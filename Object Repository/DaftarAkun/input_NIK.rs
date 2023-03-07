@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_NIK</name>
+   <tag></tag>
+   <elementGuidId>1361eed7-bb7e-4e7b-9ebc-53b2d7fd85dd</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;nik&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;nik&quot;]</value>
+      <webElementGuid>360c682e-49c8-455a-b10e-52d4ab1b158f</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

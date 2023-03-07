@@ -17,11 +17,16 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
-WebUI.acceptAlert()
+WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFotoSendiri'))
 
-WebUI.acceptAlert()
+WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFoto'))
 
-WebUI.acceptAlert()
+WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Apply'))
 
-WebUI.acceptAlert()
+WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFotoKTP'))
+
+WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFoto'))
+
+WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Apply'))
+
 

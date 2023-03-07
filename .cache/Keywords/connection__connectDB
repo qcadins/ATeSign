@@ -1,0 +1,16 @@
+{
+  "keywordFileContentHash": "0AE93AB5B446A5E008C9628E5A0E25E9",
+  "keywordClasses": [
+    {
+      "name": "connection.connectDB",
+      "keywordMethods": [
+        {
+          "name": "connectDBeSignUAT",
+          "parameters": [],
+          "javadoc": ""
+        }
+      ]
+    }
+  ],
+  "javadocParsed": true
+}

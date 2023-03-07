@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_Peran</name>
+   <tag></tag>
+   <elementGuidId>84d6a79e-42bc-472f-85a5-262c66bb4ce8</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;role&quot;]/div/div/div[3]/input</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;role&quot;]/div/div/div[3]/input</value>
+      <webElementGuid>dc3197e9-f00c-4eb5-a1a2-e0a747381491</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

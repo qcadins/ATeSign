@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>radio_Pria</name>
+   <tag></tag>
+   <elementGuidId>955e8245-791a-4216-8673-736955889ec0</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;male&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;male&quot;]</value>
+      <webElementGuid>876fa380-4d65-4467-81f3-2ead25135482</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

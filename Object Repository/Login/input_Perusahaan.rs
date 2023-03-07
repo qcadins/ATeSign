@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_Perusahaan</name>
+   <tag></tag>
+   <elementGuidId>d986239d-d60f-42e8-b72d-0d9cc43cd3a7</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;tenant&quot;]/div/div/div[3]/input</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;tenant&quot;]/div/div/div[3]/input</value>
+      <webElementGuid>8e32e543-ceb1-4516-8906-485a680ec909</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

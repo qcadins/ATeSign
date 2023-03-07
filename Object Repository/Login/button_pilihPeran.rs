@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>button_pilihPeran</name>
+   <tag></tag>
+   <elementGuidId>1949da8c-13e0-417e-8996-fd36996b4082</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/ngb-modal-window/div/div/app-multi-role/div/form/div[3]/button</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/ngb-modal-window/div/div/app-multi-role/div/form/div[3]/button</value>
+      <webElementGuid>d81bf4e0-bacd-48e0-b5bb-ed7a40cbb09b</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

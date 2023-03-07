@@ -19,3 +19,6 @@ build
 /.settings/
 /.classpath
 .svn/
+/.settings/
+.project
+Reports/

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataFileEntity>
+   <description></description>
+   <name>Login</name>
+   <tag></tag>
+   <containsHeaders>false</containsHeaders>
+   <csvSeperator></csvSeperator>
+   <dataFileGUID>c86c15c3-bfc6-4b12-a981-2af03be9e8a1</dataFileGUID>
+   <dataSourceUrl>1. Login_eSign.xlsx</dataSourceUrl>
+   <driver>ExcelFile</driver>
+   <isInternalPath>true</isInternalPath>
+   <query></query>
+   <secureUserAccount>false</secureUserAccount>
+   <sheetName>Login</sheetName>
+   <usingGlobalDBSetting>false</usingGlobalDBSetting>
+</DataFileEntity>

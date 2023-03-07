@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>button_Save</name>
+   <tag></tag>
+   <elementGuidId>a566a144-7b93-4904-93e8-38042db7098f</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-generate-invitation/div[2]/div/div/div/div/form/div[11]/button[2]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-generate-invitation/div[2]/div/div/div/div/form/div[11]/button[2]</value>
+      <webElementGuid>55ec4f34-b193-4fe1-a730-2bd5c14acbcc</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_Kota</name>
+   <tag></tag>
+   <elementGuidId>1f97d90a-b6d0-458f-87ed-3c6c2c814a4b</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;city&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;city&quot;]</value>
+      <webElementGuid>6845758b-4db5-42e3-9a10-01f10ece5eaa</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

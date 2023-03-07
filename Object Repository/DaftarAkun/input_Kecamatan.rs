@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_Kecamatan</name>
+   <tag></tag>
+   <elementGuidId>b76bfc38-36fc-4fb5-9f97-fc781acd061a</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;district&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;district&quot;]</value>
+      <webElementGuid>9479b0d7-2c64-4db5-a6ee-1994ec63911d</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

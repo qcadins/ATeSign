@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>button_AmbilFotoSendiri</name>
+   <tag></tag>
+   <elementGuidId>43292ffe-3835-4648-b491-0df1b2cef83e</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[15]/div[2]/button</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[15]/div[2]/button</value>
+      <webElementGuid>9b3aa32b-3a28-4e98-b9d4-e48d937bb9cc</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

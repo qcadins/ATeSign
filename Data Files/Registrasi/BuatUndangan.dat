@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataFileEntity>
+   <description></description>
+   <name>BuatUndangan</name>
+   <tag></tag>
+   <containsHeaders>false</containsHeaders>
+   <csvSeperator></csvSeperator>
+   <dataFileGUID>a1f894bf-c969-4bf5-adb5-aa9703177ddd</dataFileGUID>
+   <dataSourceUrl>Esign.xlsx</dataSourceUrl>
+   <driver>ExcelFile</driver>
+   <isInternalPath>true</isInternalPath>
+   <query></query>
+   <secureUserAccount>false</secureUserAccount>
+   <sheetName>BuatUndangan</sheetName>
+   <usingGlobalDBSetting>false</usingGlobalDBSetting>
+</DataFileEntity>

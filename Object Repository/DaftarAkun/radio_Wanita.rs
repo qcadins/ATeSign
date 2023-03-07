@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>radio_Wanita</name>
+   <tag></tag>
+   <elementGuidId>52de87a1-61de-45a5-a50d-19573a808596</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;female&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;female&quot;]</value>
+      <webElementGuid>091081af-2700-4208-b371-8bd6f6221a50</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

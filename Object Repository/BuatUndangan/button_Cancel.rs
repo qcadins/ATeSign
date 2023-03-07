@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>button_Cancel</name>
+   <tag></tag>
+   <elementGuidId>a922a9b9-e1e6-4df2-b071-4e57848950be</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-generate-invitation/div[2]/div/div/div/div/form/div[11]/button[1]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-generate-invitation/div[2]/div/div/div/div/form/div[11]/button[1]</value>
+      <webElementGuid>df47c53a-cde1-4ca9-b7e5-72eefa5c0561</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

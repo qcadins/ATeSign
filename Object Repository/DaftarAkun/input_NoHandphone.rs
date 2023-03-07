@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_NoHandphone</name>
+   <tag></tag>
+   <elementGuidId>76d048bc-cf1f-427a-8da0-5e6ba90c82e7</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;phone&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;phone&quot;]</value>
+      <webElementGuid>e1f63bd8-d7ee-41e8-8c6a-2d070f6376ed</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

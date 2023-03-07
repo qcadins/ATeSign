@@ -4,4 +4,34 @@
    <name>default</name>
    <tag></tag>
    <defaultProfile>true</defaultProfile>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>2</initValue>
+      <name>NumofColm</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>2</initValue>
+      <name>TimeOut</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>''</initValue>
+      <name>Link</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>''</initValue>
+      <name>DataFilePath</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>'FAILED'</initValue>
+      <name>StatusFailed</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>'SUCCESS'</initValue>
+      <name>StatusSuccess</name>
+   </GlobalVariableEntity>
 </GlobalVariableEntities>

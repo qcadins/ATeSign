@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_Link</name>
+   <tag></tag>
+   <elementGuidId>7582449b-c730-443d-9e20-c313cea8fbc7</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/ngb-modal-window/div/div/app-view-invitation-link/div/div[1]/div[1]/div/input</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/ngb-modal-window/div/div/app-view-invitation-link/div/div[1]/div[1]/div/input</value>
+      <webElementGuid>178fcadb-9975-4b36-807a-5e41d9b51acc</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

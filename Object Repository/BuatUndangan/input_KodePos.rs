@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_KodePos</name>
+   <tag></tag>
+   <elementGuidId>ac3b4d35-4f38-4e4a-8a61-1259edc9b9cc</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;zip&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;zip&quot;]</value>
+      <webElementGuid>e7d4df42-f29d-4982-bf1e-750f8c79321d</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

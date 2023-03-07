@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_TaskNo</name>
+   <tag></tag>
+   <elementGuidId>d0bb4416-0968-461e-823c-508543f167a6</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;taskNo&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;taskNo&quot;]</value>
+      <webElementGuid>5765bb76-bed7-4bab-b45f-864b5940882e</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

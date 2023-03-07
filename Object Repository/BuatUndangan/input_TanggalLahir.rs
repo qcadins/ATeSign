@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_TanggalLahir</name>
+   <tag></tag>
+   <elementGuidId>3686d0ba-f511-469b-a1f5-0fb10bdc2520</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;dob&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;dob&quot;]</value>
+      <webElementGuid>2f8be15f-c2db-4c97-9b94-398eba42a7af</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>
