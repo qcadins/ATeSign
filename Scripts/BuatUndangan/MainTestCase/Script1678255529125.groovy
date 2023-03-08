@@ -17,16 +17,16 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
-WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFotoSendiri'))
+'get data file path'
+GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\Esign.xlsx')
 
-WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFoto'))
+WebUI.callTestCase(findTestCase('Login/Login_Inveditor'), [:], FailureHandling.STOP_ON_FAILURE)
 
-WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Apply'))
+int countColmExcel = findTestData(excelPathBuatUndangan).getColumnNumbers()
 
-WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFotoKTP'))
-
-WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFoto'))
-
-WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Apply'))
-
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; GlobalVariable.NumofColm) {
+    if (findTestData('Registrasi/BuatUndangan').getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+        WebUI.callTestCase(findTestCase(excelPathBuatUndangan), [:], FailureHandling.CONTINUE_ON_FAILURE)
+    }
+}
 

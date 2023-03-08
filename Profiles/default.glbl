@@ -6,13 +6,13 @@
    <defaultProfile>true</defaultProfile>
    <GlobalVariableEntity>
       <description></description>
-      <initValue>2</initValue>
-      <name>NumofColm</name>
+      <initValue>''</initValue>
+      <name>DataFilePath</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
-      <initValue>2</initValue>
-      <name>TimeOut</name>
+      <initValue>0</initValue>
+      <name>FlagFailed</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
@@ -21,8 +21,13 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
-      <initValue>''</initValue>
-      <name>DataFilePath</name>
+      <initValue>2</initValue>
+      <name>NumofColm</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>'Failed Verify Data Match &amp; Equal'</initValue>
+      <name>ReasonFailedVerifyEqualOrMatch</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
@@ -33,5 +38,10 @@
       <description></description>
       <initValue>'SUCCESS'</initValue>
       <name>StatusSuccess</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>2</initValue>
+      <name>TimeOut</name>
    </GlobalVariableEntity>
 </GlobalVariableEntities>

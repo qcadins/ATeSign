@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>BuatUndangan</name>
+   <name>DaftarAkunDataVerif</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>e34c87ca-03f8-49a2-97a5-9d7c4e4fc76a</testCaseGuid>
+   <testCaseGuid>a31c374c-f470-45af-af7a-670cc8aed4f0</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>242bd001-6e43-4d97-9ee2-31ed68a2d12a</variableId>
+      <variableId>c73f5610-76bc-46b7-9e49-862a26382923</variableId>
    </variableLinks>
    <variable>
       <defaultValue>'Registrasi/BuatUndangan'</defaultValue>
       <description></description>
-      <id>242bd001-6e43-4d97-9ee2-31ed68a2d12a</id>
+      <id>c73f5610-76bc-46b7-9e49-862a26382923</id>
       <masked>false</masked>
       <name>excelPathBuatUndangan</name>
    </variable>

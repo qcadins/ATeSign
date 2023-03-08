@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>button_YaBatalUndangan</name>
+   <tag></tag>
+   <elementGuidId>4959d625-6fc0-4590-ab35-61e9172804ab</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/div[4]/div/div[3]/button[3]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/div[4]/div/div[3]/button[3]</value>
+      <webElementGuid>197cf4b2-42e7-4998-a161-2f001ec147b9</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

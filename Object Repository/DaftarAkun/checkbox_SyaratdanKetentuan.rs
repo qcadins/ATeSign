@@ -7,25 +7,33 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@formcontrolname = 'acceptTerms']</value>
+         <value>//section[@id='regestration']/div/div/div/div/div/div/div/form/div[17]/div/label/span</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>false</isSelected>
+      <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@id=&quot;auth-login&quot;]</value>
-      <webElementGuid>2c3223e7-5c01-4d52-b520-15877dacfc81</webElementGuid>
+      <value>//section[@id='regestration']/div/div/div/div/div/div/div/form/div[17]/div/label/span</value>
+      <webElementGuid>adf47e58-e67b-49e0-b476-2bbee25644af</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>formcontrolname</name>
       <type>Main</type>
       <value>acceptTerms</value>
-      <webElementGuid>e8dc6f40-244a-47d0-a0e9-61012e974266</webElementGuid>
+      <webElementGuid>cb826a05-039f-4ec9-9698-485f8b1d8709</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Saya Menerima</value>
+      <webElementGuid>22402515-5be8-496e-a885-3ffcdeab3ac4</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>label_ReasonError</name>
+   <tag></tag>
+   <elementGuidId>fa1ee7fd-10fb-4476-852b-028ed1bf201e</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/ngb-modal-window/div/div/app-msx-alert/div/div/div[1]/ul</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/ngb-modal-window/div/div/app-msx-alert/div/div/div[1]/ul</value>
+      <webElementGuid>bd595e80-900f-42d3-9327-8e3c322f66f8</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>button_TutupError</name>
+   <tag></tag>
+   <elementGuidId>c7597e3e-f52b-414a-8812-1718988f03b1</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/ngb-modal-window/div/div/app-msx-alert/div/div/div[2]/button</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/ngb-modal-window/div/div/app-msx-alert/div/div/div[2]/button</value>
+      <webElementGuid>ae5b3156-091f-4f86-a2c7-29bf7f057a6c</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>
