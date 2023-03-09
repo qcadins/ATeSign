@@ -64,4 +64,14 @@
       <initValue>findTestData('Login/Setting').getValue(2, 2)</initValue>
       <name>checkPaging</name>
    </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>'http://gdkwebsvr:7021/adimobile/esign'</initValue>
+      <name>base_url</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>''</initValue>
+      <name>token</name>
+   </GlobalVariableEntity>
 </GlobalVariableEntities>
