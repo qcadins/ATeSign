@@ -30,8 +30,8 @@ WebUI.click(findTestObject('ErrorReport/button_Cari'))
 'get total data'
 String total = WebUI.getText(findTestObject('ErrorReport/label_Total'))
 
-//'verify match tipe error'
-//checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/ErrorReport/label_Tipe')), 'ERROR', false, FailureHandling.OPTIONAL))
+'verify match tipe error'
+checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/ErrorReport/label_Tipe')), GlobalVariable.ErrorType, false, FailureHandling.OPTIONAL))
 
 'verify total >= 1'
 checkVerifyEqualOrMatch(WebUI.verifyGreaterThanOrEqual(Integer.parseInt(total[0]), 1, FailureHandling.OPTIONAL))
