@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_Nama</name>
+   <tag></tag>
+   <elementGuidId>c2d2ff6b-037c-4299-b23d-ca4db0ce1504</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;namaKonsumen&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;namaKonsumen&quot;]</value>
+      <webElementGuid>6781ccfc-0101-4a4e-9427-23be02262625</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

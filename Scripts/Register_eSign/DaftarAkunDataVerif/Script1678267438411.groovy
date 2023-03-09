@@ -130,6 +130,9 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
 } else {
     'connect DB eSign UAT'
     Connection conneSignUAT = CustomKeywords.'connection.connectDB.connectDBeSignUAT'()
+	
+	'delay untuk menunggu OTP'
+	WebUI.delay(10)
 
     'get OTP dari DB'
     String OTP = CustomKeywords.'connection.dataVerif.getOTP'(conneSignUAT, findTestData(excelPathBuatUndangan).getValue(

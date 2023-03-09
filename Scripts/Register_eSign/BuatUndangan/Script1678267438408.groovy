@@ -36,11 +36,11 @@ WebUI.setText(findTestObject('BuatUndangan/input_TempatLahir'), findTestData(exc
 WebUI.setText(findTestObject('BuatUndangan/input_TanggalLahir'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
         12))
 
-'cek if pria / wanita'
-if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 13).equalsIgnoreCase('Pria')) {
+'cek if pria(M) / wanita(F)'
+if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 13).equalsIgnoreCase('M')) {
     'click radio pria'
     WebUI.click(findTestObject('BuatUndangan/radio_Pria'))
-} else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 13).equalsIgnoreCase('Wanita')) {
+} else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 13).equalsIgnoreCase('F')) {
     'click radio wanita'
     WebUI.click(findTestObject('BuatUndangan/radio_Wanita'))
 }
@@ -96,11 +96,16 @@ WebUI.setText(findTestObject('BuatUndangan/input_TaskNo'), findTestData(excelPat
 'click button save'
 WebUI.click(findTestObject('BuatUndangan/button_Save'))
 
-'click button ya proses'
-WebUI.click(findTestObject('BuatUndangan/button_YaProses'))
+if(WebUI.verifyElementPresent(findTestObject('BuatUndangan/button_YaProses'), GlobalVariable.TimeOut,  FailureHandling.OPTIONAL)) {
+	'click button ya proses'
+	WebUI.click(findTestObject('BuatUndangan/button_YaProses'))
+}
+
+'declare isMmandatory Complete'
+int isMandatoryComplete = Integer.parseInt(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 4))
 
 'cek if muncul popup'
-if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationError'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationError'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL) && isMandatoryComplete > 0) {
     'get reason'
     ReasonFailed = WebUI.getText(findTestObject('BuatUndangan/label_ReasonError'))
 
@@ -124,19 +129,38 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
         (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + ReasonFailed)
 
-    'click button cancel'
-    WebUI.click(findTestObject('BuatUndangan/button_Cancel'))
-
-    'click button ya batal undangan'
-    WebUI.click(findTestObject('BuatUndangan/button_YaBatalUndangan'))
+    'call test case error report'
+    WebUI.callTestCase(findTestCase('Register_eSign/ErrorReport'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
+        FailureHandling.CONTINUE_ON_FAILURE)
 } else {
+	'click button ya proses'
+	WebUI.click(findTestObject('BuatUndangan/button_YaProses'))
+	
     'write to excel success'
     CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'BuatUndangan', 0, GlobalVariable.NumofColm - 
         1, GlobalVariable.StatusSuccess)
+
+    'get link'
+    GlobalVariable.Link = WebUI.getAttribute(findTestObject('BuatUndangan/PopUp/input_Link'), 'value')
+
+    'click tutup popup'
+    WebUI.click(findTestObject('BuatUndangan/button_TutupDapatLink'))
+
+    'call test case inquiry invitation'
+    WebUI.callTestCase(findTestCase('Register_eSign/InquiryInvitation'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
+        FailureHandling.CONTINUE_ON_FAILURE)
+
+    'call test case daftar akun data verif'
+    WebUI.callTestCase(findTestCase('Register_eSign/DaftarAkunDataVerif'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
+        FailureHandling.CONTINUE_ON_FAILURE)
+	
+	if(GlobalVariable.checkStoreDB == 'Yes') {
+	
+	'delay nunggu data db'
+	WebUI.delay(5)
+	
+    'call test case BuatUndanganStore DB'
+    WebUI.callTestCase(findTestCase('Register_eSign/BuatUndanganStoreDB'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
+    		FailureHandling.CONTINUE_ON_FAILURE)
+	}
 }
-
-'get link'
-GlobalVariable.Link = WebUI.getAttribute(findTestObject('BuatUndangan/PopUp/input_Link'), 'value')
-
-WebUI.callTestCase(findTestCase('BuatUndangan/DaftarAkunDataVerif'), [:], FailureHandling.STOP_ON_FAILURE)
-

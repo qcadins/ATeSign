@@ -26,6 +26,11 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
+      <initValue>'FailedStoreDB'</initValue>
+      <name>ReasonFailedStoredDB</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
       <initValue>'Failed Verify Data Match &amp; Equal'</initValue>
       <name>ReasonFailedVerifyEqualOrMatch</name>
    </GlobalVariableEntity>
@@ -43,5 +48,15 @@
       <description></description>
       <initValue>2</initValue>
       <name>TimeOut</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>findTestData('Login/Setting').getValue(1, 2)</initValue>
+      <name>checkStoreDB</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>findTestData('Login/Setting').getValue(2, 2)</initValue>
+      <name>checkPaging</name>
    </GlobalVariableEntity>
 </GlobalVariableEntities>

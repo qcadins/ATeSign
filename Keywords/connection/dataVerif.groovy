@@ -36,7 +36,7 @@ public class dataVerif {
 
 		Statement stm = conn.createStatement()
 
-		ResultSet resultSet = stm.executeQuery("SELECT otp_code FROM tr_invitation_link WHERE email = '"+ email +"'")
+		ResultSet resultSet = stm.executeQuery("SELECT otp_code FROM tr_invitation_link WHERE receiver_detail = '"+ email +"'")
 
 		ResultSetMetaData metadata = resultSet.getMetaData()
 
@@ -48,26 +48,26 @@ public class dataVerif {
 		return data
 	}
 
-//		@Keyword
-//		public getOTP (Connection conn, String email){
-//			String data
-//	
-//			ArrayList<String> listdata = new ArrayList<>()
-//	
-//			Statement stm = conn.createStatement()
-//	
-//			ResultSet resultSet = stm.executeQuery("SELECT otp_code FROM tr_invitation_link WHERE email = '"+ email +"'")
-//	
-//			ResultSetMetaData metadata = resultSet.getMetaData()
-//	
-//			int columnCount = metadata.getColumnCount()
-//	
-//			while (resultSet.next()) {
-//				for(int i = 1 ; i < columnCount ; i++){
-//					data = resultSet.getObject(i)
-//					listdata.add(data)
-//				}
-//			}
-//			return listdata
-//		}
+	@Keyword
+	public BuatUndanganStoreDB (Connection conn, String email){
+		String data
+
+		ArrayList<String> listdata = new ArrayList<>()
+
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("SELECT full_name, place_of_birth, To_char(date_of_birth, 'MM/dd/yyyy'), gender, email, provinsi, kota, kecamatan, kelurahan, zip_code FROM am_user_personal_data aupd JOIN am_msuser amu ON amu.login_id = aupd.email WHERE EMAIL = '"+ email +"'")
+
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for(int i = 1 ; i <= columnCount ; i++){
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		return listdata
+	}
 }

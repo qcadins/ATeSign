@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>select_Modul</name>
+   <tag></tag>
+   <elementGuidId>fde11afd-e230-494d-bed5-a9e0d781ea04</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;modul&quot;]/div/div/div[3]/input</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;modul&quot;]/div/div/div[3]/input</value>
+      <webElementGuid>81b8dffa-440e-471c-9ba7-576db61a3748</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

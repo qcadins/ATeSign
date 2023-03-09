@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>SideBar_OpenClose</name>
+   <tag></tag>
+   <elementGuidId>aab09771-d976-464d-b20d-04d0e8bcef9c</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>CSS</key>
+         <value>i.toggle-icon.ng-tns-c133-1.ft-toggle-left</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>//a[@id='sidebarToggle']/i</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>XPATH</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>i</value>
+      <webElementGuid>e87a3542-7770-4e9b-aa39-5cd360ad5376</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>toggle-icon ng-tns-c133-1 ft-toggle-left</value>
+      <webElementGuid>393bc3bc-95fa-4111-9bec-2f338725f9d4</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>ng-reflect-ng-class</name>
+      <type>Main</type>
+      <value>[object Object]</value>
+      <webElementGuid>0099ec33-0949-48c4-a98f-9756219172be</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>id(&quot;sidebarToggle&quot;)/i[@class=&quot;toggle-icon ng-tns-c133-1 ft-toggle-left&quot;]</value>
+      <webElementGuid>2e9e249e-48cb-4576-8c6a-bbabdd78b390</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:idRelative</name>
+      <type>Main</type>
+      <value>//a[@id='sidebarToggle']/i</value>
+      <webElementGuid>caad1864-819c-496f-962f-82206eea845b</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//a[2]/i</value>
+      <webElementGuid>c148c54a-ac3f-497c-8c14-31225cd86560</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_Cabang</name>
+   <tag></tag>
+   <elementGuidId>d21e136e-b666-4fb1-8dfe-3b3bdd7b9f41</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;cabang&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;cabang&quot;]</value>
+      <webElementGuid>24142bf9-60ef-4a31-a860-ac913550f211</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

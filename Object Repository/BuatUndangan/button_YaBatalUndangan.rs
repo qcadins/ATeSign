@@ -7,17 +7,25 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/div[4]/div/div[3]/button[3]</value>
+         <value>//*[(text() = 'Ya' or . = 'Ya')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html/body/div[4]/div/div[3]/button[3]</value>
-      <webElementGuid>197cf4b2-42e7-4998-a161-2f001ec147b9</webElementGuid>
+      <value>/html/body/div[3]/div/div[3]/button[3]</value>
+      <webElementGuid>7c57b108-0c66-4fed-a6fd-dddd5d8bc1e8</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Ya</value>
+      <webElementGuid>41d550fc-cc06-4587-98d6-e44bb05a6a2a</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

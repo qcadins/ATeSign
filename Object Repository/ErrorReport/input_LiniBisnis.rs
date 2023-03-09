@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_LiniBisnis</name>
+   <tag></tag>
+   <elementGuidId>f5feb6dd-5c3e-46ae-a7ce-4946934d408e</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;businessLine&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;businessLine&quot;]</value>
+      <webElementGuid>5e6c7ff0-914a-47f6-8500-17fea84a4d0c</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

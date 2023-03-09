@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_TanggalKe</name>
+   <tag></tag>
+   <elementGuidId>20c76e79-0d35-4c27-8894-5ccd73e863e4</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;tanggalSampai&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;tanggalSampai&quot;]</value>
+      <webElementGuid>3f07877c-0a12-46b6-a5de-920f77e63478</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

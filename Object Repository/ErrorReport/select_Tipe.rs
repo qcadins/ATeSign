@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>select_Tipe</name>
+   <tag></tag>
+   <elementGuidId>1ada90e7-835d-4a35-886c-9c5a7f6e99b4</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;tipe&quot;]/div/div/div[3]/input</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;tipe&quot;]/div/div/div[3]/input</value>
+      <webElementGuid>8f67a15f-cc1d-411e-a6f5-af83affabab4</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>
