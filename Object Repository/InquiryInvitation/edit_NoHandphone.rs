@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>edit_NoHandphone</name>
+   <tag></tag>
+   <elementGuidId>caddc96e-3c8f-48e3-80c9-c3bae6752c06</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;phone&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;phone&quot;]</value>
+      <webElementGuid>6e839f6b-6b27-4c10-a112-5aabe9c1279c</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

@@ -3,6 +3,9 @@ import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
+
+import java.sql.Connection
+
 import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
 import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
 import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
@@ -17,20 +20,28 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
-'open browser'
-WebUI.openBrowser('')
+'connect DB eSign UAT'
+Connection conneSignUAT = CustomKeywords.'connection.connectDB.connectDBeSignUAT'()
 
-'navigate to url esign'
-WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 4))
+'get data buat undangan dari DB'
+ArrayList<String> result = CustomKeywords.'connection.dataVerif.InquiryInvitationStoreDB'(conneSignUAT, GlobalVariable.eSignData[2])
 
-'set value userLogin'
-GlobalVariable.userLogin = findTestData('Login/Login').getValue(2, 4).toUpperCase()
+'declare arraylist arraymatch'
+ArrayList<String> arrayMatch = new ArrayList<String>()
 
-'input email'
-WebUI.setText(findTestObject('Login/input_Email'), findTestData('Login/Login').getValue(2, 4))
+'declare arrayindex'
+arrayindex = 1
 
-'input password'
-WebUI.setText(findTestObject('Login/input_Password'), findTestData('Login/Login').getValue(3, 4))
+for(i = 1 ; i < result.size(); i++) {
+	'verify edited data'
+	arrayMatch.add(WebUI.verifyMatch(GlobalVariable.eSignData[arrayindex++].toUpperCase(), (result[i]).toUpperCase(),	
+		false, FailureHandling.CONTINUE_ON_FAILURE))
+}
 
-'click button login'
-WebUI.click(findTestObject('Login/button_Login'), FailureHandling.STOP_ON_FAILURE)
+'jika data db tidak sesuai dengan excel'
+if (arrayMatch.contains(false)) {
+
+	'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+	CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2) + ';' + GlobalVariable.ReasonFailedStoredDB)
+	
+}

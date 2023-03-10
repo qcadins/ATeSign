@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>verifSubmitData</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>ffc8d185-6458-493b-b12b-78f069eb100b</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>68783550-ae9d-4cc8-bb8d-d0c76975e610</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Registrasi/BuatUndangan'</defaultValue>
+      <description></description>
+      <id>68783550-ae9d-4cc8-bb8d-d0c76975e610</id>
+      <masked>false</masked>
+      <name>excelPathBuatUndangan</name>
+   </variable>
+</TestCaseEntity>

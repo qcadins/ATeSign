@@ -74,4 +74,14 @@
       <initValue>''</initValue>
       <name>token</name>
    </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>[]</initValue>
+      <name>eSignData</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>''</initValue>
+      <name>userLogin</name>
+   </GlobalVariableEntity>
 </GlobalVariableEntities>

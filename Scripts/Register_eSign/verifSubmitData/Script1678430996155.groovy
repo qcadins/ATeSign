@@ -24,20 +24,20 @@ println "${currentDate}"
 WebUI.click(findTestObject('InquiryInvitation/menu_InquiryInvitation'))
 
 'input email'
-WebUI.setText(findTestObject('InquiryInvitation/input_Email'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
 		15))
 
-'Looping delay untuk handling copy app selama +- 2 menit'
+'Looping delay untuk handling search data selama +- 2 menit'
 for(int i = 1;i<=8;i++){
 	'click button cari'
 	WebUI.click(findTestObject('InquiryInvitation/button_Cari'))
 	
-	'Pengecekan ada/tidak adanya button action pencil yang muncul'
-	if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/input_Email'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)){
+	'Pengecekan ada/tidak adanya data yang muncul'
+	if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/tr_Name'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)){
 		break
 	}
 	else{
-		'delay 14 detik'
+		'delay 10 detik'
 		WebUI.delay(10)
 	}
 }

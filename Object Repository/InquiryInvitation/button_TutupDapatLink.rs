@@ -3,29 +3,29 @@
    <description></description>
    <name>button_TutupDapatLink</name>
    <tag></tag>
-   <elementGuidId>25fd41b7-0853-4107-89a1-8423cb9f29f0</elementGuidId>
+   <elementGuidId>e72a6d33-05ff-4a48-bde0-2f7e62a9820a</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/ngb-modal-window/div/div/app-view-invitation-link/div/div[2]/button</value>
+         <value>//*[(text() = 'Tutup' or . = 'Tutup')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/ngb-modal-window/div/div/app-view-invitation-link/div/div[2]/button</value>
-      <webElementGuid>68cb5248-e91d-470a-92ac-e682bb514db4</webElementGuid>
+      <webElementGuid>e24247e6-dea5-4cd1-84b6-a500c4aea6d9</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>false</isSelected>
+      <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>text</name>
       <type>Main</type>
       <value>Tutup</value>
-      <webElementGuid>97bbeec4-d3a5-499e-9908-cc199978a3a1</webElementGuid>
+      <webElementGuid>1b40be54-31ce-421b-b20d-deaaf086d3e7</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

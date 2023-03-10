@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>button_TutupDapatLink</name>
+   <name>errorLog</name>
    <tag></tag>
-   <elementGuidId>25fd41b7-0853-4107-89a1-8423cb9f29f0</elementGuidId>
+   <elementGuidId>dbcf2126-f2cc-4769-a8a6-66aa728a5820</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/ngb-modal-window/div/div/app-view-invitation-link/div/div[2]/button</value>
+         <value>//*[@role = 'alertdialog']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html/body/ngb-modal-window/div/div/app-view-invitation-link/div/div[2]/button</value>
-      <webElementGuid>68cb5248-e91d-470a-92ac-e682bb514db4</webElementGuid>
+      <value>/div/div[2]</value>
+      <webElementGuid>306a78aa-79b2-4f54-8b02-2c72747f2eca</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>false</isSelected>
+      <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>text</name>
+      <name>role</name>
       <type>Main</type>
-      <value>Tutup</value>
-      <webElementGuid>97bbeec4-d3a5-499e-9908-cc199978a3a1</webElementGuid>
+      <value>alertdialog</value>
+      <webElementGuid>542056ef-01d0-452c-9150-0af6821d62da</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

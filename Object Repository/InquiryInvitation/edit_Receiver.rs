@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>edit_Receiver</name>
+   <tag></tag>
+   <elementGuidId>18ce681a-0aec-4b3f-ab6e-12d99aa0c6b9</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;receiver&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;receiver&quot;]</value>
+      <webElementGuid>f223c9dc-e9c2-441b-9709-a04c31883cdb</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>InquiryInvitationEdit</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>74c55de0-691a-45e0-a6dd-6aa90c604a24</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>7b79d976-af87-4112-bdd3-16eb903893a6</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Registrasi/BuatUndangan'</defaultValue>
+      <description></description>
+      <id>7b79d976-af87-4112-bdd3-16eb903893a6</id>
+      <masked>false</masked>
+      <name>excelPathBuatUndangan</name>
+   </variable>
+</TestCaseEntity>

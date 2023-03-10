@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>edit_Alamat</name>
+   <tag></tag>
+   <elementGuidId>66493478-000f-42bc-bb56-e0d607ff9735</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;address&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;address&quot;]</value>
+      <webElementGuid>53cc2279-6160-48f7-bccb-03400e35e3b7</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

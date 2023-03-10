@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>edit_Kelurahan</name>
+   <tag></tag>
+   <elementGuidId>bf36f5fe-c3b2-4c3a-97e7-107d251040a1</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;subDistrict&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;subDistrict&quot;]</value>
+      <webElementGuid>75d8e901-3893-4b84-9783-ca2b1a8c5743</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

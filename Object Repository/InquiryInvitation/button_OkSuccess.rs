@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>button_TutupDapatLink</name>
+   <name>button_OkSuccess</name>
    <tag></tag>
-   <elementGuidId>25fd41b7-0853-4107-89a1-8423cb9f29f0</elementGuidId>
+   <elementGuidId>6bd8c372-e197-421d-bbd3-cec4ff82a7e7</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/ngb-modal-window/div/div/app-view-invitation-link/div/div[2]/button</value>
+         <value>//*[(text() = 'OK' or . = 'OK')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html/body/ngb-modal-window/div/div/app-view-invitation-link/div/div[2]/button</value>
-      <webElementGuid>68cb5248-e91d-470a-92ac-e682bb514db4</webElementGuid>
+      <value>/html/body/div[4]/div/div[3]/button[1]</value>
+      <webElementGuid>43d08ef1-81c2-4d0d-a07e-c76f8b48a262</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>false</isSelected>
+      <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>text</name>
       <type>Main</type>
-      <value>Tutup</value>
-      <webElementGuid>97bbeec4-d3a5-499e-9908-cc199978a3a1</webElementGuid>
+      <value>OK</value>
+      <webElementGuid>eb878bbc-ee04-4bf7-9b31-35a1b00ed083</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

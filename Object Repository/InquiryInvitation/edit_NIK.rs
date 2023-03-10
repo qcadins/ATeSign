@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>edit_NIK</name>
+   <tag></tag>
+   <elementGuidId>16372c23-cd20-4ba7-be4b-9ddf4485a3ea</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;nik&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;nik&quot;]</value>
+      <webElementGuid>5f8d84ed-8cc1-4dee-b974-931445195f13</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

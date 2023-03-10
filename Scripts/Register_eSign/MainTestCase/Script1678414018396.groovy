@@ -33,7 +33,17 @@ int countColmExcel = findTestData(excelPathBuatUndangan).getColumnNumbers()
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; GlobalVariable.NumofColm++) {
 	if(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
 		break
-	}else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+	}else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted') && 
+		findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Edit')) {
+        WebUI.callTestCase(findTestCase('Register_eSign/InquiryInvitationEdit'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
+            FailureHandling.CONTINUE_ON_FAILURE)
+		
+    }else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted') && 
+		findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Resend')) {
+        WebUI.callTestCase(findTestCase('Register_eSign/InquiryInvitationResend'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
+            FailureHandling.CONTINUE_ON_FAILURE)
+		
+    }else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
         WebUI.callTestCase(findTestCase('Register_eSign/BuatUndangan'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
             FailureHandling.CONTINUE_ON_FAILURE)
     }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>button_Batal</name>
+   <tag></tag>
+   <elementGuidId>bda6c7ab-ae7c-4899-8476-9a831f8fdc08</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-edit-invitation/div[2]/div/div/div/div/form/div[10]/button[1]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-edit-invitation/div[2]/div/div/div/div/form/div[10]/button[1]</value>
+      <webElementGuid>c680017d-6834-4014-a757-23a268c95568</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

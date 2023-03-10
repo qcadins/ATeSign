@@ -26,7 +26,7 @@ WebUI.navigateToUrl(GlobalVariable.Link)
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_NIK'), 'value').toUpperCase(), 
         findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 9).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
-'verify Nama Lengkao sesuai inputan'
+'verify Nama Lengkap sesuai inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_NamaLengkap'), 'value').toUpperCase(), 
         findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 10).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
@@ -35,17 +35,7 @@ checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Daf
         findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 11).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'parse Date from MM/dd/yyyy > yyyy-MM-dd'
-sdf = new SimpleDateFormat('MM/dd/yyyy')
-
-parsedDate = null
-
-sentDate = findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 12)
-
-parsedDate = sdf.parse(sentDate)
-
-sdf = new SimpleDateFormat('yyyy-MM-dd')
-
-sDate = sdf.format(parsedDate)
+sDate = CustomKeywords.'customizeKeyword.parseDate.parseDateFormat'(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 12), 'MM/dd/yyyy', 'yyyy-MM-dd')
 
 'verify tanggal lahir sesuai inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_TanggalLahir'), 'value').toUpperCase(), 
@@ -130,9 +120,9 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
 } else {
     'connect DB eSign UAT'
     Connection conneSignUAT = CustomKeywords.'connection.connectDB.connectDBeSignUAT'()
-	
-	'delay untuk menunggu OTP'
-	WebUI.delay(10)
+
+    'delay untuk menunggu OTP'
+    WebUI.delay(10)
 
     'get OTP dari DB'
     String OTP = CustomKeywords.'connection.dataVerif.getOTP'(conneSignUAT, findTestData(excelPathBuatUndangan).getValue(
@@ -145,14 +135,15 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Verifikasi'))
 }
 
+
+
 def checkVerifyEqualOrMatch(Boolean isMatch) {
     if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
         CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2) + 
-            ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
+            GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2) + ';') + 
+            GlobalVariable.ReasonFailedVerifyEqualOrMatch)
 
         GlobalVariable.FlagFailed = 1
     }
 }
-

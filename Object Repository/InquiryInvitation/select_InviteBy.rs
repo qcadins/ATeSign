@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>select_InviteBy</name>
+   <tag></tag>
+   <elementGuidId>de9cb9b6-2330-4f48-9e54-a60b75fcf97c</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-edit-invitation/div[2]/div/div/div/div/form/div[1]/div[1]/div/ng-select/div/div/div[3]/input</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-edit-invitation/div[2]/div/div/div/div/form/div[1]/div[1]/div/ng-select/div/div/div[3]/input</value>
+      <webElementGuid>6b688343-2149-43f5-986c-0262e4c1a8da</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

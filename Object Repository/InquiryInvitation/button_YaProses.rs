@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>button_TutupDapatLink</name>
+   <name>button_YaProses</name>
    <tag></tag>
-   <elementGuidId>25fd41b7-0853-4107-89a1-8423cb9f29f0</elementGuidId>
+   <elementGuidId>93ab09d3-819a-4209-8b11-a861dd1db23d</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/ngb-modal-window/div/div/app-view-invitation-link/div/div[2]/button</value>
+         <value>//*[(text() = 'Ya, proses!' or . = 'Ya, proses!')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html/body/ngb-modal-window/div/div/app-view-invitation-link/div/div[2]/button</value>
-      <webElementGuid>68cb5248-e91d-470a-92ac-e682bb514db4</webElementGuid>
+      <value>/html/body/div[4]/div/div[3]/button[3]</value>
+      <webElementGuid>54ee7a04-4346-40c5-a198-58c399a2daac</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>false</isSelected>
+      <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>text</name>
       <type>Main</type>
-      <value>Tutup</value>
-      <webElementGuid>97bbeec4-d3a5-499e-9908-cc199978a3a1</webElementGuid>
+      <value>Ya, proses!</value>
+      <webElementGuid>c01ca3b5-2f74-48bf-9f3a-aa8e708ea9a8</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
