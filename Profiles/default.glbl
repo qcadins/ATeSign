@@ -7,12 +7,42 @@
    <GlobalVariableEntity>
       <description></description>
       <initValue>''</initValue>
+      <name>API_email</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>'http://gdkwebsvr:7021/adimobile/esign'</initValue>
+      <name>base_url</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>findTestData('Login/Setting').getValue(2, 2)</initValue>
+      <name>checkPaging</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>findTestData('Login/Setting').getValue(1, 2)</initValue>
+      <name>checkStoreDB</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>''</initValue>
       <name>DataFilePath</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
       <initValue>''</initValue>
+      <name>documentId</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>''</initValue>
       <name>ErrorType</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>[]</initValue>
+      <name>eSignData</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
@@ -56,28 +86,8 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
-      <initValue>findTestData('Login/Setting').getValue(1, 2)</initValue>
-      <name>checkStoreDB</name>
-   </GlobalVariableEntity>
-   <GlobalVariableEntity>
-      <description></description>
-      <initValue>findTestData('Login/Setting').getValue(2, 2)</initValue>
-      <name>checkPaging</name>
-   </GlobalVariableEntity>
-   <GlobalVariableEntity>
-      <description></description>
-      <initValue>'http://gdkwebsvr:7021/adimobile/esign'</initValue>
-      <name>base_url</name>
-   </GlobalVariableEntity>
-   <GlobalVariableEntity>
-      <description></description>
       <initValue>''</initValue>
       <name>token</name>
-   </GlobalVariableEntity>
-   <GlobalVariableEntity>
-      <description></description>
-      <initValue>[]</initValue>
-      <name>eSignData</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>

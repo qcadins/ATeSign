@@ -134,4 +134,25 @@ public class dataVerif {
 		}
 		return data
 	}
+
+	@Keyword
+	public getSendDoc(Connection conn, String documentid, String email){
+		String data
+		ArrayList<String> listdata = new ArrayList<>()
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("select tenant.tenant_code, doc_h.ref_number, main.document_id,doc_template.doc_template_code,office.office_code,office.office_name, region.region_code,region.region_name, bline.business_line_code, bline.business_line_name, office.office_code as branch, main.is_sequence,vendor.vendor_code, doc_h.result_url,doc_h.url_upload,vendor_registered_user.signer_registered_email,vendor_registered_user.usr_upd from ms_vendor_registered_user as vendor_registered_user, tr_document_d as main join ms_tenant as tenant on main.id_ms_tenant = tenant.id_ms_tenant join tr_document_h as doc_h on main.id_document_h = doc_h.id_document_h join ms_lov as lov on main.lov_sign_status = lov.id_lov join ms_doc_template as doc_template on main.id_ms_doc_template = doc_template.id_doc_template join ms_office as office on doc_h.id_ms_office = office.id_ms_office join ms_region as region on office.id_ms_region = region.id_ms_region join ms_business_line as bline on doc_h.id_ms_business_line = bline.id_ms_business_line join ms_vendor as vendor on main.id_ms_vendor = vendor.id_ms_vendor where main.document_id = '"+documentid.replace('[','').replace(']','')+"' and vendor_registered_user.signer_registered_email = '"+email.toUpperCase()+"'")
+
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for(int i = 1 ; i <= columnCount ; i++){
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		return listdata
+	}
 }

@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>BuatUndangan</name>
+   <name>ResponseAPI</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>e34c87ca-03f8-49a2-97a5-9d7c4e4fc76a</testCaseGuid>
+   <testCaseGuid>c42e6543-e3fa-4023-8050-0d88f1426850</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>242bd001-6e43-4d97-9ee2-31ed68a2d12a</variableId>
+      <variableId>a631a2b3-eb1f-450d-91d6-02e08bd89b31</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'Registrasi/BuatUndangan'</defaultValue>
+      <defaultValue>'Registrasi/SendDocument'</defaultValue>
       <description></description>
-      <id>242bd001-6e43-4d97-9ee2-31ed68a2d12a</id>
+      <id>a631a2b3-eb1f-450d-91d6-02e08bd89b31</id>
       <masked>false</masked>
-      <name>excelPathBuatUndangan</name>
+      <name>API_Excel_Path</name>
    </variable>
 </TestCaseEntity>
