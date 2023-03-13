@@ -1,4 +1,5 @@
 import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
+
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
@@ -18,11 +19,15 @@ import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 import java.sql.Connection
 
+
+'splitting signer berdasarkan jumlah signer'
+ArrayList<String> signerperarray = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,42).split(';',-1)
+
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
-
+for(int i = 0; i>= signerperarray.size()-1;i++) {
 'get data API Send Document dari DB'
-ArrayList<String> result = CustomKeywords.'connection.dataVerif.getSendDoc'(conneSign, GlobalVariable.documentId.replace('[','').replace(']',''),findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,42).split(';').first().replace('"','').toUpperCase()
+ArrayList<String> result = CustomKeywords.'connection.dataVerif.getSendDoc'(conneSign, GlobalVariable.documentId.replace('[','').replace(']',''),signerperarray[i].replace('"','').toUpperCase()
 	)
 
 'declare arraylist arraymatch'
@@ -101,6 +106,6 @@ if (arrayMatch.contains(false)) {
 
 	'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
 	CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2) + ';' + GlobalVariable.ReasonFailedStoredDB)
-	
+}
 }
 

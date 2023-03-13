@@ -23,8 +23,27 @@ import java.sql.Connection
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
+	ArrayList<String> signAction = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,27).split(';',-1)
+	ArrayList<String> signerType = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,28).split(';',-1)
+	ArrayList<String> signSequence = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,29).split(';',-1)
+	ArrayList<String> alamat = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,30).split(';',-1)
+	ArrayList<String> jenisKelamin = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,31).split(';',-1)
+	ArrayList<String> kecamatan = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,32).split(';',-1)
+	ArrayList<String> kelurahan = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,33).split(';',-1)
+	ArrayList<String> kodePos = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,34).split(';',-1)
+	ArrayList<String> kota = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,35).split(';',-1)
+	ArrayList<String> nama = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,36).split(';',-1)
+	ArrayList<String> tlp = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,37).split(';',-1)
+	ArrayList<String> tglLahir = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,38).split(';',-1)
+	ArrayList<String> provinsi = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,39).split(';',-1)
+	ArrayList<String> idKtp = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,40).split(';',-1)
+	ArrayList<String> tmpLahir = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,41).split(';',-1)
+	ArrayList<String> email = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,42).split(';',-1)
+	ArrayList<String> npwp = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,43).split(';',-1)
+	
+'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
-GlobalVariable.NumofColm
+
 	for(GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_Excel_Path).getColumnNumbers() ; GlobalVariable.NumofColm++) {
 	respon = WS.sendRequest(findTestObject('Object Repository/Postman/Send Document',
 	 		[
@@ -40,44 +59,44 @@ GlobalVariable.NumofColm
             'businessLineName' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,19),
             'branch' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,20),
             'isSequence' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,21),
-			
-			's1.signAction' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,27).split(';').first(),
-			's1.signerType' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,28).split(';').first(),
-			's1.signSequence' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,29).split(';').first(),
-			's1.alamat' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,30).split(';').first(),
-			's1.jenisKelamin' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,31).split(';').first(),
-			's1.kecamatan' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,32).split(';').first(),
-			's1.kelurahan' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,33).split(';').first(),
-			's1.kodePos' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,34).split(';').first(),
-			's1.kota' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,35).split(';').first(),
-			's1.nama' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,36).split(';').first(),
-			's1.tlp' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,37).split(';').first(),
-			's1.tglLahir' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,38).split(';').first(),
-			's1.provinsi' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,39).split(';').first(),
-			's1.idKtp' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,40).split(';').first(),
-			's1.tmpLahir' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,41).split(';').first(),
-			's1.email' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,42).split(';').first(),
-			's1.npwp' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,43).split(';').first(),
+
+			's1.signAction' :  signAction[0],
+			's1.signerType' : signerType[0] ,
+			's1.signSequence' : signSequence[0],
+			's1.alamat' : alamat[0],
+			's1.jenisKelamin' : jenisKelamin[0],
+			's1.kecamatan' :kecamatan[0],
+			's1.kelurahan' : kelurahan[0],
+			's1.kodePos' : kodePos[0],
+			's1.kota' : kota[0],
+			's1.nama' : nama[0],
+			's1.tlp' : tlp[0],
+			's1.tglLahir' : tglLahir[0],
+			's1.provinsi' : provinsi[0],
+			's1.idKtp' : idKtp[0],
+			's1.tmpLahir' : tmpLahir[0],
+			's1.email' : email[0],
+			's1.npwp' : npwp[0],
 			's1.idPhoto' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,44),
 			's1.signerSelfPhoto' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,45),
 		
-			's2.signAction' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,27).split(';').last(),
-			's2.signerType' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,28).split(';').last(),
-			's2.signSequence' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,29).split(';').last(),
-			's2.alamat' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,30).split(';').last(),
-			's2.jenisKelamin' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,31).split(';').last(),
-			's2.kecamatan' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,32).split(';').last(),
-			's2.kelurahan' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,33).split(';').last(),
-			's2.kodePos' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,34).split(';').last(),
-			's2.kota' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,35).split(';').last(),
-			's2.nama' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,36).split(';').last(),
-			's2.tlp' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,37).split(';').last(),
-			's2.tglLahir' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,38).split(';').last(),
-			's2.provinsi' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,39).split(';').last(),
-			's2.idKtp' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,40).split(';').last(),
-			's2.tmpLahir' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,41).split(';').last(),
-			's2.email' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,42).split(';').last(),
-			's2.npwp' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,43).split(';').last(),
+			's2.signAction' : signAction[1],
+			's2.signerType' : signerType[1],
+			's2.signSequence' : signSequence[1],
+			's2.alamat' : alamat[1],
+			's2.jenisKelamin' : jenisKelamin[1],
+			's2.kecamatan' : kecamatan[1],
+			's2.kelurahan' : kelurahan[1],
+			's2.kodePos' : kodePos[1],
+			's2.kota' : kota[1],
+			's2.nama' : nama[1],
+			's2.tlp' : tlp[1],
+			's2.tglLahir' : tglLahir[1],
+			's2.provinsi' : provinsi[1],
+			's2.idKtp' : idKtp[1],
+			's2.tmpLahir' :tmpLahir[1],
+			's2.email' : email[1],
+			's2.npwp' : npwp[1],
 			's2.idPhoto' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,44),
 			's2.signerSelfPhoto' : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,45),
 			
