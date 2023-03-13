@@ -79,7 +79,7 @@ public class dataVerif {
 
 		Statement stm = conn.createStatement()
 
-		ResultSet resultSet = stm.executeQuery("SELECT invitation_by, receiver_detail, id_no, full_name, place_of_birth, date_of_birth, phone, email, address, provinsi, kota, kecamatan, kelurahan, zip_code  FROM tr_invitation_link WHERE receiver_detail = '"+ email +"'")
+		ResultSet resultSet = stm.executeQuery("SELECT invitation_by, receiver_detail, id_no, full_name, place_of_birth, date_of_birth, phone, email, address, provinsi, kota, kecamatan, kelurahan, zip_code  FROM tr_invitation_link WHERE email = '"+ email +"'")
 
 		ResultSetMetaData metadata = resultSet.getMetaData()
 
@@ -116,7 +116,7 @@ public class dataVerif {
 		}
 		return listdata
 	}
-	
+
 	@Keyword
 	public getSaldo (Connection conn, String user){
 		String data

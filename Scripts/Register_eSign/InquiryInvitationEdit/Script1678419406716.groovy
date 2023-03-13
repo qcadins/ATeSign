@@ -116,7 +116,12 @@ if (WebUI.getAttribute(findTestObject('InquiryInvitation/select_InviteBy'), 'dis
     WebUI.setText(findTestObject('InquiryInvitation/select_InviteBy'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
             32))
 
+	'send keys enter'
     WebUI.sendKeys(findTestObject('InquiryInvitation/select_InviteBy'), Keys.chord(Keys.ENTER))
+	
+	'input receiver detail'
+	WebUI.setText(findTestObject('InquiryInvitation/edit_Receiver'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+			33))
 }
 
 if (WebUI.getAttribute(findTestObject('InquiryInvitation/edit_NIK'), 'disabled') != 'true') {
@@ -246,7 +251,7 @@ WebUI.verifyElementNotPresent(findTestObject('InquiryInvitation/errorLog'), Glob
 def checkPaging() {
     if (GlobalVariable.checkPaging == 'Yes') {
         'set text'
-        WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), '2184682930293748')
+        WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), '081220380088')
 
         'click button cari'
         WebUI.click(findTestObject('InquiryInvitation/button_Cari'))
