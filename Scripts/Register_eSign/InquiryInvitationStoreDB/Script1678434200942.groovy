@@ -20,11 +20,11 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
-'connect DB eSign UAT'
-Connection conneSignUAT = CustomKeywords.'connection.connectDB.connectDBeSignUAT'()
+'connect DB eSign'
+Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 
 'get data buat undangan dari DB'
-ArrayList<String> result = CustomKeywords.'connection.dataVerif.InquiryInvitationStoreDB'(conneSignUAT, GlobalVariable.eSignData[2])
+ArrayList<String> result = CustomKeywords.'connection.dataVerif.InquiryInvitationStoreDB'(conneSign, GlobalVariable.eSignData[2])
 
 'declare arraylist arraymatch'
 ArrayList<String> arrayMatch = new ArrayList<String>()

@@ -47,11 +47,11 @@ WebUI.click(findTestObject('InquiryInvitation/button_Cari'))
 'click button Edit'
 WebUI.click(findTestObject('InquiryInvitation/button_Edit'))
 
-'connect DB eSign UAT'
-Connection conneSignUAT = CustomKeywords.'connection.connectDB.connectDBeSignUAT'()
+'connect DB eSign'
+Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 
 'get data buat undangan dari DB'
-ArrayList<String> result = CustomKeywords.'connection.dataVerif.InquiryInvitationViewDataVerif'(conneSignUAT, findTestData(
+ArrayList<String> result = CustomKeywords.'connection.dataVerif.InquiryInvitationViewDataVerif'(conneSign, findTestData(
         excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 15).toUpperCase())
 
 '1 karena invited by belum bisa di get value dari UI'

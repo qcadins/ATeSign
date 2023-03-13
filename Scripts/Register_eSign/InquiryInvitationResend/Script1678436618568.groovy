@@ -65,11 +65,11 @@ if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/button_YaProses
 				(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + ReasonFailed)
 			
 			if(invitedBy.equalsIgnoreCase('SMS')) {
-				'connect DB eSign UAT'
-				Connection conneSignUAT = CustomKeywords.'connection.connectDB.connectDBeSignUAT'()
+				'connect DB eSign'
+				Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 				
 				'get data saldo'
-				String result = CustomKeywords.'connection.dataVerif.getSaldo'(conneSignUAT, GlobalVariable.userLogin)
+				String result = CustomKeywords.'connection.dataVerif.getSaldo'(conneSign, GlobalVariable.userLogin)
 				
 				'verify saldo'
 				checkVerifyEqualOrMatch(WebUI.verifyMatch(result, '0', false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -82,11 +82,11 @@ if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/button_YaProses
 				1, GlobalVariable.StatusSuccess)
 			
 			if(invitedBy.equalsIgnoreCase('SMS')) {
-				'connect DB eSign UAT'
-				Connection conneSignUAT = CustomKeywords.'connection.connectDB.connectDBeSignUAT'()
+				'connect DB eSign'
+				Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 				
 				'get data saldo'
-				String result = CustomKeywords.'connection.dataVerif.getSaldo'(conneSignUAT, GlobalVariable.userLogin)
+				String result = CustomKeywords.'connection.dataVerif.getSaldo'(conneSign, GlobalVariable.userLogin)
 				
 				'verify saldo'
 				checkVerifyEqualOrMatch(WebUI.verifyMatch(result, '-1', false, FailureHandling.CONTINUE_ON_FAILURE))

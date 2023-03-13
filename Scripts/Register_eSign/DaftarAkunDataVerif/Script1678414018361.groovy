@@ -118,14 +118,14 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     'click button tutup error'
     WebUI.click(findTestObject('DaftarAkun/button_TutupError'))
 } else {
-    'connect DB eSign UAT'
-    Connection conneSignUAT = CustomKeywords.'connection.connectDB.connectDBeSignUAT'()
+    'connect DB eSign'
+    Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 
     'delay untuk menunggu OTP'
     WebUI.delay(10)
 
     'get OTP dari DB'
-    String OTP = CustomKeywords.'connection.dataVerif.getOTP'(conneSignUAT, findTestData(excelPathBuatUndangan).getValue(
+    String OTP = CustomKeywords.'connection.dataVerif.getOTP'(conneSign, findTestData(excelPathBuatUndangan).getValue(
             GlobalVariable.NumofColm, 15).toUpperCase())
 
     'input OTP'

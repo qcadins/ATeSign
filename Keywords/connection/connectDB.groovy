@@ -25,7 +25,7 @@ import internal.GlobalVariable
 public class connectDB {
 
 	@Keyword
-	def connectDBeSignUAT() {
+	def connectDBeSign() {
 
 		String servername = findTestData('Login/Login').getValue(1, 8)
 
