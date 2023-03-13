@@ -17,6 +17,9 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
+'call function check paging'
+checkPaging()
+
 'click menu ErrorReport'
 WebUI.click(findTestObject('ErrorReport/menu_ErrorReport'))
 
@@ -45,4 +48,76 @@ def checkVerifyEqualOrMatch(Boolean isMatch) {
 
 		GlobalVariable.FlagFailed = 1
 	}
+}
+
+def checkPaging() {
+	
+	'get defaultTanggalDari'
+	String defaultTanggalDari = WebUI.getAttribute(findTestObject('ErrorReport/input_TanggalDari'), 'value')
+	
+	'get defaultTanggalKe'
+	String defaultTanggalKe = WebUI.getAttribute(findTestObject('ErrorReport/input_TanggalKe'), 'value')
+	
+	'select modul'
+	WebUI.setText(findTestObject('ErrorReport/select_Modul'), 'generate invitation link error history')
+	
+	'send keys enter'
+	WebUI.sendKeys(findTestObject('ErrorReport/select_Modul'), Keys.chord(Keys.ENTER))
+	
+	'input no kontrak'
+	WebUI.setText(findTestObject('ErrorReport/input_NoKontrak'), '0000')
+	
+	'input nama konsumen'
+	WebUI.setText(findTestObject('ErrorReport/input_Nama'), 'abcd')
+	
+	'input lini bisnis'
+	WebUI.setText(findTestObject('ErrorReport/input_LiniBisnis'), 'abcd')
+	
+	'input cabang'
+	WebUI.setText(findTestObject('ErrorReport/input_Cabang'), 'abcd')
+	
+	'input wilayah'
+	WebUI.setText(findTestObject('ErrorReport/input_Wilayah'), 'abcd')
+	
+	'input Tanggal dari'
+	WebUI.setText(findTestObject('ErrorReport/input_TanggalDari'), '12/12/2012')
+	
+	'input Tanggal Ke'
+	WebUI.setText(findTestObject('ErrorReport/input_TanggalKe'), '12/12/2020')
+	
+	'input Tanggal Ke'
+	WebUI.setText(findTestObject('ErrorReport/select_Tipe'), 'REJECT')
+	
+	'send keys enter'
+	WebUI.sendKeys(findTestObject('ErrorReport/select_Tipe'), Keys.chord(Keys.ENTER))
+	
+	'click button set ulang'
+	WebUI.click(findTestObject('Object Repository/ErrorReport/button_Reset'))
+	
+	'verif select modul'
+	WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/select_Modul'), 'value'), '', false)
+	
+	'verif no kontrak'
+	WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/input_NoKontrak'), 'value'), '', false)
+	
+	'verif nama konsumen'
+	WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/input_Nama'), 'value'), '', false)
+	
+	'verif lini bisnis'
+	WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/input_LiniBisnis'), 'value'), '', false)
+	
+	'verif cabang'
+	WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/input_Cabang'), 'value'), '', false)
+	
+	'verif wilayah'
+	WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/input_Wilayah'), 'value'), '', false)
+	
+	'verif tanggal dari'
+	WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/input_TanggalDari'), 'value'), defaultTanggalDari, false)
+	
+	'verif tanggal ke'
+	WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/input_TanggalKe'), 'value'), defaultTanggalKe, false)
+	
+	'verif select tipe'
+	WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/select_Tipe'), 'value'), '', false)
 }
