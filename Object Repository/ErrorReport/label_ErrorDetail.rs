@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>label_ErrorDetail</name>
+   <tag></tag>
+   <elementGuidId>5563d293-5567-4892-b43e-acc29230cca0</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/ngb-modal-window/div/div/app-error-report-detail/div/div/p</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/ngb-modal-window/div/div/app-error-report-detail/div/div/p</value>
+      <webElementGuid>1d140d07-3a9f-4654-a067-530b813b535c</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

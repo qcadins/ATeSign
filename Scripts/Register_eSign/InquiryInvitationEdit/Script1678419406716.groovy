@@ -35,7 +35,7 @@ if(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equ
 	'set text search box dengan Phone'
 	WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
 			14))
-}else ifif(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Id no')) {
+}else if(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Id no')) {
 	'set text search box dengan NIK'
 	WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
 			9))

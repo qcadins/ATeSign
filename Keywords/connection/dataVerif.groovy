@@ -155,4 +155,41 @@ public class dataVerif {
 		}
 		return listdata
 	}
+
+
+	@Keyword
+	public getTotalDataError (Connection conn, String date){
+		String data
+
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("select COUNT(*) from tr_error_history where error_date >= '"+ date +"' AND id_ms_tenant = 1")
+
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		return data
+	}
+
+	@Keyword
+	public getErrorReportDetail (Connection conn, String name){
+		String data
+
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("select ERROR_MESSAGE from tr_error_history where cust_name = '"+ name +"' AND id_ms_tenant = 1 ORDER BY id_error_history DESC LIMIT 1")
+
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		return data
+	}
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>label_Total</name>
+   <name>label_TotalData</name>
    <tag></tag>
    <elementGuidId>7ac4bf72-9cc6-4ec5-8dc4-4e12061f5068</elementGuidId>
    <selectorCollection>
@@ -11,7 +11,6 @@
       </entry>
       <entry>
          <key>XPATH</key>
-         <value></value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -22,6 +21,6 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-error-report/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/div</value>
-      <webElementGuid>344ca73d-a0cd-4f50-8756-e3ba62fad6dd</webElementGuid>
+      <webElementGuid>b9eda937-3667-4b54-b38f-82036bbf2bbd</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

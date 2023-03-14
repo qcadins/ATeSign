@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>ErrorReport_InvitationLink</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>32743e08-041c-4a6e-af05-4febba8755e5</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>207e0b18-c85b-4483-b9c4-4c292dc00afd</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Registrasi/BuatUndangan'</defaultValue>
+      <description></description>
+      <id>207e0b18-c85b-4483-b9c4-4c292dc00afd</id>
+      <masked>false</masked>
+      <name>excelPathBuatUndangan</name>
+   </variable>
+</TestCaseEntity>

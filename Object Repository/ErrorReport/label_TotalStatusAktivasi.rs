@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>label_TotalStatusAktivasi</name>
+   <tag></tag>
+   <elementGuidId>ff2bcfe9-c90b-4ed9-9d7a-b2ffa4cd83a6</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/ngb-modal-window/div/div/app-act-status/div[2]/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/div</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/ngb-modal-window/div/div/app-act-status/div[2]/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/div</value>
+      <webElementGuid>09826cd2-874b-4e98-80bf-f66214ffe91f</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>
