@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "DE36354F530A375B6ACBA012A173ABF6",
+  "keywordFileContentHash": "E3C4186D611813ADDF00B5C45E582649",
   "keywordClasses": [
     {
       "name": "connection.dataVerif",
@@ -259,6 +259,38 @@
             },
             {
               "name": "name",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getStatusActivation",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "refno",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

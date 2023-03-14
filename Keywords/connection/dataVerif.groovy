@@ -192,4 +192,27 @@ public class dataVerif {
 		}
 		return data
 	}
+
+	@Keyword
+	public getStatusActivation (Connection conn, String refno){
+		String data
+
+		ArrayList<String> listdata = new ArrayList<>()
+
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("select ml.description, amu.Full_name, id_no, mvru.is_registered, mvru.is_active from tr_document_h tdh JOIN tr_document_d tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign tdds ON tdds.id_document_d = tdd.id_document_d JOIN am_msuser amu ON amu.id_ms_user = tdh.id_msuser_customer JOIN ms_lov ml ON ml.id_lov = tdds.lov_signer_type JOIN ms_vendor_registered_user mvru ON mvru.id_ms_user = amu.id_ms_user where ref_number = '"+ refno +"' and tdds.lov_signer_type = '18'")
+
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for(int i = 1 ; i <= columnCount ; i++){
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		return listdata
+	}
 }

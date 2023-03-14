@@ -38,6 +38,9 @@ String resultTotalData = CustomKeywords.'connection.dataVerif.getTotalDataError'
 'get error detail dari DB'
 String resultErrorDetail = CustomKeywords.'connection.dataVerif.getErrorReportDetail'(conneSign, 'MARVIN SUTANTO')
 
+'get status activation'
+ArrayList<String> resultStatusAktivasi = CustomKeywords.'connection.dataVerif.getStatusActivation'(conneSign, '149')
+
 'get total data'
 totalData = WebUI.getText(findTestObject('ErrorReport/label_TotalData')).split(' ')
 
@@ -62,14 +65,47 @@ checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorRep
 'click button X'
 WebUI.click(findTestObject('ErrorReport/button_X'))
 
+'click button set ulang'
+WebUI.click(findTestObject('Object Repository/ErrorReport/button_Reset'))
+
+'input nama'
+WebUI.setText(findTestObject('ErrorReport/input_NoKontrak'), '149')
+
+'click button cari'
+WebUI.click(findTestObject('ErrorReport/button_Cari'))
+
 'click button status aktivasi'
 WebUI.click(findTestObject('ErrorReport/button_StatusAktivasi'))
 
-'get total status aktivasi'
-totalStatusAktivasi = WebUI.getText(findTestObject('ErrorReport/label_TotalStatusAktivasi')).split('')
+index = 0
 
-'verify match total status aktivasi'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(totalStatusAktivasi[0], '1', false, FailureHandling.OPTIONAL))
+'verify data UI dan DB'
+checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorReport/label_SignerType')), resultStatusAktivasi[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+
+'verify data UI dan DB'
+checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorReport/label_SignerName')), resultStatusAktivasi[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+
+//'verify total data UI dan DB'
+//checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorReport/label_SignerNIK')), resultStatusAktivasi[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+'skip NIK karena di db null'
+index++
+
+'declare status'
+String status, isregis = resultStatusAktivasi[index++], isaktif = resultStatusAktivasi[index++]
+
+'cek if regis = 0 && aktif = 0 maka status belum registrasi'
+if(isregis == '0' && isaktif == '0') {
+	status = 'Belum Registrasi'
+//cek if regis = 1 && aktif = 0 maka status belum aktivasi
+}else if(isregis == '1' && isaktif == '0') {
+	status = 'Belum Aktivasi'
+//cek if regis = 1 && aktif = 1 maka status sudah aktivasi
+}else if(isregis == '1' && isaktif == '1') {
+	status = 'Sudah Aktivasi'
+}
+
+'verify total data UI dan DB'
+checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorReport/label_StatusAktivasi')), status, false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'click button X'
 WebUI.click(findTestObject('ErrorReport/button_X'))

@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>InquiryInvitationResend</name>
+   <name>InquiryInvitation</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>57bb45a1-114e-4769-b4e4-26e3c6a11de6</testCaseGuid>
+   <testCaseGuid>74c55de0-691a-45e0-a6dd-6aa90c604a24</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>5414e12a-5884-426c-b243-306bac924d78</variableId>
+      <variableId>7b79d976-af87-4112-bdd3-16eb903893a6</variableId>
    </variableLinks>
    <variable>
       <defaultValue>'Registrasi/BuatUndangan'</defaultValue>
       <description></description>
-      <id>5414e12a-5884-426c-b243-306bac924d78</id>
+      <id>7b79d976-af87-4112-bdd3-16eb903893a6</id>
       <masked>false</masked>
       <name>excelPathBuatUndangan</name>
    </variable>

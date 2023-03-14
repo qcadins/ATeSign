@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>radio_Female</name>
+   <tag></tag>
+   <elementGuidId>ed29aa25-fccf-434b-a835-95872c31fb02</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;female&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;female&quot;]</value>
+      <webElementGuid>63a189a4-dc40-4a0e-902e-2c7337c605c8</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>
