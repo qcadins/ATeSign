@@ -25,8 +25,9 @@ ArrayList<String> signerperarray = findTestData(API_Excel_Path).getValue(GlobalV
 
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
-for(int i = 0; i>= signerperarray.size()-1;i++) {
-'get data API Send Document dari DB'
+
+for(int i = 0; i<=1;i++) {
+'get data API Send Document dari DB (hanya 1 signer)'
 ArrayList<String> result = CustomKeywords.'connection.dataVerif.getSendDoc'(conneSign, GlobalVariable.documentId.replace('[','').replace(']',''),signerperarray[i].replace('"','').toUpperCase()
 	)
 
@@ -97,15 +98,15 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVar
 	false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'verify email'
-arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,42).split(';').first().replace('"',''), (result[arrayindex++]),
+arrayMatch.add(WebUI.verifyMatch(signerperarray[i].replace('"',''), (result[arrayindex++]),
 	false, FailureHandling.CONTINUE_ON_FAILURE))
 
 
 'jika data db tidak sesuai dengan excel'
 if (arrayMatch.contains(false)) {
-
 	'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
 	CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2) + ';' + GlobalVariable.ReasonFailedStoredDB)
 }
 }
+
 
