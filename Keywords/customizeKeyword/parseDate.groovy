@@ -27,7 +27,8 @@ public class parseDate {
 	@Keyword
 	def parseDateFormat (String date, String format1, String format2) {
 
-		String parsedDate, sentDate, sDate
+		Date parsedDate
+		String sentDate, sDate
 
 		//parse Date from MM/dd/yyyy > yyyy-MM-dd
 		SimpleDateFormat sdf = new SimpleDateFormat(format1)

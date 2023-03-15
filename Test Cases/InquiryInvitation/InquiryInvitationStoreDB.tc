@@ -5,4 +5,17 @@
    <tag></tag>
    <comment></comment>
    <testCaseGuid>6711b8f0-c316-4a46-bf86-02abce884325</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>83da5e56-5c0a-4429-bfcc-65162d1c14fe</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Registrasi/BuatUndangan'</defaultValue>
+      <description></description>
+      <id>83da5e56-5c0a-4429-bfcc-65162d1c14fe</id>
+      <masked>false</masked>
+      <name>excelPathBuatUndangan</name>
+   </variable>
 </TestCaseEntity>
