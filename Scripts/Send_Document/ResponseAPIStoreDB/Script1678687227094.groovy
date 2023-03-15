@@ -19,7 +19,6 @@ import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 import java.sql.Connection
 
-
 'splitting signer berdasarkan jumlah signer'
 ArrayList<String> signerperarray = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,42).split(';',-1)
 
@@ -29,7 +28,8 @@ Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 'declare arraylist arraymatch'
 ArrayList<String> arrayMatch = new ArrayList<String>()
 
-for(int i = 0; i < signerperarray.size();i++) 
+'looping berdasarkan total signer yang ada'
+for(int i = 0; i< signerperarray.size();i++) 
 {
 	'get data API Send Document dari DB (hanya 1 signer)'
 	ArrayList<String> result = CustomKeywords.'connection.dataVerif.getSendDoc'(conneSign, GlobalVariable.documentId.replace('[','').replace(']',''),signerperarray[i].replace('"','').toUpperCase())

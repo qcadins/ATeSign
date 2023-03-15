@@ -63,9 +63,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
     ArrayList<String> npwp = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 43).split(';', -1)
 
     'Pembuatan pengisian variable di sendRequest per jumlah signer.'
-    List<String> list = new ArrayList<String>()
+    ArrayList<String> list = new ArrayList<String>()
 
-    List<String> ListSigner = new ArrayList<String>()
+    ArrayList<String> ListSigner = new ArrayList<String>()
 
     (ListSigner[0]) = ''
 
@@ -95,7 +95,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
         (ListSigner[0]) = ((ListSigner[0]) + (list[(i - 1)]))
     }
     
-    respon = WS.sendRequest(findTestObject('Object Repository/Postman/Send Document', [('tenantCode') : findTestData(API_Excel_Path).getValue(
+    respon = WS.sendRequest(findTestObject('Postman/Send Document', [('tenantCode') : findTestData(API_Excel_Path).getValue(
                     GlobalVariable.NumofColm, 9), ('referenceNo') : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 
                     11), ('documentId') : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 12), ('documentTemplateCode') : findTestData(
                     API_Excel_Path).getValue(GlobalVariable.NumofColm, 13), ('officeCode') : findTestData(API_Excel_Path).getValue(
@@ -139,8 +139,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
                 GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
                     '-', '') + ';') + messageFailed)
 			
-//			'call test case error report'
-//            WebUI.callTestCase(findTestCase('Send_Document/ErrorReport'), [('API_Excel_Path') : 'Registrasi/SendDocument'], FailureHandling.STOP_ON_FAILURE)
+			//'call test case error report'
+          //  WebUI.callTestCase(findTestCase('Send_Document/ErrorReport'), [('API_Excel_Path') : 'Registrasi/SendDocument'], FailureHandling.STOP_ON_FAILURE)
         }
     }
 }
