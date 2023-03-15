@@ -69,8 +69,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 
     (ListSigner[0]) = ''
 
-    for (int i = 1; i <= npwp.size(); i++) {
-        if (i == npwp.size()) {
+    for (int i = 1; i <= signerType.size(); i++) {
+        if (i == signerType.size()) {
             list.add(((((((((((((((((((((((((((((((((((((('{"signAction": ' + (signAction[(i - 1)])) + ',"signerType": ') + 
                 (signerType[(i - 1)])) + ',"signSequence":') + (signSequence[(i - 1)])) + ',"alamat": ') + (alamat[(i - 
                 1)])) + ',"jenisKelamin": ') + (jenisKelamin[(i - 1)])) + ',"kecamatan": ') + (kecamatan[(i - 1)])) + ',"kelurahan": ') + 
@@ -95,7 +95,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
         (ListSigner[0]) = ((ListSigner[0]) + (list[(i - 1)]))
     }
     
-    respon = WS.sendRequest(findTestObject('Object Repository/Postman/Send Document', [('tenantCode') : findTestData(API_Excel_Path).getValue(
+    respon = WS.sendRequest(findTestObject('Postman/Send Document', [('tenantCode') : findTestData(API_Excel_Path).getValue(
                     GlobalVariable.NumofColm, 9), ('referenceNo') : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 
                     11), ('documentId') : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 12), ('documentTemplateCode') : findTestData(
                     API_Excel_Path).getValue(GlobalVariable.NumofColm, 13), ('officeCode') : findTestData(API_Excel_Path).getValue(
@@ -139,8 +139,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
                 GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
                     '-', '') + ';') + messageFailed)
 			
-			'call test case error report'
-            WebUI.callTestCase(findTestCase('Send_Document/ErrorReport'), [('API_Excel_Path') : 'Registrasi/SendDocument'], FailureHandling.STOP_ON_FAILURE)
+			//'call test case error report'
+          //  WebUI.callTestCase(findTestCase('Send_Document/ErrorReport'), [('API_Excel_Path') : 'Registrasi/SendDocument'], FailureHandling.STOP_ON_FAILURE)
         }
     }
 }
