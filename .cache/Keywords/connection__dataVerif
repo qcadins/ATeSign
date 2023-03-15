@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "E3C4186D611813ADDF00B5C45E582649",
+  "keywordFileContentHash": "80F542417813738B09E11B16C3DFBBF7",
   "keywordClasses": [
     {
       "name": "connection.dataVerif",
@@ -282,19 +282,6 @@
               "type": {
                 "fullClassName": "java.sql.Connection",
                 "unresolvedClassName": "Connection",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            },
-            {
-              "name": "refno",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.lang.String",
-                "unresolvedClassName": "String",
                 "isArray": false,
                 "isGnericsPlaceHolder": false,
                 "hasImmutableClassName": false,

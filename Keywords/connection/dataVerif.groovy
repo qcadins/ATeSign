@@ -194,14 +194,14 @@ public class dataVerif {
 	}
 
 	@Keyword
-	public getStatusActivation (Connection conn, String refno){
+	public getStatusActivation (Connection conn){
 		String data
 
 		ArrayList<String> listdata = new ArrayList<>()
 
 		Statement stm = conn.createStatement()
 
-		ResultSet resultSet = stm.executeQuery("select ml.description, amu.Full_name, id_no, mvru.is_registered, mvru.is_active from tr_document_h tdh JOIN tr_document_d tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign tdds ON tdds.id_document_d = tdd.id_document_d JOIN am_msuser amu ON amu.id_ms_user = tdh.id_msuser_customer JOIN ms_lov ml ON ml.id_lov = tdds.lov_signer_type JOIN ms_vendor_registered_user mvru ON mvru.id_ms_user = amu.id_ms_user where ref_number = '"+ refno +"' and tdds.lov_signer_type = '18'")
+		ResultSet resultSet = stm.executeQuery("SELECT cust_name, cust_idno, is_registered, is_active FROM tr_error_history teh JOIN ms_vendor_registered_user mvru ON teh.id_ms_vendor = mvru.id_ms_vendor ORDER BY teh.error_date DESC LIMIT 1")
 
 		ResultSetMetaData metadata = resultSet.getMetaData()
 

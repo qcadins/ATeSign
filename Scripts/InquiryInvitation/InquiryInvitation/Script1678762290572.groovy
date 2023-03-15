@@ -21,6 +21,9 @@ import org.openqa.selenium.By as By
 import org.openqa.selenium.Keys as Keys
 import org.openqa.selenium.support.ui.Select as Select
 
+'get data file path'
+GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
+
 'click menu inquiry invitation'
 WebUI.click(findTestObject('InquiryInvitation/menu_InquiryInvitation'))
 
@@ -201,8 +204,19 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).eq
 			WebUI.callTestCase(findTestCase('InquiryInvitation/InquiryInvitationStoreDB'), [:], FailureHandling.CONTINUE_ON_FAILURE)
 		}
 		
-		'set text search box dengan NIK'
-		WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), GlobalVariable.eSignData[2])
+		if(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Email')) {
+			'set text search box dengan email'
+			WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+					15))
+		}else if(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Phone')) {
+			'set text search box dengan Phone'
+			WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+					14))
+		}else if(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Id no')) {
+			'set text search box dengan NIK'
+			WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+					9))
+		}
 		
 		'click button cari'
 		WebUI.click(findTestObject('InquiryInvitation/button_Cari'))
@@ -210,8 +224,8 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).eq
 		'verify data yang sudah di edit dapat di search di inquiry invitation'
 		WebUI.verifyElementPresent(findTestObject('InquiryInvitation/tr_Name'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
 	} else {
-		'get reason'
-		ReasonFailed = WebUI.getAttribute(findTestObject('BuatUndangan/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
+				'get reason'
+				ReasonFailed = WebUI.getAttribute(findTestObject('BuatUndangan/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 				
 				'write to excel status failed dan reason'
 				CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 

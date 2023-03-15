@@ -29,6 +29,9 @@ Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 'call function check paging'
 checkPaging()
 
+String nomorKontrak = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 11).replace('"','')
+ArrayList<String> namasigner = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 36).split(';', -1)
+
 'click button cari'
 WebUI.click(findTestObject('ErrorReport/button_Cari'))
 
@@ -36,10 +39,10 @@ WebUI.click(findTestObject('ErrorReport/button_Cari'))
 String resultTotalData = CustomKeywords.'connection.dataVerif.getTotalDataError'(conneSign, WebUI.getAttribute(findTestObject('ErrorReport/input_TanggalDari'), 'value'))
 
 'get error detail dari DB'
-String resultErrorDetail = CustomKeywords.'connection.dataVerif.getErrorReportDetail'(conneSign, 'MARVIN SUTANTO')
+String resultErrorDetail = CustomKeywords.'connection.dataVerif.getErrorReportDetail'(conneSign, namasigner.last().toString().replace('"',''))
 
 'get status activation'
-ArrayList<String> resultStatusAktivasi = CustomKeywords.'connection.dataVerif.getStatusActivation'(conneSign, '149')
+ArrayList<String> resultStatusAktivasi = CustomKeywords.'connection.dataVerif.getStatusActivation'(conneSign)
 
 'get total data'
 totalData = WebUI.getText(findTestObject('ErrorReport/label_TotalData')).split(' ')
@@ -48,7 +51,10 @@ totalData = WebUI.getText(findTestObject('ErrorReport/label_TotalData')).split('
 checkVerifyEqualOrMatch(WebUI.verifyMatch(totalData[0], resultTotalData, false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'input nama'
-WebUI.setText(findTestObject('ErrorReport/input_Nama'), 'MARVIN SUTANTO')
+WebUI.setText(findTestObject('ErrorReport/input_Nama'), namasigner.last().toString().replace('"',''))
+
+'input no kontrak'
+WebUI.setText(findTestObject('ErrorReport/input_NoKontrak'), nomorKontrak)
 
 'click button cari'
 WebUI.click(findTestObject('ErrorReport/button_Cari'))
@@ -69,7 +75,10 @@ WebUI.click(findTestObject('ErrorReport/button_X'))
 WebUI.click(findTestObject('Object Repository/ErrorReport/button_Reset'))
 
 'input nama'
-WebUI.setText(findTestObject('ErrorReport/input_NoKontrak'), '149')
+WebUI.setText(findTestObject('ErrorReport/input_Nama'), namasigner.last().toString().replace('"',''))
+
+'input no kontrak'
+WebUI.setText(findTestObject('ErrorReport/input_NoKontrak'), nomorKontrak)
 
 'click button cari'
 WebUI.click(findTestObject('ErrorReport/button_Cari'))
@@ -80,15 +89,13 @@ WebUI.click(findTestObject('ErrorReport/button_StatusAktivasi'))
 index = 0
 
 'verify data UI dan DB'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorReport/label_SignerType')), resultStatusAktivasi[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorReport/label_SignerType')), 'Customer', false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'verify data UI dan DB'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorReport/label_SignerName')), resultStatusAktivasi[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-//'verify total data UI dan DB'
-//checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorReport/label_SignerNIK')), resultStatusAktivasi[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
-'skip NIK karena di db null'
-index++
+'verify total data UI dan DB'
+checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorReport/label_SignerNIK')), resultStatusAktivasi[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'declare status'
 String status, isregis = resultStatusAktivasi[index++], isaktif = resultStatusAktivasi[index++]
@@ -113,8 +120,8 @@ WebUI.click(findTestObject('ErrorReport/button_X'))
 def checkVerifyEqualOrMatch(Boolean isMatch) {
 	if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
 		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-		CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm,
-			GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2) +
+		CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm,
+			GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2) +
 			';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
 
 		GlobalVariable.FlagFailed = 1

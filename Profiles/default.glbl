@@ -61,8 +61,23 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
+      <initValue>'Mandatory is incomplete'</initValue>
+      <name>ReasonFailedMandatory</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>'Save Gagal'</initValue>
+      <name>ReasonFailedSaveGagal</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
       <initValue>'FailedStoreDB'</initValue>
       <name>ReasonFailedStoredDB</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>'Mandatory incomplete dan save berhasil'</initValue>
+      <name>ReasonFailedSystemError</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>

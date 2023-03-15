@@ -105,8 +105,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/button_YaProses'), G
 int isMandatoryComplete = Integer.parseInt(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 4))
 
 'cek if muncul popup'
-if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationError'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL) && 
-(isMandatoryComplete > 0)) {
+if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationError'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
     'get reason'
     ReasonFailed = WebUI.getText(findTestObject('BuatUndangan/label_ReasonError'))
 
@@ -146,9 +145,6 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     WebUI.callTestCase(findTestCase('Register_eSign/ErrorReport'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
         FailureHandling.CONTINUE_ON_FAILURE)
 } else {
-    'click button ya proses'
-    WebUI.click(findTestObject('BuatUndangan/button_YaProses'))
-
     'write to excel success'
     CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'BuatUndangan', 0, GlobalVariable.NumofColm - 
         1, GlobalVariable.StatusSuccess)
@@ -175,11 +171,10 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
         WebUI.callTestCase(findTestCase('Register_eSign/BuatUndanganStoreDB'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
             FailureHandling.CONTINUE_ON_FAILURE)
     }
-	
-	
-	if(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).length() > 0) {
-		'call test case inquiry invitation'
-		WebUI.callTestCase(findTestCase('InquiryInvitation/InquiryInvitation'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'],
-			FailureHandling.STOP_ON_FAILURE)
-	}
+    
+    if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).length() > 0) {
+        'call test case inquiry invitation'
+        WebUI.callTestCase(findTestCase('InquiryInvitation/InquiryInvitation'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
+            FailureHandling.STOP_ON_FAILURE)
+    }
 }
