@@ -23,17 +23,14 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExc
 'call test case login inveditor'
 WebUI.callTestCase(findTestCase('Login/Login_Inveditor'), [:], FailureHandling.STOP_ON_FAILURE)
 
-'maximize window'
-WebUI.maximizeWindow()
-
 'get colm excel'
 int countColmExcel = findTestData(excelPathBuatUndangan).getColumnNumbers()
 
 'looping buat undangan'
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; GlobalVariable.NumofColm++) {
-	if(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
-		break
-	}else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
+    if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
+        break
+    } else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
         WebUI.callTestCase(findTestCase('Register_eSign/BuatUndangan'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
             FailureHandling.CONTINUE_ON_FAILURE)
     }

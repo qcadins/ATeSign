@@ -23,6 +23,9 @@ WebUI.openBrowser('')
 'navigate to url esign'
 WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 4))
 
+'maximize window'
+WebUI.maximizeWindow()
+
 'set value userLogin'
 GlobalVariable.userLogin = findTestData('Login/Login').getValue(2, 4).toUpperCase()
 
@@ -34,3 +37,4 @@ WebUI.setText(findTestObject('Login/input_Password'), findTestData('Login/Login'
 
 'click button login'
 WebUI.click(findTestObject('Login/button_Login'), FailureHandling.STOP_ON_FAILURE)
+
