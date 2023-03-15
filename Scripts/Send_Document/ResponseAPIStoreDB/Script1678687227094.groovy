@@ -29,7 +29,7 @@ Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 'declare arraylist arraymatch'
 ArrayList<String> arrayMatch = new ArrayList<String>()
 
-for(int i = 0; i<=1;i++) 
+for(int i = 0; i < signerperarray.size();i++) 
 {
 	'get data API Send Document dari DB (hanya 1 signer)'
 	ArrayList<String> result = CustomKeywords.'connection.dataVerif.getSendDoc'(conneSign, GlobalVariable.documentId.replace('[','').replace(']',''),signerperarray[i].replace('"','').toUpperCase())
