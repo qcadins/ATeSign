@@ -26,22 +26,22 @@ public class parseDate {
 	//keyword upload file function
 	@Keyword
 	def parseDateFormat (String date, String format1, String format2) {
-		
+
 		String parsedDate, sentDate, sDate
-		
+
 		//parse Date from MM/dd/yyyy > yyyy-MM-dd
 		SimpleDateFormat sdf = new SimpleDateFormat(format1)
-		
+
 		parsedDate = null
-		
+
 		sentDate = date
-		
+
 		parsedDate = sdf.parse(sentDate)
-		
+
 		sdf = new SimpleDateFormat(format2)
-		
+
 		sDate = sdf.format(parsedDate)
-		
+
 		return sDate
 	}
 }
