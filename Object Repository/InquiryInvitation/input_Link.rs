@@ -9,6 +9,10 @@
          <key>BASIC</key>
          <value>/html/body/ngb-modal-window/div/div/app-view-invitation-link/div/div[1]/div[1]/div/input</value>
       </entry>
+      <entry>
+         <key>XPATH</key>
+         <value></value>
+      </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
@@ -18,6 +22,6 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/ngb-modal-window/div/div/app-view-invitation-link/div/div[1]/div[1]/div/input</value>
-      <webElementGuid>fc558dd2-f719-4b4a-a347-8bd831986c8e</webElementGuid>
+      <webElementGuid>48c15727-9085-4d9f-a23c-3abb032e2682</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

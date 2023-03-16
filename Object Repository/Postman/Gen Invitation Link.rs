@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebServiceRequestEntity>
    <description></description>
-   <name>Invitation_Link</name>
+   <name>Gen Invitation Link</name>
    <tag></tag>
    <elementGuidId>54a08ce5-a590-48a4-856d-2170d60719ce</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
@@ -10,7 +10,7 @@
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\r\n    \&quot;audit\&quot;: {\r\n        \&quot;callerId\&quot;: \&quot;mobile\&quot;\r\n    },\r\n    \&quot;tenantCode\&quot;: \&quot;WOMF\&quot;,\r\n    \&quot;users\&quot;: [\r\n        {\r\n            \&quot;nama\&quot;:\&quot;TEST DIRECT\&quot;,\r\n            \&quot;email\&quot; : \&quot;tes.script@andyresearch.my.id\&quot;,\r\n            \&quot;tlp\&quot; : \&quot;0812321456781\&quot;\r\n        },\r\n        {\r\n            \&quot;nama\&quot;:\&quot;TEST DIRECT\&quot;,\r\n            \&quot;email\&quot; : \&quot;tes.script2@andyresearch.my.id\&quot;,\r\n            \&quot;tlp\&quot; : \&quot;081232145678\&quot;\r\n        }\r\n        \r\n        \r\n    ]\r\n}\r\n&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: ${callerId}\n    },\n    \&quot;tenantCode\&quot;: ${tenantCode},\n    \&quot;users\&quot;: [\n\t\t\t${users}\n    ]\n}\n&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -51,5 +51,18 @@
       <masked>false</masked>
       <name>base_url</name>
    </variables>
+   <verificationScript>import static org.assertj.core.api.Assertions.*
+
+import com.kms.katalon.core.testobject.RequestObject
+import com.kms.katalon.core.testobject.ResponseObject
+import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
+import com.kms.katalon.core.webservice.verification.WSResponseManager
+
+import groovy.json.JsonSlurper
+import internal.GlobalVariable as GlobalVariable
+
+RequestObject request = WSResponseManager.getInstance().getCurrentRequest()
+
+ResponseObject response = WSResponseManager.getInstance().getCurrentResponse()</verificationScript>
    <wsdlAddress></wsdlAddress>
 </WebServiceRequestEntity>

@@ -151,7 +151,70 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
 
     'get link'
     GlobalVariable.Link = WebUI.getAttribute(findTestObject('BuatUndangan/PopUp/input_Link'), 'value')
-
+	
+	'HIT API Login untuk token : invenditor@womf'
+	respon_login = WS.sendRequest(findTestObject('Postman/Login', [('username') : 'inveditor@womf' , ('password') : 'AdIns2022'] ))
+		
+	'Jika status HIT API 200 OK'
+	if (WS.verifyResponseStatusCode(respon_login, 200, FailureHandling.OPTIONAL) == true)
+	{
+		'Parsing token menjadi GlobalVariable'
+		GlobalVariable.token = WS.getElementPropertyValue(respon_login, 'access_token')
+		
+		'HIT API get Invitation Link'
+		respon_getInvLink = WS.sendRequest(findTestObject('Postman/Get Inv Link', [('callerId') : '""' , ('receiverDetail') : '"' + findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 15) + '"' , ('tenantCode') : '"WOMF"' , ('vendorCode') : '"DIGI"']))
+		
+		'Jika status HIT API 200 OK'
+		if (WS.verifyResponseStatusCode(respon_getInvLink, 200, FailureHandling.OPTIONAL) == true)
+		{
+			'get Status Code'
+			status_Code = WS.getElementPropertyValue(respon_getInvLink, 'status.code')
+			
+			'Jika status codenya 0'
+			if(status_Code == 0)
+			{
+				'Get invitation Link'
+				InvitationLink = WS.getElementPropertyValue(respon_getInvLink, 'invitationLink')
+				
+				if(WebUI.verifyMatch(GlobalVariable.Link, InvitationLink, false)) 
+				{
+					'write to excel success'
+					CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'BuatUndangan',
+					0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+				}
+				else
+				{
+					'write to excel status failed dan reason'
+					CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm,
+					GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
+					'-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
+				}
+			}
+			else
+			{
+				messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL).toString()
+				'write to excel status failed dan reason'
+				CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm,
+				GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
+				'-', '') + ';') + messageFailed)
+			}
+		} 
+		else
+		{
+			'write to excel status failed dan reason'
+			CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm,
+			GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
+			'-', '') + ';') + GlobalVariable.ReasonFailedHitAPI)
+		}
+		
+	} 
+	else
+	{
+		CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm,
+		GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
+		'-', '') + ';') + GlobalVariable.ReasonFailedHitAPI)
+	}
+	
     'click tutup popup'
     WebUI.click(findTestObject('BuatUndangan/button_TutupDapatLink'))
 

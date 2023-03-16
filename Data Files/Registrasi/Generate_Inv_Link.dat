@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DataFileEntity>
    <description></description>
-   <name>InvitationLink</name>
+   <name>Generate_Inv_Link</name>
    <tag></tag>
    <containsHeaders>true</containsHeaders>
    <csvSeperator></csvSeperator>
-   <dataFileGUID>286488df-17da-4c89-a4d5-8034370a9e76</dataFileGUID>
-   <dataSourceUrl></dataSourceUrl>
+   <dataFileGUID>0d9cdd95-4c0f-4c6e-87e1-e7b4efdd154b</dataFileGUID>
+   <dataSourceUrl>C:\Users\wiky.hendra\git\ATeSign-New\Excel\2. Esign.xlsx</dataSourceUrl>
    <driver>ExcelFile</driver>
    <isInternalPath>false</isInternalPath>
    <query></query>
    <secureUserAccount>false</secureUserAccount>
-   <sheetName></sheetName>
+   <sheetName>API Generate Inv Link</sheetName>
    <usingGlobalDBSetting>false</usingGlobalDBSetting>
 </DataFileEntity>

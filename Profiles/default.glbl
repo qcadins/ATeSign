@@ -61,6 +61,11 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
+      <initValue>'Hit API Failed'</initValue>
+      <name>ReasonFailedHitAPI</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
       <initValue>'Mandatory is incomplete'</initValue>
       <name>ReasonFailedMandatory</name>
    </GlobalVariableEntity>
