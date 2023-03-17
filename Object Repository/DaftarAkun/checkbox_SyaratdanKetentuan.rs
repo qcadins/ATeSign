@@ -9,6 +9,10 @@
          <key>BASIC</key>
          <value>//section[@id='regestration']/div/div/div/div/div/div/div/form/div[17]/div/label/span</value>
       </entry>
+      <entry>
+         <key>XPATH</key>
+         <value></value>
+      </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
@@ -18,7 +22,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>//section[@id='regestration']/div/div/div/div/div/div/div/form/div[17]/div/label/span</value>
-      <webElementGuid>adf47e58-e67b-49e0-b476-2bbee25644af</webElementGuid>
+      <webElementGuid>423c95a1-2823-4967-9cea-a69aa39b6c8e</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -26,7 +30,7 @@
       <name>formcontrolname</name>
       <type>Main</type>
       <value>acceptTerms</value>
-      <webElementGuid>cb826a05-039f-4ec9-9698-485f8b1d8709</webElementGuid>
+      <webElementGuid>5a4f380b-0274-400b-901b-9998fda55a28</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -34,6 +38,6 @@
       <name>text</name>
       <type>Main</type>
       <value>Saya Menerima</value>
-      <webElementGuid>22402515-5be8-496e-a885-3ffcdeab3ac4</webElementGuid>
+      <webElementGuid>1ec59b0b-b6e0-45fe-b2ba-2f8d896d7ff2</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

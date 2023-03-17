@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_TempatLahir</name>
+   <tag></tag>
+   <elementGuidId>e9b2d79f-228c-479f-98a6-3312dbb1ecfa</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;pob&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;pob&quot;]</value>
+      <webElementGuid>3ad0f552-4f6b-40f9-9615-281e71f1806d</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

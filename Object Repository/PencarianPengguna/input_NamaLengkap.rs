@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_NamaLengkap</name>
+   <tag></tag>
+   <elementGuidId>0240bf48-1ec8-460c-beb7-d1853a0a52b4</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;name&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;name&quot;]</value>
+      <webElementGuid>15bc3c8f-c7bd-4fd2-800d-55b4eb1734b3</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_SearchBox</name>
+   <tag></tag>
+   <elementGuidId>693e7e6b-c1e7-46cc-82d4-15a887145320</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;userIdentifier&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;userIdentifier&quot;]</value>
+      <webElementGuid>cb1195c5-2377-447f-a147-916bef3d0ac1</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

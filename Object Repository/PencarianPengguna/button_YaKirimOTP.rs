@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>button_YaKirimOTP</name>
+   <tag></tag>
+   <elementGuidId>fe011741-ef6c-46f9-b4ec-6907fcbb367a</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[(text() = 'Ya' or . = 'Ya')]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/ngb-modal-window/div/div/app-confirmation-modal/div[2]/button[2]</value>
+      <webElementGuid>be989c1a-f27e-42b2-a8d5-956fd3e09480</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Ya</value>
+      <webElementGuid>4dd9c6a8-19a9-4c4e-abf4-4c64605ca017</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

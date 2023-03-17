@@ -71,6 +71,11 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
+      <initValue>'Failed Paging'</initValue>
+      <name>ReasonFailedPaging</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
       <initValue>'Save Gagal'</initValue>
       <name>ReasonFailedSaveGagal</name>
    </GlobalVariableEntity>
@@ -88,6 +93,11 @@
       <description></description>
       <initValue>'Failed Verify Data Match &amp; Equal'</initValue>
       <name>ReasonFailedVerifyEqualOrMatch</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>'Falied Resend'</initValue>
+      <name>ReasonFailedResend</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>

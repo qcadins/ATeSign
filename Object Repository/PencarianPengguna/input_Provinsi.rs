@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_Provinsi</name>
+   <tag></tag>
+   <elementGuidId>fa52013f-ded9-4e20-bd2c-6f48ba6b3b63</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;province&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;province&quot;]</value>
+      <webElementGuid>36f21e13-761f-45ba-baa2-95808338d3d3</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

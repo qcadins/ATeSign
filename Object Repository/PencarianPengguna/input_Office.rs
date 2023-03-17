@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_Office</name>
+   <tag></tag>
+   <elementGuidId>d184dbf8-5060-402c-8ae1-e87429908575</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;office&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;office&quot;]</value>
+      <webElementGuid>e6d6388d-8648-4db6-93ff-66a295b52b89</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>
