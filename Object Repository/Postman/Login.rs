@@ -84,6 +84,20 @@
       <masked>false</masked>
       <name>base_url</name>
    </variables>
+   <variables>
+      <defaultValue>'inveditor@womf'</defaultValue>
+      <description></description>
+      <id>4b4cc4d8-a381-4dd1-922b-853cc5328aef</id>
+      <masked>false</masked>
+      <name>username</name>
+   </variables>
+   <variables>
+      <defaultValue>'AdIns2022'</defaultValue>
+      <description></description>
+      <id>363f775e-9732-4f8d-a3b3-2a4adcf49546</id>
+      <masked>false</masked>
+      <name>password</name>
+   </variables>
    <verificationScript>import static org.assertj.core.api.Assertions.*
 
 import java.nio.file.WatchService
