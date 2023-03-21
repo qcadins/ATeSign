@@ -21,10 +21,15 @@ import com.kms.katalon.util.CryptoUtil
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
+WebUI.en
+
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_Excel_Path).getColumnNumbers(); (GlobalVariable.NumofColm)++)
 {
+	
+		ArrayList<String> listMsg = new ArrayList<String>()
+		listMsg.add('{"tenantCode":"'+ findTestData(Excel_API_Path).getValue(GlobalVariable.NumofColm,10)+'","officeCode":"'+ findTestData(Excel_API_Path).getValue(GlobalVariable.NumofColm,11) +'","email":"'+findTestData(Excel_API_Path).getValue(GlobalVariable.NumofColm,12)+'"}')
 		'HIT API'
-		respon = WS.sendRequest(findTestObject('Postman/Agreement Canceled', [('documentId') : '"' + findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,9) + '"',('msg') :  '"' + findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,10) + '"' ,('callerId') :'"' + findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,12) + '"',('tenantCode') : '"' +findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,14) + '"']))
+		respon = WS.sendRequest(findTestObject('Postman/Agreement Canceled', [('documentId') : '"' + findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,9) + '"',('msg') :  '"' + listMsg[0] + '"' ,('callerId') :'"' + findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,12) + '"',('tenantCode') : '"' +findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,14) + '"']))
 		if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true)
 		{
 			'mengambil status code berdasarkan response HIT API'
