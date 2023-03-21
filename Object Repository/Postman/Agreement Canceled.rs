@@ -10,7 +10,7 @@
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n    \&quot;documentId\&quot;: ${documentId},\n    \&quot;msg\&quot;: {${msg}},\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: ${callerId}\n    },\n    \&quot;tenantCode\&quot;: ${tenantCode}\n}&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;documentId\&quot;: ${documentId},\n    \&quot;msg\&quot;: ${msg},\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: ${callerId}\n    },\n    \&quot;tenantCode\&quot;: ${tenantCode}\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>

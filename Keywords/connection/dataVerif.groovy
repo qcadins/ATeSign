@@ -297,4 +297,40 @@ public class dataVerif {
 		}
 		return listdata
 	}
+
+	@Keyword
+	public getAESKey (Connection conn){
+		String data
+
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("SELECT gs_value FROM am_generalsetting WHERE gs_code = 'AES_KEY'")
+
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		return data
+	}
+	
+	@Keyword
+	public getAgreementCanceled (Connection conn, String documentId){
+		String data
+
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("select tdh.is_active from tr_document_d as tdd join tr_document_h as tdh on tdd.id_document_h = tdh.id_document_h where tdd.document_id = '"+ documentId +"'")
+
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		return data
+	}
 }
