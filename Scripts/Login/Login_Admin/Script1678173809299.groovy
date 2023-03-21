@@ -23,6 +23,9 @@ WebUI.openBrowser('')
 'navigate to url esign'
 WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 2))
 
+'maximized window'
+WebUI.maximizeWindow()
+
 'input email'
 WebUI.setText(findTestObject('Login/input_Email'), findTestData('Login/Login').getValue(2, 2))
 

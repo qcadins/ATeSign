@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_TanggalAktivasiDari</name>
+   <tag></tag>
+   <elementGuidId>97770b73-d758-4cc2-976d-781102bed4fa</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;activatedDateStart&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;activatedDateStart&quot;]</value>
+      <webElementGuid>27314cd8-82a4-48a5-ad57-3835d3fc6df4</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

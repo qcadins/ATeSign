@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>PencarianPengguna</name>
+   <name>PencarianPenggunaPelanggan-Admin</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>23769f98-bf69-49c8-a512-745a89811c0f</testCaseGuid>
+   <testCaseGuid>7dd10472-6160-45f9-9d4e-0158d00334d4</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>0028d71b-b84e-4235-be10-42470cfd5f8c</variableId>
+      <variableId>42136a90-efcc-4d22-abf8-f94e253c0c74</variableId>
    </variableLinks>
    <variable>
       <defaultValue>'PencarianPengguna/PencarianPengguna'</defaultValue>
       <description></description>
-      <id>0028d71b-b84e-4235-be10-42470cfd5f8c</id>
+      <id>42136a90-efcc-4d22-abf8-f94e253c0c74</id>
       <masked>false</masked>
       <name>excelPathPencarianPengguna</name>
    </variable>
