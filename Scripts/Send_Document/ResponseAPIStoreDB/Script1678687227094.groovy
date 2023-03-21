@@ -19,7 +19,9 @@ import org.openqa.selenium.Keys as Keys
 import java.sql.Connection as Connection
 
 'splitting signer berdasarkan jumlah signer'
-ArrayList<String> signerperarray = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 42).split(';', -1)
+ArrayList<String> emailpersigner = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 42).split(';', -1)
+ArrayList<String> namapersigner = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 36).split(';', -1)
+
 
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
@@ -28,22 +30,26 @@ Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 ArrayList<String> arrayMatch = new ArrayList<String>()
 
 'looping berdasarkan total signer yang ada'
-for (int i = 0; i < signerperarray.size(); i++) {
+for (int i = 0; i < namapersigner.size(); i++) 
+{
     'get data API Send Document dari DB (hanya 1 signer)'
     ArrayList<String> result = CustomKeywords.'connection.dataVerif.getSendDoc'(conneSign, GlobalVariable.documentId.replace(
-            '[', '').replace(']', ''), (signerperarray[i]).replace('"', '').toUpperCase())
-
+            '[', '').replace(']', ''), (emailpersigner[i]).replace('"', '').toUpperCase(), namapersigner[i].replace('"', '').toUpperCase())
+	
     'declare arrayindex'
     arrayindex = 0
-
+	
+	'verify full name'
+	arrayMatch.add(WebUI.verifyMatch((namapersigner[i]).replace('"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+	
     'verify tenant code'
     arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 9).replace('"', ''), 
             result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify ref_number'
     arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 11).replace('"', ''), 
-            result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
+            	result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+	
     'verify document_id'
     arrayMatch.add(WebUI.verifyMatch(GlobalVariable.documentId.replace('[', '').replace(']', ''), result[arrayindex++], 
             false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -97,7 +103,7 @@ for (int i = 0; i < signerperarray.size(); i++) {
             result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify email'
-    arrayMatch.add(WebUI.verifyMatch((signerperarray[i]).replace('"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+    arrayMatch.add(WebUI.verifyMatch((emailpersigner[i]).replace('"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 }
 
 'jika data db tidak sesuai dengan excel'

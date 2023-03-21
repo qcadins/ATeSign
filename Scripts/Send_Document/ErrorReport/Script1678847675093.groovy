@@ -48,7 +48,7 @@ ArrayList<String> resultStatusAktivasi = CustomKeywords.'connection.dataVerif.ge
 totalData = WebUI.getText(findTestObject('ErrorReport/label_TotalData')).split(' ')
 
 'verify total data UI dan DB'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(totalData[0], resultTotalData, false, FailureHandling.CONTINUE_ON_FAILURE))
+checkVerifyEqualOrMatch(WebUI.verifyMatch(totalData[0].replace(',', ''), resultTotalData, false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'input nama'
 WebUI.setText(findTestObject('ErrorReport/input_Nama'), namasigner.last().toString().replace('"',''))

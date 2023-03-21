@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "3CD877EA62E5A48D0530BAA4132EB94A",
+  "keywordFileContentHash": "5760DDC372330EF738D4BAA1C14E9546",
   "keywordClasses": [
     {
       "name": "connection.dataVerif",
@@ -195,6 +195,19 @@
             },
             {
               "name": "email",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "fullname",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

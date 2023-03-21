@@ -6,11 +6,6 @@
    <defaultProfile>true</defaultProfile>
    <GlobalVariableEntity>
       <description></description>
-      <initValue>''</initValue>
-      <name>API_email</name>
-   </GlobalVariableEntity>
-   <GlobalVariableEntity>
-      <description></description>
       <initValue>'http://gdkwebsvr:7021/adimobile/esign'</initValue>
       <name>base_url</name>
    </GlobalVariableEntity>
