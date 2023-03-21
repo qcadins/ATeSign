@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "3CD877EA62E5A48D0530BAA4132EB94A",
+  "keywordFileContentHash": "875D51CFA5840B1021491CAEC6BE8027",
   "keywordClasses": [
     {
       "name": "connection.dataVerif",
@@ -358,6 +358,38 @@
         },
         {
           "name": "getResetOTP",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "email",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getPencarianPengguna",
           "parameters": [
             {
               "name": "conn",

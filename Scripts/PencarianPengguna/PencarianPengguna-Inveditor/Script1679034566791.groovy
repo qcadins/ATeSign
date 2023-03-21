@@ -104,9 +104,10 @@ if(findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 6
 	WebUI.setText(findTestObject('PencarianPengguna/input_noHandphone'), findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm,
 			10))
 	
-	'click button cari'
+	'click button simpan'
 	WebUI.click(findTestObject('PencarianPengguna/button_Simpan'))
 	
+	'check if no error log atau tidak ada perubahan data '
 	if(WebUI.verifyElementNotPresent(findTestObject('PencarianPengguna/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL) ||
 			WebUI.getAttribute(findTestObject('PencarianPengguna/errorLog'), 'aria-label', FailureHandling.OPTIONAL).equalsIgnoreCase('Tidak ada perubahan data')) {
 		

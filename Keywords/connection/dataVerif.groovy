@@ -256,7 +256,7 @@ public class dataVerif {
 		}
 		return listdata
 	}
-	
+
 	@Keyword
 	public getResetOTP (Connection conn, String email){
 		String data
@@ -273,5 +273,28 @@ public class dataVerif {
 			data = resultSet.getObject(1)
 		}
 		return data
+	}
+
+	@Keyword
+	public getPencarianPengguna (Connection conn, String email){
+		String data
+
+		ArrayList<String> listdata = new ArrayList<>()
+
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("SELECT amu.full_name, email, aupd.date_of_birth, CASE WHEN LENGTH(mvru.vendor_user_autosign_key) > 0 THEN 'Active' ELSE 'Inactive' END , CASE WHEN mvru.is_active = '1' THEN 'Active' WHEN mvru.is_active = '0' THEN 'Inactive' ELSE mvru.is_active END FROM ms_vendor_registered_user mvru JOIN am_msuser amu ON amu.id_ms_user = mvru.id_ms_user JOIN am_user_personal_data aupd ON aupd.id_ms_user = amu.id_ms_user WHERE signer_registered_email = '"+ email +"'")
+
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for(int i = 1 ; i <= columnCount ; i++){
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		return listdata
 	}
 }

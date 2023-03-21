@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_TanggalAktivasiSampai</name>
+   <tag></tag>
+   <elementGuidId>16489143-e930-467f-92a1-f0b4c13e380d</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;activatedDateEnd&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;activatedDateEnd&quot;]</value>
+      <webElementGuid>73084786-7db1-4ceb-8c31-d1a70ae0317f</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

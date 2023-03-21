@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_Email</name>
+   <tag></tag>
+   <elementGuidId>207e9cb2-58bd-4234-be9a-fcd828121418</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;loginId&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;loginId&quot;]</value>
+      <webElementGuid>c60326b8-7c8f-4d7b-9897-32ea82aac97c</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

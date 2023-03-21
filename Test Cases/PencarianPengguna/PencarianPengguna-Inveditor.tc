@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>PencarianPengguna-Inveditor</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>23769f98-bf69-49c8-a512-745a89811c0f</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>0028d71b-b84e-4235-be10-42470cfd5f8c</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'PencarianPengguna/PencarianPengguna'</defaultValue>
+      <description></description>
+      <id>0028d71b-b84e-4235-be10-42470cfd5f8c</id>
+      <masked>false</masked>
+      <name>excelPathPencarianPengguna</name>
+   </variable>
+</TestCaseEntity>
