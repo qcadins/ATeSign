@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "B51E72A809EC5A4972F57079EF1E59D9",
+  "keywordFileContentHash": "8F77D4BC705EB35AF68C5EBCE84D3135",
   "keywordClasses": [
     {
       "name": "connection.dataVerif",
@@ -33,7 +33,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "BuatUndanganStoreDB",
@@ -64,7 +65,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "InquiryInvitationViewDataVerif",
@@ -95,7 +97,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "InquiryInvitationStoreDB",
@@ -126,7 +129,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getSaldo",
@@ -157,7 +161,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getSendDoc",
@@ -214,7 +219,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getTotalDataError",
@@ -245,7 +251,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getErrorReportDetail",
@@ -276,7 +283,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getStatusActivation",
@@ -294,7 +302,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getTenant",
@@ -325,7 +334,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getDataPencarianPengguna",
@@ -356,7 +366,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getResetOTP",
@@ -387,7 +398,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getPencarianPengguna",
@@ -418,7 +430,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getAESKey",
@@ -436,7 +449,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getAgreementCanceled",
@@ -467,10 +481,11 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         }
       ]
     }
   ],
-  "javadocParsed": false
+  "javadocParsed": true
 }

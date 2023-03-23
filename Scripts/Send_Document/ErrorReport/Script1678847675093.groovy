@@ -181,6 +181,9 @@ def checkPaging() {
 	'click button set ulang'
 	WebUI.click(findTestObject('Object Repository/ErrorReport/button_Reset'))
 	
+	'click button cari'
+	WebUI.click(findTestObject('ErrorReport/button_Cari'))
+	
 	'verif select modul'
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/select_Modul'), 'value'), '', false, FailureHandling.CONTINUE_ON_FAILURE))
 	
