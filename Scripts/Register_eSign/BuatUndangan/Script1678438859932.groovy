@@ -153,7 +153,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     GlobalVariable.Link = WebUI.getAttribute(findTestObject('BuatUndangan/PopUp/input_Link'), 'value')
 	
 	'HIT API Login untuk token : invenditor@womf'
-	respon_login = WS.sendRequest(findTestObject('Postman/Login'))
+	respon_login = WS.sendRequest(findTestObject('Postman/Login',  [('username') : findTestData('Login/Login').getValue(2, 4), ('password') : findTestData('Login/Login').getValue(3, 4)]))
 		
 	'Jika status HIT API 200 OK'
 	if (WS.verifyResponseStatusCode(respon_login, 200, FailureHandling.OPTIONAL) == true)

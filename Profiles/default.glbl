@@ -27,7 +27,7 @@
    <GlobalVariableEntity>
       <description></description>
       <initValue>''</initValue>
-      <name>documentId</name>
+      <name>Response</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
