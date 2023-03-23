@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>Bulk_Sign_Document</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>04085b6a-63b5-4119-a057-dfb51994f0b8</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>7fb94177-2053-4671-97ea-6b4ed39037f9</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Registrasi/BulkSignDocument'</defaultValue>
+      <description></description>
+      <id>7fb94177-2053-4671-97ea-6b4ed39037f9</id>
+      <masked>false</masked>
+      <name>API_Excel_Path</name>
+   </variable>
+</TestCaseEntity>

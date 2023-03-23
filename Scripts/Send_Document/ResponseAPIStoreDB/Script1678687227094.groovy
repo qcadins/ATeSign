@@ -18,10 +18,6 @@ import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 import java.sql.Connection as Connection
 
-'splitting signer berdasarkan jumlah signer'
-ArrayList<String> emailpersigner = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 42).split(';', -1)
-ArrayList<String> namapersigner = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 36).split(';', -1)
-
 
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
@@ -33,11 +29,19 @@ ArrayList<String> arrayMatch = new ArrayList<String>()
 for (int i = 0; i < namapersigner.size(); i++) 
 {
     'get data API Send Document dari DB (hanya 1 signer)'
-    ArrayList<String> result = CustomKeywords.'connection.dataVerif.getSendDoc'(conneSign, GlobalVariable.documentId.replace(
-            '[', '').replace(']', ''), (emailpersigner[i]).replace('"', '').toUpperCase(), namapersigner[i].replace('"', '').toUpperCase())
+    ArrayList<String> result = CustomKeywords.'connection.dataVerif.getSendDoc'(conneSign, GlobalVariable.Response.replace(
+            '[', '').replace(']', ''))
 	
     'declare arrayindex'
     arrayindex = 0
+	
+	'verify email'
+	arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 42).replace('"', ''),
+				result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	'verify signerType'
+	arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 28).replace('"', ''),
+		result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 	
 	'verify full name'
 	arrayMatch.add(WebUI.verifyMatch((namapersigner[i]).replace('"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -51,7 +55,7 @@ for (int i = 0; i < namapersigner.size(); i++)
             	result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 	
     'verify document_id'
-    arrayMatch.add(WebUI.verifyMatch(GlobalVariable.documentId.replace('[', '').replace(']', ''), result[arrayindex++], 
+    arrayMatch.add(WebUI.verifyMatch(GlobalVariable.Response.replace('[', '').replace(']', ''), result[arrayindex++], 
             false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify document template code'
