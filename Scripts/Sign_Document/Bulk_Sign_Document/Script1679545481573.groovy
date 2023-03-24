@@ -95,7 +95,37 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 					
 					if(optionLabel.contains(documentIds[i]) == true) 
 					{
+						//FE Belum done
 						WebUI.closeBrowser()
+						
+						'Get vendorCode'
+						GlobalVariable.Response = WS.getElementPropertyValue(respon_bulksign, 'vendorCode')
+						
+						'Get documents'
+						documents = WS.getElementPropertyValue(respon_bulksign, 'documents')
+		
+						if(documents == null)
+						{
+							'Memanggil testCase mengenai Bulk_Sign_DocumentStoreDb'
+							WebUI.callTestCase(findTestCase('Sign_Document/Bulk_Sign_DocumentStoreDb'), [('API_Excel_Path') : 'Registrasi/BulkSignDocument'],FailureHandling.CONTINUE_ON_FAILURE)
+							
+							'write to excel success'
+							CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Bulk Sign Document',
+							0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+						}
+						else
+						{
+							'Get documentId yang bermasalah'
+							documentId = WS.getElementPropertyValue(respon_bulksign, 'documents.documentId')
+							
+							'Get notif / message'
+							notif = WS.getElementPropertyValue(respon_bulksign, 'documents.notif')
+							
+							'write to excel status failed dan reason'
+							CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Bulk Sign Document', GlobalVariable.NumofColm,
+							GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
+							'-', '') + ';') + notif + ' : ' + documentId)
+						}
 					}
 					else
 					{
@@ -105,34 +135,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 						'-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
 					}
 				}
-				'Get vendorCode'
-				GlobalVariable.Response = WS.getElementPropertyValue(respon_bulksign, 'vendorCode')
 				
-				'Get documents'
-				documents = WS.getElementPropertyValue(respon_bulksign, 'documents')
-
-				if(documents == null) 
-				{
-					'Memanggil testCase mengenai Bulk_Sign_DocumentStoreDb'
-					WebUI.callTestCase(findTestCase('Sign_Document/Bulk_Sign_DocumentStoreDb'), [('API_Excel_Path') : 'Registrasi/BulkSignDocument'],FailureHandling.CONTINUE_ON_FAILURE)
-					
-					'write to excel success'
-					CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Bulk Sign Document',
-					0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-				}
-				else
-				{
-					'Get documentId yang bermasalah'
-					documentId = WS.getElementPropertyValue(respon_bulksign, 'documents.documentId')
-					
-					'Get notif / message'
-					notif = WS.getElementPropertyValue(respon_bulksign, 'documents.notif')
-					
-					'write to excel status failed dan reason'
-					CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Bulk Sign Document', GlobalVariable.NumofColm,
-					GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
-					'-', '') + ';') + notif + ' : ' + documentId)
-				}
 			}
 			else
 			{

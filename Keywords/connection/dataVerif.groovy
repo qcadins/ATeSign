@@ -333,7 +333,7 @@ public class dataVerif {
 		}
 		return data
 	}
-	
+
 	@Keyword
 	public getbulkSign(Connection conn, String documentids,String loginid){
 		String data
@@ -342,8 +342,8 @@ public class dataVerif {
 
 		Statement stm = conn.createStatement()
 
-		ResultSet resultSet = stm.executeQuery("select amm.login_id , msv.vendor_code, tdd.total_signed from tr_document_d_sign as tdds join tr_document_d as tdd on tdds.id_document_d = tdd.id_document_d join am_msuser as amm on tdds.id_ms_user = amm.id_ms_user join ms_vendor as msv on tdd.id_ms_vendor = msv.id_ms_vendor where tdd.document_id = '"+documentids+"' and amm.login_id = '"+loginid+"' ")		
-		
+		ResultSet resultSet = stm.executeQuery("select amm.login_id, msv.vendor_code, tdd.total_signed, tdd.document_id ,tdh.is_active from tr_document_d_sign as tdds join tr_document_d as tdd on tdds.id_document_d = tdd.id_document_d join am_msuser as amm on tdds.id_ms_user = amm.id_ms_user join ms_vendor as msv on tdd.id_ms_vendor = msv.id_ms_vendor join tr_document_h as tdh on tdh.id_document_h = tdd.id_document_h where tdd.document_id = '"+documentids+"' and tdh.is_active = '1' and amm.login_id = '"+loginid+"'")
+
 		ResultSetMetaData metadata = resultSet.getMetaData()
 
 		columnCount = metadata.getColumnCount()
@@ -355,6 +355,5 @@ public class dataVerif {
 			}
 		}
 		return listdata
-	
 	}
 }

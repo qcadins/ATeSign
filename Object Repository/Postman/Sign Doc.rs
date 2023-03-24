@@ -10,7 +10,7 @@
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\r\n  \&quot;audit\&quot;: {\r\n    \&quot;callerId\&quot;: \&quot;string\&quot;\r\n  },\r\n    \&quot;email\&quot;: \&quot;KRISTY.TIFFANI@ANDYRESEARCH.MY.ID\&quot;,\r\n  \&quot;documentId\&quot;: \&quot;00155D0B-7502-AD78-11EC-FB478DA4A470\&quot;\r\n  ,\&quot;msg\&quot; : \&quot;\&quot;\r\n}&quot;,
+  &quot;text&quot;: &quot;{\n  \&quot;audit\&quot;: {\n    \&quot;callerId\&quot;: ${callerId}\n  },\n    \&quot;email\&quot;: ${email},\n  \&quot;documentId\&quot;: ${documentId},\n  \&quot;msg\&quot; : ${msg}\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -36,7 +36,7 @@
       <matchCondition>equals</matchCondition>
       <name>Authorization</name>
       <type>Main</type>
-      <value>Bearer o+mBHDs4I5Nn8sxLVAzbyvXsU98=</value>
+      <value>Bearer ${token}</value>
       <webElementGuid>e79fb492-c565-4fae-8d2e-223da06f8268</webElementGuid>
    </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
@@ -59,5 +59,25 @@
       <masked>false</masked>
       <name>base_url</name>
    </variables>
+   <variables>
+      <defaultValue>GlobalVariable.token</defaultValue>
+      <description></description>
+      <id>089924c4-b008-455a-b48e-b25af4c67153</id>
+      <masked>false</masked>
+      <name>token</name>
+   </variables>
+   <verificationScript>import static org.assertj.core.api.Assertions.*
+
+import com.kms.katalon.core.testobject.RequestObject
+import com.kms.katalon.core.testobject.ResponseObject
+import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
+import com.kms.katalon.core.webservice.verification.WSResponseManager
+
+import groovy.json.JsonSlurper
+import internal.GlobalVariable as GlobalVariable
+
+RequestObject request = WSResponseManager.getInstance().getCurrentRequest()
+
+ResponseObject response = WSResponseManager.getInstance().getCurrentResponse()</verificationScript>
    <wsdlAddress></wsdlAddress>
 </WebServiceRequestEntity>
