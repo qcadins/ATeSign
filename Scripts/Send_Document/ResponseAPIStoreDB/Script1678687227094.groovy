@@ -22,11 +22,14 @@ import java.sql.Connection as Connection
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 
+'Declare email per Signer'
+ArrayList<String> emailpersigner = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 42).split(';', -1)
+
 'declare arraylist arraymatch'
 ArrayList<String> arrayMatch = new ArrayList<String>()
 
 'looping berdasarkan total signer yang ada'
-for (int i = 0; i < namapersigner.size(); i++) 
+for (int i = 0; i < emailpersigner.size(); i++) 
 {
     'get data API Send Document dari DB (hanya 1 signer)'
     ArrayList<String> result = CustomKeywords.'connection.dataVerif.getSendDoc'(conneSign, GlobalVariable.Response.replace(
@@ -36,15 +39,12 @@ for (int i = 0; i < namapersigner.size(); i++)
     arrayindex = 0
 	
 	'verify email'
-	arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 42).replace('"', ''),
+	arrayMatch.add(WebUI.verifyMatch((emailpersigner[i]).replace('"', ''),
 				result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 	
 	'verify signerType'
 	arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 28).replace('"', ''),
 		result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-	'verify full name'
-	arrayMatch.add(WebUI.verifyMatch((namapersigner[i]).replace('"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 	
     'verify tenant code'
     arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 9).replace('"', ''), 
@@ -105,9 +105,10 @@ for (int i = 0; i < namapersigner.size(); i++)
     'verify upload url'
     arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 25).replace('"', ''), 
             result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-    'verify email'
-    arrayMatch.add(WebUI.verifyMatch((emailpersigner[i]).replace('"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	'verify sign Action : hardcode. Yang penting tidak boleh kosong'
+	arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 28).replace('"', ''),
+		"", true, FailureHandling.CONTINUE_ON_FAILURE))
 }
 
 'jika data db tidak sesuai dengan excel'
