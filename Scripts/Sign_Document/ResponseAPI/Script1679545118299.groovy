@@ -7,6 +7,7 @@ import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
 import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
 import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
+import com.kms.katalon.core.main.CustomKeywordDelegatingMetaClass
 import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.testcase.TestCase as TestCase
@@ -40,34 +41,29 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExc
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_Excel_Path).getColumnNumbers(); (GlobalVariable.NumofColm)++)
-{
-		
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_Excel_Path).getColumnNumbers(); (GlobalVariable.NumofColm)++){
 	'HIT API Login untuk token : andy@ad-ins.com'
 	respon_login = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData('Login/Login').getValue(2, 3), ('password') : findTestData('Login/Login').getValue(3, 3)]))
 	
 	'Jika status HIT API Login 200 OK'
-	if (WS.verifyResponseStatusCode(respon_login, 200, FailureHandling.OPTIONAL) == true)
-	{
+	if (WS.verifyResponseStatusCode(respon_login, 200, FailureHandling.OPTIONAL) == true){
 		'Parsing token menjadi GlobalVariable'
 		GlobalVariable.token = WS.getElementPropertyValue(respon_login, 'access_token')
+		'HIT API Sign Document'
+		respon_signdoc = WS.sendRequest(findTestObject('Postman/Sign Doc', [('callerId') : '"'+ findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 9) +'"',('email') : '"'+ findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 11) +'"', ('documentId') : '"'+ findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 12) +'"',('msg') :'"'+ findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 13) +'"']))	
 		
-		'HIT API Bulk Sign Document'
-		respon_signdoc = WS.sendRequest(findTestObject('Postman/Sign Doc', [('callerId') : '"'+ findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 9) +'"',('email') : '"'+ findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 11) +'"', ('documentId') : '"'+ findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 12) +'"',('msg') :'"'+ findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 13) +'"']))
-			
 		'Jika status HIT API 200 OK'
-		if (WS.verifyResponseStatusCode(respon_signdoc, 200, FailureHandling.OPTIONAL) == true)
-		{
+		if (WS.verifyResponseStatusCode(respon_signdoc, 200, FailureHandling.OPTIONAL) == true){
 			'get Status Code'
 			status_Code = WS.getElementPropertyValue(respon_signdoc, 'status.code')
 			
 			'Jika status codenya 0'
-			if(status_Code == 0)
-			{
-				'Get signLink'
+			if(status_Code == 0){
+				'Get link'
 				url = WS.getElementPropertyValue(respon_signdoc, 'url')
 				
-				println url
+				CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sign Document',
+					4, GlobalVariable.NumofColm - 1, url) 
 				
 				'Open signLink buat check apakah dokumen yang ada disana dengan documentId excel sama'
 				WebUI.openBrowser('')
@@ -75,13 +71,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 				'navigate to url esign'
 				WebUI.navigateToUrl(url)
 				
-				println url
-				
 				'fungsi select untuk yang mengarah ke element document pertama'
 				select = WebUI.getAttribute(findTestObject('Object Repository/SignDocument/Nav Doc'), 'text')
 				
-				if(select.contains(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 12)) == true)
-				{
+				if(select.contains(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 12)) == true){
 					WebUI.maximizeWindow()
 					
 					WebUI.scrollToElement(findTestObject('Object Repository/SignDocument/btn_clickSign'), GlobalVariable.TimeOut)
@@ -107,8 +100,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 					'Get vendorCode'
 					GlobalVariable.Response = WS.getElementPropertyValue(respon_signdoc, 'vendorCode')
 	
-					'Memanggil testCase mengenai Bulk_Sign_DocumentStoreDb'
-					WebUI.callTestCase(findTestCase('Sign_Document/Bulk_Sign_DocumentStoreDb'), [('API_Excel_Path') : 'Registrasi/SignDocument'],FailureHandling.CONTINUE_ON_FAILURE)
+					'Memanggil testCase mengenai SignDocumentStoreDb'
+					WebUI.callTestCase(findTestCase('Sign_Document/SignDocumentStoreDb'), [('API_Excel_Path') : 'Registrasi/SignDocument'],FailureHandling.CONTINUE_ON_FAILURE)
 						
 					'write to excel success'
 					CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sign Document',
@@ -116,8 +109,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 				
 					WebUI.closeBrowser()
 				}
-				else
-				{
+				else{
 					'write to excel status failed dan reason'
 					CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm,
 					GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
@@ -125,8 +117,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 				}
 
 			}
-			else
-			{
+			else{
 				messageFailed = WS.getElementPropertyValue(respon_signdoc, 'status.message', FailureHandling.OPTIONAL).toString()
 				'write to excel status failed dan reason'
 				CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm,
@@ -134,13 +125,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 				'-', '') + ';') + messageFailed)
 			}
 		}
-		else
-		{
+		else{
 			'write to excel status failed dan reason'
 			CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm,
 			GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
 			'-', '') + ';') + GlobalVariable.ReasonFailedHitAPI)
-			
 		}
 	}
 }

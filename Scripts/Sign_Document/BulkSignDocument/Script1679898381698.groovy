@@ -107,7 +107,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 						if(documents == null)
 						{
 							'Memanggil testCase mengenai Bulk_Sign_DocumentStoreDb'
-							WebUI.callTestCase(findTestCase('Sign_Document/Bulk_Sign_DocumentStoreDb'), [('API_Excel_Path') : 'Registrasi/BulkSignDocument'],FailureHandling.CONTINUE_ON_FAILURE)
+							WebUI.callTestCase(findTestCase('Sign_Document/SignDocumentStoreDb'), [('API_Excel_Path') : 'Registrasi/BulkSignDocument'],FailureHandling.CONTINUE_ON_FAILURE)
 							
 							'write to excel success'
 							CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Bulk Sign Document',
