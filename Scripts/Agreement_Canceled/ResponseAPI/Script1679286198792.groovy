@@ -29,59 +29,45 @@ Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 'mengambil AES Key untuk encrypt'
 String AESKey = CustomKeywords.'connection.dataVerif.getAESKey'(conneSign)
 
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_Excel_Path).getColumnNumbers(); (GlobalVariable.NumofColm)++)
-{
-		'HIT API'
-		respon = WS.sendRequest(findTestObject('Postman/Agreement Canceled', [('documentId') : '"' + CustomKeywords.'customizeKeyword.parseText.parseEncrypt'(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,9),AESKey) + '"',('msg') :  '"' + CustomKeywords.'customizeKeyword.parseText.parseEncrypt'(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,10),AESKey) + '"' ,('callerId') :'"' + findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,12) + '"',('tenantCode') : '"' +findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,14) + '"']))
-		if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true)
-		{
-			'mengambil status code berdasarkan response HIT API'
-			status_Code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
-		
-			'jika status codenya 0'
-			if (status_Code == 0) 
-				{
-					message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
-					
-					if(message != null) 
-						{
-							'write to excel success'
-							CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Agreement Canceled',
-							0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_Excel_Path).getColumnNumbers(); (GlobalVariable.NumofColm)++){
+	'HIT API'
+	respon = WS.sendRequest(findTestObject('Postman/Agreement Canceled', [('documentId') : '"' + CustomKeywords.'customizeKeyword.parseText.parseEncrypt'(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,9),AESKey) + '"',('msg') :  '"' + CustomKeywords.'customizeKeyword.parseText.parseEncrypt'(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,10),AESKey) + '"' ,('callerId') :'"' + findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,12) + '"',('tenantCode') : '"' +findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,14) + '"']))
+	if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true){
+		'mengambil status code berdasarkan response HIT API'
+		status_Code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
+		'jika status codenya 0'
+		if (status_Code == 0){
+			message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
+			if(message != null){
+				'write to excel success'
+				CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Agreement Canceled',
+				0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 							
-							'call test case ResponseAPIStoreDB'
-							WebUI.callTestCase(findTestCase('Agreement_Canceled/ResponseAPIStoreDB'), [('API_Excel_Path') : 'Agreement_Canceled/Agreement Canceled'],
-								FailureHandling.CONTINUE_ON_FAILURE)
-						}
-						else
-						{
-							'write to excel status failed dan reason : '
-							CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Agreement Canceled', GlobalVariable.NumofColm,
-							GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace('-',
-							'') + ';') + GlobalVariable.ReasonFailedHitAPI)
-						}
-
-				}
-				else
-				{
-					messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
-					'write to excel status failed dan reason : '
-					CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Agreement Canceled', GlobalVariable.NumofColm,
-					GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace('-',
-					'') + ';') + messageFailed)
-				}
-		}
-		else
-		{
+				'call test case ResponseAPIStoreDB'
+				WebUI.callTestCase(findTestCase('Agreement_Canceled/ResponseAPIStoreDB'), [('API_Excel_Path') : 'Agreement_Canceled/Agreement Canceled'],
+					FailureHandling.CONTINUE_ON_FAILURE)
+			}else{
+				'write to excel status failed dan reason : '
+				CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Agreement Canceled', GlobalVariable.NumofColm,
+				GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace('-',
+				'') + ';') + GlobalVariable.ReasonFailedHitAPI)
+			}
+			
+		}else{
+			messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 			'write to excel status failed dan reason : '
 			CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Agreement Canceled', GlobalVariable.NumofColm,
 			GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace('-',
-			'') + ';') + GlobalVariable.ReasonFailedHitAPI)
+			'') + ';') + messageFailed)
 		}
-	}
-	
-	
 		
+	}else{
+		'write to excel status failed dan reason : '
+		CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Agreement Canceled', GlobalVariable.NumofColm,
+		GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace('-',
+		'') + ';') + GlobalVariable.ReasonFailedHitAPI)
+	}
+}
 		
 		
 		
