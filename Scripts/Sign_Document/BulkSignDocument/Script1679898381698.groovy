@@ -85,13 +85,26 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 				WebUI.openBrowser(signLink)
 				
 				'looping berdasarkan berapa banyak dokumen yang ada.'
-				for(int i = 0; i >= documentIds.size();i++) 
+				for(int j = 0; j <= documentIds.size();j++) 
 				{
+					if(j == 0) {
+						'fungsi select untuk yang mengarah ke element document pertama'
+						select = new Select(DriverFactory.getWebDriver().findElement(By.xpath("//div[@id='pdf-main-container']/div/ul/li")))
+					
+					}
+					
 					'fungsi select untuk yang mengarah ke element document pertama'
-					select = new Select(DriverFactory.getWebDriver().findElement(By.xpath("//div[@id='pdf-main-container']/div/ul/li"+ (i+1) +"/label")))
+					select = new Select(DriverFactory.getWebDriver().findElement(By.xpath("//[@id='pdf-main-container']/div/ul/li["+(j+1)+"]")))
+					
+					'ambil text yang diselect oleh dropdown list tersebut'
+					optionLabel = WebUI.getAttribute(select, 'label')
+					
+					
+					'fungsi select untuk yang mengarah ke element document pertama'
+					select = new Select(DriverFactory.getWebDriver().findElement(By.xpath("//[@id='pdf-main-container']/div/ul/li["+ (j+1) +"]")))
 				
 					'ambil text yang diselect oleh dropdown list tersebut'
-					optionLabel = select.getFirstSelectedOption().getText()
+					optionLabel = WebUI.getAttribute(select, 'label')
 					
 					if(optionLabel.contains(documentIds[i]) == true) 
 					{

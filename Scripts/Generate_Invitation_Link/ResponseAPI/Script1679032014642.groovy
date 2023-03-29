@@ -55,6 +55,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 			'Mengambil links berdasarkan response HIT API'
 			links = WS.getElementPropertyValue(respon, 'links', FailureHandling.OPTIONAL)
 			
+			println (GlobalVariable.NumofColm + " " + links)
+			
 			'Klik menu Inquiry Invitation'
 			WebUI.click(findTestObject('Object Repository/InquiryInvitation/menu_InquiryInvitation'))
 			
@@ -81,7 +83,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 			{
 				'Klik button View Link'
 				WebUI.click(findTestObject('Object Repository/InquiryInvitation/button_ViewLink'))
-
+				
+				if (WebUI.verifyElementPresent(findTestObject('Object Repository/InquiryInvitation/errorLog') , GlobalVariable.TimeOut,FailureHandling.CONTINUE_ON_FAILURE)) {
+					
+					errorLog = WebUI.getAttribute(findTestObject('Object Repository/InquiryInvitation/errorLog') , 'aria-label')
+					
+					'write to excel status failed dan reason : errorLog UI'
+					CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Generate Inv Link', GlobalVariable.NumofColm,
+					GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace('-',
+					'') + ';') + errorLog)
+				}
 				'Klik pop up link'
 				WebUI.click(findTestObject('Object Repository/InquiryInvitation/input_Link'),FailureHandling.CONTINUE_ON_FAILURE)
 			
@@ -101,6 +112,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 				'write to excel success'
 				CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Generate Inv Link',
 				0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+				
+				'call test case ResponseAPIStoreDB'
+				WebUI.callTestCase(findTestCase('Generate_Invitation_Link/ResponseAPIStoreDB'), [('API_Excel_Path') : 'Registrasi/Generate_Inv_Link'],
+				FailureHandling.CONTINUE_ON_FAILURE)
+				
 			} 
 			else 
 			{
