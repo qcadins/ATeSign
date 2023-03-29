@@ -26,6 +26,8 @@ import org.openqa.selenium.By as By
 import org.openqa.selenium.support.ui.Select as Select
 import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 
+GlobalVariable.Response = 'API Sign Document'
+
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
