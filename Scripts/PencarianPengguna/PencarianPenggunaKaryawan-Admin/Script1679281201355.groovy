@@ -46,8 +46,8 @@ if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 
 'click button cari'
 WebUI.click(findTestObject('PencarianPenggunaAdmin/Karyawan/button_Cari'))
 
-'check if edit / reset OTP / Resend Link'
-if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Edit')) {
+'check if view / reset OTP'
+if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('View')) {
 	
 	'click button reset OTP'
 	WebUI.click(findTestObject('PencarianPenggunaAdmin/Karyawan/button_View'))
@@ -92,7 +92,7 @@ if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 
         WebUI.click(findTestObject('PencarianPenggunaAdmin/Karyawan/button_OK'))
 
         'write to excel success'
-        CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PencarianPengguna', 0, GlobalVariable.NumofColm - 
+        CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PencarianPengguna-Karyawan', 0, GlobalVariable.NumofColm - 
             1, GlobalVariable.StatusSuccess)
 
         'get data reset request OTP dari DB'
@@ -103,7 +103,7 @@ if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 
         checkVerifyEqualOrMatch(WebUI.verifyMatch(resultResetOTP, '0', false, FailureHandling.CONTINUE_ON_FAILURE))
     } else {
         'write to excel status failed dan reason'
-        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('PencarianPengguna', GlobalVariable.NumofColm, 
+        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('PencarianPengguna-Karyawan', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, ((findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 2).replace(
                 '-', '') + ';') + GlobalVariable.ReasonFailedResend) + ' OTP')
     }
@@ -189,7 +189,7 @@ def checkPaging() {
 def checkVerifyEqualOrMatch(Boolean isMatch) {
     if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('PencarianPengguna', GlobalVariable.NumofColm, 
+        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('PencarianPengguna-Karyawan', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 2) + ';') + 
             GlobalVariable.ReasonFailedVerifyEqualOrMatch)
 

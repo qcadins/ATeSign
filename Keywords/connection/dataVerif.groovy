@@ -356,4 +356,23 @@ public class dataVerif {
 		}
 		return listdata
 	}
+	
+	@Keyword
+	public getOTPAktivasi (Connection conn, String email){
+		
+		String data
+
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("SELECT otp_code FROM am_msuser WHERE login_id = '"+ email +"'")
+
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		return data
+	}
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>popUp_AktivasiBerhasil</name>
+   <tag></tag>
+   <elementGuidId>d3a50885-5266-4296-9db2-6b149eeee054</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/ngb-modal-window/div/div/app-msx-alert/div</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/ngb-modal-window/div/div/app-msx-alert/div</value>
+      <webElementGuid>c87054cd-4938-4729-bf52-f70d80716e6e</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

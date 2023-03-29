@@ -15,10 +15,13 @@ import com.kms.katalon.core.testdata.TestData as TestData
 import com.kms.katalon.core.testng.keyword.TestNGBuiltinKeywords as TestNGKW
 import com.kms.katalon.core.testobject.TestObject as TestObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
+import com.kms.katalon.core.webui.driver.DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
-import internal.GlobalVariable as GlobalVariable
-import org.openqa.selenium.Keys as Keys
+import internal.GlobalVariable
+
+import org.openqa.selenium.By
+import org.openqa.selenium.Keys
 
 'click menu ErrorReport'
 WebUI.click(findTestObject('ErrorReport/menu_ErrorReport'))
@@ -35,9 +38,6 @@ WebUI.click(findTestObject('ErrorReport/button_Cari'))
 'get total data error dari DB'
 String resultTotalData = CustomKeywords.'connection.dataVerif.getTotalDataError'(conneSign, WebUI.getAttribute(findTestObject('ErrorReport/input_TanggalDari'), 'value'))
 
-'get error detail dari DB'
-String resultErrorDetail = CustomKeywords.'connection.dataVerif.getErrorReportDetail'(conneSign, 'MARVIN SUTANTO')
-
 'get status activation'
 ArrayList<String> resultStatusAktivasi = CustomKeywords.'connection.dataVerif.getStatusActivation'(conneSign)
 
@@ -45,34 +45,42 @@ ArrayList<String> resultStatusAktivasi = CustomKeywords.'connection.dataVerif.ge
 totalData = WebUI.getText(findTestObject('ErrorReport/label_TotalData')).split(' ')
 
 'verify total data UI dan DB'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(totalData[0], resultTotalData, false, FailureHandling.CONTINUE_ON_FAILURE))
+checkVerifyEqualOrMatch(WebUI.verifyMatch(totalData[0].replace(',',''), resultTotalData, false, FailureHandling.CONTINUE_ON_FAILURE))
 
-'input nama'
-WebUI.setText(findTestObject('ErrorReport/input_Nama'), 'MARVIN SUTANTO')
+'select modul'
+WebUI.setText(findTestObject('ErrorReport/select_Modul'), 'Sign Document error history')
+
+'send keys enter'
+WebUI.sendKeys(findTestObject('ErrorReport/select_Modul'), Keys.chord(Keys.ENTER))
 
 'click button cari'
 WebUI.click(findTestObject('ErrorReport/button_Cari'))
 
-//'verify match tipe error'
-//checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorReport/label_Tipe')), GlobalVariable.ErrorType, false, FailureHandling.OPTIONAL))
+'click final page'
+WebUI.click(findTestObject('ErrorReport/button_FinalPage'))
+
+'get row'
+variable = DriverFactory.getWebDriver().findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-error-report > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
+
+'modify object button view'
+modifyObjectButtonView = WebUI.modifyObjectProperty(findTestObject('ErrorReport/button_View'),'xpath','equals',
+	"/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-error-report/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper["+ variable.size() +"]/datatable-body-row/div[2]/datatable-body-cell[10]/div/a[1]/em",true)
+
+'modify object label nama konsumen'
+modifyObjectLabelNamaKonsumen = WebUI.modifyObjectProperty(findTestObject('ErrorReport/label_NamaKonsumen'),'xpath','equals',
+	"/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-error-report/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper["+ variable.size() +"]/datatable-body-row/div[2]/datatable-body-cell[3]/div/p",true)
+
+'get error detail dari DB'
+String resultErrorDetail = CustomKeywords.'connection.dataVerif.getErrorReportDetail'(conneSign, WebUI.getText(modifyObjectLabelNamaKonsumen).toUpperCase())
 
 'click button view'
-WebUI.click(findTestObject('ErrorReport/button_View'))
+WebUI.click(modifyObjectButtonView)
 
 'verify match tipe error'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorReport/label_ErrorDetail')), resultErrorDetail, false, FailureHandling.OPTIONAL))
 
 'click button X'
 WebUI.click(findTestObject('ErrorReport/button_X'))
-
-'click button set ulang'
-WebUI.click(findTestObject('Object Repository/ErrorReport/button_Reset'))
-
-'input nama'
-WebUI.setText(findTestObject('ErrorReport/input_NoKontrak'), '149')
-
-'click button cari'
-WebUI.click(findTestObject('ErrorReport/button_Cari'))
 
 'click button status aktivasi'
 WebUI.click(findTestObject('ErrorReport/button_StatusAktivasi'))
@@ -112,7 +120,7 @@ def checkVerifyEqualOrMatch(Boolean isMatch) {
 	if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
 		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
 		CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm,
-			GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2) +
+			GlobalVariable.StatusFailed, (findTestData(excelPathSignDoc).getValue(GlobalVariable.NumofColm, 2) +
 			';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
 
 		GlobalVariable.FlagFailed = 1
@@ -155,22 +163,22 @@ def checkPaging() {
 	WebUI.setText(findTestObject('ErrorReport/input_Wilayah'), 'abcd')
 	
 	'input Tanggal dari'
-	WebUI.setText(findTestObject('ErrorReport/input_TanggalDari'), '2012-12-12')
+	WebUI.setText(findTestObject('ErrorReport/input_TanggalDari'), '2020-12-12')
 	
 	'input Tanggal Ke'
 	WebUI.setText(findTestObject('ErrorReport/input_TanggalKe'), '2020-12-12')
 	
-	'input Tanggal Ke'
+	'Select Tipe'
 	WebUI.setText(findTestObject('ErrorReport/select_Tipe'), 'REJECT')
 	
 	'send keys enter'
 	WebUI.sendKeys(findTestObject('ErrorReport/select_Tipe'), Keys.chord(Keys.ENTER))
 	
-	'click button cari'
-	WebUI.click(findTestObject('ErrorReport/button_Cari'))
-	
 	'click button set ulang'
 	WebUI.click(findTestObject('Object Repository/ErrorReport/button_Reset'))
+	
+	'click button cari'
+	WebUI.click(findTestObject('ErrorReport/button_Cari'))
 	
 	'verif select modul'
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/select_Modul'), 'value'), '', false, FailureHandling.CONTINUE_ON_FAILURE))

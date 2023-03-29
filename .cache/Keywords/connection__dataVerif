@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "F45A4819A8E872F9151806061097B9FC",
+  "keywordFileContentHash": "F0517E633EE8B6F8090AE4FA60D70E67",
   "keywordClasses": [
     {
       "name": "connection.dataVerif",
@@ -489,6 +489,38 @@
             },
             {
               "name": "loginid",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getOTPAktivasi",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "email",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

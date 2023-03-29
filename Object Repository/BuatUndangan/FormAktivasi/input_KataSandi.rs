@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>input_Provinsi</name>
+   <name>input_KataSandi</name>
    <tag></tag>
-   <elementGuidId>f8b7bdcd-07f5-4436-b66c-d030b73becf9</elementGuidId>
+   <elementGuidId>52ef7850-b357-48c6-aad4-92eb6418fd79</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[10]/input</value>
+         <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[3]/div[1]/input</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,15 +17,15 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[10]/input</value>
-      <webElementGuid>a86c1ffa-b1c3-45ef-921c-a68ceb29c2fd</webElementGuid>
+      <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[3]/div[1]/input</value>
+      <webElementGuid>44fddce2-992b-446d-ba40-dbbb0043fd89</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>formcontrolname</name>
       <type>Main</type>
-      <value>province</value>
-      <webElementGuid>96e24d19-1e6e-4c78-a54a-0b9280e57467</webElementGuid>
+      <value>password</value>
+      <webElementGuid>7b030dae-48da-4bce-8fcc-b217601738ee</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

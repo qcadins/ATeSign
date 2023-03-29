@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>input_Provinsi</name>
+   <name>kirimKodeLagi</name>
    <tag></tag>
-   <elementGuidId>f8b7bdcd-07f5-4436-b66c-d030b73becf9</elementGuidId>
+   <elementGuidId>00ba871c-f057-4e8e-84d9-6a5d47bfe9d0</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[10]/input</value>
+         <value>/html/body/ngb-modal-window/div/div/app-modal-request-otp/form/div/div[5]/div/a</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,15 +17,15 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[10]/input</value>
-      <webElementGuid>a86c1ffa-b1c3-45ef-921c-a68ceb29c2fd</webElementGuid>
+      <value>/html/body/ngb-modal-window/div/div/app-modal-request-otp/form/div/div[5]/div/a</value>
+      <webElementGuid>d6f792fa-c172-4fb1-b35f-fb7f7e99f905</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>formcontrolname</name>
+      <name>text</name>
       <type>Main</type>
-      <value>province</value>
-      <webElementGuid>96e24d19-1e6e-4c78-a54a-0b9280e57467</webElementGuid>
+      <value>Kirim kode lagi</value>
+      <webElementGuid>fadb1813-10b9-42ae-aab1-2958484bb1ea</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

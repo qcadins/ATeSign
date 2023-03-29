@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>button_ProsesOTP</name>
+   <tag></tag>
+   <elementGuidId>168e30da-7395-4a93-9a69-6ecc3f4af14c</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/ngb-modal-window/div/div/app-modal-request-otp/form/div/div[5]/button</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/ngb-modal-window/div/div/app-modal-request-otp/form/div/div[5]/button</value>
+      <webElementGuid>84658b01-cef1-49b1-89ab-51301596763d</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>button_SetUlang</name>
+   <tag></tag>
+   <elementGuidId>2996ecbf-75c4-4f7d-86b6-72a69f314c94</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[5]/div/button[1]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[5]/div/button[1]</value>
+      <webElementGuid>5fcf9984-ee22-4495-a134-cdea202b2471</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

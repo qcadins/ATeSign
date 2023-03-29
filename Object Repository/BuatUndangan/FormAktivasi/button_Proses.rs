@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>button_Proses</name>
+   <tag></tag>
+   <elementGuidId>09389aba-0f03-4e47-a1ca-3519b3d86560</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@type = 'submit']</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[5]/div/button[2]</value>
+      <webElementGuid>d4d46513-5f3a-4d59-9ffd-0e5d08a397d2</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Proses</value>
+      <webElementGuid>569fd986-5c97-494d-bfa3-f874239f2bb4</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>type</name>
+      <type>Main</type>
+      <value>submit</value>
+      <webElementGuid>403768a5-3c82-4aa8-a7e5-e16d788ab6f5</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

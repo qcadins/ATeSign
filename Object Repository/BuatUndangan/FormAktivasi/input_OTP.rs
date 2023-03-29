@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_OTP</name>
+   <tag></tag>
+   <elementGuidId>0e35df3f-69e2-43e0-87d4-be34a5ae502b</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;otp&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;otp&quot;]</value>
+      <webElementGuid>99f13fba-8de0-4fee-8ca8-6df946360c1c</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

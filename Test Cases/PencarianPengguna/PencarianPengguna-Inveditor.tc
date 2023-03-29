@@ -12,7 +12,7 @@
       <variableId>0028d71b-b84e-4235-be10-42470cfd5f8c</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'PencarianPengguna/PencarianPengguna'</defaultValue>
+      <defaultValue>'PencarianPengguna/PencarianPengguna-Inveditor'</defaultValue>
       <description></description>
       <id>0028d71b-b84e-4235-be10-42470cfd5f8c</id>
       <masked>false</masked>

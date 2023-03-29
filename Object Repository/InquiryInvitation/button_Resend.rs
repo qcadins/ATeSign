@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-invitation-register/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper/datatable-body-row/div[2]/datatable-body-cell[7]/div/a[3]/em</value>
+         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-invitation-register/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper/datatable-body-row/div[2]/datatable-body-cell[8]/div/a[3]/em</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-invitation-register/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper/datatable-body-row/div[2]/datatable-body-cell[7]/div/a[3]/em</value>
-      <webElementGuid>b23aad78-3ca0-456a-9694-c68e05708d6d</webElementGuid>
+      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-invitation-register/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper/datatable-body-row/div[2]/datatable-body-cell[8]/div/a[3]/em</value>
+      <webElementGuid>8ca7d9fa-ac43-4404-b48f-4deaa7c86224</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

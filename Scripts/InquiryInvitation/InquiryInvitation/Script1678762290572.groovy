@@ -30,271 +30,275 @@ WebUI.click(findTestObject('InquiryInvitation/menu_InquiryInvitation'))
 'call function check paging'
 checkPaging()
 
-if(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Email')) {
-	'set text search box dengan email'
-	WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
-			15))
-}else if(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Phone')) {
-	'set text search box dengan Phone'
-	WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
-			14))
-}else if(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Id no')) {
-	'set text search box dengan NIK'
-	WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
-			9))
+if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Email')) {
+    'set text search box dengan email'
+    WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+            15))
+} else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Phone')) {
+    'set text search box dengan Phone'
+    WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+            14))
+} else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Id no')) {
+    'set text search box dengan NIK'
+    WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+            9))
 }
 
 'click button cari'
 WebUI.click(findTestObject('InquiryInvitation/button_Cari'))
 
 if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Edit')) {
-	
-	'click button Edit'
-	WebUI.click(findTestObject('InquiryInvitation/button_Edit'))
-	
-	'connect DB eSign'
-	Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
-	
-	'get data buat undangan dari DB'
-	ArrayList<String> result = CustomKeywords.'connection.dataVerif.InquiryInvitationViewDataVerif'(conneSign, findTestData(
-			excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 15).toUpperCase())
-	
-	'1 karena invited by belum bisa di get value dari UI'
-	arrayindex = 1
-	
-//'verify invitationby'
-//checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/select_InviteBy')).toUpperCase(), result[arrayindex++].toUpperCase(), false))
-	
-	'verify receiver'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_Receiver'), 'value', 
-			FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-	'verify NIK'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_NIK'), 'value', FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), 
-			(result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-	'verify Nama'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_Nama'), 'value', FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), 
-			(result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-	'verify TempatLahir'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_TempatLahir'), 'value', 
-			FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-	'verify TanggalLahir'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_TanggalLahir'), 'value', 
-			FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-	'verify No Handphone'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_NoHandphone'), 'value', 
-			FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-	'verify Email'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_Email'), 'value', FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), 
-			(result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-	'verify Alamat'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_Alamat'), 'value', FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), 
-			(result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-	'verify Provinsi'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_Provinsi'), 'value', 
-			FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-	'verify Kota'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_Kota'), 'value', FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), 
-			(result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-	'verify Kecamatan'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_Kecamatan'), 'value', 
-			FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-	'verify Kelurahan'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_Kelurahan'), 'value', 
-			FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-	'verify KodePos'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_KodePos'), 'value', 
-			FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-	if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 32).length() > 0) {
-		'input invited by'
-		WebUI.setText(findTestObject('InquiryInvitation/select_InviteBy'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-				32))
-		
-		'send keys enter'
-		WebUI.sendKeys(findTestObject('InquiryInvitation/select_InviteBy'), Keys.chord(Keys.ENTER))
-		
-		'input receiver detail'
-		WebUI.setText(findTestObject('InquiryInvitation/edit_Receiver'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
-				33))
-	}
-	
-	'input NIK'
-	WebUI.setText(findTestObject('InquiryInvitation/edit_NIK'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-			9))
-	
-	'input nama lengkap'
-	WebUI.setText(findTestObject('InquiryInvitation/edit_Nama'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-			10))
-	
-	'input tempat lahir'
-	WebUI.setText(findTestObject('InquiryInvitation/edit_TempatLahir'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-			11))
-	
-	'input tanggal lahir'
-	WebUI.setText(findTestObject('InquiryInvitation/edit_TanggalLahir'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-			12))
-	
-	'cek if pria(M) / wanita(F)'
-	if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 13).equalsIgnoreCase('M')) {
-		'click radio pria'
-		WebUI.click(findTestObject('InquiryInvitation/radio_Male'))
-	} else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 13).equalsIgnoreCase('F')) {
-		'click radio wanita'
-		WebUI.click(findTestObject('InquiryInvitation/radio_Female'))
-	}
-	
-	'input no handphone'
-	WebUI.setText(findTestObject('InquiryInvitation/edit_noHandphone'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-			14))
-	
-	'input email'
-	WebUI.setText(findTestObject('InquiryInvitation/edit_Email'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-			15))
-	
-	'input alamat lengkap'
-	WebUI.setText(findTestObject('InquiryInvitation/edit_Alamat'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-			17))
-	
-	'input provinsi'
-	WebUI.setText(findTestObject('InquiryInvitation/edit_Provinsi'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-			18))
-	
-	'input kota'
-	WebUI.setText(findTestObject('InquiryInvitation/edit_Kota'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-			19))
-	
-	'input kecamatan'
-	WebUI.setText(findTestObject('InquiryInvitation/edit_Kecamatan'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-			20))
-	
-	'input kelurahan'
-	WebUI.setText(findTestObject('InquiryInvitation/edit_Kelurahan'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-			21))
-	
-	'input kode pos'
-	WebUI.setText(findTestObject('InquiryInvitation/edit_KodePos'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-			22))
+    'click button Edit'
+    WebUI.click(findTestObject('InquiryInvitation/button_Edit'))
 
-	'click button Simpan'
-	WebUI.click(findTestObject('InquiryInvitation/button_Simpan'))
-	
-	if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/button_OkSuccess'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL) && 
-			WebUI.verifyElementNotPresent(findTestObject('InquiryInvitation/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-		'click button OK'
-		WebUI.click(findTestObject('InquiryInvitation/button_OkSuccess'))
-		
-		'write to excel success'
-		CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'BuatUndangan', 0, GlobalVariable.NumofColm - 
-				1, GlobalVariable.StatusSuccess)
-		
-		if (GlobalVariable.checkStoreDB == 'Yes') {
-			'call test store db inquiry invitation'
-			WebUI.callTestCase(findTestCase('InquiryInvitation/InquiryInvitationStoreDB'), [:], FailureHandling.CONTINUE_ON_FAILURE)
-		}
-		
-		if(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Email')) {
-			'set text search box dengan email'
-			WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
-					15))
-		}else if(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Phone')) {
-			'set text search box dengan Phone'
-			WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
-					14))
-		}else if(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Id no')) {
-			'set text search box dengan NIK'
-			WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
-					9))
-		}
-		
-		'click button cari'
-		WebUI.click(findTestObject('InquiryInvitation/button_Cari'))
-		
-		'verify data yang sudah di edit dapat di search di inquiry invitation'
-		WebUI.verifyElementPresent(findTestObject('InquiryInvitation/tr_Name'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
-	} else {
-				'get reason'
-				ReasonFailed = WebUI.getAttribute(findTestObject('BuatUndangan/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
-				
-				'write to excel status failed dan reason'
-				CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-						(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + ReasonFailed)
-				
-				'click button OK'
-				WebUI.click(findTestObject('InquiryInvitation/button_OkSuccess'))
-				
-				'click button batal'
-				WebUI.click(findTestObject('InquiryInvitation/button_Batal'))
-	}
-}else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Resend')) {
-	'get label invited by'
-	invitedBy = WebUI.getText(findTestObject('Object Repository/InquiryInvitation/label_InviteBy'))
-	
-	'click button Resend'
-	WebUI.click(findTestObject('InquiryInvitation/button_Resend'))
-	
-	if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/button_YaProses'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-		'click button OK'
-		WebUI.click(findTestObject('InquiryInvitation/button_YaProses'))
-		
-		if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-			'get reason'
-			ReasonFailed = WebUI.getAttribute(findTestObject('BuatUndangan/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
-		
-			if(!(ReasonFailed.contains('Undangan terkirim ke'))) {
-				
-				'write to excel status failed dan ReasonFailed'
-				CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-					(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + ReasonFailed)
-				
-				if(invitedBy.equalsIgnoreCase('SMS')) {
-					'connect DB eSign'
-					Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
-					
-					'get data saldo'
-					String result = CustomKeywords.'connection.dataVerif.getSaldo'(conneSign, GlobalVariable.userLogin)
-					
-					'verify saldo'
-					checkVerifyEqualOrMatch(WebUI.verifyMatch(result, '0', false, FailureHandling.CONTINUE_ON_FAILURE))
-				}
-				
-			}else {
-				
-				'write to excel success'
-				CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'BuatUndangan', 0, GlobalVariable.NumofColm -
-					1, GlobalVariable.StatusSuccess)
-				
-				if(invitedBy.equalsIgnoreCase('SMS')) {
-					'connect DB eSign'
-					Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
-					
-					'get data saldo'
-					String result = CustomKeywords.'connection.dataVerif.getSaldo'(conneSign, GlobalVariable.userLogin)
-					
-					'verify saldo'
-					checkVerifyEqualOrMatch(WebUI.verifyMatch(result, '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
-				}
-			}
-		}
-	} else if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)){
-		'get reason'
-		ReasonFailed = WebUI.getAttribute(findTestObject('BuatUndangan/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
-	
-		'write to excel status failed dan reason'
-		CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-			(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + ReasonFailed)
-	}
+    'connect DB eSign'
+    Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+
+    'get data buat undangan dari DB'
+    ArrayList<String> result = CustomKeywords.'connection.dataVerif.InquiryInvitationViewDataVerif'(conneSign, findTestData(
+            excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 15).toUpperCase())
+
+    '1 karena invited by belum bisa di get value dari UI'
+    arrayindex = 1
+
+    //'verify invitationby'
+    //checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/select_InviteBy')).toUpperCase(), result[arrayindex++].toUpperCase(), false))
+    'verify receiver'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_Receiver'), 'value', 
+                FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+    'verify NIK'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_NIK'), 'value', 
+                FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+    'verify Nama'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_Nama'), 'value', 
+                FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+    'verify TempatLahir'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_TempatLahir'), 'value', 
+                FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+    'verify TanggalLahir'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_TanggalLahir'), 
+                'value', FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), (result[arrayindex++]).toUpperCase(), false, 
+            FailureHandling.CONTINUE_ON_FAILURE))
+
+    'verify No Handphone'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_NoHandphone'), 'value', 
+                FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+    'verify Email'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_Email'), 'value', 
+                FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+    'verify Alamat'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_Alamat'), 'value', 
+                FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+    'verify Provinsi'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_Provinsi'), 'value', 
+                FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+    'verify Kota'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_Kota'), 'value', 
+                FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+    'verify Kecamatan'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_Kecamatan'), 'value', 
+                FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+    'verify Kelurahan'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_Kelurahan'), 'value', 
+                FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+    'verify KodePos'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_KodePos'), 'value', 
+                FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+    if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 32).length() > 0) {
+        'input invited by'
+        WebUI.setText(findTestObject('InquiryInvitation/select_InviteBy'), findTestData(excelPathBuatUndangan).getValue(
+                GlobalVariable.NumofColm, 32))
+
+        'send keys enter'
+        WebUI.sendKeys(findTestObject('InquiryInvitation/select_InviteBy'), Keys.chord(Keys.ENTER))
+
+        'input receiver detail'
+        WebUI.setText(findTestObject('InquiryInvitation/edit_Receiver'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+                33))
+    }
+    
+    'input NIK'
+    WebUI.setText(findTestObject('InquiryInvitation/edit_NIK'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+            9))
+
+    'input nama lengkap'
+    WebUI.setText(findTestObject('InquiryInvitation/edit_Nama'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+            10))
+
+    'input tempat lahir'
+    WebUI.setText(findTestObject('InquiryInvitation/edit_TempatLahir'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+            11))
+
+    'input tanggal lahir'
+    WebUI.setText(findTestObject('InquiryInvitation/edit_TanggalLahir'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+            12))
+
+    'cek if pria(M) / wanita(F)'
+    if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 13).equalsIgnoreCase('M')) {
+        'click radio pria'
+        WebUI.click(findTestObject('InquiryInvitation/radio_Male'))
+    } else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 13).equalsIgnoreCase('F')) {
+        'click radio wanita'
+        WebUI.click(findTestObject('InquiryInvitation/radio_Female'))
+    }
+    
+    if (WebUI.getAttribute(findTestObject('InquiryInvitation/edit_noHandphone'), 'disabled', FailureHandling.OPTIONAL) != 
+    'true') {
+        'input no handphone'
+        WebUI.setText(findTestObject('InquiryInvitation/edit_noHandphone'), findTestData(excelPathBuatUndangan).getValue(
+                GlobalVariable.NumofColm, 14))
+    }
+    
+    if (WebUI.getAttribute(findTestObject('InquiryInvitation/edit_Email'), 'disabled', FailureHandling.OPTIONAL) != 'true') {
+        'input email'
+        WebUI.setText(findTestObject('InquiryInvitation/edit_Email'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+                15))
+    }
+    
+    'input alamat lengkap'
+    WebUI.setText(findTestObject('InquiryInvitation/edit_Alamat'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+            17))
+
+    'input provinsi'
+    WebUI.setText(findTestObject('InquiryInvitation/edit_Provinsi'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+            18))
+
+    'input kota'
+    WebUI.setText(findTestObject('InquiryInvitation/edit_Kota'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+            19))
+
+    'input kecamatan'
+    WebUI.setText(findTestObject('InquiryInvitation/edit_Kecamatan'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+            20))
+
+    'input kelurahan'
+    WebUI.setText(findTestObject('InquiryInvitation/edit_Kelurahan'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+            21))
+
+    'input kode pos'
+    WebUI.setText(findTestObject('InquiryInvitation/edit_KodePos'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+            22))
+
+    'click button Simpan'
+    WebUI.click(findTestObject('InquiryInvitation/button_Simpan'))
+
+    if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/button_OkSuccess'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL) && 
+    WebUI.verifyElementNotPresent(findTestObject('InquiryInvitation/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+        'click button OK'
+        WebUI.click(findTestObject('InquiryInvitation/button_OkSuccess'))
+
+        'write to excel success'
+        CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'BuatUndangan', 0, GlobalVariable.NumofColm - 
+            1, GlobalVariable.StatusSuccess)
+
+        if (GlobalVariable.checkStoreDB == 'Yes') {
+            'call test store db inquiry invitation'
+            WebUI.callTestCase(findTestCase('InquiryInvitation/InquiryInvitationStoreDB'), [:], FailureHandling.CONTINUE_ON_FAILURE)
+        }
+        
+        if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Email')) {
+            'set text search box dengan email'
+            WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(
+                    GlobalVariable.NumofColm, 15))
+        } else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Phone')) {
+            'set text search box dengan Phone'
+            WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(
+                    GlobalVariable.NumofColm, 14))
+        } else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Id no')) {
+            'set text search box dengan NIK'
+            WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(
+                    GlobalVariable.NumofColm, 9))
+        }
+        
+        'click button cari'
+        WebUI.click(findTestObject('InquiryInvitation/button_Cari'))
+
+        'verify data yang sudah di edit dapat di search di inquiry invitation'
+        WebUI.verifyElementPresent(findTestObject('InquiryInvitation/tr_Name'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
+    } else {
+        'get reason'
+        ReasonFailed = WebUI.getAttribute(findTestObject('BuatUndangan/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
+
+        'write to excel status failed dan reason'
+        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
+            GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
+                '-', '') + ';') + ReasonFailed)
+
+        'click button OK'
+        WebUI.click(findTestObject('InquiryInvitation/button_OkSuccess'))
+
+        'click button batal'
+        WebUI.click(findTestObject('InquiryInvitation/button_Batal'))
+    }
+} else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Resend')) {
+    'get label invited by'
+    invitedBy = WebUI.getText(findTestObject('Object Repository/InquiryInvitation/label_InviteBy'))
+
+    'click button Resend'
+    WebUI.click(findTestObject('InquiryInvitation/button_Resend'))
+
+    if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/button_YaProses'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+        'click button OK'
+        WebUI.click(findTestObject('InquiryInvitation/button_YaProses'))
+
+        if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+            'get reason'
+            ReasonFailed = WebUI.getAttribute(findTestObject('BuatUndangan/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
+
+            if (!(ReasonFailed.contains('Undangan terkirim ke'))) {
+                'write to excel status failed dan ReasonFailed'
+                CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
+                    GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+                        2).replace('-', '') + ';') + ReasonFailed)
+
+                if (invitedBy.equalsIgnoreCase('SMS')) {
+                    'connect DB eSign'
+                    Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+
+                    'get data saldo'
+                    String result = CustomKeywords.'connection.dataVerif.getSaldo'(conneSign, GlobalVariable.userLogin)
+
+                    'verify saldo'
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch(result, '0', false, FailureHandling.CONTINUE_ON_FAILURE))
+                }
+            } else {
+                'write to excel success'
+                CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'BuatUndangan', 0, 
+                    GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+
+                if (invitedBy.equalsIgnoreCase('SMS')) {
+                    'connect DB eSign'
+                    Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+
+                    'get data saldo'
+                    String result = CustomKeywords.'connection.dataVerif.getSaldo'(conneSign, GlobalVariable.userLogin)
+
+                    'verify saldo'
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch(result, '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
+                }
+            }
+        }
+    } else if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+        'get reason'
+        ReasonFailed = WebUI.getAttribute(findTestObject('BuatUndangan/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
+
+        'write to excel status failed dan reason'
+        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
+            GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
+                '-', '') + ';') + ReasonFailed)
+    }
 }
 
 def checkPaging() {
@@ -348,3 +352,4 @@ def checkVerifyEqualOrMatch(Boolean isMatch) {
         GlobalVariable.FlagFailed = 1
     }
 }
+

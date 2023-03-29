@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>button_MataUlangKataSandi</name>
+   <tag></tag>
+   <elementGuidId>5842e50e-fba5-4b05-9f8c-0c31cbf65c8e</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[4]/div[1]/i[2]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[4]/div[1]/i[2]</value>
+      <webElementGuid>f97ecdaf-334b-4b20-bd58-6882662adda8</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

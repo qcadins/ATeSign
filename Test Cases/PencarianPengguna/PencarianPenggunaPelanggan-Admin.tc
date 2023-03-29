@@ -12,7 +12,7 @@
       <variableId>42136a90-efcc-4d22-abf8-f94e253c0c74</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'PencarianPengguna/PencarianPengguna'</defaultValue>
+      <defaultValue>'PencarianPengguna/PencarianPenggunaPelanggan'</defaultValue>
       <description></description>
       <id>42136a90-efcc-4d22-abf8-f94e253c0c74</id>
       <masked>false</masked>

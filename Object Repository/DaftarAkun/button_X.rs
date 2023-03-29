@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>button_X</name>
+   <tag></tag>
+   <elementGuidId>855f4957-77b4-4ef0-963c-6769af1b8073</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[(text() = 'x' or . = 'x')]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/ngb-modal-window/div/div/app-verification-email/form/div/button[1]/span</value>
+      <webElementGuid>0c47bfaa-3692-4d3c-b4c2-d15b8a5512c0</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>x</value>
+      <webElementGuid>193a3fd5-7a4e-40e8-9c01-534666a34fef</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

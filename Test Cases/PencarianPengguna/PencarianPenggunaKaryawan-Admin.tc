@@ -12,7 +12,7 @@
       <variableId>4580d7ac-331e-477f-9827-9f9099b49283</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'PencarianPengguna/PencarianPengguna'</defaultValue>
+      <defaultValue>'PencarianPengguna/PencarianPengguna-Karyawan'</defaultValue>
       <description></description>
       <id>4580d7ac-331e-477f-9827-9f9099b49283</id>
       <masked>false</masked>
