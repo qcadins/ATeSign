@@ -19,8 +19,14 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
-'navigate url ke daftar akun'
-WebUI.navigateToUrl(GlobalVariable.Link.replace('https://gdkwebsvr:8080', 'http://localhost:4500'))
+'check if ingin menggunakan local host atau tidak'
+if(GlobalVariable.useLocalHost == 'Yes') {	
+	'navigate url ke daftar akun'
+	WebUI.navigateToUrl(GlobalVariable.Link.replace('https://gdkwebsvr:8080', GlobalVariable.urlLocalHost))
+}else if(GlobalVariable.useLocalHost == 'No'){
+	'navigate url ke daftar akun'
+	WebUI.navigateToUrl(GlobalVariable.Link)
+}
 
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
@@ -243,7 +249,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     } else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), GlobalVariable.TimeOut, 
     		FailureHandling.OPTIONAL)) {
 		
-		'call testcae form aktivasi vida'
+		'call testcase form aktivasi vida'
 		WebUI.callTestCase(findTestCase('Register_eSign/FormAktivasiVida'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'],
 			FailureHandling.CONTINUE_ON_FAILURE)
     }

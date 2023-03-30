@@ -40,6 +40,13 @@ WebUI.setText(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), findT
 'click button mata kata sandi'
 WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_MataKataSandi'))
 
+'get text kata sandi'
+KataSandi = WebUI.getAttribute(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), 'value')
+
+'check kata sandi sesuai inputan excel'
+checkVerifyEqualOrMatch(WebUI.verifyMatch(KataSandi, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+			35), false, FailureHandling.CONTINUE_ON_FAILURE))
+
 'input ulang kata sandi'
 WebUI.setText(findTestObject('BuatUndangan/FormAktivasi/input_UlangKataSandi'), findTestData(excelPathBuatUndangan).getValue(
         GlobalVariable.NumofColm, 36))
@@ -47,6 +54,14 @@ WebUI.setText(findTestObject('BuatUndangan/FormAktivasi/input_UlangKataSandi'), 
 'click button mata ulang kata sandi'
 WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_MataUlangKataSandi'))
 
+'get text ulang kata sandi'
+UlangKataSandi = WebUI.getAttribute(findTestObject('BuatUndangan/FormAktivasi/input_UlangKataSandi'), 'value')
+
+'check ulang kata sandi sesuai inputan excel'
+checkVerifyEqualOrMatch(WebUI.verifyMatch(UlangKataSandi, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+			36), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+'verify warning password'
 if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertText'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
     'get text reason'
     reason = WebUI.getText(findTestObject('BuatUndangan/FormAktivasi/alertText'))
@@ -91,6 +106,22 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 				'klik pada button kirim ulang otp'
 				WebUI.click(findTestObject('BuatUndangan/FormAktivasi/kirimKodeLagi'))
 	
+				if(WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+					reason = WebUI.getText(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'))
+							
+					'write to excel status failed dan reason'
+					CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm,
+							GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
+									'-', '') + ';') + reason)
+							
+					'click button tutup error'
+					WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_OK'))
+							
+					GlobalVariable.FlagFailed = 1
+					
+					break
+				}
+				
 				'delay untuk menunggu OTP'
 				WebUI.delay(5)
 	

@@ -144,4 +144,14 @@
       <initValue>''</initValue>
       <name>uat_url</name>
    </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>findTestData('Login/Setting').getValue(3, 2)</initValue>
+      <name>useLocalHost</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>findTestData('Login/Setting').getValue(4, 2)</initValue>
+      <name>urlLocalHost</name>
+   </GlobalVariableEntity>
 </GlobalVariableEntities>
