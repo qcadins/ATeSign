@@ -223,7 +223,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     WebUI.callTestCase(findTestCase('Register_eSign/DaftarAkunDataVerif'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
         FailureHandling.CONTINUE_ON_FAILURE)
 
-    if (GlobalVariable.checkStoreDB == 'Yes') {
+    if (GlobalVariable.checkStoreDB == 'Yes' && GlobalVariable.FlagFailed == 0) {
         'delay nunggu data db'
         WebUI.delay(5)
 

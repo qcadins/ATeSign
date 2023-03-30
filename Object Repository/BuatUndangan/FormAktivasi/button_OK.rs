@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>button_X</name>
+   <name>button_OK</name>
    <tag></tag>
-   <elementGuidId>855f4957-77b4-4ef0-963c-6769af1b8073</elementGuidId>
+   <elementGuidId>ec17f850-9c68-4530-96da-5b37dcebdb2e</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/ngb-modal-window/div/div/app-verification-email/form/div/button[1]/span</value>
+         <value>//*[(text() = 'OK' or . = 'OK')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html/body/ngb-modal-window/div/div/app-verification-email/form/div/button[1]/span</value>
-      <webElementGuid>b68c7bad-b0bf-4723-b7c2-76b6ad18a03e</webElementGuid>
+      <value>/html/body/div[3]/div/div[3]/button[1]</value>
+      <webElementGuid>7a802c1f-a41e-4c42-b921-7b8d769c9aae</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>false</isSelected>
+      <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>text</name>
       <type>Main</type>
-      <value>x</value>
-      <webElementGuid>811146d2-ebed-46df-af0a-525069ebc0b9</webElementGuid>
+      <value>OK</value>
+      <webElementGuid>3a66024c-83fe-47eb-ace1-2c828fd1e54f</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

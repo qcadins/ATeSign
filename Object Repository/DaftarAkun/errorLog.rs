@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>button_X</name>
+   <name>errorLog</name>
    <tag></tag>
-   <elementGuidId>855f4957-77b4-4ef0-963c-6769af1b8073</elementGuidId>
+   <elementGuidId>387091b5-022b-4d9d-a418-b12c62b58d8f</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/ngb-modal-window/div/div/app-verification-email/form/div/button[1]/span</value>
+         <value>//*[@role = 'alertdialog']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html/body/ngb-modal-window/div/div/app-verification-email/form/div/button[1]/span</value>
-      <webElementGuid>b68c7bad-b0bf-4723-b7c2-76b6ad18a03e</webElementGuid>
+      <value>/div/div[2]</value>
+      <webElementGuid>b72bb49b-15d5-4cc8-8688-5d401caa19a9</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>false</isSelected>
+      <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>text</name>
+      <name>role</name>
       <type>Main</type>
-      <value>x</value>
-      <webElementGuid>811146d2-ebed-46df-af0a-525069ebc0b9</webElementGuid>
+      <value>alertdialog</value>
+      <webElementGuid>ce636709-2973-4437-a8b0-8b3bf9b8039c</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

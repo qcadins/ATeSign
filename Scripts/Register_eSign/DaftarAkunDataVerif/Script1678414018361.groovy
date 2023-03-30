@@ -80,6 +80,9 @@ checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Daf
 'click ambil foto sendiri'
 WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFotoSendiri'))
 
+'delay untuk camera on'
+WebUI.delay(2)
+
 'click ambil foto'
 WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFoto'))
 
@@ -90,6 +93,9 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 30).l
     'click ambil foto KTP'
     WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFotoKTP'))
 
+	'delay untuk camera on'
+	WebUI.delay(2)
+	
     'click ambil foto'
     WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFoto'))
 
@@ -124,6 +130,8 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
 
     'click button tutup error'
     WebUI.click(findTestObject('DaftarAkun/button_TutupError'))
+	
+	GlobalVariable.FlagFailed = 1
 } else {
     ArrayList<String> listOTP = new ArrayList<String>()
 
@@ -207,7 +215,17 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Verifikasi'))
 
     'cek if popup error msg'
-    if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_PopupMsg'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+    if (!WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).contains('berhasil')) {
+		'get reason error log'
+		reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
+		
+		'write to excel status failed dan reason'
+        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
+            GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
+                '-', '') + ';') + reason)
+		
+		GlobalVariable.FlagFailed = 1
+    } else if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_PopupMsg'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
         reason = WebUI.getText(findTestObject('DaftarAkun/label_PopupMsg'))
 
         'write to excel status failed dan reason'
@@ -220,7 +238,9 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
 		
 		'click button X tutup popup OTP'
 		WebUI.click(findTestObject('DaftarAkun/button_X'))
-    } else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/input_Email'), GlobalVariable.TimeOut, 
+		
+		GlobalVariable.FlagFailed = 1
+    } else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), GlobalVariable.TimeOut, 
     		FailureHandling.OPTIONAL)) {
 		
 		'call testcae form aktivasi vida'

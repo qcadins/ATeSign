@@ -3,11 +3,11 @@
    <description></description>
    <name>button_X</name>
    <tag></tag>
-   <elementGuidId>855f4957-77b4-4ef0-963c-6769af1b8073</elementGuidId>
+   <elementGuidId>13236af4-420a-46cd-8680-dbc3bdbbacaa</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/ngb-modal-window/div/div/app-verification-email/form/div/button[1]/span</value>
+         <value>/html/body/ngb-modal-window/div/div/app-modal-request-otp/form/div/button/span</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,8 +17,8 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html/body/ngb-modal-window/div/div/app-verification-email/form/div/button[1]/span</value>
-      <webElementGuid>b68c7bad-b0bf-4723-b7c2-76b6ad18a03e</webElementGuid>
+      <value>/html/body/ngb-modal-window/div/div/app-modal-request-otp/form/div/button/span</value>
+      <webElementGuid>4ed10f17-e751-4f8b-9345-2b23b1f0b306</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -26,6 +26,6 @@
       <name>text</name>
       <type>Main</type>
       <value>x</value>
-      <webElementGuid>811146d2-ebed-46df-af0a-525069ebc0b9</webElementGuid>
+      <webElementGuid>978a2114-e7fe-44a3-bdba-41e6a2a3cbcb</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
