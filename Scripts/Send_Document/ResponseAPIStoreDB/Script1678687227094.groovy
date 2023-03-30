@@ -83,7 +83,7 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVar
 
     'verify is sequence'
     arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 19).replace('"', ''), 
-            result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+    result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'verify psre/vendor code'
 arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 21).replace('"', ''), 
