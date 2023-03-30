@@ -230,10 +230,8 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
         'call test case BuatUndanganStore DB'
         WebUI.callTestCase(findTestCase('Register_eSign/BuatUndanganStoreDB'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
             FailureHandling.CONTINUE_ON_FAILURE)
-    }
-    
-    WebUI.closeBrowser()
+    }    
 }
 
-
-
+'close browser testing'
+WebUI.closeBrowser()

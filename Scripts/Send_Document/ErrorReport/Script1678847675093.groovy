@@ -20,6 +20,9 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
+'get current date'
+def currentDate = new Date().format( 'yyyy-MM-dd' )
+
 'click menu ErrorReport'
 WebUI.click(findTestObject('ErrorReport/menu_ErrorReport'))
 
@@ -29,8 +32,7 @@ Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 'call function check paging'
 checkPaging()
 
-String nomorKontrak = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 11).replace('"','')
-ArrayList<String> namasigner = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 36).split(';', -1)
+ArrayList<String> namasigner = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 34).split(';', -1)
 
 'click button cari'
 WebUI.click(findTestObject('ErrorReport/button_Cari'))
@@ -50,11 +52,32 @@ totalData = WebUI.getText(findTestObject('ErrorReport/label_TotalData')).split('
 'verify total data UI dan DB'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(totalData[0].replace(',', ''), resultTotalData, false, FailureHandling.CONTINUE_ON_FAILURE))
 
+'select modul'
+WebUI.setText(findTestObject('ErrorReport/select_Modul'), 'send document error history')
+
+'send keys enter'
+WebUI.sendKeys(findTestObject('ErrorReport/select_Modul'), Keys.chord(Keys.ENTER))
+
 'input nama'
 WebUI.setText(findTestObject('ErrorReport/input_Nama'), namasigner.last().toString().replace('"',''))
 
 'input no kontrak'
-WebUI.setText(findTestObject('ErrorReport/input_NoKontrak'), nomorKontrak)
+WebUI.setText(findTestObject('ErrorReport/input_NoKontrak'), findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 11).replace('"',''))
+
+'input lini bisnis'
+WebUI.setText(findTestObject('ErrorReport/input_LiniBisnis'), findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 18).replace('"',''))
+
+'input cabang'
+WebUI.setText(findTestObject('ErrorReport/input_Cabang'), findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 14).replace('"',''))
+
+'input Wilayah'
+WebUI.setText(findTestObject('ErrorReport/input_Wilayah'), findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 16).replace('"',''))
+
+'input tanggal dari'
+WebUI.setText(findTestObject('ErrorReport/input_TanggalDari'), currentDate)
+
+'input tanggal ke'
+WebUI.setText(findTestObject('ErrorReport/input_TanggalKe'), currentDate)
 
 'click button cari'
 WebUI.click(findTestObject('ErrorReport/button_Cari'))
@@ -71,31 +94,19 @@ checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorRep
 'click button X'
 WebUI.click(findTestObject('ErrorReport/button_X'))
 
-'click button set ulang'
-WebUI.click(findTestObject('Object Repository/ErrorReport/button_Reset'))
-
-'input nama'
-WebUI.setText(findTestObject('ErrorReport/input_Nama'), namasigner.last().toString().replace('"',''))
-
-'input no kontrak'
-WebUI.setText(findTestObject('ErrorReport/input_NoKontrak'), nomorKontrak)
-
-'click button cari'
-WebUI.click(findTestObject('ErrorReport/button_Cari'))
-
 'click button status aktivasi'
 WebUI.click(findTestObject('ErrorReport/button_StatusAktivasi'))
 
 index = 0
 
 'verify data UI dan DB'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorReport/label_SignerType')), 'Customer', false, FailureHandling.CONTINUE_ON_FAILURE))
+checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorReport/label_SignerType'), FailureHandling.CONTINUE_ON_FAILURE), 'Customer', false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'verify data UI dan DB'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorReport/label_SignerName')), resultStatusAktivasi[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorReport/label_SignerName'), FailureHandling.CONTINUE_ON_FAILURE), resultStatusAktivasi[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'verify total data UI dan DB'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorReport/label_SignerNIK')), resultStatusAktivasi[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorReport/label_SignerNIK'), FailureHandling.CONTINUE_ON_FAILURE), resultStatusAktivasi[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'declare status'
 String status, isregis = resultStatusAktivasi[index++], isaktif = resultStatusAktivasi[index++]
@@ -112,7 +123,7 @@ if(isregis == '0' && isaktif == '0') {
 }
 
 'verify total data UI dan DB'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorReport/label_StatusAktivasi')), status, false, FailureHandling.CONTINUE_ON_FAILURE))
+checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorReport/label_StatusAktivasi'), FailureHandling.CONTINUE_ON_FAILURE), status, false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'click button X'
 WebUI.click(findTestObject('ErrorReport/button_X'))
