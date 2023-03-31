@@ -72,28 +72,41 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 
                 'fungsi select untuk yang mengarah ke element document pertama'
                 select = WebUI.getAttribute(findTestObject('Object Repository/SignDocument/Nav Doc'), 'text')
-
+				
+				'Jika get text terdapat documentId (pengecekan sama atau tidak)'
                 if (select.contains(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 12)) == true) {
-                    WebUI.maximizeWindow()
+                    
+					'Web di Maximize'
+					WebUI.maximizeWindow()
 
+					'Scroll menuju clickSign (Kotak Merah)'
                     WebUI.scrollToElement(findTestObject('Object Repository/SignDocument/btn_clickSign'), GlobalVariable.TimeOut)
-
+					
+					'Klik kotak Merah'
                     WebUI.click(findTestObject('Object Repository/SignDocument/btn_clickSign'))
 
+					'Verify tanda tangannya ada setelah diclick'
                     WebUI.verifyElementPresent(findTestObject('Object Repository/SignDocument/NavSign'), GlobalVariable.TimeOut)
 
+					'Klik total Page'
                     WebUI.click(findTestObject('Object Repository/SignDocument/btn_totalPage'))
 
+					'Klik proses di pop up total page'
                     WebUI.click(findTestObject('Object Repository/SignDocument/btn_runtotalPage'))
 
+					'Klik pdf next'
                     WebUI.click(findTestObject('Object Repository/SignDocument/btn_pdfnext'))
 
+					'Klik pdf prev'
                     WebUI.click(findTestObject('Object Repository/SignDocument/btn_pdfprev'))
 
+					'Klik zoom in'
                     WebUI.click(findTestObject('Object Repository/SignDocument/btn_zoomin'))
 
+					'Klik zoom out'
                     WebUI.click(findTestObject('Object Repository/SignDocument/btn_zoomout'))
 
+					'Klik btn proses'
                     WebUI.click(findTestObject('Object Repository/SignDocument/btn_Proses'))
 
                     'Get vendorCode'
@@ -105,25 +118,28 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 
                     'write to excel success'
                     CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sign Document', 
-                        0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-
+                     0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+					
+					'Tutup browser'
                     WebUI.closeBrowser()
+				'Jika tidak ada, maka '
                 } else {
-                    'write to excel status failed dan reason'
+                    'write to excel status failed dan reason : verify tidak equal'
                     CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
-                            '-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
+                      '-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
                 }
             } else {
+				'write to excel status failed dan reason : message Failed dari response'
                 messageFailed = WS.getElementPropertyValue(respon_signdoc, 'status.message', FailureHandling.OPTIONAL).toString()
-
                 'write to excel status failed dan reason'
                 CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
                         '-', '') + ';') + messageFailed)
             }
         } else {
-            'write to excel status failed dan reason'
+			
+            'write to excel status failed dan reason : failed hit api'
             CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
                     '-', '') + ';') + GlobalVariable.ReasonFailedHitAPI)

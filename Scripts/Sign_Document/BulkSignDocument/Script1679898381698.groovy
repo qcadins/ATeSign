@@ -84,6 +84,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 				'Get signLink'
 				signLink = WS.getElementPropertyValue(respon_bulksign, 'signLink')
 				
+				println signLink
+				
 				'Open signLink buat check apakah dokumen yang ada disana dengan documentId excel sama'
 				WebUI.openBrowser(signLink)
 				
@@ -99,13 +101,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 					'fungsi select untuk yang mengarah ke element document pertama'
 					select = new Select(DriverFactory.getWebDriver().findElement(By.xpath("//[@id='pdf-main-container']/div/ul/li["+(j+1)+"]")))
 					
-					'ambil text yang diselect oleh dropdown list tersebut'
-					optionLabel = WebUI.getAttribute(select, 'label')
-					
-					
-					'fungsi select untuk yang mengarah ke element document pertama'
-					select = new Select(DriverFactory.getWebDriver().findElement(By.xpath("//[@id='pdf-main-container']/div/ul/li["+ (j+1) +"]")))
-				
 					'ambil text yang diselect oleh dropdown list tersebut'
 					optionLabel = WebUI.getAttribute(select, 'label')
 					
