@@ -398,7 +398,7 @@ public class dataVerif {
 		}
 		return listdata
 	}
-	
+
 	@Keyword
 	public getSetEditAfterRegister (Connection conn){
 
@@ -417,7 +417,7 @@ public class dataVerif {
 		}
 		return data
 	}
-	
+
 	@Keyword
 	public getSetResendLink (Connection conn){
 
@@ -436,7 +436,7 @@ public class dataVerif {
 		}
 		return data
 	}
-	
+
 	@Keyword
 	public getSetInvLinkAct (Connection conn, String email){
 
