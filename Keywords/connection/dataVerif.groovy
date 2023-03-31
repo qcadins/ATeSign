@@ -272,7 +272,7 @@ public class dataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return Integer.parseInt(data)
+		return data
 	}
 
 	@Keyword
@@ -402,7 +402,7 @@ public class dataVerif {
 	@Keyword
 	public getSetEditAfterRegister (Connection conn){
 
-		String data
+		int data
 
 		Statement stm = conn.createStatement()
 
@@ -415,14 +415,13 @@ public class dataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-
-		return Integer.parseInt(data)
+		return data
 	}
 
 	@Keyword
 	public getSetResendLink (Connection conn){
 
-		String data
+		int data
 
 		Statement stm = conn.createStatement()
 
@@ -435,13 +434,13 @@ public class dataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return Integer.parseInt(data)
+		return data
 	}
 
 	@Keyword
 	public getSetInvLinkAct (Connection conn, String email){
 
-		String data
+		int data
 
 		Statement stm = conn.createStatement()
 
@@ -454,6 +453,27 @@ public class dataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return Integer.parseInt(data)
+		return data
+	}
+	
+	@Keyword
+	public getKotakMasukSendDoc(Connection conn, String documentid){
+		String data
+		ArrayList<String> listdata = new ArrayList<>()
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("select tdh.ref_number, msl.description as doctype, mdt.doc_template_name, STRING_AGG(amm.full_name,';') as name, STRING_AGG(amm.login_id,';') as email, STRING_AGG(ms.description,';') as signertype, amm.is_active from tr_document_d tdd join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join ms_lov msl on tdh.lov_doc_type = msl.id_lov join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d join ms_lov ms on tdds.lov_signer_type = ms.id_lov join am_msuser amm on tdds.id_ms_user = amm.id_ms_user where document_id = 'documentid' GROUP BY tdh.ref_number, msl.description, mdt.doc_template_name, amm.is_active")
+
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for(int i = 1 ; i <= columnCount ; i++){
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		return listdata
 	}
 }
