@@ -272,7 +272,7 @@ public class dataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return data
+		return Integer.parseInt(data)
 	}
 
 	@Keyword
@@ -402,7 +402,7 @@ public class dataVerif {
 	@Keyword
 	public getSetEditAfterRegister (Connection conn){
 
-		int data
+		String data
 
 		Statement stm = conn.createStatement()
 
@@ -415,13 +415,14 @@ public class dataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return data
+
+		return Integer.parseInt(data)
 	}
 
 	@Keyword
 	public getSetResendLink (Connection conn){
 
-		int data
+		String data
 
 		Statement stm = conn.createStatement()
 
@@ -434,13 +435,13 @@ public class dataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return data
+		return Integer.parseInt(data)
 	}
 
 	@Keyword
 	public getSetInvLinkAct (Connection conn, String email){
 
-		int data
+		String data
 
 		Statement stm = conn.createStatement()
 
@@ -453,6 +454,6 @@ public class dataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return data
+		return Integer.parseInt(data)
 	}
 }

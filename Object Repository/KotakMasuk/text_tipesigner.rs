@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>text_tipesigner</name>
+   <tag></tag>
+   <elementGuidId>ff2c3f94-b2a8-4edc-9f8c-16d8cd871a4f</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>XPATH</key>
+         <value>(.//*[normalize-space(text()) and normalize-space(.)='Tanggal TTD'])[1]/following::p[1]</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>div.modal-body > app-msx-datatable > section.msx-datatable > ngx-datatable.ngx-datatable.material.bootstrap.fixed-header.virtualized.selectable.checkbox-selection > div.visible > datatable-body.datatable-body > datatable-selection > datatable-scroller.datatable-scroll.ng-star-inserted > datatable-row-wrapper.datatable-row-wrapper.ng-star-inserted > datatable-body-row.datatable-body-row.datatable-row-even.ng-star-inserted > div.datatable-row-center.datatable-row-group.ng-star-inserted > datatable-body-cell.datatable-body-cell.sort-active.ng-star-inserted > div.datatable-body-cell-label > p.undefined.ng-star-inserted</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>XPATH</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>p</value>
+      <webElementGuid>6a86cea3-cba8-4081-8ea4-93b158f62f16</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>ng-reflect-ng-class</name>
+      <type>Main</type>
+      <value>undefined</value>
+      <webElementGuid>8dea0cbd-66d4-4c37-a7ad-d91397e5dab4</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>undefined ng-star-inserted</value>
+      <webElementGuid>c3afe2ab-8198-4f1f-a39a-ac338285aacb</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Employee</value>
+      <webElementGuid>29604374-0c40-4fdd-b2e6-b5a3501dcec2</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html[1]/body[@class=&quot;vertical-layout navbar-static pace-done menu-expanded menu-open vertical-menu page-scrolled modal-open&quot;]/ngb-modal-window[@class=&quot;d-block modal fade show&quot;]/div[@class=&quot;modal-dialog modal-lg&quot;]/div[@class=&quot;modal-content&quot;]/app-signer[1]/div[@class=&quot;modal-body&quot;]/app-msx-datatable[1]/section[@class=&quot;msx-datatable&quot;]/ngx-datatable[@class=&quot;ngx-datatable material bootstrap fixed-header virtualized selectable checkbox-selection&quot;]/div[@class=&quot;visible&quot;]/datatable-body[@class=&quot;datatable-body&quot;]/datatable-selection[1]/datatable-scroller[@class=&quot;datatable-scroll ng-star-inserted&quot;]/datatable-row-wrapper[@class=&quot;datatable-row-wrapper ng-star-inserted&quot;]/datatable-body-row[@class=&quot;datatable-body-row datatable-row-even ng-star-inserted&quot;]/div[@class=&quot;datatable-row-center datatable-row-group ng-star-inserted&quot;]/datatable-body-cell[@class=&quot;datatable-body-cell sort-active ng-star-inserted&quot;]/div[@class=&quot;datatable-body-cell-label&quot;]/p[@class=&quot;undefined ng-star-inserted&quot;]</value>
+      <webElementGuid>e0d002be-3e18-4b9b-8329-9858516f45b3</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Tanggal TTD'])[1]/following::p[1]</value>
+      <webElementGuid>b230d378-ee82-45a8-936f-fef41f89b35e</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Status'])[1]/following::p[1]</value>
+      <webElementGuid>36828101-230a-4482-b807-a03005cd255b</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='-'])[1]/preceding::p[5]</value>
+      <webElementGuid>acb1d937-0b67-487d-8529-75ad8ee18268</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>//*/text()[normalize-space(.)='Employee']/parent::*</value>
+      <webElementGuid>f710eae1-d08d-4a0d-9582-7dec3739390d</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//div[2]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper/datatable-body-row/div[2]/datatable-body-cell/div/p</value>
+      <webElementGuid>08f5c981-28ce-4980-bbdf-f71b1a527632</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//p[(text() = 'Employee' or . = 'Employee')]</value>
+      <webElementGuid>24acd8e1-a95e-4ac8-b919-edc949a9767a</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>

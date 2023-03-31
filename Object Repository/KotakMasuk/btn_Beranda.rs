@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>btn_Beranda</name>
+   <tag></tag>
+   <elementGuidId>892f39d9-8ebc-41f1-ba66-f0cc5240424f</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>XPATH</key>
+         <value>(.//*[normalize-space(text()) and normalize-space(.)='Keluar'])[1]/following::span[1]</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>span.menu-title.ng-tns-c133-1</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>XPATH</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>span</value>
+      <webElementGuid>5d6a0737-b159-4581-9910-02232f042e75</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>menu-title ng-tns-c133-1</value>
+      <webElementGuid>7547f399-548b-491b-bcc1-96262d4f9c58</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Beranda</value>
+      <webElementGuid>e23d23f6-1301-4b9a-a541-4ab6a9cffa20</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html[1]/body[@class=&quot;vertical-layout navbar-static pace-done menu-expanded menu-open vertical-menu&quot;]/app-root[1]/app-full-layout[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;wrapper&quot;]/div[@class=&quot;app-sidebar main-menu menu-fixed menu-native-scroll expanded ng-star-inserted&quot;]/app-sidebar[@class=&quot;ng-tns-c133-1&quot;]/div[@class=&quot;sidebar-content main-menu-content ng-tns-c133-1 ps&quot;]/div[@class=&quot;nav-container ng-tns-c133-1&quot;]/ul[@class=&quot;navigation ng-tns-c133-1&quot;]/li[@class=&quot;ng-tns-c133-1 ng-star-inserted active&quot;]/a[@class=&quot;ng-tns-c133-1 ng-star-inserted&quot;]/span[@class=&quot;menu-title ng-tns-c133-1&quot;]</value>
+      <webElementGuid>040d0aac-3a17-43e4-a618-58a079fc7975</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Keluar'])[1]/following::span[1]</value>
+      <webElementGuid>6fb0a971-632c-4fd4-9286-674cf02500b4</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Ubah Kode Akses'])[1]/following::span[2]</value>
+      <webElementGuid>ba508cb4-5e1d-4db6-a999-78627484ad2c</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Pencarian Dokumen'])[1]/preceding::span[1]</value>
+      <webElementGuid>87896363-0f41-41b5-887e-5f2194ced0ce</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Tanda Tangan Dokumen'])[1]/preceding::span[2]</value>
+      <webElementGuid>894895da-9f57-4afb-9884-77e0a0147ef2</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>//*/text()[normalize-space(.)='Beranda']/parent::*</value>
+      <webElementGuid>d9e29050-f12a-4fcb-8405-7ba3ce213134</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//app-sidebar/div[2]/div/ul/li/a/span</value>
+      <webElementGuid>833ca37f-ae2f-4cb1-96bd-493c63548267</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//span[(text() = 'Beranda' or . = 'Beranda')]</value>
+      <webElementGuid>5c947bb6-54e7-4f6b-bc06-59c8b62a4a07</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>
