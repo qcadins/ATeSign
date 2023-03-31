@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>button_Resend</name>
+   <name>button_KirimUlangUndangan</name>
    <tag></tag>
    <elementGuidId>6e1eb636-b4cc-4d09-b631-641075d1837d</elementGuidId>
    <selectorCollection>

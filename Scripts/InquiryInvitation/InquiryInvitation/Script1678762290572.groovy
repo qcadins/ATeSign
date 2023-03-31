@@ -24,11 +24,21 @@ import org.openqa.selenium.support.ui.Select as Select
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
+'connect DB eSign'
+Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+
 'click menu inquiry invitation'
 WebUI.click(findTestObject('InquiryInvitation/menu_InquiryInvitation'))
 
 'call function check paging'
 checkPaging()
+
+int EditAfterRegister = CustomKeywords.'connection.dataVerif.getSetEditAfterRegister'(conneSign)
+
+int ResendLink = CustomKeywords.'connection.dataVerif.getSetResendLink'(conneSign)
+
+int InvLink = CustomKeywords.'connection.dataVerif.getSetInvLinkAct'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+            15).toUpperCase())
 
 if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Email')) {
     'set text search box dengan email'
@@ -47,12 +57,9 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).eq
 'click button cari'
 WebUI.click(findTestObject('InquiryInvitation/button_Cari'))
 
-if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Edit')) {
+if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Edit') && EditAfterRegister == 1) {
     'click button Edit'
     WebUI.click(findTestObject('InquiryInvitation/button_Edit'))
-
-    'connect DB eSign'
-    Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 
     'get data buat undangan dari DB'
     ArrayList<String> result = CustomKeywords.'connection.dataVerif.InquiryInvitationViewDataVerif'(conneSign, findTestData(
@@ -242,12 +249,12 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).eq
         'click button batal'
         WebUI.click(findTestObject('InquiryInvitation/button_Batal'))
     }
-} else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Resend')) {
+} else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Kirim Ulang Undangan') && InvLink == 1) {
     'get label invited by'
     invitedBy = WebUI.getText(findTestObject('Object Repository/InquiryInvitation/label_InviteBy'))
 
     'click button Resend'
-    WebUI.click(findTestObject('InquiryInvitation/button_Resend'))
+    WebUI.click(findTestObject('InquiryInvitation/button_KirimUlangUndangan'))
 
     if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/button_YaProses'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
         'click button OK'
@@ -264,8 +271,6 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).eq
                         2).replace('-', '') + ';') + ReasonFailed)
 
                 if (invitedBy.equalsIgnoreCase('SMS')) {
-                    'connect DB eSign'
-                    Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 
                     'get data saldo'
                     String result = CustomKeywords.'connection.dataVerif.getSaldo'(conneSign, GlobalVariable.userLogin)
@@ -279,8 +284,59 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).eq
                     GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 
                 if (invitedBy.equalsIgnoreCase('SMS')) {
-                    'connect DB eSign'
-                    Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+
+                    'get data saldo'
+                    String result = CustomKeywords.'connection.dataVerif.getSaldo'(conneSign, GlobalVariable.userLogin)
+
+                    'verify saldo'
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch(result, '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
+                }
+            }
+        }
+    } else if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+        'get reason'
+        ReasonFailed = WebUI.getAttribute(findTestObject('BuatUndangan/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
+
+        'write to excel status failed dan reason'
+        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
+            GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
+                '-', '') + ';') + ReasonFailed)
+    }
+}else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Kirim Ulang Aktivasi') && ResendLink == 1) {
+    'get label invited by'
+    invitedBy = WebUI.getText(findTestObject('Object Repository/InquiryInvitation/label_InviteBy'))
+
+    'click button Resend'
+    WebUI.click(findTestObject('InquiryInvitation/button_KirimUlangLinkAktivasi'))
+
+    if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/button_YaProses'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+        'click button OK'
+        WebUI.click(findTestObject('InquiryInvitation/button_YaProses'))
+
+        if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+            'get reason'
+            ReasonFailed = WebUI.getAttribute(findTestObject('BuatUndangan/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
+
+            if (!(ReasonFailed.contains('Berhasil'))) {
+                'write to excel status failed dan ReasonFailed'
+                CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
+                    GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+                        2).replace('-', '') + ';') + ReasonFailed)
+
+                if (invitedBy.equalsIgnoreCase('SMS')) {
+
+                    'get data saldo'
+                    String result = CustomKeywords.'connection.dataVerif.getSaldo'(conneSign, GlobalVariable.userLogin)
+
+                    'verify saldo'
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch(result, '0', false, FailureHandling.CONTINUE_ON_FAILURE))
+                }
+            } else {
+                'write to excel success'
+                CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'BuatUndangan', 0, 
+                    GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+
+                if (invitedBy.equalsIgnoreCase('SMS')) {
 
                     'get data saldo'
                     String result = CustomKeywords.'connection.dataVerif.getSaldo'(conneSign, GlobalVariable.userLogin)
@@ -300,6 +356,7 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).eq
                 '-', '') + ';') + ReasonFailed)
     }
 }
+
 
 def checkPaging() {
     if (GlobalVariable.checkPaging == 'Yes') {
