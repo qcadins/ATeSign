@@ -84,8 +84,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 				'Get signLink'
 				signLink = WS.getElementPropertyValue(respon_bulksign, 'signLink')
 				
-				println signLink
-				
 				'Open signLink buat check apakah dokumen yang ada disana dengan documentId excel sama'
 				WebUI.openBrowser(signLink)
 				
