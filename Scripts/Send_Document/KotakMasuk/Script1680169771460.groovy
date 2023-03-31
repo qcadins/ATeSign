@@ -16,4 +16,26 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
+import java.sql.Connection as Connection
 
+'connect DB eSign'
+Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+
+'declare arraylist arraymatch'
+ArrayList<String> arrayMatch = new ArrayList<String>()
+
+WebUI.callTestCase(findTestCase('Login/Login_Andy'), [:], FailureHandling.STOP_ON_FAILURE)
+
+WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_Beranda'))
+
+WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_Lastest'))
+
+if(WebUI.verifyElementPresent(findTestObject('Object Repository/KotakMasuk/btn_userSigner') , GlobalVariable.TimeOut)) {
+	
+	'refnum'
+	arrayMatch.add(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/KotakMasuk/input_refnum')), findTestData('Registrasi/SendDocument').getValue(GlobalVariable.NumofColm,11), false))
+	
+	''
+	
+	   
+}
