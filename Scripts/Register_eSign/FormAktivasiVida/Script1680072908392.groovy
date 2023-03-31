@@ -99,13 +99,16 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 		countResend = Integer.parseInt(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 39))
 	
 		if (countResend > 0) {
+			
+			OTPResendCount = 2
+			
 			for (int i = 0; i < countResend; i++) {
 				'tunggu button resend otp'
 				WebUI.delay(115)
 	
 				'klik pada button kirim ulang otp'
 				WebUI.click(findTestObject('BuatUndangan/FormAktivasi/kirimKodeLagi'))
-	
+				
 				if(WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 					reason = WebUI.getText(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'))
 							
@@ -120,10 +123,17 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 					GlobalVariable.FlagFailed = 1
 					
 					break
+				}else {
+					'get data reset request OTP dari DB'
+					Integer resultResetOTP = CustomKeywords.'connection.dataVerif.getResetOTP'(conneSign, findTestData(excelPathBuatUndangan).getValue(
+							GlobalVariable.NumofColm, 15).toUpperCase())
+					
+					'check if OTP resend berhasil'
+					checkVerifyEqualOrMatch(WebUI.verifyEqual(resultResetOTP, OTPResendCount++, FailureHandling.CONTINUE_ON_FAILURE))
 				}
 				
 				'delay untuk menunggu OTP'
-				WebUI.delay(5)
+				WebUI.delay(3)
 	
 				'get OTP dari DB'
 				OTP = CustomKeywords.'connection.dataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathBuatUndangan).getValue(
@@ -162,6 +172,9 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 		countResend = Integer.parseInt(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 39))
 	
 		if (countResend > 0) {
+			
+			OTPResendCount = 2
+			
 			for (int i = 0; i < countResend; i++) {
 				'tunggu button resend otp'
 				WebUI.delay(115)
@@ -183,6 +196,13 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 					GlobalVariable.FlagFailed = 1
 					
 					break
+				}else {
+					'get data reset request OTP dari DB'
+					Integer resultResetOTP = CustomKeywords.'connection.dataVerif.getResetOTP'(conneSign, findTestData(excelPathBuatUndangan).getValue(
+							GlobalVariable.NumofColm, 15).toUpperCase())
+					
+					'check if OTP resend berhasil'
+					checkVerifyEqualOrMatch(WebUI.verifyEqual(resultResetOTP, OTPResendCount++, FailureHandling.CONTINUE_ON_FAILURE))
 				}
 				
 				'delay untuk menunggu OTP'

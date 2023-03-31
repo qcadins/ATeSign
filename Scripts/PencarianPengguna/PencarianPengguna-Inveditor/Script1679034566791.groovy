@@ -152,11 +152,11 @@ if(findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 6
 				1, GlobalVariable.StatusSuccess)
 		
 		'get data reset request OTP dari DB'
-		String resultResetOTP = CustomKeywords.'connection.dataVerif.getResetOTP'(conneSign, findTestData(excelPathPencarianPengguna).getValue(
+		Integer resultResetOTP = CustomKeywords.'connection.dataVerif.getResetOTP'(conneSign, findTestData(excelPathPencarianPengguna).getValue(
 				GlobalVariable.NumofColm, 15).toUpperCase())
 		
 		'verify OTP reset menjadi 0'
-		checkVerifyEqualOrMatch(WebUI.verifyMatch(resultResetOTP, '0', false, FailureHandling.CONTINUE_ON_FAILURE))
+		checkVerifyEqualOrMatch(WebUI.verifyMatch(resultResetOTP, 0, false, FailureHandling.CONTINUE_ON_FAILURE))
 	}else {
 		'write to excel status failed dan reason'
 		CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('PencarianPengguna-Inveditor', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,

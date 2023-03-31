@@ -121,6 +121,8 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
 
     'click button ya batal undangan'
     WebUI.click(findTestObject('BuatUndangan/button_YaBatalUndangan'))
+	
+	GlobalVariable.FlagFailed = 1
 } else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
     'get reason'
     ReasonFailed = WebUI.getAttribute(findTestObject('BuatUndangan/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
@@ -129,18 +131,31 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
         (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + ReasonFailed)
 
-    'declare error type reject'
-    GlobalVariable.ErrorType = 'REJECT'
+	if(ReasonFailed.contains('sudah digunakan oleh link undangan lain') || ReasonFailed.contains('sudah terdaftar')) {
+		'declare error type error'
+		GlobalVariable.ErrorType = 'ERROR'
+	}else {
+		'declare error type reject'
+		GlobalVariable.ErrorType = 'REJECT'
+	}
 
+	GlobalVariable.FlagFailed = 1
+	
     'call test case error report'
     WebUI.callTestCase(findTestCase('Register_eSign/ErrorReport'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
         FailureHandling.CONTINUE_ON_FAILURE)
 } else if (WebUI.getAttribute(findTestObject('BuatUndangan/PopUp/input_Link'), 'value', FailureHandling.OPTIONAL) == 'undefined') {
     GlobalVariable.ErrorType = 'ERROR'
 
+	'write to excel status failed dan reason'
+	CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+		(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ErrorType)
+	
     'click tutup popup'
     WebUI.click(findTestObject('BuatUndangan/button_TutupDapatLink'))
 
+	GlobalVariable.FlagFailed = 1
+	
     'call test case error report'
     WebUI.callTestCase(findTestCase('Register_eSign/ErrorReport'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
         FailureHandling.CONTINUE_ON_FAILURE)
@@ -223,15 +238,23 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     WebUI.callTestCase(findTestCase('Register_eSign/DaftarAkunDataVerif'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
         FailureHandling.CONTINUE_ON_FAILURE)
 
-    if (GlobalVariable.checkStoreDB == 'Yes' && GlobalVariable.FlagFailed == 0) {
+    if ((GlobalVariable.checkStoreDB == 'Yes') && (GlobalVariable.FlagFailed == 0)) {
         'delay nunggu data db'
         WebUI.delay(5)
 
         'call test case BuatUndanganStore DB'
         WebUI.callTestCase(findTestCase('Register_eSign/BuatUndanganStoreDB'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
             FailureHandling.CONTINUE_ON_FAILURE)
-    }    
+    }
 }
 
 'close browser testing'
 WebUI.closeBrowser()
+
+if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 43).equalsIgnoreCase('Yes') && (GlobalVariable.FlagFailed == 0)) {
+	'call test case untuk cek inquiry invitation field after register'
+	WebUI.callTestCase(findTestCase('InquiryInvitation/InquiryInvitationAfterRegist'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
+			FailureHandling.CONTINUE_ON_FAILURE)
+}
+
+
