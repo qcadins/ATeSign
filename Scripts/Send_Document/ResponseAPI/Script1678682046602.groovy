@@ -132,13 +132,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 	            CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 
 	                0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 
+			WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('API_Excel_Path') : 'Registrasi/SendDocument'], FailureHandling.CONTINUE_ON_FAILURE)
+			
             if (GlobalVariable.checkStoreDB == 'Yes') {
                 'call test case ResponseAPIStoreDB'
                 WebUI.callTestCase(findTestCase('Send_Document/ResponseAPIStoreDB'), [('API_Excel_Path') : 'Registrasi/SendDocument'], 
                     FailureHandling.CONTINUE_ON_FAILURE)
             }
-			
-			// gw tandain kotakmasuk
             
             'jika status codenya bukan 0, yang berarti antara salah verifikasi data dan error'
         } else {

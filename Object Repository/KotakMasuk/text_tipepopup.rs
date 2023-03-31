@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>text_tipesigner</name>
+   <name>text_tipepopup</name>
    <tag></tag>
-   <elementGuidId>ff2c3f94-b2a8-4edc-9f8c-16d8cd871a4f</elementGuidId>
+   <elementGuidId>51f62ac3-dba1-48db-9785-86bbfe05208c</elementGuidId>
    <selectorCollection>
       <entry>
          <key>XPATH</key>
          <value>(.//*[normalize-space(text()) and normalize-space(.)='Tanggal TTD'])[1]/following::p[1]</value>
       </entry>
       <entry>
+         <key>BASIC</key>
+         <value></value>
+      </entry>
+      <entry>
          <key>CSS</key>
          <value>div.modal-body > app-msx-datatable > section.msx-datatable > ngx-datatable.ngx-datatable.material.bootstrap.fixed-header.virtualized.selectable.checkbox-selection > div.visible > datatable-body.datatable-body > datatable-selection > datatable-scroller.datatable-scroll.ng-star-inserted > datatable-row-wrapper.datatable-row-wrapper.ng-star-inserted > datatable-body-row.datatable-body-row.datatable-row-even.ng-star-inserted > div.datatable-row-center.datatable-row-group.ng-star-inserted > datatable-body-cell.datatable-body-cell.sort-active.ng-star-inserted > div.datatable-body-cell-label > p.undefined.ng-star-inserted</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>true</useRalativeImagePath>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -22,7 +26,7 @@
       <name>tag</name>
       <type>Main</type>
       <value>p</value>
-      <webElementGuid>6a86cea3-cba8-4081-8ea4-93b158f62f16</webElementGuid>
+      <webElementGuid>50b9d187-bcd9-4df5-a915-6a607a4a2f79</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -30,7 +34,7 @@
       <name>ng-reflect-ng-class</name>
       <type>Main</type>
       <value>undefined</value>
-      <webElementGuid>8dea0cbd-66d4-4c37-a7ad-d91397e5dab4</webElementGuid>
+      <webElementGuid>fef56c48-df07-4915-a4b7-f7777dd162e2</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -38,23 +42,23 @@
       <name>class</name>
       <type>Main</type>
       <value>undefined ng-star-inserted</value>
-      <webElementGuid>c3afe2ab-8198-4f1f-a39a-ac338285aacb</webElementGuid>
+      <webElementGuid>a53fe44e-fb43-4a5b-89e4-ebc48c513b07</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>text</name>
       <type>Main</type>
       <value>Employee</value>
-      <webElementGuid>29604374-0c40-4fdd-b2e6-b5a3501dcec2</webElementGuid>
+      <webElementGuid>635dfa24-c89e-4941-8b19-97eca2e619cb</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html[1]/body[@class=&quot;vertical-layout navbar-static pace-done menu-expanded menu-open vertical-menu page-scrolled modal-open&quot;]/ngb-modal-window[@class=&quot;d-block modal fade show&quot;]/div[@class=&quot;modal-dialog modal-lg&quot;]/div[@class=&quot;modal-content&quot;]/app-signer[1]/div[@class=&quot;modal-body&quot;]/app-msx-datatable[1]/section[@class=&quot;msx-datatable&quot;]/ngx-datatable[@class=&quot;ngx-datatable material bootstrap fixed-header virtualized selectable checkbox-selection&quot;]/div[@class=&quot;visible&quot;]/datatable-body[@class=&quot;datatable-body&quot;]/datatable-selection[1]/datatable-scroller[@class=&quot;datatable-scroll ng-star-inserted&quot;]/datatable-row-wrapper[@class=&quot;datatable-row-wrapper ng-star-inserted&quot;]/datatable-body-row[@class=&quot;datatable-body-row datatable-row-even ng-star-inserted&quot;]/div[@class=&quot;datatable-row-center datatable-row-group ng-star-inserted&quot;]/datatable-body-cell[@class=&quot;datatable-body-cell sort-active ng-star-inserted&quot;]/div[@class=&quot;datatable-body-cell-label&quot;]/p[@class=&quot;undefined ng-star-inserted&quot;]</value>
-      <webElementGuid>e0d002be-3e18-4b9b-8329-9858516f45b3</webElementGuid>
+      <value>/html[1]/body[@class=&quot;vertical-layout navbar-static pace-done page-scrolled menu-expanded menu-open vertical-menu modal-open&quot;]/ngb-modal-window[@class=&quot;d-block modal fade show&quot;]/div[@class=&quot;modal-dialog modal-lg&quot;]/div[@class=&quot;modal-content&quot;]/app-signer[1]/div[@class=&quot;modal-body&quot;]/app-msx-datatable[1]/section[@class=&quot;msx-datatable&quot;]/ngx-datatable[@class=&quot;ngx-datatable material bootstrap fixed-header virtualized selectable checkbox-selection&quot;]/div[@class=&quot;visible&quot;]/datatable-body[@class=&quot;datatable-body&quot;]/datatable-selection[1]/datatable-scroller[@class=&quot;datatable-scroll ng-star-inserted&quot;]/datatable-row-wrapper[@class=&quot;datatable-row-wrapper ng-star-inserted&quot;]/datatable-body-row[@class=&quot;datatable-body-row datatable-row-even ng-star-inserted&quot;]/div[@class=&quot;datatable-row-center datatable-row-group ng-star-inserted&quot;]/datatable-body-cell[@class=&quot;datatable-body-cell sort-active ng-star-inserted&quot;]/div[@class=&quot;datatable-body-cell-label&quot;]/p[@class=&quot;undefined ng-star-inserted&quot;]</value>
+      <webElementGuid>dbd43ab0-5736-40b8-9ea9-2bc100374268</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -62,7 +66,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Tanggal TTD'])[1]/following::p[1]</value>
-      <webElementGuid>b230d378-ee82-45a8-936f-fef41f89b35e</webElementGuid>
+      <webElementGuid>e6fcb669-9c8d-4339-8ba9-4c85f74e5b6a</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -70,7 +74,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Status'])[1]/following::p[1]</value>
-      <webElementGuid>36828101-230a-4482-b807-a03005cd255b</webElementGuid>
+      <webElementGuid>858f0356-0a54-40ba-9eeb-eb205d0685b9</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -78,7 +82,15 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='-'])[1]/preceding::p[5]</value>
-      <webElementGuid>acb1d937-0b67-487d-8529-75ad8ee18268</webElementGuid>
+      <webElementGuid>b31af236-b456-47cf-ae78-d1b8a08835a8</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='-'])[2]/preceding::p[10]</value>
+      <webElementGuid>774448fe-808f-4b89-be37-f565fdead18a</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -86,7 +98,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='Employee']/parent::*</value>
-      <webElementGuid>f710eae1-d08d-4a0d-9582-7dec3739390d</webElementGuid>
+      <webElementGuid>8ea9c8ea-187e-4101-83be-64af117b72b0</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -94,7 +106,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div[2]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper/datatable-body-row/div[2]/datatable-body-cell/div/p</value>
-      <webElementGuid>08f5c981-28ce-4980-bbdf-f71b1a527632</webElementGuid>
+      <webElementGuid>511c7bbe-246f-45bd-9902-185c39fd0cd2</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -102,6 +114,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//p[(text() = 'Employee' or . = 'Employee')]</value>
-      <webElementGuid>24acd8e1-a95e-4ac8-b919-edc949a9767a</webElementGuid>
+      <webElementGuid>cc398177-5cef-42ad-b04f-4c9d8b7c8eb8</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

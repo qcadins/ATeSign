@@ -10,11 +10,15 @@
          <value>(.//*[normalize-space(text()) and normalize-space(.)='TTD Dokumen'])[1]/following::p[4]</value>
       </entry>
       <entry>
+         <key>BASIC</key>
+         <value></value>
+      </entry>
+      <entry>
          <key>CSS</key>
          <value>datatable-body-cell.datatable-body-cell.sort-active.ng-star-inserted.active > div.datatable-body-cell-label > p.undefined.ng-star-inserted</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>true</useRalativeImagePath>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -22,7 +26,7 @@
       <name>tag</name>
       <type>Main</type>
       <value>p</value>
-      <webElementGuid>a78f99e9-85d6-4710-87a8-cf812b6dcf5e</webElementGuid>
+      <webElementGuid>7ad6f6be-ff11-40db-98ca-9a40cde89f97</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -30,7 +34,7 @@
       <name>ng-reflect-ng-class</name>
       <type>Main</type>
       <value>undefined</value>
-      <webElementGuid>591a1cb3-3ac3-4755-ab57-79c3dd5efb92</webElementGuid>
+      <webElementGuid>94f1f14a-c61a-40e0-868d-14d33679fab6</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -38,15 +42,15 @@
       <name>class</name>
       <type>Main</type>
       <value>undefined ng-star-inserted</value>
-      <webElementGuid>bd0ae47e-0f99-4dd1-9884-2dd96d5e033a</webElementGuid>
+      <webElementGuid>b07de597-125f-4507-9e5b-60c82d457386</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>text</name>
       <type>Main</type>
       <value>USERCIBH</value>
-      <webElementGuid>cd6633fb-cd55-49c9-9c18-069f41a7000d</webElementGuid>
+      <webElementGuid>bd48d187-4bd3-47b8-9550-71a40fcd41eb</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -54,7 +58,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html[1]/body[@class=&quot;vertical-layout menu-expanded menu-open vertical-menu navbar-static pace-done page-scrolled&quot;]/app-root[1]/app-full-layout[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;wrapper&quot;]/div[@class=&quot;main-panel&quot;]/div[@class=&quot;main-content&quot;]/div[@class=&quot;content-wrapper&quot;]/app-dashboard1[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;row&quot;]/div[@class=&quot;col-12&quot;]/div[@class=&quot;card&quot;]/div[@class=&quot;card-content&quot;]/div[@class=&quot;card-body&quot;]/app-msx-datatable[@class=&quot;ng-star-inserted&quot;]/section[@class=&quot;msx-datatable&quot;]/ngx-datatable[@class=&quot;ngx-datatable material bootstrap fixed-header virtualized selectable checkbox-selection&quot;]/div[@class=&quot;visible&quot;]/datatable-body[@class=&quot;datatable-body&quot;]/datatable-selection[1]/datatable-scroller[@class=&quot;datatable-scroll ng-star-inserted&quot;]/datatable-row-wrapper[@class=&quot;datatable-row-wrapper ng-star-inserted&quot;]/datatable-body-row[@class=&quot;datatable-body-row datatable-row-odd ng-star-inserted&quot;]/div[@class=&quot;datatable-row-center datatable-row-group ng-star-inserted&quot;]/datatable-body-cell[@class=&quot;datatable-body-cell sort-active ng-star-inserted active&quot;]/div[@class=&quot;datatable-body-cell-label&quot;]/p[@class=&quot;undefined ng-star-inserted&quot;]</value>
-      <webElementGuid>d0ee58b1-17f2-48b3-9802-740394bc8370</webElementGuid>
+      <webElementGuid>e2796543-04bc-4b78-b9ae-600f8223633a</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -62,7 +66,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='TTD Dokumen'])[1]/following::p[4]</value>
-      <webElementGuid>c6eb80c0-86f3-44ac-82c8-0eae318a0e72</webElementGuid>
+      <webElementGuid>3452de98-fbb0-4a30-9a2d-f9b8e39175c6</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -70,7 +74,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Aksi'])[1]/following::p[10]</value>
-      <webElementGuid>797672ec-41f8-498e-92f0-c84ec62f5fa8</webElementGuid>
+      <webElementGuid>310e4776-7fd6-4fc1-baf7-e93b4aa33961</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -78,7 +82,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='TTD Dokumen'])[2]/preceding::p[3]</value>
-      <webElementGuid>6dc55130-4cf1-40c0-917c-b08affd964d2</webElementGuid>
+      <webElementGuid>9afbcb4a-d9d5-491f-9cd9-4b667dad0a12</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -86,7 +90,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Persyaratan layanan'])[1]/preceding::p[3]</value>
-      <webElementGuid>24152409-2d9c-41f4-8874-0d33bbd9bbeb</webElementGuid>
+      <webElementGuid>fc74b861-4253-4bb3-aeec-b36927e52d47</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -94,7 +98,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='USERCIBH']/parent::*</value>
-      <webElementGuid>573babdb-cd43-47d6-b39d-c4b0897ff963</webElementGuid>
+      <webElementGuid>864aade8-43ff-40de-b998-2dc61b423d4b</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -102,7 +106,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//datatable-row-wrapper[2]/datatable-body-row/div[2]/datatable-body-cell[5]/div/p</value>
-      <webElementGuid>22ed79de-ad40-4ca9-8e80-bea573f18e09</webElementGuid>
+      <webElementGuid>083e40a2-c759-4bd1-9a24-ffa3896ac3c5</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -110,6 +114,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//p[(text() = 'USERCIBH' or . = 'USERCIBH')]</value>
-      <webElementGuid>2c21450c-908c-4313-9b49-f3a8fb9d9ce8</webElementGuid>
+      <webElementGuid>446a0a46-96e2-465e-bec9-ca2ef19f236b</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

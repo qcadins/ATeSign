@@ -10,11 +10,15 @@
          <value>(.//*[normalize-space(text()) and normalize-space(.)='TTD Dokumen'])[1]/following::p[2]</value>
       </entry>
       <entry>
+         <key>BASIC</key>
+         <value></value>
+      </entry>
+      <entry>
          <key>CSS</key>
          <value></value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>true</useRalativeImagePath>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -22,7 +26,7 @@
       <name>tag</name>
       <type>Main</type>
       <value>p</value>
-      <webElementGuid>01ded37a-c032-4d63-9eeb-f29c29cd17fb</webElementGuid>
+      <webElementGuid>0ed793d6-10ad-4df3-8203-4f1b10488965</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -30,7 +34,7 @@
       <name>ng-reflect-ng-class</name>
       <type>Main</type>
       <value>undefined</value>
-      <webElementGuid>63427803-3abf-4676-a1e5-ef07df8d7464</webElementGuid>
+      <webElementGuid>5883ce00-ce78-4f29-b73e-2a8fec930d43</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -38,15 +42,15 @@
       <name>class</name>
       <type>Main</type>
       <value>undefined ng-star-inserted</value>
-      <webElementGuid>4a4ee2c1-87ef-4e68-bde2-8904f6b021cb</webElementGuid>
+      <webElementGuid>f1a543ee-c5f7-4bc0-9f03-bfc68aa101e0</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>text</name>
       <type>Main</type>
       <value>Dokumen Kontrak</value>
-      <webElementGuid>6c75d854-a350-4a00-ac72-84fffee33f60</webElementGuid>
+      <webElementGuid>b377a0b1-93bf-470f-8877-566dcc19f02b</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -54,7 +58,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html[1]/body[@class=&quot;vertical-layout navbar-static pace-done menu-expanded menu-open vertical-menu page-scrolled&quot;]/app-root[1]/app-full-layout[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;wrapper&quot;]/div[@class=&quot;main-panel&quot;]/div[@class=&quot;main-content&quot;]/div[@class=&quot;content-wrapper&quot;]/app-dashboard1[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;row&quot;]/div[@class=&quot;col-12&quot;]/div[@class=&quot;card&quot;]/div[@class=&quot;card-content&quot;]/div[@class=&quot;card-body&quot;]/app-msx-datatable[@class=&quot;ng-star-inserted&quot;]/section[@class=&quot;msx-datatable&quot;]/ngx-datatable[@class=&quot;ngx-datatable material bootstrap fixed-header virtualized selectable checkbox-selection&quot;]/div[@class=&quot;visible&quot;]/datatable-body[@class=&quot;datatable-body&quot;]/datatable-selection[1]/datatable-scroller[@class=&quot;datatable-scroll ng-star-inserted&quot;]/datatable-row-wrapper[@class=&quot;datatable-row-wrapper ng-star-inserted&quot;]/datatable-body-row[@class=&quot;datatable-body-row datatable-row-odd ng-star-inserted&quot;]/div[@class=&quot;datatable-row-center datatable-row-group ng-star-inserted&quot;]/datatable-body-cell[@class=&quot;datatable-body-cell sort-active ng-star-inserted&quot;]/div[@class=&quot;datatable-body-cell-label&quot;]/p[@class=&quot;undefined ng-star-inserted&quot;]</value>
-      <webElementGuid>aa93e984-d581-4427-acbd-fe7437848cb9</webElementGuid>
+      <webElementGuid>d71f5b2c-43ac-4249-9243-65d873acc47f</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -62,7 +66,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='TTD Dokumen'])[1]/following::p[2]</value>
-      <webElementGuid>54709c8f-fb64-4a1f-a21e-803656df1770</webElementGuid>
+      <webElementGuid>2dce1c50-1f2d-47ea-9fff-041aaf8e9d4d</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -70,7 +74,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Aksi'])[1]/following::p[8]</value>
-      <webElementGuid>48c6a99f-c083-4302-b3b4-2fa38c4b10e6</webElementGuid>
+      <webElementGuid>db1757ea-fb41-414b-a341-e5de25e8c66a</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -78,7 +82,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='TTD Dokumen'])[2]/preceding::p[5]</value>
-      <webElementGuid>eca344ac-089c-4090-ba13-40ff90e0aa44</webElementGuid>
+      <webElementGuid>de238c7d-b644-4397-9028-3237bff0344b</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -86,7 +90,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Persyaratan layanan'])[1]/preceding::p[5]</value>
-      <webElementGuid>ce968760-4b7e-41f6-a9cd-52c57bbdb0b9</webElementGuid>
+      <webElementGuid>24204545-fcad-435c-b5b1-0177243cc722</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -94,7 +98,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//datatable-row-wrapper[2]/datatable-body-row/div[2]/datatable-body-cell[3]/div/p</value>
-      <webElementGuid>c435d204-0d2d-4665-8663-e4717be6c7ba</webElementGuid>
+      <webElementGuid>05b2808a-7178-4900-bdce-d16e2e4bf1f9</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -102,6 +106,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//p[(text() = 'Dokumen Kontrak' or . = 'Dokumen Kontrak')]</value>
-      <webElementGuid>3ac93b72-0c40-4773-8cce-9c7ca0a1a670</webElementGuid>
+      <webElementGuid>cfc3477e-26b0-4ff4-8d5e-a82ad37a509d</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

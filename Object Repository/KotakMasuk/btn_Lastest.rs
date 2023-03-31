@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>btn_Lastest</name>
+   <tag></tag>
+   <elementGuidId>3d4e6622-b372-4484-b039-11f1af54a65a</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>XPATH</key>
+         <value>//li[9]/a/i</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>i.datatable-icon-skip</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>XPATH</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>i</value>
+      <webElementGuid>6cd84c5c-3165-406e-b3d9-1c0e3ef31d6e</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>datatable-icon-skip</value>
+      <webElementGuid>2b771851-e78d-411e-aff9-f92ee78b6781</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html[1]/body[@class=&quot;vertical-layout navbar-static pace-done page-scrolled navbar-scrolled menu-expanded menu-open vertical-menu&quot;]/app-root[1]/app-full-layout[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;wrapper&quot;]/div[@class=&quot;main-panel&quot;]/div[@class=&quot;main-content&quot;]/div[@class=&quot;content-wrapper&quot;]/app-dashboard1[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;row&quot;]/div[@class=&quot;col-12&quot;]/div[@class=&quot;card&quot;]/div[@class=&quot;card-content&quot;]/div[@class=&quot;card-body&quot;]/app-msx-datatable[@class=&quot;ng-star-inserted&quot;]/section[@class=&quot;msx-datatable&quot;]/ngx-datatable[@class=&quot;ngx-datatable material bootstrap fixed-header virtualized selectable checkbox-selection&quot;]/div[@class=&quot;visible&quot;]/datatable-footer[@class=&quot;datatable-footer ng-star-inserted&quot;]/div[@class=&quot;datatable-footer-inner&quot;]/datatable-pager[@class=&quot;datatable-pager ng-star-inserted&quot;]/ul[@class=&quot;pager&quot;]/li[9]/a[1]/i[@class=&quot;datatable-icon-skip&quot;]</value>
+      <webElementGuid>f599b196-663c-4482-99ba-e7354dcee68d</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//li[9]/a/i</value>
+      <webElementGuid>e3916265-39df-4074-9dab-f51e0edd81a0</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>

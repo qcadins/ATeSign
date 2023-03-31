@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>text_emailsigner</name>
+   <name>text_emailsignerpopup</name>
    <tag></tag>
-   <elementGuidId>b641788c-f491-411c-92f7-8d80ea8096b4</elementGuidId>
+   <elementGuidId>ab001036-0996-44a6-bc3b-b4e626c7f94f</elementGuidId>
    <selectorCollection>
       <entry>
          <key>XPATH</key>
          <value>(.//*[normalize-space(text()) and normalize-space(.)='Tanggal TTD'])[1]/following::p[3]</value>
       </entry>
       <entry>
+         <key>BASIC</key>
+         <value></value>
+      </entry>
+      <entry>
          <key>CSS</key>
          <value></value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>true</useRalativeImagePath>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -22,7 +26,7 @@
       <name>tag</name>
       <type>Main</type>
       <value>p</value>
-      <webElementGuid>09fe74d0-0e9d-4566-9f78-8388dae6493d</webElementGuid>
+      <webElementGuid>a665a479-3fab-49ed-ad8e-97ec6e90324f</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -30,7 +34,7 @@
       <name>ng-reflect-ng-class</name>
       <type>Main</type>
       <value>undefined</value>
-      <webElementGuid>9c197a60-902e-4a43-8b0e-6dbf40873191</webElementGuid>
+      <webElementGuid>7b150788-ac32-4ed9-ae1f-7b7059d64635</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -38,23 +42,23 @@
       <name>class</name>
       <type>Main</type>
       <value>undefined ng-star-inserted</value>
-      <webElementGuid>451e066a-0551-400c-b07b-49fa7822f683</webElementGuid>
+      <webElementGuid>d118a82b-e6c7-411d-9f8b-94d86a49c5bc</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>text</name>
       <type>Main</type>
       <value>ANDY@AD-INS.COM</value>
-      <webElementGuid>678a3a33-f56e-4f11-906e-acad941ea2c2</webElementGuid>
+      <webElementGuid>b2c97801-3f03-4d60-a3ee-dd2f0ba8e3db</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html[1]/body[@class=&quot;vertical-layout navbar-static pace-done menu-expanded menu-open vertical-menu page-scrolled modal-open&quot;]/ngb-modal-window[@class=&quot;d-block modal fade show&quot;]/div[@class=&quot;modal-dialog modal-lg&quot;]/div[@class=&quot;modal-content&quot;]/app-signer[1]/div[@class=&quot;modal-body&quot;]/app-msx-datatable[1]/section[@class=&quot;msx-datatable&quot;]/ngx-datatable[@class=&quot;ngx-datatable material bootstrap fixed-header virtualized selectable checkbox-selection&quot;]/div[@class=&quot;visible&quot;]/datatable-body[@class=&quot;datatable-body&quot;]/datatable-selection[1]/datatable-scroller[@class=&quot;datatable-scroll ng-star-inserted&quot;]/datatable-row-wrapper[@class=&quot;datatable-row-wrapper ng-star-inserted&quot;]/datatable-body-row[@class=&quot;datatable-body-row datatable-row-even ng-star-inserted&quot;]/div[@class=&quot;datatable-row-center datatable-row-group ng-star-inserted&quot;]/datatable-body-cell[@class=&quot;datatable-body-cell sort-active ng-star-inserted&quot;]/div[@class=&quot;datatable-body-cell-label&quot;]/p[@class=&quot;undefined ng-star-inserted&quot;]</value>
-      <webElementGuid>30fb988e-0990-47d5-b40c-a2defaed09dd</webElementGuid>
+      <value>/html[1]/body[@class=&quot;vertical-layout navbar-static pace-done page-scrolled menu-expanded menu-open vertical-menu modal-open&quot;]/ngb-modal-window[@class=&quot;d-block modal fade show&quot;]/div[@class=&quot;modal-dialog modal-lg&quot;]/div[@class=&quot;modal-content&quot;]/app-signer[1]/div[@class=&quot;modal-body&quot;]/app-msx-datatable[1]/section[@class=&quot;msx-datatable&quot;]/ngx-datatable[@class=&quot;ngx-datatable material bootstrap fixed-header virtualized selectable checkbox-selection&quot;]/div[@class=&quot;visible&quot;]/datatable-body[@class=&quot;datatable-body&quot;]/datatable-selection[1]/datatable-scroller[@class=&quot;datatable-scroll ng-star-inserted&quot;]/datatable-row-wrapper[@class=&quot;datatable-row-wrapper ng-star-inserted&quot;]/datatable-body-row[@class=&quot;datatable-body-row datatable-row-even ng-star-inserted&quot;]/div[@class=&quot;datatable-row-center datatable-row-group ng-star-inserted&quot;]/datatable-body-cell[@class=&quot;datatable-body-cell sort-active ng-star-inserted&quot;]/div[@class=&quot;datatable-body-cell-label&quot;]/p[@class=&quot;undefined ng-star-inserted&quot;]</value>
+      <webElementGuid>ae33ce3a-da6d-4800-9aa4-14218e4fb7ee</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -62,7 +66,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Tanggal TTD'])[1]/following::p[3]</value>
-      <webElementGuid>82b11dcd-2c10-484b-bd98-fb39df029a31</webElementGuid>
+      <webElementGuid>1087c286-296e-4142-9a99-198b21d13358</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -70,7 +74,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Status'])[1]/following::p[3]</value>
-      <webElementGuid>b076c8d2-96a9-437a-bbcc-62198c29bd70</webElementGuid>
+      <webElementGuid>cc739085-b80d-4a54-adbe-5d6d637457b1</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -78,7 +82,15 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='-'])[1]/preceding::p[3]</value>
-      <webElementGuid>781947dd-0c48-481a-8e6c-12c4c85cd066</webElementGuid>
+      <webElementGuid>c5c64dae-90ff-49ff-855c-cbe06e8060a1</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='-'])[2]/preceding::p[8]</value>
+      <webElementGuid>16c84539-cfa8-403a-af5e-a852ada868a1</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -86,7 +98,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='ANDY@AD-INS.COM']/parent::*</value>
-      <webElementGuid>8a2ea9e1-362e-41ba-bc79-acdb4427573b</webElementGuid>
+      <webElementGuid>65a39410-9f9e-49ad-b585-96aad6c3e01f</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -94,7 +106,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div[2]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper/datatable-body-row/div[2]/datatable-body-cell[3]/div/p</value>
-      <webElementGuid>9440f29a-386e-4bd5-a473-8d0d4cfde703</webElementGuid>
+      <webElementGuid>6946b450-a063-4b58-9530-4674c54f774e</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -102,6 +114,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//p[(text() = 'ANDY@AD-INS.COM' or . = 'ANDY@AD-INS.COM')]</value>
-      <webElementGuid>ef6a7304-5aa5-420d-9fdc-01d0160b6ce8</webElementGuid>
+      <webElementGuid>171b217e-70b9-4986-99af-bf584bb540f6</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

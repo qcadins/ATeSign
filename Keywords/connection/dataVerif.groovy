@@ -463,7 +463,7 @@ public class dataVerif {
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
 
-		ResultSet resultSet = stm.executeQuery("select tdh.ref_number, msl.description as doctype, mdt.doc_template_name, STRING_AGG(amm.full_name,';') as name, STRING_AGG(amm.login_id,';') as email, STRING_AGG(ms.description,';') as signertype, amm.is_active from tr_document_d tdd join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join ms_lov msl on tdh.lov_doc_type = msl.id_lov join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d join ms_lov ms on tdds.lov_signer_type = ms.id_lov join am_msuser amm on tdds.id_ms_user = amm.id_ms_user where document_id = 'documentid' GROUP BY tdh.ref_number, msl.description, mdt.doc_template_name, amm.is_active")
+		ResultSet resultSet = stm.executeQuery("select msl.description as doctype, mdt.doc_template_name, STRING_AGG(amm.full_name,';') as name, STRING_AGG(amm.login_id,';') as email, STRING_AGG(ms.description,';') as signertype, STRING_AGG(amm.is_active,';') as aktivasi from tr_document_d tdd join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join ms_lov msl on tdh.lov_doc_type = msl.id_lov join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d join ms_lov ms on tdds.lov_signer_type = ms.id_lov join am_msuser amm on tdds.id_ms_user = amm.id_ms_user where document_id = '" + documentid +"' GROUP BY msl.description, mdt.doc_template_name")
 
 		ResultSetMetaData metadata = resultSet.getMetaData()
 

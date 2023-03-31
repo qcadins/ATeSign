@@ -66,6 +66,11 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
+      <initValue>'Data tidak ada di UI'</initValue>
+      <name>ReasonFailedNoneUI</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
       <initValue>'OTP Salah dan Berhasil Save'</initValue>
       <name>ReasonFailedOTPError</name>
    </GlobalVariableEntity>
