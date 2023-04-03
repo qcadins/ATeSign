@@ -24,7 +24,11 @@ import org.openqa.selenium.Keys as Keys
 Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 
 'get data buat undangan dari DB'
-ArrayList<String> result = CustomKeywords.'connection.dataVerif.BuatUndanganStoreDB'(conneSign, findTestData(excelPathBuatUndangan).getValue(
+ArrayList<String> resultDataDiri = CustomKeywords.'connection.dataVerif.BuatUndanganStoreDB'(conneSign, findTestData(excelPathBuatUndangan).getValue(
+		GlobalVariable.NumofColm, 15).toUpperCase())
+
+'get data perusahaan buat undangan dari DB'
+ArrayList<String> resultDataPerusahaan = CustomKeywords.'connection.dataVerif.getBuatUndanganDataPerusahaanStoreDB'(conneSign, findTestData(excelPathBuatUndangan).getValue(
 		GlobalVariable.NumofColm, 15).toUpperCase())
 
 'declare arraylist arraymatch'
@@ -34,43 +38,62 @@ ArrayList<String> arrayMatch = new ArrayList<String>()
 arrayindex = 0
 
 'verify nama'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 10).toUpperCase(), (result[arrayindex++]).toUpperCase(),
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 10).toUpperCase(), (resultDataDiri[arrayindex++]).toUpperCase(),
 		false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'verify tempat lahir'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 11).toUpperCase(), (result[arrayindex++]).toUpperCase(),
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 11).toUpperCase(), (resultDataDiri[arrayindex++]).toUpperCase(),
 		false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'verify tanggal lahir'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 12).toUpperCase(), (result[arrayindex++]).toUpperCase(),
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 12).toUpperCase(), (resultDataDiri[arrayindex++]).toUpperCase(),
 		false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'verify jenis kelamin'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 13).toUpperCase(), (result[arrayindex++]).toUpperCase(),
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 13).toUpperCase(), (resultDataDiri[arrayindex++]).toUpperCase(),
 		false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'verify email'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 15).toUpperCase(), (result[arrayindex++]).toUpperCase(),
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 15).toUpperCase(), (resultDataDiri[arrayindex++]).toUpperCase(),
 		false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'verify provinsi'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 18).toUpperCase(), (result[arrayindex++]).toUpperCase(),
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 18).toUpperCase(), (resultDataDiri[arrayindex++]).toUpperCase(),
 		false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'verify kota'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 19).toUpperCase(), (result[arrayindex++]).toUpperCase(),
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 19).toUpperCase(), (resultDataDiri[arrayindex++]).toUpperCase(),
 		false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'verify kecamatan'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 20).toUpperCase(), (result[arrayindex++]).toUpperCase(),
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 20).toUpperCase(), (resultDataDiri[arrayindex++]).toUpperCase(),
 		false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'verify kelurahan'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 21).toUpperCase(), (result[arrayindex++]).toUpperCase(),
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 21).toUpperCase(), (resultDataDiri[arrayindex++]).toUpperCase(),
 		false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'verify kode pos'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 22).toUpperCase(), (result[arrayindex++]).toUpperCase(),
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 22).toUpperCase(), (resultDataDiri[arrayindex++]).toUpperCase(),
+		false, FailureHandling.CONTINUE_ON_FAILURE))
+
+'declare arrayindex'
+arrayindex = 0
+
+'verify wilayah'
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 23).toUpperCase(), (resultDataPerusahaan[arrayindex++]).toUpperCase(),
+		false, FailureHandling.CONTINUE_ON_FAILURE))
+
+'verify office'
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 25).toUpperCase(), (resultDataPerusahaan[arrayindex++]).toUpperCase(),
+		false, FailureHandling.CONTINUE_ON_FAILURE))
+
+'verify lini bisnis'
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 26).toUpperCase(), (resultDataPerusahaan[arrayindex++]).toUpperCase(),
+		false, FailureHandling.CONTINUE_ON_FAILURE))
+
+'verify Taskno'
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 27).toUpperCase(), (resultDataPerusahaan[arrayindex++]).toUpperCase(),
 		false, FailureHandling.CONTINUE_ON_FAILURE))
 
 

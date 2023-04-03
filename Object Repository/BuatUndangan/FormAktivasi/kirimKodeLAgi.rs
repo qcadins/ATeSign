@@ -18,7 +18,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/ngb-modal-window/div/div/app-modal-request-otp/form/div/div[5]/div/a</value>
-      <webElementGuid>d6f792fa-c172-4fb1-b35f-fb7f7e99f905</webElementGuid>
+      <webElementGuid>b6f52fcc-03ef-4a1f-b3d0-d44ca8e9e430</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -26,6 +26,14 @@
       <name>text</name>
       <type>Main</type>
       <value>Kirim kode lagi</value>
-      <webElementGuid>fadb1813-10b9-42ae-aab1-2958484bb1ea</webElementGuid>
+      <webElementGuid>1faf09cb-e78f-42d1-83c4-a141f3fd3a51</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>reset-button</value>
+      <webElementGuid>bab32543-1432-409f-a27c-646e99c1c892</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

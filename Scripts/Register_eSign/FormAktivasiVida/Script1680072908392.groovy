@@ -33,6 +33,23 @@ checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Bua
             'value', FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
             10).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
+'input kata sandi untuk verify button set ulang'
+WebUI.setText(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), '@Abcd1234')
+
+'input ulang kata sandi untuk verify button set ulang'
+WebUI.setText(findTestObject('BuatUndangan/FormAktivasi/input_UlangKataSandi'), '@Abcd1234')
+
+'click button set ulang untuk reset field kata sandi dan ulang kata sandi'
+WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_SetUlang'))
+
+'verify kata sandi sudah kosong'
+checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), 'value')
+	, '', false, FailureHandling.CONTINUE_ON_FAILURE))
+
+'verify ulang kata sandi sudah kosong'
+checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/FormAktivasi/input_UlangKataSandi'), 'value')
+	, '', false, FailureHandling.CONTINUE_ON_FAILURE))
+
 'input kata sandi'
 WebUI.setText(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), findTestData(excelPathBuatUndangan).getValue(
         GlobalVariable.NumofColm, 35))
@@ -96,10 +113,13 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 		'input OTP'
 		WebUI.setText(findTestObject('BuatUndangan/FormAktivasi/input_OTP'), OTP)
 	
+		'get count untuk resend OTP dari excel'
 		countResend = Integer.parseInt(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 39))
 	
+		'jika count resend otp excel > 0'
 		if (countResend > 0) {
 			
+			'count mulai dari 2 karena pertama kali ngeklik resend OTP sudah terhitung kedua kalinya request untuk resend OTP'
 			OTPResendCount = 2
 			
 			for (int i = 0; i < countResend; i++) {
@@ -109,6 +129,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 				'klik pada button kirim ulang otp'
 				WebUI.click(findTestObject('BuatUndangan/FormAktivasi/kirimKodeLagi'))
 				
+				'verify popup message maximal resend OTP'
 				if(WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 					reason = WebUI.getText(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'))
 							
@@ -128,7 +149,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 					Integer resultResetOTP = CustomKeywords.'connection.dataVerif.getResetOTP'(conneSign, findTestData(excelPathBuatUndangan).getValue(
 							GlobalVariable.NumofColm, 15).toUpperCase())
 					
-					'check if OTP resend berhasil'
+					'verify counter OTP Katalon sesuai dengan counter OTP DB'
 					checkVerifyEqualOrMatch(WebUI.verifyEqual(resultResetOTP, OTPResendCount++, FailureHandling.CONTINUE_ON_FAILURE))
 				}
 				
@@ -169,10 +190,13 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 		WebUI.setText(findTestObject('BuatUndangan/FormAktivasi/input_OTP'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
 				38))
 	
+		'get count untuk resend OTP dari excel'
 		countResend = Integer.parseInt(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 39))
 	
+		'jika count resend OTP excel > 0'
 		if (countResend > 0) {
 			
+			'count mulai dari 2 karena pertama kali ngeklik resend OTP sudah terhitung kedua kalinya request untuk resend OTP'
 			OTPResendCount = 2
 			
 			for (int i = 0; i < countResend; i++) {
@@ -182,6 +206,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 				'klik pada button kirim ulang otp'
 				WebUI.click(findTestObject('BuatUndangan/FormAktivasi/kirimKodeLagi'))
 	
+				'verify popup message maximal resend OTP'
 				if(WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 					reason = WebUI.getText(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'))
 							
@@ -201,7 +226,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 					Integer resultResetOTP = CustomKeywords.'connection.dataVerif.getResetOTP'(conneSign, findTestData(excelPathBuatUndangan).getValue(
 							GlobalVariable.NumofColm, 15).toUpperCase())
 					
-					'check if OTP resend berhasil'
+					'verify counter OTP Katalon sesuai dengan counter OTP DB'
 					checkVerifyEqualOrMatch(WebUI.verifyEqual(resultResetOTP, OTPResendCount++, FailureHandling.CONTINUE_ON_FAILURE))
 				}
 				

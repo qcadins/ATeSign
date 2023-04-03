@@ -477,4 +477,27 @@ public class dataVerif {
 		}
 		return listdata
 	}
+	
+	@Keyword
+	public getBuatUndanganDataPerusahaanStoreDB (Connection conn, String email){
+		String data
+
+		ArrayList<String> listdata = new ArrayList<>()
+
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("select region, office, business_line, task_no from tr_invitation_link where receiver_detail = '"+ email +"'")
+
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for(int i = 1 ; i <= columnCount ; i++){
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		return listdata
+	}
 }
