@@ -477,7 +477,7 @@ public class dataVerif {
 		}
 		return listdata
 	}
-	
+
 	@Keyword
 	public getBuatUndanganDataPerusahaanStoreDB (Connection conn, String email){
 		String data

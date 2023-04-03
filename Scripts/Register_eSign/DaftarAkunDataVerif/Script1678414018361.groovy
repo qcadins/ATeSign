@@ -83,37 +83,43 @@ checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Daf
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_KodePos'), 'value').toUpperCase(), 
         findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 22).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
-'click ambil foto sendiri'
-WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFotoSendiri'))
-
-'delay untuk camera on'
-WebUI.delay(2)
-
-'click ambil foto'
-WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFoto'))
-
-'click ambil apply'
-WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Apply'))
-
-if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 30).length() == 0) {
-    'click ambil foto KTP'
-    WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFotoKTP'))
-
+if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 30) == 'Yes') {
+	
+	'click ambil foto sendiri'
+	WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFotoSendiri'))
+	
 	'delay untuk camera on'
 	WebUI.delay(2)
 	
-    'click ambil foto'
-    WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFoto'))
+	'click ambil foto'
+	WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFoto'))
 
-    'click ambil apply'
-    WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Apply'))
-} else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 30).length() > 0) {
-    'upload file'
-    CustomKeywords.'customizeKeyword.uploadFile.uploadFunction'(findTestObject('Object Repository/DaftarAkun/button_PilihFileKTP'), 
-        findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 30))
+	'click ambil apply'
+	WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Apply'))
+}
 
-    'click ambil apply'
-    WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Apply'))
+if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 31) == 'Yes') {
+	if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 32).length() == 0) {
+		'click ambil foto KTP'
+		WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFotoKTP'))
+		
+		'delay untuk camera on'
+		WebUI.delay(2)
+		
+		'click ambil foto'
+		WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFoto'))
+		
+		'click ambil apply'
+		WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Apply'))
+	} else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 32).length() > 0) {
+		'upload file'
+		CustomKeywords.'customizeKeyword.uploadFile.uploadFunction'(findTestObject('Object Repository/DaftarAkun/button_PilihFileKTP'), 
+				findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 32))
+		
+		'click ambil apply'
+		WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Apply'))
+	}
+
 }
 
 'cek centang syarat dan ketentuan'
@@ -155,7 +161,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
         'input OTP'
         WebUI.setText(findTestObject('DaftarAkun/input_OTP'), OTP)
 
-        countResend = Integer.parseInt(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 33))
+        countResend = Integer.parseInt(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 35))
 
         if (countResend > 0) {
             for (int i = 0; i < countResend; i++) {
@@ -185,9 +191,9 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     } else {
         'input OTP'
         WebUI.setText(findTestObject('DaftarAkun/input_OTP'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-                32))
+                34))
 
-        countResend = Integer.parseInt(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 33))
+        countResend = Integer.parseInt(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 35))
 
         if (countResend > 0) {
             for (int i = 0; i < countResend; i++) {
@@ -212,7 +218,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
 
                 'input OTP'
                 WebUI.setText(findTestObject('DaftarAkun/input_OTP'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-                        32))
+                        34))
             }
         }
     }

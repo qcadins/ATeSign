@@ -251,7 +251,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
 'close browser testing'
 WebUI.closeBrowser()
 
-if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 43).equalsIgnoreCase('Yes') && (GlobalVariable.FlagFailed == 0)) {
+if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 61).equalsIgnoreCase('Yes') && (GlobalVariable.FlagFailed == 0)) {
 	'call test case untuk cek inquiry invitation field after register'
 	WebUI.callTestCase(findTestCase('InquiryInvitation/InquiryInvitationAfterRegist'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
 			FailureHandling.CONTINUE_ON_FAILURE)
