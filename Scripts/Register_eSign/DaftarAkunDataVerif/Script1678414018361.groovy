@@ -19,6 +19,8 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
+String userDir = System.getProperty('user.dir')
+		
 'check if ingin menggunakan local host atau tidak'
 if(GlobalVariable.useLocalHost == 'Yes') {	
 	'navigate url ke daftar akun'
@@ -112,9 +114,13 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 31) =
 		'click ambil apply'
 		WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Apply'))
 	} else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 32).length() > 0) {
+		
+		'get file path'
+		String filePath = userDir + findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 32)
+		
 		'upload file'
 		CustomKeywords.'customizeKeyword.uploadFile.uploadFunction'(findTestObject('Object Repository/DaftarAkun/button_PilihFileKTP'), 
-				findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 32))
+				filePath)
 		
 		'click ambil apply'
 		WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Apply'))
