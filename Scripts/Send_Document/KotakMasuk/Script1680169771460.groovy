@@ -23,6 +23,8 @@ import internal.GlobalVariable
 import org.openqa.selenium.By
 import org.openqa.selenium.Keys
 
+GlobalVariable.Response = '00155D0B-7502-A922-11ED-D203A2BF1500'
+
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 
@@ -32,9 +34,10 @@ ArrayList<String> arrayMatch = new ArrayList<String>()
 'declare arrayindex'
 arrayindex = 0
 
+'call Test Case untuk login sebagai andy@ad-ins.com'
 WebUI.callTestCase(findTestCase('Login/Login_Andy'), [:], FailureHandling.STOP_ON_FAILURE)
 
-'get data API Send Document dari DB (hanya 1 signer)'
+'get data kotak masuk send document secara asc, dimana cust4omer no 1'
 ArrayList<String> result = CustomKeywords.'connection.dataVerif.getKotakMasukSendDoc'(conneSign,GlobalVariable.Response.replace('[', '').replace(']', ''))
 
 WebUI.maximizeWindow()
@@ -72,78 +75,39 @@ arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjecttextdocumenttype), re
 	
 'document template name'
 arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjecttextdocumenttemplatename), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-	
+
 'nama Customer'
-String tes = WebUI.getText(modifyObjecttextname)
-if (result[arrayindex++].contains(tes) == true)
-{
-	arrayMatch.add(true)
-}else
-{
-arrayMatch.add(false)
-}
+arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjecttextname), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-'splitting signer type untuk checking popup'
-result[4] = result[4].split(';',-1)
-
-'splitting email untuk checking popup'
-result[3] = result[3].split(';',-1)
-
-'splitting name untuk checking popup'
-result[2] = result[2].split(';',-1)
-
-'splitting aktivasi akun untuk checking popup'
-result[5] = result[5].split(';',-1)
-
-ArrayList<String> resultaktivasi =  new ArrayList<String>()
-for(int j = 1; j<= result[5].size();j++) {
-	if(result[5][j-1] == '1') 
-	{
-		resultaktivasi.add("Sudah Aktivasi")
-	} else {
-		resultaktivasi.add("Belum Aktivasi")
-	}
-}
-
+'get data kotak masuk send document secara asc, dimana cust4omer no 1'
+ArrayList<String> resultSigner = CustomKeywords.'connection.dataVerif.getSignerKotakMasukSendDoc'(conneSign,GlobalVariable.Response.replace('[', '').replace(']', ''))
 
 'Klik btnSigner'
 WebUI.click(modifyObjectbtnSigner)
 
 'get row popup'
-variable_popup = DriverFactory.getWebDriver().findElements(By.cssSelector('body > ngb-modal-window > div > div > app-signer > div.modal-body > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
+variable_row_popup = DriverFactory.getWebDriver().findElements(By.cssSelector('body > ngb-modal-window > div > div > app-signer > div.modal-body > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
 
-for(int i = 0 ; i <= variable_popup.size() ; i++) 
+'get column popup'
+variable_col_popup = DriverFactory.getWebDriver().findElements(By.cssSelector('body > ngb-modal-window > div > div > app-signer > div.modal-body > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-body-cell'))
+
+'declare arrayindex buat signer'
+arrayindex_signer = 0
+
+'loop untuk row popup'
+for(int i = 1 ; i <= variable_row_popup.size() ; i++) 
 {
-	'modify object text signer Type'
-	modifyObjecttextsignerTypepopup = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_tipepopup'),'xpath','equals',
-	"/html/body/ngb-modal-window/div/div/app-signer/div[2]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper["+ (i + 1) +"]/datatable-body-row/div[2]/datatable-body-cell[1]/div/p",true)
-	
-	'modify object text nama'
-	modifyObjecttextnamapopup = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_namasignerpopup'),'xpath','equals',
-	"/html/body/ngb-modal-window/div/div/app-signer/div[2]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper["+ (i + 1) +"]/datatable-body-row/div[2]/datatable-body-cell[2]/div/p",true)
-
-	'modify object text email'
-	modifyObjecttextemailpopup = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_emailsignerpopup'),'xpath','equals',
-	"/html/body/ngb-modal-window/div/div/app-signer/div[2]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper["+ (i + 1) +"]/datatable-body-row/div[2]/datatable-body-cell[3]/div/p",true)
-
-	'modify object text sudahaktivasi'
-	modifyObjecttextsudahaktivasipopup = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_sudahaktivasipopup'),'xpath','equals',
-	"/html/body/ngb-modal-window/div/div/app-signer/div[2]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper["+ (i + 1) +"]/datatable-body-row/div[2]/datatable-body-cell[4]/div/p",true)
-	
-	'signer Type popup'
-	arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjecttextsignerTypepopup), result[4][i], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-	'signer email popup'
-	arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjecttextemailpopup), result[3][i], false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-	'signer nama popup'
-	arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjecttextnamapopup), result[2][i], false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-	'signer aktivasi akun'
-	arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjecttextsudahaktivasipopup), resultaktivasi[i], false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-}	
-
+	'loop untuk column popup'
+	for(int m = 1 ; m <= variable_col_popup.size()/variable_row_popup.size();m++) 
+	{
+		'modify object text nama, email, signer Type, sudah aktivasi'
+		modifyObjecttextpopup = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_tipepopup'),'xpath','equals',"/html/body/ngb-modal-window/div/div/app-signer/div[2]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper["+ i +"]/datatable-body-row/div[2]/datatable-body-cell["+m+"]/div/p",true)
+		
+		'signer nama,email,signerType,sudahAktivasi popup'
+		arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjecttextpopup), resultSigner[arrayindex_signer++], false, FailureHandling.CONTINUE_ON_FAILURE))
+			
+	}
+}
 
 'jika data db tidak sesuai dengan excel'
 if (arrayMatch.contains(false)) {

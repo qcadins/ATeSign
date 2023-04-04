@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>text_TambahTemplatDokumen</name>
+   <tag></tag>
+   <elementGuidId>1c5ebb61-44da-43f2-a34b-c185f300ce80</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>XPATH</key>
+         <value>(.//*[normalize-space(text()) and normalize-space(.)='Pengaturan Dokumen'])[1]/following::div[11]</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>div.content-header</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>XPATH</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>div</value>
+      <webElementGuid>476e30ce-8c32-4b67-bc3d-5f04fe0a8b3b</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>content-header</value>
+      <webElementGuid>16853674-55da-401d-9076-54962f2c9f00</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Tambah Templat Dokumen</value>
+      <webElementGuid>d83728bc-740c-4226-bb4a-74a0d762c77f</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html[1]/body[@class=&quot;vertical-layout navbar-static  menu-expanded menu-open vertical-menu  pace-done&quot;]/app-root[1]/app-full-layout[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;wrapper&quot;]/div[@class=&quot;main-panel&quot;]/div[@class=&quot;main-content&quot;]/div[@class=&quot;content-wrapper&quot;]/app-add-document-template[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;row&quot;]/div[@class=&quot;col-6&quot;]/div[@class=&quot;content-header&quot;]</value>
+      <webElementGuid>f4c12d84-9202-49af-bce4-ef2202c3f481</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Pengaturan Dokumen'])[1]/following::div[11]</value>
+      <webElementGuid>c35fe1d1-0bf4-439c-87f4-d5f6a6fc4101</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Keluar'])[1]/following::div[18]</value>
+      <webElementGuid>cbef3467-9d3d-462b-abff-4179b02c9c7e</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='*'])[1]/preceding::div[1]</value>
+      <webElementGuid>61650b79-2e53-4163-b72b-3ef7a90d218a</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>//*/text()[normalize-space(.)='Tambah Templat Dokumen']/parent::*</value>
+      <webElementGuid>f4cebbe3-be62-4117-927c-8386e686a1b4</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//app-add-document-template/div/div/div</value>
+      <webElementGuid>4fd0c8a8-ff72-4e65-8511-e1b482c1d7f4</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//div[(text() = 'Tambah Templat Dokumen' or . = 'Tambah Templat Dokumen')]</value>
+      <webElementGuid>b1c4df21-75d3-458a-a9bb-a9325e58c7f5</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>

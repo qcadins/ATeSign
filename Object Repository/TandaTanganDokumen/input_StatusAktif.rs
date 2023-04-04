@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_StatusAktif</name>
+   <tag></tag>
+   <elementGuidId>0153643c-368f-4de6-9b42-77477b1f7df6</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>id(&quot;isActive&quot;)/div[@class=&quot;ng-select-container ng-has-value&quot;][count(. | //div[@class = 'ng-select-container ng-has-value']) = count(//div[@class = 'ng-select-container ng-has-value'])]</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>//*[@id=&quot;isActive&quot;]/div/div/div[3]/input</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>#isActive > div.ng-select-container.ng-has-value</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>XPATH</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>div</value>
+      <webElementGuid>33999c34-4fdf-4f88-a673-5e73891aeccc</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>ng-select-container ng-has-value</value>
+      <webElementGuid>bd67bc85-1ecb-4921-a20f-2b25b20702a2</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Select One×Active×</value>
+      <webElementGuid>fe310470-9bda-4b9e-a382-803f21e6929a</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>id(&quot;isActive&quot;)/div[@class=&quot;ng-select-container ng-has-value&quot;]</value>
+      <webElementGuid>cfced6e3-5ff0-47a9-84a8-45870e7038a9</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>aria-owns</name>
+      <type>Main</type>
+      <value>a813f5dffc6a</value>
+      <webElementGuid>079a4e9c-b6a2-4471-9b54-61edfae3f534</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:idRelative</name>
+      <type>Main</type>
+      <value>//ng-select[@id='isActive']/div</value>
+      <webElementGuid>d13eb067-a706-4edc-9f1f-05d960dd726b</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='*'])[6]/following::div[1]</value>
+      <webElementGuid>21cc7b55-f231-4b2e-aeb6-e94b5fe719fd</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//div[6]/app-question/app-select/div/ng-select/div</value>
+      <webElementGuid>bc6a5481-601b-48ee-a0af-2ae0428c3edb</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//div[(text() = 'Select One×Active×' or . = 'Select One×Active×')]</value>
+      <webElementGuid>56eec2fd-459d-4262-8509-ecda70f95903</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>
