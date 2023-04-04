@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "F3281D4A1161C13018E10277CA81ADF1",
+  "keywordFileContentHash": "53866BFA3ECED48D9071474AD257311A",
   "keywordClasses": [
     {
       "name": "connection.dataVerif",
@@ -726,6 +726,38 @@
             },
             {
               "name": "email",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getSignerKotakMasukSendDoc",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "documentid",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
