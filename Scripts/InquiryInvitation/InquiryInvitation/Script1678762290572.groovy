@@ -124,17 +124,17 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).eq
     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_KodePos'), 'value', 
                 FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
-    if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 41).length() > 0) {
+    if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 59).length() > 0) {
         'input invited by'
         WebUI.setText(findTestObject('InquiryInvitation/select_InviteBy'), findTestData(excelPathBuatUndangan).getValue(
-                GlobalVariable.NumofColm, 41))
+                GlobalVariable.NumofColm, 59))
 
         'send keys enter'
         WebUI.sendKeys(findTestObject('InquiryInvitation/select_InviteBy'), Keys.chord(Keys.ENTER))
 
         'input receiver detail'
         WebUI.setText(findTestObject('InquiryInvitation/edit_Receiver'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-                42))
+                60))
     }
     
     'input NIK'

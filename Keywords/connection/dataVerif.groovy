@@ -500,7 +500,7 @@ public class dataVerif {
 		}
 		return listdata
 	}
-	
+
 	@Keyword
 	public getSignerKotakMasukSendDoc(Connection conn, String documentid){
 		String data

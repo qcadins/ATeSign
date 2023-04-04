@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>FormAktivasiVida</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>e2c56ce5-a8c9-4656-91d3-9bf59c55c615</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>6e859f42-8aed-45a7-a287-b823d335e05a</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Registrasi/Generate_Inv_Link'</defaultValue>
+      <description></description>
+      <id>6e859f42-8aed-45a7-a287-b823d335e05a</id>
+      <masked>false</masked>
+      <name>excelPathGenerateLink</name>
+   </variable>
+</TestCaseEntity>
