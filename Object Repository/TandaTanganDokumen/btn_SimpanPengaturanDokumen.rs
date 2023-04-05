@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>btn_SimpanPengaturanDokumen</name>
+   <tag></tag>
+   <elementGuidId>0c75de30-e0f2-4bee-b9cb-60d747a4bcb0</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>CSS</key>
+         <value>button.btn.btn-info</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>(.//*[normalize-space(text()) and normalize-space(.)='Batal'])[1]/following::button[1]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>XPATH</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>button</value>
+      <webElementGuid>4de9a268-eff5-4088-b8a2-5222de116abf</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>btn btn-info</value>
+      <webElementGuid>debd845f-74c9-4f76-a503-68bab3496dee</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Simpan</value>
+      <webElementGuid>fb988d83-df12-49c0-a4b7-5b6c2ff9f9f3</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html[1]/body[@class=&quot;vertical-layout menu-hide navbar-static  pace-done&quot;]/app-root[1]/app-full-layout[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;wrapper&quot;]/div[@class=&quot;main-panel&quot;]/div[@class=&quot;main-content&quot;]/div[@class=&quot;content-wrapper&quot;]/app-setting-signer[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;row&quot;]/div[@class=&quot;col-6 text-right&quot;]/button[@class=&quot;btn btn-info&quot;]</value>
+      <webElementGuid>9225fa4f-4467-4f98-9401-c675c00aa13c</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Batal'])[1]/following::button[1]</value>
+      <webElementGuid>0c83ff24-7d97-4d5c-8e6a-343065ce871c</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Pengaturan Dokumen'])[2]/following::button[2]</value>
+      <webElementGuid>d29a401f-d419-41fa-a4f4-c59a83b04b7a</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Halaman 1 dari 1'])[1]/preceding::button[2]</value>
+      <webElementGuid>d06dc307-a838-45b2-aacb-47c9e8126e1b</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='TTD'])[1]/preceding::button[4]</value>
+      <webElementGuid>408409a5-1727-4138-ac4e-09007d089627</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>//*/text()[normalize-space(.)='Simpan']/parent::*</value>
+      <webElementGuid>befc8ecc-9ed7-4c9a-b17c-9e159af762cd</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//button[2]</value>
+      <webElementGuid>62576d1b-8a8f-4321-bb31-683050c141c8</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//button[(text() = 'Simpan' or . = 'Simpan')]</value>
+      <webElementGuid>155b309d-5088-4d09-b516-0be6f5b540dc</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>

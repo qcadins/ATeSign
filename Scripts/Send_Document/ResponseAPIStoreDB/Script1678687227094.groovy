@@ -85,21 +85,21 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVar
     arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 19).replace('"', ''), 
     result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-'verify psre/vendor code'
-arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 21).replace('"', ''), 
-result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+	'verify psre/vendor code'
+	arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 21).replace('"', ''), 
+		result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-'verify success url'
-arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 22).replace('"', ''), 
-result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-'verify upload url'
-arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 23).replace('"', ''), 
-result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+	'verify success url'
+	arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 22).replace('"', ''), 
+		result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 	
-	//'verify sign Action : hardcode. Yang penting tidak boleh kosong'
-	//arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 28).replace('"', ''),
-	//	"", true, FailureHandling.CONTINUE_ON_FAILURE))
+	'verify upload url'
+	arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 23).replace('"', ''), 
+		result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	'verify sign Action : hardcode. Yang penting tidak boleh kosong'
+	arrayMatch.add(WebUI.verifyNotMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 28).replace('"', ''),
+		"", false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'jika data db tidak sesuai dengan excel'
 if (arrayMatch.contains(false)) {

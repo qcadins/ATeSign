@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>div_kotakTTD</name>
+   <tag></tag>
+   <elementGuidId>9431d04a-c8c1-41da-9df7-89d45a6b0b1e</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[1]/div</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>(.//*[normalize-space(text()) and normalize-space(.)='Meterai'])[1]/following::div[3]</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>div.box-content</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>div</value>
+      <webElementGuid>72aa3d56-0cb9-42e4-851f-8439fe220b14</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>box-content</value>
+      <webElementGuid>381c5b1a-08d5-42ff-a80a-282da32db75f</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>CustomerTTD disini</value>
+      <webElementGuid>8f5c2e8e-6703-4300-8228-3beac893d1e5</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[1]/div</value>
+      <webElementGuid>d5856272-2a62-4a3d-b6a8-cbea7874bc58</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Meterai'])[1]/following::div[3]</value>
+      <webElementGuid>797b4065-86b4-4c6c-a529-311e69b46749</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Paraf'])[1]/following::div[3]</value>
+      <webElementGuid>bb4d2532-cd91-4f88-a392-26adade6fc81</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//app-bbox/div/div</value>
+      <webElementGuid>ecd773fa-e4ba-426a-90f7-28b4a8fa51e7</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//div[(text() = 'CustomerTTD disini' or . = 'CustomerTTD disini')]</value>
+      <webElementGuid>b49175ce-0702-4fb6-a3ad-cc8e8e0efc99</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>

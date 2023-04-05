@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>btn_LockTTD</name>
+   <tag></tag>
+   <elementGuidId>a751fcea-621c-41bb-8194-ea29cf1f0542</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox/div/button[1]</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>(.//*[normalize-space(text()) and normalize-space(.)='TTD disini'])[1]/following::button[1]</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>button.btn.btn-warning.btn-sm.lock.ng-star-inserted</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>button</value>
+      <webElementGuid>22aa67ed-06c0-46e2-ad4e-5198f4698a4e</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>btn btn-warning btn-sm lock ng-star-inserted</value>
+      <webElementGuid>d8c8b963-030b-4674-a44c-818f17514c46</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox/div/button[1]</value>
+      <webElementGuid>21e2af82-acea-46c5-8b3b-9db89d2ec603</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='TTD disini'])[1]/following::button[1]</value>
+      <webElementGuid>bd538164-5bca-403d-b65a-76a461f2cdb2</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Customer'])[1]/following::button[1]</value>
+      <webElementGuid>4385e8c2-fc86-45fa-b772-bd35d91506f7</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Persyaratan layanan'])[1]/preceding::button[2]</value>
+      <webElementGuid>dce4bc58-2b78-4dc3-8a80-59e4bffeaca2</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Kebijakan privasi'])[1]/preceding::button[2]</value>
+      <webElementGuid>a5cfb724-443e-4c08-8d11-3ca285000791</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//app-bbox/div/button</value>
+      <webElementGuid>e61f6519-4eaa-406c-819f-4d8abdc30677</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>

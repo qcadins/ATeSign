@@ -23,7 +23,6 @@ import internal.GlobalVariable
 import org.openqa.selenium.By
 import org.openqa.selenium.Keys
 
-GlobalVariable.Response = '00155D0B-7502-A922-11ED-D203A2BF1500'
 
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
@@ -40,16 +39,19 @@ WebUI.callTestCase(findTestCase('Login/Login_Andy'), [:], FailureHandling.STOP_O
 'get data kotak masuk send document secara asc, dimana cust4omer no 1'
 ArrayList<String> result = CustomKeywords.'connection.dataVerif.getKotakMasukSendDoc'(conneSign,GlobalVariable.Response.replace('[', '').replace(']', ''))
 
+'Max windows'
 WebUI.maximizeWindow()
 
+'Klik objek Beranda'
 WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_Beranda'))
 
+'Klik lastest dari kotak masuk yang ada'
 WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_Lastest'))
 
 'get row beranda'
 variable = DriverFactory.getWebDriver().findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
 
-//UInya berubah 31 Maret 2023 7.31
+//UInya berubah 31 Maret 2023 7.31. Mungkin akan dipakai waktu depan.
 //'modify object text refnum'
 //modifyObjecttextrefnum = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_refnum'),'xpath','equals',
 //"/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper["+ variable.size() +"]/datatable-body-row/div[2]/datatable-body-cell[2]/div/p",true)

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>btn_openddlTipePembayaran</name>
+   <tag></tag>
+   <elementGuidId>0724e2c2-d295-48e3-ace9-e942613eceb3</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>CSS</key>
+         <value>span.ng-arrow-wrapper</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>//ng-select[@id='paymentSignTypeCode']/div/span[2]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>XPATH</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>span</value>
+      <webElementGuid>3955d213-552a-4f19-a53e-9f5f7d9413e3</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>ng-arrow-wrapper</value>
+      <webElementGuid>707a1dfd-8f72-4444-8b3e-938de95c5285</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>id(&quot;paymentSignTypeCode&quot;)/div[@class=&quot;ng-select-container ng-has-value&quot;]/span[@class=&quot;ng-arrow-wrapper&quot;]</value>
+      <webElementGuid>496940c8-dbda-4796-b7e1-978fecb059cf</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:idRelative</name>
+      <type>Main</type>
+      <value>//ng-select[@id='paymentSignTypeCode']/div/span[2]</value>
+      <webElementGuid>39fc21b7-4686-408a-a11e-e3cf0401435d</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Select payment sign type'])[1]/following::span[5]</value>
+      <webElementGuid>ade2b892-0a7a-4659-a5ed-3ab10f97d47d</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='*'])[4]/following::span[5]</value>
+      <webElementGuid>b0de8857-110e-432a-907e-cbc30e09ff36</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='*'])[5]/preceding::span[2]</value>
+      <webElementGuid>8aff92a1-334c-44a5-bfd1-3316047349df</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//span[2]</value>
+      <webElementGuid>6a5bfaff-f308-4850-80f9-176aab7152cc</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>

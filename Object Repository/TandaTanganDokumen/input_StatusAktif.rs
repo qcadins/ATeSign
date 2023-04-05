@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>id(&quot;isActive&quot;)/div[@class=&quot;ng-select-container ng-has-value&quot;][count(. | //div[@class = 'ng-select-container ng-has-value']) = count(//div[@class = 'ng-select-container ng-has-value'])]</value>
+         <value>//*[@id=&quot;isActive&quot;]/div/div/div[3]/input</value>
       </entry>
       <entry>
          <key>XPATH</key>
@@ -18,23 +18,15 @@
          <value>#isActive > div.ng-select-container.ng-has-value</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>true</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>tag</name>
       <type>Main</type>
       <value>div</value>
-      <webElementGuid>33999c34-4fdf-4f88-a673-5e73891aeccc</webElementGuid>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>class</name>
-      <type>Main</type>
-      <value>ng-select-container ng-has-value</value>
-      <webElementGuid>bd67bc85-1ecb-4921-a20f-2b25b20702a2</webElementGuid>
+      <webElementGuid>748515f9-695d-4552-be1e-94c9f4dc5bd7</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -42,15 +34,15 @@
       <name>text</name>
       <type>Main</type>
       <value>Select One×Active×</value>
-      <webElementGuid>fe310470-9bda-4b9e-a382-803f21e6929a</webElementGuid>
+      <webElementGuid>832eb122-00c2-4f8a-8629-b8a22a40cf4d</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>id(&quot;isActive&quot;)/div[@class=&quot;ng-select-container ng-has-value&quot;]</value>
-      <webElementGuid>cfced6e3-5ff0-47a9-84a8-45870e7038a9</webElementGuid>
+      <value>//*[@id=&quot;isActive&quot;]/div/div/div[3]/input</value>
+      <webElementGuid>f6c17540-e3bf-4039-b0a8-384c98ce652a</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -58,7 +50,15 @@
       <name>aria-owns</name>
       <type>Main</type>
       <value>a813f5dffc6a</value>
-      <webElementGuid>079a4e9c-b6a2-4471-9b54-61edfae3f534</webElementGuid>
+      <webElementGuid>533a45af-8a19-4d08-bea6-47b3229e471c</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>ng-option ng-option-selected ng-option-marked ng-star-inserted</value>
+      <webElementGuid>6ad95335-dbb7-4a5a-8522-a1c2fef5570b</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -66,7 +66,7 @@
       <name>xpath:idRelative</name>
       <type>Main</type>
       <value>//ng-select[@id='isActive']/div</value>
-      <webElementGuid>d13eb067-a706-4edc-9f1f-05d960dd726b</webElementGuid>
+      <webElementGuid>0cce782c-8ded-4377-8ff9-88b4a1e63727</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -74,7 +74,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='*'])[6]/following::div[1]</value>
-      <webElementGuid>21cc7b55-f231-4b2e-aeb6-e94b5fe719fd</webElementGuid>
+      <webElementGuid>2eabf451-b7d6-451c-b6e8-8b28e7f86d76</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -82,7 +82,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div[6]/app-question/app-select/div/ng-select/div</value>
-      <webElementGuid>bc6a5481-601b-48ee-a0af-2ae0428c3edb</webElementGuid>
+      <webElementGuid>b1e92d86-1142-48b2-8755-7b102d31ab08</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -90,6 +90,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//div[(text() = 'Select One×Active×' or . = 'Select One×Active×')]</value>
-      <webElementGuid>56eec2fd-459d-4262-8509-ecda70f95903</webElementGuid>
+      <webElementGuid>5d6f15e7-9e59-4226-b415-b58b7a9d139b</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

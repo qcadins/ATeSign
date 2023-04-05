@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>btn_ttd</name>
+   <tag></tag>
+   <elementGuidId>e39e52b8-2bf5-482c-832c-ddcfefbd3ecd</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[1]/div/button[1]</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[1]/div/button[1]</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>button.btn.btn-light.ml-1.mr-1.ng-star-inserted</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>button</value>
+      <webElementGuid>6befbe8c-bdb2-4a3a-b115-98dedfe518a7</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>btn btn-light ml-1 mr-1 ng-star-inserted</value>
+      <webElementGuid>6f79483c-ca08-460f-b935-52c9add34d67</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value> TTD </value>
+      <webElementGuid>d996d4ac-7b88-4d70-a924-6a2310cd72f9</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[1]/div/button[1]</value>
+      <webElementGuid>9717265f-5d3f-4c5b-a306-829563269497</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Halaman 1 dari 1'])[1]/following::button[2]</value>
+      <webElementGuid>8ca10d05-0562-4a0d-88ce-614fd0facdcf</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Simpan'])[1]/following::button[4]</value>
+      <webElementGuid>63d1d51a-fa02-4f6d-9c78-c9f8362203d0</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Paraf'])[1]/preceding::button[1]</value>
+      <webElementGuid>7edd5a9f-c7db-4016-9a5a-bbac425e3553</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Meterai'])[1]/preceding::button[2]</value>
+      <webElementGuid>c3a5e0ba-6d19-4214-b389-d15fb03f7792</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>//*/text()[normalize-space(.)='TTD']/parent::*</value>
+      <webElementGuid>3c203282-a1be-4731-a53e-329a99f9a55d</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//section/div/button</value>
+      <webElementGuid>fa48e08a-d568-406a-95ed-8276183df985</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//button[(text() = ' TTD ' or . = ' TTD ')]</value>
+      <webElementGuid>cf41e6ae-a320-42e0-80fe-7228b8c8aaae</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>

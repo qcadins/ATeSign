@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>lbl_TTDtipetandatangan</name>
+   <tag></tag>
+   <elementGuidId>9334472f-431b-47e0-8b9b-09bf744e4143</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox/div/div/small</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>(.//*[normalize-space(text()) and normalize-space(.)='Meterai'])[1]/following::small[1]</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>small</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>small</value>
+      <webElementGuid>704ceb4d-17f4-4424-969a-4862e4af4083</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Customer</value>
+      <webElementGuid>1843aeb3-63c9-4964-b56f-abf27fd36248</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox/div/div/small</value>
+      <webElementGuid>2e78dfcd-3ab3-4c0e-a333-5da5eea7f804</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Meterai'])[1]/following::small[1]</value>
+      <webElementGuid>d984be86-48b9-4de0-8f79-cbf362ba665a</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Paraf'])[1]/following::small[1]</value>
+      <webElementGuid>dd8b7967-315b-48a9-ab2f-eca3542d1f75</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='TTD disini'])[1]/preceding::small[1]</value>
+      <webElementGuid>5b20506f-e500-42d3-afbd-4983d68c4ab8</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Persyaratan layanan'])[1]/preceding::small[1]</value>
+      <webElementGuid>e3a906f1-61a4-4b97-a159-8bff9d168ee7</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>//*/text()[normalize-space(.)='Customer']/parent::*</value>
+      <webElementGuid>c417e96b-8aaf-4817-9ea7-0b95126e8f87</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//small</value>
+      <webElementGuid>600c3f4c-460d-48a1-b11e-54716f07a1b9</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//small[(text() = 'Customer' or . = 'Customer')]</value>
+      <webElementGuid>05c50d52-6ead-4f1d-9127-c3d6296661a5</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>

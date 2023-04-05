@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>lbl_tipetandatangan</name>
+   <tag></tag>
+   <elementGuidId>0200f2ab-446d-48a3-8c52-fbd5472d1ba6</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/ngb-modal-window/div/div/app-label-modal/div/div/label</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>(.//*[normalize-space(text()) and normalize-space(.)='`'])[2]/following::label[1]</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>label</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>label</value>
+      <webElementGuid>b235f6c9-1b1d-4c8e-b9e7-734178fd1799</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>for</name>
+      <type>Main</type>
+      <value>signerType</value>
+      <webElementGuid>c9d8b4a8-7886-4818-a6a1-8f01de2a2e62</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Pilih Tipe Tanda Tangan</value>
+      <webElementGuid>40b4131b-cd37-407b-91be-9153a867ec3d</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/ngb-modal-window/div/div/app-label-modal/div/div/label</value>
+      <webElementGuid>148fa0c4-d827-40a3-9e69-b58346b9efc3</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='`'])[2]/following::label[1]</value>
+      <webElementGuid>a71f8d9a-b151-4758-8556-7a8ac3dd2296</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Alt'])[2]/following::label[1]</value>
+      <webElementGuid>4f0c1cb5-5f52-4ad0-bc90-91b2a86999d7</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Set Signer'])[1]/preceding::label[1]</value>
+      <webElementGuid>fde46214-ce72-4493-a7dd-de0b732134f6</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>//*/text()[normalize-space(.)='Pilih Tipe Tanda Tangan']/parent::*</value>
+      <webElementGuid>8bdc9b7f-ed4a-4aea-8f3a-9f7dac8561ef</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//label</value>
+      <webElementGuid>f16e7014-f20a-4606-9343-debf8798089c</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//label[(text() = 'Pilih Tipe Tanda Tangan' or . = 'Pilih Tipe Tanda Tangan')]</value>
+      <webElementGuid>81b48d03-7255-4f91-abce-8e5a6bd32c82</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>

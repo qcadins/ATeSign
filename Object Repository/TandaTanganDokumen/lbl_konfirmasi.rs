@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>text_konfirmasi</name>
+   <name>lbl_konfirmasi</name>
    <tag></tag>
    <elementGuidId>e2f829fe-649d-4b9e-bb54-fda277af10da</elementGuidId>
    <selectorCollection>

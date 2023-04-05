@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>text_TambahTemplatDokumen</name>
+   <name>lbl_TambahTemplatDokumen</name>
    <tag></tag>
    <elementGuidId>1c5ebb61-44da-43f2-a34b-c185f300ce80</elementGuidId>
    <selectorCollection>
