@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>button_Kirim</name>
+   <tag></tag>
+   <elementGuidId>afa2df26-9478-47e7-865f-27782ae8fb92</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;feedbackPage&quot;]/div/div/div/div/div/form/div/div[6]/div/button</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;feedbackPage&quot;]/div/div/div/div/div/form/div/div[6]/div/button</value>
+      <webElementGuid>db469b24-3fd3-4a99-9a41-07ca312c95ef</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Kirim</value>
+      <webElementGuid>749fe9ea-020c-4223-a686-1cfd4449f1bb</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

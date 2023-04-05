@@ -522,6 +522,26 @@ public class dataVerif {
 	}
 
 	@Keyword
+	public getFeedbackStoreDB(Connection conn){
+		String data
+		ArrayList<String> listdata = new ArrayList<>()
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("SELECT feedback_value, comment FROM tr_feedback ORDER BY dtm_crt DESC LIMIT 1")
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for(int i = 1 ; i <= columnCount ; i++){
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		return listdata
+	}
+	
+	@Keyword
 	public getLovTipePembayaran(Connection conn){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()

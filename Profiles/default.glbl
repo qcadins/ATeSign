@@ -56,6 +56,11 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
+      <initValue>'Field Editable / Uneditable tidak sesuai'</initValue>
+      <name>ReasonFailedEditable</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
       <initValue>'Hit API Failed'</initValue>
       <name>ReasonFailedHitAPI</name>
    </GlobalVariableEntity>
