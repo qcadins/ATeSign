@@ -18,6 +18,7 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
+'call test case login as admin'
 WebUI.callTestCase(findTestCase('Login/Login_Admin'), [:], FailureHandling.STOP_ON_FAILURE)
 
 'get data file path'
@@ -29,19 +30,23 @@ checkPaging()
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 
-if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Email')) {
-    'set text search box dengan email'
-    WebUI.setText(findTestObject('PencarianPenggunaAdmin/Karyawan/input_Email'), findTestData(excelPathPencarianPengguna).getValue(
-            GlobalVariable.NumofColm, 11))
-} else if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Phone')) {
-    'set text search box dengan Phone'
-    WebUI.setText(findTestObject('PencarianPenggunaAdmin/Karyawan/input_Email'), findTestData(excelPathPencarianPengguna).getValue(
-            GlobalVariable.NumofColm, 10))
-} else if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Id no')) {
-    'set text search box dengan NIK'
-    WebUI.setText(findTestObject('PencarianPenggunaAdmin/Karyawan/input_Email'), findTestData(excelPathPencarianPengguna).getValue(
-            GlobalVariable.NumofColm, 9))
-}
+'input email'
+WebUI.setText(findTestObject('PencarianPenggunaAdmin/Karyawan/input_Email'), findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 9))
+
+'input nama lengkap'
+WebUI.setText(findTestObject('PencarianPenggunaAdmin/Karyawan/input_NamaLengkap'), findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 10))
+
+'input tanggal aktivasi dari'
+WebUI.setText(findTestObject('PencarianPenggunaAdmin/Karyawan/input_TanggalAktivasiDari'), findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 11))
+
+'input tanggal aktivasi sampai'
+WebUI.setText(findTestObject('PencarianPenggunaAdmin/Karyawan/input_TanggalAktivasiSampai'), findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 12))
+
+'input status aktivasi'
+WebUI.setText(findTestObject('PencarianPenggunaAdmin/Karyawan/Select_Status'), findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 13))
+
+'send keys enter'
+WebUI.sendKeys(findTestObject('PencarianPenggunaAdmin/Karyawan/Select_Status'), Keys.chord(Keys.ENTER))
 
 'click button cari'
 WebUI.click(findTestObject('PencarianPenggunaAdmin/Karyawan/button_Cari'))
@@ -49,7 +54,7 @@ WebUI.click(findTestObject('PencarianPenggunaAdmin/Karyawan/button_Cari'))
 'check if view / reset OTP'
 if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('View')) {
 	
-	'click button reset OTP'
+	'click button view'
 	WebUI.click(findTestObject('PencarianPenggunaAdmin/Karyawan/button_View'))
 	
 	'get data view dari DB'

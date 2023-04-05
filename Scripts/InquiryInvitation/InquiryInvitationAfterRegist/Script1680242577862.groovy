@@ -61,59 +61,59 @@ if (EditAfterRegister == 1) {
     WebUI.click(findTestObject('InquiryInvitation/button_Edit'))
 
     'verify invitationby'
-    checkVerifyEqualOrMatch(WebUI.verifyEqual(WebUI.verifyElementHasAttribute(findTestObject('InquiryInvitation/select_InviteBy'), 
+    checkVerifyEditableOrUneditable(WebUI.verifyEqual(WebUI.verifyElementHasAttribute(findTestObject('InquiryInvitation/select_InviteBy'), 
                 'disabled', GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE), true, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify receiver'
-    checkVerifyEqualOrMatch(WebUI.verifyEqual(WebUI.verifyElementHasAttribute(findTestObject('InquiryInvitation/edit_Receiver'), 
+    checkVerifyEditableOrUneditable(WebUI.verifyEqual(WebUI.verifyElementHasAttribute(findTestObject('InquiryInvitation/edit_Receiver'), 
                 'disabled', GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE), false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify NIK'
-    checkVerifyEqualOrMatch(WebUI.verifyEqual(WebUI.verifyElementHasAttribute(findTestObject('InquiryInvitation/edit_NIK'), 
+    checkVerifyEditableOrUneditable(WebUI.verifyEqual(WebUI.verifyElementHasAttribute(findTestObject('InquiryInvitation/edit_NIK'), 
                 'disabled', GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE), true, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify Nama'
-    checkVerifyEqualOrMatch(WebUI.verifyEqual(WebUI.verifyElementHasAttribute(findTestObject('InquiryInvitation/edit_Nama'), 
+    checkVerifyEditableOrUneditable(WebUI.verifyEqual(WebUI.verifyElementHasAttribute(findTestObject('InquiryInvitation/edit_Nama'), 
                 'disabled', GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE), true, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify TempatLahir'
-    checkVerifyEqualOrMatch(WebUI.verifyEqual(WebUI.verifyElementHasAttribute(findTestObject('InquiryInvitation/edit_TempatLahir'), 
+    checkVerifyEditableOrUneditable(WebUI.verifyEqual(WebUI.verifyElementHasAttribute(findTestObject('InquiryInvitation/edit_TempatLahir'), 
                 'disabled', GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE), true, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify TanggalLahir'
-    checkVerifyEqualOrMatch(WebUI.verifyEqual(WebUI.verifyElementHasAttribute(findTestObject('InquiryInvitation/edit_TanggalLahir'), 
+    checkVerifyEditableOrUneditable(WebUI.verifyEqual(WebUI.verifyElementHasAttribute(findTestObject('InquiryInvitation/edit_TanggalLahir'), 
                 'disabled', GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE), true, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify No Handphone'
-    checkVerifyEqualOrMatch(WebUI.verifyEqual(WebUI.verifyElementHasAttribute(findTestObject('InquiryInvitation/edit_NoHandphone'), 
+    checkVerifyEditableOrUneditable(WebUI.verifyEqual(WebUI.verifyElementHasAttribute(findTestObject('InquiryInvitation/edit_NoHandphone'), 
                 'disabled', GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE), false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify Email'
-    checkVerifyEqualOrMatch(WebUI.verifyEqual(WebUI.verifyElementHasAttribute(findTestObject('InquiryInvitation/edit_Email'), 
+    checkVerifyEditableOrUneditable(WebUI.verifyEqual(WebUI.verifyElementHasAttribute(findTestObject('InquiryInvitation/edit_Email'), 
                 'disabled', GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE), true, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify Alamat'
-    checkVerifyEqualOrMatch(WebUI.verifyEqual(WebUI.verifyElementHasAttribute(findTestObject('InquiryInvitation/edit_Alamat'), 
+    checkVerifyEditableOrUneditable(WebUI.verifyEqual(WebUI.verifyElementHasAttribute(findTestObject('InquiryInvitation/edit_Alamat'), 
                 'disabled', GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE), true, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify Provinsi'
-    checkVerifyEqualOrMatch(WebUI.verifyEqual(WebUI.verifyElementHasAttribute(findTestObject('InquiryInvitation/edit_Provinsi'), 
+    checkVerifyEditableOrUneditable(WebUI.verifyEqual(WebUI.verifyElementHasAttribute(findTestObject('InquiryInvitation/edit_Provinsi'), 
                 'disabled', GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE), true, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify Kota'
-    checkVerifyEqualOrMatch(WebUI.verifyEqual(WebUI.verifyElementHasAttribute(findTestObject('InquiryInvitation/edit_Kota'), 
+    checkVerifyEditableOrUneditable(WebUI.verifyEqual(WebUI.verifyElementHasAttribute(findTestObject('InquiryInvitation/edit_Kota'), 
                 'disabled', GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE), true, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify Kecamatan'
-    checkVerifyEqualOrMatch(WebUI.verifyEqual(WebUI.verifyElementHasAttribute(findTestObject('InquiryInvitation/edit_Kecamatan'), 
+    checkVerifyEditableOrUneditable(WebUI.verifyEqual(WebUI.verifyElementHasAttribute(findTestObject('InquiryInvitation/edit_Kecamatan'), 
                 'disabled', GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE), true, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify Kelurahan'
-    checkVerifyEqualOrMatch(WebUI.verifyEqual(WebUI.verifyElementHasAttribute(findTestObject('InquiryInvitation/edit_Kelurahan'), 
+    checkVerifyEditableOrUneditable(WebUI.verifyEqual(WebUI.verifyElementHasAttribute(findTestObject('InquiryInvitation/edit_Kelurahan'), 
                 'disabled', GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE), true, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify KodePos'
-    checkVerifyEqualOrMatch(WebUI.verifyEqual(WebUI.verifyElementHasAttribute(findTestObject('InquiryInvitation/edit_KodePos'), 
+    checkVerifyEditableOrUneditable(WebUI.verifyEqual(WebUI.verifyElementHasAttribute(findTestObject('InquiryInvitation/edit_KodePos'), 
                 'disabled', GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE), true, FailureHandling.CONTINUE_ON_FAILURE))
 
     'click button Simpan'
@@ -181,12 +181,12 @@ def checkPaging() {
     }
 }
 
-def checkVerifyEqualOrMatch(Boolean isMatch) {
+def checkVerifyEditableOrUneditable(Boolean isMatch) {
     if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
         CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2) + ';') + 
-            GlobalVariable.ReasonFailedVerifyEqualOrMatch)
+            GlobalVariable.ReasonFailedEditable)
 
         GlobalVariable.FlagFailed = 1
     }

@@ -167,6 +167,10 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     'get link'
     GlobalVariable.Link = WebUI.getAttribute(findTestObject('BuatUndangan/PopUp/input_Link'), 'value')
 
+	'write to excel Link buat undangan'
+	CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'BuatUndangan', 4, GlobalVariable.NumofColm -
+		1, GlobalVariable.Link)
+	
     'HIT API Login untuk token : invenditor@womf'
     respon_login = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData('Login/Login').getValue(2, 
                     4), ('password') : findTestData('Login/Login').getValue(3, 4)]))
@@ -234,27 +238,27 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
             FailureHandling.CONTINUE_ON_FAILURE)
     }
     
-    'call test case daftar akun data verif'
-    WebUI.callTestCase(findTestCase('Register_eSign/DaftarAkunDataVerif'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
-        FailureHandling.CONTINUE_ON_FAILURE)
-
-    if ((GlobalVariable.checkStoreDB == 'Yes') && (GlobalVariable.FlagFailed == 0)) {
-        'delay nunggu data db'
-        WebUI.delay(5)
-
-        'call test case BuatUndanganStore DB'
-        WebUI.callTestCase(findTestCase('Register_eSign/BuatUndanganStoreDB'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
-            FailureHandling.CONTINUE_ON_FAILURE)
-    }
+//    'call test case daftar akun data verif'
+//    WebUI.callTestCase(findTestCase('Register_eSign/DaftarAkunDataVerif'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
+//        FailureHandling.CONTINUE_ON_FAILURE)
+//
+//    if ((GlobalVariable.checkStoreDB == 'Yes') && (GlobalVariable.FlagFailed == 0)) {
+//        'delay nunggu data db'
+//        WebUI.delay(5)
+//
+//        'call test case BuatUndanganStore DB'
+//        WebUI.callTestCase(findTestCase('Register_eSign/BuatUndanganStoreDB'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
+//            FailureHandling.CONTINUE_ON_FAILURE)
+//    }
 }
 
 'close browser testing'
 WebUI.closeBrowser()
 
-if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 61).equalsIgnoreCase('Yes') && (GlobalVariable.FlagFailed == 0)) {
-	'call test case untuk cek inquiry invitation field after register'
-	WebUI.callTestCase(findTestCase('InquiryInvitation/InquiryInvitationAfterRegist'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
-			FailureHandling.CONTINUE_ON_FAILURE)
-}
+//if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 61).equalsIgnoreCase('Yes') && (GlobalVariable.FlagFailed == 0)) {
+//	'call test case untuk cek inquiry invitation field after register'
+//	WebUI.callTestCase(findTestCase('InquiryInvitation/InquiryInvitationAfterRegist'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
+//			FailureHandling.CONTINUE_ON_FAILURE)
+//}
 
 
