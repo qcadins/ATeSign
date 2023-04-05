@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_CommentMasukan</name>
+   <tag></tag>
+   <elementGuidId>21ec592b-92be-4ca0-a16c-efc69f1930be</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;comment&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;comment&quot;]</value>
+      <webElementGuid>7e65a2f0-978f-4b85-aa81-4a5137fab0f1</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

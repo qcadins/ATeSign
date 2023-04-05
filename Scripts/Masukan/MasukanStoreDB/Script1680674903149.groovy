@@ -16,27 +16,32 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
+import java.sql.Connection
 
-'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
+'connect DB eSign'
+Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 
-'get colm excel'
-int countColmExcel = findTestData(excelPathBuatUndangan).getColumnNumbers()
+'get data buat undangan dari DB'
+ArrayList<String> result = CustomKeywords.'connection.dataVerif.getFeedbackStoreDB'(conneSign)
 
-'looping buat undangan'
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
-    if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
-        break
-    } else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
-		
-		GlobalVariable.FlagFailed = 0
-		
-    	'call test case login inveditor'
-    	WebUI.callTestCase(findTestCase('Login/Login_Inveditor'), [:], FailureHandling.STOP_ON_FAILURE)
-		
-		'call test case buat undangan'
-        WebUI.callTestCase(findTestCase('Register_eSign/BuatUndangan'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
-            FailureHandling.CONTINUE_ON_FAILURE)
-    }
+'declare arraylist arraymatch'
+ArrayList<String> arrayMatch = new ArrayList<String>()
+
+'declare arrayindex'
+arrayindex = 0
+
+'verify rating'
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, 9).toUpperCase(), (result[arrayindex++]).toUpperCase(),
+		false, FailureHandling.CONTINUE_ON_FAILURE))
+
+'verify comment'
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, 10).toUpperCase(), (result[arrayindex++]).toUpperCase(),
+		false, FailureHandling.CONTINUE_ON_FAILURE))
+
+'jika data db tidak sesuai dengan excel'
+if (arrayMatch.contains(false)) {
+
+	'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+	CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Masukan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, 2) + ';' + GlobalVariable.ReasonFailedStoredDB)
+	
 }
-

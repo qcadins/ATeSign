@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MasukanStoreDB</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>cf053e9b-b86b-42da-8764-4b765b084d46</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>293e6eb4-748b-40b2-8e44-6e9daa76f72c</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Masukan/Masukan'</defaultValue>
+      <description></description>
+      <id>293e6eb4-748b-40b2-8e44-6e9daa76f72c</id>
+      <masked>false</masked>
+      <name>excelPathMasukan</name>
+   </variable>
+</TestCaseEntity>

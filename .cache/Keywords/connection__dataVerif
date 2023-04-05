@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "FDFAEAC98DC8898BB417B139352F9840",
+  "keywordFileContentHash": "2617B15482BB85F549DAE6944E01723C",
   "keywordClasses": [
     {
       "name": "connection.dataVerif",
@@ -762,6 +762,25 @@
               "type": {
                 "fullClassName": "java.lang.String",
                 "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getFeedbackStoreDB",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
                 "isArray": false,
                 "isGnericsPlaceHolder": false,
                 "hasImmutableClassName": false,
