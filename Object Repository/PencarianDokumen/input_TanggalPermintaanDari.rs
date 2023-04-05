@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_TanggalPermintaanDari</name>
+   <tag></tag>
+   <elementGuidId>eca2fd4c-e2ee-4464-9188-25dc0b50b5b0</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;requestedDateStart&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;requestedDateStart&quot;]</value>
+      <webElementGuid>62248529-943a-4624-8ccb-20314c11a77c</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

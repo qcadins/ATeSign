@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_NomorKontrak</name>
+   <tag></tag>
+   <elementGuidId>263f9541-edf3-4abc-b2d6-f221c661606b</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;refNumber&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;refNumber&quot;]</value>
+      <webElementGuid>2b08706a-c537-4b98-8b37-f97d726b9f26</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

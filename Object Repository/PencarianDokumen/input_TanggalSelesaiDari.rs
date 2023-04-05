@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_TanggalSelesaiDari</name>
+   <tag></tag>
+   <elementGuidId>5a23860c-35f4-4f65-a068-ad8570222670</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value></value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;completedDateStart&quot;]</value>
+      <webElementGuid>e7b3c8f1-3efe-4591-bfb2-c103ddb2168e</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

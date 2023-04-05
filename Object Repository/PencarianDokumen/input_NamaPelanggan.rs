@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_NamaPelanggan</name>
+   <tag></tag>
+   <elementGuidId>3d7554fb-e10e-4cba-9fde-600ce0185f78</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;customerName&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;customerName&quot;]</value>
+      <webElementGuid>7fe59e2c-b7fe-499d-b97e-8145d90d3c7c</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>
