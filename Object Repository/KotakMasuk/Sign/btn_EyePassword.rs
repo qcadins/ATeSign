@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>btn_EyePassword</name>
+   <tag></tag>
+   <elementGuidId>9dee28ae-22fe-4cfc-a815-696055aba671</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>XPATH</key>
+         <value>//i[2]</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>i.ft-eye</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>XPATH</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>i</value>
+      <webElementGuid>e2287423-6f16-4a5d-a678-7ef3937ac4aa</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>ft-eye</value>
+      <webElementGuid>b360995c-0d35-4e93-9fc6-4f56dff04c2b</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html[1]/body[@class=&quot;vertical-layout navbar-static pace-done modal-open menu-hide menu-expanded&quot;]/ngb-modal-window[@class=&quot;d-block modal fade show&quot;]/div[@class=&quot;modal-dialog modal-l&quot;]/div[@class=&quot;modal-content&quot;]/app-signer-signing-verification[1]/div[@class=&quot;modal-body&quot;]/div[@class=&quot;modal-body&quot;]/form[@class=&quot;ng-touched ng-dirty ng-valid&quot;]/div[@class=&quot;form-group&quot;]/div[@class=&quot;input&quot;]/i[@class=&quot;ft-eye&quot;]</value>
+      <webElementGuid>7dbf75b4-e948-4677-94c2-8a0c689bfffe</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//i[2]</value>
+      <webElementGuid>ba28c605-53c4-4e49-b0be-14c75f95deac</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>

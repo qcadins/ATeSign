@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>btn_ddlaktif</name>
+   <tag></tag>
+   <elementGuidId>7bf6641a-431c-411e-bae7-64578ffff57b</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;isActive&quot;]/div/span[2]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;isActive&quot;]/div/span[2]</value>
+      <webElementGuid>ee9d02b4-dd39-4e61-90f3-91500b99df96</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>
