@@ -36,7 +36,7 @@ arrayindex = 0
 'call Test Case untuk login sebagai user'
 WebUI.callTestCase(findTestCase('Login/Login_Signer'), [:], FailureHandling.STOP_ON_FAILURE)
 
-'get data kotak masuk send document secara asc, dimana cust4omer no 1'
+'get data kotak masuk send document secara asc, dimana customer no 1'
 ArrayList<String> result = CustomKeywords.'connection.dataVerif.getKotakMasukSendDoc'(conneSign,GlobalVariable.Response.replace('[', '').replace(']', ''))
 
 'Max windows'
@@ -80,7 +80,7 @@ arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjecttextdocumenttemplaten
 'nama Customer'
 arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjecttextname), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-'get data kotak masuk send document secara asc, dimana cust4omer no 1'
+'get data kotak masuk send document secara asc, dimana customer no 1'
 ArrayList<String> resultSigner = CustomKeywords.'connection.dataVerif.getSignerKotakMasukSendDoc'(conneSign,GlobalVariable.Response.replace('[', '').replace(']', ''))
 
 'Klik btnSigner'
@@ -101,8 +101,7 @@ for(int i = 1 ; i <= variable_row_popup.size() ; i++)
 	'loop untuk column popup'
 	for(int m = 1 ; m <= variable_col_popup.size()/variable_row_popup.size();m++) 
 	{
-		'modify object text nama, email, signer Type, sudah aktivasi' 
-		'Untuk yang terakhir belum bisa, dikarenakan masih gak ada data (-)' 'Dikarenakan modifynya bukan p di lastnya, melainkan span'
+		'modify object text nama, email, signer Type, sudah aktivasi Untuk yang terakhir belum bisa, dikarenakan masih gak ada data (-) Dikarenakan modifynya bukan p di lastnya, melainkan span'
 		modifyObjecttextpopup = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_tipepopup'),'xpath','equals',"/html/body/ngb-modal-window/div/div/app-signer/div[2]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper["+ i +"]/datatable-body-row/div[2]/datatable-body-cell["+m+"]/div/p",true)
 		
 		'signer nama,email,signerType,sudahAktivasi popup'

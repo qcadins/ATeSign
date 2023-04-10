@@ -18,7 +18,7 @@ import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 import java.sql.Connection as Connection
 'asumsi password : P@ssw0rd'
-
+GlobalVariable.Response = '00155D0B-7502-9C6D-11ED-D4450E9C9C50'
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 
