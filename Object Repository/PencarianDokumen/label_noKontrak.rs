@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>button_Cari</name>
+   <name>label_noKontrak</name>
    <tag></tag>
-   <elementGuidId>c4af1b3e-032e-4ab7-8222-33795f9d881b</elementGuidId>
+   <elementGuidId>857b5ee1-73cc-4ecf-ac93-733c5c4927ba</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;searchForm&quot;]/div[2]/div/button[2]</value>
+         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-view-document-inquiry/div[1]/div[2]/div</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@id=&quot;searchForm&quot;]/div[2]/div/button[2]</value>
-      <webElementGuid>42ec3e33-f37e-4f39-8647-6c81e8d0d0ae</webElementGuid>
+      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-view-document-inquiry/div[1]/div[2]/div</value>
+      <webElementGuid>feb97c6f-c3f0-4889-88b7-28d5e01aa1ed</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

@@ -1,0 +1,30 @@
+{
+  "keywordFileContentHash": "DAE0A8C59218ACCE82F146BE82054773",
+  "keywordClasses": [
+    {
+      "name": "customizeKeyword.Download",
+      "keywordMethods": [
+        {
+          "name": "isFileDownloaded",
+          "parameters": [
+            {
+              "name": "deleteFile",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        }
+      ]
+    }
+  ],
+  "javadocParsed": true
+}

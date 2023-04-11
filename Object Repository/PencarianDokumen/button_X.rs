@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>button_Cari</name>
+   <name>button_X</name>
    <tag></tag>
-   <elementGuidId>c4af1b3e-032e-4ab7-8222-33795f9d881b</elementGuidId>
+   <elementGuidId>80aba926-bef1-4886-86f7-a851299718dc</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;searchForm&quot;]/div[2]/div/button[2]</value>
+         <value>/html/body/ngb-modal-window/div/div/app-signer/div[1]/button/span</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@id=&quot;searchForm&quot;]/div[2]/div/button[2]</value>
-      <webElementGuid>42ec3e33-f37e-4f39-8647-6c81e8d0d0ae</webElementGuid>
+      <value>/html/body/ngb-modal-window/div/div/app-signer/div[1]/button/span</value>
+      <webElementGuid>94a0c0c2-3f21-4e52-813a-8be361eb2ab9</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

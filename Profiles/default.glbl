@@ -26,18 +26,13 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
-      <initValue>''</initValue>
-      <name>Response</name>
+      <initValue>[]</initValue>
+      <name>eSignData</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
       <initValue>''</initValue>
       <name>ErrorType</name>
-   </GlobalVariableEntity>
-   <GlobalVariableEntity>
-      <description></description>
-      <initValue>[]</initValue>
-      <name>eSignData</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
@@ -53,6 +48,21 @@
       <description></description>
       <initValue>2</initValue>
       <name>NumofColm</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>findTestData('Login/Setting').getValue(5, 2)</initValue>
+      <name>Psre</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>''</initValue>
+      <name>Response</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>'Failed Download File'</initValue>
+      <name>ReasonFailedDownload</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
@@ -163,5 +173,10 @@
       <description></description>
       <initValue>findTestData('Login/Setting').getValue(4, 2)</initValue>
       <name>urlLocalHost</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>findTestData('Login/Setting').getValue(6, 2)</initValue>
+      <name>Tenant</name>
    </GlobalVariableEntity>
 </GlobalVariableEntities>
