@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>lbl_NamaDokumenAfterKonfirmasi</name>
+   <tag></tag>
+   <elementGuidId>5d6a3cfa-6d85-491f-8836-1e0cf6c591b5</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>XPATH</key>
+         <value>//div[@id='pdf-main-container']/div/ul/li/label</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>label</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>XPATH</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>label</value>
+      <webElementGuid>aedbeeda-2094-47af-bfdb-e9845f3d0fd0</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>TEST TEMPLATE FIT</value>
+      <webElementGuid>8285838e-4e94-468e-b07b-9b7c4c88deed</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>id(&quot;pdf-main-container&quot;)/div[1]/ul[@class=&quot;list-group&quot;]/li[@class=&quot;list-group-item ng-star-inserted&quot;]/label[1]</value>
+      <webElementGuid>8746dcbe-5b38-409a-b060-f1e2ab4e0b9a</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:idRelative</name>
+      <type>Main</type>
+      <value>//div[@id='pdf-main-container']/div/ul/li/label</value>
+      <webElementGuid>90cb5af4-ba58-4166-b3f4-0215d7e0e00a</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Tanda Tangan Dokumen'])[1]/following::label[1]</value>
+      <webElementGuid>47d7294d-7d5b-4ea3-8367-86e00a217096</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Masukan'])[1]/following::label[1]</value>
+      <webElementGuid>0b81fd49-15a5-473e-9074-f9c663d9cd01</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Proses'])[1]/preceding::label[1]</value>
+      <webElementGuid>719365ba-8d75-4cbb-b463-76325d6662a1</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Persyaratan layanan'])[1]/preceding::label[1]</value>
+      <webElementGuid>80cb5e7c-bf3f-48a9-afb5-f13bad5e718d</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>//*/text()[normalize-space(.)='TEST TEMPLATE FIT']/parent::*</value>
+      <webElementGuid>65ac1600-6354-4bb6-83e0-cfb732d07c4a</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//label</value>
+      <webElementGuid>6b01206d-0266-4547-b93b-ab26f0029803</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//label[(text() = 'TEST TEMPLATE FIT' or . = 'TEST TEMPLATE FIT')]</value>
+      <webElementGuid>9146060f-5fce-48f7-a5e5-84d524f77be2</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>

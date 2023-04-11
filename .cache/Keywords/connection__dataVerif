@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "E460EEE3C68C20536F34640923B883C4",
+  "keywordFileContentHash": "9F622FC6E13B9A53E3CEB9D29E3F1E8B",
   "keywordClasses": [
     {
       "name": "connection.dataVerif",
@@ -785,7 +785,7 @@
           ]
         },
         {
-          "name": "getSignerInfo",
+          "name": "getEmailLogin",
           "parameters": [
             {
               "name": "conn",
@@ -801,20 +801,7 @@
               }
             },
             {
-              "name": "refnum",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.lang.String",
-                "unresolvedClassName": "String",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            },
-            {
-              "name": "psre",
+              "name": "documentid",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

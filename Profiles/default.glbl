@@ -6,7 +6,7 @@
    <defaultProfile>true</defaultProfile>
    <GlobalVariableEntity>
       <description></description>
-      <initValue>'http://gdkwebsvr:7021/adimobile/esign'</initValue>
+      <initValue>'https://gdkwebserver.ad-ins.com/adimobile/demo/esign'</initValue>
       <name>base_url</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>

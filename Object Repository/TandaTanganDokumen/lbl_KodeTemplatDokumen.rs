@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>lbl_KodeTemplatDokumen</name>
+   <tag></tag>
+   <elementGuidId>d89a02be-639a-4889-a6de-b9ac89b953f6</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>XPATH</key>
+         <value>//form[@id='searchForm']/div/div/app-question/app-text/div/div/label</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>label.msx-form-label</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>XPATH</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>label</value>
+      <webElementGuid>ff8525bb-deba-49d4-aad7-0d2a189a643c</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>msx-form-label</value>
+      <webElementGuid>8d4237bd-990f-4da9-90eb-f7fa04eb195f</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>for</name>
+      <type>Main</type>
+      <value>documentTemplateCode</value>
+      <webElementGuid>885a4230-f6b1-424b-895d-4bd0e48f3d6a</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Kode Templat Dokumen </value>
+      <webElementGuid>9ff6fba3-34a2-4de1-86f4-a9d1ecbdbefa</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>id(&quot;searchForm&quot;)/div[@class=&quot;row&quot;]/div[@class=&quot;col-6 ng-star-inserted&quot;]/app-question[1]/app-text[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;form-group row ng-untouched ng-pristine ng-valid ng-star-inserted&quot;]/div[@class=&quot;col-5&quot;]/label[@class=&quot;msx-form-label&quot;]</value>
+      <webElementGuid>be11a96a-72ab-41fd-86e2-58cd77a3a351</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:idRelative</name>
+      <type>Main</type>
+      <value>//form[@id='searchForm']/div/div/app-question/app-text/div/div/label</value>
+      <webElementGuid>4d024c0f-7b5b-4400-b81e-f48539222cb5</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Filter'])[1]/following::label[1]</value>
+      <webElementGuid>edb2d0f8-c8cf-41cf-94fc-1e8035b21bbf</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Baru'])[1]/following::label[1]</value>
+      <webElementGuid>4df1eb9f-658c-40c8-b413-922752a2bcca</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Nama Templat Dokumen'])[1]/preceding::label[1]</value>
+      <webElementGuid>3cf7063d-2abd-491c-898f-d7f7d1209b15</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Status'])[1]/preceding::label[2]</value>
+      <webElementGuid>b77dd9ee-6d50-4069-8928-7dc62b4f9919</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>//*/text()[normalize-space(.)='Kode Templat Dokumen']/parent::*</value>
+      <webElementGuid>47602c90-7e8c-4924-8e4d-9a42a988555a</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//label</value>
+      <webElementGuid>abaf2b30-9bd8-4a25-b1e6-2f49ca233728</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//label[(text() = 'Kode Templat Dokumen ' or . = 'Kode Templat Dokumen ')]</value>
+      <webElementGuid>5fd7f0a7-6a80-4ddd-a0f9-483ca13fabbf</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>
