@@ -1,26 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebServiceRequestEntity>
    <description></description>
-   <name>Login</name>
+   <name>Register</name>
    <tag></tag>
-   <elementGuidId>20aa4544-69ef-49ad-b58a-4b0b467e91b2</elementGuidId>
+   <elementGuidId>3992b909-476b-45d6-afac-78194cbde0b7</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
-   <authorizationRequest>
-      <authorizationInfo>
-         <entry>
-            <key>bearerToken</key>
-            <value>sadsd</value>
-         </entry>
-      </authorizationInfo>
-      <authorizationType>Bearer</authorizationType>
-   </authorizationRequest>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;client_id\u003dfrontend\u0026grant_type\u003dpassword\u0026username\u003d${username}password\u003d${password}&quot;,
-  &quot;contentType&quot;: &quot;text/plain&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: ${callerId}\n    },\n    \&quot;nama\&quot;: ${nama},\n    \&quot;email\&quot;: ${email},\n    \&quot;tmpLahir\&quot;: ${tmpLahir},\n    \&quot;tglLahir\&quot;: ${tglLahir},\n    \&quot;jenisKelamin\&quot;: ${jenisKelamin},\n    \&quot;tlp\&quot;: ${tlp},\n    \&quot;idKtp\&quot;: ${idKtp},\n    \&quot;alamat\&quot;: ${alamat},\n    \&quot;kecamatan\&quot;: ${kecamatan},\n    \&quot;kelurahan\&quot;: ${kelurahan},\n    \&quot;kota\&quot;: ${kota},\n    \&quot;provinsi\&quot;: ${provinsi},\n    \&quot;kodePos\&quot;: ${kodePos},\n    \&quot;selfPhoto\&quot;: ${selfPhoto},\n    \&quot;idPhoto\&quot;: ${idPhoto},\n    \&quot;password\&quot;: ${password}\n}\n&quot;,
+  &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
    <httpBodyType>text</httpBodyType>
@@ -29,46 +20,30 @@
       <matchCondition>equals</matchCondition>
       <name>Content-Type</name>
       <type>Main</type>
-      <value>text/plain</value>
-      <webElementGuid>b05d1743-2242-4c94-ac28-27d7671a1a6a</webElementGuid>
+      <value>application/json</value>
+      <webElementGuid>1c014722-347f-4d6f-a13b-a0b7d5369d3f</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Connection</name>
-      <type>Main</type>
-      <value>keep-alive</value>
-      <webElementGuid>c217d3b6-6d0d-4400-b9cd-d714fa5ce22f</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>Accept</name>
       <type>Main</type>
-      <value>*/*</value>
-      <webElementGuid>fdf73134-ab13-4ab8-9a69-02908407dfcb</webElementGuid>
+      <value>application/json</value>
+      <webElementGuid>dee38c70-d751-433d-9e3b-44e1ca24acdf</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>Accept-Encoding</name>
+      <name>x-api-key</name>
       <type>Main</type>
-      <value>gzip</value>
-      <webElementGuid>cf12e7bd-fe49-4085-bba0-883cf8039458</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Content-Type</name>
-      <type>Main</type>
-      <value>text/plain</value>
-      <webElementGuid>aa7dcf7c-b30d-49ad-91bf-4db9d87c0860</webElementGuid>
+      <value>${api_key}@${tenant_code}</value>
+      <webElementGuid>e31b7a49-b00b-4ae8-8d4c-ff6a87158f85</webElementGuid>
    </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>POST</restRequestMethod>
-   <restUrl>${base_url}/oauth/token</restUrl>
+   <restUrl>${base_url}/user/register</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>
@@ -80,13 +55,25 @@
    <variables>
       <defaultValue>GlobalVariable.base_url</defaultValue>
       <description></description>
-      <id>85a60297-d1f7-4811-bf13-a44a63b4f50a</id>
+      <id>e49821fd-f3a0-455b-9897-3b4335aae85b</id>
       <masked>false</masked>
       <name>base_url</name>
    </variables>
+   <variables>
+      <defaultValue>GlobalVariable.api_key</defaultValue>
+      <description></description>
+      <id>84123dd6-a37b-4f83-9e6a-afc40e470665</id>
+      <masked>false</masked>
+      <name>api_key</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.tenant_code</defaultValue>
+      <description></description>
+      <id>a82177d8-d362-4cb9-9971-0e41f24e681c</id>
+      <masked>false</masked>
+      <name>tenant_code</name>
+   </variables>
    <verificationScript>import static org.assertj.core.api.Assertions.*
-
-import java.nio.file.WatchService
 
 import com.kms.katalon.core.testobject.RequestObject
 import com.kms.katalon.core.testobject.ResponseObject

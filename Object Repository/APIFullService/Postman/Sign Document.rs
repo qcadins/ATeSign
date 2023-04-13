@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebServiceRequestEntity>
+   <description></description>
+   <name>Sign Document</name>
+   <tag></tag>
+   <elementGuidId>77b0c009-d718-43e2-99f1-d2694670e784</elementGuidId>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <connectionTimeout>-1</connectionTimeout>
+   <followRedirects>false</followRedirects>
+   <httpBody></httpBody>
+   <httpBodyContent>{
+  &quot;text&quot;: &quot;{\r\n    \&quot;audit\&quot;: {\r\n        \&quot;callerId\&quot;: \&quot;USER@AD-INS.COM\&quot;\r\n    },\r\n    \&quot;documentId\&quot;: [\r\n        \&quot;00155D0A-AD03-8C34-11EC-DAB74EE7FEE0\&quot;,\r\n        \&quot;00155D0A-AD03-8C34-11EC-DAB74EE7FEE1\&quot;,\r\n        \&quot;00155D0A-AD03-8C34-11EC-DAB74EE7FEE2\&quot;\r\n    ],\r\n    \&quot;email\&quot;: \&quot;test@gmail.com\&quot;,\r\n    \&quot;password\&quot;: \&quot;Password123!\&quot;,\r\n    \&quot;ipAddress\&quot;: \&quot;192.158.1.38\&quot;,\r\n    \&quot;browserInfo\&quot;: \&quot;Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36\&quot;,\r\n    \&quot;otp\&quot;: \&quot;912834\&quot;,\r\n    \&quot;selfPhoto\&quot;: \&quot;\&quot;\r\n}&quot;,
+  &quot;contentType&quot;: &quot;application/json&quot;,
+  &quot;charset&quot;: &quot;UTF-8&quot;
+}</httpBodyContent>
+   <httpBodyType>text</httpBodyType>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Content-Type</name>
+      <type>Main</type>
+      <value>application/json</value>
+      <webElementGuid>fe0873a6-ed57-40c2-824e-65abaeb2fa62</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Accept</name>
+      <type>Main</type>
+      <value>application/json</value>
+      <webElementGuid>5210489a-87f9-492b-80e1-ca52226f5a1b</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>x-api-key</name>
+      <type>Main</type>
+      <value>${api_key}@${tenant_code}</value>
+      <webElementGuid>6ac931a5-5f44-4577-a0d3-9409c8eeea6f</webElementGuid>
+   </httpHeaderProperties>
+   <katalonVersion>8.5.5</katalonVersion>
+   <maxResponseSize>-1</maxResponseSize>
+   <migratedVersion>5.4.1</migratedVersion>
+   <restRequestMethod>POST</restRequestMethod>
+   <restUrl>${base_url}/document/signDocument</restUrl>
+   <serviceType>RESTful</serviceType>
+   <soapBody></soapBody>
+   <soapHeader></soapHeader>
+   <soapRequestMethod></soapRequestMethod>
+   <soapServiceEndpoint></soapServiceEndpoint>
+   <soapServiceFunction></soapServiceFunction>
+   <socketTimeout>-1</socketTimeout>
+   <useServiceInfoFromWsdl>true</useServiceInfoFromWsdl>
+   <variables>
+      <defaultValue>GlobalVariable.base_url</defaultValue>
+      <description></description>
+      <id>b837a462-ab18-4bdd-b525-693ad57d6edd</id>
+      <masked>false</masked>
+      <name>base_url</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.api_key</defaultValue>
+      <description></description>
+      <id>13f51062-c4d6-464b-8d0a-38e08bdc8909</id>
+      <masked>false</masked>
+      <name>api_key</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.tenant_code</defaultValue>
+      <description></description>
+      <id>2cdb5e33-c881-4495-981b-21b72cabb300</id>
+      <masked>false</masked>
+      <name>tenant_code</name>
+   </variables>
+   <wsdlAddress></wsdlAddress>
+</WebServiceRequestEntity>

@@ -16,32 +16,37 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
-import java.sql.Connection
 
-'connect DB eSign'
-Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+'open browser'
+WebUI.openBrowser('')
 
-'get data masukan dari DB'
-ArrayList<String> result = CustomKeywords.'connection.dataVerif.getFeedbackStoreDB'(conneSign)
+'navigate to url esign'
+WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 5))
 
-'declare arraylist arraymatch'
-ArrayList<String> arrayMatch = new ArrayList<String>()
+'maximize window'
+WebUI.maximizeWindow()
 
-'declare arrayindex'
-arrayindex = 0
+'set value userLogin'
+GlobalVariable.userLogin = findTestData('Login/Login').getValue(2, 5).toUpperCase()
 
-'verify rating'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, 9).toUpperCase(), (result[arrayindex++]).toUpperCase(),
-		false, FailureHandling.CONTINUE_ON_FAILURE))
+'input email'
+WebUI.setText(findTestObject('Login/input_Email'), findTestData('Login/Login').getValue(2, 5))
 
-'verify comment'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, 10).toUpperCase(), (result[arrayindex++]).toUpperCase(),
-		false, FailureHandling.CONTINUE_ON_FAILURE))
+'input password'
+WebUI.setText(findTestObject('Login/input_Password'), findTestData('Login/Login').getValue(3, 5))
 
-'jika data db tidak sesuai dengan excel'
-if (arrayMatch.contains(false)) {
+'click button login'
+WebUI.click(findTestObject('Login/button_Login'), FailureHandling.STOP_ON_FAILURE)
 
-	'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-	CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Masukan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, 2) + ';' + GlobalVariable.ReasonFailedStoredDB)
-	
-}
+'input perusahaan'
+WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData('Login/Login').getValue(4, 5))
+
+WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
+
+'input peran'
+WebUI.setText(findTestObject('Login/input_Peran'), findTestData('Login/Login').getValue(5, 5))
+
+WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
+
+'click button pilih peran'
+WebUI.click(findTestObject('Login/button_pilihPeran'), FailureHandling.STOP_ON_FAILURE)

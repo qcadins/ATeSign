@@ -6,7 +6,7 @@
    <defaultProfile>true</defaultProfile>
    <GlobalVariableEntity>
       <description></description>
-      <initValue>'https://gdkwebserver.ad-ins.com/adimobile/demo/esign'</initValue>
+      <initValue>'http://gdkwebsvr:7021/adimobile/esign'</initValue>
       <name>base_url</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>
@@ -178,5 +178,15 @@
       <description></description>
       <initValue>findTestData('Login/Setting').getValue(6, 2)</initValue>
       <name>Tenant</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>''</initValue>
+      <name>api_key</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>''</initValue>
+      <name>tenant_code</name>
    </GlobalVariableEntity>
 </GlobalVariableEntities>

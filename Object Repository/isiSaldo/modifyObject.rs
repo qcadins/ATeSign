@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>modifyObject</name>
+   <tag></tag>
+   <elementGuidId>358f502d-1cec-42ce-8cfb-71d0befad7a4</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;ad53fbacda2b-1&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;ad53fbacda2b-1&quot;]</value>
+      <webElementGuid>5d496aa3-caaa-4e4c-8c77-6b017da01a82</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

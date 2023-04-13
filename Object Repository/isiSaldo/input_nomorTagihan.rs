@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_nomorTagihan</name>
+   <tag></tag>
+   <elementGuidId>6d2cf492-eef2-43a6-b2d0-84d1a8e47f95</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;refNo&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;refNo&quot;]</value>
+      <webElementGuid>e1169ebb-97ff-4791-9f05-334d9df185ec</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

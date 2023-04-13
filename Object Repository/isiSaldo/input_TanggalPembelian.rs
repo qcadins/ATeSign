@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_TanggalPembelian</name>
+   <tag></tag>
+   <elementGuidId>80ee34f5-634d-497f-9b07-6ec8b045e947</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;trxDate&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;trxDate&quot;]</value>
+      <webElementGuid>110981c9-0ce0-4455-ad6a-481ba3f3205d</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

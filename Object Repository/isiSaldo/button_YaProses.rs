@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>button_YaProses</name>
+   <tag></tag>
+   <elementGuidId>79a38e5c-afeb-4ef8-94e3-8f54bb027578</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/div[3]/div/div[3]/button[3]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/div[3]/div/div[3]/button[3]</value>
+      <webElementGuid>7e181fdf-f4be-4d86-ab34-3bbe210d1449</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

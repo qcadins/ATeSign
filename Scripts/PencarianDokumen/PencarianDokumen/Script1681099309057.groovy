@@ -39,7 +39,7 @@ checkPaging(conneSign)
 'get colm excel'
 int countColmExcel = findTestData(excelPathPencarianDokumen).getColumnNumbers()
 
-'looping buat undangan'
+'looping pencarian dokumen'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
 	
 	if (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
@@ -207,6 +207,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			'write to excel success'
 			CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PencarianDokumen', 0, GlobalVariable.NumofColm -
 					1, GlobalVariable.StatusSuccess)
+		}else {
+			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedMandatory'
+			CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('PencarianDokumen', GlobalVariable.NumofColm,
+				GlobalVariable.StatusFailed, (findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 2) +
+				';') + GlobalVariable.ReasonFailedMandatory)
 		}
 	}	
 }

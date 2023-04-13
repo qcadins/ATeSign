@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_TambahSaldo</name>
+   <tag></tag>
+   <elementGuidId>af85be4d-ab04-45b2-9fe4-6ae61fba8103</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;qty&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;qty&quot;]</value>
+      <webElementGuid>bafd35cb-8756-4e21-9867-c400446c83b4</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

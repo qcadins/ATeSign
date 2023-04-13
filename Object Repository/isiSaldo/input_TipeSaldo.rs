@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_TipeSaldo</name>
+   <tag></tag>
+   <elementGuidId>db6841ae-6c2a-4933-b0ed-f8fe88852e73</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;balanceType&quot;]/div/div/div[2]/input</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;balanceType&quot;]/div/div/div[2]/input</value>
+      <webElementGuid>911589ef-e7e2-4d74-a11f-2a1dabb898db</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

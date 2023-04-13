@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_PilihVendor</name>
+   <tag></tag>
+   <elementGuidId>06715a02-a996-46fe-bb78-14f5ad8771f8</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;vendorCode&quot;]/div/div/div[2]/input</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;vendorCode&quot;]/div/div/div[2]/input</value>
+      <webElementGuid>a24e2b20-b691-4cf3-a84f-c83b720df25d</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

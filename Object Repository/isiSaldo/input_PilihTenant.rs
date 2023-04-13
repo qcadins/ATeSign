@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_PilihTenant</name>
+   <tag></tag>
+   <elementGuidId>fd11fd2f-d6fa-4118-bb21-96e77ca172d0</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;tenantCode&quot;]/div/div/div[3]/input</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;tenantCode&quot;]/div/div/div[3]/input</value>
+      <webElementGuid>ff10748e-c5a3-4559-a485-07e276c0cfa6</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>
