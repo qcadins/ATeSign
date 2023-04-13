@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_refnumber</name>
+   <tag></tag>
+   <elementGuidId>2913653f-9601-44c5-aa84-4217bd1ecc6f</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;referenceNo&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;referenceNo&quot;]</value>
+      <webElementGuid>1b063590-e33e-4d07-bed1-40dcdbad8044</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

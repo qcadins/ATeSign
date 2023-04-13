@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>btn_cari</name>
+   <tag></tag>
+   <elementGuidId>bb139d5b-dacb-48ce-b38a-f7dffb05d41b</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;searchForm&quot;]/div[2]/div/button[3]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;searchForm&quot;]/div[2]/div/button[3]</value>
+      <webElementGuid>15cbdbc3-4fe3-4187-b548-fcc05f1f553d</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

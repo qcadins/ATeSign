@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>btn_ttdbulk</name>
+   <tag></tag>
+   <elementGuidId>63255a5f-f3d8-47f6-92d3-722cf3d1d61e</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[2]/div/div/button</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[2]/div/div/button</value>
+      <webElementGuid>f472cf57-f460-48af-bafa-c21825ffb2c1</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

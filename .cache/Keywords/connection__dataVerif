@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "7E696D55C450B5E2FC559D778A8D5CB0",
+  "keywordFileContentHash": "D722BA300ADF7F37DE351B04D96785D3",
   "keywordClasses": [
     {
       "name": "connection.dataVerif",
@@ -831,6 +831,89 @@
         },
         {
           "name": "getEmailLogin",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "documentid",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getOTPLoginId",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "email",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "gettrxSaldo",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getRequestDateSendSign",
           "parameters": [
             {
               "name": "conn",

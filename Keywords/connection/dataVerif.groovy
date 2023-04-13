@@ -464,8 +464,8 @@ public class dataVerif {
 		Statement stm = conn.createStatement()
 
 		ResultSet resultSet = stm.executeQuery("select tdh.ref_number,  msl.description as doctype,mdt.doc_template_name, TO_CHAR(tdd.dtm_crt, 'DD-Mon-YYYY HH24:MI') as timee from tr_document_d tdd join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join ms_lov msl on tdh.lov_doc_type = msl.id_lov join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d join ms_lov ms on tdds.lov_signer_type = ms.id_lov join am_msuser amm on tdds.id_ms_user = amm.id_ms_user where document_id = '"+documentid+"' ORDER BY tdds.id_document_d_sign asc limit 1")
-		
-	ResultSetMetaData metadata = resultSet.getMetaData()
+
+		ResultSetMetaData metadata = resultSet.getMetaData()
 
 		columnCount = metadata.getColumnCount()
 
@@ -590,6 +590,60 @@ public class dataVerif {
 
 		ResultSet resultSet = stm.executeQuery("select au.login_id from tr_document_h tdh join tr_document_d tdd on tdh.id_document_h = tdd.id_document_h join am_msuser au on au.id_ms_user = tdh.id_msuser_customer where tdd.document_id = '"+documentid+"'")
 
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		return data
+	}
+
+	@Keyword
+	public getOTPLoginId(Connection conn, String email){
+		String data
+
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("select otp_code from am_msuser where login_id = '"+email+"'")
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		return data
+	}
+
+	@Keyword
+	public gettrxSaldo(Connection conn){
+		String data
+		ArrayList<String> listdata = new ArrayList<>()
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("select tbm.trx_no, tbm.dtm_crt, ml.description , amm.full_name, tdh.ref_number||'('||amm.full_name||')',ml_doc_h.code,mdt.doc_template_name, tbm.notes, tbm.qty from tr_balance_mutation as tbm join ms_lov as ml on tbm.lov_trx_type = ml.id_lov join am_msuser as amm on tbm.id_ms_user = amm.id_ms_user join tr_document_h as tdh on tbm.id_document_h = tdh.id_document_h join ms_lov as ml_doc_h on tdh.lov_doc_type = ml_doc_h.id_lov join tr_document_d as tdd on tbm.id_document_d = tdd.id_document_d join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template order by dtm_crt desc limit 1")
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for(int i = 1 ; i <= columnCount ; i++){
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		return listdata
+	}
+	
+	@Keyword
+	public getRequestDateSendSign(Connection conn, String documentid){
+		String data
+
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("select TO_char(request_date, 'DD-Mon-YYYY HH24:MI') from tr_document_d where document_id = '"+documentid+"'")
 		ResultSetMetaData metadata = resultSet.getMetaData()
 
 		columnCount = metadata.getColumnCount()

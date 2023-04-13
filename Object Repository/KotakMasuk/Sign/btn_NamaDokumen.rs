@@ -11,14 +11,14 @@
       </entry>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id = 'ngb-nav-2']</value>
+         <value>id(&quot;ngb-nav-2&quot;)</value>
       </entry>
       <entry>
          <key>CSS</key>
          <value>#ngb-nav-2</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>true</useRalativeImagePath>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -26,15 +26,15 @@
       <name>tag</name>
       <type>Main</type>
       <value>a</value>
-      <webElementGuid>2955a4a3-7c27-4ae5-bcc2-befdd89c1bfe</webElementGuid>
+      <webElementGuid>abd797da-aba8-4bba-a642-d37398693a5d</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>id</name>
       <type>Main</type>
       <value>ngb-nav-2</value>
-      <webElementGuid>eb49a8de-2916-4c6d-a3fe-563e7be8c9c3</webElementGuid>
+      <webElementGuid>bf16ec94-f079-40b6-8f60-c79bf6451037</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -42,7 +42,7 @@
       <name>role</name>
       <type>Main</type>
       <value>tab</value>
-      <webElementGuid>98a6567f-3c1f-4472-b6bc-b5db2dea3d79</webElementGuid>
+      <webElementGuid>814cab0b-4be8-4283-bd64-819dac5e956f</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -50,7 +50,7 @@
       <name>aria-controls</name>
       <type>Main</type>
       <value>ngb-nav-2-panel</value>
-      <webElementGuid>0c49c64a-f921-4c41-a214-4ff13bb71712</webElementGuid>
+      <webElementGuid>34025e61-fded-46d2-8623-4c7041354aa8</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -58,7 +58,7 @@
       <name>aria-selected</name>
       <type>Main</type>
       <value>true</value>
-      <webElementGuid>159985bd-3a59-4601-8948-1177be4e518d</webElementGuid>
+      <webElementGuid>800fceed-2be5-4356-b7d0-c24780bc75da</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -66,7 +66,7 @@
       <name>aria-disabled</name>
       <type>Main</type>
       <value>false</value>
-      <webElementGuid>35f81924-5be8-42d5-a192-a9d62a021080</webElementGuid>
+      <webElementGuid>29d334d9-bbe5-40a8-8ebe-9cd1727265fb</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -74,7 +74,7 @@
       <name>class</name>
       <type>Main</type>
       <value>nav-link active</value>
-      <webElementGuid>0466e8de-30d5-4912-9935-a23812f3f390</webElementGuid>
+      <webElementGuid>1f7dac90-90f0-46dd-9b59-87ad1561f274</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -82,15 +82,15 @@
       <name>text</name>
       <type>Main</type>
       <value>TEST TEMPLATE FIT</value>
-      <webElementGuid>e63b7006-668f-42c6-83db-bc4431c64db7</webElementGuid>
+      <webElementGuid>73317f84-0d7b-457c-a9a4-cc796a298e55</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>false</isSelected>
+      <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>id(&quot;ngb-nav-2&quot;)</value>
-      <webElementGuid>96c6bdfd-5f4c-42cf-93df-a6f64512cdb7</webElementGuid>
+      <webElementGuid>83164d54-7cdc-4ec2-809e-a93212793df1</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -98,7 +98,7 @@
       <name>xpath:attributes</name>
       <type>Main</type>
       <value>//a[@id='ngb-nav-2']</value>
-      <webElementGuid>1fbeefcd-993e-4ca3-ae64-88b7752cff0d</webElementGuid>
+      <webElementGuid>478f949c-a4f7-4c48-9196-047a06429632</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -106,7 +106,7 @@
       <name>xpath:link</name>
       <type>Main</type>
       <value>//a[contains(text(),'TEST TEMPLATE FIT')]</value>
-      <webElementGuid>0c34a215-305a-4080-a32d-80283f43ac4e</webElementGuid>
+      <webElementGuid>35edf669-c3ef-4127-9a8e-a80ca91c4f20</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -114,7 +114,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='TTD Semua'])[1]/following::a[1]</value>
-      <webElementGuid>5a3a3f35-667e-4eb0-b842-fd528a770fa8</webElementGuid>
+      <webElementGuid>41353e23-fd0a-42cb-8554-7bd57e0490b7</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -122,7 +122,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Batal'])[1]/following::a[2]</value>
-      <webElementGuid>f766462c-cb3d-447e-836a-07e78b3f41a0</webElementGuid>
+      <webElementGuid>43c06ea1-3dde-41c8-b5cd-6ce0d4022e1d</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -130,7 +130,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Persyaratan layanan'])[1]/preceding::a[1]</value>
-      <webElementGuid>dbd69efa-4730-4b20-a999-956c0ec6ae0c</webElementGuid>
+      <webElementGuid>6011045d-6296-4133-b7e5-28dc37d33900</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -138,7 +138,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Kebijakan privasi'])[1]/preceding::a[2]</value>
-      <webElementGuid>dc67cb28-4768-4029-bc2d-070d070c6cb2</webElementGuid>
+      <webElementGuid>e2c59fbb-e63f-41b4-a15e-4130127204a9</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -146,7 +146,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='TEST TEMPLATE FIT']/parent::*</value>
-      <webElementGuid>943d40a2-d826-4d24-9f3c-b9762df1fecd</webElementGuid>
+      <webElementGuid>1394206d-5f1e-4448-86cf-bf0fa8a1fb65</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -154,7 +154,7 @@
       <name>xpath:href</name>
       <type>Main</type>
       <value>(//a[contains(@href, '')])[17]</value>
-      <webElementGuid>83fa23ec-6d97-45df-b0db-94cc5d42c9b6</webElementGuid>
+      <webElementGuid>8f5b6e1a-7296-4bd3-9c0f-a40b88087305</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -162,7 +162,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//app-bulk-sign/div[2]/div/ul/li/a</value>
-      <webElementGuid>c53ba4fd-2c73-4b0c-9606-d309dee06805</webElementGuid>
+      <webElementGuid>0c58838b-b355-434a-ab5b-f685a32c3f50</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -170,6 +170,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//a[@id = 'ngb-nav-2' and (text() = 'TEST TEMPLATE FIT' or . = 'TEST TEMPLATE FIT')]</value>
-      <webElementGuid>eb7c914e-c0bb-471e-99dc-10f23fae4f05</webElementGuid>
+      <webElementGuid>201a4098-0c9c-41d4-b962-dbd9218e5b60</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

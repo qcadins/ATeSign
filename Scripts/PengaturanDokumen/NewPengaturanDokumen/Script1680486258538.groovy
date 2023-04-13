@@ -25,6 +25,8 @@ import org.openqa.selenium.WebElement
 import com.kms.katalon.core.webui.driver.DriverFactory
 import com.kms.katalon.core.testobject.TestObject
 import org.openqa.selenium.WebElement
+
+
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 
@@ -115,10 +117,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		   WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_openddlTipePembayaran'))
 		   
 		   checkVerifyEqualorMatch(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 12), WebUI.getText(findTestObject('TandaTanganDokumen/check_tipePembayaran')),false, FailureHandling.CONTINUE_ON_FAILURE))
-		   
-		   //Checking document
-		  // checkVerifyEqualorMatch(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 13), WebUI.getText(findTestObject('TandaTanganDokumen/input_documentExample')),false,FailureHandling.CONTINUE_ON_FAILURE))
-		   
+
 		   //Checking status
 		   checkVerifyEqualorMatch(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 14), WebUI.getText(findTestObject('TandaTanganDokumen/input_StatusAktif')) ,false, FailureHandling.CONTINUE_ON_FAILURE))
 		   

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>lbl_saldo</name>
+   <tag></tag>
+   <elementGuidId>9a406d61-5bfa-48cf-a961-68c5a372c723</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[2]/div/div/div/div/div[1]/h3</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[2]/div/div/div/div/div[1]/h3</value>
+      <webElementGuid>ac9baa3c-c792-46aa-b5c7-8d4ce4143ee3</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

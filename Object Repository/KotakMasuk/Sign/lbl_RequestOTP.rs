@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>lbl_VerifikasiPenandaTangan</name>
+   <name>lbl_RequestOTP</name>
    <tag></tag>
-   <elementGuidId>8d81cf7e-a833-49f4-b754-04854b4cb628</elementGuidId>
+   <elementGuidId>37607f95-23e6-424e-ba0d-7bdfa36f1881</elementGuidId>
    <selectorCollection>
       <entry>
          <key>XPATH</key>
@@ -11,11 +11,11 @@
       </entry>
       <entry>
          <key>BASIC</key>
-         <value>/html[1]/body[@class=&quot;vertical-layout menu-expanded menu-open vertical-menu navbar-static pace-done modal-open&quot;]/ngb-modal-window[@class=&quot;d-block modal fade show&quot;]/div[@class=&quot;modal-dialog modal-l&quot;]/div[@class=&quot;modal-content&quot;]/app-signer-signing-verification[1]/div[@class=&quot;modal-body&quot;]/p[@class=&quot;modal-title&quot;]</value>
+         <value>/html/body/ngb-modal-window/div/div/app-signer-signing-otp-verification/form/div/div[1]/div/p</value>
       </entry>
       <entry>
          <key>CSS</key>
-         <value>p.modal-title</value>
+         <value>p.font-large-1.text-center.text-bold-700.px-5</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -26,31 +26,31 @@
       <name>tag</name>
       <type>Main</type>
       <value>p</value>
-      <webElementGuid>e1fc02ec-daa7-4d55-adc3-e8643ad5b51d</webElementGuid>
+      <webElementGuid>732cd5f7-19b9-4dad-a8f9-0faca9ca8195</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>modal-title</value>
-      <webElementGuid>73ff1302-ac58-4906-98a6-3a4de6c7c763</webElementGuid>
+      <value>/html/body/ngb-modal-window/div/div/app-signer-signing-otp-verification/form/div/div[1]/div/p</value>
+      <webElementGuid>d4a20171-e6a5-44bc-bcd5-b322007eb413</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>text</name>
       <type>Main</type>
-      <value>Verifikasi Penanda Tangan</value>
-      <webElementGuid>7dd712ce-fb5e-484a-9152-037153f4b6da</webElementGuid>
+      <value>Request OTP</value>
+      <webElementGuid>2e728b20-9ab5-4a62-96fc-7a4eb195016e</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html[1]/body[@class=&quot;vertical-layout menu-expanded menu-open vertical-menu navbar-static pace-done modal-open&quot;]/ngb-modal-window[@class=&quot;d-block modal fade show&quot;]/div[@class=&quot;modal-dialog modal-l&quot;]/div[@class=&quot;modal-content&quot;]/app-signer-signing-verification[1]/div[@class=&quot;modal-body&quot;]/p[@class=&quot;modal-title&quot;]</value>
-      <webElementGuid>12eb614e-8ab5-4845-82b5-076ef8dac2d7</webElementGuid>
+      <value>/html/body/ngb-modal-window/div/div/app-signer-signing-otp-verification/form/div/div[1]/div/p</value>
+      <webElementGuid>e710276b-56e8-43fa-877a-d6860a489d72</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -58,7 +58,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='`'])[2]/following::p[1]</value>
-      <webElementGuid>e9e4c3e0-3bf7-4b78-ad72-bf406b958ae0</webElementGuid>
+      <webElementGuid>163947a2-406b-4f67-b460-490d0e9c63f7</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -66,46 +66,46 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Alt'])[2]/following::p[1]</value>
-      <webElementGuid>512789cc-1d9f-468f-a7b3-e7f02b450aef</webElementGuid>
+      <webElementGuid>036c29cf-3459-4d9f-997c-1d19b0b587b6</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:neighbor</name>
       <type>Main</type>
-      <value>(.//*[normalize-space(text()) and normalize-space(.)='Email'])[1]/preceding::p[1]</value>
-      <webElementGuid>569fb565-0339-4f9d-b55f-f2a0a8946e1d</webElementGuid>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='No HP'])[1]/preceding::p[1]</value>
+      <webElementGuid>75035bbb-398b-4e71-b04a-e5f3a6dee35e</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:neighbor</name>
       <type>Main</type>
-      <value>(.//*[normalize-space(text()) and normalize-space(.)='Nomor Handphone'])[1]/preceding::p[1]</value>
-      <webElementGuid>02a7d30f-b85f-4fed-b83f-a6387ca9943b</webElementGuid>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Berhasil kirim OTP'])[1]/preceding::p[1]</value>
+      <webElementGuid>b5fe8b5c-4275-4c03-a874-36177ab07122</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:neighbor</name>
       <type>Main</type>
-      <value>//*/text()[normalize-space(.)='Verifikasi Penanda Tangan']/parent::*</value>
-      <webElementGuid>38e7224b-60f7-4a01-bf66-5fc94645acc6</webElementGuid>
+      <value>//*/text()[normalize-space(.)='Request OTP']/parent::*</value>
+      <webElementGuid>2d63cc49-b465-420a-babe-3393dca43f89</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:position</name>
       <type>Main</type>
-      <value>//app-signer-signing-verification/div/p</value>
-      <webElementGuid>b48db4ef-25cd-4b81-842d-345d009766b3</webElementGuid>
+      <value>//div/div/p</value>
+      <webElementGuid>e80d1f17-1211-4be2-a799-ce9aea2f61b3</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:customAttributes</name>
       <type>Main</type>
-      <value>//p[(text() = 'Verifikasi Penanda Tangan' or . = 'Verifikasi Penanda Tangan')]</value>
-      <webElementGuid>3d4386eb-752b-45ca-993a-28842ec1a1da</webElementGuid>
+      <value>//p[(text() = 'Request OTP' or . = 'Request OTP')]</value>
+      <webElementGuid>219c8add-5d5e-49f2-abc8-85e1b5449a11</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

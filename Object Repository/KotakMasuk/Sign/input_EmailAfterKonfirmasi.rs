@@ -10,11 +10,15 @@
          <value>//input[@id='Email']</value>
       </entry>
       <entry>
+         <key>BASIC</key>
+         <value>id(&quot;Email&quot;)</value>
+      </entry>
+      <entry>
          <key>CSS</key>
          <value>#Email</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>true</useRalativeImagePath>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -22,15 +26,15 @@
       <name>tag</name>
       <type>Main</type>
       <value>input</value>
-      <webElementGuid>c63145fd-ba2b-4707-a06b-cc41d7b49257</webElementGuid>
+      <webElementGuid>afe52cc9-c8a1-4faf-80ac-a6df04a77fb8</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>type</name>
       <type>Main</type>
       <value>Email</value>
-      <webElementGuid>76eb2d4f-6906-4bdd-97af-3c53616bb1f1</webElementGuid>
+      <webElementGuid>bd0f2b7b-c3d3-4525-88e5-27a1fb3a6d3c</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -38,39 +42,39 @@
       <name>formcontrolname</name>
       <type>Main</type>
       <value>Email</value>
-      <webElementGuid>134deb54-f52e-416e-ba3a-b056002d42ca</webElementGuid>
+      <webElementGuid>0251a454-cc85-4d8f-ad64-17e1da64a222</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>id</name>
       <type>Main</type>
       <value>Email</value>
-      <webElementGuid>6f22d63d-9f1b-40e8-9f97-4d16c8bff787</webElementGuid>
+      <webElementGuid>dc7da0e0-c04b-4814-9cff-4191d90a4802</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>placeholder</name>
       <type>Main</type>
       <value>Email</value>
-      <webElementGuid>94f5c956-6f75-4533-bcbc-99cbbb4ed8cc</webElementGuid>
+      <webElementGuid>086188fb-ab4f-4d9e-bf0d-4be1bf06301b</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>form-control mb-2 ng-untouched ng-pristine ng-valid</value>
-      <webElementGuid>99d44d2b-f531-4a51-afe6-825182867bdf</webElementGuid>
+      <value>/html/body/ngb-modal-window/div/div/app-signer-signing-verification/div/div/form/div[1]/label</value>
+      <webElementGuid>69f0643e-366f-4531-a1fa-5cd29848d661</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>false</isSelected>
+      <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>id(&quot;Email&quot;)</value>
-      <webElementGuid>2bb8c95d-73ca-4684-b79d-609656fbb6ea</webElementGuid>
+      <webElementGuid>0e0e5c92-92f9-4727-b34c-975ea2aff9c8</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -78,7 +82,7 @@
       <name>xpath:attributes</name>
       <type>Main</type>
       <value>//input[@id='Email']</value>
-      <webElementGuid>c9ef95e7-6ded-42bb-9bfe-a33071d9043f</webElementGuid>
+      <webElementGuid>8261883e-e4cc-4315-81cd-839fd1e8fbf7</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -86,7 +90,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div/input</value>
-      <webElementGuid>c34f559f-12ac-4fdd-9538-8a1300db3d65</webElementGuid>
+      <webElementGuid>d7d12c78-bdba-4e90-8b65-5d5d7bacd648</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -94,6 +98,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//input[@type = 'Email' and @id = 'Email' and @placeholder = 'Email']</value>
-      <webElementGuid>d1ddf3ed-a2c7-499e-9ad6-1a65e5c2789e</webElementGuid>
+      <webElementGuid>b6ccdb25-be68-4464-92f9-96ea93c69841</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

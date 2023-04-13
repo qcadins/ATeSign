@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_namadokumen</name>
+   <tag></tag>
+   <elementGuidId>e29b1a7c-5169-4082-93ae-a442f4a7dd01</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;documentName&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;documentName&quot;]</value>
+      <webElementGuid>423b9ec1-d24e-4016-a1c0-835c45282c5d</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>
