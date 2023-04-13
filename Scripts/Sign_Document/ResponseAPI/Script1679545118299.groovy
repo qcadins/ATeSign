@@ -34,34 +34,43 @@ Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_Excel_Path).getColumnNumbers(); (GlobalVariable.NumofColm)++) {
     'Pembuatan pengisian variable di sendRequest per jumlah documentid.'
+	'Case yang dilakukan dimana email tidak berdasarkan excel, melainkan database'
+	'Sehingga 1 document id untuk seluruh signer'
     ArrayList<String> list = new ArrayList<String>()
-
-    list.clear()
-
+    'membersihkan list'
+	list.clear()
+	'array list untuk document id'
     ArrayList<String> Listdocid = new ArrayList<String>()
-
+	'list dengan array 0 harus kosong'
     (Listdocid[0]) = ''
-
+	'array list untuk email'
     ArrayList<String> Listemail = new ArrayList<String>()
-
+	'list dengan array 0 harus kosong'
     (Listemail[0]) = ''
-
+	'Mengambil document id dari excel dan displit'
     ArrayList<String> documentid = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 12).split(';', -1)
 
+	'Looping berdasarkan jumlah dokumen id di excel'
     for (int q = 1; q <= documentid.size(); q++) {
+		'Memasukkan ke dalam list mengenai isi send Request dengan document Id excel'
         (list[(q - 1)]) = (('"documentId": "' + (documentid[(q - 1)])) + '",')
 
+		'Memasukkan list kedalam Listdocid agar menyatu'
         (Listdocid[0]) = ((Listdocid[0]) + (list[(q - 1)]))
-
+		
+		'Mengkosongkan List agar dapat digunakan di loop email'
         (list[(q - 1)]) = ''
 
+		'mengambil isi email signer berdasarkan database.'
         ArrayList<String> emailsigner = CustomKeywords.'connection.dataVerif.getEmailsSign'(conneSign, documentid[(q - 1)])
 
+		'loop berdasarkan jumlah email signer di database'
         for (int i = 1; i <= emailsigner.size(); i++) {
+			'Memasukkan ke dalam list mengenai isi send Request dengan email'
             (list[(i - 1)]) = (('"email": "' + (emailsigner[(i - 1)])) + '",')
-
+			'Memasukkan list kedalam Listemail agar menyatu'
             (Listemail[0]) = ((Listemail[0]) + (list[(i - 1)]))
-
+			'Mengkosongkan List agar dapat digunakan'
             (list[(i - 1)]) = ''
         }
     }
@@ -77,7 +86,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 
         'HIT API Sign Document'
         respon_signdoc = WS.sendRequest(findTestObject('Postman/Sign Doc', [('callerId') : ('"' + findTestData(API_Excel_Path).getValue(
-                        GlobalVariable.NumofColm, 9)) + '"', ('email') : Listemail[0], ('documentid') : Listdocid[0], ('msg') : ('"' + 
+                    GlobalVariable.NumofColm, 9)) + '"', ('email') : Listemail[0], ('documentid') : Listdocid[0], ('msg') : ('"' + 
                     findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 13)) + '"']))
 
         'Jika status HIT API 200 OK'
@@ -87,9 +96,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 
             'Jika status codenya 0'
             if (status_Code == 0) {
-                'Mengambil value vendorCode'
-
-                'get Status Code'
+                'get vendor Code'
                 GlobalVariable.Response = WS.getElementPropertyValue(respon_signdoc, 'vendorCode')
 
                 'write to excel success'
