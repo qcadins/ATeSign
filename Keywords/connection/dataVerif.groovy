@@ -636,7 +636,7 @@ public class dataVerif {
 		}
 		return Integer.parseInt(data)
 	}
-	
+
 	public getDDLTenant(Connection conn){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
@@ -655,7 +655,7 @@ public class dataVerif {
 		}
 		return listdata
 	}
-	
+
 	public getDDLVendor(Connection conn, String tenant){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
@@ -674,7 +674,7 @@ public class dataVerif {
 		}
 		return listdata
 	}
-	
+
 	public getDDLTipeSaldo(Connection conn, String tenant, String vendor){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
@@ -693,7 +693,7 @@ public class dataVerif {
 		}
 		return listdata
 	}
-	
+
 	public getIsiSaldoStoreDB(Connection conn, String refno){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
