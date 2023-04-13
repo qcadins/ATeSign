@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>isiSaldoStoreDB</name>
+   <name>IsiSaldoStoreDB</name>
    <tag></tag>
    <comment></comment>
    <testCaseGuid>48bbeec8-3655-499d-b621-ae9b78737bf9</testCaseGuid>
