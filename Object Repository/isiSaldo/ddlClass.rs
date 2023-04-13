@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>button_Cari</name>
+   <name>ddlClass</name>
    <tag></tag>
-   <elementGuidId>c4af1b3e-032e-4ab7-8222-33795f9d881b</elementGuidId>
+   <elementGuidId>4032ce20-dc0f-4aba-830d-c079817df026</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;searchForm&quot;]/div[2]/div/button[2]</value>
+         <value>//*[@class = 'ng-dropdown-panel ng-star-inserted ng-select-bottom']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>class</name>
       <type>Main</type>
-      <value>//*[@id=&quot;searchForm&quot;]/div[2]/div/button[2]</value>
-      <webElementGuid>42ec3e33-f37e-4f39-8647-6c81e8d0d0ae</webElementGuid>
+      <value>ng-dropdown-panel ng-star-inserted ng-select-bottom</value>
+      <webElementGuid>1d681ddc-c295-4143-ad24-5fba76eb9afc</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

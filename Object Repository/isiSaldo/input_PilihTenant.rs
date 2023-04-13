@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>button_Cari</name>
+   <name>input_PilihTenant</name>
    <tag></tag>
-   <elementGuidId>c4af1b3e-032e-4ab7-8222-33795f9d881b</elementGuidId>
+   <elementGuidId>fd11fd2f-d6fa-4118-bb21-96e77ca172d0</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;searchForm&quot;]/div[2]/div/button[2]</value>
+         <value>//*[@id=&quot;tenantCode&quot;]/div/div/div[3]/input</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@id=&quot;searchForm&quot;]/div[2]/div/button[2]</value>
-      <webElementGuid>42ec3e33-f37e-4f39-8647-6c81e8d0d0ae</webElementGuid>
+      <value>//*[@id=&quot;tenantCode&quot;]/div/div/div[3]/input</value>
+      <webElementGuid>ff10748e-c5a3-4559-a485-07e276c0cfa6</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

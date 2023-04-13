@@ -3,8 +3,7 @@ import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
-import com.kms.katalon.core.checkpoint.Checkpoint
-import com.kms.katalon.core.configuration.RunConfiguration
+import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
 import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
 import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
@@ -18,41 +17,35 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
-'setting untuk membuat lokasi default folder download'
-HashMap<String, ArrayList> chromePrefs = new HashMap<String, ArrayList>()
-
-chromePrefs.put('download.default_directory', System.getProperty('user.dir') + '\\Download')
-
-RunConfiguration.setWebDriverPreferencesProperty('prefs', chromePrefs)
 
 'open browser'
 WebUI.openBrowser('')
 
 'navigate to url esign'
-WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 3))
+WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 5))
 
-'maximized window'
+'maximize window'
 WebUI.maximizeWindow()
 
-'input email'
-WebUI.setText(findTestObject('Login/input_Email'), findTestData('Login/Login').getValue(2, 3))
+'set value userLogin'
+GlobalVariable.userLogin = findTestData('Login/Login').getValue(2, 5).toUpperCase()
 
-'store user login id'
-GlobalVariable.userLogin = findTestData('Login/Login').getValue(2, 3).toUpperCase()
+'input email'
+WebUI.setText(findTestObject('Login/input_Email'), findTestData('Login/Login').getValue(2, 5))
 
 'input password'
-WebUI.setText(findTestObject('Login/input_Password'), findTestData('Login/Login').getValue(3, 3))
+WebUI.setText(findTestObject('Login/input_Password'), findTestData('Login/Login').getValue(3, 5))
 
 'click button login'
 WebUI.click(findTestObject('Login/button_Login'), FailureHandling.STOP_ON_FAILURE)
 
 'input perusahaan'
-WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData('Login/Login').getValue(4, 3))
+WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData('Login/Login').getValue(4, 5))
 
 WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
 
 'input peran'
-WebUI.setText(findTestObject('Login/input_Peran'), findTestData('Login/Login').getValue(5, 3))
+WebUI.setText(findTestObject('Login/input_Peran'), findTestData('Login/Login').getValue(5, 5))
 
 WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
 

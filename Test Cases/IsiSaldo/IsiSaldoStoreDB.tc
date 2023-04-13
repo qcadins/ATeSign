@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>IsiSaldoStoreDB</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>48bbeec8-3655-499d-b621-ae9b78737bf9</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>c0ca098c-0371-44cb-9316-75cc91ad8405</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Saldo/isiSaldo'</defaultValue>
+      <description></description>
+      <id>c0ca098c-0371-44cb-9316-75cc91ad8405</id>
+      <masked>false</masked>
+      <name>excelPathIsiSaldo</name>
+   </variable>
+</TestCaseEntity>

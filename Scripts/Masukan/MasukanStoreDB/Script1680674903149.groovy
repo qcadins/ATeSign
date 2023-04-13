@@ -21,7 +21,7 @@ import java.sql.Connection
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 
-'get data buat undangan dari DB'
+'get data masukan dari DB'
 ArrayList<String> result = CustomKeywords.'connection.dataVerif.getFeedbackStoreDB'(conneSign)
 
 'declare arraylist arraymatch'

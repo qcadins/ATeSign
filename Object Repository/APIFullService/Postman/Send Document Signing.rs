@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebServiceRequestEntity>
+   <description></description>
+   <name>Send Document Signing</name>
+   <tag></tag>
+   <elementGuidId>467e23f1-aa9c-4cf4-864c-2c7ab429391e</elementGuidId>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <connectionTimeout>-1</connectionTimeout>
+   <followRedirects>false</followRedirects>
+   <httpBody></httpBody>
+   <httpBodyContent>{
+  &quot;text&quot;: &quot;{\r\n  \&quot;tenantCode\&quot;: \&quot;ADINS\&quot;,\r\n  \&quot;requests\&quot;: [\r\n    {\r\n      \&quot;referenceNo\&quot;: \&quot;WS-ANDY-VIDA-0003\&quot;,\r\n      \&quot;documentTemplateCode\&quot;: \&quot;\&quot;,\r\n      \&quot;officeCode\&quot;: \&quot;0191\&quot;,\r\n      \&quot;officeName\&quot;: \&quot;BEKASI\&quot;,\r\n      \&quot;regionCode\&quot;: \&quot;0101\&quot;,\r\n      \&quot;regionName\&quot;: \&quot;JATASE 1\&quot;,\r\n      \&quot;businessLineCode\&quot;: \&quot;MGBMTRKON\&quot;,\r\n      \&quot;businessLineName\&quot;: \&quot;Multiguna Barang Motor Konvensional\&quot;,\r\n      \&quot;signer\&quot;: [\r\n        {\r\n          \&quot;signAction\&quot;: \&quot;mt\&quot;,\r\n          \&quot;signerType\&quot;: \&quot;CUST\&quot;,         \r\n          \&quot;tlp\&quot;: \&quot;001000990221\&quot;,          \r\n          \&quot;idKtp\&quot;: \&quot;3222212321232121\&quot;,\r\n          \&quot;email\&quot;: \&quot;VIDA.ACCB@ESIGNHUB.MY.ID\&quot;,\r\n          \&quot;signLocation\&quot;: [\r\n            {\r\n                \&quot;page\&quot;: 1,\r\n                \&quot;llx\&quot;: \&quot;453.00\&quot;,\r\n                \&quot;lly\&quot;: \&quot;630.89\&quot;,\r\n                \&quot;urx\&quot;: \&quot;583.00\&quot;,\r\n                \&quot;ury\&quot;: \&quot;760.89\&quot;\r\n            },\r\n            {\r\n                \&quot;page\&quot;: 2,\r\n                \&quot;llx\&quot;: \&quot;453.00\&quot;,\r\n                \&quot;lly\&quot;: \&quot;630.89\&quot;,\r\n                \&quot;urx\&quot;: \&quot;583.00\&quot;,\r\n                \&quot;ury\&quot;: \&quot;760.89\&quot;\r\n            }\r\n            ]\r\n        },\r\n        {\r\n          \&quot;signAction\&quot;: \&quot;mt\&quot;,\r\n          \&quot;signerType\&quot;: \&quot;MF\&quot;,\r\n          \&quot;tlp\&quot;: \&quot;087123123123\&quot;,\r\n          \&quot;idKtp\&quot;: \&quot;3222212321232122\&quot;,\r\n          \&quot;email\&quot;: \&quot;VIDA.AAAA@ESIGNHUB.MY.ID\&quot;,\r\n          \&quot;signLocation\&quot;: [\r\n            {\r\n                \&quot;page\&quot;: 1,\r\n                \&quot;llx\&quot;: \&quot;453.00\&quot;,\r\n                \&quot;lly\&quot;: \&quot;630.89\&quot;,\r\n                \&quot;urx\&quot;: \&quot;583.00\&quot;,\r\n                \&quot;ury\&quot;: \&quot;760.89\&quot;\r\n            },\r\n            {\r\n                \&quot;page\&quot;: 2,\r\n                \&quot;llx\&quot;: \&quot;453.00\&quot;,\r\n                \&quot;lly\&quot;: \&quot;630.89\&quot;,\r\n                \&quot;urx\&quot;: \&quot;583.00\&quot;,\r\n                \&quot;ury\&quot;: \&quot;760.89\&quot;\r\n            }\r\n            ]\r\n        }\r\n      ],\r\n      \&quot;documentFile\&quot;: \&quot;base64\&quot;, \r\n      \&quot;stampLocation\&quot;: [\r\n            {\r\n                \&quot;page\&quot;: 1,\r\n                \&quot;llx\&quot;: \&quot;453.00\&quot;,\r\n                \&quot;lly\&quot;: \&quot;630.89\&quot;,\r\n                \&quot;urx\&quot;: \&quot;583.00\&quot;,\r\n                \&quot;ury\&quot;: \&quot;760.89\&quot;\r\n            },\r\n            {\r\n                \&quot;page\&quot;: 2,\r\n                \&quot;llx\&quot;: \&quot;453.00\&quot;,\r\n                \&quot;lly\&quot;: \&quot;630.89\&quot;,\r\n                \&quot;urx\&quot;: \&quot;583.00\&quot;,\r\n                \&quot;ury\&quot;: \&quot;760.89\&quot;\r\n            }\r\n        ]\r\n    },\r\n    {\r\n      \&quot;referenceNo\&quot;: \&quot;WS-ANDY-VIDA-0003\&quot;,\r\n      \&quot;documentTemplateCode\&quot;: \&quot;\&quot;,\r\n      \&quot;officeCode\&quot;: \&quot;0191\&quot;,\r\n      \&quot;officeName\&quot;: \&quot;BEKASI\&quot;,\r\n      \&quot;regionCode\&quot;: \&quot;0101\&quot;,\r\n      \&quot;regionName\&quot;: \&quot;JATASE 1\&quot;,\r\n      \&quot;businessLineCode\&quot;: \&quot;MGBMTRKON\&quot;,\r\n      \&quot;businessLineName\&quot;: \&quot;Multiguna Barang Motor Konvensional\&quot;,\r\n      \&quot;signer\&quot;: [\r\n         {\r\n          \&quot;signAction\&quot;: \&quot;mt\&quot;,\r\n          \&quot;signerType\&quot;: \&quot;CUST\&quot;,\r\n          \&quot;tlp\&quot;: \&quot;001000990223\&quot;,\r\n          \&quot;idKtp\&quot;: \&quot;3511111112121212\&quot;,\r\n          \&quot;email\&quot;: \&quot;VIDA.ACCA@ESIGNHUB.MY.ID\&quot;,\r\n          \&quot;signLocation\&quot;: [\r\n            {\r\n                \&quot;page\&quot;: 1,\r\n                \&quot;llx\&quot;: \&quot;453.00\&quot;,\r\n                \&quot;lly\&quot;: \&quot;630.89\&quot;,\r\n                \&quot;urx\&quot;: \&quot;583.00\&quot;,\r\n                \&quot;ury\&quot;: \&quot;760.89\&quot;\r\n            },\r\n            {\r\n                \&quot;page\&quot;: 2,\r\n                \&quot;llx\&quot;: \&quot;453.00\&quot;,\r\n                \&quot;lly\&quot;: \&quot;630.89\&quot;,\r\n                \&quot;urx\&quot;: \&quot;583.00\&quot;,\r\n                \&quot;ury\&quot;: \&quot;760.89\&quot;\r\n            }\r\n            ]\r\n        },\r\n        {\r\n          \&quot;signAction\&quot;: \&quot;mt\&quot;,\r\n          \&quot;signerType\&quot;: \&quot;MF\&quot;,\r\n          \&quot;tlp\&quot;: \&quot;001000990224\&quot;,\r\n          \&quot;idKtp\&quot;: \&quot;3511111112121213\&quot;,\r\n          \&quot;email\&quot;: \&quot;VIDA.ACCC@ESIGNHUB.MY.ID\&quot;,\r\n          \&quot;signLocation\&quot;: [\r\n            {\r\n                \&quot;page\&quot;: 1,\r\n                \&quot;llx\&quot;: \&quot;453.00\&quot;,\r\n                \&quot;lly\&quot;: \&quot;630.89\&quot;,\r\n                \&quot;urx\&quot;: \&quot;583.00\&quot;,\r\n                \&quot;ury\&quot;: \&quot;760.89\&quot;\r\n            },\r\n            {\r\n                \&quot;page\&quot;: 2,\r\n                \&quot;llx\&quot;: \&quot;453.00\&quot;,\r\n                \&quot;lly\&quot;: \&quot;630.89\&quot;,\r\n                \&quot;urx\&quot;: \&quot;583.00\&quot;,\r\n                \&quot;ury\&quot;: \&quot;760.89\&quot;\r\n            }\r\n            ]\r\n        }\r\n      ],\r\n      \&quot;documentFile\&quot;: \&quot;base64\&quot;,\r\n      \&quot;stampLocation\&quot;: [\r\n            {\r\n                \&quot;page\&quot;: 1,\r\n                \&quot;llx\&quot;: \&quot;453.00\&quot;,\r\n                \&quot;lly\&quot;: \&quot;630.89\&quot;,\r\n                \&quot;urx\&quot;: \&quot;583.00\&quot;,\r\n                \&quot;ury\&quot;: \&quot;760.89\&quot;\r\n            },\r\n            {\r\n                \&quot;page\&quot;: 2,\r\n                \&quot;llx\&quot;: \&quot;453.00\&quot;,\r\n                \&quot;lly\&quot;: \&quot;630.89\&quot;,\r\n                \&quot;urx\&quot;: \&quot;583.00\&quot;,\r\n                \&quot;ury\&quot;: \&quot;760.89\&quot;\r\n            }\r\n        ]\r\n    }\r\n  ],\r\n  \&quot;audit\&quot;: {\r\n    \&quot;callerId\&quot;: \&quot;confins\&quot;\r\n  }\r\n}&quot;,
+  &quot;contentType&quot;: &quot;application/json&quot;,
+  &quot;charset&quot;: &quot;UTF-8&quot;
+}</httpBodyContent>
+   <httpBodyType>text</httpBodyType>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Content-Type</name>
+      <type>Main</type>
+      <value>application/json</value>
+      <webElementGuid>e93d4450-45bf-4700-ba1d-594d634388ef</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Accept</name>
+      <type>Main</type>
+      <value>application/json</value>
+      <webElementGuid>cc58dec2-bdaf-41f3-88ba-4c00e06fd3fa</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>x-api-key</name>
+      <type>Main</type>
+      <value>${api_key}@${tenant_code}</value>
+      <webElementGuid>9db5e1a8-b4d3-497c-a9eb-5c95eef92299</webElementGuid>
+   </httpHeaderProperties>
+   <katalonVersion>8.5.5</katalonVersion>
+   <maxResponseSize>-1</maxResponseSize>
+   <migratedVersion>5.4.1</migratedVersion>
+   <restRequestMethod>POST</restRequestMethod>
+   <restUrl>${base_url}/document/sendDocumentSigning</restUrl>
+   <serviceType>RESTful</serviceType>
+   <soapBody></soapBody>
+   <soapHeader></soapHeader>
+   <soapRequestMethod></soapRequestMethod>
+   <soapServiceEndpoint></soapServiceEndpoint>
+   <soapServiceFunction></soapServiceFunction>
+   <socketTimeout>-1</socketTimeout>
+   <useServiceInfoFromWsdl>true</useServiceInfoFromWsdl>
+   <variables>
+      <defaultValue>GlobalVariable.base_url</defaultValue>
+      <description></description>
+      <id>7d94c627-5170-471f-8581-7b7de8672de4</id>
+      <masked>false</masked>
+      <name>base_url</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.api_key</defaultValue>
+      <description></description>
+      <id>9427da73-b03f-478f-8a26-1cf9a802f167</id>
+      <masked>false</masked>
+      <name>api_key</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.tenant_code</defaultValue>
+      <description></description>
+      <id>e5d33140-5cc3-4c0e-9123-2d45c17591d2</id>
+      <masked>false</masked>
+      <name>tenant_code</name>
+   </variables>
+   <wsdlAddress></wsdlAddress>
+</WebServiceRequestEntity>

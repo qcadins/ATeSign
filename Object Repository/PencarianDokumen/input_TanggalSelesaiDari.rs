@@ -7,17 +7,17 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value></value>
+         <value>//*[@id=&quot;completedDateStart&quot;]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>false</isSelected>
+      <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>//*[@id=&quot;completedDateStart&quot;]</value>
-      <webElementGuid>e7b3c8f1-3efe-4591-bfb2-c103ddb2168e</webElementGuid>
+      <webElementGuid>1d8e7edd-8bed-486d-a9dc-347bcbfdb9dd</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
