@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>input_phoneNoAfterKonfirmasi</name>
+   <name>input_OTP</name>
    <tag></tag>
-   <elementGuidId>33ffcebe-06e8-495e-84ee-50f3421b48f9</elementGuidId>
+   <elementGuidId>73542e59-65fe-4842-9a91-ef09c46e44cd</elementGuidId>
    <selectorCollection>
       <entry>
          <key>XPATH</key>
-         <value>//input[@id='phoneNo']</value>
+         <value>//input[@id='otp']</value>
       </entry>
       <entry>
          <key>BASIC</key>
-         <value>id(&quot;phoneNo&quot;)</value>
+         <value>id(&quot;otp&quot;)</value>
       </entry>
       <entry>
          <key>CSS</key>
-         <value>#phoneNo</value>
+         <value>#otp</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -26,78 +26,86 @@
       <name>tag</name>
       <type>Main</type>
       <value>input</value>
-      <webElementGuid>339765bc-6837-4cce-9f80-c3bf3bad6628</webElementGuid>
+      <webElementGuid>e5a03c2d-0692-40f9-b356-8438b4d2b843</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>type</name>
       <type>Main</type>
-      <value>phoneNo</value>
-      <webElementGuid>6f1d1072-40a1-43ce-93a8-6985595366c3</webElementGuid>
+      <value>tel</value>
+      <webElementGuid>58ece7ef-a15a-401a-ba24-0b55467cd25a</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>formcontrolname</name>
       <type>Main</type>
-      <value>PhoneNo</value>
-      <webElementGuid>fc3e3e58-4248-4b04-9d74-a71bcf64b759</webElementGuid>
+      <value>otp</value>
+      <webElementGuid>366d25d4-9ee8-4d3a-b0fb-f7edd326d013</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>id</name>
       <type>Main</type>
-      <value>phoneNo</value>
-      <webElementGuid>6531d009-3a23-4809-ad60-6ee893fec604</webElementGuid>
+      <value>otp</value>
+      <webElementGuid>d7932737-639c-4a92-88ec-6a2e6974988d</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>placeholder</name>
       <type>Main</type>
-      <value>No Handphone</value>
-      <webElementGuid>c19b3701-429e-48b0-ad9b-52aea4fbf7f8</webElementGuid>
+      <value>Insert OTP Code</value>
+      <webElementGuid>182bf752-008c-4606-975a-f2cee17700d2</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>maxlength</name>
+      <type>Main</type>
+      <value>6</value>
+      <webElementGuid>85054c7a-2660-476e-9fb3-544eb7607754</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>/html/body/ngb-modal-window/div/div/app-signer-signing-verification/div/div/form/div[2]/label</value>
-      <webElementGuid>80940c54-8893-461a-9afb-e87f81af8b73</webElementGuid>
+      <value>form-control mb-2 ng-untouched ng-pristine ng-invalid</value>
+      <webElementGuid>1dabc0de-49c7-4f08-a6ad-f94f80995b63</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>id(&quot;phoneNo&quot;)</value>
-      <webElementGuid>70eb2e43-decd-4aad-9afd-7dec3059fe7b</webElementGuid>
+      <value>id(&quot;otp&quot;)</value>
+      <webElementGuid>95f8ec54-1b05-44b2-b0e8-45577e7b99c5</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:attributes</name>
       <type>Main</type>
-      <value>//input[@id='phoneNo']</value>
-      <webElementGuid>62c8cbb9-8377-485d-8f9a-21385acdc821</webElementGuid>
+      <value>//input[@id='otp']</value>
+      <webElementGuid>814fb07d-655e-4b7b-9925-55d8c541bbfc</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:position</name>
       <type>Main</type>
-      <value>//div[2]/input</value>
-      <webElementGuid>15d4103f-7e19-40df-9877-5565bfc7226e</webElementGuid>
+      <value>//div[3]/input</value>
+      <webElementGuid>6b581bab-4bb4-4f82-ba78-3c65e2cf957d</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:customAttributes</name>
       <type>Main</type>
-      <value>//input[@type = 'phoneNo' and @id = 'phoneNo' and @placeholder = 'No Handphone']</value>
-      <webElementGuid>2df37f26-e526-4f8b-a449-af6a6a6c068f</webElementGuid>
+      <value>//input[@type = 'tel' and @id = 'otp' and @placeholder = 'Insert OTP Code']</value>
+      <webElementGuid>92b907fa-76d2-4577-ac50-8693cb108ab9</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

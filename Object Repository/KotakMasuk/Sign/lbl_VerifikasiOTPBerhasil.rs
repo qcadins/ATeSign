@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>lbl_VerifikasiOTPBerhasil</name>
+   <tag></tag>
+   <elementGuidId>f3034bf6-67b3-4686-9399-44dbee73ea0a</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>XPATH</key>
+         <value>//div[@id='toast-container']/div</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>div.ng-tns-c78-3.ng-star-inserted.ng-trigger.ng-trigger-flyInOut.ngx-toastr.toast-success</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>XPATH</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>div</value>
+      <webElementGuid>764b282f-e4f2-451b-ad3e-0f9edc389fc6</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>ng-tns-c78-3 ng-star-inserted ng-trigger ng-trigger-flyInOut ngx-toastr toast-success</value>
+      <webElementGuid>175b1fc6-66a4-416a-9c42-75aa9415f2d4</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value> Verifikasi OTP berhasil </value>
+      <webElementGuid>ff998970-d155-476c-a1f7-52f624f757dc</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html[1]/body[@class=&quot;vertical-layout menu-hide navbar-static  modal-open  pace-done&quot;]/div[@class=&quot;overlay-container&quot;]/div[@id=&quot;toast-container&quot;]/div[@class=&quot;ng-tns-c78-3 ng-star-inserted ng-trigger ng-trigger-flyInOut ngx-toastr toast-success&quot;]</value>
+      <webElementGuid>f9f9eb06-a60b-41c2-b0ef-5859c3494e2a</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:idRelative</name>
+      <type>Main</type>
+      <value>//div[@id='toast-container']/div</value>
+      <webElementGuid>a800f4ef-e99a-456e-9543-a70766af8b90</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='`'])[2]/following::div[5]</value>
+      <webElementGuid>76dead96-86d3-4666-afee-95e682951d6e</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Alt'])[2]/following::div[5]</value>
+      <webElementGuid>66b2a744-c944-4d03-91d3-08f3e4d0d270</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='( )'])[1]/preceding::div[12]</value>
+      <webElementGuid>5775a0fc-69a6-43c1-9332-232409adbcf2</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//div[4]/div[2]/div</value>
+      <webElementGuid>337f8da2-0c93-4cff-b008-4c7adb062cfb</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//div[(text() = ' Verifikasi OTP berhasil ' or . = ' Verifikasi OTP berhasil ')]</value>
+      <webElementGuid>32cd5217-c4e9-4022-839b-39526bb2f9b9</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>

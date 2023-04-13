@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>lbl_RequestFace</name>
+   <tag></tag>
+   <elementGuidId>56fa33f5-dfb5-4916-94ed-fce6ffe5f55c</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value></value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/ngb-modal-window/div/div/app-camera-liveness/div[1]/h4</value>
+      <webElementGuid>16f7dcc2-b9b6-4b17-be92-f38c3a107820</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

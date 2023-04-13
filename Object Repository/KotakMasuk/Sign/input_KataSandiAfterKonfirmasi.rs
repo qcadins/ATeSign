@@ -10,11 +10,15 @@
          <value>//input[@type='password']</value>
       </entry>
       <entry>
+         <key>BASIC</key>
+         <value>/html/body/ngb-modal-window/div/div/app-signer-signing-verification/div/div/form/div[3]/div/input</value>
+      </entry>
+      <entry>
          <key>CSS</key>
          <value>input.form-control.ng-untouched.ng-pristine.ng-invalid</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>true</useRalativeImagePath>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -22,7 +26,7 @@
       <name>tag</name>
       <type>Main</type>
       <value>input</value>
-      <webElementGuid>2f65d7c4-a7c8-4ca7-9664-3c78f94a9990</webElementGuid>
+      <webElementGuid>801d9872-7a7c-4e1b-9d32-ddc62d2d3757</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -30,39 +34,39 @@
       <name>formcontrolname</name>
       <type>Main</type>
       <value>password</value>
-      <webElementGuid>5f937a96-18fc-47d3-ac39-cf9557e6719d</webElementGuid>
+      <webElementGuid>cea8deb1-434a-4c22-b5dd-7a57429f4da3</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>form-control ng-untouched ng-pristine ng-invalid</value>
-      <webElementGuid>d96fad9c-c8c9-4c09-8609-5229e17c1990</webElementGuid>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>type</name>
-      <type>Main</type>
-      <value>password</value>
-      <webElementGuid>ff669d78-c3b2-4c92-945e-422c6d782c64</webElementGuid>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>placeholder</name>
-      <type>Main</type>
-      <value>Kata Sandi</value>
-      <webElementGuid>dd193f20-f084-44a8-b0f6-85ea34f412ad</webElementGuid>
+      <value>/html/body/ngb-modal-window/div/div/app-signer-signing-verification/div/div/form/div[3]/label</value>
+      <webElementGuid>e8563957-152c-4702-9bb5-0f7f5593ede9</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
+      <name>type</name>
+      <type>Main</type>
+      <value>password</value>
+      <webElementGuid>665e4fef-c839-4fda-a6f4-0d293462367d</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>placeholder</name>
+      <type>Main</type>
+      <value>Kata Sandi</value>
+      <webElementGuid>eecdaa21-d7f5-4c38-9488-03f126ae0bf2</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html[1]/body[@class=&quot;vertical-layout menu-expanded menu-open vertical-menu navbar-static pace-done modal-open&quot;]/ngb-modal-window[@class=&quot;d-block modal fade show&quot;]/div[@class=&quot;modal-dialog modal-l&quot;]/div[@class=&quot;modal-content&quot;]/app-signer-signing-verification[1]/div[@class=&quot;modal-body&quot;]/div[@class=&quot;modal-body&quot;]/form[@class=&quot;ng-untouched ng-pristine ng-invalid&quot;]/div[@class=&quot;form-group&quot;]/div[@class=&quot;input&quot;]/input[@class=&quot;form-control ng-untouched ng-pristine ng-invalid&quot;]</value>
-      <webElementGuid>2722410a-43e4-4c5a-91d9-95d8b8ee9bef</webElementGuid>
+      <value>/html/body/ngb-modal-window/div/div/app-signer-signing-verification/div/div/form/div[3]/div/input</value>
+      <webElementGuid>57dc3911-fd6b-4804-a364-583fb473f230</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -70,7 +74,7 @@
       <name>xpath:attributes</name>
       <type>Main</type>
       <value>//input[@type='password']</value>
-      <webElementGuid>292f2904-919e-4a2a-81a2-5630fe1602d2</webElementGuid>
+      <webElementGuid>04254080-731d-4daa-afc2-1446ea186d4b</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -78,7 +82,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div[3]/div/input</value>
-      <webElementGuid>d7c57859-73e8-49f1-86c2-779120139cba</webElementGuid>
+      <webElementGuid>0e18a5ac-3a75-4977-815f-92ce52db95a3</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -86,6 +90,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//input[@type = 'password' and @placeholder = 'Kata Sandi']</value>
-      <webElementGuid>d1092a7d-8c66-4337-85b0-c51ba8b57d54</webElementGuid>
+      <webElementGuid>4cff898a-0387-474a-8b57-bbb37d4a047f</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

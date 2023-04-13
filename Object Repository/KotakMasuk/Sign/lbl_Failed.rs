@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>lbl_Failed</name>
+   <tag></tag>
+   <elementGuidId>e9a5a6c0-6e46-4d64-8af2-51c739d14fb5</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/ngb-modal-window/div/div/app-progress-signing/div/div/div/div/div[1]/div[2]/div[2]/p</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/ngb-modal-window/div/div/app-progress-signing/div/div/div/div/div[1]/div[2]/div[2]/p</value>
+      <webElementGuid>0b3d459d-1b85-43f5-b380-bad3d8f17519</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

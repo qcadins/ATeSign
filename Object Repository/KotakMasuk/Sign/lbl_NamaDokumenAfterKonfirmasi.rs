@@ -10,11 +10,15 @@
          <value>//div[@id='pdf-main-container']/div/ul/li/label</value>
       </entry>
       <entry>
+         <key>BASIC</key>
+         <value>id(&quot;pdf-main-container&quot;)/div[1]/ul[@class=&quot;list-group&quot;]/li[@class=&quot;list-group-item ng-star-inserted&quot;]/label[1]</value>
+      </entry>
+      <entry>
          <key>CSS</key>
          <value>label</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>true</useRalativeImagePath>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -22,23 +26,23 @@
       <name>tag</name>
       <type>Main</type>
       <value>label</value>
-      <webElementGuid>aedbeeda-2094-47af-bfdb-e9845f3d0fd0</webElementGuid>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>text</name>
-      <type>Main</type>
-      <value>TEST TEMPLATE FIT</value>
-      <webElementGuid>8285838e-4e94-468e-b07b-9b7c4c88deed</webElementGuid>
+      <webElementGuid>c39f487d-2951-483c-a020-f923bb122897</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>TEST TEMPLATE FIT</value>
+      <webElementGuid>2e154b49-cdaa-4990-80de-8f3c38f4c6e1</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>id(&quot;pdf-main-container&quot;)/div[1]/ul[@class=&quot;list-group&quot;]/li[@class=&quot;list-group-item ng-star-inserted&quot;]/label[1]</value>
-      <webElementGuid>8746dcbe-5b38-409a-b060-f1e2ab4e0b9a</webElementGuid>
+      <webElementGuid>ac2d08fe-6dc2-4c81-81bb-1f138be3a728</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -46,7 +50,7 @@
       <name>xpath:idRelative</name>
       <type>Main</type>
       <value>//div[@id='pdf-main-container']/div/ul/li/label</value>
-      <webElementGuid>90cb5af4-ba58-4166-b3f4-0215d7e0e00a</webElementGuid>
+      <webElementGuid>f5be7994-ebfc-4e6a-82fe-86c6a7521403</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -54,7 +58,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Tanda Tangan Dokumen'])[1]/following::label[1]</value>
-      <webElementGuid>47d7294d-7d5b-4ea3-8367-86e00a217096</webElementGuid>
+      <webElementGuid>19f651cd-b43b-441f-bc6e-6e3231249cf6</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -62,7 +66,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Masukan'])[1]/following::label[1]</value>
-      <webElementGuid>0b81fd49-15a5-473e-9074-f9c663d9cd01</webElementGuid>
+      <webElementGuid>05013c4c-7eac-47f9-9b63-eee64ee2a95b</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -70,7 +74,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Proses'])[1]/preceding::label[1]</value>
-      <webElementGuid>719365ba-8d75-4cbb-b463-76325d6662a1</webElementGuid>
+      <webElementGuid>a1faeb61-57b5-4890-a85f-ef9de99808f4</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -78,7 +82,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Persyaratan layanan'])[1]/preceding::label[1]</value>
-      <webElementGuid>80cb5e7c-bf3f-48a9-afb5-f13bad5e718d</webElementGuid>
+      <webElementGuid>05b05f8a-c48d-47ca-9e3c-7ac93da593c4</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -86,7 +90,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='TEST TEMPLATE FIT']/parent::*</value>
-      <webElementGuid>65ac1600-6354-4bb6-83e0-cfb732d07c4a</webElementGuid>
+      <webElementGuid>2471264c-bd27-40a6-ba60-c9738b51f6c0</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -94,7 +98,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//label</value>
-      <webElementGuid>6b01206d-0266-4547-b93b-ab26f0029803</webElementGuid>
+      <webElementGuid>c935fba9-dd9c-4c96-85f8-d18f2e8b5c45</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -102,6 +106,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//label[(text() = 'TEST TEMPLATE FIT' or . = 'TEST TEMPLATE FIT')]</value>
-      <webElementGuid>9146060f-5fce-48f7-a5e5-84d524f77be2</webElementGuid>
+      <webElementGuid>fd8f7964-3bde-4ff5-85a5-4d2dca61706c</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

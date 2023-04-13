@@ -811,6 +811,25 @@
           "javadoc": ""
         },
         {
+          "name": "getTotalDokumenTemplatKode",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
           "name": "getEmailLogin",
           "parameters": [
             {
@@ -843,7 +862,7 @@
           "javadoc": ""
         },
         {
-          "name": "getTotalPencarianDokumen",
+          "name": "getOTPLoginId",
           "parameters": [
             {
               "name": "conn",
@@ -859,7 +878,7 @@
               }
             },
             {
-              "name": "loginid",
+              "name": "email",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -870,9 +889,47 @@
                 "genericsTypes": [],
                 "errorOnParsing": false
               }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "gettrxSaldo",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getRequestDateSendSign",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
             },
             {
-              "name": "tenant",
+              "name": "documentid",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

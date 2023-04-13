@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@type = 'text' and @ng-reflect-name = 'documentTemplateDescription' and @id = 'documentTemplateDescription' and @placeholder = 'Tulis deskripsi']</value>
+         <value>id(&quot;documentTemplateDescription&quot;)</value>
       </entry>
       <entry>
          <key>XPATH</key>
@@ -26,15 +26,15 @@
       <name>tag</name>
       <type>Main</type>
       <value>input</value>
-      <webElementGuid>968a3128-ba54-4b8d-bba3-1258e42d4cc2</webElementGuid>
+      <webElementGuid>2c41d845-5b47-42f1-8626-dad30a600e12</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>type</name>
       <type>Main</type>
       <value>text</value>
-      <webElementGuid>c697fd91-677d-458d-8c5a-006f844d5fe4</webElementGuid>
+      <webElementGuid>190569a7-2070-4779-8faf-95468085c15d</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -42,31 +42,31 @@
       <name>class</name>
       <type>Main</type>
       <value>form-control ng-untouched ng-pristine ng-invalid</value>
-      <webElementGuid>8508c12b-0b5b-4a11-a90d-e6eb3f9a4603</webElementGuid>
+      <webElementGuid>f1f3169f-8b0d-4b5c-9ffe-36cba56eda54</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>ng-reflect-name</name>
       <type>Main</type>
       <value>documentTemplateDescription</value>
-      <webElementGuid>044060ec-e560-4999-aece-0815b6cf0deb</webElementGuid>
+      <webElementGuid>9f15842e-0aca-4a77-8287-492f5b65eafa</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>id</name>
       <type>Main</type>
       <value>documentTemplateDescription</value>
-      <webElementGuid>c5b097d6-e45f-4ed8-ba5e-f519bc266290</webElementGuid>
+      <webElementGuid>94b054de-724f-4e57-bde5-3c1da31980e5</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>placeholder</name>
       <type>Main</type>
       <value>Tulis deskripsi</value>
-      <webElementGuid>1af874a8-d10b-4fac-9425-73e12a8d6e98</webElementGuid>
+      <webElementGuid>e00d616d-816c-42ea-b19b-61dbd28eec91</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -74,7 +74,7 @@
       <name>ng-reflect-required</name>
       <type>Main</type>
       <value>true</value>
-      <webElementGuid>b741a361-3bf0-4a80-b178-4aadef9d7f3c</webElementGuid>
+      <webElementGuid>b9004ad4-985f-4397-994b-572e4f655d02</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -82,15 +82,15 @@
       <name>maxlength</name>
       <type>Main</type>
       <value>200</value>
-      <webElementGuid>cd16290b-ea8d-4c32-9835-0522c4820be3</webElementGuid>
+      <webElementGuid>0bbf8017-a7a2-442b-9af1-8a55c9953fb7</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>false</isSelected>
+      <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>id(&quot;documentTemplateDescription&quot;)</value>
-      <webElementGuid>b550d7f7-e5d9-4c47-a3c6-362484985698</webElementGuid>
+      <webElementGuid>37bf0b4a-e95c-48ca-9cf1-63e55b964216</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -98,7 +98,7 @@
       <name>xpath:attributes</name>
       <type>Main</type>
       <value>//input[@id='documentTemplateDescription']</value>
-      <webElementGuid>f782a145-0bd4-42be-a0ef-9f037d60445a</webElementGuid>
+      <webElementGuid>e4caa857-09e1-463f-96bf-fb79a1fa974f</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -106,7 +106,7 @@
       <name>xpath:idRelative</name>
       <type>Main</type>
       <value>//form[@id='msxForm']/div/div[3]/app-question/app-text/fieldset/div/input</value>
-      <webElementGuid>56d7dfc2-1d70-4b1c-9569-460dba303196</webElementGuid>
+      <webElementGuid>ae70aa04-ec04-4c6f-b09f-3053e7c2aa02</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -114,7 +114,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div[3]/app-question/app-text/fieldset/div/input</value>
-      <webElementGuid>6aa00924-0c8c-4c79-8596-b97c3dc31b41</webElementGuid>
+      <webElementGuid>c36c70dc-803d-4941-87d4-7b7d786e9f95</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -122,6 +122,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//input[@type = 'text' and @id = 'documentTemplateDescription' and @placeholder = 'Tulis deskripsi']</value>
-      <webElementGuid>e6367e30-759c-428c-844d-5ebe6d574916</webElementGuid>
+      <webElementGuid>948b188a-c296-4254-80bf-c9acf34c99ef</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

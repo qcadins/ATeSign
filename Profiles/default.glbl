@@ -71,6 +71,11 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
+      <initValue>'Submit Feedback Gagal'</initValue>
+      <name>ReasonFailedFeedbackGagal</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
       <initValue>'Hit API Failed'</initValue>
       <name>ReasonFailedHitAPI</name>
    </GlobalVariableEntity>
@@ -98,6 +103,11 @@
       <description></description>
       <initValue>'Save Gagal'</initValue>
       <name>ReasonFailedSaveGagal</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>'Tanda Tangan Gagal'</initValue>
+      <name>ReasonFailedSignGagal</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
