@@ -21,22 +21,22 @@ import java.sql.Connection as Connection
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 
-'open browser'
-WebUI.openBrowser('')
+	'open browser'
+	WebUI.openBrowser('')
 
-'navigate to url esign'
-WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 2))
+	'navigate to url esign'
+	WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 2))
 
-'maximized window'
-WebUI.maximizeWindow()
+	'maximized window'
+	WebUI.maximizeWindow()
 
-'input email'
-WebUI.setText(findTestObject('Login/input_Email'), CustomKeywords.'connection.dataVerif.getEmailLogin'(conneSign, GlobalVariable.Response))
+	'input email'
+	WebUI.setText(findTestObject('Login/input_Email'), email)
 
-'input password'
-WebUI.setText(findTestObject('Login/input_Password'), 'P@ssw0rd')
+	'input password'
+	WebUI.setText(findTestObject('Login/input_Password'), 'P@ssw0rd')
 
-'click button login'
-WebUI.click(findTestObject('Login/button_Login'), FailureHandling.STOP_ON_FAILURE)
+	'click button login'
+	WebUI.click(findTestObject('Login/button_Login'), FailureHandling.STOP_ON_FAILURE)
 
 

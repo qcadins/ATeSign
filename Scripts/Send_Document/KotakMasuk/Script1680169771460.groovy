@@ -34,7 +34,7 @@ ArrayList<String> arrayMatch = new ArrayList<String>()
 arrayindex = 0
 
 'call Test Case untuk login sebagai user'
-WebUI.callTestCase(findTestCase('Login/Login_Signer'), [:], FailureHandling.STOP_ON_FAILURE)
+WebUI.callTestCase(findTestCase('Login/Login_1docManySigner'), [:], FailureHandling.STOP_ON_FAILURE)
 
 'get data kotak masuk send document secara asc, dimana customer no 1'
 ArrayList<String> result = CustomKeywords.'connection.dataVerif.getKotakMasukSendDoc'(conneSign,GlobalVariable.Response.replace('[', '').replace(']', ''))

@@ -587,7 +587,7 @@ public class dataVerif {
 
 		Statement stm = conn.createStatement()
 
-		ResultSet resultSet = stm.executeQuery("select au.login_id as login from tr_document_h tdh join tr_document_d tdd on tdh.id_document_h = tdd.id_document_h join am_msuser au on au.id_ms_user = tdh.id_msuser_customer where tdd.document_id = '"+documentid+"'")
+		ResultSet resultSet = stm.executeQuery("SELECT STRING_AGG(au.login_id, ';') AS login FROM tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user WHERE tdd.document_id = '"+documentid+"' ")
 		ResultSetMetaData metadata = resultSet.getMetaData()
 
 		columnCount = metadata.getColumnCount()
@@ -772,12 +772,12 @@ public class dataVerif {
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
-	
+
 		ResultSet resultSet = stm.executeQuery("SELECT au.login_id FROM tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user WHERE tdd.document_id = '"+documentid+"' ")
 		ResultSetMetaData metadata = resultSet.getMetaData()
-	
+
 		columnCount = metadata.getColumnCount()
-	
+
 		while (resultSet.next()) {
 			for(int i = 1 ; i <= columnCount ; i++){
 				data = resultSet.getObject(i)
@@ -786,5 +786,4 @@ public class dataVerif {
 		}
 		return listdata
 	}
-	
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>Login_1docManySigner</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>b392529a-1378-4201-956e-2fcb9f9b4740</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>c9d89b4e-b2da-4bb1-9f3c-0ccd356923c0</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>c9d89b4e-b2da-4bb1-9f3c-0ccd356923c0</id>
+      <masked>false</masked>
+      <name>email</name>
+   </variable>
+</TestCaseEntity>
