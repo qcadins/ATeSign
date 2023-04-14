@@ -635,7 +635,8 @@ public class dataVerif {
 		}
 		return Integer.parseInt(data)
 	}
-
+	
+	@Keyword
 	public getDDLTenant(Connection conn){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
@@ -655,6 +656,7 @@ public class dataVerif {
 		return listdata
 	}
 
+	@Keyword
 	public getDDLVendor(Connection conn, String tenant){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
@@ -674,6 +676,7 @@ public class dataVerif {
 		return listdata
 	}
 
+	@Keyword
 	public getDDLTipeSaldo(Connection conn, String tenant, String vendor){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
@@ -692,7 +695,8 @@ public class dataVerif {
 		}
 		return listdata
 	}
-
+	
+	@Keyword
 	public getIsiSaldoStoreDB(Connection conn, String refno){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
@@ -767,6 +771,62 @@ public class dataVerif {
 	}
 
 	@Keyword
+	public getTotalTenant (Connection conn){
+
+		String data
+
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("select count(*) from ms_tenant")
+
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		return Integer.parseInt(data)
+	}
+
+	@Keyword
+	public getTenantStoreDB(Connection conn, String refnum){
+		String data
+		ArrayList<String> listdata = new ArrayList<>()
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("select tenant_name, tenant_code, ref_number_label, api_key, threshold_balance, email_reminder_dest from ms_tenant where ref_number_label = '"+ refnum +"'")
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for(int i = 1 ; i <= columnCount ; i++){
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		return listdata
+	}
+
+	@Keyword
+	public getTenantServices(Connection conn, String tenantname){
+		String data
+
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("select threshold_balance from ms_tenant where tenant_name = '"+ tenantname +"'")
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		return data
+	}
+
+	@Keyword
 	public getEmailsSign(Connection conn, String documentid){
 
 		String data
@@ -786,4 +846,5 @@ public class dataVerif {
 		}
 		return listdata
 	}
+	
 }

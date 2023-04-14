@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>TenantStoreDB</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>5c8eaaef-68b3-4d90-b31f-cbf196b4e56f</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>dff330b1-15c2-42cc-9a11-e7dddb56d161</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Tenant/Tenant'</defaultValue>
+      <description></description>
+      <id>dff330b1-15c2-42cc-9a11-e7dddb56d161</id>
+      <masked>false</masked>
+      <name>excelPathTenant</name>
+   </variable>
+</TestCaseEntity>
