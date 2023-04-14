@@ -18,6 +18,7 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 import java.sql.Connection as Connection
+
 'Split mengenai documentid'
 ArrayList<String> documentIds = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 12).split(';', -1)
 
@@ -27,18 +28,30 @@ Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 'declare arraylist arraymatch'
 ArrayList<String> arrayMatch = new ArrayList<String>()
 'looping berdasarkan total document yang ada'
-for (int i = 0; i < documentIds.size(); i++) 
+for (int i = 1; i <= documentIds.size(); i++) 
 {
-
+	ArrayList<String> emailsigner = CustomKeywords.'connection.dataVerif.getEmailsSign'(conneSign, documentIds[i-1])
 	'get data API Bulk Sign Document dari DB'
-	ArrayList<String> result = CustomKeywords.'connection.dataVerif.getbulkSign'(conneSign, documentIds[i], findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 11))
+	ArrayList<String> result = CustomKeywords.'connection.dataVerif.getbulkSign'(conneSign, documentIds[i-1])
+	
 	
 	'declare arrayindex'
 	arrayindex = 0
 
 	'verify login id'
-	arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 11), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
+	result[arrayindex] = result[arrayindex].split(';',-1)
+	for(int b = 1; b <= result[arrayindex].size();b++) 
+		{
+			if(WebUI.verifyMatch(emailsigner[b-1], result[arrayindex][b-1], false, FailureHandling.CONTINUE_ON_FAILURE) == true)
+			{
+				arrayMatch.add(true)
+			}
+			else
+			{
+			arrayMatch.add(false)
+			}
+		}
+	arrayindex++
 	'verify vendor code'
 	arrayMatch.add(WebUI.verifyMatch(GlobalVariable.Response,result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
