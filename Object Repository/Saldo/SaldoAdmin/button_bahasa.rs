@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>button_bahasa</name>
+   <tag></tag>
+   <elementGuidId>97896c6c-ec71-49b8-9815-f011dbc0fc7e</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;dropdown-flag&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;dropdown-flag&quot;]</value>
+      <webElementGuid>232caa3c-5c53-45bd-84d9-77f27f302c6b</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

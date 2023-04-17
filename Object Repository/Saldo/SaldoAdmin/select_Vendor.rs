@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>select_Vendor</name>
+   <tag></tag>
+   <elementGuidId>676cc164-dd89-435d-8453-92646015e442</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div/div/form/select</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div/div/form/select</value>
+      <webElementGuid>fbd89c89-8684-4263-b84f-ce0b0391afc6</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>formcontrolname</name>
+      <type>Main</type>
+      <value>vendorSelect</value>
+      <webElementGuid>7f31d688-2a74-4a9e-a72c-a8ba9b71fdf8</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>
