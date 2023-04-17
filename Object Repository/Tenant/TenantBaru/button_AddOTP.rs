@@ -18,6 +18,14 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/div[5]/button</value>
-      <webElementGuid>ca356cf6-3695-410d-acb7-128bf3399af5</webElementGuid>
+      <webElementGuid>1dea28b4-76bf-4131-8fdc-699f703ee5d3</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Add OTP</value>
+      <webElementGuid>9401a67c-fa1f-4f9e-91e6-ab51930de825</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

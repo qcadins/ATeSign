@@ -95,6 +95,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         WebUI.setText(findTestObject('isiSaldo/input_TambahSaldo'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
                 17))
 
+		'tambah saldo before dengan jumlah isi saldo'
+		saldoBefore.set(0, (Integer.parseInt(saldoBefore[0])+Integer.parseInt(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm,
+				17))).toString())
+		
+		saldoBefore.set(1, (Integer.parseInt(saldoBefore[1])+Integer.parseInt(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm,
+			17))).toString())
+		
         'input nomor tagihan'
         WebUI.setText(findTestObject('isiSaldo/input_nomorTagihan'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
                 18))
@@ -137,7 +144,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			saldoAfter = loginAdminGetSaldo()
 			
 			'verify saldoafter tidak sama dengan saldo before'
-			checkVerifyEqualOrMatch(!(saldoAfter.equals(saldoBefore)))
+			checkVerifyEqualOrMatch(saldoAfter.equals(saldoBefore))
+			
+			println(saldoBefore)
+			println(saldoAfter)
 			
         } else if (isMandatoryComplete > 0) {
             'click batal'
@@ -234,16 +244,16 @@ def loginAdminGetSaldo() {
 	WebUI.click(findTestObject('Login/button_pilihPeran'), FailureHandling.STOP_ON_FAILURE)
 	
 	'click menu saldo'
-	WebUI.click(findTestObject('Saldo/SaldoAdmin/menu_Saldo'))
+	WebUI.click(findTestObject('isiSaldo/SaldoAdmin/menu_Saldo'))
 	
 	'click ddl bahasa'
-	WebUI.click(findTestObject('Saldo/SaldoAdmin/button_bahasa'))
+	WebUI.click(findTestObject('isiSaldo/SaldoAdmin/button_bahasa'))
 	
 	'click english'
-	WebUI.click(findTestObject('Saldo/SaldoAdmin/button_English'))
+	WebUI.click(findTestObject('isiSaldo/SaldoAdmin/button_English'))
 	
 	'select vendor'
-	WebUI.selectOptionByLabel(findTestObject('Saldo/SaldoAdmin/select_Vendor'), '(?i)' + findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 15), true)
+	WebUI.selectOptionByLabel(findTestObject('isiSaldo/SaldoAdmin/select_Vendor'), '(?i)' + findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 15), true)
 	
 	'get row'
 	variable = DriverFactory.getWebDriver().findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
@@ -251,13 +261,13 @@ def loginAdminGetSaldo() {
 	for(index = 2; index <= variable.size(); index++) {
 		
 		'modify object box info'
-		modifyObjectBoxInfo = WebUI.modifyObjectProperty(findTestObject('Saldo/SaldoAdmin/modifyObject'),'xpath','equals',
+		modifyObjectBoxInfo = WebUI.modifyObjectProperty(findTestObject('isiSaldo/SaldoAdmin/modifyObject'),'xpath','equals',
 			"/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div["+ index +"]/div/div/div/div/div[1]/h3",true)
 	
 		'check if box info = tipe saldo di excel'
 		if(WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 16))) {
 			'modify object qty'
-			modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('Saldo/SaldoAdmin/modifyObject'),'xpath','equals',
+			modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('isiSaldo/SaldoAdmin/modifyObject'),'xpath','equals',
 				"/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div["+ index +"]/div/div/div/div/div[2]/h3",true)
 			
 			'get qty saldo before'
@@ -268,24 +278,24 @@ def loginAdminGetSaldo() {
 	}
 	
 	'input tipe saldo'
-	WebUI.setText(findTestObject('Saldo/SaldoAdmin/input_TipeSaldo'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 16))
+	WebUI.setText(findTestObject('isiSaldo/SaldoAdmin/input_TipeSaldo'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 16))
 	
 	'enter untuk input tipe saldo'
-	WebUI.sendKeys(findTestObject('Saldo/SaldoAdmin/input_TipeSaldo'), Keys.chord(Keys.ENTER))
+	WebUI.sendKeys(findTestObject('isiSaldo/SaldoAdmin/input_TipeSaldo'), Keys.chord(Keys.ENTER))
 	
 	'click button cari'
-	WebUI.click(findTestObject('Saldo/SaldoAdmin/button_Cari'))
+	WebUI.click(findTestObject('isiSaldo/SaldoAdmin/button_Cari'))
 	
-	if(WebUI.verifyElementPresent(findTestObject('Saldo/SaldoAdmin/button_LastPage'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+	if(WebUI.verifyElementPresent(findTestObject('isiSaldo/SaldoAdmin/button_LastPage'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 		'click button last page'
-		WebUI.click(findTestObject('Saldo/SaldoAdmin/button_LastPage'))
+		WebUI.click(findTestObject('isiSaldo/SaldoAdmin/button_LastPage'))
 	}
 	
 	'get row'
 	variable = DriverFactory.getWebDriver().findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
 	
 	'modify object balance'
-	modifyObjectBalance = WebUI.modifyObjectProperty(findTestObject('Saldo/SaldoAdmin/modifyObject'),'xpath','equals',
+	modifyObjectBalance = WebUI.modifyObjectProperty(findTestObject('isiSaldo/SaldoAdmin/modifyObject'),'xpath','equals',
 		"/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper["+ variable.size() +"]/datatable-body-row/div[2]/datatable-body-cell[10]/div",true)
 	
 	'get trx saldo before'

@@ -40,6 +40,9 @@ if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 7).equalsIg
     'click button Baru'
     WebUI.click(findTestObject('Tenant/Button_Baru'))
 
+    'get total form'
+    variable = DriverFactory.getWebDriver().findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-add-tenant > div.row.match-height > div > div > div > div > form div'))
+
     'input nama tenant'
     WebUI.setText(findTestObject('Tenant/TenantBaru/input_NamaTenant'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
             12))
@@ -53,11 +56,11 @@ if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 7).equalsIg
             14))
 
     'check if ingin menginput api secara manual/generate'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 15).length() > 0) {
+    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 15) == 'No') {
         'input API Key'
         WebUI.setText(findTestObject('Tenant/TenantBaru/input_APIKEY'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-                15))
-    } else {
+                16))
+    } else if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 15) == 'Yes') {
         'click button generate api key'
         WebUI.click(findTestObject('Tenant/TenantBaru/button_GenerateAPIKEY'))
 
@@ -65,172 +68,49 @@ if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 7).equalsIg
         APIKEY = WebUI.getAttribute(findTestObject('Tenant/TenantBaru/input_APIKEY'), 'value', FailureHandling.CONTINUE_ON_FAILURE)
 
         'write to excel api key'
-        CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Tenant', 14, GlobalVariable.NumofColm - 
+        CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Tenant', 15, GlobalVariable.NumofColm - 
             1, APIKEY)
     }
     
-    'check if ingin input batas otp'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 17).length() > 0) {
-        'click button OTP'
-        WebUI.click(findTestObject('Tenant/TenantBaru/button_AddOTP'))
+    'get array services dari excel'
+    arrayServices = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 18).split(';', -1)
 
-        'input Batas OTP'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_OTP'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-                17))
-    }
-    
-    'check if ingin input batas verification'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 18).length() > 0) {
-        'click button verification'
-        WebUI.click(findTestObject('Tenant/TenantBaru/button_AddVerification'))
+    'get array batas saldo dari excel'
+    arrayServicesBatasSaldo = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 19).split(';', -1)
 
-        'input Batas verification'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_Verification'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-                18))
-    }
-    
-    'check if ingin input batas Dokumen'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 19).length() > 0) {
-        'click button dokumen'
-        WebUI.click(findTestObject('Tenant/TenantBaru/button_AddDokumen'))
+    'looping untuk array service excel'
+    for (indexExcel = 0; indexExcel < arrayServices.size(); indexExcel++) {
+        'looping untuk input bata saldo'
+        for (index = 5; index < variable.size(); index++) {
+            'modify object button services'
+            modifyObjectButtonServices = WebUI.modifyObjectProperty(findTestObject('Tenant/TenantBaru/modifyObject'), 'xpath', 
+                'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/div[' + 
+                index) + ']/button', true)
 
-        'input Batas dokumen'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_Dokumen'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-                19))
-    }
-    
-    'check if ingin input batas TTD'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 20).length() > 0) {
-        'click button TTD'
-        WebUI.click(findTestObject('Tenant/TenantBaru/button_AddSign'))
+            'check if button contain service name'
+            if (WebUI.verifyElementNotPresent(modifyObjectButtonServices, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+                continue
+            } else if (!(WebUI.getText(modifyObjectButtonServices).contains(arrayServices[indexExcel]))) {
+                continue
+            } else if (WebUI.getText(modifyObjectButtonServices).contains(arrayServices[indexExcel])) {
+                'click button'
+                WebUI.click(modifyObjectButtonServices)
 
-        'input Batas TTD'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_TTD'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-                20))
-    }
-    
-    'check if ingin input batas Verifikasi Wajah'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 21).length() > 0) {
-        'click button Verifikasi Wajah'
-        WebUI.click(findTestObject('Tenant/TenantBaru/button_AddFaceVerify'))
+                'modify object input services'
+                modifyObjectInputServices = WebUI.modifyObjectProperty(findTestObject('Tenant/TenantBaru/modifyObject'), 
+                    'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/div[' + 
+                    index) + ']/div/input', true)
 
-        'input Batas Verifikasi Wajah'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_VerifikasiWajah'), findTestData(excelPathTenant).getValue(
-                GlobalVariable.NumofColm, 21))
-    }
-    
-    'check if ingin input batas DukcapilBiometrik'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 22).length() > 0) {
-        'click button DukcapilBiometrik'
-        WebUI.click(findTestObject('Tenant/TenantBaru/button_AddDukcapilBiometrik'))
+                'input batas saldo'
+                WebUI.setText(modifyObjectInputServices, arrayServicesBatasSaldo[indexExcel])
 
-        'input Batas DukcapilBiometrik'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_DukcapilBiometrik'), findTestData(excelPathTenant).getValue(
-                GlobalVariable.NumofColm, 22))
-    }
-    
-    'check if ingin input batas OCR KTP'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 23).length() > 0) {
-        'click button OCR KTP'
-        WebUI.click(findTestObject('Tenant/TenantBaru/button_AddOCRKTP'))
-
-        'input Batas OCR KTP'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_OCRKTP'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-                23))
-    }
-    
-    'check if ingin input batas OCR NPWP'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 24).length() > 0) {
-        'click button OCR NPWP'
-        WebUI.click(findTestObject('Tenant/TenantBaru/button_AddOCRNPWP'))
-
-        'input Batas OCR NPWP'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_OCRNPWP'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-                24))
-    }
-    
-    'check if ingin input batas OCR BPKB'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 25).length() > 0) {
-        'click button OCR BPKB'
-        WebUI.click(findTestObject('Tenant/TenantBaru/button_AddOCRBPKB'))
-
-        'input Batas OCR BPKB'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_OCRBPKB'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-                25))
-    }
-    
-    'check if ingin input batas phone active check'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 26).length() > 0) {
-        'click button phone active check'
-        WebUI.click(findTestObject('Tenant/TenantBaru/button_AddPhoneactiveCheck'))
-
-        'input Batas phone active check'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_PhoneactiveCheck'), findTestData(excelPathTenant).getValue(
-                GlobalVariable.NumofColm, 26))
-    }
-    
-    'check if ingin input batas OCR KK'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 27).length() > 0) {
-        'click button OCR KK'
-        WebUI.click(findTestObject('Tenant/TenantBaru/button_AddOCRKK'))
-
-        'input Batas OCR KK'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_OCRKK'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-                27))
-    }
-    
-    'check if ingin input batas stamdutyPostpaid'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 28).length() > 0) {
-        'click button stamdutyPostpaid'
-        WebUI.click(findTestObject('Tenant/TenantBaru/button_AddStampdutyPostPaid'))
-
-        'input Batas stamdutyPostpaid'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_StampDutyPostPaid'), findTestData(excelPathTenant).getValue(
-                GlobalVariable.NumofColm, 28))
-    }
-    
-    'check if ingin input batas smsNotif'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 29).length() > 0) {
-        'click button smsNotif'
-        WebUI.click(findTestObject('Tenant/TenantBaru/button_AddSMSNotif'))
-
-        'input Batas smsNotif'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_SMSNotif'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-                29))
-    }
-    
-    'check if ingin input batas stampduty'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 30).length() > 0) {
-        'click button stampduty'
-        WebUI.click(findTestObject('Tenant/TenantBaru/button_AddStampduty'))
-
-        'input Batas stampduty'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_Materai'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-                30))
-    }
-    
-    'check if ingin input batas OCR STNK'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 31).length() > 0) {
-        'click button OCR STNK'
-        WebUI.click(findTestObject('Tenant/TenantBaru/button_AddOCRSTNK'))
-
-        'input Batas OCR STNK'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_OCRSTNK'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-                31))
-    }
-    
-    'check if ingin input batas LivenessFaceCompare'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 32).length() > 0) {
-        'click button LivenessFaceCompare'
-        WebUI.click(findTestObject('Tenant/TenantBaru/button_AddLivenessFaceCompare'))
-
-        'input Batas LivenessFaceCompare'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_LivenessFaceCompare'), findTestData(excelPathTenant).getValue(
-                GlobalVariable.NumofColm, 32))
+                break
+            }
+        }
     }
     
     'get array email reminder dari excel'
-    arrayEmailReminder = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 34).split(';', -1)
+    arrayEmailReminder = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 21).split(';', -1)
 
     'looping untuk input email reminder'
     for (index = 1; index <= arrayEmailReminder.size(); index++) {
@@ -248,11 +128,11 @@ if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 7).equalsIg
     
     'input email user admin'
     WebUI.setText(findTestObject('Tenant/TenantBaru/input_EmailUserAdmin'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-            35))
+            22))
 
     'input kode akses user admin'
     WebUI.setText(findTestObject('Tenant/TenantBaru/input_KodeAksesUserAdmin'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-            36))
+            23))
 
     'check if mandatory complete dan button simpan clickable'
     if ((isMandatoryComplete == 0) && !(WebUI.verifyElementHasAttribute(findTestObject('Tenant/TenantBaru/button_Simpan'), 
@@ -296,10 +176,10 @@ if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 7).equalsIg
     WebUI.click(findTestObject('Tenant/button_ServiceBalance'))
 
     'get array Services dari excel'
-    arrayServices = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 38).split(';', -1)
+    arrayServices = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 25).split(';', -1)
 
     'get array Vendor dari excel'
-    arrayVendor = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 39).split(';', -1)
+    arrayVendor = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 26).split(';', -1)
 
     'looping untuk input services check'
     for (index = 0; index < arrayServices.size(); index++) {
@@ -315,10 +195,10 @@ if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 7).equalsIg
     }
     
     'get array Services dari excel'
-    arrayServices = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 40).split(';', -1)
+    arrayServices = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 27).split(';', -1)
 
     'get array Vendor dari excel'
-    arrayVendor = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 41).split(';', -1)
+    arrayVendor = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 28).split(';', -1)
 
     'looping untuk input services uncheck'
     for (index = 0; index < arrayServices.size(); index++) {
@@ -368,9 +248,12 @@ if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 7).equalsIg
     'click button cari'
     WebUI.click(findTestObject('Tenant/button_Cari'))
 
-    'click button services balance'
+    'click button edit'
     WebUI.click(findTestObject('Tenant/button_Edit'))
 
+	'get total form'
+	variable = DriverFactory.getWebDriver().findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-add-tenant > div.row.match-height > div > div > div > div > form div'))
+	
     'input tenant code'
     WebUI.setText(findTestObject('Tenant/TenantBaru/input_TenantCode'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
             13), FailureHandling.OPTIONAL)
@@ -380,11 +263,11 @@ if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 7).equalsIg
             14))
 
     'check if ingin menginput api secara manual/generate'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 15).length() > 0) {
+    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 15) == 'No') {
         'input API Key'
         WebUI.setText(findTestObject('Tenant/TenantBaru/input_APIKEY'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-                15))
-    } else {
+                16))
+    } else if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 15) == 'Yes') {
         'click button generate api key'
         WebUI.click(findTestObject('Tenant/TenantBaru/button_GenerateAPIKEY'))
 
@@ -392,269 +275,96 @@ if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 7).equalsIg
         APIKEY = WebUI.getAttribute(findTestObject('Tenant/TenantBaru/input_APIKEY'), 'value', FailureHandling.CONTINUE_ON_FAILURE)
 
         'write to excel api key'
-        CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Tenant', 14, GlobalVariable.NumofColm - 
+        CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Tenant', 15, GlobalVariable.NumofColm - 
             1, APIKEY)
     }
     
-    'check if ingin input batas otp'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 17).length() > 0) {
-		if (WebUI.verifyElementNotPresent(findTestObject('Tenant/Edit/HapusOTP'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-			
-        'click button OTP'
-        WebUI.click(findTestObject('Tenant/TenantBaru/button_AddOTP'))
+	'get array services dari excel'
+	arrayServices = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 18).split(';', -1)
+	
+	'get array batas saldo dari excel'
+	arrayServicesBatasSaldo = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 19).split(';', -1)
+	
+	'looping untuk input bata saldo'
+	for (index = 5; index < variable.size(); index++) {
+		'modify object button Hapus'
+		modifyObjectButtonHapus = WebUI.modifyObjectProperty(findTestObject('Tenant/TenantBaru/modifyObject'), 'xpath', 'equals',
+			('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/div[' + index) +
+			']/div/button', true)
+	
+		'modify object label services'
+		modifyObjectLabelServices = WebUI.modifyObjectProperty(findTestObject('Tenant/TenantBaru/modifyObject'), 'xpath',
+			'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/div[' +
+			  index) + ']/label', true)
+		
+		'modify object button services'
+		modifyObjectButtonServices = WebUI.modifyObjectProperty(findTestObject('Tenant/TenantBaru/modifyObject'), 'xpath',
+			'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/div[' +
+			index) + ']/button', true)
+		
+		'break if index udah lebih dari 20 HARDCODE karena tidak bisa di track objectnya'
+		if(index > 20) {
+			break
 		}
-
-        'input Batas OTP'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_OTP'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-                17))
-    } else if (WebUI.verifyElementPresent(findTestObject('Tenant/Edit/HapusOTP'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-        'click button hapus OTP'
-        WebUI.click(findTestObject('Tenant/Edit/HapusOTP'))
-    }
-    
-    'check if ingin input batas verification'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 18).length() > 0) {
-        if (WebUI.verifyElementNotPresent(findTestObject('Tenant/Edit/HapusVerification'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-            'click button verification'
-            WebUI.click(findTestObject('Tenant/TenantBaru/button_AddVerification'))
-        }
-        
-        'input Batas verification'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_Verification'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-                18))
-    } else if (WebUI.verifyElementPresent(findTestObject('Tenant/Edit/HapusVerification'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-        'click button hapus verification'
-        WebUI.click(findTestObject('Tenant/Edit/HapusVerification'))
-    }
-    
-    'check if ingin input batas Dokumen'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 19).length() > 0) {
-        if (WebUI.verifyElementNotPresent(findTestObject('Tenant/Edit/HapusDokumen'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-            'click button dokumen'
-            WebUI.click(findTestObject('Tenant/TenantBaru/button_AddDokumen'))
-        }
-        
-        'input Batas dokumen'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_Dokumen'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-                19))
-    } else if (WebUI.verifyElementPresent(findTestObject('Tenant/Edit/HapusDokumen'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-        'click button hapus Dokumen'
-        WebUI.click(findTestObject('Tenant/Edit/HapusDokumen'))
-    }
-    
-    'check if ingin input batas TTD'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 20).length() > 0) {
-        if (WebUI.verifyElementNotPresent(findTestObject('Tenant/Edit/HapusSign'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-            'click button TTD'
-            WebUI.click(findTestObject('Tenant/TenantBaru/button_AddSign'))
-        }
-        
-        'input Batas TTD'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_TTD'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-                20))
-    } else if (WebUI.verifyElementPresent(findTestObject('Tenant/Edit/HapusSign'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-        'click button hapus Sign'
-        WebUI.click(findTestObject('Tenant/Edit/HapusSign'))
-    }
-    
-    'check if ingin input batas Verifikasi Wajah'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 21).length() > 0) {
-        if (WebUI.verifyElementNotPresent(findTestObject('Tenant/Edit/HapusFaceVerify'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-            'click button Verifikasi Wajah'
-            WebUI.click(findTestObject('Tenant/TenantBaru/button_AddFaceVerify'))
-        }
-        
-        'input Batas Verifikasi Wajah'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_VerifikasiWajah'), findTestData(excelPathTenant).getValue(
-                GlobalVariable.NumofColm, 21))
-    } else if (WebUI.verifyElementPresent(findTestObject('Tenant/Edit/HapusFaceVerify'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-        'click button hapus FaceVerify'
-        WebUI.click(findTestObject('Tenant/Edit/HapusFaceVerify'))
-    }
-    
-    'check if ingin input batas DukcapilBiometrik'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 22).length() > 0) {
-        if (WebUI.verifyElementNotPresent(findTestObject('Tenant/Edit/HapusDukBio'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-            'click button DukcapilBiometrik'
-            WebUI.click(findTestObject('Tenant/TenantBaru/button_AddDukcapilBiometrik'))
-        }
-        
-        'input Batas DukcapilBiometrik'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_DukcapilBiometrik'), findTestData(excelPathTenant).getValue(
-                GlobalVariable.NumofColm, 22))
-    } else if (WebUI.verifyElementPresent(findTestObject('Tenant/Edit/HapusDukBio'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-        'click button hapus DukBio'
-        WebUI.click(findTestObject('Tenant/Edit/HapusDukBio'))
-    }
-    
-    'check if ingin input batas OCR KTP'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 23).length() > 0) {
-        if (WebUI.verifyElementNotPresent(findTestObject('Tenant/Edit/HapusOCRKTP'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-            'click button OCR KTP'
-            WebUI.click(findTestObject('Tenant/TenantBaru/button_AddOCRKTP'))
-        }
-        
-        'input Batas OCR KTP'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_OCRKTP'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-                23))
-    } else if (WebUI.verifyElementPresent(findTestObject('Tenant/Edit/HapusOCRKTP'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-        'click button hapus OCRKTP'
-        WebUI.click(findTestObject('Tenant/Edit/HapusOCRKTP'))
-    }
-    
-    'check if ingin input batas OCR NPWP'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 24).length() > 0) {
-        if (WebUI.verifyElementNotPresent(findTestObject('Tenant/Edit/HapusOCRNPWP'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-            'click button OCR NPWP'
-            WebUI.click(findTestObject('Tenant/TenantBaru/button_AddOCRNPWP'))
-        }
-        
-        'input Batas OCR NPWP'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_OCRNPWP'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-                24))
-    } else if (WebUI.verifyElementPresent(findTestObject('Tenant/Edit/HapusOCRNPWP'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-        'click button hapus OCRNPWP'
-        WebUI.click(findTestObject('Tenant/Edit/HapusOCRNPWP'))
-    }
-    
-    'check if ingin input batas OCR BPKB'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 25).length() > 0) {
-        if (WebUI.verifyElementNotPresent(findTestObject('Tenant/Edit/HapusOCRBPKB'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-            'click button OCR BPKB'
-            WebUI.click(findTestObject('Tenant/TenantBaru/button_AddOCRBPKB'))
-        }
-        
-        'input Batas OCR BPKB'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_OCRBPKB'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-                25))
-    } else if (WebUI.verifyElementPresent(findTestObject('Tenant/Edit/HapusOCRBPKB'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-        'click button hapus OCRBPKB'
-        WebUI.click(findTestObject('Tenant/Edit/HapusOCRBPKB'))
-    }
-    
-    'check if ingin input batas phone active check'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 26).length() > 0) {
-        if (WebUI.verifyElementNotPresent(findTestObject('Tenant/Edit/HapusPhoneActiveCheck'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-            'click button phone active check'
-            WebUI.click(findTestObject('Tenant/TenantBaru/button_AddPhoneactiveCheck'))
-        }
-        
-        'input Batas phone active check'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_PhoneactiveCheck'), findTestData(excelPathTenant).getValue(
-                GlobalVariable.NumofColm, 26))
-    } else if (WebUI.verifyElementPresent(findTestObject('Tenant/Edit/HapusPhoneActiveCheck'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-        'click button hapus phone active check'
-        WebUI.click(findTestObject('Tenant/Edit/HapusPhoneActiveCheck'))
-    }
-    
-    'check if ingin input batas OCR KK'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 27).length() > 0) {
-        if (WebUI.verifyElementNotPresent(findTestObject('Tenant/Edit/HapusOCRKK'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-            'click button OCR KK'
-            WebUI.click(findTestObject('Tenant/TenantBaru/button_AddOCRKK'))
-        }
-        
-        'input Batas OCR KK'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_OCRKK'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-                27))
-    } else if (WebUI.verifyElementPresent(findTestObject('Tenant/Edit/HapusOCRKK'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-        'click button hapus OCRKK'
-        WebUI.click(findTestObject('Tenant/Edit/HapusOCRKK'))
-    }
-    
-    'check if ingin input batas stamdutyPostpaid'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 28).length() > 0) {
-        if (WebUI.verifyElementNotPresent(findTestObject('Tenant/Edit/HapusStampdutyPostPaid'), GlobalVariable.TimeOut, 
-            FailureHandling.OPTIONAL)) {
-            'click button stamdutyPostpaid'
-            WebUI.click(findTestObject('Tenant/TenantBaru/button_AddStampdutyPostPaid'))
-        }
-        
-        'input Batas stamdutyPostpaid'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_StampDutyPostPaid'), findTestData(excelPathTenant).getValue(
-                GlobalVariable.NumofColm, 28))
-    } else if (WebUI.verifyElementPresent(findTestObject('Tenant/Edit/HapusStampdutyPostPaid'), GlobalVariable.TimeOut, 
-        FailureHandling.OPTIONAL)) {
-        'click button hapus StampdutyPostPaid'
-        WebUI.click(findTestObject('Tenant/Edit/HapusStampdutyPostPaid'))
-    }
-    
-    'check if ingin input batas smsNotif'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 29).length() > 0) {
-        if (WebUI.verifyElementNotPresent(findTestObject('Tenant/Edit/HapusSMS'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-            'click button smsNotif'
-            WebUI.click(findTestObject('Tenant/TenantBaru/button_AddSMSNotif'))
-        }
-        
-        'input Batas smsNotif'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_SMSNotif'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-                29))
-    } else if (WebUI.verifyElementPresent(findTestObject('Tenant/Edit/HapusSMS'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-        'click button hapus SMS'
-        WebUI.click(findTestObject('Tenant/Edit/HapusSMS'))
-    }
-    
-    'check if ingin input batas stampduty'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 30).length() > 0) {
-        if (WebUI.verifyElementNotPresent(findTestObject('Tenant/Edit/HapusStampduty'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-            'click button stampduty'
-            WebUI.click(findTestObject('Tenant/TenantBaru/button_AddStampduty'))
-        }
-        
-        'input Batas stampduty'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_Materai'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-                30))
-    } else if (WebUI.verifyElementPresent(findTestObject('Tenant/Edit/HapusStampduty'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-        'click button hapus Stampduty'
-        WebUI.click(findTestObject('Tenant/Edit/HapusStampduty'))
-    }
-    
-    'check if ingin input batas OCR STNK'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 31).length() > 0) {
-        if (WebUI.verifyElementNotPresent(findTestObject('Tenant/Edit/HapusOCRSTNK'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-            'click button OCR STNK'
-            WebUI.click(findTestObject('Tenant/TenantBaru/button_AddOCRSTNK'))
-        }
-        
-        'input Batas OCR STNK'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_OCRSTNK'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-                31))
-    } else if (WebUI.verifyElementPresent(findTestObject('Tenant/Edit/HapusOCRSTNK'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-        'click button hapus OCRSTNK'
-        WebUI.click(findTestObject('Tenant/Edit/HapusOCRSTNK'))
-    }
-    
-    'check if ingin input batas LivenessFaceCompare'
-    if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 32).length() > 0) {
-        if (WebUI.verifyElementNotPresent(findTestObject('Tenant/Edit/HapusLivenessFaceCompare'), GlobalVariable.TimeOut, 
-            FailureHandling.OPTIONAL)) {
-            'click button LivenessFaceCompare'
-            WebUI.click(findTestObject('Tenant/TenantBaru/button_AddLivenessFaceCompare'))
-        }
-        
-        'input Batas LivenessFaceCompare'
-        WebUI.setText(findTestObject('Tenant/TenantBaru/input_LivenessFaceCompare'), findTestData(excelPathTenant).getValue(
-                GlobalVariable.NumofColm, 32))
-    } else if (WebUI.verifyElementPresent(findTestObject('Tenant/Edit/HapusLivenessFaceCompare'), GlobalVariable.TimeOut, 
-        FailureHandling.OPTIONAL)) {
-        'click button hapus LivenessFaceCompare'
-        WebUI.click(findTestObject('Tenant/Edit/HapusLivenessFaceCompare'))
-    }
+		
+			'looping untuk array service excel'
+			for (indexExcel = 0; indexExcel < arrayServices.size(); indexExcel++) {
+	
+				'check if label present'
+				if (WebUI.verifyElementPresent(modifyObjectButtonHapus, GlobalVariable.TimeOut, FailureHandling.OPTIONAL) && WebUI.verifyElementPresent(modifyObjectLabelServices, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+					'check if button label = service name di excel'
+					if (WebUI.getText(modifyObjectLabelServices).equalsIgnoreCase(arrayServices[indexExcel])) {
+						'modify object input services'
+						modifyObjectInputServices = WebUI.modifyObjectProperty(findTestObject('Tenant/TenantBaru/modifyObject'),
+							'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/div[' +
+							index) + ']/div/input', true)
+		
+						'input batas saldo'
+						WebUI.setText(modifyObjectInputServices, arrayServicesBatasSaldo[indexExcel])
+	
+						break
+					} else if (!WebUI.getText(modifyObjectLabelServices).equalsIgnoreCase(arrayServices[indexExcel])) {
+						if(indexExcel+1 == arrayServices.size()) {
+							
+							'click button'
+							WebUI.click(modifyObjectButtonHapus)
+							
+							break
+						}
+					}
+				}else if(WebUI.verifyElementPresent(modifyObjectButtonServices, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+					if (WebUI.getText(modifyObjectButtonServices).contains(arrayServices[indexExcel])) {
+						'click button'
+						WebUI.click(modifyObjectButtonServices)
+		
+						'modify object input services'
+						modifyObjectInputServices = WebUI.modifyObjectProperty(findTestObject('Tenant/TenantBaru/modifyObject'),
+							'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/div[' +
+							index) + ']/div/input', true)
+		
+						'input batas saldo'
+						WebUI.setText(modifyObjectInputServices, arrayServicesBatasSaldo[indexExcel])
+						
+						break
+					}
+				}
+			}
+	}
     
     'get array email reminder dari excel'
-    arrayEmailReminder = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 34).split(';', -1)
+    arrayEmailReminder = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 21).split(';', -1)
 
     'looping untuk hapus email reminder yang tidak ada di excel'
-    for (index = 1; index <= 100; index++) {
+    for (index = 21; index <= variable.size(); index++) {
         'modify object input email'
         modifyObjectInputEmail = WebUI.modifyObjectProperty(findTestObject('Tenant/TenantBaru/modifyObject'), 'xpath', 'equals', 
             ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/div[' + 
-            (20 + index).toString()) + ']/div/input', true)
+            index) + ']/div/input', true)
 
         'modify object button hapus'
         modifyObjectButtonHapus = WebUI.modifyObjectProperty(findTestObject('Tenant/TenantBaru/modifyObject'), 'xpath', 
             'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/div[' + 
-            (20 + index).toString()) + ']/div/button', true)
+            index) + ']/div/button', true)
 
         if (WebUI.verifyElementPresent(modifyObjectInputEmail, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
             'looping untuk input email reminder'
@@ -680,11 +390,11 @@ if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 7).equalsIg
     'looping untuk input email reminder yang tidak ada di ui'
     for (indexexcel = 1; indexexcel <= arrayEmailReminder.size(); indexexcel++) {
         'looping untuk input email reminder'
-        for (index = 1; index <= 100; index++) {
+        for (index = 21; index <= variable.size(); index++) {
             'modify object input email'
             modifyObjectInputEmail = WebUI.modifyObjectProperty(findTestObject('Tenant/TenantBaru/modifyObject'), 'xpath', 
                 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/div[' + 
-                (20 + index).toString()) + ']/div/input', true)
+                index) + ']/div/input', true)
 
             if (WebUI.verifyElementNotPresent(modifyObjectInputEmail, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
                 'click tambah email'
