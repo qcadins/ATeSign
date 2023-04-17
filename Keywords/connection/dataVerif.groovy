@@ -635,7 +635,7 @@ public class dataVerif {
 		}
 		return Integer.parseInt(data)
 	}
-	
+
 	@Keyword
 	public getDDLTenant(Connection conn){
 		String data
@@ -695,7 +695,7 @@ public class dataVerif {
 		}
 		return listdata
 	}
-	
+
 	@Keyword
 	public getIsiSaldoStoreDB(Connection conn, String refno){
 		String data
@@ -846,5 +846,4 @@ public class dataVerif {
 		}
 		return listdata
 	}
-	
 }

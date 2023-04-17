@@ -22,7 +22,7 @@ import java.sql.Connection
 Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 
 'get data balacne mutation dari DB'
-ArrayList<String> result = CustomKeywords.'connection.dataVerif.getIsiSaldoStoreDB'(conneSign, findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 13))
+ArrayList<String> result = CustomKeywords.'connection.dataVerif.getIsiSaldoStoreDB'(conneSign, findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 18))
 
 'declare arraylist arraymatch'
 ArrayList<String> arrayMatch = new ArrayList<String>()
@@ -31,31 +31,31 @@ ArrayList<String> arrayMatch = new ArrayList<String>()
 arrayindex = 0
 
 'verify tenant'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 9).toUpperCase(), (result[arrayindex++]).toUpperCase(),
-		false, FailureHandling.CONTINUE_ON_FAILURE))
-
-'verify vendor'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 10).toUpperCase(), (result[arrayindex++]).toUpperCase(),
-		false, FailureHandling.CONTINUE_ON_FAILURE))
-
-'verify tipe saldo'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 11).toUpperCase(), (result[arrayindex++]).toUpperCase(),
-		false, FailureHandling.CONTINUE_ON_FAILURE))
-
-'verify tambah saldo'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 12).toUpperCase(), (result[arrayindex++]).toUpperCase(),
-		false, FailureHandling.CONTINUE_ON_FAILURE))
-
-'verify Nomor tagihan'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 13).toUpperCase(), (result[arrayindex++]).toUpperCase(),
-		false, FailureHandling.CONTINUE_ON_FAILURE))
-
-'verify Catatan'
 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 14).toUpperCase(), (result[arrayindex++]).toUpperCase(),
 		false, FailureHandling.CONTINUE_ON_FAILURE))
 
-'verify tanggal pembelian'
+'verify vendor'
 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 15).toUpperCase(), (result[arrayindex++]).toUpperCase(),
+		false, FailureHandling.CONTINUE_ON_FAILURE))
+
+'verify tipe saldo'
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 16).toUpperCase(), (result[arrayindex++]).toUpperCase(),
+		false, FailureHandling.CONTINUE_ON_FAILURE))
+
+'verify tambah saldo'
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 17).toUpperCase(), (result[arrayindex++]).toUpperCase(),
+		false, FailureHandling.CONTINUE_ON_FAILURE))
+
+'verify Nomor tagihan'
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 18).toUpperCase(), (result[arrayindex++]).toUpperCase(),
+		false, FailureHandling.CONTINUE_ON_FAILURE))
+
+'verify Catatan'
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 19).toUpperCase(), (result[arrayindex++]).toUpperCase(),
+		false, FailureHandling.CONTINUE_ON_FAILURE))
+
+'verify tanggal pembelian'
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 20).toUpperCase(), (result[arrayindex++]).toUpperCase(),
 		false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'jika data db tidak sesuai dengan excel'
