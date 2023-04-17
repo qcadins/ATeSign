@@ -75,7 +75,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_tipePembayaran'), Keys.chord(Keys.ENTER))
 
         'Input value status'
-        WebUI.setText(findTestObject('TandaTanganDokumen/input_StatusAktif'), findTestData(excelPathPengaturanDokumen).getValue(
+        WebUI.setText(findTestObject('TandaTanganDokumen/input_Status'), findTestData(excelPathPengaturanDokumen).getValue(
                 GlobalVariable.NumofColm, 14))
 
         'Input enter'
