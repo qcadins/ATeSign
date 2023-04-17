@@ -27,34 +27,47 @@ WebUI.callTestCase(findTestCase('Login/Login_Admin'), [:], FailureHandling.STOP_
 'Klik tombol pengaturan dokumen'
 WebUI.click(findTestObject('TandaTanganDokumen/btn_PengaturanDokumen'))
 
+'Klik button ddl open Filter'
 WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_ddlFilter'))
 
+'Klik button ddl close Filter'
 WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_ddlFilter'))
 
+'Verifikasi element ada dengan label yang ada pada Filter'
 WebUI.verifyElementPresent(findTestObject('Object Repository/TandaTanganDokumen/lbl_Status'), GlobalVariable.TimeOut)
 
+'Verifikasi element ada dengan label yang ada pada Filter'
 WebUI.verifyElementPresent(findTestObject('Object Repository/TandaTanganDokumen/lbl_NamaTemplatDokumen'), GlobalVariable.TimeOut)
 
+'Verifikasi element ada dengan label yang ada pada Filter'
 WebUI.verifyElementPresent(findTestObject('Object Repository/TandaTanganDokumen/lbl_KodeTemplatDokumen'), GlobalVariable.TimeOut)
 
+'Input AKtif pada input Status'
 WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_Status'), 'Active')
 
+'Klik enter'
 WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
 
+'Input teks di nama template dokumen'
 WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_NamaTemplatDokumen'), 'e')
 
+'Input teks kode template dokumen'
 WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_KodeTemplatDokumen'), 'f')
 
+'Klik button set Ulang'
 WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_Set Ulang'))
 
+'Klik ddl aktif'
 WebUI.click(findTestObject('TandaTanganDokumen/btn_ddlaktif'))
 
-WebUI.verifyMatch(findTestObject('Object Repository/TandaTanganDokumen/input_Status'),WebUI.getText(findTestObject('TandaTanganDokumen/check_ddl')), false)
+'Verifikasi status'
+WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/TandaTanganDokumen/input_Status')),WebUI.getText(findTestObject('TandaTanganDokumen/check_ddl')), false)
 
-WebUI.verifyMatch(findTestObject('Object Repository/TandaTanganDokumen/input_NamaTemplatDokumen'),'', false)
+'Verify ketika telah reset apakah kosong'
+WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/TandaTanganDokumen/input_NamaTemplatDokumen')),'', false)
+WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/TandaTanganDokumen/input_KodeTemplatDokumen')),'', false)
 
-WebUI.verifyMatch(findTestObject('Object Repository/TandaTanganDokumen/input_KodeTemplatDokumen'),'', false)
-
+'Set text kembali'
 WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_Status'), 'Active')
 
 WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
@@ -63,6 +76,7 @@ WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_NamaTem
 
 WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_KodeTemplatDokumen'), 'c')
 
-// 0 itu excel2an semua ya ges ya
+//Note : 1. Inputan masih belum ditaruh di excel.
+//2. Paging tidak akan masuk TC, sehingga jika perlu check paging tinggal bikin function
 
 
