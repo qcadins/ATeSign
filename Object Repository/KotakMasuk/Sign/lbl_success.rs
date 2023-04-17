@@ -18,6 +18,6 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/ngb-modal-window/div/div/app-progress-signing/div/div/div/div/div[1]/div[1]/div[2]/p</value>
-      <webElementGuid>e653eeeb-5b29-43f0-b027-b024cc0b2936</webElementGuid>
+      <webElementGuid>5940a679-5830-4f74-9e66-914b561768ca</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

@@ -19,7 +19,7 @@ import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import org.openqa.selenium.By as By
 import java.sql.Connection as Connection
 
-GlobalVariable.Response = '00155D0B-7502-8636-11ED-DAA7E1C4FB50'
+GlobalVariable.Response = '00155D0B-7502-8DC2-11ED-DCCFC7F84130'
 
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
@@ -82,6 +82,10 @@ for (int c = 1; c <= variable_divSaldo.size(); c++) {
 WebUI.closeBrowser()
 
 for (int o = 1; o <= emailSigner.size(); o++) {
+	
+	'memberikan delay untuk tanda tangannya sudah masuk dengan 3sec'
+	WebUI.delay(3)
+	
     'call Test Case untuk login sebagai user berdasarkan doc id'
     WebUI.callTestCase(findTestCase('Login/Login_1docManySigner'), [('email') : emailSigner[(o - 1)]], FailureHandling.STOP_ON_FAILURE)
 
@@ -100,9 +104,13 @@ for (int o = 1; o <= emailSigner.size(); o++) {
     'refresh buat reset nav bar selanjutnya'
     WebUI.refresh()
 	
+	'reset array. Digunakan untuk jika per signer dan tidak menumpuk'
+	documentTemplateName.clear()
+	
 	'Jika bukan di page 1, verifikasi menggunakan button Lastest'
-	if(WebUI.verifyElementClickable(findTestObject('Object Repository/KotakMasuk/Sign/btn_Lastest' ),FailureHandling.OPTIONAL)) {
-		WebUI.click(findTestObject('Object Repository/KotakMasuk/Sign/btn_Lastest' ))
+	if(WebUI.verifyElementPresent(findTestObject('Object Repository/KotakMasuk/Sign/btn_Lastest'),GlobalVariable.TimeOut,FailureHandling.OPTIONAL)) {
+		'Klik button Lastest'
+		WebUI.click(findTestObject('Object Repository/KotakMasuk/Sign/btn_Lastest'))
 	}
 	
     'get row beranda'
@@ -119,9 +127,6 @@ for (int o = 1; o <= emailSigner.size(); o++) {
             modifyObjecttextdocumenttemplatename = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_namadokumentemplate'), 
                 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
                 k) + ']/datatable-body-row/div[2]/datatable-body-cell[4]/div/p', true)
-			
-			'reset array. Digunakan untuk jika per signer dan tidak menumpuk'
-			documentTemplateName.clear()
 			
             'get text dari modify'
             documentTemplateName.add(WebUI.getText(modifyObjecttextdocumenttemplatename))
@@ -181,6 +186,7 @@ for (int o = 1; o <= emailSigner.size(); o++) {
     WebUI.click(findTestObject('KotakMasuk/Sign/btn_ttdbulk'))
 
     'Loop mengenai total dari document template name'
+	println documentTemplateName
     for (int a = 1; a <= documentTemplateName.size(); a++) {
 		'modify object btn Nama Dokumen '
         modifyObjectbtnNamaDokumen = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/btn_NamaDokumen'), 'xpath', 
@@ -347,6 +353,14 @@ for (int o = 1; o <= emailSigner.size(); o++) {
                     
                     'klik verifikasi OTP'
                     WebUI.click(findTestObject('KotakMasuk/Sign/btn_ProsesOTP'))
+					
+					'Jika error lognya muncul'
+					if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+						'Tulis di excel itu adalah error'
+						CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Sign Document', GlobalVariable.NumofColm,
+							GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+								2) + ';') + WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label'))
+					}
 
                     'Jika label verifikasi OTPnya tidak muncul'
                     if (!(WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_VerifikasiOTPBerhasildanMasukan'), 
@@ -387,13 +401,15 @@ for (int o = 1; o <= emailSigner.size(); o++) {
                 'Jika label verifikasi mengenai popup berhasil dan meminta masukan ada'
                 if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_VerifikasiOTPBerhasildanMasukan'), GlobalVariable.TimeOut)) {
                     'Verif success dan failednya belum dilakukan apa-apa'
-                    String countSuccessSign = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_success')).split(':', -1)
-                    String countFailedSign = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_Failed')).split(':', -1)
+                    String countSuccessSign = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_success'))
+                    String countFailedSign = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_Failed'))
 					
 					'Menarik value count success ke excel'
-					CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Sign Document', 2, 28, countSuccessSign)
+					CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Sign Document', 27, GlobalVariable.NumofColm - 1, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
+                            27) + ';' + countSuccessSign)
 					'Menarik value count failed ke excel'
-					CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Sign Document', 2, 29, countFailedSign)
+					CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Sign Document', 28, GlobalVariable.NumofColm - 1, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
+                            27) + ';' + countFailedSign)
 					
 					'modify object starmasukan, jika bintang 1 = 2, jika bintang 2 = 4'
                     modifyObjectstarMasukan = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/span_starMasukan'), 
@@ -517,7 +533,7 @@ for (int o = 1; o <= emailSigner.size(); o++) {
                     'Jika masih tidak ada'
                     CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Sign Document', GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
-                            2) + ';') + GlobalVariable.ReasonFailedNoneUI)
+                            2).replace( '-', '') + ';') + GlobalVariable.ReasonFailedNoneUI)
                 }
                 
                 'delay 10 detik'
