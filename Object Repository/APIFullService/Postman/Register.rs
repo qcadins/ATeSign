@@ -3,14 +3,14 @@
    <description></description>
    <name>Register</name>
    <tag></tag>
-   <elementGuidId>3992b909-476b-45d6-afac-78194cbde0b7</elementGuidId>
+   <elementGuidId>bfd654fc-5a9a-4e08-b532-2c35aa9a77ef</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: ${callerId}\n    },\n    \&quot;nama\&quot;: ${nama},\n    \&quot;email\&quot;: ${email},\n    \&quot;tmpLahir\&quot;: ${tmpLahir},\n    \&quot;tglLahir\&quot;: ${tglLahir},\n    \&quot;jenisKelamin\&quot;: ${jenisKelamin},\n    \&quot;tlp\&quot;: ${tlp},\n    \&quot;idKtp\&quot;: ${idKtp},\n    \&quot;alamat\&quot;: ${alamat},\n    \&quot;kecamatan\&quot;: ${kecamatan},\n    \&quot;kelurahan\&quot;: ${kelurahan},\n    \&quot;kota\&quot;: ${kota},\n    \&quot;provinsi\&quot;: ${provinsi},\n    \&quot;kodePos\&quot;: ${kodePos},\n    \&quot;selfPhoto\&quot;: ${selfPhoto},\n    \&quot;idPhoto\&quot;: ${idPhoto},\n    \&quot;password\&quot;: ${password}\n}\n&quot;,
+  &quot;text&quot;: &quot;{\r\n    \&quot;audit\&quot;: {\r\n        \&quot;callerId\&quot;: \&quot;USER@AD-INS.COM\&quot;\r\n    },\r\n    \&quot;nama\&quot;: \&quot;Test nama\&quot;,\r\n    \&quot;email\&quot;: \&quot;test123@gmail.com\&quot;,\r\n    \&quot;tmpLahir\&quot;: \&quot;tempat lahir\&quot;,\r\n    \&quot;tglLahir\&quot;: \&quot;2023-03-28\&quot;,\r\n    \&quot;jenisKelamin\&quot;: \&quot;M\&quot;,\r\n    \&quot;tlp\&quot;: \&quot;0812345678\&quot;,\r\n    \&quot;idKtp\&quot;: \&quot;1234567890123456\&quot;,\r\n    \&quot;alamat\&quot;: \&quot;alamat\&quot;,\r\n    \&quot;kecamatan\&quot;: \&quot;kecamatan\&quot;,\r\n    \&quot;kelurahan\&quot;: \&quot;kelurahan\&quot;,\r\n    \&quot;kota\&quot;: \&quot;kota\&quot;,\r\n    \&quot;provinsi\&quot;: \&quot;provinsi\&quot;,\r\n    \&quot;kodePos\&quot;: \&quot;123456\&quot;,\r\n    \&quot;selfPhoto\&quot;: \&quot;selfPhoto\&quot;,\r\n    \&quot;idPhoto\&quot;: \&quot;idPhoto\&quot;,\r\n    \&quot;password\&quot;: \&quot;Password123!\&quot;\r\n}\r\n&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -21,7 +21,7 @@
       <name>Content-Type</name>
       <type>Main</type>
       <value>application/json</value>
-      <webElementGuid>1c014722-347f-4d6f-a13b-a0b7d5369d3f</webElementGuid>
+      <webElementGuid>1c4926d0-8447-40d1-92bc-507c53f76002</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -29,7 +29,7 @@
       <name>Accept</name>
       <type>Main</type>
       <value>application/json</value>
-      <webElementGuid>dee38c70-d751-433d-9e3b-44e1ca24acdf</webElementGuid>
+      <webElementGuid>06968266-469c-4ca8-8e18-9f62db0e7498</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -37,7 +37,7 @@
       <name>x-api-key</name>
       <type>Main</type>
       <value>${api_key}@${tenant_code}</value>
-      <webElementGuid>e31b7a49-b00b-4ae8-8d4c-ff6a87158f85</webElementGuid>
+      <webElementGuid>8f0317fc-1f29-4909-a70e-1bb3e033f247</webElementGuid>
    </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>
@@ -55,36 +55,23 @@
    <variables>
       <defaultValue>GlobalVariable.base_url</defaultValue>
       <description></description>
-      <id>e49821fd-f3a0-455b-9897-3b4335aae85b</id>
+      <id>45248845-b2a3-42ff-a1a5-f1c525d2f959</id>
       <masked>false</masked>
       <name>base_url</name>
    </variables>
    <variables>
       <defaultValue>GlobalVariable.api_key</defaultValue>
       <description></description>
-      <id>84123dd6-a37b-4f83-9e6a-afc40e470665</id>
+      <id>06bec374-a825-4f7c-a2d7-16124b8d7847</id>
       <masked>false</masked>
       <name>api_key</name>
    </variables>
    <variables>
       <defaultValue>GlobalVariable.tenant_code</defaultValue>
       <description></description>
-      <id>a82177d8-d362-4cb9-9971-0e41f24e681c</id>
+      <id>dfe4c694-3be4-44ab-92f8-d8d9e5da661a</id>
       <masked>false</masked>
       <name>tenant_code</name>
    </variables>
-   <verificationScript>import static org.assertj.core.api.Assertions.*
-
-import com.kms.katalon.core.testobject.RequestObject
-import com.kms.katalon.core.testobject.ResponseObject
-import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
-import com.kms.katalon.core.webservice.verification.WSResponseManager
-
-import groovy.json.JsonSlurper
-import internal.GlobalVariable as GlobalVariable
-
-RequestObject request = WSResponseManager.getInstance().getCurrentRequest()
-
-ResponseObject response = WSResponseManager.getInstance().getCurrentResponse()</verificationScript>
    <wsdlAddress></wsdlAddress>
 </WebServiceRequestEntity>

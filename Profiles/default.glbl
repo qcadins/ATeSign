@@ -6,6 +6,11 @@
    <defaultProfile>true</defaultProfile>
    <GlobalVariableEntity>
       <description></description>
+      <initValue>''</initValue>
+      <name>api_key</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
       <initValue>'http://gdkwebsvr:7021/adimobile/esign'</initValue>
       <name>base_url</name>
    </GlobalVariableEntity>
@@ -141,6 +146,11 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
+      <initValue>findTestData('Login/Setting').getValue(6, 2)</initValue>
+      <name>Tenant</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
       <initValue>2</initValue>
       <name>TimeOut</name>
    </GlobalVariableEntity>
@@ -156,26 +166,6 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
-      <initValue>''</initValue>
-      <name>cloud_url</name>
-   </GlobalVariableEntity>
-   <GlobalVariableEntity>
-      <description></description>
-      <initValue>''</initValue>
-      <name>email_address</name>
-   </GlobalVariableEntity>
-   <GlobalVariableEntity>
-      <description></description>
-      <initValue>''</initValue>
-      <name>local_url</name>
-   </GlobalVariableEntity>
-   <GlobalVariableEntity>
-      <description></description>
-      <initValue>''</initValue>
-      <name>uat_url</name>
-   </GlobalVariableEntity>
-   <GlobalVariableEntity>
-      <description></description>
       <initValue>findTestData('Login/Setting').getValue(3, 2)</initValue>
       <name>useLocalHost</name>
    </GlobalVariableEntity>
@@ -183,20 +173,5 @@
       <description></description>
       <initValue>findTestData('Login/Setting').getValue(4, 2)</initValue>
       <name>urlLocalHost</name>
-   </GlobalVariableEntity>
-   <GlobalVariableEntity>
-      <description></description>
-      <initValue>findTestData('Login/Setting').getValue(6, 2)</initValue>
-      <name>Tenant</name>
-   </GlobalVariableEntity>
-   <GlobalVariableEntity>
-      <description></description>
-      <initValue>''</initValue>
-      <name>api_key</name>
-   </GlobalVariableEntity>
-   <GlobalVariableEntity>
-      <description></description>
-      <initValue>''</initValue>
-      <name>tenant_code</name>
    </GlobalVariableEntity>
 </GlobalVariableEntities>

@@ -3,14 +3,14 @@
    <description></description>
    <name>Check Registration</name>
    <tag></tag>
-   <elementGuidId>af3f09ae-1537-4a4b-acd6-8bcbd68f8f49</elementGuidId>
+   <elementGuidId>52db0f58-5853-4e08-9167-916ff98e6910</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\r\n    \&quot;audit\&quot;: {\r\n        \&quot;callerId\&quot;: \&quot;USER@AD-INS.COM\&quot;\r\n    },\r\n    \&quot;dataType\&quot;: \&quot;NIK\&quot;,\r\n    \&quot;userData\&quot;: \&quot;3271011112910011\&quot;\r\n}&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: ${callerId}\n    },\n    \&quot;dataType\&quot;: ${dataType},\n    \&quot;userData\&quot;: ${dataValue}\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -21,7 +21,7 @@
       <name>Content-Type</name>
       <type>Main</type>
       <value>application/json</value>
-      <webElementGuid>abef817d-6499-4f48-b033-058503cd5d88</webElementGuid>
+      <webElementGuid>b344a62c-982a-4647-8b05-f1c5f25d85f4</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -29,7 +29,7 @@
       <name>Accept</name>
       <type>Main</type>
       <value>application/json</value>
-      <webElementGuid>af188f20-3067-458c-962b-ad485c84581f</webElementGuid>
+      <webElementGuid>f56b0d50-eea3-4aa5-9033-1f1f10154ed4</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -37,13 +37,13 @@
       <name>x-api-key</name>
       <type>Main</type>
       <value>${api_key}@${tenant_code}</value>
-      <webElementGuid>f86754a5-8f9f-48f4-b857-906c1d7b8ea4</webElementGuid>
+      <webElementGuid>af55c283-a588-4890-9121-bfe93c643e3f</webElementGuid>
    </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>POST</restRequestMethod>
-   <restUrl>${base_url}/user/checkRegistration</restUrl>
+   <restUrl>${base_url}/services/external/user/checkRegistration</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>
@@ -55,23 +55,36 @@
    <variables>
       <defaultValue>GlobalVariable.base_url</defaultValue>
       <description></description>
-      <id>4d1cfbac-9efd-4e85-8b86-274dd7d66d57</id>
+      <id>56798e6a-707d-4d7a-939e-dca5c05a1fc8</id>
       <masked>false</masked>
       <name>base_url</name>
    </variables>
    <variables>
       <defaultValue>GlobalVariable.api_key</defaultValue>
       <description></description>
-      <id>49fb86b0-b63b-4e4f-bed2-cb1641406d45</id>
+      <id>d8ae6229-6f56-4b2c-b556-c6363baf4fca</id>
       <masked>false</masked>
       <name>api_key</name>
    </variables>
    <variables>
-      <defaultValue>GlobalVariable.tenant_code</defaultValue>
+      <defaultValue>GlobalVariable.Tenant</defaultValue>
       <description></description>
-      <id>29debf5b-c096-4da4-89ab-47fa0b7a5269</id>
+      <id>65940127-044d-429a-9ab1-a02eea395b42</id>
       <masked>false</masked>
       <name>tenant_code</name>
    </variables>
+   <verificationScript>import static org.assertj.core.api.Assertions.*
+
+import com.kms.katalon.core.testobject.RequestObject
+import com.kms.katalon.core.testobject.ResponseObject
+import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
+import com.kms.katalon.core.webservice.verification.WSResponseManager
+
+import groovy.json.JsonSlurper
+import internal.GlobalVariable as GlobalVariable
+
+RequestObject request = WSResponseManager.getInstance().getCurrentRequest()
+
+ResponseObject response = WSResponseManager.getInstance().getCurrentResponse()</verificationScript>
    <wsdlAddress></wsdlAddress>
 </WebServiceRequestEntity>

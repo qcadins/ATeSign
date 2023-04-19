@@ -3,7 +3,7 @@
    <description></description>
    <name>Download Document</name>
    <tag></tag>
-   <elementGuidId>86d4de0e-1b6c-4e13-b85c-558ee6a44ad3</elementGuidId>
+   <elementGuidId>863b86c8-273d-4563-a8c9-18cb03a49c20</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <connectionTimeout>-1</connectionTimeout>
@@ -21,7 +21,7 @@
       <name>Content-Type</name>
       <type>Main</type>
       <value>application/json</value>
-      <webElementGuid>fd2ccfec-2137-4a5a-9981-42037e084e5d</webElementGuid>
+      <webElementGuid>ecc7dde3-23be-4536-9804-84fd0ab1a8a4</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -29,7 +29,7 @@
       <name>Accept</name>
       <type>Main</type>
       <value>application/json</value>
-      <webElementGuid>c5201cb8-72ad-4e73-94b4-4b91aa0d5668</webElementGuid>
+      <webElementGuid>c88f5ecf-e5a0-4448-8a72-58b9bce70c88</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -37,7 +37,7 @@
       <name>x-api-key</name>
       <type>Main</type>
       <value>${api_key}@${tenant_code}</value>
-      <webElementGuid>350577ae-93f8-4b05-8ac3-6d2358710e76</webElementGuid>
+      <webElementGuid>acd83fdf-2d74-48b4-b52a-c6949f19f83e</webElementGuid>
    </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>
@@ -55,21 +55,21 @@
    <variables>
       <defaultValue>GlobalVariable.base_url</defaultValue>
       <description></description>
-      <id>08b2d762-35c8-4fd5-8ed8-dbaf694f2770</id>
+      <id>0ae9af62-b4ee-4a41-92d6-f53010976a67</id>
       <masked>false</masked>
       <name>base_url</name>
    </variables>
    <variables>
       <defaultValue>GlobalVariable.api_key</defaultValue>
       <description></description>
-      <id>479cc035-871f-4c29-b32b-40bbf20329d6</id>
+      <id>8546c564-740e-456f-b60e-dd922312975f</id>
       <masked>false</masked>
       <name>api_key</name>
    </variables>
    <variables>
       <defaultValue>GlobalVariable.tenant_code</defaultValue>
       <description></description>
-      <id>38a1a510-fc62-4467-b414-57aac02fa342</id>
+      <id>dfe82fe0-6723-4209-85ad-0ebe7f0ab852</id>
       <masked>false</masked>
       <name>tenant_code</name>
    </variables>
