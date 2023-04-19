@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[(text() = 'Batal' or . = 'Batal')]</value>
+         <value>//*[(text() = 'Cancel' or . = 'Cancel')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -18,14 +18,14 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/div[24]/div/button[1]</value>
-      <webElementGuid>f8e85b4a-1e22-4eb6-a52c-3de4bed2bc0d</webElementGuid>
+      <webElementGuid>a06dbdee-1223-4acf-93d6-b81c0eca9931</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>text</name>
       <type>Main</type>
-      <value>Batal</value>
-      <webElementGuid>0319e5f7-4435-49f2-90d4-8642d52c3381</webElementGuid>
+      <value>Cancel</value>
+      <webElementGuid>63f693bc-d2c3-4f2c-987b-f0cf73790311</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

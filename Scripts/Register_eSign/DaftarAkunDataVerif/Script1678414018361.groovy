@@ -130,8 +130,11 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 31) =
 
 'cek centang syarat dan ketentuan'
 if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 29).equalsIgnoreCase('Yes')) {
-    'click checkbox'
+    'click checkbox syarat'
     WebUI.click(findTestObject('DaftarAkun/checkbox_SyaratdanKetentuan'))
+	
+	'click checkbox setuju'
+	WebUI.click(findTestObject('DaftarAkun/checkbox_Setuju'))
 }
 
 'click daftar akun'
@@ -232,17 +235,22 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     'click verifikasi'
     WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Verifikasi'))
 
-    'cek if popup error msg'
-    if (!WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).contains('berhasil')) {
-		'get reason error log'
-		reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
+//	if (WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).contains('berhasil')) {
 		
-		'write to excel status failed dan reason'
-        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
-                '-', '') + ';') + reason)
+    'get reason error log'
+    reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).toString()
+	
+	    'cek if popup error msg'
+	    if (reason.contains('gagal')) {
+			
+			'write to excel status failed dan reason'
+	        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
+	            GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
+	                '-', '') + ';') + reason)
+			
+			GlobalVariable.FlagFailed = 1
+//	    } 
 		
-		GlobalVariable.FlagFailed = 1
     } else if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_PopupMsg'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
         reason = WebUI.getText(findTestObject('DaftarAkun/label_PopupMsg'))
 
@@ -258,13 +266,13 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
 		WebUI.click(findTestObject('DaftarAkun/button_X'))
 		
 		GlobalVariable.FlagFailed = 1
-    } else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), GlobalVariable.TimeOut, 
-    		FailureHandling.OPTIONAL)) {
-		
-		'call testcase form aktivasi vida'
-		WebUI.callTestCase(findTestCase('Register_eSign/FormAktivasiVida'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'],
-			FailureHandling.CONTINUE_ON_FAILURE)
-    }
+    }else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), GlobalVariable.TimeOut, 
+	    		FailureHandling.OPTIONAL)) {
+			
+			'call testcase form aktivasi vida'
+			WebUI.callTestCase(findTestCase('Register_eSign/FormAktivasiVida'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'],
+				FailureHandling.CONTINUE_ON_FAILURE)
+	    }
 }
 
 def checkVerifyEqualOrMatch(Boolean isMatch) {

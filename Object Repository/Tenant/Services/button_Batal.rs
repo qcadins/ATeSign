@@ -7,17 +7,25 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-service-balance/div[2]/div/div/div/div/div/div/button[1]</value>
+         <value>//*[(text() = 'Cancel' or . = 'Cancel')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-service-balance/div[2]/div/div/div/div/div/div/button[1]</value>
-      <webElementGuid>11b4bcba-d40d-4db7-98f2-ceb8e148e867</webElementGuid>
+      <webElementGuid>1c696a4d-a463-4b29-9869-4d8f5492947e</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Cancel</value>
+      <webElementGuid>87a4d6e1-aae6-40bc-ad01-889ac17b9c6a</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

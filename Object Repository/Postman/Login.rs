@@ -19,7 +19,7 @@
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;client_id\u003dfrontend\u0026grant_type\u003dpassword\u0026username\u003dandy@ad-ins.com\u0026password\u003dpassword&quot;,
+  &quot;text&quot;: &quot;client_id\u003dfrontend\u0026grant_type\u003dpassword\u0026username\u003d${username}\u0026password\u003d${password}&quot;,
   &quot;contentType&quot;: &quot;text/plain&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -55,14 +55,6 @@
       <type>Main</type>
       <value>gzip</value>
       <webElementGuid>cf12e7bd-fe49-4085-bba0-883cf8039458</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Content-Type</name>
-      <type>Main</type>
-      <value>text/plain</value>
-      <webElementGuid>05a641ac-ec51-4210-849b-d72252cb71f2</webElementGuid>
    </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>

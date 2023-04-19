@@ -795,7 +795,7 @@ public class dataVerif {
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
 
-		ResultSet resultSet = stm.executeQuery("select tenant_name, tenant_code, ref_number_label, api_key, threshold_balance, email_reminder_dest from ms_tenant where ref_number_label = '"+ refnum +"'")
+		ResultSet resultSet = stm.executeQuery("select tenant_name, tenant_code, ref_number_label, api_key, email_reminder_dest from ms_tenant where ref_number_label = '"+ refnum +"'")
 		ResultSetMetaData metadata = resultSet.getMetaData()
 
 		columnCount = metadata.getColumnCount()
@@ -834,6 +834,26 @@ public class dataVerif {
 		Statement stm = conn.createStatement()
 
 		ResultSet resultSet = stm.executeQuery("SELECT au.login_id FROM tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user WHERE tdd.document_id = '"+documentid+"' ")
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for(int i = 1 ; i <= columnCount ; i++){
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		return listdata
+	}
+
+	@Keyword
+	public getTenantServicesDescription(Connection conn, String tenantname){
+		String data
+		ArrayList<String> listdata = new ArrayList<>()
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("SELECT ms_lov.description, value FROM ms_tenant CROSS JOIN LATERAL json_each_text(threshold_balance::json) AS threshold_type JOIN ms_lov ON ms_lov.lov_group = 'BALANCE_TYPE' AND ms_lov.code = threshold_type.key WHERE tenant_name = '"+ tenantname +"'")
 		ResultSetMetaData metadata = resultSet.getMetaData()
 
 		columnCount = metadata.getColumnCount()

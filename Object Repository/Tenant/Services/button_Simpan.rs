@@ -7,17 +7,25 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-service-balance/div[2]/div/div/div/div/div/div/button[2]</value>
+         <value>//*[(text() = 'Save' or . = 'Save')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-service-balance/div[2]/div/div/div/div/div/div/button[2]</value>
-      <webElementGuid>e6b0c969-72a4-496b-a7e3-7cf6a34ab559</webElementGuid>
+      <webElementGuid>fe31ba4b-2f13-4676-9495-c33bf8be04c0</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Save</value>
+      <webElementGuid>77169092-0ac7-4292-a9b9-7913edec4739</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

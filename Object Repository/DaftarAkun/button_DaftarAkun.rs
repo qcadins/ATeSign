@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[18]/button</value>
+         <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[19]/button</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[18]/button</value>
-      <webElementGuid>765115d6-da04-4d7b-b6dc-4f22b4291f18</webElementGuid>
+      <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[19]/button</value>
+      <webElementGuid>39280857-4258-401e-b67e-3d9ba13f523a</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

@@ -182,8 +182,8 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
 
         'HIT API get Invitation Link'
         respon_getInvLink = WS.sendRequest(findTestObject('Postman/Get Inv Link', [('callerId') : '""', ('receiverDetail') : ('"' + 
-                    findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 15)) + '"', ('tenantCode') : '"WOMF"'
-                    , ('vendorCode') : '"VIDA"']))
+                    findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 15)) + '"', ('tenantCode') : '"'+ GlobalVariable.Tenant +'"'
+                    , ('vendorCode') : '"'+ GlobalVariable.Psre +'"']))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(respon_getInvLink, 200, FailureHandling.OPTIONAL) == true) {
@@ -238,18 +238,18 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
             FailureHandling.CONTINUE_ON_FAILURE)
     }
     
-//    'call test case daftar akun data verif'
-//    WebUI.callTestCase(findTestCase('Register_eSign/DaftarAkunDataVerif'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
-//        FailureHandling.CONTINUE_ON_FAILURE)
-//
-//    if ((GlobalVariable.checkStoreDB == 'Yes') && (GlobalVariable.FlagFailed == 0)) {
-//        'delay nunggu data db'
-//        WebUI.delay(5)
-//
-//        'call test case BuatUndanganStore DB'
-//        WebUI.callTestCase(findTestCase('Register_eSign/BuatUndanganStoreDB'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
-//            FailureHandling.CONTINUE_ON_FAILURE)
-//    }
+    'call test case daftar akun data verif'
+    WebUI.callTestCase(findTestCase('Register_eSign/DaftarAkunDataVerif'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
+        FailureHandling.CONTINUE_ON_FAILURE)
+
+    if ((GlobalVariable.checkStoreDB == 'Yes') && (GlobalVariable.FlagFailed == 0)) {
+        'delay nunggu data db'
+        WebUI.delay(5)
+
+        'call test case BuatUndanganStore DB'
+        WebUI.callTestCase(findTestCase('Register_eSign/BuatUndanganStoreDB'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
+            FailureHandling.CONTINUE_ON_FAILURE)
+    }
 }
 
 'close browser testing'

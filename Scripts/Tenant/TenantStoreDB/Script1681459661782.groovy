@@ -27,9 +27,11 @@ ArrayList<String> arrayMatch = new ArrayList<String>()
 'check if action new/services'
 if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('New') || findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Edit')) {
 	
-'get data balacne mutation dari DB'
-ArrayList<String> result = CustomKeywords.'connection.dataVerif.getTenantStoreDB'(conneSign, findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 13))
+'get data balance mutation dari DB'
+ArrayList<String> result = CustomKeywords.'connection.dataVerif.getTenantStoreDB'(conneSign, findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 14))
 
+'get data services dari DB'
+ArrayList<String> resultServices = CustomKeywords.'connection.dataVerif.getTenantServicesDescription'(conneSign, findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 12))
 
 'declare arrayindex'
 arrayindex = 0
@@ -56,12 +58,18 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathTenant).getValue(GlobalVa
 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 16).toUpperCase(), (result[arrayindex++]).toUpperCase(),
 		false, FailureHandling.CONTINUE_ON_FAILURE))
 
-'batas saldo'
-arrayindex++
-
 'verify Email reminder'
 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 21).toUpperCase(), (result[arrayindex++]).toUpperCase(),
 		false, FailureHandling.CONTINUE_ON_FAILURE))
+
+ArrayList<String> arrayServices = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 18).split(';',-1)
+
+println(arrayServices)
+println(resultServices)
+
+'verify services'
+arrayMatch.add(arrayServices.containsAll(resultServices))
+
 
 }else if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Service')) {
 	'get data balacne mutation dari DB'
