@@ -49,6 +49,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
     (Listemail[0]) = ''
 	'Mengambil document id dari excel dan displit'
     ArrayList<String> documentid = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 12).split(';', -1)
+	
+	'mengambil isi email signer berdasarkan excel dan di split.'
+	ArrayList<String> emailsigner = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 11).split(';', -1)	
 
 	'Looping berdasarkan jumlah dokumen id di excel'
     for (int q = 1; q <= documentid.size(); q++) {
@@ -60,20 +63,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 		
 		'Mengkosongkan List agar dapat digunakan di loop email'
         (list[(q - 1)]) = ''
-
-		'mengambil isi email signer berdasarkan database.'
-        ArrayList<String> emailsigner = CustomKeywords.'connection.dataVerif.getEmailsSign'(conneSign, documentid[(q - 1)])
-
-		'loop berdasarkan jumlah email signer di database'
-        for (int i = 1; i <= emailsigner.size(); i++) {
-			'Memasukkan ke dalam list mengenai isi send Request dengan email'
-            (list[(i - 1)]) = (('"email": "' + (emailsigner[(i - 1)])) + '",')
-			'Memasukkan list kedalam Listemail agar menyatu'
-            (Listemail[0]) = ((Listemail[0]) + (list[(i - 1)]))
-			'Mengkosongkan List agar dapat digunakan'
-            (list[(i - 1)]) = ''
-        }
     }
+	
+	'loop berdasarkan jumlah email signer di database'
+	for (int i = 1; i <= emailsigner.size(); i++) {
+		'Memasukkan ke dalam list mengenai isi send Request dengan email'
+		(list[(i - 1)]) = (('"email": "' + (emailsigner[(i - 1)])) + '",')
+		'Memasukkan list kedalam Listemail agar menyatu'
+		(Listemail[0]) = ((Listemail[0]) + (list[(i - 1)]))
+		'Mengkosongkan List agar dapat digunakan'
+		(list[(i - 1)]) = ''
+	}
     
     'HIT API Login untuk token : andy@ad-ins.com'
     respon_login = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData('Login/Login').getValue(2, 
