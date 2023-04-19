@@ -3,9 +3,7 @@ import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
-
-import java.sql.Connection
-
+import java.sql.Connection as Connection
 import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
 import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
 import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
@@ -42,31 +40,86 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'get api key salah dari excel'
             GlobalVariable.api_key = findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, 15)
         }
-		
-	        'HIT API check registrasi'
-	       respon = WS.sendRequest(findTestObject('APIFullService/Postman/Check Registration', [('callerId') : findTestData(excelPathAPICheckRegistrasi).getValue(
-						GlobalVariable.NumofColm, 9), ('dataType') : findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm,
-						11), ('dataValue') : findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm,
-						12)])) 
-		   
-		   'Jika status HIT API 200 OK'
-		   if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
-					'mengambil status code berdasarkan response HIT API'
-					vendor = WS.getElementPropertyValue(respon, 'registrationData.vendor', FailureHandling.OPTIONAL)
-					vendoractive = WS.getElementPropertyValue(respon, 'registrationData.registrationStatus', FailureHandling.OPTIONAL)
-		  
-					println(vendor)
-					println(vendoractive)
-		  }else {
-			  'mengambil status code berdasarkan response HIT API'
-			  message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
-			  
-			  println(message)
-			  'Write To Excel GlobalVariable.StatusFailed and errormessage'
-			  CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Check Registrasi', GlobalVariable.NumofColm,
-					  GlobalVariable.StatusFailed, message)
-		  }
+        
+        'HIT API check registrasi'
+        respon = WS.sendRequest(findTestObject('APIFullService/Postman/Check Registration', [('callerId') : findTestData(
+                        excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, 9), ('dataType') : findTestData(
+                        excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, 11), ('dataValue') : findTestData(
+                        excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, 12)]))
+
+        'Jika status HIT API 200 OK'
+        if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
+			
+			code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
+			
+			if(code == 0) {
+			
+            'mengambil response'
+            vendor = WS.getElementPropertyValue(respon, 'registrationData.vendor', FailureHandling.OPTIONAL)
+
+            vendoractive = WS.getElementPropertyValue(respon, 'registrationData.registrationStatus', FailureHandling.OPTIONAL)
+			
+			if(GlobalVariable.checkStoreDB == 'Yes') {
+
+				arrayIndex = 0
+				
+				'get data from db'				
+				ArrayList<String> result = CustomKeywords.'connection.dataVerif.getAPICheckRegisterStoreDB'(conneSign, findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, 12).replace('"',''))
+				
+				println(result)
+				'declare arraylist arraymatch'
+				ArrayList<String> arrayMatch = new ArrayList<String>()
+				
+				for(index = 0; index < vendor.size(); index++) {
+					
+					if(vendoractive[index] != '0') {
+						'verify vendor'
+						arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++].toUpperCase(), vendor[index].toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+						
+						'verify vendor status'
+						arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++].toUpperCase(), vendoractive[index].toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+					}
+					
+				}
+					
+				
+			
+				'jika data db tidak sesuai dengan excel'
+				if (arrayMatch.contains(false)) {
+				
+					'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+					CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Check Registrasi', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 2) + ';' + GlobalVariable.ReasonFailedStoredDB)
+					
+				}else {
+					'write to excel success'
+					CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Check Registrasi', 0, GlobalVariable.NumofColm -
+						1, GlobalVariable.StatusSuccess)
+				}
+			
+			}
+            println(vendor)
+
+            println(vendoractive)
+			
+			}else {
+				'mengambil status code berdasarkan response HIT API'
+				message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
+	
+				println(message)
+	
+				'Write To Excel GlobalVariable.StatusFailed and errormessage'
+				CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Check Registrasi', GlobalVariable.NumofColm,
+					GlobalVariable.StatusFailed, message)
+			}
+        } else {
+            'mengambil status code berdasarkan response HIT API'
+            message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
+
+            println(message)
+
+            'Write To Excel GlobalVariable.StatusFailed and errormessage'
+            CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Check Registrasi', GlobalVariable.NumofColm, 
+                GlobalVariable.StatusFailed, message)
+        }
     }
 }
-
-

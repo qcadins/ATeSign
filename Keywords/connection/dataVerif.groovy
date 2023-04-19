@@ -924,4 +924,26 @@ public class dataVerif {
 		}
 		return listdata
 	}
+	
+	@Keyword
+	public getAPICheckRegisterStoreDB(Connection conn, String value){
+		String data
+		ArrayList<String> listdata = new ArrayList<>()
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("select mv.vendor_name, CASE WHEN mvru.is_registered = '1' AND mvru.is_active = '1' THEN '2' WHEN mvru.is_registered = '1' AND mvru.is_active = '0' THEN '1' END from ms_vendor_registered_user mvru JOIN am_msuser amu ON amu.id_ms_user = mvru.id_ms_user JOIN ms_vendor mv ON mv.id_ms_vendor = mvru.id_ms_vendor where login_id = '"+ value +"' OR amu.hashed_id_no = encode(sha256('"+ value +"'), 'hex') OR amu.hashed_phone = encode(sha256('"+ value +"'), 'hex')")
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for(int i = 1 ; i <= columnCount ; i++){
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		return listdata
+	}
 }
