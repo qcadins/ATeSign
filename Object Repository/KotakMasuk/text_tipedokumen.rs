@@ -6,16 +6,15 @@
    <elementGuidId>8b12c9ce-d60d-4f9c-bdea-0f821bd7daa4</elementGuidId>
    <selectorCollection>
       <entry>
+         <key>CSS</key>
+      </entry>
+      <entry>
          <key>XPATH</key>
          <value>(.//*[normalize-space(text()) and normalize-space(.)='TTD Dokumen'])[1]/following::p[2]</value>
       </entry>
       <entry>
          <key>BASIC</key>
-         <value></value>
-      </entry>
-      <entry>
-         <key>CSS</key>
-         <value></value>
+         <value>/html[1]/body[@class=&quot;vertical-layout navbar-static pace-done menu-expanded menu-open vertical-menu page-scrolled&quot;]/app-root[1]/app-full-layout[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;wrapper&quot;]/div[@class=&quot;main-panel&quot;]/div[@class=&quot;main-content&quot;]/div[@class=&quot;content-wrapper&quot;]/app-dashboard1[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;row&quot;]/div[@class=&quot;col-12&quot;]/div[@class=&quot;card&quot;]/div[@class=&quot;card-content&quot;]/div[@class=&quot;card-body&quot;]/app-msx-datatable[@class=&quot;ng-star-inserted&quot;]/section[@class=&quot;msx-datatable&quot;]/ngx-datatable[@class=&quot;ngx-datatable material bootstrap fixed-header virtualized selectable checkbox-selection&quot;]/div[@class=&quot;visible&quot;]/datatable-body[@class=&quot;datatable-body&quot;]/datatable-selection[1]/datatable-scroller[@class=&quot;datatable-scroll ng-star-inserted&quot;]/datatable-row-wrapper[@class=&quot;datatable-row-wrapper ng-star-inserted&quot;]/datatable-body-row[@class=&quot;datatable-body-row datatable-row-odd ng-star-inserted&quot;]/div[@class=&quot;datatable-row-center datatable-row-group ng-star-inserted&quot;]/datatable-body-cell[@class=&quot;datatable-body-cell sort-active ng-star-inserted&quot;]/div[@class=&quot;datatable-body-cell-label&quot;]/p[@class=&quot;undefined ng-star-inserted&quot;]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -26,7 +25,7 @@
       <name>tag</name>
       <type>Main</type>
       <value>p</value>
-      <webElementGuid>0ed793d6-10ad-4df3-8203-4f1b10488965</webElementGuid>
+      <webElementGuid>9f095e44-0691-4d06-917a-b2755ca95b51</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -34,7 +33,7 @@
       <name>ng-reflect-ng-class</name>
       <type>Main</type>
       <value>undefined</value>
-      <webElementGuid>5883ce00-ce78-4f29-b73e-2a8fec930d43</webElementGuid>
+      <webElementGuid>90c6316d-0029-436c-95ba-c47c2d6ffd8b</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -42,7 +41,7 @@
       <name>class</name>
       <type>Main</type>
       <value>undefined ng-star-inserted</value>
-      <webElementGuid>f1a543ee-c5f7-4bc0-9f03-bfc68aa101e0</webElementGuid>
+      <webElementGuid>0aae84ef-6958-4f8a-9315-d248c54df27f</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -50,15 +49,15 @@
       <name>text</name>
       <type>Main</type>
       <value>Dokumen Kontrak</value>
-      <webElementGuid>b377a0b1-93bf-470f-8877-566dcc19f02b</webElementGuid>
+      <webElementGuid>46fa696c-79d1-4416-b37e-00b56d02e12c</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>false</isSelected>
+      <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>/html[1]/body[@class=&quot;vertical-layout navbar-static pace-done menu-expanded menu-open vertical-menu page-scrolled&quot;]/app-root[1]/app-full-layout[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;wrapper&quot;]/div[@class=&quot;main-panel&quot;]/div[@class=&quot;main-content&quot;]/div[@class=&quot;content-wrapper&quot;]/app-dashboard1[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;row&quot;]/div[@class=&quot;col-12&quot;]/div[@class=&quot;card&quot;]/div[@class=&quot;card-content&quot;]/div[@class=&quot;card-body&quot;]/app-msx-datatable[@class=&quot;ng-star-inserted&quot;]/section[@class=&quot;msx-datatable&quot;]/ngx-datatable[@class=&quot;ngx-datatable material bootstrap fixed-header virtualized selectable checkbox-selection&quot;]/div[@class=&quot;visible&quot;]/datatable-body[@class=&quot;datatable-body&quot;]/datatable-selection[1]/datatable-scroller[@class=&quot;datatable-scroll ng-star-inserted&quot;]/datatable-row-wrapper[@class=&quot;datatable-row-wrapper ng-star-inserted&quot;]/datatable-body-row[@class=&quot;datatable-body-row datatable-row-odd ng-star-inserted&quot;]/div[@class=&quot;datatable-row-center datatable-row-group ng-star-inserted&quot;]/datatable-body-cell[@class=&quot;datatable-body-cell sort-active ng-star-inserted&quot;]/div[@class=&quot;datatable-body-cell-label&quot;]/p[@class=&quot;undefined ng-star-inserted&quot;]</value>
-      <webElementGuid>d71f5b2c-43ac-4249-9243-65d873acc47f</webElementGuid>
+      <webElementGuid>24bcd7dd-d915-48c9-a733-848fd5a5c37d</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -66,7 +65,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='TTD Dokumen'])[1]/following::p[2]</value>
-      <webElementGuid>2dce1c50-1f2d-47ea-9fff-041aaf8e9d4d</webElementGuid>
+      <webElementGuid>1a8150de-6956-4ec9-8fca-5b615ca6adf2</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -74,7 +73,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Aksi'])[1]/following::p[8]</value>
-      <webElementGuid>db1757ea-fb41-414b-a341-e5de25e8c66a</webElementGuid>
+      <webElementGuid>40d2d8f7-1722-4453-9834-beb14fbd822b</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -82,7 +81,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='TTD Dokumen'])[2]/preceding::p[5]</value>
-      <webElementGuid>de238c7d-b644-4397-9028-3237bff0344b</webElementGuid>
+      <webElementGuid>4aa22225-3453-4182-b465-7b02efaec270</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -90,7 +89,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Persyaratan layanan'])[1]/preceding::p[5]</value>
-      <webElementGuid>24204545-fcad-435c-b5b1-0177243cc722</webElementGuid>
+      <webElementGuid>63a1a26d-d215-4b19-8e76-f665ca55348c</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -98,7 +97,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//datatable-row-wrapper[2]/datatable-body-row/div[2]/datatable-body-cell[3]/div/p</value>
-      <webElementGuid>05b2808a-7178-4900-bdce-d16e2e4bf1f9</webElementGuid>
+      <webElementGuid>97f0edee-9beb-4b1e-bd9f-368b115875e6</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -106,6 +105,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//p[(text() = 'Dokumen Kontrak' or . = 'Dokumen Kontrak')]</value>
-      <webElementGuid>cfc3477e-26b0-4ff4-8d5e-a82ad37a509d</webElementGuid>
+      <webElementGuid>2e4f226d-ceb8-492f-9077-5e4da79b16dd</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

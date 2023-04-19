@@ -6,12 +6,12 @@
    <elementGuidId>a924758b-2bc3-4e80-9181-fa26240c889a</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>BASIC</key>
-         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox/div/button[2]</value>
-      </entry>
-      <entry>
          <key>XPATH</key>
          <value>(.//*[normalize-space(text()) and normalize-space(.)='TTD disini'])[1]/following::button[2]</value>
+      </entry>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[1]/div/button[2]</value>
       </entry>
       <entry>
          <key>CSS</key>
@@ -21,12 +21,12 @@
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>true</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>tag</name>
       <type>Main</type>
       <value>button</value>
-      <webElementGuid>a34e82c8-b8c9-4247-9060-bdc1e9b59878</webElementGuid>
+      <webElementGuid>747630e0-bad7-4d6d-9d9f-3b6b3954e608</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -34,15 +34,15 @@
       <name>class</name>
       <type>Main</type>
       <value>btn btn-danger btn-sm remove ng-star-inserted</value>
-      <webElementGuid>fe0506d8-efe7-4d0e-a220-530a6ba38a95</webElementGuid>
+      <webElementGuid>1cd2657c-7705-4e65-999d-62922d35ab99</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox/div/button[2]</value>
-      <webElementGuid>8d9bdc41-3439-4194-9c18-4ec8abdd173d</webElementGuid>
+      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[1]/div/button[2]</value>
+      <webElementGuid>1b35fb96-4840-4c68-80c1-cee6446036f5</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -50,7 +50,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='TTD disini'])[1]/following::button[2]</value>
-      <webElementGuid>b49d05c3-6dfa-4f0f-a615-3e79ce87bdfa</webElementGuid>
+      <webElementGuid>1e567acd-84d6-48e4-9328-4cff0039b8f9</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -58,7 +58,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Customer'])[1]/following::button[2]</value>
-      <webElementGuid>0942b703-9c11-4475-9897-8ce42a74065b</webElementGuid>
+      <webElementGuid>06cc4a80-8a9a-4f28-b3eb-e00bef28586e</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -66,7 +66,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Persyaratan layanan'])[1]/preceding::button[1]</value>
-      <webElementGuid>e8e9306e-2b0b-4536-8e28-cd2360e2e2b0</webElementGuid>
+      <webElementGuid>facd77d8-a6aa-49f0-b9ca-7d71187d81e5</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -74,7 +74,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Kebijakan privasi'])[1]/preceding::button[1]</value>
-      <webElementGuid>06cbde28-e1bd-41c0-96bc-8bd3dc7eb33b</webElementGuid>
+      <webElementGuid>5e6448d5-df9c-449f-940b-5e873bce40d9</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -82,6 +82,6 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//app-bbox/div/button[2]</value>
-      <webElementGuid>7f46b357-4dd6-4440-b531-5c66ac6d9364</webElementGuid>
+      <webElementGuid>193da2ac-3fb9-48e1-8319-9dd1ced8a868</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

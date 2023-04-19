@@ -6,12 +6,12 @@
    <elementGuidId>9334472f-431b-47e0-8b9b-09bf744e4143</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>BASIC</key>
-         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox/div/div/small</value>
-      </entry>
-      <entry>
          <key>XPATH</key>
          <value>(.//*[normalize-space(text()) and normalize-space(.)='Meterai'])[1]/following::small[1]</value>
+      </entry>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox/div/div/small</value>
       </entry>
       <entry>
          <key>CSS</key>
@@ -21,12 +21,12 @@
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>true</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>tag</name>
       <type>Main</type>
       <value>small</value>
-      <webElementGuid>704ceb4d-17f4-4424-969a-4862e4af4083</webElementGuid>
+      <webElementGuid>49c64a4c-4d03-4cb9-84c4-6ca0bb005829</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -34,7 +34,7 @@
       <name>text</name>
       <type>Main</type>
       <value>Customer</value>
-      <webElementGuid>1843aeb3-63c9-4964-b56f-abf27fd36248</webElementGuid>
+      <webElementGuid>8093303b-3af0-45a6-8599-f5aeb9f835d6</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -42,7 +42,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox/div/div/small</value>
-      <webElementGuid>2e78dfcd-3ab3-4c0e-a333-5da5eea7f804</webElementGuid>
+      <webElementGuid>515cb4ea-14cb-4e4e-8792-26baf734a3cd</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -50,7 +50,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Meterai'])[1]/following::small[1]</value>
-      <webElementGuid>d984be86-48b9-4de0-8f79-cbf362ba665a</webElementGuid>
+      <webElementGuid>ddfe9fbd-2f2c-4f60-b642-ee77fa038d44</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -58,7 +58,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Paraf'])[1]/following::small[1]</value>
-      <webElementGuid>dd8b7967-315b-48a9-ab2f-eca3542d1f75</webElementGuid>
+      <webElementGuid>11b9337e-a423-4ad9-b6db-ffc0b0e95d8d</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -66,7 +66,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='TTD disini'])[1]/preceding::small[1]</value>
-      <webElementGuid>5b20506f-e500-42d3-afbd-4983d68c4ab8</webElementGuid>
+      <webElementGuid>2ad888d8-7322-4ce0-825f-d4ad27f95cc2</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -74,7 +74,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Persyaratan layanan'])[1]/preceding::small[1]</value>
-      <webElementGuid>e3a906f1-61a4-4b97-a159-8bff9d168ee7</webElementGuid>
+      <webElementGuid>2f68782c-d2c4-453a-b8b2-4d0e46032508</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -82,7 +82,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='Customer']/parent::*</value>
-      <webElementGuid>c417e96b-8aaf-4817-9ea7-0b95126e8f87</webElementGuid>
+      <webElementGuid>e27347db-2cb4-4c63-9d05-b857babbd3b7</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -90,7 +90,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//small</value>
-      <webElementGuid>600c3f4c-460d-48a1-b11e-54716f07a1b9</webElementGuid>
+      <webElementGuid>2375446a-d8d2-43c0-9bf3-49356dd6ba8f</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -98,6 +98,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//small[(text() = 'Customer' or . = 'Customer')]</value>
-      <webElementGuid>05c50d52-6ead-4f1d-9127-c3d6296661a5</webElementGuid>
+      <webElementGuid>8b1eb1fd-0f4b-4c57-8251-ea723906b403</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

@@ -6,16 +6,16 @@
    <elementGuidId>c2293555-59eb-4b1b-ac52-15365c0488e8</elementGuidId>
    <selectorCollection>
       <entry>
+         <key>CSS</key>
+         <value>datatable-body-cell.datatable-body-cell.sort-active.ng-star-inserted.active > div.datatable-body-cell-label > p.undefined.ng-star-inserted</value>
+      </entry>
+      <entry>
          <key>XPATH</key>
          <value>(.//*[normalize-space(text()) and normalize-space(.)='TTD Dokumen'])[1]/following::p[4]</value>
       </entry>
       <entry>
          <key>BASIC</key>
-         <value></value>
-      </entry>
-      <entry>
-         <key>CSS</key>
-         <value>datatable-body-cell.datatable-body-cell.sort-active.ng-star-inserted.active > div.datatable-body-cell-label > p.undefined.ng-star-inserted</value>
+         <value>/html[1]/body[@class=&quot;vertical-layout menu-expanded menu-open vertical-menu navbar-static pace-done page-scrolled&quot;]/app-root[1]/app-full-layout[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;wrapper&quot;]/div[@class=&quot;main-panel&quot;]/div[@class=&quot;main-content&quot;]/div[@class=&quot;content-wrapper&quot;]/app-dashboard1[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;row&quot;]/div[@class=&quot;col-12&quot;]/div[@class=&quot;card&quot;]/div[@class=&quot;card-content&quot;]/div[@class=&quot;card-body&quot;]/app-msx-datatable[@class=&quot;ng-star-inserted&quot;]/section[@class=&quot;msx-datatable&quot;]/ngx-datatable[@class=&quot;ngx-datatable material bootstrap fixed-header virtualized selectable checkbox-selection&quot;]/div[@class=&quot;visible&quot;]/datatable-body[@class=&quot;datatable-body&quot;]/datatable-selection[1]/datatable-scroller[@class=&quot;datatable-scroll ng-star-inserted&quot;]/datatable-row-wrapper[@class=&quot;datatable-row-wrapper ng-star-inserted&quot;]/datatable-body-row[@class=&quot;datatable-body-row datatable-row-odd ng-star-inserted&quot;]/div[@class=&quot;datatable-row-center datatable-row-group ng-star-inserted&quot;]/datatable-body-cell[@class=&quot;datatable-body-cell sort-active ng-star-inserted active&quot;]/div[@class=&quot;datatable-body-cell-label&quot;]/p[@class=&quot;undefined ng-star-inserted&quot;]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -26,7 +26,7 @@
       <name>tag</name>
       <type>Main</type>
       <value>p</value>
-      <webElementGuid>7ad6f6be-ff11-40db-98ca-9a40cde89f97</webElementGuid>
+      <webElementGuid>fbb8cdcd-51ab-4292-8f00-3155a99e339b</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -34,7 +34,7 @@
       <name>ng-reflect-ng-class</name>
       <type>Main</type>
       <value>undefined</value>
-      <webElementGuid>94f1f14a-c61a-40e0-868d-14d33679fab6</webElementGuid>
+      <webElementGuid>7c7f82b2-bda3-4702-b6f3-2aa89dc75687</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -42,7 +42,7 @@
       <name>class</name>
       <type>Main</type>
       <value>undefined ng-star-inserted</value>
-      <webElementGuid>b07de597-125f-4507-9e5b-60c82d457386</webElementGuid>
+      <webElementGuid>94dcbe4a-2d44-4da1-bf46-5e0bdbefe68a</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -50,15 +50,15 @@
       <name>text</name>
       <type>Main</type>
       <value>USERCIBH</value>
-      <webElementGuid>bd48d187-4bd3-47b8-9550-71a40fcd41eb</webElementGuid>
+      <webElementGuid>09ec6a3f-7d8c-4b40-8984-57bdd7ae09c9</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>false</isSelected>
+      <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>/html[1]/body[@class=&quot;vertical-layout menu-expanded menu-open vertical-menu navbar-static pace-done page-scrolled&quot;]/app-root[1]/app-full-layout[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;wrapper&quot;]/div[@class=&quot;main-panel&quot;]/div[@class=&quot;main-content&quot;]/div[@class=&quot;content-wrapper&quot;]/app-dashboard1[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;row&quot;]/div[@class=&quot;col-12&quot;]/div[@class=&quot;card&quot;]/div[@class=&quot;card-content&quot;]/div[@class=&quot;card-body&quot;]/app-msx-datatable[@class=&quot;ng-star-inserted&quot;]/section[@class=&quot;msx-datatable&quot;]/ngx-datatable[@class=&quot;ngx-datatable material bootstrap fixed-header virtualized selectable checkbox-selection&quot;]/div[@class=&quot;visible&quot;]/datatable-body[@class=&quot;datatable-body&quot;]/datatable-selection[1]/datatable-scroller[@class=&quot;datatable-scroll ng-star-inserted&quot;]/datatable-row-wrapper[@class=&quot;datatable-row-wrapper ng-star-inserted&quot;]/datatable-body-row[@class=&quot;datatable-body-row datatable-row-odd ng-star-inserted&quot;]/div[@class=&quot;datatable-row-center datatable-row-group ng-star-inserted&quot;]/datatable-body-cell[@class=&quot;datatable-body-cell sort-active ng-star-inserted active&quot;]/div[@class=&quot;datatable-body-cell-label&quot;]/p[@class=&quot;undefined ng-star-inserted&quot;]</value>
-      <webElementGuid>e2796543-04bc-4b78-b9ae-600f8223633a</webElementGuid>
+      <webElementGuid>9f2a82db-21ce-4523-af82-4d7623375198</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -66,7 +66,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='TTD Dokumen'])[1]/following::p[4]</value>
-      <webElementGuid>3452de98-fbb0-4a30-9a2d-f9b8e39175c6</webElementGuid>
+      <webElementGuid>cfa289c4-7090-4738-b26b-a4a050311dd8</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -74,7 +74,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Aksi'])[1]/following::p[10]</value>
-      <webElementGuid>310e4776-7fd6-4fc1-baf7-e93b4aa33961</webElementGuid>
+      <webElementGuid>dbfd83a0-71ce-455b-b2bd-4fdb2cd01761</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -82,7 +82,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='TTD Dokumen'])[2]/preceding::p[3]</value>
-      <webElementGuid>9afbcb4a-d9d5-491f-9cd9-4b667dad0a12</webElementGuid>
+      <webElementGuid>40bbe123-06a0-460c-8434-14e5fbd67e80</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -90,7 +90,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Persyaratan layanan'])[1]/preceding::p[3]</value>
-      <webElementGuid>fc74b861-4253-4bb3-aeec-b36927e52d47</webElementGuid>
+      <webElementGuid>38fb5355-77f2-4728-bac3-d442a75af0af</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -98,7 +98,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='USERCIBH']/parent::*</value>
-      <webElementGuid>864aade8-43ff-40de-b998-2dc61b423d4b</webElementGuid>
+      <webElementGuid>3580d4ad-0ac7-4056-a2ef-92761404dcd2</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -106,7 +106,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//datatable-row-wrapper[2]/datatable-body-row/div[2]/datatable-body-cell[5]/div/p</value>
-      <webElementGuid>083e40a2-c759-4bd1-9a24-ffa3896ac3c5</webElementGuid>
+      <webElementGuid>a905cf56-3949-402e-a9ff-3a248e909623</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -114,6 +114,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//p[(text() = 'USERCIBH' or . = 'USERCIBH')]</value>
-      <webElementGuid>446a0a46-96e2-465e-bec9-ca2ef19f236b</webElementGuid>
+      <webElementGuid>1d2aa772-3b2b-4611-a7d9-fe30963634fd</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

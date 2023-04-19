@@ -79,7 +79,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 GlobalVariable.NumofColm, 14))
 
         'Input enter'
-        WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_StatusAktif'), Keys.chord(Keys.ENTER))
+        WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
 
         'Jika panjang dokumen lebih besar dari 0'
         if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 13).length() > 0) {
@@ -120,16 +120,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'Klik dropdown mengenai tipe pembayaran'
             WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_openddlTipePembayaran'))
 
-			'Verifikasi input tipe pembayaran dengan excel'
+            'Verifikasi input tipe pembayaran dengan excel'
             checkVerifyEqualorMatch(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
                         12), WebUI.getText(findTestObject('TandaTanganDokumen/check_tipePembayaran')), false, FailureHandling.CONTINUE_ON_FAILURE))
-			
-			'Klik dropdown mengenai status'
-			WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_ddlaktif'))
-			
+
+            'Klik dropdown mengenai status'
+            WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_ddlaktif'))
+
             'Verifikasi input status dengan excel'
             checkVerifyEqualorMatch(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
-                        14), WebUI.getText(findTestObject('TandaTanganDokumen/input_StatusAktif')), false, FailureHandling.CONTINUE_ON_FAILURE))
+                        14), WebUI.getText(findTestObject('TandaTanganDokumen/check_tipePembayaran')), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+            'Input enter'
+            WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
 
             'Klik lanjut'
             WebUI.click(findTestObject('TandaTanganDokumen/btn_Lanjut'))
@@ -147,87 +150,106 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             TipeTandaTangan = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 20).split(';', 
                 -1)
 
-			'looping berdasarkan total tanda tangan'
+            'looping berdasarkan total tanda tangan'
             for (int j = 1; j <= findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 15); j++) {
                 'Klik button tanda tangan'
-				WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_ttd'))
-				
-				'Verify label tanda tangannya muncul atau tidak'
+                WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_ttd'))
+
+                'Verify label tanda tangannya muncul atau tidak'
                 WebUI.verifyElementPresent(findTestObject('TandaTanganDokumen/lbl_tipetandatangan'), GlobalVariable.TimeOut, 
                     FailureHandling.CONTINUE_ON_FAILURE)
 
-				'Memilih tipe signer apa berdasarkan excel'
+                'Memilih tipe signer apa berdasarkan excel'
                 WebUI.selectOptionByLabel(findTestObject('TandaTanganDokumen/ddl_tipetandatangan'), TipeTandaTangan[(j - 
                     1)], false)
-				
-				'Klik set tanda tangan'
+
+                'Klik set tanda tangan'
                 WebUI.click(findTestObject('TandaTanganDokumen/btn_setTandaTangan'))
-				
-				'modify label tipe tanda tangan di kotak'
-				modifyobjectTTDlbltipetandatangan = WebUI.modifyObjectProperty(findTestObject('Object Repository/TandaTanganDokumen/lbl_TTDtipetandatangan'), 'xpath', 'equals', '/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox['+j+']/div/div/small', false)
-				
-				'Verify apakah tanda tangannya ada'
-                WebUI.verifyElementPresent(modifyobjectTTDlbltipetandatangan, 
-                    GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
-				
-				'Verifikasi antara excel dan UI, apakah tipenya sama'
-                WebUI.verifyMatch(TipeTandaTangan[(j - 1)], WebUI.getText(modifyobjectTTDlbltipetandatangan),false)
 
-                'Persiapan buat modify objectnya dengan case-case selanjutnya'
-                TestObject kotakttd = WebUI.modifyObjectProperty(findTestObject('Object Repository/TandaTanganDokumen/div_kotakTTD'), 'xpath', 'equals', '/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox['+j+']/div', false)
-				
-				'Verifikasi kotaknya'
-                WebUI.verifyElementPresent(kotakttd, GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
-				
-				'Mengambil web element dari kotaknya'
-                WebElement element = WebUI.findWebElement(kotakttd)
-				
-				'Memasang lokasi, untuk sekarang masih di hardcode'
-				'Cara yang digunakan yaitu mengubah css agar lebih tepat. Jika drag and drop, kurang tepat lokasinya'
-				'Bisa diubah'
-                String newLocation = 'translate3d(400px, 500px, 0px)'
-				
-                String js = 'arguments[0].style.transform = arguments[1]'
-				
-                DriverFactory.getWebDriver().executeScript(js, element, newLocation)
-				
-				'Jika total deletenya lebih besar dari 0'
-				'Asumsinya melakukan delete terlebih dahulu'
-                if (countDel > 0) {
-					'Klik button Delete'
-                    WebUI.click(findTestObject('TandaTangaDokumen/btn_DeleteTTD'))
-					
-					'Dicheck apakah kotaknya tidak ada'
-                    WebUI.verifyElementNotPresent(kotakttd, GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
+                'modify label tipe tanda tangan di kotak'
+                modifyobjectTTDlbltipetandatangan = WebUI.modifyObjectProperty(findTestObject('Object Repository/TandaTanganDokumen/lbl_TTDtipetandatangan'), 
+                    'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' + 
+                    j) + ']/div/div/small', true)
 
-                    countDel--
-                } else if (countDel == 0) {
-                    if (countLock > 0) {
+                'Verify apakah tanda tangannya ada'
+                if (WebUI.verifyElementPresent(modifyobjectTTDlbltipetandatangan, GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+                    'Verifikasi antara excel dan UI, apakah tipenya sama'
+                    WebUI.verifyMatch(TipeTandaTangan[(j - 1)], WebUI.getText(modifyobjectTTDlbltipetandatangan), false)
 
-                        WebUI.click(findTestObject('TandaTangaDokumen/btn_LockTTD'))
+                    'Persiapan buat modify objectnya dengan case-case selanjutnya'
+                    TestObject kotakttd = WebUI.modifyObjectProperty(findTestObject('Object Repository/TandaTanganDokumen/div_kotakTTD'), 
+                        'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' + 
+                        j) + ']/div', true)
+
+                    'Verifikasi kotaknya'
+                    WebUI.verifyElementPresent(kotakttd, GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
+
+                    'Mengambil web element dari kotaknya'
+                    WebElement element = WebUI.findWebElement(kotakttd)
+
+                    'Memasang lokasi, untuk sekarang masih di hardcode'
+
+                    'Cara yang digunakan yaitu mengubah css agar lebih tepat. Jika drag and drop, kurang tepat lokasinya'
+
+                    'Bisa diubah'
+                    String newLocation = 'translate3d(400px, 500px, 0px)'
+
+                    String js = 'arguments[0].style.transform = arguments[1]'
+
+                    DriverFactory.getWebDriver().executeScript(js, element, newLocation)
+
+                    'Jika total deletenya lebih besar dari 0'
+
+                    'Asumsinya melakukan delete terlebih dahulu'
+                    if (countDel > 0) {
+						'Persiapan buat modify objectnya dengan case-case selanjutnya'
+						modifyobjekDeleteTTD = WebUI.modifyObjectProperty(findTestObject('Object Repository/TandaTanganDokumen/btn_DeleteTTD'),
+							'xpath', 'equals', '/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[1]/div/button[2]', true)
 						
-						'Dicheck apakah kotaknya ada'
-						WebUI.verifyElementPresent(kotakttd, GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
-	
-                        countLock--
-                    } else {
+                        'Klik button Delete'
+                        WebUI.click(modifyobjekDeleteTTD)
+
+                        'Dicheck apakah kotaknya tidak ada'
+                        WebUI.verifyElementNotPresent(kotakttd, GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
+
+                        countDel--
+                    } else if (countDel == 0) {
+                        if (countLock > 0) {
+							
+							'Persiapan buat modify objectnya dengan case-case selanjutnya'
+							modifyobjekLockTTD = WebUI.modifyObjectProperty(findTestObject('Object Repository/TandaTanganDokumen/btn_DeleteTTD'),
+								'xpath', 'equals', '/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox['+j+']/div/button[1]', true)
+							
+                            WebUI.click(modifyobjekLockTTD)
+							
+							isLocked = WebUI.getAttribute(modifyobjekLockTTD, 'ng-reflect-ng-class', FailureHandling.STOP_ON_FAILURE)
+							
+							if(isLocked == 'fa-lock') {
+								countLock--
+							}else {
+								
+							}
+
+                        } else {
+                        }
                     }
+                    
+                    'Reason Failed mengenai Tanda Tangan tidak muncul.'
                 }
             }
         }
     }
-}
- //CustomKeywords.'writeToExcel.writeExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumOfColm, GlobalVariable.StatusFailed,
+} //CustomKeywords.'writeToExcel.writeExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumOfColm, GlobalVariable.StatusFailed,
 //(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumOfColm, 2) + ';') + GlobalVariable.FailedReasonStoreDB)
 
 def checkVerifyEqualorMatch(Boolean isMatch) {
     if (isMatch == false) {
         'Write to excel status failed and ReasonFailedVerifyEqualorMatch'
         GlobalVariable.FlagFailed = 1
-		
-		CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Sign Document', GlobalVariable.NumofColm,
-			GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) +
-			';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
+
+        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Sign Document', GlobalVariable.NumofColm, 
+            GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + 
+            ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
     }
 }
 

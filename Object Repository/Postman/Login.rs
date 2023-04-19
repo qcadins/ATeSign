@@ -19,7 +19,7 @@
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;client_id\u003dfrontend\u0026grant_type\u003dpassword\u0026username\u003dandy@ad-ins.com\u0026password\u003dpassword&quot;,
+  &quot;text&quot;: &quot;client_id\u003dfrontend\u0026grant_type\u003dpassword\u0026username\u003d${username}\u0026password\u003d${password}&quot;,
   &quot;contentType&quot;: &quot;text/plain&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -29,7 +29,7 @@
       <matchCondition>equals</matchCondition>
       <name>Content-Type</name>
       <type>Main</type>
-      <value>application/x-www-form-urlencoded</value>
+      <value>text/plain</value>
       <webElementGuid>b05d1743-2242-4c94-ac28-27d7671a1a6a</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
