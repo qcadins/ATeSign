@@ -53,14 +53,14 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathTenant).getValue(GlobalVa
 		false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'verify API Key'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 15).toUpperCase(), (result[arrayindex++]).toUpperCase(),
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 16).toUpperCase(), (result[arrayindex++]).toUpperCase(),
 		false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'batas saldo'
 arrayindex++
 
 'verify Email reminder'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 34).toUpperCase(), (result[arrayindex++]).toUpperCase(),
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 21).toUpperCase(), (result[arrayindex++]).toUpperCase(),
 		false, FailureHandling.CONTINUE_ON_FAILURE))
 
 }else if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Service')) {
@@ -71,7 +71,7 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathTenant).getValue(GlobalVa
 	ArrayList<String> resultarray = result.split(':0')
 	
 	'get array Services dari excel'
-	ArrayList<String> arrayServices = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 38).split(';', -1)
+	ArrayList<String> arrayServices = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 25).split(';', -1)
 	
 	'verify services'
 	arrayMatch.add(arrayServices.containsAll(resultarray))

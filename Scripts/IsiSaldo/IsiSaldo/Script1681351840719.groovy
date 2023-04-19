@@ -31,12 +31,18 @@ Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 'get colm excel'
 int countColmExcel = findTestData(excelPathIsiSaldo).getColumnNumbers()
 
+'declare variable array'
+ArrayList<String> saldoBefore, saldoAfter
+
 'looping isi saldo'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
 
+		'call function login admin get saldo'
+		saldoBefore = loginAdminGetSaldo()
+		
         'call test case login admin esign'
         WebUI.callTestCase(findTestCase('Login/Login_AdminEsign'), [:], FailureHandling.STOP_ON_FAILURE)
 
@@ -89,6 +95,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         WebUI.setText(findTestObject('isiSaldo/input_TambahSaldo'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
                 17))
 
+		'tambah saldo before dengan jumlah isi saldo'
+		saldoBefore.set(0, (Integer.parseInt(saldoBefore[0])+Integer.parseInt(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm,
+				17))).toString())
+		
+		saldoBefore.set(1, (Integer.parseInt(saldoBefore[1])+Integer.parseInt(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm,
+			17))).toString())
+		
         'input nomor tagihan'
         WebUI.setText(findTestObject('isiSaldo/input_nomorTagihan'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
                 18))
@@ -124,6 +137,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 WebUI.callTestCase(findTestCase('IsiSaldo/IsiSaldoStoreDB'), [('excelPathIsiSaldo') : 'Saldo/isiSaldo'], 
                     FailureHandling.STOP_ON_FAILURE)
             }
+			'close browser'
+			WebUI.closeBrowser()
+			
+			'call function login admin get saldo'
+			saldoAfter = loginAdminGetSaldo()
+			
+			'verify saldoafter tidak sama dengan saldo before'
+			checkVerifyEqualOrMatch(saldoAfter.equals(saldoBefore))
+			
+			println(saldoBefore)
+			println(saldoAfter)
+			
         } else if (isMandatoryComplete > 0) {
             'click batal'
             WebUI.click(findTestObject('isiSaldo/button_Batal'))
@@ -132,10 +157,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('isiSaldo', GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, (findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 2) + ';') + 
                 GlobalVariable.ReasonFailedMandatory)
+			
+			'close browser'
+			WebUI.closeBrowser()
         }
-        
-        'close browser'
-        WebUI.closeBrowser()
     }
 }
 
@@ -180,7 +205,10 @@ def checkDDL(TestObject objectDDL, ArrayList<String> listDB) {
 	checkVerifyEqualOrMatch(WebUI.verifyEqual(list.size(), listDB.size(), FailureHandling.CONTINUE_ON_FAILURE))
 }
 
-def loginAdmin() {
+def loginAdminGetSaldo() {
+	
+	ArrayList<String> saldo = new ArrayList<>()
+	
 	'open browser'
 	WebUI.openBrowser('')
 	
@@ -194,21 +222,21 @@ def loginAdmin() {
 	GlobalVariable.userLogin = findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 9).toUpperCase()
 	
 	'input email'
-	WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 10))
+	WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 9))
 	
 	'input password'
-	WebUI.setText(findTestObject('Login/input_Password'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 11))
+	WebUI.setText(findTestObject('Login/input_Password'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 10))
 	
 	'click button login'
 	WebUI.click(findTestObject('Login/button_Login'), FailureHandling.STOP_ON_FAILURE)
 	
 	'input perusahaan'
-	WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 12))
+	WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 11))
 	
 	WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
 	
 	'input peran'
-	WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 13))
+	WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 12))
 	
 	WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
 	
@@ -216,13 +244,65 @@ def loginAdmin() {
 	WebUI.click(findTestObject('Login/button_pilihPeran'), FailureHandling.STOP_ON_FAILURE)
 	
 	'click menu saldo'
-	WebUI.click(findTestObject('Saldo/SaldoAdmin/menu_Saldo'))
+	WebUI.click(findTestObject('isiSaldo/SaldoAdmin/menu_Saldo'))
 	
 	'click ddl bahasa'
-	WebUI.click(findTestObject('Saldo/SaldoAdmin/button_bahasa'))
+	WebUI.click(findTestObject('isiSaldo/SaldoAdmin/button_bahasa'))
 	
 	'click english'
-	WebUI.click(findTestObject('Saldo/SaldoAdmin/button_English'))
+	WebUI.click(findTestObject('isiSaldo/SaldoAdmin/button_English'))
 	
+	'select vendor'
+	WebUI.selectOptionByLabel(findTestObject('isiSaldo/SaldoAdmin/select_Vendor'), '(?i)' + findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 15), true)
 	
+	'get row'
+	variable = DriverFactory.getWebDriver().findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
+	
+	for(index = 2; index <= variable.size(); index++) {
+		
+		'modify object box info'
+		modifyObjectBoxInfo = WebUI.modifyObjectProperty(findTestObject('isiSaldo/SaldoAdmin/modifyObject'),'xpath','equals',
+			"/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div["+ index +"]/div/div/div/div/div[1]/h3",true)
+	
+		'check if box info = tipe saldo di excel'
+		if(WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 16))) {
+			'modify object qty'
+			modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('isiSaldo/SaldoAdmin/modifyObject'),'xpath','equals',
+				"/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div["+ index +"]/div/div/div/div/div[2]/h3",true)
+			
+			'get qty saldo before'
+			saldo.add(WebUI.getText(modifyObjectQty))
+			
+			break
+		}
+	}
+	
+	'input tipe saldo'
+	WebUI.setText(findTestObject('isiSaldo/SaldoAdmin/input_TipeSaldo'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 16))
+	
+	'enter untuk input tipe saldo'
+	WebUI.sendKeys(findTestObject('isiSaldo/SaldoAdmin/input_TipeSaldo'), Keys.chord(Keys.ENTER))
+	
+	'click button cari'
+	WebUI.click(findTestObject('isiSaldo/SaldoAdmin/button_Cari'))
+	
+	if(WebUI.verifyElementPresent(findTestObject('isiSaldo/SaldoAdmin/button_LastPage'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		'click button last page'
+		WebUI.click(findTestObject('isiSaldo/SaldoAdmin/button_LastPage'))
+	}
+	
+	'get row'
+	variable = DriverFactory.getWebDriver().findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
+	
+	'modify object balance'
+	modifyObjectBalance = WebUI.modifyObjectProperty(findTestObject('isiSaldo/SaldoAdmin/modifyObject'),'xpath','equals',
+		"/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper["+ variable.size() +"]/datatable-body-row/div[2]/datatable-body-cell[10]/div",true)
+	
+	'get trx saldo before'
+	saldo.add(WebUI.getText(modifyObjectBalance))
+	
+	'close browser'
+	WebUI.closeBrowser()
+	
+	return saldo
 }

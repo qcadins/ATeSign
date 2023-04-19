@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>button_English</name>
+   <tag></tag>
+   <elementGuidId>f7392f8a-8bd6-424b-b720-40ca92f53fbf</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;navbarSupportedContent&quot;]/ul/li[1]/div/a[1]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;navbarSupportedContent&quot;]/ul/li[1]/div/a[1]</value>
+      <webElementGuid>62293068-b987-439f-9486-9e34c85a3fb0</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

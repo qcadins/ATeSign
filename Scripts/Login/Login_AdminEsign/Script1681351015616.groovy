@@ -50,3 +50,9 @@ WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
 
 'click button pilih peran'
 WebUI.click(findTestObject('Login/button_pilihPeran'), FailureHandling.STOP_ON_FAILURE)
+
+'click ddl bahasa'
+WebUI.click(findTestObject('Login/button_bahasa'))
+
+'click english'
+WebUI.click(findTestObject('Login/button_English'))
