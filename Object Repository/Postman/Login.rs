@@ -56,6 +56,14 @@
       <value>gzip</value>
       <webElementGuid>cf12e7bd-fe49-4085-bba0-883cf8039458</webElementGuid>
    </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Content-Type</name>
+      <type>Main</type>
+      <value></value>
+      <webElementGuid>3b2f0021-8032-4a78-bc35-528ab20806ab</webElementGuid>
+   </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
