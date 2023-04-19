@@ -21,8 +21,11 @@ import java.sql.Connection
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 
-'get data balacne mutation dari DB'
+'get data balance mutation dari DB'
 ArrayList<String> result = CustomKeywords.'connection.dataVerif.getIsiSaldoStoreDB'(conneSign, findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 18))
+
+'get data tenant yang tidak topup dari DB'
+String resultTenantTidakTopup = CustomKeywords.'connection.dataVerif.getTenantTidakIsiSaldo'(conneSign, findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 14), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 18))
 
 'declare arraylist arraymatch'
 ArrayList<String> arrayMatch = new ArrayList<String>()
@@ -57,6 +60,9 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathIsiSaldo).getValue(Global
 'verify tanggal pembelian'
 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 20).toUpperCase(), (result[arrayindex++]).toUpperCase(),
 		false, FailureHandling.CONTINUE_ON_FAILURE))
+
+'verify tenant tidak ada'
+arrayMatch.add(WebUI.verifyMatch(resultTenantTidakTopup.toString(), 'null', false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'jika data db tidak sesuai dengan excel'
 if (arrayMatch.contains(false)) {
