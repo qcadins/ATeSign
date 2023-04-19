@@ -20,7 +20,7 @@ import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.By as By
 import org.openqa.selenium.Keys as Keys
 
-GlobalVariable.Response = '00155D0B-7502-91E7-11ED-DDD3E3D66530'
+GlobalVariable.Response = '00155D0B-7502-ACBA-11ED-DE572CD60D20'
 int jumlahsignertandatangan = 0
 
 'connect DB eSign'
@@ -135,7 +135,7 @@ for (int o = 1; o <= emailSigner.size(); o++) {
             'modify object text nama, email, signer Type, sudah aktivasi Untuk yang terakhir belum bisa, dikarenakan masih gak ada data (-) Dikarenakan modifynya bukan p di lastnya, melainkan span'
             modifyObjecttextpopup = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_tipepopup'), 'xpath', 'equals', 
                 ((('/html/body/ngb-modal-window/div/div/app-signer/div[2]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-                i) + ']/datatable-body-row/div[2]/datatable-body-cell[') + m) + ']/div/p', true)
+                i) + ']/datatable-body-row/div[2]/datatable-body-cell[') + m) + ']/div', true)
 
             'signer nama,email,signerType,sudahAktivasi popup'
             arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjecttextpopup), resultSigner[arrayindex_signer++], false, 

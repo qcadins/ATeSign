@@ -25,14 +25,6 @@
 }</httpBodyContent>
    <httpBodyType>text</httpBodyType>
    <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Content-Type</name>
-      <type>Main</type>
-      <value>text/plain</value>
-      <webElementGuid>b05d1743-2242-4c94-ac28-27d7671a1a6a</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>Connection</name>
@@ -61,8 +53,8 @@
       <matchCondition>equals</matchCondition>
       <name>Content-Type</name>
       <type>Main</type>
-      <value>text/plain</value>
-      <webElementGuid>05a641ac-ec51-4210-849b-d72252cb71f2</webElementGuid>
+      <value>application/x-www-form-urlencoded</value>
+      <webElementGuid>4d5d9cad-19c7-4af7-8916-c24172537e35</webElementGuid>
    </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>
