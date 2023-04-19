@@ -902,7 +902,7 @@ public class dataVerif {
 		}
 		return data
 	}
-	
+
 	@Keyword
 	public getIsiSaldoTrx(Connection conn, String refno){
 		String data

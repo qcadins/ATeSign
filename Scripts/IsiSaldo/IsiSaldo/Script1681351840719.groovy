@@ -143,8 +143,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             if (GlobalVariable.checkStoreDB == 'Yes') {
                 'call test case store db'
                 WebUI.callTestCase(findTestCase('IsiSaldo/IsiSaldoStoreDB'), [('excelPathIsiSaldo') : 'Saldo/isiSaldo'], 
-                    FailureHandling.STOP_ON_FAILURE)
+                    FailureHandling.CONTINUE_ON_FAILURE)
             }
+			
 			'close browser'
 			WebUI.closeBrowser()
 			
@@ -279,7 +280,7 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 				"/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div["+ index +"]/div/div/div/div/div[2]/h3",true)
 			
 			'get qty saldo before'
-			saldo.add(WebUI.getText(modifyObjectQty))
+			saldo.add(WebUI.getText(modifyObjectQty).replace(',',''))
 			
 			break
 		}
@@ -291,10 +292,11 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 	'enter untuk input tipe saldo'
 	WebUI.sendKeys(findTestObject('isiSaldo/SaldoAdmin/input_TipeSaldo'), Keys.chord(Keys.ENTER))
 	
-	if(countCheckSaldo == 1) {
-		'input no kontrak'
-		WebUI.setText(findTestObject('isiSaldo/SaldoAdmin/input_NoKontrak'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 18))
-	}
+	'input tipe transaksi'
+	WebUI.setText(findTestObject('isiSaldo/SaldoAdmin/input_TipeTransaksi'), 'Topup ' + findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 16))
+	
+	'enter untuk input tipe saldo'
+	WebUI.sendKeys(findTestObject('isiSaldo/SaldoAdmin/input_TipeTransaksi'), Keys.chord(Keys.ENTER))
 	
 	'click button cari'
 	WebUI.click(findTestObject('isiSaldo/SaldoAdmin/button_Cari'))
@@ -320,7 +322,7 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 		"/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper["+ variable.size() +"]/datatable-body-row/div[2]/datatable-body-cell[10]/div",true)
 	
 	'get trx saldo'
-	saldo.add(WebUI.getText(modifyObjectBalance))
+	saldo.add(WebUI.getText(modifyObjectBalance).replace(',',''))
 	
 	if(countCheckSaldo == 1) {
 		'modify object no transaksi'
