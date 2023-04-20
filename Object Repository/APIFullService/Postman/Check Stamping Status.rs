@@ -10,7 +10,7 @@
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;USER@AD-INS.COM\&quot;\n    },\n    \&quot;refNumber\&quot;: $(refnum)\n\n}&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: ${callerId}\n    },\n    \&quot;refNumber\&quot;: ${refNumber}\n\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -43,7 +43,7 @@
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>POST</restRequestMethod>
-   <restUrl>${base_url}/document/checkStampingStatus</restUrl>
+   <restUrl>${base_url}/services/external/document/checkStampingStatus</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>
@@ -67,7 +67,7 @@
       <name>api_key</name>
    </variables>
    <variables>
-      <defaultValue>GlobalVariable.tenant_code</defaultValue>
+      <defaultValue>GlobalVariable.Tenant</defaultValue>
       <description></description>
       <id>db7afe84-b5f3-4e75-86a4-68fac5cc88a9</id>
       <masked>false</masked>

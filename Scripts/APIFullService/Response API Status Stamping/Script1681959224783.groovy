@@ -39,8 +39,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         } else if (findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 13) == 'No') {
             'get api key salah dari excel'
             GlobalVariable.api_key = findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 14)
-
-			
         }
 		
 		'check if tidak mau menggunakan tenant code yang benar'
@@ -51,7 +49,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         
         'HIT API check registrasi'
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Check Stamping Status', [('callerId') : findTestData(
-                        excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 9), ('refnum') : findTestData(
+                        excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 9), ('refNumber') : findTestData(
                         excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 11)]))
 
         'Jika status HIT API 200 OK'
@@ -64,29 +62,37 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'mengambil response'
             docId = WS.getElementPropertyValue(respon, 'checkStampingStatus.documentId', FailureHandling.OPTIONAL)
 
+			println(docId.size())
             stampingstatus = WS.getElementPropertyValue(respon, 'checkStampingStatus.stampingStatus', FailureHandling.OPTIONAL)
+			
+			message = WS.getElementPropertyValue(respon, 'checkStampingStatus.message', FailureHandling.OPTIONAL)
+			
 			
 			if(GlobalVariable.checkStoreDB == 'Yes') {
 
 				arrayIndex = 0
 				
 				'get data from db'				
-				ArrayList<String> result = CustomKeywords.'connection.dataVerif.getAPICheckRegisterStoreDB'(conneSign, findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 12).replace('"',''))
+				ArrayList<String> result = CustomKeywords.'connection.dataVerif.getAPICheckStampingStoreDB'(conneSign, findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 11).replace('"',''))
 				
 				println(result)
+				
 				'declare arraylist arraymatch'
 				ArrayList<String> arrayMatch = new ArrayList<String>()
 				
 				for(index = 0; index < docId.size(); index++) {
 					
-					if(stampingstatus[index] != '0') {
-						'verify vendor'
+						'verify doc id'
 						arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++].toUpperCase(), docId[index].toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 						
-						'verify vendor status'
+						'verify stamping status'
 						arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++].toUpperCase(), stampingstatus[index].toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-					}
-					
+						
+						'if stamping status = 2'
+						if(stampingstatus == 2) {
+						'verify error status'
+						arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++].toUpperCase(), message[index].toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+						}			
 				}
 					
 				
