@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>btn_X</name>
+   <tag></tag>
+   <elementGuidId>821764dc-15bf-41ef-9ff2-b1361654b3c9</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/ngb-modal-window/div/div/app-signer/div[1]/button/span</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/ngb-modal-window/div/div/app-signer/div[1]/button/span</value>
+      <webElementGuid>6dedc1bb-dbe5-496e-95b4-0c4beafa5703</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>
