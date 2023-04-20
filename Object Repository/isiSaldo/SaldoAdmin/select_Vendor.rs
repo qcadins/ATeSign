@@ -18,7 +18,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div/div/form/select</value>
-      <webElementGuid>fbd89c89-8684-4263-b84f-ce0b0391afc6</webElementGuid>
+      <webElementGuid>8368e4af-dbdc-44b9-a967-4d1f44118d8c</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -26,6 +26,6 @@
       <name>formcontrolname</name>
       <type>Main</type>
       <value>vendorSelect</value>
-      <webElementGuid>7f31d688-2a74-4a9e-a72c-a8ba9b71fdf8</webElementGuid>
+      <webElementGuid>dc12bb96-6911-43b1-94e0-c873a32f3bb8</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_TanggalTrxSampai</name>
+   <tag></tag>
+   <elementGuidId>3c39de0c-c7a3-4e62-a25f-60f2d8e673db</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;transactionDateEnd&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;transactionDateEnd&quot;]</value>
+      <webElementGuid>ad6a3aa5-bbbb-4fdd-a8ea-15b1d21dafbb</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

@@ -41,7 +41,7 @@ checkPaging(conneSign)
 'declare isMmandatory Complete'
 int isMandatoryComplete = Integer.parseInt(findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 4))
 
-'looping isi saldo'
+'looping tenant'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
@@ -104,7 +104,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     } else if (!(WebUI.getText(modifyObjectButtonServices).contains(arrayServices[indexExcel]))) {
                         continue
                     } else if (WebUI.getText(modifyObjectButtonServices).contains(arrayServices[indexExcel])) {
-                        'click button'
+                        'click button add services'
                         WebUI.click(modifyObjectButtonServices)
 
                         'modify object input services'
@@ -339,7 +339,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             break
                         } else if (!(WebUI.getText(modifyObjectLabelServices).equalsIgnoreCase(arrayServices[indexExcel]))) {
                             if ((indexExcel + 1) == arrayServices.size()) {
-                                'click button'
+                                'click button hapus'
                                 WebUI.click(modifyObjectButtonHapus)
 
                                 break
@@ -347,7 +347,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         }
                     } else if (WebUI.verifyElementPresent(modifyObjectButtonServices, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
                         if (WebUI.getText(modifyObjectButtonServices).contains(arrayServices[indexExcel])) {
-                            'click button'
+                            'click button add service'
                             WebUI.click(modifyObjectButtonServices)
 
                             'modify object input services'

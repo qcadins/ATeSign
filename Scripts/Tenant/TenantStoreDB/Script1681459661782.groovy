@@ -64,12 +64,24 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathTenant).getValue(GlobalVa
 
 ArrayList<String> arrayServices = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 18).split(';',-1)
 
-println(arrayServices)
-println(resultServices)
+ArrayList<String> arrayServicesBatasSaldo = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 19).split(';',-1)
 
-'verify services'
-arrayMatch.add(arrayServices.containsAll(resultServices))
+'looping untuk verif services dan bata saldo'
+indexServices = 0 
+for(indexExcel = 0 ; indexExcel < arrayServices.size(); indexExcel++) {
+	String services = resultServices[indexServices++]
+	
+	if(services.equalsIgnoreCase(arrayServices[indexExcel])) {
+		'verify services'
+		arrayMatch.add(WebUI.verifyMatch(services, arrayServices[indexExcel].toUpperCase(),
+				false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+		'verify service batas saldo'
+		arrayMatch.add(WebUI.verifyMatch(resultServices[indexServices++], arrayServicesBatasSaldo[indexExcel],
+				false, FailureHandling.CONTINUE_ON_FAILURE))
+	}
 
+}
 
 }else if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Service')) {
 	'get data balacne mutation dari DB'
