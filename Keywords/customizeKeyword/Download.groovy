@@ -21,7 +21,7 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable
 
 public class Download {
-	
+
 	@Keyword
 	def isFileDownloaded(String deleteFile) {
 		boolean isDownloaded = false
@@ -42,5 +42,5 @@ public class Download {
 		}
 		return isDownloaded
 	}
-	
+
 }
