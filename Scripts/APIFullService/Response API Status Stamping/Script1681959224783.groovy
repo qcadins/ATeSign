@@ -45,7 +45,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         if (findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 15) == 'No') {
             'set tenant kosong'
             GlobalVariable.Tenant = findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 16)
-        }
+        }else if (findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 15) == 'Yes') {
+			GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
+		}
         
         'HIT API check registrasi'
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Check Stamping Status', [('callerId') : findTestData(

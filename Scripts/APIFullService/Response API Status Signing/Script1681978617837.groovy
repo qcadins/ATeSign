@@ -25,113 +25,111 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExc
 Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 
 'get colm excel'
-int countColmExcel = findTestData(excelPathAPICheckStamping).getColumnNumbers()
+int countColmExcel = findTestData(excelPathAPICheckSigning).getColumnNumbers()
 
 'looping API Registrasi'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
-    if (findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
+    if (findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
-    } else if (findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+    } else if (findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+        'check if tidak mau menggunakan tenant code yang benar'
+        if (findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, 15) == 'No') {
+            'set tenant kosong'
+            GlobalVariable.Tenant = findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, 16)
+        } else if (findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, 15) == 'Yes') {
+            GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
+        }
+        
         'check if mau menggunakan api_key yang salah atau benar'
-        if (findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 13) == 'Yes') {
+        if (findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, 13) == 'Yes') {
             'get api key dari db'
             GlobalVariable.api_key = CustomKeywords.'connection.dataVerif.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
-        } else if (findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 13) == 'No') {
+        } else if (findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, 13) == 'No') {
             'get api key salah dari excel'
-            GlobalVariable.api_key = findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 14)
+            GlobalVariable.api_key = findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, 14)
         }
-		
-		'check if tidak mau menggunakan tenant code yang benar'
-		if (findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 15) == 'No') {
-			'set tenant kosong'
-			GlobalVariable.Tenant = findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 16)
-		}
         
         'HIT API check registrasi'
-        respon = WS.sendRequest(findTestObject('APIFullService/Postman/Check Stamping Status', [('callerId') : findTestData(
-                        excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 9), ('refNumber') : findTestData(
-                        excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 11)]))
+        respon = WS.sendRequest(findTestObject('APIFullService/Postman/Check Status Signing', [('callerId') : findTestData(
+                        excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, 9), ('refNumber') : findTestData(excelPathAPICheckSigning).getValue(
+                        GlobalVariable.NumofColm, 11)]))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
-			
-			code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
-			
-			if(code == 0) {
-			
-            'mengambil response'
-            docId = WS.getElementPropertyValue(respon, 'checkStampingStatus.documentId', FailureHandling.OPTIONAL)
+            code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
-			println(docId.size())
-            stampingstatus = WS.getElementPropertyValue(respon, 'checkStampingStatus.stampingStatus', FailureHandling.OPTIONAL)
-			
-			message = WS.getElementPropertyValue(respon, 'checkStampingStatus.message', FailureHandling.OPTIONAL)
-			
-			
-			if(GlobalVariable.checkStoreDB == 'Yes') {
+            if (code == 0) {
+                'mengambil response'
+                docId = WS.getElementPropertyValue(respon, 'statusSigning.documentId', FailureHandling.OPTIONAL)
 
-				arrayIndex = 0
-				
-				'get data from db'				
-				ArrayList<String> result = CustomKeywords.'connection.dataVerif.getAPICheckStampingStoreDB'(conneSign, findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 11).replace('"',''))
-				
-				println(result)
-				
-				'declare arraylist arraymatch'
-				ArrayList<String> arrayMatch = new ArrayList<String>()
-				
-				for(index = 0; index < docId.size(); index++) {
-					
-						'verify doc id'
-						arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++].toUpperCase(), docId[index].toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-						
-						'verify stamping status'
-						arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++].toUpperCase(), stampingstatus[index].toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-						
-						'if stamping status = 2'
-						if(stampingstatus == 2) {
-						'verify error status'
-						arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++].toUpperCase(), message[index].toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-						}			
-				}
-					
-				
-			
-				'jika data db tidak sesuai dengan excel'
-				if (arrayMatch.contains(false)) {
-				
-					'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-					CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Check Stamping Status', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 2) + ';' + GlobalVariable.ReasonFailedStoredDB)
-					
-				}else {
-					'write to excel success'
-					CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Check Stamping Status', 0, GlobalVariable.NumofColm -
-						1, GlobalVariable.StatusSuccess)
-				}
-			
-			}
-            println(docId)
+                email = WS.getElementPropertyValue(respon, 'statusSigning.signer.email', FailureHandling.OPTIONAL)
 
-            println(stampingstatus)
-			
-			}else {
-				'mengambil status code berdasarkan response HIT API'
-				message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
-	
-				println(message)
-	
-				'Write To Excel GlobalVariable.StatusFailed and errormessage'
-				CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Check Stamping Status', GlobalVariable.NumofColm,
-					GlobalVariable.StatusFailed, message)
-			}
+                statusSigning = WS.getElementPropertyValue(respon, 'statusSigning.signer.signStatus', FailureHandling.OPTIONAL)
+
+                signDate = WS.getElementPropertyValue(respon, 'statusSigning.signer.signDate', FailureHandling.OPTIONAL)
+
+                if (GlobalVariable.checkStoreDB == 'Yes') {
+                    arrayIndex = 0
+
+                    'get data from db'
+                    ArrayList<String> result = CustomKeywords.'connection.dataVerif.getAPICheckSigningStoreDB'(conneSign, 
+                        findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, 11).replace('"', ''))
+
+                    'declare arraylist arraymatch'
+                    ArrayList<String> arrayMatch = new ArrayList<String>()
+
+                    for (index = 0; index < docId.size(); index++) {
+                        for (indexB = 0; indexB < (email[index]).size(); indexB++) {
+                            'verify doc id'
+                            arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), (docId[index]).toUpperCase(), 
+                                    false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                            'verify user email'
+                            arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), ((email[index])[indexB]).toUpperCase(), 
+                                    false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                            'verify sign status'
+                            arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), ((statusSigning[index])[
+                                    indexB]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                            'if statusSigning == 1'
+                            if (((statusSigning[index])[indexB]) == '1') {
+                                'verify error status'
+                                arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), ((signDate[index])[
+                                        indexB]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+                            } else {
+                                'skip signdate karena status != 1'
+                                arrayIndex++
+                            }
+                        }
+                    }
+                    
+                    'jika data db tidak sesuai dengan excel'
+                    if (arrayMatch.contains(false)) {
+                        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+                        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Check Signing Status', 
+                            GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (findTestData(excelPathIsiSaldo).getValue(
+                                GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
+                    } else {
+                        'write to excel success'
+                        CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Check Signing Status', 
+                            0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+                    }
+                }
+            } else {
+                'mengambil status code berdasarkan response HIT API'
+                message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
+
+                'Write To Excel GlobalVariable.StatusFailed and errormessage'
+                CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Check Signing Status', GlobalVariable.NumofColm, 
+                    GlobalVariable.StatusFailed, message)
+            }
         } else {
             'mengambil status code berdasarkan response HIT API'
             message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
-            println(message)
-
             'Write To Excel GlobalVariable.StatusFailed and errormessage'
-            CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Check Stamping Status', GlobalVariable.NumofColm, 
+            CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Check Signing Status', GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, message)
         }
     }

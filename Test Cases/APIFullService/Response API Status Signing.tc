@@ -18,11 +18,11 @@
       <variableId>069fc894-8d00-4bf2-8779-b99ed107c823</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'APIFullService/API_CheckStamping'</defaultValue>
+      <defaultValue>'APIFullService/API_CheckSigning'</defaultValue>
       <description></description>
       <id>a6346604-661a-4779-983d-494053ba5252</id>
       <masked>false</masked>
-      <name>excelPathAPICheckStamping</name>
+      <name>excelPathAPICheckSigning</name>
    </variable>
    <variable>
       <defaultValue>'Login/Setting'</defaultValue>
