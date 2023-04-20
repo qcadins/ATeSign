@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>Response API check Registrasi</name>
+   <name>Response API Status Stamping</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>66791b57-cf47-4687-a21e-4249fd9574fd</testCaseGuid>
+   <testCaseGuid>89f6b975-2db9-4eb8-8a4d-97b50705dec5</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>f33931ef-70ac-463d-a00c-ccb1a6b31033</variableId>
+      <variableId>afe8798b-a03d-494a-8a01-866512c003b8</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'APIFullService/API_CheckRegistrasi'</defaultValue>
+      <defaultValue>'APIFullService/API_CheckStamping'</defaultValue>
       <description></description>
-      <id>f33931ef-70ac-463d-a00c-ccb1a6b31033</id>
+      <id>afe8798b-a03d-494a-8a01-866512c003b8</id>
       <masked>false</masked>
-      <name>excelPathAPICheckRegistrasi</name>
+      <name>excelPathAPICheckStamping</name>
    </variable>
 </TestCaseEntity>
