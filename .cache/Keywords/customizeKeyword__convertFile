@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "D19172533D6CC118287A13BBD64BA8B7",
+  "keywordFileContentHash": "D96D2055C16F6E08D4524746C5185833",
   "keywordClasses": [
     {
       "name": "customizeKeyword.convertFile",
@@ -20,11 +20,10 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         }
       ]
     }
   ],
-  "javadocParsed": true
+  "javadocParsed": false
 }

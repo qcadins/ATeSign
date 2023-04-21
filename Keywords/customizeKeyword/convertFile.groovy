@@ -26,7 +26,7 @@ public class convertFile {
 	@Keyword
 	public static String BASE64File(String filename) {
 
-		File f = new File(System.getProperty('user.dir') + "\\File\\Image\\" + filename)
+		File f = new File(System.getProperty('user.dir') + "\\File" + filename)
 		FileInputStream fis = new FileInputStream(f)
 		byte[] byteArray = new byte[(int)f.length()]
 		fis.read(byteArray)
