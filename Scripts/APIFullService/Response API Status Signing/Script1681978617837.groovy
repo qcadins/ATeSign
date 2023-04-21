@@ -27,7 +27,7 @@ Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 'get colm excel'
 int countColmExcel = findTestData(excelPathAPICheckSigning).getColumnNumbers()
 
-'looping API Registrasi'
+'looping API Status Signing'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
@@ -49,7 +49,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.api_key = findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, 14)
         }
         
-        'HIT API check registrasi'
+        'HIT API check Status Signing'
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Check Status Signing', [('callerId') : findTestData(
                         excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, 9), ('refNumber') : findTestData(excelPathAPICheckSigning).getValue(
                         GlobalVariable.NumofColm, 11)]))
