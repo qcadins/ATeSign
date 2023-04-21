@@ -26,7 +26,7 @@ import internal.GlobalVariable
 
 
 public class parseText {
-	
+
 	@Keyword
 	public static String parseEncrypt(String value, String AESKey) {
 		try {
@@ -43,10 +43,9 @@ public class parseText {
 		}
 		return null;
 	}
-	
+
 	@Keyword
-	public static String parseDecrypt(String encrypted, String AESKey)
-	{
+	public static String parseDecrypt(String encrypted, String AESKey) {
 		try {
 			String key = "JavasEncryptDemo"; // 128 bit key
 			String randomVector = "RandomJavaVector"; // 16 bytes IV 

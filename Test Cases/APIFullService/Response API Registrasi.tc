@@ -11,11 +11,24 @@
       <value></value>
       <variableId>a0c4b290-fb55-4f3d-972a-88eb2aabfc88</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>56b4591f-d85e-4499-a3d1-af8f085de647</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>'APIFullService/API_Registrasi'</defaultValue>
       <description></description>
       <id>a0c4b290-fb55-4f3d-972a-88eb2aabfc88</id>
       <masked>false</masked>
       <name>excelPathAPIRegistrasi</name>
+   </variable>
+   <variable>
+      <defaultValue>'Login/Setting'</defaultValue>
+      <description></description>
+      <id>56b4591f-d85e-4499-a3d1-af8f085de647</id>
+      <masked>false</masked>
+      <name>excelPathSetting</name>
    </variable>
 </TestCaseEntity>

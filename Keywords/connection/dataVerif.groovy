@@ -985,7 +985,7 @@ public class dataVerif {
 		}
 		return listdata
 	}
-	
+
 	@Keyword
 	public getAPICheckSigningStoreDB(Connection conn, String value){
 		String data
@@ -1006,5 +1006,44 @@ public class dataVerif {
 			}
 		}
 		return listdata
+	}
+	
+	@Keyword
+	public checkAPIRegisterActive(Connection conn, String email, String notelp){
+		String data
+		ArrayList<String> listdata = new ArrayList<>()
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("select mvru.is_active, mvru.is_registered from ms_vendor_registered_user mvru JOIN ms_vendor mv ON mv.id_ms_vendor = mvru.id_ms_vendor where vendor_code = '"+ GlobalVariable.Psre +"' AND (signer_registered_email = '"+ email +"' OR mvru.hashed_signer_registered_phone = encode(sha256('"+ notelp +"'), 'hex'))")
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for(int i = 1 ; i <= columnCount ; i++){
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		return listdata
+	}
+	
+	@Keyword
+	public getAPIRegisterTrx (Connection conn, String trxno){
+		String data
+
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("select qty from tr_balance_mutation WHERE trx_no = '"+ trxno +"'")
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		return data
 	}
 }
