@@ -506,8 +506,7 @@ public class dataVerif {
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
 
-		ResultSet resultSet = stm.executeQuery("select ms.description as signertype,amm.full_name as name, amm.login_id as email,CASE WHEN amm.is_active = '1' THEN 'Sudah Aktivasi' END as aktivasi, msl.description as status,CASE WHEN tdds.sign_date IS null THEN '-' END sign_date from tr_document_d tdd join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join ms_lov msl on tdd.lov_sign_status = msl.id_lov join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d join ms_lov ms on tdds.lov_signer_type = ms.id_lov join am_msuser amm on tdds.id_ms_user = amm.id_ms_user where document_id = '"+documentid+"' ORDER BY tdds.id_document_d_sign asc")
-
+		ResultSet resultSet = stm.executeQuery("select ms.description as signertype,amm.full_name as name, amm.login_id as email, CASE WHEN amm.is_active = '1' THEN 'Sudah Aktivasi' END as aktivasi, CASE WHEN tdds.sign_date is not null THEN 'Signed' ELSE msl.description END as status, CASE WHEN tdds.sign_date IS null THEN '-' else to_char(tdds.sign_date, 'DD-Mon-YYYY HH24:MI') END sign_date from tr_document_d tdd join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join ms_lov msl on tdd.lov_sign_status = msl.id_lov join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d join ms_lov ms on tdds.lov_signer_type = ms.id_lov join am_msuser amm on tdds.id_ms_user = amm.id_ms_user where document_id = '"+documentid+"' ORDER BY tdds.id_document_d_sign asc")
 		ResultSetMetaData metadata = resultSet.getMetaData()
 
 		columnCount = metadata.getColumnCount()
@@ -528,7 +527,7 @@ public class dataVerif {
 		Statement stm = conn.createStatement()
 
 		ResultSet resultSet = stm.executeQuery("SELECT trf.feedback_value, trf.comment FROM tr_feedback trf join am_msuser amm on trf.id_ms_user = amm.id_ms_user where amm.login_id = '"+emailsigner+"' ORDER BY trf.dtm_crt DESC LIMIT 1")
-		
+
 		ResultSetMetaData metadata = resultSet.getMetaData()
 
 		columnCount = metadata.getColumnCount()
@@ -740,7 +739,7 @@ public class dataVerif {
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
 
-		ResultSet resultSet = stm.executeQuery("select tbm.trx_no, TO_CHAR(tbm.dtm_crt,'YYYY-MM-DD HH24:MI:SS'), ml.description , amm.full_name, tdh.ref_number,ml_doc_h.code,mdt.doc_template_name, tbm.notes, tbm.qty from tr_balance_mutation as tbm join ms_lov as ml on tbm.lov_trx_type = ml.id_lov join am_msuser as amm on tbm.id_ms_user = amm.id_ms_user join tr_document_h as tdh on tbm.id_document_h = tdh.id_document_h join ms_lov as ml_doc_h on tdh.lov_doc_type = ml_doc_h.id_lov join tr_document_d as tdd on tbm.id_document_d = tdd.id_document_d join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template order by tbm.dtm_crt desc limit 1")
+		ResultSet resultSet = stm.executeQuery("select tbm.trx_no, TO_CHAR(tbm.dtm_crt,'YYYY-MM-DD HH24:MI:SS'), ml.description , amm.full_name, tdh.ref_number||'('||amm.full_name||')',ml_doc_h.code,mdt.doc_template_name, tbm.notes, tbm.qty from tr_balance_mutation as tbm join ms_lov as ml on tbm.lov_trx_type = ml.id_lov join am_msuser as amm on tbm.id_ms_user = amm.id_ms_user join tr_document_h as tdh on tbm.id_document_h = tdh.id_document_h join ms_lov as ml_doc_h on tdh.lov_doc_type = ml_doc_h.id_lov join tr_document_d as tdd on tbm.id_document_d = tdd.id_document_d join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template order by tbm.dtm_crt desc limit 1")
 
 		ResultSetMetaData metadata = resultSet.getMetaData()
 
@@ -756,20 +755,24 @@ public class dataVerif {
 	}
 
 	@Keyword
-	public getRequestDateSendSign(Connection conn, String documentid){
+	public getDataSendtoSign(Connection conn, String documentid){
 		String data
-
+		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
 
-		ResultSet resultSet = stm.executeQuery("select TO_char(request_date, 'DD-Mon-YYYY HH24:MI') from tr_document_d where document_id = '"+documentid+"'")
+		ResultSet resultSet = stm.executeQuery("select tdh.ref_number, msl.description, TO_char(tdd.request_date, 'DD-Mon-YYYY HH24:MI') from tr_document_d tdd join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join ms_lov msl on tdh.lov_doc_type = msl.id_lov where tdd.document_id = '"+documentid+"'")
+
 		ResultSetMetaData metadata = resultSet.getMetaData()
 
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			data = resultSet.getObject(1)
+			for(int i = 1 ; i <= columnCount ; i++){
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
 		}
-		return data
+		return listdata
 	}
 
 	@Keyword
@@ -924,7 +927,7 @@ public class dataVerif {
 		}
 		return listdata
 	}
-	
+
 	@Keyword
 	public getAPICheckRegisterStoreDB(Connection conn, String value){
 		String data
@@ -946,7 +949,7 @@ public class dataVerif {
 		}
 		return listdata
 	}
-	
+
 	@Keyword
 	public getSignStatus (Connection conn, String documentid){
 		String data
@@ -962,5 +965,26 @@ public class dataVerif {
 			data = resultSet.getObject(1)
 		}
 		return data
+	}
+
+	@Keyword
+	public getSigningStatusProcess(Connection conn, String documentid, String emailsigner){
+		String data
+		ArrayList<String> listdata = new ArrayList<>()
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("select tdsp.request_status, CASE WHEN tdds.sign_date is not null THEN 'Sudah TTD' end , tdd.total_signed from tr_document_d_sign tdds join tr_document_d tdd on tdds.id_document_d = tdd.id_document_d join am_msuser amm on tdds.id_ms_user = amm.id_ms_user join tr_document_signing_request tdsp on amm.id_ms_user = tdsp.id_ms_user where tdd.document_id = '"+documentid+"' and amm.login_id = '"+emailsigner+"' ORDER BY tdsp.request_status desc limit 1 ")
+
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for(int i = 1 ; i <= columnCount ; i++){
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		return listdata
 	}
 }
