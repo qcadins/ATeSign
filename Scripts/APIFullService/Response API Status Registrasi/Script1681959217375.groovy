@@ -50,72 +50,59 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
 			
-			code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
-			
-			if(code == 0) {
-			
-            'mengambil response'
-            vendor = WS.getElementPropertyValue(respon, 'registrationData.vendor', FailureHandling.OPTIONAL)
+            code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
-            vendoractive = WS.getElementPropertyValue(respon, 'registrationData.registrationStatus', FailureHandling.OPTIONAL)
-			
-			if(GlobalVariable.checkStoreDB == 'Yes') {
+            if (code == 0) {
+                'mengambil response'
+                vendor = WS.getElementPropertyValue(respon, 'registrationData.vendor', FailureHandling.OPTIONAL)
 
-				arrayIndex = 0
-				
-				'get data from db'				
-				ArrayList<String> result = CustomKeywords.'connection.dataVerif.getAPICheckRegisterStoreDB'(conneSign, findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, 12).replace('"',''))
-				
-				println(result)
-				'declare arraylist arraymatch'
-				ArrayList<String> arrayMatch = new ArrayList<String>()
-				
-				for(index = 0; index < vendor.size(); index++) {
-					
-					if(vendoractive[index] != '0') {
-						'verify vendor'
-						arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++].toUpperCase(), vendor[index].toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-						
-						'verify vendor status'
-						arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++].toUpperCase(), vendoractive[index].toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-					}
-					
-				}
-					
-				
-			
-				'jika data db tidak sesuai dengan excel'
-				if (arrayMatch.contains(false)) {
-				
-					'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-					CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Check Registrasi', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 2) + ';' + GlobalVariable.ReasonFailedStoredDB)
-					
-				}else {
-					'write to excel success'
-					CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Check Registrasi', 0, GlobalVariable.NumofColm -
-						1, GlobalVariable.StatusSuccess)
-				}
-			
-			}
-            println(vendor)
+                vendoractive = WS.getElementPropertyValue(respon, 'registrationData.registrationStatus', FailureHandling.OPTIONAL)
 
-            println(vendoractive)
-			
-			}else {
-				'mengambil status code berdasarkan response HIT API'
-				message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
-	
-				println(message)
-	
-				'Write To Excel GlobalVariable.StatusFailed and errormessage'
-				CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Check Registrasi', GlobalVariable.NumofColm,
-					GlobalVariable.StatusFailed, message)
-			}
+                if (GlobalVariable.checkStoreDB == 'Yes') {
+                    arrayIndex = 0
+
+                    'get data from db'
+                    ArrayList<String> result = CustomKeywords.'connection.dataVerif.getAPICheckRegisterStoreDB'(conneSign, 
+                        findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, 12).replace('"', ''))
+
+                    'declare arraylist arraymatch'
+                    ArrayList<String> arrayMatch = new ArrayList<String>()
+
+                    for (index = 0; index < vendor.size(); index++) {
+                        if ((vendoractive[index]) != '0') {
+                            'verify vendor'
+                            arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), (vendor[index]).toUpperCase(), 
+                                    false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                            'verify vendor status'
+                            arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), (vendoractive[index]).toUpperCase(), 
+                                    false, FailureHandling.CONTINUE_ON_FAILURE))
+                        }
+                    }
+                    
+                    'jika data db tidak sesuai dengan excel'
+                    if (arrayMatch.contains(false)) {
+                        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+                        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Check Registrasi', GlobalVariable.NumofColm, 
+                            GlobalVariable.StatusFailed, (findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
+                                2) + ';') + GlobalVariable.ReasonFailedStoredDB)
+                    } else {
+                        'write to excel success'
+                        CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Check Registrasi', 
+                            0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+                    }
+                }
+            } else {
+                'mengambil status code berdasarkan response HIT API'
+                message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
+
+                'Write To Excel GlobalVariable.StatusFailed and errormessage'
+                CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Check Registrasi', GlobalVariable.NumofColm, 
+                    GlobalVariable.StatusFailed, message)
+            }
         } else {
             'mengambil status code berdasarkan response HIT API'
             message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
-
-            println(message)
 
             'Write To Excel GlobalVariable.StatusFailed and errormessage'
             CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Check Registrasi', GlobalVariable.NumofColm, 

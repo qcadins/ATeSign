@@ -506,7 +506,7 @@ public class dataVerif {
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
 
-		ResultSet resultSet = stm.executeQuery("select ms.description as signertype,amm.full_name as name, amm.login_id as email, CASE WHEN amm.is_active = '1' THEN 'Sudah Aktivasi' END as aktivasi, CASE WHEN tdds.sign_date is not null THEN 'Signed' ELSE msl.description END as status, CASE WHEN tdds.sign_date IS null THEN '-' else to_char(tdds.sign_date, 'DD-Mon-YYYY HH24:MI') END sign_date from tr_document_d tdd join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join ms_lov msl on tdd.lov_sign_status = msl.id_lov join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d join ms_lov ms on tdds.lov_signer_type = ms.id_lov join am_msuser amm on tdds.id_ms_user = amm.id_ms_user where document_id = '"+documentid+"' ORDER BY tdds.id_document_d_sign asc")
+		ResultSet resultSet = stm.executeQuery("select ms.description as signertype,amm.full_name as name, amm.login_id as email,CASE WHEN amm.is_active = '1' THEN 'Sudah Aktivasi' END as aktivasi, CASE WHEN tdds.sign_date is not null THEN 'Signed' ELSE msl.description END as status, CASE WHEN tdds.sign_date IS null THEN '-' else to_char(tdds.sign_date, 'DD-Mon-YYYY HH24:MI') END sign_date from tr_document_d tdd join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join ms_lov msl on tdd.lov_sign_status = msl.id_lov join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d join ms_lov ms on tdds.lov_signer_type = ms.id_lov join am_msuser amm on tdds.id_ms_user = amm.id_ms_user where document_id = '"+documentid+"' ORDER BY tdds.id_document_d_sign asc")
 		ResultSetMetaData metadata = resultSet.getMetaData()
 
 		columnCount = metadata.getColumnCount()
@@ -986,5 +986,88 @@ public class dataVerif {
 			}
 		}
 		return listdata
+	}
+	
+	@Keyword
+	public getAPICheckStampingStoreDB(Connection conn, String value){
+		String data
+		ArrayList<String> listdata = new ArrayList<>()
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("SELECT document_id, CASE WHEN proses_materai = 0 OR proses_materai IS NULL THEN 0 WHEN proses_materai = 53 THEN 1 WHEN proses_materai = 51 AND error_message IS NOT NULL THEN 2 WHEN proses_materai = 51 AND sdt_process = 'NOT_STR' THEN 0 WHEN proses_materai = 51 AND sdt_process = 'STM_SDT' THEN 4 WHEN proses_materai = 51 AND sdt_process = 'UPL_DOC' OR sdt_process = 'GEN_SDT' THEN 3 WHEN proses_materai = 51 AND sdt_process = 'UPL_OSS' OR sdt_process = 'UPL_CON' THEN 5 WHEN proses_materai = 51 AND sdt_process = 'SDT_FIN' THEN 1 WHEN proses_materai = 55 OR proses_materai = 52 AND sdt_process = 'NOT_STR' THEN 0 WHEN proses_materai = 55 OR proses_materai = 52 AND sdt_process = 'STM_SDT' THEN 4 WHEN proses_materai = 55 OR proses_materai = 52 AND sdt_process = 'UPL_DOC' OR sdt_process = 'GEN_SDT' THEN 3 WHEN proses_materai = 55 OR proses_materai = 52 AND sdt_process = 'UPL_OSS' OR sdt_process = 'UPL_CON' THEN 5 WHEN proses_materai = 55 OR proses_materai = 52 AND sdt_process = 'SDT_FIN' THEN 1 END FROM tr_document_h tdh JOIN tr_document_d tdd ON tdd.id_document_h = tdh.id_document_h LEFT JOIN tr_document_h_stampduty_error tdhse ON tdhse.id_document_d = tdd.id_document_d WHERE tdh.ref_number = '"+ value +"'")
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for(int i = 1 ; i <= columnCount ; i++){
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		return listdata
+	}
+
+	@Keyword
+	public getAPICheckSigningStoreDB(Connection conn, String value){
+		String data
+		ArrayList<String> listdata = new ArrayList<>()
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("select document_id, login_id, CASE WHEN LENGTH(TO_CHAR(tdds.sign_date, 'yyyy-MM-dd HH24:MI:SS')) > 0 THEN '1' ELSE '0' END, TO_CHAR(tdds.sign_date, 'yyyy-MM-dd HH24:MI:SS') from tr_document_h tdh JOIN tr_document_d tdd ON tdd.id_document_h = tdh.id_document_h JOIN tr_document_d_sign tdds ON tdds.id_document_d = tdd.id_document_d JOIN am_msuser amu ON amu.id_ms_user = tdds.id_ms_user where ref_number = '"+ value +"' ORDER BY id_document_d_sign DESC")
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for(int i = 1 ; i <= columnCount ; i++){
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		return listdata
+	}
+	
+	@Keyword
+	public checkAPIRegisterActive(Connection conn, String email, String notelp){
+		String data
+		ArrayList<String> listdata = new ArrayList<>()
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("select mvru.is_active, mvru.is_registered from ms_vendor_registered_user mvru JOIN ms_vendor mv ON mv.id_ms_vendor = mvru.id_ms_vendor where vendor_code = '"+ GlobalVariable.Psre +"' AND (signer_registered_email = '"+ email +"' OR mvru.hashed_signer_registered_phone = encode(sha256('"+ notelp +"'), 'hex'))")
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for(int i = 1 ; i <= columnCount ; i++){
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		return listdata
+	}
+	
+	@Keyword
+	public getAPIRegisterTrx (Connection conn, String trxno){
+		String data
+
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("select qty from tr_balance_mutation WHERE trx_no = '"+ trxno +"'")
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		return data
 	}
 }

@@ -1,14 +1,14 @@
 {
-  "keywordFileContentHash": "12BE8C36899EEFCF004A07FE76609AA0",
+  "keywordFileContentHash": "D96D2055C16F6E08D4524746C5185833",
   "keywordClasses": [
     {
-      "name": "customizeKeyword.Download",
+      "name": "customizeKeyword.convertFile",
       "keywordMethods": [
         {
-          "name": "isFileDownloaded",
+          "name": "BASE64File",
           "parameters": [
             {
-              "name": "deleteFile",
+              "name": "filename",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -20,11 +20,10 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         }
       ]
     }
   ],
-  "javadocParsed": true
+  "javadocParsed": false
 }
