@@ -916,8 +916,6 @@ public class dataVerif {
 
 		columnCount = metadata.getColumnCount()
 
-		columnCount = metadata.getColumnCount()
-
 		while (resultSet.next()) {
 			for(int i = 1 ; i <= columnCount ; i++){
 				data = resultSet.getObject(i)
@@ -935,8 +933,6 @@ public class dataVerif {
 
 		ResultSet resultSet = stm.executeQuery("select mv.vendor_name, CASE WHEN mvru.is_registered = '1' AND mvru.is_active = '1' THEN '2' WHEN mvru.is_registered = '1' AND mvru.is_active = '0' THEN '1' END from ms_vendor_registered_user mvru JOIN am_msuser amu ON amu.id_ms_user = mvru.id_ms_user JOIN ms_vendor mv ON mv.id_ms_vendor = mvru.id_ms_vendor where login_id = '"+ value +"' OR amu.hashed_id_no = encode(sha256('"+ value +"'), 'hex') OR amu.hashed_phone = encode(sha256('"+ value +"'), 'hex')")
 		ResultSetMetaData metadata = resultSet.getMetaData()
-
-		columnCount = metadata.getColumnCount()
 
 		columnCount = metadata.getColumnCount()
 
@@ -998,8 +994,6 @@ public class dataVerif {
 
 		columnCount = metadata.getColumnCount()
 
-		columnCount = metadata.getColumnCount()
-
 		while (resultSet.next()) {
 			for(int i = 1 ; i <= columnCount ; i++){
 				data = resultSet.getObject(i)
@@ -1015,10 +1009,8 @@ public class dataVerif {
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
 
-		ResultSet resultSet = stm.executeQuery("select document_id, login_id, CASE WHEN LENGTH(TO_CHAR(tdds.sign_date, 'yyyy-MM-dd HH24:MI:SS')) > 0 THEN '1' ELSE '0' END, TO_CHAR(tdds.sign_date, 'yyyy-MM-dd HH24:MI:SS') from tr_document_h tdh JOIN tr_document_d tdd ON tdd.id_document_h = tdh.id_document_h JOIN tr_document_d_sign tdds ON tdds.id_document_d = tdd.id_document_d JOIN am_msuser amu ON amu.id_ms_user = tdds.id_ms_user where ref_number = '"+ value +"' ORDER BY id_document_d_sign DESC")
+		ResultSet resultSet = stm.executeQuery("select document_id, login_id, CASE WHEN LENGTH(TO_CHAR(tdds.sign_date, 'yyyy-MM-dd HH24:MI:SS')) > 0 THEN '1' ELSE '0' END, TO_CHAR(tdds.sign_date, 'yyyy-MM-dd HH24:MI:SS') from tr_document_h tdh JOIN tr_document_d tdd ON tdd.id_document_h = tdh.id_document_h LEFT JOIN tr_document_d_sign tdds ON tdds.id_document_d = tdd.id_document_d JOIN am_msuser amu ON amu.id_ms_user = tdds.id_ms_user where ref_number = '"+ value +"' GROUP BY document_id, login_id, tdds.sign_date")
 		ResultSetMetaData metadata = resultSet.getMetaData()
-
-		columnCount = metadata.getColumnCount()
 
 		columnCount = metadata.getColumnCount()
 
@@ -1042,8 +1034,6 @@ public class dataVerif {
 
 		columnCount = metadata.getColumnCount()
 
-		columnCount = metadata.getColumnCount()
-
 		while (resultSet.next()) {
 			for(int i = 1 ; i <= columnCount ; i++){
 				data = resultSet.getObject(i)
@@ -1060,6 +1050,43 @@ public class dataVerif {
 		Statement stm = conn.createStatement()
 
 		ResultSet resultSet = stm.executeQuery("select qty from tr_balance_mutation WHERE trx_no = '"+ trxno +"'")
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		return data
+	}
+
+	@Keyword
+	public getSaldoTrx(Connection conn, String email, String notelp, String desc){
+		String data
+		ArrayList<String> listdata = new ArrayList<>()
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("SELECT tbm.trx_no, to_char(trx_date, 'yyyy-MM-dd HH24:mi:SS'), description, amu.full_name, notes, qty FROM tr_balance_mutation tbm JOIN ms_lov ml ON ml.id_lov = tbm.lov_trx_type JOIN am_msuser amu ON amu.id_ms_user = tbm.id_ms_user WHERE description = '"+ desc +"' AND (tbm.usr_crt = '"+ email +"' OR tbm.usr_crt = '"+ notelp +"') ORDER BY id_balance_mutation DESC")
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for(int i = 1 ; i <= columnCount ; i++){
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		return listdata
+	}
+
+	@Keyword
+	public getCountTrx (Connection conn, String email, String notelp, String desc){
+		String data
+
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("SELECT COUNT(*) FROM tr_balance_mutation tbm JOIN ms_lov ml ON ml.id_lov = tbm.lov_trx_type JOIN am_msuser amu ON amu.id_ms_user = tbm.id_ms_user WHERE description = '"+ desc +"' AND (tbm.usr_crt = '"+ email +"' OR tbm.usr_crt = '"+ notelp +"')")
 		ResultSetMetaData metadata = resultSet.getMetaData()
 
 		columnCount = metadata.getColumnCount()

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_NoKontrak</name>
+   <tag></tag>
+   <elementGuidId>96b10e05-8207-4f5b-9943-d6a9e3762dd4</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;referenceNo&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;referenceNo&quot;]</value>
+      <webElementGuid>502f9188-c9f5-4c71-8495-2f2ee09833f3</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

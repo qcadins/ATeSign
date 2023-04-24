@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_TipeTransaksi</name>
+   <tag></tag>
+   <elementGuidId>35832830-70be-4d1a-908f-7a2804727812</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;transactionType&quot;]/div/div/div[3]/input</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;transactionType&quot;]/div/div/div[3]/input</value>
+      <webElementGuid>ec0ee046-9349-481d-aa8c-8529daf48c3f</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

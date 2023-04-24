@@ -237,11 +237,13 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
 
 //	if (WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).contains('berhasil')) {
 		
+	WebUI.delay(6)
+	
     'get reason error log'
     reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).toString()
 	
 	    'cek if popup error msg'
-	    if (reason.contains('gagal')) {
+	    if (!reason.contains('berhasil')) {
 			
 			'write to excel status failed dan reason'
 	        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
