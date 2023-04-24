@@ -12,7 +12,7 @@
       <variableId>e79b4264-7ac4-4228-bdcb-69ebdae80209</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'Registrasi/FE_SignDocument'</defaultValue>
+      <defaultValue>'Beranda/SendtoSign'</defaultValue>
       <description></description>
       <id>e79b4264-7ac4-4228-bdcb-69ebdae80209</id>
       <masked>false</masked>

@@ -32,12 +32,12 @@ RunConfiguration.setWebDriverPreferencesProperty('prefs', chromePrefs)
 Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 
 'get data kotak masuk send document secara asc, dimana customer no 1'
-ArrayList result = CustomKeywords.'connection.dataVerif.getKotakMasukSendDoc'(conneSign, GlobalVariable.Response)
+ArrayList<String> result = CustomKeywords.'connection.dataVerif.getKotakMasukSendDoc'(conneSign, GlobalVariable.Response)
 
 ArrayList<String> prosesttd_pencariandokumen = new ArrayList<String>()
 
 'declare arraylist arraymatch'
-ArrayList arrayMatch = new ArrayList()
+ArrayList<String> arrayMatch = new ArrayList<String>()
 
 'declare arrayindex'
 arrayindex = 0
@@ -46,8 +46,8 @@ arrayindex = 0
 WebUI.click(findTestObject('PencarianDokumen/menu_PencarianDokumen'))
 
 'input status'
-WebUI.setText(findTestObject('PencarianDokumen/select_Status'), CustomKeywords.'connection.dataVerif.getSignStatus'(
-		conneSign, GlobalVariable.Response))
+WebUI.setText(findTestObject('PencarianDokumen/select_Status'), CustomKeywords.'connection.dataVerif.getSignStatus'(conneSign, 
+        GlobalVariable.Response))
 
 'click enter untuk input select ddl'
 WebUI.sendKeys(findTestObject('PencarianDokumen/select_Status'), Keys.chord(Keys.ENTER))
@@ -55,10 +55,9 @@ WebUI.sendKeys(findTestObject('PencarianDokumen/select_Status'), Keys.chord(Keys
 'Klik button cari'
 WebUI.click(findTestObject('Object Repository/PencarianDokumen/button_Cari'))
 
-if (!WebUI.verifyElementPresent(findTestObject('PencarianDokumen/text_refnum'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
-	CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Sign Document', GlobalVariable.NumofColm,
-		GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
-			2) + ';') + GlobalVariable.ReasonFailedNoneUI)
+if (!(WebUI.verifyElementPresent(findTestObject('PencarianDokumen/text_refnum'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE))) {
+    CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Sign Document', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+        (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedNoneUI)
 }
 
 'Agar dapat ke Lastest'
@@ -81,10 +80,8 @@ variable_pencariandokumen_row = DriverFactory.getWebDriver().findElements(By.css
 'ambil column lastest pencarian dokumen'
 variable_pencariandokumen_column = DriverFactory.getWebDriver().findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-body-cell'))
 
-println variable_pencariandokumen_column.size() / variable_pencariandokumen_row.size()
-
 'loop berdasarkan jumlah kolom dan dicheck dari 1 - 10.'
-for (int i = 1; i <= variable_pencariandokumen_column.size() / variable_pencariandokumen_row.size(); i++) {
+for (int i = 1; i <= (variable_pencariandokumen_column.size() / variable_pencariandokumen_row.size()); i++) {
     'modify object text refnum, tipe dok, nama dok, tgl permintaan, tgl selesai, proses ttd, total materai, status'
     modifyObjectpencariandokumen = WebUI.modifyObjectProperty(findTestObject('PencarianDokumen/text_refnum'), 'xpath', 'equals', 
         ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-inquiry/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
@@ -94,31 +91,28 @@ for (int i = 1; i <= variable_pencariandokumen_column.size() / variable_pencaria
     if (i == 5) {
         if (jumlahsignertandatangan <= emailSigner.size()) {
             arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectpencariandokumen), '-', false, FailureHandling.CONTINUE_ON_FAILURE))
-        }
-    } 
-	//Jika kolom yang ingin di check berada pada urutan ke-6
-	else if (i == 6) {
+        } //Jika kolom yang ingin di check berada pada urutan ke-6
+        //Kolom materai, masih belum get dari Beranda
+        //Jika selain kolom2 tersebut, maka
+    } else if (i == 6) {
         'mengambil text mengenai proses tanda tangan dan displit menjadi 2, yang pertama menjadi jumlah signer yang sudah tanda tangan'
 
         'yang kedua menjadi total signer'
         prosesttd_pencariandokumen = WebUI.getText(modifyObjectpencariandokumen).split('/', -1)
 
-        arrayMatch.add(WebUI.verifyEqual(jumlahsignertandatangan, prosesttd_pencariandokumen[0].replace(' ',''), FailureHandling.CONTINUE_ON_FAILURE))
-		
-		arrayMatch.add(WebUI.verifyEqual(emailSigner.size(),prosesttd_pencariandokumen[1].replace(' ', ''),FailureHandling.CONTINUE_ON_FAILURE))
-    } 
-	//Kolom materai, masih belum get dari Beranda
-	else if (i == 7 || i == 9) {
+        arrayMatch.add(WebUI.verifyEqual(jumlahsignertandatangan, (prosesttd_pencariandokumen[0]).replace(' ', ''), FailureHandling.CONTINUE_ON_FAILURE))
+
+        arrayMatch.add(WebUI.verifyEqual(emailSigner.size(), (prosesttd_pencariandokumen[1]).replace(' ', ''), FailureHandling.CONTINUE_ON_FAILURE))
+    } else if ((i == 7) || (i == 9)) {
+    } else if (i == 8) {
+        arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectpencariandokumen), CustomKeywords.'connection.dataVerif.getSignStatus'(
+                    conneSign, GlobalVariable.Response), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+        arrayindex++
+    } else {
+        'Diverifikasi dengan UI didepan'
+        arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectpencariandokumen), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
     }
-	else if(i == 8) {
-		arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectpencariandokumen), CustomKeywords.'connection.dataVerif.getSignStatus'(conneSign, GlobalVariable.Response), false, FailureHandling.CONTINUE_ON_FAILURE))
-		arrayindex++
-	}
-	//Jika selain kolom2 tersebut, maka
-	else {
-    'Diverifikasi dengan UI didepan'
-	arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectpencariandokumen), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-}
 }
 
 'Klik objek Beranda'
@@ -213,11 +207,11 @@ arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjecttextstatusttd), resul
 'mengambil text mengenai proses tanda tangan dan displit menjadi 2, yang pertama menjadi jumlah signer yang sudah tanda tangan'
 
 'yang kedua menjadi total signer'
-ArrayList prosesttd = WebUI.getText(modifyObjecttextprosesttd).split('/', -1)
+ArrayList<String> prosesttd = WebUI.getText(modifyObjecttextprosesttd).split('/', -1)
 
 'verifikasi total signer beranda dan pencarian dokumen'
-arrayMatch.add(WebUI.verifyMatch((prosesttd.toString()), prosesttd_pencariandokumen.toString(),false, FailureHandling.CONTINUE_ON_FAILURE))
-
+arrayMatch.add(WebUI.verifyMatch(prosesttd.toString(), prosesttd_pencariandokumen.toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+/*
 'Klik View Document'
 WebUI.click(modifyObjectbtnViewDoc)
 
@@ -240,12 +234,11 @@ if (WebUI.verifyElementPresent(findTestObject('Object Repository/KotakMasuk/lbl_
 
     'Klik kembali'
     WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_backViewDokumen'))
-}else {
-	CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Sign Document', GlobalVariable.NumofColm,
-		GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
-			2) + ';') + GlobalVariable.ReasonFailedProcessNotDone)
+} else {
+    CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Sign Document', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+        (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedProcessNotDone)
 }
-
+*/
 'Agar dapat ke Lastest'
 
 'modifikasi button Lastest pada paging'
@@ -260,24 +253,24 @@ if (WebUI.verifyElementClickable(modifyobjectbtnLastest, FailureHandling.OPTIONA
 }
 
 'Klik download file'
-WebUI.click(modifyObjectbtnDownloadDoc)
+//WebUI.click(modifyObjectbtnDownloadDoc)
 
 'Kasih waktu 2 detik untuk proses download'
 WebUI.delay(4)
 
 'Jika error lognya muncul'
 if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-	'Tulis di excel itu adalah error'
-	CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Sign Document', GlobalVariable.NumofColm,
-		GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) +
-		';') + WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label'))
-
+    'Tulis di excel itu adalah error'
+    CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Sign Document', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+        (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + ';') + WebUI.getAttribute(findTestObject(
+                'KotakMasuk/Sign/errorLog'), 'aria-label'))
 }
+
 'Check apakah sudah terddownload menggunakan custom keyword'
 CustomKeywords.'customizeKeyword.Download.isFileDownloaded'('Yes')
 
 'get data kotak masuk send document secara asc, dimana customer no 1'
-ArrayList resultSigner = CustomKeywords.'connection.dataVerif.getSignerKotakMasukSendDoc'(conneSign, GlobalVariable.Response)
+ArrayList<String> resultSigner = CustomKeywords.'connection.dataVerif.getSignerKotakMasukSendDoc'(conneSign, GlobalVariable.Response)
 
 'Klik btnSigner'
 WebUI.click(modifyObjectbtnSigner)
@@ -316,6 +309,6 @@ WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_X'))
 if (arrayMatch.contains(false)) {
     'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
     CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'(GlobalVariable.Response, GlobalVariable.NumofColm, 
-        GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedNoneUI)
+        GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedNoneUI)
 }
 

@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "keywordFileContentHash": "74CF5FAB6B82B6CC0F476942DA70C8A1",
-=======
-  "keywordFileContentHash": "F720C42D8B00B2AC02E2EDBB67A0F1B3",
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+  "keywordFileContentHash": "38AADF5A18B905C9C4708A467FDAA1D7",
   "keywordClasses": [
     {
       "name": "connection.dataVerif",
@@ -1442,7 +1438,6 @@
           "javadoc": ""
         },
         {
-<<<<<<< HEAD
           "name": "getSigningStatusProcess",
           "parameters": [
             {
@@ -1473,7 +1468,21 @@
             },
             {
               "name": "emailsigner",
-=======
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
           "name": "getAPICheckStampingStoreDB",
           "parameters": [
             {
@@ -1600,7 +1609,6 @@
             },
             {
               "name": "trxno",
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
