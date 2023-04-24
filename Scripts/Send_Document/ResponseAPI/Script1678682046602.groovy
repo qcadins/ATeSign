@@ -126,8 +126,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
         if (status_Code == 0) {
             documentId = WS.getElementPropertyValue(respon, 'documentId', FailureHandling.OPTIONAL).toString()
 
+			'masih ada [ ] nya dalam documentid'
             GlobalVariable.Response = documentId
-			
+
 			
 			//call test case mengenai sign doc FE (kemungkinan)
 

@@ -17,6 +17,14 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 import java.sql.Connection as Connection
+import com.kms.katalon.core.configuration.RunConfiguration as RunConfiguration
+
+'setting untuk membuat lokasi default folder download'
+HashMap<String, ArrayList> chromePrefs = new HashMap<String, ArrayList>()
+
+chromePrefs.put('download.default_directory', System.getProperty('user.dir') + '\\Download')
+
+RunConfiguration.setWebDriverPreferencesProperty('prefs', chromePrefs)
 'asumsi password : P@ssw0rd'
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
