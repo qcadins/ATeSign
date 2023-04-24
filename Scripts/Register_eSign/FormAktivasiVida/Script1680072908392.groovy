@@ -101,6 +101,9 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 	OTP = CustomKeywords.'connection.dataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
 			15).toUpperCase())
 	
+	'+1 count send OTP'
+	GlobalVariable.Counter++
+	
 	'clear arraylist sebelumnya'
 	listOTP.clear()
 	
@@ -129,6 +132,9 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 	
 				'klik pada button kirim ulang otp'
 				WebUI.click(findTestObject('BuatUndangan/FormAktivasi/kirimKodeLagi'))
+				
+				'+1 count send OTP'
+				GlobalVariable.Counter++
 				
 				'verify popup message maximal resend OTP'
 				if(WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
@@ -207,6 +213,9 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 				'klik pada button kirim ulang otp'
 				WebUI.click(findTestObject('BuatUndangan/FormAktivasi/kirimKodeLagi'))
 	
+				'+1 count send OTP'
+				GlobalVariable.Counter++
+				
 				'verify popup message maximal resend OTP'
 				if(WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 					reason = WebUI.getText(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'))

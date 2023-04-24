@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_TanggalTrxDari</name>
+   <tag></tag>
+   <elementGuidId>b2994af6-f734-45b5-b32a-abb7113ef754</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;transactionDateStart&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;transactionDateStart&quot;]</value>
+      <webElementGuid>38ca91ec-6e2e-435f-9d16-fdfb948f312b</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

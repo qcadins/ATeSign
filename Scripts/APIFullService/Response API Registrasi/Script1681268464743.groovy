@@ -51,12 +51,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'get api key salah dari excel'
             GlobalVariable.api_key = findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 29)
         }
-		
-		if(findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 32) == 'Yes') {
-			selfPhoto = '"' + CustomKeywords.'customizeKeyword.convertFile.BASE64File'(findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 24)) + '"'
-		}else if(findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 32) == 'No'){
-			selfPhoto = findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 24)
-		}
+        
+        if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 32) == 'Yes') {
+            selfPhoto = (('"' + CustomKeywords.'customizeKeyword.convertFile.BASE64File'(findTestData(excelPathAPIRegistrasi).getValue(
+                    GlobalVariable.NumofColm, 24))) + '"')
+        } else if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 32) == 'No') {
+            selfPhoto = findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 24)
+        }
         
         'HIT API'
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Register', [('callerId') : findTestData(excelPathAPIRegistrasi).getValue(
@@ -71,11 +72,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         20), ('kota') : findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 21), ('provinsi') : findTestData(
                         excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 22), ('kodePos') : findTestData(excelPathAPIRegistrasi).getValue(
                         GlobalVariable.NumofColm, 23), ('selfPhoto') : selfPhoto, ('idPhoto') : findTestData(excelPathAPIRegistrasi).getValue(
-                        GlobalVariable.NumofColm, 25), ('password') : findTestData(excelPathAPIRegistrasi).getValue(
-                        GlobalVariable.NumofColm, 26)]))
+                        GlobalVariable.NumofColm, 25), ('password') : findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 
+                        26)]))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
+			'get status code'
             code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
             if (code == 0) {
@@ -88,28 +90,71 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     arrayIndex = 0
 
                     'get data from db'
-                    ArrayList<String> result = CustomKeywords.'connection.dataVerif.checkAPIRegisterActive'(conneSign, 
-                        findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 12).replace('"', ''),
-						findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 16).replace('"', ''))
-					
-					String resultTrx = CustomKeywords.'connection.dataVerif.getAPIRegisterTrx'(conneSign, trxNo)
+                    ArrayList<String> result = CustomKeywords.'connection.dataVerif.checkAPIRegisterActive'(conneSign, findTestData(
+                            excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 12).replace('"', ''), findTestData(
+                            excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 16).replace('"', ''))
+
+                    String resultTrx = CustomKeywords.'connection.dataVerif.getAPIRegisterTrx'(conneSign, trxNo)
+
+                    ArrayList<String> resultDataUser = CustomKeywords.'connection.dataVerif.BuatUndanganStoreDB'(conneSign, 
+                        findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 12).replace('"', ''))
 
                     'declare arraylist arraymatch'
                     ArrayList<String> arrayMatch = new ArrayList<String>()
 
                     'verify is_active'
-                    arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), '1', 
-                    		false, FailureHandling.CONTINUE_ON_FAILURE))
-                    
-                    'verify is_registered'
-                    arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), '1', 
-                    		false, FailureHandling.CONTINUE_ON_FAILURE))
+                    arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), '1', false, FailureHandling.CONTINUE_ON_FAILURE))
 
-					'verify trx qty = -1'
-					arrayMatch.add(WebUI.verifyMatch(resultTrx, '-1',
-							false, FailureHandling.CONTINUE_ON_FAILURE))
-                    
-                    
+                    'verify is_registered'
+                    arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), '1', false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                    'verify trx qty = -1'
+                    arrayMatch.add(WebUI.verifyMatch(resultTrx, '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                    'verify full name'
+                    arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathAPIRegistrasi).getValue(
+                                GlobalVariable.NumofColm, 11).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                    'verify tempat lahir'
+                    arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathAPIRegistrasi).getValue(
+                                GlobalVariable.NumofColm, 13).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                    'parse Date from MM/dd/yyyy > yyyy-MM-dd'
+                    sDate = CustomKeywords.'customizeKeyword.parseDate.parseDateFormat'(findTestData(excelPathAPIRegistrasi).getValue(
+                            GlobalVariable.NumofColm, 14).replace('"', ''), 'MM/dd/yyyy', 'yyyy-MM-dd')
+
+                    'verify tanggal lahir'
+                    arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), sDate.toUpperCase(), 
+                            false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                    'verify jenis kelamin'
+                    arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathAPIRegistrasi).getValue(
+                                GlobalVariable.NumofColm, 15).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                    'verify email'
+                    arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathAPIRegistrasi).getValue(
+                                GlobalVariable.NumofColm, 12).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                    'verify provinsi'
+                    arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathAPIRegistrasi).getValue(
+                                GlobalVariable.NumofColm, 22).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                    'verify kota'
+                    arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathAPIRegistrasi).getValue(
+                                GlobalVariable.NumofColm, 21).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                    'verify kecamatan'
+                    arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathAPIRegistrasi).getValue(
+                                GlobalVariable.NumofColm, 19).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                    'verify kelurahan'
+                    arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathAPIRegistrasi).getValue(
+                                GlobalVariable.NumofColm, 20).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                    'verify kode pos'
+                    arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathAPIRegistrasi).getValue(
+                                GlobalVariable.NumofColm, 23).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
                     'jika data db tidak sesuai dengan excel'
                     if (arrayMatch.contains(false)) {
                         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
@@ -126,31 +171,29 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'mengambil status code berdasarkan response HIT API'
                 message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
-				trxNo = WS.getElementPropertyValue(respon, 'trxNo', FailureHandling.OPTIONAL)
-								
+                trxNo = WS.getElementPropertyValue(respon, 'trxNo', FailureHandling.OPTIONAL)
+
                 'Write To Excel GlobalVariable.StatusFailed and errormessage'
                 CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Registrasi', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, message)
-				
-				if (GlobalVariable.checkStoreDB == 'Yes' && trxNo != null) {
-					
-					String resultTrx = CustomKeywords.'connection.dataVerif.getAPIRegisterTrx'(conneSign, trxNo)
-					
-					'declare arraylist arraymatch'
-					ArrayList<String> arrayMatch = new ArrayList<String>()
-							
-					'verify trx qty = -1'
-					arrayMatch.add(WebUI.verifyMatch(resultTrx, '-1',
-							false, FailureHandling.CONTINUE_ON_FAILURE))
-										
-					'jika data db tidak sesuai dengan excel'
-					if (arrayMatch.contains(false)) {
-						'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-						CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Registrasi', GlobalVariable.NumofColm,
-							GlobalVariable.StatusFailed, (findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm,
-								2) + ';') + GlobalVariable.ReasonFailedStoredDB)
-					}
-				}
+
+                if ((GlobalVariable.checkStoreDB == 'Yes') && (trxNo != null)) {
+                    String resultTrx = CustomKeywords.'connection.dataVerif.getAPIRegisterTrx'(conneSign, trxNo)
+
+                    'declare arraylist arraymatch'
+                    ArrayList<String> arrayMatch = new ArrayList<String>()
+
+                    'verify trx qty = -1'
+                    arrayMatch.add(WebUI.verifyMatch(resultTrx, '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                    'jika data db tidak sesuai dengan excel'
+                    if (arrayMatch.contains(false)) {
+                        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+                        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Registrasi', GlobalVariable.NumofColm, 
+                            GlobalVariable.StatusFailed, (findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
+                                2) + ';') + GlobalVariable.ReasonFailedStoredDB)
+                    }
+                }
             }
         } else {
             'mengambil status code berdasarkan response HIT API'

@@ -174,4 +174,9 @@
       <initValue>findTestData('Login/Setting').getValue(4, 2)</initValue>
       <name>urlLocalHost</name>
    </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>0</initValue>
+      <name>Counter</name>
+   </GlobalVariableEntity>
 </GlobalVariableEntities>
