@@ -155,9 +155,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
                     '-', '') + ';') + messageFailed)
 			
 			if(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 9).replace('"', '') == resultTenant) {
-	            //'call test case error report'
-	           // WebUI.callTestCase(findTestCase('Send_Document/ErrorReport'), [('API_Excel_Path') : 'Registrasi/SendDocument'], 
-	           //     FailureHandling.CONTINUE_ON_FAILURE)
+	            'call test case error report'
+	            WebUI.callTestCase(findTestCase('Send_Document/ErrorReport'), [('API_Excel_Path') : 'Registrasi/SendDocument'], 
+	            FailureHandling.CONTINUE_ON_FAILURE)
 			}
         }
     }

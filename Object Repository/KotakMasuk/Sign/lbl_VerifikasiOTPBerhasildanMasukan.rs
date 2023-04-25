@@ -10,6 +10,10 @@
          <value>(.//*[normalize-space(text()) and normalize-space(.)='`'])[2]/following::p[1]</value>
       </entry>
       <entry>
+         <key>BASIC</key>
+         <value>//*[(text() = 'Berhasil mengirimkan permintaan tanda tangan dokumen' or . = 'Berhasil mengirimkan permintaan tanda tangan dokumen')]</value>
+      </entry>
+      <entry>
          <key>CSS</key>
          <value>p.card-title</value>
       </entry>
@@ -22,7 +26,7 @@
       <name>tag</name>
       <type>Main</type>
       <value>p</value>
-      <webElementGuid>77af1d39-29de-40e2-9c31-67336df1080d</webElementGuid>
+      <webElementGuid>915a5310-4a34-4ce0-92e4-d21e62dc8e3f</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -30,7 +34,7 @@
       <name>class</name>
       <type>Main</type>
       <value>card-title</value>
-      <webElementGuid>7cc2b583-ef83-442a-8253-47e793de1d15</webElementGuid>
+      <webElementGuid>78a1389d-8c0e-4679-adf2-bbf65b31377a</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -38,15 +42,15 @@
       <name>text</name>
       <type>Main</type>
       <value>Berhasil mengirimkan permintaan tanda tangan dokumen</value>
-      <webElementGuid>a7f62e29-fed7-4e76-808f-81817c329322</webElementGuid>
+      <webElementGuid>d7562dae-6e6a-45a3-b486-a1f9ab9103b4</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html[1]/body[@class=&quot;vertical-layout menu-hide navbar-static  modal-open  pace-done&quot;]/ngb-modal-window[@class=&quot;d-block modal fade show&quot;]/div[@class=&quot;modal-dialog modal-lg&quot;]/div[@class=&quot;modal-content&quot;]/app-progress-signing[1]/div[@class=&quot;modal-body&quot;]/div[@class=&quot;row text-left&quot;]/div[@class=&quot;col-12&quot;]/div[@class=&quot;card&quot;]/div[@class=&quot;card-header&quot;]/div[@class=&quot;row&quot;]/div[@class=&quot;col-6 col-md-10&quot;]/p[@class=&quot;card-title&quot;]</value>
-      <webElementGuid>6ab73ed5-9bb8-4cd0-ade1-d0c1ee2360b2</webElementGuid>
+      <value>/html/body/ngb-modal-window/div/div/app-progress-signing/div/div/div/div/div[1]/div[1]/div[1]/p</value>
+      <webElementGuid>9728f2b3-80b0-4f76-a376-3ea94907e007</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -54,7 +58,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='`'])[2]/following::p[1]</value>
-      <webElementGuid>0b9d423c-f370-43ea-9b88-c8a6d646a952</webElementGuid>
+      <webElementGuid>9b76eaa2-a611-43d3-b2bb-a6c6ae5bd0f3</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -62,7 +66,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Alt'])[2]/following::p[1]</value>
-      <webElementGuid>8f40ab3d-5c08-4c7a-8809-1033759e0e72</webElementGuid>
+      <webElementGuid>72f764d7-f235-4009-8c8f-772d455252ec</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -70,7 +74,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='( )'])[1]/preceding::p[6]</value>
-      <webElementGuid>b87893f2-795a-4ca1-9293-917a99ac12ee</webElementGuid>
+      <webElementGuid>d3932e77-46db-4717-8697-e568e95a7719</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -78,7 +82,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='( )'])[2]/preceding::p[6]</value>
-      <webElementGuid>cf7c0f62-8050-4ce9-af78-bbf0eee1c040</webElementGuid>
+      <webElementGuid>a8ca72a8-3f35-458f-a381-4fbf06d9a8ba</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -86,7 +90,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='Berhasil mengirimkan permintaan tanda tangan dokumen']/parent::*</value>
-      <webElementGuid>763f4cfc-e0dc-4547-b21f-ac3564c59acd</webElementGuid>
+      <webElementGuid>528d1558-273f-4659-b06f-575fbd2134d2</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -94,7 +98,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div/div/div/div/div/div/p</value>
-      <webElementGuid>35b46fcf-4c10-4df5-868d-56b553b03ff0</webElementGuid>
+      <webElementGuid>69f3bea3-e8a3-4c95-897f-4b3ae3c73e97</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -102,6 +106,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//p[(text() = 'Berhasil mengirimkan permintaan tanda tangan dokumen' or . = 'Berhasil mengirimkan permintaan tanda tangan dokumen')]</value>
-      <webElementGuid>9ee2cd78-d735-4101-811c-12f782322e5b</webElementGuid>
+      <webElementGuid>4e639edb-0a65-4188-94ae-bc84694c05e4</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>
