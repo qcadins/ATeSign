@@ -27,10 +27,10 @@ Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 'get colm excel'
 int countColmExcel = findTestData(excelPathAPIDownload).getColumnNumbers()
 
-'looping API Status Signing'
+'looping API Download Document'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
-        break //12
+        break
     } else if (findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
         'check if tidak mau menggunakan tenant code yang benar'
         if (findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, 15) == 'No') {
@@ -49,7 +49,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.api_key = findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, 14)
         }
         
-        'HIT API check Status Signing'
+        'HIT API check Download Document'
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Download Document', [('callerId') : findTestData(
                         excelPathAPIDownload).getValue(GlobalVariable.NumofColm, 9), ('documentId') : findTestData(excelPathAPIDownload).getValue(
                         GlobalVariable.NumofColm, 11)]))
@@ -62,11 +62,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'mengambil response'
                 base64PDF = WS.getElementPropertyValue(respon, 'pdfBase64', FailureHandling.OPTIONAL)
 
-				'decode Bas64 to File PDF'
+                'decode Bas64 to File PDF'
                 CustomKeywords.'customizeKeyword.convertFile.DecodeBase64'(base64PDF, findTestData(excelPathAPIDownload).getValue(
                         GlobalVariable.NumofColm, 18))
-				
-				'check is file downloaded dan apakah mau di delete'
+
+                'check is file downloaded dan apakah mau di delete'
                 if (CustomKeywords.'customizeKeyword.Download.isFileDownloaded'(findTestData(excelPathAPIDownload).getValue(
                         GlobalVariable.NumofColm, 17)) == true) {
                     'write to excel success'
@@ -91,6 +91,3 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
     }
 }
-
-
-
