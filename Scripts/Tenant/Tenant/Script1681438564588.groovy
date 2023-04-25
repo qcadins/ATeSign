@@ -89,15 +89,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'get array batas saldo dari excel'
             arrayServicesBatasSaldo = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 19).split(';', -1)
 
-            'looping untuk array service excel'
-            for (indexExcel = 0; indexExcel < arrayServices.size(); indexExcel++) {
-                'looping untuk input bata saldo'
-                for (index = 5; index < variable.size(); index++) {
-                    'modify object button services'
-                    modifyObjectButtonServices = WebUI.modifyObjectProperty(findTestObject('Tenant/TenantBaru/modifyObject'), 
-                        'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/div[' + 
-                        index) + ']/button', true)
-
+			'looping untuk input bata saldo'
+			for (index = 5; index < variable.size(); index++) {
+				
+				'modify object button services'
+				modifyObjectButtonServices = WebUI.modifyObjectProperty(findTestObject('Tenant/TenantBaru/modifyObject'),
+					'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/div[' +
+					index) + ']/button', true)
+				
+				'break if index udah lebih dari 20 HARDCODE karena tidak bisa di track objectnya'
+				if (index > 20) {
+					break
+				}
+				
+	            'looping untuk array service excel'
+	            for (indexExcel = 0; indexExcel < arrayServices.size(); indexExcel++) {
+					
                     'check if button contain service name'
                     if (WebUI.verifyElementNotPresent(modifyObjectButtonServices, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
                         continue
