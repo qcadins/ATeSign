@@ -20,6 +20,10 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 
 import internal.GlobalVariable
 import org.json.JSONObject
+import javax.xml.bind.DatatypeConverter
+import java.nio.file.Files
+import java.nio.file.Paths
+
 
 public class convertFile {
 
@@ -33,5 +37,17 @@ public class convertFile {
 		String imageString = new sun.misc.BASE64Encoder().encode(byteArray)
 
 		return imageString.replaceAll("[\r\n\t ]", "")
+	}
+	
+	@Keyword
+	public static String DecodeBase64(String base64String, String filename) {
+		
+		byte[] bytes = DatatypeConverter.parseBase64Binary(base64String)
+		
+		// Specify the file path and name
+		String filePath = System.getProperty('user.dir') + "\\Download\\" + filename + ".PDF"
+		
+		// Write the decoded bytes to the file
+		Files.write(Paths.get(filePath), bytes)
 	}
 }

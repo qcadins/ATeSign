@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "7159F159E76B629697379ED4A33DC5EF",
+  "keywordFileContentHash": "F205A25FADFA44E4D512FEF05633C511",
   "keywordClasses": [
     {
       "name": "customizeKeyword.convertFile",
@@ -7,6 +7,38 @@
         {
           "name": "BASE64File",
           "parameters": [
+            {
+              "name": "filename",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "DecodeBase64",
+          "parameters": [
+            {
+              "name": "base64String",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
             {
               "name": "filename",
               "initialExpression": "",
