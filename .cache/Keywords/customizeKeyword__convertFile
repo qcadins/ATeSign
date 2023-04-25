@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "12778BA436139A8963979AC93F5CDDFC",
+  "keywordFileContentHash": "F205A25FADFA44E4D512FEF05633C511",
   "keywordClasses": [
     {
       "name": "customizeKeyword.convertFile",
@@ -28,6 +28,19 @@
           "parameters": [
             {
               "name": "base64String",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "filename",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

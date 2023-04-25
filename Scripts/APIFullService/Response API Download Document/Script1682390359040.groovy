@@ -63,7 +63,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 base64PDF = WS.getElementPropertyValue(respon, 'pdfBase64', FailureHandling.OPTIONAL)
 
 				'decode Bas64 to File PDF'
-                CustomKeywords.'customizeKeyword.convertFile.DecodeBase64'(base64PDF)
+                CustomKeywords.'customizeKeyword.convertFile.DecodeBase64'(base64PDF, findTestData(excelPathAPIDownload).getValue(
+                        GlobalVariable.NumofColm, 18))
 				
 				'check is file downloaded dan apakah mau di delete'
                 if (CustomKeywords.'customizeKeyword.Download.isFileDownloaded'(findTestData(excelPathAPIDownload).getValue(

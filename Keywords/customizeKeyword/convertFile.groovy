@@ -40,12 +40,12 @@ public class convertFile {
 	}
 	
 	@Keyword
-	public static String DecodeBase64(String base64String) {
+	public static String DecodeBase64(String base64String, String filename) {
 		
 		byte[] bytes = DatatypeConverter.parseBase64Binary(base64String)
 		
 		// Specify the file path and name
-		String filePath = System.getProperty('user.dir') + "\\Download\\Document.PDF"
+		String filePath = System.getProperty('user.dir') + "\\Download\\" + filename + ".PDF"
 		
 		// Write the decoded bytes to the file
 		Files.write(Paths.get(filePath), bytes)
