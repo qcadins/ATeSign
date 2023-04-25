@@ -983,7 +983,7 @@ public class dataVerif {
 		}
 		return listdata
 	}
-	
+
 	@Keyword
 	public getAPICheckStampingStoreDB(Connection conn, String value){
 		String data
