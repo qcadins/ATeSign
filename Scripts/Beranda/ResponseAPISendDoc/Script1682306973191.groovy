@@ -20,7 +20,7 @@ import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 import java.sql.Connection as Connection
 
-WebUI.callTestCase(findTestCase('Login/Login_Inveditor'), [:], FailureHandling.STOP_ON_FAILURE)
+//WebUI.callTestCase(findTestCase('Login/Login_Inveditor'), [:], FailureHandling.STOP_ON_FAILURE)
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
@@ -31,7 +31,6 @@ Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 'get tenant code dari DB'
 String resultTenant = CustomKeywords.'connection.dataVerif.getTenant'(conneSign, GlobalVariable.userLogin)
 
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_Excel_Path).getColumnNumbers(); (GlobalVariable.NumofColm)++) {
     'Split mengenai signer 1 dan signer 2'
     ArrayList<String> signAction = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 25).split(';', -1)
 
@@ -100,6 +99,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
           )) + '},')
 
         (ListSigner[0]) = ((ListSigner[0]) + (list[(i - 1)]))
+	
 		
     }
     
@@ -129,20 +129,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 			'masih ada [ ] nya dalam documentid'
             GlobalVariable.Response = documentId.replace('[','').replace(']','')
 			
-	        CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 
+	        CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Send to Sign', 
 	        4, GlobalVariable.NumofColm - 1, GlobalVariable.Response)
 			//call test case mengenai sign doc FE (kemungkinan)
 
 	            'write to excel success'
-	            CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 
+	            CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Send to Sign', 
 	                0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 
 			//WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('API_Excel_Path') : 'Registrasi/SendDocument'], FailureHandling.CONTINUE_ON_FAILURE)
 			
             if (GlobalVariable.checkStoreDB == 'Yes') {
                 'call test case ResponseAPIStoreDB'
-                WebUI.callTestCase(findTestCase('Send_Document/ResponseAPIStoreDB'), [('API_Excel_Path') : 'Registrasi/SendDocument'], 
-                    FailureHandling.CONTINUE_ON_FAILURE)
+                ResponseAPIStoreDB()
             }
             
             'jika status codenya bukan 0, yang berarti antara salah verifikasi data dan error'
@@ -150,16 +149,107 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
             messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL).toString()
 
             'write to excel status failed dan reason'
-            CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm, 
+            CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
                     '-', '') + ';') + messageFailed)
 			
 			if(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 9).replace('"', '') == resultTenant) {
-	            //'call test case error report'
-	           // WebUI.callTestCase(findTestCase('Send_Document/ErrorReport'), [('API_Excel_Path') : 'Registrasi/SendDocument'], 
-	           //     FailureHandling.CONTINUE_ON_FAILURE)
+	            'call test case error report'
+	            WebUI.callTestCase(findTestCase('Send_Document/ErrorReport'), [('API_Excel_Path') : 'Registrasi/SendDocument'], 
+	                FailureHandling.CONTINUE_ON_FAILURE)
 			}
         }
     }
-}
+
+
+	def ResponseAPIStoreDB() {
+		'connect DB eSign'
+		Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+		
+		'declare arraylist arraymatch'
+		ArrayList<String> arrayMatch = new ArrayList<String>()
+		
+		'get data API Send Document dari DB (hanya 1 signer)'
+		ArrayList<String> result = CustomKeywords.'connection.dataVerif.getSendDoc'(conneSign, GlobalVariable.Response.replace('[',
+				'').replace(']', ''))
+		
+		'declare arrayindex'
+		arrayindex = 0
+		
+		'verify email'
+		arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 40).replace('"', ''), result[
+				arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+		'verify signerType'
+		arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 26).replace('"', ''), result[
+				arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+		'verify tenant code'
+		arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 9).replace('"', ''), result[
+				arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+		'verify ref_number'
+		arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 11).replace('"', ''), result[
+				arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+		'verify document_id'
+		arrayMatch.add(WebUI.verifyMatch(GlobalVariable.Response.replace('[', '').replace(']', ''), result[arrayindex++], false,
+				FailureHandling.CONTINUE_ON_FAILURE))
+		
+		'verify document template code'
+		arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 12).replace('"', ''), result[
+				arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+		'verify office code'
+		arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 13).replace('"', ''), result[
+				arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+		'verify office name'
+		arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 14).replace('"', ''), result[
+				arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+		'verify region code'
+		arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 15).replace('"', ''), result[
+				arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+		'verify region name'
+		arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 16).replace('"', ''), result[
+				arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+		'verify business line code'
+		arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 17).replace('"', ''), result[
+				arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+		'verify business line name'
+		arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 18).replace('"', ''), result[
+				arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+		'verify is sequence'
+		arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 19).replace('"', ''), result[
+				arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+		'verify psre/vendor code'
+		arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 21).replace('"', ''), result[
+				arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+		'verify success url'
+		arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 22).replace('"', ''), result[
+				arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+		'verify upload url'
+		arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 23).replace('"', ''), result[
+				arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+		'verify sign Action : hardcode. Yang penting tidak boleh kosong'
+		arrayMatch.add(WebUI.verifyNotMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 28).replace('"', ''),
+				'', false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+		'jika data db tidak sesuai dengan excel'
+		if (arrayMatch.contains(false)) {
+			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+			CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm,
+				GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
+		}
+		
+	}
 

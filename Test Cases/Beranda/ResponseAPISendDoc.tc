@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>KotakMasuk</name>
+   <name>ResponseAPISendDoc</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>ab31fc33-cdb9-4a63-9edc-732c2f981f1a</testCaseGuid>
+   <testCaseGuid>4d6df43e-9cec-40e6-90ac-12fabc94440f</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>e944e0b4-9b38-4dbc-93e4-b98fcea0eeba</variableId>
+      <variableId>bc58f57e-8d54-48da-8bb9-13d26383a903</variableId>
    </variableLinks>
    <variable>
       <defaultValue>'Beranda/SendtoSign'</defaultValue>
       <description></description>
-      <id>e944e0b4-9b38-4dbc-93e4-b98fcea0eeba</id>
+      <id>bc58f57e-8d54-48da-8bb9-13d26383a903</id>
       <masked>false</masked>
-      <name>excelPathFESignDocument</name>
+      <name>API_Excel_Path</name>
    </variable>
 </TestCaseEntity>
