@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>New Test Case</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>f722bc5f-871c-4416-801a-94393d8cae66</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>b6927e12-6e89-4323-b48d-39b49f88f522</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'PengaturanDokumen/PengaturanDokumen'</defaultValue>
+      <description></description>
+      <id>b6927e12-6e89-4323-b48d-39b49f88f522</id>
+      <masked>false</masked>
+      <name>excelPathPengaturanDokumen</name>
+   </variable>
+</TestCaseEntity>

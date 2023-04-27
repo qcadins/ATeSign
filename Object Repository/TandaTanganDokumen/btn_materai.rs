@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>btn_meterai</name>
+   <name>btn_materai</name>
    <tag></tag>
    <elementGuidId>5462a98b-6384-47cf-90ce-47ac1918e686</elementGuidId>
    <selectorCollection>
       <entry>
          <key>CSS</key>
-         <value></value>
       </entry>
       <entry>
          <key>XPATH</key>

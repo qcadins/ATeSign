@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>view_DocTempStatus</name>
+   <tag></tag>
+   <elementGuidId>fcc37aef-674a-4216-8cc1-a8dff2355f5f</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;isActive&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;isActive&quot;]</value>
+      <webElementGuid>c18cea0c-3987-4dc8-9cec-6419f14cb764</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

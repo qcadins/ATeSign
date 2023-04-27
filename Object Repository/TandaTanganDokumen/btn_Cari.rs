@@ -6,15 +6,19 @@
    <elementGuidId>14631805-2cfa-4f15-a5d2-1aee8b7f2c56</elementGuidId>
    <selectorCollection>
       <entry>
+         <key>CSS</key>
+         <value>button.btn.btn-primary</value>
+      </entry>
+      <entry>
          <key>XPATH</key>
          <value>//button[@type='submit']</value>
       </entry>
       <entry>
-         <key>CSS</key>
-         <value>button.btn.btn-primary</value>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;searchForm&quot;]/div[2]/div/button[2]</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>true</useRalativeImagePath>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -22,15 +26,15 @@
       <name>tag</name>
       <type>Main</type>
       <value>button</value>
-      <webElementGuid>bbd29728-270e-4410-8192-3f0a89d141c5</webElementGuid>
+      <webElementGuid>4aed1da0-8bc6-4931-b059-ea1e8ed0d45e</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>type</name>
       <type>Main</type>
       <value>submit</value>
-      <webElementGuid>2689ab73-703e-457c-b795-b320245995b9</webElementGuid>
+      <webElementGuid>1e6f5b1b-0cb9-436c-ada7-90be115a409b</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -38,23 +42,23 @@
       <name>class</name>
       <type>Main</type>
       <value>btn btn-primary</value>
-      <webElementGuid>a02e5d52-1081-45e3-a0d3-09e3495910a1</webElementGuid>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>text</name>
-      <type>Main</type>
-      <value> Cari</value>
-      <webElementGuid>8390f38b-a0a6-424c-823f-db7c890ab455</webElementGuid>
+      <webElementGuid>a3ad4393-2605-4ef6-9d28-5be6ce65bb6b</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value> Cari</value>
+      <webElementGuid>35ab20d9-7d4d-4dc6-8e14-fec3e56cb961</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>id(&quot;searchForm&quot;)/div[@class=&quot;row&quot;]/div[@class=&quot;col-12 text-right&quot;]/button[@class=&quot;btn btn-primary&quot;]</value>
-      <webElementGuid>12e138f0-03f8-4bf8-afcf-b721f7cdd8a3</webElementGuid>
+      <value>//*[@id=&quot;searchForm&quot;]/div[2]/div/button[2]</value>
+      <webElementGuid>00af48d8-59a9-4dc2-8daa-d873b80aa9cf</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -62,7 +66,7 @@
       <name>xpath:attributes</name>
       <type>Main</type>
       <value>//button[@type='submit']</value>
-      <webElementGuid>72e73dd7-2b0e-4b0c-8d8b-564c77843108</webElementGuid>
+      <webElementGuid>4adff36e-bc6f-437d-95d8-6bd5b6043044</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -70,7 +74,7 @@
       <name>xpath:idRelative</name>
       <type>Main</type>
       <value>//form[@id='searchForm']/div[2]/div/button[2]</value>
-      <webElementGuid>9a9749ce-8d2b-4579-a5d2-4b47a1accca8</webElementGuid>
+      <webElementGuid>397d9a58-8278-43cc-9d1a-694e6b944bba</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -78,7 +82,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Set Ulang'])[1]/following::button[1]</value>
-      <webElementGuid>435b4028-9a69-45b7-875e-f05c73a3e9f9</webElementGuid>
+      <webElementGuid>e32de8bd-51e7-4aab-89e0-29933238cfb0</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -86,7 +90,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Pilih status'])[1]/following::button[2]</value>
-      <webElementGuid>8cce2553-4301-41bc-9c29-0151eba97e92</webElementGuid>
+      <webElementGuid>fa9d2cf2-74e9-455a-8632-1ba214067cba</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -94,7 +98,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Kode'])[1]/preceding::button[1]</value>
-      <webElementGuid>373d8b5d-12f3-4ce3-8a00-9552644eed45</webElementGuid>
+      <webElementGuid>c9eb879f-65e9-4220-ab5b-6104db0d104d</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -102,7 +106,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Nama'])[1]/preceding::button[1]</value>
-      <webElementGuid>cac4e8d0-13e4-4e55-94eb-621cf8c300d0</webElementGuid>
+      <webElementGuid>a6d8a889-8079-4235-a5b3-cdf507a3737d</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -110,7 +114,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='Cari']/parent::*</value>
-      <webElementGuid>69bd19bc-a630-431a-85b5-a48c28df835d</webElementGuid>
+      <webElementGuid>2f98248b-2727-4485-be7e-9ff74a7ab480</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -118,7 +122,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//button[2]</value>
-      <webElementGuid>ffaeef85-434a-44be-b748-09af37177bfc</webElementGuid>
+      <webElementGuid>d84c3454-aadd-4b0f-ae69-007dda40e234</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -126,6 +130,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//button[@type = 'submit' and (text() = ' Cari' or . = ' Cari')]</value>
-      <webElementGuid>a5effc96-91b9-4fde-9ecb-19cedd873603</webElementGuid>
+      <webElementGuid>7429ab9a-e917-4146-a15e-281579215417</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>
