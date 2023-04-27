@@ -458,7 +458,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         'check if store db'
-        if (GlobalVariable.checkStoreDB == 'Yes') {
+        if (GlobalVariable.checkStoreDB == 'Yes' && isMandatoryComplete == 0) {
             'call test case tenant store db'
             WebUI.callTestCase(findTestCase('Tenant/TenantStoreDB'), [('excelPathTenant') : 'Tenant/Tenant'], FailureHandling.STOP_ON_FAILURE)
         }

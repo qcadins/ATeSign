@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>PengaturanDokumenStoreDB</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>be629d5f-4c37-4f0b-8cd2-6cc596c9505b</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>f29c3495-34f7-40a2-8d3e-1e6c8bc5ecd3</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'PengaturanDokumen/PengaturanDokumen'</defaultValue>
+      <description></description>
+      <id>f29c3495-34f7-40a2-8d3e-1e6c8bc5ecd3</id>
+      <masked>false</masked>
+      <name>excelPathPengaturanDokumen</name>
+   </variable>
+</TestCaseEntity>

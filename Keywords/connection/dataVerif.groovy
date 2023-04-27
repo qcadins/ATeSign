@@ -1096,4 +1096,44 @@ public class dataVerif {
 		}
 		return data
 	}
+
+	@Keyword
+	public getDataDocTemplate(Connection conn, String docTempCode){
+		String data
+		ArrayList<String> listdata = new ArrayList<>()
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("SELECT doc_template_code, doc_template_name, doc_template_description, CASE WHEN is_active = '1' THEN 'Active' ELSE 'Inactive' END FROM esign.ms_doc_template where doc_template_code = '"+ docTempCode +"'")
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for(int i = 1 ; i <= columnCount ; i++){
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		return listdata
+	}
+	
+	@Keyword
+	public DataDocTemplateStoreDB(Connection conn, String docTempCode){
+		String data
+		ArrayList<String> listdata = new ArrayList<>()
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("SELECT doc_template_code, doc_template_name, doc_template_description, ml.description, CASE WHEN mdt.is_active = '1' THEN 'Active' ELSE 'Inactive' END FROM esign.ms_doc_template mdt JOIN ms_lov ml ON ml.id_lov = mdt.lov_payment_sign_type where doc_template_code = '"+ docTempCode +"'")
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for(int i = 1 ; i <= columnCount ; i++){
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		return listdata
+	}
 }
