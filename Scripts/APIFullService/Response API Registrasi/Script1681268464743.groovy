@@ -28,7 +28,7 @@ Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 'get colm excel'
 int countColmExcel = findTestData(excelPathAPIRegistrasi).getColumnNumbers()
 
-String selfPhoto
+String selfPhoto, idPhoto
 
 'looping API Registrasi'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
@@ -58,6 +58,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         } else if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 32) == 'No') {
             selfPhoto = findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 24)
         }
+		
+		if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 33) == 'Yes') {
+			idPhoto = (('"' + CustomKeywords.'customizeKeyword.convertFile.BASE64File'(findTestData(excelPathAPIRegistrasi).getValue(
+					GlobalVariable.NumofColm, 25))) + '"')
+		} else if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 33) == 'No') {
+			idPhoto = findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 25)
+		}
         
         'HIT API'
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Register', [('callerId') : findTestData(excelPathAPIRegistrasi).getValue(
@@ -71,8 +78,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         GlobalVariable.NumofColm, 19), ('kelurahan') : findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 
                         20), ('kota') : findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 21), ('provinsi') : findTestData(
                         excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 22), ('kodePos') : findTestData(excelPathAPIRegistrasi).getValue(
-                        GlobalVariable.NumofColm, 23), ('selfPhoto') : selfPhoto, ('idPhoto') : findTestData(excelPathAPIRegistrasi).getValue(
-                        GlobalVariable.NumofColm, 25), ('password') : findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 
+                        GlobalVariable.NumofColm, 23), ('selfPhoto') : selfPhoto, ('idPhoto') : idPhoto, ('password') : findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 
                         26)]))
 
         'Jika status HIT API 200 OK'
@@ -159,7 +165,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     if (arrayMatch.contains(false)) {
                         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
                         CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Registrasi', GlobalVariable.NumofColm, 
-                            GlobalVariable.StatusFailed, (findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
+                            GlobalVariable.StatusFailed, (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 
                                 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
                     } else {
                         'write to excel success'
@@ -190,7 +196,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     if (arrayMatch.contains(false)) {
                         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
                         CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Registrasi', GlobalVariable.NumofColm, 
-                            GlobalVariable.StatusFailed, (findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
+                            GlobalVariable.StatusFailed, (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 
                                 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
                     }
                 }

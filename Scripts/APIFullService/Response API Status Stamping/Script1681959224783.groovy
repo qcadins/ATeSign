@@ -97,7 +97,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     if (arrayMatch.contains(false)) {
                         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
                         CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Check Stamping Status', 
-                            GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (findTestData(excelPathIsiSaldo).getValue(
+                            GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (findTestData(excelPathAPICheckStamping).getValue(
                                 GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
                     } else {
                         'write to excel success'

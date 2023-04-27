@@ -257,24 +257,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 }
             }
         } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('View')) {
-            'Input teks kode template dokumen'
-            WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_KodeTemplatDokumen'), findTestData(
-                    excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 9))
-
-            'Input teks di nama template dokumen'
-            WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_NamaTemplatDokumen'), findTestData(
-                    excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 10))
-
-            'Input AKtif pada input Status'
-            WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_Status'), findTestData(excelPathPengaturanDokumen).getValue(
-                    GlobalVariable.NumofColm, 14))
-
-            'Klik enter'
-            WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
-
-            'Klik button cari'
-            WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_cari'))
-
+            
+			'call function search pengaturan dokumen'
+			searchPengaturanDokumen()
+			
             'Klik button view'
             WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/button_View'))
 
@@ -303,23 +289,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'Klik button Kembali'
             WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/button_Kembali'))
         } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Edit')) {
-            'Input teks kode template dokumen'
-            WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_KodeTemplatDokumen'), findTestData(
-                    excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 9))
-
-            'Input teks di nama template dokumen'
-            WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_NamaTemplatDokumen'), findTestData(
-                    excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 10))
-
-            'Input AKtif pada input Status'
-            WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_Status'), findTestData(excelPathPengaturanDokumen).getValue(
-                    GlobalVariable.NumofColm, 14))
-
-            'Klik enter'
-            WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
-
-            'Klik button cari'
-            WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_cari'))
+			
+			'call function search pengaturan dokumen'
+			searchPengaturanDokumen()
 
             'Klik button Edit'
             WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/button_Edit'))
@@ -558,23 +530,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 }
             }
         } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Setting')) {
-            'Input teks kode template dokumen'
-            WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_KodeTemplatDokumen'), findTestData(
-                    excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 9))
-
-            'Input teks di nama template dokumen'
-            WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_NamaTemplatDokumen'), findTestData(
-                    excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 10))
-
-            'Input AKtif pada input Status'
-            WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_Status'), findTestData(excelPathPengaturanDokumen).getValue(
-                    GlobalVariable.NumofColm, 14))
-
-            'Klik enter'
-            WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
-
-            'Klik button cari'
-            WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_cari'))
+            
+			'call function search pengaturan dokumen'
+			searchPengaturanDokumen()
 
             'Klik button setting'
             WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/button_Setting'))
@@ -945,3 +903,22 @@ def checkPaging() {
             'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
 }
 
+def searchPengaturanDokumen() {
+	'Input teks kode template dokumen'
+	WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_KodeTemplatDokumen'), findTestData(
+			excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 9))
+
+	'Input teks di nama template dokumen'
+	WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_NamaTemplatDokumen'), findTestData(
+			excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 10))
+
+	'Input AKtif pada input Status'
+	WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_Status'), findTestData(excelPathPengaturanDokumen).getValue(
+			GlobalVariable.NumofColm, 14))
+
+	'Klik enter'
+	WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
+
+	'Klik button cari'
+	WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_cari'))
+}
