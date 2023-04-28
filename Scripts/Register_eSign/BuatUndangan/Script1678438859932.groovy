@@ -33,8 +33,6 @@ ArrayList<String> saldoBefore, saldoAfter
 
 saldoBefore = loginAdminGetSaldo(countCheckSaldo, conneSign)
 
-println(saldoBefore)
-
 countCheckSaldo = 1
 
 GlobalVariable.FlagFailed = 0
@@ -287,9 +285,6 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
 	saldoBefore.set(3, (Integer.parseInt(saldoBefore[3])-GlobalVariable.Counter).toString())
 	
 	saldoAfter = loginAdminGetSaldo(countCheckSaldo, conneSign)
-	
-	println(saldoBefore)
-	println(saldoAfter)
 	
 	'verify saldoafter tidak sama dengan saldo before'
 	checkVerifyEqualOrMatch(saldoAfter.equals(saldoBefore))
