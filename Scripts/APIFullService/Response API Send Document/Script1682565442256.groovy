@@ -21,7 +21,7 @@ import org.openqa.selenium.Keys as Keys
 import java.sql.Connection as Connection
 
 'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\2. Esign - Full API Services.xlsx')
+GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\2.1 Esign - Full API Services.xlsx')
 
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
@@ -29,148 +29,191 @@ Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 'get tenant code dari DB'
 String resultTenant = CustomKeywords.'connection.dataVerif.getTenant'(conneSign, GlobalVariable.userLogin)
 
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(API_Excel_Path).getColumnNumbers()*/; (GlobalVariable.NumofColm)++) {
-    String refNo = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 11)
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(API_Excel_Path).getColumnNumbers()*/ ; (GlobalVariable.NumofColm)++) {
+    
+	ArrayList<String> refNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 11).split(';', -1)
+
+    ArrayList<String> documentTemplateCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 12).split(';', 
+        -1)
+
+    ArrayList<String> officeCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 13).split(';', -1)
+
+    ArrayList<String> officeName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 14).split(';', -1)
+
+    ArrayList<String> regionCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 15).split(';', -1)
+
+    ArrayList<String> regionName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 16).split(';', -1)
+
+    ArrayList<String> businessLineCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 17).split(';', 
+        -1)
+
+    ArrayList<String> businessLineName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 18).split(';', 
+        -1)
+
+    ArrayList<String> documentFile = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 19).split(';', -1)
+
+	ArrayList<String> pageStamp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 21).split(';', -1)
 	
-    String documentTemplateCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 12)
+	ArrayList<String> llxStamp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 22).split(';', -1)
 	
-    String officeCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 13)
-
-    String officeName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 14)
-
-    String regionCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 15)
-
-    String regionName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 16)
-
-    String businessLineCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 17)
-
-    String businessLineName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 18)
-
-    String isSequence = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 19)
-
-    String psreCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 21)
-
-    String successURL = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 22)
-
-    String uploadURL = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 23)
-
-    ArrayList<String> documentFile = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 20).split(';', -1)
-
+	ArrayList<String> llyStamp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 23).split(';', -1)
+	
+	ArrayList<String> urxStamp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 24).split(';', -1)
+	
+	ArrayList<String> uryStamp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 25).split(';', -1)
+	
     'split signer untuk doc1 dan signer untuk doc2'
-    ArrayList<String> signAction = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 25).split(';', -1)
-
-    ArrayList<String> signerType = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 26).split(';', -1)
-
-    ArrayList<String> signSequence = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 27).split(';', -1)
-
-    ArrayList<String> alamat = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 28).split(';', -1)
-
-    ArrayList<String> jenisKelamin = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 29).split(';', -1)
-
-    ArrayList<String> kecamatan = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 30).split(';', -1)
-
-    ArrayList<String> kelurahan = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 31).split(';', -1)
-
-    ArrayList<String> kodePos = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 32).split(';', -1)
-
-    ArrayList<String> kota = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 33).split(';', -1)
-
-    ArrayList<String> nama = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 34).split(';', -1)
-
-    ArrayList<String> tlp = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 35).split(';', -1)
-
-    ArrayList<String> tglLahir = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 36).split(';', -1)
-
-    ArrayList<String> provinsi = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 37).split(';', -1)
-
-    ArrayList<String> idKtp = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 38).split(';', -1)
-
-    ArrayList<String> tmpLahir = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 39).split(';', -1)
-
-    ArrayList<String> email = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 40).split(';', -1)
-
-    ArrayList<String> npwp = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 41).split(';', -1)
-
-    String idPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 42)
 	
-    String signerSelfPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 43)
+    ArrayList<String> signAction = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 27).split('\\|', -1)
+
+    ArrayList<String> signerType = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 28).split('\\|', -1)
+
+    ArrayList<String> tlp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 29).split('\\|', -1)
+
+    ArrayList<String> idKtp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 30).split('\\|', -1)
+
+    ArrayList<String> email = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 31).split('\\|', -1)
 	
+	ArrayList<String> pageSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 33).split('\\|', -1)
+	
+	ArrayList<String> llxSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 34).split('\\|', -1)
+	
+	ArrayList<String> llySign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 35).split('\\|', -1)
+	
+	ArrayList<String> urxSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 36).split('\\|', -1)
+	
+	ArrayList<String> urySign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 37).split('\\|', -1)
+
     String stringRefno = new String()
-	
-	stringRefno = ''
 
-	'Pembuatan pengisian variable di sendRequest per jumlah signer.'
-	ArrayList<String> list = new ArrayList<String>()
+    for (int i = 0; i < refNo.size(); i++) {
+		
+        (signAction[i]) = (signAction[i]).split(';', -1)
 
-	ArrayList<String> ListSigner = new ArrayList<String>()
+        (signerType[i]) = (signerType[i]).split(';', -1)
 
-	(ListSigner[0]) = ''
+        (tlp[i]) = (tlp[i]).split(';', -1)
 
-	for (int i = 1; i <= signAction.size(); i++) {
-		if (i == signAction.size()) {
-			list.add(((((((((((((((((((((((((((((((((((((('{"signAction": ' + (signAction[(i - 1)])) + ',"signerType": ') +
-				(signerType[(i - 1)])) + ',"signSequence":') + (signSequence[(i - 1)])) + ',"alamat": ') + (alamat[(i -
-				1)])) + ',"jenisKelamin": ') + (jenisKelamin[(i - 1)])) + ',"kecamatan": ') + (kecamatan[(i - 1)])) + ',"kelurahan": ') +
-				(kelurahan[(i - 1)])) + ',"kodePos": ') + (kodePos[(i - 1)])) + ',"kota": ') + (kota[(i - 1)])) + ',"nama": ') +
-				(nama[(i - 1)])) + ',"tlp": ') + (tlp[(i - 1)])) + ',"tglLahir": ') + (tglLahir[(i - 1)])) + ',"provinsi": ') +
-				(provinsi[(i - 1)])) + ',"idKtp": ') + (idKtp[(i - 1)])) + ',"tmpLahir": ') + (tmpLahir[(i - 1)])) + ',"email": ') +
-				(email[(i - 1)])) + ',"npwp": ') + (npwp[(i - 1)])) + ',"idPhoto": ') + idPhoto + ',"signerSelfPhoto": ') + signerSelfPhoto
-					)) + '}')
+        (idKtp[i]) = (idKtp[i]).split(';', -1)
+
+        (email[i]) = (email[i]).split(';', -1)
+		
+		(pageSign[i]) = (pageSign[i]).split(';', -1)
+		
+		(llxSign[i]) = (llxSign[i]).split(';', -1)
+		
+		(llySign[i]) = (llySign[i]).split(';', -1)
+		
+		(urxSign[i]) = (urxSign[i]).split(';', -1)
+		
+		(urySign[i]) = (urySign[i]).split(';', -1)
+
+        String string = new String()
+
+        string = ''
+
+        string = (string + (((((((((((((((((('{"referenceNo" : ' + (refNo[i])) + ', "documentTemplateCode": ') + (documentTemplateCode[
+        i])) + ', "officeCode": ') + (officeCode[i])) + ', "officeName": ') + (officeName[i])) + ', "regionCode": ') + (regionName[
+        i])) + ', "regionName": ') + (regionName[i])) + ', "businessLineCode": ') + (businessLineCode[i])) + ', "businessLineName": ') + 
+        (businessLineName[i])) + ','))))
+
+        stringRefno = (stringRefno + string)
+
+        string = new String()
+
+        string = ''
+		
+		signlocation = new String()
+		
+		signLocation = ''
+		
+		stampLocation = new String()
+		
+		stampLocation = ''
+
+		if(documentTemplateCode[i] == '""') {
 		}
-		
-		list.add(((((((((((((((((((((((((((((((((((((('{"signAction": ' + (signAction[(i - 1)])) + ',"signerType": ') +
-		(signerType[(i - 1)])) + ',"signSequence":') + (signSequence[(i - 1)])) + ',"alamat": ') + (alamat[(i -
-		 1)])) + ',"jenisKelamin": ') + (jenisKelamin[(i - 1)])) + ',"kecamatan": ') + (kecamatan[(i - 1)])) + ',"kelurahan": ') +
-		 (kelurahan[(i - 1)])) + ',"kodePos": ') + (kodePos[(i - 1)])) + ',"kota": ') + (kota[(i - 1)])) + ',"nama": ') +
-		 (nama[(i - 1)])) + ',"tlp": ') + (tlp[(i - 1)])) + ',"tglLahir": ') + (tglLahir[(i - 1)])) + ',"provinsi": ') +
-		 (provinsi[(i - 1)])) + ',"idKtp": ') + (idKtp[(i - 1)])) + ',"tmpLahir": ') + (tmpLahir[(i - 1)])) + ',"email": ') +
-		 (email[(i - 1)])) + ',"npwp": ') + (npwp[(i - 1)])) + ',"idPhoto": ') + idPhoto + ',"signerSelfPhoto": ') + signerSelfPhoto
-		  )) + '},')
-
-		(ListSigner[0]) = ((ListSigner[0]) + (list[(i - 1)]))
-		
-	}
-	
-	for(int t = 0; t < documentFile.size();t++) {
-		if(t == documentFile.size() - 1){
-			stringRefno = stringRefno + ((((((((((((((((((((((((((('{"referenceNo" : ' + (refNo)) + ', "documentTemplateCode": ') +
-				(documentTemplateCode)) + ', "officeCode": ') + (officeCode)) + ', "officeName": ') + (officeName)) + ', "regionCode": ') + (regionName)) + ', "regionName": ') + (regionName)) + ', "businessLineCode": ') +
-				(businessLineCode)) + ', "businessLineName": ') + (businessLineName)) + ', "isSequence": ') +
-				(isSequence)) + ', "signer":[') + (ListSigner[0])) + '], "documentFile": "') + PDFtoBase64(documentFile[t])) + '", "psreCode" : ') +
-				(psreCode)) + ', "successURL": ') + (successURL)) + ', "uploadURL": ') + (uploadURL)) + '}'
+		else {
+			for(int e = 0 ; e < documentTemplateCode.size();e++) {
+				if(e == documentTemplateCode.size() - 1){
+					stampLocation = stampLocation + '{"page": '+ pageStamp[e] + ',"llx" : '+ llxStamp[e] + ',"lly" : '+ llyStamp[e]+',"urx" : '+urxStamp[e]+', "ury": '+uryStamp[e]+'}]'
+				} else if (e == 0) {
+					stampLocation = stampLocation + ',"stampLocation" : [{"page": '+ pageStamp[e] + ',"llx" : '+ llxStamp[e] + ',"lly" : '+ llyStamp[e]+',"urx" : '+urxStamp[e]+', "ury": '+uryStamp[e]+'},'
+				} else {
+					stampLocation = stampLocation + '{"page": '+ pageStamp[e] + ',"llx" : '+ llxStamp[e] + ',"lly" : '+ llyStamp[e]+',"urx" : '+urxStamp[e]+', "ury": '+uryStamp[e]+'},'
+				}
 			}
-		else 
-		{
-			stringRefno = stringRefno + ((((((((((((((((((((((((((('{"referenceNo" : ' + (refNo)) + ', "documentTemplateCode": ') + 
-            (documentTemplateCode)) + ', "officeCode": ') + (officeCode)) + ', "officeName": ') + (officeName)) + ', "regionCode": ') + (regionName)) + ', "regionName": ') + (regionName)) + ', "businessLineCode": ') + 
-            (businessLineCode)) + ', "businessLineName": ') + (businessLineName)) + ', "isSequence": ') + 
-            (isSequence)) + ', "signer":[') + (ListSigner[0])) + '], "documentFile": "') + PDFtoBase64(documentFile[t])) + '", "psreCode" : ') + 
-            (psreCode)) + ', "successURL": ') + (successURL)) + ', "uploadURL": ') + (uploadURL)) + 
-            '},'
 		}
 
-		}
+		
+		for (int r = 0; r < pageSign[i].size(); r++) 
+		{
+			if(r == 0) 
+				{
+					signLocation = signLocation + '"signLocation" : [{"page": '+ pageSign[i][r] + ',"llx" : '+ llxSign[i][r] + ',"lly" : '+ llySign[i][r]+',"urx" : '+urxSign[i][r]+', "ury": '+urySign[i][r]+'},'
+				}
+				else if  (r == documentTemplateCode.size() - 1)
+					{
+						signLocation = signLocation + '{"page": '+ pageSign[i][r] + ',"llx" : '+ llxSign[i][r] + ',"lly" : '+ llySign[i][r]+',"urx" : '+urxSign[i][r]+', "ury": '+urySign[i][r]+'}]'
+					}
+					else {
+						signLocation = signLocation + '{"page": '+ pageSign[r] + ',"llx" : '+ llxSign[r] + ',"lly" : '+ llySign[r]+',"urx" : '+urxSign[r]+', "ury": '+urySign[r]+'},'
+			
+					}
+		}	
+        for (int t = 0; t < (signAction[i]).size(); t++) {
+            if (t == ((signAction[i]).size() - 1)) {
+                string = (string + (((((((((('{"signAction": ' + ((signAction[i])[t])) + ',"signerType": ') + 
+                ((signerType[i])[t])) + ',"tlp": ') + ((tlp[i])[t])) + ',"idKtp": ') + ((idKtp[i])[t])) + ',"email": ') + 
+                ((email[i])[t])) + ', '+ signLocation + '}],'))
+            } else if (t == 0) {
+                string = (string + (((((((((('"signers": [{"signAction": ' + ((signAction[i])[t])) + ',"signerType": ') + 
+                ((signerType[i])[t])) + ',"tlp": ') + ((tlp[i])[t])) + ',"idKtp": ') + ((idKtp[i])[t])) + ',"email": ') + 
+                ((email[i])[t])) + ', '+signLocation + '},'))
+            } else {
+                string = (string + (((((((((('{"signAction": ' + ((signAction[i])[t])) + ',"signerType": ') + 
+                ((signerType[i])[t])) + ',"tlp": ') + ((tlp[i])[t])) + ',"idKtp": ') + ((idKtp[i])[t])) + ',"email": ') + 
+                ((email[i])[t])) + ', '+signLocation + '},'))
+            }
+            
+            stringRefno = (stringRefno + string)
+
+            string = ''
+        }
+        
+        string = new ArrayList<String>()
+
+        string = ''
+
+        if (i == (refNo.size() - 1)) {
+            string = (string + ('"documentFile": "' + PDFtoBase64(documentFile[i])) + '"' + stampLocation +'}')
+        } else {
+            string = (string + ('"documentFile": "' + PDFtoBase64(documentFile[i])) + '"' + stampLocation +'},')
+        }
+        
+        stringRefno = (stringRefno + string)
+    }
+
 	
-		
-		if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 49) == 'No') {
-			'set tenant kosong'
-			GlobalVariable.Tenant = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 50)
-		} else if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 49) == 'Yes') {
-			GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
-		}
-		
-		'check if mau menggunakan api_key yang salah atau benar'
-		if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 47) == 'Yes') {
-			'get api key dari db'
-			GlobalVariable.api_key = CustomKeywords.'connection.dataVerif.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
-		} else if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 47) == 'No') {
-			'get api key salah dari excel'
-			GlobalVariable.api_key = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 48)
-		}
-		
-    respon = WS.sendRequest(findTestObject('APIFullService/Postman/Send Document Signing', [('tenantCode') : findTestData(API_Excel_Path).getValue(
-                    GlobalVariable.NumofColm, 9), ('request') : stringRefno, ('callerId') : findTestData(API_Excel_Path).getValue(
-                    GlobalVariable.NumofColm, 45)]))
+    if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 43) == 'No') {
+        'set tenant kosong'
+        GlobalVariable.Tenant = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 44)
+    } else if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 43) == 'Yes') {
+        GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
+    }
+    
+    'check if mau menggunakan api_key yang salah atau benar'
+    if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 41) == 'Yes') {
+        'get api key dari db'
+        GlobalVariable.api_key = CustomKeywords.'connection.dataVerif.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
+    } else if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 41) == 'No') {
+        'get api key salah dari excel'
+        GlobalVariable.api_key = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 42)
+    }
+
+    respon = WS.sendRequest(findTestObject('APIFullService/Postman/Send Document Signing', [('tenantCode') : findTestData(
+                    excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 9), ('request') : stringRefno, ('callerId') : findTestData(
+                    excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 39)]))
 
     'jika response 200 / hit api berhasil'
     if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
@@ -186,40 +229,39 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
 
             CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 
                 4, GlobalVariable.NumofColm - 1, GlobalVariable.Response.toString())
-					
-			'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
-			int jumlahsignertandatangan = 0
+
+            'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
+            int jumlahsignertandatangan = 0
 
             //call test case mengenai sign doc FE (kemungkinan)
             'write to excel success'
             CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 
                 0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 
-            WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('API_Excel_Path') : 'Registrasi/SendDocument',('jumlahsignertandatangan') : jumlahsignertandatangan], FailureHandling.CONTINUE_ON_FAILURE)
-            if (GlobalVariable.checkStoreDB == 'Yes') {
-                'call test case ResponseAPIStoreDB'
+          /*  if (GlobalVariable.checkStoreDB == 'Yes') {
+                'calexcelPathAPISendDocsponseAPIStoreDB'
                 WebUI.callTestCase(findTestCase('Send_Document/ResponseAPIStoreDB'), [('API_Excel_Path') : 'Registrasi/SendDocument'], 
                     FailureHandling.CONTINUE_ON_FAILURE)
             }
-            
+            */
             'jika status codenya bukan 0, yang berarti antara salah verifikasi data dan error'
         } else {
             messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL).toString()
 
             'write to excel status failed dan reason'
             CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm, 
-                GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
+                GlobalVariable.StatusFailed, (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 2).replace(
                     '-', '') + ';') + messageFailed)
-
+/*
             if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 9).replace('"', '') == resultTenant) {
                 'call test case error report'
                 WebUI.callTestCase(findTestCase('Send_Document/ErrorReport'), [('API_Excel_Path') : 'Registrasi/SendDocument'], 
                     FailureHandling.CONTINUE_ON_FAILURE)
             }
+            */
         }
     }
 }
-
 
 def PDFtoBase64(String fileName) {
     String base64 = CustomKeywords.'customizeKeyword.convertFile.BASE64File'(fileName)

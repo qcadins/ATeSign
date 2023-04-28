@@ -26,7 +26,6 @@ Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
-//ArrayList<String> documentTemplateName = new ArrayList<String>()
 'Inisialisasi array-array yang dibutuhkan'
 
 'get current date'

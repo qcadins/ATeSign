@@ -11,7 +11,7 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
-      <initValue>'http://gdkwebsvr:7021/adimobile/esign'</initValue>
+      <initValue>findTestData('Login/Setting').getValue(7, 2)</initValue>
       <name>base_url</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>
