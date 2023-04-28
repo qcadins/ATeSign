@@ -177,19 +177,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     ';') + GlobalVariable.ReasonFailedMandatory)
             }
         } else if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Service')) {
-            'input nama tenant'
-            WebUI.setText(findTestObject('Tenant/input_NamaTenant'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-                    9))
-
-            'input status'
-            WebUI.setText(findTestObject('Tenant/input_Status'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-                    10))
-
-            'click enter untuk input select ddl'
-            WebUI.sendKeys(findTestObject('Tenant/input_Status'), Keys.chord(Keys.ENTER))
-
-            'click button cari'
-            WebUI.click(findTestObject('Tenant/button_Cari'))
+           
+			'call function search'
+			searchTenant()
 
             'click button services balance'
             WebUI.click(findTestObject('Tenant/button_ServiceBalance'))
@@ -255,19 +245,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     ';') + GlobalVariable.ReasonFailedMandatory)
             }
         } else if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Edit')) {
-            'input nama tenant'
-            WebUI.setText(findTestObject('Tenant/input_NamaTenant'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-                    9))
-
-            'input status'
-            WebUI.setText(findTestObject('Tenant/input_Status'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
-                    10))
-
-            'click enter untuk input select ddl'
-            WebUI.sendKeys(findTestObject('Tenant/input_Status'), Keys.chord(Keys.ENTER))
-
-            'click button cari'
-            WebUI.click(findTestObject('Tenant/button_Cari'))
+            
+			'call function search'
+			searchTenant()
 
             'click button edit'
             WebUI.click(findTestObject('Tenant/button_Edit'))
@@ -562,3 +542,18 @@ def checkVerifyPaging(Boolean isMatch) {
     }
 }
 
+def searchTenant() {
+	'input nama tenant'
+	WebUI.setText(findTestObject('Tenant/input_NamaTenant'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm,
+			9))
+
+	'input status'
+	WebUI.setText(findTestObject('Tenant/input_Status'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm,
+			10))
+
+	'click enter untuk input select ddl'
+	WebUI.sendKeys(findTestObject('Tenant/input_Status'), Keys.chord(Keys.ENTER))
+
+	'click button cari'
+	WebUI.click(findTestObject('Tenant/button_Cari'))
+}
