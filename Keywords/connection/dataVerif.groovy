@@ -1116,7 +1116,7 @@ public class dataVerif {
 		}
 		return listdata
 	}
-	
+
 	@Keyword
 	public DataDocTemplateStoreDB(Connection conn, String docTempCode){
 		String data
