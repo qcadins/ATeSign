@@ -98,6 +98,9 @@ for (int i = 0; i < docid.size(); i++) {
     'verify upload url'
     arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 23).replace('"', ''), 
             result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	'verify total document'
+	arrayMatch.add(WebUI.verifyEqual(docid.size(),result[arrayindex++].toInteger(), FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify sign Action : hardcode. Yang penting tidak boleh kosong'
     arrayMatch.add(WebUI.verifyNotMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 28).replace('"', 

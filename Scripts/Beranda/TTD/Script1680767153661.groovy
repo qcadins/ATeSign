@@ -53,7 +53,7 @@ arrayindex = 0
 String nokontrak, saldo_before, saldo_after, otp_before, otp_after, documentTemplateName, notelpsigner
 
 'looping berdasarkan jumlah dokumen yang dikirimkan'
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(excelPathFESignDocument).getColumnNumbers()*/; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathFESignDocument).getColumnNumbers(); (GlobalVariable.NumofColm)++) {
     'Call API Send doc'
     WebUI.callTestCase(findTestCase('Beranda/ResponseAPISendDoc'), [:], FailureHandling.CONTINUE_ON_FAILURE)
 	
@@ -313,13 +313,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(e
                             WebUI.click(findTestObject('KotakMasuk/Sign/btn_LanjutAfterKonfirmasi'), FailureHandling.OPTIONAL)
                         } else {
                             'Jika btn lanjut setelah konfirmasi untuk mengarah ke otp tidak dapat diklik'
-
                             'Failed alasan save gagal tidak bisa diklik.'
                             CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
                                 GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                                     2) + ';') + GlobalVariable.ReasonFailedSaveGagal)
 
-                            'balikan ke loop atas'
+                            'kembali ke loop atas'
                             continue
                         }
                         
@@ -639,7 +638,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(e
                 } else {
                     'Jika bukan -1, atau masih 0. Maka ttdnya dibilang error'
                     GlobalVariable.FlagFailed = 1
-
+					
+					'Jika saldonya belum masuk dengan flag, maka signnya gagal.'
                     CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                             2) + ';') + GlobalVariable.ReasonFailedSignGagal)
@@ -670,7 +670,8 @@ def checkVerifyEqualorMatch(Boolean isMatch) {
     if (isMatch == false) {
         'Write to excel status failed and ReasonFailedVerifyEqualorMatch'
         GlobalVariable.FlagFailed = 1
-
+		
+		'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
         CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + 
             ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)

@@ -51,7 +51,6 @@ Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 'get tenant code dari DB'
 String resultTenant = CustomKeywords.'connection.dataVerif.getTenant'(conneSign, GlobalVariable.userLogin)
 
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(API_Excel_Path).getColumnNumbers()*/; (GlobalVariable.NumofColm)++) {
     String refNo = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 11)
 	
     String documentTemplateCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 12)
@@ -195,7 +194,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
 			'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
 			int jumlahsignertandatangan = 0
 
-            //call test case mengenai sign doc FE (kemungkinan)
             'write to excel success'
             CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 
                 0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
@@ -222,7 +220,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
             }
         }
     }
-}
 
 
 def PDFtoBase64(String fileName) {

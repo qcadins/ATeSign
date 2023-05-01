@@ -10,7 +10,7 @@
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\r\n    \&quot;audit\&quot;: {\r\n        \&quot;callerId\&quot;: \&quot;TEST@GMAIL.COM\&quot;\r\n    },\r\n    \&quot;phoneNo\&quot;: \&quot;08191234112\&quot;,\r\n    \&quot;email\&quot;: \&quot;test@gmail.com\&quot;,\r\n    \&quot;refNumber\&quot;: \&quot;\&quot;\r\n}&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: ${callerId}\n    },\n    \&quot;phoneNo\&quot;: ${phoneNo},\n    \&quot;email\&quot;: ${email},\n    \&quot;refNumber\&quot;: ${refnumber}\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -43,7 +43,7 @@
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>POST</restRequestMethod>
-   <restUrl>${base_url}/user/sentOtpSigning</restUrl>
+   <restUrl>${base_url}/services/external/user/sentOtpSigning</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>
@@ -67,11 +67,24 @@
       <name>api_key</name>
    </variables>
    <variables>
-      <defaultValue>GlobalVariable.tenant_code</defaultValue>
+      <defaultValue>GlobalVariable.Tenant</defaultValue>
       <description></description>
       <id>60a8935d-3b31-4b32-9666-1a786ac047d9</id>
       <masked>false</masked>
       <name>tenant_code</name>
    </variables>
+   <verificationScript>import static org.assertj.core.api.Assertions.*
+
+import com.kms.katalon.core.testobject.RequestObject
+import com.kms.katalon.core.testobject.ResponseObject
+import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
+import com.kms.katalon.core.webservice.verification.WSResponseManager
+
+import groovy.json.JsonSlurper
+import internal.GlobalVariable as GlobalVariable
+
+RequestObject request = WSResponseManager.getInstance().getCurrentRequest()
+
+ResponseObject response = WSResponseManager.getInstance().getCurrentResponse()</verificationScript>
    <wsdlAddress></wsdlAddress>
 </WebServiceRequestEntity>
