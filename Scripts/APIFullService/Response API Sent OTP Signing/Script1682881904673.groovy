@@ -50,9 +50,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.api_key = findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 17)
         }
         
+		'mengambil reset otp request numbernya awal berapa'
         reset_otp_request_num = CustomKeywords.'connection.dataVerif.getResetCodeRequestNum'(conneSign, findTestData(excelPathAPISentOTPSigning).getValue(
                 GlobalVariable.NumofColm, 11).replace('"', ''))
 
+		'mengambil nilai otp awal baik berisi ataupun kosong'
         otp_code = CustomKeywords.'connection.dataVerif.getOTP'(conneSign, findTestData(excelPathAPISentOTPSigning).getValue(
                 GlobalVariable.NumofColm, 11).replace('"', ''))
 
@@ -66,14 +68,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
             'get status code'
             code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
-
+			
+			'jika codenya 0'
             if (code == 0) {
-                'mengambil response'
+                'mengambil response trx nonya'
                 trxNo = WS.getElementPropertyValue(respon, 'trxNo', FailureHandling.OPTIONAL)
-
+				
+				'input di excel mengenai trxno yang telah didapat'
                 CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sent OTP Signing', 
                     4, GlobalVariable.NumofColm - 1, trxNo.toString())
-
+				
+				'check Db'
                 if (GlobalVariable.checkStoreDB == 'Yes') {
                     arrayIndex = 0
 
