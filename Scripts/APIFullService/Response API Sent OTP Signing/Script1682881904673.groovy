@@ -107,7 +107,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     arrayMatch.add(WebUI.verifyNotEqual(result[arrayIndex++], otp_code, FailureHandling.CONTINUE_ON_FAILURE))
 
 					'verify reset otp request number '
-					arrayMatch.add(WebUI.verifyEqual(result[arrayIndex++], reset_otp_request_num.toInteger() + 1, FailureHandling.CONTINUE_ON_FAILURE))
+					arrayMatch.add(WebUI.verifyEqual(result[arrayIndex++], Integer.parseInt(reset_otp_request_num) + 1, FailureHandling.CONTINUE_ON_FAILURE))
 
                     'verify api key'
                     arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], GlobalVariable.api_key, false, FailureHandling.CONTINUE_ON_FAILURE))
