@@ -142,7 +142,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				'mengambil status code berdasarkan response HIT API'
 				message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 	
-				'Write To Excel GlobalVariable.StatusFailed and errormessage'
+				'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
 				CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Sent OTP Signing', GlobalVariable.NumofColm,
 					GlobalVariable.StatusFailed, message)
 			}
