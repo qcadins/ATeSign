@@ -22,7 +22,7 @@
       <description></description>
       <id>fa82d3fb-ea92-4d29-b155-3f4cce5e8112</id>
       <masked>false</masked>
-      <name>excelPathAPISentOTPSigning</name>
+      <name>excelPathAPISignDocument</name>
    </variable>
    <variable>
       <defaultValue>'Login/Setting'</defaultValue>
