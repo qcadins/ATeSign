@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>NewPengaturanDokumen</name>
+   <name>PengaturanDokumen</name>
    <tag></tag>
    <comment></comment>
    <testCaseGuid>a1d28b7e-0ff6-4213-b76b-b821f80cacbb</testCaseGuid>

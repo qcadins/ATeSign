@@ -1202,7 +1202,7 @@ public class dataVerif {
 		Statement stm = conn.createStatement()
 
 		ResultSet resultSet = stm.executeQuery("select trx_no,ref_no, TO_CHAR(trx_date, 'yyyy-MM-DD'), qty, notes from tr_balance_mutation where trx_no = '"+trxno+"'")
-		
+
 		ResultSetMetaData metadata = resultSet.getMetaData()
 
 		columnCount = metadata.getColumnCount()
