@@ -603,9 +603,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'count signbox'
             variable = DriverFactory.getWebDriver().findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-setting-signer > div:nth-child(3) > div > app-document-anotate > section > section.box > div app-bbox'))
 
-            def RoleTTD
-
-            def tipeTTD
+            def RoleTTD, tipeTTD
 
             'looping signbox sesuai jumlah yang ada di ui'
             for (index = 1; index <= variable.size(); index++) {
