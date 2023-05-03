@@ -30,8 +30,6 @@ public class parseText {
 	@Keyword
 	public static String parseEncrypt(String value, String AESKey) {
 		try {
-			String key = "JavasEncryptDemo"; // 128 bit key
-			String randomVector = "RandomJavaVector"; // 16 bytes IV 
 			SecretKeySpec skeySpec = new SecretKeySpec(AESKey.getBytes("UTF-8"), "AES");
 			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
 			cipher.init(Cipher.ENCRYPT_MODE, skeySpec);

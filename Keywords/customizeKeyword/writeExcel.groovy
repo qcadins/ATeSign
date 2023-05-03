@@ -96,8 +96,6 @@ public class writeExcel {
 		XSSFWorkbook workbook = new XSSFWorkbook(file);
 		XSSFSheet sheet = workbook.getSheet(sheetName);
 
-		XSSFRow row=sheet.createRow(0);
-
 		sheet.getRow(rowNo).createCell(collNo).setCellFormula(cellValue)
 
 		file.close();
