@@ -1216,4 +1216,21 @@ public class dataVerif {
 		}
 		return data
 	}
+	
+	@Keyword
+	public getAPIRequestStampingTrx (Connection conn){
+		String data
+
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("select qty from tr_balance_mutation ORDER BY trx_date DESC")
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		return data
+	}
 }

@@ -45,13 +45,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         if (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, 15) == 'No') {
             'set tenant kosong'
             GlobalVariable.Tenant = findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, 16)
-        }else if (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, 15) == 'Yes') {
-			GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
-		}
+        } else if (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, 15) == 'Yes') {
+            GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
+        }
         
         'HIT API check Status stamping'
-        respon = WS.sendRequest(findTestObject('APIFullService/Postman/Request Stamping', [('callerId') : findTestData(
-                        excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, 9), ('refNumber') : findTestData(excelPathAPIRequestStamping).getValue(
+        respon = WS.sendRequest(findTestObject('APIFullService/Postman/Request Stamping', [('callerId') : findTestData(excelPathAPIRequestStamping).getValue(
+                        GlobalVariable.NumofColm, 9), ('refNumber') : findTestData(excelPathAPIRequestStamping).getValue(
                         GlobalVariable.NumofColm, 11)]))
 
         'Jika status HIT API 200 OK'
@@ -63,8 +63,27 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 message = WS.getElementPropertyValue(respon, 'checkStampingStatus.message', FailureHandling.OPTIONAL)
 
                 if (GlobalVariable.checkStoreDB == 'Yes') {
+					'get trx from db'
+					trxQty = CustomKeywords.'connection.dataVerif.getAPIRequestStampingTrx'(conneSign)
 					
-				}
+					'declare arraylist arraymatch'
+					ArrayList<String> arrayMatch = new ArrayList<String>()
+					
+					'verify is_active'
+					arrayMatch.add(WebUI.verifyMatch(trxQty, '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
+					
+					'jika data db tidak sesuai dengan excel'
+					if (arrayMatch.contains(false)) {
+						'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+						CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Request Stamping', GlobalVariable.NumofColm,
+							GlobalVariable.StatusFailed, (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm,
+								2) + ';') + GlobalVariable.ReasonFailedStoredDB)
+					} else {
+						'write to excel success'
+						CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Request Stamping',
+							0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+					}
+                }
             } else {
                 'mengambil status code berdasarkan response HIT API'
                 message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
@@ -83,3 +102,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
     }
 }
+
+
+
