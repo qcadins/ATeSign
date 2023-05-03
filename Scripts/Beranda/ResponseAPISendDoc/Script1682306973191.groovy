@@ -141,7 +141,7 @@ for (int t = 0; t < documentFile.size(); t++) {
         'Membuat body API'
         stringRefno = ((stringRefno + ((((((((((((((((((((((((((('{"referenceNo" : ' + refNo) + ', "documentTemplateCode": ') + 
         documentTemplateCode) + ', "officeCode": ') + officeCode) + ', "officeName": ') + officeName) + ', "regionCode": ') + 
-        regionName) + ', "regionName": ') + regionName) + ', "businessLineCode": ') + businessLineCode) + ', "businessLineName": ') + 
+        regionCode) + ', "regionName": ') + regionName) + ', "businessLineCode": ') + businessLineCode) + ', "businessLineName": ') + 
         businessLineName) + ', "isSequence": ') + isSequence) + ', "signer":[') + (ListSigner[0])) + '], "documentFile": "') + 
         PDFtoBase64(documentFile[t])) + '", "psreCode" : ') + psreCode) + ', "successURL": ') + successURL) + ', "uploadURL": ') + 
         uploadURL)) + '}')
@@ -149,7 +149,7 @@ for (int t = 0; t < documentFile.size(); t++) {
         'Jika tidak diakhir maka membuat body API'
         stringRefno = ((stringRefno + ((((((((((((((((((((((((((('{"referenceNo" : ' + refNo) + ', "documentTemplateCode": ') + 
         documentTemplateCode) + ', "officeCode": ') + officeCode) + ', "officeName": ') + officeName) + ', "regionCode": ') + 
-        regionName) + ', "regionName": ') + regionName) + ', "businessLineCode": ') + businessLineCode) + ', "businessLineName": ') + 
+        regionCode) + ', "regionName": ') + regionName) + ', "businessLineCode": ') + businessLineCode) + ', "businessLineName": ') + 
         businessLineName) + ', "isSequence": ') + isSequence) + ', "signer":[') + (ListSigner[0])) + '], "documentFile": "') + 
         PDFtoBase64(documentFile[t])) + '", "psreCode" : ') + psreCode) + ', "successURL": ') + successURL) + ', "uploadURL": ') + 
         uploadURL)) + '},')

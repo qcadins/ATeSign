@@ -26,9 +26,6 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExc
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 
-'get tenant code dari DB'
-String resultTenant = CustomKeywords.'connection.dataVerif.getTenant'(conneSign, GlobalVariable.userLogin)
-
 'looping berdasarkan total kolom'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathAPISendDoc).getColumnNumbers(); (GlobalVariable.NumofColm)++) {
 	if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
@@ -122,7 +119,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
 		'Pengisian body'
 		bodyAPI = bodyAPI + '{"referenceNo" : ' + refNo[i] + ', "documentTemplateCode": ' + documentTemplateCode[
-		i] + ', "officeCode": ' + officeCode[i] + ', "officeName": ' + officeName[i] + ', "regionCode": ' + regionName[
+		i] + ', "officeCode": ' + officeCode[i] + ', "officeName": ' + officeName[i] + ', "regionCode": ' + regionCode[
 		i] + ', "regionName": ' + regionName[i] + ', "businessLineCode": ' + businessLineCode[i] + ', "businessLineName": ' +
 		businessLineName[i] + ','
 		

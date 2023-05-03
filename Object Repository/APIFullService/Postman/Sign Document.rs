@@ -10,7 +10,7 @@
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\r\n    \&quot;audit\&quot;: {\r\n        \&quot;callerId\&quot;: \&quot;USER@AD-INS.COM\&quot;\r\n    },\r\n    \&quot;documentId\&quot;: [\r\n        \&quot;00155D0A-AD03-8C34-11EC-DAB74EE7FEE0\&quot;,\r\n        \&quot;00155D0A-AD03-8C34-11EC-DAB74EE7FEE1\&quot;,\r\n        \&quot;00155D0A-AD03-8C34-11EC-DAB74EE7FEE2\&quot;\r\n    ],\r\n    \&quot;email\&quot;: \&quot;test@gmail.com\&quot;,\r\n    \&quot;password\&quot;: \&quot;Password123!\&quot;,\r\n    \&quot;ipAddress\&quot;: \&quot;192.158.1.38\&quot;,\r\n    \&quot;browserInfo\&quot;: \&quot;Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36\&quot;,\r\n    \&quot;otp\&quot;: \&quot;912834\&quot;,\r\n    \&quot;selfPhoto\&quot;: \&quot;\&quot;\r\n}&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: ${callerId}\n    },\n    \&quot;documentId\&quot;: ${documentId},\n    \&quot;email\&quot;: ${email},\n    \&quot;password\&quot;: ${password},\n    \&quot;ipAddress\&quot;: ${ipAddress},\n    \&quot;browserInfo\&quot;: ${browserInfo},\n    \&quot;otp\&quot;: ${otp},\n    \&quot;selfPhoto\&quot;: ${selfPhoto}\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -67,11 +67,24 @@
       <name>api_key</name>
    </variables>
    <variables>
-      <defaultValue>GlobalVariable.tenant_code</defaultValue>
+      <defaultValue>GlobalVariable.Tenant</defaultValue>
       <description></description>
       <id>95a66518-9f1f-420d-8d2f-852edf359004</id>
       <masked>false</masked>
       <name>tenant_code</name>
    </variables>
+   <verificationScript>import static org.assertj.core.api.Assertions.*
+
+import com.kms.katalon.core.testobject.RequestObject
+import com.kms.katalon.core.testobject.ResponseObject
+import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
+import com.kms.katalon.core.webservice.verification.WSResponseManager
+
+import groovy.json.JsonSlurper
+import internal.GlobalVariable as GlobalVariable
+
+RequestObject request = WSResponseManager.getInstance().getCurrentRequest()
+
+ResponseObject response = WSResponseManager.getInstance().getCurrentResponse()</verificationScript>
    <wsdlAddress></wsdlAddress>
 </WebServiceRequestEntity>

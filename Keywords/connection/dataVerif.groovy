@@ -1216,7 +1216,7 @@ public class dataVerif {
 		}
 		return data
 	}
-	
+
 	@Keyword
 	public getAPIRequestStampingTrx (Connection conn){
 		String data
@@ -1224,6 +1224,23 @@ public class dataVerif {
 		Statement stm = conn.createStatement()
 
 		ResultSet resultSet = stm.executeQuery("select qty from tr_balance_mutation ORDER BY trx_date DESC")
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		return data
+	}
+	
+	@Keyword
+	public getRefNumber(Connection conn, String documentId){
+		String data
+
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("select tdh.ref_number from tr_document_h tdh join tr_document_d tdd on tdh.id_document_h = tdd.id_document_h where tdd.document_id = '"+documentId+"'")
 		ResultSetMetaData metadata = resultSet.getMetaData()
 
 		columnCount = metadata.getColumnCount()
