@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'ng-option ng-option-selected ng-option-marked ng-star-inserted']</value>
+         <value>//*[@class = 'ng-option ng-option-selected ng-star-inserted ng-option-marked']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,15 @@
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>ng-option ng-option-selected ng-option-marked ng-star-inserted</value>
-      <webElementGuid>2dcc5aca-0fca-460a-837a-331d2fabdcd2</webElementGuid>
+      <value>ng-option ng-option-selected ng-star-inserted ng-option-marked</value>
+      <webElementGuid>b7cff3fd-51a9-4416-8844-349cfc6afbb9</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>aria-selected</name>
+      <type>Main</type>
+      <value>true</value>
+      <webElementGuid>021c19d9-1789-47e4-9626-5589536d515e</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
