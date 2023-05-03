@@ -35,7 +35,6 @@ public class parseText {
 			cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
 			byte[] encrypted = cipher.doFinal(value.getBytes());
 			return Base64.encodeBase64String(encrypted);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -45,8 +44,6 @@ public class parseText {
 	@Keyword
 	public static String parseDecrypt(String encrypted, String AESKey) {
 		try {
-			String key = "JavasEncryptDemo"; // 128 bit key
-			String randomVector = "RandomJavaVector"; // 16 bytes IV 
 			SecretKeySpec skeySpec = new SecretKeySpec(AESKey.getBytes("UTF-8"), "AES");
 			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
 			cipher.init(Cipher.DECRYPT_MODE, skeySpec);

@@ -29,9 +29,6 @@ import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
-'connect dengan db'
-Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
-
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_Excel_Path).getColumnNumbers(); (GlobalVariable.NumofColm)++) {
     'Pembuatan pengisian variable di sendRequest per jumlah documentid.'
 	'Case yang dilakukan dimana email tidak berdasarkan excel, melainkan database'

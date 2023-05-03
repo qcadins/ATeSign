@@ -28,14 +28,10 @@ import org.openqa.selenium.By
 import org.openqa.selenium.support.ui.Select
 import com.kms.katalon.core.webui.driver.DriverFactory
 
-
 GlobalVariable.Response = 'API Bulk Sign Document'
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
-
-'connect dengan db'
-Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_Excel_Path).getColumnNumbers(); (GlobalVariable.NumofColm)++) 
 {

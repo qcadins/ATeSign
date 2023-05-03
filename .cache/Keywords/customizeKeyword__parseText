@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "12FC8CE78295EC0F81D47B4ED56B8A81",
+  "keywordFileContentHash": "3A41B0935DF721B7D1315A01C76A3436",
   "keywordClasses": [
     {
       "name": "customizeKeyword.parseText",
@@ -33,7 +33,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "parseDecrypt",
@@ -64,10 +65,11 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         }
       ]
     }
   ],
-  "javadocParsed": false
+  "javadocParsed": true
 }

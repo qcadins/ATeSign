@@ -58,9 +58,6 @@ if(findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 6
 	ArrayList<String> result = CustomKeywords.'connection.dataVerif.getDataPencarianPengguna'(conneSign, findTestData(excelPathPencarianPengguna).getValue(
 			GlobalVariable.NumofColm, 15).toUpperCase())
 	
-	'declare arraylist arraymatch'
-	ArrayList<String> arrayMatch = new ArrayList<String>()
-	
 	'declare arrayindex'
 	arrayindex = 0
 	

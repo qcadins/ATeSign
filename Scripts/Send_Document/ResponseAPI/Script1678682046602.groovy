@@ -135,7 +135,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
 	for(int t = 0; t < documentFile.size();t++) {
 		if(t == documentFile.size() - 1){
 			stringRefno = stringRefno + ((((((((((((((((((((((((((('{"referenceNo" : ' + (refNo)) + ', "documentTemplateCode": ') +
-				(documentTemplateCode)) + ', "officeCode": ') + (officeCode)) + ', "officeName": ') + (officeName)) + ', "regionCode": ') + (regionName)) + ', "regionName": ') + (regionName)) + ', "businessLineCode": ') +
+				(documentTemplateCode)) + ', "officeCode": ') + (officeCode)) + ', "officeName": ') + (officeName)) + ', "regionCode": ') + (regionCode)) + ', "regionName": ') + (regionName)) + ', "businessLineCode": ') +
 				(businessLineCode)) + ', "businessLineName": ') + (businessLineName)) + ', "isSequence": ') +
 				(isSequence)) + ', "signer":[') + (ListSigner[0])) + '], "documentFile": "') + PDFtoBase64(documentFile[t])) + '", "psreCode" : ') +
 				(psreCode)) + ', "successURL": ') + (successURL)) + ', "uploadURL": ') + (uploadURL)) + '}'
@@ -143,7 +143,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
 		else 
 		{
 			stringRefno = stringRefno + ((((((((((((((((((((((((((('{"referenceNo" : ' + (refNo)) + ', "documentTemplateCode": ') + 
-            (documentTemplateCode)) + ', "officeCode": ') + (officeCode)) + ', "officeName": ') + (officeName)) + ', "regionCode": ') + (regionName)) + ', "regionName": ') + (regionName)) + ', "businessLineCode": ') + 
+            (documentTemplateCode)) + ', "officeCode": ') + (officeCode)) + ', "officeName": ') + (officeName)) + ', "regionCode": ') + (regionCode)) + ', "regionName": ') + (regionName)) + ', "businessLineCode": ') + 
             (businessLineCode)) + ', "businessLineName": ') + (businessLineName)) + ', "isSequence": ') + 
             (isSequence)) + ', "signer":[') + (ListSigner[0])) + '], "documentFile": "') + PDFtoBase64(documentFile[t])) + '", "psreCode" : ') + 
             (psreCode)) + ', "successURL": ') + (successURL)) + ', "uploadURL": ') + (uploadURL)) + 

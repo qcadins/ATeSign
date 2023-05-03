@@ -147,7 +147,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
         string = ''
 
         string = (string + (((((((((((((((((('{"referenceNo" : ' + (refNo[i])) + ', "documentTemplateCode": ') + (documentTemplateCode[
-        i])) + ', "officeCode": ') + (officeCode[i])) + ', "officeName": ') + (officeName[i])) + ', "regionCode": ') + (regionName[
+        i])) + ', "officeCode": ') + (officeCode[i])) + ', "officeName": ') + (officeName[i])) + ', "regionCode": ') + (regionCode[
         i])) + ', "regionName": ') + (regionName[i])) + ', "businessLineCode": ') + (businessLineCode[i])) + ', "businessLineName": ') + 
         (businessLineName[i])) + ', "isSequence": ') + (isSequence[i])) + ','))
 

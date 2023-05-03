@@ -182,7 +182,11 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     'call test case error report'
     WebUI.callTestCase(findTestCase('Register_eSign/ErrorReport'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
         FailureHandling.CONTINUE_ON_FAILURE)
-} else {
+} else if(isMandatoryComplete > 0){
+	'write to excel status failed dan reason'
+	CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+		(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedMandatory)
+}else {
     'write to excel success'
     CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'BuatUndangan', 0, GlobalVariable.NumofColm - 
         1, GlobalVariable.StatusSuccess)
