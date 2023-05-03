@@ -18,6 +18,7 @@ import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
 import java.sql.Connection as Connection
 import org.apache.commons.io.FileUtils as FileUtils
+import java.net.InetAddress
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\2.1 Esign - Full API Services.xlsx')
@@ -29,25 +30,25 @@ Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 int countColmExcel = findTestData(excelPathAPISentOTPSigning).getColumnNumbers()
 
 'looping API Sent OTP Signing'
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel + 2; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
         'check if tidak mau menggunakan tenant code yang benar'
-        if (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 18) == 'No') {
+        if (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 16) == 'No') {
             'set tenant kosong'
-            GlobalVariable.Tenant = findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 19)
-        } else if (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 18) == 'Yes') {
+            GlobalVariable.Tenant = findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 17)
+        } else if (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 16) == 'Yes') {
             GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
         }
         
         'check if mau menggunakan api_key yang salah atau benar'
-        if (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 16) == 'Yes') {
+        if (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 14) == 'Yes') {
             'get api key dari db'
             GlobalVariable.api_key = CustomKeywords.'connection.dataVerif.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
-        } else if (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 16) == 'No') {
+        } else if (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 14) == 'No') {
             'get api key salah dari excel'
-            GlobalVariable.api_key = findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 17)
+            GlobalVariable.api_key = findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 15)
         }
         
 		'mengambil reset otp request numbernya awal berapa'

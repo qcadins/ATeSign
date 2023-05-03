@@ -28,8 +28,6 @@ ArrayList<String> arrayMatch = new ArrayList<String>()
 
 docid = GlobalVariable.Response.toString().replace('[', '').replace(']', '').split(', ', -1)
 
-println docid.size()
-
 ArrayList<String> refNo = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 11).replace('"', '').split(';', 
     -1)
 
