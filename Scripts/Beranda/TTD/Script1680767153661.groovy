@@ -34,15 +34,6 @@ def currentDate = new Date().format('yyyy-MM-dd')
 'Inisialisasi array untuk Listotp'
 ArrayList<String> listOTP = new ArrayList<String>()
 
-'Inisialisasi array untuk totalSaldo'
-ArrayList<String> totalSaldo = new ArrayList<String>()
-
-'Inisialisasi array untuk masukan DB'
-ArrayList<String> MasukanDB = new ArrayList<String>()
-
-'Inisialisasi array untuk signingDB'
-ArrayList<String> SigningDB = new ArrayList<String>()
-
 'declare arraylist arraymatch'
 ArrayList<String> arrayMatch = new ArrayList<String>()
 
