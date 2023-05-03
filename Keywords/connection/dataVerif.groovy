@@ -717,23 +717,6 @@ public class dataVerif {
 	}
 
 	@Keyword
-	public getOTPLoginId(Connection conn, String email){
-		String data
-
-		Statement stm = conn.createStatement()
-
-		ResultSet resultSet = stm.executeQuery("select otp_code from am_msuser where login_id = '"+email+"'")
-		ResultSetMetaData metadata = resultSet.getMetaData()
-
-		columnCount = metadata.getColumnCount()
-
-		while (resultSet.next()) {
-			data = resultSet.getObject(1)
-		}
-		return data
-	}
-
-	@Keyword
 	public gettrxSaldo(Connection conn){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()

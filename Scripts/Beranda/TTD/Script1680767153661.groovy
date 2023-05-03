@@ -341,7 +341,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                             'value'), notelpsigner, false))
 
                                 'OTP yang pertama dimasukkan kedalam 1 var'
-                                OTP_before = CustomKeywords.'connection.dataVerif.getOTPLoginId'(conneSign, emailSigner[
+                                OTP_before = CustomKeywords.'connection.dataVerif.getOTPAktivasi'(conneSign, emailSigner[
                                     (o - 1)])
 
                                 'clear arraylist sebelumnya'
@@ -385,7 +385,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                         WebUI.delay(3)
 										
                                         'OTP yang kedua'
-                                        OTP_after = CustomKeywords.'connection.dataVerif.getOTPLoginId'(conneSign, emailSigner[
+                                        OTP_after = CustomKeywords.'connection.dataVerif.getOTPAktivasi'(conneSign, emailSigner[
 											(o - 1)])
 										
                                         'add otp ke list'
