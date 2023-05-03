@@ -64,8 +64,6 @@ ArrayList<String> successURL = findTestData(API_Excel_Path).getValue(GlobalVaria
 ArrayList<String> uploadURL = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 23).replace('"', '').split(
     ';', -1)
 
-ArrayList<String> documentFile = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 20).split(';', -1)
-
 'split signer untuk doc1 dan signer untuk doc2'
 ArrayList<String> signAction = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 25).replace('"', '').split(
     '\\|', -1)
