@@ -30,7 +30,7 @@ Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 int countColmExcel = findTestData(excelPathAPISentOTPSigning).getColumnNumbers()
 
 'looping API Sent OTP Signing'
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel + 2; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
@@ -109,9 +109,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel + 
                     arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], findTestData(excelPathAPISentOTPSigning).getValue(
                                 GlobalVariable.NumofColm, 10).replace('"', '') + ' : Send OTP SMS', false, FailureHandling.CONTINUE_ON_FAILURE))
 
+					
+					newOTP = result[arrayIndex++]
+					
                     'verify otp code tidak sama'
-                    arrayMatch.add(WebUI.verifyNotEqual(result[arrayIndex++], otp_code, FailureHandling.CONTINUE_ON_FAILURE))
+                    arrayMatch.add(WebUI.verifyNotEqual(newOTP, otp_code, FailureHandling.CONTINUE_ON_FAILURE))
 
+					'input di excel mengenai trxno yang telah didapat'
+					CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sent OTP Signing',
+						5, GlobalVariable.NumofColm - 1, newOTP)
+					
 					'verify reset otp request number '
 					arrayMatch.add(WebUI.verifyEqual(result[arrayIndex++], Integer.parseInt(reset_otp_request_num) + 1, FailureHandling.CONTINUE_ON_FAILURE))
 

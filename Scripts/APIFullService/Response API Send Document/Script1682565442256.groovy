@@ -41,49 +41,53 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 	'Inisialisasi document template code berdasarkan delimiter ;'
 	ArrayList<String> documentTemplateCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 12).split(';',
 		-1)
+	
+	'Inisialisasi document name berdasarkan delimiter ;'
+	ArrayList<String> documentName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 13).split(';',
+		-1)
 
 	'Inisialisasi office Code berdasarkan delimiter ;'
-	ArrayList<String> officeCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 13).split(';', -1)
+	ArrayList<String> officeCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 14).split(';', -1)
 	
 	'Inisialisasi office name berdasarkan delimiter ;'
-	ArrayList<String> officeName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 14).split(';', -1)
+	ArrayList<String> officeName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 15).split(';', -1)
 
 	'Inisialisasi region code berdasarkan delimiter ;'
-	ArrayList<String> regionCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 15).split(';', -1)
+	ArrayList<String> regionCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 16).split(';', -1)
 
 	'Inisialisasi region name berdasarkan delimiter ;'
-	ArrayList<String> regionName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 16).split(';', -1)
+	ArrayList<String> regionName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 17).split(';', -1)
 
 	'Inisialisasi business line code berdasarkan delimiter ;'
-	ArrayList<String> businessLineCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 17).split(';',
+	ArrayList<String> businessLineCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 18).split(';',
 		-1)
 
 	'Inisialisasi business line name berdasarkan delimiter ;'
-	ArrayList<String> businessLineName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 18).split(';',
+	ArrayList<String> businessLineName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 19).split(';',
 		-1)
 
-	ArrayList<String> documentFile = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 19).split(';', -1)
+	ArrayList<String> documentFile = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 20).split(';', -1)
 
 	'split signer untuk doc1 dan signer untuk doc2'
-	ArrayList<String> signAction = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 27).split('\\|', -1)
+	ArrayList<String> signAction = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 28).split('\\|', -1)
 	
-	ArrayList<String> signerType = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 28).split('\\|', -1)
+	ArrayList<String> signerType = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 29).split('\\|', -1)
 
-	ArrayList<String> tlp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 29).split('\\|', -1)
+	ArrayList<String> tlp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 30).split('\\|', -1)
 
-	ArrayList<String> idKtp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 30).split('\\|', -1)
+	ArrayList<String> idKtp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 31).split('\\|', -1)
 	
-	ArrayList<String> email = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 31).split('\\|', -1)
+	ArrayList<String> email = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 32).split('\\|', -1)
 
-	ArrayList<String> pageStamp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 21).split('\\|', -1)
+	ArrayList<String> pageStamp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 22).split('\\|', -1)
 	
-	ArrayList<String> llxStamp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 22).split('\\|', -1)
+	ArrayList<String> llxStamp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 23).split('\\|', -1)
 	
-	ArrayList<String> llyStamp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 23).split('\\|', -1)
+	ArrayList<String> llyStamp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 24).split('\\|', -1)
 	
-	ArrayList<String> urxStamp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 24).split('\\|', -1)
+	ArrayList<String> urxStamp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 25).split('\\|', -1)
 	
-	ArrayList<String> uryStamp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 25).split('\\|', -1)
+	ArrayList<String> uryStamp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 26).split('\\|', -1)
 	
 	'Deklarasi variable string Ref no untuk full body API.'
 	String stringRefno = new String()
@@ -119,7 +123,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
 		'Pengisian body'
 		bodyAPI = bodyAPI + '{"referenceNo" : ' + refNo[i] + ', "documentTemplateCode": ' + documentTemplateCode[
-		i] + ', "officeCode": ' + officeCode[i] + ', "officeName": ' + officeName[i] + ', "regionCode": ' + regionCode[
+		i]+ ', "documentName": ' + documentName[i] + ', "officeCode": ' + officeCode[i] + ', "officeName": ' + officeName[i] + ', "regionCode": ' + regionCode[
 		i] + ', "regionName": ' + regionName[i] + ', "businessLineCode": ' + businessLineCode[i] + ', "businessLineName": ' +
 		businessLineName[i] + ','
 		
@@ -133,15 +137,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		for (int t = 0; t < (signAction[i]).size(); t++) {
 			
 			'Split mengenai signLocation dimana berdasarkan dokumen'
-			ArrayList<String> pageSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 33).split('\\|\\|', -1)
+			ArrayList<String> pageSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 34).split('\\|\\|', -1)
 			
-			ArrayList<String> llxSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 34).split('\\|\\|', -1)
+			ArrayList<String> llxSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 35).split('\\|\\|', -1)
 			
-			ArrayList<String> llySign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 35).split('\\|\\|', -1)
+			ArrayList<String> llySign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 36).split('\\|\\|', -1)
 			
-			ArrayList<String> urxSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 36).split('\\|\\|', -1)
+			ArrayList<String> urxSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 37).split('\\|\\|', -1)
 			
-			ArrayList<String> urySign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 37).split('\\|\\|', -1)
+			ArrayList<String> urySign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 38).split('\\|\\|', -1)
 			
 			
 			'Split mengenai signLocation dimana berdasarkan dokumen dan berdasarkan signer'
@@ -224,7 +228,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		bodyAPI = new String()
 		
 		'Jika dokumennya menggunakan base64'
-			if(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 45) == 'Yes') {
+			if(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 46) == 'Yes') {
 				'input bodyAPI dengan Base64'
 				bodyAPI = bodyAPI + '"documentFile": "' + PDFtoBase64(documentFile[i]) + '"'
 			}
@@ -277,27 +281,27 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 	}
 	
 	'Jika flag tenant no'
-    if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 43) == 'No') {
+    if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 44) == 'No') {
         'set tenant kosong'
-        GlobalVariable.Tenant = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 44)
-    } else if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 43) == 'Yes') {
+        GlobalVariable.Tenant = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 45)
+    } else if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 44) == 'Yes') {
         'Input tenant'
 		GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
     }
     
     'check if mau menggunakan api_key yang salah atau benar'
-    if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 41) == 'Yes') {
+    if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 42) == 'Yes') {
         'get api key dari db'
         GlobalVariable.api_key = CustomKeywords.'connection.dataVerif.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
-    } else if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 41) == 'No') {
+    } else if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 42) == 'No') {
         'get api key salah dari excel'
-        GlobalVariable.api_key = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 42)
+        GlobalVariable.api_key = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 43)
     }
     
 	'Hit API'
     respon = WS.sendRequest(findTestObject('APIFullService/Postman/Send Document Signing', [('tenantCode') : findTestData(
                     excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 9), ('request') : stringRefno, ('callerId') : findTestData(
-                    excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 39)]))
+                    excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 40)]))
 	
     'jika response 200 / hit api berhasil'
     if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
@@ -372,15 +376,15 @@ def ResponseAPIStoreDB(String signlocStoreDB) {
 		-1)
 	
 	'split signer untuk doc1 dan signer untuk doc2'
-	ArrayList<String> signAction = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 27).split('\\|', -1)
+	ArrayList<String> signAction = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 28).split('\\|', -1)
 	
-	ArrayList<String> signerType = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 28).split('\\|', -1)
+	ArrayList<String> signerType = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 29).split('\\|', -1)
 
-	ArrayList<String> tlp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 29).split('\\|', -1)
+	ArrayList<String> tlp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 30).split('\\|', -1)
 
-	ArrayList<String> idKtp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 30).split('\\|', -1)
+	ArrayList<String> idKtp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 31).split('\\|', -1)
 	
-	ArrayList<String> email = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 31).split('\\|', -1)
+	ArrayList<String> email = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 32).split('\\|', -1)
 
 	ArrayList<String> refNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 11).split(';', -1)
 
@@ -391,24 +395,28 @@ def ResponseAPIStoreDB(String signlocStoreDB) {
 		ArrayList<String> documentTemplateCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 12).split(';',
 			-1)
 	
+		'Inisialisasi document template code berdasarkan delimiter ;'
+		ArrayList<String> documentName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 13).split(';',
+			-1)
+		
 		'Inisialisasi office Code berdasarkan delimiter ;'
-		ArrayList<String> officeCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 13).split(';', -1)
+		ArrayList<String> officeCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 14).split(';', -1)
 		
 		'Inisialisasi office name berdasarkan delimiter ;'
-		ArrayList<String> officeName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 14).split(';', -1)
+		ArrayList<String> officeName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 15).split(';', -1)
 	
 		'Inisialisasi region code berdasarkan delimiter ;'
-		ArrayList<String> regionCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 15).split(';', -1)
+		ArrayList<String> regionCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 16).split(';', -1)
 	
 		'Inisialisasi region name berdasarkan delimiter ;'
-		ArrayList<String> regionName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 16).split(';', -1)
+		ArrayList<String> regionName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 17).split(';', -1)
 	
 		'Inisialisasi business line code berdasarkan delimiter ;'
-		ArrayList<String> businessLineCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 17).split(';',
+		ArrayList<String> businessLineCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 18).split(';',
 			-1)
 	
 		'Inisialisasi business line name berdasarkan delimiter ;'
-		ArrayList<String> businessLineName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 18).split(';',
+		ArrayList<String> businessLineName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 19).split(';',
 			-1)
 		
 		'Jika documentTemplateCode di dokumen pertama adalah kosong'
@@ -497,7 +505,7 @@ def ResponseAPIStoreDB(String signlocStoreDB) {
 			'Jika signAction tersebut adalah AT'
 			if(signAction[z].replace('"','') == 'at') {
 				'Mengambil emailSign dari excel dan displit kembali'
-				emailSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 31).replace('"','').split(';',-1)[z]
+				emailSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 32).replace('"','').split(';',-1)[z]
 				
 				'Mengambil trxno dari column tersebut'
 				trxno = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 6)
