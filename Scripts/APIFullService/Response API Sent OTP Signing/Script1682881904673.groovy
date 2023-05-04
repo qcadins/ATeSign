@@ -30,7 +30,7 @@ Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 int countColmExcel = findTestData(excelPathAPISentOTPSigning).getColumnNumbers()
 
 'looping API Sent OTP Signing'
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel + 2; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
