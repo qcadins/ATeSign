@@ -1250,4 +1250,43 @@ public class dataVerif {
 		}
 		return data
 	}
+	
+	@Keyword
+	public getSign(Connection conn, String documentid, String emailsigner){
+		String data
+		ArrayList<String> listdata = new ArrayList<>()
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("select tbm.qty, tbm.trx_no, tdsr.request_status, tdh.ref_number, CASE WHEN tdsr.user_request_ip is null then '' else tdsr.user_request_ip end, CASE WHEN tdsr.user_request_browser_information is null then '' else tdsr.user_request_browser_information end, tdsr.usr_crt, tdd.signing_process, TO_CHAR(tdds.sign_date, 'yyyy-MM-dd'), mst.api_key, mst.tenant_code from tr_document_signing_request tdsr join tr_document_d tdd on tdd.id_document_d = tdsr.id_document_d join tr_document_d_sign tdds on tdsr.id_document_d = tdds.id_document_d join am_msuser amm on tdds.id_ms_user = amm.id_ms_user join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join tr_balance_mutation tbm on tdd.id_document_d = tbm.id_document_d join ms_tenant mst on tbm.id_ms_tenant = mst.id_ms_tenant where tdd.document_id = '"+documentid+"' and amm.login_id = '"+emailsigner+"' order by tdsr.dtm_crt desc, tdds.sign_date desc")
+		
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for(int i = 1 ; i <= columnCount ; i++){
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		return listdata
+	}
+	
+	@Keyword
+	public getTotalSigned(Connection conn, String documentId){
+		String data
+
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("select total_signed from tr_document_d where document_id = '"+documentId+"'")
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		return data
+	}
+	
 }

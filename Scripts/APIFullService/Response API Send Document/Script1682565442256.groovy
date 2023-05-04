@@ -183,9 +183,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 				else if(l == pageSign[i].size() - 1){
 					'Isi bodyAPI'
 					bodyAPI = bodyAPI + '{ "page" : '+ pageSign[i][l] + ', "llx" : '+ llxSign[i][l]+', "lly" : '+ llySign[i][l]+', "urx" : '+ urxSign[i][l]+', "ury" : '+ urySign[i][l]+'}]'
+					if(t == (signAction[i]).size() - 1) {
+						'isi signlocStoreDB'
+						signlocStoreDB =  signlocStoreDB + '{"llx":'+ llxSign[i][l]+',"lly":'+ llySign[i][l]+',"urx":'+ urxSign[i][l]+',"ury":'+ urySign[i][l]+'}'
+					}else {
 					'isi signlocStoreDB'
-					signlocStoreDB =  signlocStoreDB + '{"llx":'+ llxSign[i][l]+',"lly":'+ llySign[i][l]+',"urx":'+ urxSign[i][l]+',"ury":'+ urySign[i][l]+'}'
-				}
+					signlocStoreDB =  signlocStoreDB + '{"llx":'+ llxSign[i][l]+',"lly":'+ llySign[i][l]+',"urx":'+ urxSign[i][l]+',"ury":'+ urySign[i][l]+'};'
+					}
+					}
+				
 				//Jika bukan kedua-duanya
 				else {
 					'Isi bodyAPI'
