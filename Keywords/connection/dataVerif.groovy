@@ -1288,4 +1288,25 @@ public class dataVerif {
 		}
 		return data
 	}
+	
+	@Keyword
+	public getSignerTypeonDocTemplate(Connection conn, String documentTemplate){
+		String data
+		ArrayList<String> listdata = new ArrayList<>()
+		Statement stm = conn.createStatement()
+
+		ResultSet resultSet = stm.executeQuery("select msl.code from ms_doc_template_sign_loc mdtsl join ms_doc_template mdt on mdtsl.id_doc_template = mdt.id_doc_template join ms_lov msl on mdtsl.lov_signer_type = msl.id_lov where mdt.doc_template_code = '"+documentTemplate+"'")
+		
+		ResultSetMetaData metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for(int i = 1 ; i <= columnCount ; i++){
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		return listdata
+	}
 }

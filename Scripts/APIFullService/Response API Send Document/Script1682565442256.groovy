@@ -66,6 +66,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 	ArrayList<String> businessLineName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 19).split(';',
 		-1)
 
+	'Inisialisasi document file berdasarkan delimiter ;'
 	ArrayList<String> documentFile = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 20).split(';', -1)
 
 	'split signer untuk doc1 dan signer untuk doc2'
@@ -147,7 +148,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			
 			ArrayList<String> urySign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 38).split('\\|\\|', -1)
 			
-			
 			'Split mengenai signLocation dimana berdasarkan dokumen dan berdasarkan signer'
 			(pageSign[i]) = (pageSign[i]).split('\\|', -1)
 			
@@ -174,10 +174,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			for(int l = 0 ; l < pageSign[i].size();l++) {
 				'Jika loopingan pertama'
 				if(l == 0) {
+					if(l == pageSign[i].size() - 1) {
+						'Isi bodyAPI'
+						bodyAPI = bodyAPI + ',"signLocations": [{ "page" : '+ pageSign[i][l] + ', "llx" : '+ llxSign[i][l]+', "lly" : '+ llySign[i][l]+', "urx" : '+ urxSign[i][l]+', "ury" : '+ urySign[i][l]+'}]'
+						'isi signlocStoreDB'
+						signlocStoreDB =  signlocStoreDB + '{"llx":'+ llxSign[i][l]+',"lly":'+ llySign[i][l]+',"urx":'+ urxSign[i][l]+',"ury":'+ urySign[i][l]+'}'
+					}else {
 					'Isi bodyAPI'
 					bodyAPI = bodyAPI + ',"signLocations": [{ "page" : '+ pageSign[i][l] + ', "llx" : '+ llxSign[i][l]+', "lly" : '+ llySign[i][l]+', "urx" : '+ urxSign[i][l]+', "ury" : '+ urySign[i][l]+'},'
 					'isi signlocStoreDB'
 					signlocStoreDB =  signlocStoreDB + '{"llx":'+ llxSign[i][l]+',"lly":'+ llySign[i][l]+',"urx":'+ urxSign[i][l]+',"ury":'+ urySign[i][l]+'};'
+					}
 				} 
 				//jika loopingan sudah diakhir
 				else if(l == pageSign[i].size() - 1){
@@ -190,7 +197,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 					'isi signlocStoreDB'
 					signlocStoreDB =  signlocStoreDB + '{"llx":'+ llxSign[i][l]+',"lly":'+ llySign[i][l]+',"urx":'+ urxSign[i][l]+',"ury":'+ urySign[i][l]+'};'
 					}
-					}
+				}
 				
 				//Jika bukan kedua-duanya
 				else {
@@ -198,16 +205,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 					bodyAPI = bodyAPI + '{ "page" : '+ pageSign[i][l] + ', "llx" : '+ llxSign[i][l]+', "lly" : '+ llySign[i][l]+', "urx" : '+ urxSign[i][l]+', "ury" : '+ urySign[i][l]+'},'
 					'isi signlocStoreDB'
 					signlocStoreDB =  signlocStoreDB + '{"llx":'+ llxSign[i][l]+',"lly":'+ llySign[i][l]+',"urx":'+ urxSign[i][l]+',"ury":'+ urySign[i][l]+'};'
-				}
-				
+				}	
 			}
 			
 			'Jika signAction yang pertama untuk dokumen pertama'
 			if (t == 0) {
-				'isi bodyAPI dengan bodyAPI yang atas'
-				bodyAPI = '"signers" : [{"signAction": ' + signAction[i][t] + ',"signerType": ' +
-				signerType[i][t] + ',"tlp": ' + tlp[i][t] + ',"idKtp": ' + idKtp[i][t] + ',"email": ' +
-				email[i][t] + bodyAPI + '},'
+				if(t == signAction[i].size() - 1) {
+					'isi bodyAPI dengan bodyAPI yang atas'
+					bodyAPI = '"signers" : [{"signAction": ' + signAction[i][t] + ',"signerType": ' +
+					signerType[i][t] + ',"tlp": ' + tlp[i][t] + ',"idKtp": ' + idKtp[i][t] + ',"email": ' +
+					email[i][t] + bodyAPI + '}],'
+				}else {
+					'isi bodyAPI dengan bodyAPI yang atas'
+					bodyAPI = '"signers" : [{"signAction": ' + signAction[i][t] + ',"signerType": ' +
+					signerType[i][t] + ',"tlp": ' + tlp[i][t] + ',"idKtp": ' + idKtp[i][t] + ',"email": ' +
+					email[i][t] + bodyAPI + '},'
+				}
 			} 
 			//Jika signAction sudah di terakhir untuk dokumen pertama
 			else if (t == signAction[i].size() - 1){
@@ -269,8 +282,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 					'input bodyAPI'
 					bodyAPI = bodyAPI + '{ "page" : '+ pageStamp[i][b] + ', "llx" : '+ llxStamp[i][b]+', "lly" : '+ llyStamp[i][b]+', "urx" : '+ urxStamp[i][b]+', "ury" : '+ uryStamp[i][b]+ '},'				
 				}
-				}
+			}
 		}
+		
 		'jika dokumennya di akhir'
 		if (i == documentFile.size() - 1){
 			'input body API berdasarkan bodyAPI diatasnya'
@@ -357,8 +371,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			'write to excel status failed dan reason'
 			CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm,
 			GlobalVariable.StatusFailed, (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 2).replace(
-			'-', '') + ';') + messageFailed.toString())
-			
+			'-', '') + ';') + messageFailed.toString())	
     }
 	}
 }
@@ -425,65 +438,82 @@ def ResponseAPIStoreDB(String signlocStoreDB) {
 		ArrayList<String> businessLineName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 19).split(';',
 			-1)
 	
+		'Inisialisasi pageSign berdasarkan delimiter ||'
+		ArrayList<String> pageSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 34).split('\\|\\|', -1)
+
 		'get data API Send Document dari DB (hanya 1 signer)'
 		ArrayList<String> result = CustomKeywords.'connection.dataVerif.getSendDocSigning'(conneSign, docid[i])
 	
 		'declare arrayindex'
 		arrayindex = 0
-		
-		ArrayList<String> pageSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 34).split('\\|\\|', -1)
-		
-		println(pageSign)
+				
 		'Jika documentTemplateCode di dokumen pertama adalah kosong'
 		if(documentTemplateCode[i].replace('"', '') == '') {
 			'Maka pengecekan signlocation yang diinput'
 			arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.dataVerif.getSignLocation'(conneSign, docid[i]),signlocStoreDB, false, FailureHandling.CONTINUE_ON_FAILURE))
 		}
+		
 		'get current date'
 		def currentDate = new Date().format('yyyy-MM-dd')
 		
 		'Split result dari email berdasarkan db'
 		EmailDB = result[arrayindex++].split(';',-1)
 		
+		'Split result dari signerType berdasarkan db'
 		SignerTypeDB = result[arrayindex++].split(';',-1)
 		
+		'Split result dari signerType per signer berdasarkan excel yang telah displit per dokumen. '
 		SignerTypeExcel = signerType[i].replace('"','').split(';',-1)
-			
+		
+		'Deklarasi index Email dan index Signer Type'
+		indexEmail = 0
+		
+		indexSignerType = 0
+		
 		'Splitting email berdasarkan excel per dokumen'
 		EmailExcel = email[i].split(';',-1)
 
+		'Jika document Template pada excel tidak kosong'
 		if(documentTemplateCode[i].replace('"', '') != '') {
 			
-			'Looping berdasarkan jumlah email per dokumen'
-			for(int c = 0 ; c < EmailDB.size();c++) {
-				'Jika email pertama di dokumen pertama tidak kosong'
-				if(EmailExcel[c] != '""') {
-					'Verify email'
-					arrayMatch.add(WebUI.verifyMatch(EmailExcel[c].replace('"', ''),
-							EmailDB[c], false, FailureHandling.CONTINUE_ON_FAILURE))
-				}
+			'Mengambil value tipe signer berdasarkan tipe dokumen template'
+			resultDocTemplate = CustomKeywords.'connection.dataVerif.getSignerTypeonDocTemplate'(conneSign, documentTemplateCode[i].replace('"', ''))
+			
+			'Looping berdasarkan jumlah email per dokumen di excel'
+			for(int c = 0 ; c < EmailExcel.size();c++) {
 				
-				'verify signerType'
-				arrayMatch.add(WebUI.verifyMatch(SignerTypeExcel[c].replace('"', ''),
-						SignerTypeDB[c], false, FailureHandling.CONTINUE_ON_FAILURE))
+				'Jika hasil dari db ada pada excel mengenai signer type per signer'
+				if(resultDocTemplate.contains(SignerTypeExcel[c].replace('"',''))) {
+					'Jika email pertama di dokumen pertama tidak kosong'
+					if(EmailExcel[c] != '""') {
+						'Verify email'
+						arrayMatch.add(WebUI.verifyMatch(EmailExcel[c].replace('"', ''),
+							EmailDB[indexEmail++], false, FailureHandling.CONTINUE_ON_FAILURE))
+					}
+					'verify signerType'
+					arrayMatch.add(WebUI.verifyMatch(SignerTypeExcel[c].replace('"', ''),
+							SignerTypeDB[indexSignerType++], false, FailureHandling.CONTINUE_ON_FAILURE))
+				}
+				//Jika tidak ada dari db dan excel, maka continue
+				else {
+					continue
+				}
+
 			}
-			
-			
-			
+		//Jika dokumennya kosong
 		}else if(documentTemplateCode[i].replace('"', '') == '') {
-			
+			'PageSign displit per signer.'
 			pageSignSigner = pageSign[i].split('\\|',-1)
 			
-			indexEmail = 0
-			
-			indexSignerType = 0
-			
+			'looping berdasarkan total email di excel'
 			for(y = 0; y < EmailExcel.size(); y++) {
-				
+				'looping berdasarkan total pagesign per signer. Dalam per signer, displit lagi berdasarkan 1 lokasi'
 				for (x = 0; x < pageSignSigner[y].split(';',-1).size(); x++){
+					'Verifikasi email DB dengan email excel'
 					arrayMatch.add(WebUI.verifyMatch(EmailDB[indexEmail++],
 						EmailExcel[y].replace('"', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
 					
+					'Verifikasi signer Type DB dengan signer Type Excel'
 					arrayMatch.add(WebUI.verifyMatch(SignerTypeDB[indexSignerType++],
 						SignerTypeExcel[y], false, FailureHandling.CONTINUE_ON_FAILURE))
 				}

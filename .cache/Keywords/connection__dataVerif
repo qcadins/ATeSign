@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "C0988D88DEC083A210FB0E8955CD1AE5",
+  "keywordFileContentHash": "01CC0A82FEF11FD8057158758D38603F",
   "keywordClasses": [
     {
       "name": "connection.dataVerif",
@@ -1983,6 +1983,37 @@
             },
             {
               "name": "documentId",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ]
+        },
+        {
+          "name": "getSignerTypeonDocTemplate",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "documentTemplate",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
