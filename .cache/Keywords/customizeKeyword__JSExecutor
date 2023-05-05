@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "939921037A72A6B87B0685EE1BCB46F2",
+  "keywordFileContentHash": "A7DEFEBE28E78F06B6EBBE22F2DAF5AF",
   "keywordClasses": [
     {
       "name": "customizeKeyword.JSExecutor",
@@ -46,11 +46,10 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         }
       ]
     }
   ],
-  "javadocParsed": true
+  "javadocParsed": false
 }

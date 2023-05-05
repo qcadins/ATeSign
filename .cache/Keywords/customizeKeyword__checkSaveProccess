@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "36E5D3ECF8B152B8515220ABE2CD215F",
+  "keywordFileContentHash": "F87F2304B70E04398F8CB1102BEC6A64",
   "keywordClasses": [
     {
       "name": "customizeKeyword.checkSaveProccess",
@@ -82,7 +82,7 @@
               "name": "sheetname",
               "initialExpression": "",
               "type": {
-                "fullClassName": "java.lang.String",
+                "fullClassName": "String",
                 "unresolvedClassName": "String",
                 "isArray": false,
                 "isGnericsPlaceHolder": false,
@@ -95,7 +95,7 @@
               "name": "object",
               "initialExpression": "",
               "type": {
-                "fullClassName": "java.lang.Object",
+                "fullClassName": "Object",
                 "unresolvedClassName": "Object",
                 "isArray": false,
                 "isGnericsPlaceHolder": false,
