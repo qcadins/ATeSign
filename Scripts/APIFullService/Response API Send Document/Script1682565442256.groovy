@@ -425,6 +425,9 @@ def ResponseAPIStoreDB(String signlocStoreDB) {
 		ArrayList<String> businessLineName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 19).split(';',
 			-1)
 		
+		ArrayList<String> pageSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 34).split('\\|\\|', -1)
+		
+		println(pageSign)
 		'Jika documentTemplateCode di dokumen pertama adalah kosong'
 		if(documentTemplateCode[i].replace('"', '') == '') {
 			'Maka pengecekan signlocation yang diinput'
@@ -441,28 +444,50 @@ def ResponseAPIStoreDB(String signlocStoreDB) {
 		arrayindex = 0
 		
 		'Split result dari email berdasarkan db'
-		result[arrayindex] = result[arrayindex].split(';',-1)
+		EmailDB = result[arrayindex++].split(';',-1)
 		
+		SignerTypeDB = result[arrayindex++].split(';',-1)
+		
+		SignerTypeExcel = signerType[i].replace('"','').split(';',-1)
+			
+		println(EmailDB)
+		println(SignerTypeDB)
+		println(SignerTypeDB)
 		'Splitting email berdasarkan excel per dokumen'
-		email[i] = email[i].split(';',-1)
-		
-		'Looping berdasarkan jumlah email per dokumen'
-		for(int c = 0 ; c < email[i].size();c++) {
-			'Jika email pertama di dokumen pertama tidak kosong'
-			if(email[i][c] != '""') {
-				'Verify email'
-				arrayMatch.add(WebUI.verifyMatch(email[i][c].replace('"', ''),
-					result[arrayindex][c], false, FailureHandling.CONTINUE_ON_FAILURE))
+		EmailExcel = email[i].split(';',-1)
+
+		println(EmailExcel)
+		if(documentTemplateCode[i].replace('"', '') != '') {
+			
+			'Looping berdasarkan jumlah email per dokumen'
+			for(int c = 0 ; c < EmailExcel.size();c++) {
+				'Jika email pertama di dokumen pertama tidak kosong'
+				if(EmailExcel[c] != '""') {
+					'Verify email'
+					arrayMatch.add(WebUI.verifyMatch(EmailExcel[c].replace('"', ''),
+							EmailDB[c], false, FailureHandling.CONTINUE_ON_FAILURE))
+				}
+			}
+			
+			'verify signerType'
+			arrayMatch.add(WebUI.verifyMatch(SignerTypeExcel.toString(),
+					SignerTypeDB.toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+			
+		}else if(documentTemplateCode[i].replace('"', '') == '') {
+			for (x = 0; x < EmailExcel.size(); x++){
+				countEmail = EmailDB.count(EmailExcel[x].replace('"', ''))
+				WebUI.verifyEqual(countEmail, pageSign[i].split('\\|',-1).size())
+			}
+
+			for (x = 0; x < SignerTypeExcel.size(); x++){
+				countSignerType = SignerTypeDB.count(SignerTypeExcel[x].replace('"', ''))
+				WebUI.verifyEqual(countSignerType, pageSign[i].split('\\|',-1).size())
 			}
 		}
 		
 		'Penambahan arrayindex + 1 karena email tidak ada penambahan'
-		arrayindex++
+//		arrayindex++
 		
-		'verify signerType'
-		arrayMatch.add(WebUI.verifyMatch(signerType[i].replace('"', ''),
-				result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-	
 		'verify tenant code'
 		arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 9).replace('"', ''),
 				result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
