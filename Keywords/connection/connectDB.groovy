@@ -3,7 +3,6 @@ import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import java.sql.Connection
 import java.sql.DriverManager
 import com.kms.katalon.core.annotation.Keyword
-import internal.GlobalVariable
 
 public class connectDB {
 
