@@ -424,6 +424,12 @@ def ResponseAPIStoreDB(String signlocStoreDB) {
 		'Inisialisasi business line name berdasarkan delimiter ;'
 		ArrayList<String> businessLineName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 19).split(';',
 			-1)
+	
+		'get data API Send Document dari DB (hanya 1 signer)'
+		ArrayList<String> result = CustomKeywords.'connection.dataVerif.getSendDocSigning'(conneSign, docid[i])
+	
+		'declare arrayindex'
+		arrayindex = 0
 		
 		ArrayList<String> pageSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 34).split('\\|\\|', -1)
 		
@@ -433,15 +439,8 @@ def ResponseAPIStoreDB(String signlocStoreDB) {
 			'Maka pengecekan signlocation yang diinput'
 			arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.dataVerif.getSignLocation'(conneSign, docid[i]),signlocStoreDB, false, FailureHandling.CONTINUE_ON_FAILURE))
 		}
-	
 		'get current date'
 		def currentDate = new Date().format('yyyy-MM-dd')
-		
-		'get data API Send Document dari DB (hanya 1 signer)'
-		ArrayList<String> result = CustomKeywords.'connection.dataVerif.getSendDocSigning'(conneSign, docid[i])
-	
-		'declare arrayindex'
-		arrayindex = 0
 		
 		'Split result dari email berdasarkan db'
 		EmailDB = result[arrayindex++].split(';',-1)
