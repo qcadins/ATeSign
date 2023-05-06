@@ -33,42 +33,42 @@ int countColmExcel = findTestData(excelPathAPISignDocument).getColumnNumbers()
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
-
     } else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
-        String otp
+        'Inisialisasi otp, Photo, ipaddress, dan total signed sebelumnya yang dikosongkan'
+        String otp, Photo, ipaddress, totalSigned_before
 
-        String Photo
+        'Split dokumen id agar mendapat dokumenid 1 per 1 dengan case bulk'
+        documentId = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 10).replace('[', '').replace(
+            ']', '').replace('"', '').split(',', -1)
 
-        String ipaddress
-		
-		totalSigned_before = ''
-		
         'check if tidak mau menggunakan tenant code yang benar'
-        if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 18) == 'No') {
+        if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 19) == 'No') {
             'set tenant kosong'
-            GlobalVariable.Tenant = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 19)
-        } else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 18) == 'Yes') {
+            GlobalVariable.Tenant = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 20)
+        } else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 19) == 'Yes') {
+            'Mengambil tenant dari setting'
             GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
         }
         
         'check if mau menggunakan api_key yang salah atau benar'
-        if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 16) == 'Yes') {
+        if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 17) == 'Yes') {
             'get api key dari db'
             GlobalVariable.api_key = CustomKeywords.'connection.dataVerif.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
-        } else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 16) == 'No') {
+        } else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 17) == 'No') {
             'get api key salah dari excel'
-            GlobalVariable.api_key = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 17)
+            GlobalVariable.api_key = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 18)
         }
         
         'check if mau menggunakan OTP yang salah atau benar'
-        if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 20) == 'Yes') {
-            'request OTP'
+        if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 21) == 'Yes') {
+            'request OTP dengan HIT API'
 
-            'HIT API'
-
-            'Constraint = untuk user USERCIIE@AD-INS.COM dengan nomor telefon 081233444403. Hash no telp jika dari db'
-            respon_OTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing', [('callerId') : '""', ('phoneNo') : '"081233444403"'
-                        , ('email') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 10), ('refnumber') : '""']))
+            'Constaint : Dokumen yang dipasang selalu dengan referal number di dokumen pertama.'
+            respon_OTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing', [('callerId') : findTestData(
+                            excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 26), ('phoneNo') : findTestData(
+                            excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 8), ('email') : findTestData(excelPathAPISignDocument).getValue(
+                            GlobalVariable.NumofColm, 11), ('refnumber') : ('"' + CustomKeywords.'connection.dataVerif.getRefNumber'(
+                            conneSign, documentId[0])) + '"']))
 
             'Jika status HIT API 200 OK'
             if (WS.verifyResponseStatusCode(respon_OTP, 200, FailureHandling.OPTIONAL) == true) {
@@ -82,7 +82,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                     'Mengambil otp dari database'
                     otp = (('"' + CustomKeywords.'connection.dataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathAPISignDocument).getValue(
-                            GlobalVariable.NumofColm, 10).replace('"', ''))) + '"')
+                            GlobalVariable.NumofColm, 11).replace('"', ''))) + '"')
                 } else {
                     'mengambil status code berdasarkan response HIT API'
                     message = WS.getElementPropertyValue(respon_OTP, 'status.message', FailureHandling.OPTIONAL)
@@ -95,102 +95,102 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.HITAPI Gagal'
                 CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
-                        2) + ';') + GlobalVariable.ReasonFailedHitAPI)
+                        2) + ';') + GlobalVariable.ReasonFailedOTPError)
             }
-        } else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 20) == 'No') {
+        } else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 21) == 'No') {
             'get otp dari excel'
-            otp = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 21)
+            otp = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 22)
         }
         
         'check if mau menggunakan base64 untuk photo yang salah atau benar'
-        if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 22) == 'Yes') {
+        if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 23) == 'Yes') {
             'get base64 photo dari fungsi'
-            Photo = (('"' + PhototoBase64(findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 14))) + 
+            Photo = (('"' + PhototoBase64(findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 15))) + 
             '"')
-        } else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 22) == 'No') {
+        } else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 23) == 'No') {
             'get base64 photo salah dari excel'
-            Photo = (('"' + findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 14)) + '"')
+            Photo = (('"' + findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 15)) + '"')
         }
         
         'check if mau menggunakan ip address yang salah atau benar'
-        if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 23) == 'Yes') {
+        if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 24) == 'Yes') {
             'get ip address dari fungsi'
             ipaddress = (('"' + CorrectipAddress()) + '"')
-        } else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 23) == 'No') {
+        } else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 24) == 'No') {
             'get ip address salah dari excel'
-            ipaddress = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 12)
+            ipaddress = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 13)
         }
         
-        ArrayList<String> documentId = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 9).replace(
-            '[', '').replace(']', '').replace('"','').split(',', -1)
-
+        'looping berdasarkan ukuran dari dokumen id'
         for (int z = 0; z < documentId.size(); z++) {
-           
-			if(z == 0) {
-				totalSigned_before = totalSigned_before + (CustomKeywords.'connection.dataVerif.getTotalSigned'(conneSign, documentId[z]) + ',')
-			}
-			if(z == documentId.size() - 1) 
-				{
-				totalSigned_before = totalSigned_before + (CustomKeywords.'connection.dataVerif.getTotalSigned'(conneSign, documentId[z]))
-				}
-			}
+            'Memasukkan input dari total signed dengan ,'
+            totalSigned_before = (CustomKeywords.'connection.dataVerif.getTotalSigned'(conneSign, documentId[z]) + ',')
 
-		println totalSigned_before
-		
+            'Jika di paling akhir loop'
+            if (z == (documentId.size() - 1)) {
+                'Memasukkan input dari total signed tanpa ,'
+                totalSigned_before = CustomKeywords.'connection.dataVerif.getTotalSigned'(conneSign, documentId[z])
+            }
+        }
+        
         'HIT API Sign'
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Sign Document', [('callerId') : findTestData(excelPathAPISignDocument).getValue(
-                        GlobalVariable.NumofColm, 25), ('documentId') : findTestData(excelPathAPISignDocument).getValue(
-                        GlobalVariable.NumofColm, 9), ('email') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
-                        10), ('password') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 11)
+                        GlobalVariable.NumofColm, 26), ('documentId') : findTestData(excelPathAPISignDocument).getValue(
+                        GlobalVariable.NumofColm, 10), ('email') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
+                        11), ('password') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 12)
                     , ('ipAddress') : ipaddress, ('browserInfo') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
-                        13), ('otp') : otp, ('selfPhoto') : Photo]))
+                        14), ('otp') : otp, ('selfPhoto') : Photo]))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
             'get status code'
             code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
-			
-			'get status code'
-			trxNo = WS.getElementPropertyValue(respon, 'trxNo', FailureHandling.OPTIONAL)
-			if(trxNo != null) {
-				CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sign Document',
-				4, GlobalVariable.NumofColm - 1, trxNo.toString().replace('[','').replace(']',''))
-			}
-			
+
+            'get status code'
+            trxNo = WS.getElementPropertyValue(respon, 'trxNo', FailureHandling.OPTIONAL)
+
+            'Jika trxNonya tidak kosong dari response'
+            if (trxNo != null) {
+                'Input excel'
+                CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sign Document', 
+                    4, GlobalVariable.NumofColm - 1, trxNo.toString().replace('[', '').replace(']', ''))
+            }
             
             'jika codenya 0'
             if (code == 0) {
-				
-				println documentId.size()
-				println documentId
-				for (int x = 0; x < documentId.size(); x++) {
-					
-					for (int v = 1; v <= 20; v++) {
-						'Mengambil total Signed setelah sign'
-						totalSigned_after = CustomKeywords.'connection.dataVerif.getTotalSigned'(conneSign, documentId[x])
-		
-						'Verify total signed sebelum dan sesudah'
-						if (WebUI.verifyEqual(totalSigned_after, Integer.parseInt(totalSigned_before.split(
-									',', -1)[x]) + 1, FailureHandling.CONTINUE_ON_FAILURE)) {
-							break
-						} else if (v == 20) {
-							'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-							CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm,
-								GlobalVariable.StatusFailed, (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 2) +
-									';') + GlobalVariable.ReasonFailedSignGagal)
-							}
-						else {
-							WebUI.delay(10)
-						}
-					}
-				}
+                'Loop berdasarkan jumlah documen id'
+                for (int x = 0; x < documentId.size(); x++) {
+                    'Loop untuk check db update sign. Maksimal 200 detik.'
+                    for (int v = 1; v <= 20; v++) {
+                        'Mengambil total Signed setelah sign'
+                        totalSigned_after = CustomKeywords.'connection.dataVerif.getTotalSigned'(conneSign, documentId[x])
+
+                        'Verify total signed sebelum dan sesudah. Jika sesuai maka break'
+                        if (WebUI.verifyEqual(totalSigned_after, Integer.parseInt(totalSigned_before.split(',', -1)[x]) + 
+                            Integer.parseInt(CustomKeywords.'connection.dataVerif.getTotalSigner'(conneSign, documentId[
+                                    x], findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 11).replace(
+                                        '"', ''))), FailureHandling.CONTINUE_ON_FAILURE)) {
+                            break
+                        } else if (v == 20) {
+                            'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+                            CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm, 
+                                GlobalVariable.StatusFailed, (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
+                                    2) + ';') + GlobalVariable.ReasonFailedSignGagal)
+                        } else {
+                            'Delay 10 detik.'
+                            WebUI.delay(10)
+                        }
+                    }
+                }
+                
                 'write to excel success'
                 CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sign Document', 
                     0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 
                 'check Db'
                 if (GlobalVariable.checkStoreDB == 'Yes') {
-                    ResponseAPIStoreDB(conneSign, totalSigned_before,ipaddress)
+                    'Panggil function ResponseAPIStoreDB dengan parameter totalSigned, ipaddress, dan array dari documentId'
+                    ResponseAPIStoreDB(conneSign, ipaddress, documentId)
                 }
             } else {
                 'mengambil status code berdasarkan response HIT API'
@@ -211,70 +211,86 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     }
 }
 
+'Fungsi mendapat correct ip address'
+
 def CorrectipAddress() {
     String ipAddress = InetAddress.getLocalHost().getHostAddress()
 
     return ipAddress
 }
 
+'Fungsi photo to base64'
 def PhototoBase64(String filePath) {
     return CustomKeywords.'customizeKeyword.convertFile.BASE64File'(filePath)
 }
-
-def ResponseAPIStoreDB(Connection conneSign, String totalSigned_before, String ipaddress) {
-	'get current date'
-	def currentDate = new Date().format('yyyy-MM-dd')
-
-    ArrayList<String> documentId = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 9).replace(
-        '[', '').replace(']', '').split(',', -1)
+'Fungsi StoreDB'
+def ResponseAPIStoreDB(Connection conneSign, String ipaddress, ArrayList<String> documentId) {
+    'get current date'
+    def currentDate = new Date().format('yyyy-MM-dd')
 
     'declare arraylist arraymatch'
     ArrayList<String> arrayMatch = new ArrayList<String>()
 
+    'loop berdasarkan dokumen id'
     for (int i = 0; i < documentId.size(); i++) {
         'get data from db'
-		arrayIndex = 0
-		
-        ArrayList<String> result = CustomKeywords.'connection.dataVerif.getSign'(conneSign, documentId[i].replace('"',''), findTestData(
-                excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 10).replace('"', ''))
+        arrayIndex = 0
+
+        'Array result. Value dari db'
+        ArrayList<String> result = CustomKeywords.'connection.dataVerif.getSign'(conneSign, (documentId[i]).replace('"', 
+                ''), findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 11).replace('"', ''))
 
         'verify qty dalam transaksi. Jika done = 1'
         arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
 
-		if(findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 5) != '') {
-			'verify trx no'
-			arrayMatch.add(WebUI.verifyEqual((result[arrayIndex++]), findTestData(excelPathAPISignDocument).getValue(
-			GlobalVariable.NumofColm, 6), FailureHandling.CONTINUE_ON_FAILURE))
-		} else {
-			arrayIndex++
-		}
-		
+        'Check liveness compare adalah 0 dikarenakan trxNo yang didapat adalah transaksi untuk liveness compare.'
+        'Ini perlu dideklarasi dikarenakan jika 2 dokumen, trxNo tetap 1, sehingga perlu diflag apakah dia sudah check trxnya atau belum'
+        checkLivenessCompare = 0
+
+        'Jika trxNonya tidak kosong dan checkLivenessComparenya 0'
+        if ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 5) != '') || (checkLivenessCompare == 
+        0)) {
+            'verify trx no. Jika sesuai, maka'
+            if (WebUI.verifyEqual(result[arrayIndex++], findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
+                    5), FailureHandling.CONTINUE_ON_FAILURE)) {
+                'Ditambah 1'
+                checkLivenessCompare++
+
+                'arrayMatchnya diinput true'
+                arrayMatch.add(true)
+            }
+        } else {
+            'Tambah dari arrayIndex'
+            arrayIndex++
+        }
+        
         'verify request status. 3 = done'
-        arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]), '3', false, FailureHandling.CONTINUE_ON_FAILURE))
+        arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], '3', false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'verify ref number yang tertandatangan'
-        arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], CustomKeywords.'connection.dataVerif.getRefNumber'(conneSign, documentId[i].replace('"','')), false, FailureHandling.CONTINUE_ON_FAILURE))
+        arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], CustomKeywords.'connection.dataVerif.getRefNumber'(conneSign, 
+                    (documentId[i]).replace('"', '')), false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'verify ip address'
-        arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], ipaddress.replace('"',''), false, FailureHandling.CONTINUE_ON_FAILURE))
+        arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], ipaddress.replace('"', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'verify user browser'
         arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
-                        13).replace('"',''), false, FailureHandling.CONTINUE_ON_FAILURE))
+                    14).replace('"', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'verify callerId'
-        arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++],  findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
-                        25).replace('"',''), false, FailureHandling.CONTINUE_ON_FAILURE))
+        arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
+                    26).replace('"', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'verify signing proces. 0 berarti tidak ada proses tanda tangan lagi.'
         arrayMatch.add(WebUI.verifyEqual(result[arrayIndex++], 0, FailureHandling.CONTINUE_ON_FAILURE))
 
         'verify tanggal tanda tangan'
         arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], currentDate, false, FailureHandling.CONTINUE_ON_FAILURE))
-		
-		'verify api key'
-		arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], GlobalVariable.api_key, false, FailureHandling.CONTINUE_ON_FAILURE))
- 
+
+        'verify api key'
+        arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], GlobalVariable.api_key, false, FailureHandling.CONTINUE_ON_FAILURE))
+
         'verify tenant'
         arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], GlobalVariable.Tenant, false, FailureHandling.CONTINUE_ON_FAILURE))
     }
