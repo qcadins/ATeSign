@@ -362,8 +362,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'input body API kedalam stringRefno'
             stringRefno = (stringRefno + bodyAPI)
         }
-        
-        println(stringRefno)
 
         'Jika flag tenant no'
         if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 44) == 'No') {
