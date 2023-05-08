@@ -24,7 +24,7 @@ import org.openqa.selenium.By
 import org.openqa.selenium.Keys as Keys
 
 'connect DB eSign'
-Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 int countCheckSaldo
 
@@ -133,7 +133,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     ReasonFailed = WebUI.getText(findTestObject('BuatUndangan/label_ReasonError'))
 
     'write to excel status failed dan reason'
-    CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
         (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + ReasonFailed)
 
     'click button tutup error'
@@ -151,7 +151,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     ReasonFailed = WebUI.getAttribute(findTestObject('BuatUndangan/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 
     'write to excel status failed dan reason'
-    CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
         (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + ReasonFailed)
 
 	if(ReasonFailed.contains('sudah digunakan oleh link undangan lain') || ReasonFailed.contains('sudah terdaftar')) {
@@ -171,7 +171,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     GlobalVariable.ErrorType = 'ERROR'
 
 	'write to excel status failed dan reason'
-	CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+	CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 		(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ErrorType)
 	
     'click tutup popup'
@@ -184,18 +184,18 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
         FailureHandling.CONTINUE_ON_FAILURE)
 } else if(isMandatoryComplete > 0){
 	'write to excel status failed dan reason'
-	CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+	CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 		(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedMandatory)
 }else {
     'write to excel success'
-    CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'BuatUndangan', 0, GlobalVariable.NumofColm - 
+    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'BuatUndangan', 0, GlobalVariable.NumofColm - 
         1, GlobalVariable.StatusSuccess)
 
     'get link'
     GlobalVariable.Link = WebUI.getAttribute(findTestObject('BuatUndangan/PopUp/input_Link'), 'value')
 
 	'write to excel Link buat undangan'
-	CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'BuatUndangan', 4, GlobalVariable.NumofColm -
+	CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'BuatUndangan', 4, GlobalVariable.NumofColm -
 		1, GlobalVariable.Link)
 	
     'HIT API Login untuk token : invenditor@womf'
@@ -224,11 +224,11 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
 
                 if (WebUI.verifyMatch(GlobalVariable.Link, InvitationLink, false)) {
                     'write to excel success'
-                    CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'BuatUndangan', 
+                    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'BuatUndangan', 
                         0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
                 } else {
                     'write to excel status failed dan reason'
-                    CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
+                    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
                             2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
                 }
@@ -236,18 +236,18 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
                 messageFailed = WS.getElementPropertyValue(respon_getInvLink, 'status.message', FailureHandling.OPTIONAL).toString()
 
                 'write to excel status failed dan reason'
-                CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
+                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
                         2).replace('-', '') + ';') + messageFailed)
             }
         } else {
             'write to excel status failed dan reason'
-            CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
+            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
                     '-', '') + ';') + GlobalVariable.ReasonFailedHitAPI)
         }
     } else {
-        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
+        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
                 '-', '') + ';') + GlobalVariable.ReasonFailedHitAPI)
     }
@@ -623,7 +623,7 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 def checkVerifyEqualOrMatch(Boolean isMatch) {
 	if (isMatch == false) {
 		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-		CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+		CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 			(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
 
 		GlobalVariable.FlagFailed = 1

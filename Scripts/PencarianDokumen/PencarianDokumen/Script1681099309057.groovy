@@ -22,13 +22,13 @@ import org.openqa.selenium.Keys as Keys
 
 
 'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
+GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
 'call test case login andy'
 WebUI.callTestCase(findTestCase('Login/Login_Andy'), [:], FailureHandling.STOP_ON_FAILURE)
 
 'connect DB eSign'
-Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'click menu pencarian dokumen'
 WebUI.click(findTestObject('PencarianDokumen/menu_PencarianDokumen'))
@@ -113,12 +113,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				if(GlobalVariable.FlagFailed == 0) {
 					
 					'write to excel success'
-					CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PencarianDokumen', 0, GlobalVariable.NumofColm -
+					CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PencarianDokumen', 0, GlobalVariable.NumofColm -
 							1, GlobalVariable.StatusSuccess)
 				}
 			}else {
 				'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedDownload'
-				CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('PencarianDokumen', GlobalVariable.NumofColm,
+				CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('PencarianDokumen', GlobalVariable.NumofColm,
 						GlobalVariable.StatusFailed, (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 2) +
 								';') + GlobalVariable.ReasonFailedDownload)
 				
@@ -205,11 +205,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		if(GlobalVariable.FlagFailed == 0 && isMandatoryComplete == 0) {
 			
 			'write to excel success'
-			CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PencarianDokumen', 0, GlobalVariable.NumofColm -
+			CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PencarianDokumen', 0, GlobalVariable.NumofColm -
 					1, GlobalVariable.StatusSuccess)
 		}else {
 			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedMandatory'
-			CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('PencarianDokumen', GlobalVariable.NumofColm,
+			CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('PencarianDokumen', GlobalVariable.NumofColm,
 				GlobalVariable.StatusFailed, (findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 2) +
 				';') + GlobalVariable.ReasonFailedMandatory)
 		}
@@ -348,7 +348,7 @@ def checkPaging(Connection conneSign) {
 def checkVerifyPaging(Boolean isMatch) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('PencarianDokumen', GlobalVariable.NumofColm, 
+        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('PencarianDokumen', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 2) + 
             ';') + GlobalVariable.ReasonFailedPaging)
 
@@ -359,7 +359,7 @@ def checkVerifyPaging(Boolean isMatch) {
 def checkVerifyEqualOrMatch(Boolean isMatch) {
     if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('PencarianDokumen', GlobalVariable.NumofColm, 
+        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('PencarianDokumen', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 2) + 
             ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
 

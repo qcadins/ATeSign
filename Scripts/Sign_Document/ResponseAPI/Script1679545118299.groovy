@@ -27,7 +27,7 @@ import org.openqa.selenium.support.ui.Select as Select
 import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 
 'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
+GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_Excel_Path).getColumnNumbers(); (GlobalVariable.NumofColm)++) {
     'Pembuatan pengisian variable di sendRequest per jumlah documentid.'
@@ -97,7 +97,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
                 GlobalVariable.Response = WS.getElementPropertyValue(respon_signdoc, 'vendorCode')
 
                 'write to excel success'
-                CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sign Document', 
+                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sign Document', 
                     0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 
                 'Memanggil testCase mengenai SignDocumentStoreDb'
@@ -110,7 +110,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
                 messageFailed = WS.getElementPropertyValue(respon_signdoc, 'status.message', FailureHandling.OPTIONAL).toString()
 
                 'write to excel status failed dan reason'
-                CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm, 
+                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
                         '-', '') + ';') + messageFailed)
             }
@@ -119,13 +119,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
             messageFailed = WS.getElementPropertyValue(respon_signdoc, 'status.message', FailureHandling.OPTIONAL).toString()
 
             'write to excel status failed dan reason'
-            CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm, 
+            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
                     '-', '') + ';') + messageFailed)
         }
     } else {
         'write to excel status failed dan reason : failed hit api'
-        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm, 
+        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace('-', 
                 '') + ';') + GlobalVariable.ReasonFailedHitAPI)
 

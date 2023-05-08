@@ -8,7 +8,7 @@ import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
 import java.awt.event.KeyEvent
 
-public class uploadFile {
+public class UploadFile {
 
 	//keyword upload file function
 	@Keyword

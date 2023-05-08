@@ -22,7 +22,7 @@ import org.openqa.selenium.By
 import org.openqa.selenium.Keys as Keys
 
 'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
+GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
 'get colm excel'
 int countColmExcel = findTestData(excelPathBuatUndangan).getColumnNumbers()

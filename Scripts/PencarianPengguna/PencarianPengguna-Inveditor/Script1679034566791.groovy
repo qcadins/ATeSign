@@ -21,7 +21,7 @@ import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
 'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
+GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
 'click menu PencarianPengguna'
 WebUI.click(findTestObject('PencarianPengguna/menu_PencarianPengguna'))
@@ -30,7 +30,7 @@ WebUI.click(findTestObject('PencarianPengguna/menu_PencarianPengguna'))
 checkPaging()
 
 'connect DB eSign'
-Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 if(findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Email')) {
 	'set text search box dengan email'
@@ -114,7 +114,7 @@ if(findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 6
 		}
 		
 		'write to excel success'
-		CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PencarianPengguna-Inveditor', 0, GlobalVariable.NumofColm -
+		CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PencarianPengguna-Inveditor', 0, GlobalVariable.NumofColm -
 				1, GlobalVariable.StatusSuccess)
 	}else if(WebUI.verifyElementPresent(findTestObject('PencarianPengguna/MessagePopUp'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL) &&
 			WebUI.verifyElementPresent(findTestObject('PencarianPengguna/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)){
@@ -126,7 +126,7 @@ if(findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 6
 		AlertMsg = WebUI.getAttribute(findTestObject('PencarianPengguna/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 		
 		'write to excel status failed dan reason'
-		CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('PencarianPengguna-Inveditor', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+		CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('PencarianPengguna-Inveditor', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 				(findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedPaging)
 		
 		'click button kembali'
@@ -145,7 +145,7 @@ if(findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 6
 		WebUI.click(findTestObject('PencarianPengguna/button_OK'))
 		
 		'write to excel success'
-		CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PencarianPengguna-Inveditor', 0, GlobalVariable.NumofColm -
+		CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PencarianPengguna-Inveditor', 0, GlobalVariable.NumofColm -
 				1, GlobalVariable.StatusSuccess)
 		
 		'get data reset request OTP dari DB'
@@ -156,7 +156,7 @@ if(findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 6
 		checkVerifyEqualOrMatch(WebUI.verifyMatch(resultResetOTP, 0, false, FailureHandling.CONTINUE_ON_FAILURE))
 	}else {
 		'write to excel status failed dan reason'
-		CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('PencarianPengguna-Inveditor', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+		CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('PencarianPengguna-Inveditor', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 			(findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedResend + ' OTP')
 	}
 }else if(findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Resend Link')) {
@@ -169,16 +169,16 @@ if(findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 6
 		
 		if(AlertMsg.contains('berhasil')) {
 			'write to excel success'
-			CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PencarianPengguna-Inveditor', 0, GlobalVariable.NumofColm -
+			CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PencarianPengguna-Inveditor', 0, GlobalVariable.NumofColm -
 					1, GlobalVariable.StatusSuccess)
 		}else {
 			'write to excel status failed dan reason'
-			CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('PencarianPengguna-Inveditor', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+			CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('PencarianPengguna-Inveditor', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 				(findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedResend + ' Link')
 		}
 	}else {
 		'write to excel status failed dan reason'
-		CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('PencarianPengguna-Inveditor', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+		CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('PencarianPengguna-Inveditor', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 			(findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedResend + ' Link')
 	}
 }
@@ -206,7 +206,7 @@ def checkPaging() {
 		WebUI.click(findTestObject('PencarianPengguna/button_Kembali'))
 	}else {
 		'write to excel status failed dan reason'
-		CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('PencarianPengguna-Inveditor', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+		CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('PencarianPengguna-Inveditor', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 			(findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedPaging)
 	}
 }
@@ -214,7 +214,7 @@ def checkPaging() {
 def checkVerifyEqualOrMatch(Boolean isMatch) {
 	if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
 		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-		CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('PencarianPengguna-Inveditor', GlobalVariable.NumofColm,
+		CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('PencarianPengguna-Inveditor', GlobalVariable.NumofColm,
 			GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2) + ';') +
 			GlobalVariable.ReasonFailedVerifyEqualOrMatch)
 

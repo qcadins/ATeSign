@@ -23,7 +23,7 @@ import java.sql.Connection as Connection
 ArrayList<String> documentIds = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 12).split(';', -1)
 
 'connect DB eSign'
-Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'declare arraylist arraymatch'
 ArrayList<String> arrayMatch = new ArrayList<String>()
@@ -63,6 +63,6 @@ for (int i = 1; i <= documentIds.size(); i++)
 'jika data db tidak sesuai dengan excel'
 if (arrayMatch.contains(false)) {
 	'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-	CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'(GlobalVariable.Response, GlobalVariable.NumofColm,
+	CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'(GlobalVariable.Response, GlobalVariable.NumofColm,
 		GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
 }

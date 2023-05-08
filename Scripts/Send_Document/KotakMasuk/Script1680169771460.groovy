@@ -29,7 +29,7 @@ chromePrefs.put('download.default_directory', System.getProperty('user.dir') + '
 RunConfiguration.setWebDriverPreferencesProperty('prefs', chromePrefs)
 
 'connect DB eSign'
-Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 docid = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 5).replace('[', '').replace(']', '').split(', ', 
     -1)
@@ -67,7 +67,7 @@ for (int y = 0; y < docid.size(); y++) {
         WebUI.click(findTestObject('Object Repository/PencarianDokumen/button_Cari'))
 
         if (!(WebUI.verifyElementPresent(findTestObject('PencarianDokumen/text_refnum'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE))) {
-            CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Sign Document', GlobalVariable.NumofColm, 
+            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Sign Document', GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + 
                 ';') + GlobalVariable.ReasonFailedNoneUI)
         }
@@ -253,7 +253,7 @@ for (int y = 0; y < docid.size(); y++) {
             'Klik kembali'
             WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_backViewDokumen'))
         } else {
-            CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Sign Document', GlobalVariable.NumofColm, 
+            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Sign Document', GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + 
                 ';') + GlobalVariable.ReasonFailedProcessNotDone)
         }
@@ -279,7 +279,7 @@ for (int y = 0; y < docid.size(); y++) {
         'Jika error lognya muncul'
         if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
             'Tulis di excel itu adalah error'
-            CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Sign Document', GlobalVariable.NumofColm, 
+            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Sign Document', GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + 
                 ';') + WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label'))
         }
@@ -329,7 +329,7 @@ for (int y = 0; y < docid.size(); y++) {
 'jika data db tidak sesuai dengan excel'
 if (arrayMatch.contains(false)) {
     'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-    CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'(docid[y], GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'(docid[y], GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
         (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedNoneUI)
 }
 

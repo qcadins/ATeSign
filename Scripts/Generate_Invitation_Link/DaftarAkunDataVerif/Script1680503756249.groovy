@@ -31,7 +31,7 @@ if (GlobalVariable.useLocalHost == 'Yes') {
 }
 
 'connect DB eSign'
-Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'verify NIK sesuai inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_NIK'), 'value').toUpperCase(), 
@@ -128,7 +128,7 @@ if (findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 29) =
 		String filePath = userDir + findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 30)
 		
         'upload file'
-        CustomKeywords.'customizeKeyword.uploadFile.uploadFunction'(findTestObject('Object Repository/DaftarAkun/button_PilihFileKTP'), 
+        CustomKeywords.'customizeKeyword.UploadFile.uploadFunction'(findTestObject('Object Repository/DaftarAkun/button_PilihFileKTP'), 
             filePath)
 
         'click ambil apply'
@@ -151,7 +151,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     ReasonFailed = WebUI.getText(findTestObject('DaftarAkun/label_ReasonError'))
 
     'write to excel status failed dan reason'
-    CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Generate Inv Link', GlobalVariable.NumofColm, 
+    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Generate Inv Link', GlobalVariable.NumofColm, 
         GlobalVariable.StatusFailed, (findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 2).replace(
             '-', '') + ';') + ReasonFailed)
 
@@ -247,7 +247,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
         reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
 
         'write to excel status failed dan reason'
-        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Generate Inv Link', GlobalVariable.NumofColm, 
+        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Generate Inv Link', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 2).replace(
                 '-', '') + ';') + reason)
 
@@ -256,7 +256,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
         reason = WebUI.getText(findTestObject('DaftarAkun/label_PopupMsg'))
 
         'write to excel status failed dan reason'
-        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Generate Inv Link', GlobalVariable.NumofColm, 
+        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Generate Inv Link', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 2).replace(
                 '-', '') + ';') + reason)
 
@@ -278,7 +278,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
 def checkVerifyEqualOrMatch(Boolean isMatch) {
     if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Generate Inv Link', GlobalVariable.NumofColm, 
+        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Generate Inv Link', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 2) + ';') + 
             GlobalVariable.ReasonFailedVerifyEqualOrMatch)
 

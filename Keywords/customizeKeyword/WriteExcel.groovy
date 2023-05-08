@@ -6,7 +6,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import com.kms.katalon.core.annotation.Keyword
 import internal.GlobalVariable
 
-public class writeExcel {
+public class WriteExcel {
 	/**
 	 * Write to Excel
 	 */
@@ -65,9 +65,9 @@ public class writeExcel {
 	@Keyword
 	public writeToExcelStatusReason (String sheetname, int colm, String status, String reason){
 
-		(new customizeKeyword.writeExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
+		(new customizeKeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
 				0, colm - 1, status)
-		(new customizeKeyword.writeExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
+		(new customizeKeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
 				1, colm - 1, reason)
 	}
 

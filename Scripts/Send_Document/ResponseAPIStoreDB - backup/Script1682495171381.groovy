@@ -21,7 +21,7 @@ import java.sql.Connection as Connection
 import java.util.*
 
 'connect DB eSign'
-Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'declare arraylist arraymatch'
 ArrayList<String> arrayMatch = new ArrayList<String>()
@@ -222,13 +222,13 @@ for (int i = 0; i < docid.size(); i++) {
 'jika data db tidak sesuai dengan excel'
 if (arrayMatch.contains(false)) {
     'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-    CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm, 
+    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm, 
         GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
 }
 
 
 def PDFtoBase64(String fileName) {
-	String base64 = CustomKeywords.'customizeKeyword.convertFile.BASE64File'(fileName)
+	String base64 = CustomKeywords.'customizeKeyword.ConvertFile.BASE64File'(fileName)
 
 	return base64
 }

@@ -23,10 +23,10 @@ import org.openqa.selenium.Keys as Keys
 GlobalVariable.FlagFailed = 0
 
 'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
+GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
 'connect DB eSign'
-Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get colm excel'
 int countColmExcel = findTestData(excelPathIsiSaldo).getColumnNumbers()
@@ -137,7 +137,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             WebUI.click(findTestObject('isiSaldo/button_YaProses'))
 
             'write to excel success'
-            CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'isiSaldo', 0, GlobalVariable.NumofColm - 
+            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'isiSaldo', 0, GlobalVariable.NumofColm - 
                 1, GlobalVariable.StatusSuccess)
 
             if (GlobalVariable.checkStoreDB == 'Yes') {
@@ -163,7 +163,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             WebUI.click(findTestObject('isiSaldo/button_Batal'))
 
             'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedMandatory'
-            CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('isiSaldo', GlobalVariable.NumofColm, 
+            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('isiSaldo', GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, (findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 2) + ';') + 
                 GlobalVariable.ReasonFailedMandatory)
 			
@@ -176,7 +176,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 def checkVerifyEqualOrMatch(Boolean isMatch) {
     if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('isiSaldo', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('isiSaldo', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
             (findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
 
         GlobalVariable.FlagFailed = 1

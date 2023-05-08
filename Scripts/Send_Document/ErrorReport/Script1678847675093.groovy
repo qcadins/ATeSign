@@ -27,7 +27,7 @@ def currentDate = new Date().format( 'yyyy-MM-dd' )
 WebUI.click(findTestObject('ErrorReport/menu_ErrorReport'))
 
 'connect DB eSign'
-Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'call function check paging'
 checkPaging()
@@ -131,7 +131,7 @@ WebUI.click(findTestObject('ErrorReport/button_X'))
 def checkVerifyEqualOrMatch(Boolean isMatch) {
 	if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
 		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-		CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm,
+		CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm,
 			GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2) +
 			';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
 

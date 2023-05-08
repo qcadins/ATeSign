@@ -1,27 +1,14 @@
 {
-  "keywordFileContentHash": "6351C5CB3558BBC3E948918F055496F7",
+  "keywordFileContentHash": "E7EC39C55042F67392138F04CC2554CF",
   "keywordClasses": [
     {
-      "name": "customizeKeyword.parseText",
+      "name": "customizeKeyword.convertFilee",
       "keywordMethods": [
         {
-          "name": "parseEncrypt",
+          "name": "BASE64File",
           "parameters": [
             {
-              "name": "value",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.lang.String",
-                "unresolvedClassName": "String",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            },
-            {
-              "name": "AESKey",
+              "name": "filename",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -37,10 +24,10 @@
           "javadoc": ""
         },
         {
-          "name": "parseDecrypt",
+          "name": "DecodeBase64",
           "parameters": [
             {
-              "name": "encrypted",
+              "name": "base64String",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -53,7 +40,7 @@
               }
             },
             {
-              "name": "AESKey",
+              "name": "filename",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

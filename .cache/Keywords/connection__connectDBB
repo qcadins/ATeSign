@@ -1,8 +1,8 @@
 {
-  "keywordFileContentHash": "DCA248F540291AE7EFF3127C3420274A",
+  "keywordFileContentHash": "8D0B8B4F864C90767346A01F4FB1FFE9",
   "keywordClasses": [
     {
-      "name": "connection.connectDB",
+      "name": "connection.connectDBB",
       "keywordMethods": [
         {
           "name": "connectDBeSign",

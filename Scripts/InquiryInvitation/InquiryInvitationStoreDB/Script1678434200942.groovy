@@ -21,7 +21,7 @@ import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
 'connect DB eSign'
-Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get data buat undangan dari DB'
 ArrayList<String> result = CustomKeywords.'connection.dataVerif.InquiryInvitationStoreDB'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 9))
@@ -53,7 +53,7 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(Gl
 		false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'parse Date from MM/dd/yyyy > yyyy-MM-dd'
-sDate = CustomKeywords.'customizeKeyword.parseDate.parseDateFormat'(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 12), 'MM/dd/yyyy', 'yyyy-MM-dd')
+sDate = CustomKeywords.'customizeKeyword.ParseDate.parseDateFormat'(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 12), 'MM/dd/yyyy', 'yyyy-MM-dd')
 
 'verify tanggal lahir'
 arrayMatch.add(WebUI.verifyMatch(sDate.toUpperCase(), (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -102,6 +102,6 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(Gl
 if (arrayMatch.contains(false)) {
 
 	'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-	CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2) + ';' + GlobalVariable.ReasonFailedStoredDB)
+	CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2) + ';' + GlobalVariable.ReasonFailedStoredDB)
 	
 }

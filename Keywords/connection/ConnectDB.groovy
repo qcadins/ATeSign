@@ -4,7 +4,7 @@ import java.sql.Connection
 import java.sql.DriverManager
 import com.kms.katalon.core.annotation.Keyword
 
-public class connectDB {
+public class ConnectDB {
 
 	@Keyword
 	def connectDBeSign() {

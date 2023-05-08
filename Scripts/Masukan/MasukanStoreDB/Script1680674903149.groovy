@@ -19,7 +19,7 @@ import org.openqa.selenium.Keys as Keys
 import java.sql.Connection
 
 'connect DB eSign'
-Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get data masukan dari DB'
 ArrayList<String> result = CustomKeywords.'connection.dataVerif.getFeedbackStoreDB'(conneSign)
@@ -42,6 +42,6 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathMasukan).getValue(GlobalV
 if (arrayMatch.contains(false)) {
 
 	'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-	CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Masukan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, 2) + ';' + GlobalVariable.ReasonFailedStoredDB)
+	CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Masukan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, 2) + ';' + GlobalVariable.ReasonFailedStoredDB)
 	
 }

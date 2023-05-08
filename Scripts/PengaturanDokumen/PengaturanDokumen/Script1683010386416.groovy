@@ -1,33 +1,19 @@
-import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
-import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
-import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
-import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
-import com.kms.katalon.core.testcase.TestCase as TestCase
-import com.kms.katalon.core.testdata.TestData as TestData
-import com.kms.katalon.core.testng.keyword.TestNGBuiltinKeywords as TestNGKW
-import com.kms.katalon.core.testobject.TestObject as TestObject
-import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
-import org.apache.commons.collections.ArrayStack as ArrayStack
 import org.openqa.selenium.By as By
 import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import java.sql.Connection as Connection
-import org.openqa.selenium.JavascriptExecutor as JavascriptExecutor
-import org.openqa.selenium.WebElement as WebElement
 
 'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
+GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
 'connect dengan db'
-Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'memanggil test case login untuk admin wom dengan Admin Legal'
 WebUI.callTestCase(findTestCase('Login/Login_Admin'), [:], FailureHandling.STOP_ON_FAILURE)
@@ -73,17 +59,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         GlobalVariable.NumofColm, 11))
 
                 'get data tipe-tipe pembayaran secara asc'
-                ArrayList<String> tipepembayaran_db = CustomKeywords.'connection.dataVerif.getLovTipePembayaran'(conneSign)
+                ArrayList<String> tipePembayaran_DB = CustomKeywords.'connection.dataVerif.getLovTipePembayaran'(conneSign)
 
                 'Click dropdown mengenai tipe pembayaran'
                 WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_openddlTipePembayaran'))
 
                 'Mengambil value yang ada di UI dan displit dengan enter'
-                tipepembayaran_ui = WebUI.getText(findTestObject('Object Repository/TandaTanganDokumen/ddl_tipepembayaran')).split(
+                tipePembayaran_UI = WebUI.getText(findTestObject('Object Repository/TandaTanganDokumen/ddl_tipepembayaran')).split(
                     '\\n')
 
                 'Jika db dan UI tidak cocok maka'
-                if (tipepembayaran_ui != tipepembayaran_db) {
+                if (tipePembayaran_UI != tipePembayaran_DB) {
                     'Flag false'
                     checkVerifyEqualorMatch(false)
                 }
@@ -123,7 +109,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
 				if (isMandatoryComplete > 0) {
 					'write to excel status failed dan reason'
-					CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm,
+					CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm,
 						GlobalVariable.StatusFailed, (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm,
 							2).replace('-', '') + ';') + GlobalVariable.ReasonFailedMandatory)
 
@@ -174,7 +160,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         ReasonFailed = WebUI.getAttribute(findTestObject('BuatUndangan/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 
                         'write to excel status failed dan reason'
-                        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm, 
+                        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm, 
                             GlobalVariable.StatusFailed, (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
                                 2).replace('-', '') + ';') + ReasonFailed)
 
@@ -268,7 +254,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         'check if pengaturan document berhasil disimpan'
                         if (isMandatoryComplete > 0) {
                             'write to excel status failed dan reason'
-                            CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm, 
+                            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm, 
                                 GlobalVariable.StatusFailed, (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
                                     2).replace('-', '') + ';') + GlobalVariable.ReasonFailedMandatory)
 
@@ -276,7 +262,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         } else if (WebUI.verifyElementNotPresent(findTestObject('Object Repository/TandaTanganDokumen/signBox'), 
                             GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
                             'write to excel success'
-                            CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PengaturanDokumen', 
+                            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PengaturanDokumen', 
                                 0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
                         }
                     }
@@ -317,7 +303,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			if (WebUI.verifyElementPresent(findTestObject('Object Repository/TandaTanganDokumen/input_KodeTemplatDokumen'),
 				GlobalVariable.TimeOut, FailureHandling.OPTIONAL) && GlobalVariable.FlagFailed == 0) {
 				'write to excel success'
-				CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PengaturanDokumen',
+				CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PengaturanDokumen',
 					0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 			}
 			
@@ -444,7 +430,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                 if (isMandatoryComplete > 0) {
                     'write to excel status failed dan reason'
-                    CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm, 
+                    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
                             2).replace('-', '') + ';') + GlobalVariable.ReasonFailedMandatory)
 
@@ -452,7 +438,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 } else if (WebUI.verifyElementPresent(findTestObject('Object Repository/TandaTanganDokumen/input_KodeTemplatDokumen'), 
                     GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
                     'write to excel success'
-                    CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PengaturanDokumen', 
+                    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PengaturanDokumen', 
                         0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
                 } else if (WebUI.verifyElementPresent(findTestObject('Object Repository/TandaTanganDokumen/btn_ttd'), GlobalVariable.TimeOut, 
                     FailureHandling.OPTIONAL)) {
@@ -560,11 +546,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     if (WebUI.verifyElementNotPresent(findTestObject('Object Repository/TandaTanganDokumen/signBox'), GlobalVariable.TimeOut, 
                         FailureHandling.CONTINUE_ON_FAILURE)) {
                         'write to excel success'
-                        CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PengaturanDokumen', 
+                        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PengaturanDokumen', 
                             0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
                     } else {
                         'write to excel failed'
-                        CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PengaturanDokumen', 
+                        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PengaturanDokumen', 
                             0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusFailed)
 
                         GlobalVariable.FlagFailed = 1
@@ -827,7 +813,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			'check if pengaturan document berhasil disimpan'
 			if (isMandatoryComplete > 0) {
 				'write to excel status failed dan reason'
-				CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm,
+				CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm,
 					GlobalVariable.StatusFailed, (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm,
 						2).replace('-', '') + ';') + GlobalVariable.ReasonFailedMandatory)
 
@@ -835,7 +821,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			} else if (WebUI.verifyElementNotPresent(findTestObject('Object Repository/TandaTanganDokumen/signBox'),
 				GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
 				'write to excel success'
-				CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PengaturanDokumen',
+				CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PengaturanDokumen',
 					0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 			}
 
@@ -859,7 +845,7 @@ def checkVerifyEqualorMatch(Boolean isMatch) {
         'Write to excel status failed and ReasonFailedVerifyEqualorMatch'
         GlobalVariable.FlagFailed = 1
 
-        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm, 
+        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + 
             ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
     }
@@ -868,7 +854,7 @@ def checkVerifyEqualorMatch(Boolean isMatch) {
 def checkVerifyPaging(Boolean isMatch) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm, 
+        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedPaging)
 
         GlobalVariable.FlagFailed = 1

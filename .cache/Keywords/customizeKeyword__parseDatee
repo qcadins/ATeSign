@@ -1,14 +1,14 @@
 {
-  "keywordFileContentHash": "6351C5CB3558BBC3E948918F055496F7",
+  "keywordFileContentHash": "098F453E000FAFB5352EC43F818C9255",
   "keywordClasses": [
     {
-      "name": "customizeKeyword.parseText",
+      "name": "customizeKeyword.parseDatee",
       "keywordMethods": [
         {
-          "name": "parseEncrypt",
+          "name": "parseDateFormat",
           "parameters": [
             {
-              "name": "value",
+              "name": "date",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -21,26 +21,7 @@
               }
             },
             {
-              "name": "AESKey",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.lang.String",
-                "unresolvedClassName": "String",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            }
-          ],
-          "javadoc": ""
-        },
-        {
-          "name": "parseDecrypt",
-          "parameters": [
-            {
-              "name": "encrypted",
+              "name": "format1",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -53,7 +34,7 @@
               }
             },
             {
-              "name": "AESKey",
+              "name": "format2",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

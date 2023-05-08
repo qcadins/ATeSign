@@ -21,10 +21,10 @@ import org.openqa.selenium.By as By
 import org.openqa.selenium.Keys as Keys
 
 'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
+GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
 'connect DB eSign'
-Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get colm excel'
 int countColmExcel = findTestData(excelPathTenant).getColumnNumbers()
@@ -79,7 +79,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 APIKEY = WebUI.getAttribute(findTestObject('Tenant/TenantBaru/input_APIKEY'), 'value', FailureHandling.CONTINUE_ON_FAILURE)
 
                 'write to excel api key'
-                CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Tenant', 15, GlobalVariable.NumofColm - 
+                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Tenant', 15, GlobalVariable.NumofColm - 
                     1, APIKEY)
             }
             
@@ -164,7 +164,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     WebUI.click(findTestObject('Tenant/button_OK'))
 
                     'write to excel success'
-                    CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Tenant', 0, 
+                    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Tenant', 0, 
                         GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
                 }
             } else if (isMandatoryComplete > 0) {
@@ -172,7 +172,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 WebUI.click(findTestObject('Tenant/TenantBaru/button_Batal'))
 
                 'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedMandatory'
-                CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Tenant', GlobalVariable.NumofColm, 
+                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Tenant', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 2) + 
                     ';') + GlobalVariable.ReasonFailedMandatory)
             }
@@ -232,7 +232,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 if (WebUI.getAttribute(findTestObject('Tenant/errorLog'), 'aria-label', FailureHandling.OPTIONAL).contains(
                     'berhasil')) {
                     'write to excel success'
-                    CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Tenant', 0, 
+                    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Tenant', 0, 
                         GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
                 }
             } else if (isMandatoryComplete > 0) {
@@ -240,7 +240,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 WebUI.click(findTestObject('Tenant/Services/button_Batal'))
 
                 'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedMandatory'
-                CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Tenant', GlobalVariable.NumofColm, 
+                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Tenant', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 2) + 
                     ';') + GlobalVariable.ReasonFailedMandatory)
             }
@@ -273,7 +273,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 APIKEY = WebUI.getAttribute(findTestObject('Tenant/TenantBaru/input_APIKEY'), 'value', FailureHandling.CONTINUE_ON_FAILURE)
 
                 'write to excel api key'
-                CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Tenant', 15, GlobalVariable.NumofColm - 
+                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Tenant', 15, GlobalVariable.NumofColm - 
                     1, APIKEY)
             }
             
@@ -423,7 +423,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     WebUI.click(findTestObject('Tenant/button_OK'))
 
                     'write to excel success'
-                    CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Tenant', 0, 
+                    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Tenant', 0, 
                         GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
                 }
             } else if (isMandatoryComplete > 0) {
@@ -431,7 +431,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 WebUI.click(findTestObject('Tenant/Edit/button_Batal'))
 
                 'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedMandatory'
-                CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Tenant', GlobalVariable.NumofColm, 
+                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Tenant', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 2) + 
                     ';') + GlobalVariable.ReasonFailedMandatory)
             }
@@ -535,7 +535,7 @@ def checkPaging(Connection conneSign) {
 def checkVerifyPaging(Boolean isMatch) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Tenant', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Tenant', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
             (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedPaging)
 
         GlobalVariable.FlagFailed = 1

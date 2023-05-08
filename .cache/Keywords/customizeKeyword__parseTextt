@@ -1,8 +1,8 @@
 {
-  "keywordFileContentHash": "6351C5CB3558BBC3E948918F055496F7",
+  "keywordFileContentHash": "7B94CDA00C50C0A3E9348FA0906E8978",
   "keywordClasses": [
     {
-      "name": "customizeKeyword.parseText",
+      "name": "customizeKeyword.parseTextt",
       "keywordMethods": [
         {
           "name": "parseEncrypt",
