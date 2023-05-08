@@ -21,5 +21,5 @@ import org.openqa.selenium.By as By
 import org.openqa.selenium.Keys as Keys
 import org.openqa.selenium.WebElement as WebElement
 
-CustomKeywords.'connection.connectDB.connectDBeSign'()
+CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 

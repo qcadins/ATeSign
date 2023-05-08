@@ -8,7 +8,7 @@ import javax.crypto.spec.SecretKeySpec;
 import internal.GlobalVariable
 
 
-public class parseText {
+public class ParseText {
 
 	@Keyword
 	public static String parseEncrypt(String value, String AESKey) {

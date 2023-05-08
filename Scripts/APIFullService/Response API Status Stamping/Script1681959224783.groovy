@@ -19,10 +19,10 @@ import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
 'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\2.1 Esign - Full API Services.xlsx')
+GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - Full API Services.xlsx')
 
 'connect DB eSign'
-Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get colm excel'
 int countColmExcel = findTestData(excelPathAPICheckStamping).getColumnNumbers()
@@ -96,12 +96,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'jika data db tidak sesuai dengan excel'
                     if (arrayMatch.contains(false)) {
                         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-                        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Check Stamping Status', 
+                        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Check Stamping Status', 
                             GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (findTestData(excelPathAPICheckStamping).getValue(
                                 GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
                     } else {
                         'write to excel success'
-                        CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Check Stamping Status', 
+                        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Check Stamping Status', 
                             0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
                     }
                 }
@@ -110,7 +110,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
                 'Write To Excel GlobalVariable.StatusFailed and errormessage'
-                CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Check Stamping Status', GlobalVariable.NumofColm, 
+                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Check Stamping Status', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, message)
             }
         } else {
@@ -118,7 +118,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
             'Write To Excel GlobalVariable.StatusFailed and errormessage'
-            CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Check Stamping Status', GlobalVariable.NumofColm, 
+            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Check Stamping Status', GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, message)
         }
     }

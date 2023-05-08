@@ -20,10 +20,10 @@ import org.apache.commons.io.FileUtils as FileUtils
 import org.openqa.selenium.Keys as Keys
 
 'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\2.1 Esign - Full API Services.xlsx')
+GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - Full API Services.xlsx')
 
 'connect DB eSign'
-Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get colm excel'
 int countColmExcel = findTestData(excelPathAPIRegistrasi).getColumnNumbers()
@@ -53,14 +53,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 32) == 'Yes') {
-            selfPhoto = (('"' + CustomKeywords.'customizeKeyword.convertFile.BASE64File'(findTestData(excelPathAPIRegistrasi).getValue(
+            selfPhoto = (('"' + CustomKeywords.'customizeKeyword.ConvertFile.BASE64File'(findTestData(excelPathAPIRegistrasi).getValue(
                     GlobalVariable.NumofColm, 24))) + '"')
         } else if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 32) == 'No') {
             selfPhoto = findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 24)
         }
 		
 		if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 33) == 'Yes') {
-			idPhoto = (('"' + CustomKeywords.'customizeKeyword.convertFile.BASE64File'(findTestData(excelPathAPIRegistrasi).getValue(
+			idPhoto = (('"' + CustomKeywords.'customizeKeyword.ConvertFile.BASE64File'(findTestData(excelPathAPIRegistrasi).getValue(
 					GlobalVariable.NumofColm, 25))) + '"')
 		} else if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 33) == 'No') {
 			idPhoto = findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 25)
@@ -126,7 +126,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                                 GlobalVariable.NumofColm, 13).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
                     'parse Date from MM/dd/yyyy > yyyy-MM-dd'
-                    sDate = CustomKeywords.'customizeKeyword.parseDate.parseDateFormat'(findTestData(excelPathAPIRegistrasi).getValue(
+                    sDate = CustomKeywords.'customizeKeyword.ParseDate.parseDateFormat'(findTestData(excelPathAPIRegistrasi).getValue(
                             GlobalVariable.NumofColm, 14).replace('"', ''), 'MM/dd/yyyy', 'yyyy-MM-dd')
 
                     'verify tanggal lahir'
@@ -164,12 +164,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'jika data db tidak sesuai dengan excel'
                     if (arrayMatch.contains(false)) {
                         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-                        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Registrasi', GlobalVariable.NumofColm, 
+                        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Registrasi', GlobalVariable.NumofColm, 
                             GlobalVariable.StatusFailed, (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 
                                 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
                     } else {
                         'write to excel success'
-                        CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Registrasi', 
+                        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Registrasi', 
                             0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
                     }
                 }
@@ -180,7 +180,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 trxNo = WS.getElementPropertyValue(respon, 'trxNo', FailureHandling.OPTIONAL)
 
                 'Write To Excel GlobalVariable.StatusFailed and errormessage'
-                CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Registrasi', GlobalVariable.NumofColm, 
+                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Registrasi', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, message)
 
                 if ((GlobalVariable.checkStoreDB == 'Yes') && (trxNo != null)) {
@@ -195,7 +195,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'jika data db tidak sesuai dengan excel'
                     if (arrayMatch.contains(false)) {
                         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-                        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Registrasi', GlobalVariable.NumofColm, 
+                        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Registrasi', GlobalVariable.NumofColm, 
                             GlobalVariable.StatusFailed, (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 
                                 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
                     }
@@ -206,7 +206,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
             'Write To Excel GlobalVariable.StatusFailed and errormessage'
-            CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Registrasi', GlobalVariable.NumofColm, 
+            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Registrasi', GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, message)
         }
     }

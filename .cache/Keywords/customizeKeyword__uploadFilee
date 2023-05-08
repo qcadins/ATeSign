@@ -1,37 +1,18 @@
 {
-  "keywordFileContentHash": "61A36A3DCD3C40F6480AC21AF368D1B9",
+  "keywordFileContentHash": "48183D3402B22F7FE7CA4088DC4FDEDB",
   "keywordClasses": [
     {
-      "name": "customizeKeyword.ConvertFile",
+      "name": "customizeKeyword.uploadFilee",
       "keywordMethods": [
         {
-          "name": "BASE64File",
+          "name": "uploadFunction",
           "parameters": [
             {
-              "name": "filename",
+              "name": "to",
               "initialExpression": "",
               "type": {
-                "fullClassName": "java.lang.String",
-                "unresolvedClassName": "String",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            }
-          ],
-          "javadoc": ""
-        },
-        {
-          "name": "DecodeBase64",
-          "parameters": [
-            {
-              "name": "base64String",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.lang.String",
-                "unresolvedClassName": "String",
+                "fullClassName": "com.kms.katalon.core.testobject.TestObject",
+                "unresolvedClassName": "TestObject",
                 "isArray": false,
                 "isGnericsPlaceHolder": false,
                 "hasImmutableClassName": false,
@@ -40,7 +21,7 @@
               }
             },
             {
-              "name": "filename",
+              "name": "filePath",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

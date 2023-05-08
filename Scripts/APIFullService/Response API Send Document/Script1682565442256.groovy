@@ -21,10 +21,10 @@ import org.openqa.selenium.Keys as Keys
 import java.sql.Connection as Connection
 
 'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\2.1 Esign - Full API Services.xlsx')
+GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - Full API Services.xlsx')
 
 'connect dengan db'
-Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'looping berdasarkan total kolom'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathAPISendDoc).getColumnNumbers(); (GlobalVariable.NumofColm)++) {
@@ -321,14 +321,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			trxno = WS.getElementPropertyValue(respon, 'documents.trxNos', FailureHandling.OPTIONAL)
 
 			'Memasukkan documentid dan trxno ke dalam excel'
-            CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 
+            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 
             4, GlobalVariable.NumofColm - 1, documentId.toString().replace('[', '').replace(']', ''))
 			
-			CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document',
+			CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document',
 			5, GlobalVariable.NumofColm - 1, trxno.toString().replace('[','').replace(']',''))
 			
 			'write to excel success'
-			CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document',
+			CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document',
 			0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 			
 			'Jika check storedb'
@@ -344,7 +344,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL).toString()
 
             'write to excel status failed dan reason'
-            CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm, 
+            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 2).replace(
                     '-', '') + ';') + messageFailed)
         }
@@ -355,7 +355,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL).toString()
 				
 			'write to excel status failed dan reason'
-			CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm,
+			CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm,
 			GlobalVariable.StatusFailed, (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 2).replace(
 			'-', '') + ';') + messageFailed.toString())
 			
@@ -366,13 +366,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 'Fungsi PDF to Base64'
 def PDFtoBase64(String fileName) 
 {
-    return CustomKeywords.'customizeKeyword.convertFile.BASE64File'(fileName)
+    return CustomKeywords.'customizeKeyword.ConvertFile.BASE64File'(fileName)
 }
 
 'Fungsi storedb'
 def ResponseAPIStoreDB(String signlocStoreDB) {
 	'connect DB eSign'
-	Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+	Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 	
 	'declare arraylist arraymatch'
 	ArrayList<String> arrayMatch = new ArrayList<String>()
@@ -569,7 +569,7 @@ def ResponseAPIStoreDB(String signlocStoreDB) {
 		'jika data db tidak sesuai dengan excel'
 		if (arrayMatch.contains(false)) {
 			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-			CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm,
+			CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm,
 				GlobalVariable.StatusFailed, (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
 		}
 		

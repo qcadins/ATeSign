@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat
 import com.kms.katalon.core.annotation.Keyword
 import internal.GlobalVariable
 
-public class parseDate {
+public class ParseDate {
 	//keyword upload file function
 	@Keyword
 	def parseDateFormat (String date, String format1, String format2) {

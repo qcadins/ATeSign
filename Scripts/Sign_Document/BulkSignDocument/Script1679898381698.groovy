@@ -31,7 +31,7 @@ import com.kms.katalon.core.webui.driver.DriverFactory
 GlobalVariable.Response = 'API Bulk Sign Document'
 
 'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
+GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_Excel_Path).getColumnNumbers(); (GlobalVariable.NumofColm)++) 
 {
@@ -115,7 +115,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 							WebUI.callTestCase(findTestCase('Sign_Document/SignDocumentStoreDb'), [('API_Excel_Path') : 'Registrasi/BulkSignDocument'],FailureHandling.CONTINUE_ON_FAILURE)
 							
 							'write to excel success'
-							CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Bulk Sign Document',
+							CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Bulk Sign Document',
 							0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 						}
 						else
@@ -127,7 +127,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 							notif = WS.getElementPropertyValue(respon_bulksign, 'documents.notif')
 							
 							'write to excel status failed dan reason'
-							CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Bulk Sign Document', GlobalVariable.NumofColm,
+							CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Bulk Sign Document', GlobalVariable.NumofColm,
 							GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
 							'-', '') + ';') + notif + ' : ' + documentId)
 						}
@@ -135,7 +135,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 					else
 					{
 						'write to excel status failed dan reason'
-						CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Bulk Sign Document', GlobalVariable.NumofColm,
+						CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Bulk Sign Document', GlobalVariable.NumofColm,
 						GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
 						'-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
 					}
@@ -146,7 +146,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 			{
 				messageFailed = WS.getElementPropertyValue(respon_bulksign, 'status.message', FailureHandling.OPTIONAL).toString()
 				'write to excel status failed dan reason'
-				CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Bulk Sign Document', GlobalVariable.NumofColm,
+				CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Bulk Sign Document', GlobalVariable.NumofColm,
 				GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
 				'-', '') + ';') + messageFailed)
 			}
@@ -154,7 +154,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 		else
 		{
 			'write to excel status failed dan reason'
-			CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Bulk Sign Document', GlobalVariable.NumofColm,
+			CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Bulk Sign Document', GlobalVariable.NumofColm,
 			GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
 			'-', '') + ';') + GlobalVariable.ReasonFailedHitAPI)
 			

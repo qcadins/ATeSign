@@ -1,8 +1,8 @@
 {
-  "keywordFileContentHash": "61A36A3DCD3C40F6480AC21AF368D1B9",
+  "keywordFileContentHash": "E7EC39C55042F67392138F04CC2554CF",
   "keywordClasses": [
     {
-      "name": "customizeKeyword.ConvertFile",
+      "name": "customizeKeyword.convertFilee",
       "keywordMethods": [
         {
           "name": "BASE64File",

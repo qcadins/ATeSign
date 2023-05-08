@@ -21,10 +21,10 @@ import org.openqa.selenium.By as By
 import java.sql.Connection as Connection
 
 'connect dengan db'
-Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
+GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
 'Inisialisasi array-array yang dibutuhkan'
 
@@ -213,7 +213,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
 
 			'Tulis di excel sebagai failed dan error.'
-			CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Send to Sign',
+			CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign',
 				GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(
 					GlobalVariable.NumofColm, 2) + ';') + lblpopup)
 			
@@ -232,7 +232,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         if (!(WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_TandaTanganDokumen'), GlobalVariable.TimeOut, 
             FailureHandling.OPTIONAL))) {
             'Jika tidak ada, maka datanya tidak ada, atau save gagal'
-            CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
+            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + 
                 ';') + GlobalVariable.ReasonFailedSaveGagal)
         } else {
@@ -253,7 +253,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'Jika error lognya muncul'
             if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
                 'Tulis di excel itu adalah error'
-                CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
+                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                         2) + ';') + WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label'))
             } else {
@@ -261,7 +261,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 if (!(WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_VerifikasiPenandaTangan'), GlobalVariable.TimeOut, 
                     FailureHandling.OPTIONAL))) {
                     'Custom keyword mengenai savenya gagal'
-                    CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
+                    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                             2) + ';') + GlobalVariable.ReasonFailedSaveGagal)
                 } else {
@@ -305,7 +305,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         } else {
                             'Jika btn lanjut setelah konfirmasi untuk mengarah ke otp tidak dapat diklik'
                             'Failed alasan save gagal tidak bisa diklik.'
-                            CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
+                            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
                                 GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                                     2) + ';') + GlobalVariable.ReasonFailedSaveGagal)
 
@@ -317,13 +317,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, 
                             FailureHandling.OPTIONAL)) {
                             'Tulis di excel itu adalah error'
-                            CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
+                            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
                                 GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                                     2) + ';') + WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label'))
                         } else {
                             'Jika tidak muncul untuk element selanjutnya'
                             if (!(WebUI.verifyElementPresent(modifyObjectlabelRequestOTP, GlobalVariable.TimeOut))) {
-                                CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
+                                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
                                     GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                                         2) + ';') + GlobalVariable.ReasonFailedSaveGagal)
                             } else {
@@ -384,7 +384,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                                         'dicheck OTP pertama dan kedua dan seterusnya'
                                         if (WebUI.verifyMatch(listOTP[w-1], listOTP[w], false, FailureHandling.CONTINUE_ON_FAILURE)) {
-                                            CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Send to Sign', 
+                                            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', 
                                                 GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(
                                                     GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedOTPError)
 											
@@ -411,7 +411,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 							lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
 
 							'Tulis di excel sebagai failed dan error.'
-							CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Send to Sign',
+							CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign',
 								GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(
 									GlobalVariable.NumofColm, 2) + ';') + lblpopup)
 							'Klik OK'
@@ -426,7 +426,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 								FailureHandling.CONTINUE_ON_FAILURE)
 
 							'Tulis di excel sebagai failed dan error.'
-							CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Send to Sign',
+							CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign',
 								GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(
 									GlobalVariable.NumofColm, 2) + ';') + errormessage)
 						}
@@ -453,7 +453,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                         'Jika tidak muncul untuk element selanjutnya'
                         if (!(WebUI.verifyElementPresent(modifyObjectlabelRequestOTP, GlobalVariable.TimeOut))) {
-                            CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
+                            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
                                 GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                                     2) + ';') + GlobalVariable.ReasonFailedSaveGagal)
                         }
@@ -468,12 +468,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         String countFailedSign = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_Failed'))
 
                         'Menarik value count success ke excel'
-                        CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Send to Sign', 
+                        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Send to Sign', 
                             72, GlobalVariable.NumofColm - 1, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                                 73) + ';') + countSuccessSign)
 
                         'Menarik value count failed ke excel'
-                        CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Send to Sign', 
+                        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Send to Sign', 
                             73, GlobalVariable.NumofColm - 1, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                                 74) + ';') + countFailedSign)
 
@@ -500,7 +500,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                         'Verifikasi label pop up ketika masukan telah selesai dikirim'
                         if (!(WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_popupmasukan'), GlobalVariable.TimeOut))) {
-                            CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
+                            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
                                 GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                                     2) + ';') + GlobalVariable.ReasonFailedFeedbackGagal)
                         } else {
@@ -525,7 +525,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                 'Jika looping waktu delaynya yang terakhir, maka'
                                 if (y == 5) {
                                     'Failed dengan alasan prosesnya belum selesai'
-                                    CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Send to Sign', 
+                                    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', 
                                         GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(
                                             GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedProcessNotDone)
                                 }
@@ -539,7 +539,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         WebUI.closeBrowser()
                     }else {
 						'Jika popup berhasilnya tidak ada, maka Savenya gagal'
-						CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm,
+						CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm,
 						GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
 							2) + ';') + GlobalVariable.ReasonFailedSaveGagal)
 					}
@@ -591,7 +591,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 'jika kesempatan yang terakhir'
                 if (d == 6) {
                     'Jika masih tidak ada'
-                    CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
+                    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                             2).replace('-', '') + ';') + GlobalVariable.ReasonFailedNoneUI)
                 }
@@ -631,7 +631,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     GlobalVariable.FlagFailed = 1
 					
 					'Jika saldonya belum masuk dengan flag, maka signnya gagal.'
-                    CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
+                    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                             2) + ';') + GlobalVariable.ReasonFailedSignGagal)
                 }
@@ -653,7 +653,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 ' penggunaan ini hanya untuk Masukan Store Db'
 if (arrayMatch.contains(false)) {
     'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-    CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
         (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
 }
 
@@ -663,7 +663,7 @@ def checkVerifyEqualorMatch(Boolean isMatch) {
         GlobalVariable.FlagFailed = 1
 		
 		'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
+        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + 
             ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
     }

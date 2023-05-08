@@ -19,7 +19,7 @@ import org.openqa.selenium.Keys as Keys
 import java.sql.Connection
 
 'connect DB eSign'
-Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get data doc template dari DB'
 ArrayList<String> result = CustomKeywords.'connection.dataVerif.DataDocTemplateStoreDB'(conneSign, findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 9))
@@ -54,6 +54,6 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getVal
 if (arrayMatch.contains(false)) {
 
 	'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-	CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 2) + ';' + GlobalVariable.ReasonFailedStoredDB)
+	CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 2) + ';' + GlobalVariable.ReasonFailedStoredDB)
 	
 }

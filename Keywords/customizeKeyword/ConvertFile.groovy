@@ -8,7 +8,7 @@ import java.nio.file.Files
 import java.nio.file.Paths
 
 
-public class convertFile {
+public class ConvertFile {
 
 	@Keyword
 	public static String BASE64File(String filename) {

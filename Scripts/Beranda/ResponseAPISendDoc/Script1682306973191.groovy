@@ -21,10 +21,10 @@ import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
 
 'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
+GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
 'connect dengan db'
-Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get tenant code dari DB'
 String resultTenant = CustomKeywords.'connection.dataVerif.getTenant'(conneSign, GlobalVariable.userLogin)
@@ -174,14 +174,14 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         GlobalVariable.Response = documentId
 
         'Responsenya diwrite di excel'
-        CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Send to Sign', 4, GlobalVariable.NumofColm - 
+        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Send to Sign', 4, GlobalVariable.NumofColm - 
             1, GlobalVariable.Response.toString())
 
         'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
         int jumlahsignertandatangan = 0
 
         'write to excel success'
-        CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 0, GlobalVariable.NumofColm - 
+        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 0, GlobalVariable.NumofColm - 
             1, GlobalVariable.StatusSuccess)
 
         'Call test case mengenai kotak masuk dan melempar variable API_ExcelPath, dan jumlah signer untuk tanda tangan'
@@ -199,7 +199,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL).toString()
 
         'write to excel status failed dan reason'
-        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm, 
+        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace('-', 
                 '') + ';') + messageFailed)
 
@@ -217,7 +217,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 'Fungsi responseAPIStoreDB'
 
 def PDFtoBase64(String fileName) {
-    String base64 = CustomKeywords.'customizeKeyword.convertFile.BASE64File'(fileName)
+    String base64 = CustomKeywords.'customizeKeyword.ConvertFile.BASE64File'(fileName)
 
     return base64
 }
@@ -307,7 +307,7 @@ def ResponseAPIStoreDB(Connection conneSign) {
     'jika data db tidak sesuai dengan excel'
     if (arrayMatch.contains(false)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
+        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
     }
 }

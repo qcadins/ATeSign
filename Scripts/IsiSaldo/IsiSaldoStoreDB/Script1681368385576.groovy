@@ -19,7 +19,7 @@ import org.openqa.selenium.Keys as Keys
 import java.sql.Connection
 
 'connect DB eSign'
-Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get data balance mutation dari DB'
 ArrayList<String> result = CustomKeywords.'connection.dataVerif.getIsiSaldoStoreDB'(conneSign, findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 18))
@@ -68,6 +68,6 @@ arrayMatch.add(WebUI.verifyMatch(resultTenantTidakTopup.toString(), 'null', fals
 if (arrayMatch.contains(false)) {
 
 	'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-	CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('isiSaldo', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 2) + ';' + GlobalVariable.ReasonFailedStoredDB)
+	CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('isiSaldo', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 2) + ';' + GlobalVariable.ReasonFailedStoredDB)
 	
 }

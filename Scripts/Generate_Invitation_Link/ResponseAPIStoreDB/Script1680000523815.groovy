@@ -19,7 +19,7 @@ import org.openqa.selenium.Keys as Keys
 import java.sql.Connection as Connection
 
 'connect DB eSign'
-Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'declare arraylist arraymatch'
 ArrayList<String> arrayMatch = new ArrayList<String>()
@@ -93,6 +93,6 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVar
 'jika data db tidak sesuai dengan excel'
 if (arrayMatch.contains(false)) {
 	'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-	CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Generate Inv Link', GlobalVariable.NumofColm,
+	CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Generate Inv Link', GlobalVariable.NumofColm,
 		GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
 }

@@ -13,26 +13,26 @@ public class CheckSaveProccess {
 	public checkStatus (int count, TestObject object, int colm, String sheetname){
 		if(WebUI.verifyElementPresent(object, 3, FailureHandling.OPTIONAL)){
 			if (count==0){
-				(new customizeKeyword.writeExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
+				(new customizeKeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
 						0, colm - 1, GlobalVariable.StatusSuccess)
 			}
 			else{
-				(new customizeKeyword.writeExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
+				(new customizeKeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
 						0, colm - 1, GlobalVariable.StatusFailed)
-				(new customizeKeyword.writeExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
+				(new customizeKeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
 						1, colm - 1, GlobalVariable.ReasonFailedSystemError)
 			}
 		}else{
 			if (count==0){
-				(new customizeKeyword.writeExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
+				(new customizeKeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
 						0, colm - 1, GlobalVariable.StatusFailed)
-				(new customizeKeyword.writeExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
+				(new customizeKeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
 						1, colm - 1, GlobalVariable.ReasonFailedSaveGagal)
 			}
 			else{
-				(new customizeKeyword.writeExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
+				(new customizeKeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
 						0, colm - 1, GlobalVariable.StatusFailed)
-				(new customizeKeyword.writeExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
+				(new customizeKeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
 						1, colm - 1, GlobalVariable.ReasonFailedMandatory)
 			}
 		}
@@ -49,9 +49,9 @@ public class CheckSaveProccess {
 
 					String failedAlertReason = WebUI.getAttribute(object, 'aria-label', FailureHandling.OPTIONAL)
 
-					(new customizeKeyword.writeExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
+					(new customizeKeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
 							0, colm - 1, GlobalVariable.StatusFailed)
-					(new customizeKeyword.writeExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
+					(new customizeKeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
 							1, colm - 1, failedAlertReason)
 					flagFailed = 1
 				}

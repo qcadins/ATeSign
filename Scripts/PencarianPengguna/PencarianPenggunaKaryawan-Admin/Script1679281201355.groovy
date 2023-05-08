@@ -22,13 +22,13 @@ import org.openqa.selenium.Keys as Keys
 WebUI.callTestCase(findTestCase('Login/Login_Admin'), [:], FailureHandling.STOP_ON_FAILURE)
 
 'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
+GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
 'call function check paging'
 checkPaging()
 
 'connect DB eSign'
-Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'input email'
 WebUI.setText(findTestObject('PencarianPenggunaAdmin/Karyawan/input_Email'), findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 9))
@@ -70,7 +70,7 @@ if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianPenggunaAdmin/View/input_Email'), 'value', FailureHandling.OPTIONAL), resultData[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 	
 	'parse Date from yyyy-MM-dd > dd-MMM-yyyy'
-	sDate = CustomKeywords.'customizeKeyword.parseDate.parseDateFormat'(resultData[index++], 'yyyy-MM-dd', 'dd-MMM-yyyy')
+	sDate = CustomKeywords.'customizeKeyword.ParseDate.parseDateFormat'(resultData[index++], 'yyyy-MM-dd', 'dd-MMM-yyyy')
 	
 	'verify tanggal lahir'
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianPenggunaAdmin/View/input_TanggalLahir'), 'value', FailureHandling.OPTIONAL), sDate, false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -97,7 +97,7 @@ if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 
         WebUI.click(findTestObject('PencarianPenggunaAdmin/Karyawan/button_OK'))
 
         'write to excel success'
-        CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PencarianPengguna-Karyawan', 0, GlobalVariable.NumofColm - 
+        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PencarianPengguna-Karyawan', 0, GlobalVariable.NumofColm - 
             1, GlobalVariable.StatusSuccess)
 
         'get data reset request OTP dari DB'
@@ -108,7 +108,7 @@ if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 
         checkVerifyEqualOrMatch(WebUI.verifyMatch(resultResetOTP, '0', false, FailureHandling.CONTINUE_ON_FAILURE))
     } else {
         'write to excel status failed dan reason'
-        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('PencarianPengguna-Karyawan', GlobalVariable.NumofColm, 
+        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('PencarianPengguna-Karyawan', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, ((findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 2).replace(
                 '-', '') + ';') + GlobalVariable.ReasonFailedResend) + ' OTP')
     }
@@ -194,7 +194,7 @@ def checkPaging() {
 def checkVerifyEqualOrMatch(Boolean isMatch) {
     if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('PencarianPengguna-Karyawan', GlobalVariable.NumofColm, 
+        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('PencarianPengguna-Karyawan', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 2) + ';') + 
             GlobalVariable.ReasonFailedVerifyEqualOrMatch)
 

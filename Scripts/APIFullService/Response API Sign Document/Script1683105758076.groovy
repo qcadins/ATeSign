@@ -21,10 +21,10 @@ import org.apache.commons.io.FileUtils as FileUtils
 import java.net.InetAddress as InetAddress
 
 'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.writeExcel.getExcelPath'('\\Excel\\2.1 Esign - Full API Services.xlsx')
+GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - Full API Services.xlsx')
 
 'connect DB eSign'
-Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get colm excel'
 int countColmExcel = findTestData(excelPathAPISignDocument).getColumnNumbers()
@@ -88,12 +88,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     message = WS.getElementPropertyValue(respon_OTP, 'status.message', FailureHandling.OPTIONAL)
 
                     'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
-                    CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm, 
+                    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, message)
                 }
             } else {
                 'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.HITAPI Gagal'
-                CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm, 
+                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
                         2) + ';') + GlobalVariable.ReasonFailedHitAPI)
             }
@@ -153,7 +153,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			'get status code'
 			trxNo = WS.getElementPropertyValue(respon, 'trxNo', FailureHandling.OPTIONAL)
 			if(trxNo != null) {
-				CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sign Document',
+				CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sign Document',
 				4, GlobalVariable.NumofColm - 1, trxNo.toString().replace('[','').replace(']',''))
 			}
 			
@@ -175,7 +175,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 							break
 						} else if (v == 20) {
 							'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-							CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm,
+							CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm,
 								GlobalVariable.StatusFailed, (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 2) +
 									';') + GlobalVariable.ReasonFailedSignGagal)
 							}
@@ -185,7 +185,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					}
 				}
                 'write to excel success'
-                CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sign Document', 
+                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sign Document', 
                     0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 
                 'check Db'
@@ -197,7 +197,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
                 'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
-                CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm, 
+                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, message)
             }
         } else {
@@ -205,7 +205,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
             'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
-            CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm, 
+            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, message)
         }
     }
@@ -218,7 +218,7 @@ def CorrectipAddress() {
 }
 
 def PhototoBase64(String filePath) {
-    return CustomKeywords.'customizeKeyword.convertFile.BASE64File'(filePath)
+    return CustomKeywords.'customizeKeyword.ConvertFile.BASE64File'(filePath)
 }
 
 def ResponseAPIStoreDB(Connection conneSign, String totalSigned_before, String ipaddress) {
@@ -282,7 +282,7 @@ def ResponseAPIStoreDB(Connection conneSign, String totalSigned_before, String i
     'jika data db tidak sesuai dengan excel'
     if (arrayMatch.contains(false)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-        CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm, 
+        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 2) + 
             ';') + GlobalVariable.ReasonFailedStoredDB)
     }
