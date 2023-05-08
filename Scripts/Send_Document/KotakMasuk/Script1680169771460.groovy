@@ -31,7 +31,7 @@ RunConfiguration.setWebDriverPreferencesProperty('prefs', chromePrefs)
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.connectDB.connectDBeSign'()
 
-docid = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 5).replace('[', '').replace(']', '').split(', ', 
+docid = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 5).replace('[', '').replace(']', '').split(', ', 
     -1)
 
 'declare arraylist arraymatch'
@@ -81,9 +81,9 @@ for (int y = 0; y < docid.size(); y++) {
             variable_lastest_pencariandokumen.size()) + ']/a/i', true)
 
         'Jika button Lastest dapat diklik'
-        if (WebUI.verifyElementClickable(modifyobjectbtnLastestpencariandokumen, FailureHandling.OPTIONAL)) {
+        if (WebUI.verifyElementVisible(modifyobjectbtnLastestpencariandokumen, FailureHandling.OPTIONAL)) {
             'Klik button Lastest'
-            WebUI.click(modifyobjectbtnLastestpencariandokumen)
+            WebUI.click(modifyobjectbtnLastestpencariandokumen, FailureHandling.CONTINUE_ON_FAILURE)
         }
         
         'ambil row lastest pencarian dokumen'
@@ -147,7 +147,7 @@ for (int y = 0; y < docid.size(); y++) {
         'Jika button Lastest dapat diklik'
         if (WebUI.verifyElementClickable(modifyobjectbtnLastest, FailureHandling.OPTIONAL)) {
             'Klik button Lastest'
-            WebUI.click(modifyobjectbtnLastest)
+            WebUI.click(modifyobjectbtnLastest, FailureHandling.CONTINUE_ON_FAILURE)
         }
         
         'get row pada beranda'
