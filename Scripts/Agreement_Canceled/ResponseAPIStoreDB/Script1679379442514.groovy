@@ -25,7 +25,7 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 ArrayList<String> arrayMatch = new ArrayList<String>()
 
 'get data API Agreement Canceled sebagai pengecekan'
-String result = CustomKeywords.'connection.dataVerif.getAgreementCanceled'(conneSign,findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,9))
+String result = CustomKeywords.'connection.DataVerif.getAgreementCanceled'(conneSign,findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,9))
 
 'verify jika document is_activenya 0'
     arrayMatch.add(WebUI.verifyMatch('0', result, false, FailureHandling.CONTINUE_ON_FAILURE))

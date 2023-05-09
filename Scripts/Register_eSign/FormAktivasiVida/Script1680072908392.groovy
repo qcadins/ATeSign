@@ -98,7 +98,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 	WebUI.delay(5)
 	
 	'get OTP dari DB'
-	OTP = CustomKeywords.'connection.dataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+	OTP = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
 			15).toUpperCase())
 	
 	'+1 count send OTP'
@@ -153,7 +153,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 					break
 				}else {
 					'get data reset request OTP dari DB'
-					Integer resultResetOTP = CustomKeywords.'connection.dataVerif.getResetOTP'(conneSign, findTestData(excelPathBuatUndangan).getValue(
+					Integer resultResetOTP = CustomKeywords.'connection.DataVerif.getResetOTP'(conneSign, findTestData(excelPathBuatUndangan).getValue(
 							GlobalVariable.NumofColm, 15).toUpperCase())
 					
 					'verify counter OTP Katalon sesuai dengan counter OTP DB'
@@ -164,7 +164,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 				WebUI.delay(3)
 	
 				'get OTP dari DB'
-				OTP = CustomKeywords.'connection.dataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathBuatUndangan).getValue(
+				OTP = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathBuatUndangan).getValue(
 						GlobalVariable.NumofColm, 15).toUpperCase())
 	
 				'add OTP ke list'
@@ -233,7 +233,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 					break
 				}else {
 					'get data reset request OTP dari DB'
-					Integer resultResetOTP = CustomKeywords.'connection.dataVerif.getResetOTP'(conneSign, findTestData(excelPathBuatUndangan).getValue(
+					Integer resultResetOTP = CustomKeywords.'connection.DataVerif.getResetOTP'(conneSign, findTestData(excelPathBuatUndangan).getValue(
 							GlobalVariable.NumofColm, 15).toUpperCase())
 					
 					'verify counter OTP Katalon sesuai dengan counter OTP DB'
@@ -244,7 +244,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 				WebUI.delay(5)
 	
 				'get OTP dari DB'
-				OTP = CustomKeywords.'connection.dataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathBuatUndangan).getValue(
+				OTP = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathBuatUndangan).getValue(
 						GlobalVariable.NumofColm, 15).toUpperCase())
 	
 				'add OTP ke list'

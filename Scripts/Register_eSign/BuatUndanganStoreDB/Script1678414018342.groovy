@@ -24,11 +24,11 @@ import org.openqa.selenium.Keys as Keys
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get data buat undangan dari DB'
-ArrayList<String> resultDataDiri = CustomKeywords.'connection.dataVerif.BuatUndanganStoreDB'(conneSign, findTestData(excelPathBuatUndangan).getValue(
+ArrayList<String> resultDataDiri = CustomKeywords.'connection.DataVerif.BuatUndanganStoreDB'(conneSign, findTestData(excelPathBuatUndangan).getValue(
 		GlobalVariable.NumofColm, 15).toUpperCase())
 
 'get data perusahaan buat undangan dari DB'
-ArrayList<String> resultDataPerusahaan = CustomKeywords.'connection.dataVerif.getBuatUndanganDataPerusahaanStoreDB'(conneSign, findTestData(excelPathBuatUndangan).getValue(
+ArrayList<String> resultDataPerusahaan = CustomKeywords.'connection.DataVerif.getBuatUndanganDataPerusahaanStoreDB'(conneSign, findTestData(excelPathBuatUndangan).getValue(
 		GlobalVariable.NumofColm, 15).toUpperCase())
 
 'declare arraylist arraymatch'

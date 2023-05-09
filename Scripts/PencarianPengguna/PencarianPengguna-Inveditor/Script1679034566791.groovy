@@ -55,7 +55,7 @@ if(findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 6
 	WebUI.click(findTestObject('PencarianPengguna/button_Edit'))
 		
 	'get data PencarianPengguna dari DB'
-	ArrayList<String> result = CustomKeywords.'connection.dataVerif.getDataPencarianPengguna'(conneSign, findTestData(excelPathPencarianPengguna).getValue(
+	ArrayList<String> result = CustomKeywords.'connection.DataVerif.getDataPencarianPengguna'(conneSign, findTestData(excelPathPencarianPengguna).getValue(
 			GlobalVariable.NumofColm, 15).toUpperCase())
 	
 	'declare arrayindex'
@@ -149,7 +149,7 @@ if(findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 6
 				1, GlobalVariable.StatusSuccess)
 		
 		'get data reset request OTP dari DB'
-		Integer resultResetOTP = CustomKeywords.'connection.dataVerif.getResetOTP'(conneSign, findTestData(excelPathPencarianPengguna).getValue(
+		Integer resultResetOTP = CustomKeywords.'connection.DataVerif.getResetOTP'(conneSign, findTestData(excelPathPencarianPengguna).getValue(
 				GlobalVariable.NumofColm, 15).toUpperCase())
 		
 		'verify OTP reset menjadi 0'

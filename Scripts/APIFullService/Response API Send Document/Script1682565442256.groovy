@@ -413,12 +413,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         'check if mau menggunakan api_key yang salah atau benar'
         if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 42) == 'Yes') {
             'get api key dari db'
-            GlobalVariable.api_key = CustomKeywords.'connection.dataVerif.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
+            GlobalVariable.api_key = CustomKeywords.'connection.DataVerif.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
         } else if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 42) == 'No') {
             'get api key salah dari excel'
             GlobalVariable.api_key = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 43)
         }
         
+		println(stringRefno)
+		
         'Hit API'
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Send Document Signing', [('tenantCode') : findTestData(
                         excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 9), ('request') : stringRefno, ('callerId') : findTestData(
@@ -546,7 +548,7 @@ def ResponseAPIStoreDB(String signlocStoreDB) {
             -1)
 
         'get data API Send Document dari DB (hanya 1 signer)'
-        ArrayList<String> result = CustomKeywords.'connection.dataVerif.getSendDocSigning'(conneSign, docid[i])
+        ArrayList<String> result = CustomKeywords.'connection.DataVerif.getSendDocSigning'(conneSign, docid[i])
 
         'declare arrayindex'
         arrayindex = 0
@@ -554,7 +556,7 @@ def ResponseAPIStoreDB(String signlocStoreDB) {
         'Jika documentTemplateCode di dokumen pertama adalah kosong'
         if ((documentTemplateCode[i]).replace('"', '') == '') {
             'Maka pengecekan signlocation yang diinput'
-            arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.dataVerif.getSignLocation'(conneSign, docid[i]), 
+            arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.DataVerif.getSignLocation'(conneSign, docid[i]), 
                     signlocStoreDB, false, FailureHandling.CONTINUE_ON_FAILURE))
         }
         
@@ -581,7 +583,7 @@ def ResponseAPIStoreDB(String signlocStoreDB) {
         'Jika document Template pada excel tidak kosong'
         if ((documentTemplateCode[i]).replace('"', '') != '') {
             'Mengambil value tipe signer berdasarkan tipe dokumen template'
-            resultDocTemplate = CustomKeywords.'connection.dataVerif.getSignerTypeonDocTemplate'(conneSign, (documentTemplateCode[
+            resultDocTemplate = CustomKeywords.'connection.DataVerif.getSignerTypeonDocTemplate'(conneSign, (documentTemplateCode[
                 i]).replace('"', ''))
 
             'Looping berdasarkan jumlah email per dokumen di excel'
@@ -665,7 +667,7 @@ def ResponseAPIStoreDB(String signlocStoreDB) {
                 trxno = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 6)
 
                 'get data result trx untuk signing'
-                ArrayList<String> resulttrxsigning = CustomKeywords.'connection.dataVerif.getTrxSendDocSigning'(conneSign, 
+                ArrayList<String> resulttrxsigning = CustomKeywords.'connection.DataVerif.getTrxSendDocSigning'(conneSign, 
                     trxno)
 
                 'declare arrayindex'

@@ -1,8 +1,8 @@
 {
-  "keywordFileContentHash": "347324EDF698451E512E156FB7C08E89",
+  "keywordFileContentHash": "660BB5D76FC30B8B5A42F178505BD756",
   "keywordClasses": [
     {
-      "name": "customizeKeyword.writeExcell",
+      "name": "customizeKeyword.WriteExcell",
       "keywordMethods": [
         {
           "name": "writeToExcel",

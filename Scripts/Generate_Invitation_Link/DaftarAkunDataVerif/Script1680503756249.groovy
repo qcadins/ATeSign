@@ -163,7 +163,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     ArrayList<String> listOTP = new ArrayList<String>()
 
     'get OTP dari DB'
-    String OTP = CustomKeywords.'connection.dataVerif.getOTP'(conneSign, findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 
+    String OTP = CustomKeywords.'connection.DataVerif.getOTP'(conneSign, findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 
             13).replace('"', '').toUpperCase())
 
     'add OTP ke list'
@@ -190,7 +190,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
                 WebUI.delay(5)
 
                 'get OTP dari DB'
-                OTP = CustomKeywords.'connection.dataVerif.getOTP'(conneSign, findTestData(excelPathGenerateLink).getValue(
+                OTP = CustomKeywords.'connection.DataVerif.getOTP'(conneSign, findTestData(excelPathGenerateLink).getValue(
                         GlobalVariable.NumofColm, 13).replace('"', '').toUpperCase())
 
                 'add OTP ke list'
@@ -222,7 +222,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
                 WebUI.delay(5)
 
                 'get OTP dari DB'
-                OTP = CustomKeywords.'connection.dataVerif.getOTP'(conneSign, findTestData(excelPathGenerateLink).getValue(
+                OTP = CustomKeywords.'connection.DataVerif.getOTP'(conneSign, findTestData(excelPathGenerateLink).getValue(
                         GlobalVariable.NumofColm, 13).replace('"', '').toUpperCase())
 
                 'add OTP ke list'

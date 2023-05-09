@@ -22,7 +22,7 @@ import java.sql.Connection
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get data masukan dari DB'
-ArrayList<String> result = CustomKeywords.'connection.dataVerif.getFeedbackStoreDB'(conneSign)
+ArrayList<String> result = CustomKeywords.'connection.DataVerif.getFeedbackStoreDB'(conneSign)
 
 'declare arraylist arraymatch'
 ArrayList<String> arrayMatch = new ArrayList<String>()

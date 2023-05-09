@@ -1,8 +1,8 @@
 {
-  "keywordFileContentHash": "B8009EF7036D450FAC4DF86F4F8699F5",
+  "keywordFileContentHash": "967CC89357146BD4A319FA7CB9CE1E4A",
   "keywordClasses": [
     {
-      "name": "connection.DataVerif",
+      "name": "connection.DataVeriff",
       "keywordMethods": [
         {
           "name": "getOTP",

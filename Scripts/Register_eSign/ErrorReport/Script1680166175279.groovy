@@ -34,11 +34,11 @@ checkPaging()
 WebUI.click(findTestObject('ErrorReport/button_Cari'))
 
 'get total data error dari DB'
-String resultTotalData = CustomKeywords.'connection.dataVerif.getTotalDataError'(conneSign, WebUI.getAttribute(findTestObject(
+String resultTotalData = CustomKeywords.'connection.DataVerif.getTotalDataError'(conneSign, WebUI.getAttribute(findTestObject(
             'ErrorReport/input_TanggalDari'), 'value'))
 
 'get error detail dari DB'
-String resultErrorDetail = CustomKeywords.'connection.dataVerif.getErrorReportDetail'(conneSign, findTestData(excelPathBuatUndangan).getValue(
+String resultErrorDetail = CustomKeywords.'connection.DataVerif.getErrorReportDetail'(conneSign, findTestData(excelPathBuatUndangan).getValue(
         GlobalVariable.NumofColm, 10).toUpperCase())
 
 'get total data'

@@ -53,7 +53,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'check if mau menggunakan api_key yang salah atau benar'
         if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 17) == 'Yes') {
             'get api key dari db'
-            GlobalVariable.api_key = CustomKeywords.'connection.dataVerif.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
+            GlobalVariable.api_key = CustomKeywords.'connection.DataVerif.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
         } else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 17) == 'No') {
             'get api key salah dari excel'
             GlobalVariable.api_key = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 18)
@@ -67,7 +67,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             respon_OTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing', [('callerId') : findTestData(
                             excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 26), ('phoneNo') : findTestData(
                             excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 8), ('email') : findTestData(excelPathAPISignDocument).getValue(
-                            GlobalVariable.NumofColm, 11), ('refnumber') : ('"' + CustomKeywords.'connection.dataVerif.getRefNumber'(
+                            GlobalVariable.NumofColm, 11), ('refnumber') : ('"' + CustomKeywords.'connection.DataVerif.getRefNumber'(
                             conneSign, documentId[0])) + '"']))
 
             'Jika status HIT API 200 OK'
@@ -81,7 +81,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     WebUI.delay(1)
 
                     'Mengambil otp dari database'
-                    otp = (('"' + CustomKeywords.'connection.dataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathAPISignDocument).getValue(
+                    otp = (('"' + CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathAPISignDocument).getValue(
                             GlobalVariable.NumofColm, 11).replace('"', ''))) + '"')
                 } else {
                     'mengambil status code berdasarkan response HIT API'
@@ -124,12 +124,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'looping berdasarkan ukuran dari dokumen id'
         for (int z = 0; z < documentId.size(); z++) {
             'Memasukkan input dari total signed dengan ,'
-            totalSigned_before = (CustomKeywords.'connection.dataVerif.getTotalSigned'(conneSign, documentId[z]) + ',')
+            totalSigned_before = (CustomKeywords.'connection.DataVerif.getTotalSigned'(conneSign, documentId[z]) + ',')
 
             'Jika di paling akhir loop'
             if (z == (documentId.size() - 1)) {
                 'Memasukkan input dari total signed tanpa ,'
-                totalSigned_before = CustomKeywords.'connection.dataVerif.getTotalSigned'(conneSign, documentId[z])
+                totalSigned_before = CustomKeywords.'connection.DataVerif.getTotalSigned'(conneSign, documentId[z])
             }
         }
         
@@ -163,17 +163,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'Loop untuk check db update sign. Maksimal 200 detik.'
                     for (int v = 1; v <= 20; v++) {
                         'Mengambil total Signed setelah sign'
-                        totalSigned_after = CustomKeywords.'connection.dataVerif.getTotalSigned'(conneSign, documentId[x])
+                        totalSigned_after = CustomKeywords.'connection.DataVerif.getTotalSigned'(conneSign, documentId[x])
 
                         'Verify total signed sebelum dan sesudah. Jika sesuai maka break'
                         if (WebUI.verifyEqual(totalSigned_after, Integer.parseInt(totalSigned_before.split(',', -1)[x]) + 
-                            Integer.parseInt(CustomKeywords.'connection.dataVerif.getTotalSigner'(conneSign, documentId[
+                            Integer.parseInt(CustomKeywords.'connection.DataVerif.getTotalSigner'(conneSign, documentId[
                                     x], findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 11).replace(
                                         '"', ''))), FailureHandling.CONTINUE_ON_FAILURE)) {
                             break
                         } else if (v == 20) {
                             'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-                            CustomKeywords.'customizeKeyword.writeExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm, 
+                            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm, 
                                 GlobalVariable.StatusFailed, (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
                                     2) + ';') + GlobalVariable.ReasonFailedSignGagal)
                         } else {
@@ -236,7 +236,7 @@ def ResponseAPIStoreDB(Connection conneSign, String ipaddress, ArrayList<String>
         arrayIndex = 0
 
         'Array result. Value dari db'
-        ArrayList<String> result = CustomKeywords.'connection.dataVerif.getSign'(conneSign, (documentId[i]).replace('"', 
+        ArrayList<String> result = CustomKeywords.'connection.DataVerif.getSign'(conneSign, (documentId[i]).replace('"', 
                 ''), findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 11).replace('"', ''))
 
         'verify qty dalam transaksi. Jika done = 1'
@@ -267,7 +267,7 @@ def ResponseAPIStoreDB(Connection conneSign, String ipaddress, ArrayList<String>
         arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], '3', false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'verify ref number yang tertandatangan'
-        arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], CustomKeywords.'connection.dataVerif.getRefNumber'(conneSign, 
+        arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], CustomKeywords.'connection.DataVerif.getRefNumber'(conneSign, 
                     (documentId[i]).replace('"', '')), false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'verify ip address'

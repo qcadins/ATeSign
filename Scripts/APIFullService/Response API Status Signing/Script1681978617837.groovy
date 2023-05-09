@@ -44,7 +44,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'check if mau menggunakan api_key yang salah atau benar'
         if (findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, 13) == 'Yes') {
             'get api key dari db'
-            GlobalVariable.api_key = CustomKeywords.'connection.dataVerif.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
+            GlobalVariable.api_key = CustomKeywords.'connection.DataVerif.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
         } else if (findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, 13) == 'No') {
             'get api key salah dari excel'
             GlobalVariable.api_key = findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, 14)
@@ -73,7 +73,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     arrayIndex = 0
 
                     'get data from db'
-                    ArrayList<String> result = CustomKeywords.'connection.dataVerif.getAPICheckSigningStoreDB'(conneSign, 
+                    ArrayList<String> result = CustomKeywords.'connection.DataVerif.getAPICheckSigningStoreDB'(conneSign, 
                         findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, 11).replace('"', ''))
 
                     'declare arraylist arraymatch'

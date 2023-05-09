@@ -35,7 +35,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'check if mau menggunakan api_key yang salah atau benar'
         if (findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 13) == 'Yes') {
             'get api key dari db'
-            GlobalVariable.api_key = CustomKeywords.'connection.dataVerif.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
+            GlobalVariable.api_key = CustomKeywords.'connection.DataVerif.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
         } else if (findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 13) == 'No') {
             'get api key salah dari excel'
             GlobalVariable.api_key = findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 14)
@@ -64,33 +64,54 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 stampingstatus = WS.getElementPropertyValue(respon, 'checkStampingStatus.stampingStatus', FailureHandling.OPTIONAL)
 
-                message = WS.getElementPropertyValue(respon, 'checkStampingStatus.message', FailureHandling.OPTIONAL)
+                message = WS.getElementPropertyValue(respon, 'checkStampingStatus.messsage', FailureHandling.OPTIONAL)
 
                 if (GlobalVariable.checkStoreDB == 'Yes') {
                     arrayIndex = 0
 
                     'get data from db'
-                    ArrayList<String> result = CustomKeywords.'connection.dataVerif.getAPICheckStampingStoreDB'(conneSign, 
+                    ArrayList<String> result = CustomKeywords.'connection.DataVerif.getAPICheckStampingStoreDB'(conneSign, 
                         findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 11).replace('"', ''))
 
                     'declare arraylist arraymatch'
                     ArrayList<String> arrayMatch = new ArrayList<String>()
 
-                    for (index = 0; index < docId.size(); index++) {
-                        'verify doc id'
-                        arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), (docId[index]).toUpperCase(), 
-                                false, FailureHandling.CONTINUE_ON_FAILURE))
+					'looping sesuai size DB'
+                    for (index = 0; index < result.size()/2; index++) {
+						
+						'get docid DB'
+						docIdDB = result[arrayIndex++]
+						
+						'looping sesuai size response'
+						for (indexResponse = 0; indexResponse < docId.size(); indexResponse++) {
+							
+							'check if docidDB == docid response'
+							if(docIdDB == docId[indexResponse]) {
+								'verify doc id'
+								arrayMatch.add(WebUI.verifyMatch(docIdDB.toUpperCase(), (docId[indexResponse]).toUpperCase(), 
+										false, FailureHandling.CONTINUE_ON_FAILURE))
+								
+								'verify stamping status'
+								arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), (stampingstatus[indexResponse]).toUpperCase(), 
+										false, FailureHandling.CONTINUE_ON_FAILURE))
+								
+								'if stamping status = 2'
+								if (stampingstatus[indexResponse] == '2') {
+									println(message)
+									'verify error status'
+									arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]), (message[indexResponse]), 
+											false, FailureHandling.CONTINUE_ON_FAILURE))
+								}else {
+									'skip error status'
+									arrayIndex++
+								}
+							}else {
+								continue
+								
+								arrayIndex--
+							}
+						}
 
-                        'verify stamping status'
-                        arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), (stampingstatus[index]).toUpperCase(), 
-                                false, FailureHandling.CONTINUE_ON_FAILURE))
-
-                        'if stamping status = 2'
-                        if (stampingstatus == 2) {
-                            'verify error status'
-                            arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), (message[index]).toUpperCase(), 
-                                    false, FailureHandling.CONTINUE_ON_FAILURE))
-                        }
                     }
                     
                     'jika data db tidak sesuai dengan excel'

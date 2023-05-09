@@ -33,11 +33,11 @@ WebUI.click(findTestObject('InquiryInvitation/menu_InquiryInvitation'))
 'call function check paging'
 checkPaging()
 
-int EditAfterRegister = CustomKeywords.'connection.dataVerif.getSetEditAfterRegister'(conneSign)
+int EditAfterRegister = CustomKeywords.'connection.DataVerif.getSetEditAfterRegister'(conneSign)
 
-int ResendLink = CustomKeywords.'connection.dataVerif.getSetResendLink'(conneSign)
+int ResendLink = CustomKeywords.'connection.DataVerif.getSetResendLink'(conneSign)
 
-int InvLink = CustomKeywords.'connection.dataVerif.getSetInvLinkAct'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+int InvLink = CustomKeywords.'connection.DataVerif.getSetInvLinkAct'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
             15).toUpperCase())
 
 if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Email')) {
@@ -62,7 +62,7 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).eq
     WebUI.click(findTestObject('InquiryInvitation/button_Edit'))
 
     'get data buat undangan dari DB'
-    ArrayList<String> result = CustomKeywords.'connection.dataVerif.InquiryInvitationViewDataVerif'(conneSign, findTestData(
+    ArrayList<String> result = CustomKeywords.'connection.DataVerif.InquiryInvitationViewDataVerif'(conneSign, findTestData(
             excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 15).toUpperCase())
 
     '1 karena invited by belum bisa di get value dari UI'
@@ -274,7 +274,7 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).eq
                 if (invitedBy.equalsIgnoreCase('SMS')) {
 
                     'get data saldo'
-                    String result = CustomKeywords.'connection.dataVerif.getSaldo'(conneSign, GlobalVariable.userLogin)
+                    String result = CustomKeywords.'connection.DataVerif.getSaldo'(conneSign, GlobalVariable.userLogin)
 
                     'verify saldo'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(result, '0', false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -287,7 +287,7 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).eq
                 if (invitedBy.equalsIgnoreCase('SMS')) {
 
                     'get data saldo'
-                    String result = CustomKeywords.'connection.dataVerif.getSaldo'(conneSign, GlobalVariable.userLogin)
+                    String result = CustomKeywords.'connection.DataVerif.getSaldo'(conneSign, GlobalVariable.userLogin)
 
                     'verify saldo'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(result, '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -327,7 +327,7 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).eq
                 if (invitedBy.equalsIgnoreCase('SMS')) {
 
                     'get data saldo'
-                    String result = CustomKeywords.'connection.dataVerif.getSaldo'(conneSign, GlobalVariable.userLogin)
+                    String result = CustomKeywords.'connection.DataVerif.getSaldo'(conneSign, GlobalVariable.userLogin)
 
                     'verify saldo'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(result, '0', false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -340,7 +340,7 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).eq
                 if (invitedBy.equalsIgnoreCase('SMS')) {
 
                     'get data saldo'
-                    String result = CustomKeywords.'connection.dataVerif.getSaldo'(conneSign, GlobalVariable.userLogin)
+                    String result = CustomKeywords.'connection.DataVerif.getSaldo'(conneSign, GlobalVariable.userLogin)
 
                     'verify saldo'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(result, '-1', false, FailureHandling.CONTINUE_ON_FAILURE))

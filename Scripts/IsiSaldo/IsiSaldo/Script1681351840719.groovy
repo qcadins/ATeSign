@@ -58,7 +58,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         WebUI.click(findTestObject('isiSaldo/menu_isiSaldo'))
 
         'get ddl tenant'
-        ArrayList<String> resultTenant = CustomKeywords.'connection.dataVerif.getDDLTenant'(conneSign)
+        ArrayList<String> resultTenant = CustomKeywords.'connection.DataVerif.getDDLTenant'(conneSign)
 
 		'call function check ddl untuk tenant'
 		checkDDL(findTestObject('isiSaldo/input_PilihTenant'), resultTenant)
@@ -71,7 +71,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         WebUI.sendKeys(findTestObject('isiSaldo/input_PilihTenant'), Keys.chord(Keys.ENTER))
 
         'get ddl vendor'
-        ArrayList<String> resultVendor = CustomKeywords.'connection.dataVerif.getDDLVendor'(conneSign, findTestData(excelPathIsiSaldo).getValue(
+        ArrayList<String> resultVendor = CustomKeywords.'connection.DataVerif.getDDLVendor'(conneSign, findTestData(excelPathIsiSaldo).getValue(
                 GlobalVariable.NumofColm, 14))
 
 		'call function check ddl untuk vendor'
@@ -85,7 +85,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         WebUI.sendKeys(findTestObject('isiSaldo/input_PilihVendor'), Keys.chord(Keys.ENTER))
 
         'get ddl tipe saldo'
-        ArrayList<String> resultTipeSaldo = CustomKeywords.'connection.dataVerif.getDDLTipeSaldo'(conneSign, findTestData(
+        ArrayList<String> resultTipeSaldo = CustomKeywords.'connection.DataVerif.getDDLTipeSaldo'(conneSign, findTestData(
                 excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 14), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
                 15))
 
@@ -354,7 +354,7 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 			"/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper["+ variable.size() +"]/datatable-body-row/div[2]/datatable-body-cell[9]/div",true)
 		
 		'get trx dari db'
-		ArrayList<String> result = CustomKeywords.'connection.dataVerif.getIsiSaldoTrx'(conneSign, findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
+		ArrayList<String> result = CustomKeywords.'connection.DataVerif.getIsiSaldoTrx'(conneSign, findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
                 18))
 		
 		arrayIndex = 0

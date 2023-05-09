@@ -38,13 +38,13 @@ ArrayList<String> namasigner = findTestData(API_Excel_Path).getValue(GlobalVaria
 WebUI.click(findTestObject('ErrorReport/button_Cari'))
 
 'get total data error dari DB'
-String resultTotalData = CustomKeywords.'connection.dataVerif.getTotalDataError'(conneSign, WebUI.getAttribute(findTestObject('ErrorReport/input_TanggalDari'), 'value'))
+String resultTotalData = CustomKeywords.'connection.DataVerif.getTotalDataError'(conneSign, WebUI.getAttribute(findTestObject('ErrorReport/input_TanggalDari'), 'value'))
 
 'get error detail dari DB'
-String resultErrorDetail = CustomKeywords.'connection.dataVerif.getErrorReportDetail'(conneSign, namasigner.last().toString().replace('"',''))
+String resultErrorDetail = CustomKeywords.'connection.DataVerif.getErrorReportDetail'(conneSign, namasigner.last().toString().replace('"',''))
 
 'get status activation'
-ArrayList<String> resultStatusAktivasi = CustomKeywords.'connection.dataVerif.getStatusActivation'(conneSign)
+ArrayList<String> resultStatusAktivasi = CustomKeywords.'connection.DataVerif.getStatusActivation'(conneSign)
 
 'get total data'
 totalData = WebUI.getText(findTestObject('ErrorReport/label_TotalData')).split(' ')

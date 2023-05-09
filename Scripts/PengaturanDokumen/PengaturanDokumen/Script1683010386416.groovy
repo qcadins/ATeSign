@@ -59,7 +59,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         GlobalVariable.NumofColm, 11))
 
                 'get data tipe-tipe pembayaran secara asc'
-                ArrayList<String> tipePembayaran_DB = CustomKeywords.'connection.dataVerif.getLovTipePembayaran'(conneSign)
+                ArrayList<String> tipePembayaran_DB = CustomKeywords.'connection.DataVerif.getLovTipePembayaran'(conneSign)
 
                 'Click dropdown mengenai tipe pembayaran'
                 WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_openddlTipePembayaran'))
@@ -276,7 +276,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/button_View'))
 
             'get data doc template from db'
-            result = CustomKeywords.'connection.dataVerif.getDataDocTemplate'(conneSign, findTestData(excelPathPengaturanDokumen).getValue(
+            result = CustomKeywords.'connection.DataVerif.getDataDocTemplate'(conneSign, findTestData(excelPathPengaturanDokumen).getValue(
                     GlobalVariable.NumofColm, 9))
 
             arrayIndex = 0
@@ -315,7 +315,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/button_Edit'))
 
             'get data doc template from db'
-            result = CustomKeywords.'connection.dataVerif.DataDocTemplateStoreDB'(conneSign, findTestData(excelPathPengaturanDokumen).getValue(
+            result = CustomKeywords.'connection.DataVerif.DataDocTemplateStoreDB'(conneSign, findTestData(excelPathPengaturanDokumen).getValue(
                     GlobalVariable.NumofColm, 9))
 
             arrayIndex = 0
@@ -565,7 +565,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/button_Setting'))
 
             'get data doc template from db'
-            result = CustomKeywords.'connection.dataVerif.getDataDocTemplate'(conneSign, findTestData(excelPathPengaturanDokumen).getValue(
+            result = CustomKeywords.'connection.DataVerif.getDataDocTemplate'(conneSign, findTestData(excelPathPengaturanDokumen).getValue(
                     GlobalVariable.NumofColm, 9))
 
             arrayIndex = 0

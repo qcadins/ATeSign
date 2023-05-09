@@ -28,7 +28,7 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExc
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get tenant code dari DB'
-String resultTenant = CustomKeywords.'connection.dataVerif.getTenant'(conneSign, GlobalVariable.userLogin)
+String resultTenant = CustomKeywords.'connection.DataVerif.getTenant'(conneSign, GlobalVariable.userLogin)
 
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(API_Excel_Path).getColumnNumbers()*/; (GlobalVariable.NumofColm)++) {
     String refNo = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 11)

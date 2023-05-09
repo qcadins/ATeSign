@@ -35,7 +35,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'check if mau menggunakan api_key yang salah atau benar'
         if (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, 13) == 'Yes') {
             'get api key dari db'
-            GlobalVariable.api_key = CustomKeywords.'connection.dataVerif.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
+            GlobalVariable.api_key = CustomKeywords.'connection.DataVerif.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
         } else if (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, 13) == 'No') {
             'get api key salah dari excel'
             GlobalVariable.api_key = findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, 14)
@@ -64,7 +64,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 if (GlobalVariable.checkStoreDB == 'Yes') {
 					'get trx from db'
-					trxQty = CustomKeywords.'connection.dataVerif.getAPIRequestStampingTrx'(conneSign)
+					trxQty = CustomKeywords.'connection.DataVerif.getAPIRequestStampingTrx'(conneSign)
 					
 					'declare arraylist arraymatch'
 					ArrayList<String> arrayMatch = new ArrayList<String>()

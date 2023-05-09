@@ -25,7 +25,7 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 ArrayList<String> arrayMatch = new ArrayList<String>()
 
 'get data API Send Document dari DB (hanya 1 signer)'
-ArrayList<String> result = CustomKeywords.'connection.dataVerif.getGenInvLink'(conneSign,  findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,11).replace('"', '') , findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,15).replace('"', ''), findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 19).replace('"', ''), findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 13).replace('"', '').toUpperCase())
+ArrayList<String> result = CustomKeywords.'connection.DataVerif.getGenInvLink'(conneSign,  findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,11).replace('"', '') , findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,15).replace('"', ''), findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 19).replace('"', ''), findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 13).replace('"', '').toUpperCase())
 
 'declare arrayindex'
 arrayindex = 0

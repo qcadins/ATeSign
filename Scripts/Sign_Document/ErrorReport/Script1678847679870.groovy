@@ -36,10 +36,10 @@ checkPaging()
 WebUI.click(findTestObject('ErrorReport/button_Cari'))
 
 'get total data error dari DB'
-String resultTotalData = CustomKeywords.'connection.dataVerif.getTotalDataError'(conneSign, WebUI.getAttribute(findTestObject('ErrorReport/input_TanggalDari'), 'value'))
+String resultTotalData = CustomKeywords.'connection.DataVerif.getTotalDataError'(conneSign, WebUI.getAttribute(findTestObject('ErrorReport/input_TanggalDari'), 'value'))
 
 'get status activation'
-ArrayList<String> resultStatusAktivasi = CustomKeywords.'connection.dataVerif.getStatusActivation'(conneSign)
+ArrayList<String> resultStatusAktivasi = CustomKeywords.'connection.DataVerif.getStatusActivation'(conneSign)
 
 'get total data'
 totalData = WebUI.getText(findTestObject('ErrorReport/label_TotalData')).split(' ')
@@ -71,7 +71,7 @@ modifyObjectLabelNamaKonsumen = WebUI.modifyObjectProperty(findTestObject('Error
 	"/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-error-report/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper["+ variable.size() +"]/datatable-body-row/div[2]/datatable-body-cell[3]/div/p",true)
 
 'get error detail dari DB'
-String resultErrorDetail = CustomKeywords.'connection.dataVerif.getErrorReportDetail'(conneSign, WebUI.getText(modifyObjectLabelNamaKonsumen).toUpperCase())
+String resultErrorDetail = CustomKeywords.'connection.DataVerif.getErrorReportDetail'(conneSign, WebUI.getText(modifyObjectLabelNamaKonsumen).toUpperCase())
 
 'click button view'
 WebUI.click(modifyObjectButtonView)

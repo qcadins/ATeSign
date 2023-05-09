@@ -55,10 +55,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(e
     }
 
     'ambil db checking ke UI Beranda'
-    ArrayList<String> SendtoSign = CustomKeywords.'connection.dataVerif.getDataSendtoSign'(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,5))
+    ArrayList<String> SendtoSign = CustomKeywords.'connection.DataVerif.getDataSendtoSign'(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,5))
 
     'Mengambil email berdasarkan documentId'
-    ArrayList<String> emailSigner = CustomKeywords.'connection.dataVerif.getEmailLogin'(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,5)).split(
+    ArrayList<String> emailSigner = CustomKeywords.'connection.DataVerif.getEmailLogin'(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,5)).split(
         ';', -1)
 
 	'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
@@ -305,7 +305,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(e
                                             'value'), notelpsigner, false))
 
                                 'OTP yang pertama dimasukkan kedalam 1 var'
-                                OTP_before = CustomKeywords.'connection.dataVerif.getOTPAktivasi'(conneSign, emailSigner[
+                                OTP_before = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, emailSigner[
                                     (o - 1)])
 
                                 'clear arraylist sebelumnya'
@@ -351,7 +351,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(e
                                         WebUI.delay(3)
 										
                                         'OTP yang kedua'
-                                        OTP_after = CustomKeywords.'connection.dataVerif.getOTPAktivasi'(conneSign, emailSigner[
+                                        OTP_after = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, emailSigner[
 											(o - 1)])
 										
                                         'add otp ke list'
@@ -574,7 +574,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(e
 		variable_saldo_row = DriverFactory.getWebDriver().findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper '))
 
         'ambil inquiry di db'
-        ArrayList<String> inquiry_db = CustomKeywords.'connection.dataVerif.gettrxSaldo'(conneSign)
+        ArrayList<String> inquiry_db = CustomKeywords.'connection.DataVerif.gettrxSaldo'(conneSign)
 		
         'looping mengenai columnnya'
         for (int u = 1; u <= (variable_saldo_column.size() / variable_saldo_row.size()); u++) {
@@ -655,7 +655,7 @@ def MasukanStoreDB(Connection conneSign, String emailSigner, ArrayList<String> a
     arrayindex = 0
 
     'MasukanDB mengambil value dari hasil query'
-    MasukanDB = CustomKeywords.'connection.dataVerif.getFeedbackStoreDB'(conneSign, emailSigner)
+    MasukanDB = CustomKeywords.'connection.DataVerif.getFeedbackStoreDB'(conneSign, emailSigner)
 
     'verify rating'
     arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 62), MasukanDB[
@@ -672,7 +672,7 @@ def SigningProcessStoreDB(Connection conneSign, String emailSigner, int jumlahsi
     arrayindex = 0
 
     'SigningDB mengambil value dari hasil query'
-    SigningDB = CustomKeywords.'connection.dataVerif.getSigningStatusProcess'(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,5), emailSigner)
+    SigningDB = CustomKeywords.'connection.DataVerif.getSigningStatusProcess'(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,5), emailSigner)
 
     'looping berdasarkan size dari signingDB'
     for (int t = 1; t <= SigningDB.size(); t++) {
