@@ -27,10 +27,10 @@ ArrayList<String> arrayMatch = new ArrayList<String>()
 if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('New') || findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Edit')) {
 	
 'get data balance mutation dari DB'
-ArrayList<String> result = CustomKeywords.'connection.dataVerif.getTenantStoreDB'(conneSign, findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 14))
+ArrayList<String> result = CustomKeywords.'connection.DataVerif.getTenantStoreDB'(conneSign, findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 14))
 
 'get data services dari DB'
-ArrayList<String> resultServices = CustomKeywords.'connection.dataVerif.getTenantServicesDescription'(conneSign, findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 12))
+ArrayList<String> resultServices = CustomKeywords.'connection.DataVerif.getTenantServicesDescription'(conneSign, findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 12))
 
 'declare arrayindex'
 arrayindex = 0
@@ -84,7 +84,7 @@ for(indexExcel = 0 ; indexExcel < arrayServices.size(); indexExcel++) {
 
 }else if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Service')) {
 	'get data balacne mutation dari DB'
-	String result = CustomKeywords.'connection.dataVerif.getTenantServices'(conneSign, findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 9)).replace('{','').replace('}','').replace('"','').replace(',','')
+	String result = CustomKeywords.'connection.DataVerif.getTenantServices'(conneSign, findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 9)).replace('{','').replace('}','').replace('"','').replace(',','')
 	
 	'split result to array'
 	ArrayList<String> resultarray = result.split(':0')

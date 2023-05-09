@@ -22,10 +22,10 @@ import java.sql.Connection
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get data balance mutation dari DB'
-ArrayList<String> result = CustomKeywords.'connection.dataVerif.getIsiSaldoStoreDB'(conneSign, findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 18))
+ArrayList<String> result = CustomKeywords.'connection.DataVerif.getIsiSaldoStoreDB'(conneSign, findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 18))
 
 'get data tenant yang tidak topup dari DB'
-String resultTenantTidakTopup = CustomKeywords.'connection.dataVerif.getTenantTidakIsiSaldo'(conneSign, findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 14), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 18))
+String resultTenantTidakTopup = CustomKeywords.'connection.DataVerif.getTenantTidakIsiSaldo'(conneSign, findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 14), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 18))
 
 'declare arraylist arraymatch'
 ArrayList<String> arrayMatch = new ArrayList<String>()

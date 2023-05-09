@@ -42,14 +42,14 @@ arrayindex = 0
 
 for (int y = 0; y < docid.size(); y++) {
     'Mengambil email berdasarkan documentId'
-    ArrayList<String> emailSigner = CustomKeywords.'connection.dataVerif.getEmailLogin'(conneSign, docid[y]).split(';',-1)
+    ArrayList<String> emailSigner = CustomKeywords.'connection.DataVerif.getEmailLogin'(conneSign, docid[y]).split(';',-1)
 
     for (int t = 0; t < emailSigner.size(); t++) {
         'call Test Case untuk login sebagai user berdasarkan doc id'
         WebUI.callTestCase(findTestCase('Login/Login_1docManySigner'), [('email') : emailSigner[t]], FailureHandling.STOP_ON_FAILURE)
 
         'get data kotak masuk send document secara asc, dimana customer no 1'
-        ArrayList<String> result = CustomKeywords.'connection.dataVerif.getKotakMasukSendDoc'(conneSign, docid[y])
+        ArrayList<String> result = CustomKeywords.'connection.DataVerif.getKotakMasukSendDoc'(conneSign, docid[y])
 
         ArrayList<String> prosesttd_pencariandokumen = new ArrayList<String>()
 
@@ -57,7 +57,7 @@ for (int y = 0; y < docid.size(); y++) {
         WebUI.click(findTestObject('PencarianDokumen/menu_PencarianDokumen'))
 
         'input status'
-        WebUI.setText(findTestObject('PencarianDokumen/select_Status'), CustomKeywords.'connection.dataVerif.getSignStatus'(
+        WebUI.setText(findTestObject('PencarianDokumen/select_Status'), CustomKeywords.'connection.DataVerif.getSignStatus'(
                 conneSign, docid[y]))
 
         'click enter untuk input select ddl'
@@ -118,7 +118,7 @@ for (int y = 0; y < docid.size(); y++) {
                 arrayMatch.add(WebUI.verifyEqual(emailSigner.size(), (prosesttd_pencariandokumen[1]).replace(' ', ''), FailureHandling.CONTINUE_ON_FAILURE))
             } else if ((i == 7) || (i == 9)) {
             } else if (i == 8) {
-                arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectpencariandokumen), CustomKeywords.'connection.dataVerif.getSignStatus'(
+                arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectpencariandokumen), CustomKeywords.'connection.DataVerif.getSignStatus'(
                             conneSign, docid[y]), false, FailureHandling.CONTINUE_ON_FAILURE))
 
                 arrayindex++
@@ -288,7 +288,7 @@ for (int y = 0; y < docid.size(); y++) {
         CustomKeywords.'customizeKeyword.Download.isFileDownloaded'('Yes')
 
         'get data kotak masuk send document secara asc, dimana customer no 1'
-        ArrayList<String> resultSigner = CustomKeywords.'connection.dataVerif.getSignerKotakMasukSendDoc'(conneSign, docid[
+        ArrayList<String> resultSigner = CustomKeywords.'connection.DataVerif.getSignerKotakMasukSendDoc'(conneSign, docid[
             y])
 
         'Klik btnSigner'

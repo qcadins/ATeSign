@@ -30,9 +30,9 @@ ArrayList<String> arrayMatch = new ArrayList<String>()
 'looping berdasarkan total document yang ada'
 for (int i = 1; i <= documentIds.size(); i++) 
 {
-	ArrayList<String> emailsigner = CustomKeywords.'connection.dataVerif.getEmailsSign'(conneSign, documentIds[i-1])
+	ArrayList<String> emailsigner = CustomKeywords.'connection.DataVerif.getEmailsSign'(conneSign, documentIds[i-1])
 	'get data API Bulk Sign Document dari DB'
-	ArrayList<String> result = CustomKeywords.'connection.dataVerif.getbulkSign'(conneSign, documentIds[i-1])
+	ArrayList<String> result = CustomKeywords.'connection.DataVerif.getbulkSign'(conneSign, documentIds[i-1])
 	
 	
 	'declare arrayindex'

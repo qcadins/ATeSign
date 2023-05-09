@@ -27,7 +27,7 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExc
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get tenant code dari DB'
-String resultTenant = CustomKeywords.'connection.dataVerif.getTenant'(conneSign, GlobalVariable.userLogin)
+String resultTenant = CustomKeywords.'connection.DataVerif.getTenant'(conneSign, GlobalVariable.userLogin)
 
 'Inisialisasi seluruh data yang dibuuthkan'
 String refNo = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 11)
@@ -232,7 +232,7 @@ def ResponseAPIStoreDB(Connection conneSign) {
 
     for (int r = 0; r < docid.size(); r++) {
         'get data API Send Document dari DB (hanya 1 signer)'
-        ArrayList<String> result = CustomKeywords.'connection.dataVerif.getSendDoc'(conneSign, docid[r])
+        ArrayList<String> result = CustomKeywords.'connection.DataVerif.getSendDoc'(conneSign, docid[r])
 
         'declare arrayindex'
         arrayindex = 0

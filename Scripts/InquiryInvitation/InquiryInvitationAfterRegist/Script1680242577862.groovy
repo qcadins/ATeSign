@@ -36,7 +36,7 @@ WebUI.click(findTestObject('InquiryInvitation/menu_InquiryInvitation'))
 'call function check paging'
 checkPaging()
 
-Integer EditAfterRegister = CustomKeywords.'connection.dataVerif.getSetEditAfterRegister'(conneSign)
+Integer EditAfterRegister = CustomKeywords.'connection.DataVerif.getSetEditAfterRegister'(conneSign)
 
 if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Email')) {
     'set text search box dengan email'

@@ -455,7 +455,7 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 			variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[9]/div', true)
 
 		'get trx dari db'
-		ArrayList<String> result = CustomKeywords.'connection.dataVerif.getSaldoTrx'(conneSign, findTestData(excelPathBuatUndangan).getValue(
+		ArrayList<String> result = CustomKeywords.'connection.DataVerif.getSaldoTrx'(conneSign, findTestData(excelPathBuatUndangan).getValue(
 				GlobalVariable.NumofColm, 15),findTestData(excelPathBuatUndangan).getValue(
 				GlobalVariable.NumofColm, 14), 'Use Verification')
 		
@@ -579,12 +579,12 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 			variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[9]/div', true)
 
 		'get trx dari db'
-		ArrayList<String> result = CustomKeywords.'connection.dataVerif.getSaldoTrx'(conneSign, findTestData(excelPathBuatUndangan).getValue(
+		ArrayList<String> result = CustomKeywords.'connection.DataVerif.getSaldoTrx'(conneSign, findTestData(excelPathBuatUndangan).getValue(
 				GlobalVariable.NumofColm, 15),findTestData(excelPathBuatUndangan).getValue(
 				GlobalVariable.NumofColm, 14), 'Use OTP')
 		
 		'get count trx'
-		String resultCount = CustomKeywords.'connection.dataVerif.getCountTrx'(conneSign, findTestData(excelPathBuatUndangan).getValue(
+		String resultCount = CustomKeywords.'connection.DataVerif.getCountTrx'(conneSign, findTestData(excelPathBuatUndangan).getValue(
 				GlobalVariable.NumofColm, 15),findTestData(excelPathBuatUndangan).getValue(
 				GlobalVariable.NumofColm, 14), 'Use OTP')
 

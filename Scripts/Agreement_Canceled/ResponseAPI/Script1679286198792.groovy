@@ -27,7 +27,7 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExc
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'mengambil AES Key untuk encrypt'
-String AESKey = CustomKeywords.'connection.dataVerif.getAESKey'(conneSign)
+String AESKey = CustomKeywords.'connection.DataVerif.getAESKey'(conneSign)
 
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_Excel_Path).getColumnNumbers(); (GlobalVariable.NumofColm)++){
 	'HIT API'

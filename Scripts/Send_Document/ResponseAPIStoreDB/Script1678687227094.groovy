@@ -31,7 +31,7 @@ docid = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 5).repla
 
 for (int i = 0; i < docid.size(); i++) {
     'get data API Send Document dari DB (hanya 1 signer)'
-    ArrayList<String> result = CustomKeywords.'connection.dataVerif.getSendDoc'(conneSign, docid[i])
+    ArrayList<String> result = CustomKeywords.'connection.DataVerif.getSendDoc'(conneSign, docid[i])
 
     'declare arrayindex'
     arrayindex = 0
