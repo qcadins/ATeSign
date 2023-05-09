@@ -161,6 +161,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
             'looping berdasarkan jumlah dari signAction di dokumen pertama'
             for (int t = 0; t < (signAction[i]).size(); t++) {
+				if(!(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm,34).length() == 0 && findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 35).length() == 0 && findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 36).length() == 0 && findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 37).length() == 0 && findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 38).length() == 0)) {
+					
                 'Split mengenai signLocation dimana berdasarkan dokumen'
                 ArrayList<String> pageSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 34).split(
                     '\\|\\|', -1)
@@ -201,54 +203,56 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                 'looping menuju jumlah lokasi pageSign di 1 signer'
                 for (int l = 0; l < (pageSign[i]).size(); l++) {
-                    'Jika loopingan pertama'
+					'Jika loopingan pertama'
                     if (l == 0) {
                         if (l == ((pageSign[i]).size() - 1)) {
                             'Isi bodyAPI'
-                            bodyAPI = (bodyAPI + ',"signLocations": [{')
-
-                            println((pageSign[i])[l])
-
-                            if (((pageSign[i])[l]) == '') {
-                                bodyAPI = (((((((((bodyAPI + '"llx" : ') + ((llxSign[i])[l])) + ', "lly" : ') + ((llySign[
-                                i])[l])) + ', "urx" : ') + ((urxSign[i])[l])) + ', "ury" : ') + ((urySign[i])[l])) + '}]')
-                            } else {
-                                bodyAPI = (((((((((((bodyAPI + '"page" : ') + ((pageSign[i])[l])) + ', "llx" : ') + ((llxSign[
-                                i])[l])) + ', "lly" : ') + ((llySign[i])[l])) + ', "urx" : ') + ((urxSign[i])[l])) + ', "ury" : ') + 
-                                ((urySign[i])[l])) + '}]')
-                            }
+                            bodyAPI = (bodyAPI + ',"signLocations": [')
+							
+                            if (pageSign[i][l] == '') {
+                                bodyAPI = bodyAPI + '{"llx" : ' + llxSign[i][l] + ', "lly" : ' + llySign[
+                                i][l] + ', "urx" : ' + urxSign[i][l] + ', "ury" : ' + urySign[i][l] + '}]'
+                            } else if(llxSign[i][l] == '""'){
+                                bodyAPI = bodyAPI + '{"page" : ' + pageSign[i][l] + '}]'
+                            }else if(pageSign[i][l] != '' && llxSign[i][l] != '""'){
+								bodyAPI = bodyAPI + '{"page" : ' + pageSign[i][l] + ', "llx" : ' + llxSign[
+									i][l] + ', "lly" : ' + llySign[i][l] + ', "urx" : ' + urxSign[i][l] + ', "ury" : ' +
+									urySign[i][l] + '}]'
+							}
                             
                             'isi signlocStoreDB'
                             signlocStoreDB = (((((((((signlocStoreDB + '{"llx":') + ((llxSign[i])[l])) + ',"lly":') + ((llySign[
                             i])[l])) + ',"urx":') + ((urxSign[i])[l])) + ',"ury":') + ((urySign[i])[l])) + '}')
                         } else {
                             'Isi bodyAPI'
-                            bodyAPI = (bodyAPI + ',"signLocations": [{')
+                            bodyAPI = (bodyAPI + ',"signLocations": [')
 
-                            println((pageSign[i])[l])
-
-                            if (((pageSign[i])[l]) == '') {
-                                bodyAPI = (((((((((bodyAPI + '"llx" : ') + ((llxSign[i])[l])) + ', "lly" : ') + ((llySign[
-                                i])[l])) + ', "urx" : ') + ((urxSign[i])[l])) + ', "ury" : ') + ((urySign[i])[l])) + '},')
-                            } else {
-                                bodyAPI = (((((((((((bodyAPI + '"page" : ') + ((pageSign[i])[l])) + ', "llx" : ') + ((llxSign[
-                                i])[l])) + ', "lly" : ') + ((llySign[i])[l])) + ', "urx" : ') + ((urxSign[i])[l])) + ', "ury" : ') + 
-                                ((urySign[i])[l])) + '},')
-                            }
+                            if (pageSign[i][l] == '') {
+                                bodyAPI = bodyAPI + '{"llx" : ' + llxSign[i][l] + ', "lly" : ' + llySign[
+                                i][l] + ', "urx" : ' + urxSign[i][l] + ', "ury" : ' + urySign[i][l] + '},'
+                            } else if(llxSign[i][l] == '""'){
+                                bodyAPI = bodyAPI + '{"page" : ' + pageSign[i][l] + '},'
+                            }else if(pageSign[i][l] != '' && llxSign[i][l] != '""'){
+								bodyAPI = bodyAPI + '"page" : ' + pageSign[i][l] + ', "llx" : ' + llxSign[
+									i][l] + ', {"lly" : ' + llySign[i][l] + ', "urx" : ' + urxSign[i][l] + ', "ury" : ' +
+									urySign[i][l] + '},'
+							}
                             
                             signlocStoreDB = (((((((((signlocStoreDB + '{"llx":') + ((llxSign[i])[l])) + ',"lly":') + ((llySign[
                             i])[l])) + ',"urx":') + ((urxSign[i])[l])) + ',"ury":') + ((urySign[i])[l])) + '};')
                         }
                     } else if (l == ((pageSign[i]).size() - 1)) {
-                        'Isi bodyAPI'
-                        if (((pageSign[i])[l]) == '') {
-                            bodyAPI = (((((((((bodyAPI + '{"llx" : ') + ((llxSign[i])[l])) + ', "lly" : ') + ((llySign[i])[
-                            l])) + ', "urx" : ') + ((urxSign[i])[l])) + ', "ury" : ') + ((urySign[i])[l])) + '}]')
-                        } else {
-                            bodyAPI = (((((((((((bodyAPI + '{ "page" : ') + ((pageSign[i])[l])) + ', "llx" : ') + ((llxSign[
-                            i])[l])) + ', "lly" : ') + ((llySign[i])[l])) + ', "urx" : ') + ((urxSign[i])[l])) + ', "ury" : ') + 
-                            ((urySign[i])[l])) + '}]')
-                        }
+
+                            if (pageSign[i][l] == '') {
+                                bodyAPI = bodyAPI + '{"llx" : ' + llxSign[i][l] + ', "lly" : ' + llySign[
+                                i][l] + ', "urx" : ' + urxSign[i][l] + ', "ury" : ' + urySign[i][l] + '}]'
+                            } else if(llxSign[i][l] == '""'){
+                                bodyAPI = bodyAPI + '{"page" : ' + pageSign[i][l] + '}]'
+                            }else if(pageSign[i][l] != '' && llxSign[i][l] != '""'){
+								bodyAPI = bodyAPI + '{"page" : ' + pageSign[i][l] + ', "llx" : ' + llxSign[
+									i][l] + ', "lly" : ' + llySign[i][l] + ', "urx" : ' + urxSign[i][l] + ', "ury" : ' +
+									urySign[i][l] + '}]'
+							}
                         
                         if (t == ((signAction[i]).size() - 1)) {
                             'isi signlocStoreDB'
@@ -260,22 +264,24 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             i])[l])) + ',"urx":') + ((urxSign[i])[l])) + ',"ury":') + ((urySign[i])[l])) + '};')
                         }
                     } else {
-                        'Isi bodyAPI'
-                        if (((pageSign[i])[l]) == '') {
-                            bodyAPI = (((((((((bodyAPI + '{"llx" : ') + ((llxSign[i])[l])) + ', "lly" : ') + ((llySign[i])[
-                            l])) + ', "urx" : ') + ((urxSign[i])[l])) + ', "ury" : ') + ((urySign[i])[l])) + '},')
-                        } else {
-                            bodyAPI = (((((((((((bodyAPI + '{ "page" : ') + ((pageSign[i])[l])) + ', "llx" : ') + ((llxSign[
-                            i])[l])) + ', "lly" : ') + ((llySign[i])[l])) + ', "urx" : ') + ((urxSign[i])[l])) + ', "ury" : ') + 
-                            ((urySign[i])[l])) + '},')
-                        }
+							
+                            if (pageSign[i][l] == '') {
+                                bodyAPI = bodyAPI + '{"llx" : ' + llxSign[i][l] + ', "lly" : ' + llySign[
+                                i][l] + ', "urx" : ' + urxSign[i][l] + ', "ury" : ' + urySign[i][l] + '},'
+                            } else if(llxSign[i][l] == '""'){
+                                bodyAPI = bodyAPI + '{"page" : ' + pageSign[i][l] + '},'
+                            }else if(pageSign[i][l] != '' && llxSign[i][l] != '""'){
+								bodyAPI = bodyAPI + '{"page" : ' + pageSign[i][l] + ', "llx" : ' + llxSign[
+									i][l] + ', "lly" : ' + llySign[i][l] + ', "urx" : ' + urxSign[i][l] + ', "ury" : ' +
+									urySign[i][l] + '},'
+							}
                         
                         'isi signlocStoreDB'
                         signlocStoreDB = (((((((((signlocStoreDB + '{"llx":') + ((llxSign[i])[l])) + ',"lly":') + ((llySign[
                         i])[l])) + ',"urx":') + ((urxSign[i])[l])) + ',"ury":') + ((urySign[i])[l])) + '};')
                     }
                 }
-                
+                }
                 'Jika signAction yang pertama untuk dokumen pertama'
                 if (t == 0) {
                     if (t == ((signAction[i]).size() - 1)) {
@@ -326,12 +332,42 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'Mengkosongkan bodyAPI'
             bodyAPI = ''
 
-            'Jika documentTemplateCodenya di dokumen pertama kosong '
-            if ((documentTemplateCode[i]) == '""') {
                 'looping berdasarkan pagestamp per dokumen'
                 for (int b = 0; b < (pageStamp[i]).size(); b++) {
                     'Jika dia loopingan yang pertama'
                     if (b == 0) {
+						if (b == ((pageStamp[b]).size() - 1)) {
+							'Isi bodyAPI'
+							bodyAPI = (bodyAPI + ',"stampLocations": [')
+							
+							if (pageStamp[i][b] == '') {
+								bodyAPI = bodyAPI + '{"llx" : ' + llxStamp[i][b] + ', "lly" : ' + llyStamp[
+								i][b] + ', "urx" : ' + urxStamp[i][b] + ', "ury" : ' + uryStamp[i][b] + '}]'
+							} else if(llxStamp[i][b] == '""'){
+								bodyAPI = bodyAPI + '{"page" : ' + pageStamp[i][b] + '}]'
+							}else if(pageStamp[i][b] != '' && llxStamp[i][b] != '""'){
+								bodyAPI = bodyAPI + '{"page" : ' + pageStamp[i][b] + ', "llx" : ' + llxStamp[
+									i][b] + ', "lly" : ' + llyStamp[i][b] + ', "urx" : ' + urxStamp[i][b] + ', "ury" : ' +
+									uryStamp[i][b] + '}]'
+							}
+							
+						} else {
+							'Isi bodyAPI'
+							bodyAPI = (bodyAPI + ',"signLocations": [')
+
+							if (pageSign[i][l] == '') {
+								bodyAPI = bodyAPI + '{"llx" : ' + llxSign[i][l] + ', "lly" : ' + llySign[
+								i][l] + ', "urx" : ' + urxSign[i][l] + ', "ury" : ' + urySign[i][l] + '},'
+							} else if(llxSign[i][l] == '""'){
+								bodyAPI = bodyAPI + '{"page" : ' + pageSign[i][l] + '},'
+							}else if(pageSign[i][l] != '' && llxSign[i][l] != '""'){
+								bodyAPI = bodyAPI + '"page" : ' + pageSign[i][l] + ', "llx" : ' + llxSign[
+									i][l] + ', {"lly" : ' + llySign[i][l] + ', "urx" : ' + urxSign[i][l] + ', "ury" : ' +
+									urySign[i][l] + '},'
+							}
+							
+						}
+						
                         'input bodyAPI'
                         bodyAPI = (((((((((((bodyAPI + ', "stampLocations" : [{ "page" : ') + ((pageStamp[i])[b])) + ', "llx" : ') + 
                         ((llxStamp[i])[b])) + ', "lly" : ') + ((llyStamp[i])[b])) + ', "urx" : ') + ((urxStamp[i])[b])) + 
@@ -348,7 +384,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         ((uryStamp[i])[b])) + '},')
                     }
                 }
-            }
+            
             
             'jika dokumennya di akhir'
             if (i == (documentFile.size() - 1)) {
@@ -362,7 +398,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'input body API kedalam stringRefno'
             stringRefno = (stringRefno + bodyAPI)
         }
-
+		
+		println stringRefno
+		WebUI.delay(4)
         'Jika flag tenant no'
         if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 44) == 'No') {
             'set tenant kosong'
