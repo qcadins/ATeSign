@@ -2,7 +2,7 @@
   "keywordFileContentHash": "D4AC9546DA038AC877F86E0A93FE0674",
   "keywordClasses": [
     {
-      "name": "customizeKeyword.uploadFile",
+      "name": "customizeKeyword.UploadFile",
       "keywordMethods": [
         {
           "name": "uploadFunction",

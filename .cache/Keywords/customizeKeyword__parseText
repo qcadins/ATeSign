@@ -2,7 +2,7 @@
   "keywordFileContentHash": "6351C5CB3558BBC3E948918F055496F7",
   "keywordClasses": [
     {
-      "name": "customizeKeyword.parseText",
+      "name": "customizeKeyword.ParseText",
       "keywordMethods": [
         {
           "name": "parseEncrypt",

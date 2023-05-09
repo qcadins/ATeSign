@@ -1,8 +1,8 @@
 {
-  "keywordFileContentHash": "098F453E000FAFB5352EC43F818C9255",
+  "keywordFileContentHash": "4801897FE69525D959651718BFEE8705",
   "keywordClasses": [
     {
-      "name": "customizeKeyword.parseDatee",
+      "name": "customizeKeyword.ParseDatee",
       "keywordMethods": [
         {
           "name": "parseDateFormat",
