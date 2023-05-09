@@ -757,7 +757,7 @@ def ResponseAPIStoreDB(String signlocStoreDB) {
 
                 'verify trx autosign'
                 arrayMatch.add(WebUI.verifyMatch(resulttrxsigning[arrayindex++], ('Auto Sign (' + emailSign) + ')', false, 
-                        FailureHandling.CONTINUE_ON_FAILURE))
+                        FailureHandling.CONTINUE_ON_FAILURE)) 
             }
         }
         
