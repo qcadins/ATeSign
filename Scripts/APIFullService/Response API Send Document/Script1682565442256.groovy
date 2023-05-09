@@ -331,7 +331,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
             'Mengkosongkan bodyAPI'
             bodyAPI = ''
-
+			if(!(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm,22).length() == 0 && findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 23).length() == 0 && findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 24).length() == 0 && findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 25).length() == 0 && findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 26).length() == 0)) {
+				
                 'looping berdasarkan pagestamp per dokumen'
                 for (int b = 0; b < (pageStamp[i]).size(); b++) {
                     'Jika dia loopingan yang pertama'
@@ -355,36 +356,45 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 							'Isi bodyAPI'
 							bodyAPI = (bodyAPI + ',"signLocations": [')
 
-							if (pageSign[i][l] == '') {
-								bodyAPI = bodyAPI + '{"llx" : ' + llxSign[i][l] + ', "lly" : ' + llySign[
-								i][l] + ', "urx" : ' + urxSign[i][l] + ', "ury" : ' + urySign[i][l] + '},'
-							} else if(llxSign[i][l] == '""'){
-								bodyAPI = bodyAPI + '{"page" : ' + pageSign[i][l] + '},'
-							}else if(pageSign[i][l] != '' && llxSign[i][l] != '""'){
-								bodyAPI = bodyAPI + '"page" : ' + pageSign[i][l] + ', "llx" : ' + llxSign[
-									i][l] + ', {"lly" : ' + llySign[i][l] + ', "urx" : ' + urxSign[i][l] + ', "ury" : ' +
-									urySign[i][l] + '},'
+							if (pageStamp[i][b] == '') {
+								bodyAPI = bodyAPI + '{"llx" : ' + llxStamp[i][b] + ', "lly" : ' + llyStamp[
+								i][b] + ', "urx" : ' + urxStamp[i][b] + ', "ury" : ' + uryStamp[i][b] + '},'
+							} else if(llxStamp[i][b] == '""'){
+								bodyAPI = bodyAPI + '{"page" : ' + pageStamp[i][b] + '},'
+							}else if(pageStamp[i][b] != '' && llxStamp[i][b] != '""'){
+								bodyAPI = bodyAPI + '"page" : ' + pageStamp[i][b] + ', "llx" : ' + llxStamp[
+									i][b] + ', {"lly" : ' + llyStamp[i][b] + ', "urx" : ' + urxStamp[i][b] + ', "ury" : ' +
+									uryStamp[i][b] + '},'
 							}
 							
 						}
-						
-                        'input bodyAPI'
-                        bodyAPI = (((((((((((bodyAPI + ', "stampLocations" : [{ "page" : ') + ((pageStamp[i])[b])) + ', "llx" : ') + 
-                        ((llxStamp[i])[b])) + ', "lly" : ') + ((llyStamp[i])[b])) + ', "urx" : ') + ((urxStamp[i])[b])) + 
-                        ', "ury" : ') + ((uryStamp[i])[b])) + '},')
+
                     } else if (b == ((pageStamp[i]).size() - 1)) {
-                        'input bodyAPI'
-                        bodyAPI = (((((((((((bodyAPI + '{ "page" : ') + ((pageStamp[i])[b])) + ', "llx" : ') + ((llxStamp[
-                        i])[b])) + ', "lly" : ') + ((llyStamp[i])[b])) + ', "urx" : ') + ((urxStamp[i])[b])) + ', "ury" : ') + 
-                        ((uryStamp[i])[b])) + '}]')
+
+                            if (pageStamp[i][b] == '') {
+                                bodyAPI = bodyAPI + '{"llx" : ' + llxStamp[i][b] + ', "lly" : ' + llyStamp[
+                                i][b] + ', "urx" : ' + urxStamp[i][b] + ', "ury" : ' + uryStamp[i][b] + '}]'
+                            } else if(llxStamp[i][b] == '""'){
+                                bodyAPI = bodyAPI + '{"page" : ' + pageStamp[i][b] + '}]'
+                            }else if(pageStamp[i][b] != '' && llxStamp[i][b] != '""'){
+								bodyAPI = bodyAPI + '{"page" : ' + pageStamp[i][b] + ', "llx" : ' + llxStamp[
+									i][b] + ', "lly" : ' + llyStamp[i][b] + ', "urx" : ' + urxStamp[i][b] + ', "ury" : ' +
+									uryStamp[i][b] + '}]'
+							}
                     } else {
-                        'input bodyAPI'
-                        bodyAPI = (((((((((((bodyAPI + '{ "page" : ') + ((pageStamp[i])[b])) + ', "llx" : ') + ((llxStamp[
-                        i])[b])) + ', "lly" : ') + ((llyStamp[i])[b])) + ', "urx" : ') + ((urxStamp[i])[b])) + ', "ury" : ') + 
-                        ((uryStamp[i])[b])) + '},')
+                            if (pageStamp[i][b] == '') {
+                                bodyAPI = bodyAPI + '{"llx" : ' + llxStamp[i][b] + ', "lly" : ' + llyStamp[
+                                i][b] + ', "urx" : ' + urxStamp[i][b] + ', "ury" : ' + uryStamp[i][b] + '},'
+                            } else if(llxStamp[i][b] == '""'){
+                                bodyAPI = bodyAPI + '{"page" : ' + pageStamp[i][b] + '},'
+                            }else if(pageStamp[i][b] != '' && llxStamp[i][b] != '""'){
+								bodyAPI = bodyAPI + '{"page" : ' + pageStamp[i][b] + ', "llx" : ' + llxStamp[
+									i][b] + ', "lly" : ' + llyStamp[i][b] + ', "urx" : ' + urxStamp[i][b] + ', "ury" : ' +
+									uryStamp[i][b] + '},'
+							}
                     }
                 }
-            
+			}
             
             'jika dokumennya di akhir'
             if (i == (documentFile.size() - 1)) {
@@ -418,9 +428,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'get api key salah dari excel'
             GlobalVariable.api_key = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 43)
         }
-        
-		println(stringRefno)
-		
+
         'Hit API'
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Send Document Signing', [('tenantCode') : findTestData(
                         excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 9), ('request') : stringRefno, ('callerId') : findTestData(
