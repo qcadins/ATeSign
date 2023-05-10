@@ -7,24 +7,24 @@ import java.nio.file.Paths
 
 public class ConvertFile {
 	@Keyword
-	public base64File (String filename){
+	public base64File(String filename) {
 
-		File f = new File(System.getProperty('user.dir') + "\\File" + filename)
+		File f = new File(System.getProperty('user.dir') + '\\File' + filename)
 		FileInputStream fis = new FileInputStream(f)
 		byte[] byteArray = new byte[(int)f.length()]
 		fis.read(byteArray)
 		String imageString = new sun.misc.BASE64Encoder().encode(byteArray)
 
-		return imageString.replaceAll("[\r\n\t ]", "")
+		return imageString.replaceAll('[\r\n\t ]', '')
 	}
 
 	@Keyword
-	public decodeBase64 (String base64String, String filename){
+	public decodeBase64(String base64String, String filename) {
 
 		byte[] bytes = DatatypeConverter.parseBase64Binary(base64String)
 
 		// Specify the file path and name
-		String filePath = System.getProperty('user.dir') + "\\Download\\" + filename + ".PDF"
+		String filePath = System.getProperty('user.dir') + '\\Download\\' + filename + '.PDF'
 
 		// Write the decoded bytes to the file
 		Files.write(Paths.get(filePath), bytes)
