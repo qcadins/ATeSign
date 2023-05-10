@@ -13,7 +13,7 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExc
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get colm excel'
-int countColmExcel = findTestData(excelPathAPIRegistrasi).getColumnNumbers()
+int countColmExcel = findTestData(excelPathAPIRegistrasi).columnNumbers
 
 String selfPhoto, idPhoto
 
@@ -93,7 +93,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 12).replace('"', ''))
 
                     'declare arraylist arraymatch'
-                    ArrayList<String> arrayMatch = new ArrayList<String>()
+                    arrayMatch = []
 
                     'verify is_active'
                     arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), '1', false, FailureHandling.CONTINUE_ON_FAILURE))
