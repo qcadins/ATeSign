@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "53181AB6845476EFC32C299BA314FDAB",
+  "keywordFileContentHash": "B1D7915613E78D5FD95A46957A3BDCEA",
   "keywordClasses": [
     {
       "name": "customizeKeyword.Download",
@@ -20,10 +20,11 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         }
       ]
     }
   ],
-  "javadocParsed": false
+  "javadocParsed": true
 }

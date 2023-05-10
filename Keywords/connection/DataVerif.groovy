@@ -14,7 +14,7 @@ public class DataVerif {
 	int columnCount
 
 	@Keyword
-	public getOTP (Connection conn, String email){
+	getOTP (Connection conn, String email){
 		String data
 
 		Statement stm = conn.createStatement()
@@ -32,7 +32,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public BuatUndanganStoreDB (Connection conn, String email){
+	BuatUndanganStoreDB (Connection conn, String email){
 		String data
 
 		ArrayList<String> listdata = new ArrayList<>()
@@ -55,7 +55,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public InquiryInvitationViewDataVerif (Connection conn, String email){
+	InquiryInvitationViewDataVerif (Connection conn, String email){
 		String data
 
 		ArrayList<String> listdata = new ArrayList<>()
@@ -78,7 +78,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public InquiryInvitationStoreDB (Connection conn, String idno){
+	InquiryInvitationStoreDB (Connection conn, String idno){
 		String data
 
 		ArrayList<String> listdata = new ArrayList<>()
@@ -101,7 +101,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getSaldo (Connection conn, String user){
+	getSaldo (Connection conn, String user){
 		String data
 
 		Statement stm = conn.createStatement()
@@ -119,7 +119,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getSendDoc(Connection conn, String documentid){
+	getSendDoc(Connection conn, String documentid){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
@@ -141,7 +141,7 @@ public class DataVerif {
 
 
 	@Keyword
-	public getTotalDataError (Connection conn, String date){
+	getTotalDataError (Connection conn, String date){
 		String data
 
 		Statement stm = conn.createStatement()
@@ -159,7 +159,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getErrorReportDetail (Connection conn, String name){
+	getErrorReportDetail (Connection conn, String name){
 		String data
 
 		Statement stm = conn.createStatement()
@@ -177,7 +177,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getStatusActivation (Connection conn){
+	getStatusActivation (Connection conn){
 		String data
 
 		ArrayList<String> listdata = new ArrayList<>()
@@ -200,7 +200,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getTenant (Connection conn, String user){
+	getTenant (Connection conn, String user){
 		String data
 
 		Statement stm = conn.createStatement()
@@ -218,7 +218,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getDataPencarianPengguna (Connection conn, String email){
+	getDataPencarianPengguna (Connection conn, String email){
 		String data
 
 		ArrayList<String> listdata = new ArrayList<>()
@@ -241,7 +241,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getResetOTP (Connection conn, String email){
+	getResetOTP (Connection conn, String email){
 		String data
 
 		Statement stm = conn.createStatement()
@@ -259,7 +259,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getPencarianPengguna (Connection conn, String email){
+	getPencarianPengguna (Connection conn, String email){
 		String data
 
 		ArrayList<String> listdata = new ArrayList<>()
@@ -282,7 +282,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getAESKey (Connection conn){
+	getAESKey (Connection conn){
 		String data
 
 		Statement stm = conn.createStatement()
@@ -300,7 +300,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getAgreementCanceled (Connection conn, String documentId){
+	getAgreementCanceled (Connection conn, String documentId){
 		String data
 
 		Statement stm = conn.createStatement()
@@ -318,7 +318,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getbulkSign(Connection conn, String documentids){
+	getbulkSign(Connection conn, String documentids){
 		String data
 
 		ArrayList<String> listdata = new ArrayList<>()
@@ -340,7 +340,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getOTPAktivasi (Connection conn, String email){
+	getOTPAktivasi (Connection conn, String email){
 
 		String data
 
@@ -359,7 +359,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getGenInvLink(Connection conn, String tenant,String phone, String idno, String email){
+	getGenInvLink(Connection conn, String tenant,String phone, String idno, String email){
 		String data
 
 		ArrayList<String> listdata = new ArrayList<>()
@@ -382,7 +382,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getSetEditAfterRegister (Connection conn){
+	getSetEditAfterRegister (Connection conn){
 
 		String data
 
@@ -402,7 +402,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getSetResendLink (Connection conn){
+	getSetResendLink (Connection conn){
 
 		String data
 
@@ -421,7 +421,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getSetInvLinkAct (Connection conn, String email){
+	getSetInvLinkAct (Connection conn, String email){
 
 		String data
 
@@ -440,7 +440,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getKotakMasukSendDoc(Connection conn, String documentid){
+	getKotakMasukSendDoc(Connection conn, String documentid){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
@@ -461,7 +461,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getBuatUndanganDataPerusahaanStoreDB (Connection conn, String email){
+	getBuatUndanganDataPerusahaanStoreDB (Connection conn, String email){
 		String data
 
 		ArrayList<String> listdata = new ArrayList<>()
@@ -484,7 +484,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getSignerKotakMasukSendDoc(Connection conn, String documentid){
+	getSignerKotakMasukSendDoc(Connection conn, String documentid){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
@@ -504,7 +504,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getFeedbackStoreDB(Connection conn,String emailsigner){
+	getFeedbackStoreDB(Connection conn,String emailsigner){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
@@ -525,7 +525,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getLovTipePembayaran(Connection conn){
+	getLovTipePembayaran(Connection conn){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
@@ -546,7 +546,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getTotalDokumenTemplatKode(Connection conn){
+	getTotalDokumenTemplatKode(Connection conn){
 		String data
 
 		Statement stm = conn.createStatement()
@@ -564,7 +564,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getEmailLogin(Connection conn, String documentid){
+	getEmailLogin(Connection conn, String documentid){
 		String data
 
 		Statement stm = conn.createStatement()
@@ -581,7 +581,8 @@ public class DataVerif {
 		data
 	}
 
-	public getSignerInfo(Connection conn, String refnum, String psre){
+	@Keyword
+	getSignerInfo(Connection conn, String refnum, String psre){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
@@ -601,7 +602,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getTotalPencarianDokumen (Connection conn, String loginid, String tenant){
+	getTotalPencarianDokumen (Connection conn, String loginid, String tenant){
 
 		String data
 
@@ -620,7 +621,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getDDLTenant(Connection conn){
+	getDDLTenant(Connection conn){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
@@ -640,7 +641,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getDDLVendor(Connection conn, String tenant){
+	getDDLVendor(Connection conn, String tenant){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
@@ -660,7 +661,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getDDLTipeSaldo(Connection conn, String tenant, String vendor){
+	getDDLTipeSaldo(Connection conn, String tenant, String vendor){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
@@ -680,7 +681,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getIsiSaldoStoreDB(Connection conn, String refno){
+	getIsiSaldoStoreDB(Connection conn, String refno){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
@@ -700,7 +701,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public gettrxSaldo(Connection conn){
+	gettrxSaldo(Connection conn){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
@@ -720,7 +721,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getDataSendtoSign(Connection conn, String documentid){
+	getDataSendtoSign(Connection conn, String documentid){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
@@ -741,7 +742,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getTotalTenant (Connection conn){
+	getTotalTenant (Connection conn){
 
 		String data
 
@@ -760,7 +761,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getTenantStoreDB(Connection conn, String refnum){
+	getTenantStoreDB(Connection conn, String refnum){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
@@ -780,7 +781,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getTenantServices(Connection conn, String tenantname){
+	getTenantServices(Connection conn, String tenantname){
 		String data
 
 		Statement stm = conn.createStatement()
@@ -797,7 +798,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getEmailsSign(Connection conn, String documentid){
+	getEmailsSign(Connection conn, String documentid){
 
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
@@ -818,7 +819,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getTenantServicesDescription(Connection conn, String tenantname){
+	getTenantServicesDescription(Connection conn, String tenantname){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
@@ -838,7 +839,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getTenantTidakIsiSaldo(Connection conn, String tenantname, String refno){
+	getTenantTidakIsiSaldo(Connection conn, String tenantname, String refno){
 		String data
 
 		Statement stm = conn.createStatement()
@@ -855,7 +856,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getTenantAPIKey(Connection conn, String tenantcode){
+	getTenantAPIKey(Connection conn, String tenantcode){
 		String data
 
 		Statement stm = conn.createStatement()
@@ -872,7 +873,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getIsiSaldoTrx(Connection conn, String refno){
+	getIsiSaldoTrx(Connection conn, String refno){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
@@ -892,7 +893,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getAPICheckRegisterStoreDB(Connection conn, String value){
+	getAPICheckRegisterStoreDB(Connection conn, String value){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
@@ -912,7 +913,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getSignStatus (Connection conn, String documentid){
+	getSignStatus (Connection conn, String documentid){
 		String data
 
 		Statement stm = conn.createStatement()
@@ -929,7 +930,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getSigningStatusProcess(Connection conn, String documentid, String emailsigner){
+	getSigningStatusProcess(Connection conn, String documentid, String emailsigner){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
@@ -950,7 +951,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getAPICheckStampingStoreDB(Connection conn, String value){
+	getAPICheckStampingStoreDB(Connection conn, String value){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
@@ -970,7 +971,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getAPICheckSigningStoreDB(Connection conn, String value){
+	getAPICheckSigningStoreDB(Connection conn, String value){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
@@ -990,7 +991,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public checkAPIRegisterActive(Connection conn, String email, String notelp){
+	checkAPIRegisterActive(Connection conn, String email, String notelp){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
@@ -1010,7 +1011,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getAPIRegisterTrx (Connection conn, String trxno){
+	getAPIRegisterTrx (Connection conn, String trxno){
 		String data
 
 		Statement stm = conn.createStatement()
@@ -1027,7 +1028,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getSaldoTrx(Connection conn, String email, String notelp, String desc){
+	getSaldoTrx(Connection conn, String email, String notelp, String desc){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
@@ -1047,7 +1048,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getCountTrx (Connection conn, String email, String notelp, String desc){
+	getCountTrx (Connection conn, String email, String notelp, String desc){
 		String data
 
 		Statement stm = conn.createStatement()
@@ -1064,7 +1065,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getDataDocTemplate(Connection conn, String docTempCode){
+	getDataDocTemplate(Connection conn, String docTempCode){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
@@ -1084,7 +1085,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public DataDocTemplateStoreDB(Connection conn, String docTempCode){
+	DataDocTemplateStoreDB(Connection conn, String docTempCode){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
@@ -1104,7 +1105,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getResetCodeRequestNum (Connection conn, String email){
+	getResetCodeRequestNum (Connection conn, String email){
 		String data
 
 		Statement stm = conn.createStatement()
@@ -1121,7 +1122,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public checkAPISentOTPSigning(Connection conn, String trxno){
+	checkAPISentOTPSigning(Connection conn, String trxno){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
@@ -1141,7 +1142,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getSendDocSigning(Connection conn, String documentid){
+	getSendDocSigning(Connection conn, String documentid){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
@@ -1162,7 +1163,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getTrxSendDocSigning(Connection conn, String trxno){
+	getTrxSendDocSigning(Connection conn, String trxno){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
@@ -1183,7 +1184,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getSignLocation(Connection conn, String docid){
+	getSignLocation(Connection conn, String docid){
 		String data
 
 		Statement stm = conn.createStatement()
@@ -1201,7 +1202,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getAPIRequestStampingTrx (Connection conn){
+	getAPIRequestStampingTrx (Connection conn){
 		String data
 
 		Statement stm = conn.createStatement()
@@ -1218,7 +1219,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getRefNumber(Connection conn, String documentId){
+	getRefNumber(Connection conn, String documentId){
 		String data
 
 		Statement stm = conn.createStatement()
@@ -1235,7 +1236,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getSign(Connection conn, String documentid, String emailsigner){
+	getSign(Connection conn, String documentid, String emailsigner){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
@@ -1256,7 +1257,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getTotalSigned(Connection conn, String documentId){
+	getTotalSigned(Connection conn, String documentId){
 		String data
 
 		Statement stm = conn.createStatement()
@@ -1273,7 +1274,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getSignerTypeonDocTemplate(Connection conn, String documentTemplate){
+	getSignerTypeonDocTemplate(Connection conn, String documentTemplate){
 		String data
 		ArrayList<String> listdata = new ArrayList<>()
 		Statement stm = conn.createStatement()
@@ -1294,7 +1295,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	public getTotalSigner(Connection conn, String documentId, String emailsigner){
+	getTotalSigner(Connection conn, String documentId, String emailsigner){
 		String data
 
 		Statement stm = conn.createStatement()

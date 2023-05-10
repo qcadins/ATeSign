@@ -7,7 +7,7 @@ import com.kms.katalon.core.webui.driver.DriverFactory
 
 public class JSExecutor {
 	@Keyword
-	public jsExecutionFunction(String jsCode, String xpath, String newJS) {
+	jsExecutionFunction(String jsCode, String xpath, String newJS) {
 		'Mengambil web element dari kotaknya'
 		WebElement element = DriverFactory.webDriver.findElement(By.xpath(xpath))
 

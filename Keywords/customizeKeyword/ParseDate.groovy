@@ -6,7 +6,7 @@ import internal.GlobalVariable
 
 public class ParseDate {
 	@Keyword
-	def parseDateFormat(String date, String format1, String format2) {
+	parseDateFormat(String date, String format1, String format2) {
 		Date parsedDate
 		String sentDate, sDate
 		//parse Date from MM/dd/yyyy > yyyy-MM-dd

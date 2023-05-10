@@ -10,10 +10,10 @@ import java.awt.event.KeyEvent
 
 public class UploadFile {
 	@Keyword
-	def uploadFunction(TestObject to, String filePath) {
+	uploadFunction(TestObject to, String filePath) {
 		WebUI.click(to)
 		StringSelection ss = new StringSelection(filePath)
-		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null)
+		Toolkit.getDefaultToolkit().systemClipboard().setContents(ss, null)
 		Robot robot = new Robot()
 		robot.keyPress(KeyEvent.VK_ENTER) //control, -
 		robot.keyRelease(KeyEvent.VK_ENTER) //-, control

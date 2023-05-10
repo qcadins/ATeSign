@@ -8,7 +8,7 @@ import internal.GlobalVariable
 
 public class WriteExcel {
 	@Keyword
-	def writeToExcel(String filePath, String sheetName, int rowNo, int collNo, String cellValue) {
+	writeToExcel(String filePath, String sheetName, int rowNo, int collNo, String cellValue) {
 		FileInputStream file = new FileInputStream (new File(filePath))
 
 		XSSFWorkbook workbook = new XSSFWorkbook(file)
@@ -24,7 +24,7 @@ public class WriteExcel {
 	}
 
 	@Keyword
-	def writeToExcelNumber(String filePath, String sheetName, int rowNo, int collNo, Integer cellValue) {
+	writeToExcelNumber(String filePath, String sheetName, int rowNo, int collNo, Integer cellValue) {
 		FileInputStream file = new FileInputStream (new File(filePath))
 
 		XSSFWorkbook workbook = new XSSFWorkbook(file)
@@ -40,7 +40,7 @@ public class WriteExcel {
 	}
 
 	@Keyword
-	def writeToExcelDecimal(String filePath, String sheetName, int rowNo, int collNo, Double cellValue) {
+	writeToExcelDecimal(String filePath, String sheetName, int rowNo, int collNo, Double cellValue) {
 		FileInputStream file = new FileInputStream (new File(filePath)) //initiate excel repository
 
 		XSSFWorkbook workbook = new XSSFWorkbook(file)
@@ -66,7 +66,7 @@ public class WriteExcel {
 	}
 
 	@Keyword
-	public void writeToExcelFormula(String filePath, String sheetName, int rowNo, int collNo, String cellValue) throws IOException {
+	writeToExcelFormula(String filePath, String sheetName, int rowNo, int collNo, String cellValue) throws IOException {
 		FileInputStream file = new FileInputStream (new File(filePath))
 		XSSFWorkbook workbook = new XSSFWorkbook(file)
 		XSSFSheet sheet = workbook.getSheet(sheetName)
@@ -82,7 +82,7 @@ public class WriteExcel {
 
 	//keyword getExcelPath
 	@Keyword
-	public getExcelPath (String Path){
+	getExcelPath (String Path){
 		String userDir = System.getProperty('user.dir')
 
 		String filePath = userDir + Path

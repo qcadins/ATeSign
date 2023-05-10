@@ -7,8 +7,7 @@ import java.nio.file.Paths
 
 public class ConvertFile {
 	@Keyword
-	public base64File(String filename) {
-
+	base64File(String filename) {
 		File f = new File(System.getProperty('user.dir') + '\\File' + filename)
 		FileInputStream fis = new FileInputStream(f)
 		byte[] byteArray = new byte[(int)f.length()]
@@ -19,8 +18,7 @@ public class ConvertFile {
 	}
 
 	@Keyword
-	public decodeBase64(String base64String, String filename) {
-
+	decodeBase64(String base64String, String filename) {
 		byte[] bytes = DatatypeConverter.parseBase64Binary(base64String)
 
 		// Specify the file path and name

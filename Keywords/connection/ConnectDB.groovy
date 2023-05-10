@@ -8,7 +8,7 @@ import com.kms.katalon.core.annotation.Keyword
 public class ConnectDB {
 
 	@Keyword
-	def connectDBeSign() {
+	connectDBeSign() {
 		String servername = findTestData('Login/Login').getValue(1, 8)
 
 		String port = findTestData('Login/Login').getValue(2, 8)

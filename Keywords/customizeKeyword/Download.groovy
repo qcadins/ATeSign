@@ -5,7 +5,7 @@ import com.kms.katalon.core.annotation.Keyword
 public class Download {
 
 	@Keyword
-	def isFileDownloaded(String deleteFile) {
+	isFileDownloaded(String deleteFile) {
 		boolean isDownloaded = false
 		File dir = new File(System.getProperty('user.dir') + '\\Download')
 		//Getting the list of all the files in the specific directory

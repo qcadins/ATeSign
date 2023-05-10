@@ -7,7 +7,7 @@ import javax.crypto.spec.SecretKeySpec
 
 public class ParseText {
 	@Keyword
-	static parseEncrypt(String value, String aesKey) {
+	parseEncrypt(String value, String aesKey) {
 		try {
 			SecretKeySpec skeySpec = new SecretKeySpec(aesKey.getBytes('UTF-8'), 'AES')
 			Cipher cipher = Cipher.getInstance('AES/ECB/PKCS5Padding')
@@ -20,7 +20,7 @@ public class ParseText {
 	}
 
 	@Keyword
-	static String parseDecrypt(String encrypted, String aesKey) {
+	parseDecrypt(String encrypted, String aesKey) {
 		try {
 			SecretKeySpec skeySpec = new SecretKeySpec(aesKey.getBytes('UTF-8'), 'AES')
 			Cipher cipher = Cipher.getInstance('AES/ECB/PKCS5Padding')
