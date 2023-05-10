@@ -6,7 +6,6 @@ import java.sql.DriverManager
 import com.kms.katalon.core.annotation.Keyword
 
 public class ConnectDB {
-
 	@Keyword
 	connectDBeSign() {
 		String servername = findTestData('Login/Login').getValue(1, 8)

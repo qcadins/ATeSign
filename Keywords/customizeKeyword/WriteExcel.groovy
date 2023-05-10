@@ -82,7 +82,7 @@ public class WriteExcel {
 
 	//keyword getExcelPath
 	@Keyword
-	getExcelPath (String Path){
+	getExcelPath(String Path) {
 		String userDir = System.getProperty('user.dir')
 
 		String filePath = userDir + Path
