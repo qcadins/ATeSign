@@ -8,23 +8,7 @@ import internal.GlobalVariable
 
 public class WriteExcel {
 	@Keyword
-	def writeToExcel (String filePath, String sheetName, int rowNo, int collNo, String cellValue) {
-		FileInputStream file = new FileInputStream (new File(filePath))
-
-		XSSFWorkbook workbook = new XSSFWorkbook(file)
-		XSSFSheet sheet = workbook.getSheet(sheetName)
-
-		'Write data to excel'
-		sheet.getRow(rowNo).createCell(collNo).setCellValue(cellValue) 
-
-		file.close()
-		FileOutputStream outFile =new FileOutputStream(new File(filePath))
-		workbook.write(outFile)
-		outFile.close()
-	}
-
-	@Keyword
-	def writeToExcelNumber (String filePath, String sheetName, int rowNo, int collNo, Integer cellValue) {
+	def writeToExcel (String filePath, String sheetName, int rowNo, int collNo, String cellValue){
 		FileInputStream file = new FileInputStream (new File(filePath))
 
 		XSSFWorkbook workbook = new XSSFWorkbook(file)
@@ -34,13 +18,29 @@ public class WriteExcel {
 		sheet.getRow(rowNo).createCell(collNo).setCellValue(cellValue)
 
 		file.close()
-		FileOutputStream outFile =new FileOutputStream(new File(filePath))
+		FileOutputStream outFile = new FileOutputStream(new File(filePath))
 		workbook.write(outFile)
 		outFile.close()
 	}
 
 	@Keyword
-	def writeToExcelDecimal (String filePath, String sheetName, int rowNo, int collNo, Double cellValue) {
+	def writeToExcelNumber (String filePath, String sheetName, int rowNo, int collNo, Integer cellValue){
+		FileInputStream file = new FileInputStream (new File(filePath))
+
+		XSSFWorkbook workbook = new XSSFWorkbook(file)
+		XSSFSheet sheet = workbook.getSheet(sheetName)
+
+		'Write data to excel'
+		sheet.getRow(rowNo).createCell(collNo).setCellValue(cellValue)
+
+		file.close()
+		FileOutputStream outFile = new FileOutputStream(new File(filePath))
+		workbook.write(outFile)
+		outFile.close()
+	}
+
+	@Keyword
+	def writeToExcelDecimal (String filePath, String sheetName, int rowNo, int collNo, Double cellValue){
 		FileInputStream file = new FileInputStream (new File(filePath)) //initiate excel repository
 
 		XSSFWorkbook workbook = new XSSFWorkbook(file)
@@ -50,7 +50,7 @@ public class WriteExcel {
 		sheet.getRow(rowNo).createCell(collNo).setCellValue(cellValue)
 
 		file.close()
-		FileOutputStream outFile =new FileOutputStream(new File(filePath))
+		FileOutputStream outFile = new FileOutputStream(new File(filePath))
 		workbook.write(outFile)
 		outFile.close()
 	}
@@ -66,7 +66,7 @@ public class WriteExcel {
 	}
 
 	@Keyword
-	public void writeToExcelFormula (String filePath, String sheetName, int rowNo, int collNo, String cellValue) throws IOException{
+	public void writeToExcelFormula(String filePath, String sheetName, int rowNo, int collNo, String cellValue) throws IOException{
 		FileInputStream file = new FileInputStream (new File(filePath))
 		XSSFWorkbook workbook = new XSSFWorkbook(file)
 		XSSFSheet sheet = workbook.getSheet(sheetName)
@@ -74,7 +74,7 @@ public class WriteExcel {
 		sheet.getRow(rowNo).createCell(collNo).setCellFormula(cellValue)
 
 		file.close()
-		FileOutputStream outFile =new FileOutputStream(new File(filePath))
+		FileOutputStream outFile = new FileOutputStream(new File(filePath))
 		workbook.write(outFile)
 		outFile.close()
 
