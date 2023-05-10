@@ -243,8 +243,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 							//Jika pageSign yang pertama dan koordinat yang pertama di signer pertama tidak kosong
 							else if(pageSign[i][l] != '' && llxSign[i][l] != '""'){
 								'Input body mengenai page dan koordinat'
-								bodyAPI = bodyAPI + '"page" : ' + pageSign[i][l] + ', "llx" : ' + llxSign[
-									i][l] + ', {"lly" : ' + llySign[i][l] + ', "urx" : ' + urxSign[i][l] + ', "ury" : ' +
+								bodyAPI = bodyAPI + '{"page" : ' + pageSign[i][l] + ', "llx" : ' + llxSign[
+									i][l] + ', "lly" : ' + llySign[i][l] + ', "urx" : ' + urxSign[i][l] + ', "ury" : ' +
 									urySign[i][l] + '},'
 							}
 							'isi signlocStoreDB'
@@ -394,7 +394,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 						//Jika loopingan yang pertama namun masih ada kelanjutan dalam data
 						else {
 							'Isi bodyAPI'
-							bodyAPI = (bodyAPI + ',"signLocations": [')
+							bodyAPI = (bodyAPI + ',"stampLocations": [')
 							'Jika pageStampnya kosong'
 							if (pageStamp[i][b] == '') {
 								'Input body mengenai koordinat'
@@ -409,8 +409,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 							//Jika page dan koordinat tidak kosong
 							else if(pageStamp[i][b] != '' && llxStamp[i][b] != '""'){
 								'Input body mengenai page dan koordinat'
-								bodyAPI = bodyAPI + '"page" : ' + pageStamp[i][b] + ', "llx" : ' + llxStamp[
-									i][b] + ', {"lly" : ' + llyStamp[i][b] + ', "urx" : ' + urxStamp[i][b] + ', "ury" : ' +
+								bodyAPI = bodyAPI + '{"page" : ' + pageStamp[i][b] + ', "llx" : ' + llxStamp[
+									i][b] + ', "lly" : ' + llyStamp[i][b] + ', "urx" : ' + urxStamp[i][b] + ', "ury" : ' +
 									uryStamp[i][b] + '},'
 							}
 							

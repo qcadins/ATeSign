@@ -38,7 +38,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         String otp, Photo, ipaddress, totalSigned_before
 
         'Split dokumen id agar mendapat dokumenid 1 per 1 dengan case bulk'
-        documentId = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 10).replace('[', '').replace(
+        ArrayList<String> documentId = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 10).replace('[', '').replace(
             ']', '').replace('"', '').split(',', -1)
 
         'check if tidak mau menggunakan tenant code yang benar'
@@ -152,24 +152,35 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'Jika trxNonya tidak kosong dari response'
             if (trxNo != null) {
                 'Input excel'
-                CustomKeywords.'customizeKeyword.writeExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sign Document', 
+                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sign Document', 
                     4, GlobalVariable.NumofColm - 1, trxNo.toString().replace('[', '').replace(']', ''))
             }
-
+			
             'jika codenya 0'
             if (code == 0) {
                 'Loop berdasarkan jumlah documen id'
                 for (int x = 0; x < documentId.size(); x++) {
+					
+					signCount = CustomKeywords.'connection.DataVerif.getTotalSigner'(conneSign, documentId[
+						x], findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 11).replace(
+							'"', ''))
+					
                     'Loop untuk check db update sign. Maksimal 200 detik.'
                     for (int v = 1; v <= 20; v++) {
                         'Mengambil total Signed setelah sign'
                         totalSigned_after = CustomKeywords.'connection.DataVerif.getTotalSigned'(conneSign, documentId[x])
-
+						
                         'Verify total signed sebelum dan sesudah. Jika sesuai maka break'
-                        if (WebUI.verifyEqual(totalSigned_after, Integer.parseInt(totalSigned_before.split(',', -1)[x]) + 
-                            Integer.parseInt(CustomKeywords.'connection.DataVerif.getTotalSigner'(conneSign, documentId[
-                                    x], findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 11).replace(
-                                        '"', ''))), FailureHandling.CONTINUE_ON_FAILURE)) {
+                        if (totalSigned_after == Integer.parseInt(totalSigned_before.split(',', -1)[x]) +
+								Integer.parseInt(signCount)) {
+							
+							WebUI.verifyEqual(totalSigned_after, Integer.parseInt(totalSigned_before.split(',', -1)[x]) +
+								Integer.parseInt(signCount), FailureHandling.CONTINUE_ON_FAILURE)
+							
+							'write to excel success'
+							CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sign Document',
+								0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+							
                             break
                         } else if (v == 20) {
                             'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
@@ -182,10 +193,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         }
                     }
                 }
-
-                'write to excel success'
-                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sign Document', 
-                    0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 
                 'check Db'
                 if (GlobalVariable.checkStoreDB == 'Yes') {
