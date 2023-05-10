@@ -40,7 +40,7 @@ public class WriteExcel {
 	}
 
 	@Keyword
-	def writeToExcelDecimal(String filePath, String sheetName, int rowNo, int collNo, Double cellValue){
+	def writeToExcelDecimal (String filePath, String sheetName, int rowNo, int collNo, Double cellValue){
 		FileInputStream file = new FileInputStream (new File(filePath)) //initiate excel repository
 
 		XSSFWorkbook workbook = new XSSFWorkbook(file)
