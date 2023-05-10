@@ -8,7 +8,7 @@ import internal.GlobalVariable
 
 public class WriteExcel {
 	@Keyword
-	def writeToExcel (String filePath, String sheetName, int rowNo, int collNo, String cellValue){
+	def writeToExcel(String filePath, String sheetName, int rowNo, int collNo, String cellValue){
 		FileInputStream file = new FileInputStream (new File(filePath))
 
 		XSSFWorkbook workbook = new XSSFWorkbook(file)
@@ -24,7 +24,7 @@ public class WriteExcel {
 	}
 
 	@Keyword
-	def writeToExcelNumber (String filePath, String sheetName, int rowNo, int collNo, Integer cellValue){
+	def writeToExcelNumber(String filePath, String sheetName, int rowNo, int collNo, Integer cellValue){
 		FileInputStream file = new FileInputStream (new File(filePath))
 
 		XSSFWorkbook workbook = new XSSFWorkbook(file)
@@ -40,7 +40,7 @@ public class WriteExcel {
 	}
 
 	@Keyword
-	def writeToExcelDecimal (String filePath, String sheetName, int rowNo, int collNo, Double cellValue){
+	def writeToExcelDecimal(String filePath, String sheetName, int rowNo, int collNo, Double cellValue){
 		FileInputStream file = new FileInputStream (new File(filePath)) //initiate excel repository
 
 		XSSFWorkbook workbook = new XSSFWorkbook(file)
