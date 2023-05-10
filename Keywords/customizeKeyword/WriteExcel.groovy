@@ -1,12 +1,14 @@
 package customizeKeyword
 
-import org.apache.poi.xssf.usermodel.XSSFRow
 import org.apache.poi.xssf.usermodel.XSSFSheet
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import com.kms.katalon.core.annotation.Keyword
+import groovy.transform.CompileDynamic
 import internal.GlobalVariable
 
+@CompileDynamic
 public class WriteExcel {
+	
 	@Keyword
 	writeToExcel(String filePath, String sheetName, int rowNo, int collNo, String cellValue) {
 		FileInputStream file = new FileInputStream (new File(filePath))
@@ -57,8 +59,8 @@ public class WriteExcel {
 
 	// write to excel status and reason
 	@Keyword
-	public writeToExcelStatusReason(String sheetname, int colm, String status, String reason) {
-
+	writeToExcelStatusReason(String sheetname, int colm, String status, String reason) {
+		
 		(new customizeKeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
 				0, colm - 1, status)
 		(new customizeKeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
@@ -82,10 +84,10 @@ public class WriteExcel {
 
 	//keyword getExcelPath
 	@Keyword
-	getExcelPath(String Path) {
+	getExcelPath(String path) {
 		String userDir = System.getProperty('user.dir')
 
-		String filePath = userDir + Path
+		String filePath = userDir + path
 
 		filePath
 	}

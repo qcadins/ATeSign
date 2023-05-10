@@ -5,8 +5,10 @@ import java.sql.ResultSet
 import java.sql.ResultSetMetaData
 import java.sql.Statement
 import com.kms.katalon.core.annotation.Keyword
+import groovy.transform.CompileDynamic
 import internal.GlobalVariable
 
+@CompileDynamic
 public class DataVerif {
 
 	String data
