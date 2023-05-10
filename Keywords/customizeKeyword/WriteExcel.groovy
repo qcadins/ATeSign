@@ -3,12 +3,9 @@ package customizeKeyword
 import org.apache.poi.xssf.usermodel.XSSFSheet
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import com.kms.katalon.core.annotation.Keyword
-import groovy.transform.CompileDynamic
 import internal.GlobalVariable
 
-@CompileDynamic
 public class WriteExcel {
-	
 	@Keyword
 	writeToExcel(String filePath, String sheetName, int rowNo, int collNo, String cellValue) {
 		FileInputStream file = new FileInputStream (new File(filePath))
@@ -60,7 +57,6 @@ public class WriteExcel {
 	// write to excel status and reason
 	@Keyword
 	writeToExcelStatusReason(String sheetname, int colm, String status, String reason) {
-		
 		(new customizeKeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
 				0, colm - 1, status)
 		(new customizeKeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
@@ -73,13 +69,12 @@ public class WriteExcel {
 		XSSFWorkbook workbook = new XSSFWorkbook(file)
 		XSSFSheet sheet = workbook.getSheet(sheetName)
 
-		sheet.getRow(rowNo).createCell(collNo).setCellFormula(cellValue)
+		sheet.getRow(rowNo).createCell(collNo).cellFormula = cellValue
 
 		file.close()
 		FileOutputStream outFile = new FileOutputStream(new File(filePath))
 		workbook.write(outFile)
 		outFile.close()
-
 	}
 
 	//keyword getExcelPath

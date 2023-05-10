@@ -1,12 +1,10 @@
 package customizeKeyword
 
 import com.kms.katalon.core.annotation.Keyword
-import groovy.transform.CompileDynamic
 import javax.xml.bind.DatatypeConverter
 import java.nio.file.Files
 import java.nio.file.Paths
 
-@CompileDynamic
 public class ConvertFile {
 
 	@Keyword

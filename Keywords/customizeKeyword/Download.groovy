@@ -1,9 +1,7 @@
 package customizeKeyword
 
 import com.kms.katalon.core.annotation.Keyword
-import groovy.transform.CompileDynamic
 
-@CompileDynamic
 public class Download {
 
 	@Keyword

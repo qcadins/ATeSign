@@ -23,7 +23,7 @@ import org.openqa.selenium.WebElement as WebElement
 
 CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-result = CustomKeywords.'connection.DataVerif.getSignerTypeonDocTemplate'(CustomKeywords.'connection.ConnectDB.connectDBeSign'(), '1BM1CUST')
+result = CustomKeywords.'connection.DataVerif.getOTP'(CustomKeywords.'connection.ConnectDB.connectDBeSign'(), 'USERCIIE@GMAIL.COM')
 
 println(result)
 
