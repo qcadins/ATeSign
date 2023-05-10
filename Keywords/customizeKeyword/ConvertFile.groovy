@@ -1,17 +1,13 @@
 package customizeKeyword
 
 import com.kms.katalon.core.annotation.Keyword
-import internal.GlobalVariable
-import org.json.JSONObject
 import javax.xml.bind.DatatypeConverter
 import java.nio.file.Files
 import java.nio.file.Paths
 
-
 public class ConvertFile {
-
 	@Keyword
-	public static String BASE64File(String filename) {
+	public static base64File(String filename) {
 
 		File f = new File(System.getProperty('user.dir') + "\\File" + filename)
 		FileInputStream fis = new FileInputStream(f)
@@ -23,7 +19,7 @@ public class ConvertFile {
 	}
 
 	@Keyword
-	public static String DecodeBase64(String base64String, String filename) {
+	public static decodeBase64(String base64String, String filename) {
 
 		byte[] bytes = DatatypeConverter.parseBase64Binary(base64String)
 

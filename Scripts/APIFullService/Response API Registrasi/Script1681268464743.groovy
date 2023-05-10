@@ -40,14 +40,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 32) == 'Yes') {
-            selfPhoto = (('"' + CustomKeywords.'customizeKeyword.ConvertFile.BASE64File'(findTestData(excelPathAPIRegistrasi).getValue(
+            selfPhoto = (('"' + CustomKeywords.'customizeKeyword.ConvertFile.base64File'(findTestData(excelPathAPIRegistrasi).getValue(
                     GlobalVariable.NumofColm, 24))) + '"')
         } else if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 32) == 'No') {
             selfPhoto = findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 24)
         }
 		
 		if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 33) == 'Yes') {
-			idPhoto = (('"' + CustomKeywords.'customizeKeyword.ConvertFile.BASE64File'(findTestData(excelPathAPIRegistrasi).getValue(
+			idPhoto = (('"' + CustomKeywords.'customizeKeyword.ConvertFile.base64File'(findTestData(excelPathAPIRegistrasi).getValue(
 					GlobalVariable.NumofColm, 25))) + '"')
 		} else if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 33) == 'No') {
 			idPhoto = findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 25)

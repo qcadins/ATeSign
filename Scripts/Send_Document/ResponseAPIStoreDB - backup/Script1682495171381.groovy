@@ -228,7 +228,7 @@ if (arrayMatch.contains(false)) {
 
 
 def PDFtoBase64(String fileName) {
-	String base64 = CustomKeywords.'customizeKeyword.ConvertFile.BASE64File'(fileName)
+	String base64 = CustomKeywords.'customizeKeyword.ConvertFile.base64File'(fileName)
 
 	return base64
 }

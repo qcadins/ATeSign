@@ -24,7 +24,7 @@ public class WriteExcel {
 	}
 
 	@Keyword
-	def writeToExcelNumber(String filePath, String sheetName, int rowNo, int collNo, Integer cellValue){
+	def writeToExcelNumber (String filePath, String sheetName, int rowNo, int collNo, Integer cellValue){
 		FileInputStream file = new FileInputStream (new File(filePath))
 
 		XSSFWorkbook workbook = new XSSFWorkbook(file)

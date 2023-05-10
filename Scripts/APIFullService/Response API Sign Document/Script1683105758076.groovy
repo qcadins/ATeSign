@@ -214,7 +214,7 @@ def CorrectipAddress() {
 
 'Fungsi photo to base64'
 def PhototoBase64(String filePath) {
-    return CustomKeywords.'customizeKeyword.ConvertFile.BASE64File'(filePath)
+    return CustomKeywords.'customizeKeyword.ConvertFile.base64File'(filePath)
 }
 'Fungsi StoreDB'
 def ResponseAPIStoreDB(Connection conneSign, String ipaddress, ArrayList<String> documentId) {
