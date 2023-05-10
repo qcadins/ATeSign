@@ -23,6 +23,6 @@ public class ConnectDB {
 
 		Connection conn = DriverManager.getConnection(url, username, password)
 
-		return conn
+		conn
 	}
 }

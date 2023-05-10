@@ -9,7 +9,7 @@ public class JSExecutor {
 	@Keyword
 	public jsExecutionFunction(String jsCode, String xpath, String newJS) {
 		'Mengambil web element dari kotaknya'
-		WebElement element = DriverFactory.getWebDriver().findElement(By.xpath(xpath))
+		WebElement element = DriverFactory.webDriver.findElement(By.xpath(xpath))
 
 		'menentukan lokasi terbaru untuk object'
 		String newLocation = newJS

@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "D973D52010D55F5E7B9517097754A62E",
+  "keywordFileContentHash": "93D01C85759460599BA9928E3AF7E877",
   "keywordClasses": [
     {
       "name": "customizeKeyword.ParseText",
@@ -21,7 +21,7 @@
               }
             },
             {
-              "name": "AESKey",
+              "name": "aesKey",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -33,7 +33,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "parseDecrypt",
@@ -52,7 +53,7 @@
               }
             },
             {
-              "name": "AESKey",
+              "name": "aesKey",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -64,10 +65,11 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         }
       ]
     }
   ],
-  "javadocParsed": false
+  "javadocParsed": true
 }

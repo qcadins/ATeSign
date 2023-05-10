@@ -7,9 +7,9 @@ import javax.crypto.spec.SecretKeySpec
 
 public class ParseText {
 	@Keyword
-	static parseEncrypt(String value, String AESKey) {
+	static parseEncrypt(String value, String aesKey) {
 		try {
-			SecretKeySpec skeySpec = new SecretKeySpec(AESKey.getBytes('UTF-8'), 'AES')
+			SecretKeySpec skeySpec = new SecretKeySpec(aesKey.getBytes('UTF-8'), 'AES')
 			Cipher cipher = Cipher.getInstance('AES/ECB/PKCS5Padding')
 			cipher.init(Cipher.ENCRYPT_MODE, skeySpec)
 			byte[] encrypted = cipher.doFinal(value.getBytes())
@@ -20,9 +20,9 @@ public class ParseText {
 	}
 
 	@Keyword
-	static String parseDecrypt(String encrypted, String AESKey) {
+	static String parseDecrypt(String encrypted, String aesKey) {
 		try {
-			SecretKeySpec skeySpec = new SecretKeySpec(AESKey.getBytes('UTF-8'), 'AES')
+			SecretKeySpec skeySpec = new SecretKeySpec(aesKey.getBytes('UTF-8'), 'AES')
 			Cipher cipher = Cipher.getInstance('AES/ECB/PKCS5Padding')
 			cipher.init(Cipher.DECRYPT_MODE, skeySpec)
 			byte[] originalText = cipher.doFinal(Base64.decodeBase64(encrypted))

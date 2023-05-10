@@ -15,7 +15,7 @@ public class ConvertFile {
 		fis.read(byteArray)
 		String imageString = new sun.misc.BASE64Encoder().encode(byteArray)
 
-		return imageString.replaceAll('[\r\n\t ]', '')
+		imageString.replaceAll('[\r\n\t ]', '')
 	}
 
 	@Keyword

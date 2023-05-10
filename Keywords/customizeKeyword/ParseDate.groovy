@@ -22,6 +22,6 @@ public class ParseDate {
 
 		sDate = sdf.format(parsedDate)
 
-		return sDate
+		sDate
 	}
 }

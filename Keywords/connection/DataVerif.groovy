@@ -28,7 +28,7 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return data
+		data
 	}
 
 	@Keyword
@@ -51,7 +51,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -74,7 +74,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -97,7 +97,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -115,7 +115,7 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return data
+		data
 	}
 
 	@Keyword
@@ -136,7 +136,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 
@@ -155,7 +155,7 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return data
+		data
 	}
 
 	@Keyword
@@ -173,7 +173,7 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return data
+		data
 	}
 
 	@Keyword
@@ -196,7 +196,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -214,7 +214,7 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return data
+		data
 	}
 
 	@Keyword
@@ -237,7 +237,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -255,7 +255,7 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return Integer.parseInt(data)
+		Integer.parseInt(data)
 	}
 
 	@Keyword
@@ -278,7 +278,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -296,7 +296,7 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return data
+		data
 	}
 
 	@Keyword
@@ -314,7 +314,7 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return data
+		data
 	}
 
 	@Keyword
@@ -336,7 +336,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -355,7 +355,7 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return data
+		data
 	}
 
 	@Keyword
@@ -378,7 +378,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -398,7 +398,7 @@ public class DataVerif {
 			data = resultSet.getObject(1)
 		}
 
-		return Integer.parseInt(data)
+		Integer.parseInt(data)
 	}
 
 	@Keyword
@@ -417,7 +417,7 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return Integer.parseInt(data)
+		Integer.parseInt(data)
 	}
 
 	@Keyword
@@ -436,7 +436,7 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return Integer.parseInt(data)
+		Integer.parseInt(data)
 	}
 
 	@Keyword
@@ -457,7 +457,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -480,7 +480,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -500,7 +500,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -521,7 +521,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -542,7 +542,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -560,7 +560,7 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return data
+		data
 	}
 
 	@Keyword
@@ -578,7 +578,7 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return data
+		data
 	}
 
 	public getSignerInfo(Connection conn, String refnum, String psre){
@@ -597,7 +597,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -616,7 +616,7 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return Integer.parseInt(data)
+		Integer.parseInt(data)
 	}
 
 	@Keyword
@@ -636,7 +636,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -656,7 +656,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -676,7 +676,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -696,7 +696,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -716,7 +716,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -737,7 +737,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -756,7 +756,7 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return Integer.parseInt(data)
+		Integer.parseInt(data)
 	}
 
 	@Keyword
@@ -776,7 +776,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -793,7 +793,7 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return data
+		data
 	}
 
 	@Keyword
@@ -814,7 +814,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -834,7 +834,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -851,7 +851,7 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return data
+		data
 	}
 
 	@Keyword
@@ -868,7 +868,7 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return data
+		data
 	}
 
 	@Keyword
@@ -888,7 +888,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -908,7 +908,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -925,7 +925,7 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return data
+		data
 	}
 
 	@Keyword
@@ -946,7 +946,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -966,7 +966,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -986,7 +986,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -1006,7 +1006,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -1023,7 +1023,7 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return data
+		data
 	}
 
 	@Keyword
@@ -1043,7 +1043,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -1060,7 +1060,7 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return data
+		data
 	}
 
 	@Keyword
@@ -1080,7 +1080,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -1100,7 +1100,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -1117,7 +1117,7 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return data
+		data
 	}
 
 	@Keyword
@@ -1137,7 +1137,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -1158,7 +1158,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -1179,7 +1179,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -1197,7 +1197,7 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return data
+		data
 	}
 
 	@Keyword
@@ -1214,7 +1214,7 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return data
+		data
 	}
 
 	@Keyword
@@ -1231,7 +1231,7 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return data
+		data
 	}
 
 	@Keyword
@@ -1252,7 +1252,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -1269,7 +1269,7 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return data
+		data
 	}
 
 	@Keyword
@@ -1290,7 +1290,7 @@ public class DataVerif {
 				listdata.add(data)
 			}
 		}
-		return listdata
+		listdata
 	}
 
 	@Keyword
@@ -1307,6 +1307,6 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		return data
+		data
 	}
 }

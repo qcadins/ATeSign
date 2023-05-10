@@ -1,16 +1,15 @@
 {
-  "keywordFileContentHash": "486F7FF1FD127BB38350092CD76D781B",
+  "keywordFileContentHash": "C27DC733DAAB213E515A874003D8E569",
   "keywordClasses": [
     {
       "name": "connection.ConnectDB",
       "keywordMethods": [
         {
           "name": "connectDBeSign",
-          "parameters": [],
-          "javadoc": ""
+          "parameters": []
         }
       ]
     }
   ],
-  "javadocParsed": true
+  "javadocParsed": false
 }
