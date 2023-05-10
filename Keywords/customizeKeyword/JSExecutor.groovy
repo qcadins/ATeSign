@@ -16,6 +16,6 @@ public class JSExecutor {
 
 		String js = jsCode
 
-		DriverFactory.getWebDriver().executeScript(js, element, newLocation)
+		DriverFactory.webDriver.executeScript(js, element, newLocation)
 	}
 }

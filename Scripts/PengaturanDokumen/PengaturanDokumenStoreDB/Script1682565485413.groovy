@@ -22,7 +22,7 @@ import java.sql.Connection
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get data doc template dari DB'
-ArrayList<String> result = CustomKeywords.'connection.DataVerif.DataDocTemplateStoreDB'(conneSign, findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 9))
+ArrayList<String> result = CustomKeywords.'connection.DataVerif.dataDocTemplateStoreDB'(conneSign, findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 9))
 
 'declare arraylist arraymatch'
 ArrayList<String> arrayMatch = new ArrayList<String>()

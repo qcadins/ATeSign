@@ -62,7 +62,7 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).eq
     WebUI.click(findTestObject('InquiryInvitation/button_Edit'))
 
     'get data buat undangan dari DB'
-    ArrayList<String> result = CustomKeywords.'connection.DataVerif.InquiryInvitationViewDataVerif'(conneSign, findTestData(
+    ArrayList<String> result = CustomKeywords.'connection.DataVerif.inquiryInvitationViewDataVerif'(conneSign, findTestData(
             excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 15).toUpperCase())
 
     '1 karena invited by belum bisa di get value dari UI'

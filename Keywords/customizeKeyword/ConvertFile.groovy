@@ -6,6 +6,7 @@ import java.nio.file.Files
 import java.nio.file.Paths
 
 public class ConvertFile {
+	
 	@Keyword
 	base64File(String filename) {
 		File f = new File(System.getProperty('user.dir') + '\\File' + filename)

@@ -27,3 +27,8 @@ result = CustomKeywords.'connection.DataVerif.getSignerTypeonDocTemplate'(Custom
 
 println(result)
 
+result = CustomKeywords.'connection.DataVerif.gettrxSaldo'(CustomKeywords.'connection.ConnectDB.connectDBeSign'())
+
+println(result)
+
+

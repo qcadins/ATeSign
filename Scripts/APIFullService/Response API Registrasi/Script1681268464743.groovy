@@ -89,7 +89,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                     String resultTrx = CustomKeywords.'connection.DataVerif.getAPIRegisterTrx'(conneSign, trxNo)
 
-                    ArrayList<String> resultDataUser = CustomKeywords.'connection.DataVerif.BuatUndanganStoreDB'(conneSign, 
+                    ArrayList<String> resultDataUser = CustomKeywords.'connection.DataVerif.buatUndanganStoreDB'(conneSign, 
                         findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 12).replace('"', ''))
 
                     'declare arraylist arraymatch'

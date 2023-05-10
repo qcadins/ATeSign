@@ -1,7 +1,9 @@
 package customizeKeyword
 
 import com.kms.katalon.core.annotation.Keyword
+import groovy.transform.CompileStatic
 
+@CompileStatic
 public class Download {
 
 	@Keyword

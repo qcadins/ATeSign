@@ -24,7 +24,7 @@ import org.openqa.selenium.Keys as Keys
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get data buat undangan dari DB'
-ArrayList<String> result = CustomKeywords.'connection.DataVerif.InquiryInvitationStoreDB'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 9))
+ArrayList<String> result = CustomKeywords.'connection.DataVerif.inquiryInvitationStoreDB'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 9))
 
 'declare arraylist arraymatch'
 ArrayList<String> arrayMatch = new ArrayList<String>()

@@ -315,7 +315,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/button_Edit'))
 
             'get data doc template from db'
-            result = CustomKeywords.'connection.DataVerif.DataDocTemplateStoreDB'(conneSign, findTestData(excelPathPengaturanDokumen).getValue(
+            result = CustomKeywords.'connection.DataVerif.dataDocTemplateStoreDB'(conneSign, findTestData(excelPathPengaturanDokumen).getValue(
                     GlobalVariable.NumofColm, 9))
 
             arrayIndex = 0
