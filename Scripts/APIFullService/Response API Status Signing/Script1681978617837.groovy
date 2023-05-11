@@ -13,13 +13,12 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExc
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get colm excel'
-int countColmExcel = findTestData(excelPathAPICheckSigning).getColumnNumbers()
+int countColmExcel = findTestData(excelPathAPICheckSigning).columnNumbers
 
 'looping API Status Signing'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
-        //12
     } else if (findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
         'check if tidak mau menggunakan tenant code yang benar'
         if (findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, 15) == 'No') {
@@ -58,7 +57,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 signDate = WS.getElementPropertyValue(respon, 'statusSigning.signer.signDate', FailureHandling.OPTIONAL)
 
                 if (GlobalVariable.checkStoreDB == 'Yes') {
-                    arrayIndex = 0
+                	int indexArrayDB = 0, indexColResp = 0, indexRowResp = 0, i = 0, arrayIndex = 0
 
                     'get data from db'
                     ArrayList<String> result = CustomKeywords.'connection.DataVerif.getAPICheckSigningStoreDB'(conneSign, 
@@ -67,53 +66,34 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'declare arraylist arraymatch'
                     ArrayList<String> arrayMatch = new ArrayList<String>()
 
-                    println(docId)
+                    for (i = 0; i < (result.size() / 4); i++) {
+                        docIdDB = (result[indexArrayDB++])
 
-                    println(email)
-
-                    println(statusSigning)
-
-                    println(signDate)
-
-                    println(result)
-
-                    indexArrayDB = 0
-
-                    indexColResp = 0
-
-                    indexRowResp = 0
-
-                    i = 0
-
-                    for (i = 0; i < result.size()/4; i++) {
-						
-						docIdDB = result[indexArrayDB++]
                         if ((docId[indexColResp]).equalsIgnoreCase(docIdDB)) {
-							
-							'verify doc ID'
-							arrayMatch.add(WebUI.verifyMatch((docId[indexColResp]).toUpperCase(), (docIdDB).toUpperCase(),
-									false, FailureHandling.CONTINUE_ON_FAILURE))
-							
-                            for (indexRowResp = 0; indexRowResp < email[indexColResp].size(); indexRowResp++) {
-								emailDB = result[indexArrayDB++]
-                                if (email[indexColResp][indexRowResp].equalsIgnoreCase(emailDB)) {
+                            'verify doc ID'
+                            arrayMatch.add(WebUI.verifyMatch((docId[indexColResp]).toUpperCase(), docIdDB.toUpperCase(), 
+                                    false, FailureHandling.CONTINUE_ON_FAILURE))
 
-									'verify email'
-									arrayMatch.add(WebUI.verifyMatch((email[indexColResp][indexRowResp]).toUpperCase(), (emailDB).toUpperCase(),
-											false, FailureHandling.CONTINUE_ON_FAILURE))
-									
-									'verify status signing'
-									arrayMatch.add(WebUI.verifyMatch((statusSigning[indexColResp][indexRowResp]).toUpperCase(), (result[indexArrayDB++]).toUpperCase(),
-											false, FailureHandling.CONTINUE_ON_FAILURE))
-									
-									if(statusSigning[indexColResp][indexRowResp] == '1'){
-										'verify sign date'
-										arrayMatch.add(WebUI.verifyMatch((signDate[indexColResp][indexRowResp]).toUpperCase(), (result[indexArrayDB++]).toUpperCase(),
-												false, FailureHandling.CONTINUE_ON_FAILURE))
-									}else {
-										indexArrayDB++
-									}
-									
+                            for (indexRowResp = 0; indexRowResp < (email[indexColResp]).size(); indexRowResp++) {
+                                emailDB = (result[indexArrayDB++])
+
+                                if (((email[indexColResp])[indexRowResp]).equalsIgnoreCase(emailDB)) {
+                                    'verify email'
+                                    arrayMatch.add(WebUI.verifyMatch(((email[indexColResp])[indexRowResp]).toUpperCase(), 
+                                            emailDB.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                                    'verify status signing'
+                                    arrayMatch.add(WebUI.verifyMatch(((statusSigning[indexColResp])[indexRowResp]).toUpperCase(), 
+                                            (result[indexArrayDB++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                                    if (((statusSigning[indexColResp])[indexRowResp]) == '1') {
+                                        'verify sign date'
+                                        arrayMatch.add(WebUI.verifyMatch(((signDate[indexColResp])[indexRowResp]).toUpperCase(), 
+                                                (result[indexArrayDB++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+                                    } else {
+                                        indexArrayDB++
+                                    }
+                                    
                                     indexRowResp = 0
 
                                     indexColResp = 0

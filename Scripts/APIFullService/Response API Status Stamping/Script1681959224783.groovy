@@ -13,7 +13,7 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExc
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get colm excel'
-int countColmExcel = findTestData(excelPathAPICheckStamping).getColumnNumbers()
+int countColmExcel = findTestData(excelPathAPICheckStamping).columnNumbers
 
 'looping API Status stamping'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
@@ -33,9 +33,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         if (findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 15) == 'No') {
             'set tenant kosong'
             GlobalVariable.Tenant = findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 16)
-        }else if (findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 15) == 'Yes') {
-			GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
-		}
+        } else if (findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 15) == 'Yes') {
+            GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
+        }
         
         'HIT API check Status stamping'
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Check Stamping Status', [('callerId') : findTestData(
@@ -64,42 +64,40 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'declare arraylist arraymatch'
                     ArrayList<String> arrayMatch = new ArrayList<String>()
 
-					'looping sesuai size DB'
-                    for (index = 0; index < result.size()/2; index++) {
-						
-						'get docid DB'
-						docIdDB = result[arrayIndex++]
-						
-						'looping sesuai size response'
-						for (indexResponse = 0; indexResponse < docId.size(); indexResponse++) {
-							
-							'check if docidDB == docid response'
-							if(docIdDB == docId[indexResponse]) {
-								'verify doc id'
-								arrayMatch.add(WebUI.verifyMatch(docIdDB.toUpperCase(), (docId[indexResponse]).toUpperCase(), 
-										false, FailureHandling.CONTINUE_ON_FAILURE))
-								
-								'verify stamping status'
-								arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), (stampingstatus[indexResponse]).toUpperCase(), 
-										false, FailureHandling.CONTINUE_ON_FAILURE))
-								
-								'if stamping status = 2'
-								if (stampingstatus[indexResponse] == '2') {
-									println(message)
-									'verify error status'
-									arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]), (message[indexResponse]), 
-											false, FailureHandling.CONTINUE_ON_FAILURE))
-								}else {
-									'skip error status'
-									arrayIndex++
-								}
-							}else {
-								continue
-								
-								arrayIndex--
-							}
-						}
+                    'looping sesuai size DB'
+                    for (index = 0; index < (result.size() / 2); index++) {
+                        'get docid DB'
+                        docIdDB = (result[arrayIndex++])
 
+                        'looping sesuai size response'
+                        for (indexResponse = 0; indexResponse < docId.size(); indexResponse++) {
+                            'check if docidDB == docid response'
+                            if (docIdDB == (docId[indexResponse])) {
+                                'verify doc id'
+                                arrayMatch.add(WebUI.verifyMatch(docIdDB.toUpperCase(), (docId[indexResponse]).toUpperCase(), 
+                                        false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                                'verify stamping status'
+                                arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), (stampingstatus[indexResponse]).toUpperCase(), 
+                                        false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                                'if stamping status = 2'
+                                if ((stampingstatus[indexResponse]) == '2') {
+                                    println(message)
+
+                                    'verify error status'
+                                    arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], message[indexResponse], false, 
+                                            FailureHandling.CONTINUE_ON_FAILURE))
+                                } else {
+                                    'skip error status'
+                                    arrayIndex++
+                                }
+                            } else {
+                                continue
+                                
+                                arrayIndex--
+                            }
+                        }
                     }
                     
                     'jika data db tidak sesuai dengan excel'
@@ -132,3 +130,4 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
     }
 }
+
