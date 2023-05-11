@@ -57,7 +57,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 signDate = WS.getElementPropertyValue(respon, 'statusSigning.signer.signDate', FailureHandling.OPTIONAL)
 
                 if (GlobalVariable.checkStoreDB == 'Yes') {
-                	int indexArrayDB = 0, indexColResp = 0, indexRowResp = 0, i = 0, arrayIndex = 0
+                	int indexArrayDB = 0, indexColResp = 0, indexRowResp = 0, i = 0
 
                     'get data from db'
                     ArrayList<String> result = CustomKeywords.'connection.DataVerif.getAPICheckSigningStoreDB'(conneSign, 

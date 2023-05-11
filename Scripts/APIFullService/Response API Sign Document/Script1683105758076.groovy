@@ -24,7 +24,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         break
     } else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
         'Inisialisasi otp, photo, ipaddress, dan total signed sebelumnya yang dikosongkan'
-        String otp, photo, ipaddress, totalSigned_before
+        String otp, photo, ipaddress, totalSignedBefore
 
         'Split dokumen id agar mendapat dokumenid 1 per 1 dengan case bulk'
         documentId = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 10).replace('[', '').replace(
@@ -113,12 +113,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'looping berdasarkan ukuran dari dokumen id'
         for (int z = 0; z < documentId.size(); z++) {
             'Memasukkan input dari total signed dengan ,'
-            totalSigned_before = (CustomKeywords.'connection.DataVerif.getTotalSigned'(conneSign, documentId[z]) + ',')
+            totalSignedBefore = (CustomKeywords.'connection.DataVerif.getTotalSigned'(conneSign, documentId[z]) + ',')
 
             'Jika di paling akhir loop'
             if (z == (documentId.size() - 1)) {
                 'Memasukkan input dari total signed tanpa ,'
-                totalSigned_before = CustomKeywords.'connection.DataVerif.getTotalSigned'(conneSign, documentId[z])
+                totalSignedBefore = CustomKeywords.'connection.DataVerif.getTotalSigned'(conneSign, documentId[z])
             }
         }
         
@@ -158,9 +158,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         totalSigned_after = CustomKeywords.'connection.DataVerif.getTotalSigned'(conneSign, documentId[x])
 
                         'Verify total signed sebelum dan sesudah. Jika sesuai maka break'
-                        if (totalSigned_after == (Integer.parseInt(totalSigned_before.split(',', splitnum)[x]) + Integer.parseInt(
+                        if (totalSigned_after == (Integer.parseInt(totalSignedBefore.split(',', splitnum)[x]) + Integer.parseInt(
                             signCount))) {
-                            WebUI.verifyEqual(totalSigned_after, Integer.parseInt(totalSigned_before.split(',', splitnum)[
+                            WebUI.verifyEqual(totalSigned_after, Integer.parseInt(totalSignedBefore.split(',', splitnum)[
                                     x]) + Integer.parseInt(signCount), FailureHandling.CONTINUE_ON_FAILURE)
 
                             'write to excel success'

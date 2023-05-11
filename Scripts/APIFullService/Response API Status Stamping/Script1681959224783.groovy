@@ -83,8 +83,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                                 'if stamping status = 2'
                                 if ((stampingstatus[indexResponse]) == '2') {
-                                    println(message)
-
                                     'verify error status'
                                     arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], message[indexResponse], false, 
                                             FailureHandling.CONTINUE_ON_FAILURE))
