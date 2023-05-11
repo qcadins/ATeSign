@@ -2,6 +2,7 @@ import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
+import internal.GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
 'open browser'
@@ -15,6 +16,9 @@ WebUI.maximizeWindow()
 
 'input email'
 WebUI.setText(findTestObject('Login/input_Email'), findTestData('Login/Login').getValue(2, 2))
+
+'store GV user login'
+GlobalVariable.userLogin = findTestData('Login/Login').getValue(2, 2)
 
 'input password'
 WebUI.setText(findTestObject('Login/input_Password'), findTestData('Login/Login').getValue(3, 2))

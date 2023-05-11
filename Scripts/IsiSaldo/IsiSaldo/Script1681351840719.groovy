@@ -24,7 +24,7 @@ int countColmExcel = findTestData(excelPathIsiSaldo).columnNumbers
 int countCheckSaldo
 
 'declare variable array'
-ArrayList<String> saldoBeforem, saldoAfter
+ArrayList<String> saldoBefore, saldoAfter
 
 'looping isi saldo'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
