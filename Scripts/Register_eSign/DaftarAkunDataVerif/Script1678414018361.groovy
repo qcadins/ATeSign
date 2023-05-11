@@ -1,33 +1,21 @@
-import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
 import java.sql.Connection as Connection
-import java.text.SimpleDateFormat as SimpleDateFormat
-import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
-import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
-import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
-import com.kms.katalon.core.testcase.TestCase as TestCase
-import com.kms.katalon.core.testdata.TestData as TestData
-import com.kms.katalon.core.testng.keyword.TestNGBuiltinKeywords as TestNGKW
-import com.kms.katalon.core.testobject.TestObject as TestObject
-import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
-import org.openqa.selenium.Keys as Keys
 
+'declare userDir'
 String userDir = System.getProperty('user.dir')
-		
+
 'check if ingin menggunakan local host atau tidak'
-if(GlobalVariable.useLocalHost == 'Yes') {	
-	'navigate url ke daftar akun'
-	WebUI.navigateToUrl(GlobalVariable.Link.replace('https://gdkwebsvr:8080', GlobalVariable.urlLocalHost))
-}else if(GlobalVariable.useLocalHost == 'No'){
-	'navigate url ke daftar akun'
-	WebUI.navigateToUrl(GlobalVariable.Link)
+if (GlobalVariable.useLocalHost == 'Yes') {
+    'navigate url ke daftar akun'
+    WebUI.navigateToUrl(GlobalVariable.Link.replace('https://gdkwebsvr:8080', GlobalVariable.urlLocalHost))
+} else if (GlobalVariable.useLocalHost == 'No') {
+    'navigate url ke daftar akun'
+    WebUI.navigateToUrl(GlobalVariable.Link)
 }
 
 'connect DB eSign'
@@ -86,55 +74,52 @@ checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Daf
         findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 22).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
 if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 30) == 'Yes') {
-	
-	'click ambil foto sendiri'
-	WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFotoSendiri'))
-	
-	'delay untuk camera on'
-	WebUI.delay(2)
-	
-	'click ambil foto'
-	WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFoto'))
+    'click ambil foto sendiri'
+    WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFotoSendiri'))
 
-	'click ambil apply'
-	WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Apply'))
+    'delay untuk camera on'
+    WebUI.delay(2)
+
+    'click ambil foto'
+    WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFoto'))
+
+    'click ambil apply'
+    WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Apply'))
 }
 
 if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 31) == 'Yes') {
-	if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 32).length() == 0) {
-		'click ambil foto KTP'
-		WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFotoKTP'))
-		
-		'delay untuk camera on'
-		WebUI.delay(2)
-		
-		'click ambil foto'
-		WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFoto'))
-		
-		'click ambil apply'
-		WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Apply'))
-	} else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 32).length() > 0) {
-		
-		'get file path'
-		String filePath = userDir + findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 32)
-		
-		'upload file'
-		CustomKeywords.'customizeKeyword.UploadFile.uploadFunction'(findTestObject('Object Repository/DaftarAkun/button_PilihFileKTP'), 
-				filePath)
-		
-		'click ambil apply'
-		WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Apply'))
-	}
+    if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 32).length() == 0) {
+        'click ambil foto KTP'
+        WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFotoKTP'))
 
+        'delay untuk camera on'
+        WebUI.delay(2)
+
+        'click ambil foto'
+        WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFoto'))
+
+        'click ambil apply'
+        WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Apply'))
+    } else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 32).length() > 0) {
+        'get file path'
+        String filePath = userDir + findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 32)
+
+        'upload file'
+        CustomKeywords.'customizeKeyword.UploadFile.uploadFunction'(findTestObject('Object Repository/DaftarAkun/button_PilihFileKTP'), 
+            filePath)
+
+        'click ambil apply'
+        WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Apply'))
+    }
 }
 
 'cek centang syarat dan ketentuan'
 if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 29).equalsIgnoreCase('Yes')) {
     'click checkbox syarat'
     WebUI.click(findTestObject('DaftarAkun/checkbox_SyaratdanKetentuan'))
-	
-	'click checkbox setuju'
-	WebUI.click(findTestObject('DaftarAkun/checkbox_Setuju'))
+
+    'click checkbox setuju'
+    WebUI.click(findTestObject('DaftarAkun/checkbox_Setuju'))
 }
 
 'click daftar akun'
@@ -151,24 +136,25 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
 
     'click button tutup error'
     WebUI.click(findTestObject('DaftarAkun/button_TutupError'))
-	
-	GlobalVariable.FlagFailed = 1
-} else {
-    ArrayList<String> listOTP = new ArrayList<String>()
 
-    'get OTP dari DB'
-    String OTP = CustomKeywords.'connection.DataVerif.getOTP'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+    GlobalVariable.FlagFailed = 1 //	if (WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).contains('berhasil')) {
+    //	    } 
+} else {
+    ArrayList<String> listOTP = []
+
+    'get otp dari DB'
+    String otp = CustomKeywords.'connection.DataVerif.getOTP'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
             15).toUpperCase())
 
-    'add OTP ke list'
-    listOTP.add(OTP)
+    'add otp ke list'
+    listOTP.add(otp)
 
     if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 31).equalsIgnoreCase('Yes')) {
-        'delay untuk menunggu OTP'
+        'delay untuk menunggu otp'
         WebUI.delay(5)
 
-        'input OTP'
-        WebUI.setText(findTestObject('DaftarAkun/input_OTP'), OTP)
+        'input otp'
+        WebUI.setText(findTestObject('DaftarAkun/input_OTP'), otp)
 
         countResend = Integer.parseInt(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 35))
 
@@ -180,25 +166,25 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
                 'klik pada button kirim ulang otp'
                 WebUI.click(findTestObject('DaftarAkun/button_KirimKodeLagi'))
 
-				'delay untuk menunggu OTP'
-				WebUI.delay(5)
-				
-                'get OTP dari DB'
-                OTP = CustomKeywords.'connection.DataVerif.getOTP'(conneSign, findTestData(excelPathBuatUndangan).getValue(
+                'delay untuk menunggu otp'
+                WebUI.delay(5)
+
+                'get otp dari DB'
+                otp = CustomKeywords.'connection.DataVerif.getOTP'(conneSign, findTestData(excelPathBuatUndangan).getValue(
                         GlobalVariable.NumofColm, 15).toUpperCase())
 
-                'add OTP ke list'
-                listOTP.add(OTP)
+                'add otp ke list'
+                listOTP.add(otp)
 
-                'check if OTP resend berhasil'
+                'check if otp resend berhasil'
                 checkVerifyEqualOrMatch(WebUI.verifyNotMatch(listOTP[i], listOTP[(i + 1)], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                'input OTP'
-                WebUI.setText(findTestObject('DaftarAkun/input_OTP'), OTP)
+                'input otp'
+                WebUI.setText(findTestObject('DaftarAkun/input_OTP'), otp)
             }
         }
     } else {
-        'input OTP'
+        'input otp'
         WebUI.setText(findTestObject('DaftarAkun/input_OTP'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
                 34))
 
@@ -212,20 +198,20 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
                 'klik pada button kirim ulang otp'
                 WebUI.click(findTestObject('DaftarAkun/button_KirimKodeLagi'))
 
-				'delay untuk menunggu OTP'
-				WebUI.delay(5)
-				
-                'get OTP dari DB'
-                OTP = CustomKeywords.'connection.DataVerif.getOTP'(conneSign, findTestData(excelPathBuatUndangan).getValue(
+                'delay untuk menunggu otp'
+                WebUI.delay(5)
+
+                'get otp dari DB'
+                otp = CustomKeywords.'connection.DataVerif.getOTP'(conneSign, findTestData(excelPathBuatUndangan).getValue(
                         GlobalVariable.NumofColm, 15).toUpperCase())
 
-                'add OTP ke list'
-                listOTP.add(OTP)
+                'add otp ke list'
+                listOTP.add(otp)
 
-                'check if OTP resend berhasil'
+                'check if otp resend berhasil'
                 checkVerifyEqualOrMatch(WebUI.verifyNotMatch(listOTP[i], listOTP[(i + 1)], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                'input OTP'
+                'input otp'
                 WebUI.setText(findTestObject('DaftarAkun/input_OTP'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
                         34))
             }
@@ -235,24 +221,19 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     'click verifikasi'
     WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Verifikasi'))
 
-//	if (WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).contains('berhasil')) {
-		
-	WebUI.delay(6)
-	
+    WebUI.delay(6)
+
     'get reason error log'
     reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).toString()
-	
-	    'cek if popup error msg'
-	    if (!reason.contains('berhasil')) {
-			
-			'write to excel status failed dan reason'
-	        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
-	            GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
-	                '-', '') + ';') + reason)
-			
-			GlobalVariable.FlagFailed = 1
-//	    } 
-		
+
+    'cek if popup error msg'
+    if (!(reason.contains('berhasil'))) {
+        'write to excel status failed dan reason'
+        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
+            GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
+                '-', '') + ';') + reason)
+
+        GlobalVariable.FlagFailed = 1
     } else if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_PopupMsg'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
         reason = WebUI.getText(findTestObject('DaftarAkun/label_PopupMsg'))
 
@@ -263,18 +244,17 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
 
         'click button tutup error'
         WebUI.click(findTestObject('DaftarAkun/button_OK'))
-		
-		'click button X tutup popup OTP'
-		WebUI.click(findTestObject('DaftarAkun/button_X'))
-		
-		GlobalVariable.FlagFailed = 1
-    }else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), GlobalVariable.TimeOut, 
-	    		FailureHandling.OPTIONAL)) {
-			
-			'call testcase form aktivasi vida'
-			WebUI.callTestCase(findTestCase('Register_eSign/FormAktivasiVida'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'],
-				FailureHandling.CONTINUE_ON_FAILURE)
-	    }
+
+        'click button X tutup popup otp'
+        WebUI.click(findTestObject('DaftarAkun/button_X'))
+
+        GlobalVariable.FlagFailed = 1
+    } else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), GlobalVariable.TimeOut, 
+        FailureHandling.OPTIONAL)) {
+        'call testcase form aktivasi vida'
+        WebUI.callTestCase(findTestCase('Register_eSign/FormAktivasiVida'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
+            FailureHandling.CONTINUE_ON_FAILURE)
+    }
 }
 
 def checkVerifyEqualOrMatch(Boolean isMatch) {
