@@ -122,7 +122,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'modify object input email'
                 modifyObjectInputEmail = WebUI.modifyObjectProperty(findTestObject('Tenant/TenantBaru/modifyObject'), 'xpath', 
                     'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/div[' + 
-                    (20 + index).toString()) + ']/div/input', true)
+                    (20 + index)) + ']/div/input', true)
 
                 'click tambah email'
                 WebUI.click(findTestObject('Tenant/TenantBaru/button_TambahEmail'))
@@ -482,7 +482,7 @@ def checkPaging(Connection conneSign) {
 
     'modify object next Page'
     def modifyObjectNextPage = WebUI.modifyObjectProperty(findTestObject('Tenant/modifyObject'), 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' + 
-        (variable.size() - 1).toString()) + ']', true)
+        variable.size() - 1) + ']', true)
 
     'click next page'
     WebUI.click(modifyObjectNextPage)
@@ -500,7 +500,7 @@ def checkPaging(Connection conneSign) {
 
     'modify object last Page'
     def modifyObjectLastPage = WebUI.modifyObjectProperty(findTestObject('Tenant/modifyObject'), 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' + 
-        (variable.size() - 2).toString()) + ']', true)
+        variable.size() - 2) + ']', true)
 
     'click max page'
     WebUI.click(findTestObject('Tenant/button_MaxPage'))
