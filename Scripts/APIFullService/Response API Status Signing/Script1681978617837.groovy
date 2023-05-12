@@ -64,7 +64,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, 11).replace('"', ''))
 
                     'declare arraylist arraymatch'
-                    ArrayList<String> arrayMatch = new ArrayList<String>()
+                    ArrayList<String> arrayMatch = []
 
                     for (i = 0; i < (result.size() / 4); i++) {
                         docIdDB = (result[indexArrayDB++])

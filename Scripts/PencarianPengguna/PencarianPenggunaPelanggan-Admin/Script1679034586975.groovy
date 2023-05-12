@@ -122,7 +122,7 @@ if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 
     }
 }
 
-def checkPaging() {
+public checkPaging() {
     'click menu pencarian pengguna'
     WebUI.click(findTestObject('PencarianPenggunaAdmin/menu_PencarianPengguna'))
 
@@ -144,7 +144,7 @@ def checkPaging() {
                 'value', FailureHandling.CONTINUE_ON_FAILURE), '', false, FailureHandling.CONTINUE_ON_FAILURE))
 }
 
-def checkVerifyEqualOrMatch(Boolean isMatch) {
+public checkVerifyEqualOrMatch(Boolean isMatch) {
     if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
         CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('PencarianPengguna-Pelanggan', GlobalVariable.NumofColm, 

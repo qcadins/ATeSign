@@ -199,7 +199,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     }
 }
 
-def checkPaging(Connection conneSign) {
+public checkPaging(Connection conneSign) {
     'input nama pelanggan'
     WebUI.setText(findTestObject('PencarianDokumen/input_NamaPelanggan'), 'nama pelanggan')
 
@@ -329,7 +329,7 @@ def checkPaging(Connection conneSign) {
             'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
 }
 
-def checkVerifyPaging(Boolean isMatch) {
+public checkVerifyPaging(Boolean isMatch) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
         CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('PencarianDokumen', GlobalVariable.NumofColm, 
@@ -340,7 +340,7 @@ def checkVerifyPaging(Boolean isMatch) {
     }
 }
 
-def checkVerifyEqualOrMatch(Boolean isMatch) {
+public checkVerifyEqualOrMatch(Boolean isMatch) {
     if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
         CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('PencarianDokumen', GlobalVariable.NumofColm, 

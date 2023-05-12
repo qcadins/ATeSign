@@ -24,7 +24,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         break
     } else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
         'Inisialisasi otp, photo, ipaddress, dan total signed sebelumnya yang dikosongkan'
-        String otp, photo, ipaddress, totalSignedBefore
+        String otp, photo, ipaddress, totalSignedBefore, documentId
 
         'Split dokumen id agar mendapat dokumenid 1 per 1 dengan case bulk'
         documentId = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 10).replace('[', '').replace(
@@ -204,22 +204,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     }
 }
 
-def correctipAddress() {
-    String ipAddress = InetAddress.getLocalHost().getHostAddress()
+public correctipAddress() {
+    String ipAddress = InetAddress.getLocalHost().hostAddress
 
     return ipAddress
 }
 
-def phototoBase64(String filePath) {
+public phototoBase64(String filePath) {
     return CustomKeywords.'customizeKeyword.ConvertFile.base64File'(filePath)
 }
 
-def responseAPIStoreDB(Connection conneSign, String ipaddress, def documentId) {
+public responseAPIStoreDB(Connection conneSign, String ipaddress, String documentId) {
     'get current date'
-    def currentDate = new Date().format('yyyy-MM-dd')
+    currentDate = new Date().format('yyyy-MM-dd')
 
     'declare arraylist arraymatch'
-    arrayMatch = []
+    ArrayList<String> arrayMatch = []
 
     'loop berdasarkan dokumen id'
     for (int i = 0; i < documentId.size(); i++) {

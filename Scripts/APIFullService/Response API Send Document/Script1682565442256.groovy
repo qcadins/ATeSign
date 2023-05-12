@@ -517,12 +517,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 }
 
 'Fungsi PDF to Base64'
-def PDFtoBase64(String fileName) {
+public PDFtoBase64(String fileName) {
     return CustomKeywords.'customizeKeyword.ConvertFile.base64File'(fileName)
 }
 
 'Fungsi storedb'
-def ResponseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, String delimiter) {
+public ResponseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, String delimiter) {
     'connect DB eSign'
     Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
@@ -588,7 +588,7 @@ def ResponseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, St
         }
         
         'get current date'
-        def currentDate = new Date().format('yyyy-MM-dd')
+        currentDate = new Date().format('yyyy-MM-dd')
 
         'Split result dari email berdasarkan db'
         EmailDB = result[arrayindex++].split(semicolon, splitnum)

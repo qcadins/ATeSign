@@ -199,7 +199,7 @@ def checkDDL(TestObject objectDDL, ArrayList<String> listDB) {
     checkVerifyEqualOrMatch(WebUI.verifyEqual(list.size(), listDB.size(), FailureHandling.CONTINUE_ON_FAILURE))
 }
 
-def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
+public loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
     ArrayList<String> saldo = []
 
     'open browser'

@@ -10,7 +10,7 @@ import internal.GlobalVariable
 public class DataVerif {
 
 	String data
-	int columnCount
+	int columnCount, i
 	Statement stm
 	ResultSetMetaData metadata
 	ResultSet resultSet
@@ -43,7 +43,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -62,7 +62,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -81,7 +81,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -116,7 +116,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -167,7 +167,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -202,7 +202,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -237,7 +237,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -287,7 +287,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -322,7 +322,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -390,7 +390,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -409,7 +409,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -427,7 +427,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -446,7 +446,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -465,7 +465,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -515,7 +515,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -549,7 +549,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -567,7 +567,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -585,7 +585,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -603,7 +603,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -622,7 +622,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -641,7 +641,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -676,7 +676,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -711,7 +711,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -730,7 +730,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -781,7 +781,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -800,7 +800,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -835,7 +835,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -854,7 +854,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -873,7 +873,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -892,7 +892,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -927,7 +927,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -962,7 +962,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -981,7 +981,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -1016,7 +1016,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -1035,7 +1035,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -1054,7 +1054,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -1121,7 +1121,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}
@@ -1156,7 +1156,7 @@ public class DataVerif {
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			for(int i = 1 ; i <= columnCount ; i++) {
+			for(i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
 				listdata.add(data)
 			}

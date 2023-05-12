@@ -86,7 +86,7 @@ checkVerifyEqualOrMatch(WebUI.verifyMatch(totalStatusAktivasi[0], '0', false, Fa
 'click button X'
 WebUI.click(findTestObject('ErrorReport/button_X'))
 
-def checkVerifyEqualOrMatch(Boolean isMatch) {
+public checkVerifyEqualOrMatch(Boolean isMatch) {
     if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
         CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
@@ -97,7 +97,7 @@ def checkVerifyEqualOrMatch(Boolean isMatch) {
     }
 }
 
-def checkPaging() {
+public checkPaging() {
     'click button cari'
     WebUI.click(findTestObject('ErrorReport/button_Cari'))
 

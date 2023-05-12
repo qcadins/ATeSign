@@ -243,7 +243,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
     }
 }
 
-def PDFtoBase64(String fileName) {
+public PDFtoBase64(String fileName) {
     String base64 = CustomKeywords.'customizeKeyword.ConvertFile.base64File'(fileName)
 
     return base64

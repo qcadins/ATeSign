@@ -172,7 +172,7 @@ if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 
     }
 }
 
-def checkPaging() {
+public checkPaging() {
     'input search box'
     WebUI.setText(findTestObject('PencarianPengguna/input_SearchBox'), findTestData(excelPathPencarianPengguna).getValue(
             GlobalVariable.NumofColm, 15))
@@ -201,7 +201,7 @@ def checkPaging() {
     }
 }
 
-def checkVerifyEqualOrMatch(Boolean isMatch) {
+public checkVerifyEqualOrMatch(Boolean isMatch) {
     if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
         CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('PencarianPengguna-Inveditor', GlobalVariable.NumofColm, 
