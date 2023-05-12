@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "32497968A6EC14B1C5C88DF5A74632FE",
+  "keywordFileContentHash": "4E474EBB564D3BA4AEF1A7221E52BAD0",
   "keywordClasses": [
     {
       "name": "customizeKeyword.WriteExcel",
@@ -73,7 +73,7 @@
               }
             }
           ],
-          "javadoc": "/**\r\n\t * Write to Excel\r\n\t */"
+          "javadoc": ""
         },
         {
           "name": "writeToExcelNumber",
@@ -350,7 +350,7 @@
           "name": "getExcelPath",
           "parameters": [
             {
-              "name": "Path",
+              "name": "path",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

@@ -1,11 +1,11 @@
 {
-  "keywordFileContentHash": "6326685AF0662B4C275CAF38391798FB",
+  "keywordFileContentHash": "3A2ADA5DC8291E7DBBC4295712A2073D",
   "keywordClasses": [
     {
       "name": "customizeKeyword.ConvertFile",
       "keywordMethods": [
         {
-          "name": "BASE64File",
+          "name": "base64File",
           "parameters": [
             {
               "name": "filename",
@@ -24,7 +24,7 @@
           "javadoc": ""
         },
         {
-          "name": "DecodeBase64",
+          "name": "decodeBase64",
           "parameters": [
             {
               "name": "base64String",

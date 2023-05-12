@@ -1,22 +1,10 @@
-import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
 import java.sql.Connection as Connection
-import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
-import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
-import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
-import com.kms.katalon.core.testcase.TestCase as TestCase
-import com.kms.katalon.core.testdata.TestData as TestData
-import com.kms.katalon.core.testng.keyword.TestNGBuiltinKeywords as TestNGKW
-import com.kms.katalon.core.testobject.TestObject as TestObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
-import org.openqa.selenium.Keys as Keys
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - Full API Services.xlsx')
@@ -25,7 +13,7 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExc
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get colm excel'
-int countColmExcel = findTestData(excelPathAPICheckStamping).getColumnNumbers()
+int countColmExcel = findTestData(excelPathAPICheckStamping).columnNumbers
 
 'looping API Status stamping'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
@@ -45,9 +33,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         if (findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 15) == 'No') {
             'set tenant kosong'
             GlobalVariable.Tenant = findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 16)
-        }else if (findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 15) == 'Yes') {
-			GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
-		}
+        } else if (findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 15) == 'Yes') {
+            GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
+        }
         
         'HIT API check Status stamping'
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Check Stamping Status', [('callerId') : findTestData(
@@ -76,42 +64,38 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'declare arraylist arraymatch'
                     ArrayList<String> arrayMatch = new ArrayList<String>()
 
-					'looping sesuai size DB'
-                    for (index = 0; index < result.size()/2; index++) {
-						
-						'get docid DB'
-						docIdDB = result[arrayIndex++]
-						
-						'looping sesuai size response'
-						for (indexResponse = 0; indexResponse < docId.size(); indexResponse++) {
-							
-							'check if docidDB == docid response'
-							if(docIdDB == docId[indexResponse]) {
-								'verify doc id'
-								arrayMatch.add(WebUI.verifyMatch(docIdDB.toUpperCase(), (docId[indexResponse]).toUpperCase(), 
-										false, FailureHandling.CONTINUE_ON_FAILURE))
-								
-								'verify stamping status'
-								arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), (stampingstatus[indexResponse]).toUpperCase(), 
-										false, FailureHandling.CONTINUE_ON_FAILURE))
-								
-								'if stamping status = 2'
-								if (stampingstatus[indexResponse] == '2') {
-									println(message)
-									'verify error status'
-									arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]), (message[indexResponse]), 
-											false, FailureHandling.CONTINUE_ON_FAILURE))
-								}else {
-									'skip error status'
-									arrayIndex++
-								}
-							}else {
-								continue
-								
-								arrayIndex--
-							}
-						}
+                    'looping sesuai size DB'
+                    for (index = 0; index < (result.size() / 2); index++) {
+                        'get docid DB'
+                        docIdDB = (result[arrayIndex++])
 
+                        'looping sesuai size response'
+                        for (indexResponse = 0; indexResponse < docId.size(); indexResponse++) {
+                            'check if docidDB == docid response'
+                            if (docIdDB == (docId[indexResponse])) {
+                                'verify doc id'
+                                arrayMatch.add(WebUI.verifyMatch(docIdDB.toUpperCase(), (docId[indexResponse]).toUpperCase(), 
+                                        false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                                'verify stamping status'
+                                arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), (stampingstatus[indexResponse]).toUpperCase(), 
+                                        false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                                'if stamping status = 2'
+                                if ((stampingstatus[indexResponse]) == '2') {
+                                    'verify error status'
+                                    arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], message[indexResponse], false, 
+                                            FailureHandling.CONTINUE_ON_FAILURE))
+                                } else {
+                                    'skip error status'
+                                    arrayIndex++
+                                }
+                            } else {
+                                continue
+                                
+                                arrayIndex--
+                            }
+                        }
                     }
                     
                     'jika data db tidak sesuai dengan excel'
@@ -144,3 +128,4 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
     }
 }
+

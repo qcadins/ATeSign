@@ -1,25 +1,11 @@
-import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
 import java.sql.Connection as Connection
-import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
-import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
-import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
-import com.kms.katalon.core.testcase.TestCase as TestCase
-import com.kms.katalon.core.testdata.TestData as TestData
-import com.kms.katalon.core.testng.keyword.TestNGBuiltinKeywords as TestNGKW
-import com.kms.katalon.core.testobject.TestObject as TestObject
-import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
-import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
-import org.openqa.selenium.By as By
 import org.openqa.selenium.Keys as Keys
-import org.openqa.selenium.support.ui.Select as Select
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
@@ -33,13 +19,14 @@ WebUI.click(findTestObject('InquiryInvitation/menu_InquiryInvitation'))
 'call function check paging'
 checkPaging()
 
-int EditAfterRegister = CustomKeywords.'connection.DataVerif.getSetEditAfterRegister'(conneSign)
+int editAfterRegister = CustomKeywords.'connection.DataVerif.getSetEditAfterRegister'(conneSign)
 
-int ResendLink = CustomKeywords.'connection.DataVerif.getSetResendLink'(conneSign)
+int resendLink = CustomKeywords.'connection.DataVerif.getSetResendLink'(conneSign)
 
-int InvLink = CustomKeywords.'connection.DataVerif.getSetInvLinkAct'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+int invLink = CustomKeywords.'connection.DataVerif.getSetInvLinkAct'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
             15).toUpperCase())
 
+'check if search dengan email/phone/id no'
 if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Email')) {
     'set text search box dengan email'
     WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
@@ -57,12 +44,12 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).eq
 'click button cari'
 WebUI.click(findTestObject('InquiryInvitation/button_Cari'))
 
-if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Edit') && EditAfterRegister == 1) {
+if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Edit') && editAfterRegister == 1) {
     'click button Edit'
     WebUI.click(findTestObject('InquiryInvitation/button_Edit'))
 
     'get data buat undangan dari DB'
-    ArrayList<String> result = CustomKeywords.'connection.DataVerif.InquiryInvitationViewDataVerif'(conneSign, findTestData(
+    ArrayList<String> result = CustomKeywords.'connection.DataVerif.inquiryInvitationViewDataVerif'(conneSign, findTestData(
             excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 15).toUpperCase())
 
     '1 karena invited by belum bisa di get value dari UI'
@@ -250,7 +237,7 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).eq
         'click button batal'
         WebUI.click(findTestObject('InquiryInvitation/button_Batal'))
     }
-} else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Kirim Ulang Undangan') && InvLink == 1) {
+} else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Kirim Ulang Undangan') && invLink == 1) {
     'get label invited by'
     invitedBy = WebUI.getText(findTestObject('Object Repository/InquiryInvitation/label_InviteBy'))
 
@@ -303,7 +290,7 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).eq
             GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
                 '-', '') + ';') + ReasonFailed)
     }
-}else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Kirim Ulang Aktivasi') && ResendLink == 1) {
+}else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Kirim Ulang Aktivasi') && resendLink == 1) {
     'get label invited by'
     invitedBy = WebUI.getText(findTestObject('Object Repository/InquiryInvitation/label_InviteBy'))
 
@@ -357,7 +344,6 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).eq
                 '-', '') + ';') + ReasonFailed)
     }
 }
-
 
 def checkPaging() {
     if (GlobalVariable.checkPaging == 'Yes') {

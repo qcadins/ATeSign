@@ -1,22 +1,10 @@
-import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
 import java.sql.Connection as Connection
-import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
-import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
-import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
-import com.kms.katalon.core.testcase.TestCase as TestCase
-import com.kms.katalon.core.testdata.TestData as TestData
-import com.kms.katalon.core.testng.keyword.TestNGBuiltinKeywords as TestNGKW
-import com.kms.katalon.core.testobject.TestObject as TestObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
-import org.openqa.selenium.Keys as Keys
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - Full API Services.xlsx')
@@ -25,7 +13,7 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExc
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get colm excel'
-int countColmExcel = findTestData(excelPathAPIRequestStamping).getColumnNumbers()
+int countColmExcel = findTestData(excelPathAPIRequestStamping).columnNumbers
 
 'looping API request stamping'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
@@ -63,26 +51,26 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 message = WS.getElementPropertyValue(respon, 'checkStampingStatus.message', FailureHandling.OPTIONAL)
 
                 if (GlobalVariable.checkStoreDB == 'Yes') {
-					'get trx from db'
-					trxQty = CustomKeywords.'connection.DataVerif.getAPIRequestStampingTrx'(conneSign)
-					
-					'declare arraylist arraymatch'
-					ArrayList<String> arrayMatch = new ArrayList<String>()
-					
-					'verify is_active'
-					arrayMatch.add(WebUI.verifyMatch(trxQty, '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
-					
-					'jika data db tidak sesuai dengan excel'
-					if (arrayMatch.contains(false)) {
-						'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-						CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Request Stamping', GlobalVariable.NumofColm,
-							GlobalVariable.StatusFailed, (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm,
-								2) + ';') + GlobalVariable.ReasonFailedStoredDB)
-					} else {
-						'write to excel success'
-						CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Request Stamping',
-							0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-					}
+                    'get trx from db'
+                    trxQty = CustomKeywords.'connection.DataVerif.getAPIRequestStampingTrx'(conneSign)
+
+                    'declare arraylist arraymatch'
+                    arrayMatch = []
+
+                    'verify is_active'
+                    arrayMatch.add(WebUI.verifyMatch(trxQty, '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                    'jika data db tidak sesuai dengan excel'
+                    if (arrayMatch.contains(false)) {
+                        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+                        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Request Stamping', GlobalVariable.NumofColm, 
+                            GlobalVariable.StatusFailed, (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, 
+                                2) + ';') + GlobalVariable.ReasonFailedStoredDB)
+                    } else {
+                        'write to excel success'
+                        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Request Stamping', 
+                            0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+                    }
                 }
             } else {
                 'mengambil status code berdasarkan response HIT API'
@@ -102,6 +90,4 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
     }
 }
-
-
 

@@ -1,4 +1,5 @@
 package connection
+
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import java.sql.Connection
 import java.sql.DriverManager
@@ -7,8 +8,7 @@ import com.kms.katalon.core.annotation.Keyword
 public class ConnectDB {
 
 	@Keyword
-	def connectDBeSign() {
-
+	connectDBeSign() {
 		String servername = findTestData('Login/Login').getValue(1, 8)
 
 		String port = findTestData('Login/Login').getValue(2, 8)
@@ -23,6 +23,6 @@ public class ConnectDB {
 
 		Connection conn = DriverManager.getConnection(url, username, password)
 
-		return conn
+		conn
 	}
 }

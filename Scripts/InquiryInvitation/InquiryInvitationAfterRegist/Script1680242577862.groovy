@@ -1,25 +1,10 @@
-import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
 import java.sql.Connection as Connection
-import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
-import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
-import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
-import com.kms.katalon.core.testcase.TestCase as TestCase
-import com.kms.katalon.core.testdata.TestData as TestData
-import com.kms.katalon.core.testng.keyword.TestNGBuiltinKeywords as TestNGKW
-import com.kms.katalon.core.testobject.TestObject as TestObject
-import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
-import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
-import org.openqa.selenium.By as By
-import org.openqa.selenium.Keys as Keys
-import org.openqa.selenium.support.ui.Select as Select
 
 'call login inveditor test case'
 WebUI.callTestCase(findTestCase('Login/Login_Inveditor'), [:], FailureHandling.STOP_ON_FAILURE)
@@ -36,8 +21,9 @@ WebUI.click(findTestObject('InquiryInvitation/menu_InquiryInvitation'))
 'call function check paging'
 checkPaging()
 
-Integer EditAfterRegister = CustomKeywords.'connection.DataVerif.getSetEditAfterRegister'(conneSign)
+Integer editAfterRegister = CustomKeywords.'connection.DataVerif.getSetEditAfterRegister'(conneSign)
 
+'check if search dengan email/phone/id no'
 if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Email')) {
     'set text search box dengan email'
     WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
@@ -56,7 +42,7 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).eq
 WebUI.click(findTestObject('InquiryInvitation/button_Cari'))
 
 'cek if button edit aktif'
-if (EditAfterRegister == 1) {
+if (editAfterRegister == 1) {
     'click button Edit'
     WebUI.click(findTestObject('InquiryInvitation/button_Edit'))
 
@@ -119,21 +105,20 @@ if (EditAfterRegister == 1) {
     'click button Simpan'
     WebUI.click(findTestObject('InquiryInvitation/button_Simpan'))
 
-	'get reason'
-	ReasonFailed = WebUI.getAttribute(findTestObject('BuatUndangan/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
-	
+    'get reason'
+    ReasonFailed = WebUI.getAttribute(findTestObject('BuatUndangan/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
+
     if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/button_OkSuccess'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL) && 
-    ReasonFailed == 'Link undangan sudah tidak aktif.') {
-        
+    (ReasonFailed == 'Link undangan sudah tidak aktif.')) {
         'write to excel success'
         CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'BuatUndangan', 0, GlobalVariable.NumofColm - 
             1, GlobalVariable.StatusSuccess)
 
-		'click button OK'
-		WebUI.click(findTestObject('InquiryInvitation/button_OkSuccess'))
-		
-		'click button batal'
-		WebUI.click(findTestObject('InquiryInvitation/button_Batal'))
+        'click button OK'
+        WebUI.click(findTestObject('InquiryInvitation/button_OkSuccess'))
+
+        'click button batal'
+        WebUI.click(findTestObject('InquiryInvitation/button_Batal'))
     }
 }
 

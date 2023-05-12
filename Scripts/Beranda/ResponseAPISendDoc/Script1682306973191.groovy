@@ -218,7 +218,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 
 'Fungsi PDF to Base64'
 def PDFtoBase64(String fileName) {
-    String base64 = CustomKeywords.'customizeKeyword.ConvertFile.BASE64File'(fileName)
+    String base64 = CustomKeywords.'customizeKeyword.ConvertFile.base64File'(fileName)
 
     return base64
 }

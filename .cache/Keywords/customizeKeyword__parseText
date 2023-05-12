@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "8FBA7693E31E47FC2F6D33BD5DC78B99",
+  "keywordFileContentHash": "00FE91D8647748F15EFCB8CD7FDC1F00",
   "keywordClasses": [
     {
       "name": "customizeKeyword.ParseText",
@@ -21,7 +21,7 @@
               }
             },
             {
-              "name": "AESKey",
+              "name": "aesKey",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -53,7 +53,7 @@
               }
             },
             {
-              "name": "AESKey",
+              "name": "aesKey",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

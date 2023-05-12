@@ -1,24 +1,10 @@
-import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
-import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
-import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
-import com.kms.katalon.core.testcase.TestCase as TestCase
-import com.kms.katalon.core.testdata.TestData as TestData
-import com.kms.katalon.core.testng.keyword.TestNGBuiltinKeywords as TestNGKW
-import com.kms.katalon.core.testobject.TestObject as TestObject
-import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
-import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
-import internal.GlobalVariable as GlobalVariable
-import org.openqa.selenium.Keys as Keys
-import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
+import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
+import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
+import internal.GlobalVariable as GlobalVariable
 import java.sql.Connection as Connection
-import org.apache.commons.io.FileUtils as FileUtils
-import java.net.InetAddress
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - Full API Services.xlsx')
@@ -27,7 +13,7 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExc
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get colm excel'
-int countColmExcel = findTestData(excelPathAPISentOTPSigning).getColumnNumbers()
+int countColmExcel = findTestData(excelPathAPISentOTPSigning).columnNumbers
 
 'looping API Sent OTP Signing'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
@@ -51,11 +37,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.api_key = findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 15)
         }
         
-		'mengambil reset otp request numbernya awal berapa'
+        'mengambil reset otp request numbernya awal berapa'
         reset_otp_request_num = CustomKeywords.'connection.DataVerif.getResetCodeRequestNum'(conneSign, findTestData(excelPathAPISentOTPSigning).getValue(
                 GlobalVariable.NumofColm, 11).replace('"', ''))
 
-		'mengambil nilai otp awal baik berisi ataupun kosong'
+        'mengambil nilai otp awal baik berisi ataupun kosong'
         otp_code = CustomKeywords.'connection.DataVerif.getOTP'(conneSign, findTestData(excelPathAPISentOTPSigning).getValue(
                 GlobalVariable.NumofColm, 11).replace('"', ''))
 
@@ -69,17 +55,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
             'get status code'
             code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
-			
-			'jika codenya 0'
+
+            'jika codenya 0'
             if (code == 0) {
                 'mengambil response trx nonya'
                 trxNo = WS.getElementPropertyValue(respon, 'trxNo', FailureHandling.OPTIONAL)
-				
-				'input di excel mengenai trxno yang telah didapat'
+
+                'input di excel mengenai trxno yang telah didapat'
                 CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sent OTP Signing', 
                     4, GlobalVariable.NumofColm - 1, trxNo.toString())
-				
-				'check Db'
+
+                'check Db'
                 if (GlobalVariable.checkStoreDB == 'Yes') {
                     arrayIndex = 0
 
@@ -92,7 +78,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                     'verify trxno'
                     arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], findTestData(excelPathAPISentOTPSigning).getValue(
-                                GlobalVariable.NumofColm, 5),false, FailureHandling.CONTINUE_ON_FAILURE))
+                                GlobalVariable.NumofColm, 5), false, FailureHandling.CONTINUE_ON_FAILURE))
 
                     'verify email'
                     arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), findTestData(excelPathAPISentOTPSigning).getValue(
@@ -109,18 +95,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], findTestData(excelPathAPISentOTPSigning).getValue(
                                 GlobalVariable.NumofColm, 10).replace('"', '') + ' : Send OTP SMS', false, FailureHandling.CONTINUE_ON_FAILURE))
 
-					
-					newOTP = result[arrayIndex++]
-					
+                    newOTP = (result[arrayIndex++])
+
                     'verify otp code tidak sama'
                     arrayMatch.add(WebUI.verifyNotEqual(newOTP, otp_code, FailureHandling.CONTINUE_ON_FAILURE))
 
-					'input di excel mengenai trxno yang telah didapat'
-					CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sent OTP Signing',
-						5, GlobalVariable.NumofColm - 1, newOTP)
-					
-					'verify reset otp request number '
-					arrayMatch.add(WebUI.verifyEqual(result[arrayIndex++], Integer.parseInt(reset_otp_request_num) + 1, FailureHandling.CONTINUE_ON_FAILURE))
+                    'input di excel mengenai trxno yang telah didapat'
+                    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sent OTP Signing', 
+                        5, GlobalVariable.NumofColm - 1, newOTP)
+
+                    'verify reset otp request number '
+                    arrayMatch.add(WebUI.verifyEqual(result[arrayIndex++], Integer.parseInt(reset_otp_request_num) + 1, 
+                            FailureHandling.CONTINUE_ON_FAILURE))
 
                     'verify api key'
                     arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], GlobalVariable.api_key, false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -134,26 +120,24 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Sent OTP Signing', GlobalVariable.NumofColm, 
                             GlobalVariable.StatusFailed, (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 
                                 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
+                    } else {
+                        'write to excel success'
+                        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sent OTP Signing', 
+                            0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
                     }
-					else {
-						'write to excel success'
-						CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sent OTP Signing',
-							0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-					}
                 } else {
                     'write to excel success'
                     CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sent OTP Signing', 
                         0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
                 }
+            } else {
+                'mengambil status code berdasarkan response HIT API'
+                message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
+
+                'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
+                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Sent OTP Signing', GlobalVariable.NumofColm, 
+                    GlobalVariable.StatusFailed, message)
             }
-			else {
-				'mengambil status code berdasarkan response HIT API'
-				message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
-	
-				'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
-				CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Sent OTP Signing', GlobalVariable.NumofColm,
-					GlobalVariable.StatusFailed, message)
-			}
         } else {
             'mengambil status code berdasarkan response HIT API'
             message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)

@@ -9,23 +9,21 @@ import java.awt.datatransfer.StringSelection
 import java.awt.event.KeyEvent
 
 public class UploadFile {
-
-	//keyword upload file function
 	@Keyword
-	def uploadFunction (TestObject to, String filePath) {
+	uploadFunction(TestObject to, String filePath) {
 		WebUI.click(to)
-		StringSelection ss = new StringSelection(filePath);
-		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
-		Robot robot = new Robot();
-		robot.keyPress(KeyEvent.VK_ENTER); //control, -
-		robot.keyRelease(KeyEvent.VK_ENTER); //-, control
+		StringSelection ss = new StringSelection(filePath)
+		Toolkit.getDefaultToolkit().systemClipboard().setContents(ss, null)
+		Robot robot = new Robot()
+		robot.keyPress(KeyEvent.VK_ENTER) //control, -
+		robot.keyRelease(KeyEvent.VK_ENTER) //-, control
 		robot.delay(1000) //NOTE THE DELAY (500, 1000, 1500 MIGHT WORK FOR YOU)
-		robot.keyPress(KeyEvent.VK_CONTROL);
-		robot.keyPress(KeyEvent.VK_V);
-		robot.keyRelease(KeyEvent.VK_V);
+		robot.keyPress(KeyEvent.VK_CONTROL)
+		robot.keyPress(KeyEvent.VK_V)
+		robot.keyRelease(KeyEvent.VK_V)
 		robot.delay(1000) //NOTE THE DELAY (500, 1000, 1500 MIGHT WORK FOR YOU)
-		robot.keyRelease(KeyEvent.VK_CONTROL);
-		robot.keyPress(KeyEvent.VK_ENTER);
-		robot.keyRelease(KeyEvent.VK_ENTER);
+		robot.keyRelease(KeyEvent.VK_CONTROL)
+		robot.keyPress(KeyEvent.VK_ENTER)
+		robot.keyRelease(KeyEvent.VK_ENTER)
 	}
 }

@@ -1,23 +1,10 @@
-import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
 import java.sql.Connection as Connection
-import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
-import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
-import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
-import com.kms.katalon.core.testcase.TestCase as TestCase
-import com.kms.katalon.core.testdata.TestData as TestData
-import com.kms.katalon.core.testng.keyword.TestNGBuiltinKeywords as TestNGKW
-import com.kms.katalon.core.testobject.TestObject as TestObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
-import org.apache.commons.io.FileUtils as FileUtils
-import org.openqa.selenium.Keys as Keys
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - Full API Services.xlsx')
@@ -26,7 +13,7 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExc
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get colm excel'
-int countColmExcel = findTestData(excelPathAPIRegistrasi).getColumnNumbers()
+int countColmExcel = findTestData(excelPathAPIRegistrasi).columnNumbers
 
 String selfPhoto, idPhoto
 
@@ -53,14 +40,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 32) == 'Yes') {
-            selfPhoto = (('"' + CustomKeywords.'customizeKeyword.ConvertFile.BASE64File'(findTestData(excelPathAPIRegistrasi).getValue(
+            selfPhoto = (('"' + CustomKeywords.'customizeKeyword.ConvertFile.base64File'(findTestData(excelPathAPIRegistrasi).getValue(
                     GlobalVariable.NumofColm, 24))) + '"')
         } else if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 32) == 'No') {
             selfPhoto = findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 24)
         }
 		
 		if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 33) == 'Yes') {
-			idPhoto = (('"' + CustomKeywords.'customizeKeyword.ConvertFile.BASE64File'(findTestData(excelPathAPIRegistrasi).getValue(
+			idPhoto = (('"' + CustomKeywords.'customizeKeyword.ConvertFile.base64File'(findTestData(excelPathAPIRegistrasi).getValue(
 					GlobalVariable.NumofColm, 25))) + '"')
 		} else if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 33) == 'No') {
 			idPhoto = findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 25)
@@ -102,11 +89,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                     String resultTrx = CustomKeywords.'connection.DataVerif.getAPIRegisterTrx'(conneSign, trxNo)
 
-                    ArrayList<String> resultDataUser = CustomKeywords.'connection.DataVerif.BuatUndanganStoreDB'(conneSign, 
+                    ArrayList<String> resultDataUser = CustomKeywords.'connection.DataVerif.buatUndanganStoreDB'(conneSign, 
                         findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 12).replace('"', ''))
 
                     'declare arraylist arraymatch'
-                    ArrayList<String> arrayMatch = new ArrayList<String>()
+                    arrayMatch = []
 
                     'verify is_active'
                     arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), '1', false, FailureHandling.CONTINUE_ON_FAILURE))

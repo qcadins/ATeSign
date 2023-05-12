@@ -8,28 +8,27 @@ import internal.GlobalVariable
 
 public class CheckSaveProccess {
 
-	//check status untuk write to excel success / failed + reason failed
 	@Keyword
-	public checkStatus (int count, TestObject object, int colm, String sheetname){
-		if(WebUI.verifyElementPresent(object, 3, FailureHandling.OPTIONAL)){
-			if (count==0){
+	checkStatus(int count, TestObject object, int colm, String sheetname) {
+		if (WebUI.verifyElementPresent(object, 3, FailureHandling.OPTIONAL)) {
+			if (count == 0) {
 				(new customizeKeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
 						0, colm - 1, GlobalVariable.StatusSuccess)
 			}
-			else{
+			else {
 				(new customizeKeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
 						0, colm - 1, GlobalVariable.StatusFailed)
 				(new customizeKeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
 						1, colm - 1, GlobalVariable.ReasonFailedSystemError)
 			}
-		}else{
-			if (count==0){
+		}else {
+			if (count == 0) {
 				(new customizeKeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
 						0, colm - 1, GlobalVariable.StatusFailed)
 				(new customizeKeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
 						1, colm - 1, GlobalVariable.ReasonFailedSaveGagal)
 			}
-			else{
+			else {
 				(new customizeKeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
 						0, colm - 1, GlobalVariable.StatusFailed)
 				(new customizeKeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
@@ -38,14 +37,13 @@ public class CheckSaveProccess {
 		}
 	}
 
-	//check alert pojok kanan atas jika failed akan write to excel failed + reason failed
 	@Keyword
-	public checkAlert(int colm, String sheetname, Object object){
-		int flagFailed=0
-		if (WebUI.verifyElementPresent(object, 1, FailureHandling.OPTIONAL)){
+	checkAlert(int colm, String sheetname, Object object) {
+		int flagFailed = 0
+		if (WebUI.verifyElementPresent(object, 1, FailureHandling.OPTIONAL)) {
 			String erroralert = WebUI.getText(object, FailureHandling.OPTIONAL)
-			if(erroralert!=null){
-				if(!erroralert.contains("Success".toUpperCase())){
+			if (erroralert!=null) {
+				if (!erroralert.contains("Success".toUpperCase())) {
 
 					String failedAlertReason = WebUI.getAttribute(object, 'aria-label', FailureHandling.OPTIONAL)
 
@@ -56,8 +54,7 @@ public class CheckSaveProccess {
 					flagFailed = 1
 				}
 			}
-
 		}
-		return flagFailed
+		flagFailed
 	}
 }
