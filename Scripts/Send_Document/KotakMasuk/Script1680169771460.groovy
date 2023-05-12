@@ -31,8 +31,7 @@ RunConfiguration.setWebDriverPreferencesProperty('prefs', chromePrefs)
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-docid = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 5).replace('[', '').replace(']', '').split(', ', 
-    -1)
+docid = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 5).split(', ', -1)
 
 'declare arraylist arraymatch'
 ArrayList<String> arrayMatch = new ArrayList<String>()
@@ -147,7 +146,7 @@ for (int y = 0; y < docid.size(); y++) {
         'Jika button Lastest dapat diklik'
         if (WebUI.verifyElementClickable(modifyobjectbtnLastest, FailureHandling.OPTIONAL)) {
             'Klik button Lastest'
-            WebUI.click(modifyobjectbtnLastest, FailureHandling.CONTINUE_ON_FAILURE)
+            WebUI.click(modifyobjectbtnLastest, FailureHandling.OPTIONAL)
         }
         
         'get row pada beranda'
@@ -266,7 +265,7 @@ for (int y = 0; y < docid.size(); y++) {
         'Jika button Lastest dapat diklik'
         if (WebUI.verifyElementClickable(modifyobjectbtnLastest, FailureHandling.OPTIONAL)) {
             'Klik button Lastest'
-            WebUI.click(modifyobjectbtnLastest)
+            WebUI.click(modifyobjectbtnLastest, FailureHandling.OPTIONAL)
         }
         
 		/*
@@ -324,7 +323,7 @@ for (int y = 0; y < docid.size(); y++) {
         'Klik x terlebih dahulu pada popup'
         WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_X'))
     }
-}
+
 
 'jika data db tidak sesuai dengan excel'
 if (arrayMatch.contains(false)) {
@@ -332,4 +331,4 @@ if (arrayMatch.contains(false)) {
     CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'(docid[y], GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
         (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedNoneUI)
 }
-
+}
