@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "C128E385D6A2FA5A401D8176054021A1",
+  "keywordFileContentHash": "D152B11048496A9EB4D49EEDBA8ECE56",
   "keywordClasses": [
     {
       "name": "connection.DataVerif",
@@ -36,7 +36,7 @@
           ]
         },
         {
-          "name": "BuatUndanganStoreDB",
+          "name": "buatUndanganStoreDB",
           "parameters": [
             {
               "name": "conn",
@@ -67,7 +67,7 @@
           ]
         },
         {
-          "name": "InquiryInvitationViewDataVerif",
+          "name": "inquiryInvitationViewDataVerif",
           "parameters": [
             {
               "name": "conn",
@@ -98,7 +98,7 @@
           ]
         },
         {
-          "name": "InquiryInvitationStoreDB",
+          "name": "inquiryInvitationStoreDB",
           "parameters": [
             {
               "name": "conn",
@@ -834,6 +834,50 @@
           ]
         },
         {
+          "name": "getSignerInfo",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "refnum",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "psre",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ]
+        },
+        {
           "name": "getTotalPencarianDokumen",
           "parameters": [
             {
@@ -1010,6 +1054,19 @@
               "type": {
                 "fullClassName": "java.sql.Connection",
                 "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "refnumber",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
                 "isArray": false,
                 "isGnericsPlaceHolder": false,
                 "hasImmutableClassName": false,
@@ -1687,7 +1744,7 @@
           ]
         },
         {
-          "name": "DataDocTemplateStoreDB",
+          "name": "dataDocTemplateStoreDB",
           "parameters": [
             {
               "name": "conn",

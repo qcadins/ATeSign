@@ -650,7 +650,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                 WebUI.refresh()
             }
         }
-        
+        'Wrong'
         if (totaldocsign != documentTemplateName_perdoc.size()) {
             'Jika saldonya belum masuk dengan flag, maka signnya gagal.'
             CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
@@ -673,11 +673,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                     variable_saldo_row = DriverFactory.getWebDriver().findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper '))
 
                     'ambil inquiry di db'
-                    ArrayList<String> inquiry_db = CustomKeywords.'connection.DataVerif.gettrxSaldo'(conneSign)
+                    ArrayList<String> inquiry_db = CustomKeywords.'connection.DataVerif.gettrxSaldo'(conneSign, nokontrak_perdoc[i].toString())
 
                     'looping mengenai columnnya'
                     for (int u = 1; u <= (variable_saldo_column.size() / variable_saldo_row.size()); u++) {
-						isbreak = true
                         'modify per row dan column. column menggunakan u dan row menggunakan documenttemplatename'
                         modifyperrowpercolumn = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/lbl_notrxsaldo'), 
                             'xpath', 'equals', ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
@@ -711,10 +710,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                             checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(modifyperrowpercolumn), inquiry_db[(u - 
                                     1)], false, FailureHandling.CONTINUE_ON_FAILURE))
                         }
-						if(isbreak == true) {
-							break
-						}
                     }
+					break
 					} else {
                     'jika kesempatan yang terakhir'
                     if (d == 6) {
@@ -728,6 +725,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                     WebUI.delay(10)
 
                     WebUI.refresh()
+					
+					if(isbreak == true) {
+						break
+					}
                 }
 			}
         }
