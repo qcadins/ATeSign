@@ -9,13 +9,12 @@ import internal.GlobalVariable
 public class CheckSaveProccess {
 
 	@Keyword
-	checkStatus(int count, TestObject object, int colm, String sheetname) {
+	void checkStatus(int count, TestObject object, int colm, String sheetname) {
 		if (WebUI.verifyElementPresent(object, 3, FailureHandling.OPTIONAL)) {
 			if (count == 0) {
 				(new customizekeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
 						0, colm - 1, GlobalVariable.StatusSuccess)
-			}
-			else {
+			} else {
 				(new customizekeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
 						0, colm - 1, GlobalVariable.StatusFailed)
 				(new customizekeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
@@ -27,8 +26,7 @@ public class CheckSaveProccess {
 						0, colm - 1, GlobalVariable.StatusFailed)
 				(new customizekeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
 						1, colm - 1, GlobalVariable.ReasonFailedSaveGagal)
-			}
-			else {
+			} else {
 				(new customizekeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
 						0, colm - 1, GlobalVariable.StatusFailed)
 				(new customizekeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
@@ -38,7 +36,7 @@ public class CheckSaveProccess {
 	}
 
 	@Keyword
-	checkAlert(int colm, String sheetname, Object object) {
+	void checkAlert(int colm, String sheetname, Object object) {
 		int flagFailed = 0
 		if (WebUI.verifyElementPresent(object, 1, FailureHandling.OPTIONAL)) {
 			String erroralert = WebUI.getText(object, FailureHandling.OPTIONAL)
@@ -57,5 +55,4 @@ public class CheckSaveProccess {
 		}
 		flagFailed
 	}
-	
 }
