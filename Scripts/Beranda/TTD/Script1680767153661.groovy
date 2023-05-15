@@ -567,21 +567,31 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
 
                         'Klik bintangnya bintang berapa'
                         WebUI.click(modifyObjectstarMasukan)
-
+                    }
+					
                         'Jika komentarnya tidak kosoong'
                         if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 63) != '') {
                             'Input komentar di rating'
                             WebUI.setText(findTestObject('KotakMasuk/Sign/input_komentarMasukan'), findTestData(excelPathFESignDocument).getValue(
                                     GlobalVariable.NumofColm, 63))
                         }
-                    }
                     
 					'Scroll ke btn Kirim'
 					WebUI.scrollToElement(findTestObject('KotakMasuk/Sign/btn_Kirim'), GlobalVariable.TimeOut)
 					
                     'klik button Kirim'
                     WebUI.click(findTestObject('KotakMasuk/Sign/btn_Kirim'))
-
+					
+					'check error log'
+					if (checkerrorLog() == true) {
+						continue
+					}
+					
+					'check pop up'
+					if (checkPopup() == true) {
+						continue
+					}
+					
                     'Verifikasi label pop up ketika masukan telah selesai dikirim'
                     if (!(WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_popupmasukan'), GlobalVariable.TimeOut))) {
                         CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
@@ -592,9 +602,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                         WebUI.click(findTestObject('/KotakMasuk/Sign/button_OK'))
                     }
                     
+					'Jika masukan ratingnya tidak kosong'
+					if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 62) != '') {
                     'StoreDB mengenai masukan'
                     MasukanStoreDB(conneSign, emailSigner[(o - 1)], arrayMatch)
-
+					}
+					
                     'Jummlah signer tanda tangan akan ditambah mengenai total success berdasarkan countSuccess'
                     jumlahsignertandatangan = (jumlahsignertandatangan + 1)
 
