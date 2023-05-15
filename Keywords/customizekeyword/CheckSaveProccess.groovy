@@ -9,7 +9,7 @@ import internal.GlobalVariable
 public class CheckSaveProccess {
 
 	@Keyword
-	void checkStatus(int count, TestObject object, int colm, String sheetname) {
+	checkStatus(int count, TestObject object, int colm, String sheetname) {
 		if (WebUI.verifyElementPresent(object, 3, FailureHandling.OPTIONAL)) {
 			if (count == 0) {
 				(new customizekeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
@@ -36,7 +36,7 @@ public class CheckSaveProccess {
 	}
 
 	@Keyword
-	void checkAlert(int colm, String sheetname, Object object) {
+	checkAlert(int colm, String sheetname, Object object) {
 		int flagFailed = 0
 		if (WebUI.verifyElementPresent(object, 1, FailureHandling.OPTIONAL)) {
 			String erroralert = WebUI.getText(object, FailureHandling.OPTIONAL)
