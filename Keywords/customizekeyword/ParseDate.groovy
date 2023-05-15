@@ -22,7 +22,5 @@ public class ParseDate {
 		sDate = sdf.format(parsedDate)
 
 		sDate
-		
 	}
-	
 }

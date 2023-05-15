@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "267ABD21CDBE18ECDAB1FF367146CA38",
+  "keywordFileContentHash": "4E51623E8E66A509A5E69E4D847E75C1",
   "keywordClasses": [
     {
       "name": "customizekeyword.UploadFile",
@@ -33,10 +33,11 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         }
       ]
     }
   ],
-  "javadocParsed": false
+  "javadocParsed": true
 }

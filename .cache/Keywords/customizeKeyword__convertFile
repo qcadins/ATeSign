@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "4DA1B3E2B5797C13CA8CBDF39E50C782",
+  "keywordFileContentHash": "4D0F79241731527E99974D6D44E38DBE",
   "keywordClasses": [
     {
       "name": "customizekeyword.ConvertFile",
@@ -20,7 +20,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "decodeBase64",
@@ -51,10 +52,11 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         }
       ]
     }
   ],
-  "javadocParsed": false
+  "javadocParsed": true
 }

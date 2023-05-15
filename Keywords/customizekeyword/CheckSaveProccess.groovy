@@ -35,7 +35,6 @@ public class CheckSaveProccess {
 						1, colm - 1, GlobalVariable.ReasonFailedMandatory)
 			}
 		}
-		
 	}
 
 	@Keyword
@@ -57,7 +56,5 @@ public class CheckSaveProccess {
 			}
 		}
 		flagFailed
-		
 	}
-	
 }
