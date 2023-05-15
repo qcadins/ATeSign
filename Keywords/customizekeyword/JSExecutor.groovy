@@ -6,6 +6,7 @@ import com.kms.katalon.core.annotation.Keyword
 import com.kms.katalon.core.webui.driver.DriverFactory
 
 public class JSExecutor {
+
 	@Keyword
 	jsExecutionFunction(String jsCode, String xpath, String newJS) {
 		'Mengambil web element dari kotaknya'
