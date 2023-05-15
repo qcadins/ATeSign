@@ -612,10 +612,10 @@ public class DataVerif {
 	}
 
 	@Keyword
-	gettrxSaldo(Connection conn) {
+	gettrxSaldo(Connection conn, String refnumber) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select tbm.trx_no, TO_CHAR(tbm.dtm_crt,'YYYY-MM-DD HH24:MI:SS'), ml.description , amm.full_name, tdh.ref_number||'('||amm_two.full_name||')',ml_doc_h.code,mdt.doc_template_name, tbm.notes, tbm.qty from tr_balance_mutation as tbm join ms_lov as ml on tbm.lov_trx_type = ml.id_lov join am_msuser as amm on tbm.id_ms_user = amm.id_ms_user join tr_document_h as tdh on tbm.id_document_h = tdh.id_document_h join ms_lov as ml_doc_h on tdh.lov_doc_type = ml_doc_h.id_lov join tr_document_d as tdd on tbm.id_document_d = tdd.id_document_d join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template join am_msuser as amm_two on tdh.id_msuser_customer = amm_two.id_ms_user order by tbm.dtm_crt desc limit 1")
+		resultSet = stm.executeQuery("select tbm.trx_no, TO_CHAR(tbm.dtm_crt,'YYYY-MM-DD HH24:MI:SS'), ml.description , amm.full_name, tdh.ref_number||'('||amm_two.full_name||')',ml_doc_h.code,mdt.doc_template_name, tbm.notes, tbm.qty from tr_balance_mutation as tbm join ms_lov as ml on tbm.lov_trx_type = ml.id_lov join am_msuser as amm on tbm.id_ms_user = amm.id_ms_user join tr_document_h as tdh on tbm.id_document_h = tdh.id_document_h join ms_lov as ml_doc_h on tdh.lov_doc_type = ml_doc_h.id_lov join tr_document_d as tdd on tbm.id_document_d = tdd.id_document_d join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template join am_msuser as amm_two on tdh.id_msuser_customer = amm_two.id_ms_user where tdh.ref_number = '"+refnumber+"' order by tbm.dtm_crt desc limit 1")
 
 		metadata = resultSet.metaData
 
@@ -828,7 +828,7 @@ public class DataVerif {
 	getSigningStatusProcess(Connection conn, String documentid, String emailsigner) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select tdsp.request_status, CASE WHEN tdds.sign_date is not null THEN 'Sudah TTD' end , tdd.total_signed from tr_document_d_sign tdds join tr_document_d tdd on tdds.id_document_d = tdd.id_document_d join am_msuser amm on tdds.id_ms_user = amm.id_ms_user join tr_document_signing_request tdsp on amm.id_ms_user = tdsp.id_ms_user where tdd.document_id = '" + documentid + "' and amm.login_id = '" + emailsigner + "' ORDER BY tdsp.request_status desc limit 1 ")
+		resultSet = stm.executeQuery("select tdsp.request_status, CASE WHEN tdds.sign_date is not null THEN 'Sudah TTD' end , tdd.total_signed from tr_document_d_sign tdds join tr_document_d tdd on tdds.id_document_d = tdd.id_document_d join am_msuser amm on tdds.id_ms_user = amm.id_ms_user join tr_document_signing_request tdsp on amm.id_ms_user = tdsp.id_ms_user where tdd.document_id = '"+documentid+"' and amm.login_id = '"+emailsigner+"' ORDER BY tdsp.dtm_crt desc limit 1 ")
 
 		metadata = resultSet.metaData
 
@@ -1171,6 +1171,23 @@ public class DataVerif {
 		resultSet = stm.executeQuery("select count(msl.code) from tr_document_d_sign tdds join tr_document_d tdd on tdds.id_document_d = tdd.id_document_d join ms_lov msl on tdds.lov_signer_type = msl.id_lov join am_msuser amm on tdds.id_ms_user = amm.id_ms_user where tdd.document_id = '" + documentId + "' and amm.login_id = '" + emailsigner + "'")
 
 		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+
+	@Keyword
+	getuserCustomerondocument(Connection conn, String refnumber){
+		String data
+
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select amm.full_name from tr_document_h tdh join tr_document_d tdd on tdh.id_document_h = tdd.id_document_h join am_msuser amm on tdh.id_msuser_customer = amm.id_ms_user where tdh.ref_number = '"+refnumber+"'")
+		metadata = resultSet.getMetaData()
 
 		columnCount = metadata.getColumnCount()
 
