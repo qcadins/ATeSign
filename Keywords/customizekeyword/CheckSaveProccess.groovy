@@ -1,4 +1,4 @@
-package customizeKeyword
+package customizekeyword
 
 import com.kms.katalon.core.annotation.Keyword
 import com.kms.katalon.core.model.FailureHandling

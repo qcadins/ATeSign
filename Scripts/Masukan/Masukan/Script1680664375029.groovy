@@ -51,7 +51,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             if (WebUI.getAttribute(findTestObject('Masukan/errorLog'), 'aria-label', FailureHandling.OPTIONAL).contains(
                 'Terimakasih') && (isMandatoryComplete == 0)) {
                 'write to excel success'
-                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Masukan', 0, GlobalVariable.NumofColm - 
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Masukan', 0, GlobalVariable.NumofColm - 
                     1, GlobalVariable.StatusSuccess)
 
                 if (GlobalVariable.checkStoreDB == 'Yes') {
@@ -63,7 +63,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         } else if (WebUI.verifyElementNotPresent(findTestObject('Masukan/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL) && 
         (isMandatoryComplete > 0)) {
             'write to excel status failed dan reason'
-            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Masukan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Masukan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                 (findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedMandatory)
         }
         

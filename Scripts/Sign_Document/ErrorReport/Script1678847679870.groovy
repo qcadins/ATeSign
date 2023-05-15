@@ -104,7 +104,7 @@ WebUI.click(findTestObject('ErrorReport/button_X'))
 def checkVerifyEqualOrMatch(Boolean isMatch) {
 	if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
 		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-		CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm,
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm,
 			GlobalVariable.StatusFailed, (findTestData(excelPathSignDoc).getValue(GlobalVariable.NumofColm, 2) +
 			';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
 

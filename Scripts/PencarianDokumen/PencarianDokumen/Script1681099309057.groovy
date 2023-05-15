@@ -10,7 +10,7 @@ import org.openqa.selenium.By as By
 import org.openqa.selenium.Keys as Keys
 
 'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
+GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
 'call test case login andy'
 WebUI.callTestCase(findTestCase('Login/Login_Andy'), [:], FailureHandling.STOP_ON_FAILURE)
@@ -92,16 +92,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             WebUI.delay(3)
 
             'check if file downloaded'
-            if (WebUI.verifyEqual(CustomKeywords.'customizeKeyword.Download.isFileDownloaded'(findTestData(excelPathPencarianDokumen).getValue(
+            if (WebUI.verifyEqual(CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathPencarianDokumen).getValue(
                         GlobalVariable.NumofColm, 18)), true, FailureHandling.CONTINUE_ON_FAILURE)) {
                 if (GlobalVariable.FlagFailed == 0) {
                     'write to excel success'
-                    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PencarianDokumen', 
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PencarianDokumen', 
                         0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
                 }
             } else {
                 'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedDownload'
-                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('PencarianDokumen', GlobalVariable.NumofColm, 
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PencarianDokumen', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 
                         2) + ';') + GlobalVariable.ReasonFailedDownload)
 
@@ -188,11 +188,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
         if ((GlobalVariable.FlagFailed == 0) && (isMandatoryComplete == 0)) {
             'write to excel success'
-            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PencarianDokumen', 0, 
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PencarianDokumen', 0, 
                 GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
         } else {
             'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedMandatory'
-            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('PencarianDokumen', GlobalVariable.NumofColm, 
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PencarianDokumen', GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, (findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 2) + ';') + 
                 GlobalVariable.ReasonFailedMandatory)
         }
@@ -332,7 +332,7 @@ public checkPaging(Connection conneSign) {
 public checkVerifyPaging(Boolean isMatch) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('PencarianDokumen', GlobalVariable.NumofColm, 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PencarianDokumen', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 2) + 
             ';') + GlobalVariable.ReasonFailedPaging)
 
@@ -343,7 +343,7 @@ public checkVerifyPaging(Boolean isMatch) {
 public checkVerifyEqualOrMatch(Boolean isMatch) {
     if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('PencarianDokumen', GlobalVariable.NumofColm, 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PencarianDokumen', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 2) + 
             ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
 

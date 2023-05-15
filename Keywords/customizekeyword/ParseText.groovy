@@ -1,4 +1,4 @@
-package customizeKeyword
+package customizekeyword
 
 import com.kms.katalon.core.annotation.Keyword
 import org.apache.commons.codec.binary.Base64

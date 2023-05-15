@@ -11,7 +11,7 @@ import internal.GlobalVariable as GlobalVariable
 String invitationLinkInquiry = ''
 
 'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
+GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
 'get colm excel'
 int countColmExcel = findTestData(API_Excel_Path).columnNumbers
@@ -87,7 +87,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         errorLog = WebUI.getAttribute(findTestObject('Object Repository/InquiryInvitation/errorLog'), 'aria-label')
 
                         'write to excel status failed dan reason : errorLog UI'
-                        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Generate Inv Link', GlobalVariable.NumofColm, 
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Inv Link', GlobalVariable.NumofColm, 
                             GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 
                                 2).replace('-', '') + ';') + errorLog)
                     }
@@ -110,7 +110,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 if (WebUI.verifyMatch(links.toString().replace('[', '').replace(']', ''), invitationLinkInquiry, false, 
                     FailureHandling.CONTINUE_ON_FAILURE)) {
                     'write to excel success'
-                    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Generate Inv Link', 
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Generate Inv Link', 
                         0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 
                     if ((GlobalVariable.checkStoreDB == 'Yes') && (GlobalVariable.FlagFailed == 0)) {
@@ -127,7 +127,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         FailureHandling.STOP_ON_FAILURE)
                 } else {
                     'write to excel status failed dan reason : '
-                    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Generate Inv Link', GlobalVariable.NumofColm, 
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Inv Link', GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
                             '-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
                 }
@@ -137,13 +137,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
                 'write to excel status failed dan reason : '
-                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Generate Inv Link', GlobalVariable.NumofColm, 
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Inv Link', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
                         '-', '') + ';') + messageFailed)
             }
         } else {
             'write to excel status failed dan reason : '
-            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Generate Inv Link', GlobalVariable.NumofColm, 
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Inv Link', GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
                     '-', '') + ';') + GlobalVariable.ReasonFailedHitAPI)
         }

@@ -6,7 +6,7 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import internal.GlobalVariable as GlobalVariable
 
 'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - Full API Services.xlsx')
+GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - Full API Services.xlsx')
 
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
@@ -50,14 +50,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 base64PDF = WS.getElementPropertyValue(respon, 'pdfBase64', FailureHandling.OPTIONAL)
 
                 'decode Bas64 to File PDF'
-                CustomKeywords.'customizeKeyword.ConvertFile.decodeBase64'(base64PDF, findTestData(excelPathAPIDownload).getValue(
+                CustomKeywords.'customizekeyword.ConvertFile.decodeBase64'(base64PDF, findTestData(excelPathAPIDownload).getValue(
                         GlobalVariable.NumofColm, 18))
 
                 'check is file downloaded dan apakah mau di delete'
-                if (CustomKeywords.'customizeKeyword.Download.isFileDownloaded'(findTestData(excelPathAPIDownload).getValue(
+                if (CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathAPIDownload).getValue(
                         GlobalVariable.NumofColm, 17)) == true) {
                     'write to excel success'
-                    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Download Document', 
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Download Document', 
                         0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
                 }
             } else {
@@ -65,7 +65,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
                 'Write To Excel GlobalVariable.StatusFailed and errormessage'
-                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Download Document', GlobalVariable.NumofColm, 
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Download Document', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, message)
             }
         } else {
@@ -73,7 +73,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
             'Write To Excel GlobalVariable.StatusFailed and errormessage'
-            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Download Document', GlobalVariable.NumofColm, 
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Download Document', GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, message)
         }
     }

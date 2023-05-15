@@ -8,7 +8,7 @@ import internal.GlobalVariable as GlobalVariable
 import java.sql.Connection as Connection
 
 'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
+GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
@@ -18,9 +18,9 @@ String aesKey = CustomKeywords.'connection.DataVerif.getAESKey'(conneSign)
 
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_Excel_Path).columnNumbers; (GlobalVariable.NumofColm)++) {
     'HIT API'
-    respon = WS.sendRequest(findTestObject('Postman/Agreement Canceled', [('documentId') : ('"' + CustomKeywords.'customizeKeyword.ParseText.parseEncrypt'(
+    respon = WS.sendRequest(findTestObject('Postman/Agreement Canceled', [('documentId') : ('"' + CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(
                     findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 9), aesKey)) + '"', 
-					('msg') : ('"' + CustomKeywords.'customizeKeyword.ParseText.parseEncrypt'(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 
+					('msg') : ('"' + CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 
                     10), aesKey)) + '"', ('callerId') : ('"' + findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 
                     12)) + '"', ('tenantCode') : ('"' + findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 
                     14)) + '"']))
@@ -35,7 +35,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 
             if (message != null) {
                 'write to excel success'
-                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Agreement Canceled', 
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Agreement Canceled', 
                     0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 
                 'call test case ResponseAPIStoreDB'
@@ -43,7 +43,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
                     FailureHandling.CONTINUE_ON_FAILURE)
             } else {
                 'write to excel status failed dan reason : '
-                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Agreement Canceled', GlobalVariable.NumofColm, 
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Agreement Canceled', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
                         '-', '') + ';') + GlobalVariable.ReasonFailedHitAPI)
             }
@@ -51,13 +51,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
             messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
             'write to excel status failed dan reason : '
-            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Agreement Canceled', GlobalVariable.NumofColm, 
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Agreement Canceled', GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
                     '-', '') + ';') + messageFailed)
         }
     } else {
         'write to excel status failed dan reason : '
-        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Agreement Canceled', GlobalVariable.NumofColm, 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Agreement Canceled', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace('-', 
                 '') + ';') + GlobalVariable.ReasonFailedHitAPI)
     }
