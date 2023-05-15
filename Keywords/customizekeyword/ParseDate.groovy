@@ -2,7 +2,6 @@ package customizekeyword
 
 import java.text.SimpleDateFormat
 import com.kms.katalon.core.annotation.Keyword
-import internal.GlobalVariable
 
 public class ParseDate {
 	@Keyword
@@ -23,5 +22,7 @@ public class ParseDate {
 		sDate = sdf.format(parsedDate)
 
 		sDate
+		
 	}
+	
 }
