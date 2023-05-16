@@ -17,6 +17,7 @@ import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
+//Tidak terpakai
 WebUI.callTestCase(findTestCase('Beranda/ResponseAPISendDoc'), [:],FailureHandling.OPTIONAL)
 GlobalVariable.Response = ""
 for (int colapisend = 2; colapisend <= findTestData(API_Excel_Path).getColumnNumbers(); (colapisend)++) {

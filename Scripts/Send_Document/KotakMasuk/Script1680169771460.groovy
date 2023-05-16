@@ -261,7 +261,7 @@ for (int y = 0; y < docid.size(); y++) {
         'Klik download file'
         WebUI.click(modifyObjectbtnDownloadDoc)
 		*/
-        'Kasih waktu 2 detik untuk proses download'
+        'Kasih waktu 4 detik untuk proses download'
         WebUI.delay(4)
 
         'Jika error lognya muncul'

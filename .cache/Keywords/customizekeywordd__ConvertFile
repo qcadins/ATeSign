@@ -1,14 +1,33 @@
 {
-  "keywordFileContentHash": "194853457E889438C894B7EA4108B353",
+  "keywordFileContentHash": "A33186AE425EACCD561EDC5305F6442F",
   "keywordClasses": [
     {
-      "name": "customizekeyword.ParseDate",
+      "name": "customizekeywordd.ConvertFile",
       "keywordMethods": [
         {
-          "name": "parseDateFormat",
+          "name": "base64File",
           "parameters": [
             {
-              "name": "date",
+              "name": "filename",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "decodeBase64",
+          "parameters": [
+            {
+              "name": "base64String",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -21,20 +40,7 @@
               }
             },
             {
-              "name": "format1",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.lang.String",
-                "unresolvedClassName": "String",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            },
-            {
-              "name": "format2",
+              "name": "filename",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

@@ -111,6 +111,11 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
+      <initValue>'Falied Resend'</initValue>
+      <name>ReasonFailedResend</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
       <initValue>'Save Gagal'</initValue>
       <name>ReasonFailedSaveGagal</name>
    </GlobalVariableEntity>
@@ -131,13 +136,13 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
-      <initValue>'Failed Verify Data Match &amp; Equal'</initValue>
-      <name>ReasonFailedVerifyEqualOrMatch</name>
+      <initValue>'Total Dokumen Untuk Bulk Tidak Sesuai Data Pada Paging'</initValue>
+      <name>ReasonFailedTotalDocTidakSesuai</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
-      <initValue>'Falied Resend'</initValue>
-      <name>ReasonFailedResend</name>
+      <initValue>'Failed Verify Data Match &amp; Equal'</initValue>
+      <name>ReasonFailedVerifyEqualOrMatch</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
