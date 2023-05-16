@@ -1,8 +1,8 @@
 {
-  "keywordFileContentHash": "7BD068EF85CEE4F58EA273BE7FF4AA87",
+  "keywordFileContentHash": "AFEAD614133CD138AAE11B6F14924AEA",
   "keywordClasses": [
     {
-      "name": "customizeKeyword.ParseText",
+      "name": "customizekeyword.ParseText",
       "keywordMethods": [
         {
           "name": "parseEncrypt",

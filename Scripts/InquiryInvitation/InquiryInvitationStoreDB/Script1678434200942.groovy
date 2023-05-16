@@ -37,7 +37,7 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(Gl
 		false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'parse Date from MM/dd/yyyy > yyyy-MM-dd'
-sDate = CustomKeywords.'customizeKeyword.ParseDate.parseDateFormat'(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 12), 'MM/dd/yyyy', 'yyyy-MM-dd')
+sDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 12), 'MM/dd/yyyy', 'yyyy-MM-dd')
 
 'verify tanggal lahir'
 arrayMatch.add(WebUI.verifyMatch(sDate.toUpperCase(), (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -85,6 +85,6 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(Gl
 'jika data db tidak sesuai dengan excel'
 if (arrayMatch.contains(false)) {
 	'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-	CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2) + ';' + GlobalVariable.ReasonFailedStoredDB)
+	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2) + ';' + GlobalVariable.ReasonFailedStoredDB)
 }
 

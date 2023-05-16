@@ -1,8 +1,8 @@
 {
-  "keywordFileContentHash": "97C87C1E15D6235DFAD45DCCF0AF715B",
+  "keywordFileContentHash": "3B7B712F185208F0A722975EBAB30328",
   "keywordClasses": [
     {
-      "name": "customizeKeyword.Download",
+      "name": "customizekeyword.Download",
       "keywordMethods": [
         {
           "name": "isFileDownloaded",

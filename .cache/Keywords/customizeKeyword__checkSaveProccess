@@ -1,8 +1,8 @@
 {
-  "keywordFileContentHash": "4F01349643149A19A45CE095AB68765F",
+  "keywordFileContentHash": "BF0F19A37D579F6CBF44F1C24873B2F6",
   "keywordClasses": [
     {
-      "name": "customizeKeyword.CheckSaveProccess",
+      "name": "customizekeyword.CheckSaveProccess",
       "keywordMethods": [
         {
           "name": "checkStatus",
@@ -59,8 +59,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "checkAlert",
@@ -104,11 +103,10 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         }
       ]
     }
   ],
-  "javadocParsed": true
+  "javadocParsed": false
 }

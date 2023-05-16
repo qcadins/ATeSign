@@ -11,7 +11,7 @@ import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 
 'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizeKeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
+GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
@@ -165,11 +165,19 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         GlobalVariable.Response = documentId
 
         'Responsenya diwrite di excel'
-        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Send to Sign', 4, GlobalVariable.NumofColm - 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Send to Sign', 4, GlobalVariable.NumofColm - 
             1, GlobalVariable.Response.toString().replace('[','').replace(']',''))
 
         'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
         int jumlahsignertandatangan = 0
+<<<<<<< HEAD
+=======
+
+        'write to excel success'
+
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Send to Sign', 0, GlobalVariable.NumofColm - 
+            1, GlobalVariable.StatusSuccess)
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 
         'Call test case mengenai kotak masuk dan melempar variable API_ExcelPath, dan jumlah signer untuk tanda tangan'
         WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('excelPathFESignDocument') : 'Beranda/SendtoSign', ('jumlahsignertandatangan') : jumlahsignertandatangan], 
@@ -187,7 +195,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 
         'write to excel status failed dan reason'
 
-        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm, 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm, 
 
             GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace('-', 
                 '') + ';') + messageFailed)
@@ -203,7 +211,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 
 'Fungsi PDF to Base64'
 def PDFtoBase64(String fileName) {
-    String base64 = CustomKeywords.'customizeKeyword.ConvertFile.base64File'(fileName)
+    String base64 = CustomKeywords.'customizekeyword.ConvertFile.base64File'(fileName)
 
     return base64
 }
@@ -293,7 +301,7 @@ def ResponseAPIStoreDB(Connection conneSign) {
     'jika data db tidak sesuai dengan excel'
     if (arrayMatch.contains(false)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
     }
 }

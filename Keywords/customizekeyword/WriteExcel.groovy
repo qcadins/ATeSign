@@ -1,4 +1,4 @@
-package customizeKeyword
+package customizekeyword
 
 import org.apache.poi.xssf.usermodel.XSSFSheet
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
@@ -57,9 +57,9 @@ public class WriteExcel {
 	// write to excel status and reason
 	@Keyword
 	writeToExcelStatusReason(String sheetname, int colm, String status, String reason) {
-		(new customizeKeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
+		(new customizekeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
 				0, colm - 1, status)
-		(new customizeKeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
+		(new customizekeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
 				1, colm - 1, reason)
 	}
 
@@ -86,4 +86,5 @@ public class WriteExcel {
 
 		filePath
 	}
+
 }

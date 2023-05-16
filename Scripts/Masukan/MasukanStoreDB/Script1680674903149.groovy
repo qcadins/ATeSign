@@ -28,7 +28,7 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathMasukan).getValue(GlobalV
 'jika data db tidak sesuai dengan excel'
 if (arrayMatch.contains(false)) {
     'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Masukan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Masukan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
         (findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
 }
 

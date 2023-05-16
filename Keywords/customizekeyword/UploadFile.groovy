@@ -1,4 +1,4 @@
-package customizeKeyword
+package customizekeyword
 
 import com.kms.katalon.core.annotation.Keyword
 import com.kms.katalon.core.testobject.TestObject
@@ -13,7 +13,7 @@ public class UploadFile {
 	uploadFunction(TestObject to, String filePath) {
 		WebUI.click(to)
 		StringSelection ss = new StringSelection(filePath)
-		Toolkit.getDefaultToolkit().systemClipboard().setContents(ss, null)
+		Toolkit.defaultToolkit.systemClipboard().setContents(ss, null)
 		Robot robot = new Robot()
 		robot.keyPress(KeyEvent.VK_ENTER) //control, -
 		robot.keyRelease(KeyEvent.VK_ENTER) //-, control

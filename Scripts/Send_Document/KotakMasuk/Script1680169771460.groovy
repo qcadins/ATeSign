@@ -55,7 +55,7 @@ for (int y = 0; y < docid.size(); y++) {
         WebUI.click(findTestObject('Object Repository/PencarianDokumen/button_Cari'))
 
         if (!(WebUI.verifyElementPresent(findTestObject('PencarianDokumen/text_refnum'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE))) {
-            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Sign Document', GlobalVariable.NumofColm, 
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Sign Document', GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + 
                 ';') + GlobalVariable.ReasonFailedNoneUI)
         }
@@ -241,7 +241,7 @@ for (int y = 0; y < docid.size(); y++) {
             'Klik kembali'
             WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_backViewDokumen'))
         } else {
-            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Sign Document', GlobalVariable.NumofColm, 
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Sign Document', GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + 
                 ';') + GlobalVariable.ReasonFailedProcessNotDone)
         }
@@ -267,13 +267,13 @@ for (int y = 0; y < docid.size(); y++) {
         'Jika error lognya muncul'
         if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
             'Tulis di excel itu adalah error'
-            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'('Sign Document', GlobalVariable.NumofColm, 
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Sign Document', GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + 
                 ';') + WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label'))
         }
         
         'Check apakah sudah terddownload menggunakan custom keyword'
-        CustomKeywords.'customizeKeyword.Download.isFileDownloaded'('Yes')
+        CustomKeywords.'customizekeyword.Download.isFileDownloaded'('Yes')
 
         'get data kotak masuk send document secara asc, dimana customer no 1'
         ArrayList<String> resultSigner = CustomKeywords.'connection.DataVerif.getSignerKotakMasukSendDoc'(conneSign, docid[
@@ -317,7 +317,7 @@ for (int y = 0; y < docid.size(); y++) {
 'jika data db tidak sesuai dengan excel'
 if (arrayMatch.contains(false)) {
     'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'(docid[y], GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(docid[y], GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
         (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedNoneUI)
 }
 }

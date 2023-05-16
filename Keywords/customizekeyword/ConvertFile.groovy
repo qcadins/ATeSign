@@ -1,4 +1,4 @@
-package customizeKeyword
+package customizekeyword
 
 import com.kms.katalon.core.annotation.Keyword
 import javax.xml.bind.DatatypeConverter
@@ -28,4 +28,5 @@ public class ConvertFile {
 		// Write the decoded bytes to the file
 		Files.write(Paths.get(filePath), bytes)
 	}
+	
 }

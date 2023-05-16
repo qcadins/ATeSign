@@ -1,4 +1,4 @@
-package customizeKeyword
+package customizekeyword
 
 import com.kms.katalon.core.annotation.Keyword
 
@@ -21,4 +21,5 @@ public class Download {
 		}
 		isDownloaded
 	}
+
 }

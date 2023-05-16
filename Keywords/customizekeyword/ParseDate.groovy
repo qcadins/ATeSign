@@ -1,16 +1,18 @@
-package customizeKeyword
+package customizekeyword
 
 import java.text.SimpleDateFormat
 import com.kms.katalon.core.annotation.Keyword
-import internal.GlobalVariable
+
 
 public class ParseDate {
+
 	@Keyword
 	parseDateFormat(String date, String format1, String format2) {
+		Locale locale = Locale.US
 		Date parsedDate
 		String sentDate, sDate
 		//parse Date from MM/dd/yyyy > yyyy-MM-dd
-		SimpleDateFormat sdf = new SimpleDateFormat(format1)
+		SimpleDateFormat sdf = new SimpleDateFormat(format1, locale)
 
 		parsedDate = null
 
@@ -18,7 +20,7 @@ public class ParseDate {
 
 		parsedDate = sdf.parse(sentDate)
 
-		sdf = new SimpleDateFormat(format2)
+		sdf = new SimpleDateFormat(format2, locale)
 
 		sDate = sdf.format(parsedDate)
 
