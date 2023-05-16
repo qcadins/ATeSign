@@ -1,14 +1,14 @@
 {
-  "keywordFileContentHash": "194853457E889438C894B7EA4108B353",
+  "keywordFileContentHash": "9E12F42D3BEE0405F8537F74E8A202D0",
   "keywordClasses": [
     {
-      "name": "customizekeyword.ParseDate",
+      "name": "customizekeywordd.JSExecutor",
       "keywordMethods": [
         {
-          "name": "parseDateFormat",
+          "name": "jsExecutionFunction",
           "parameters": [
             {
-              "name": "date",
+              "name": "jsCode",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -21,7 +21,7 @@
               }
             },
             {
-              "name": "format1",
+              "name": "xpath",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -34,7 +34,7 @@
               }
             },
             {
-              "name": "format2",
+              "name": "newJS",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

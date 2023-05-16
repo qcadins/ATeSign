@@ -1,8 +1,8 @@
 {
-  "keywordFileContentHash": "79DDC88FF667D01AF94FFB14692DAA26",
+  "keywordFileContentHash": "35C95095BF6CC657CC38DF31A110C8EB",
   "keywordClasses": [
     {
-      "name": "customizekeyword.Download",
+      "name": "customizekeywordd.Download",
       "keywordMethods": [
         {
           "name": "isFileDownloaded",
@@ -20,10 +20,11 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         }
       ]
     }
   ],
-  "javadocParsed": false
+  "javadocParsed": true
 }

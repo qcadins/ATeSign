@@ -33,7 +33,7 @@ ArrayList<String> arrayMatch = []
 arrayIndex = 0
 
 'looping berdasarkan jumlah dokumen yang dikirimkan'
-for (GlobalVariable.NumofColm = 8; GlobalVariable.NumofColm <= 8/*findTestData(excelPathFESignDocument).columnNumbers*/; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 10; GlobalVariable.NumofColm <= 10/*findTestData(excelPathFESignDocument).columnNumbers*/; (GlobalVariable.NumofColm)++) {
     'Call API Send doc'
     WebUI.callTestCase(findTestCase('Beranda/ResponseAPISendDoc'), [:], FailureHandling.CONTINUE_ON_FAILURE)
 

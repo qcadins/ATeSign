@@ -1195,5 +1195,4 @@ public class DataVerif {
 		}
 		data
 	}
-
 }
