@@ -170,14 +170,10 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 
         'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
         int jumlahsignertandatangan = 0
-<<<<<<< HEAD
-=======
 
         'write to excel success'
-
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Send to Sign', 0, GlobalVariable.NumofColm - 
             1, GlobalVariable.StatusSuccess)
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 
         'Call test case mengenai kotak masuk dan melempar variable API_ExcelPath, dan jumlah signer untuk tanda tangan'
         WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('excelPathFESignDocument') : 'Beranda/SendtoSign', ('jumlahsignertandatangan') : jumlahsignertandatangan], 
@@ -195,9 +191,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 
         'write to excel status failed dan reason'
 
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm, 
-
-            GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace('-', 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace('-', 
                 '') + ';') + messageFailed)
 
         'Jika result Tenantnya sama, maka check error report'
