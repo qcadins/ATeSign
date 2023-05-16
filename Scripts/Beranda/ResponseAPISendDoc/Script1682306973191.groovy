@@ -133,7 +133,7 @@ for (int t = 0; t < documentFile.size(); t++) {
         documentTemplateCode) + ', "officeCode": ') + officeCode) + ', "officeName": ') + officeName) + ', "regionCode": ') + 
         regionCode) + ', "regionName": ') + regionName) + ', "businessLineCode": ') + businessLineCode) + ', "businessLineName": ') + 
         businessLineName) + ', "isSequence": ') + isSequence) + ', "signer":[') + (ListSigner[0])) + '], "documentFile": "') + 
-        PDFtoBase64(documentFile[t])) + '", "psreCode" : ') + psreCode) + ', "successURL": ') + successURL) + ', "uploadURL": ') + 
+        pdfToBase64(documentFile[t])) + '", "psreCode" : ') + psreCode) + ', "successURL": ') + successURL) + ', "uploadURL": ') + 
         uploadURL)) + '}')
     } else {
         'Jika tidak diakhir maka membuat body API'
@@ -141,7 +141,7 @@ for (int t = 0; t < documentFile.size(); t++) {
         documentTemplateCode) + ', "officeCode": ') + officeCode) + ', "officeName": ') + officeName) + ', "regionCode": ') + 
         regionCode) + ', "regionName": ') + regionName) + ', "businessLineCode": ') + businessLineCode) + ', "businessLineName": ') + 
         businessLineName) + ', "isSequence": ') + isSequence) + ', "signer":[') + (ListSigner[0])) + '], "documentFile": "') + 
-        PDFtoBase64(documentFile[t])) + '", "psreCode" : ') + psreCode) + ', "successURL": ') + successURL) + ', "uploadURL": ') + 
+        pdfToBase64(documentFile[t])) + '", "psreCode" : ') + psreCode) + ', "successURL": ') + successURL) + ', "uploadURL": ') + 
         uploadURL)) + '},')
     }
 }
@@ -180,8 +180,8 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         FailureHandling.CONTINUE_ON_FAILURE)
 
         if (GlobalVariable.checkStoreDB == 'Yes') {
-            'call Fungsi ResponseAPIStoreDB'
-            ResponseAPIStoreDB(conneSign)
+            'call Fungsi responseAPIStoreDB'
+            responseAPIStoreDB(conneSign)
         }
         
         'jika status codenya bukan 0, yang berarti antara salah verifikasi data dan error'
@@ -204,14 +204,14 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 }
 
 'Fungsi PDF to Base64'
-def PDFtoBase64(String fileName) {
+def pdfToBase64(String fileName) {
     String base64 = CustomKeywords.'customizekeyword.ConvertFile.base64File'(fileName)
 
     return base64
 }
 
 'Fungsi responseAPIStoreDB'
-def ResponseAPIStoreDB(Connection conneSign) {
+def responseAPIStoreDB(Connection conneSign) {
     'declare arraylist arraymatch'
     ArrayList<String> arrayMatch = new ArrayList<String>()
 
