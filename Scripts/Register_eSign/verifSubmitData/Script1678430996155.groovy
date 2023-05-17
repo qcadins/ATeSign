@@ -3,6 +3,17 @@ import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
+import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
+import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
+import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
+import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
+import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
+import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
+import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
+import com.kms.katalon.core.testcase.TestCase as TestCase
+import com.kms.katalon.core.testdata.TestData as TestData
+import com.kms.katalon.core.testobject.TestObject as TestObject
+import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
 
 'get current date'
 def currentDate = new Date().format('dd-MMM-yyyy')
@@ -43,6 +54,66 @@ checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('InquiryI
 'verify invitation date'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('InquiryInvitation/tr_InvitationDate')).toUpperCase(), 
         currentDate.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+verifyListUndangan()
+
+def verifyListUndangan(){
+	currentDate = new Date().format('yyyy-MM-dd')
+	
+	'call test case login admin'
+	WebUI.callTestCase(findTestCase('Login/Login_Admin'), [:], FailureHandling.STOP_ON_FAILURE)
+	
+	'click menu list undangan'
+	WebUI.click(findTestObject('ListUndangan/menu_ListUndangan'))
+	
+	'set text nama'
+	WebUI.setText(findTestObject('ListUndangan/input_Nama'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+			10))
+	
+	'set text penerima undangan'
+	WebUI.setText(findTestObject('ListUndangan/input_PenerimaUndangan'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+			15))
+	
+	'set text tanggal pengiriman dari'
+	WebUI.setText(findTestObject('ListUndangan/input_TanggalPengirimanDari'), currentDate)
+	
+	'set text tanggal pengiriman ke'
+	WebUI.setText(findTestObject('ListUndangan/input_TanggalPengirimanKe'), currentDate)
+	
+	'click button cari'
+	WebUI.click(findTestObject('ListUndangan/button_Cari'))
+	
+	'verify nama'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_Nama')), findTestData(excelPathBuatUndangan).getValue(
+				GlobalVariable.NumofColm, 10), false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	'verify pengiriman melalui'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_PengirimanMelalui')), 'Email',
+			false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	'verify penerima undangan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_PenerimaUndangan')), findTestData(
+				excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 15), false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	tanggalPengiriman = WebUI.getText(findTestObject('ListUndangan/table_TanggalPengiriman')).split(' ', -1)
+	
+	parsedDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(tanggalPengiriman[0], 'dd-MMM-yyyy', 'yyyy-MM-dd')
+	
+	'verify tanggal pengiriman'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(parsedDate, currentDate, false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	'verify tanggal registrasi'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_TanggalRegistrasi')), '-', false,
+			FailureHandling.CONTINUE_ON_FAILURE))
+	
+	'verify status registrasi'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusRegistrasi')), 'NOT DONE',
+			false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	'verify Status undangan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusUndangan')), 'AKTIF', false,
+			FailureHandling.CONTINUE_ON_FAILURE))
+}
 
 def checkVerifyEqualOrMatch(Boolean isMatch) {
     if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {

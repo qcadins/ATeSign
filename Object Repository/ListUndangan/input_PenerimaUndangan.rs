@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_PenerimaUndangan</name>
+   <tag></tag>
+   <elementGuidId>ccb94332-4f65-4513-af5b-0da8059f3535</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;penerimaUndangan&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;penerimaUndangan&quot;]</value>
+      <webElementGuid>a59ce0bf-0802-4bcc-b17d-0c27bd7e2c78</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

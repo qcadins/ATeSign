@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_TanggalPakaiSampai</name>
+   <tag></tag>
+   <elementGuidId>84607363-593d-4d34-b3bd-159413574dc7</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;stampDutyUsedDtEnd&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;stampDutyUsedDtEnd&quot;]</value>
+      <webElementGuid>d9d410dd-d67f-4206-a6df-cb71b74007a9</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

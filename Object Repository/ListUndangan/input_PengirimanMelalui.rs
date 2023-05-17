@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_PengirimanMelalui</name>
+   <tag></tag>
+   <elementGuidId>aca8c62b-ddb2-4d4c-b166-972af5d39b48</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;pengirimanMelalui&quot;]/div/div/div[3]/input</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;pengirimanMelalui&quot;]/div/div/div[3]/input</value>
+      <webElementGuid>224cc72d-a431-41f3-a034-b2a6c20b9b3b</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

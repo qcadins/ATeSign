@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_TanggalPakaiDari</name>
+   <tag></tag>
+   <elementGuidId>df0e442b-b949-45dc-b578-0f55f253bca5</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;stampDutyUsedDtStart&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;stampDutyUsedDtStart&quot;]</value>
+      <webElementGuid>638edcf0-2d0c-414e-918f-eb807768e390</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

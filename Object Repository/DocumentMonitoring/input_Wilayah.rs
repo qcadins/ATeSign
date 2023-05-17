@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_Wilayah</name>
+   <tag></tag>
+   <elementGuidId>066aeb7c-02db-4a89-aeb1-28e0fb5a4991</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;regionCode&quot;]/div/div/div[3]/input</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;regionCode&quot;]/div/div/div[3]/input</value>
+      <webElementGuid>761fe43b-7ff6-4e0d-be01-9c453a7a1033</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

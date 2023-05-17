@@ -186,28 +186,28 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
         1, GlobalVariable.Link)
 
     'HIT API Login untuk token : invenditor@womf'
-    respon_login = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData('Login/Login').getValue(2, 
+    responLogin = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData('Login/Login').getValue(2, 
                     4), ('password') : findTestData('Login/Login').getValue(3, 4)]))
 
     'Jika status HIT API 200 OK'
-    if (WS.verifyResponseStatusCode(respon_login, 200, FailureHandling.OPTIONAL) == true) {
+    if (WS.verifyResponseStatusCode(responLogin, 200, FailureHandling.OPTIONAL) == true) {
         'Parsing token menjadi GlobalVariable'
-        GlobalVariable.token = WS.getElementPropertyValue(respon_login, 'access_token')
+        GlobalVariable.token = WS.getElementPropertyValue(responLogin, 'access_token')
 
         'HIT API get Invitation Link'
-        respon_getInvLink = WS.sendRequest(findTestObject('Postman/Get Inv Link', [('callerId') : '""', ('receiverDetail') : ('"' + 
+        responGetInvLink = WS.sendRequest(findTestObject('Postman/Get Inv Link', [('callerId') : '""', ('receiverDetail') : ('"' + 
                     findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 15)) + '"', ('tenantCode') : ('"' + 
                     GlobalVariable.Tenant) + '"', ('vendorCode') : ('"' + GlobalVariable.Psre) + '"']))
 
         'Jika status HIT API 200 OK'
-        if (WS.verifyResponseStatusCode(respon_getInvLink, 200, FailureHandling.OPTIONAL) == true) {
+        if (WS.verifyResponseStatusCode(responGetInvLink, 200, FailureHandling.OPTIONAL) == true) {
             'get Status Code'
-            status_Code = WS.getElementPropertyValue(respon_getInvLink, 'status.code')
+            status_Code = WS.getElementPropertyValue(responGetInvLink, 'status.code')
 
             'Jika status codenya 0'
             if (status_Code == 0) {
                 'Get invitation Link'
-                InvitationLink = WS.getElementPropertyValue(respon_getInvLink, 'invitationLink')
+                InvitationLink = WS.getElementPropertyValue(responGetInvLink, 'invitationLink')
 
                 if (WebUI.verifyMatch(GlobalVariable.Link, InvitationLink, false)) {
                     'write to excel success'
@@ -220,7 +220,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
                             2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
                 }
             } else {
-                messageFailed = WS.getElementPropertyValue(respon_getInvLink, 'status.message', FailureHandling.OPTIONAL).toString()
+                messageFailed = WS.getElementPropertyValue(responGetInvLink, 'status.message', FailureHandling.OPTIONAL).toString()
 
                 'write to excel status failed dan reason'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
@@ -602,12 +602,73 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 
         'verify count transaction'
         checkVerifyEqualOrMatch(WebUI.verifyMatch(resultCount, GlobalVariable.Counter.toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+		'call function verify list undangan'
+		verifyListUndangan()
     }
     
     'close browser'
     WebUI.closeBrowser()
 
     return saldo
+}
+
+def verifyListUndangan(){
+	currentDate = new Date().format('yyyy-MM-dd')
+	
+	'click menu list undangan'
+	WebUI.click(findTestObject('ListUndangan/menu_ListUndangan'))
+	
+	'set text nama'
+	WebUI.setText(findTestObject('ListUndangan/input_Nama'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+			10))
+	
+	'set text penerima undangan'
+	WebUI.setText(findTestObject('ListUndangan/input_PenerimaUndangan'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+			15))
+	
+	'set text tanggal pengiriman dari'
+	WebUI.setText(findTestObject('ListUndangan/input_TanggalPengirimanDari'), currentDate)
+	
+	'set text tanggal pengiriman ke'
+	WebUI.setText(findTestObject('ListUndangan/input_TanggalPengirimanKe'), currentDate)
+	
+	'click button cari'
+	WebUI.click(findTestObject('ListUndangan/button_Cari'))
+	
+	'verify nama'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_Nama')), findTestData(excelPathBuatUndangan).getValue(
+				GlobalVariable.NumofColm, 10), false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	'verify pengiriman melalui'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_PengirimanMelalui')), 'Email',
+			false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	'verify penerima undangan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_PenerimaUndangan')), findTestData(
+				excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 15), false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	tanggalPengiriman = WebUI.getText(findTestObject('ListUndangan/table_TanggalPengiriman')).split(' ', -1)
+	
+	parsedDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(tanggalPengiriman[0], 'dd-MMM-yyyy', 'yyyy-MM-dd')
+	
+	'verify tanggal pengiriman'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(parsedDate, currentDate, false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	tanggalRegistrasi = WebUI.getText(findTestObject('ListUndangan/table_TanggalRegistrasi')).split(' ', -1)
+	
+	parsedDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(tanggalRegistrasi[0], 'dd-MMM-yyyy', 'yyyy-MM-dd')
+	
+	'verify tanggal registrasi'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(parsedDate, currentDate, false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	'verify status registrasi'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusRegistrasi')), 'DONE',
+			false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	'verify Status undangan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusUndangan')), 'NON AKTIF', false,
+			FailureHandling.CONTINUE_ON_FAILURE))
 }
 
 def checkVerifyEqualOrMatch(Boolean isMatch) {
