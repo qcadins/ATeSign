@@ -671,6 +671,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(
 
         noKontrak_perdoc = noKontrak.split(';', -1)
 		
+		'looping untuk mendapatkan total saldo yang digunakan per nomor kontrak'
 		for(i = 1 ; i <= noKontrak_perdoc.size();i++) {
 			saldoUsed = saldoUsed + CustomKeywords.'connection.DataVerif.getSaldoUsedBasedonPaymentType'(conneSign, noKontrak_perdoc[i], emailSigner[o - 1])
 		}
