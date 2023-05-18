@@ -167,9 +167,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     if (l == 0) {
 						'Jika dari loopingan pertama, pageSignnya hanya ada 1 dan yang terakhir'
                         if (l == pageSigns.size() - 1) {
+							if(pageSigns[l] != '' || llxSigns[l] != '""') {
                             'Isi bodyAPI'
                             bodyAPI = bodyAPI + ',"signLocations": ['
-							
+						
 							'Jika pageSign untuk yang pertama di signer pertama kosong'
                             if (pageSigns[l] == '') {
 								'Input body mengenai llx dan lly'
@@ -188,13 +189,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 								', "lly" : ' + llySigns[l] + ', "urx" : ' + urxSigns[l] + ', "ury" : ' +
 								urySigns[l] + '}]'
 							}
-                            
+							}
                             'isi signlocStoreDB'
                             signlocStoreDB = signlocStoreDB + '{"llx":' + llxSigns[l] + ',"lly":' +
 								 llySigns[l] + ',"urx":' + urxSigns[l] + ',"ury":' + urySigns[l] + '}'
                         } 
 						//Jika tidak yang terakhir, maka
 						else {
+                            if(pageSigns[l] != '' || llxSigns[l] != '""') {
                             'Isi bodyAPI'
                             bodyAPI = bodyAPI + ',"signLocations": ['
 							
@@ -216,6 +218,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 								 ', "lly" : ' + llySigns[l] + ', "urx" : ' + urxSigns[l] + ', "ury" : ' +
 									urySigns[l] + '},'
 							}
+                            }
 							'isi signlocStoreDB'
                             signlocStoreDB = signlocStoreDB + '{"llx":' + llxSigns[l] + ',"lly":' + llySigns[l] +
 								 ',"urx":' + urxSigns[l] + ',"ury":' + urySigns[l] + '};'
@@ -223,6 +226,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     }
 					//Jika loopingan sudah berada di akhir
 					 else if (l == pageSigns.size() - 1) {
+						 if(pageSigns[l] != '' || llxSigns[l] != '""') {
 						 	'Jika pageSign yang pertama di signer pertama kosong'
                             if (pageSigns[l] == '') {
 								'Input body mengenai koordinat'
@@ -241,20 +245,27 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 								 ', "lly" : ' + llySigns[l] + ', "urx" : ' + urxSigns[l] + ', "ury" : ' +
 									urySigns[l] + '}]'
 							}
-                        
+						 }
 							'Jika loopingan sudah di akhir'
                         if (t == signActions.size() - 1) {
+							if(pageSigns[l] != '' || llxSigns[l] != '""') {
                             'isi signlocStoreDB'
                             signlocStoreDB = signlocStoreDB + '{"llx":' + llxSigns[l] + ',"lly":' +
 								 llySigns[l] + ',"urx":' + urxSigns[l] + ',"ury":' + urySigns[l] + '}'
-                        } else {
+                        } else if (llxSigns[l] == '""') {
+								'Input body mengenai page'
+                                bodyAPI = bodyAPI + '{"page" : ' + pageSigns[l] + '}]'
+                            }else {
                             'isi signlocStoreDB'
                             signlocStoreDB = signlocStoreDB + '{"llx":' + llxSigns[l] + ',"lly":' +
 								 llySigns[l] + ',"urx":' + urxSigns[l] + ',"ury":' + urySigns[l] + '};'
                         }
+						}
                     } 
 					//Jika loopingan tidak diawal dan diakhir
 					else {
+						if(pageSigns[l] != '' || llxSigns[l] != '""') {
+							
 							'Jika pageSign yang pertama di signer pertama kosong'
                             if (pageSigns[l] == '') {
 								'Input body mengenai koordinat'
@@ -272,6 +283,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 								bodyAPI = bodyAPI + '{"page" : ' + pageSigns[l] + ', "llx" : ' + llxSigns[l] +
 								 ', "lly" : ' + llySigns[l] + ', "urx" : ' + urxSigns[l] + ', "ury" : ' +
 									urySigns[l] + '},'
+							}
 							}
                         
                         'isi signlocStoreDB'
@@ -312,6 +324,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 bodyAPI = ''
             }
             
+			println stringRefno
             'Deklarasi bodyAPI kembali'
             bodyAPI = new String()
 
@@ -461,7 +474,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'get api key salah dari excel'
             GlobalVariable.api_key = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 43)
         }
-
+		println stringRefno
+		
         'Hit API'
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Send Document Signing', [('tenantCode') : findTestData(
                         excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 9), ('request') : stringRefno, ('callerId') : findTestData(

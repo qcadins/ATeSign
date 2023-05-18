@@ -136,7 +136,7 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
-      <initValue>'Total Dokumen Untuk Bulk Tidak Sesuai Data Pada Paging'</initValue>
+      <initValue>'Jumlah Dokumen Untuk Bulk yang Tersedia Adalah '</initValue>
       <name>ReasonFailedTotalDocTidakSesuai</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>

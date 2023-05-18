@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>lbl_Pengawasan Dokumen</name>
+   <tag></tag>
+   <elementGuidId>45fb3b6b-5724-4af0-924a-27d140fd5663</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>CSS</key>
+         <value>div.content-header</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>//app-msx-paging[@id='listDokumen']/div/div/div</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>XPATH</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>div</value>
+      <webElementGuid>d3938900-3da5-4c02-b116-e271d5366cc9</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>content-header</value>
+      <webElementGuid>8abfe473-cf11-470c-8d82-352e0e89f3a7</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Pengawasan Dokumen</value>
+      <webElementGuid>e6a377af-b51c-4734-8b4b-f846dd684b34</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>id(&quot;listDokumen&quot;)/div[@class=&quot;row&quot;]/div[@class=&quot;col-6&quot;]/div[@class=&quot;content-header&quot;]</value>
+      <webElementGuid>f8e2acc1-90b8-4a10-9469-d5085a9cda45</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:idRelative</name>
+      <type>Main</type>
+      <value>//app-msx-paging[@id='listDokumen']/div/div/div</value>
+      <webElementGuid>c1405943-eaf1-4d56-82bc-13f679a31486</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Download Report'])[1]/following::div[11]</value>
+      <webElementGuid>8e890a4d-ef0b-45b8-9cb7-f5f14d6ef7bd</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Masukan'])[1]/following::div[11]</value>
+      <webElementGuid>c58fe5ee-ca57-4a44-bd9f-2103887dea4a</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Filter'])[1]/preceding::div[2]</value>
+      <webElementGuid>f6184212-27b3-4c6a-a4de-495ac048df3d</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Nama Pelanggan'])[1]/preceding::div[3]</value>
+      <webElementGuid>c2556bcd-f6cb-46cb-883c-c8cd9b2a0048</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>//*/text()[normalize-space(.)='Pengawasan Dokumen']/parent::*</value>
+      <webElementGuid>1dbf8fb7-7d9c-48b7-b33c-37fecc35a1e3</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//app-msx-paging/div/div/div</value>
+      <webElementGuid>fe5d0e2f-345d-43e9-9d61-52b5ac6e72d8</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//div[(text() = 'Pengawasan Dokumen' or . = 'Pengawasan Dokumen')]</value>
+      <webElementGuid>7a8b8024-147f-4ea4-8a06-1a81e6959a38</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>

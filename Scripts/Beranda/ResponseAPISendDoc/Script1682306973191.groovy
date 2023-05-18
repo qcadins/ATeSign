@@ -9,6 +9,7 @@ import java.sql.Connection as Connection
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
+import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
@@ -176,9 +177,11 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
             1, GlobalVariable.StatusSuccess)
 
         'Call test case mengenai kotak masuk dan melempar variable API_ExcelPath, dan jumlah signer untuk tanda tangan'
-        WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('excelPathFESignDocument') : 'Beranda/SendtoSign', ('jumlahsignertandatangan') : jumlahsignertandatangan], 
-        FailureHandling.CONTINUE_ON_FAILURE)
+        //WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('excelPathFESignDocument') : 'Beranda/SendtoSign', ('jumlahsignertandatangan') : jumlahsignertandatangan], 
+       // FailureHandling.CONTINUE_ON_FAILURE)
 
+		MonitoringDocument()
+		
         if (GlobalVariable.checkStoreDB == 'Yes') {
             'call Fungsi responseAPIStoreDB'
             responseAPIStoreDB(conneSign)
@@ -300,3 +303,74 @@ def responseAPIStoreDB(Connection conneSign) {
     }
 }
 
+def MonitoringDocument(Connection conneSign, String refNo, String regionName, String officeName) {
+	
+	'Pembuatan untuk array Index'
+	arrayIndex = 0
+	
+	'declare arraylist arraymatch'
+	ArrayList<String> arrayMatch = new ArrayList<String>()
+	
+	'Mengisi value hasil komparasi, total sign, dan total signed'
+	jumlahSigned = CustomKeywords.'connection.DataVerif.getComparationTotalSignTotalSigned'(conneSign, refNo)
+	
+	'get current date'
+	currentDate = new Date().format('yyyy-MM-dd')
+	
+	fullNameCust = CustomKeywords.'connection.DataVerif.getuserCustomerondocument'(conneSign, refNo)
+	
+	'Call test Case untuk login sebagai admin wom admin client'
+	WebUI.callTestCase(findTestCase('Login/Login_Admin'), [:], FailureHandling.STOP_ON_FAILURE)
+	
+	'Klik Button Document Monitoring'
+	WebUI.click(findTestObject('MonitoringDocument/btn_Document Monitoring'))
+	
+	if(WebUI.verifyElementPresent(findTestObject('MonitoringDocument/lbl_Pengawasan Dokumen'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE))
+	{
+		WebUI.setText(findTestObject('MonitoringDocument/input_NamaPelanggan'), fullNameCust)
+		
+		WebUI.setText(findTestObject('MonitoringDocument/input_TanggalPermintaanDari'), currentDate)
+		
+		WebUI.setText(findTestObject('MonitoringDocument/input_TanggalPermintaanSampai'), currentDate)
+		
+		WebUI.setText(findTestObject('MonitoringDocument/ddl_TipeDok'),findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 67))
+		
+		WebUI.setText(findTestObject('MonitoringDocument/ddl_Wilayah'), regionName)
+		
+		WebUI.setText(findTestObject('MonitoringDocument/input_NomorKontrak'), refNo)
+		
+		WebUI.setText(findTestObject('MonitoringDocument/input_TanggalPermintaanSampai'), currentDate)
+		
+		WebUI.setText(findTestObject('MonitoringDocument/input_TanggalSelesaiSampai'), currentDate)
+		
+		WebUI.setText(findTestObject('MonitoringDocument/input_Status'), jumlahSigned[arrayIndex++])
+		
+		WebUI.setText(findTestObject('MonitoringDocument/input_Cabang'), officeName)
+		
+		WebUI.click(findTestObject('MonitoringDocument/btn_Cari'))
+		
+		WebUI.verifyElementPresent(findTestObject('MonitoringDocument/lbl_ValueDocumentMonitoring'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
+		
+		int sizeRowofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('#listDokumen > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
+		
+		int sizeColumnofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('#listDokumen > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-body-cell'))
+		
+		for(int i = 1; i <= sizeColumnofLabelValue.size(); i ++) {
+		'modify object btn TTD Dokumen di beranda'
+		 modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('MonitoringDocument/lbl_ValueDocumentMonitoring'), 'xpath',
+			'equals', ('//*[@id="listDokumen"]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper['+sizeRowofLabelValue.size()+']/datatable-body-row/div[2]/datatable-body-cell['+i+']/div/p'), true)
+		
+		 
+		 if(i == 1) {
+			 arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectvalues), refNo, false, FailureHandling.CONTINUE_ON_FAILURE))
+		 }
+		 if(i == 2) {
+			 arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectvalues), refNo, false, FailureHandling.CONTINUE_ON_FAILURE))
+			 
+		 }
+		 
+		}
+		
+		}
+	
+}

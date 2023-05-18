@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>ddl_Status</name>
+   <tag></tag>
+   <elementGuidId>2e129c64-125d-4ab2-9f78-f621e07bca4d</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>CSS</key>
+         <value>#transactionStatus > div.ng-select-container.ng-has-value</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>//ng-select[@id='transactionStatus']/div</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>XPATH</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>div</value>
+      <webElementGuid>8619d21c-8eb8-42bb-855f-a82fe91995fb</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>ng-select-container ng-has-value</value>
+      <webElementGuid>f982f17e-b988-4dac-a05a-c1eb87c74b58</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Select status×All×</value>
+      <webElementGuid>4304e98a-62bb-40a3-b2d8-2bab5a69ce0e</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>id(&quot;transactionStatus&quot;)/div[@class=&quot;ng-select-container ng-has-value&quot;]</value>
+      <webElementGuid>d2c3a8f5-04ee-45ca-99ac-f45c141b700f</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:idRelative</name>
+      <type>Main</type>
+      <value>//ng-select[@id='transactionStatus']/div</value>
+      <webElementGuid>b2489e25-64c9-480d-8ec9-7628a1bf31aa</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Status'])[1]/following::div[2]</value>
+      <webElementGuid>06bb97d4-4e9f-4c1f-9e70-175ce25463f4</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='All'])[1]/following::div[6]</value>
+      <webElementGuid>381928c1-05ab-487f-a6c7-153e9a69f14c</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//div[8]/app-question/app-select/div/div[2]/ng-select/div</value>
+      <webElementGuid>376fa4ce-5374-438f-ba13-0ba954999165</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//div[(text() = 'Select status×All×' or . = 'Select status×All×')]</value>
+      <webElementGuid>bd119b5a-75f1-4e46-b8a5-3b4960893e90</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>
