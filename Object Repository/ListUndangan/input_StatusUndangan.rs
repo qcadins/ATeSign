@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_StatusUndangan</name>
+   <tag></tag>
+   <elementGuidId>e2cce43d-be57-480f-bed4-ff9ae09255ce</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;statusUndangan&quot;]/div/div/div[3]/input</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;statusUndangan&quot;]/div/div/div[3]/input</value>
+      <webElementGuid>54e35f53-9e3b-40ca-bb48-cc339b13bf23</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

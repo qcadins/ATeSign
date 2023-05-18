@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_TanggalPengirimanKe</name>
+   <tag></tag>
+   <elementGuidId>bd049db7-0010-4c39-bc94-88950cb97ce9</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;tanggalPengirimanSampai&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;tanggalPengirimanSampai&quot;]</value>
+      <webElementGuid>32a7b3ea-8fab-4f79-861c-b4b82b2e9d53</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

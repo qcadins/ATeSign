@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_StatusMeterai</name>
+   <tag></tag>
+   <elementGuidId>c3a5932d-cf89-43cd-9f9c-3230fc25f663</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;stampDutyStatus&quot;]/div/div/div[3]/input</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;stampDutyStatus&quot;]/div/div/div[3]/input</value>
+      <webElementGuid>087921f9-3546-4b8f-9a48-309f2c294c73</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

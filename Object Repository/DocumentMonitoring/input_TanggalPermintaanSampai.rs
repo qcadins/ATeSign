@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_TanggalPermintaanSampai</name>
+   <tag></tag>
+   <elementGuidId>b6c60dc9-d60e-44b6-b309-cd3243d37df1</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;requestedDateEnd&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;requestedDateEnd&quot;]</value>
+      <webElementGuid>e4a6e07d-71e2-445a-a327-0ad088ea9507</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

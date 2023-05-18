@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_Status</name>
+   <tag></tag>
+   <elementGuidId>09e994f5-a56c-4cf1-ba70-d991483ca913</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;transactionStatus&quot;]/div/div/div[3]/input</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;transactionStatus&quot;]/div/div/div[3]/input</value>
+      <webElementGuid>66086171-1407-47c5-ade4-be5b0abb616c</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

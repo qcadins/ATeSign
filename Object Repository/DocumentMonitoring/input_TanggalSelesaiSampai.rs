@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_TanggalSelesaiSampai</name>
+   <tag></tag>
+   <elementGuidId>45cd78fb-2029-46ff-b323-3fa5426662da</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;completedDateEnd&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;completedDateEnd&quot;]</value>
+      <webElementGuid>ace05cdb-49e6-44d7-8660-1b71662ad062</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

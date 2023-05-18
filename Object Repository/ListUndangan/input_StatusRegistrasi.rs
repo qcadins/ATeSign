@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_StatusRegistrasi</name>
+   <tag></tag>
+   <elementGuidId>ff7dbd0b-ab95-42c4-8108-d093f21d45e1</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;statusRegistrasi&quot;]/div/div/div[3]/input</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;statusRegistrasi&quot;]/div/div/div[3]/input</value>
+      <webElementGuid>de0293c0-5ef5-4436-a55f-2d1afc7f2290</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

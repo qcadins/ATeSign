@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_NoKontrak</name>
+   <tag></tag>
+   <elementGuidId>c73855cb-da78-410d-be8c-73d5216ae71c</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;invoiceNo&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;invoiceNo&quot;]</value>
+      <webElementGuid>535a5b0b-8694-45ca-9b39-cd810978ce63</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

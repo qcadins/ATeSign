@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_NoMeterai</name>
+   <tag></tag>
+   <elementGuidId>10beb9b6-c979-452b-b808-96f44e18c9a7</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;stampDutyNo&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;stampDutyNo&quot;]</value>
+      <webElementGuid>1e7ce50e-5e0f-4ac6-9e73-12f8e3613174</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

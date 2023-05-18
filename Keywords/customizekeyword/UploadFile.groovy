@@ -13,7 +13,7 @@ public class UploadFile {
 	uploadFunction(TestObject to, String filePath) {
 		WebUI.click(to)
 		StringSelection ss = new StringSelection(filePath)
-		Toolkit.defaultToolkit.systemClipboard().setContents(ss, null)
+		Toolkit.defaultToolkit.systemClipboard.setContents(ss, null)
 		Robot robot = new Robot()
 		robot.keyPress(KeyEvent.VK_ENTER) //control, -
 		robot.keyRelease(KeyEvent.VK_ENTER) //-, control
