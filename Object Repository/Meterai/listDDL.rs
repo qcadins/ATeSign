@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>DocumentMonitoring</name>
+   <name>listDDL</name>
    <tag></tag>
-   <elementGuidId>d21cdf60-3b48-414a-8149-8591754f68be</elementGuidId>
+   <elementGuidId>8eb8dd9d-6720-49a6-b621-68abd664c400</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'sidebar-content main-menu-content ng-tns-c133-2 ps']/div[1]/ul/li[6]</value>
+         <value>//*[@class = 'ng-dropdown-panel-items scroll-host']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>class</name>
       <type>Main</type>
-      <value>//*[@class = 'sidebar-content main-menu-content ng-tns-c133-2 ps']/div[1]/ul/li[6]</value>
-      <webElementGuid>49f237ff-b79d-4984-8d77-9e222a83d474</webElementGuid>
+      <value>ng-dropdown-panel-items scroll-host</value>
+      <webElementGuid>ce1861e0-caeb-425e-8ae5-c23c0d389687</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

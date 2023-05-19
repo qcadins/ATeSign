@@ -1,9 +1,21 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
+
+import com.kms.katalon.core.configuration.RunConfiguration
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable
 import org.openqa.selenium.Keys as Keys
+
+'setting untuk membuat lokasi default folder download'
+HashMap<String, ArrayList> chromePrefs = new HashMap<String, ArrayList>()
+
+chromePrefs.put('download.default_directory', System.getProperty('user.dir') + '\\Download')
+
+RunConfiguration.setWebDriverPreferencesProperty('prefs', chromePrefs)
+
+'get data file path'
+GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
 'open browser'
 WebUI.openBrowser('')
