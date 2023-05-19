@@ -260,10 +260,10 @@ for (int y = 0; y < docid.size(); y++) {
 		/*
         'Klik download file'
         WebUI.click(modifyObjectbtnDownloadDoc)
-		*/
+		
         'Kasih waktu 4 detik untuk proses download'
         WebUI.delay(4)
-
+		*/
         'Jika error lognya muncul'
         if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
             'Tulis di excel itu adalah error'
@@ -274,10 +274,6 @@ for (int y = 0; y < docid.size(); y++) {
         
         'Check apakah sudah terddownload menggunakan custom keyword'
         CustomKeywords.'customizekeyword.Download.isFileDownloaded'('Yes')
-
-        'get data kotak masuk send document secara asc, dimana customer no 1'
-        ArrayList<String> resultSigner = CustomKeywords.'connection.DataVerif.getSignerKotakMasukSendDoc'(conneSign, docid[
-            y])
 
         'Klik btnSigner'
         WebUI.click(modifyObjectbtnSigner)
@@ -290,9 +286,13 @@ for (int y = 0; y < docid.size(); y++) {
 
         'declare arrayindex buat signer'
         arrayindex_signer = 0
-
         'loop untuk row popup'
         for (int i = 1; i <= variable_row_popup.size(); i++) {
+			'get data kotak masuk send document secara asc, dimana customer no 1'
+			ArrayList<String> resultSigner = CustomKeywords.'connection.DataVerif.getSignerKotakMasukSendDoc'(conneSign, docid[y], emailSigner[i-1])
+			
+			arrayindex_signer = 0
+			
             'loop untuk column popup'
             for (int m = 1; m <= (variable_col_popup.size() / variable_row_popup.size()); m++) {
                 'modify object text nama, email, signer Type, sudah aktivasi Untuk yang terakhir belum bisa, dikarenakan masih gak ada data (-) Dikarenakan modifynya bukan p di lastnya, melainkan span'
@@ -317,7 +317,7 @@ for (int y = 0; y < docid.size(); y++) {
 'jika data db tidak sesuai dengan excel'
 if (arrayMatch.contains(false)) {
     'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(docid[y], GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
         (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedNoneUI)
 }
 }

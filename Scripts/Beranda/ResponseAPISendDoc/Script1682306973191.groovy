@@ -154,8 +154,7 @@ respon = WS.sendRequest(findTestObject('Postman/Send Document', [('tenantCode') 
 
 'jika response 200 / hit api berhasil'
 if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
-
-'ambil respon text dalam bentuk code.'
+    'ambil respon text dalam bentuk code.'
     status_Code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
     'jika status codenya 0, verifikasi datanya benar'
@@ -167,21 +166,22 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 
         'Responsenya diwrite di excel'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Send to Sign', 4, GlobalVariable.NumofColm - 
-            1, GlobalVariable.Response.toString().replace('[','').replace(']',''))
+            1, GlobalVariable.Response.toString().replace('[', '').replace(']', ''))
 
         'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
         int jumlahsignertandatangan = 0
+		
+		ArrayList<String> emailSigner = email
 
         'write to excel success'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Send to Sign', 0, GlobalVariable.NumofColm - 
             1, GlobalVariable.StatusSuccess)
 
+        WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('excelPathFESignDocument') : 'Beranda/SendtoSign', ('jumlahsignertandatangan') : jumlahsignertandatangan], 
+         FailureHandling.CONTINUE_ON_FAILURE)
         'Call test case mengenai kotak masuk dan melempar variable API_ExcelPath, dan jumlah signer untuk tanda tangan'
-        //WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('excelPathFESignDocument') : 'Beranda/SendtoSign', ('jumlahsignertandatangan') : jumlahsignertandatangan], 
-       // FailureHandling.CONTINUE_ON_FAILURE)
+        MonitoringDocument(conneSign, refNo, regionName, officeName, jumlahsignertandatangan, emailSigner)
 
-		MonitoringDocument()
-		
         if (GlobalVariable.checkStoreDB == 'Yes') {
             'call Fungsi responseAPIStoreDB'
             responseAPIStoreDB(conneSign)
@@ -193,8 +193,8 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL).toString()
 
         'write to excel status failed dan reason'
-
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace('-', 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
+            GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace('-', 
                 '') + ';') + messageFailed)
 
         'Jika result Tenantnya sama, maka check error report'
@@ -207,13 +207,22 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 }
 
 'Fungsi PDF to Base64'
+
+'Fungsi responseAPIStoreDB'
+
 def pdfToBase64(String fileName) {
     String base64 = CustomKeywords.'customizekeyword.ConvertFile.base64File'(fileName)
 
     return base64
 }
 
-'Fungsi responseAPIStoreDB'
+'jika data db tidak sesuai dengan excel'
+if (arrayMatch.contains(false)) {
+	'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm,
+		GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
+}
+
 def responseAPIStoreDB(Connection conneSign) {
     'declare arraylist arraymatch'
     ArrayList<String> arrayMatch = new ArrayList<String>()
@@ -303,74 +312,89 @@ def responseAPIStoreDB(Connection conneSign) {
     }
 }
 
-def MonitoringDocument(Connection conneSign, String refNo, String regionName, String officeName) {
-	
-	'Pembuatan untuk array Index'
-	arrayIndex = 0
-	
-	'declare arraylist arraymatch'
-	ArrayList<String> arrayMatch = new ArrayList<String>()
-	
-	'Mengisi value hasil komparasi, total sign, dan total signed'
-	jumlahSigned = CustomKeywords.'connection.DataVerif.getComparationTotalSignTotalSigned'(conneSign, refNo)
-	
-	'get current date'
-	currentDate = new Date().format('yyyy-MM-dd')
-	
-	fullNameCust = CustomKeywords.'connection.DataVerif.getuserCustomerondocument'(conneSign, refNo)
-	
+def MonitoringDocument(Connection conneSign, String refNo, String regionName, String officeName, int jumlahsignertandatangan, ArrayList<String> emailSigner) {
 	'Call test Case untuk login sebagai admin wom admin client'
 	WebUI.callTestCase(findTestCase('Login/Login_Admin'), [:], FailureHandling.STOP_ON_FAILURE)
 	
-	'Klik Button Document Monitoring'
-	WebUI.click(findTestObject('MonitoringDocument/btn_Document Monitoring'))
-	
-	if(WebUI.verifyElementPresent(findTestObject('MonitoringDocument/lbl_Pengawasan Dokumen'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE))
-	{
-		WebUI.setText(findTestObject('MonitoringDocument/input_NamaPelanggan'), fullNameCust)
-		
-		WebUI.setText(findTestObject('MonitoringDocument/input_TanggalPermintaanDari'), currentDate)
-		
-		WebUI.setText(findTestObject('MonitoringDocument/input_TanggalPermintaanSampai'), currentDate)
-		
-		WebUI.setText(findTestObject('MonitoringDocument/ddl_TipeDok'),findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 67))
-		
-		WebUI.setText(findTestObject('MonitoringDocument/ddl_Wilayah'), regionName)
-		
-		WebUI.setText(findTestObject('MonitoringDocument/input_NomorKontrak'), refNo)
-		
-		WebUI.setText(findTestObject('MonitoringDocument/input_TanggalPermintaanSampai'), currentDate)
-		
-		WebUI.setText(findTestObject('MonitoringDocument/input_TanggalSelesaiSampai'), currentDate)
-		
-		WebUI.setText(findTestObject('MonitoringDocument/input_Status'), jumlahSigned[arrayIndex++])
-		
-		WebUI.setText(findTestObject('MonitoringDocument/input_Cabang'), officeName)
-		
-		WebUI.click(findTestObject('MonitoringDocument/btn_Cari'))
-		
-		WebUI.verifyElementPresent(findTestObject('MonitoringDocument/lbl_ValueDocumentMonitoring'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
-		
-		int sizeRowofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('#listDokumen > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
-		
-		int sizeColumnofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('#listDokumen > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-body-cell'))
-		
-		for(int i = 1; i <= sizeColumnofLabelValue.size(); i ++) {
-		'modify object btn TTD Dokumen di beranda'
-		 modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('MonitoringDocument/lbl_ValueDocumentMonitoring'), 'xpath',
-			'equals', ('//*[@id="listDokumen"]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper['+sizeRowofLabelValue.size()+']/datatable-body-row/div[2]/datatable-body-cell['+i+']/div/p'), true)
-		
-		 
-		 if(i == 1) {
-			 arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectvalues), refNo, false, FailureHandling.CONTINUE_ON_FAILURE))
-		 }
-		 if(i == 2) {
-			 arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectvalues), refNo, false, FailureHandling.CONTINUE_ON_FAILURE))
-			 
-		 }
-		 
-		}
-		
-		}
-	
+	'Pembuatan untuk array Index untuk total Sign dan total Signed'
+    arrayIndexforSign = 0
+
+    'Pembuatan untuk array Index result Query'
+    arrayIndex = 0
+
+    'declare arraylist arraymatch'
+    ArrayList<String> arrayMatch = new ArrayList<String>()
+
+    'Mengisi value hasil komparasi, total sign, dan total signed'
+    jumlahSigned = CustomKeywords.'connection.DataVerif.getComparationTotalSignTotalSigned'(conneSign, refNo)
+
+    'get current date'
+    currentDate = new Date().format('yyyy-MM-dd')
+
+    fullNameCust = CustomKeywords.'connection.DataVerif.getuserCustomerondocument'(conneSign, refNo)
+
+    'Call test Case untuk login sebagai admin wom admin client'
+    WebUI.callTestCase(findTestCase('Login/Login_Admin'), [:], FailureHandling.STOP_ON_FAILURE)
+
+    'Klik Button Document Monitoring'
+    WebUI.click(findTestObject('DocumentMonitoring/DocumentMonitoring'))
+
+    if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/input_NamaPelanggan'), GlobalVariable.TimeOut, 
+        FailureHandling.CONTINUE_ON_FAILURE)) {
+        WebUI.setText(findTestObject('DocumentMonitoring/input_NamaPelanggan'), fullNameCust)
+
+        WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalPermintaanDari'), currentDate)
+
+        WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalSelesaiDari'), currentDate)
+
+        WebUI.setText(findTestObject('DocumentMonitoring/input_TipeDok'), findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 
+                67))
+
+        WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), regionName)
+
+        WebUI.setText(findTestObject('DocumentMonitoring/input_NoKontrak'), refNo)
+
+        WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalPermintaanSampai'), currentDate)
+
+        WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalSelesaiSampai'), currentDate)
+
+        WebUI.setText(findTestObject('DocumentMonitoring/input_Status'), jumlahSigned[arrayIndexforSign++])
+
+        WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), officeName)
+
+        WebUI.click(findTestObject('DocumentMonitoring/button_Cari'))
+
+        WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/lbl_Value'), GlobalVariable.TimeOut, 
+            FailureHandling.CONTINUE_ON_FAILURE)
+
+        int sizeRowofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('#listDokumen > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
+
+        int sizeColumnofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('#listDokumen > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-body-cell'))
+
+        resultQuery = CustomKeywords.'connection.DataVerif.getDocumentMonitoring'(conneSign, refNo)
+
+        for (int j = 1; j <= sizeRowofLabelValue.size(); j++) {
+            for (int i = 1; i <= sizeColumnofLabelValue.size() - 1; i++) {
+                'modify object btn TTD Dokumen di beranda'
+                modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 
+                    'xpath', 'equals', ((('//*[@id="listDokumen"]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
+                    j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div/p', true)
+
+                if (i == 7) {
+					totalSignandtotalSigned = WebUI.getText(modifyObjectvalues).split(' / ',-1)
+					
+					arrayMatch.add(WebUI.verifyMatch(totalSignandtotalSigned, jumlahsignertandatangan, false,
+						FailureHandling.CONTINUE_ON_FAILURE))
+
+					arrayMatch.add(WebUI.verifyEqual(emailSigner.size(), (prosesttd_pencariandokumen[1]).replace(' ', ''), FailureHandling.CONTINUE_ON_FAILURE))
+					
+                } else if (i == 8) {
+                } else {
+                    arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectvalues), resultQuery[arrayIndex++], false, 
+                            FailureHandling.CONTINUE_ON_FAILURE))
+                }
+            }
+        }
+    }
 }
+
