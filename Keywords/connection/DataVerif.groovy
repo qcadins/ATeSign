@@ -14,7 +14,7 @@ public class DataVerif {
 	Statement stm
 	ResultSetMetaData metadata
 	ResultSet resultSet
-	ArrayList<String> listdata = new ArrayList<>()
+	ArrayList<String> listdata = []
 
 	@Keyword
 	getOTP(Connection conn, String email) {
@@ -422,7 +422,6 @@ public class DataVerif {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select ms.description as signertype,amm.full_name as name, amm.login_id as email,CASE WHEN amm.is_active = '1' THEN 'Sudah Aktivasi' END as aktivasi, CASE WHEN tdds.sign_date is not null THEN 'Signed' ELSE msl.description END as status, CASE WHEN tdds.sign_date IS null THEN '-' else to_char(tdds.sign_date, 'DD-Mon-YYYY HH24:MI') END sign_date from tr_document_d tdd join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join ms_lov msl on tdd.lov_sign_status = msl.id_lov join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d join ms_lov ms on tdds.lov_signer_type = ms.id_lov join am_msuser amm on tdds.id_ms_user = amm.id_ms_user where document_id = '" + documentid + "' and amm.login_id = '"+emailSigner+"' ORDER BY tdds.id_document_d_sign asc limit 1")
-
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -495,7 +494,6 @@ public class DataVerif {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("SELECT STRING_AGG(distinct au.login_id, ';') AS login FROM tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user WHERE tdd.document_id = '"+documentid+"'")
-
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -1216,7 +1214,7 @@ public class DataVerif {
 		}
 		listdata
 	}
-
+	
 	@Keyword
 	getSaldoUsedBasedonPaymentType(Connection conn, String refnumber, String userEmail){
 		String data
@@ -1239,6 +1237,44 @@ public class DataVerif {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select tdh.ref_number, msl_doctype.description, case when tdd.id_ms_doc_template is null then case when tdd.document_name is null then '' else tdd.document_name end else mdt.doc_template_name end, case when amm.full_name is null then '' else amm.full_name end, TO_CHAR(tdh.dtm_crt, 'DD-Mon-YYYY HH24:MI'), case when tdd.completed_date is null then '-' else TO_CHAR(tdd.completed_date, 'DD-Mon-YYYY HH24:MI') end ,mso.office_name, msr.region_name, msl_signstatus.description from tr_document_d tdd join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join ms_lov msl_doctype on tdh.lov_doc_type = msl_doctype.id_lov left join ms_doc_template mdt on tdd.id_ms_doc_template = mdt.id_doc_template left join am_msuser amm on tdh.id_msuser_customer = amm.id_ms_user join ms_lov msl_signstatus on tdd.lov_sign_status = msl_signstatus.id_lov join ms_office mso on tdh.id_ms_office = mso.id_ms_office join ms_region msr on mso.id_ms_region = msr.id_ms_region where tdh.ref_number = '"+refNumber+"' order by tdd.document_name desc, mdt.doc_template_name desc")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+	
+	@Keyword
+	getStampdutyData(Connection conn, String stampdutyno) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select tbm.notes, tbm.ref_no, to_char(tbm.trx_date, 'dd-Mon-yyyy'), tsd.stamp_duty_fee, mo.office_name, mr.region_name, mbl.business_line_name, ml.description from tr_balance_mutation tbm join tr_document_d tdd on tdd.id_document_d = tbm.id_document_d join tr_document_h tdh on tdh.id_document_h = tdd.id_document_h join tr_stamp_duty tsd on tsd.id_stamp_duty = tbm.id_stamp_duty join ms_business_line mbl on mbl.id_ms_business_line = tdh.id_ms_business_line join ms_office mo on mo.id_ms_office = tdh.id_ms_office join ms_region mr on mr.id_ms_region = mo.id_ms_region join ms_lov ml on ml.id_lov = tsd.lov_stamp_duty_status where tbm.notes = '" + stampdutyno + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+	
+	@Keyword
+	getStampdutyTrxData(Connection conn, String stampdutyno) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select tbm.trx_no, tbm.ref_no, CASE WHEN tdd.id_ms_doc_template IS NULL THEN tdd.document_name ELSE mdt.doc_template_name END, amu.full_name, ml.description, to_char(tbm.trx_date, 'dd-Mon-yyyy HH24:MI') from tr_balance_mutation tbm join tr_document_d tdd on tdd.id_document_d = tbm.id_document_d left join am_msuser amu on amu.id_ms_user = tbm.id_ms_user join ms_lov ml on ml.id_lov = tbm.lov_trx_type join tr_stamp_duty tsd on tsd.id_stamp_duty = tbm.id_stamp_duty left join ms_doc_template mdt on mdt.id_doc_template = tdd.id_ms_doc_template where tbm.notes = '" + stampdutyno + "'")
+
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

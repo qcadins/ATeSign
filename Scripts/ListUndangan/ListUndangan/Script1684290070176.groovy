@@ -19,6 +19,8 @@ import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
 'call test case login admin'
 WebUI.callTestCase(findTestCase('Login/Login_Admin'), [:], FailureHandling.STOP_ON_FAILURE)
 
+GlobalVariable.FlagFailed = 0
+
 'click menu list undangan'
 WebUI.click(findTestObject('ListUndangan/menu_ListUndangan'))
 
@@ -34,8 +36,20 @@ if (findTestData(excelPathListUndangan).getValue(GlobalVariable.NumofColm, 9).eq
     WebUI.delay(3)
 
     'check isfiled downloaded'
-    CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathListUndangan).getValue(GlobalVariable.NumofColm, 
-            10))
+    if (CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathListUndangan).getValue(GlobalVariable.NumofColm, 
+            10)) == false) {
+		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedDownload'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('ListUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+			(findTestData(excelPathListUndangan).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedDownload)
+
+		GlobalVariable.FlagFailed = 1
+    }
+}
+
+if (GlobalVariable.FlagFailed == 0) {
+	'write to excel success'
+	CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Meterai', 0, GlobalVariable.NumofColm -
+		1, GlobalVariable.StatusSuccess)
 }
 
 def checkPaging() {

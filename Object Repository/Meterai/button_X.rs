@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>DocumentMonitoring</name>
+   <name>button_X</name>
    <tag></tag>
-   <elementGuidId>d21cdf60-3b48-414a-8149-8591754f68be</elementGuidId>
+   <elementGuidId>acfadaed-20dd-4857-acd3-9323c5a64a64</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'sidebar-content main-menu-content ng-tns-c133-2 ps']/div[1]/ul/li[6]</value>
+         <value>//*[@class = 'modal-body']/button/span</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@class = 'sidebar-content main-menu-content ng-tns-c133-2 ps']/div[1]/ul/li[6]</value>
-      <webElementGuid>49f237ff-b79d-4984-8d77-9e222a83d474</webElementGuid>
+      <value>//*[@class = 'modal-body']/button/span</value>
+      <webElementGuid>03681438-4fe1-4d41-8db5-73a5fd160b88</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
