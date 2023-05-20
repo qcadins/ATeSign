@@ -124,6 +124,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             bodyAPI = new String()
 
             'looping berdasarkan jumlah dari signAction di dokumen pertama'
+			
             for (int t = 0; t < signActions.size(); t++) {
 				'Jika semua data mengenai Sign Location seperti page, llx, lly, urx, ury tidak kosong'
 				if (!(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm,34).length() == 0 && findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 35).length() == 0 && findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 36).length() == 0 && findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 37).length() == 0 && findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 38).length() == 0)) {
@@ -189,10 +190,20 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 								', "lly" : ' + llySigns[l] + ', "urx" : ' + urxSigns[l] + ', "ury" : ' +
 								urySigns[l] + '}]'
 							}
+							
+							'Jika loopingan sudah di akhir'
+							if (t == signActions.size() - 1) {
+								'isi signlocStoreDB'
+								signlocStoreDB = signlocStoreDB + '{"llx":' + llxSigns[l] + ',"lly":' +
+									 llySigns[l] + ',"urx":' + urxSigns[l] + ',"ury":' + urySigns[l] + '}'
+							} else {
+								'isi signlocStoreDB'
+								signlocStoreDB = signlocStoreDB + '{"llx":' + llxSigns[l] + ',"lly":' +
+									 llySigns[l] + ',"urx":' + urxSigns[l] + ',"ury":' + urySigns[l] + '};'
 							}
-                            'isi signlocStoreDB'
-                            signlocStoreDB = signlocStoreDB + '{"llx":' + llxSigns[l] + ',"lly":' +
-								 llySigns[l] + ',"urx":' + urxSigns[l] + ',"ury":' + urySigns[l] + '}'
+							
+							}	
+
                         } 
 						//Jika tidak yang terakhir, maka
 						else {
@@ -218,12 +229,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 								 ', "lly" : ' + llySigns[l] + ', "urx" : ' + urxSigns[l] + ', "ury" : ' +
 									urySigns[l] + '},'
 							}
-                            }
 							'isi signlocStoreDB'
-                            signlocStoreDB = signlocStoreDB + '{"llx":' + llxSigns[l] + ',"lly":' + llySigns[l] +
+							signlocStoreDB = signlocStoreDB + '{"llx":' + llxSigns[l] + ',"lly":' + llySigns[l] +
 								 ',"urx":' + urxSigns[l] + ',"ury":' + urySigns[l] + '};'
+                            }
+
                         }
                     }
+
 					//Jika loopingan sudah berada di akhir
 					 else if (l == pageSigns.size() - 1) {
 						 if(pageSigns[l] != '' || llxSigns[l] != '""') {
@@ -248,19 +261,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 						 }
 							'Jika loopingan sudah di akhir'
                         if (t == signActions.size() - 1) {
-							if(pageSigns[l] != '' || llxSigns[l] != '""') {
                             'isi signlocStoreDB'
                             signlocStoreDB = signlocStoreDB + '{"llx":' + llxSigns[l] + ',"lly":' +
 								 llySigns[l] + ',"urx":' + urxSigns[l] + ',"ury":' + urySigns[l] + '}'
-                        } else if (llxSigns[l] == '""') {
-								'Input body mengenai page'
-                                bodyAPI = bodyAPI + '{"page" : ' + pageSigns[l] + '}]'
-                            }else {
+                        } else {
                             'isi signlocStoreDB'
                             signlocStoreDB = signlocStoreDB + '{"llx":' + llxSigns[l] + ',"lly":' +
 								 llySigns[l] + ',"urx":' + urxSigns[l] + ',"ury":' + urySigns[l] + '};'
                         }
-						}
+						
                     } 
 					//Jika loopingan tidak diawal dan diakhir
 					else {
@@ -285,12 +294,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 									urySigns[l] + '},'
 							}
 							}
-                        
-                        'isi signlocStoreDB'
-                        signlocStoreDB = signlocStoreDB + '{"llx":' + llxSigns[l] + ',"lly":' +
-							 llySigns[l] + ',"urx":' + urxSigns[l] + ',"ury":' + urySigns[l] + '};'
+							'isi signlocStoreDB'
+							signlocStoreDB = signlocStoreDB + '{"llx":' + llxSigns[l] + ',"lly":' +
+								 llySigns[l] + ',"urx":' + urxSigns[l] + ',"ury":' + urySigns[l] + '};'
                     }
+					println 'loopingan ke ' + l + bodyAPI
+					println 'loopingan ke ' + l + signlocStoreDB
                 }
+				
+				
                 }
                 'Jika signAction yang pertama untuk dokumen pertama'
                 if (t == 0) {

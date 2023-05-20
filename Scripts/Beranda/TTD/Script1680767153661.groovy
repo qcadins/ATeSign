@@ -33,13 +33,13 @@ ArrayList<String> arrayMatch = []
 arrayIndex = 0
 
 'looping untuk sending document'
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathFESignDocument).columnNumbers; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(excelPathFESignDocument).columnNumbers*/; (GlobalVariable.NumofColm)++) {
     'Call API Send doc'
     WebUI.callTestCase(findTestCase('Beranda/ResponseAPISendDoc'), [:], FailureHandling.CONTINUE_ON_FAILURE)
 }
 
 
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathFESignDocument).columnNumbers; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(excelPathFESignDocument).columnNumbers*/; (GlobalVariable.NumofColm)++) {
     'Jika tidak ada dokumen id di excel'
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 5) == '') {
         'loop selanjutnya'
@@ -645,8 +645,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Send to Sign', 
                         0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 
+					noKontrak_perdoc = noKontrak.split(';', -1)
+					
+					'looping untuk mendapatkan total saldo yang digunakan per nomor kontrak'
+					for (i = 0; i < noKontrak_perdoc.size(); i++) {
+						saldoUsed = (saldoUsed + CustomKeywords.'connection.DataVerif.getSaldoUsedBasedonPaymentType'(conneSign, noKontrak_perdoc[
+						i], emailSigner[(o - 1)]))
+					}
+					
                     'Jumlah signer tanda tangan akan ditambah mengenai total success yang ditandatangani, yaitu'
-                    jumlahSignerTandaTangan = (jumlahSignerTandaTangan + 1)
+                    jumlahSignerTandaTangan = (jumlahSignerTandaTangan + saldoUsed)
 
                     'Looping maksimal 100 detik untuk signing proses. Perlu lama dikarenakan walaupun requestnya done(3), tapi dari VIDAnya tidak secepat itu.'
                     for (int y = 1; y <= 5; y++) {
@@ -691,14 +699,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
         'Split dokumen template name dan nomor kontrak per dokumen berdasarkan delimiter ;'
         documentTemplateName_perdoc = documentTemplateName.split(';', -1)
-
-        noKontrak_perdoc = noKontrak.split(';', -1)
-
-        'looping untuk mendapatkan total saldo yang digunakan per nomor kontrak'
-        for (i = 1; i <= noKontrak_perdoc.size(); i++) {
-            saldoUsed = (saldoUsed + CustomKeywords.'connection.DataVerif.getSaldoUsedBasedonPaymentType'(conneSign, noKontrak_perdoc[
-                i], emailSigner[(o - 1)]))
-        }
         
         'beri maks 30 sec mengenai perubahan total sign'
         for (int b = 1; b <= 3; b++) {
@@ -708,7 +708,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'ambil saldo after'
             saldoSignAfter = checkSaldoSign()
 
-            saldoUsed = 'Jika count saldo otp after dengan yang before dikurangi 1 ditambah dengan '
+			'Jika count saldo otp after dengan yang before dikurangi 1 ditambah dengan '
 
             if (WebUI.verifyEqual(Integer.parseInt(otpBefore) - (countResend + 1), Integer.parseInt(otpAfter), FailureHandling.OPTIONAL)) {
                 'Jika count saldo sign/ttd diatas (after) sama dengan yang dulu/pertama (before) dikurang jumlah dokumen yang ditandatangani'

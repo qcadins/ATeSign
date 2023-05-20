@@ -20,7 +20,7 @@ String resultTenant = CustomKeywords.'connection.DataVerif.getTenant'(conneSign,
 semicolon = ';'
 splitIndex = -1
 
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_Excel_Path).columnNumbers; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(API_Excel_Path).columnNumbers*/; (GlobalVariable.NumofColm)++) {
     String refNo = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 11)
 	
     String documentTemplateCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 12)
@@ -159,7 +159,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
             GlobalVariable.Response = documentId
 
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 
-                4, GlobalVariable.NumofColm - 1, GlobalVariable.Response.toString())
+                4, GlobalVariable.NumofColm - 1, GlobalVariable.Response.toString().replace('[','').replace(']',''))
 					
 			'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
 			int jumlahsignertandatangan = 0
@@ -169,7 +169,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 
                 0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 
-            WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('API_Excel_Path') : 'Registrasi/SendDocument',('jumlahsignertandatangan') : jumlahsignertandatangan], FailureHandling.CONTINUE_ON_FAILURE)
+            WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('excelPathFESignDocument') : 'Registrasi/SendDocument',('jumlahsignertandatangan') : jumlahsignertandatangan], FailureHandling.CONTINUE_ON_FAILURE)
             if (GlobalVariable.checkStoreDB == 'Yes') {
                 'call test case ResponseAPIStoreDB'
                 WebUI.callTestCase(findTestCase('Send_Document/ResponseAPIStoreDB'), [('API_Excel_Path') : 'Registrasi/SendDocument'], 

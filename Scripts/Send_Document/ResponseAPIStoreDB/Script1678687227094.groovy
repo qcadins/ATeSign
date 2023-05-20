@@ -16,16 +16,31 @@ for (int i = 0; i < docid.size(); i++) {
     'get data API Send Document dari DB (hanya 1 signer)'
     ArrayList<String> result = CustomKeywords.'connection.DataVerif.getSendDoc'(conneSign, docid[i])
 
-    'declare arrayindex'
-    arrayindex = 0
+	'Mengambil email berdasarkan documentId'
+	ArrayList<String> emailSigner = CustomKeywords.'connection.DataVerif.getEmailLogin'(conneSign, docid[i]).split(';',-1)
 
-    'verify email'
-    arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 40).replace('"', ''), 
-            result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+	'split email dari excel'
+	email = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 40).replace('"','').split(';',-1)
+	
+	'split signer type dari excel'
+	signerType = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 26).replace('"','').split(';',-1)
+	
+	for(int r = 0; r < emailSigner.size();r++) {
+		ArrayList<String> resultStoreEmailandType = CustomKeywords.'connection.DataVerif.getSendDocForEmailAndSignerType'(conneSign, docid[i], emailSigner[r])
+		
+		'declare arrayindex'
+		arrayindex = 0
 
-    'verify signerType'
-    arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 26).replace('"', ''), 
-            result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+		'verify email'
+		arrayMatch.add(WebUI.verifyMatch(email[r], resultStoreEmailandType[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+
+		'verify signerType'
+		arrayMatch.add(WebUI.verifyMatch(signerType[r], resultStoreEmailandType[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+	}
+	
+	'declare arrayindex'
+	arrayindex = 0
 
     'verify tenant code'
     arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 9).replace('"', ''), 

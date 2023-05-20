@@ -109,7 +109,7 @@ public class DataVerif {
 	getSendDoc(Connection conn, String documentid) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select STRING_AGG(amm.login_id,';') as email, STRING_AGG(lov.code,';') as code, mst.tenant_code, tdh.ref_number, tdd.document_id,mdt.doc_template_code, mso.office_code,mso.office_name, msr.region_code, msr.region_name,mbl.business_line_code, mbl.business_line_name, tdd.is_sequence,msv.vendor_code, tdh.result_url,tdh.url_upload, tdh.total_document from tr_document_d as tdd join tr_document_h as tdh on tdd.id_document_h = tdh.id_document_h join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d join am_msuser as amm on tdds.id_ms_user = amm.id_ms_user join ms_tenant as mst on tdd.id_ms_tenant = mst.id_ms_tenant join ms_lov as lov on tdds.lov_signer_type = lov.id_lov join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template join ms_office as mso on tdh.id_ms_office = mso.id_ms_office join ms_region as msr on mso.id_ms_region = msr.id_ms_region join ms_business_line as mbl on tdh.id_ms_business_line = mbl.id_ms_business_line join ms_vendor as msv on tdd.id_ms_vendor = msv.id_ms_vendor where tdd.document_id = '" + documentid + "' GROUP BY mst.tenant_code, tdh.ref_number, tdd.document_id,mdt.doc_template_code, mso.office_code,mso.office_name, msr.region_code, msr.region_name,mbl.business_line_code, mbl.business_line_name, mso.office_code, tdd.is_sequence,msv.vendor_code,tdh.result_url,tdh.url_upload,tdh.total_document")
+		resultSet = stm.executeQuery("select mst.tenant_code, tdh.ref_number, tdd.document_id,mdt.doc_template_code, mso.office_code,mso.office_name, msr.region_code, msr.region_name,mbl.business_line_code, mbl.business_line_name, tdd.is_sequence,msv.vendor_code, tdh.result_url,tdh.url_upload, tdh.total_document from tr_document_d as tdd join tr_document_h as tdh on tdd.id_document_h = tdh.id_document_h join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d join am_msuser as amm on tdds.id_ms_user = amm.id_ms_user join ms_tenant as mst on tdd.id_ms_tenant = mst.id_ms_tenant join ms_lov as lov on tdds.lov_signer_type = lov.id_lov join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template join ms_office as mso on tdh.id_ms_office = mso.id_ms_office join ms_region as msr on mso.id_ms_region = msr.id_ms_region join ms_business_line as mbl on tdh.id_ms_business_line = mbl.id_ms_business_line join ms_vendor as msv on tdd.id_ms_vendor = msv.id_ms_vendor where tdd.document_id = '" + documentid + "' GROUP BY mst.tenant_code, tdh.ref_number, tdd.document_id,mdt.doc_template_code, mso.office_code,mso.office_name, msr.region_code, msr.region_name,mbl.business_line_code, mbl.business_line_name, mso.office_code, tdd.is_sequence,msv.vendor_code,tdh.result_url,tdh.url_upload,tdh.total_document")
 
 		metadata = resultSet.metaData
 
@@ -1196,25 +1196,7 @@ public class DataVerif {
 		data
 	}
 
-	@Keyword
-	getComparationTotalSignTotalSigned(Connection conn, String refnumber) {
-		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select CASE WHEN tdd.total_sign = tdd.total_signed then 'Complete' else 'Use Sign' end, tdd.total_signed, tdd.total_sign from tr_document_d tdd join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h where tdh.ref_number = '"+refnumber+"'")
-
-		metadata = resultSet.metaData
-
-		columnCount = metadata.getColumnCount()
-
-		while (resultSet.next()) {
-			for (i = 1 ; i <= columnCount ; i++) {
-				data = resultSet.getObject(i)
-				listdata.add(data)
-			}
-		}
-		listdata
-	}
-	
 	@Keyword
 	getSaldoUsedBasedonPaymentType(Connection conn, String refnumber, String userEmail){
 		String data
@@ -1249,7 +1231,7 @@ public class DataVerif {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getStampdutyData(Connection conn, String stampdutyno) {
 		stm = conn.createStatement()
@@ -1268,13 +1250,48 @@ public class DataVerif {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getStampdutyTrxData(Connection conn, String stampdutyno) {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select tbm.trx_no, tbm.ref_no, CASE WHEN tdd.id_ms_doc_template IS NULL THEN tdd.document_name ELSE mdt.doc_template_name END, amu.full_name, ml.description, to_char(tbm.trx_date, 'dd-Mon-yyyy HH24:MI') from tr_balance_mutation tbm join tr_document_d tdd on tdd.id_document_d = tbm.id_document_d left join am_msuser amu on amu.id_ms_user = tbm.id_ms_user join ms_lov ml on ml.id_lov = tbm.lov_trx_type join tr_stamp_duty tsd on tsd.id_stamp_duty = tbm.id_stamp_duty left join ms_doc_template mdt on mdt.id_doc_template = tdd.id_ms_doc_template where tbm.notes = '" + stampdutyno + "'")
 
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+
+	@Keyword
+	getDocumentStatus(Connection conn, String refnumber){
+		String data
+
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select msl.description from tr_document_d tdd join ms_lov msl on tdd.lov_sign_status = msl.id_lov join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h where tdh.ref_number = '"+refnumber+"'")
+		metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+
+	@Keyword
+	getSendDocForEmailAndSignerType(Connection conn, String documentid,String emailSigner) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select DISTINCT amm.login_id as email, lov.code as code from tr_document_d as tdd join tr_document_h as tdh on tdd.id_document_h = tdh.id_document_h join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d join am_msuser as amm on tdds.id_ms_user = amm.id_ms_user join ms_tenant as mst on tdd.id_ms_tenant = mst.id_ms_tenant join ms_lov as lov on tdds.lov_signer_type = lov.id_lov where tdd.document_id = '"+documentid+"' and amm.login_id = '"+emailSigner+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

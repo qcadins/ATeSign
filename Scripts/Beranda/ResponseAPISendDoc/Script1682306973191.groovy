@@ -10,6 +10,7 @@ import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
+import org.openqa.selenium.By as By
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
@@ -216,13 +217,6 @@ def pdfToBase64(String fileName) {
     return base64
 }
 
-'jika data db tidak sesuai dengan excel'
-if (arrayMatch.contains(false)) {
-	'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm,
-		GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
-}
-
 def responseAPIStoreDB(Connection conneSign) {
     'declare arraylist arraymatch'
     ArrayList<String> arrayMatch = new ArrayList<String>()
@@ -232,17 +226,32 @@ def responseAPIStoreDB(Connection conneSign) {
     for (int r = 0; r < docid.size(); r++) {
         'get data API Send Document dari DB (hanya 1 signer)'
         ArrayList<String> resultStoreDB = CustomKeywords.'connection.DataVerif.getSendDoc'(conneSign, docid[r])
+		
+		'Mengambil email berdasarkan documentId'
+		ArrayList<String> emailSigner = CustomKeywords.'connection.DataVerif.getEmailLogin'(conneSign, docid[r]).split(';',-1)
 
-        'declare arrayindex'
+		'split email dari excel'
+		email = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 40).replace('"','').split(';',-1)
+		
+		'split signer type dari excel'
+		signerType = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 26).replace('"','').split(';',-1)
+		
+		for(int i = 0; i< emailSigner.size();i++) {
+			ArrayList<String> resultStoreEmailandType = CustomKeywords.'connection.DataVerif.getSendDocForEmailAndSignerType'(conneSign, docid[r], emailSigner[i])
+			
+			'declare arrayindex'
+			arrayindex = 0
+
+			'verify email'
+			arrayMatch.add(WebUI.verifyMatch(email[i], resultStoreEmailandType[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+			'verify signerType'
+			arrayMatch.add(WebUI.verifyMatch(signerType[i], resultStoreEmailandType[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+			
+		}
+		
+		'declare arrayindex'
         arrayindex = 0
-
-        'verify email'
-        arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 40).replace('"', 
-                    ''), resultStoreDB[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-        'verify signerType'
-        arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 26).replace('"', 
-                    ''), resultStoreDB[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'verify tenant code'
         arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 9).replace('"', 
@@ -313,12 +322,18 @@ def responseAPIStoreDB(Connection conneSign) {
 }
 
 def MonitoringDocument(Connection conneSign, String refNo, String regionName, String officeName, int jumlahsignertandatangan, ArrayList<String> emailSigner) {
+	
+	refNo = refNo.replace('"','')
+	regionName = regionName.replace('"','')
+	officeName = officeName.replace('"','')
+	
+	'get current date'
+	currentDate = new Date().format('yyyy-MM-dd')
+	
 	'Call test Case untuk login sebagai admin wom admin client'
 	WebUI.callTestCase(findTestCase('Login/Login_Admin'), [:], FailureHandling.STOP_ON_FAILURE)
-	
-	'Pembuatan untuk array Index untuk total Sign dan total Signed'
-    arrayIndexforSign = 0
 
+	
     'Pembuatan untuk array Index result Query'
     arrayIndex = 0
 
@@ -326,15 +341,9 @@ def MonitoringDocument(Connection conneSign, String refNo, String regionName, St
     ArrayList<String> arrayMatch = new ArrayList<String>()
 
     'Mengisi value hasil komparasi, total sign, dan total signed'
-    jumlahSigned = CustomKeywords.'connection.DataVerif.getComparationTotalSignTotalSigned'(conneSign, refNo)
-
-    'get current date'
-    currentDate = new Date().format('yyyy-MM-dd')
+    documentStatus = CustomKeywords.'connection.DataVerif.getDocumentStatus'(conneSign, refNo)
 
     fullNameCust = CustomKeywords.'connection.DataVerif.getuserCustomerondocument'(conneSign, refNo)
-
-    'Call test Case untuk login sebagai admin wom admin client'
-    WebUI.callTestCase(findTestCase('Login/Login_Admin'), [:], FailureHandling.STOP_ON_FAILURE)
 
     'Klik Button Document Monitoring'
     WebUI.click(findTestObject('DocumentMonitoring/DocumentMonitoring'))
@@ -349,8 +358,12 @@ def MonitoringDocument(Connection conneSign, String refNo, String regionName, St
 
         WebUI.setText(findTestObject('DocumentMonitoring/input_TipeDok'), findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 
                 67))
+		
+		WebUI.sendKeys(findTestObject('DocumentMonitoring/input_TipeDok'), Keys.chord(Keys.ENTER))
 
         WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), regionName)
+		
+		WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER))
 
         WebUI.setText(findTestObject('DocumentMonitoring/input_NoKontrak'), refNo)
 
@@ -358,35 +371,39 @@ def MonitoringDocument(Connection conneSign, String refNo, String regionName, St
 
         WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalSelesaiSampai'), currentDate)
 
-        WebUI.setText(findTestObject('DocumentMonitoring/input_Status'), jumlahSigned[arrayIndexforSign++])
+        WebUI.setText(findTestObject('DocumentMonitoring/input_Status'), documentStatus)
+		
+		WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Status'), Keys.chord(Keys.ENTER))
 
         WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), officeName)
+		
+		WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER))
 
         WebUI.click(findTestObject('DocumentMonitoring/button_Cari'))
 
         WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/lbl_Value'), GlobalVariable.TimeOut, 
             FailureHandling.CONTINUE_ON_FAILURE)
 
-        int sizeRowofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('#listDokumen > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
+        sizeRowofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('#listDokumen > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
 
-        int sizeColumnofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('#listDokumen > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-body-cell'))
+        sizeColumnofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('#listDokumen > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-body-cell'))
 
         resultQuery = CustomKeywords.'connection.DataVerif.getDocumentMonitoring'(conneSign, refNo)
 
         for (int j = 1; j <= sizeRowofLabelValue.size(); j++) {
-            for (int i = 1; i <= sizeColumnofLabelValue.size() - 1; i++) {
+            for (int i = 1; i <= (sizeColumnofLabelValue.size() / sizeRowofLabelValue.size()) - 1; i++) {
                 'modify object btn TTD Dokumen di beranda'
                 modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 
                     'xpath', 'equals', ((('//*[@id="listDokumen"]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-                    j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div/p', true)
+                    j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div', true)
 
                 if (i == 7) {
 					totalSignandtotalSigned = WebUI.getText(modifyObjectvalues).split(' / ',-1)
 					
-					arrayMatch.add(WebUI.verifyMatch(totalSignandtotalSigned, jumlahsignertandatangan, false,
+					arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[0], jumlahsignertandatangan,
 						FailureHandling.CONTINUE_ON_FAILURE))
 
-					arrayMatch.add(WebUI.verifyEqual(emailSigner.size(), (prosesttd_pencariandokumen[1]).replace(' ', ''), FailureHandling.CONTINUE_ON_FAILURE))
+					arrayMatch.add(WebUI.verifyEqual(emailSigner.size(),totalSignandtotalSigned[1], FailureHandling.CONTINUE_ON_FAILURE))
 					
                 } else if (i == 8) {
                 } else {
