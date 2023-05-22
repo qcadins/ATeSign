@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "6E78E562751B5DB78839EEC8A5E23E01",
+  "keywordFileContentHash": "F175C5E6EF10A328BB496C38787A0172",
   "keywordClasses": [
     {
       "name": "connection.DataVerif",
@@ -2302,6 +2302,19 @@
             },
             {
               "name": "refNumber",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "userName",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

@@ -87,7 +87,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
         'click button cari'
         WebUI.click(findTestObject('DocumentMonitoring/button_Cari'))
-
+		
         'check if action yang dilakukan sesuai excel'
         if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('View Dokumen')) {
             'click button view dokumen'
@@ -363,6 +363,8 @@ def checkPaging() {
     'click button cari'
     WebUI.click(findTestObject('DocumentMonitoring/button_Cari'))
 
+	WebUI.delay(3)
+	
     'click next page'
     WebUI.click(findTestObject('DocumentMonitoring/button_NextPage'))
 

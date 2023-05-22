@@ -42,7 +42,6 @@ public class CheckSaveProccess {
 			String erroralert = WebUI.getText(object, FailureHandling.OPTIONAL)
 			if (erroralert != null) {
 				if (!erroralert.contains('Success'.toUpperCase())) {
-
 					String failedAlertReason = WebUI.getAttribute(object, 'aria-label', FailureHandling.OPTIONAL)
 
 					(new customizekeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
