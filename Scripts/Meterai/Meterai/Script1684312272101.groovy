@@ -1,14 +1,16 @@
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import java.sql.Connection
-import java.time.LocalDate
+import java.sql.Connection as Connection
+import java.time.LocalDate as LocalDate
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
+'get dates'
 currentDate = LocalDate.now()
+
 firstDateOfMonth = currentDate.withDayOfMonth(1)
 
 'connect DB eSign'
@@ -25,146 +27,164 @@ WebUI.click(findTestObject('Meterai/menu_Meterai'))
 'call function check paging'
 checkPaging(currentDate, firstDateOfMonth)
 
-'set text no kontrak'
-WebUI.setText(findTestObject('Meterai/input_NoKontrak'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-        9))
+'get colm excel'
+int countColmExcel = findTestData(excelPathMeterai).columnNumbers
 
-'set text status meterai'
-WebUI.setText(findTestObject('Meterai/input_StatusMeterai'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-        10))
+'looping DocumentMonitoring'
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
+    if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
+        break
+    } else if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+        GlobalVariable.FlagFailed = 0
 
-'enter untuk set status meterai'
-WebUI.sendKeys(findTestObject('Meterai/input_StatusMeterai'), Keys.chord(Keys.ENTER))
+        'set text no kontrak'
+        WebUI.setText(findTestObject('Meterai/input_NoKontrak'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
+                9))
 
-'set text lini bisnis'
-WebUI.setText(findTestObject('Meterai/input_LiniBisnis'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-        11))
+        'set text status meterai'
+        WebUI.setText(findTestObject('Meterai/input_StatusMeterai'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
+                10))
 
-'enter untuk set lini bisnis'
-WebUI.sendKeys(findTestObject('Meterai/input_LiniBisnis'), Keys.chord(Keys.ENTER))
+        'enter untuk set status meterai'
+        WebUI.sendKeys(findTestObject('Meterai/input_StatusMeterai'), Keys.chord(Keys.ENTER))
 
-'set text tanggal wilayah'
-WebUI.setText(findTestObject('Meterai/input_Wilayah'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-        12))
+        'set text lini bisnis'
+        WebUI.setText(findTestObject('Meterai/input_LiniBisnis'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
+                11))
 
-'enter untuk set wilayah'
-WebUI.sendKeys(findTestObject('Meterai/input_Wilayah'), Keys.chord(Keys.ENTER))
+        'enter untuk set lini bisnis'
+        WebUI.sendKeys(findTestObject('Meterai/input_LiniBisnis'), Keys.chord(Keys.ENTER))
 
-'set text tanggal cabang'
-WebUI.setText(findTestObject('Meterai/input_Cabang'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-        13))
+        'set text tanggal wilayah'
+        WebUI.setText(findTestObject('Meterai/input_Wilayah'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
+                12))
 
-'enter untuk set cabang'
-WebUI.sendKeys(findTestObject('Meterai/input_Cabang'), Keys.chord(Keys.ENTER))
+        'enter untuk set wilayah'
+        WebUI.sendKeys(findTestObject('Meterai/input_Wilayah'), Keys.chord(Keys.ENTER))
 
-'set text tanggal pakai dari'
-WebUI.setText(findTestObject('Meterai/input_TanggalPakaiDari'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-        14))
+        'set text tanggal cabang'
+        WebUI.setText(findTestObject('Meterai/input_Cabang'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
+                13))
 
-'set text tanggal pakai sampai'
-WebUI.setText(findTestObject('Meterai/input_TanggalPakaiSampai'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-        15))
+        'enter untuk set cabang'
+        WebUI.sendKeys(findTestObject('Meterai/input_Cabang'), Keys.chord(Keys.ENTER))
 
-'set text no meterai'
-WebUI.setText(findTestObject('Meterai/input_NoMeterai'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-        16))
+        'set text tanggal pakai dari'
+        WebUI.setText(findTestObject('Meterai/input_TanggalPakaiDari'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
+                14))
 
-'click button cari'
-WebUI.click(findTestObject('Meterai/button_Cari'))
+        'set text tanggal pakai sampai'
+        WebUI.setText(findTestObject('Meterai/input_TanggalPakaiSampai'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
+                15))
 
-'get stampduty data dari db'
-result = CustomKeywords.'connection.DataVerif.getStampdutyData'(conneSign, findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-        16))
+        'set text no meterai'
+        WebUI.setText(findTestObject('Meterai/input_NoMeterai'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
+                16))
 
-index = 0
+        'click button cari'
+        WebUI.click(findTestObject('Meterai/button_Cari'))
 
-'verify no meterai'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_NomorMeterai')), result[index++], false, 
-        FailureHandling.CONTINUE_ON_FAILURE))
+        'get stampduty data dari db'
+        result = CustomKeywords.'connection.DataVerif.getStampdutyData'(conneSign, findTestData(excelPathMeterai).getValue(
+                GlobalVariable.NumofColm, 16))
 
-'verify no kontrak'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_NoKontrak')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+        index = 0
 
-'verify tanggal pakai'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_TanggalPakai')), result[index++], false, 
-        FailureHandling.CONTINUE_ON_FAILURE))
+        'verify no meterai'
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_NomorMeterai')), result[index++], 
+                false, FailureHandling.CONTINUE_ON_FAILURE))
 
-'verify biaya'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_Biaya')).replace(',',''), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+        'verify no kontrak'
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_NoKontrak')), result[index++], 
+                false, FailureHandling.CONTINUE_ON_FAILURE))
 
-'verify cabang'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_Cabang')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+        'verify tanggal pakai'
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_TanggalPakai')), result[index++], 
+                false, FailureHandling.CONTINUE_ON_FAILURE))
 
-'verify wilayah'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_Wilayah')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+        'verify biaya'
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_Biaya')).replace(',', ''), 
+                result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-'verify lini bisnis'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_LiniBisnis')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+        'verify cabang'
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_Cabang')), result[index++], 
+                false, FailureHandling.CONTINUE_ON_FAILURE))
 
-status = (result[index++]).toUpperCase()
+        'verify wilayah'
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_Wilayah')), result[index++], 
+                false, FailureHandling.CONTINUE_ON_FAILURE))
 
-'verify status'
-checkVerifyEqualOrMatch(status.contains(WebUI.getText(findTestObject('Meterai/table_Status'))))
+        'verify lini bisnis'
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_LiniBisnis')), result[index++], 
+                false, FailureHandling.CONTINUE_ON_FAILURE))
 
-'click nomor meterai untuk membuka hyperlink'
-WebUI.click(findTestObject('Meterai/table_NomorMeterai'))
+        status = (result[index++]).toUpperCase()
 
-'get stampduty trx data dari db'
-result = CustomKeywords.'connection.DataVerif.getStampdutyTrxData'(conneSign, findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-        16))
+        'verify status'
+        checkVerifyEqualOrMatch(status.contains(WebUI.getText(findTestObject('Meterai/table_Status'))))
 
-index = 0
+        'click nomor meterai untuk membuka hyperlink'
+        WebUI.click(findTestObject('Meterai/table_NomorMeterai'))
 
-'verify no meterai'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_NoTrx')), result[index++], false, 
-        FailureHandling.CONTINUE_ON_FAILURE))
+        'get stampduty trx data dari db'
+        result = CustomKeywords.'connection.DataVerif.getStampdutyTrxData'(conneSign, findTestData(excelPathMeterai).getValue(
+                GlobalVariable.NumofColm, 16))
 
-'verify no kontrak'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_NoKontrak')), result[index++], false, 
-        FailureHandling.CONTINUE_ON_FAILURE))
+        index = 0
 
-'verify nama dok'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_NamaDok')), result[index++], false, 
-        FailureHandling.CONTINUE_ON_FAILURE))
+        'verify no meterai'
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_NoTrx')), result[index++], 
+                false, FailureHandling.CONTINUE_ON_FAILURE))
 
-'verify nama pelanggan'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_NamaPelanggan')), result[index++], 
-        false, FailureHandling.CONTINUE_ON_FAILURE))
+        'verify no kontrak'
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_NoKontrak')), result[
+                index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-'verify tipe trx'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_TipeTrx')), result[index++], false, 
-        FailureHandling.CONTINUE_ON_FAILURE))
+        'verify nama dok'
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_NamaDok')), result[index++], 
+                false, FailureHandling.CONTINUE_ON_FAILURE))
 
-'verify tanggal trx'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_TanggalTrx')), result[index++], false, 
-        FailureHandling.CONTINUE_ON_FAILURE))
+        'verify nama pelanggan'
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_NamaPelanggan')), result[
+                index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-'click button X'
-WebUI.click(findTestObject('Meterai/button_X'))
+        'verify tipe trx'
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_TipeTrx')), result[index++], 
+                false, FailureHandling.CONTINUE_ON_FAILURE))
 
-'check if mau download data meterai'
-if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 18).equalsIgnoreCase('Yes')) {
-    'click button download'
-    WebUI.click(findTestObject('Meterai/button_UnduhExcel'))
+        'verify tanggal trx'
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_TanggalTrx')), result[
+                index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-    'delay 5 detik'
-    WebUI.delay(5)
+        'click button X'
+        WebUI.click(findTestObject('Meterai/button_X'))
 
-    'check isfiled downloaded'
-    if (CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-            19)) == false) {
-		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedDownload'
-		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Meterai', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-			(findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedDownload)
+        'check if mau download data meterai'
+        if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 18).equalsIgnoreCase('Yes')) {
+            'click button download'
+            WebUI.click(findTestObject('Meterai/button_UnduhExcel'))
 
-		GlobalVariable.FlagFailed = 1
+            'delay 5 detik'
+            WebUI.delay(5)
+
+            'check isfiled downloaded'
+            if (CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
+                    19)) == false) {
+                'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedDownload'
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Meterai', GlobalVariable.NumofColm, 
+                    GlobalVariable.StatusFailed, (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 2) + 
+                    ';') + GlobalVariable.ReasonFailedDownload)
+
+                GlobalVariable.FlagFailed = 1
+            }
+        }
+        
+        if (GlobalVariable.FlagFailed == 0) {
+            'write to excel success'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Meterai', 0, GlobalVariable.NumofColm - 
+                1, GlobalVariable.StatusSuccess)
+        }
     }
-}
-
-if (GlobalVariable.FlagFailed == 0) {
-	'write to excel success'
-	CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Meterai', 0, GlobalVariable.NumofColm -
-		1, GlobalVariable.StatusSuccess)
 }
 
 def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth) {
