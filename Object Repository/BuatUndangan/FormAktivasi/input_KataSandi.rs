@@ -18,7 +18,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[3]/div[1]/input</value>
-      <webElementGuid>44fddce2-992b-446d-ba40-dbbb0043fd89</webElementGuid>
+      <webElementGuid>dea0450c-1158-4aa1-80e2-7e7bd2932301</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -26,6 +26,6 @@
       <name>formcontrolname</name>
       <type>Main</type>
       <value>password</value>
-      <webElementGuid>7b030dae-48da-4bce-8fcc-b217601738ee</webElementGuid>
+      <webElementGuid>81b39bb5-0169-42d4-9300-8536970de5fc</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

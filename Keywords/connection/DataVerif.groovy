@@ -5,8 +5,6 @@ import java.sql.ResultSet
 import java.sql.ResultSetMetaData
 import java.sql.Statement
 import com.kms.katalon.core.annotation.Keyword
-import com.kms.katalon.core.model.FailureHandling
-
 import internal.GlobalVariable
 
 public class DataVerif {
@@ -1391,11 +1389,48 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		
+
 		if (data != null) {
 			Integer.parseInt(data)
 		} else {
 			data = 0
 		}
+	}
+
+
+	@Keyword
+	getAPIGenInvLinkVerifTrx(Connection conn, String name) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select tbm.qty from tr_balance_mutation tbm join am_msuser am on am.id_ms_user = tbm.id_ms_user join ms_lov ml on ml.id_lov = tbm.lov_trx_type where am.full_name = '"+ name +"' and ml.description = 'Use Verification'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+
+	@Keyword
+	getAPIGenInvLinkOTPTrx(Connection conn, String name) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select tbm.qty from tr_balance_mutation tbm join am_msuser am on am.id_ms_user = tbm.id_ms_user join ms_lov ml on ml.id_lov = tbm.lov_trx_type where am.full_name = '"+ name +"' and ml.description = 'Use OTP'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
 	}
 }

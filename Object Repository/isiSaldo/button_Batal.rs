@@ -18,6 +18,6 @@
       <name>xpath</name>
       <type>Main</type>
       <value>//*[@id=&quot;xForm&quot;]/div[2]/div/button[1]</value>
-      <webElementGuid>23ebebd6-0fad-4490-b83e-e6680a500286</webElementGuid>
+      <webElementGuid>b0713287-0ff8-44ae-913f-6002cf83ae42</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
