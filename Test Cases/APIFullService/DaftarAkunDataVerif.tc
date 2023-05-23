@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>DaftarAkunDataVerif</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>dba77cd8-d2e3-4a22-a6ab-f821a3c1e598</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>2392a0fe-e4c5-4cb0-9073-154cd62ec14a</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'APIFullService/API_GenInvLink'</defaultValue>
+      <description></description>
+      <id>2392a0fe-e4c5-4cb0-9073-154cd62ec14a</id>
+      <masked>false</masked>
+      <name>excelPathAPIGenerateInvLink</name>
+   </variable>
+</TestCaseEntity>

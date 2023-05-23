@@ -189,4 +189,9 @@
       <initValue>0</initValue>
       <name>Counter</name>
    </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>''</initValue>
+      <name>tenant_code</name>
+   </GlobalVariableEntity>
 </GlobalVariableEntities>

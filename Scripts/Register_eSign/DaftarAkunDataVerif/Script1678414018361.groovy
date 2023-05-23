@@ -221,17 +221,24 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     'click verifikasi'
     WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Verifikasi'))
 
-    'get reason error log'
-    reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).toString()
+    WebUI.delay(3)
 
-    'cek if popup error msg'
-    if (!(reason.contains('berhasil'))) {
+    'cek if berhasil pindah page'
+    if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), GlobalVariable.TimeOut, 
+        FailureHandling.OPTIONAL)) {
+        'call testcase form aktivasi vida'
+        WebUI.callTestCase(findTestCase('APIFullService/FormAktivasiVida'), [('excelPathBuatUndangan') : 'APIFullService/API_GenInvLink'], 
+			FailureHandling.CONTINUE_ON_FAILURE)
+    } else if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+        'get reason error log'
+        reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).toString()
+		
         'write to excel status failed dan reason'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
                 '-', '') + ';') + reason)
 
-        GlobalVariable.FlagFailed = 1
+        GlobalVariable.FlagFailed = 1		
     } else if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_PopupMsg'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
         reason = WebUI.getText(findTestObject('DaftarAkun/label_PopupMsg'))
 
@@ -247,11 +254,6 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
         WebUI.click(findTestObject('DaftarAkun/button_X'))
 
         GlobalVariable.FlagFailed = 1
-    } else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), GlobalVariable.TimeOut, 
-        FailureHandling.OPTIONAL)) {
-        'call testcase form aktivasi vida'
-        WebUI.callTestCase(findTestCase('Register_eSign/FormAktivasiVida'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
-            FailureHandling.CONTINUE_ON_FAILURE)
     }
 }
 

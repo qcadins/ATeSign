@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>FormAktivasiVida</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>8d7f7a15-0f84-4a10-a486-5ba46624db89</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>1af0fa09-6995-4cdc-8c21-b4f308390aae</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'APIFullService/API_GenInvLink'</defaultValue>
+      <description></description>
+      <id>1af0fa09-6995-4cdc-8c21-b4f308390aae</id>
+      <masked>false</masked>
+      <name>excelPathAPIGenerateInvLink</name>
+   </variable>
+</TestCaseEntity>
