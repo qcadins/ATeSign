@@ -20,7 +20,7 @@ RunConfiguration.setWebDriverPreferencesProperty('prefs', chromePrefs)
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-docid = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 5).split(', ', -1)
+docid = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 6).split(', ', -1)
 
 'declare arraylist arraymatch'
 ArrayList<String> arrayMatch = new ArrayList<String>()
@@ -30,7 +30,8 @@ arrayindex = 0
 
 for (int y = 0; y < docid.size(); y++) {
     'Mengambil email berdasarkan documentId'
-    ArrayList<String> emailSigner = CustomKeywords.'connection.DataVerif.getEmailLogin'(conneSign, docid[y]).split(';',-1)
+    ArrayList<String> emailSigner = CustomKeywords.'connection.DataVerif.getEmailLogin'(conneSign, docid[y]).split(';', 
+        -1)
 
     for (int t = 0; t < emailSigner.size(); t++) {
         'call Test Case untuk login sebagai user berdasarkan doc id'
@@ -91,9 +92,10 @@ for (int y = 0; y < docid.size(); y++) {
             'Jika kolom yang ingin di check berada pada urutan ke-5'
             if (i == 5) {
                 if (jumlahsignertandatangan <= emailSigner.size()) {
-                    arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectpencariandokumen), '-', false, FailureHandling.CONTINUE_ON_FAILURE) //Jika kolom yang ingin di check berada pada urutan ke-6
-                        ) //Kolom materai, masih belum get dari Beranda
-                } //Jika selain kolom2 tersebut, maka
+                    arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectpencariandokumen), '-', false, FailureHandling.CONTINUE_ON_FAILURE //Jika kolom yang ingin di check berada pada urutan ke-6
+                            ) //Kolom materai, masih belum get dari Beranda
+                        ) //Jika selain kolom2 tersebut, maka
+                }
             } else if (i == 6) {
                 'mengambil text mengenai proses tanda tangan dan displit menjadi 2, yang pertama menjadi jumlah signer yang sudah tanda tangan'
 
@@ -104,7 +106,16 @@ for (int y = 0; y < docid.size(); y++) {
                         FailureHandling.CONTINUE_ON_FAILURE))
 
                 arrayMatch.add(WebUI.verifyEqual(emailSigner.size(), (prosesttd_pencariandokumen[1]).replace(' ', ''), FailureHandling.CONTINUE_ON_FAILURE))
-            } else if ((i == 7) || (i == 9)) {
+            } else if (i == 7) {
+                resultStamping = CustomKeywords.'connection.DataVerif.getTotalStampingandTotalMaterai'(conneSign, docid[
+                    y])
+
+                totalMaterai_pencariandokumen = WebUI.getText(modifyObjectpencariandokumen).split('/', -1)
+
+                for (int j = 1; j < totalMaterai_pencariandokumen.size(); j++) {
+                    arrayMatch.add(WebUI.verifyEqual(totalMaterai_pencariandokumen[j], resultStamping[j], FailureHandling.CONTINUE_ON_FAILURE))
+                }
+            } else if (i == 9) {
             } else if (i == 8) {
                 arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectpencariandokumen), CustomKeywords.'connection.DataVerif.getSignStatus'(
                             conneSign, docid[y]), false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -127,6 +138,7 @@ for (int y = 0; y < docid.size(); y++) {
         variable_lastest = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager li'))
 
         'Agar dapat ke Lastest'
+
         'modifikasi button Lastest pada paging'
         modifyobjectbtnLastest = WebUI.modifyObjectProperty(findTestObject('Object Repository/KotakMasuk/Sign/btn_Lastest'), 
             'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' + 
@@ -211,12 +223,14 @@ for (int y = 0; y < docid.size(); y++) {
         arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjecttextstatusttd), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'mengambil text mengenai proses tanda tangan dan displit menjadi 2, yang pertama menjadi jumlah signer yang sudah tanda tangan'
+
         'yang kedua menjadi total signer'
         ArrayList<String> prosesttd = WebUI.getText(modifyObjecttextprosesttd).split('/', -1)
 
         'verifikasi total signer beranda dan pencarian dokumen'
         arrayMatch.add(WebUI.verifyMatch(prosesttd.toString(), prosesttd_pencariandokumen.toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
-		/*
+
+        /*
         'Klik View Document'
         WebUI.click(modifyObjectbtnViewDoc)
 
@@ -257,7 +271,7 @@ for (int y = 0; y < docid.size(); y++) {
             WebUI.click(modifyobjectbtnLastest, FailureHandling.OPTIONAL)
         }
         
-		/*
+        /*
         'Klik download file'
         WebUI.click(modifyObjectbtnDownloadDoc)
 		
@@ -286,13 +300,15 @@ for (int y = 0; y < docid.size(); y++) {
 
         'declare arrayindex buat signer'
         arrayindex_signer = 0
+
         'loop untuk row popup'
         for (int i = 1; i <= variable_row_popup.size(); i++) {
-			'get data kotak masuk send document secara asc, dimana customer no 1'
-			ArrayList<String> resultSigner = CustomKeywords.'connection.DataVerif.getSignerKotakMasukSendDoc'(conneSign, docid[y], emailSigner[i-1])
-			
-			arrayindex_signer = 0
-			
+            'get data kotak masuk send document secara asc, dimana customer no 1'
+            ArrayList<String> resultSigner = CustomKeywords.'connection.DataVerif.getSignerKotakMasukSendDoc'(conneSign, 
+                docid[y], emailSigner[(i - 1)])
+
+            arrayindex_signer = 0
+
             'loop untuk column popup'
             for (int m = 1; m <= (variable_col_popup.size() / variable_row_popup.size()); m++) {
                 'modify object text nama, email, signer Type, sudah aktivasi Untuk yang terakhir belum bisa, dikarenakan masih gak ada data (-) Dikarenakan modifynya bukan p di lastnya, melainkan span'
@@ -312,12 +328,17 @@ for (int y = 0; y < docid.size(); y++) {
         'Klik x terlebih dahulu pada popup'
         WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_X'))
     }
+    
+    //Document Monitoring
+    WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : 'Beranda/SendtoSign'
+            , ('jumlahsignertandatangan') : jumlahsignertandatangan], FailureHandling.CONTINUE_ON_FAILURE)
 
+    'jika data db tidak sesuai dengan excel'
+    if (arrayMatch.contains(false)) {
+        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
+            GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + 
+            ';') + GlobalVariable.ReasonFailedNoneUI)
+    }
+}
 
-'jika data db tidak sesuai dengan excel'
-if (arrayMatch.contains(false)) {
-    'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-        (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedNoneUI)
-}
-}
