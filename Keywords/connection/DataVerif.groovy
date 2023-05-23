@@ -5,6 +5,8 @@ import java.sql.ResultSet
 import java.sql.ResultSetMetaData
 import java.sql.Statement
 import com.kms.katalon.core.annotation.Keyword
+import com.kms.katalon.core.model.FailureHandling
+
 import internal.GlobalVariable
 
 public class DataVerif {
@@ -1356,12 +1358,12 @@ public class DataVerif {
 		}
 		data
 	}
-	
+
 	@Keyword
 	getTotalStampingandTotalMaterai(Connection conn, String documentid) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select tdd.total_stamping, tdd.total_materai from tr_document_d tdd join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h where tdd.document_id = '"+docuemntid+"'")
+		resultSet = stm.executeQuery("select tdd.total_stamping, tdd.total_materai from tr_document_d tdd join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h where tdd.document_id = '"+documentid+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -1375,4 +1377,25 @@ public class DataVerif {
 		listdata
 	}
 
+	@Keyword
+	getTotalUnsignedDocuments(Connection conn, String tenantCode, String email){
+		String data
+
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select count(distinct (tdds.id_document_d)) from tr_document_d_sign tdds join tr_document_d tdd on tdds.id_document_d = tdd.id_document_d join am_msuser amm on amm.id_ms_user = tdds.id_ms_user join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join ms_tenant mst on tdd.id_ms_tenant = mst.id_ms_tenant where amm.login_id = '"+email+"' and tdds.sign_date is null and mst.tenant_code = '"+tenantCode+"' group by mst.tenant_code, mst.api_key")
+		metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		
+		if (data != null) {
+			Integer.parseInt(data)
+		} else {
+			data = 0
+		}
+	}
 }

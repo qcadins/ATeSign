@@ -178,8 +178,8 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Send to Sign', 0, GlobalVariable.NumofColm - 
             1, GlobalVariable.StatusSuccess)
 
-       // WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('excelPathFESignDocument') : 'Beranda/SendtoSign', ('jumlahsignertandatangan') : jumlahsignertandatangan], 
-       //  FailureHandling.CONTINUE_ON_FAILURE)
+        WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('excelPathFESignDocument') : 'Beranda/SendtoSign', ('jumlahsignertandatangan') : jumlahsignertandatangan], 
+         FailureHandling.CONTINUE_ON_FAILURE)
 
         if (GlobalVariable.checkStoreDB == 'Yes') {
             'call Fungsi responseAPIStoreDB'

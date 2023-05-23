@@ -94,6 +94,9 @@ for (int y = 0; y < docid.size(); y++) {
 		
 		'Jika valuenya ada'
         if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/lbl_Value'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+			'Pembuatan untuk array Index result Query'
+			arrayIndex = 0
+			
 			'Mengambil row size dari value'
             sizeRowofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('#listDokumen > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
 			
@@ -102,7 +105,7 @@ for (int y = 0; y < docid.size(); y++) {
 			
 			'Mengambil value dari db menngenai data yang perlu diverif'
             resultQuery = CustomKeywords.'connection.DataVerif.getDocumentMonitoring'(conneSign, inputDocumentMonitoring[
-                arrayIndex], fullNameCust)
+                0], fullNameCust)
 
 			'Mengambil value dari db mengenai total stamping'
             resultStamping = CustomKeywords.'connection.DataVerif.getTotalStampingandTotalMaterai'(conneSign, docid[y])
@@ -131,8 +134,8 @@ for (int y = 0; y < docid.size(); y++) {
 						'Split teks total Stamping'
                         totalStampingAndTotalMaterai = WebUI.getText(modifyObjectvalues).split('/', -1)
 						'looping berdasarkan total split dan diverif berdasarkan db.'
-                        for (int j = 1; j < totalStampingAndTotalMaterai.size(); j++) {
-                            arrayMatch.add(WebUI.verifyEqual(totalStampingAndTotalMaterai[j], resultStamping[j], FailureHandling.CONTINUE_ON_FAILURE))
+                        for (int k = 0; k < totalStampingAndTotalMaterai.size(); k++) {
+                            arrayMatch.add(WebUI.verifyEqual(totalStampingAndTotalMaterai[k], resultStamping[k], FailureHandling.CONTINUE_ON_FAILURE))
                         }
                     } else {
 						'Selain di column 7 dan 8 maka akan diverif dengan db.'

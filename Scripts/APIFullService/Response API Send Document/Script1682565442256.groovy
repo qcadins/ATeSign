@@ -298,8 +298,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 							signlocStoreDB = signlocStoreDB + '{"llx":' + llxSigns[l] + ',"lly":' +
 								 llySigns[l] + ',"urx":' + urxSigns[l] + ',"ury":' + urySigns[l] + '};'
                     }
-					println 'loopingan ke ' + l + bodyAPI
-					println 'loopingan ke ' + l + signlocStoreDB
+
                 }
 				
 				
@@ -336,7 +335,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 bodyAPI = ''
             }
             
-			println stringRefno
             'Deklarasi bodyAPI kembali'
             bodyAPI = new String()
 

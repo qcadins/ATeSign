@@ -68,7 +68,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 4 /*findTestData(
                 GlobalVariable.NumofColm, 6)).split(';', -1)
 		
 		'Declare variable jumlahSignerTelahTtd untuk proses ttd'
-		int jumlahSignerTelahTtd
+		int jumlahSignerTelahTtd = 0
 		
 		'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
 		int jumlahSignerTandaTangan = CustomKeywords.'connection.DataVerif.getTotalSigned'(conneSign, findTestData(excelPathFESignDocument).getValue(
@@ -665,7 +665,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 4 /*findTestData(
                                 }*/
                             } else {
                                 saldoUsed = saldoUsed + 1
-/*	belum kepake
+							/*	belum kepake
                                 if (i == 0) {
                                     saldoUsed_docpertama = CustomKeywords.'connection.DataVerif.getSaldoUsedBasedonPaymentType'(
                                     conneSign, noKontrak_perdoc[i], emailSigner[(o - 1)])
