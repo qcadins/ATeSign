@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>VerifyDocumentMonitoring</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>e2e559fe-5e74-47c9-a3d5-9513180eb057</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>dd0c31e5-1530-4b7e-b611-070310c53a13</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Beranda/SendtoSign'</defaultValue>
+      <description></description>
+      <id>dd0c31e5-1530-4b7e-b611-070310c53a13</id>
+      <masked>false</masked>
+      <name>excelPathFESignDocument</name>
+   </variable>
+</TestCaseEntity>

@@ -141,7 +141,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(A
 		}
 
 		}
-	
+	'Hit API'
     respon = WS.sendRequest(findTestObject('Postman/Send Document', [('tenantCode') : findTestData(API_Excel_Path).getValue(
                     GlobalVariable.NumofColm, 9), ('request') : stringRefno, ('callerId') : findTestData(API_Excel_Path).getValue(
                     GlobalVariable.NumofColm, 45)]))
