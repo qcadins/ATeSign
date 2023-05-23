@@ -52,6 +52,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 email = WS.getElementPropertyValue(respon, 'statusSigning.signer.email', FailureHandling.OPTIONAL)
 
+				signerType = WS.getElementPropertyValue(respon, 'statusSigning.signer.signerType', FailureHandling.OPTIONAL)
+				
                 statusSigning = WS.getElementPropertyValue(respon, 'statusSigning.signer.signStatus', FailureHandling.OPTIONAL)
 
                 signDate = WS.getElementPropertyValue(respon, 'statusSigning.signer.signDate', FailureHandling.OPTIONAL)
@@ -82,6 +84,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                                     arrayMatch.add(WebUI.verifyMatch(((email[indexColResp])[indexRowResp]).toUpperCase(), 
                                             emailDB.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
+									'verify signer type'
+									arrayMatch.add(WebUI.verifyMatch(((signerType[indexColResp])[indexRowResp]).toUpperCase(),
+											(result[indexArrayDB++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+									
                                     'verify status signing'
                                     arrayMatch.add(WebUI.verifyMatch(((statusSigning[indexColResp])[indexRowResp]).toUpperCase(), 
                                             (result[indexArrayDB++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
