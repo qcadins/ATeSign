@@ -1433,7 +1433,7 @@ public class DataVerif {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getTotalSignedUsingRefNumber(Connection conn, String refnumber) {
 		stm = conn.createStatement()
