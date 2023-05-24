@@ -13,7 +13,7 @@ import org.openqa.selenium.Keys as Keys
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'call testcase login admin'
-WebUI.callTestCase(findTestCase('Login/Login_Admin'), [:], FailureHandling.STOP_ON_FAILURE)
+WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathDocumentMonitoring, ('sheet') : 'DocumentMonitoring'], FailureHandling.CONTINUE_ON_FAILURE)
 
 GlobalVariable.FlagFailed = 0
 
@@ -126,7 +126,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             if (CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathDocumentMonitoring).getValue(
                     GlobalVariable.NumofColm, 19)) == false) {
                 'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedDownload'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Meterai', GlobalVariable.NumofColm, 
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('DocumentMonitoring', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 2) + 
                     ';') + GlobalVariable.ReasonFailedDownload)
 

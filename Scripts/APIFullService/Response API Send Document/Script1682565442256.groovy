@@ -15,6 +15,7 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'variable untuk keperluan split excel'
 semicolon = ';'
 delimiter = '\\|'
+enter = '\\n'
 int splitnum = -1
 
 'looping berdasarkan total kolom'
@@ -53,18 +54,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         businessLineName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 19).split(semicolon, splitnum)
 
         'Inisialisasi document file berdasarkan delimiter ;'
-        documentFile = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 20).split(semicolon, splitnum)
+        documentFile = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 20).split(enter, splitnum)
 
         'split signer untuk doc1 dan signer untuk doc2'
-        signAction = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 28).split(delimiter, splitnum)
+        signAction = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 28).split(enter, splitnum)
 
-        signerType = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 29).split(delimiter, splitnum)
+        signerType = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 29).split(enter, splitnum)
 
-        tlp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 30).split(delimiter, splitnum)
+        tlp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 30).split(enter, splitnum)
 
-        idKtp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 31).split(delimiter, splitnum)
+        idKtp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 31).split(enter, splitnum)
 
-        email = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 32).split(delimiter, splitnum)
+        email = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 32).split(enter, splitnum)
 
         pageStamp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 22).split(delimiter, splitnum)
 
@@ -130,15 +131,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 				if (!(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm,34).length() == 0 && findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 35).length() == 0 && findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 36).length() == 0 && findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 37).length() == 0 && findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 38).length() == 0)) {
 					
                 'Split mengenai signLocation dimana berdasarkan dokumen'
-                pageSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 34).split(delimiter + delimiter, splitnum)
+                pageSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 34).split(enter, splitnum)
+				
+                llxSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 35).split(enter, splitnum)
 
-                llxSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 35).split(delimiter + delimiter, splitnum)
+                llySign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 36).split(enter, splitnum)
 
-                llySign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 36).split(delimiter + delimiter, splitnum)
+                urxSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 37).split(enter, splitnum)
 
-                urxSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 37).split(delimiter + delimiter, splitnum)
-
-                urySign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 38).split(delimiter + delimiter, splitnum)
+                urySign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 38).split(enter, splitnum)
 				
                 'Split mengenai signLocation dimana berdasarkan dokumen dan berdasarkan signer'
                 pageSigns = pageSign[i].split(delimiter, splitnum)
@@ -516,7 +517,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 'Jika check storedb'
                 if (GlobalVariable.checkStoreDB == 'Yes') {
                     'Fungsi storedb'
-                    ResponseAPIStoreDB(signlocStoreDB, semicolon, splitnum, delimiter)
+                    ResponseAPIStoreDB(signlocStoreDB, semicolon, splitnum, delimiter, enter)
                 }
             } else {
                 'Mengambil message Failed'
@@ -545,7 +546,7 @@ public PDFtoBase64(String fileName) {
 }
 
 'Fungsi storedb'
-public ResponseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, String delimiter) {
+public ResponseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, String delimiter, String enter) {
     'connect DB eSign'
     Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
@@ -556,15 +557,15 @@ public ResponseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum,
     docid = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 5).split(', ', splitnum)
 
     'split signer untuk doc1 dan signer untuk doc2'
-    signAction = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 28).split(delimiter, splitnum)
+    signAction = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 28).split(enter, splitnum)
 
-    signerType = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 29).split(delimiter, splitnum)
+    signerType = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 29).split(enter, splitnum)
 
-    tlp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 30).split(delimiter, splitnum)
+    tlp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 30).split(enter, splitnum)
 
-    idKtp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 31).split(delimiter, splitnum)
+    idKtp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 31).split(enter, splitnum)
 
-    email = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 32).split(delimiter, splitnum)
+    email = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 32).split(enter, splitnum)
 
     refNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 11).split(semicolon, splitnum)
 
@@ -595,7 +596,7 @@ public ResponseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum,
         businessLineName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 19).split(semicolon, splitnum)
 
         'Inisialisasi pageSign berdasarkan delimiter ||'
-        pageSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 34).split(delimiter + delimiter, splitnum)
+        pageSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 34).split(enter, splitnum)
 
         'get data API Send Document dari DB (hanya 1 signer)'
         result = CustomKeywords.'connection.DataVerif.getSendDocSigning'(conneSign, docid[i])

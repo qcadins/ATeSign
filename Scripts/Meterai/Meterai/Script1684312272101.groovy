@@ -17,7 +17,7 @@ firstDateOfMonth = currentDate.withDayOfMonth(1)
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'call testcase login admin'
-WebUI.callTestCase(findTestCase('Login/Login_Admin'), [:], FailureHandling.STOP_ON_FAILURE)
+WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathMeterai, ('sheet') : 'Meterai'], FailureHandling.CONTINUE_ON_FAILURE)
 
 GlobalVariable.FlagFailed = 0
 
