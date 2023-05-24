@@ -746,6 +746,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 5 /*findTestData(
             for (int i = 0; i < noKontrak_perdoc.size(); i++) {
                 'Input filter di Mutasi Saldo'
                 inputFiltertrx(conneSign, currentDate, noKontrak_perdoc[i], documentTemplateName_perdoc[i])
+				
+				'Memanggil saldo total yang telah digunakan per dokumen tersebut'
 				saldoUsed_perDoc = CustomKeywords.'connection.DataVerif.getTotalSignedUsingRefNumber'(conneSign, noKontrak_perdoc[i])
                 'delay dari 10 sampe 60 detik'
                 for (int d = 1; d <= 6; d++) {
