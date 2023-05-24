@@ -52,3 +52,13 @@ WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
 'click button pilih peran'
 WebUI.click(findTestObject('Login/button_pilihPeran'), FailureHandling.STOP_ON_FAILURE)
 
+'Jika error lognya muncul'
+if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+	'ambil teks errormessage'
+	errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
+	
+	'Tulis di excel itu adalah error'
+	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+		GlobalVariable.StatusWarning, (findTestData(excel).getValue(GlobalVariable.NumofColm, 2).replace(
+		'-', '') + ';') + errormessage)
+}

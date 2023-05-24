@@ -16,7 +16,7 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'memanggil test case login untuk admin wom dengan Admin Legal'
-WebUI.callTestCase(findTestCase('Login/Login_Admin'), [:], FailureHandling.STOP_ON_FAILURE)
+WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathPengaturanDokumen, ('sheet') : 'PengaturanDokumen'], FailureHandling.CONTINUE_ON_FAILURE)
 
 'call function chceck paging'
 checkPaging()
@@ -38,7 +38,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
         SignBoxAction = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 17).split(semicolon, splitIndex)
 
-        SignBoxLocation = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 18).split(semicolon, splitIndex)
+        SignBoxLocation = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 18).split('\\n', splitIndex)
 
         LockSignBox = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 19).split(semicolon, splitIndex)
 
@@ -457,7 +457,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         semicolon, splitIndex)
 
                     SignBoxLocation = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 18).split(
-                        semicolon, splitIndex)
+                        '\\n', splitIndex)
 
                     LockSignBox = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 19).split(
                         semicolon, splitIndex)

@@ -17,7 +17,7 @@ import com.kms.katalon.core.testobject.TestObject as TestObject
 import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
 
 'call test case login admin'
-WebUI.callTestCase(findTestCase('Login/Login_Admin'), [:], FailureHandling.STOP_ON_FAILURE)
+WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathListUndangan, ('sheet') : 'ListUndangan'], FailureHandling.CONTINUE_ON_FAILURE)
 
 GlobalVariable.FlagFailed = 0
 
@@ -38,18 +38,19 @@ if (findTestData(excelPathListUndangan).getValue(GlobalVariable.NumofColm, 9).eq
     'check isfiled downloaded'
     if (CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathListUndangan).getValue(GlobalVariable.NumofColm, 
             10)) == false) {
-		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedDownload'
-		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('ListUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-			(findTestData(excelPathListUndangan).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedDownload)
+        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedDownload'
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('ListUndangan', GlobalVariable.NumofColm, 
+            GlobalVariable.StatusFailed, (findTestData(excelPathListUndangan).getValue(GlobalVariable.NumofColm, 2) + ';') + 
+            GlobalVariable.ReasonFailedDownload)
 
-		GlobalVariable.FlagFailed = 1
+        GlobalVariable.FlagFailed = 1
     }
 }
 
 if (GlobalVariable.FlagFailed == 0) {
-	'write to excel success'
-	CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Meterai', 0, GlobalVariable.NumofColm -
-		1, GlobalVariable.StatusSuccess)
+    'write to excel success'
+    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Meterai', 0, GlobalVariable.NumofColm - 
+        1, GlobalVariable.StatusSuccess)
 }
 
 def checkPaging() {
@@ -102,29 +103,29 @@ def checkPaging() {
     checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ListUndangan/input_TanggalPengirimanKe'), 'value', 
                 FailureHandling.CONTINUE_ON_FAILURE), '2023-05-17', false, FailureHandling.CONTINUE_ON_FAILURE))
 
-	'click ddl status meterai'
-	WebUI.click(findTestObject('ListUndangan/input_StatusUndangan'))
-	
-	'verify field ke reset'
-	checkVerifyPaging(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/selected_DDL')), 'All', false, FailureHandling.CONTINUE_ON_FAILURE))
+    'click ddl status meterai'
+    WebUI.click(findTestObject('ListUndangan/input_StatusUndangan'))
 
-	'click ddl status meterai'
-	WebUI.click(findTestObject('ListUndangan/input_PengirimanMelalui'))
-	
     'verify field ke reset'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ListUndangan/selected_DDL'), 'value', 
-                FailureHandling.CONTINUE_ON_FAILURE), '', false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-	'click ddl status meterai'
-	WebUI.click(findTestObject('ListUndangan/input_StatusRegistrasi'))
-	
-    'verify field ke reset'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ListUndangan/selected_DDL'), 'value', 
-                FailureHandling.CONTINUE_ON_FAILURE), '', false, FailureHandling.CONTINUE_ON_FAILURE))
+    checkVerifyPaging(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/selected_DDL')), 'All', false, FailureHandling.CONTINUE_ON_FAILURE))
 
-	'click object lain untuk close ddl'
-	WebUI.click(findTestObject('ListUndangan/input_TanggalPengirimanDari'))
-	
+    'click ddl status meterai'
+    WebUI.click(findTestObject('ListUndangan/input_PengirimanMelalui'))
+
+    'verify field ke reset'
+    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ListUndangan/selected_DDL'), 'value', FailureHandling.CONTINUE_ON_FAILURE), 
+            '', false, FailureHandling.CONTINUE_ON_FAILURE))
+
+    'click ddl status meterai'
+    WebUI.click(findTestObject('ListUndangan/input_StatusRegistrasi'))
+
+    'verify field ke reset'
+    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ListUndangan/selected_DDL'), 'value', FailureHandling.CONTINUE_ON_FAILURE), 
+            '', false, FailureHandling.CONTINUE_ON_FAILURE))
+
+    'click object lain untuk close ddl'
+    WebUI.click(findTestObject('ListUndangan/input_TanggalPengirimanDari'))
+
     'set text tanggal pengiriman dari'
     WebUI.setText(findTestObject('ListUndangan/input_TanggalPengirimanDari'), '2023-03-01')
 

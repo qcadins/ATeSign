@@ -7,7 +7,7 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
 'call test case login admin'
-WebUI.callTestCase(findTestCase('Login/Login_Admin'), [:], FailureHandling.STOP_ON_FAILURE)
+WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathPencarianPengguna, ('sheet') : 'PencarianPengguna-Pelanggan'], FailureHandling.CONTINUE_ON_FAILURE)
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')

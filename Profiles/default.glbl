@@ -156,6 +156,11 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
+      <initValue>'WARNING'</initValue>
+      <name>StatusWarning</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
       <initValue>findTestData('Login/Setting').getValue(6, 2)</initValue>
       <name>Tenant</name>
    </GlobalVariableEntity>

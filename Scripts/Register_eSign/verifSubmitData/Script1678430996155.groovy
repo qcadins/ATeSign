@@ -61,7 +61,7 @@ def verifyListUndangan(){
 	currentDate = new Date().format('yyyy-MM-dd')
 	
 	'call test case login admin'
-	WebUI.callTestCase(findTestCase('Login/Login_Admin'), [:], FailureHandling.STOP_ON_FAILURE)
+	WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathBuatUndangan, ('sheet') : 'BuatUndangan'], FailureHandling.CONTINUE_ON_FAILURE)
 	
 	'click menu list undangan'
 	WebUI.click(findTestObject('ListUndangan/menu_ListUndangan'))
