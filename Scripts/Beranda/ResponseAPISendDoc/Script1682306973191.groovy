@@ -143,7 +143,7 @@ for (int t = 0; t < documentFile.size(); t++) {
         documentTemplateCode) + ', "officeCode": ') + officeCode) + ', "officeName": ') + officeName) + ', "regionCode": ') + 
         regionCode) + ', "regionName": ') + regionName) + ', "businessLineCode": ') + businessLineCode) + ', "businessLineName": ') + 
         businessLineName) + ', "isSequence": ') + isSequence) + ', "signer":[') + (ListSigner[0])) + '], "documentFile": "') + 
-        pdfToBase64(documentFile[t])) + '", "psreCode" : ') + psreCode) + ', "successURL": ') + successURL) + ', "uploadURL": ') + 
+		pdfToBase64(documentFile[t])) + '", "psreCode" : ') + psreCode) + ', "successURL": ') + successURL) + ', "uploadURL": ') + 
         uploadURL)) + '},')
     }
 }

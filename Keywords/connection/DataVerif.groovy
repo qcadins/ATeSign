@@ -1198,12 +1198,12 @@ public class DataVerif {
 
 
 	@Keyword
-	getSaldoUsedBasedonPaymentType(Connection conn, String refnumber, String userEmail){
+	getSaldoUsedBasedonPaymentType(Connection conn, String refnumber){
 		String data
 
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select CASE WHEN msl_tdd.description = 'Per Document' then '1' WHEN msl_tdd.description = 'Per Sign' then count(tdds.sign_location) end from tr_document_d_sign tdds join tr_document_d tdd on tdds.id_document_d = tdd.id_document_d join ms_lov msl on tdds.lov_signer_type = msl.id_lov join ms_lov msl_tdd on tdd.lov_payment_sign_type = msl_tdd.id_lov join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join am_msuser amm on tdds.id_ms_user = amm.id_ms_user where tdh.ref_number = '"+refnumber+"' and amm.login_id = '"+userEmail+"' GROUP BY msl.description, msl_tdd.description")
+		resultSet = stm.executeQuery("select CASE WHEN msl_tdd.description = 'Per Document' then '1' WHEN msl_tdd.description = 'Per Sign' then count(tdds.sign_location) end from tr_document_d_sign tdds join tr_document_d tdd on tdds.id_document_d = tdd.id_document_d join ms_lov msl on tdds.lov_signer_type = msl.id_lov join ms_lov msl_tdd on tdd.lov_payment_sign_type = msl_tdd.id_lov join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join am_msuser amm on tdds.id_ms_user = amm.id_ms_user where tdh.ref_number = '"+refnumber+"' GROUP BY msl.description, msl_tdd.description")
 		metadata = resultSet.getMetaData()
 
 		columnCount = metadata.getColumnCount()
@@ -1432,5 +1432,21 @@ public class DataVerif {
 			}
 		}
 		listdata
+	}
+	
+	@Keyword
+	getTotalSignedUsingRefNumber(Connection conn, String refnumber) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select tdd.total_signed from tr_document_d tdd join tr_document_h tdh on tdd.id_document_h = tdd.id_document_h where tdh.ref_number = '"+refnumber+"'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		Integer.parseInt(data)
 	}
 }
