@@ -92,10 +92,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 5 /*findTestData(
             saldoUsed = 0
 
             'Call test Case untuk login sebagai admin wom admin client'
-            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [:], FailureHandling.STOP_ON_FAILURE)
-			
-			'check error log'
-            checkerrorLog()
+            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : 'Send to Sign'], FailureHandling.STOP_ON_FAILURE)
 
             'mengambil saldo before'
             saldoSignBefore = checkSaldoSign()
@@ -656,7 +653,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 5 /*findTestData(
 							'Jika tipe pembayarannya per sign'
                             if (paymentType == 'Per Sign') {
 								'Saldo usednya akan ditambah dengan value db penggunaan saldo'
-                                saldoUsed = (CustomKeywords.'connection.DataVerif.getSaldoUsedBasedonPaymentType'(
+                                saldoUsed = (saldoUsed + CustomKeywords.'connection.DataVerif.getSaldoUsedBasedonPaymentType'(
                                     conneSign, noKontrak_perdoc[i], emailSigner[(o - 1)]))
 
                                 if (i == 0) {
@@ -715,10 +712,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 5 /*findTestData(
             int loop_saldo = 0
 
             'Call test Case untuk login sebagai admin wom admin client'
-            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [:], FailureHandling.STOP_ON_FAILURE)
-			
-			'Check error log'
-            checkerrorLog()
+            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : 'Send to Sign'], FailureHandling.STOP_ON_FAILURE)
 
             'Split dokumen template name dan nomor kontrak per dokumen berdasarkan delimiter ;'
             documentTemplateName_perdoc = documentTemplateName.split(';', -1)

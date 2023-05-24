@@ -157,9 +157,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(A
 
             'masih ada [ ] nya dalam documentid'
             GlobalVariable.Response = documentId
-
+			
+			'Write to excel mengenai Document ID'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 
-                4, GlobalVariable.NumofColm - 1, GlobalVariable.Response.toString().replace('[','').replace(']',''))
+                5, GlobalVariable.NumofColm - 1, GlobalVariable.Response.toString().replace('[','').replace(']',''))
 					
 			'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
 			int jumlahsignertandatangan = 0
