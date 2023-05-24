@@ -184,7 +184,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         
         'declare isMmandatory Complete'
         int isMandatoryComplete = Integer.parseInt(findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 
-                4))
+                5))
 
         if ((GlobalVariable.FlagFailed == 0) && (isMandatoryComplete == 0)) {
             'write to excel success'

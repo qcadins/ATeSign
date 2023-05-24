@@ -110,7 +110,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                 'declare isMmandatory Complete'
                 int isMandatoryComplete = Integer.parseInt(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
-                        4))
+                        5))
 
                 if (isMandatoryComplete > 0) {
                     'write to excel status failed dan reason'

@@ -112,7 +112,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/button_YaProses'), G
 }
 
 'declare isMmandatory Complete'
-int isMandatoryComplete = Integer.parseInt(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 4))
+int isMandatoryComplete = Integer.parseInt(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 5))
 
 'cek if muncul popup'
 if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationError'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
@@ -182,7 +182,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     GlobalVariable.Link = WebUI.getAttribute(findTestObject('BuatUndangan/PopUp/input_Link'), 'value')
 
     'write to excel Link buat undangan'
-    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'BuatUndangan', 4, GlobalVariable.NumofColm - 
+    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'BuatUndangan', 66, GlobalVariable.NumofColm - 
         1, GlobalVariable.Link)
 
     'HIT API Login untuk token : invenditor@womf'

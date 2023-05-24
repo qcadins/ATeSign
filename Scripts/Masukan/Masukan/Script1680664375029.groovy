@@ -43,7 +43,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         WebUI.click(findTestObject('Masukan/button_Kirim'))
 
         'declare isMmandatory Complete'
-        int isMandatoryComplete = Integer.parseInt(findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, 4))
+        int isMandatoryComplete = Integer.parseInt(findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, 5))
 
         'check if alert berhasil muncul'
         if (WebUI.verifyElementPresent(findTestObject('Masukan/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
