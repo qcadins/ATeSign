@@ -10,7 +10,7 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'declare arraylist arraymatch'
 ArrayList<String> arrayMatch = new ArrayList<String>()
 
-docid = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 5).replace('[', '').replace(']', '').split(', ', -1)
+docid = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 6).replace('[', '').replace(']', '').split(', ', -1)
 
 for (int i = 0; i < docid.size(); i++) {
     'get data API Send Document dari DB (hanya 1 signer)'
