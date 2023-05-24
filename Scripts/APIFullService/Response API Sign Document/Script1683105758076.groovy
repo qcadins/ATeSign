@@ -142,7 +142,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             if (trxNo != null) {
                 'Input excel'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sign Document', 
-                    4, GlobalVariable.NumofColm - 1, trxNo.toString().replace('[', '').replace(']', ''))
+                    5, GlobalVariable.NumofColm - 1, trxNo.toString().replace('[', '').replace(']', ''))
             }
             
             'jika codenya 0'

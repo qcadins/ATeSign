@@ -63,7 +63,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 'input di excel mengenai trxno yang telah didapat'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sent OTP Signing', 
-                    4, GlobalVariable.NumofColm - 1, trxNo.toString())
+                    5, GlobalVariable.NumofColm - 1, trxNo.toString())
 
                 'check Db'
                 if (GlobalVariable.checkStoreDB == 'Yes') {
@@ -102,7 +102,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                     'input di excel mengenai trxno yang telah didapat'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sent OTP Signing', 
-                        5, GlobalVariable.NumofColm - 1, newOTP)
+                        6, GlobalVariable.NumofColm - 1, newOTP)
 
                     'verify reset otp request number '
                     arrayMatch.add(WebUI.verifyEqual(result[arrayIndex++], Integer.parseInt(reset_otp_request_num) + 1, 

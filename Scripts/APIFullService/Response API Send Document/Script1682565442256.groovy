@@ -505,10 +505,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                 'Memasukkan documentid dan trxno ke dalam excel'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 
-                    4, GlobalVariable.NumofColm - 1, documentId.toString().replace('[', '').replace(']', ''))
+                    5, GlobalVariable.NumofColm - 1, documentId.toString().replace('[', '').replace(']', ''))
 
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 
-                    5, GlobalVariable.NumofColm - 1, trxno.toString().replace('[', '').replace(']', ''))
+                    6, GlobalVariable.NumofColm - 1, trxno.toString().replace('[', '').replace(']', ''))
 
                 'write to excel success'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 
