@@ -28,7 +28,7 @@ WebUI.click(findTestObject('Tenant/menu_Tenant'))
 checkPaging(conneSign)
 
 'declare isMmandatory Complete'
-int isMandatoryComplete = Integer.parseInt(findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 4))
+int isMandatoryComplete = Integer.parseInt(findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 5))
 
 'looping tenant'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
