@@ -123,9 +123,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
             'inisialisasi bodyAPI untuk menyusun body'
             bodyAPI = new String()
-
-            'looping berdasarkan jumlah dari signAction di dokumen pertama'
 			
+            'looping berdasarkan jumlah dari signAction di dokumen pertama'
             for (int t = 0; t < signActions.size(); t++) {
 				'Jika semua data mengenai Sign Location seperti page, llx, lly, urx, ury tidak kosong'
 				if (!(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm,34).length() == 0 && findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 35).length() == 0 && findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 36).length() == 0 && findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 37).length() == 0 && findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 38).length() == 0)) {
@@ -554,7 +553,7 @@ public ResponseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum,
     arrayMatch = []
 
     'Mengambil documentid di excel dan displit'
-    docid = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 5).split(', ', splitnum)
+    docid = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 6).split(', ', splitnum)
 
     'split signer untuk doc1 dan signer untuk doc2'
     signAction = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 28).split(enter, splitnum)
@@ -615,13 +614,13 @@ public ResponseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum,
         currentDate = new Date().format('yyyy-MM-dd')
 
         'Split result dari email berdasarkan db'
-        EmailDB = result[arrayindex++].split(semicolon, splitnum)
+        emailDB = result[arrayindex++].split(semicolon, splitnum)
 
         'Split result dari signerType berdasarkan db'
-        SignerTypeDB = result[arrayindex++].split(semicolon, splitnum)
+        signerTypeDB = result[arrayindex++].split(semicolon, splitnum)
 
         'Split result dari signerType per signer berdasarkan excel yang telah displit per dokumen. '
-        SignerTypeExcel = signerType[i].replace('"', '').split(semicolon, splitnum)
+        signerTypeExcel = signerType[i].replace('"', '').split(semicolon, splitnum)
 
         'Deklarasi index Email dan index Signer Type'
         indexEmail = 0
@@ -629,7 +628,7 @@ public ResponseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum,
         indexSignerType = 0
 
         'Splitting email berdasarkan excel per dokumen'
-        EmailExcel = email[i].split(semicolon, splitnum)
+        emailExcel = email[i].split(semicolon, splitnum)
 
         'Jika document Template pada excel tidak kosong'
         if (documentTemplateCode[i].replace('"', '') != '') {
@@ -638,18 +637,18 @@ public ResponseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum,
                 i]).replace('"', ''))
 
             'Looping berdasarkan jumlah email per dokumen di excel'
-            for (int c = 0; c < EmailExcel.size(); c++) {
+            for (int c = 0; c < emailExcel.size(); c++) {
                 'Jika hasil dari db ada pada excel mengenai signer type per signer'
-                if (resultDocTemplate.contains(SignerTypeExcel[c].replace('"', ''))) {
+                if (resultDocTemplate.contains(signerTypeExcel[c].replace('"', ''))) {
                     'Jika email pertama di dokumen pertama tidak kosong'
-                    if (EmailExcel[c] != '""') {
+                    if (emailExcel[c] != '""') {
                         'Verify email'
-                        arrayMatch.add(WebUI.verifyMatch(EmailExcel[c].replace('"', ''), EmailDB[indexEmail++], false, 
+                        arrayMatch.add(WebUI.verifyMatch(emailExcel[c].replace('"', ''), emailDB[indexEmail++], false, 
                                 FailureHandling.CONTINUE_ON_FAILURE))
                     }
                     
                     'verify signerType'
-                    arrayMatch.add(WebUI.verifyMatch(SignerTypeExcel[c].replace('"', ''), SignerTypeDB[indexSignerType++], 
+                    arrayMatch.add(WebUI.verifyMatch(signerTypeExcel[c].replace('"', ''), signerTypeDB[indexSignerType++], 
                             false, FailureHandling.CONTINUE_ON_FAILURE))
                 } else {
                     continue
@@ -660,14 +659,14 @@ public ResponseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum,
             pageSignSigner = pageSign[i].split(delimiter, splitnum)
 
             'looping berdasarkan total email di excel'
-            for (y = 0; y < EmailExcel.size(); y++) {
+            for (y = 0; y < emailExcel.size(); y++) {
                 'looping berdasarkan total pagesign per signer. Dalam per signer, displit lagi berdasarkan 1 lokasi'
                 for (x = 0; x < pageSignSigner[y].split(semicolon, splitnum).size(); x++) {
                     'Verifikasi email DB dengan email excel'
-                    arrayMatch.add(WebUI.verifyMatch(EmailDB[indexEmail++], EmailExcel[y].replace('"', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
+                    arrayMatch.add(WebUI.verifyMatch(emailDB[indexEmail++], emailExcel[y].replace('"', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
 
                     'Verifikasi signer Type DB dengan signer Type Excel'
-                    arrayMatch.add(WebUI.verifyMatch(SignerTypeDB[indexSignerType++], SignerTypeExcel[y], false, FailureHandling.CONTINUE_ON_FAILURE))
+                    arrayMatch.add(WebUI.verifyMatch(signerTypeDB[indexSignerType++], signerTypeExcel[y], false, FailureHandling.CONTINUE_ON_FAILURE))
                 }
             }
         }

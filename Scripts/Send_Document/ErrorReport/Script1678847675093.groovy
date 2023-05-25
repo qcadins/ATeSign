@@ -38,7 +38,7 @@ ArrayList<String> resultStatusAktivasi = CustomKeywords.'connection.DataVerif.ge
 totalData = WebUI.getText(findTestObject('ErrorReport/label_TotalData')).split(' ')
 
 'verify total data UI dan DB'
-checkVerifyEqualOrMatch(WebUI.verifyMatch((totalData[0]).replace(',', ''), resultTotalData, false, FailureHandling.CONTINUE_ON_FAILURE))
+checkVerifyEqualOrMatch(WebUI.verifyMatch((totalData[0]).replace(',', ''), resultTotalData, false, FailureHandling.CONTINUE_ON_FAILURE), ' Total Data')
 
 'select modul'
 WebUI.setText(findTestObject('ErrorReport/select_Modul'), 'send document error history')
@@ -75,14 +75,14 @@ WebUI.setText(findTestObject('ErrorReport/input_TanggalKe'), currentDate)
 WebUI.click(findTestObject('ErrorReport/button_Cari'))
 
 //'verify match tipe error'
-//checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorReport/label_Tipe')), GlobalVariable.ErrorType, false, FailureHandling.OPTIONAL))
+//checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorReport/label_Tipe')), GlobalVariable.ErrorType, false, FailureHandling.OPTIONAL), ' Tipe Error')
 
 'click button view'
 WebUI.click(findTestObject('ErrorReport/button_View'))
 
-'verify match tipe error'
+'verify match error detail'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorReport/label_ErrorDetail')), resultErrorDetail, 
-        false, FailureHandling.OPTIONAL))
+        false, FailureHandling.OPTIONAL), ' Error Detail')
 
 'click button X'
 WebUI.click(findTestObject('ErrorReport/button_X'))
@@ -94,15 +94,15 @@ index = 0
 
 'verify data UI dan DB'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorReport/label_SignerType'), FailureHandling.CONTINUE_ON_FAILURE), 
-        'Customer', false, FailureHandling.CONTINUE_ON_FAILURE))
+        'Customer', false, FailureHandling.CONTINUE_ON_FAILURE), ' Signer Type')
 
 'verify data UI dan DB'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorReport/label_SignerName'), FailureHandling.CONTINUE_ON_FAILURE), 
-        resultStatusAktivasi[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+        resultStatusAktivasi[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Signer Nama')
 
 'verify total data UI dan DB'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorReport/label_SignerNIK'), FailureHandling.CONTINUE_ON_FAILURE), 
-        resultStatusAktivasi[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+        resultStatusAktivasi[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Signer NIK')
 
 'declare status'
 String status
@@ -123,16 +123,16 @@ if ((isregis == '0') && (isaktif == '0')) {
 
 'verify total data UI dan DB'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorReport/label_StatusAktivasi'), FailureHandling.CONTINUE_ON_FAILURE), 
-        status, false, FailureHandling.CONTINUE_ON_FAILURE))
+        status, false, FailureHandling.CONTINUE_ON_FAILURE), ' Total Data')
 
 'click button X'
 WebUI.click(findTestObject('ErrorReport/button_X'))
 
-def checkVerifyEqualOrMatch(Boolean isMatch) {
+def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
+            GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
 
         GlobalVariable.FlagFailed = 1
     }
