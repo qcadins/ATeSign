@@ -25,7 +25,7 @@ for (int y = 0; y < docid.size(); y++) {
         -1)
 
     'Call test Case untuk login sebagai admin wom admin client'
-    WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : 'Send to Sign'], 
+    WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
         FailureHandling.STOP_ON_FAILURE)
 
     'Pembuatan untuk array Index result Query'
@@ -152,7 +152,7 @@ for (int y = 0; y < docid.size(); y++) {
             }
         } else {
             'Jika tidak ada, maka datanya tidak ada di UI.'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                     2).replace('-', '') + ';') + GlobalVariable.ReasonFailedNoneUI) + ' pada Page Document Monitoring.')
         }
@@ -161,7 +161,7 @@ for (int y = 0; y < docid.size(); y++) {
     'penggunaan checking print false'
     if (arrayMatch.contains(false)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace(
                 '-', '') + ';') + GlobalVariable.ReasonFailedStoredDB)
     }

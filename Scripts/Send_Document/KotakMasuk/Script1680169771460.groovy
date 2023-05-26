@@ -200,11 +200,6 @@ for (int y = 0; y < docid.size(); y++) {
             ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
             variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[9]/div/a[2]/em', true)
 
-        'modify object button Download Doc'
-        modifyObjectbtnDownloadDoc = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/btn_signer'), 'xpath', 'equals', 
-            ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-            variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[9]/div/a[3]/em', true)
-
         'verifikasi ref number dengan database'
         arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjecttextrefnum), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
@@ -229,55 +224,7 @@ for (int y = 0; y < docid.size(); y++) {
 
         'verifikasi total signer beranda dan pencarian dokumen'
         arrayMatch.add(WebUI.verifyMatch(prosesttd.toString(), prosesttd_pencariandokumen.toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
-
-        /*
-        'Klik View Document'
-        WebUI.click(modifyObjectbtnViewDoc)
-
-        'Pemberian waktu 3 detik karena loading terus menerus'
-        WebUI.delay(4)
-
-        'verifikasi label dokumen'
-        if (WebUI.verifyElementPresent(findTestObject('Object Repository/KotakMasuk/lbl_viewDokumen'), GlobalVariable.TimeOut, 
-            FailureHandling.CONTINUE_ON_FAILURE)) {
-            'Mengambil label pada view Dokoumen'
-            lbl_viewDoc = WebUI.getText(findTestObject('Object Repository/KotakMasuk/lbl_viewDokumen'))
-
-            'Jika pada label terdapat teks No Kontrak'
-            if (lbl_viewDoc.contains('No Kontrak')) {
-                'Direplace dengan kosong agar mendapatkan nomor kontrak'
-                lbl_viewDoc = lbl_viewDoc.replace('No Kontrak ', '')
-            }
-            
-            'Diverifikasi dengan UI didepan'
-            arrayMatch.add(WebUI.verifyMatch(lbl_refnum, lbl_viewDoc, false, FailureHandling.CONTINUE_ON_FAILURE))
-
-            'Klik kembali'
-            WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_backViewDokumen'))
-        } else {
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Sign Document', GlobalVariable.NumofColm, 
-                GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + 
-                ';') + GlobalVariable.ReasonFailedProcessNotDone)
-        }
-        */
-        'Agar dapat ke Lastest. Modifikasi button Lastest pada paging'
-        modifyobjectbtnLastest = WebUI.modifyObjectProperty(findTestObject('Object Repository/KotakMasuk/Sign/btn_Lastest'), 
-            'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' + 
-            variable_lastest.size()) + ']/a/i', true)
-
-        'Jika button Lastest dapat diklik'
-        if (WebUI.verifyElementClickable(modifyobjectbtnLastest, FailureHandling.OPTIONAL)) {
-            'Klik button Lastest'
-            WebUI.click(modifyobjectbtnLastest, FailureHandling.OPTIONAL)
-        }
         
-        /*
-        'Klik download file'
-        WebUI.click(modifyObjectbtnDownloadDoc)
-		
-        'Kasih waktu 4 detik untuk proses download'
-        WebUI.delay(4)
-		*/
         'Jika error lognya muncul'
         if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
             'Tulis di excel itu adalah error'
@@ -286,9 +233,6 @@ for (int y = 0; y < docid.size(); y++) {
                 ';') + WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label'))
         }
         
-        'Check apakah sudah terddownload menggunakan custom keyword'
-        CustomKeywords.'customizekeyword.Download.isFileDownloaded'('Yes')
-
         'Klik btnSigner'
         WebUI.click(modifyObjectbtnSigner)
 
@@ -327,16 +271,61 @@ for (int y = 0; y < docid.size(); y++) {
 
         'Klik x terlebih dahulu pada popup'
         WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_X'))
-    }
     
+    
+	'modify object button Download Doc'
+	modifyObjectbtnDownloadDoc = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/btn_signer'), 'xpath', 'equals',
+		('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[9]/div/a[3]/em', true)
+
+	 'Klik download file'
+	 WebUI.click(modifyObjectbtnDownloadDoc)
+	 
+	 'Kasih waktu 4 detik untuk proses download'
+	 WebUI.delay(4)
+	 
+	'Check apakah sudah terddownload menggunakan custom keyword'
+	CustomKeywords.'customizekeyword.Download.isFileDownloaded'('Yes')
+	
+	
+	 'Klik View Document'
+	 WebUI.click(modifyObjectbtnViewDoc)
+
+	 'Pemberian waktu 3 detik karena loading terus menerus'
+	 WebUI.delay(4)
+
+	 'verifikasi label dokumen'
+	 if (WebUI.verifyElementPresent(findTestObject('Object Repository/KotakMasuk/lbl_viewDokumen'), GlobalVariable.TimeOut,
+		 FailureHandling.CONTINUE_ON_FAILURE)) {
+		 'Mengambil label pada view Dokoumen'
+		 lbl_viewDoc = WebUI.getText(findTestObject('Object Repository/KotakMasuk/lbl_viewDokumen'))
+
+		 'Jika pada label terdapat teks No Kontrak'
+		 if (lbl_viewDoc.contains('No Kontrak')) {
+			 'Direplace dengan kosong agar mendapatkan nomor kontrak'
+			 lbl_viewDoc = lbl_viewDoc.replace('No Kontrak ', '')
+		 }
+		 
+		 'Diverifikasi dengan UI didepan'
+		 arrayMatch.add(WebUI.verifyMatch(lbl_refnum, lbl_viewDoc, false, FailureHandling.CONTINUE_ON_FAILURE))
+
+		 'Klik kembali'
+		 WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_backViewDokumen'))
+	 } else {
+		 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Sign Document', GlobalVariable.NumofColm,
+			 GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) +
+			 ';') + GlobalVariable.ReasonFailedProcessNotDone)
+	 }
+    }
+
     //Document Monitoring
-    WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : 'Beranda/SendtoSign'
-            , ('jumlahsignertandatangan') : jumlahsignertandatangan], FailureHandling.CONTINUE_ON_FAILURE)
+    WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') :excelPathFESignDocument
+            , ('jumlahsignertandatangan') : jumlahsignertandatangan, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
 
     'jika data db tidak sesuai dengan excel'
     if (arrayMatch.contains(false)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Send to Sign', GlobalVariable.NumofColm, 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + 
             ';') + GlobalVariable.ReasonFailedNoneUI)
     }

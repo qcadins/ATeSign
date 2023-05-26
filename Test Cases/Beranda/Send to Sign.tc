@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>Bulk Sign</name>
+   <name>Send to Sign</name>
    <tag></tag>
    <comment></comment>
    <testCaseGuid>c02cb56b-cde6-4f3b-8201-0de46b3989bb</testCaseGuid>
