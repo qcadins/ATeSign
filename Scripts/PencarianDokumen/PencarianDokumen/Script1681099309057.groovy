@@ -80,7 +80,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'verify no kontrak'
             checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('PencarianDokumen/label_noKontrak')).replace(
                         'No Kontrak ', ''), findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 10), 
-                    false, FailureHandling.CONTINUE_ON_FAILURE))
+                    false, FailureHandling.CONTINUE_ON_FAILURE), ' No Kontrak')
 
             'click button kembali'
             WebUI.click(findTestObject('PencarianDokumen/button_Kembali'))
@@ -155,27 +155,27 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 'verify tipe'
                 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectLabelTipe), resultDataSigner[arrayIndexDB++], 
-                        false, FailureHandling.CONTINUE_ON_FAILURE))
+                        false, FailureHandling.CONTINUE_ON_FAILURE), ' Tipe Dok')
 
                 'verify Nama'
                 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectLabelNama), resultDataSigner[arrayIndexDB++], 
-                        false, FailureHandling.CONTINUE_ON_FAILURE))
+                        false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama')
 
                 'verify Email'
                 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectLabelEmail), resultDataSigner[arrayIndexDB++], 
-                        false, FailureHandling.CONTINUE_ON_FAILURE))
+                        false, FailureHandling.CONTINUE_ON_FAILURE), ' Email')
 
                 'verify register Status'
                 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectLabelRegisterStatus), resultDataSigner[
-                        arrayIndexDB++], false, FailureHandling.CONTINUE_ON_FAILURE))
+                        arrayIndexDB++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Register Status')
 
                 'verify sign status'
                 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectLabelSignStatus), resultDataSigner[arrayIndexDB++], 
-                        false, FailureHandling.CONTINUE_ON_FAILURE))
+                        false, FailureHandling.CONTINUE_ON_FAILURE), ' Sign Status')
 
                 'verify sign date'
                 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectLabelSignDate), resultDataSigner[arrayIndexDB++], 
-                        false, FailureHandling.CONTINUE_ON_FAILURE))
+                        false, FailureHandling.CONTINUE_ON_FAILURE), ' Sign Date')
             }
             
             'click button X'
@@ -340,12 +340,12 @@ public checkVerifyPaging(Boolean isMatch) {
     }
 }
 
-public checkVerifyEqualOrMatch(Boolean isMatch) {
+public checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PencarianDokumen', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 2) + 
-            ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
+            ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
 
         GlobalVariable.FlagFailed = 1
     }

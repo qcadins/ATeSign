@@ -41,19 +41,19 @@ for (int i = 1; i <= 8; i++) {
 
 'verify nama'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('InquiryInvitation/tr_Name')).toUpperCase(), findTestData(
-            excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 10).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+            excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 10).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama')
 
 'verify email'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('InquiryInvitation/tr_Receiver')).toUpperCase(), 
-        findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 15).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+        findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 15).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Email')
 
 'verify phone'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('InquiryInvitation/tr_Phone')).toUpperCase(), findTestData(
-            excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 14).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+            excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 14).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Phone')
 
 'verify invitation date'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('InquiryInvitation/tr_InvitationDate')).toUpperCase(), 
-        currentDate.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+        currentDate.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Invitation Date')
 
 verifyListUndangan()
 
@@ -85,42 +85,42 @@ def verifyListUndangan(){
 	
 	'verify nama'
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_Nama')), findTestData(excelPathBuatUndangan).getValue(
-				GlobalVariable.NumofColm, 10), false, FailureHandling.CONTINUE_ON_FAILURE))
+				GlobalVariable.NumofColm, 10), false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama')
 	
 	'verify pengiriman melalui'
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_PengirimanMelalui')), 'Email',
-			false, FailureHandling.CONTINUE_ON_FAILURE))
+			false, FailureHandling.CONTINUE_ON_FAILURE), ' Pengiriman Melalui')
 	
 	'verify penerima undangan'
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_PenerimaUndangan')), findTestData(
-				excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 15), false, FailureHandling.CONTINUE_ON_FAILURE))
+				excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 15), false, FailureHandling.CONTINUE_ON_FAILURE), ' Penerima Undangan')
 	
 	tanggalPengiriman = WebUI.getText(findTestObject('ListUndangan/table_TanggalPengiriman')).split(' ', -1)
 	
 	parsedDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(tanggalPengiriman[0], 'dd-MMM-yyyy', 'yyyy-MM-dd')
 	
 	'verify tanggal pengiriman'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(parsedDate, currentDate, false, FailureHandling.CONTINUE_ON_FAILURE))
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(parsedDate, currentDate, false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Pengiriman')
 	
 	'verify tanggal registrasi'
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_TanggalRegistrasi')), '-', false,
-			FailureHandling.CONTINUE_ON_FAILURE))
+			FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Registrasi')
 	
 	'verify status registrasi'
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusRegistrasi')), 'NOT DONE',
-			false, FailureHandling.CONTINUE_ON_FAILURE))
+			false, FailureHandling.CONTINUE_ON_FAILURE), ' Status Registrasi')
 	
 	'verify Status undangan'
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusUndangan')), 'AKTIF', false,
-			FailureHandling.CONTINUE_ON_FAILURE))
+			FailureHandling.CONTINUE_ON_FAILURE), ' Status Undangan')
 }
 
-def checkVerifyEqualOrMatch(Boolean isMatch) {
+def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2) + ';') + 
-            GlobalVariable.ReasonFailedVerifyEqualOrMatch)
+            GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
 
         GlobalVariable.FlagFailed = 1
     }

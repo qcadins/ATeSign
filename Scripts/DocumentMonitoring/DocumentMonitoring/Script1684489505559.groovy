@@ -181,27 +181,27 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         index) + ']/datatable-body-row/div[2]/datatable-body-cell[6]/div', true)
 
                     'verify user type'
-                    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectUserType), userType, false, FailureHandling.CONTINUE_ON_FAILURE))
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectUserType), userType, false, FailureHandling.CONTINUE_ON_FAILURE), ' User Type')
 
                     'verify user name'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectUserName), result[arrayIndex++], 
-                            false, FailureHandling.CONTINUE_ON_FAILURE))
+                            false, FailureHandling.CONTINUE_ON_FAILURE), ' User Name')
 
                     'verify user email'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectUserEmail), result[arrayIndex++], 
-                            false, FailureHandling.CONTINUE_ON_FAILURE))
+                            false, FailureHandling.CONTINUE_ON_FAILURE), ' User Email')
 
                     'verify register status'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectRegisterStatus), result[arrayIndex++], 
-                            false, FailureHandling.CONTINUE_ON_FAILURE))
+                            false, FailureHandling.CONTINUE_ON_FAILURE), ' Register Status')
 
                     'verify sign status'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectSignStatus), result[arrayIndex++], 
-                            false, FailureHandling.CONTINUE_ON_FAILURE))
+                            false, FailureHandling.CONTINUE_ON_FAILURE), ' Sign Status')
 
                     'verify sign date'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectSignDate), result[arrayIndex++], 
-                            false, FailureHandling.CONTINUE_ON_FAILURE))
+                            false, FailureHandling.CONTINUE_ON_FAILURE), ' Sign date')
                 }
             }
             
@@ -406,12 +406,12 @@ def checkVerifyPaging(Boolean isMatch) {
     }
 }
 
-def checkVerifyEqualOrMatch(Boolean isMatch) {
+def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('DocumentMonitoring', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 2) + 
-            ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
+            ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
 
         GlobalVariable.FlagFailed = 1
     }

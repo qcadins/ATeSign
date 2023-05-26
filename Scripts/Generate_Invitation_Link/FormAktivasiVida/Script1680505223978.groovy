@@ -14,12 +14,12 @@ ArrayList<String> listOTP = []
 'check email sesuai dengan inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/FormAktivasi/input_Email'), 'value', 
             FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 
-            13).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+            13).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Email')
 
 'check nama lengkap sesuai dengan inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/FormAktivasi/input_NamaLengkap'), 
             'value', FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 
-            14).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+            14).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama Lengkap')
 
 'input kata sandi untuk verify button set ulang'
 WebUI.setText(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), '@Abcd1234')
@@ -34,11 +34,11 @@ WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_SetUlang'))
 
 'verify kata sandi sudah kosong'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), 
-            'value'), '', false, FailureHandling.CONTINUE_ON_FAILURE))
+            'value'), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' Kata Sandi Tidak Kereset')
 
 'verify ulang kata sandi sudah kosong'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/FormAktivasi/input_UlangKataSandi'), 
-            'value'), '', false, FailureHandling.CONTINUE_ON_FAILURE))
+            'value'), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' Ulang Kata Sandi Tidak Kereset')
 
 'input kata sandi'
 WebUI.setText(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), findTestData(excelPathGenerateLink).getValue(
@@ -52,7 +52,7 @@ KataSandi = WebUI.getAttribute(findTestObject('BuatUndangan/FormAktivasi/input_K
 
 'check kata sandi sesuai inputan excel'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(KataSandi, findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 
-            49), false, FailureHandling.CONTINUE_ON_FAILURE))
+            49), false, FailureHandling.CONTINUE_ON_FAILURE), ' Kata Sandi Tidak Sesuai Inputan')
 
 'input ulang kata sandi'
 WebUI.setText(findTestObject('BuatUndangan/FormAktivasi/input_UlangKataSandi'), findTestData(excelPathGenerateLink).getValue(
@@ -66,7 +66,7 @@ UlangKataSandi = WebUI.getAttribute(findTestObject('BuatUndangan/FormAktivasi/in
 
 'check ulang kata sandi sesuai inputan excel'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(UlangKataSandi, findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 
-            50), false, FailureHandling.CONTINUE_ON_FAILURE))
+            50), false, FailureHandling.CONTINUE_ON_FAILURE), ' Ulang Kata Sandi tidak Sesuai Inputan')
 
 'verify warning password'
 if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertText'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
@@ -140,7 +140,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
                             GlobalVariable.NumofColm, 13).replace('"', '').toUpperCase())
 
                     'verify counter OTP Katalon sesuai dengan counter OTP DB'
-                    checkVerifyEqualOrMatch(WebUI.verifyEqual(resultResetOTP, OTPResendCount++, FailureHandling.CONTINUE_ON_FAILURE))
+                    checkVerifyEqualOrMatch(WebUI.verifyEqual(resultResetOTP, OTPResendCount++, FailureHandling.CONTINUE_ON_FAILURE), ' Count OTP Tidak Sesuai')
                 }
                 
                 'delay untuk menunggu OTP'
@@ -154,7 +154,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
                 listOTP.add(OTP)
 
                 'check if OTP resend berhasil'
-                checkVerifyEqualOrMatch(WebUI.verifyNotMatch(listOTP[i], listOTP[(i + 1)], false, FailureHandling.CONTINUE_ON_FAILURE))
+                checkVerifyEqualOrMatch(WebUI.verifyNotMatch(listOTP[i], listOTP[(i + 1)], false, FailureHandling.CONTINUE_ON_FAILURE), ' OTP tidak kereset')
 
                 'select OTP'
                 WebUI.sendKeys(findTestObject('DaftarAkun/input_OTP'), Keys.chord(Keys.CONTROL, 'A'))
@@ -216,7 +216,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
                             GlobalVariable.NumofColm, 13).replace('"', '').toUpperCase())
 
                     'verify counter OTP Katalon sesuai dengan counter OTP DB'
-                    checkVerifyEqualOrMatch(WebUI.verifyEqual(resultResetOTP, OTPResendCount++, FailureHandling.CONTINUE_ON_FAILURE))
+                    checkVerifyEqualOrMatch(WebUI.verifyEqual(resultResetOTP, OTPResendCount++, FailureHandling.CONTINUE_ON_FAILURE), ' Count OTP tidak sesuai')
                 }
                 
                 'delay untuk menunggu OTP'
@@ -230,7 +230,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
                 listOTP.add(OTP)
 
                 'check if OTP resend berhasil'
-                checkVerifyEqualOrMatch(WebUI.verifyNotMatch(listOTP[i], listOTP[(i + 1)], false, FailureHandling.CONTINUE_ON_FAILURE))
+                checkVerifyEqualOrMatch(WebUI.verifyNotMatch(listOTP[i], listOTP[(i + 1)], false, FailureHandling.CONTINUE_ON_FAILURE), ' OTP tidak Kereset')
 
                 'input OTP'
                 WebUI.setText(findTestObject('BuatUndangan/FormAktivasi/input_OTP'), findTestData(excelPathGenerateLink).getValue(
@@ -270,12 +270,12 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
     }
 }
 
-def checkVerifyEqualOrMatch(Boolean isMatch) {
+def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Inv Link', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 2) + ';') + 
-            GlobalVariable.ReasonFailedVerifyEqualOrMatch)
+            GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
 
         GlobalVariable.FlagFailed = 1
     }

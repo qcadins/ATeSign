@@ -92,36 +92,36 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
         'verify no meterai'
         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_NomorMeterai')), result[index++], 
-                false, FailureHandling.CONTINUE_ON_FAILURE))
+                false, FailureHandling.CONTINUE_ON_FAILURE), ' No Materai')
 
         'verify no kontrak'
         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_NoKontrak')), result[index++], 
-                false, FailureHandling.CONTINUE_ON_FAILURE))
+                false, FailureHandling.CONTINUE_ON_FAILURE), ' No Kontrak')
 
         'verify tanggal pakai'
         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_TanggalPakai')), result[index++], 
-                false, FailureHandling.CONTINUE_ON_FAILURE))
+                false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Pakai')
 
         'verify biaya'
         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_Biaya')).replace(',', ''), 
-                result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+                result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Biaya')
 
         'verify cabang'
         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_Cabang')), result[index++], 
-                false, FailureHandling.CONTINUE_ON_FAILURE))
+                false, FailureHandling.CONTINUE_ON_FAILURE), ' Cabang')
 
         'verify wilayah'
         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_Wilayah')), result[index++], 
-                false, FailureHandling.CONTINUE_ON_FAILURE))
+                false, FailureHandling.CONTINUE_ON_FAILURE), ' Wilayah')
 
         'verify lini bisnis'
         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_LiniBisnis')), result[index++], 
-                false, FailureHandling.CONTINUE_ON_FAILURE))
+                false, FailureHandling.CONTINUE_ON_FAILURE), ' Lini bisnis')
 
         status = (result[index++]).toUpperCase()
 
         'verify status'
-        checkVerifyEqualOrMatch(status.contains(WebUI.getText(findTestObject('Meterai/table_Status'))))
+        checkVerifyEqualOrMatch(status.contains(WebUI.getText(findTestObject('Meterai/table_Status'))), ' Status')
 
         'click nomor meterai untuk membuka hyperlink'
         WebUI.click(findTestObject('Meterai/table_NomorMeterai'))
@@ -134,27 +134,27 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
         'verify no meterai'
         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_NoTrx')), result[index++], 
-                false, FailureHandling.CONTINUE_ON_FAILURE))
+                false, FailureHandling.CONTINUE_ON_FAILURE), ' No Materai')
 
         'verify no kontrak'
         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_NoKontrak')), result[
-                index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+                index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' No Kontrak')
 
         'verify nama dok'
         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_NamaDok')), result[index++], 
-                false, FailureHandling.CONTINUE_ON_FAILURE))
+                false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama Dokumen')
 
         'verify nama pelanggan'
         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_NamaPelanggan')), result[
-                index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+                index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama Pelanggan')
 
         'verify tipe trx'
         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_TipeTrx')), result[index++], 
-                false, FailureHandling.CONTINUE_ON_FAILURE))
+                false, FailureHandling.CONTINUE_ON_FAILURE), ' Tipe Trx')
 
         'verify tanggal trx'
         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_TanggalTrx')), result[
-                index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+                index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Trx')
 
         'click button X'
         WebUI.click(findTestObject('Meterai/button_X'))
@@ -319,11 +319,11 @@ def checkVerifyPaging(Boolean isMatch) {
     }
 }
 
-def checkVerifyEqualOrMatch(Boolean isMatch) {
+def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Meterai', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
+            (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
 
         GlobalVariable.FlagFailed = 1
     }

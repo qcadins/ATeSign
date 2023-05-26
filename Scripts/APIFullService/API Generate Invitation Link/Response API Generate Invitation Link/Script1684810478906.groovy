@@ -25,9 +25,7 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'get colm excel'
 int countColmExcel = findTestData(excelPathAPIGenerateInvLink).columnNumbers
 
-String selfPhoto
-
-String idPhoto
+String selfPhoto, idPhoto
 
 'looping API Generate Invitation Link'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
@@ -51,6 +49,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.api_key = findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 33)
         }
         
+		'check if self photo mau menggunakan base64 yang salah atau benar'
         if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 36) == 'Yes') {
             selfPhoto = (('"' + CustomKeywords.'customizekeyword.ConvertFile.base64File'(findTestData(excelPathAPIGenerateInvLink).getValue(
                     GlobalVariable.NumofColm, 24))) + '"')
@@ -58,6 +57,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             selfPhoto = findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 24)
         }
         
+		'check if id photo mau menggunakan base64 yang salah atau benar'
         if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 37) == 'Yes') {
             idPhoto = (('"' + CustomKeywords.'customizekeyword.ConvertFile.base64File'(findTestData(excelPathAPIGenerateInvLink).getValue(
                     GlobalVariable.NumofColm, 25))) + '"')
@@ -98,12 +98,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 if ((GlobalVariable.checkStoreDB == 'Yes') && (GlobalVariable.FlagFailed == 0)) {
                     'call test case ResponseAPIStoreDB'
-                    WebUI.callTestCase(findTestCase('APIFullService/APIGenInvLinkStoreDB'), [('excelPathGenInvLink') : 'APIFullService/API_GenInvLink'], 
+                    WebUI.callTestCase(findTestCase('APIFullService/API Generate Invitation Link/APIGenInvLinkStoreDB'), [('excelPathGenInvLink') : 'APIFullService/API_GenInvLink'], 
 						FailureHandling.CONTINUE_ON_FAILURE)
                 }
                 
                 'call test case daftar akun verif'
-                WebUI.callTestCase(findTestCase('APIFullService/DaftarAkunDataVerif'), [('excelPathGenerateLink') : 'APIFullService/API_GenInvLink'], 
+                WebUI.callTestCase(findTestCase('APIFullService/API Generate Invitation Link/DaftarAkunDataVerif'), [('excelPathGenerateLink') : 'APIFullService/API_GenInvLink'], 
                     FailureHandling.CONTINUE_ON_FAILURE)
             } else {
                 'mengambil status code berdasarkan response HIT API'

@@ -35,65 +35,65 @@ if (GlobalVariable.useLocalHost == 'Yes') {
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-'verify NIK sesuai inputan'
+'verify Email sesuai inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Email'), 'value').toUpperCase(), 
         findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 12).replace('"', '').toUpperCase(), false, 
-        FailureHandling.CONTINUE_ON_FAILURE))
+        FailureHandling.CONTINUE_ON_FAILURE), ' Email')
 
 'verify NIK sesuai inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_NIK'), 'value').toUpperCase(), 
         findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 17).replace('"', '').toUpperCase(), false, 
-        FailureHandling.CONTINUE_ON_FAILURE))
+        FailureHandling.CONTINUE_ON_FAILURE), ' NIK')
 
 'verify Nama Lengkap sesuai inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_NamaLengkap'), 'value').toUpperCase(), 
         findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 11).replace('"', '').toUpperCase(), false, 
-        FailureHandling.CONTINUE_ON_FAILURE))
+        FailureHandling.CONTINUE_ON_FAILURE), ' Nama Lengkap')
 
 'verify tempat lahir sesuai inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_TempatLahir'), 'value').toUpperCase(), 
         findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 13).replace('"', '').toUpperCase(), false, 
-        FailureHandling.CONTINUE_ON_FAILURE))
+        FailureHandling.CONTINUE_ON_FAILURE), ' Tempat Lahir')
 
 'verify tanggal lahir sesuai inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_TanggalLahir'), 'value').toUpperCase(), 
         findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 14).replace('"', '').toUpperCase(), false, 
-        FailureHandling.CONTINUE_ON_FAILURE))
+        FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Lahir')
 
 'verify No Handphone sesuai inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_NoHandphone'), 'value').toUpperCase(), 
         findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 16).replace('"', '').toUpperCase(), false, 
-        FailureHandling.CONTINUE_ON_FAILURE))
+        FailureHandling.CONTINUE_ON_FAILURE), ' No Handphone')
 
 'verify alamat sesuai inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_AlamatLengkap'), 'value').toUpperCase(), 
         findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 18).replace('"', '').toUpperCase(), false, 
-        FailureHandling.CONTINUE_ON_FAILURE))
+        FailureHandling.CONTINUE_ON_FAILURE), ' Alamat')
 
 'verify provinsi sesuai inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Provinsi'), 'value').toUpperCase(), 
         findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 22).replace('"', '').toUpperCase(), false, 
-        FailureHandling.CONTINUE_ON_FAILURE))
+        FailureHandling.CONTINUE_ON_FAILURE), ' Provinsi')
 
 'verify kota sesuai inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Kota'), 'value').toUpperCase(), 
         findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 21).replace('"', '').toUpperCase(), false, 
-        FailureHandling.CONTINUE_ON_FAILURE))
+        FailureHandling.CONTINUE_ON_FAILURE), ' Kota')
 
 'verify Kecamatan sesuai inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Kecamatan'), 'value').toUpperCase(), 
         findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 19).replace('"', '').toUpperCase(), false, 
-        FailureHandling.CONTINUE_ON_FAILURE))
+        FailureHandling.CONTINUE_ON_FAILURE), ' Kecamatan')
 
 'verify Kelurahan sesuai inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Kelurahan'), 'value').toUpperCase(), 
         findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 20).replace('"', '').toUpperCase(), false, 
-        FailureHandling.CONTINUE_ON_FAILURE))
+        FailureHandling.CONTINUE_ON_FAILURE), ' Kelurahan')
 
 'verify KodePos sesuai inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_KodePos'), 'value').toUpperCase(), 
         findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 23).replace('"', '').toUpperCase(), false, 
-        FailureHandling.CONTINUE_ON_FAILURE))
+        FailureHandling.CONTINUE_ON_FAILURE), ' KodePos')
 
 'check mau foto selfie atau tidak'
 if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 39) == 'Yes') {
@@ -203,7 +203,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
                 listOTP.add(OTP)
 
                 'check if OTP resend berhasil'
-                checkVerifyEqualOrMatch(WebUI.verifyNotMatch(listOTP[i], listOTP[(i + 1)], false, FailureHandling.CONTINUE_ON_FAILURE))
+                checkVerifyEqualOrMatch(WebUI.verifyNotMatch(listOTP[i], listOTP[(i + 1)], false, FailureHandling.CONTINUE_ON_FAILURE), , ' OTP')
 
                 'input OTP'
                 WebUI.setText(findTestObject('DaftarAkun/input_OTP'), OTP)
@@ -235,7 +235,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
                 listOTP.add(OTP)
 
                 'check if OTP resend berhasil'
-                checkVerifyEqualOrMatch(WebUI.verifyNotMatch(listOTP[i], listOTP[(i + 1)], false, FailureHandling.CONTINUE_ON_FAILURE))
+                checkVerifyEqualOrMatch(WebUI.verifyNotMatch(listOTP[i], listOTP[(i + 1)], false, FailureHandling.CONTINUE_ON_FAILURE), ' OTP')
 
                 'input OTP'
                 WebUI.setText(findTestObject('DaftarAkun/input_OTP'), findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 
@@ -256,7 +256,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
 		checkTrxMutation(conneSign)
 	
         'call testcase form aktivasi vida'
-        WebUI.callTestCase(findTestCase('APIFullService/FormAktivasiVida'), [('excelPathAPIGenerateInvLink') : 'APIFullService/API_GenInvLink'], 
+        WebUI.callTestCase(findTestCase('APIFullService/API Generate Invitation Link/FormAktivasiVida'), [('excelPathAPIGenerateInvLink') : 'APIFullService/API_GenInvLink'], 
 			FailureHandling.CONTINUE_ON_FAILURE)
     } else if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
         'get reason error log'
@@ -289,12 +289,12 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     }
 }
 
-def checkVerifyEqualOrMatch(Boolean isMatch) {
+def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 2) + ';') + 
-            GlobalVariable.ReasonFailedVerifyEqualOrMatch)
+            GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
 
         GlobalVariable.FlagFailed = 1
     }

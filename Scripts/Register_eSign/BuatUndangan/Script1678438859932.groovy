@@ -278,7 +278,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     saldoAfter = loginAdminGetSaldo(countCheckSaldo, conneSign)
 
     'verify saldoafter tidak sama dengan saldo before'
-    checkVerifyEqualOrMatch(saldoAfter.equals(saldoBefore))
+    checkVerifyEqualOrMatch(saldoAfter.equals(saldoBefore), ' Saldo')
 }
 
 'close browser testing'
@@ -450,25 +450,25 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
         arrayIndex = 0
 
         'verify no trx ui = db'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectNoTransaksi), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectNoTransaksi), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' No Trx')
 
         'verify tgl trx ui = db'
         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectTanggalTransaksi), (result[arrayIndex++]).replace(
-                    '.0', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
+                    '.0', ''), false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Trx')
 
         'verify tipe trx ui = db'
         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectTipeTransaksi), result[arrayIndex++], false, 
-                FailureHandling.CONTINUE_ON_FAILURE))
+                FailureHandling.CONTINUE_ON_FAILURE), ' Tipe Trx')
 
         'verify user trx ui = db'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectUser), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectUser), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' User')
 
         'verify note trx ui = db'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectCatatan), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectCatatan), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Notes')
 
         'verify qty trx ui = db'
         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectQty), (result[arrayIndex++]).replace('-', ''), 
-                false, FailureHandling.CONTINUE_ON_FAILURE))
+                false, FailureHandling.CONTINUE_ON_FAILURE), ' Qty Trx')
     }
     
     'select vendor'
@@ -580,28 +580,28 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
         arrayIndex = 0
 
         'verify no trx ui = db'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectNoTransaksi), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectNoTransaksi), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' No Trx')
 
         'verify tgl trx ui = db'
         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectTanggalTransaksi), (result[arrayIndex++]).replace(
-                    '.0', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
+                    '.0', ''), false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Trx')
 
         'verify tipe trx ui = db'
         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectTipeTransaksi), result[arrayIndex++], false, 
-                FailureHandling.CONTINUE_ON_FAILURE))
+                FailureHandling.CONTINUE_ON_FAILURE), ' Tipe Trx')
 
         'verify user trx ui = db'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectUser), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectUser), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' User')
 
         'verify note trx ui = db'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectCatatan), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectCatatan), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Notes')
 
         'verify qty trx ui = db'
         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectQty), (result[arrayIndex++]).replace('-', ''), 
-                false, FailureHandling.CONTINUE_ON_FAILURE))
+                false, FailureHandling.CONTINUE_ON_FAILURE), ' Qty trx')
 
         'verify count transaction'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(resultCount, GlobalVariable.Counter.toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(resultCount, GlobalVariable.Counter.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Count Trx')
 		
 		'call function verify list undangan'
 		verifyListUndangan()
@@ -638,45 +638,45 @@ def verifyListUndangan(){
 	
 	'verify nama'
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_Nama')), findTestData(excelPathBuatUndangan).getValue(
-				GlobalVariable.NumofColm, 10), false, FailureHandling.CONTINUE_ON_FAILURE))
+				GlobalVariable.NumofColm, 10), false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama')
 	
 	'verify pengiriman melalui'
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_PengirimanMelalui')), 'Email',
-			false, FailureHandling.CONTINUE_ON_FAILURE))
+			false, FailureHandling.CONTINUE_ON_FAILURE), ' Pengiriman Melalui')
 	
 	'verify penerima undangan'
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_PenerimaUndangan')), findTestData(
-				excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 15), false, FailureHandling.CONTINUE_ON_FAILURE))
+				excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 15), false, FailureHandling.CONTINUE_ON_FAILURE), ' Penerima Undangan')
 	
 	tanggalPengiriman = WebUI.getText(findTestObject('ListUndangan/table_TanggalPengiriman')).split(' ', -1)
 	
 	parsedDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(tanggalPengiriman[0], 'dd-MMM-yyyy', 'yyyy-MM-dd')
 	
 	'verify tanggal pengiriman'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(parsedDate, currentDate, false, FailureHandling.CONTINUE_ON_FAILURE))
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(parsedDate, currentDate, false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Pengiriman')
 	
 	tanggalRegistrasi = WebUI.getText(findTestObject('ListUndangan/table_TanggalRegistrasi')).split(' ', -1)
 	
 	parsedDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(tanggalRegistrasi[0], 'dd-MMM-yyyy', 'yyyy-MM-dd')
 	
 	'verify tanggal registrasi'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(parsedDate, currentDate, false, FailureHandling.CONTINUE_ON_FAILURE))
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(parsedDate, currentDate, false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Registrasi')
 	
 	'verify status registrasi'
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusRegistrasi')), 'DONE',
-			false, FailureHandling.CONTINUE_ON_FAILURE))
+			false, FailureHandling.CONTINUE_ON_FAILURE), ' Status Registrasi')
 	
 	'verify Status undangan'
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusUndangan')), 'NON AKTIF', false,
-			FailureHandling.CONTINUE_ON_FAILURE))
+			FailureHandling.CONTINUE_ON_FAILURE), ' Status Undangan')
 }
 
-def checkVerifyEqualOrMatch(Boolean isMatch) {
+def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2) + ';') + 
-            GlobalVariable.ReasonFailedVerifyEqualOrMatch)
+            GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
 
         GlobalVariable.FlagFailed = 1
     }

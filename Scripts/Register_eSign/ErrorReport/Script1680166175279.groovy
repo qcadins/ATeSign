@@ -33,7 +33,7 @@ String resultErrorDetail = CustomKeywords.'connection.DataVerif.getErrorReportDe
 totalData = WebUI.getText(findTestObject('ErrorReport/label_TotalData')).split(' ')
 
 'verify total data UI dan DB'
-checkVerifyEqualOrMatch(WebUI.verifyMatch((totalData[0]).replace(',', ''), resultTotalData, false, FailureHandling.CONTINUE_ON_FAILURE))
+checkVerifyEqualOrMatch(WebUI.verifyMatch((totalData[0]).replace(',', ''), resultTotalData, false, FailureHandling.CONTINUE_ON_FAILURE), ' Total Data')
 
 'select modul'
 WebUI.setText(findTestObject('ErrorReport/select_Modul'), 'generate invitation link error history')
@@ -62,14 +62,14 @@ WebUI.click(findTestObject('ErrorReport/button_Cari'))
 
 'verify match tipe error'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorReport/label_Tipe')), GlobalVariable.ErrorType, 
-        false, FailureHandling.OPTIONAL))
+        false, FailureHandling.OPTIONAL), ' Tipe Error')
 
 'click button view'
 WebUI.click(findTestObject('ErrorReport/button_View'))
 
-'verify match tipe error'
+'verify match error detail'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ErrorReport/label_ErrorDetail')), resultErrorDetail, 
-        false, FailureHandling.OPTIONAL))
+        false, FailureHandling.OPTIONAL), ' Error Detail')
 
 'click button X'
 WebUI.click(findTestObject('ErrorReport/button_X'))
@@ -81,20 +81,31 @@ WebUI.click(findTestObject('ErrorReport/button_StatusAktivasi'))
 totalStatusAktivasi = WebUI.getText(findTestObject('ErrorReport/label_TotalStatusAktivasi')).split('')
 
 'verify match total status aktivasi'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(totalStatusAktivasi[0], '0', false, FailureHandling.OPTIONAL))
+checkVerifyEqualOrMatch(WebUI.verifyMatch(totalStatusAktivasi[0], '0', false, FailureHandling.OPTIONAL), ' Status Aktivasi')
 
 'click button X'
 WebUI.click(findTestObject('ErrorReport/button_X'))
 
-public checkVerifyEqualOrMatch(Boolean isMatch) {
+public checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2) + ';') + 
-            GlobalVariable.ReasonFailedVerifyEqualOrMatch)
+            GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
 
         GlobalVariable.FlagFailed = 1
     }
+}
+
+def checkVerifyPaging(Boolean isMatch) {
+	if (isMatch == false) {
+		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm,
+			GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2) +
+			';') + GlobalVariable.ReasonFailedPaging)
+
+		GlobalVariable.FlagFailed = 1
+	}
 }
 
 public checkPaging() {
@@ -150,67 +161,67 @@ public checkPaging() {
     WebUI.click(findTestObject('Object Repository/ErrorReport/button_Reset'))
 
     'verif select modul'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/select_Modul'), 'value'), '', 
+    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/select_Modul'), 'value'), '', 
             false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verif no kontrak'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/input_NoKontrak'), 'value'), 
+    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/input_NoKontrak'), 'value'), 
             '', false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verif nama konsumen'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/input_Nama'), 'value'), '', 
+    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/input_Nama'), 'value'), '', 
             false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verif lini bisnis'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/input_LiniBisnis'), 'value'), 
+    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/input_LiniBisnis'), 'value'), 
             '', false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verif cabang'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/input_Cabang'), 'value'), '', 
+    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/input_Cabang'), 'value'), '', 
             false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verif wilayah'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/input_Wilayah'), 'value'), 
+    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/input_Wilayah'), 'value'), 
             '', false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verif tanggal dari'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/input_TanggalDari'), 'value'), 
+    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/input_TanggalDari'), 'value'), 
             defaultTanggalDari, false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verif tanggal ke'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/input_TanggalKe'), 'value'), 
+    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/input_TanggalKe'), 'value'), 
             defaultTanggalKe, false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verif select tipe'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/select_Tipe'), 'value'), '', 
+    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/select_Tipe'), 'value'), '', 
             false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'click page 2'
     WebUI.click(findTestObject('ErrorReport/page_2'))
 
     'verify page 2 active'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/label_Page'), 'ng-reflect-page'), 
+    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/label_Page'), 'ng-reflect-page'), 
             '2', false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'click page 1'
     WebUI.click(findTestObject('ErrorReport/page_1'))
 
     'verify page 1 active'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/label_Page'), 'ng-reflect-page'), 
+    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/label_Page'), 'ng-reflect-page'), 
             '1', false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'click next page'
     WebUI.click(findTestObject('ErrorReport/button_NextPage'))
 
     'verify page 2 active'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/label_Page'), 'ng-reflect-page'), 
+    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/label_Page'), 'ng-reflect-page'), 
             '2', false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'click previous page'
     WebUI.click(findTestObject('ErrorReport/button_PreviousPage'))
 
     'verify page 1 active'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/label_Page'), 'ng-reflect-page'), 
+    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/label_Page'), 'ng-reflect-page'), 
             '1', false, FailureHandling.CONTINUE_ON_FAILURE))
 }
 
