@@ -11,7 +11,7 @@
       </entry>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/div[20]/div/input</value>
+         <value>//*[@class = 'btn btn-danger col-3 input-group-addon']</value>
       </entry>
       <entry>
          <key>CSS</key>
@@ -26,15 +26,15 @@
       <name>tag</name>
       <type>Main</type>
       <value>button</value>
-      <webElementGuid>3b23578a-54e6-4253-b25b-954e43938c74</webElementGuid>
+      <webElementGuid>c87acbff-c90a-4415-a93c-021d0d546c18</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>false</isSelected>
+      <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
       <value>btn btn-danger col-3 input-group-addon</value>
-      <webElementGuid>5c9ea3fb-05cf-4eca-bf06-6c4d7de1c8d2</webElementGuid>
+      <webElementGuid>6e22532e-d457-46b2-ab8a-a86f33d2d12d</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -42,15 +42,15 @@
       <name>text</name>
       <type>Main</type>
       <value>Hapus</value>
-      <webElementGuid>3bf272d2-5bd1-4774-8492-abbb581f0b78</webElementGuid>
+      <webElementGuid>0787f5d3-22e9-4866-910b-b89e53731a07</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/div[20]/div/input</value>
-      <webElementGuid>9e6a94e2-aaff-46f3-86cf-fe69e3275672</webElementGuid>
+      <webElementGuid>92e86a69-db18-4e46-bb49-55b9e3defc34</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -58,7 +58,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Meterai'])[2]/following::button[1]</value>
-      <webElementGuid>da9e188e-18cb-4707-8f51-cab03e31997c</webElementGuid>
+      <webElementGuid>2fbefe68-792a-4352-b503-690b3f1f27c0</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -66,7 +66,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Stamp Duty Postpaid'])[1]/following::button[1]</value>
-      <webElementGuid>44109e41-846b-4d9f-9794-290ebd9c8d52</webElementGuid>
+      <webElementGuid>79216160-6562-4e30-9cde-ee58f8c86099</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -74,7 +74,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Hapus'])[2]/preceding::button[1]</value>
-      <webElementGuid>41248bc5-5189-4fbf-abf8-3818551459c0</webElementGuid>
+      <webElementGuid>5ea07ea4-a49e-4639-94cc-75cea22da941</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -82,7 +82,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Tambah'])[1]/preceding::button[2]</value>
-      <webElementGuid>f6969f4d-2b10-42c8-9125-453886354018</webElementGuid>
+      <webElementGuid>755dfbca-0845-45e8-a71f-b6d09ded9ba8</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -90,7 +90,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='Hapus']/parent::*</value>
-      <webElementGuid>eef60012-4ed9-4dca-9d5b-a2d6e25d441c</webElementGuid>
+      <webElementGuid>5c51b771-b686-4aa4-807d-9b149b0c3eb2</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -98,7 +98,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div[20]/div/button</value>
-      <webElementGuid>be5d3479-ca01-4785-a89d-b35c1af1a16b</webElementGuid>
+      <webElementGuid>6bf6853b-ffbc-4ad1-b589-f8ad0be07f25</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -106,6 +106,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//button[(text() = 'Hapus' or . = 'Hapus')]</value>
-      <webElementGuid>9ec713bf-16ee-4d89-86ab-cc65d58328f2</webElementGuid>
+      <webElementGuid>a43ff57e-eb64-4012-ac8c-33f1c0954aa3</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

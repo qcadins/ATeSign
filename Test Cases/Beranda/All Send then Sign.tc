@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>TTD</name>
+   <name>All Send then Sign</name>
    <tag></tag>
    <comment></comment>
    <testCaseGuid>df4b57d8-7361-4e7a-a5fd-993355eefaf2</testCaseGuid>
