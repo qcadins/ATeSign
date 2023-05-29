@@ -875,14 +875,14 @@ def masukanStoreDB(Connection conneSign, String emailSigner, ArrayList arrayMatc
     arrayIndex = 0
 
     'MasukanDB mengambil value dari hasil query'
-    MasukanDB = CustomKeywords.'connection.DataVerif.getFeedbackStoreDB'(conneSign, emailSigner)
+    masukanDB = CustomKeywords.'connection.DataVerif.getFeedbackStoreDB'(conneSign, emailSigner)
 
     'verify rating'
-    arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 62), MasukanDB[
+    arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 62), masukanDB[
             arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify komentar'
-    arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 63), MasukanDB[
+    arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 63), masukanDB[
             arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 }
 
@@ -891,21 +891,21 @@ def signingProcessStoreDB(Connection conneSign, String emailSigner, int jumlahSi
     arrayIndex = 0
 
     'SigningDB mengambil value dari hasil query'
-    SigningDB = CustomKeywords.'connection.DataVerif.getSigningStatusProcess'(conneSign, findTestData(excelPathFESignDocument).getValue(
+    signingDB = CustomKeywords.'connection.DataVerif.getSigningStatusProcess'(conneSign, findTestData(excelPathFESignDocument).getValue(
             GlobalVariable.NumofColm, 6), emailSigner)
 
     'looping berdasarkan size dari signingDB'
-    for (int t = 1; t <= SigningDB.size(); t++) {
+    for (int t = 1; t <= signingDB.size(); t++) {
         ArrayList arrayMatch = new ArrayList()
 
         'verify request status. 3 berarti done request. Terpaksa hardcode karena tidak ada masternya untuk 3.'
-        arrayMatch.add(WebUI.verifyMatch('3', SigningDB[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+        arrayMatch.add(WebUI.verifyMatch('3', signingDB[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'verify sign date. Jika ada, maka teksnya Sudah TTD. Sign Date sudah dijoin ke email masing-masing, sehingga pengecekan apakah sudah sign atau belum ditandai disini'
-        arrayMatch.add(WebUI.verifyMatch('Sudah TTD', SigningDB[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+        arrayMatch.add(WebUI.verifyMatch('Sudah TTD', signingDB[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'verify total signed. Total signed harusnya seusai dengan variable jumlah signed'
-        arrayMatch.add(WebUI.verifyEqual(jumlahSignerTandaTangan, Integer.parseInt(SigningDB[arrayIndex++]), FailureHandling.CONTINUE_ON_FAILURE))
+        arrayMatch.add(WebUI.verifyEqual(jumlahSignerTandaTangan, Integer.parseInt(signingDB[arrayIndex++]), FailureHandling.CONTINUE_ON_FAILURE))
 
         'Jika arraymatchnya ada false'
         if (arrayMatch.contains(false)) {
