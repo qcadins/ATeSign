@@ -29,7 +29,7 @@ ArrayList<String> arrayMatch = new ArrayList<String>()
 arrayindex = 0
 
 'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
-int jumlahsignertandatangan = 0
+int jumlahSignerTandaTangan = 0
 
 for (int y = 0; y < docid.size(); y++) {
     'Mengambil email berdasarkan documentId'
@@ -94,7 +94,7 @@ for (int y = 0; y < docid.size(); y++) {
 
             'Jika kolom yang ingin di check berada pada urutan ke-5'
             if (i == 5) {
-                if (jumlahsignertandatangan <= emailSigner.size()) {
+                if (jumlahSignerTandaTangan <= emailSigner.size()) {
                     arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectpencariandokumen), '-', false, FailureHandling.CONTINUE_ON_FAILURE //Jika kolom yang ingin di check berada pada urutan ke-6
                             ) //Kolom materai, masih belum get dari Beranda
                         ) //Jika selain kolom2 tersebut, maka
@@ -105,7 +105,7 @@ for (int y = 0; y < docid.size(); y++) {
                 'yang kedua menjadi total signer'
                 prosesttd_pencariandokumen = WebUI.getText(modifyObjectpencariandokumen).split('/', -1)
 
-                arrayMatch.add(WebUI.verifyEqual(jumlahsignertandatangan, (prosesttd_pencariandokumen[0]).replace(' ', ''), 
+                arrayMatch.add(WebUI.verifyEqual(jumlahSignerTandaTangan, (prosesttd_pencariandokumen[0]).replace(' ', ''), 
                         FailureHandling.CONTINUE_ON_FAILURE))
 
                 arrayMatch.add(WebUI.verifyEqual(emailSigner.size(), (prosesttd_pencariandokumen[1]).replace(' ', ''), FailureHandling.CONTINUE_ON_FAILURE))
@@ -322,7 +322,7 @@ for (int y = 0; y < docid.size(); y++) {
 
     //Document Monitoring
     WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') :excelPathFESignDocument
-            , ('jumlahsignertandatangan') : jumlahsignertandatangan, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
+            , ('jumlahsignertandatangan') : jumlahSignerTandaTangan, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
 
     'jika data db tidak sesuai dengan excel'
     if (arrayMatch.contains(false)) {

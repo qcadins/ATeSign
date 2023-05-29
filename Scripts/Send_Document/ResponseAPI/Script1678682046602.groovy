@@ -92,9 +92,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 4/*findTestData(A
 	'Pembuatan pengisian variable di sendRequest per jumlah signer.'
 	ArrayList<String> list = new ArrayList<String>()
 
-	ArrayList<String> ListSigner = new ArrayList<String>()
+	String listSigner = new String()
 
-	(ListSigner[0]) = ''
+	listSigner = ''
 
 	for (int i = 1; i <= signAction.size(); i++) {
 		if (i == signAction.size()) {
@@ -117,7 +117,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 4/*findTestData(A
 		 (email[(i - 1)])) + ',"npwp": ') + (npwp[(i - 1)])) + ',"idPhoto": ') + idPhoto + ',"signerSelfPhoto": ') + signerSelfPhoto
 		  )) + '},')
 
-		(ListSigner[0]) = ((ListSigner[0]) + (list[(i - 1)]))
+    'Memasukkan seluruh BodyAPI ke listSigner'
+    listSigner = listSigner + list[(i - 1)]
 		
 	}
 	

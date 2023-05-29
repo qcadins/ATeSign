@@ -92,9 +92,9 @@ String stringRefno = ''
 'Pembuatan pengisian variable di sendRequest per jumlah signer.'
 ArrayList<String> list = new ArrayList<String>()
 
-ArrayList<String> listSigner = new ArrayList<String>()
+String listSigner = new String()
 
-listSigner[0] = ''
+listSigner = ''
 
 'Looping berdasarkan jumlah array dari signAction'
 for (int i = 1; i <= signAction.size(); i++) {
@@ -121,7 +121,8 @@ for (int i = 1; i <= signAction.size(); i++) {
         (npwp[(i - 1)])) + ',"idPhoto": ') + idPhoto) + ',"signerSelfPhoto": ') + signerSelfPhoto) + '},')
 
     'Memasukkan seluruh BodyAPI ke listSigner'
-    (listSigner[0]) = ((listSigner[0]) + (list[(i - 1)]))
+    listSigner = listSigner + list[(i - 1)]
+
 }
 
 'looping berdasarkan jumlah dari documentFile'
@@ -132,17 +133,16 @@ for (int t = 0; t < documentFile.size(); t++) {
         stringRefno = ((stringRefno + ((((((((((((((((((((((((((('{"referenceNo" : ' + refNo) + ', "documentTemplateCode": ') + 
         documentTemplateCode) + ', "officeCode": ') + officeCode) + ', "officeName": ') + officeName) + ', "regionCode": ') + 
         regionCode) + ', "regionName": ') + regionName) + ', "businessLineCode": ') + businessLineCode) + ', "businessLineName": ') + 
-        businessLineName) + ', "isSequence": ') + isSequence) + ', "signer":[') + (listSigner[0])) + '], "documentFile": "') + 
-        pdfToBase64(documentFile[t])) + '", "psreCode" : ') + psreCode) + ', "successURL": ') + successURL) + ', "uploadURL": ') + 
+        businessLineName) + ', "isSequence": ') + isSequence) + ', "signer":[') + (listSigner)) + '], "documentFile": "') + 
+        pdfToBase64(documentFile[t]))+ '", "psreCode" : ') + psreCode) + ', "successURL": ') + successURL) + ', "uploadURL": ') + 
         uploadURL)) + '}')
     } else {
         'Jika tidak diakhir maka membuat body API'
         stringRefno = ((stringRefno + ((((((((((((((((((((((((((('{"referenceNo" : ' + refNo) + ', "documentTemplateCode": ') + 
         documentTemplateCode) + ', "officeCode": ') + officeCode) + ', "officeName": ') + officeName) + ', "regionCode": ') + 
         regionCode) + ', "regionName": ') + regionName) + ', "businessLineCode": ') + businessLineCode) + ', "businessLineName": ') + 
-        businessLineName) + ', "isSequence": ') + isSequence) + ', "signer":[') + (listSigner[0])) + '], "documentFile": "') + 
-		pdfToBase64(documentFile[t])) + '", "psreCode" : ') + psreCode) + ', "successURL": ') + successURL) + ', "uploadURL": ') + 
-        uploadURL)) + '},')
+        businessLineName) + ', "isSequence": ') + isSequence) + ', "signer":[') + (listSigner)) + '], "documentFile": "') + 
+		pdfToBase64(documentFile[t]))+ '", "psreCode" : ') + psreCode) + ', "successURL": ') + successURL) + ', "uploadURL": ') + uploadURL)) + '},')
     }
 }
 
@@ -164,16 +164,15 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 5, GlobalVariable.NumofColm - 
             1, documentId.toString().replace('[', '').replace(']', ''))
 		
-		emailSigner = email
-		
 		String isDownloadDocument = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 75)
 		
         'write to excel success'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
             1, GlobalVariable.StatusSuccess)
 
-        WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('excelPathFESignDocument') : API_Excel_Path, ('sheet') : sheet, ('isDownloadDocument') : isDownloadDocument], 
-         FailureHandling.CONTINUE_ON_FAILURE)
+		'Call Test Case Kotak Masuk. Melempar value excel, sheet excel, dan is Download Document'
+       // WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('excelPathFESignDocument') : API_Excel_Path, ('sheet') : sheet, ('isDownloadDocument') : isDownloadDocument], 
+       //  FailureHandling.CONTINUE_ON_FAILURE)
 
         if (GlobalVariable.checkStoreDB == 'Yes') {
             'call Fungsi responseAPIStoreDB'

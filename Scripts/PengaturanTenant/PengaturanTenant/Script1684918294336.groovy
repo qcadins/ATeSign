@@ -6,6 +6,8 @@ import com.kms.katalon.core.testobject.TestObject as TestObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
+import com.thoughtworks.selenium.webdriven.commands.RemoveAllSelections
+import java.util.ArrayList
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 import java.sql.Connection as Connection
@@ -78,7 +80,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         WebUI.click(findTestObject('Object Repository/PengaturanTenant/button_Copy'))
 
         'Check error log'
-        checkerrorLog()
+        checkErrorLog()
 
         'tipe saldo displit berdasarkan ;'
         tipeSaldo = findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 10).split(';', -1)
@@ -138,7 +140,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
         'Mengambil value untuk jumlah yang tersisa'
         countEmailRemaining = (countEmailBefore.size() - Integer.parseInt(countEmailDelete))
-
+		
         'Jika deletenya lebih besar daripada jumlah email'
         if (Integer.parseInt(countEmailDelete) > countEmailBefore.size()) {
             'Write excel yang bisa dihapus berjumlah '
@@ -210,7 +212,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             WebUI.setText(findTestObject('Object Repository/PengaturanTenant/input_Tambah_activationCallbackUrl'), activationCallBackUrl)
         } else {
             'Jika Unchange url Activation CallBacknya Yes, maka mengambil value dari UI'
-            activationCallBackUrl = WebUI.getText(findTestObject('Object Repository/PengaturanTenant/input_Tambah_activationCallbackUrl'))
+            activationCallBackUrl = WebUI.getAttribute(findTestObject('Object Repository/PengaturanTenant/input_Tambah_activationCallbackUrl'), 'value')
+			println activationCallBackUrl
         }
         
         'Klik button Coba'
@@ -220,7 +223,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         checkPopup()
 
         'Check error log'
-        checkerrorLog()
+        checkErrorLog()
 
         'Jika button Simpan tidak bisa diklik'
         if (WebUI.verifyElementHasAttribute(findTestObject('Object Repository/PengaturanTenant/button_Simpan'), 'disabled', 
@@ -246,7 +249,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         if (countEmailRemaining != 0) {
             for (i = 0; i < countEmailRemaining; i++) {
                 (countEmailBefore[i]) = (countEmailBefore[((countEmailBefore.size() - 1) - i)])
-				println countEmailBefore[i]
+				
+				countEmailBefore.remove(0)
+				println countEmailBefore[i].
                 emailAfter = (((countEmailBefore[i]) + ',') + emailAfter)
 				println emailAfter
             }
@@ -338,7 +343,7 @@ def checkPopup() {
     return false
 }
 
-def checkerrorLog() {
+def checkErrorLog() {
     'Jika error lognya muncul'
     if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
     } else {
