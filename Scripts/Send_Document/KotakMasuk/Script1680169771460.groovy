@@ -28,6 +28,9 @@ ArrayList<String> arrayMatch = new ArrayList<String>()
 'declare arrayindex'
 arrayindex = 0
 
+'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
+int jumlahsignertandatangan = 0
+
 for (int y = 0; y < docid.size(); y++) {
     'Mengambil email berdasarkan documentId'
     ArrayList<String> emailSigner = CustomKeywords.'connection.DataVerif.getEmailLogin'(conneSign, docid[y]).split(';', 
@@ -285,8 +288,7 @@ for (int y = 0; y < docid.size(); y++) {
 	 WebUI.delay(4)
 	 
 	'Check apakah sudah terddownload menggunakan custom keyword'
-	CustomKeywords.'customizekeyword.Download.isFileDownloaded'('Yes')
-	
+	CustomKeywords.'customizekeyword.Download.isFileDownloaded'(isDownloadDocument)
 	
 	 'Klik View Document'
 	 WebUI.click(modifyObjectbtnViewDoc)
@@ -314,7 +316,7 @@ for (int y = 0; y < docid.size(); y++) {
 	 } else {
 		 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Sign Document', GlobalVariable.NumofColm,
 			 GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) +
-			 ';') + GlobalVariable.ReasonFailedProcessNotDone)
+			 ';') + GlobalVariable.ReasonFailedProcessNotDone + ' untuk proses download dokumen tanda tangan. ')
 	 }
     }
 

@@ -11,7 +11,7 @@
       </entry>
       <entry>
          <key>BASIC</key>
-         <value>//p[(text() = 'Document Anda telah berhasil diproses untuk tanda tangan' or . = 'Document Anda telah berhasil diproses untuk tanda tangan')]</value>
+         <value>//p[(text() = 'Permintaan tanda tangan sedang diproses' or . = 'Permintaan tanda tangan sedang diproses')]</value>
       </entry>
       <entry>
          <key>CSS</key>
@@ -26,7 +26,7 @@
       <name>tag</name>
       <type>Main</type>
       <value>p</value>
-      <webElementGuid>78d988f2-f90b-4b2f-bf19-6102ce3418d4</webElementGuid>
+      <webElementGuid>6fde3497-6c49-45d2-8286-b6de700847f2</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -34,15 +34,15 @@
       <name>class</name>
       <type>Main</type>
       <value>font-large-1 text-center text-bold-700 px-5</value>
-      <webElementGuid>ab1f08d1-bef0-4b35-b00d-637f20bb3303</webElementGuid>
+      <webElementGuid>cd5b17e5-66ac-49a9-9789-efdf9be2b1ae</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>text</name>
       <type>Main</type>
-      <value>Document Anda telah berhasil diproses untuk tanda tangan</value>
-      <webElementGuid>b61d776a-1fdc-4cd5-875d-fbdc4253ee6a</webElementGuid>
+      <value>Permintaan tanda tangan sedang diproses</value>
+      <webElementGuid>53523b3d-c241-4f3d-85de-09fa3ce18d11</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -50,7 +50,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html[1]/body[@class=&quot;vertical-layout menu-hide navbar-static  modal-open  pace-done&quot;]/ngb-modal-window[@class=&quot;d-block modal fade show&quot;]/div[@class=&quot;modal-dialog modal-l&quot;]/div[@class=&quot;modal-content&quot;]/app-signing-request-complete[1]/div[@class=&quot;modal-body&quot;]/div[@class=&quot;row align-items-center&quot;]/p[@class=&quot;font-large-1 text-center text-bold-700 px-5&quot;]</value>
-      <webElementGuid>5e9ad056-144b-4ef6-a36d-78f2a0b3d263</webElementGuid>
+      <webElementGuid>bdd587c5-3783-442a-bd5b-6675bd9a9995</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -58,7 +58,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='`'])[2]/following::p[1]</value>
-      <webElementGuid>dd05858c-e75b-4378-9732-6e55a707424f</webElementGuid>
+      <webElementGuid>b89b8337-c57f-4be4-b48d-212f51082126</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -66,7 +66,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Alt'])[2]/following::p[1]</value>
-      <webElementGuid>27c0a6b4-3185-4679-adc1-4cf74808a8e2</webElementGuid>
+      <webElementGuid>aa908f08-974e-431e-b1d9-d94d8bd802b1</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -74,7 +74,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='OK'])[1]/preceding::p[1]</value>
-      <webElementGuid>7e2d6309-1af9-4a00-aeba-9fa533df9ee4</webElementGuid>
+      <webElementGuid>b5255830-821b-441f-bd46-ad54e003cff7</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -82,7 +82,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='Document Anda telah berhasil diproses untuk tanda tangan']/parent::*</value>
-      <webElementGuid>0b93678c-7b36-4559-be34-baf72d473a06</webElementGuid>
+      <webElementGuid>5a8a6626-d445-4e08-83be-653e298b32e9</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -90,7 +90,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div/div[2]/p</value>
-      <webElementGuid>8d95ee76-d65f-43b3-b1fd-38d412412714</webElementGuid>
+      <webElementGuid>52f5486a-0e85-44d3-b5e3-b39d4a0425ac</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -98,6 +98,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//p[(text() = 'Document Anda telah berhasil diproses untuk tanda tangan' or . = 'Document Anda telah berhasil diproses untuk tanda tangan')]</value>
-      <webElementGuid>332886f6-d702-41f1-90f6-eef003039780</webElementGuid>
+      <webElementGuid>f354ceaa-66f4-480b-a059-41d37c289a10</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

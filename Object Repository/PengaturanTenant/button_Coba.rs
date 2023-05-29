@@ -6,15 +6,15 @@
    <elementGuidId>aac6f98a-001e-42f1-94e6-2fdcbc3c0509</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>XPATH</key>
-         <value>(.//*[normalize-space(text()) and normalize-space(.)='Tambah'])[1]/following::button[1]</value>
+         <key>CSS</key>
       </entry>
       <entry>
          <key>BASIC</key>
-         <value>//*[(text() = 'Coba' or . = 'Coba')]</value>
+         <value>//*[@class = 'btn btn-secondary col-3 input-group-addon' and (text() = 'Coba' or . = 'Coba')]</value>
       </entry>
       <entry>
-         <key>CSS</key>
+         <key>XPATH</key>
+         <value>(.//*[normalize-space(text()) and normalize-space(.)='Tambah'])[1]/following::button[1]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -25,15 +25,15 @@
       <name>tag</name>
       <type>Main</type>
       <value>button</value>
-      <webElementGuid>f1984ae8-e47b-449c-b505-f28e5094d007</webElementGuid>
+      <webElementGuid>cae421fc-6a6f-4679-87d0-94bb4e73adeb</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>false</isSelected>
+      <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
       <value>btn btn-secondary col-3 input-group-addon</value>
-      <webElementGuid>3dbe2edf-cb8a-478e-bd2b-21910d7c3929</webElementGuid>
+      <webElementGuid>c9960fb4-ab2b-47ea-b85c-07722727a8f4</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -41,7 +41,7 @@
       <name>text</name>
       <type>Main</type>
       <value>Coba</value>
-      <webElementGuid>bd0836e5-d636-48a0-800c-a357186c7f19</webElementGuid>
+      <webElementGuid>6dc2ca29-ef82-433c-9198-61eabae47d1b</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -49,7 +49,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/div[24]/button</value>
-      <webElementGuid>a68ecad7-f2f6-4a7e-b842-85fc0b32a15a</webElementGuid>
+      <webElementGuid>c13d99fd-9f35-4d8b-b0b4-882046be53e8</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -57,7 +57,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Tambah'])[1]/following::button[1]</value>
-      <webElementGuid>ee14e103-8390-4ddd-8e5a-6498f71bfd87</webElementGuid>
+      <webElementGuid>f39ce0a8-a3e7-4823-a1f7-327407dfcb11</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -65,7 +65,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Hapus'])[2]/following::button[2]</value>
-      <webElementGuid>270e77bc-65a7-4820-8ea2-a9bdb109dd74</webElementGuid>
+      <webElementGuid>15f6fbf3-53e4-44b2-ad62-633782e10382</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -73,7 +73,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Batal'])[1]/preceding::button[1]</value>
-      <webElementGuid>fb40c966-3e8a-47ee-8399-67efa4330c73</webElementGuid>
+      <webElementGuid>9ee34242-2d48-4d9c-9158-e0e438f51e38</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -81,7 +81,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Simpan'])[1]/preceding::button[2]</value>
-      <webElementGuid>8295217c-a954-4b2f-82ba-c01cae28598c</webElementGuid>
+      <webElementGuid>9c3e782e-fa0b-496d-b76c-27706c06de9d</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -89,7 +89,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='Coba']/parent::*</value>
-      <webElementGuid>131eadd4-ad66-4ca3-aa2d-7134dd4329aa</webElementGuid>
+      <webElementGuid>f9ab4de2-3efe-42b6-9fa5-5bf5f777267c</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -97,7 +97,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div[24]/button</value>
-      <webElementGuid>eddfdfb8-b841-4550-a46e-ef6b002e528a</webElementGuid>
+      <webElementGuid>3c1487db-d905-4e4e-8460-4f75d9122893</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -105,6 +105,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//button[(text() = 'Coba' or . = 'Coba')]</value>
-      <webElementGuid>0a477b46-9e94-4993-afae-9c5c4bedacb9</webElementGuid>
+      <webElementGuid>93922e66-df51-4633-8142-d6390fd65333</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

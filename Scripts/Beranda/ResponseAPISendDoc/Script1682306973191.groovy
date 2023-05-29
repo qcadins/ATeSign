@@ -87,16 +87,14 @@ String idPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,
 
 String signerSelfPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 43)
 
-String stringRefno = new String()
-
-stringRefno = ''
+String stringRefno = ''
 
 'Pembuatan pengisian variable di sendRequest per jumlah signer.'
 ArrayList<String> list = new ArrayList<String>()
 
-ArrayList<String> ListSigner = new ArrayList<String>()
+ArrayList<String> listSigner = new ArrayList<String>()
 
-(ListSigner[0]) = ''
+listSigner[0] = ''
 
 'Looping berdasarkan jumlah array dari signAction'
 for (int i = 1; i <= signAction.size(); i++) {
@@ -122,8 +120,8 @@ for (int i = 1; i <= signAction.size(); i++) {
         (idKtp[(i - 1)])) + ',"tmpLahir": ') + (tmpLahir[(i - 1)])) + ',"email": ') + (email[(i - 1)])) + ',"npwp": ') + 
         (npwp[(i - 1)])) + ',"idPhoto": ') + idPhoto) + ',"signerSelfPhoto": ') + signerSelfPhoto) + '},')
 
-    'Memasukkan seluruh BodyAPI ke ListSigner[0]'
-    (ListSigner[0]) = ((ListSigner[0]) + (list[(i - 1)]))
+    'Memasukkan seluruh BodyAPI ke listSigner'
+    (listSigner[0]) = ((listSigner[0]) + (list[(i - 1)]))
 }
 
 'looping berdasarkan jumlah dari documentFile'
@@ -134,7 +132,7 @@ for (int t = 0; t < documentFile.size(); t++) {
         stringRefno = ((stringRefno + ((((((((((((((((((((((((((('{"referenceNo" : ' + refNo) + ', "documentTemplateCode": ') + 
         documentTemplateCode) + ', "officeCode": ') + officeCode) + ', "officeName": ') + officeName) + ', "regionCode": ') + 
         regionCode) + ', "regionName": ') + regionName) + ', "businessLineCode": ') + businessLineCode) + ', "businessLineName": ') + 
-        businessLineName) + ', "isSequence": ') + isSequence) + ', "signer":[') + (ListSigner[0])) + '], "documentFile": "') + 
+        businessLineName) + ', "isSequence": ') + isSequence) + ', "signer":[') + (listSigner[0])) + '], "documentFile": "') + 
         pdfToBase64(documentFile[t])) + '", "psreCode" : ') + psreCode) + ', "successURL": ') + successURL) + ', "uploadURL": ') + 
         uploadURL)) + '}')
     } else {
@@ -142,7 +140,7 @@ for (int t = 0; t < documentFile.size(); t++) {
         stringRefno = ((stringRefno + ((((((((((((((((((((((((((('{"referenceNo" : ' + refNo) + ', "documentTemplateCode": ') + 
         documentTemplateCode) + ', "officeCode": ') + officeCode) + ', "officeName": ') + officeName) + ', "regionCode": ') + 
         regionCode) + ', "regionName": ') + regionName) + ', "businessLineCode": ') + businessLineCode) + ', "businessLineName": ') + 
-        businessLineName) + ', "isSequence": ') + isSequence) + ', "signer":[') + (ListSigner[0])) + '], "documentFile": "') + 
+        businessLineName) + ', "isSequence": ') + isSequence) + ', "signer":[') + (listSigner[0])) + '], "documentFile": "') + 
 		pdfToBase64(documentFile[t])) + '", "psreCode" : ') + psreCode) + ', "successURL": ') + successURL) + ', "uploadURL": ') + 
         uploadURL)) + '},')
     }
@@ -162,23 +160,19 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
     if (status_Code == 0) {
        documentId = WS.getElementPropertyValue(respon, 'documentId', FailureHandling.OPTIONAL)
 
-        'masih ada [ ] nya dalam documentid'
-        GlobalVariable.Response = documentId
-
         'Responsenya diwrite di excel'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 5, GlobalVariable.NumofColm - 
-            1, GlobalVariable.Response.toString().replace('[', '').replace(']', ''))
-
-        'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
-        int jumlahsignertandatangan = 0
+            1, documentId.toString().replace('[', '').replace(']', ''))
 		
-		ArrayList<String> emailSigner = email
-
+		emailSigner = email
+		
+		String isDownloadDocument = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 75)
+		
         'write to excel success'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
             1, GlobalVariable.StatusSuccess)
 
-        WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('excelPathFESignDocument') : API_Excel_Path, ('jumlahsignertandatangan') : jumlahsignertandatangan, ('sheet') : sheet], 
+        WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('excelPathFESignDocument') : API_Excel_Path, ('sheet') : sheet, ('isDownloadDocument') : isDownloadDocument], 
          FailureHandling.CONTINUE_ON_FAILURE)
 
         if (GlobalVariable.checkStoreDB == 'Yes') {

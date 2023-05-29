@@ -7,7 +7,6 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import java.sql.Connection as Connection
 
-//WebUI.callTestCase(findTestCase('Login/Login_Inveditor'), [:], FailureHandling.STOP_ON_FAILURE)
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
@@ -20,7 +19,7 @@ String resultTenant = CustomKeywords.'connection.DataVerif.getTenant'(conneSign,
 semicolon = ';'
 splitIndex = -1
 
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(API_Excel_Path).columnNumbers*/; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 4/*findTestData(API_Excel_Path).columnNumbers*/; (GlobalVariable.NumofColm)++) {
     String refNo = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 11)
 	
     String documentTemplateCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 12)
@@ -141,6 +140,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(A
 		}
 
 		}
+		
+	String isDownloadDocument = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 47)
+	
 	'Hit API'
     respon = WS.sendRequest(findTestObject('Postman/Send Document', [('tenantCode') : findTestData(API_Excel_Path).getValue(
                     GlobalVariable.NumofColm, 9), ('request') : stringRefno, ('callerId') : findTestData(API_Excel_Path).getValue(
@@ -169,9 +171,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(A
             'write to excel success'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 
                 0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-
-            WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('excelPathFESignDocument') : 'Registrasi/SendDocument',('jumlahsignertandatangan') : jumlahsignertandatangan], FailureHandling.CONTINUE_ON_FAILURE)
-            if (GlobalVariable.checkStoreDB == 'Yes') {
+			
+			'Call Test case mengneai Kotak Masuk'
+            WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('excelPathFESignDocument') : 'Registrasi/SendDocument',('jumlahsignertandatangan') : jumlahsignertandatangan, ('isDownloadDocument') : isDownloadDocument], FailureHandling.CONTINUE_ON_FAILURE)
+            
+			if (GlobalVariable.checkStoreDB == 'Yes') {
                 'call test case ResponseAPIStoreDB'
                 WebUI.callTestCase(findTestCase('Send_Document/ResponseAPIStoreDB'), [('API_Excel_Path') : 'Registrasi/SendDocument'], 
                     FailureHandling.CONTINUE_ON_FAILURE)

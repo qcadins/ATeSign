@@ -2,7 +2,6 @@ import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
-import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
@@ -36,11 +35,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(
         break
     } else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
         'Call API Send doc'
-        WebUI.callTestCase(findTestCase('Beranda/ResponseAPISendDoc'), [('API_Excel_Path') : excelPathFESignDocument, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
+        WebUI.callTestCase(findTestCase('Beranda/ResponseAPISendDoc'), [('API_Excel_Path') : excelPathFESignDocument, ('sheet') : sheet], 
+            FailureHandling.CONTINUE_ON_FAILURE)
     }
 }
 
-'Looping untuk sign document'
+'looping untuk sign document'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(excelPathFESignDocument).columnNumbers*/ ; (GlobalVariable.NumofColm)++) {
 
         'Jika tidak ada dokumen id di excel'
@@ -61,25 +61,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(
         'Mengambil email berdasarkan documentId'
         ArrayList<String> emailSigner = CustomKeywords.'connection.DataVerif.getEmailLogin'(conneSign, findTestData(excelPathFESignDocument).getValue(
                 GlobalVariable.NumofColm, 6)).split(';', -1)
-		
-		'Declare variable jumlahSignerTelahTtd untuk proses ttd'
-		int jumlahSignerTelahTtd = 0
-		
-		'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
-		int jumlahSignerTandaTangan = CustomKeywords.'connection.DataVerif.getTotalSigned'(conneSign, findTestData(excelPathFESignDocument).getValue(
-		GlobalVariable.NumofColm, 6))
 
-		int saldoUsed
-		
-		int saldoUsed_docpertama = 0
-		
-		'Declare saldo used dari 0'
-		saldoUsed = 0
+        'Declare variable jumlahSignerTelahTtd untuk proses ttd'
+        int jumlahSignerTelahTtd = 0
+
+        'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
+        int jumlahSignerTandaTangan = CustomKeywords.'connection.DataVerif.getTotalSigned'(conneSign, findTestData(excelPathFESignDocument).getValue(
+                GlobalVariable.NumofColm, 6))
+
+        int saldoUsed = 0
+
+        int saldoUsedDocPertama = 0
 
         'looping email signer'
         for (int o = 1; o <= emailSigner.size(); o++) {
             'Inisialisasi variable yang dibutuhkan'
-            String noKontrak, saldoSignBefore, saldoSignAfter, otpBefore, otpAfter, documentTemplateName, noTelpSigner
+            String noKontrak,saldoSignBefore,saldoSignAfter,otpBefore,otpAfter,documentTemplateName,noTelpSigner
 
             'Mengkosongkan nomor kontrak'
             noKontrak = ''
@@ -89,9 +86,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(
 
             'Inisialisasi variable total document yang akan disign, count untuk resend, dan saldo yang akan digunakan'
             int totalDocSign, countResend
-			
+
             'Call test Case untuk login sebagai admin wom admin client'
-            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
+            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
+                FailureHandling.STOP_ON_FAILURE)
 
             'mengambil saldo before'
             saldoSignBefore = checkSaldoSign()
@@ -184,6 +182,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(
                                     if (WebUI.verifyMatch(WebUI.getText(modifyObjectlbltglpermintaan), SendtoSign[arrayIndex++], 
                                         false, FailureHandling.OPTIONAL)) {
                                         'Jika sudah benar pada row terakhir'
+
                                         'Verifynya true'
                                         checkVerifyEqualorMatch(true, '')
                                     }
@@ -216,7 +215,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(
                 WebUI.click(findTestObject('KotakMasuk/Sign/btn_ttdbulk'))
 
                 'Split document Template Name berdasarkan delimiter'
-                documentTemplateName_perdoc = documentTemplateName.split(';', -1)
+                documentTemplateNamePerDoc = documentTemplateName.split(';', -1)
 
                 'check popup'
                 if (checkPopup() == true) {
@@ -224,27 +223,27 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(
                 }
                 
                 'Jika total document sign excel tidak sama dengan total document sign paging'
-                if (totalDocSign != documentTemplateName_perdoc.size()) {
+                if (totalDocSign != documentTemplateNamePerDoc.size()) {
                     CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, ((((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
-                            2) + ';') + GlobalVariable.ReasonFailedTotalDocTidakSesuai) + documentTemplateName_perdoc.size()) + 
+                            2) + ';') + GlobalVariable.ReasonFailedTotalDocTidakSesuai) + documentTemplateNamePerDoc.size()) + 
                         'pada User ') + (emailSigner[(o - 1)]))
                 }
                 
                 'Looping berdasarkan total document sign'
-                for (int c = 0; c < documentTemplateName_perdoc.size(); c++) {
+                for (int c = 0; c < documentTemplateNamePerDoc.size(); c++) {
                     'modify object btn Nama Dokumen '
                     modifyObjectbtnNamaDokumen = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/btn_NamaDokumen'), 
                         'xpath', 'equals', ('id("ngb-nav-' + (c + 2)) + '")', true, FailureHandling.CONTINUE_ON_FAILURE)
 
                     'verify nama dokumen massal dengan nama dokumen di paging'
-                    if (WebUI.verifyMatch(WebUI.getText(modifyObjectbtnNamaDokumen), documentTemplateName_perdoc[(documentTemplateName_perdoc.size() - 
+                    if (WebUI.verifyMatch(WebUI.getText(modifyObjectbtnNamaDokumen), documentTemplateNamePerDoc[(documentTemplateNamePerDoc.size() - 
                         (c + 1))], false, FailureHandling.CONTINUE_ON_FAILURE) == false) {
-						'Jika tidak cocok, maka custom keywords jika tidak sama.'
+                        'Jika tidak cocok, maka custom keywords jika tidak sama.'
                         CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                             GlobalVariable.StatusFailed, (((((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                                 2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + ' dimana tidak sesuai di page Bulk Sign antara ') + 
-                            WebUI.getText(modifyObjectbtnNamaDokumen)) + ' dengan ') + (documentTemplateName_perdoc[c]))
+                            WebUI.getText(modifyObjectbtnNamaDokumen)) + ' dengan ') + (documentTemplateNamePerDoc[c]))
                     }
                 }
             } else {
@@ -255,8 +254,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(
                 modifyobjectbtnLastest = WebUI.modifyObjectProperty(findTestObject('Object Repository/KotakMasuk/Sign/btn_Lastest'), 
                     'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' + 
                     2) + ']/a/i', true)
-				
-				'Looping berdasarkan page agar bergeser ke page sebelumnya'
+
+                'Looping berdasarkan page agar bergeser ke page sebelumnya'
                 for (int k = 1; k <= (variableLastest.size() - 4); k++) {
                     'get row beranda'
                     rowBeranda = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
@@ -310,21 +309,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(
                             }
                         }
                     }
+                    
                     'Jika masih tidak ditemukan datanya, maka'
                     if (documentTemplateName == '') {
-						'Klik previous'
+                        'Klik previous'
                         WebUI.click(modifyobjectbtnLastest)
                     } else {
-						'Jika sudah ditemukan, maka break'
+                        'Jika sudah ditemukan, maka break'
                         break
                     }
-                   
+                    
                     'Jika sudah dilooping terakhir mengenai pagenya dan tetap tidak menemukan'
                     if ((k == (variableLastest.size() - 4)) && (documentTemplateName == '')) {
                         'Input verifynya false dengan reason'
                         checkVerifyEqualorMatch(false, ' dengan alasan tidak ditemukannya document Template Name yang diinginkan.')
-						
-						continue
+
+                        continue
                     }
                 }
                 
@@ -353,24 +353,24 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(
             if (!(WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_TandaTanganDokumen'), GlobalVariable.TimeOut, 
                 FailureHandling.OPTIONAL))) {
                 'Jika tidak ada, maka datanya tidak ada, atau save gagal'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                    GlobalVariable.StatusFailed, ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
-                        2).replace('-', '') + ';') + GlobalVariable.ReasonFailedSaveGagal) + ' dengan alasan page tidak berpindah di Bulk Sign View.')
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                    ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + 
+                    GlobalVariable.ReasonFailedSaveGagal) + ' dengan alasan page tidak berpindah di Bulk Sign View.')
             } else {
                 'Jika bulk signing'
                 if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 49) == 'Yes') {
                     'Split document Template name per dokumen berdasarkan delimiter'
-                    documentTemplateName_perdoc = documentTemplateName.split(';', -1)
+                    documentTemplateNamePerDoc = documentTemplateName.split(';', -1)
 
                     'Looping berdasarkan document template name per dokumen'
-                    for (int i = 0; i < documentTemplateName_perdoc.size(); i++) {
+                    for (int i = 0; i < documentTemplateNamePerDoc.size(); i++) {
                         'Jika page sudah berpindah maka modify object text document template name di Tanda Tangan Dokumen'
                         modifyObjectlabelnamadokumenafterkonfirmasi = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/lbl_NamaDokumenAfterKonfirmasi'), 
                             'xpath', 'equals', ('//*[@id="pdf-main-container"]/div[1]/ul/li[' + (i + 1)) + ']/label', true)
 
                         'verify nama dokumen dengan nama dokumen di paging'
                         checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectlabelnamadokumenafterkonfirmasi), 
-                                documentTemplateName_perdoc[(documentTemplateName_perdoc.size() - (i + 1))], false), '')
+                                documentTemplateNamePerDoc[(documentTemplateNamePerDoc.size() - (i + 1))], false), '')
                     }
                 } else {
                     'verify nama dokumen dengan nama dokumen di paging'
@@ -439,6 +439,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(
                             WebUI.click(findTestObject('KotakMasuk/Sign/btn_LanjutAfterKonfirmasi'), FailureHandling.OPTIONAL)
                         } else {
                             'Jika btn lanjut setelah konfirmasi untuk mengarah ke otp tidak dapat diklik'
+
                             'Failed alasan save gagal tidak bisa diklik.'
                             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                                 GlobalVariable.StatusFailed, ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
@@ -518,8 +519,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(
 
                                     'dicheck OTP pertama dan kedua dan seterusnya'
                                     if (WebUI.verifyMatch(listOTP[(w - 1)], listOTP[w], false, FailureHandling.CONTINUE_ON_FAILURE)) {
-                                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, 
-                                            GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(
+                                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                                            GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(
                                                 GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedOTPError)
                                     }
                                     
@@ -585,13 +586,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(
                         String countFailedSign = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_Failed'))
 
                         'Menarik value count success ke excel'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
-                            71, GlobalVariable.NumofColm - 1, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 71, 
+                            GlobalVariable.NumofColm - 1, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                                 72) + ';') + countSuccessSign)
 
                         'Menarik value count failed ke excel'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
-                            72, GlobalVariable.NumofColm - 1, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 72, 
+                            GlobalVariable.NumofColm - 1, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                                 73) + ';') + countFailedSign)
 
                         'Jika masukan ratingnya tidak kosong'
@@ -639,63 +640,57 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(
                         }
                         
                         'write to excel success'
-                        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
-                            0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-						
-						'Mensplit nomor kontrak yang telah disatukan'
-                        noKontrak_perdoc = noKontrak.split(';', -1)
+                        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, 
+                            GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 
-						println saldoUsed
-						println saldoUsed_docpertama
+                        'Mensplit nomor kontrak yang telah disatukan'
+                        noKontrakPerDoc = noKontrak.split(';', -1)
+
                         'looping untuk mendapatkan total saldo yang digunakan per nomor kontrak'
-                        for (i = 0; i < noKontrak_perdoc.size(); i++) {
-							'Mengambil value dari db mengenai tipe pembayran'
-                            paymentType = CustomKeywords.'connection.DataVerif.getPaymentType'(conneSign, noKontrak_perdoc[
+                        for (i = 0; i < noKontrakPerDoc.size(); i++) {
+                            'Mengambil value dari db mengenai tipe pembayran'
+                            paymentType = CustomKeywords.'connection.DataVerif.getPaymentType'(conneSign, noKontrakPerDoc[
                                 i])
-							
-							'Jika tipe pembayarannya per sign'
+
+                            'Jika tipe pembayarannya per sign'
                             if (paymentType == 'Per Sign') {
-								'Saldo usednya akan ditambah dengan value db penggunaan saldo'
+                                'Saldo usednya akan ditambah dengan value db penggunaan saldo'
                                 saldoUsed = (saldoUsed + CustomKeywords.'connection.DataVerif.getSaldoUsedBasedonPaymentType'(
-                                    conneSign, noKontrak_perdoc[i], emailSigner[(o - 1)]))
+                                    conneSign, noKontrakPerDoc[i], emailSigner[(o - 1)]))
 
                                 if (i == 0) {
-                                    saldoUsed_docpertama = saldoUsed_docpertama + CustomKeywords.'connection.DataVerif.getSaldoUsedBasedonPaymentType'(
-                                    conneSign, noKontrak_perdoc[i], emailSigner[(o - 1)])
+                                    saldoUsedDocPertama = (saldoUsedDocPertama + CustomKeywords.'connection.DataVerif.getSaldoUsedBasedonPaymentType'(
+                                        conneSign, noKontrakPerDoc[i], emailSigner[(o - 1)]))
+                                }
+                            } else {
+                                saldoUsed = (saldoUsed + 1)
+
+                                if (i == 0) {
+                                    saldoUsedDocPertama = (saldoUsedDocPertama + CustomKeywords.'connection.DataVerif.getSaldoUsedBasedonPaymentType'(
+                                        conneSign, noKontrakPerDoc[i], emailSigner[(o - 1)]))
                                 }
                             }
-							else {
-								saldoUsed = saldoUsed + 1
-								
-								if (i == 0) {
-									saldoUsed_docpertama = saldoUsed_docpertama +  CustomKeywords.'connection.DataVerif.getSaldoUsedBasedonPaymentType'(
-									conneSign, noKontrak_perdoc[i], emailSigner[(o - 1)])
-								}
-							}
-							
                         }
-						
-						println 'saldo doc pertama ' + saldoUsed_docpertama + ' adalah dokumen ' + noKontrak_perdoc[0]
-						println saldoUsed
-						
+                        
                         'Jumlah signer tanda tangan akan ditambah dengan total saldo yang telah digunakan'
-						jumlahSignerTandaTangan = (jumlahSignerTandaTangan + saldoUsed)
-						
-						'Jumlah signer telah ttd lebih kepada proses tanda tangan telah bertambah 1.'
-						jumlahSignerTelahTtd = jumlahSignerTelahTtd + 1
-						
+                        jumlahSignerTandaTangan = (jumlahSignerTandaTangan + saldoUsed)
+
+                        'Jumlah signer telah ttd lebih kepada proses tanda tangan telah bertambah 1.'
+                        jumlahSignerTelahTtd = (jumlahSignerTelahTtd + 1)
+
                         'Looping maksimal 100 detik untuk signing proses. Perlu lama dikarenakan walaupun requestnya done(3), tapi dari VIDAnya tidak secepat itu.'
                         for (int y = 1; y <= 5; y++) {
                             'Kita berikan delay per 20 detik karena proses signingnya masih dalam status In Progress (1), dan ketika selesai, status tanda tangan akan kembali menjadi 0'
                             WebUI.delay(20)
+
                             'Jika signing process db untuk signing false, maka'
-                            if (SigningProcessStoreDB(conneSign, emailSigner[(o - 1)], saldoUsed_docpertama) == false) {
+                            if (SigningProcessStoreDB(conneSign, emailSigner[(o - 1)], saldoUsedDocPertama) == false) {
                                 'Jika looping waktu delaynya yang terakhir, maka'
                                 if (y == 5) {
                                     'Failed dengan alasan prosesnya belum selesai'
-                                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, 
-                                        GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(
-                                            GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedProcessNotDone)
+                                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                                        GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
+                                            2) + ';') + GlobalVariable.ReasonFailedProcessNotDone)
                                 }
                             } else {
                                 'Jika hasil store dbnya true, maka'
@@ -715,22 +710,23 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(
                     }
                 }
             }
-			
-			'Memanggil DocumentMonitoring untuk dicheck apakah proses ttdnya bertambah'
+            
+            'Memanggil DocumentMonitoring untuk dicheck apakah proses ttdnya bertambah'
             WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : 'Beranda/SendtoSign'
-                    , ('jumlahsignertandatangan') : jumlahSignerTelahTtd], FailureHandling.CONTINUE_ON_FAILURE)
+                    , ('jumlahsignertandatangan') : jumlahSignerTelahTtd, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
 
             'persiapan loop untuk checking saldo. Membuat variable '
             int loop_saldo = 0
 
             'Call test Case untuk login sebagai admin wom admin client'
-            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
+            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
+                FailureHandling.STOP_ON_FAILURE)
 
             'Split dokumen template name dan nomor kontrak per dokumen berdasarkan delimiter ;'
-            documentTemplateName_perdoc = documentTemplateName.split(';', -1)
+            documentTemplateNamePerDoc = documentTemplateName.split(';', -1)
 
-            noKontrak_perdoc = noKontrak.split(';', -1)
-			
+            noKontrakPerDoc = noKontrak.split(';', -1)
+
             'beri maks 30 sec mengenai perubahan total sign'
             for (int b = 1; b <= 3; b++) {
                 'ambil saldo otp after'
@@ -755,21 +751,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(
             }
             
             'looping berdasarkan total dokumen dari dokumen template code'
-            for (int i = 0; i < noKontrak_perdoc.size(); i++) {
+            for (int i = 0; i < noKontrakPerDoc.size(); i++) {
                 'Input filter di Mutasi Saldo'
-                inputFiltertrx(conneSign, currentDate, noKontrak_perdoc[i], documentTemplateName_perdoc[i])
-				
-				'Mengambil value dari db mengenai tipe pembayran'
-				paymentType = CustomKeywords.'connection.DataVerif.getPaymentType'(conneSign, noKontrak_perdoc[
-					i])
-				'Jika tipe pembayarannya per sign'
+                inputFiltertrx(conneSign, currentDate, noKontrakPerDoc[i], documentTemplateNamePerDoc[i])
+
+                'Mengambil value dari db mengenai tipe pembayran'
+                paymentType = CustomKeywords.'connection.DataVerif.getPaymentType'(conneSign, noKontrakPerDoc[i])
+
+                'Jika tipe pembayarannya per sign'
                 if (paymentType == 'Per Sign') {
-				'Memanggil saldo total yang telah digunakan per dokumen tersebut'
-				saldoUsed_perDoc = CustomKeywords.'connection.DataVerif.getTotalSignedUsingRefNumber'(conneSign, noKontrak_perdoc[i])
+                    'Memanggil saldo total yang telah digunakan per dokumen tersebut'
+                    saldoUsedperDoc = CustomKeywords.'connection.DataVerif.getTotalSignedUsingRefNumber'(conneSign, noKontrakPerDoc[
+                        i])
                 } else {
-				saldoUsed_perDoc = o
+                    saldoUsedperDoc = o
                 }
-				println saldoUsed_perDoc
+                
                 'delay dari 10 sampe 60 detik'
                 for (int d = 1; d <= 6; d++) {
                     'Jika dokumennya ada, maka'
@@ -782,7 +779,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(
                         variable_saldo_row = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper '))
 
                         'ambil inquiry di db'
-                        ArrayList<String> inquiry_db = CustomKeywords.'connection.DataVerif.gettrxSaldo'(conneSign, (noKontrak_perdoc[
+                        ArrayList<String> inquiry_db = CustomKeywords.'connection.DataVerif.gettrxSaldo'(conneSign, (noKontrakPerDoc[
                             i]).toString())
 
                         'looping mengenai columnnya'
@@ -800,29 +797,29 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(
                                     'Jika bukan untuk 2 kolom itu, maka check ke db'
                                     checkVerifyEqualorMatch(WebUI.verifyMatch('-' + WebUI.getText(modifyperrowpercolumn), 
                                             inquiry_db[(u - 1)], false, FailureHandling.CONTINUE_ON_FAILURE), 'pada Kuantitas di Mutasi Saldo dengan nomor kontrak ' + 
-                                        (noKontrak_perdoc[i]))
+                                        (noKontrakPerDoc[i]))
                                 } else {
                                     'Jika bukan -1, atau masih 0. Maka ttdnya dibilang error'
                                     GlobalVariable.FlagFailed = 1
 
                                     'Jika saldonya belum masuk dengan flag, maka signnya gagal.'
-                                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, 
-                                        GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (((findTestData(excelPathFESignDocument).getValue(
-                                            GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedSignGagal) + 
-                                        ' pada Kuantitas di Mutasi Saldo dengan nomor kontrak ') + (noKontrak_perdoc[i]))
+                                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                                        GlobalVariable.StatusFailed, (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
+                                            2) + ';') + GlobalVariable.ReasonFailedSignGagal) + ' pada Kuantitas di Mutasi Saldo dengan nomor kontrak ') + 
+                                        (noKontrakPerDoc[i]))
                                 }
                             } else if (u == (variable_saldo_column.size() / variable_saldo_row.size())) {
                                 'Jika di kolom ke 10, atau di FE table saldo'
 
                                 'check saldo dari table dengan saldo yang sekarang'
                                 checkVerifyEqualorMatch(WebUI.verifyEqual(Integer.parseInt(WebUI.getText(modifyperrowpercolumn)), 
-                                        saldoUsed_perDoc, FailureHandling.CONTINUE_ON_FAILURE), ' pada Saldo di Mutasi Saldo dengan nomor kontrak ' + 
-                                    (noKontrak_perdoc[i]))
+                                        saldoUsedperDoc, FailureHandling.CONTINUE_ON_FAILURE), ' pada Saldo di Mutasi Saldo dengan nomor kontrak ' + 
+                                    (noKontrakPerDoc[i]))
                             } else {
                                 'Jika bukan untuk 2 kolom itu, maka check ke db'
                                 checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(modifyperrowpercolumn), inquiry_db[
                                         (u - 1)], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada Mutasi Saldo dengan nomor kontrak ' + 
-                                    (noKontrak_perdoc[i]))
+                                    (noKontrakPerDoc[i]))
                             }
                         }
                         
@@ -834,7 +831,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(
                             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                                 GlobalVariable.StatusFailed, (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                                     2).replace('-', '') + ';') + GlobalVariable.ReasonFailedNoneUI) + ' dengan nomor kontrak ') + 
-                                (noKontrak_perdoc[i]))
+                                (noKontrakPerDoc[i]))
                         }
                         
                         'delay 10 detik'
@@ -846,7 +843,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(
                 }
             }
         }
-}
+    }
+
 
 ' penggunaan ini hanya untuk Masukan Store Db'
 if (arrayMatch.contains(false)) {
@@ -861,9 +859,9 @@ def checkVerifyEqualorMatch(Boolean isMatch, String reason) {
         GlobalVariable.FlagFailed = 1
 
         'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace(
-                '-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + reason)
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
+            reason)
     }
 }
 
@@ -1056,45 +1054,43 @@ def checkSaldoOtp() {
 }
 
 def checkPopup() {
-	'Jika popup muncul'
-	if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-	}else {
-		'label popup diambil'
-		lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
+    'Jika popup muncul'
+    if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+    } else {
+        'label popup diambil'
+        lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
 
-		if (!(lblpopup.contains('Kode OTP salah'))) {
-			'Tulis di excel sebagai failed dan error.'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-				GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace(
-					'-', '') + ';') + lblpopup)
+        if (!(lblpopup.contains('Kode OTP salah'))) {
+            'Tulis di excel sebagai failed dan error.'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + lblpopup)
 
-			return true
-		}
-		'Klik OK untuk popupnya'
-		WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
-	}
-	
-	return false
+            return true
+        }
+        
+        'Klik OK untuk popupnya'
+        WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
+    }
+    
+    return false
 }
 
 def checkerrorLog() {
-	'Jika error lognya muncul'
-	if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+    'Jika error lognya muncul'
+    if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+    } else {
+        'ambil teks errormessage'
+        errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
 
-	}else {
-		'ambil teks errormessage'
-		errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
+        if (!(errormessage.contains('Verifikasi OTP berhasil')) && !(errormessage.contains('feedback'))) {
+            'Tulis di excel itu adalah error'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + errormessage)
 
-		if (!(errormessage.contains('Verifikasi OTP berhasil')) && !(errormessage.contains('feedback'))) {
-			'Tulis di excel itu adalah error'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-				GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace(
-					'-', '') + ';') + errormessage)
-
-			return true
-		}
-
-	}
-	return false
+            return true
+        }
+    }
+    
+    return false
 }
 
