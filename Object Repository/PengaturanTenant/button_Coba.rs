@@ -11,11 +11,10 @@
       </entry>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/div[24]/button</value>
+         <value>//*[(text() = 'Coba' or . = 'Coba')]</value>
       </entry>
       <entry>
          <key>CSS</key>
-         <value></value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -26,7 +25,7 @@
       <name>tag</name>
       <type>Main</type>
       <value>button</value>
-      <webElementGuid>760d60a7-18f0-425c-ba5e-0d61f08a7f4c</webElementGuid>
+      <webElementGuid>f1984ae8-e47b-449c-b505-f28e5094d007</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -34,23 +33,23 @@
       <name>class</name>
       <type>Main</type>
       <value>btn btn-secondary col-3 input-group-addon</value>
-      <webElementGuid>5ef12114-79d2-4c93-98d4-22ba291d0eca</webElementGuid>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>text</name>
-      <type>Main</type>
-      <value>Coba</value>
-      <webElementGuid>5aaccc0a-49f9-450b-ab61-b153f8d8afdb</webElementGuid>
+      <webElementGuid>3dbe2edf-cb8a-478e-bd2b-21910d7c3929</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Coba</value>
+      <webElementGuid>bd0836e5-d636-48a0-800c-a357186c7f19</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/div[24]/button</value>
-      <webElementGuid>51bd4956-610f-4011-8369-b5dbe15644cb</webElementGuid>
+      <webElementGuid>a68ecad7-f2f6-4a7e-b842-85fc0b32a15a</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -58,7 +57,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Tambah'])[1]/following::button[1]</value>
-      <webElementGuid>9691500c-2954-430e-82fc-a99d19ddfbd6</webElementGuid>
+      <webElementGuid>ee14e103-8390-4ddd-8e5a-6498f71bfd87</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -66,7 +65,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Hapus'])[2]/following::button[2]</value>
-      <webElementGuid>3aeeb1f0-5591-49a1-938f-aea1e9b43c44</webElementGuid>
+      <webElementGuid>270e77bc-65a7-4820-8ea2-a9bdb109dd74</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -74,7 +73,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Batal'])[1]/preceding::button[1]</value>
-      <webElementGuid>e2e61ff9-5b55-4ea9-8a9a-5a1728655a2f</webElementGuid>
+      <webElementGuid>fb40c966-3e8a-47ee-8399-67efa4330c73</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -82,7 +81,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Simpan'])[1]/preceding::button[2]</value>
-      <webElementGuid>1b495294-9866-45a7-b30a-f311d9b28ca6</webElementGuid>
+      <webElementGuid>8295217c-a954-4b2f-82ba-c01cae28598c</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -90,7 +89,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='Coba']/parent::*</value>
-      <webElementGuid>cad083e6-af3a-4e28-9dc6-87058009a843</webElementGuid>
+      <webElementGuid>131eadd4-ad66-4ca3-aa2d-7134dd4329aa</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -98,7 +97,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div[24]/button</value>
-      <webElementGuid>bdd9fa40-f731-4929-bdae-35efd78878cd</webElementGuid>
+      <webElementGuid>eddfdfb8-b841-4550-a46e-ef6b002e528a</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -106,6 +105,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//button[(text() = 'Coba' or . = 'Coba')]</value>
-      <webElementGuid>05f83702-09c8-4d40-bb2c-c26064a50b5a</webElementGuid>
+      <webElementGuid>0a477b46-9e94-4993-afae-9c5c4bedacb9</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

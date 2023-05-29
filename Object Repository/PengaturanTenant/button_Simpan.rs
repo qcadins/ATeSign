@@ -11,7 +11,7 @@
       </entry>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/div[25]/div/button[2]</value>
+         <value>//*[(text() = 'Simpan' or . = 'Simpan')]</value>
       </entry>
       <entry>
          <key>CSS</key>
@@ -26,7 +26,7 @@
       <name>tag</name>
       <type>Main</type>
       <value>button</value>
-      <webElementGuid>64dca08f-4a2c-41b5-9c75-647380225695</webElementGuid>
+      <webElementGuid>f3ebd0c4-1645-49f8-913e-76d1b7dcb963</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -34,23 +34,23 @@
       <name>class</name>
       <type>Main</type>
       <value>btn btn-info</value>
-      <webElementGuid>01fb79f6-b57e-4a03-9592-00033aec2a2f</webElementGuid>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>text</name>
-      <type>Main</type>
-      <value>Simpan</value>
-      <webElementGuid>1723133f-69c8-4218-94a4-cabb904c7360</webElementGuid>
+      <webElementGuid>0c852f1e-3f95-46b3-8472-0a6b27ce8201</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Simpan</value>
+      <webElementGuid>52b44959-e201-4b59-9827-bada827408b4</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/div[25]/div/button[2]</value>
-      <webElementGuid>d3b3dd22-4d93-4d5a-b836-7514200b9d50</webElementGuid>
+      <webElementGuid>ff343fa2-e9e8-4a78-8e62-687c16d0bb6f</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -58,7 +58,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Batal'])[1]/following::button[1]</value>
-      <webElementGuid>33602ebf-0f9b-4fe9-a488-7500aa1c3743</webElementGuid>
+      <webElementGuid>ee1c0ec6-420d-4a27-911b-3d31e8e50b81</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -66,7 +66,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Coba'])[1]/following::button[2]</value>
-      <webElementGuid>bfedf988-275d-4f69-8495-f4b43d73fab6</webElementGuid>
+      <webElementGuid>f02bae42-9f43-4a29-ac2d-91f372a0a117</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -74,7 +74,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Persyaratan layanan'])[1]/preceding::button[1]</value>
-      <webElementGuid>33f5a37a-71f3-4afd-b9a9-23ae8618d3f4</webElementGuid>
+      <webElementGuid>499d53cd-074a-46c2-a67e-43c428bda66d</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -82,7 +82,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Kebijakan privasi'])[1]/preceding::button[1]</value>
-      <webElementGuid>8d7c60ba-bbe5-4dee-a688-b43648610611</webElementGuid>
+      <webElementGuid>553b1cdc-2742-43ef-a629-531708d453ea</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -90,7 +90,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='Simpan']/parent::*</value>
-      <webElementGuid>a65bb3b9-d1fa-4678-842a-2fc58741fe02</webElementGuid>
+      <webElementGuid>6d9f7ca5-0351-4329-b35e-9fa3b2bc4649</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -98,7 +98,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//button[2]</value>
-      <webElementGuid>2c415eb7-01ab-404a-855a-cead99a31c7c</webElementGuid>
+      <webElementGuid>f65b117c-bb01-466c-bc5f-681f88d5ce11</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -106,6 +106,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//button[(text() = 'Simpan' or . = 'Simpan')]</value>
-      <webElementGuid>895fcae9-7a9c-4304-a54a-03d45cb5f5b3</webElementGuid>
+      <webElementGuid>98ab3f84-223b-445f-9a76-6e43f5e3b5bc</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>
