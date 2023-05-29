@@ -1466,7 +1466,7 @@ public class DataVerif {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getDescriptionBalanceType(Connection conn, String lovCode) {
 		stm = conn.createStatement()

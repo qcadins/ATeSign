@@ -18,6 +18,14 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-edit-invitation/div[2]/div/div/div/div/form/div[10]/button[2]</value>
-      <webElementGuid>817baf38-550c-4d07-ae13-b9b69b0166b5</webElementGuid>
+      <webElementGuid>786726c8-bb85-43d2-b4b9-afd57f5f728d</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Simpan</value>
+      <webElementGuid>c465ea2c-360d-4b31-b417-d8bc680decf3</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
