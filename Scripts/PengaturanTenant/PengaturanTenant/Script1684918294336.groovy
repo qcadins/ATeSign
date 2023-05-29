@@ -6,8 +6,6 @@ import com.kms.katalon.core.testobject.TestObject as TestObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
-import com.thoughtworks.selenium.webdriven.commands.RemoveAllSelections
-import java.util.ArrayList
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 import java.sql.Connection as Connection
@@ -80,7 +78,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         WebUI.click(findTestObject('Object Repository/PengaturanTenant/button_Copy'))
 
         'Check error log'
-        checkErrorLog()
+        checkerrorLog()
 
         'tipe saldo displit berdasarkan ;'
         tipeSaldo = findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 10).split(';', -1)
@@ -117,12 +115,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                 'Set text di input batas saldo'
                 WebUI.setText(modifyObjectInputBatasSaldo, saldoTipeSaldo[i])
-            }else {
-				'Write excel mengenai tidak ada pada batas saldo '
-				CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-					(((findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedNoneUI) +
-					' dikarenakan saldo tersebut tidak muncul. '))
-			}
+            }
         }
         
         'Mengambil hasil db untuk sebelum diedit untuk mendapatkan total emailnya ada berapa'
@@ -131,29 +124,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
         'Mengambil email dari db sebelum diedit'
         countEmailBefore = (resultDbPrevious[arrayIndex]).split(',', -1)
-
-        'Mengambil value untuk jumlah email yang mau didelete'
-        countEmailDelete = findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 12)
-
-        'Mengambil value untuk jumlah yang mau diinput'
-        countEmailInput = findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 13)
-
-        'Mengambil value untuk jumlah yang tersisa'
-        countEmailRemaining = (countEmailBefore.size() - Integer.parseInt(countEmailDelete))
 		
-        'Jika deletenya lebih besar daripada jumlah email'
-        if (Integer.parseInt(countEmailDelete) > countEmailBefore.size()) {
-            'Write excel yang bisa dihapus berjumlah '
-            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (((findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedNoneUI) + 
-                ' dikarenakan Email yang bisa dihapus hanya berjumlah ') + countEmailBefore.size())
-
-            'Remainingnya 0'
-            countEmailRemaining = 0
-        }
+		arrayEmailInput = findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 12)
+        'Mengambil value untuk jumlah yang mau diinput'
         
         'looping berdasarkan total dari email delete'
-        for (i = 1; i <= Integer.parseInt(countEmailDelete); i++) {
+        for (i = 1; i <= arrayEmailInput.size(); i++) {
+			'modify object untuk input email'
+			modifyObjectinputEmail = WebUI.modifyObjectProperty(findTestObject('Object Repository/PengaturanTenant/input_PenerimaEmailReminderSaldo'),
+				'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/div[' +
+				(19 + i)) + ']/div/input', true)
+			
+			if(WebUI.getText(modifyObjectinputEmail) == arrayEmailIn)
+			
             'modify object button Hapus dari yang email pertama'
             modifyObjectbuttonHapus = WebUI.modifyObjectProperty(findTestObject('Object Repository/PengaturanTenant/button_HapusPenerimaEmailReminderSaldo'), 
                 'xpath', 'equals', '/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/div[20]/div/button', 
@@ -212,8 +195,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             WebUI.setText(findTestObject('Object Repository/PengaturanTenant/input_Tambah_activationCallbackUrl'), activationCallBackUrl)
         } else {
             'Jika Unchange url Activation CallBacknya Yes, maka mengambil value dari UI'
-            activationCallBackUrl = WebUI.getAttribute(findTestObject('Object Repository/PengaturanTenant/input_Tambah_activationCallbackUrl'), 'value')
-			println activationCallBackUrl
+            activationCallBackUrl = WebUI.getText(findTestObject('Object Repository/PengaturanTenant/input_Tambah_activationCallbackUrl'))
         }
         
         'Klik button Coba'
@@ -223,7 +205,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         checkPopup()
 
         'Check error log'
-        checkErrorLog()
+        checkerrorLog()
 
         'Jika button Simpan tidak bisa diklik'
         if (WebUI.verifyElementHasAttribute(findTestObject('Object Repository/PengaturanTenant/button_Simpan'), 'disabled', 
@@ -249,16 +231,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         if (countEmailRemaining != 0) {
             for (i = 0; i < countEmailRemaining; i++) {
                 (countEmailBefore[i]) = (countEmailBefore[((countEmailBefore.size() - 1) - i)])
-				
-				countEmailBefore.remove(0)
-				println countEmailBefore[i].
+
                 emailAfter = (((countEmailBefore[i]) + ',') + emailAfter)
-				println emailAfter
             }
         }
         
-		println emailAfter
-		
         arrayMatch.add(WebUI.verifyMatch(emailAfter, resultDbNew[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'verify login'
@@ -343,7 +320,7 @@ def checkPopup() {
     return false
 }
 
-def checkErrorLog() {
+def checkerrorLog() {
     'Jika error lognya muncul'
     if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
     } else {

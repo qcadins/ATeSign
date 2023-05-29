@@ -92,9 +92,7 @@ String stringRefno = ''
 'Pembuatan pengisian variable di sendRequest per jumlah signer.'
 ArrayList<String> list = new ArrayList<String>()
 
-String listSigner = new String()
-
-listSigner = ''
+String listSigner = ''
 
 'Looping berdasarkan jumlah array dari signAction'
 for (int i = 1; i <= signAction.size(); i++) {
