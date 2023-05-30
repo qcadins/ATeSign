@@ -25,19 +25,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         break
     } else if (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
         'declare arraylist arraymatch'
-        ArrayList<String> arrayMatch = []
+        ArrayList arrayMatch = []
 
         'declare arraylist untuk balance'
-        ArrayList<String> balance = []
+        ArrayList balance = []
 
         'declare result Db untuk sebelum edit'
-        ArrayList<String> resultDbPrevious = []
+        ArrayList resultDbPrevious = []
 
         'declare result Db setelah edit'
-        ArrayList<String> resultDbNew = []
+        ArrayList resultDbNew = []
 
         'declare email Input'
-        ArrayList<String> emaiLInput = []
+        ArrayList emaiLInput = []
 
         'declare variable inisialisasi for'
         int i
@@ -124,61 +124,74 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
         'Mengambil email dari db sebelum diedit'
         countEmailBefore = (resultDbPrevious[arrayIndex]).split(',', -1)
-		
-		arrayEmailInput = findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 12)
-        'Mengambil value untuk jumlah yang mau diinput'
-        
-        'looping berdasarkan total dari email delete'
-        for (i = 1; i <= arrayEmailInput.size(); i++) {
-			'modify object untuk input email'
-			modifyObjectinputEmail = WebUI.modifyObjectProperty(findTestObject('Object Repository/PengaturanTenant/input_PenerimaEmailReminderSaldo'),
-				'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/div[' +
-				(19 + i)) + ']/div/input', true)
-			
-			if(WebUI.getText(modifyObjectinputEmail) == arrayEmailIn)
-			
-            'modify object button Hapus dari yang email pertama'
-            modifyObjectbuttonHapus = WebUI.modifyObjectProperty(findTestObject('Object Repository/PengaturanTenant/button_HapusPenerimaEmailReminderSaldo'), 
-                'xpath', 'equals', '/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/div[20]/div/button', 
-                true)
 
-            'Jika button tersebut ada'
-            if (WebUI.verifyElementPresent(modifyObjectbuttonHapus, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-                'Klik button Hapus'
-                WebUI.click(modifyObjectbuttonHapus)
+        arrayEmailInput = findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 12).split(',', -1)
+
+        'looping untuk hapus email reminder yang tidak ada di excel'
+        for (index = 20; index <= (20 + countEmailBefore.size()); index++) {
+            'modify object untuk input email'
+            modifyObjectInputEmail = WebUI.modifyObjectProperty(findTestObject('Object Repository/PengaturanTenant/input_PenerimaEmailReminderSaldo'), 
+                'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/div[' + 
+                index) + ']/div/input', true)
+
+            'modify object button Hapus dari yang email pertama'
+            modifyObjectButtonHapus = WebUI.modifyObjectProperty(findTestObject('Object Repository/PengaturanTenant/button_HapusPenerimaEmailReminderSaldo'), 
+                'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/div[' + 
+                index) + ']/div/button', true)
+
+            if (WebUI.verifyElementPresent(modifyObjectInputEmail, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+                'looping untuk input email reminder'
+                for (indexexcel = 1; indexexcel <= arrayEmailInput.size(); indexexcel++) {
+                    'check if email ui = excel'
+                    if (WebUI.getAttribute(modifyObjectInputEmail, 'value', FailureHandling.OPTIONAL).equalsIgnoreCase(arrayEmailInput[
+                        (indexexcel - 1)])) {
+                        break
+                    } else {
+                        if (indexexcel == arrayEmailInput.size()) {
+                            'click tambah email'
+                            WebUI.click(modifyObjectButtonHapus)
+
+                            index--
+                        }
+                    }
+                }
             } else {
-                'Jika tidak, maka Write excel bahwa tidak ada di UI untuk delete'
-                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                    ((findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedNoneUI) + 
-                    ' untuk delete Email ')
+                break
             }
         }
         
-        'Mengambil email input dari excel dan displit '
-        emaiLInput = findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 14).split(',', -1)
+        'looping untuk input email reminder yang tidak ada di ui'
+        for (indexexcel = 1; indexexcel <= arrayEmailInput.size(); indexexcel++) {
+            'looping untuk input email reminder'
+            for (index = 20; index <= (20 + countEmailBefore.size()); index++) {
+                'modify object untuk input email'
+                modifyObjectInputEmail = WebUI.modifyObjectProperty(findTestObject('Object Repository/PengaturanTenant/input_PenerimaEmailReminderSaldo'), 
+                    'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/div[' + 
+                    index) + ']/div/input', true)
 
-        'looping berdasarkan total input excel'
-        for (i = 1; i <= Integer.parseInt(countEmailInput); i++) {
-            'Klik button Tambah'
-            WebUI.click(findTestObject('Object Repository/PengaturanTenant/button_Tambah'))
+                if (WebUI.verifyElementNotPresent(modifyObjectInputEmail, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+                    'click tambah email'
+                    WebUI.click(findTestObject('Tenant/TenantBaru/button_TambahEmail'))
 
-            'modify object untuk input email'
-            modifyObjectinputEmail = WebUI.modifyObjectProperty(findTestObject('Object Repository/PengaturanTenant/input_PenerimaEmailReminderSaldo'), 
-                'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/div[' + 
-                ((19 + i) + countEmailRemaining)) + ']/div/input', true)
+                    'input email reminder'
+                    WebUI.setText(modifyObjectInputEmail, arrayEmailInput[(indexexcel - 1)])
 
-            'set Text email berdasarkan variable emailInput yang displit'
-            WebUI.setText(modifyObjectinputEmail, emaiLInput[(i - 1)])
+                    break
+                } else if (WebUI.getAttribute(modifyObjectInputEmail, 'value', FailureHandling.OPTIONAL).equalsIgnoreCase(
+                    arrayEmailInput[(indexexcel - 1)])) {
+                    break
+                }
+            }
         }
-        
+
         'Jika stamping otomatisnya yes'
-        if (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 15) == 'Yes') {
+        if (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 13) == 'Yes') {
             'Jika kondisi sekarang masih No'
             if ((resultDbPrevious[6]) == 'No') {
                 'Klik button stamping Otomatis'
                 WebUI.click(findTestObject('Object Repository/PengaturanTenant/slide_StampingOtomatis'))
             }
-        } else if (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 15) == 'No') {
+        } else if (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 13) == 'No') {
             'Jika stamping otomatisnya no, namun kondisi sekarang Yes'
             if ((resultDbPrevious[6]) == 'Yes') {
                 'Klik button stamping Otomatis'
@@ -187,15 +200,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         }
         
         'Jika Unchange url Activation CallBacknya No'
-        if (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 16) == 'No') {
+        if (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 14) == 'No') {
             'activation Callback Url dari excel'
-            activationCallBackUrl = findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 17)
+            activationCallBackUrl = findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 15)
 
             'Input activation Call Back Url'
             WebUI.setText(findTestObject('Object Repository/PengaturanTenant/input_Tambah_activationCallbackUrl'), activationCallBackUrl)
         } else {
+
             'Jika Unchange url Activation CallBacknya Yes, maka mengambil value dari UI'
-            activationCallBackUrl = WebUI.getText(findTestObject('Object Repository/PengaturanTenant/input_Tambah_activationCallbackUrl'))
+            activationCallBackUrl = WebUI.getAttribute(findTestObject('Object Repository/PengaturanTenant/input_Tambah_activationCallbackUrl'), 
+                'value')
+
         }
         
         'Klik button Coba'
@@ -225,18 +241,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         resultDbNew = CustomKeywords.'connection.DataVerif.getPengaturanTenant'(conneSign, findTestData('Login/Login').getValue(
                 2, 2).toUpperCase())
 
-        emailAfter = findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 14)
+        arrayIndex = 0
 
-        'verify email'
-        if (countEmailRemaining != 0) {
-            for (i = 0; i < countEmailRemaining; i++) {
-                (countEmailBefore[i]) = (countEmailBefore[((countEmailBefore.size() - 1) - i)])
+        emailDb = (resultDbNew[arrayIndex++]).split(',').collect({it.trim()}).sort().join(',')
 
-                emailAfter = (((countEmailBefore[i]) + ',') + emailAfter)
-            }
-        }
-        
-        arrayMatch.add(WebUI.verifyMatch(emailAfter, resultDbNew[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+        emailExcel = findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 12).split(',').collect(
+            {it.trim()}).sort().join(',')
+
+        arrayMatch.add(WebUI.verifyMatch(emailExcel, emailDb, false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'verify login'
         arrayMatch.add(WebUI.verifyMatch(findTestData('Login/Login').getValue(2, 2).toUpperCase(), resultDbNew[arrayIndex++], 
@@ -278,15 +290,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         arrayIndex++
 
         'verify stamping otomatis'
-        arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 15), 
+        arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 13), 
                 resultDbNew[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-        'Jika Unchange url Activation CallBacknya No'
-        if (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 16) == 'No') {
-            'verify aktivasi callback url'
-            arrayMatch.add(WebUI.verifyMatch(activationCallBackUrl, resultDbNew[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-        }
-        
+        'verify aktivasi callback url'
+        arrayMatch.add(WebUI.verifyMatch(activationCallBackUrl, resultDbNew[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+
         'Jika storedbnya ada false'
         if (arrayMatch.contains(false)) {
             'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
