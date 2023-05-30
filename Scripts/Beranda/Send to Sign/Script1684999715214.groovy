@@ -529,15 +529,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             }
                         }
                         
+						'check error log'
+						if (checkErrorLog() == true) {
+							continue
+						}
+						
                         'check pop up'
                         if (checkPopup() == true) {
                             continue
                         }
                         
-                        'check error log'
-                        if (checkErrorLog() == true) {
-                            continue
-                        }
                     } else {
                         'Klik verifikasi by Biometric'
                         modifyObjectverifBiometric = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/btn_verifOTP'), 

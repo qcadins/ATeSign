@@ -144,6 +144,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 4/*findTestData(A
 		
 	String isDownloadDocument = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 47)
 	
+	String isViewDocument = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 48)
+	
 	'Hit API'
     respon = WS.sendRequest(findTestObject('Postman/Send Document', [('tenantCode') : findTestData(API_Excel_Path).getValue(
                     GlobalVariable.NumofColm, 9), ('request') : stringRefno, ('callerId') : findTestData(API_Excel_Path).getValue(
@@ -174,7 +176,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 4/*findTestData(A
                 0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 			
 			'Call Test case mengneai Kotak Masuk'
-            WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('excelPathFESignDocument') : 'Registrasi/SendDocument',('jumlahsignertandatangan') : jumlahsignertandatangan, ('isDownloadDocument') : isDownloadDocument], FailureHandling.CONTINUE_ON_FAILURE)
+            WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('excelPathFESignDocument') : 'Registrasi/SendDocument',('jumlahsignertandatangan') : jumlahsignertandatangan, ('isDownloadDocument') : isDownloadDocument, ('isViewDocument') : isViewDocument], FailureHandling.CONTINUE_ON_FAILURE)
             
 			if (GlobalVariable.checkStoreDB == 'Yes') {
                 'call test case ResponseAPIStoreDB'

@@ -10,47 +10,43 @@ import org.openqa.selenium.By as By
 import org.openqa.selenium.Keys as Keys
 import com.kms.katalon.core.configuration.RunConfiguration as RunConfiguration
 
-'setting untuk membuat lokasi default folder download'
-HashMap<String, ArrayList> chromePrefs = new HashMap<String, ArrayList>()
-
-chromePrefs.put('download.default_directory', System.getProperty('user.dir') + '\\Download')
-
-RunConfiguration.setWebDriverPreferencesProperty('prefs', chromePrefs)
-
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-docid = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 6).split(', ', -1)
+'mengambil document dari excel yang telah diberikan.'
+docId = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 6).split(', ', -1)
 
 'declare arraylist arraymatch'
-ArrayList<String> arrayMatch = new ArrayList<String>()
+ArrayList arrayMatch = []
 
 'declare arrayindex'
-arrayindex = 0
+arrayIndex = 0
 
 'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
 int jumlahSignerTandaTangan = 0
 
-for (int y = 0; y < docid.size(); y++) {
+'looping berdasarkan jumlah dokumen'
+for (int y = 0; y < docId.size(); y++) {
     'Mengambil email berdasarkan documentId'
-    ArrayList<String> emailSigner = CustomKeywords.'connection.DataVerif.getEmailLogin'(conneSign, docid[y]).split(';', 
-        -1)
+    ArrayList emailSigner = CustomKeywords.'connection.DataVerif.getEmailLogin'(conneSign, docId[y]).split(';', -1)
 
+    'looping berdasarkan email Signer dari dokumen tersebut. '
     for (int t = 0; t < emailSigner.size(); t++) {
         'call Test Case untuk login sebagai user berdasarkan doc id'
         WebUI.callTestCase(findTestCase('Login/Login_1docManySigner'), [('email') : emailSigner[t]], FailureHandling.STOP_ON_FAILURE)
 
         'get data kotak masuk send document secara asc, dimana customer no 1'
-        ArrayList<String> result = CustomKeywords.'connection.DataVerif.getKotakMasukSendDoc'(conneSign, docid[y])
+        ArrayList result = CustomKeywords.'connection.DataVerif.getKotakMasukSendDoc'(conneSign, docId[y])
 
-        ArrayList<String> prosesttd_pencariandokumen = new ArrayList<String>()
+        'declare array proses Ttd pada Pencarian Dokumen. Digunakan untuk membandingkan dengan Kotak Masuk / Beranda. '
+        ArrayList prosesTtdPencarianDokumen = []
 
         'click menu pencarian dokumen'
         WebUI.click(findTestObject('PencarianDokumen/menu_PencarianDokumen'))
 
         'input status'
         WebUI.setText(findTestObject('PencarianDokumen/select_Status'), CustomKeywords.'connection.DataVerif.getSignStatus'(
-                conneSign, docid[y]))
+                conneSign, docId[y]))
 
         'click enter untuk input select ddl'
         WebUI.sendKeys(findTestObject('PencarianDokumen/select_Status'), Keys.chord(Keys.ENTER))
@@ -58,75 +54,78 @@ for (int y = 0; y < docid.size(); y++) {
         'Klik button cari'
         WebUI.click(findTestObject('Object Repository/PencarianDokumen/button_Cari'))
 
+        'Jika pada halaman tersebut, jika tidak ada referal number yang muncul. Maka write failed tidak ada UI.'
         if (!(WebUI.verifyElementPresent(findTestObject('PencarianDokumen/text_refnum'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE))) {
+            'Write excel tidak ada di UI pada menu Pencarian Dokumen.'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Sign Document', GlobalVariable.NumofColm, 
-                GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + 
-                ';') + GlobalVariable.ReasonFailedNoneUI)
+                GlobalVariable.StatusFailed, ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
+                    2) + ';') + GlobalVariable.ReasonFailedNoneUI) + ' pada menu Pencarian Dokumen')
         }
         
-        'Agar dapat ke Lastest'
-        variable_lastest_pencariandokumen = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
+        'Agar dapat ke Lastest pada Pencarian Dokumen, diambil selector'
+        variableLastestPencarianDokumen = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
 
         'modifikasi button Lastest pada paging'
-        modifyobjectbtnLastestpencariandokumen = WebUI.modifyObjectProperty(findTestObject('Object Repository/KotakMasuk/Sign/btn_Lastest'), 
+        modifyobjectBtnLastestPencarianDokumen = WebUI.modifyObjectProperty(findTestObject('Object Repository/KotakMasuk/Sign/btn_Lastest'), 
             'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-inquiry/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' + 
-            variable_lastest_pencariandokumen.size()) + ']/a/i', true)
+            variableLastestPencarianDokumen.size()) + ']/a/i', true)
 
         'Jika button Lastest dapat diklik'
-        if (WebUI.verifyElementVisible(modifyobjectbtnLastestpencariandokumen, FailureHandling.OPTIONAL)) {
+        if (WebUI.verifyElementVisible(modifyobjectBtnLastestPencarianDokumen, FailureHandling.OPTIONAL)) {
             'Klik button Lastest'
-            WebUI.click(modifyobjectbtnLastestpencariandokumen, FailureHandling.CONTINUE_ON_FAILURE)
+            WebUI.click(modifyobjectBtnLastestPencarianDokumen, FailureHandling.CONTINUE_ON_FAILURE)
         }
         
         'ambil row lastest pencarian dokumen'
-        variable_pencariandokumen_row = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
+        variablePencarianDokumenRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
 
         'ambil column lastest pencarian dokumen'
-        variable_pencariandokumen_column = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-body-cell'))
+        variablePencarianDokumenColumn = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-body-cell'))
 
         'loop berdasarkan jumlah kolom dan dicheck dari 1 - 10.'
-        for (int i = 1; i <= (variable_pencariandokumen_column.size() / variable_pencariandokumen_row.size()); i++) {
+        for (int i = 1; i <= (variablePencarianDokumenColumn.size() / variablePencarianDokumenRow.size()); i++) {
             'modify object text refnum, tipe dok, nama dok, tgl permintaan, tgl selesai, proses ttd, total materai, status'
-            modifyObjectpencariandokumen = WebUI.modifyObjectProperty(findTestObject('PencarianDokumen/text_refnum'), 'xpath', 
+            modifyObjectPencarianDokumen = WebUI.modifyObjectProperty(findTestObject('PencarianDokumen/text_refnum'), 'xpath', 
                 'equals', ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-inquiry/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-                variable_pencariandokumen_row.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div', 
+                variablePencarianDokumenRow.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div', 
                 true)
 
-            'Jika kolom yang ingin di check berada pada urutan ke-5'
+            'Jika kolom yang ingin di check berada pada urutan ke-5, yaitu Tgl Selesai'
             if (i == 5) {
-                if (jumlahSignerTandaTangan <= emailSigner.size()) {
-                    arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectpencariandokumen), '-', false, FailureHandling.CONTINUE_ON_FAILURE //Jika kolom yang ingin di check berada pada urutan ke-6
-                            ) //Kolom materai, masih belum get dari Beranda
-                        ) //Jika selain kolom2 tersebut, maka
-                }
+                'Match text dengan completed date'
+                arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectPencarianDokumen), result[5], false, FailureHandling.CONTINUE_ON_FAILURE))
             } else if (i == 6) {
-                'mengambil text mengenai proses tanda tangan dan displit menjadi 2, yang pertama menjadi jumlah signer yang sudah tanda tangan'
+                'Jika kolom dicheck pada Proses TTD, mengambil text mengenai proses tanda tangan dan displit menjadi 2, yang pertama menjadi jumlah signer yang sudah tanda tangan. Yang kedua menjadi total signer'
+                prosesTtdPencarianDokumen = WebUI.getText(modifyObjectPencarianDokumen).split('/', -1)
 
-                'yang kedua menjadi total signer'
-                prosesttd_pencariandokumen = WebUI.getText(modifyObjectpencariandokumen).split('/', -1)
-
-                arrayMatch.add(WebUI.verifyEqual(jumlahSignerTandaTangan, (prosesttd_pencariandokumen[0]).replace(' ', ''), 
+                'Pengecekan proses sign'
+                arrayMatch.add(WebUI.verifyEqual(jumlahSignerTandaTangan, (prosesTtdPencarianDokumen[0]).replace(' ', ''), 
                         FailureHandling.CONTINUE_ON_FAILURE))
 
-                arrayMatch.add(WebUI.verifyEqual(emailSigner.size(), (prosesttd_pencariandokumen[1]).replace(' ', ''), FailureHandling.CONTINUE_ON_FAILURE))
+                'Pengecekan total proses tanda tangan'
+                arrayMatch.add(WebUI.verifyEqual(emailSigner.size(), (prosesTtdPencarianDokumen[1]).replace(' ', ''), FailureHandling.CONTINUE_ON_FAILURE))
             } else if (i == 7) {
-                resultStamping = CustomKeywords.'connection.DataVerif.getTotalStampingandTotalMaterai'(conneSign, docid[
+                'Jika kolom dicheck pada Total Meterai, keyword untuk mengecek total stamping dan total materai berdasarkan document id'
+                resultStamping = CustomKeywords.'connection.DataVerif.getTotalStampingandTotalMaterai'(conneSign, docId[
                     y])
 
-                totalMaterai_pencariandokumen = WebUI.getText(modifyObjectpencariandokumen).split('/', -1)
+                'Mengambil teks dari UI dan displit berdasarkan proses stamping dan total materai'
+                totalMateraiPencarianDokumen = WebUI.getText(modifyObjectPencarianDokumen).split('/', -1)
 
-                for (int j = 1; j < totalMaterai_pencariandokumen.size(); j++) {
-                    arrayMatch.add(WebUI.verifyEqual(totalMaterai_pencariandokumen[j], resultStamping[j], FailureHandling.CONTINUE_ON_FAILURE))
-                }
+                'Pengecekan proses stamping'
+                arrayMatch.add(WebUI.verifyEqual(totalMateraiPencarianDokumen[0], resultStamping[0], FailureHandling.CONTINUE_ON_FAILURE))
+
+                'Pengecekan total materai'
+                arrayMatch.add(WebUI.verifyEqual(totalMateraiPencarianDokumen[1], resultStamping[1], FailureHandling.CONTINUE_ON_FAILURE))
             } else if (i == 9) {
+                'Untuk ke sembilan tidak dibuat pengecekan dikarenakan itu adalah aksi. AKsi tidak dapat dicheck'
             } else if (i == 8) {
-                arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectpencariandokumen), CustomKeywords.'connection.DataVerif.getSignStatus'(
-                            conneSign, docid[y]), false, FailureHandling.CONTINUE_ON_FAILURE))
-
-                arrayindex++
+                'Jika kolom dicheck pada Status, maka Pengecekan sign status'
+                arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectPencarianDokumen), CustomKeywords.'connection.DataVerif.getSignStatus'(
+                            conneSign, docId[y]), false, FailureHandling.CONTINUE_ON_FAILURE))
             } else {
                 'Diverifikasi dengan UI didepan'
-                arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectpencariandokumen), result[arrayindex++], false, 
+                arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectPencarianDokumen), result[arrayIndex++], false, 
                         FailureHandling.CONTINUE_ON_FAILURE))
             }
         }
@@ -135,99 +134,95 @@ for (int y = 0; y < docid.size(); y++) {
         WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_Beranda'))
 
         'dekalarsi arrayindex menjadi 0'
-        arrayindex = 0
+        arrayIndex = 0
 
         'get row lastest'
-        variable_lastest = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager li'))
+        variableLastest = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager li'))
 
-        'Agar dapat ke Lastest'
-
-        'modifikasi button Lastest pada paging'
-        modifyobjectbtnLastest = WebUI.modifyObjectProperty(findTestObject('Object Repository/KotakMasuk/Sign/btn_Lastest'), 
+        'Agar dapat ke Lastest, modifikasi button Lastest pada paging'
+        modifyObjectBtnLastest = WebUI.modifyObjectProperty(findTestObject('Object Repository/KotakMasuk/Sign/btn_Lastest'), 
             'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' + 
-            variable_lastest.size()) + ']/a/i', true)
+            variableLastest.size()) + ']/a/i', true)
 
         'Jika button Lastest dapat diklik'
-        if (WebUI.verifyElementClickable(modifyobjectbtnLastest, FailureHandling.OPTIONAL)) {
+        if (WebUI.verifyElementClickable(modifyObjectBtnLastest, FailureHandling.OPTIONAL)) {
             'Klik button Lastest'
-            WebUI.click(modifyobjectbtnLastest, FailureHandling.OPTIONAL)
+            WebUI.click(modifyObjectBtnLastest, FailureHandling.OPTIONAL)
         }
         
         'get row pada beranda'
         variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
 
         'modify object text refnum'
-        modifyObjecttextrefnum = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_refnum'), 'xpath', 'equals', 
+        modifyObjectTextRefNum = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_refnum'), 'xpath', 'equals', 
             ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
             variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[2]/div', true)
 
         'Mengambil teks refnum'
-        lbl_refnum = WebUI.getText(modifyObjecttextrefnum)
+        labelRefNum = WebUI.getText(modifyObjectTextRefNum)
 
         'modify object text document type'
-        modifyObjecttextdocumenttype = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_tipedokumen'), 'xpath', 
+        modifyObjectTextDocumentType = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_tipedokumen'), 'xpath', 
             'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
             variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[3]/div', true)
 
         'modify object text document template name'
-        modifyObjecttextdocumenttemplatename = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_namadokumentemplate'), 
+        modifyObjectTextDocumentTemplateName = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_namadokumentemplate'), 
             'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
             variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[4]/div', true)
 
         'modify object text tanggal permintaan'
-        modifyObjecttexttanggalpermintaan = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_Berandaname'), 'xpath', 
+        modifyObjectTextTanggalPermintaan = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_Berandaname'), 'xpath', 
             'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
             variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[5]/div', true)
 
         'modify object text proses ttd'
-        modifyObjecttextprosesttd = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_Berandaname'), 'xpath', 'equals', 
+        modifyObjectTextProsesTtd = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_Berandaname'), 'xpath', 'equals', 
             ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
             variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[6]/div', true)
 
         'modify object text total materai'
-        modifyObjecttexttotalmaterai = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_Berandaname'), 'xpath', 
+        modifyObjectTextTotalMaterai = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_Berandaname'), 'xpath', 
             'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
             variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[7]/div', true)
 
         'modify object text status TTD'
-        modifyObjecttextstatusttd = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_Berandaname'), 'xpath', 'equals', 
+        modifyObjectTextStatusTtd = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_Berandaname'), 'xpath', 'equals', 
             ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
             variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[8]/div', true)
 
         'modify object button signer'
-        modifyObjectbtnSigner = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/btn_signer'), 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
+        modifyObjectBtnSigner = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/btn_signer'), 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
             variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[9]/div/a[4]/em', true)
 
         'modify object button View Document'
-        modifyObjectbtnViewDoc = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/btn_signer'), 'xpath', 'equals', 
+        modifyObjectBtnViewDoc = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/btn_signer'), 'xpath', 'equals', 
             ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
             variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[9]/div/a[2]/em', true)
 
         'verifikasi ref number dengan database'
-        arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjecttextrefnum), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+        arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectTextRefNum), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'verifikasi doctype dengan database'
-        arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjecttextdocumenttype), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+        arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectTextDocumentType), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'verifikasi document template name dengan database'
-        arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjecttextdocumenttemplatename), result[arrayindex++], false, 
+        arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectTextDocumentTemplateName), result[arrayIndex++], false, 
                 FailureHandling.CONTINUE_ON_FAILURE))
 
         'verifikasi tanggal permintaan dengan database'
-        arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjecttexttanggalpermintaan), result[arrayindex++], false, 
+        arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectTextTanggalPermintaan), result[arrayIndex++], false, 
                 FailureHandling.CONTINUE_ON_FAILURE))
 
         'verifikasi status ttd'
-        arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjecttextstatusttd), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+        arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectTextStatusTtd), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-        'mengambil text mengenai proses tanda tangan dan displit menjadi 2, yang pertama menjadi jumlah signer yang sudah tanda tangan'
-
-        'yang kedua menjadi total signer'
-        ArrayList<String> prosesttd = WebUI.getText(modifyObjecttextprosesttd).split('/', -1)
+        'Mengambil text mengenai proses tanda tangan dan displit menjadi 2, yang pertama menjadi jumlah signer yang sudah tanda tangan. Yang kedua menjadi total signer'
+        ArrayList prosesTtd = WebUI.getText(modifyObjectTextProsesTtd).split('/', -1)
 
         'verifikasi total signer beranda dan pencarian dokumen'
-        arrayMatch.add(WebUI.verifyMatch(prosesttd.toString(), prosesttd_pencariandokumen.toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
-        
+        arrayMatch.add(WebUI.verifyMatch(prosesTtd.toString(), prosesTtdPencarianDokumen.toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
         'Jika error lognya muncul'
         if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
             'Tulis di excel itu adalah error'
@@ -236,100 +231,98 @@ for (int y = 0; y < docid.size(); y++) {
                 ';') + WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label'))
         }
         
-        'Klik btnSigner'
-        WebUI.click(modifyObjectbtnSigner)
+        'Klik button Signer'
+        WebUI.click(modifyObjectBtnSigner)
 
         'get row popup'
-        variable_row_popup = DriverFactory.webDriver.findElements(By.cssSelector('body > ngb-modal-window > div > div > app-signer > div.modal-body > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
+        variableRowPopup = DriverFactory.webDriver.findElements(By.cssSelector('body > ngb-modal-window > div > div > app-signer > div.modal-body > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
 
         'get column popup'
-        variable_col_popup = DriverFactory.webDriver.findElements(By.cssSelector('body > ngb-modal-window > div > div > app-signer > div.modal-body > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-body-cell'))
-
-        'declare arrayindex buat signer'
-        arrayindex_signer = 0
+        variableColPopup = DriverFactory.webDriver.findElements(By.cssSelector('body > ngb-modal-window > div > div > app-signer > div.modal-body > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-body-cell'))
 
         'loop untuk row popup'
-        for (int i = 1; i <= variable_row_popup.size(); i++) {
+        for (int i = 1; i <= variableRowPopup.size(); i++) {
             'get data kotak masuk send document secara asc, dimana customer no 1'
-            ArrayList<String> resultSigner = CustomKeywords.'connection.DataVerif.getSignerKotakMasukSendDoc'(conneSign, 
-                docid[y], emailSigner[(i - 1)])
+            ArrayList resultSigner = CustomKeywords.'connection.DataVerif.getSignerKotakMasukSendDoc'(conneSign, docId[y], 
+                emailSigner[(i - 1)])
 
-            arrayindex_signer = 0
+            'declare array index menjadi 0 per result'
+            arrayIndex = 0
 
             'loop untuk column popup'
-            for (int m = 1; m <= (variable_col_popup.size() / variable_row_popup.size()); m++) {
+            for (int m = 1; m <= (variableColPopup.size() / variableRowPopup.size()); m++) {
                 'modify object text nama, email, signer Type, sudah aktivasi Untuk yang terakhir belum bisa, dikarenakan masih gak ada data (-) Dikarenakan modifynya bukan p di lastnya, melainkan span'
-                modifyObjecttextpopup = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_tipepopup'), 'xpath', 
+                modifyObjectTextPopup = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_tipepopup'), 'xpath', 
                     'equals', ((('/html/body/ngb-modal-window/div/div/app-signer/div[2]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
                     i) + ']/datatable-body-row/div[2]/datatable-body-cell[') + m) + ']/div', true)
 
                 'signer nama,email,signerType,sudahAktivasi popup'
-                arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjecttextpopup), resultSigner[arrayindex_signer++], 
-                        false, FailureHandling.CONTINUE_ON_FAILURE))
+                arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectTextPopup), resultSigner[arrayIndex++], false, 
+                        FailureHandling.CONTINUE_ON_FAILURE))
             }
         }
         
         'set ulang array index untuk pencarian dokumen'
-        arrayindex = 0
+        arrayIndex = 0
 
         'Klik x terlebih dahulu pada popup'
         WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_X'))
-    
-    
-	'modify object button Download Doc'
-	modifyObjectbtnDownloadDoc = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/btn_signer'), 'xpath', 'equals',
-		('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[9]/div/a[3]/em', true)
 
-	 'Klik download file'
-	 WebUI.click(modifyObjectbtnDownloadDoc)
-	 
-	 'Kasih waktu 4 detik untuk proses download'
-	 WebUI.delay(4)
-	 
-	'Check apakah sudah terddownload menggunakan custom keyword'
-	CustomKeywords.'customizekeyword.Download.isFileDownloaded'(isDownloadDocument)
-	
-	 'Klik View Document'
-	 WebUI.click(modifyObjectbtnViewDoc)
+        'modify object button Download Doc'
+        modifyObjectBtnDownloadDoc = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/btn_signer'), 'xpath', 'equals', 
+            ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
+            variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[9]/div/a[3]/em', true)
 
-	 'Pemberian waktu 3 detik karena loading terus menerus'
-	 WebUI.delay(4)
+        'Klik download file'
+        WebUI.click(modifyObjectBtnDownloadDoc)
 
-	 'verifikasi label dokumen'
-	 if (WebUI.verifyElementPresent(findTestObject('Object Repository/KotakMasuk/lbl_viewDokumen'), GlobalVariable.TimeOut,
-		 FailureHandling.CONTINUE_ON_FAILURE)) {
-		 'Mengambil label pada view Dokoumen'
-		 lbl_viewDoc = WebUI.getText(findTestObject('Object Repository/KotakMasuk/lbl_viewDokumen'))
+        'Kasih waktu 4 detik untuk proses download'
+        WebUI.delay(4)
 
-		 'Jika pada label terdapat teks No Kontrak'
-		 if (lbl_viewDoc.contains('No Kontrak')) {
-			 'Direplace dengan kosong agar mendapatkan nomor kontrak'
-			 lbl_viewDoc = lbl_viewDoc.replace('No Kontrak ', '')
-		 }
-		 
-		 'Diverifikasi dengan UI didepan'
-		 arrayMatch.add(WebUI.verifyMatch(lbl_refnum, lbl_viewDoc, false, FailureHandling.CONTINUE_ON_FAILURE))
+        'Check apakah sudah terddownload menggunakan custom keyword'
+        CustomKeywords.'customizekeyword.Download.isFileDownloaded'(isDownloadDocument)
 
-		 'Klik kembali'
-		 WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_backViewDokumen'))
-	 } else {
-		 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Sign Document', GlobalVariable.NumofColm,
-			 GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) +
-			 ';') + GlobalVariable.ReasonFailedProcessNotDone + ' untuk proses download dokumen tanda tangan. ')
-	 }
+		'Jika is View Document yes, maka '
+        if (isViewDocument == 'Yes') {
+            'Klik View Document'
+            WebUI.click(modifyObjectBtnViewDoc)
+
+            'Pemberian waktu 3 detik karena loading terus menerus'
+            WebUI.delay(4)
+
+            'verifikasi label dokumen'
+            if (WebUI.verifyElementPresent(findTestObject('Object Repository/KotakMasuk/lbl_viewDokumen'), GlobalVariable.TimeOut, 
+                FailureHandling.CONTINUE_ON_FAILURE)) {
+                'Mengambil label pada view Dokoumen'
+                labelViewDoc = WebUI.getText(findTestObject('Object Repository/KotakMasuk/lbl_viewDokumen'))
+
+                'Jika pada label terdapat teks No Kontrak'
+                if (labelViewDoc.contains('No Kontrak')) {
+                    'Direplace dengan kosong agar mendapatkan nomor kontrak'
+                    lbl_viewDoc = labelViewDoc.replace('No Kontrak ', '')
+                }
+                
+                'Diverifikasi dengan UI didepan'
+                arrayMatch.add(WebUI.verifyMatch(labelRefNum, labelViewDoc, false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                'Klik kembali'
+                WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_backViewDokumen'))
+            } else {
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                    ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedProcessNotDone) + 
+                    ' untuk proses View dokumen tanda tangan. ')
+            }
+        }
     }
-
-    //Document Monitoring
-    WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') :excelPathFESignDocument
+    
+    WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument
             , ('jumlahsignertandatangan') : jumlahSignerTandaTangan, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
 
     'jika data db tidak sesuai dengan excel'
     if (arrayMatch.contains(false)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + 
-            ';') + GlobalVariable.ReasonFailedNoneUI)
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedNoneUI)
     }
 }
 

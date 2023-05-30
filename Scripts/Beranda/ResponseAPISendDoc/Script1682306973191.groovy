@@ -164,13 +164,15 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 		
 		String isDownloadDocument = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 75)
 		
+		String isViewDocument = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 76)
+		
         'write to excel success'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
             1, GlobalVariable.StatusSuccess)
 
 		'Call Test Case Kotak Masuk. Melempar value excel, sheet excel, dan is Download Document'
-       // WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('excelPathFESignDocument') : API_Excel_Path, ('sheet') : sheet, ('isDownloadDocument') : isDownloadDocument], 
-       //  FailureHandling.CONTINUE_ON_FAILURE)
+        WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('excelPathFESignDocument') : API_Excel_Path, ('sheet') : sheet, ('isDownloadDocument') : isDownloadDocument, ('isViewDocument') : isViewDocument], 
+         FailureHandling.CONTINUE_ON_FAILURE)
 
         if (GlobalVariable.checkStoreDB == 'Yes') {
             'call Fungsi responseAPIStoreDB'
