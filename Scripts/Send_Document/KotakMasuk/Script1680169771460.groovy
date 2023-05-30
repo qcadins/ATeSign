@@ -299,7 +299,7 @@ for (int y = 0; y < docId.size(); y++) {
                 'Jika pada label terdapat teks No Kontrak'
                 if (labelViewDoc.contains('No Kontrak')) {
                     'Direplace dengan kosong agar mendapatkan nomor kontrak'
-                    lbl_viewDoc = labelViewDoc.replace('No Kontrak ', '')
+                    labelViewDoc = labelViewDoc.replace('No Kontrak ', '')
                 }
                 
                 'Diverifikasi dengan UI didepan'

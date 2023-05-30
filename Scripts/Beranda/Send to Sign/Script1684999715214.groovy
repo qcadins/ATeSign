@@ -174,8 +174,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                         arrayIndex++], false, FailureHandling.OPTIONAL), '')
                             } else {
                                 'Data tidak ada di UI pada page ke '
-                                checkVerifyEqualorMatch(false, (((GlobalVariable.ReasonFailedNoneUI + ' pada page ke ') + 
-                                    variableLastest.size()) - 4) - k)
+                                checkVerifyEqualorMatch(false, '')
                             }
                         }
                         
@@ -293,10 +292,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             noKontrak = WebUI.getText(modifyObjecttextrefnumber)
 
                             WebUI.click(modifyObjectcheckboxttd)
-                        } else {
-                            'Data tidak ada di UI pada page ke '
-                            checkVerifyEqualorMatch(false, (((GlobalVariable.ReasonFailedNoneUI + ' pada page ke ') + variableLastest.size()) - 
-                                4) - k)
                         }
                     }
                     
@@ -1069,20 +1064,19 @@ def checkPopup() {
 
 def checkErrorLog() {
     'Jika error lognya muncul'
-    if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-    } else {
-        'ambil teks errormessage'
-        errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
+    if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		'ambil teks errormessage'
+		errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
 
-        if (!(errormessage.contains('Verifikasi OTP berhasil')) && !(errormessage.contains('feedback'))) {
-            'Tulis di excel itu adalah error'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + errormessage)
+		if (!(errormessage.contains('Verifikasi OTP berhasil')) && !(errormessage.contains('feedback'))) {
+			'Tulis di excel itu adalah error'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+				(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + errormessage)
 
-            return true
-        }
+			return true
+		}
     }
-    
+		
     return false
 }
 

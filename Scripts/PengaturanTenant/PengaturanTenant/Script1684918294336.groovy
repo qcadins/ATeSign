@@ -3,9 +3,7 @@ import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.testobject.TestObject as TestObject
-import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 import java.sql.Connection as Connection
@@ -27,30 +25,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         'declare arraylist arraymatch'
         ArrayList arrayMatch = []
 
-        'declare arraylist untuk balance'
-        ArrayList balance = []
-
-        'declare result Db untuk sebelum edit'
-        ArrayList resultDbPrevious = []
-
-        'declare result Db setelah edit'
-        ArrayList resultDbNew = []
-
-        'declare email Input'
-        ArrayList emaiLInput = []
+        'declare result Db setelah edit, result Db untuk sebelum edit, arraylist untuk balance'
+        ArrayList resultDbNew = [], resultDbPrevious = [], balance = []
 
         'declare variable inisialisasi for'
-        int i
-
-        int j
+        int i, j
 
         'inisalisasi arrayIndex yaitu 0'
         arrayIndex = 0
 
         'declare variable string'
-        String activationCallBackUrl
-
-        String descriptionBalanceType
+        String activationCallBackUrl, descriptionBalanceType
 
         'Call test Case untuk login sebagai admin wom admin client'
         WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFEPengaturanTenant, ('sheet') : sheet], 
@@ -162,9 +147,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         
         'looping untuk input email reminder yang tidak ada di ui'
         for (indexexcel = 1; indexexcel <= arrayEmailInput.size(); indexexcel++) {
-            'looping untuk input email reminder'
+            'looping untuk delete email reminder'
             for (index = 20; index <= (20 + countEmailBefore.size()); index++) {
-                'modify object untuk input email'
+                'modify object untuk delete email'
                 modifyObjectInputEmail = WebUI.modifyObjectProperty(findTestObject('Object Repository/PengaturanTenant/input_PenerimaEmailReminderSaldo'), 
                     'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/div[' + 
                     index) + ']/div/input', true)
@@ -241,13 +226,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         resultDbNew = CustomKeywords.'connection.DataVerif.getPengaturanTenant'(conneSign, findTestData('Login/Login').getValue(
                 2, 2).toUpperCase())
 
+		'declare arrayIndex menjadi 0'
         arrayIndex = 0
 
+		'membuat emailDb menjadi sorted berdasarkan asc'
         emailDb = (resultDbNew[arrayIndex++]).split(',').collect({it.trim()}).sort().join(',')
 
+		'membuat email Excel menjadi sorted berdasarkan asc'
         emailExcel = findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 12).split(',').collect(
             {it.trim()}).sort().join(',')
 
+		'verifikasi email'
         arrayMatch.add(WebUI.verifyMatch(emailExcel, emailDb, false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'verify login'

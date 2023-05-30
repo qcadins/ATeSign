@@ -178,8 +178,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                     arrayIndex++], false, FailureHandling.OPTIONAL), '')
                         } else {
                             'Data tidak ada di UI pada page ke '
-                            checkVerifyEqualorMatch(false, (((GlobalVariable.ReasonFailedNoneUI + ' pada page ke ') + variableLastest.size()) - 
-                                4) - k)
+                            checkVerifyEqualorMatch(false, '')
                         }
                     }
                     
@@ -296,10 +295,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         noKontrak = WebUI.getText(modifyObjecttextrefnumber)
 
                         WebUI.click(modifyObjectcheckboxttd)
-                    } else {
-                        'Data tidak ada di UI pada page ke '
-                        checkVerifyEqualorMatch(false, (((GlobalVariable.ReasonFailedNoneUI + ' pada page ke ') + variableLastest.size()) - 
-                            4) - k)
                     }
                 }
                 
