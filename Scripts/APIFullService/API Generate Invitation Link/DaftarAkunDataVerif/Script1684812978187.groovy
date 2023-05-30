@@ -1,36 +1,42 @@
+import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import java.sql.Connection as Connection
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import java.sql.Connection
+
+import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords
+import com.kms.katalon.core.model.FailureHandling
+import com.kms.katalon.core.webui.driver.DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
-import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
-import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
-import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
-import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
-import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
-import com.kms.katalon.core.testcase.TestCase as TestCase
-import com.kms.katalon.core.testdata.TestData as TestData
-import com.kms.katalon.core.testobject.TestObject as TestObject
-import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
 
 'declare userDir'
 String userDir = System.getProperty('user.dir')
 
-WebUI.openBrowser('')
-
-WebUI.maximizeWindow()
-
 'check if ingin menggunakan local host atau tidak'
 if (GlobalVariable.useLocalHost == 'Yes') {
+		
+	link = GlobalVariable.Link.replace('https', 'http')
+	
+	'navigate url ke daftar akun'
+	WebUI.openBrowser(link)
+	
+	WebUI.delay(3)
+	
+	link = GlobalVariable.Link.replace('https://gdkwebsvr:8080', GlobalVariable.urlLocalHost)
+	
     'navigate url ke daftar akun'
-    WebUI.navigateToUrl(GlobalVariable.Link.replace('https://gdkwebsvr:8080', GlobalVariable.urlLocalHost))
+    WebUI.navigateToUrl(link)
+	
 } else if (GlobalVariable.useLocalHost == 'No') {
+	
+	link = GlobalVariable.Link.replace('https', 'http')
+	
     'navigate url ke daftar akun'
-    WebUI.navigateToUrl(GlobalVariable.Link)
+    WebUI.openBrowser(link)
 }
+
+WebUI.maximizeWindow()
 
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
@@ -100,8 +106,14 @@ if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm,
     'click ambil foto sendiri'
     WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFotoSendiri'))
 
+	'tap allow camera'
+	MobileBuiltInKeywords.tapAndHoldAtPosition(920, 1220, 5)
+	
+	'tap allow camera'
+	MobileBuiltInKeywords.tapAndHoldAtPosition(550, 1820, 5)
+	
     'delay untuk camera on'
-    WebUI.delay(2)
+    WebUI.delay(5)
 
     'click ambil foto'
     WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFoto'))
@@ -146,6 +158,9 @@ if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm,
 
     'click checkbox setuju'
     WebUI.click(findTestObject('DaftarAkun/checkbox_Setuju'))
+	
+	'click checkbox setuju'
+	WebUI.click(findTestObject('DaftarAkun/checkbox_SetujuVIDA'))
 }
 
 'click daftar akun'
@@ -247,7 +262,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     'click verifikasi'
     WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Verifikasi'))
 
-    WebUI.delay(3)
+    WebUI.delay(10)
 
     'cek if berhasil pindah page'
     if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), GlobalVariable.TimeOut, 

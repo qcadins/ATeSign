@@ -36,8 +36,7 @@ if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 
 WebUI.click(findTestObject('PencarianPenggunaAdmin/Pengguna/button_Cari'))
 
 'check if View / reset OTP'
-if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('View')) {
-	
+if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('View')) {	
 	'click button view'
 	WebUI.click(findTestObject('PencarianPenggunaAdmin/Karyawan/button_View'))
 	

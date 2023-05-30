@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>checkbox_SetujuVIDA</name>
+   <tag></tag>
+   <elementGuidId>459d6588-3308-4966-8724-e9e871f0d6cf</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>XPATH</key>
+      </entry>
+      <entry>
+         <key>BASIC</key>
+         <value>//section[@id='regestration']/div/div/div/div/div/div/div/form/div[19]/div/div</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//section[@id='regestration']/div/div/div/div/div/div/div/form/div[19]/div/div</value>
+      <webElementGuid>a61fd794-ecdf-4ade-b01d-650fdb71015d</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>formcontrolname</name>
+      <type>Main</type>
+      <value>acceptTerms</value>
+      <webElementGuid>62998fe9-9f83-47ba-88a8-5254c64eb551</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Saya Menerima</value>
+      <webElementGuid>cce3e8b5-32ec-4386-8838-774f7eedb7fa</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>
