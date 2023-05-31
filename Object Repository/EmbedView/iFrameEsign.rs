@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>input_Email</name>
+   <name>iFrameEsign</name>
    <tag></tag>
-   <elementGuidId>c4efa5a5-c3b9-441a-9917-4970557063b7</elementGuidId>
+   <elementGuidId>e64085c8-9a56-42ff-a48b-76d8829fb0f1</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>XPATH</key>
-      </entry>
-      <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;login&quot;]/div/div[2]/div/form/div[1]/div/input</value>
+         <value>/html/body/app-root/app-content-layout/div/div/div/div[2]/app-page-dummy/div/div/iframe</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -20,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@id=&quot;login&quot;]/div/div[2]/div/form/div[1]/div/input</value>
-      <webElementGuid>88205b36-8890-46e5-b08e-94ac62ccf8b4</webElementGuid>
+      <value>/html/body/app-root/app-content-layout/div/div/div/div[2]/app-page-dummy/div/div/iframe</value>
+      <webElementGuid>b525a6da-7e16-4fef-bc76-2b3dc5dfc7f5</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

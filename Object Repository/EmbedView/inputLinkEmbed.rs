@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>input_Email</name>
+   <name>inputLinkEmbed</name>
    <tag></tag>
-   <elementGuidId>c4efa5a5-c3b9-441a-9917-4970557063b7</elementGuidId>
+   <elementGuidId>f6ab72e7-4b66-4988-851e-43ae6bf26e98</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>XPATH</key>
-      </entry>
-      <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;login&quot;]/div/div[2]/div/form/div[1]/div/input</value>
+         <value>/html/body/app-root/app-content-layout/div/div/div/div[2]/app-page-dummy/div/input</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -20,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@id=&quot;login&quot;]/div/div[2]/div/form/div[1]/div/input</value>
-      <webElementGuid>88205b36-8890-46e5-b08e-94ac62ccf8b4</webElementGuid>
+      <value>/html/body/app-root/app-content-layout/div/div/div/div[2]/app-page-dummy/div/input</value>
+      <webElementGuid>686f09bf-e92c-440d-bc21-7c54c2dc5d39</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

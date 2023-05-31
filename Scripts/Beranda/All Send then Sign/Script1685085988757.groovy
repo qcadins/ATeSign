@@ -30,7 +30,7 @@ arrayIndex = 0
 sheet = 'All Send then Sign'
 
 'looping untuk sending document'
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <=  findTestData(excelPathFESignDocument).columnNumbers ; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <=  2/*findTestData(excelPathFESignDocument).columnNumbers*/ ; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
@@ -41,7 +41,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <=  findTestData(exc
 }
 
 'looping untuk sign document'
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathFESignDocument).columnNumbers ; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(excelPathFESignDocument).columnNumbers */; (GlobalVariable.NumofColm)++) {
     'Jika tidak ada dokumen id di excel'
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 5) == '') {
         'loop selanjutnya'
@@ -59,14 +59,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
     'Mengambil email berdasarkan documentId'
     ArrayList emailSigner = CustomKeywords.'connection.DataVerif.getEmailLogin'(conneSign, findTestData(excelPathFESignDocument).getValue(
-            GlobalVariable.NumofColm, 6)).split(';', -1)
+    GlobalVariable.NumofColm, 6)).split(';', -1)
 
     'Declare variable jumlahSignerTelahTtd untuk proses ttd, saldo Used untuk penggunaan saldo, dan saldoUsedDocPertama hanya untuk dokumen pertama'
     int jumlahSignerTelahTtd = 0, saldoUsed = 0, saldoUsedDocPertama = 0
-
+	println jumlahSignerTelahTtd
     'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
     int jumlahSignerTandaTangan = CustomKeywords.'connection.DataVerif.getTotalSigned'(conneSign, findTestData(excelPathFESignDocument).getValue(
-            GlobalVariable.NumofColm, 6))
+    GlobalVariable.NumofColm, 6))
 
     'looping email signer'
     for (int o = 1; o <= emailSigner.size(); o++) {
@@ -659,10 +659,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     
                     'Jumlah signer tanda tangan akan ditambah dengan total saldo yang telah digunakan'
                     jumlahSignerTandaTangan = (jumlahSignerTandaTangan + saldoUsed)
-
+					
                     'Jumlah signer telah ttd lebih kepada proses tanda tangan telah bertambah 1.'
                     jumlahSignerTelahTtd = (jumlahSignerTelahTtd + 1)
-
+					
+					println jumlahSignerTelahTtd + 'di email ' + emailSigner + ' dan ' + emailSigner.size()
+					
                     'Looping maksimal 100 detik untuk signing proses. Perlu lama dikarenakan walaupun requestnya done(3), tapi dari VIDAnya tidak secepat itu.'
                     for (int y = 1; y <= 5; y++) {
                         'Kita berikan delay per 20 detik karena proses signingnya masih dalam status In Progress (1), dan ketika selesai, status tanda tangan akan kembali menjadi 0'
@@ -697,7 +699,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         }
         
         'Memanggil DocumentMonitoring untuk dicheck apakah proses ttdnya bertambah'
-        WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : 'Beranda/SendtoSign'
+        WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument
                 , ('jumlahsignertandatangan') : jumlahSignerTelahTtd, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
 
         'Call test Case untuk login sebagai admin wom admin client'
@@ -1061,19 +1063,18 @@ def checkPopup() {
 
 def checkerrorLog() {
     'Jika error lognya muncul'
-    if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-    } else {
-        'ambil teks errormessage'
-        errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
+    if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		'ambil teks errormessage'
+		errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
 
-        if (!(errormessage.contains('Verifikasi OTP berhasil')) && !(errormessage.contains('feedback'))) {
-            'Tulis di excel itu adalah error'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + errormessage)
+		if (!(errormessage.contains('Verifikasi OTP berhasil')) && !(errormessage.contains('feedback'))) {
+			'Tulis di excel itu adalah error'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+				(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + errormessage)
 
-            return true
-        }
-    }
+			return true
+		}
+		}
     
     return false
 }
