@@ -268,6 +268,8 @@ for (int y = 0; y < docId.size(); y++) {
         'Klik x terlebih dahulu pada popup'
         WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_X'))
 
+		'Jika document ingin didownload, maka'
+		if (isDownloadDocument == 'Yes') {
         'modify object button Download Doc'
         modifyObjectBtnDownloadDoc = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/btn_signer'), 'xpath', 'equals', 
             ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
@@ -280,8 +282,9 @@ for (int y = 0; y < docId.size(); y++) {
         WebUI.delay(4)
 
         'Check apakah sudah terddownload menggunakan custom keyword'
-        CustomKeywords.'customizekeyword.Download.isFileDownloaded'(isDownloadDocument)
-
+        CustomKeywords.'customizekeyword.Download.isFileDownloaded'(isDeleteDownloadedDocument)
+		}
+		
 		'Jika is View Document yes, maka '
         if (isViewDocument == 'Yes') {
             'Klik View Document'
