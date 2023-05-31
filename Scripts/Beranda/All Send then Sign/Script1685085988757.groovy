@@ -30,7 +30,7 @@ arrayIndex = 0
 sheet = 'All Send then Sign'
 
 'looping untuk sending document'
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <=  2/*findTestData(excelPathFESignDocument).columnNumbers*/ ; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathFESignDocument).columnNumbers ; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
@@ -41,7 +41,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <=  2/*findTestData(
 }
 
 'looping untuk sign document'
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(excelPathFESignDocument).columnNumbers */; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathFESignDocument).columnNumbers; (GlobalVariable.NumofColm)++) {
     'Jika tidak ada dokumen id di excel'
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 5) == '') {
         'loop selanjutnya'
