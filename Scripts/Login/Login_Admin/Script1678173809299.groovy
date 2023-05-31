@@ -72,3 +72,4 @@ if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), Globa
 		1, GlobalVariable.NumofColm - 1, (findTestData(excel).getValue(GlobalVariable.NumofColm, 2).replace(
 		'-', '') + ';') + errormessage)
 }
+
