@@ -6,16 +6,16 @@
    <elementGuidId>87f3ea51-0363-4552-8a2c-62289e56144e</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>XPATH</key>
-         <value>(.//*[normalize-space(text()) and normalize-space(.)='Hapus'])[2]/following::button[1]</value>
+         <key>CSS</key>
+         <value>button.btn.btn-info</value>
       </entry>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/button</value>
+         <value>//*[(text() = 'Tambah' or . = 'Tambah')]</value>
       </entry>
       <entry>
-         <key>CSS</key>
-         <value>button.btn.btn-info</value>
+         <key>XPATH</key>
+         <value>(.//*[normalize-space(text()) and normalize-space(.)='Hapus'])[2]/following::button[1]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -26,7 +26,7 @@
       <name>tag</name>
       <type>Main</type>
       <value>button</value>
-      <webElementGuid>8e237169-aab8-419d-a0bc-3855f7d7cdd7</webElementGuid>
+      <webElementGuid>833fccf5-9c92-477d-a2ee-00e5b54b83a5</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -34,23 +34,23 @@
       <name>class</name>
       <type>Main</type>
       <value>btn btn-info</value>
-      <webElementGuid>cf88d747-fc52-4bc7-a6fa-e46c849823ac</webElementGuid>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>text</name>
-      <type>Main</type>
-      <value>Tambah</value>
-      <webElementGuid>01aa9842-291c-4d0b-b4d3-3486981e5772</webElementGuid>
+      <webElementGuid>47b6bd36-64a7-4f5b-83b9-fa886af14f29</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Tambah</value>
+      <webElementGuid>65aac454-f956-4d56-b2ea-80ba505fe1cd</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/button</value>
-      <webElementGuid>15445a81-a8ea-4163-9ea8-6b68aa29cf32</webElementGuid>
+      <webElementGuid>fc51a597-bf6f-4e3c-92bc-5a7bec6002bc</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -58,7 +58,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Hapus'])[2]/following::button[1]</value>
-      <webElementGuid>1b412d24-80e4-4efb-b3f4-6f2414b8899c</webElementGuid>
+      <webElementGuid>63c61fba-e3d1-4b04-aebb-9615ec55c73b</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -66,7 +66,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Hapus'])[1]/following::button[2]</value>
-      <webElementGuid>93275193-9110-4b35-ae45-a34ab84bd433</webElementGuid>
+      <webElementGuid>98049b6c-7fe6-466a-ba61-33dc05b45f84</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -74,7 +74,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Coba'])[1]/preceding::button[1]</value>
-      <webElementGuid>0a8d85ad-e7f2-4548-8daf-8e1208b95346</webElementGuid>
+      <webElementGuid>ea249c57-8e66-4781-a804-41532c342ffe</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -82,7 +82,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Batal'])[1]/preceding::button[2]</value>
-      <webElementGuid>066b7e2e-32ca-42eb-9056-970baac0c9ac</webElementGuid>
+      <webElementGuid>53cc5a3a-7546-4454-9dab-44b33799583f</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -90,7 +90,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='Tambah']/parent::*</value>
-      <webElementGuid>15f5ea4e-81a7-4260-a6de-40ac3eaa7b9d</webElementGuid>
+      <webElementGuid>09f9e6ad-dbd9-42d9-af8e-072d8ac317d2</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -98,7 +98,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//form/button</value>
-      <webElementGuid>7ab483c4-54ff-41ef-af45-39e502561c49</webElementGuid>
+      <webElementGuid>04397e58-c69b-4137-a44f-9df5ed14a9d1</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -106,6 +106,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//button[(text() = 'Tambah' or . = 'Tambah')]</value>
-      <webElementGuid>6b77c82b-20e3-4124-817a-900de1778463</webElementGuid>
+      <webElementGuid>268d24cf-3379-4900-9ca9-f9b8668bad51</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

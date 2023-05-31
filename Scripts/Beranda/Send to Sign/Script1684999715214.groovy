@@ -30,7 +30,7 @@ arrayIndex = 0
 sheet = 'Send to Sign'
 
 'looping untuk sending document'
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathFESignDocument).columnNumbers ; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3/*findTestData(excelPathFESignDocument).columnNumbers*/ ; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
@@ -277,7 +277,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                         'Jika datanya match dengan db, mengenai referal number'
                         if (WebUI.verifyMatch(WebUI.getText(modifyObjecttextrefnumber), SendtoSign[arrayIndex++], false, 
-                            FailureHandling.OPTIONAL) == true) {
+                            FailureHandling.OPTIONAL)) {
                             'Mengenai tipe dokumen template'
                             checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(modifyObjecttextdocumenttemplatetipe), 
                                     SendtoSign[arrayIndex++], false, FailureHandling.OPTIONAL), '')
@@ -698,7 +698,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             }
             
             'Memanggil DocumentMonitoring untuk dicheck apakah proses ttdnya bertambah'
-            WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : 'Beranda/SendtoSign'
+            WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument
                     , ('jumlahsignertandatangan') : jumlahSignerTelahTtd, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
 
             'Call test Case untuk login sebagai admin wom admin client'

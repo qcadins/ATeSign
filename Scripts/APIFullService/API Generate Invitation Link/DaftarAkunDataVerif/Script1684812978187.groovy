@@ -12,30 +12,30 @@ import internal.GlobalVariable as GlobalVariable
 'declare userDir'
 String userDir = System.getProperty('user.dir')
 
-'check if ingin menggunakan embed atau tidak'
+'check if ingin menggunakan embed atau tidakk'
 if (GlobalVariable.RunWithEmbed == 'Yes') {
 	'replace https > http'
 	link = GlobalVariable.Link.replace('https', 'http')
 	
 	'navigate url ke daftar akun'
-	WebUI.openBrowser('http://gdkwebsvr:8080/pages/page-dummy')
+	WebUI.openBrowser(GlobalVariable.embedUrl)
 	
 	WebUI.delay(3)
 	
 	'check if ingin menggunakan local host atau tidak'
 	if (GlobalVariable.useLocalHost == 'Yes') {
 		'navigate url ke daftar akun'
-		WebUI.setText(findTestObject('inputLinkEmbed'), link.replace('http://gdkwebsvr:8080', GlobalVariable.urlLocalHost))
+		WebUI.setText(findTestObject('EmbedView/inputLinkEmbed'), link.replace('http://gdkwebsvr:8080', GlobalVariable.urlLocalHost))
 	} else if (GlobalVariable.useLocalHost == 'No') {
 		'navigate url ke daftar akun'
-		WebUI.setText(findTestObject('inputLinkEmbed'), link)
+		WebUI.setText(findTestObject('EmbedView/inputLinkEmbed'), link)
 	}
 	
 	'click button embed'
-	WebUI.click(findTestObject('button_Embed'))
+	WebUI.click(findTestObject('EmbedView/button_Embed'))
 	
 	'swith to iframe'
-	WebUI.switchToFrame(findTestObject('iFrameEsign'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
+	WebUI.switchToFrame(findTestObject('EmbedView/iFrameEsign'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
 	
 } else if (GlobalVariable.RunWithEmbed == 'No') {
 	'replace https > http'

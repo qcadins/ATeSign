@@ -12,7 +12,7 @@
       <variableId>e944e0b4-9b38-4dbc-93e4-b98fcea0eeba</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'Beranda/SendtoSign'</defaultValue>
+      <defaultValue>''</defaultValue>
       <description></description>
       <id>e944e0b4-9b38-4dbc-93e4-b98fcea0eeba</id>
       <masked>false</masked>

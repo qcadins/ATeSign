@@ -6,12 +6,11 @@
    <elementGuidId>c4efa5a5-c3b9-441a-9917-4970557063b7</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>BASIC</key>
-         <value>//*[@id=&quot;login&quot;]/div/div[2]/div/form/div[1]/div/input</value>
+         <key>XPATH</key>
       </entry>
       <entry>
-         <key>XPATH</key>
-         <value></value>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;login&quot;]/div/div[2]/div/form/div[1]/div/input</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -22,6 +21,6 @@
       <name>xpath</name>
       <type>Main</type>
       <value>//*[@id=&quot;login&quot;]/div/div[2]/div/form/div[1]/div/input</value>
-      <webElementGuid>0166aef3-cdb0-4470-9c55-f2e1380a76da</webElementGuid>
+      <webElementGuid>88205b36-8890-46e5-b08e-94ac62ccf8b4</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

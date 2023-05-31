@@ -31,6 +31,11 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
+      <initValue>findTestData('Login/Setting').getValue(10, 2)</initValue>
+      <name>embedUrl</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
       <initValue>[]</initValue>
       <name>eSignData</name>
    </GlobalVariableEntity>

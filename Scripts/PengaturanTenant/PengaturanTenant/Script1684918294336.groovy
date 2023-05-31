@@ -46,11 +46,74 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
         'Delay 5 karena batas Saldonya loading lumayan lama.'
         WebUI.delay(5)
-
+		
         'Verifikasi sudah pindah page'
         WebUI.verifyElementPresent(findTestObject('Object Repository/PengaturanTenant/label_PengaturanTenant'), GlobalVariable.TimeOut, 
             FailureHandling.CONTINUE_ON_FAILURE)
+		
+		'Mengambil hasil db untuk sebelum diedit untuk mendapatkan total emailnya ada berapa'
+		resultDbPrevious = CustomKeywords.'connection.DataVerif.getPengaturanTenant'(conneSign, findTestData('Login/Login').getValue(
+		2, 2).toUpperCase())
+		
+		resultDbPrevious[5] = resultDbPrevious[5].replace('{','').replace('}','').replace('"','').split(',',-1)
 
+		ArrayList<String> arrtipeSaldoBefore = []
+		String tipeSaldoBefore = ''
+		String saldoTipeSaldoBefore = ''
+		
+		for(i = 0 ; i < resultDbPrevious[5].size();i++) {
+			arrtipeSaldoBefore[i] = resultDbPrevious[5][i].split(':',-1)
+			println arrtipeSaldoBefore[i]
+			if(i == resultDbPrevious[5].size() - 1) {
+				tipeSaldoBefore = tipeSaldoBefore + arrtipeSaldoBefore[i][0]
+				saldoTipeSaldoBefore = saldoTipeSaldoBefore + arrtipeSaldoBefore[i][1]
+			}else {
+			tipeSaldoBefore = tipeSaldoBefore + arrtipeSaldoBefore[i][0] + ','
+			saldoTipeSaldoBefore = saldoTipeSaldoBefore + arrtipeSaldoBefore[i][1] + ','
+			}
+			println tipeSaldoBefore
+			println saldoTipeSaldoBefore
+		}
+		
+		'loop berdasarkan tipe saldo'
+		for (i = 0; i < tipeSaldoBefore.size(); i++) {
+			'modify object mencari object berdasarkan id nya tipe saldo tersebut'
+			modifyObjectTipeBatasSaldo = WebUI.modifyObjectProperty(findTestObject('Object Repository/PengaturanTenant/label_TipeBatasSaldo'),
+				'for', 'equals', ('' + (tipeSaldoBefore[i])) + '', true)
+
+			'Mengambil deskripsi dari tipe saldo tersebut'
+			descriptionBalanceType = CustomKeywords.'connection.DataVerif.getDescriptionBalanceType'(conneSign, tipeSaldo[
+				i])
+
+			'Jika pada loopingan terakhir'
+			if (i == (tipeSaldoBefore.size() - 1)) {
+				'Jika masih tidak ketemu textnya'
+				if (WebUI.getText(modifyObjectTipeBatasSaldo) == null) {
+					'Write excel tidak ketemu dengan tipe saldo tersebut'
+					CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+						GlobalVariable.StatusFailed, (((findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm,
+							2) + ';') + GlobalVariable.ReasonFailedNoneUI) + 'mengenai tipe saldo ') + (tipeSaldoBefore[i]))
+				}
+			}
+			
+			'Jika teks yang didapat itu sama dengan deskripsi batas saldo'
+			if (WebUI.getText(modifyObjectTipeBatasSaldo) == descriptionBalanceType) {
+				
+				checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectTipeBatasSaldo),descriptionBalanceType, false, FailureHandling.OPTIONAL), ' dengan alasan tidak cocok antara ' + WebUI.getText(modifyObjectTipeBatasSaldo) + ' dan ' + descriptionBalanceType)
+				
+				'modify object untuk input batas saldo'
+				modifyObjectInputBatasSaldo = WebUI.modifyObjectProperty(findTestObject('Object Repository/PengaturanTenant/input_BatasSaldo'),
+					'id', 'equals', ('' + (tipeSaldoBefore[i])) + '', true)
+
+				checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectInputBatasSaldo),descriptionBalanceType, false, FailureHandling.OPTIONAL), ' dengan alasan tidak cocok antara ' + WebUI.getText(modifyObjectTipeBatasSaldo) + ' dan ' + descriptionBalanceType)
+				
+			}
+		}
+		
+		arrayIndex = resultDbPrevious.indexOf(countEmailBefore)
+		
+		checkVerifyEqualorMatch(WebUI.verifyMatch(descriptionBalanceType, activationCallBackUrl, false), reason)
+		
         'Set text untuk Label Ref Number'
         WebUI.setText(findTestObject('Object Repository/PengaturanTenant/input_LabelRefNumber'), findTestData(excelPathFEPengaturanTenant).getValue(
                 GlobalVariable.NumofColm, 8))
@@ -103,13 +166,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             }
         }
         
-        'Mengambil hasil db untuk sebelum diedit untuk mendapatkan total emailnya ada berapa'
-        resultDbPrevious = CustomKeywords.'connection.DataVerif.getPengaturanTenant'(conneSign, findTestData('Login/Login').getValue(
-                2, 2).toUpperCase())
-
-        'Mengambil email dari db sebelum diedit'
-        countEmailBefore = (resultDbPrevious[arrayIndex]).split(',', -1)
-
+		'Mengambil email dari db sebelum diedit'
+		countEmailBefore = (resultDbPrevious[arrayIndex++]).split(',', -1)
+		
+		'Mengambil Email dari excel untuk diinput dan displit'
         arrayEmailInput = findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 12).split(',', -1)
 
         'looping untuk hapus email reminder yang tidak ada di excel'
@@ -156,7 +216,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                 if (WebUI.verifyElementNotPresent(modifyObjectInputEmail, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
                     'click tambah email'
-                    WebUI.click(findTestObject('Tenant/TenantBaru/button_TambahEmail'))
+                    WebUI.click(findTestObject('PengaturanTenant/button_Tambah'))
 
                     'input email reminder'
                     WebUI.setText(modifyObjectInputEmail, arrayEmailInput[(indexexcel - 1)])
@@ -222,6 +282,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             checkPopup()
         }
         
+		//klik simpan dlu, baru check popup ada atau tidak.
         'Mengambil value excel setelah diedit pengaturan tenant'
         resultDbNew = CustomKeywords.'connection.DataVerif.getPengaturanTenant'(conneSign, findTestData('Login/Login').getValue(
                 2, 2).toUpperCase())
@@ -320,21 +381,33 @@ def checkPopup() {
 
 def checkerrorLog() {
     'Jika error lognya muncul'
-    if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-    } else {
-        'ambil teks errormessage'
-        errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
+    if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		'ambil teks errormessage'
+		errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
 
-        if (!(errormessage.contains('URL Upload tersalin')) && !(errormessage.contains('feedback'))) {
-            'Tulis di excel itu adalah error'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + 
-                errormessage)
+		if (!(errormessage.contains('URL Upload tersalin')) && !(errormessage.contains('feedback'))) {
+			'Tulis di excel itu adalah error'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+				(findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') +
+				errormessage)
 
-            return true
-        }
-    }
-    
-    return false
+		}
+	}
+
 }
 
+def checkVerifyEqualorMatch(Boolean isMatch, String reason) {
+	if (isMatch == false) {
+		'Write to excel status failed and ReasonFailedVerifyEqualorMatch'
+		GlobalVariable.FlagFailed = 1
+
+		'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+			((findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) +
+			reason)
+
+		return false
+	}
+	
+	return true
+}
