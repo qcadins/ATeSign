@@ -48,6 +48,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
             if (code == 0) {
                 'mengambil response'
+				statusSigning = WS.getElementPropertyValue(respon, 'statusSigning', FailureHandling.OPTIONAL)
+				
+				'write to excel statusSigning'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Check Signing Status',
+					5, GlobalVariable.NumofColm - 1, statusSigning.toString())
+				
                 docId = WS.getElementPropertyValue(respon, 'statusSigning.documentId', FailureHandling.OPTIONAL)
 
                 email = WS.getElementPropertyValue(respon, 'statusSigning.signer.email', FailureHandling.OPTIONAL)

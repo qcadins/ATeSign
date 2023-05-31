@@ -360,7 +360,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             break
                         } else {
                             if (indexexcel == arrayEmailReminder.size()) {
-                                'click tambah email'
+                                'click hapus email'
                                 WebUI.click(modifyObjectButtonHapus)
 
                                 index--

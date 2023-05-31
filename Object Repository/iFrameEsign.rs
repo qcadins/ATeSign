@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>input_Email</name>
+   <name>iFrameEsign</name>
    <tag></tag>
-   <elementGuidId>9c8281e6-82a2-42e1-a7b7-5057020da30c</elementGuidId>
+   <elementGuidId>e64085c8-9a56-42ff-a48b-76d8829fb0f1</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;email&quot;][count(. | //*[@ref_element = 'Object Repository/iFrameEsign']) = count(//*[@ref_element = 'Object Repository/iFrameEsign'])]</value>
+         <value>/html/body/app-root/app-content-layout/div/div/div/div[2]/app-page-dummy/div/div/iframe</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@id=&quot;email&quot;]</value>
-      <webElementGuid>d9eaa69e-fe6b-409f-b550-9d25aa75b858</webElementGuid>
+      <value>/html/body/app-root/app-content-layout/div/div/div/div[2]/app-page-dummy/div/div/iframe</value>
+      <webElementGuid>b525a6da-7e16-4fef-bc76-2b3dc5dfc7f5</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

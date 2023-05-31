@@ -2,7 +2,6 @@ import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import java.sql.Connection
-
 import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords
 import com.kms.katalon.core.model.FailureHandling
 import com.kms.katalon.core.webui.driver.DriverFactory
@@ -13,27 +12,52 @@ import internal.GlobalVariable as GlobalVariable
 'declare userDir'
 String userDir = System.getProperty('user.dir')
 
-'check if ingin menggunakan local host atau tidak'
-if (GlobalVariable.useLocalHost == 'Yes') {
-		
+'check if ingin menggunakan embed atau tidak'
+if (GlobalVariable.RunWithEmbed == 'Yes') {
+	'replace https > http'
 	link = GlobalVariable.Link.replace('https', 'http')
 	
 	'navigate url ke daftar akun'
-	WebUI.openBrowser(link)
+	WebUI.openBrowser('http://gdkwebsvr:8080/pages/page-dummy')
 	
 	WebUI.delay(3)
 	
-	link = GlobalVariable.Link.replace('https://gdkwebsvr:8080', GlobalVariable.urlLocalHost)
+	'check if ingin menggunakan local host atau tidak'
+	if (GlobalVariable.useLocalHost == 'Yes') {
+		'navigate url ke daftar akun'
+		WebUI.setText(findTestObject('inputLinkEmbed'), link.replace('http://gdkwebsvr:8080', GlobalVariable.urlLocalHost))
+	} else if (GlobalVariable.useLocalHost == 'No') {
+		'navigate url ke daftar akun'
+		WebUI.setText(findTestObject('inputLinkEmbed'), link)
+	}
 	
-    'navigate url ke daftar akun'
-    WebUI.navigateToUrl(link)
+	'click button embed'
+	WebUI.click(findTestObject('button_Embed'))
 	
-} else if (GlobalVariable.useLocalHost == 'No') {
+	'swith to iframe'
+	WebUI.switchToFrame(findTestObject('iFrameEsign'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
 	
+} else if (GlobalVariable.RunWithEmbed == 'No') {
+	'replace https > http'
 	link = GlobalVariable.Link.replace('https', 'http')
 	
-    'navigate url ke daftar akun'
-    WebUI.openBrowser(link)
+	'check if ingin menggunakan local host atau tidak'
+	if (GlobalVariable.useLocalHost == 'Yes') {	
+		'navigate url ke daftar akun'
+		WebUI.openBrowser(link)
+				
+		'delay 3 detik'
+		WebUI.delay(3)
+				
+		'replace gdk > localhost'
+		link = GlobalVariable.Link.replace('https://gdkwebsvr:8080', GlobalVariable.urlLocalHost)
+				
+		'navigate url ke daftar akun'
+		WebUI.navigateToUrl(link)
+	} else if (GlobalVariable.useLocalHost == 'No') {
+		'navigate url ke daftar akun'
+		WebUI.openBrowser(link)
+	}
 }
 
 WebUI.maximizeWindow()
@@ -106,11 +130,14 @@ if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm,
     'click ambil foto sendiri'
     WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFotoSendiri'))
 
-	'tap allow camera'
-	MobileBuiltInKeywords.tapAndHoldAtPosition(920, 1220, 5)
-	
-	'tap allow camera'
-	MobileBuiltInKeywords.tapAndHoldAtPosition(550, 1820, 5)
+	'check if run with mobile / web'
+	if(GlobalVariable.RunWith == 'Mobile') {
+		'tap allow camera'
+		MobileBuiltInKeywords.tapAndHoldAtPosition(920, 1220, 3)
+		
+		'tap allow camera'
+		MobileBuiltInKeywords.tapAndHoldAtPosition(550, 1820, 3)
+	}
 	
     'delay untuk camera on'
     WebUI.delay(5)
@@ -331,7 +358,7 @@ def checkTrxMutation(Connection conneSign) {
 			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link',
 				GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (findTestData(excelPathAPIGenerateInvLink).getValue(
-					GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
+					GlobalVariable.NumofColm, 2) + ';') + 'Saldo tidak terpotong')
 		}
 	}
 }

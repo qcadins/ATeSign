@@ -16,17 +16,6 @@ firstDateOfMonth = currentDate.withDayOfMonth(1)
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-'call testcase login admin'
-WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathMeterai, ('sheet') : 'Meterai'], FailureHandling.CONTINUE_ON_FAILURE)
-
-GlobalVariable.FlagFailed = 0
-
-'click menu meterai'
-WebUI.click(findTestObject('Meterai/menu_Meterai'))
-
-'call function check paging'
-checkPaging(currentDate, firstDateOfMonth)
-
 'get colm excel'
 int countColmExcel = findTestData(excelPathMeterai).columnNumbers
 
@@ -35,8 +24,20 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
-        GlobalVariable.FlagFailed = 0
-
+		
+		GlobalVariable.FlagFailed = 0
+		
+		if(GlobalVariable.NumofColm == 2) {
+			'call testcase login admin'
+			WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathMeterai, ('sheet') : 'Meterai'], FailureHandling.CONTINUE_ON_FAILURE)
+			
+			'click menu meterai'
+			WebUI.click(findTestObject('Meterai/menu_Meterai'))
+			
+			'call function check paging'
+			checkPaging(currentDate, firstDateOfMonth)
+		}
+		
         'set text no kontrak'
         WebUI.setText(findTestObject('Meterai/input_NoKontrak'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
                 9))

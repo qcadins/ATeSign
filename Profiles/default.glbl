@@ -146,6 +146,16 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
+      <initValue>findTestData('Login/Setting').getValue(8, 2)</initValue>
+      <name>RunWith</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>findTestData('Login/Setting').getValue(9, 2)</initValue>
+      <name>RunWithEmbed</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
       <initValue>'FAILED'</initValue>
       <name>StatusFailed</name>
    </GlobalVariableEntity>
