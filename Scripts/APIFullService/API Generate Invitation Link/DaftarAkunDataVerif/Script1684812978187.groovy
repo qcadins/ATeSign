@@ -12,21 +12,26 @@ import internal.GlobalVariable as GlobalVariable
 'declare userDir'
 String userDir = System.getProperty('user.dir')
 
-'check if ingin menggunakan embed atau tidakk'
+'check if ingin menggunakan embed atau tidak'
 if (GlobalVariable.RunWithEmbed == 'Yes') {
 	'replace https > http'
-	link = GlobalVariable.Link.replace('https', 'http')
-	
-	'navigate url ke daftar akun'
-	WebUI.openBrowser(GlobalVariable.embedUrl)
-	
-	WebUI.delay(3)
-	
+	link = GlobalVariable.Link.replace('https', 'http')	
+
 	'check if ingin menggunakan local host atau tidak'
 	if (GlobalVariable.useLocalHost == 'Yes') {
 		'navigate url ke daftar akun'
+		WebUI.openBrowser(GlobalVariable.embedUrl.replace('http://gdkwebsvr:8080', GlobalVariable.urlLocalHost))
+		
+		WebUI.delay(3)
+		
+		'navigate url ke daftar akun'
 		WebUI.setText(findTestObject('EmbedView/inputLinkEmbed'), link.replace('http://gdkwebsvr:8080', GlobalVariable.urlLocalHost))
 	} else if (GlobalVariable.useLocalHost == 'No') {
+		'navigate url ke daftar akun'
+		WebUI.openBrowser(GlobalVariable.embedUrl)
+		
+		WebUI.delay(3)
+		
 		'navigate url ke daftar akun'
 		WebUI.setText(findTestObject('EmbedView/inputLinkEmbed'), link)
 	}
@@ -60,7 +65,11 @@ if (GlobalVariable.RunWithEmbed == 'Yes') {
 	}
 }
 
+'maximize window'
 WebUI.maximizeWindow()
+
+'delay 3 detik'
+WebUI.delay(3)
 
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
@@ -289,10 +298,24 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     'click verifikasi'
     WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Verifikasi'))
 
-    WebUI.delay(10)
-
+    'get reason error log'
+    reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).toString()
+	
     'cek if berhasil pindah page'
-    if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), GlobalVariable.TimeOut, 
+    if (reason.contains('gagal') || reason.contains('Saldo')) {	
+        'write to excel status failed dan reason'
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link', GlobalVariable.NumofColm, 
+            GlobalVariable.StatusFailed, (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 2).replace(
+                '-', '') + ';') + reason + ' Daftar Akun Esign')
+
+        GlobalVariable.FlagFailed = 1
+
+		'if gagal verifikasi wajah maka cek saldo verifikasi berkurang 1'		
+		if (reason.contains('gagal')) {
+			'call function checkTrxMutation'
+			checkTrxMutation(conneSign)
+		}
+    } else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), GlobalVariable.TimeOut, 
         FailureHandling.OPTIONAL)) {
 		
 		checkTrxMutation(conneSign)
@@ -300,19 +323,6 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
         'call testcase form aktivasi vida'
         WebUI.callTestCase(findTestCase('APIFullService/API Generate Invitation Link/FormAktivasiVida'), [('excelPathAPIGenerateInvLink') : 'APIFullService/API_GenInvLink'], 
 			FailureHandling.CONTINUE_ON_FAILURE)
-    } else if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-        'get reason error log'
-        reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).toString()
-		
-        'write to excel status failed dan reason'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link', GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 2).replace(
-                '-', '') + ';') + reason)
-
-        GlobalVariable.FlagFailed = 1
-		
-		checkTrxMutation(conneSign)
-		
     } else if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_PopupMsg'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
         reason = WebUI.getText(findTestObject('DaftarAkun/label_PopupMsg'))
 

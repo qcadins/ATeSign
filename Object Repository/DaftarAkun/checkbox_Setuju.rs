@@ -10,7 +10,7 @@
       </entry>
       <entry>
          <key>BASIC</key>
-         <value>//section[@id='regestration']/div/div/div/div/div/div/div/form/div[18]/div/div</value>
+         <value>//section[@id='regestration']/div/div/div/div/div/div/div/form/div[18]/div/div/label/span</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -20,8 +20,8 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//section[@id='regestration']/div/div/div/div/div/div/div/form/div[18]/div/div</value>
-      <webElementGuid>d5ec06e2-c493-4bd7-b43d-1e2e71206f91</webElementGuid>
+      <value>//section[@id='regestration']/div/div/div/div/div/div/div/form/div[18]/div/div/label/span</value>
+      <webElementGuid>4c3b2186-bc90-4406-b1d6-4d8f175f3dd0</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -29,7 +29,7 @@
       <name>formcontrolname</name>
       <type>Main</type>
       <value>acceptTerms</value>
-      <webElementGuid>85f2fec5-895c-4464-8b9a-50ab7a9bfcc6</webElementGuid>
+      <webElementGuid>20d6b8d1-b6d7-4ad7-84ae-a9baf81a1eb0</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -37,6 +37,6 @@
       <name>text</name>
       <type>Main</type>
       <value>Saya Menerima</value>
-      <webElementGuid>11a17933-2112-47d0-96ac-75110b5481a2</webElementGuid>
+      <webElementGuid>3e2b916a-a53f-4bda-92c9-a5abc69b10ae</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
