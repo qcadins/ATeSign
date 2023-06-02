@@ -7,25 +7,33 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@role = 'alertdialog']</value>
+         <value>//*[contains(@class, 'ng-star-inserted ng-trigger ng-trigger-flyInOut ngx-toastr toast-error')]/div[2]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>false</isSelected>
+      <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/div/div[2]</value>
-      <webElementGuid>b72bb49b-15d5-4cc8-8688-5d401caa19a9</webElementGuid>
+      <value>//*[contains(@class, 'ng-star-inserted ng-trigger ng-trigger-flyInOut ngx-toastr toast-error')]/div[2]</value>
+      <webElementGuid>48c86df9-32af-4068-8ff7-33e24f0cc527</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>role</name>
       <type>Main</type>
       <value>alertdialog</value>
-      <webElementGuid>ce636709-2973-4437-a8b0-8b3bf9b8039c</webElementGuid>
+      <webElementGuid>a675a3e4-2636-4dbb-ba28-344763435cc6</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>contains</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>ng-star-inserted ng-trigger ng-trigger-flyInOut ngx-toastr toast-error</value>
+      <webElementGuid>2b03e8ba-b507-48b1-b07c-38fda5d3cde4</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

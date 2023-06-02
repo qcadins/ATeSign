@@ -87,223 +87,239 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
     'click button proses'
     WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_Proses'))
 
-    'delay untuk menunggu OTP'
-    WebUI.delay(5)
+	'verify popup message maximal resend OTP'
+	if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'), GlobalVariable.TimeOut,
+		FailureHandling.OPTIONAL)) {
+		reason = WebUI.getText(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'))
 
-    'get OTP dari DB'
-    OTP = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 
-            12).replace('"', '').toUpperCase())
+		'write to excel status failed dan reason'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link', GlobalVariable.NumofColm,
+			GlobalVariable.StatusFailed, (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm,
+				2).replace('-', '') + ';') + reason + ' Form Aktivasi Vida')
 
-	'+1 karena request otp'
-	reqOTP++
+		'click button tutup error'
+		WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_OK'))
+
+		GlobalVariable.FlagFailed = 1
+	} else {	
+	    'delay untuk menunggu OTP'
+	    WebUI.delay(5)
 	
-    'clear arraylist sebelumnya'
-    listOTP.clear()
-
-    'add otp ke list'
-    listOTP.add(OTP)
-
-    if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 49).equalsIgnoreCase('Yes')) {
-        'delay untuk menunggu OTP'
-        WebUI.delay(5)
-
-        'input OTP'
-        WebUI.setText(findTestObject('BuatUndangan/FormAktivasi/input_OTP'), OTP)
-
-        'get count untuk resend OTP dari excel'
-        countResend = Integer.parseInt(findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 51))
-
-        'jika count resend otp excel > 0'
-        if (countResend > 0) {
-            'count mulai dari 2 karena pertama kali ngeklik resend OTP sudah terhitung kedua kalinya request untuk resend OTP'
-            OTPResendCount = 2
-
-            for (int i = 0; i < countResend; i++) {
-                'tunggu button resend otp'
-                WebUI.delay(115)
-
-                'klik pada button kirim ulang otp'
-                WebUI.click(findTestObject('BuatUndangan/FormAktivasi/kirimKodeLagi'))
-
-                'verify popup message maximal resend OTP'
-                if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'), GlobalVariable.TimeOut, 
-                    FailureHandling.OPTIONAL)) {
-                    reason = WebUI.getText(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'))
-
-                    'write to excel status failed dan reason'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link', GlobalVariable.NumofColm, 
-                        GlobalVariable.StatusFailed, (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 
-                            2).replace('-', '') + ';') + reason)
-
-                    'click button tutup error'
-                    WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_OK'))
-
-                    GlobalVariable.FlagFailed = 1
-
-                    break
-                } else {
-                    'get data reset request OTP dari DB'
-                    Integer resultResetOTP = CustomKeywords.'connection.DataVerif.getResetOTP'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(
-                            GlobalVariable.NumofColm, 12).replace('"', '').toUpperCase())
-
-                    'verify counter OTP Katalon sesuai dengan counter OTP DB'
-                    checkVerifyEqualOrMatch(WebUI.verifyEqual(resultResetOTP, OTPResendCount++, FailureHandling.CONTINUE_ON_FAILURE), ' OTP')
-                }
-                
-                'delay untuk menunggu OTP'
-                WebUI.delay(3)
-
-                'get OTP dari DB'
-                OTP = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(
-                        GlobalVariable.NumofColm, 12).replace('"', '').toUpperCase())
-
-				'+1 karena request otp'
-				reqOTP++
-				
-                'add OTP ke list'
-                listOTP.add(OTP)
-
-                'check if OTP resend berhasil'
-                checkVerifyEqualOrMatch(WebUI.verifyNotMatch(listOTP[i], listOTP[(i + 1)], false, FailureHandling.CONTINUE_ON_FAILURE), ' OTP')
-
-                'select OTP'
-                WebUI.sendKeys(findTestObject('DaftarAkun/input_OTP'), Keys.chord(Keys.CONTROL, 'A'))
-
-                'input OTP'
-                WebUI.setText(findTestObject('BuatUndangan/FormAktivasi/input_OTP'), OTP)
-            }
-        }
-        
-        'click button proses OTP'
-        WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_ProsesOTP'))
-
-        'check if aktivasi berhasil dengan OTP yang benar'
-        if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/popUp_AktivasiBerhasil'), GlobalVariable.TimeOut, 
-            FailureHandling.OPTIONAL) && (GlobalVariable.FlagFailed == 0)) {
-            'write to excel success'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Generate Invitation Link', 
-                0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-        }
-    } else {
-        'input OTP'
-        WebUI.setText(findTestObject('BuatUndangan/FormAktivasi/input_OTP'), findTestData(excelPathAPIGenerateInvLink).getValue(
-                GlobalVariable.NumofColm, 50))
-
-        'get count untuk resend OTP dari excel'
-        countResend = Integer.parseInt(findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 51))
-
-        'jika count resend OTP excel > 0'
-        if (countResend > 0) {
-            'count mulai dari 2 karena pertama kali ngeklik resend OTP sudah terhitung kedua kalinya request untuk resend OTP'
-            OTPResendCount = 2
-
-            for (int i = 0; i < countResend; i++) {
-                'tunggu button resend otp'
-                WebUI.delay(115)
-
-                'klik pada button kirim ulang otp'
-                WebUI.click(findTestObject('BuatUndangan/FormAktivasi/kirimKodeLagi'))
-
-                'verify popup message maximal resend OTP'
-                if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'), GlobalVariable.TimeOut, 
-                    FailureHandling.OPTIONAL)) {
-                    reason = WebUI.getText(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'))
-
-                    'write to excel status failed dan reason'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link', GlobalVariable.NumofColm, 
-                        GlobalVariable.StatusFailed, (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 
-                            2).replace('-', '') + ';') + reason)
-
-                    'click button tutup error'
-                    WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_OK'))
-
-                    GlobalVariable.FlagFailed = 1
-
-                    break
-                } else {
-                    'get data reset request OTP dari DB'
-                    Integer resultResetOTP = CustomKeywords.'connection.DataVerif.getResetOTP'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(
-                            GlobalVariable.NumofColm, 12).replace('"', '').toUpperCase())
-
-                    'verify counter OTP Katalon sesuai dengan counter OTP DB'
-                    checkVerifyEqualOrMatch(WebUI.verifyEqual(resultResetOTP, OTPResendCount++, FailureHandling.CONTINUE_ON_FAILURE), ' OTP')
-                }
-                
-                'delay untuk menunggu OTP'
-                WebUI.delay(5)
-
-                'get OTP dari DB'
-                OTP = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(
-                        GlobalVariable.NumofColm, 12).replace('"', '').toUpperCase())
-
-				'+1 karena request otp'
-				reqOTP++
-				
-                'add OTP ke list'
-                listOTP.add(OTP)
-
-                'check if OTP resend berhasil'
-                checkVerifyEqualOrMatch(WebUI.verifyNotMatch(listOTP[i], listOTP[(i + 1)], false, FailureHandling.CONTINUE_ON_FAILURE), ' OTP')
-
-                'input OTP'
-                WebUI.setText(findTestObject('BuatUndangan/FormAktivasi/input_OTP'), findTestData(excelPathAPIGenerateInvLink).getValue(
-                        GlobalVariable.NumofColm, 50))
-            }
-        }
-        
-        'click button proses OTP'
-        WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_ProsesOTP'))
-
-        'check if aktivasi berhasil dengan OTP yang Salah'
-        if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/popUp_AktivasiBerhasil'), GlobalVariable.TimeOut, 
-            FailureHandling.OPTIONAL)) {
-            'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link', GlobalVariable.NumofColm, 
-                GlobalVariable.StatusFailed, (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 2) + 
-                ';') + GlobalVariable.ReasonFailedOTPError)
-
-            GlobalVariable.FlagFailed = 1
-        } else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'), GlobalVariable.TimeOut, 
-            FailureHandling.OPTIONAL)) {
-            reason = WebUI.getText(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'))
-
-            'write to excel status failed dan reason'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link', GlobalVariable.NumofColm, 
-                GlobalVariable.StatusFailed, (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 2).replace(
-                    '-', '') + ';') + reason)
-
-            'click button tutup error'
-            WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_OK'))
-
-            'click button X tutup popup OTP'
-            WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_X'))
-
-            GlobalVariable.FlagFailed = 1
-        }
-    }
+	    'get OTP dari DB'
+	    OTP = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 
+	            12).replace('"', '').toUpperCase())
 	
-	if ((GlobalVariable.checkStoreDB == 'Yes')) {
-		resultTrx = CustomKeywords.'connection.DataVerif.getAPIGenInvLinkOTPTrx'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(
-					GlobalVariable.NumofColm, 11).replace('"',''))
-
-		'declare arraylist arraymatch'
-		ArrayList<String> arrayMatch = []
-
-		int sum = 0
-		for (String value : resultTrx) {
-		    int intValue = Integer.parseInt(value)
-		    sum += intValue
-		}
+		'+1 karena request otp'
+		reqOTP++
 		
-		'verify trx qty = -1'
-		arrayMatch.add(WebUI.verifyEqual(sum, -reqOTP, FailureHandling.CONTINUE_ON_FAILURE))
-
-		'jika data db tidak sesuai dengan excel'
-		if (arrayMatch.contains(false)) {
-			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link',
-				GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (findTestData(excelPathAPIGenerateInvLink).getValue(
-					GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
+	    'clear arraylist sebelumnya'
+	    listOTP.clear()
+	
+	    'add otp ke list'
+	    listOTP.add(OTP)
+	
+	    if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 49).equalsIgnoreCase('Yes')) {
+	        'delay untuk menunggu OTP'
+	        WebUI.delay(5)
+	
+	        'input OTP'
+	        WebUI.setText(findTestObject('BuatUndangan/FormAktivasi/input_OTP'), OTP)
+	
+	        'get count untuk resend OTP dari excel'
+	        countResend = Integer.parseInt(findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 51))
+	
+	        'jika count resend otp excel > 0'
+	        if (countResend > 0) {
+	            'count mulai dari 2 karena pertama kali ngeklik resend OTP sudah terhitung kedua kalinya request untuk resend OTP'
+	            OTPResendCount = 2
+	
+	            for (int i = 0; i < countResend; i++) {
+	                'tunggu button resend otp'
+	                WebUI.delay(115)
+	
+	                'klik pada button kirim ulang otp'
+	                WebUI.click(findTestObject('BuatUndangan/FormAktivasi/kirimKodeLagi'))
+	
+	                'verify popup message maximal resend OTP'
+	                if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'), GlobalVariable.TimeOut, 
+	                    FailureHandling.OPTIONAL)) {
+	                    reason = WebUI.getText(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'))
+	
+	                    'write to excel status failed dan reason'
+	                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link', GlobalVariable.NumofColm, 
+	                        GlobalVariable.StatusFailed, (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 
+	                            2).replace('-', '') + ';') + reason)
+	
+	                    'click button tutup error'
+	                    WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_OK'))
+	
+	                    GlobalVariable.FlagFailed = 1
+	
+	                    break
+	                } else {
+	                    'get data reset request OTP dari DB'
+	                    Integer resultResetOTP = CustomKeywords.'connection.DataVerif.getResetOTP'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(
+	                            GlobalVariable.NumofColm, 12).replace('"', '').toUpperCase())
+	
+	                    'verify counter OTP Katalon sesuai dengan counter OTP DB'
+	                    checkVerifyEqualOrMatch(WebUI.verifyEqual(resultResetOTP, OTPResendCount++, FailureHandling.CONTINUE_ON_FAILURE), ' OTP')
+	                }
+	                
+	                'delay untuk menunggu OTP'
+	                WebUI.delay(3)
+	
+	                'get OTP dari DB'
+	                OTP = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(
+	                        GlobalVariable.NumofColm, 12).replace('"', '').toUpperCase())
+	
+					'+1 karena request otp'
+					reqOTP++
+					
+	                'add OTP ke list'
+	                listOTP.add(OTP)
+	
+	                'check if OTP resend berhasil'
+	                checkVerifyEqualOrMatch(WebUI.verifyNotMatch(listOTP[i], listOTP[(i + 1)], false, FailureHandling.CONTINUE_ON_FAILURE), ' OTP')
+	
+	                'select OTP'
+	                WebUI.sendKeys(findTestObject('DaftarAkun/input_OTP'), Keys.chord(Keys.CONTROL, 'A'))
+	
+	                'input OTP'
+	                WebUI.setText(findTestObject('BuatUndangan/FormAktivasi/input_OTP'), OTP)
+	            }
+	        }
+	        
+	        'click button proses OTP'
+	        WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_ProsesOTP'))
+	
+	        'check if aktivasi berhasil dengan OTP yang benar'
+	        if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/popUp_AktivasiBerhasil'), GlobalVariable.TimeOut, 
+	            FailureHandling.OPTIONAL) && (GlobalVariable.FlagFailed == 0)) {
+	            'write to excel success'
+	            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Generate Invitation Link', 
+	                0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+	        }
+	    } else {
+	        'input OTP'
+	        WebUI.setText(findTestObject('BuatUndangan/FormAktivasi/input_OTP'), findTestData(excelPathAPIGenerateInvLink).getValue(
+	                GlobalVariable.NumofColm, 50))
+	
+	        'get count untuk resend OTP dari excel'
+	        countResend = Integer.parseInt(findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 51))
+	
+	        'jika count resend OTP excel > 0'
+	        if (countResend > 0) {
+	            'count mulai dari 2 karena pertama kali ngeklik resend OTP sudah terhitung kedua kalinya request untuk resend OTP'
+	            OTPResendCount = 2
+	
+	            for (int i = 0; i < countResend; i++) {
+	                'tunggu button resend otp'
+	                WebUI.delay(115)
+	
+	                'klik pada button kirim ulang otp'
+	                WebUI.click(findTestObject('BuatUndangan/FormAktivasi/kirimKodeLagi'))
+	
+	                'verify popup message maximal resend OTP'
+	                if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'), GlobalVariable.TimeOut, 
+	                    FailureHandling.OPTIONAL)) {
+	                    reason = WebUI.getText(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'))
+	
+	                    'write to excel status failed dan reason'
+	                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link', GlobalVariable.NumofColm, 
+	                        GlobalVariable.StatusFailed, (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 
+	                            2).replace('-', '') + ';') + reason)
+	
+	                    'click button tutup error'
+	                    WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_OK'))
+	
+	                    GlobalVariable.FlagFailed = 1
+	
+	                    break
+	                } else {
+	                    'get data reset request OTP dari DB'
+	                    Integer resultResetOTP = CustomKeywords.'connection.DataVerif.getResetOTP'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(
+	                            GlobalVariable.NumofColm, 12).replace('"', '').toUpperCase())
+	
+	                    'verify counter OTP Katalon sesuai dengan counter OTP DB'
+	                    checkVerifyEqualOrMatch(WebUI.verifyEqual(resultResetOTP, OTPResendCount++, FailureHandling.CONTINUE_ON_FAILURE), ' OTP')
+	                }
+	                
+	                'delay untuk menunggu OTP'
+	                WebUI.delay(5)
+	
+	                'get OTP dari DB'
+	                OTP = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(
+	                        GlobalVariable.NumofColm, 12).replace('"', '').toUpperCase())
+	
+					'+1 karena request otp'
+					reqOTP++
+					
+	                'add OTP ke list'
+	                listOTP.add(OTP)
+	
+	                'check if OTP resend berhasil'
+	                checkVerifyEqualOrMatch(WebUI.verifyNotMatch(listOTP[i], listOTP[(i + 1)], false, FailureHandling.CONTINUE_ON_FAILURE), ' OTP')
+	
+	                'input OTP'
+	                WebUI.setText(findTestObject('BuatUndangan/FormAktivasi/input_OTP'), findTestData(excelPathAPIGenerateInvLink).getValue(
+	                        GlobalVariable.NumofColm, 50))
+	            }
+	        }
+	        
+	        'click button proses OTP'
+	        WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_ProsesOTP'))
+	
+	        'check if aktivasi berhasil dengan OTP yang Salah'
+	        if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/popUp_AktivasiBerhasil'), GlobalVariable.TimeOut, 
+	            FailureHandling.OPTIONAL)) {
+	            'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+	            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link', GlobalVariable.NumofColm, 
+	                GlobalVariable.StatusFailed, (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 2) + 
+	                ';') + GlobalVariable.ReasonFailedOTPError)
+	
+	            GlobalVariable.FlagFailed = 1
+	        } else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'), GlobalVariable.TimeOut, 
+	            FailureHandling.OPTIONAL)) {
+	            reason = WebUI.getText(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'))
+	
+	            'write to excel status failed dan reason'
+	            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link', GlobalVariable.NumofColm, 
+	                GlobalVariable.StatusFailed, (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 2).replace(
+	                    '-', '') + ';') + reason)
+	
+	            'click button tutup error'
+	            WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_OK'))
+	
+	            'click button X tutup popup OTP'
+	            WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_X'))
+	
+	            GlobalVariable.FlagFailed = 1
+	        }
+	    }
+		
+		if ((GlobalVariable.checkStoreDB == 'Yes')) {
+			resultTrx = CustomKeywords.'connection.DataVerif.getAPIGenInvLinkOTPTrx'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(
+						GlobalVariable.NumofColm, 11).replace('"',''))
+	
+			'declare arraylist arraymatch'
+			ArrayList<String> arrayMatch = []
+	
+			int sum = 0
+			for (String value : resultTrx) {
+			    int intValue = Integer.parseInt(value)
+			    sum += intValue
+			}
+			
+			'verify trx qty = -1'
+			arrayMatch.add(WebUI.verifyEqual(sum, -reqOTP, FailureHandling.CONTINUE_ON_FAILURE))
+	
+			'jika data db tidak sesuai dengan excel'
+			if (arrayMatch.contains(false)) {
+				'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link',
+					GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (findTestData(excelPathAPIGenerateInvLink).getValue(
+						GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
+			}
 		}
 	}
 }
