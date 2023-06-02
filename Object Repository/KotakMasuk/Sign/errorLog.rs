@@ -9,6 +9,10 @@
          <key>BASIC</key>
          <value>//*[@role = 'alertdialog']</value>
       </entry>
+      <entry>
+         <key>XPATH</key>
+         <value></value>
+      </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
@@ -18,7 +22,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/div/div[2]</value>
-      <webElementGuid>8a7599e0-f770-43f2-92da-97a8da844079</webElementGuid>
+      <webElementGuid>13a2bd0e-6f7f-49af-b477-779ccab161de</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -26,6 +30,6 @@
       <name>role</name>
       <type>Main</type>
       <value>alertdialog</value>
-      <webElementGuid>40ccdbc6-90f0-4cc4-81c4-38c9340268ac</webElementGuid>
+      <webElementGuid>bf727789-99b8-48f4-976c-6ea52f84e04b</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

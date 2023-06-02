@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>Response API Send Document</name>
+   <name>3.1.0 Send to Sign</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>2d541798-6898-440f-a5bc-88231c685ab3</testCaseGuid>
+   <testCaseGuid>f8a6e845-abba-4c66-8677-2a608c62ffaa</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>b51e5211-6f18-47c4-a95e-7b87c0a89cbe</variableId>
+      <variableId>7e16dd65-bf99-4f9e-9135-b6de53ac8fd8</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'Login/Setting'</defaultValue>
+      <defaultValue>'APIFullService/SendtoSign'</defaultValue>
       <description></description>
-      <id>b51e5211-6f18-47c4-a95e-7b87c0a89cbe</id>
+      <id>7e16dd65-bf99-4f9e-9135-b6de53ac8fd8</id>
       <masked>false</masked>
-      <name>excelPathSetting</name>
+      <name>excelPathFESignDocument</name>
    </variable>
 </TestCaseEntity>

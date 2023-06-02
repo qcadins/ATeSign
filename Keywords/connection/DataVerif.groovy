@@ -493,7 +493,7 @@ public class DataVerif {
 	getEmailLogin(Connection conn, String documentid) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT STRING_AGG(distinct au.login_id, ';') AS login FROM tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user WHERE tdd.document_id = '"+documentid+"'")
+		resultSet = stm.executeQuery("SELECT STRING_AGG(distinct au.login_id, ';') AS login FROM tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user WHERE tdd.document_id = '"+documentid+"' and tdds.sign_date is null")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -1482,14 +1482,14 @@ public class DataVerif {
 		}
 		data
 	}
-	
+
 	@Keyword
 	getDocumentMonitoringSigner(Connection conn, String refNo) {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select ms.description as signertype, au.full_name as name, au.login_id as login , CASE WHEN au.is_active = '1' THEN 'Sudah Aktivasi' END as aktivasi, CASE WHEN tdds.sign_date is not null THEN 'Signed' ELSE msl.description END as status, CASE WHEN tdds.sign_date IS null THEN '-' else to_char(tdds.sign_date, 'DD-Mon-YYYY HH24:MI') END sign_date from tr_document_d_sign tdds left join tr_document_d as tdd on tdd.id_document_d = tdds.id_document_d left join tr_document_h as tdh on tdh.id_document_h = tdd.id_document_h join am_msuser as au on au.id_ms_user = tdds.id_ms_user join ms_lov ms on tdds.lov_signer_type = ms.id_lov join ms_lov msl on tdd.lov_sign_status = msl.id_lov WHERE tdh.ref_number = '"+ refNo +"' group by ms.description, au.full_name, au.login_id, au.is_active, tdds.sign_date, msl.description")
 		metadata = resultSet.metaData
-		
+
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
