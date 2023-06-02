@@ -493,7 +493,7 @@ public class DataVerif {
 	getEmailLogin(Connection conn, String documentid) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT STRING_AGG(distinct au.login_id, ';') AS login FROM tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user WHERE tdd.document_id = '"+documentid+"' and tdds.sign_date is null")
+		resultSet = stm.executeQuery("SELECT STRING_AGG(distinct au.login_id, ';') AS login FROM tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user WHERE tdd.document_id = '"+documentid+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -1499,5 +1499,35 @@ public class DataVerif {
 			}
 		}
 		listdata
+	}
+
+	@Keyword
+	getAesKeyBasedOnTenant(Connection conn, String tenantCode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select aes_encrypt_key from ms_tenant where tenant_code = '"+tenantCode+"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+	
+	@Keyword
+	getProsesTtdProgress(Connection conn, String documentId) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT COUNT(DISTINCT au.login_id) AS login FROM tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user WHERE tdd.document_id = '"+documentId+"' AND tdds.sign_date IS NOT NULL")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		Integer.parseInt(data)
 	}
 }

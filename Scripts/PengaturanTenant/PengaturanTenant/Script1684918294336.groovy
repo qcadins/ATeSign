@@ -2,13 +2,10 @@ import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
-import com.kms.katalon.core.testobject.TestObject as TestObject
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 import java.sql.Connection as Connection
-import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
-import org.openqa.selenium.By as By
 
 'get current date'
 def currentDate = new Date().format('yyyy-MM-dd')
@@ -24,11 +21,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
     if (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
-        'declare arraylist arraymatch'
-        ArrayList arrayMatch = []
-
-        'declare result Db setelah edit, result Db untuk sebelum edit, arraylist untuk balance, declare array split dari result di db, array tipe saldo sebelumnya, array saldo dari tipe saldo sebelumnya'
-        ArrayList resultDbNew = [], resultDbPrevious = [], balance = [], arrSplitResultDb = [], arrTipeSaldoBefore = [], arrSaldoTipeSaldoBefore = []
+        'declare result Db setelah edit, result Db untuk sebelum edit, arraylist untuk balance, declare array split dari result di db, array tipe saldo sebelumnya, array saldo dari tipe saldo sebelumnya, dan arrayMatch'
+        ArrayList resultDbNew = [], resultDbPrevious = [], balance = [], arrSplitResultDb = [], arrTipeSaldoBefore = [], arrSaldoTipeSaldoBefore = [], arrayMatch = []
 
         'declare variable inisialisasi for'
         int i, j
