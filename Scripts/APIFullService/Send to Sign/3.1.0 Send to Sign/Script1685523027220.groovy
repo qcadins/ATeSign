@@ -225,12 +225,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                         'xpath', 'equals', ('/html/body/app-root/app-content-layout/div/div/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
                         j) + ']/datatable-body-row/div[2]/datatable-body-cell[2]/div/p', true)
 
-                    'modify object text no kontrak di beranda'
+                    'modify object test status tanda tangan di beranda'
                     modifyObjectTextStatusTtd = WebUI.modifyObjectProperty(findTestObject('Object Repository/APIFullService/Send to Sign/text_NamaDokumen'), 
                         'xpath', 'equals', ('/html/body/app-root/app-content-layout/div/div/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
                         j) + ']/datatable-body-row/div[2]/datatable-body-cell[9]/div/p', true)
 
-                    'modify object text no kontrak di beranda'
+                    'modify object text proses ttd di beranda'
                     modifyObjectTextProsesTtd = WebUI.modifyObjectProperty(findTestObject('Object Repository/APIFullService/Send to Sign/text_NamaDokumen'), 
                         'xpath', 'equals', ('/html/body/app-root/app-content-layout/div/div/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
                         j) + ']/datatable-body-row/div[2]/datatable-body-cell[7]/div/p', true)
@@ -265,13 +265,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                         'Klik checkbox tanda tangan'
                         WebUI.click(modifyObjectCheckboxTtd)
 
+						'Jika total Document Signnya lebih besar dari 1, datanya continue'
                         if (totalDocSign > 1) {
                             continue
-                        }
+                        } else {
+							'Jika total document signnya itu 1, maka perlu break'
+							break
+						}
                     }
                     
+					'Jika bulk sign'
                     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 50) == 'Yes') {
 
+						'Jika loopingan sudah cukup untuk total doc sign'
                         if (j == (rowBeranda.size() - totalDocSign)) {
                             break
                         } else {
