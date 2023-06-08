@@ -67,10 +67,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
         int jumlahSignerTandaTangan = CustomKeywords.'connection.DataVerif.getTotalSigned'(conneSign, findTestData(excelPathFESignDocument).getValue(
                 GlobalVariable.NumofColm, 6))
 
-        'Declare variable jumlahSignerTelahTtd untuk proses ttd, saldo Used untuk penggunaan saldo, dan saldoUsedDocPertama hanya untuk dokumen pertama'
+        'Declare variable jumlahSignerTelahTtd untuk proses ttd'
         int jumlahSignerTelahTtd = CustomKeywords.'connection.DataVerif.getProsesTtdProgress'(conneSign, findTestData(excelPathFESignDocument).getValue(
                 GlobalVariable.NumofColm, 5))
 
+		'saldo Used untuk penggunaan saldo, dan saldoUsedDocPertama hanya untuk dokumen pertama'
         int saldoUsed = 0, saldoUsedDocPertama = 0
 
         'looping email signer'
