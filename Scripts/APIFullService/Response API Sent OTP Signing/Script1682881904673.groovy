@@ -74,11 +74,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                     'get data from db'
                     ArrayList<String> result = CustomKeywords.'connection.DataVerif.checkAPISentOTPSigning'(conneSign, findTestData(
-                            excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 5))
+                            excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 6))
 
                     'verify trxno'
                     arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], findTestData(excelPathAPISentOTPSigning).getValue(
-                                GlobalVariable.NumofColm, 5), false, FailureHandling.CONTINUE_ON_FAILURE))
+                                GlobalVariable.NumofColm, 6), false, FailureHandling.CONTINUE_ON_FAILURE))
 
                     'verify email'
                     arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), findTestData(excelPathAPISentOTPSigning).getValue(

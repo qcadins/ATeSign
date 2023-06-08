@@ -52,17 +52,26 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     ArrayList<String> result = CustomKeywords.'connection.DataVerif.getAPICheckRegisterStoreDB'(conneSign, 
                         findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, 12).replace('"', ''))
 
+					println(result)
+					
                     'declare arraylist arraymatch'
-                    ArrayList<String> arrayMatch = new ArrayList<String>()
+                    ArrayList<String> arrayMatch = []
 
                     for (index = 0; index < vendor.size(); index++) {
-                        if ((vendoractive[index]) != '0') {
+						
+						arrayIndex = result.indexOf(vendor[index])
+						
+						vendorDB = result[arrayIndex++]
+						
+						vendorStatusDB = result[arrayIndex++]
+						
+                        if ((vendor[index]) == vendorDB) {
                             'verify vendor'
-                            arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), (vendor[index]).toUpperCase(), 
+                            arrayMatch.add(WebUI.verifyMatch(vendorDB.toUpperCase(), (vendor[index]).toUpperCase(), 
                                     false, FailureHandling.CONTINUE_ON_FAILURE))
 
                             'verify vendor status'
-                            arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), (vendoractive[index]).toUpperCase(), 
+                            arrayMatch.add(WebUI.verifyMatch(vendorStatusDB.toUpperCase(), (vendoractive[index]).toUpperCase(), 
                                     false, FailureHandling.CONTINUE_ON_FAILURE))
                         }
                     }

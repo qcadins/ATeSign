@@ -15,7 +15,7 @@ String userDir = System.getProperty('user.dir')
 'check if ingin menggunakan embed atau tidak'
 if (GlobalVariable.RunWithEmbed == 'Yes') {
 	'replace https > http'
-	link = GlobalVariable.Link.replace('https', 'http')	
+	link = GlobalVariable.Link
 
 	'check if ingin menggunakan local host atau tidak'
 	if (GlobalVariable.useLocalHost == 'Yes') {
@@ -302,7 +302,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).toString()
 	
     'cek if berhasil pindah page'
-    if (reason.contains('gagal') || reason.contains('Saldo')) {	
+    if (reason.contains('gagal') || reason.contains('Saldo') || reason.contains('Invalid')) {	
         'write to excel status failed dan reason'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 2).replace(
