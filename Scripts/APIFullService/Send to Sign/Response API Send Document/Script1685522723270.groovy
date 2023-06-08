@@ -26,7 +26,7 @@ sheet = 'Send to Sign'
 'Deklarasi variable mengenai signLoc untuk store db'
 String signlocStoreDB = new String()
 
-takeExcel(semicolon, splitnum, delimiter, enter)
+getDataExcel(semicolon, splitnum, delimiter, enter)
 
 'Deklarasi variable string Ref no untuk full body API.'
 String stringRefno = new String()
@@ -442,10 +442,6 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + semicolon) + messageFailed.toString())
 }
 
-'Fungsi PDF to Base64'
-
-'Fungsi storedb'
-
 def PDFtoBase64(String fileName) {
     return CustomKeywords.'customizekeyword.ConvertFile.base64File'(fileName)
 }
@@ -630,7 +626,7 @@ def ResponseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, St
     }
 }
 
-def takeExcel(String semicolon, int splitnum, String delimiter, String enter) {
+def getDataExcel(String semicolon, int splitnum, String delimiter, String enter) {
     'Inisialisasi ref No berdasarkan delimiter ;'
     refNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 11).split(semicolon, splitnum)
 

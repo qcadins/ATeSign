@@ -71,11 +71,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
         int jumlahSignerTelahTtd = CustomKeywords.'connection.DataVerif.getProsesTtdProgress'(conneSign, findTestData(excelPathFESignDocument).getValue(
                 GlobalVariable.NumofColm, 5))
 
-		'saldo Used untuk penggunaan saldo, dan saldoUsedDocPertama hanya untuk dokumen pertama'
-        int saldoUsed = 0, saldoUsedDocPertama = 0
-
         'looping email signer'
         for (int o = 1; o <= emailSigner.size(); o++) {
+			'saldo Used untuk penggunaan saldo, dan saldoUsedDocPertama hanya untuk dokumen pertama'
+			int saldoUsed = 0, saldoUsedDocPertama = 0
+			
             'pembuatan message yang akan dienkrip'
             msg = (((('{"officeCode" : ' + findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 14)) + 
             ', "email" : "') + (emailSigner[(o - 1)])) + '"}')
@@ -95,10 +95,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
             'Inisialisasi variable yang dibutuhkan'
             String noKontrak, saldoSignBefore, saldoSignAfter, otpBefore, otpAfter, documentTemplateName, noTelpSigner
 
-            'Mengkosongkan nomor kontrak'
+            'Mengkosongkan nomor kontrak dan document Template Name'
             noKontrak = ''
-
-            'Mengkosongkan document Template Name'
+			
             documentTemplateName = ''
 
             'Inisialisasi variable total document yang akan disign, count untuk resend, dan saldo yang akan digunakan'
@@ -287,19 +286,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                                 documentTemplateName = WebUI.getText(modifyObjectTextDocumentTemplateName)
 
                                 noKontrak = WebUI.getText(modifyObjectTextRefNumber)
-
-                                'Klik checkbox tanda tangan'
-                                WebUI.click(modifyObjectCheckboxTtd)
                             } else {
                                 'Input document Template Name dan nomor kontrak dari UI ditambah dengan delimiter ;'
                                 documentTemplateName = ((WebUI.getText(modifyObjectTextDocumentTemplateName) + ';') + documentTemplateName)
 
                                 noKontrak = ((WebUI.getText(modifyObjectTextRefNumber) + ';') + noKontrak)
-
-                                'Klik checkbox tanda tangan'
-                                WebUI.click(modifyObjectCheckboxTtd)
                             }
-                        }
+							
+							'Klik checkbox tanda tangan'
+							WebUI.click(modifyObjectCheckboxTtd)
+						}
                     } 
                 }
                 
@@ -352,7 +348,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                     (c + 1))], false, FailureHandling.CONTINUE_ON_FAILURE) == false) {
                     'Jika tidak cocok, maka custom keywords jika tidak sama.'
                     CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                        GlobalVariable.StatusFailed, (((((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
+                        GlobalVariable.StatusWarning, (((((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                             2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + ' dimana tidak sesuai di page Bulk Sign antara ') + 
                         WebUI.getText(modifyObjectbtnNamaDokumen)) + ' dengan ') + (documentTemplateNamePerDoc[c]))
                 }
@@ -660,19 +656,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                             'Saldo usednya akan ditambah dengan value db penggunaan saldo'
                             saldoUsed = (saldoUsed + CustomKeywords.'connection.DataVerif.getSaldoUsedBasedonPaymentType'(
                                 conneSign, noKontrakPerDoc[i], emailSigner[(o - 1)]))
-
-                            if (i == 0) {
-                                saldoUsedDocPertama = (saldoUsedDocPertama + CustomKeywords.'connection.DataVerif.getSaldoUsedBasedonPaymentType'(
-                                    conneSign, noKontrakPerDoc[i], emailSigner[(o - 1)]))
-                            }
                         } else {
                             saldoUsed = (saldoUsed + 1)
-
-                            if (i == 0) {
-                                saldoUsedDocPertama = (saldoUsedDocPertama + CustomKeywords.'connection.DataVerif.getSaldoUsedBasedonPaymentType'(
-                                    conneSign, noKontrakPerDoc[i], emailSigner[(o - 1)]))
-                            }
                         }
+						
+						if (i == 0) {
+							saldoUsedDocPertama = (saldoUsedDocPertama + CustomKeywords.'connection.DataVerif.getSaldoUsedBasedonPaymentType'(
+								conneSign, noKontrakPerDoc[i], emailSigner[(o - 1)]))
+						}
                     }
                     
                     'Jumlah signer tanda tangan akan ditambah dengan total saldo yang telah digunakan'
