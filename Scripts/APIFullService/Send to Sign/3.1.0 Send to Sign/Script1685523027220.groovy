@@ -546,7 +546,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                     if (checkErrorLog() == true) {
                         continue
                     }
-                    
+
                     'check pop up'
                     if (checkPopup() == true) {
                         continue
