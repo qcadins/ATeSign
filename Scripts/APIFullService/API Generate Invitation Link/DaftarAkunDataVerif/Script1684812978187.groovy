@@ -223,6 +223,8 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     String OTP = CustomKeywords.'connection.DataVerif.getOTP'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 
             12).replace('"', '').toUpperCase())
 
+	println(OTP)
+	
     'add OTP ke list'
     listOTP.add(OTP)
 

@@ -1515,7 +1515,7 @@ public class DataVerif {
 		}
 		data
 	}
-	
+
 	@Keyword
 	getProsesTtdProgress(Connection conn, String documentId) {
 		stm = conn.createStatement()
