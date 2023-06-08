@@ -52,7 +52,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 if (GlobalVariable.checkStoreDB == 'Yes') {
                     'get trx from db'
-                    trxQty = CustomKeywords.'connection.DataVerif.getAPIRequestStampingTrx'(conneSign)
+                    String trxQty = CustomKeywords.'connection.DataVerif.getAPIRequestStampingTrx'(conneSign)
 
                     'declare arraylist arraymatch'
                     arrayMatch = []

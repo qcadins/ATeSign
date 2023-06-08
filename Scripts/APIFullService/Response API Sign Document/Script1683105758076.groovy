@@ -24,7 +24,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         break
     } else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
         'Inisialisasi otp, photo, ipaddress, dan total signed sebelumnya yang dikosongkan'
-        String otp, photo, ipaddress, totalSignedBefore, documentId
+        String otp, photo, ipaddress, totalSignedBefore
 
         'Split dokumen id agar mendapat dokumenid 1 per 1 dengan case bulk'
         documentId = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 10).replace('[', '').replace(
@@ -111,7 +111,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         'looping berdasarkan ukuran dari dokumen id'
-        for (int z = 0; z < documentId.size(); z++) {
+        for (int z = 0; z < documentId.size(); z++) {			
             'Memasukkan input dari total signed dengan ,'
             totalSignedBefore = (CustomKeywords.'connection.DataVerif.getTotalSigned'(conneSign, documentId[z]) + ',')
 
