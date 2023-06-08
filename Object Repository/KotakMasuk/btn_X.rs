@@ -7,17 +7,33 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/ngb-modal-window/div/div/app-signer/div[1]/button/span</value>
+         <value>//*[@class = 'close']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/ngb-modal-window/div/div/app-signer/div[1]/button/span</value>
-      <webElementGuid>6dedc1bb-dbe5-496e-95b4-0c4beafa5703</webElementGuid>
+      <webElementGuid>56a7b11c-aeda-47c0-a45a-3bd106c80749</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>x</value>
+      <webElementGuid>effcf5dc-f5b9-4aca-bbcc-218fbbc33f12</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>close</value>
+      <webElementGuid>dda71735-cdb9-442a-ad93-acc39c73c2fb</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

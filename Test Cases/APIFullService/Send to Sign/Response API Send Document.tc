@@ -9,21 +9,8 @@
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>d221481c-8480-45eb-b1f0-fa17c8e552cb</variableId>
-   </variableLinks>
-   <variableLinks>
-      <testDataLinkId></testDataLinkId>
-      <type>DEFAULT</type>
-      <value></value>
       <variableId>b51e5211-6f18-47c4-a95e-7b87c0a89cbe</variableId>
    </variableLinks>
-   <variable>
-      <defaultValue>'APIFullService/SendtoSign'</defaultValue>
-      <description></description>
-      <id>d221481c-8480-45eb-b1f0-fa17c8e552cb</id>
-      <masked>false</masked>
-      <name>excelPathAPISendDoc</name>
-   </variable>
    <variable>
       <defaultValue>'Login/Setting'</defaultValue>
       <description></description>

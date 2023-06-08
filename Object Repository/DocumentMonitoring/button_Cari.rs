@@ -7,17 +7,25 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;searchForm&quot;]/div[2]/div/button[2]</value>
+         <value>//*[@class = 'btn btn-primary']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>//*[@id=&quot;searchForm&quot;]/div[2]/div/button[2]</value>
-      <webElementGuid>02f95c37-daa3-4406-a2bb-d1de03b60ced</webElementGuid>
+      <webElementGuid>b147e270-877b-4c04-8f58-2278083b511f</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>btn btn-primary</value>
+      <webElementGuid>747be446-3c29-4b6b-af0d-16423099889d</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
