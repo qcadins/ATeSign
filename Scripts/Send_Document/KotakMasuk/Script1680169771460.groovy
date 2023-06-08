@@ -32,9 +32,9 @@ for (int y = 0; y < docId.size(); y++) {
 
     'looping berdasarkan email Signer dari dokumen tersebut. '
     for (int t = 0; t < emailSigner.size(); t++) {
-        'call Test Case untuk login sebagai user berdasarkan doc id'
-        WebUI.callTestCase(findTestCase('Login/Login_1docManySigner'), [('email') : emailSigner[t]], FailureHandling.STOP_ON_FAILURE)
-
+            'call Test Case untuk login sebagai user berdasarkan doc id'
+            WebUI.callTestCase(findTestCase('Login/Login_1docManySigner'), [('email') : emailSigner[t]], FailureHandling.STOP_ON_FAILURE)
+        
         'get data kotak masuk send document secara asc, dimana customer no 1'
         ArrayList result = CustomKeywords.'connection.DataVerif.getKotakMasukSendDoc'(conneSign, docId[y])
 
@@ -268,24 +268,24 @@ for (int y = 0; y < docId.size(); y++) {
         'Klik x terlebih dahulu pada popup'
         WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_X'))
 
-		'Jika document ingin didownload, maka'
-		if (isDownloadDocument == 'Yes') {
-        'modify object button Download Doc'
-        modifyObjectBtnDownloadDoc = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/btn_signer'), 'xpath', 'equals', 
-            ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-            variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[9]/div/a[3]/em', true)
+        'Jika document ingin didownload, maka'
+        if (isDownloadDocument == 'Yes') {
+            'modify object button Download Doc'
+            modifyObjectBtnDownloadDoc = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/btn_signer'), 'xpath', 'equals', 
+                ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
+                variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[9]/div/a[3]/em', true)
 
-        'Klik download file'
-        WebUI.click(modifyObjectBtnDownloadDoc)
+            'Klik download file'
+            WebUI.click(modifyObjectBtnDownloadDoc)
 
-        'Kasih waktu 4 detik untuk proses download'
-        WebUI.delay(4)
+            'Kasih waktu 4 detik untuk proses download'
+            WebUI.delay(4)
 
-        'Check apakah sudah terddownload menggunakan custom keyword'
-        CustomKeywords.'customizekeyword.Download.isFileDownloaded'(isDeleteDownloadedDocument)
-		}
-		
-		'Jika is View Document yes, maka '
+            'Check apakah sudah terddownload menggunakan custom keyword'
+            CustomKeywords.'customizekeyword.Download.isFileDownloaded'(isDeleteDownloadedDocument)
+        }
+        
+        'Jika is View Document yes, maka '
         if (isViewDocument == 'Yes') {
             'Klik View Document'
             WebUI.click(modifyObjectBtnViewDoc)

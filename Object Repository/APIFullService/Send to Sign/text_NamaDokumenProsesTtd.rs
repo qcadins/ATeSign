@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>text_NamaDokumenProsesTtd</name>
+   <tag></tag>
+   <elementGuidId>1ff75f53-8216-45f0-9de1-4364450debda</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>XPATH</key>
+         <value>//div[@id='pdf-main-container']/div/ul/li/label</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>label</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>XPATH</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>label</value>
+      <webElementGuid>ae9c8928-b20a-48b0-91dc-f60d258c27c3</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>DOKUMEN 1BM 1CUST</value>
+      <webElementGuid>dc396f51-0417-4a17-93dc-e1eb7d9eaba8</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>id(&quot;pdf-main-container&quot;)/div[1]/ul[@class=&quot;list-group&quot;]/li[@class=&quot;list-group-item ng-star-inserted&quot;]/label[1]</value>
+      <webElementGuid>d5a31789-3c6d-46e4-ad02-9930fec37b9a</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:idRelative</name>
+      <type>Main</type>
+      <value>//div[@id='pdf-main-container']/div/ul/li/label</value>
+      <webElementGuid>26e3edef-4e9b-40e1-b64f-70e6dae96f25</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Tanda Tangan Dokumen'])[1]/following::label[1]</value>
+      <webElementGuid>31e3f00f-d39e-4d2a-bad4-6da33ecc2777</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Proses'])[1]/preceding::label[1]</value>
+      <webElementGuid>82263e64-4b1f-438e-a94d-62d95479c0a9</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Persyaratan layanan'])[1]/preceding::label[1]</value>
+      <webElementGuid>acd3793c-c437-4a75-b161-fd5996072f67</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>//*/text()[normalize-space(.)='DOKUMEN 1BM 1CUST']/parent::*</value>
+      <webElementGuid>c54c85b1-b3f1-4ba0-889a-ea30353274b8</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//label</value>
+      <webElementGuid>4b3817b6-87ae-4baf-a889-924b411ffebd</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//label[(text() = 'DOKUMEN 1BM 1CUST' or . = 'DOKUMEN 1BM 1CUST')]</value>
+      <webElementGuid>a3f37e11-1157-4c01-8d6d-7417be4a756b</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>
