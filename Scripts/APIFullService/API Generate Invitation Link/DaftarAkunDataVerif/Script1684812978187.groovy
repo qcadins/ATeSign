@@ -357,7 +357,8 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 def checkTrxMutation(Connection conneSign) {
 	if ((GlobalVariable.checkStoreDB == 'Yes')) {
 		resultTrx = CustomKeywords.'connection.DataVerif.getAPIGenInvLinkVerifTrx'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(
-					GlobalVariable.NumofColm, 11).replace('"',''))
+					GlobalVariable.NumofColm, 11).replace('"',''), findTestData(excelPathAPIGenerateInvLink).getValue(
+					GlobalVariable.NumofColm, 16).replace('"',''))
 
 		'declare arraylist arraymatch'
 		ArrayList<String> arrayMatch = []

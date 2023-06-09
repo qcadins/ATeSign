@@ -56,6 +56,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'get status code'
             code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
+			'declare arraylist arraymatch'
+			ArrayList<String> arrayMatch = []
+			
             'jika codenya 0'
             if (code == 0) {
                 'mengambil response trx nonya'
@@ -68,9 +71,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'check Db'
                 if (GlobalVariable.checkStoreDB == 'Yes') {
                     arrayIndex = 0
-
-                    'declare arraylist arraymatch'
-                    ArrayList<String> arrayMatch = new ArrayList<String>()
 
                     'get data from db'
                     ArrayList<String> result = CustomKeywords.'connection.DataVerif.checkAPISentOTPSigning'(conneSign, findTestData(
@@ -137,6 +137,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Sent OTP Signing', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, message)
+				
+				String result = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(
+					excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 6))
+				
+				'check Db'
+				if (GlobalVariable.checkStoreDB == 'Yes') {
+					'verify no telp'
+					arrayMatch.add(WebUI.verifyEqual(result, null, FailureHandling.CONTINUE_ON_FAILURE))
+					
+					if (arrayMatch.contains(false)) {
+						'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Sent OTP Signing', GlobalVariable.NumofColm,
+							GlobalVariable.StatusFailed, (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm,
+								2) + ';') + GlobalVariable.ReasonFailedStoredDB)
+					}
+				}
             }
         } else {
             'mengambil status code berdasarkan response HIT API'

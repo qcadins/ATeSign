@@ -51,14 +51,25 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 message = WS.getElementPropertyValue(respon, 'checkStampingStatus.message', FailureHandling.OPTIONAL)
 
                 if (GlobalVariable.checkStoreDB == 'Yes') {
+					'get totalMaterai from db'
+					String totalMaterai = CustomKeywords.'connection.DataVerif.getTotalMaterai'(conneSign, findTestData(excelPathAPIRequestStamping).getValue(
+                        GlobalVariable.NumofColm, 11).replace('"',''))
+					
+					'looping untuk delay sebanyak total materai yang ada pada document'
+					for (i = 0 ; i <= Integer.parseInt(totalMaterai) ; i++) {
+						'delay untuk menunggu proses transaksi selesai sebanyak total materai yang ada'
+						WebUI.delay(10)
+					}
+					
                     'get trx from db'
-                    String trxQty = CustomKeywords.'connection.DataVerif.getAPIRequestStampingTrx'(conneSign)
+                    String result = CustomKeywords.'connection.DataVerif.getAPIRequestStampingTrx'(conneSign, findTestData(excelPathAPIRequestStamping).getValue(
+                        GlobalVariable.NumofColm, 11).replace('"',''), totalMaterai)
 
                     'declare arraylist arraymatch'
                     arrayMatch = []
-
-                    'verify is_active'
-                    arrayMatch.add(WebUI.verifyMatch(trxQty, '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
+					
+                    'verify saldo terpotong'
+                    arrayMatch.add(WebUI.verifyMatch(result, '-'+totalMaterai, false, FailureHandling.CONTINUE_ON_FAILURE))
 
                     'jika data db tidak sesuai dengan excel'
                     if (arrayMatch.contains(false)) {

@@ -55,6 +55,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 message = WS.getElementPropertyValue(respon, 'checkStampingStatus.messsage', FailureHandling.OPTIONAL)
 
                 if (GlobalVariable.checkStoreDB == 'Yes') {
+//					'get totalMaterai from db'
+//					String totalMaterai = CustomKeywords.'connection.DataVerif.getTotalMaterai'(conneSign, findTestData(excelPathAPIRequestStamping).getValue(
+//						GlobalVariable.NumofColm, 11).replace('"',''))
+					
                     arrayIndex = 0
 
                     'get data from db'
@@ -77,9 +81,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                                 arrayMatch.add(WebUI.verifyMatch(docIdDB.toUpperCase(), (docId[indexResponse]).toUpperCase(), 
                                         false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                                'verify stamping status'
-                                arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), (stampingstatus[indexResponse]).toUpperCase(), 
-                                        false, FailureHandling.CONTINUE_ON_FAILURE))
+	                            'verify stamping status'
+	                            arrayMatch.add(WebUI.verifyEqual((result[arrayIndex++]), (stampingstatus[indexResponse]), 
+										, FailureHandling.CONTINUE_ON_FAILURE))
 
                                 'if stamping status = 2'
                                 if ((stampingstatus[indexResponse]) == '2') {
