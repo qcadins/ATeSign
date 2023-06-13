@@ -36,7 +36,7 @@ for (int y = 0; y < docid.size(); y++) {
             'navigate url ke daftar akun'
             WebUI.openBrowser(GlobalVariable.embedUrl)
 
-            WebUI.delay(3)
+            WebUI.delay(4)
 
             WebUI.maximizeWindow()
 
@@ -56,6 +56,8 @@ for (int y = 0; y < docid.size(); y++) {
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 				(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + ';') + WebUI.getAttribute(findTestObject(
 				'KotakMasuk/Sign/errorLog'), 'aria-label'))
+				
+				continue
 			}
 			
         } else if (GlobalVariable.RunWithEmbed == 'No') {
@@ -157,7 +159,7 @@ for (int y = 0; y < docid.size(); y++) {
                 for (int j = 1; j <= sizeRowofLabelValue.size(); j++) {
                     'Looping berdasarkan column yang ada pada value tanpa aksi.'
                     for (int i = 1; i <= ((sizeColumnofLabelValue.size() / sizeRowofLabelValue.size()) - 1); i++) {
-                            'modify object label Value'
+						 'modify object label Value'
                             modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 
                                 'xpath', 'equals', ((('//*[@id="listDokumen"]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
                                 j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div', true)
@@ -166,9 +168,11 @@ for (int y = 0; y < docid.size(); y++) {
                         if (i == 7) {
                             'Split teks proses TTD'
                             totalSignandtotalSigned = WebUI.getText(modifyObjectvalues).split(' / ', -1)
-
+							
+							jumlahSignerTelahTandaTangan = CustomKeywords.'connection.DataVerif.getProsesTtdProgress'(conneSign, inputDocumentMonitoring[0])
+							
                             'Verif hasil split, dimana proses awal hingga akhir. Awal dibandingkan dengan jumlahsignertandatangan, sedangkan akhir dibandingkan dengan total signer dari email'
-                            arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[0], jumlahsignertandatangan, FailureHandling.CONTINUE_ON_FAILURE))
+                            arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[0], jumlahSignerTelahTandaTangan, FailureHandling.CONTINUE_ON_FAILURE))
 
                             arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[1], emailSigner.size(), FailureHandling.CONTINUE_ON_FAILURE))
                         } else if (i == 8) {
@@ -225,7 +229,8 @@ for (int y = 0; y < docid.size(); y++) {
                 'Looping berdasarkan row yang ada pada value'
                 for (int j = 1; j <= sizeRowofLabelValue.size(); j++) {
                     'Looping berdasarkan column yang ada pada value tanpa aksi.'
-                    for (int i = 1; i <= sizeColumnofLabelValue.size(); i++) {
+                    for (int i = 1; i <= (sizeColumnofLabelValue.size() / sizeRowofLabelValue.size()); i++) {
+						
                          modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 
                         'xpath', 'equals', ((('/html/body/app-root/app-content-layout/div/div/div/div[2]/app-inquiry/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
                          j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div', true)
@@ -235,9 +240,11 @@ for (int y = 0; y < docid.size(); y++) {
                         if (i == 7) {
                             'Split teks proses TTD'
                             totalSignandtotalSigned = WebUI.getText(modifyObjectvalues).split(' / ', -1)
-
-                            'Verif hasil split, dimana proses awal hingga akhir. Awal dibandingkan dengan jumlahsignertandatangan, sedangkan akhir dibandingkan dengan total signer dari email'
-                            arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[0], jumlahsignertandatangan, FailureHandling.CONTINUE_ON_FAILURE))
+							
+							jumlahSignerTelahTandaTangan = CustomKeywords.'connection.DataVerif.getProsesTtdProgress'(conneSign, inputDocumentMonitoring[0])
+							
+							'Verif hasil split, dimana proses awal hingga akhir. Awal dibandingkan dengan jumlahsignertandatangan, sedangkan akhir dibandingkan dengan total signer dari email'
+							arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[0], jumlahSignerTelahTandaTangan, FailureHandling.CONTINUE_ON_FAILURE))
 
                             arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[1], emailSigner.size(), FailureHandling.CONTINUE_ON_FAILURE))
                         } else if (i == 8) {
@@ -274,7 +281,7 @@ for (int y = 0; y < docid.size(); y++) {
     if (arrayMatch.contains(false)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedStoredDB)
+            (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedStoredDB + ' pada menu Document Monitoring ')
     }
 }
 

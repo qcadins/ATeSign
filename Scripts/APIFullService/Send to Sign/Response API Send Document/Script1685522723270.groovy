@@ -423,7 +423,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         'Jika check storedb'
         if (GlobalVariable.checkStoreDB == 'Yes') {
             'Fungsi storedb'
-            ResponseAPIStoreDB(signlocStoreDB, semicolon, splitnum, delimiter, enter)
+            responseAPIStoreDB(signlocStoreDB, semicolon, splitnum, enter)
         }
     } else {
         'Mengambil message Failed'
@@ -446,7 +446,7 @@ def PDFtoBase64(String fileName) {
     return CustomKeywords.'customizekeyword.ConvertFile.base64File'(fileName)
 }
 
-def ResponseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, String delimiter, String enter) {
+def responseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, String enter) {
     'connect DB eSign'
     Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
@@ -527,12 +527,9 @@ def ResponseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, St
         'Splitting email berdasarkan excel per dokumen'
         emailExcel = (email[i]).replace('"', '').split(semicolon, splitnum)
 		
-        'Mengambil email berdasarkan documentId'
-        ArrayList emailSigner = CustomKeywords.'connection.DataVerif.getEmailLogin'(conneSign, docid[i]).split(';', -1)
-		
-        for (int r = 0; r < emailSigner.size(); r++) {
+        for (int r = 0; r < emailExcel.size(); r++) {
             ArrayList resultStoreEmailandType = CustomKeywords.'connection.DataVerif.getSendDocForEmailAndSignerType'(conneSign, 
-                docid[i], emailSigner[r])
+                docid[i], emailExcel[r])
 			
             'declare arrayindex'
             arrayindex = 0

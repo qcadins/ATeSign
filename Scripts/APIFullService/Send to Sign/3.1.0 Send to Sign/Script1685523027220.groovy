@@ -30,7 +30,7 @@ arrayIndex = 0
 sheet = 'Send to Sign'
 
 'looping untuk sending document'
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(excelPathFESignDocument).columnNumbers*/ ; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 14; GlobalVariable.NumofColm <= 14/*findTestData(excelPathFESignDocument).columnNumbers*/ ; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
@@ -67,45 +67,41 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
         int jumlahSignerTandaTangan = CustomKeywords.'connection.DataVerif.getTotalSigned'(conneSign, findTestData(excelPathFESignDocument).getValue(
                 GlobalVariable.NumofColm, 6))
 
-        'Declare variable jumlahSignerTelahTtd untuk proses ttd'
-        int jumlahSignerTelahTtd = CustomKeywords.'connection.DataVerif.getProsesTtdProgress'(conneSign, findTestData(excelPathFESignDocument).getValue(
-                GlobalVariable.NumofColm, 5))
+		'saldoUsedDocPertama hanya untuk dokumen pertama'
+		int saldoUsedDocPertama = 0 
+		
+		encryptMsg = encryptLink(findTestData(excelPathFESignDocument).getValue(2, 86), findTestData(excelPathFESignDocument).getValue(2, 87), aesKey)
+
+		'membuat link document monitoring'
+		linkDocumentMonitoring = ((((((((findTestData(excelPathFESignDocument).getValue(2, 84) + '?msg=') + encryptMsg) +
+		'&isHO=') + findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 80)) + '&isMonitoring=') +
+		findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 81)) + '&tenantCode=') + tenantCode)
 
         'looping email signer'
         for (int o = 1; o <= emailSigner.size(); o++) {
-			'saldo Used untuk penggunaan saldo, dan saldoUsedDocPertama hanya untuk dokumen pertama'
-			int saldoUsed = 0, saldoUsedDocPertama = 0
+			'saldo Used untuk penggunaan saldo'
+			int saldoUsed = 0
 			
-            'pembuatan message yang akan dienkrip'
-            msg = (((('{"officeCode" : ' + findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 14)) + 
-            ', "email" : "') + (emailSigner[(o - 1)])) + '"}')
-
-            'enkripsi msg'
-            encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(msg, aesKey)
-
+			encryptMsg = encryptLink(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 14), emailSigner[(o - 1)], aesKey)
+			
             'membuat link kotak masuk'
             linkKotakMasuk = ((((findTestData(excelPathFESignDocument).getValue(2, 83) + '?msg=') + encryptMsg) + '&tenantCode=') + 
             tenantCode)
-
-            'membuat link document monitoring'
-            linkDocumentMonitoring = ((((((((findTestData(excelPathFESignDocument).getValue(2, 84) + '?msg=') + encryptMsg) + 
-            '&isHO=') + findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 80)) + '&isMonitoring=') + 
-            findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 81)) + '&tenantCode=') + tenantCode)
-
+			
             'Inisialisasi variable yang dibutuhkan'
             String noKontrak, saldoSignBefore, saldoSignAfter, otpBefore, otpAfter, documentTemplateName, noTelpSigner
 
             'Mengkosongkan nomor kontrak dan document Template Name'
             noKontrak = ''
 			
-            documentTemplateName = ''
+			documentTemplateName = ''
 
             'Inisialisasi variable total document yang akan disign, count untuk resend, dan saldo yang akan digunakan'
             int totalDocSign, countResend
 
             'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
             WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument
-             , ('jumlahsignertandatangan') : jumlahSignerTelahTtd, ('sheet') : sheet, ('linkDocumentMonitoring') : linkDocumentMonitoring], 
+             , ('sheet') : sheet, ('linkDocumentMonitoring') : linkDocumentMonitoring], 
              FailureHandling.CONTINUE_ON_FAILURE)
 
             'Call test Case untuk login sebagai admin wom admin client'
@@ -453,6 +449,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                         continue
                     }
                     
+					WebUI.delay(10)
+					
                     'Jika tidak muncul untuk element selanjutnya'
                     if (!(WebUI.verifyElementPresent(modifyObjectlabelRequestOTP, GlobalVariable.TimeOut))) {
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
@@ -501,10 +499,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                             'Looping dari 1 hingga total count resend OTP'
                             for (int w = 1; w <= countResend; w++) {
                                 'taruh waktu delay'
-                                WebUI.delay(292)
+                                WebUI.delay(298)
 
                                 'Klik resend otp'
                                 WebUI.click(findTestObject('KotakMasuk/Sign/btn_ResendOTP'))
+								
+								'checkErrorLog'
+								checkErrorLog()
+								
+								'check pop up'
+								checkPopup()
 
                                 'Memberikan delay 3 karena OTP after terlalu cepat'
                                 WebUI.delay(3)
@@ -517,19 +521,24 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                                 listOTP.add(otpAfter)
 
                                 'dicheck OTP pertama dan kedua dan seterusnya'
-                                if (WebUI.verifyMatch(listOTP[(w - 1)], listOTP[w], false, FailureHandling.CONTINUE_ON_FAILURE)) {
+                                if (WebUI.verifyMatch(listOTP[(w - 1)], listOTP[w], false, FailureHandling.OPTIONAL)) {
                                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                                         GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                                             2).replace('-', '') + ';') + GlobalVariable.ReasonFailedOTPError)
+									
                                 }
                                 
                                 'Jika looping telah diterakhir, baru set text'
                                 if (w == countResend) {
+									
+									WebUI.delay(3)
+									
                                     'value OTP dari db'
                                     WebUI.setText(findTestObject('KotakMasuk/Sign/input_OTP'), otpAfter, FailureHandling.CONTINUE_ON_FAILURE)
 
                                     'klik verifikasi OTP'
                                     WebUI.click(findTestObject('KotakMasuk/Sign/btn_ProsesOTP'))
+									
                                 }
                             }
                         } else {
@@ -586,7 +595,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                     String countSuccessSign = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_success'))
 
                     String countFailedSign = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_Failed'))
-
+					
                     'Menarik value count success ke excel'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 72, GlobalVariable.NumofColm - 
                         1, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 73) + ';') + countSuccessSign)
@@ -639,10 +648,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                         masukanStoreDB(conneSign, emailSigner[(o - 1)], arrayMatch)
                     }
                     
+					if( GlobalVariable.FlagFailed == 0 ) {
                     'write to excel success'
                     CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
                         1, GlobalVariable.StatusSuccess)
-
+					}
+					
                     'Mensplit nomor kontrak yang telah disatukan'
                     noKontrakPerDoc = noKontrak.split(';', -1)
 
@@ -706,7 +717,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
             
             'Memanggil DocumentMonitoring untuk dicheck apakah proses ttdnya bertambah'
             WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument
-                    , ('jumlahsignertandatangan') : jumlahSignerTelahTtd, ('sheet') : sheet, ('linkDocumentMonitoring') : linkDocumentMonitoring], 
+                   , ('sheet') : sheet, ('linkDocumentMonitoring') : linkDocumentMonitoring], 
                 FailureHandling.CONTINUE_ON_FAILURE)
 
             'Call test Case untuk login sebagai admin wom admin client'
@@ -729,7 +740,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                 'Jika count saldo otp after dengan yang before dikurangi 1 ditambah dengan '
                 if (WebUI.verifyEqual(Integer.parseInt(otpBefore) - (countResend + 1), Integer.parseInt(otpAfter), FailureHandling.OPTIONAL)) {
                     'Jika count saldo sign/ttd diatas (after) sama dengan yang dulu/pertama (before) dikurang jumlah dokumen yang ditandatangani'
-                    if (WebUI.verifyEqual(Integer.parseInt(saldoSignBefore) - saldoUsed, Integer.parseInt(saldoSignAfter), 
+                    if (WebUI.verifyEqual(Integer.parseInt(saldoSignBefore.replace(',','')) - saldoUsed, Integer.parseInt(saldoSignAfter.replace(',','')), 
                         FailureHandling.OPTIONAL)) {
                         break
                     }
@@ -841,7 +852,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
 if (arrayMatch.contains(false)) {
     'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-        (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedStoredDB)
+        (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedStoredDB + ' untuk Masukan Store DB')
+}
+
+def encryptLink(String officeCode, String emailSigner, String aesKey) {
+	'pembuatan message yang akan dienkrip'
+	msg = (((('{"officeCode" : ' + officeCode) + ', "email" : "') + (emailSigner)) + '"}')
+
+	'enkripsi msg'
+	encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(msg, aesKey)
+
+	return encryptMsg
 }
 
 def checkVerifyEqualorMatch(Boolean isMatch, String reason) {

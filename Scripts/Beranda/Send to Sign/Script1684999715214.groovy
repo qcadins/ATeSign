@@ -43,6 +43,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
         
         'Jika document tersebut tidak membutuhkan tanda tangan'
         if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 47) == 'No') {
+			'loop selanjutnya'
             continue
         }
         
@@ -54,10 +55,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
         ArrayList emailSigner = CustomKeywords.'connection.DataVerif.getEmailLogin'(conneSign, findTestData(excelPathFESignDocument).getValue(
                 GlobalVariable.NumofColm, 6)).split(';', -1)
 
-        'Declare variable jumlahSignerTelahTtd untuk proses ttd, saldo Used untuk penggunaan saldo, dan saldoUsedDocPertama hanya untuk dokumen pertama'
-        int jumlahSignerTelahTtd = 0,saldoUsed = 0, saldoUsedDocPertama = 0
+        'Declare variable jumlahSignerTelahTtd untuk proses ttd dengan db'
+        int jumlahSignerTelahTtd = CustomKeywords.'connection.DataVerif.getProsesTtdProgress'(conneSign, findTestData(excelPathFESignDocument).getValue(
+        GlobalVariable.NumofColm, 6))
+		
+		'declare saldo used untuk document pertama yaitu 0'
+		int saldoUsedDocPertama = 0
 
-        'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
+        'declare jumlah signer tanda tangan'
         int jumlahSignerTandaTangan = CustomKeywords.'connection.DataVerif.getTotalSigned'(conneSign, findTestData(excelPathFESignDocument).getValue(
                 GlobalVariable.NumofColm, 6))
 
@@ -65,7 +70,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
         for (int o = 1; o <= emailSigner.size(); o++) {
             'Inisialisasi variable yang dibutuhkan'
             String noKontrak, saldoSignBefore, saldoSignAfter, otpBefore, otpAfter, documentTemplateName, noTelpSigner
-
+			
             'Mengkosongkan nomor kontrak'
             noKontrak = ''
 
@@ -73,7 +78,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
             documentTemplateName = ''
 
             'Inisialisasi variable total document yang akan disign, count untuk resend, dan saldo yang akan digunakan'
-            int totalDocSign, countResend
+            int totalDocSign, countResend, saldoUsed = 0
 
             'Call test Case untuk login sebagai admin wom admin client'
             WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
@@ -167,15 +172,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                         j) + ']/datatable-body-row/div[2]/datatable-body-cell[2]/div/p', true)
 
                     'Jika datanya match dengan db, mengenai referal number'
-                    if (WebUI.verifyMatch(WebUI.getText(modifyObjectTextRefNumber), sendToSign[arrayIndex++], false, FailureHandling.OPTIONAL) == 
-                    true) {
+                    if (WebUI.verifyMatch(WebUI.getText(modifyObjectTextRefNumber), sendToSign[arrayIndex++], false, FailureHandling.OPTIONAL) == true) {
                         'Mengenai tipe dokumen template'
                         checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectTextDocumentTemplateTipe), sendToSign[
-                                arrayIndex++], false, FailureHandling.OPTIONAL), '')
+                        arrayIndex++], false, FailureHandling.OPTIONAL), '')
 
                         'Mengenai tanggal permintaan'
                         checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectTextTglPermintaan), sendToSign[
-                                arrayIndex++], false, FailureHandling.OPTIONAL), '')
+                        arrayIndex++], false, FailureHandling.OPTIONAL), '')
 
                         'Input document Template Name dan nomor kontrak dari UI'
                         documentTemplateName = WebUI.getText(modifyObjectTextDocumentTemplateName)
@@ -185,15 +189,21 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                         'Klik checkbox tanda tangan'
                         WebUI.click(modifyObjectCheckboxTtd)
 
+						'Jika total document yang ingin ditandatangani lebih dari satu'
                         if (totalDocSign > 1) {
+							'ganti loop'
                             continue
                         } else {
+							'jika hanya 1, maka break'
 							break
 						}
                     }
                     
+					'Jika bulk sign'
                     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 49) == 'Yes') {
+						'jika j nya sudah di last row dari document yang ingin diambil'
                         if (j == (rowBeranda.size() - totalDocSign)) {
+							'break looping'
                             break
                         } else {
                             'Jika document Template Namenya masih kosong'
@@ -256,7 +266,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
 					documentTemplateNamePerDoc.size()) + ' pada User ') + (emailSigner[(o - 1)]))
 			}
 			
-			'Looping berdasarkan total document sign'
+			'Looping berdasarkan total document template'
 			for (int c = 0; c < documentTemplateNamePerDoc.size(); c++) {
 				'modify object btn Nama Dokumen '
 				modifyObjectbtnNamaDokumen = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/btn_NamaDokumen'),
@@ -276,7 +286,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
 			'Check konfirmasi tanda tangan'
 			checkKonfirmasiTTD()
 
-			'jika page belum pindah'
+			'jika page belum pindah ke tahap selanjutnya'
 			if (!(WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_TandaTanganDokumen'), GlobalVariable.TimeOut,
 				FailureHandling.OPTIONAL))) {
 				'Jika tidak ada, maka datanya tidak ada, atau save gagal'
@@ -284,7 +294,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
 					((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') +
 					GlobalVariable.ReasonFailedSaveGagal) + ' dengan alasan page tidak berpindah di Bulk Sign View.')
 			} else {
-				'Looping berdasarkan document template name per dokumen'
+				'Looping berdasarkan document template name yang telah berisi dokumen akan ditandatangani'
 				for (int i = 0; i < documentTemplateNamePerDoc.size(); i++) {
 					'Jika page sudah berpindah maka modify object text document template name di Tanda Tangan Dokumen'
 					modifyObjectlabelnamadokumenafterkonfirmasi = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/lbl_NamaDokumenAfterKonfirmasi'),
@@ -511,10 +521,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 72, GlobalVariable.NumofColm -
 						1, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 73) + ';') + countFailedSign)
 
-                    'write to excel success'
-                    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
-                      1, GlobalVariable.StatusSuccess)
-					
                     'Jika masukan ratingnya tidak kosong'
                     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 62) != '') {
                         'modify object starmasukan, jika bintang 1 = 2, jika bintang 2 = 4'
@@ -559,9 +565,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                         masukanStoreDB(conneSign, emailSigner[(o - 1)], arrayMatch)
                     }
                     
-                    'write to excel success'
-                    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
-                        1, GlobalVariable.StatusSuccess)
+					
+					'Jika flag failednya 0'
+					if (GlobalVariable.FlagFailed == 0) {
+					'write to excel success'
+					CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
+					  1, GlobalVariable.StatusSuccess)
+					}
 
                     'Mensplit nomor kontrak yang telah disatukan'
                     noKontrakPerDoc = noKontrak.split(';', -1)
@@ -765,7 +775,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
 if (arrayMatch.contains(false)) {
     'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-        (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedStoredDB)
+        (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedStoredDB + ' untuk Masukan Store DB')
 }
 
 def checkVerifyEqualorMatch(Boolean isMatch, String reason) {

@@ -5,12 +5,6 @@
    <tag></tag>
    <comment></comment>
    <testCaseGuid>c02cb56b-cde6-4f3b-8201-0de46b3989bb</testCaseGuid>
-   <variableLinks>
-      <testDataLinkId></testDataLinkId>
-      <type>DEFAULT</type>
-      <value></value>
-      <variableId>6c83ec0d-0404-44ed-a290-5f231bbe81c0</variableId>
-   </variableLinks>
    <variable>
       <defaultValue>'Beranda/SendtoSign'</defaultValue>
       <description></description>

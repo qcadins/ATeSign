@@ -30,7 +30,7 @@ arrayIndex = 0
 sheet = 'All Send then Sign'
 
 'looping untuk sending document'
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(excelPathFESignDocument).columnNumbers*/ ; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(excelPathFESignDocument).columnNumbers*/ ; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
@@ -41,7 +41,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(
 }
 
 'looping untuk sign document'
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(excelPathFESignDocument).columnNumbers*/ ; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(excelPathFESignDocument).columnNumbers*/ ; (GlobalVariable.NumofColm)++) {
     'Jika tidak ada dokumen id di excel'
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 5) == '') {
         'loop selanjutnya'
@@ -61,8 +61,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(
     ArrayList emailSigner = CustomKeywords.'connection.DataVerif.getEmailLogin'(conneSign, findTestData(excelPathFESignDocument).getValue(
             GlobalVariable.NumofColm, 6)).split(';', -1)
 
-    'Declare variable jumlahSignerTelahTtd untuk proses ttd, saldo Used untuk penggunaan saldo, dan saldoUsedDocPertama hanya untuk dokumen pertama'
-    int jumlahSignerTelahTtd = 0, saldoUsed = 0, saldoUsedDocPertama = 0
+    'Declare variable jumlahSignerTelahTtd untuk proses ttd, saldoUsedDocPertama hanya untuk dokumen pertama'
+     int jumlahSignerTelahTtd = CustomKeywords.'connection.DataVerif.getProsesTtdProgress'(conneSign, findTestData(excelPathFESignDocument).getValue(
+     GlobalVariable.NumofColm, 6))
+	
+	int saldoUsedDocPertama = 0
 
     'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
     int jumlahSignerTandaTangan = CustomKeywords.'connection.DataVerif.getTotalSigned'(conneSign, findTestData(excelPathFESignDocument).getValue(
@@ -80,7 +83,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(
         documentTemplateName = ''
 
         'Inisialisasi variable total document yang akan disign, count untuk resend, dan saldo yang akan digunakan'
-        int totalDocSign, countResend
+        int totalDocSign, countResend, saldoUsed = 0
 
         'Call test Case untuk login sebagai admin wom admin client'
         WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
@@ -561,10 +564,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(
                     'StoreDB mengenai masukan'
                     masukanStoreDB(conneSign, emailSigner[(o - 1)], arrayMatch)
                 }
-                
-                'write to excel success'
-                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
-                    1, GlobalVariable.StatusSuccess)
+				
+				'Jika flag failednya 0'
+				if (GlobalVariable.FlagFailed == 0) {
+					'write to excel success'
+					CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
+					  1, GlobalVariable.StatusSuccess)
+					}
 
                 'Mensplit nomor kontrak yang telah disatukan'
                 noKontrakPerDoc = noKontrak.split(';', -1)
@@ -766,8 +772,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(
 if (arrayMatch.contains(false)) {
     'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-        (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedStoredDB)
+        (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedStoredDB + ' untuk Masukan Store DB')
 }
+
 
 def checkVerifyEqualorMatch(Boolean isMatch, String reason) {
     if (isMatch == false) {

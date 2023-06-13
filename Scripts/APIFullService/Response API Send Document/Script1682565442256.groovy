@@ -25,28 +25,6 @@ int splitnum = -1
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathAPISendDoc).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
-        //Jika koordinat nya untuk yang pertama di signer pertama kosong
-        //Jika page dan koordinatnya tidak kosong, maka 
-        //Jika tidak yang terakhir, maka
-        //Jika koordinat pada signLoc yang pertama di signer pertama kosong, maka
-        //Jika pageSign yang pertama dan koordinat yang pertama di signer pertama tidak kosong
-        //Jika loopingan sudah berada di akhir
-        //Jika koordinat yang pertama di signer pertama kosong 
-        //Jika page dan koordinat yang pertama di signer pertama tidak kosong 
-        //Jika loopingan tidak diawal dan diakhir
-        //Jika koordinat yang pertama di signer pertama kosong
-        //Jika page dan koordinat tidak kosong
-        //Jika koordinatnya kosong
-        //Jika page dan koordinat tidak kosong
-        //Jika loopingan yang pertama namun masih ada kelanjutan dalam data
-        //Jika koordinatnya kosong
-        //Jika page dan koordinat tidak kosong
-        //Jika loopingan telah di akhir
-        //Jika koordinatnya kosong
-        //Jika page dan koordinat tidak kosong
-        //Jika loopingan masih berlanjut
-        //Jika koordinatnya kosong
-        //Jika page dan koordinat tidak kosong
     } else if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
         'Deklarasi variable mengenai signLoc untuk store db'
         String signlocStoreDB = new String()
@@ -497,7 +475,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 'Jika check storedb'
                 if (GlobalVariable.checkStoreDB == 'Yes') {
                     'Fungsi storedb'
-                    ResponseAPIStoreDB(signlocStoreDB, semicolon, splitnum, delimiter, enter)
+                    responseAPIStoreDB(signlocStoreDB, semicolon, splitnum, delimiter, enter)
                 }
             } else {
                 'Mengambil message Failed'
@@ -528,7 +506,7 @@ def PDFtoBase64(String fileName) {
     return CustomKeywords.'customizekeyword.ConvertFile.base64File'(fileName)
 }
 
-def ResponseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, String delimiter, String enter) {
+def responseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, String delimiter, String enter) {
     'connect DB eSign'
     Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 

@@ -1517,10 +1517,10 @@ public class DataVerif {
 	}
 
 	@Keyword
-	getProsesTtdProgress(Connection conn, String documentId) {
+	getProsesTtdProgress(Connection conn, String refNumber) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT COUNT(DISTINCT au.login_id) AS login FROM tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user WHERE tdd.document_id = '"+documentId+"' AND tdds.sign_date IS NOT NULL")
+		resultSet = stm.executeQuery("select count(id_ms_user) from tr_document_h tdh join tr_document_signing_request tdsr on tdh.id_document_h = tdsr.id_document_h where tdh.ref_number = '"+refNumber+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
