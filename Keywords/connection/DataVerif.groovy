@@ -312,7 +312,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	getGenInvLink(Connection conn, String tenant,String phone, String idno, String email) {
+	getGenInvLink(Connection conn, String tenant, String phone, String idno, String email) {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select tril.usr_crt, tril.gender, tril.kelurahan, tril.kecamatan, tril.kota, tril.zip_code, tril.date_of_birth, tril.place_of_birth, tril.provinsi, tril.email, tril.id_no, tril.phone, tril.address, tril.full_name, mst.tenant_code from tr_invitation_link as tril join ms_tenant as mst on tril.id_ms_tenant = mst.id_ms_tenant where tril.is_active = '1' and mst.tenant_code = '" + tenant + "' and tril.phone = '" + phone + "' and tril.id_no = '" + idno + "' and tril.email = '" + email + "'")
@@ -436,7 +436,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	getFeedbackStoreDB(Connection conn,String emailsigner) {
+	getFeedbackStoreDB(Connection conn, String emailsigner) {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("SELECT trf.feedback_value, trf.comment FROM tr_feedback trf join am_msuser amm on trf.id_ms_user = amm.id_ms_user where amm.login_id = '" + emailsigner + "' ORDER BY trf.dtm_crt DESC LIMIT 1")
@@ -919,7 +919,7 @@ public class DataVerif {
 	getSaldoTrx(Connection conn, String email, String notelp, String desc) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT tbm.trx_no, to_char(trx_date, 'yyyy-MM-dd HH24:mi:SS'), description, amu.full_name, notes, qty FROM tr_balance_mutation tbm JOIN ms_lov ml ON ml.id_lov = tbm.lov_trx_type JOIN am_msuser amu ON amu.id_ms_user = tbm.id_ms_user WHERE description = '" +  desc  + "' AND (tbm.usr_crt = '" +  email  + "' OR tbm.usr_crt = '" +  notelp  + "') ORDER BY id_balance_mutation DESC")
+		resultSet = stm.executeQuery("SELECT tbm.trx_no, to_char(trx_date, 'yyyy-MM-dd HH24:mi:SS'), description, CASE WHEN amu.full_name IS NULL THEN tbm.usr_crt ELSE amu.full_name END, notes, qty FROM tr_balance_mutation tbm JOIN ms_lov ml ON ml.id_lov = tbm.lov_trx_type LEFT JOIN am_msuser amu ON amu.id_ms_user = tbm.id_ms_user WHERE description = '"+ desc +"' AND (tbm.usr_crt = '"+ email +"' OR tbm.usr_crt = '"+ notelp +"') ORDER BY id_balance_mutation DESC LIMIT 1")
 
 		metadata = resultSet.metaData
 
@@ -1078,10 +1078,10 @@ public class DataVerif {
 	}
 
 	@Keyword
-	getAPIRequestStampingTrx(Connection conn) {
+	getAPIRequestStampingTrx(Connection conn, String value, String totalMaterai) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select qty from tr_balance_mutation ORDER BY trx_date DESC")
+		resultSet = stm.executeQuery("select SUM(qty) from tr_balance_mutation tbm JOIN ms_lov ml ON ml.id_lov = tbm.lov_trx_type WHERE ref_no = '"+ value +"' AND ml.description = 'Use Stamp Duty' LIMIT "+ totalMaterai)
 
 		metadata = resultSet.metaData
 
@@ -1399,10 +1399,10 @@ public class DataVerif {
 
 
 	@Keyword
-	getAPIGenInvLinkVerifTrx(Connection conn, String name) {
+	getAPIGenInvLinkVerifTrx(Connection conn, String name, String phone) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select tbm.qty from tr_balance_mutation tbm join am_msuser am on am.id_ms_user = tbm.id_ms_user join ms_lov ml on ml.id_lov = tbm.lov_trx_type where am.full_name = '"+ name +"' and ml.description = 'Use Verification'")
+		resultSet = stm.executeQuery("select qty from tr_balance_mutation tbm join am_msuser am on am.id_ms_user = tbm.id_ms_user join ms_lov ml on ml.id_lov = tbm.lov_trx_type where ml.description = 'Use Verification' AND (am.full_name = '"+ name +"' OR tbm.usr_crt = '"+ phone +"')")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -1547,5 +1547,21 @@ public class DataVerif {
 			}
 		}
 		listdata
+	}
+
+	@Keyword
+	getTotalMaterai(Connection conn, String value) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select SUM(total_materai) from tr_document_d tdd JOIN tr_document_h tdh ON tdh.id_document_h = tdd.id_document_h where tdh.ref_number = '"+ value +"'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
 	}
 }

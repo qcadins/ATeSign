@@ -406,7 +406,7 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
     'get trx saldo'
     saldo.add(WebUI.getText(modifyObjectBalance).replace(',', ''))
 
-    if ((countCheckSaldo == 1) && (GlobalVariable.FlagFailed == 0)) {
+    if ((countCheckSaldo == 1)) {
         'modify object no transaksi'
         modifyObjectNoTransaksi = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 
             'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 

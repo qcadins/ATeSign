@@ -127,7 +127,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 4/*findTestData(A
 			stringRefno = stringRefno + ((((((((((((((((((((((((((('{"referenceNo" : ' + (refNo)) + ', "documentTemplateCode": ') +
 				(documentTemplateCode)) + ', "officeCode": ') + (officeCode)) + ', "officeName": ') + (officeName)) + ', "regionCode": ') + (regionCode)) + ', "regionName": ') + (regionName)) + ', "businessLineCode": ') +
 				(businessLineCode)) + ', "businessLineName": ') + (businessLineName)) + ', "isSequence": ') +
-				(isSequence)) + ', "signer":[') + (ListSigner[0])) + '], "documentFile": "') + PDFtoBase64(documentFile[t])) + '", "psreCode" : ') +
+				(isSequence)) + ', "signer":[') + (ListSigner[0])) + '], "documentFile": "') + pdftoBase64(documentFile[t])) + '", "psreCode" : ') +
 				(psreCode)) + ', "successURL": ') + (successURL)) + ', "uploadURL": ') + (uploadURL)) + '}'
 			}
 		else 
@@ -135,7 +135,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 4/*findTestData(A
 			stringRefno = stringRefno + ((((((((((((((((((((((((((('{"referenceNo" : ' + (refNo)) + ', "documentTemplateCode": ') + 
             (documentTemplateCode)) + ', "officeCode": ') + (officeCode)) + ', "officeName": ') + (officeName)) + ', "regionCode": ') + (regionCode)) + ', "regionName": ') + (regionName)) + ', "businessLineCode": ') + 
             (businessLineCode)) + ', "businessLineName": ') + (businessLineName)) + ', "isSequence": ') + 
-            (isSequence)) + ', "signer":[') + (ListSigner[0])) + '], "documentFile": "') + PDFtoBase64(documentFile[t])) + '", "psreCode" : ') + 
+            (isSequence)) + ', "signer":[') + (ListSigner[0])) + '], "documentFile": "') + pdftoBase64(documentFile[t])) + '", "psreCode" : ') + 
             (psreCode)) + ', "successURL": ') + (successURL)) + ', "uploadURL": ') + (uploadURL)) + 
             '},'
 		}
@@ -205,7 +205,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 4/*findTestData(A
 }
 
 
-public PDFtoBase64(String fileName) {
+public pdftoBase64(String fileName) {
     String base64 = CustomKeywords.'customizekeyword.ConvertFile.base64File'(fileName)
 
     return base64
