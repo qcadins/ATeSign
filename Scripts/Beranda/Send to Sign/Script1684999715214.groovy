@@ -46,7 +46,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
 			'loop selanjutnya'
             continue
         }
-        
+		
         'ambil db checking ke UI Beranda'
         ArrayList sendToSign = CustomKeywords.'connection.DataVerif.getDataSendtoSign'(conneSign, findTestData(excelPathFESignDocument).getValue(
                 GlobalVariable.NumofColm, 6))
@@ -54,10 +54,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
         'Mengambil email berdasarkan documentId'
         ArrayList emailSigner = CustomKeywords.'connection.DataVerif.getEmailLogin'(conneSign, findTestData(excelPathFESignDocument).getValue(
                 GlobalVariable.NumofColm, 6)).split(';', -1)
-
-        'Declare variable jumlahSignerTelahTtd untuk proses ttd dengan db'
-        int jumlahSignerTelahTtd = CustomKeywords.'connection.DataVerif.getProsesTtdProgress'(conneSign, findTestData(excelPathFESignDocument).getValue(
-        GlobalVariable.NumofColm, 6))
 		
 		'declare saldo used untuk document pertama yaitu 0'
 		int saldoUsedDocPertama = 0
@@ -65,7 +61,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
         'declare jumlah signer tanda tangan'
         int jumlahSignerTandaTangan = CustomKeywords.'connection.DataVerif.getTotalSigned'(conneSign, findTestData(excelPathFESignDocument).getValue(
                 GlobalVariable.NumofColm, 6))
-
+		
         'looping email signer'
         for (int o = 1; o <= emailSigner.size(); o++) {
             'Inisialisasi variable yang dibutuhkan'
@@ -604,9 +600,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                     'Jumlah signer tanda tangan akan ditambah dengan total saldo yang telah digunakan'
                     jumlahSignerTandaTangan = (jumlahSignerTandaTangan + saldoUsed)
 
-                    'Jumlah signer telah ttd lebih kepada proses tanda tangan telah bertambah 1.'
-                    jumlahSignerTelahTtd = (jumlahSignerTelahTtd + 1)
-
                     'Looping maksimal 100 detik untuk signing proses. Perlu lama dikarenakan walaupun requestnya done(3), tapi dari VIDAnya tidak secepat itu.'
                     for (int y = 1; y <= 5; y++) {
                         'Kita berikan delay per 20 detik karena proses signingnya masih dalam status In Progress (1), dan ketika selesai, status tanda tangan akan kembali menjadi 0'
@@ -639,9 +632,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                 }
             }
             
-            'Memanggil DocumentMonitoring untuk dicheck apakah proses ttdnya bertambah'
-            WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument
-                    , ('jumlahsignertandatangan') : jumlahSignerTelahTtd, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
+			'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
+			WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument
+			 , ('sheet') : sheet, ("nomorKontrak") : noKontrak], FailureHandling.CONTINUE_ON_FAILURE)
 
             'Call test Case untuk login sebagai admin wom admin client'
             WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 

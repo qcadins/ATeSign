@@ -16,11 +16,16 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'get tenant code dari DB'
 String resultTenant = CustomKeywords.'connection.DataVerif.getTenant'(conneSign, GlobalVariable.userLogin)
 
+sheet = 'API Send Document'
 semicolon = ';'
 splitIndex = -1
 
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 4/*findTestData(API_Excel_Path).columnNumbers*/; (GlobalVariable.NumofColm)++) {
-    String refNo = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 11)
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(API_Excel_Path).columnNumbers*/; (GlobalVariable.NumofColm)++) {
+	if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
+		break
+	} else if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+ 
+	String refNo = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 11)
 	
     String documentTemplateCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 12)
 	
@@ -92,7 +97,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 4/*findTestData(A
 	'Pembuatan pengisian variable di sendRequest per jumlah signer.'
 	ArrayList<String> list = new ArrayList<String>()
 
-	String listSigner = new String()
+	String listSigner
 
 	listSigner = ''
 
@@ -127,7 +132,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 4/*findTestData(A
 			stringRefno = stringRefno + ((((((((((((((((((((((((((('{"referenceNo" : ' + (refNo)) + ', "documentTemplateCode": ') +
 				(documentTemplateCode)) + ', "officeCode": ') + (officeCode)) + ', "officeName": ') + (officeName)) + ', "regionCode": ') + (regionCode)) + ', "regionName": ') + (regionName)) + ', "businessLineCode": ') +
 				(businessLineCode)) + ', "businessLineName": ') + (businessLineName)) + ', "isSequence": ') +
-				(isSequence)) + ', "signer":[') + (ListSigner[0])) + '], "documentFile": "') + pdftoBase64(documentFile[t])) + '", "psreCode" : ') +
+				(isSequence)) + ', "signer":[') + (listSigner)) + '], "documentFile": "') + pdftoBase64(documentFile[t])) + '", "psreCode" : ') +
 				(psreCode)) + ', "successURL": ') + (successURL)) + ', "uploadURL": ') + (uploadURL)) + '}'
 			}
 		else 
@@ -135,7 +140,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 4/*findTestData(A
 			stringRefno = stringRefno + ((((((((((((((((((((((((((('{"referenceNo" : ' + (refNo)) + ', "documentTemplateCode": ') + 
             (documentTemplateCode)) + ', "officeCode": ') + (officeCode)) + ', "officeName": ') + (officeName)) + ', "regionCode": ') + (regionCode)) + ', "regionName": ') + (regionName)) + ', "businessLineCode": ') + 
             (businessLineCode)) + ', "businessLineName": ') + (businessLineName)) + ', "isSequence": ') + 
-            (isSequence)) + ', "signer":[') + (ListSigner[0])) + '], "documentFile": "') + pdftoBase64(documentFile[t])) + '", "psreCode" : ') + 
+            (isSequence)) + ', "signer":[') + (listSigner)) + '], "documentFile": "') + pdftoBase64(documentFile[t])) + '", "psreCode" : ') + 
             (psreCode)) + ', "successURL": ') + (successURL)) + ', "uploadURL": ') + (uploadURL)) + 
             '},'
 		}
@@ -166,7 +171,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 4/*findTestData(A
             GlobalVariable.Response = documentId
 			
 			'Write to excel mengenai Document ID'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
                 5, GlobalVariable.NumofColm - 1, GlobalVariable.Response.toString().replace('[','').replace(']',''))
 					
 			'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
@@ -174,36 +179,36 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 4/*findTestData(A
 
             //call test case mengenai sign doc FE (kemungkinan)
             'write to excel success'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
                 0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 			
 			'Call Test case mengneai Kotak Masuk'
-            WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('excelPathFESignDocument') : 'Registrasi/SendDocument',('jumlahsignertandatangan') : jumlahsignertandatangan, ('isDownloadDocument') : isDownloadDocument, ('isDeleteDownloadedDocument') : isDeleteDownloadedDocument, ('isViewDocument') : isViewDocument], FailureHandling.CONTINUE_ON_FAILURE)
+            WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('excelPathFESignDocument') : API_Excel_Path,('jumlahsignertandatangan') : jumlahsignertandatangan, ('isDownloadDocument') : isDownloadDocument, ('isDeleteDownloadedDocument') : isDeleteDownloadedDocument, ('isViewDocument') : isViewDocument, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
             
 			if (GlobalVariable.checkStoreDB == 'Yes') {
                 'call test case ResponseAPIStoreDB'
-                WebUI.callTestCase(findTestCase('Send_Document/ResponseAPIStoreDB'), [('API_Excel_Path') : 'Registrasi/SendDocument'], 
+                WebUI.callTestCase(findTestCase('Send_Document/ResponseAPIStoreDB'), [('API_Excel_Path') : API_Excel_Path], 
                     FailureHandling.CONTINUE_ON_FAILURE)
             }
-            
+			
             'jika status codenya bukan 0, yang berarti antara salah verifikasi data dan error'
         } else {
             messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL).toString()
 
             'write to excel status failed dan reason'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm, 
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
                     '-', '') + semicolon) + messageFailed)
 
             if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 9).replace('"', '') == resultTenant) {
                 'call test case error report'
-                WebUI.callTestCase(findTestCase('Send_Document/ErrorReport'), [('API_Excel_Path') : 'Registrasi/SendDocument'], 
+                WebUI.callTestCase(findTestCase('Send_Document/ErrorReport'), [('API_Excel_Path') : API_Excel_Path], 
                     FailureHandling.CONTINUE_ON_FAILURE)
             }
         }
     }
 }
-
+}
 
 public pdftoBase64(String fileName) {
     String base64 = CustomKeywords.'customizekeyword.ConvertFile.base64File'(fileName)

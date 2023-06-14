@@ -22,9 +22,6 @@ ArrayList arrayMatch = []
 'declare arrayindex'
 arrayIndex = 0
 
-'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
-int jumlahSignerTandaTangan = 0
-
 'looping berdasarkan jumlah dokumen'
 for (int y = 0; y < docId.size(); y++) {
     'Mengambil email berdasarkan documentId'
@@ -32,8 +29,8 @@ for (int y = 0; y < docId.size(); y++) {
 
     'looping berdasarkan email Signer dari dokumen tersebut. '
     for (int t = 0; t < emailSigner.size(); t++) {
-            'call Test Case untuk login sebagai user berdasarkan doc id'
-            WebUI.callTestCase(findTestCase('Login/Login_1docManySigner'), [('email') : emailSigner[t]], FailureHandling.STOP_ON_FAILURE)
+        'call Test Case untuk login sebagai user berdasarkan doc id'
+        WebUI.callTestCase(findTestCase('Login/Login_1docManySigner'), [('email') : emailSigner[t]], FailureHandling.STOP_ON_FAILURE)
         
         'get data kotak masuk send document secara asc, dimana customer no 1'
         ArrayList result = CustomKeywords.'connection.DataVerif.getKotakMasukSendDoc'(conneSign, docId[y])
@@ -97,17 +94,18 @@ for (int y = 0; y < docId.size(); y++) {
             } else if (i == 6) {
                 'Jika kolom dicheck pada Proses TTD, mengambil text mengenai proses tanda tangan dan displit menjadi 2, yang pertama menjadi jumlah signer yang sudah tanda tangan. Yang kedua menjadi total signer'
                 prosesTtdPencarianDokumen = WebUI.getText(modifyObjectPencarianDokumen).split('/', -1)
+				
+				jumlahSignerTelahTandaTangan = CustomKeywords.'connection.DataVerif.getProsesTtdProgress'(conneSign, result[0])
 
                 'Pengecekan proses sign'
-                arrayMatch.add(WebUI.verifyEqual(jumlahSignerTandaTangan, (prosesTtdPencarianDokumen[0]).replace(' ', ''), 
+                arrayMatch.add(WebUI.verifyEqual(jumlahSignerTelahTandaTangan, (prosesTtdPencarianDokumen[0]).replace(' ', ''), 
                         FailureHandling.CONTINUE_ON_FAILURE))
 
                 'Pengecekan total proses tanda tangan'
                 arrayMatch.add(WebUI.verifyEqual(emailSigner.size(), (prosesTtdPencarianDokumen[1]).replace(' ', ''), FailureHandling.CONTINUE_ON_FAILURE))
             } else if (i == 7) {
                 'Jika kolom dicheck pada Total Meterai, keyword untuk mengecek total stamping dan total materai berdasarkan document id'
-                resultStamping = CustomKeywords.'connection.DataVerif.getTotalStampingandTotalMaterai'(conneSign, docId[
-                    y])
+                resultStamping = CustomKeywords.'connection.DataVerif.getTotalStampingandTotalMaterai'(conneSign, result[0])
 
                 'Mengambil teks dari UI dan displit berdasarkan proses stamping dan total materai'
                 totalMateraiPencarianDokumen = WebUI.getText(modifyObjectPencarianDokumen).split('/', -1)
@@ -318,8 +316,10 @@ for (int y = 0; y < docId.size(); y++) {
         }
     }
     
-    WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument
-            , ('jumlahsignertandatangan') : jumlahSignerTandaTangan, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
+	'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
+	WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument
+	 , ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
+
 
     'jika data db tidak sesuai dengan excel'
     if (arrayMatch.contains(false)) {

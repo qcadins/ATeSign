@@ -65,7 +65,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     result = CustomKeywords.'connection.DataVerif.getTotalUnsignedDocuments'(conneSign, GlobalVariable.Tenant, 
                         findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, 11).replace(
                             '"', ''))
-
+					
                     'verify total Unsigned Documents'
                     if (WebUI.verifyEqual(result, findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, 
                             6), FailureHandling.CONTINUE_ON_FAILURE)) {
@@ -73,10 +73,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Get Total Unsigned Document', 
                             0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
                     } else {
-                        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+                        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Get Total Unsigned Document', 
                             GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (((((findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(
-                                GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedStoredDB) + ' dimana Value DB yaitu ') + 
+                                GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + ' dimana Value DB yaitu ') + 
                             (result)) + ' dan Value Excel yaitu ') + findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(
                                 GlobalVariable.NumofColm, 6))
                     }

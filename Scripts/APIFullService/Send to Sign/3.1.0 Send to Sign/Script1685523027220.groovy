@@ -70,10 +70,10 @@ for (GlobalVariable.NumofColm = 14; GlobalVariable.NumofColm <= 14/*findTestData
 		'saldoUsedDocPertama hanya untuk dokumen pertama'
 		int saldoUsedDocPertama = 0 
 		
-		encryptMsg = encryptLink(findTestData(excelPathFESignDocument).getValue(2, 86), findTestData(excelPathFESignDocument).getValue(2, 87), aesKey)
+		encryptMsg = encryptLink(findTestData(excelPathFESignDocument).getValue(2, 84), findTestData(excelPathFESignDocument).getValue(2, 85), aesKey)
 
 		'membuat link document monitoring'
-		linkDocumentMonitoring = ((((((((findTestData(excelPathFESignDocument).getValue(2, 84) + '?msg=') + encryptMsg) +
+		linkDocumentMonitoring = ((((((((findTestData(excelPathFESignDocument).getValue(2, 83) + '?msg=') + encryptMsg) +
 		'&isHO=') + findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 80)) + '&isMonitoring=') +
 		findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 81)) + '&tenantCode=') + tenantCode)
 
@@ -85,7 +85,7 @@ for (GlobalVariable.NumofColm = 14; GlobalVariable.NumofColm <= 14/*findTestData
 			encryptMsg = encryptLink(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 14), emailSigner[(o - 1)], aesKey)
 			
             'membuat link kotak masuk'
-            linkKotakMasuk = ((((findTestData(excelPathFESignDocument).getValue(2, 83) + '?msg=') + encryptMsg) + '&tenantCode=') + 
+            linkKotakMasuk = ((((findTestData(excelPathFESignDocument).getValue(2, 82) + '?msg=') + encryptMsg) + '&tenantCode=') + 
             tenantCode)
 			
             'Inisialisasi variable yang dibutuhkan'
@@ -101,8 +101,7 @@ for (GlobalVariable.NumofColm = 14; GlobalVariable.NumofColm <= 14/*findTestData
 
             'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
             WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument
-             , ('sheet') : sheet, ('linkDocumentMonitoring') : linkDocumentMonitoring], 
-             FailureHandling.CONTINUE_ON_FAILURE)
+             , ('sheet') : sheet, ('linkDocumentMonitoring') : linkDocumentMonitoring, ("nomorKontrak") : noKontrak], FailureHandling.CONTINUE_ON_FAILURE)
 
             'Call test Case untuk login sebagai admin wom admin client'
             WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
@@ -234,7 +233,7 @@ for (GlobalVariable.NumofColm = 14; GlobalVariable.NumofColm <= 14/*findTestData
                     if (WebUI.verifyMatch(WebUI.getText(modifyObjectTextRefNumber), sendToSign[arrayIndex++], false, FailureHandling.OPTIONAL) == 
                     true) {
                         'check Kotak Masuk'
-                        checkKotakMasuk(conneSign, jumlahSignerTelahTtd, emailSigner, sheet, modifyObjectTextRefNumber, 
+                        checkKotakMasuk(conneSign, emailSigner, sheet, modifyObjectTextRefNumber, 
                             modifyObjectTextDocumentTemplateTipe, modifyObjectTextDocumentTemplateName, modifyObjectTextTglPermintaan, 
                             modifyObjectTextStatusTtd, modifyObjectTextProsesTtd, j)
 
@@ -715,11 +714,10 @@ for (GlobalVariable.NumofColm = 14; GlobalVariable.NumofColm <= 14/*findTestData
                 }
             }
             
-            'Memanggil DocumentMonitoring untuk dicheck apakah proses ttdnya bertambah'
+            'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
             WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument
-                   , ('sheet') : sheet, ('linkDocumentMonitoring') : linkDocumentMonitoring], 
-                FailureHandling.CONTINUE_ON_FAILURE)
-
+             , ('sheet') : sheet, ('linkDocumentMonitoring') : linkDocumentMonitoring, ("nomorKontrak") : noKontrak], FailureHandling.CONTINUE_ON_FAILURE)
+			
             'Call test Case untuk login sebagai admin wom admin client'
             WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
                 FailureHandling.STOP_ON_FAILURE)
@@ -1182,8 +1180,10 @@ def checkKotakMasuk(Connection conneSign, int jumlahSignerTelahTtd, ArrayList em
     'Mengambil text mengenai proses tanda tangan dan displit menjadi 2, yang pertama menjadi jumlah signer yang sudah tanda tangan. Yang kedua menjadi total signer'
     ArrayList prosesTtd = WebUI.getText(modifyObjectTextProsesTtd).split(' / ', -1)
 
+	jumlahSignerTelahTandaTangan = CustomKeywords.'connection.DataVerif.getProsesTtdProgress'(conneSign, labelRefNum)
+	
     'Verif hasil split, dimana proses awal hingga akhir. Awal dibandingkan dengan jumlahsignertandatangan, sedangkan akhir dibandingkan dengan total signer dari email'
-    arrayMatch.add(WebUI.verifyEqual(prosesTtd[0], jumlahSignerTelahTtd, FailureHandling.CONTINUE_ON_FAILURE))
+    arrayMatch.add(WebUI.verifyEqual(prosesTtd[0], jumlahSignerTelahTandaTangan, FailureHandling.CONTINUE_ON_FAILURE))
 
     arrayMatch.add(WebUI.verifyEqual(prosesTtd[1], emailSigner.size(), FailureHandling.CONTINUE_ON_FAILURE))
 

@@ -1306,10 +1306,10 @@ public class DataVerif {
 	}
 
 	@Keyword
-	getInputDocumentMonitoring(Connection conn, String documentid) {
+	getInputDocumentMonitoring(Connection conn, String refNumber) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select tdh.ref_number, mso.office_name, msr.region_name from tr_document_h tdh left join ms_office mso on tdh.id_ms_office = mso.id_ms_office left join ms_region msr on mso.id_ms_region = msr.id_ms_region join tr_document_d tdd on tdd.id_document_h = tdh.id_document_h where tdd.document_id = '"+documentid+"'")
+		resultSet = stm.executeQuery("select mso.office_name, msr.region_name from tr_document_h tdh left join ms_office mso on tdh.id_ms_office = mso.id_ms_office left join ms_region msr on mso.id_ms_region = msr.id_ms_region join tr_document_d tdd on tdd.id_document_h = tdh.id_document_h where tdh.ref_number = '"+refNumber+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -1358,10 +1358,10 @@ public class DataVerif {
 	}
 
 	@Keyword
-	getTotalStampingandTotalMaterai(Connection conn, String documentid) {
+	getTotalStampingandTotalMaterai(Connection conn, String refNumber) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select tdd.total_stamping, tdd.total_materai from tr_document_d tdd join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h where tdd.document_id = '"+documentid+"'")
+		resultSet = stm.executeQuery("select tdd.total_stamping, tdd.total_materai from tr_document_d tdd join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h where tdh.ref_number = '"+refNumber+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -1520,7 +1520,7 @@ public class DataVerif {
 	getProsesTtdProgress(Connection conn, String refNumber) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select count(id_ms_user) from tr_document_h tdh join tr_document_signing_request tdsr on tdh.id_document_h = tdsr.id_document_h where tdh.ref_number = '"+refNumber+"'")
+		resultSet = stm.executeQuery("SELECT COUNT(tdsr.id_ms_user) FROM tr_document_h tdh JOIN tr_document_signing_request tdsr ON tdh.id_document_h = tdsr.id_document_h WHERE tdh.ref_number = '"+refNumber+"' GROUP BY tdsr.dtm_crt ORDER BY tdsr.dtm_crt DESC LIMIT 1;")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -1555,6 +1555,21 @@ public class DataVerif {
 
 		resultSet = stm.executeQuery("select SUM(total_materai) from tr_document_d tdd JOIN tr_document_h tdh ON tdh.id_document_h = tdd.id_document_h where tdh.ref_number = '"+ value +"'")
 
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+
+	@Keyword
+	getEmailSigneronRefNumber(Connection conn, String refNumber) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT STRING_AGG(distinct au.login_id, ';') AS login FROM tr_document_h AS tdh JOIN tr_document_d as tdd on tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user WHERE tdh.ref_number = '"+refNumber+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

@@ -172,11 +172,10 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
             1, GlobalVariable.StatusSuccess)
 
-		
-		/*'Call Test Case Kotak Masuk. Melempar value excel, sheet excel, dan is Download Document'
+		'Call Test Case Kotak Masuk. Melempar value excel, sheet excel, dan is Download Document'
         WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('excelPathFESignDocument') : API_Excel_Path, ('sheet') : sheet, ('isDownloadDocument') : isDownloadDocument, ('isDeleteDownloadedDocument') : isDeleteDownloadedDocument, ('isViewDocument') : isViewDocument], 
          FailureHandling.CONTINUE_ON_FAILURE)
-*/
+		
         if (GlobalVariable.checkStoreDB == 'Yes') {
             'call Fungsi responseAPIStoreDB'
             responseAPIStoreDB(conneSign)

@@ -70,7 +70,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(e
     'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
     int jumlahSignerTandaTangan = CustomKeywords.'connection.DataVerif.getTotalSigned'(conneSign, findTestData(excelPathFESignDocument).getValue(
             GlobalVariable.NumofColm, 6))
-
+	
+	'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
+	WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument
+	 , ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
+	
     'looping email signer'
     for (int o = 1; o <= emailSigner.size(); o++) {
         'Inisialisasi variable yang dibutuhkan'
