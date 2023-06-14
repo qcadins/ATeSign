@@ -18,6 +18,8 @@ ArrayList<String> saldoBefore, saldoAfter
 
 int countCheckSaldo = 0
 
+WebUI.openBrowser('')
+
 saldoBefore = loginAdminGetSaldo(countCheckSaldo, conneSign)
 
 countCheckSaldo = 1
@@ -281,9 +283,6 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     checkVerifyEqualOrMatch(saldoAfter.equals(saldoBefore), ' Saldo')
 }
 
-'close browser testing'
-WebUI.closeBrowser()
-
 if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 61).equalsIgnoreCase('Yes') && (GlobalVariable.FlagFailed == 
 0)) {
     'call test case untuk cek inquiry invitation field after register'
@@ -294,9 +293,6 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 61).e
 def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
     ArrayList<String> saldo = []
 
-    'open browser'
-    WebUI.openBrowser('')
-
     'navigate to url esign'
     WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 5))
 
@@ -304,28 +300,27 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
     WebUI.maximizeWindow()
 
     'set value userLogin'
-    GlobalVariable.userLogin = findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 63).toUpperCase()
+    GlobalVariable.userLogin = findTestData(excelPathBuatUndangan).getValue(2, 66).toUpperCase()
 
     'input email'
-    WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-            63))
+    WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathBuatUndangan).getValue(2, 66))
 
     'input password'
-    WebUI.setText(findTestObject('Login/input_Password'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-            64))
+    WebUI.setText(findTestObject('Login/input_Password'), findTestData(excelPathBuatUndangan).getValue(2, 
+            67))
 
     'click button login'
     WebUI.click(findTestObject('Login/button_Login'), FailureHandling.STOP_ON_FAILURE)
 
     'input perusahaan'
-    WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-            65))
+    WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excelPathBuatUndangan).getValue(2, 
+            68))
 
     WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
 
     'input peran'
-    WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-            66))
+    WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excelPathBuatUndangan).getValue(2, 
+            69))
 
     WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
 
@@ -373,11 +368,11 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
     'enter untuk input tipe saldo'
     WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), Keys.chord(Keys.ENTER))
 
-    'input tipe transaksi'
-    WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TipeTransaksi'), 'Use Verification')
-
-    'enter untuk input tipe saldo'
-    WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeTransaksi'), Keys.chord(Keys.ENTER))
+//    'input tipe transaksi'
+//    WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TipeTransaksi'), 'Use Verification')
+//
+//    'enter untuk input tipe saldo'
+//    WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeTransaksi'), Keys.chord(Keys.ENTER))
 
     'click button cari'
     WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_Cari'))
@@ -406,7 +401,7 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
     'get trx saldo'
     saldo.add(WebUI.getText(modifyObjectBalance).replace(',', ''))
 
-    if ((countCheckSaldo == 1)) {
+    if ((countCheckSaldo == 1) && (GlobalVariable.FlagFailed == 0)) {
         'modify object no transaksi'
         modifyObjectNoTransaksi = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 
             'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
@@ -503,11 +498,11 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
     'enter untuk input tipe saldo'
     WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), Keys.chord(Keys.ENTER))
 
-    'input tipe transaksi'
-    WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TipeTransaksi'), 'Use OTP')
-
-    'enter untuk input tipe saldo'
-    WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeTransaksi'), Keys.chord(Keys.ENTER))
+//    'input tipe transaksi'
+//    WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TipeTransaksi'), 'Use OTP')
+//
+//    'enter untuk input tipe saldo'
+//    WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeTransaksi'), Keys.chord(Keys.ENTER))
 
     'click button cari'
     WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_Cari'))

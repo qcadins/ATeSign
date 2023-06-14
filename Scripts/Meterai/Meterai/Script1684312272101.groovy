@@ -24,20 +24,20 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
-		
-		GlobalVariable.FlagFailed = 0
-		
-		if(GlobalVariable.NumofColm == 2) {
-			'call testcase login admin'
-			WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathMeterai, ('sheet') : 'Meterai'], FailureHandling.CONTINUE_ON_FAILURE)
-			
-			'click menu meterai'
-			WebUI.click(findTestObject('Meterai/menu_Meterai'))
-			
-			'call function check paging'
-			checkPaging(currentDate, firstDateOfMonth)
-		}
-		
+        GlobalVariable.FlagFailed = 0
+
+        if (GlobalVariable.NumofColm == 2) {
+            'call testcase login admin'
+            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathMeterai, ('sheet') : 'Meterai'], 
+                FailureHandling.CONTINUE_ON_FAILURE)
+
+            'click menu meterai'
+            WebUI.click(findTestObject('Meterai/menu_Meterai'))
+
+            'call function check paging'
+            checkPaging(currentDate, firstDateOfMonth, conneSign)
+        }
+        
         'set text no kontrak'
         WebUI.setText(findTestObject('Meterai/input_NoKontrak'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
                 9))
@@ -188,7 +188,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     }
 }
 
-def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth) {
+def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection conneSign) {
+	
+	totalMeteraiDB = CustomKeywords.'connection.Meterai.getTotalMeterai'(conneSign)
+	
     'set text no kontrak'
     WebUI.setText(findTestObject('Meterai/input_NoKontrak'), '000111')
 
@@ -271,43 +274,45 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth) {
     checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/input_NoMeterai'), 'value', FailureHandling.CONTINUE_ON_FAILURE), 
             '', false, FailureHandling.CONTINUE_ON_FAILURE))
 
-    'set text tanggal pengiriman dari'
-    WebUI.setText(findTestObject('Meterai/input_TanggalPakaiDari'), '2023-01-01')
-
-    'set text tanggal pengiriman ke'
-    WebUI.setText(findTestObject('Meterai/input_TanggalPakaiSampai'), '2023-01-31')
-
     'click button cari'
     WebUI.click(findTestObject('Meterai/button_Cari'))
+	
+    'set text tanggal pengiriman ke'
+    totalMeteraiUI = WebUI.getText(findTestObject('Meterai/Label_TotalMeterai')).split(' ', -1)
 
-    'click next page'
-    WebUI.click(findTestObject('Meterai/button_NextPage'))
-
-    'verify paging di page 2'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE), 
-            '2', false, FailureHandling.CONTINUE_ON_FAILURE))
-
-    'click prev page'
-    WebUI.click(findTestObject('Meterai/button_PrevPage'))
-
-    'verify paging di page 1'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE), 
-            '1', false, FailureHandling.CONTINUE_ON_FAILURE))
-
-    'click last page'
-    WebUI.click(findTestObject('Meterai/button_LastPage'))
-
-    'verify paging di last page'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE), 
-            WebUI.getAttribute(findTestObject('Meterai/page_Active'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE).replace(
-                'page ', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
-
-    'click first page'
-    WebUI.click(findTestObject('Meterai/button_FirstPage'))
-
-    'verify paging di page 1'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE), 
-            '1', false, FailureHandling.CONTINUE_ON_FAILURE))
+	'verify total Meterai'
+	checkVerifyPaging(WebUI.verifyMatch(totalMeteraiUI[0], totalMeteraiDB, false, FailureHandling.CONTINUE_ON_FAILURE))
+    
+	if (Integer.parseInt(totalMeteraiUI[0]) > 10) {		
+	    'click next page'
+	    WebUI.click(findTestObject('Meterai/button_NextPage'))
+	
+	    'verify paging di page 2'
+	    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE), 
+	            '2', false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	    'click prev page'
+	    WebUI.click(findTestObject('Meterai/button_PrevPage'))
+	
+	    'verify paging di page 1'
+	    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE), 
+	            '1', false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	    'click last page'
+	    WebUI.click(findTestObject('Meterai/button_LastPage'))
+	
+	    'verify paging di last page'
+	    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE), 
+	            WebUI.getAttribute(findTestObject('Meterai/page_Active'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE).replace(
+	                'page ', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	    'click first page'
+	    WebUI.click(findTestObject('Meterai/button_FirstPage'))
+	
+	    'verify paging di page 1'
+	    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE), 
+	            '1', false, FailureHandling.CONTINUE_ON_FAILURE))
+	}
 }
 
 def checkVerifyPaging(Boolean isMatch) {
@@ -324,7 +329,8 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Meterai', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
+            ((findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
+            reason)
 
         GlobalVariable.FlagFailed = 1
     }
