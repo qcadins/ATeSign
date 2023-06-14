@@ -3,17 +3,7 @@ import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
-import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
-import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
-import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
-import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
-import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
-import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
-import com.kms.katalon.core.testcase.TestCase as TestCase
-import com.kms.katalon.core.testdata.TestData as TestData
-import com.kms.katalon.core.testobject.TestObject as TestObject
-import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
+import org.openqa.selenium.Keys
 
 'get current date'
 def currentDate = new Date().format('dd-MMM-yyyy')
@@ -51,17 +41,50 @@ checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('InquiryI
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('InquiryInvitation/tr_Phone')).toUpperCase(), findTestData(
             excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 14).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Phone')
 
+'split date and time'
+invitationDate = WebUI.getText(findTestObject('InquiryInvitation/tr_InvitationDate')).split(' ', -1)
+
 'verify invitation date'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('InquiryInvitation/tr_InvitationDate')).toUpperCase(), 
-        currentDate.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Invitation Date')
+checkVerifyEqualOrMatch(WebUI.verifyMatch(invitationDate[0] , currentDate, false, FailureHandling.CONTINUE_ON_FAILURE), ' Invitation Date')
 
 verifyListUndangan()
 
 def verifyListUndangan(){
 	currentDate = new Date().format('yyyy-MM-dd')
 	
-	'call test case login admin'
-	WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathBuatUndangan, ('sheet') : 'BuatUndangan'], FailureHandling.CONTINUE_ON_FAILURE)
+	'navigate to url esign'
+	WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 5))
+
+	'maximize window'
+	WebUI.maximizeWindow()
+
+	'set value userLogin'
+	GlobalVariable.userLogin = findTestData(excelPathBuatUndangan).getValue(2, 66).toUpperCase()
+
+	'input email'
+    WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathBuatUndangan).getValue(2, 66))
+
+    'input password'
+    WebUI.setText(findTestObject('Login/input_Password'), findTestData(excelPathBuatUndangan).getValue(2, 
+            67))
+
+    'click button login'
+    WebUI.click(findTestObject('Login/button_Login'), FailureHandling.STOP_ON_FAILURE)
+
+    'input perusahaan'
+    WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excelPathBuatUndangan).getValue(2, 
+            68))
+
+    WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
+
+    'input peran'
+    WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excelPathBuatUndangan).getValue(2, 
+            69))
+
+    WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
+
+	'click button pilih peran'
+	WebUI.click(findTestObject('Login/button_pilihPeran'), FailureHandling.STOP_ON_FAILURE)
 	
 	'click menu list undangan'
 	WebUI.click(findTestObject('ListUndangan/menu_ListUndangan'))

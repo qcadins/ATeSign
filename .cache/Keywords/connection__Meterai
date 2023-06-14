@@ -1,0 +1,29 @@
+{
+  "keywordFileContentHash": "A64D47435F93E5359B3A3973AD48E423",
+  "keywordClasses": [
+    {
+      "name": "connection.Meterai",
+      "keywordMethods": [
+        {
+          "name": "getTotalMeterai",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "javadocParsed": false
+}

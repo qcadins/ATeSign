@@ -13,7 +13,7 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 ArrayList<String> listOTP = []
 
-int reqOTP
+GlobalVariable.Counter = 0
 
 'check email sesuai dengan inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/FormAktivasi/input_Email'), 'value', 
@@ -110,7 +110,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 	            12).replace('"', '').toUpperCase())
 	
 		'+1 karena request otp'
-		reqOTP++
+		GlobalVariable.Counter++
 		
 	    'clear arraylist sebelumnya'
 	    listOTP.clear()
@@ -173,7 +173,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 	                        GlobalVariable.NumofColm, 12).replace('"', '').toUpperCase())
 	
 					'+1 karena request otp'
-					reqOTP++
+					GlobalVariable.Counter++
 					
 	                'add OTP ke list'
 	                listOTP.add(OTP)
@@ -252,7 +252,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 	                        GlobalVariable.NumofColm, 12).replace('"', '').toUpperCase())
 	
 					'+1 karena request otp'
-					reqOTP++
+					GlobalVariable.Counter++
 					
 	                'add OTP ke list'
 	                listOTP.add(OTP)
@@ -311,7 +311,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 			}
 			
 			'verify trx qty = -1'
-			arrayMatch.add(WebUI.verifyEqual(sum, -reqOTP, FailureHandling.CONTINUE_ON_FAILURE))
+			arrayMatch.add(WebUI.verifyEqual(sum, -GlobalVariable.Counter, FailureHandling.CONTINUE_ON_FAILURE))
 	
 			'jika data db tidak sesuai dengan excel'
 			if (arrayMatch.contains(false)) {

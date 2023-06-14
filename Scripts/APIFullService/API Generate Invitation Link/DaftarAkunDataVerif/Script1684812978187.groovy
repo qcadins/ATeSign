@@ -2,6 +2,10 @@ import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import java.sql.Connection
+
+import org.openqa.selenium.By
+import org.openqa.selenium.Keys
+
 import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords
 import com.kms.katalon.core.model.FailureHandling
 import com.kms.katalon.core.webui.driver.DriverFactory
@@ -20,7 +24,7 @@ if (GlobalVariable.RunWithEmbed == 'Yes') {
 	'check if ingin menggunakan local host atau tidak'
 	if (GlobalVariable.useLocalHost == 'Yes') {
 		'navigate url ke daftar akun'
-		WebUI.openBrowser(GlobalVariable.embedUrl.replace('http://gdkwebsvr:8080', GlobalVariable.urlLocalHost))
+		WebUI.navigateToUrl(GlobalVariable.embedUrl.replace('http://gdkwebsvr:8080', GlobalVariable.urlLocalHost))
 		
 		WebUI.delay(3)
 		
@@ -28,7 +32,7 @@ if (GlobalVariable.RunWithEmbed == 'Yes') {
 		WebUI.setText(findTestObject('EmbedView/inputLinkEmbed'), link.replace('http://gdkwebsvr:8080', GlobalVariable.urlLocalHost))
 	} else if (GlobalVariable.useLocalHost == 'No') {
 		'navigate url ke daftar akun'
-		WebUI.openBrowser(GlobalVariable.embedUrl)
+		WebUI.navigateToUrl(GlobalVariable.embedUrl)
 		
 		WebUI.delay(3)
 		
@@ -303,6 +307,9 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     'get reason error log'
     reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).toString()
 	
+	'check saldo OTP'
+	checkSaldoOTP()
+	
     'cek if berhasil pindah page'
     if (reason.contains('gagal') || reason.contains('Saldo') || reason.contains('Invalid')) {	
         'write to excel status failed dan reason'
@@ -374,4 +381,106 @@ def checkTrxMutation(Connection conneSign) {
 					GlobalVariable.NumofColm, 2) + ';') + 'Saldo tidak terpotong')
 		}
 	}
+}
+
+def checkSaldoOTP() {
+	'open new tab'
+	WebUI.executeJavaScript('window.open();', [])
+	
+	'swicth tab ke new tab'
+	WebUI.switchToWindowIndex(1)
+	
+	'navigate to url esign'
+	WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 5))
+
+	'maximize window'
+	WebUI.maximizeWindow()
+
+   'set value userLogin'
+	GlobalVariable.userLogin = findTestData(excelPathAPIGenerateInvLink).getValue(2, 54).toUpperCase()
+
+	'input email'
+	WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathAPIGenerateInvLink).getValue(2, 54))
+
+	'input password'
+	WebUI.setText(findTestObject('Login/input_Password'), findTestData(excelPathAPIGenerateInvLink).getValue(2,
+			55))
+
+	'click button login'
+	WebUI.click(findTestObject('Login/button_Login'), FailureHandling.CONTINUE_ON_FAILURE)
+
+	'input perusahaan'
+	WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excelPathAPIGenerateInvLink).getValue(2,
+			56))
+
+	WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
+
+	'input peran'
+	WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excelPathAPIGenerateInvLink).getValue(2,
+			57))
+
+	WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
+	
+	'click button pilih peran'
+	WebUI.click(findTestObject('Login/button_pilihPeran'), FailureHandling.STOP_ON_FAILURE)
+
+	'click menu saldo'
+	WebUI.click(findTestObject('BuatUndangan/checkSaldo/menu_Saldo'))
+	
+	'click ddl bahasa'
+	WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_bahasa'))
+
+	'click english'
+	WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_English'))
+
+	'select vendor'
+	WebUI.selectOptionByLabel(findTestObject('BuatUndangan/checkSaldo/select_Vendor'), '(?i)' + 'ESIGN/ADINS', true)
+	
+	'input tipe saldo'
+	WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), 'OTP')
+
+	'enter untuk input tipe saldo'
+	WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), Keys.chord(Keys.ENTER))
+
+	'input tipe transaksi'
+	WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TipeTransaksi'), 'Use OTP')
+
+	'enter untuk input tipe saldo'
+	WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeTransaksi'), Keys.chord(Keys.ENTER))
+
+	'click button cari'
+	WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_Cari'))
+
+	'get row'
+	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
+
+	'modify object button last page'
+	modifyObjectButtonLastPage = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
+		'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' +
+		variable.size()) + ']', true)
+
+	if (WebUI.getAttribute(modifyObjectButtonLastPage, 'class', FailureHandling.OPTIONAL) != 'disabled') {
+		'click button last page'
+		WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_LastPage'))
+	}
+	
+	'get row'
+	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
+	
+	'modify object user'
+	modifyObjectUser = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 'equals',
+		('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[4]/div', true)
+
+	'verify user name ui = excel'
+	checkVerifyEqualOrMatch(WebUI.verifyNotMatch(WebUI.getText(modifyObjectUser), findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 11).replace('"','').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' User')
+
+	'swicth tab ke new tab'
+	WebUI.switchToWindowIndex(0)
+	
+	'close tab saldo'
+	WebUI.closeWindowIndex(1)
+	
+	'swicth tab ke new tab'
+	WebUI.switchToWindowIndex(0)
 }
