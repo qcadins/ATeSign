@@ -267,20 +267,22 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
             FailureHandling.CONTINUE_ON_FAILURE)
     }
     
-    'kurang saldo before dengan proses verifikasi'
-    saldoBefore.set(0, (Integer.parseInt(saldoBefore[0]) - 1).toString())
-
-    saldoBefore.set(1, (Integer.parseInt(saldoBefore[1]) - 1).toString())
-
-    'kurang saldo before dengan jumlah counter send OTP'
-    saldoBefore.set(2, (Integer.parseInt(saldoBefore[2]) - GlobalVariable.Counter).toString())
-
-    saldoBefore.set(3, (Integer.parseInt(saldoBefore[3]) - GlobalVariable.Counter).toString())
-
-    saldoAfter = loginAdminGetSaldo(countCheckSaldo, conneSign)
-
-    'verify saldoafter tidak sama dengan saldo before'
-    checkVerifyEqualOrMatch(saldoAfter.equals(saldoBefore), ' Saldo')
+	if (GlobalVariable.FlagFailed == 0) {		
+	    'kurang saldo before dengan proses verifikasi'
+	    saldoBefore.set(0, (Integer.parseInt(saldoBefore[0]) - 1).toString())
+	
+	    saldoBefore.set(1, (Integer.parseInt(saldoBefore[1]) - 1).toString())
+	
+	    'kurang saldo before dengan jumlah counter send OTP'
+	    saldoBefore.set(2, (Integer.parseInt(saldoBefore[2]) - GlobalVariable.Counter).toString())
+	
+	    saldoBefore.set(3, (Integer.parseInt(saldoBefore[3]) - GlobalVariable.Counter).toString())
+	
+	    saldoAfter = loginAdminGetSaldo(countCheckSaldo, conneSign)
+	
+	    'verify saldoafter tidak sama dengan saldo before'
+	    checkVerifyEqualOrMatch(saldoAfter.equals(saldoBefore), ' Saldo')
+	}
 }
 
 if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 61).equalsIgnoreCase('Yes') && (GlobalVariable.FlagFailed == 
