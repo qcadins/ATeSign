@@ -254,7 +254,7 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                             'Split teks proses TTD'
                             totalSignandtotalSigned = WebUI.getText(modifyObjectvalues).split(' / ', -1)
 
-                            jumlahSignerTelahTandaTangan = CustomKeywords.'connection.DataVerif.getProsesTtdProgress'(conneSign, 
+                            int jumlahSignerTelahTandaTangan = CustomKeywords.'connection.DataVerif.getProsesTtdProgress'(conneSign, 
                                 nomorKontrakPerPilihan[y])
 
                             'Verif hasil split, dimana proses awal hingga akhir. Awal dibandingkan dengan jumlahsignertandatangan, sedangkan akhir dibandingkan dengan total signer dari email'

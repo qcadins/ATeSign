@@ -12,12 +12,13 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-'get colm excel'
+'get column excel'
 int countColmExcel = findTestData(excelPathTryCallbackURL).columnNumbers
 
+'sheet yang digunakan di excel'
 sheet = 'API Try Callback URL'
 
-'looping API get Total Unsigned Documents'
+'looping per column'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathTryCallbackURL).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
@@ -39,6 +40,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.api_key = findTestData(excelPathTryCallbackURL).getValue(GlobalVariable.NumofColm, 14)
         }
         
+		'Set base url dengan value dari excel'
         GlobalVariable.base_url = findTestData(excelPathTryCallbackURL).getValue(GlobalVariable.NumofColm, 11)
 
         'HIT API'
@@ -47,27 +49,28 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         9), ('activationStatus') : findTestData(excelPathTryCallbackURL).getValue(GlobalVariable.NumofColm, 
                         10)]), FailureHandling.CONTINUE_ON_FAILURE)
 
-        'Jika status HIT API 200 OK'
+        'Jika status HIT API 200 ok'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
             'get status code'
             code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
             'jika codenya 0'
             if (code == 0) {
-                'mengambil response totalUnsignedDocuments'
+                'mengambil response message'
                 message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
+				'Jika messagenya success'
                 if ('Success'.equalsIgnoreCase(message)) {
                     'write to excel success'
                     CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
                         1, GlobalVariable.StatusSuccess)
                 } else {
-                    'Write To Excel GlobalVariable.StatusFailed and errormessage'
+                    'Jika tidak sukses, maka Write To Excel GlobalVariable.StatusFailed and errormessage'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                        GlobalVariable.StatusFailed, GlobalVariable.ReasonFailedHitAPI + ' dengan hasil null')
+                        GlobalVariable.StatusFailed, GlobalVariable.ReasonFailedHitAPI + ' dengan hasil ' + message)
                 }
             } else {
-                'mengambil status code berdasarkan response HIT API'
+                ' Jika code bukan 0, maka mengambil status code berdasarkan response HIT API'
                 message = WS.getElementPropertyValue(respon, 'error', FailureHandling.OPTIONAL)
 
                 'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
@@ -75,16 +78,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     message.toString())
             }
         } else {
-            'mengambil status code berdasarkan response HIT API'
+            'Jika status tidak 200, maka mengambil status code berdasarkan response HIT API'
             message = WS.getElementPropertyValue(respon, 'error', FailureHandling.OPTIONAL)
 			
+			'Jika messagenya tidak null'
 			if (message != null) {
             'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
              CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
              message.toString())
         } else {
-			'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, GlobalVariable.ReasonFailedHitAPI + ' dengan hasil null ')
+			'Jika messagenya null maka Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, GlobalVariable.ReasonFailedHitAPI + ' dengan hasil ' + message)
 		}
     }
 }
