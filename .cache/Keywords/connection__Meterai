@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "A64D47435F93E5359B3A3973AD48E423",
+  "keywordFileContentHash": "3020683917E7357408998E44EA6BFEAA",
   "keywordClasses": [
     {
       "name": "connection.Meterai",
@@ -20,10 +20,11 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         }
       ]
     }
   ],
-  "javadocParsed": false
+  "javadocParsed": true
 }

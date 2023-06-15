@@ -93,7 +93,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(A
     String stringRefno = new String()
 	
 	stringRefno = ''
-
+	
 	'Pembuatan pengisian variable di sendRequest per jumlah signer.'
 	ArrayList<String> list = new ArrayList<String>()
 
@@ -122,8 +122,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(A
 		 (email[(i - 1)])) + ',"npwp": ') + (npwp[(i - 1)])) + ',"idPhoto": ') + idPhoto + ',"signerSelfPhoto": ') + signerSelfPhoto
 		  )) + '},')
 
-    'Memasukkan seluruh BodyAPI ke listSigner'
-    listSigner = listSigner + list[(i - 1)]
+	    'Memasukkan seluruh BodyAPI ke listSigner'
+	    listSigner = listSigner + list[(i - 1)]
+		
+		'check ada value maka setting email service tenant'
+		if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 49).length() > 0) {
+			'setting email service tenant'
+			CustomKeywords.'connection.SendDocument.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 49), email[(i - 1)].replace('"',''))
+		}
 		
 	}
 	

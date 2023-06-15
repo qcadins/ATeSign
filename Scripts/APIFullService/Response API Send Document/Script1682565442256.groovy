@@ -110,7 +110,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             urxStamps = (urxStamp[i]).split(semicolon, splitnum)
 
             uryStamps = (uryStamp[i]).split(semicolon, splitnum)
-
+			
             'inisialisasi bodyAPI untuk menyusun body'
             String bodyAPI = new String()
 
@@ -307,6 +307,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     '},')
                 }
                 
+				'check ada value maka setting email service tenant'
+				if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 47).length() > 0) {
+					'setting email service tenant'
+					CustomKeywords.'connection.SendDocument.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 47), emails[t].replace('"',''))
+				}
+				
                 'Memasukkan bodyAPI ke stringRefno'
                 stringRefno = (stringRefno + bodyAPI)
 

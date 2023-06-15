@@ -42,6 +42,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		
 		GlobalVariable.FlagFailed = 0
 		
+		'check ada value maka setting email service tenant'
+		if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 52).length() > 0) {
+			'setting email service tenant'
+			CustomKeywords.'connection.Registrasi.settingEmailServiceTenant'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 52))
+		}
+		
         'check if tidak mau menggunakan tenant code yang benar'
         if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 34) == 'No') {
             'set tenant kosong'

@@ -29,6 +29,12 @@ GlobalVariable.FlagFailed = 0
 'call test case login inveditor'
 WebUI.callTestCase(findTestCase('Login/Login_Inveditor'), [:], FailureHandling.CONTINUE_ON_FAILURE)
 
+'check ada value maka setting email service tenant'
+if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 64).length() > 0) {
+	'setting email service tenant'
+	CustomKeywords.'connection.Registrasi.settingEmailServiceTenant'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 64))
+}
+
 'click menu buat undangan'
 WebUI.click(findTestObject('BuatUndangan/menu_BuatUndangan'))
 
