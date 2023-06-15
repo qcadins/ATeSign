@@ -1520,7 +1520,7 @@ public class DataVerif {
 	getProsesTtdProgress(Connection conn, String refNumber) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT COUNT(tdsr.id_ms_user) FROM tr_document_h tdh JOIN tr_document_signing_request tdsr ON tdh.id_document_h = tdsr.id_document_h WHERE tdh.ref_number = '"+refNumber+"' GROUP BY tdsr.dtm_crt ORDER BY tdsr.dtm_crt DESC LIMIT 1;")
+		resultSet = stm.executeQuery("SELECT COUNT(tdsr.id_ms_user) FROM tr_document_h tdh JOIN tr_document_signing_request tdsr ON tdh.id_document_h = tdsr.id_document_h WHERE tdh.ref_number = '"+refNumber+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

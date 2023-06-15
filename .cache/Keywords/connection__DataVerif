@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "keywordFileContentHash": "B4AFA7BC98D244803A85543D83284CE9",
-=======
-  "keywordFileContentHash": "D6D49107F07F396FC3F0000EB3EF3214",
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+  "keywordFileContentHash": "92E90068A8CAF6261014ADF47E70ED02",
   "keywordClasses": [
     {
       "name": "connection.DataVerif",
@@ -3018,7 +3014,6 @@
             }
           ],
           "javadoc": ""
-<<<<<<< HEAD
         },
         {
           "name": "getEmailSigneronRefNumber",
@@ -3051,8 +3046,6 @@
             }
           ],
           "javadoc": ""
-=======
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
         }
       ]
     }
