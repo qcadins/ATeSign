@@ -105,7 +105,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         'get row modal'
                         rowModal = DriverFactory.webDriver.findElements(By.cssSelector('body > ngb-modal-window > div > div > app-view-request-param > div.modal-body > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-body-cell'))
 
-						'looping row modal'
+						'looping row Modal'
                         for (j = 1; j <= rowModal.size(); j++) {
                             'modify object label value untuk modal'
                             modifyObjectLblValue = WebUI.modifyObjectProperty(findTestObject('Job Result/lbl_ValueModal'), 
