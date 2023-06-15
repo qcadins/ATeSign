@@ -49,7 +49,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         9), ('activationStatus') : findTestData(excelPathTryCallbackURL).getValue(GlobalVariable.NumofColm, 
                         10)]), FailureHandling.CONTINUE_ON_FAILURE)
 
-        'Jika status HIT API 200 ok'
+        'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
             'get status code'
             code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
