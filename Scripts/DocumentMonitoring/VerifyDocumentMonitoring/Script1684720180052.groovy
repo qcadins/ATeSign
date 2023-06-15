@@ -181,11 +181,7 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                             totalSignandtotalSigned = WebUI.getText(modifyObjectvalues).split(' / ', -1)
 
                             jumlahSignerTelahTandaTangan = CustomKeywords.'connection.DataVerif.getProsesTtdProgress'(conneSign, 
-                                inputDocumentMonitoring[0])
-							
-							WebUI.delay(20)
-							println jumlahSignerTelahTandaTangan
-							println totalSignandtotalSigned[0]
+                                nomorKontrakPerPilihan[y])
 							
                             'Verif hasil split, dimana proses awal hingga akhir. Awal dibandingkan dengan jumlahsignertandatangan, sedangkan akhir dibandingkan dengan total signer dari email'
                             arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[0], jumlahSignerTelahTandaTangan, FailureHandling.CONTINUE_ON_FAILURE))
