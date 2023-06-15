@@ -10,6 +10,9 @@ import internal.GlobalVariable as GlobalVariable
 'declare invitation link inquiry'
 String invitationLinkInquiry = ''
 
+'connect DB eSign'
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
+
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
@@ -22,6 +25,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     } else if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
         'Open test case untuk login sebagai Invenditor'
         WebUI.callTestCase(findTestCase('Login/Login_Inveditor'), [:], FailureHandling.STOP_ON_FAILURE)
+		
+		'check ada value maka setting email service tenant'
+		if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 54).length() > 0) {
+			'setting email service tenant'
+			CustomKeywords.'connection.Registrasi.settingEmailServiceTenant'(conneSign, findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 54))
+		}
 
         'Pembuatan pengisian variable di sendRequest per column berdasarkan data excel.'
         ArrayList<String> listInvitation = []
