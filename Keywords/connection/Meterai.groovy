@@ -8,14 +8,14 @@ import com.kms.katalon.core.annotation.Keyword
 import internal.GlobalVariable
 
 public class Meterai {
-	
+
 	String data
 	int columnCount, i
 	Statement stm
 	ResultSetMetaData metadata
 	ResultSet resultSet
 	ArrayList<String> listdata = []
-	
+
 	@Keyword
 	getTotalMeterai(Connection conn) {
 		stm = conn.createStatement()
