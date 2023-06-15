@@ -1,14 +1,27 @@
 {
-  "keywordFileContentHash": "8FA050DBD0F63D0EE8040F1EBCE05599",
+  "keywordFileContentHash": "4EEA60F052FB761F2C43F7E07F50AD21",
   "keywordClasses": [
     {
-      "name": "customizekeyword.ParseText",
+      "name": "connection.JobResult",
       "keywordMethods": [
         {
-          "name": "parseEncrypt",
+          "name": "jobResultDB",
           "parameters": [
             {
-              "name": "value",
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "startDate",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -21,7 +34,7 @@
               }
             },
             {
-              "name": "aesKey",
+              "name": "endDate",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -37,10 +50,23 @@
           "javadoc": ""
         },
         {
-          "name": "parseDecrypt",
+          "name": "countJobResult",
           "parameters": [
             {
-              "name": "encrypted",
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "startDate",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -53,7 +79,7 @@
               }
             },
             {
-              "name": "aesKey",
+              "name": "endDate",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
