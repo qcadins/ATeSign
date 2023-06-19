@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>errorLog_OK</name>
+   <name>page_Active</name>
    <tag></tag>
-   <elementGuidId>d720cedf-9f29-4c1e-953a-3c25d25f0632</elementGuidId>
+   <elementGuidId>e459bff3-f0bd-46b8-96bb-97850f553d83</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'swal2-confirm btn btn-info']</value>
+         <value>//*[@class = 'pages active ng-star-inserted']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>swal2-confirm btn btn-info</value>
-      <webElementGuid>cf9f075c-fa11-4915-8be0-d7a84ab1d46a</webElementGuid>
+      <value>pages active ng-star-inserted</value>
+      <webElementGuid>ee1ca41c-85fb-446f-bdfc-cba09b2bf732</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

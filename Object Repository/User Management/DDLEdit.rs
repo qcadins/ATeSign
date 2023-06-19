@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>errorLog_OK</name>
+   <name>DDLEdit</name>
    <tag></tag>
-   <elementGuidId>d720cedf-9f29-4c1e-953a-3c25d25f0632</elementGuidId>
+   <elementGuidId>0d51abba-458f-4fb4-8e21-b440e17d6fc1</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'swal2-confirm btn btn-info']</value>
+         <value>//*[@aria-selected = 'true']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>class</name>
+      <name>aria-selected</name>
       <type>Main</type>
-      <value>swal2-confirm btn btn-info</value>
-      <webElementGuid>cf9f075c-fa11-4915-8be0-d7a84ab1d46a</webElementGuid>
+      <value>true</value>
+      <webElementGuid>0ff1f126-8e8d-473b-9cda-f0f2f7367ac8</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>errorLog_OK</name>
+   <name>button_Next</name>
    <tag></tag>
-   <elementGuidId>d720cedf-9f29-4c1e-953a-3c25d25f0632</elementGuidId>
+   <elementGuidId>ece5d073-3129-4d36-af24-a636e8b862a7</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'swal2-confirm btn btn-info']</value>
+         <value>//*[@class = 'datatable-icon-right']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>swal2-confirm btn btn-info</value>
-      <webElementGuid>cf9f075c-fa11-4915-8be0-d7a84ab1d46a</webElementGuid>
+      <value>datatable-icon-right</value>
+      <webElementGuid>87d50ab3-36f3-4a05-9c8c-7e9e92ee571f</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

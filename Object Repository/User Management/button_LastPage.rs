@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>errorLog_OK</name>
+   <name>button_LastPage</name>
    <tag></tag>
-   <elementGuidId>d720cedf-9f29-4c1e-953a-3c25d25f0632</elementGuidId>
+   <elementGuidId>cb82d6be-1a16-4c88-b86d-020f721b1e5f</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'swal2-confirm btn btn-info']</value>
+         <value>//*[@class = 'datatable-icon-skip']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>swal2-confirm btn btn-info</value>
-      <webElementGuid>cf9f075c-fa11-4915-8be0-d7a84ab1d46a</webElementGuid>
+      <value>datatable-icon-skip</value>
+      <webElementGuid>661d6d74-9a5b-474f-8d43-a3f0aa0b3420</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

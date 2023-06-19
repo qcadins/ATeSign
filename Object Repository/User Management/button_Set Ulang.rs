@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>button_Cari</name>
+   <name>button_Set Ulang</name>
    <tag></tag>
-   <elementGuidId>99f33503-9487-4ae7-8a6f-bfe9ec95e489</elementGuidId>
+   <elementGuidId>c7397e8d-5327-44fb-8377-f2ab393390b9</elementGuidId>
    <selectorCollection>
       <entry>
          <key>XPATH</key>
-         <value>//button[@type='submit']</value>
+         <value>//button[@type='button']</value>
       </entry>
       <entry>
          <key>CSS</key>
-         <value>button.btn.btn-primary</value>
-      </entry>
-      <entry>
-         <key>BASIC</key>
-         <value>//*[@class = 'btn btn-primary']</value>
+         <value>button.btn.btn-secondary.mr-2</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -25,79 +21,79 @@
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>btn btn-primary</value>
-      <webElementGuid>022d0957-6c5e-4267-8bca-5709c81b2d58</webElementGuid>
+      <value>btn btn-secondary mr-2</value>
+      <webElementGuid>c89fc3d9-e08c-461b-8808-b1890ee7ac36</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:attributes</name>
       <type>Main</type>
-      <value>//button[@type='submit']</value>
-      <webElementGuid>d35aa906-2326-4602-b406-3e4b54b078b0</webElementGuid>
+      <value>//button[@type='button']</value>
+      <webElementGuid>1790e741-09bb-4167-b6ef-b091c45b63bc</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:idRelative</name>
       <type>Main</type>
-      <value>//form[@id='searchForm']/div[2]/div/button[2]</value>
-      <webElementGuid>9dbe23cd-25c9-46f1-8873-6dded1bcdaf1</webElementGuid>
+      <value>//form[@id='searchForm']/div[2]/div/button</value>
+      <webElementGuid>f9cfc54c-0f0e-440e-88f9-00346d2fa0e7</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:neighbor</name>
       <type>Main</type>
-      <value>(.//*[normalize-space(text()) and normalize-space(.)='Set Ulang'])[1]/following::button[1]</value>
-      <webElementGuid>42ae83f3-0cbf-49c6-b242-fe91d07a31df</webElementGuid>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='All'])[1]/following::button[1]</value>
+      <webElementGuid>725c722e-6f10-454b-bdaa-0bc0c04968e1</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:neighbor</name>
       <type>Main</type>
-      <value>(.//*[normalize-space(text()) and normalize-space(.)='Diminta oleh'])[1]/following::button[2]</value>
-      <webElementGuid>460a2ab5-6ef8-4f0f-afd3-5a49bca84ca7</webElementGuid>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Select Role'])[1]/following::button[1]</value>
+      <webElementGuid>d46e34a5-0eb9-4d79-b85b-56c85406c96e</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:neighbor</name>
       <type>Main</type>
-      <value>(.//*[normalize-space(text()) and normalize-space(.)='Diminta oleh'])[2]/preceding::button[1]</value>
-      <webElementGuid>33f86bcb-24f5-4d38-a759-af5a4ad75029</webElementGuid>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Cari'])[1]/preceding::button[1]</value>
+      <webElementGuid>607ebcd9-4651-4b8a-a355-227fc01c51aa</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:neighbor</name>
       <type>Main</type>
-      <value>(.//*[normalize-space(text()) and normalize-space(.)='Nama Job'])[2]/preceding::button[1]</value>
-      <webElementGuid>00b300ad-23c6-4867-9db5-ec8cea7c9c42</webElementGuid>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='User Name'])[1]/preceding::button[2]</value>
+      <webElementGuid>8a147123-5350-47ad-9238-f17c9bafb415</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:neighbor</name>
       <type>Main</type>
-      <value>//*/text()[normalize-space(.)='Cari']/parent::*</value>
-      <webElementGuid>60f61326-9b12-4e1c-8c0f-26e8adbc44bd</webElementGuid>
+      <value>//*/text()[normalize-space(.)='Set Ulang']/parent::*</value>
+      <webElementGuid>86a529bb-9460-4faa-99ee-53f463a79316</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:position</name>
       <type>Main</type>
-      <value>//button[2]</value>
-      <webElementGuid>c8273680-97d2-4c7f-8af9-520ab9e330e9</webElementGuid>
+      <value>//button</value>
+      <webElementGuid>98598a92-147b-4237-ae2f-a19e8e93e5c8</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:customAttributes</name>
       <type>Main</type>
-      <value>//button[@type = 'submit' and (text() = ' Cari' or . = ' Cari')]</value>
-      <webElementGuid>394c9508-8a9f-4e47-8e8a-f82ee18bb111</webElementGuid>
+      <value>//button[@type = 'button' and (text() = ' Set Ulang' or . = ' Set Ulang')]</value>
+      <webElementGuid>20c533c5-eec4-461d-bd9e-42dcdfe23915</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>
