@@ -2,7 +2,6 @@ import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import java.sql.Connection as Connection
-import java.time.LocalDate as LocalDate
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
@@ -74,6 +73,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
         'Jika value muncul'
         if (WebUI.verifyElementPresent(findTestObject('Job Result/lbl_value'), GlobalVariable.TimeOut)) {
+			'Jika aksi yang dipilih adalah View Request Param'
             if (findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 7) == 'View Request Param') {
 				'get row'
 				row = DriverFactory.webDriver.findElements(By.cssSelector('#listJobResult > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-body-cell'))
@@ -114,11 +114,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					'click button X'
 					WebUI.click(findTestObject('KotakMasuk/btn_X'))
                 } else {
-					'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+					'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedNoneUI'
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Job Result', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 					((findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedNoneUI + ' pada View Request Param'))
 				}
             } else if (findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 7) == '-') {
+				'Jika tidak ada aksi yang dipilih, maka check flag failed'
 				if (GlobalVariable.FlagFailed == 0) {
 					'write to excel success'
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
@@ -126,7 +127,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				}
 			}
         } else {
-			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedNoneUI'
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
             ((findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedNoneUI + ' pada data tersebut '))
         }
