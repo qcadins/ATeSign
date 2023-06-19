@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>Edit Signer Data</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>e12d62ea-8eb2-4bd3-83f3-1bbe1e2ee015</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>a6160d32-19ab-4252-9f13-5d3d75dab5ca</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>a6160d32-19ab-4252-9f13-5d3d75dab5ca</id>
+      <masked>false</masked>
+      <name>excelPathEditSignerData</name>
+   </variable>
+</TestCaseEntity>

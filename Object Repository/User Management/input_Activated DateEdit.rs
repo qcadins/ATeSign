@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_Activated DateEdit</name>
+   <tag></tag>
+   <elementGuidId>e68967d6-5230-4f4e-89cc-bfc503c66f99</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>XPATH</key>
+         <value>//input[@id='activatedDate']</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>#activatedDate</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>id</name>
+      <type>Main</type>
+      <value>activatedDate</value>
+      <webElementGuid>c6c92df9-22f0-4b4f-8ec1-3a20c9dceb95</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:attributes</name>
+      <type>Main</type>
+      <value>//input[@id='activatedDate']</value>
+      <webElementGuid>cdd9db53-7d0e-401b-b85e-3bb9858cf1c6</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//div[3]/div/app-text/div/div[2]/div/input</value>
+      <webElementGuid>c70ded7f-6012-4823-b688-09c2189f528f</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//input[@type = 'text' and @id = 'activatedDate']</value>
+      <webElementGuid>3c5513a4-ad17-4ed8-a1b6-65b59d3d5945</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>

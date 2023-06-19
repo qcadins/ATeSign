@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>errorLog_OK</name>
+   <name>button_Simpan</name>
    <tag></tag>
-   <elementGuidId>d720cedf-9f29-4c1e-953a-3c25d25f0632</elementGuidId>
+   <elementGuidId>8a7ce77c-ab94-4f50-9315-060db1e8f145</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'swal2-confirm btn btn-info']</value>
+         <value>//*[@class = 'btn btn-info mr-5']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>swal2-confirm btn btn-info</value>
-      <webElementGuid>cf9f075c-fa11-4915-8be0-d7a84ab1d46a</webElementGuid>
+      <value>btn btn-info mr-5</value>
+      <webElementGuid>552f080f-68ca-441f-ad31-47780efe5120</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
