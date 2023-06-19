@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[6]/a/i</value>
+         <value>//*[@class = 'datatable-icon-skip']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>class</name>
       <type>Main</type>
-      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[6]/a/i</value>
-      <webElementGuid>cc02b79f-c49d-449d-9f3d-4dd2699b443e</webElementGuid>
+      <value>datatable-icon-skip</value>
+      <webElementGuid>00edbf3e-ba79-4664-b264-53dd5ca6f035</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

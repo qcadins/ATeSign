@@ -9,11 +9,11 @@ import internal.GlobalVariable as GlobalVariable
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get data buat undangan dari DB'
-ArrayList<String> resultDataDiri = CustomKeywords.'connection.DataVerif.buatUndanganStoreDB'(conneSign, findTestData(excelPathBuatUndangan).getValue(
+ArrayList<String> resultDataDiri = CustomKeywords.'connection.Registrasi.buatUndanganStoreDB'(conneSign, findTestData(excelPathBuatUndangan).getValue(
         GlobalVariable.NumofColm, 15).toUpperCase())
 
 'get data perusahaan buat undangan dari DB'
-ArrayList<String> resultDataPerusahaan = CustomKeywords.'connection.DataVerif.getBuatUndanganDataPerusahaanStoreDB'(conneSign, 
+ArrayList<String> resultDataPerusahaan = CustomKeywords.'connection.Registrasi.getBuatUndanganDataPerusahaanStoreDB'(conneSign, 
     findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 15).toUpperCase())
 
 'declare arraylist arraymatch'

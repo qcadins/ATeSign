@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/ngb-modal-window/div/div/app-view-invitation-link/div/div[2]/button</value>
+         <value>//*[@class = 'col-12 text-center']/button</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,8 +17,8 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html/body/ngb-modal-window/div/div/app-view-invitation-link/div/div[2]/button</value>
-      <webElementGuid>68cb5248-e91d-470a-92ac-e682bb514db4</webElementGuid>
+      <value>//*[@class = 'col-12 text-center']/button</value>
+      <webElementGuid>33320e09-60c4-4162-b4c5-97939f3493e2</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -26,6 +26,14 @@
       <name>text</name>
       <type>Main</type>
       <value>Tutup</value>
-      <webElementGuid>97bbeec4-d3a5-499e-9908-cc199978a3a1</webElementGuid>
+      <webElementGuid>8850e354-e6f0-4dfa-8ecf-32f1b34b8d4a</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>col-12 text-center</value>
+      <webElementGuid>0721735e-ba6f-4d27-82de-ab5ee0c44c60</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

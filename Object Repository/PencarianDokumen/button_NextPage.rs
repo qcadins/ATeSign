@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-inquiry/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[6]/a/i</value>
+         <value>//*[@class = 'datatable-icon-right']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>class</name>
       <type>Main</type>
-      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-inquiry/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[6]/a/i</value>
-      <webElementGuid>0d2b9502-00e7-462a-95e9-dd21c55a3863</webElementGuid>
+      <value>datatable-icon-right</value>
+      <webElementGuid>8be4677b-50bb-4188-af38-789d217b688c</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

@@ -14,10 +14,10 @@ docid = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 6).repla
 
 for (int i = 0; i < docid.size(); i++) {
     'get data API Send Document dari DB (hanya 1 signer)'
-    ArrayList<String> result = CustomKeywords.'connection.DataVerif.getSendDoc'(conneSign, docid[i])
+    ArrayList<String> result = CustomKeywords.'connection.SendSign.getSendDoc'(conneSign, docid[i])
 
 	'Mengambil email berdasarkan documentId'
-	ArrayList<String> emailSigner = CustomKeywords.'connection.DataVerif.getEmailLogin'(conneSign, docid[i]).split(';',-1)
+	ArrayList<String> emailSigner = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, docid[i]).split(';',-1)
 
 	'split email dari excel'
 	email = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 40).replace('"','').split(';',-1)
@@ -26,7 +26,7 @@ for (int i = 0; i < docid.size(); i++) {
 	signerType = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 26).replace('"','').split(';',-1)
 	
 	for(int r = 0; r < emailSigner.size();r++) {
-		ArrayList<String> resultStoreEmailandType = CustomKeywords.'connection.DataVerif.getSendDocForEmailAndSignerType'(conneSign, docid[i], emailSigner[r])
+		ArrayList<String> resultStoreEmailandType = CustomKeywords.'connection.SendSign.getSendDocForEmailAndSignerType'(conneSign, docid[i], emailSigner[r])
 		
 		'declare arrayindex'
 		arrayindex = 0

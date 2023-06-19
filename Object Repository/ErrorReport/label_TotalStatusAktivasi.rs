@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/ngb-modal-window/div/div/app-act-status/div[2]/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/div</value>
+         <value>//*[@class = 'modal-body']/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/div</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,15 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html/body/ngb-modal-window/div/div/app-act-status/div[2]/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/div</value>
-      <webElementGuid>09826cd2-874b-4e98-80bf-f66214ffe91f</webElementGuid>
+      <value>//*[@class = 'modal-body']/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/div</value>
+      <webElementGuid>257321ee-40ae-4ec3-8c70-9ba3a0c7379f</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>modal-body</value>
+      <webElementGuid>2c78afd0-d274-4b64-9fe5-f4c5a4f74cee</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

@@ -39,7 +39,7 @@ if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 
     WebUI.click(findTestObject('PencarianPengguna/button_Edit'))
 
     'get data PencarianPengguna dari DB'
-    ArrayList<String> result = CustomKeywords.'connection.DataVerif.getDataPencarianPengguna'(conneSign, findTestData(excelPathPencarianPengguna).getValue(
+    ArrayList<String> result = CustomKeywords.'connection.PencarianPengguna.getDataPencarianPengguna'(conneSign, findTestData(excelPathPencarianPengguna).getValue(
             GlobalVariable.NumofColm, 15).toUpperCase())
 
     'declare arrayindex'

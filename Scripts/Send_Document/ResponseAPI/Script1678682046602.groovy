@@ -14,7 +14,7 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get tenant code dari DB'
-String resultTenant = CustomKeywords.'connection.DataVerif.getTenant'(conneSign, GlobalVariable.userLogin)
+String resultTenant = CustomKeywords.'connection.SendSign.getTenant'(conneSign, GlobalVariable.userLogin)
 
 sheet = 'API Send Document'
 semicolon = ';'
@@ -128,7 +128,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(A
 		'check ada value maka setting email service tenant'
 		if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 49).length() > 0) {
 			'setting email service tenant'
-			CustomKeywords.'connection.SendDocument.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 49), email[(i - 1)].replace('"',''))
+			CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 49), email[(i - 1)].replace('"',''))
 		}
 		
 	}

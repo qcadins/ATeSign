@@ -21,7 +21,7 @@ WebUI.click(findTestObject('InquiryInvitation/menu_InquiryInvitation'))
 'call function check paging'
 checkPaging()
 
-Integer editAfterRegister = CustomKeywords.'connection.DataVerif.getSetEditAfterRegister'(conneSign)
+Integer editAfterRegister = CustomKeywords.'connection.InquiryInvitation.getSetEditAfterRegister'(conneSign)
 
 'check if search dengan email/phone/id no'
 if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Email')) {

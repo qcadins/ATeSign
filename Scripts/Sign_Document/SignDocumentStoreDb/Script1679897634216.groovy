@@ -15,10 +15,10 @@ ArrayList<String> arrayMatch = new ArrayList<String>()
 
 'looping berdasarkan total document yang ada'
 for (int i = 1; i <= documentIds.size(); i++) {
-    ArrayList<String> emailsigner = CustomKeywords.'connection.DataVerif.getEmailsSign'(conneSign, documentIds[(i - 1)])
+    ArrayList<String> emailsigner = CustomKeywords.'connection.SendSign.getEmailsSign'(conneSign, documentIds[(i - 1)])
 
     'get data API Bulk Sign Document dari DB'
-    ArrayList<String> result = CustomKeywords.'connection.DataVerif.getbulkSign'(conneSign, documentIds[(i - 1)])
+    ArrayList<String> result = CustomKeywords.'connection.SendSign.getbulkSign'(conneSign, documentIds[(i - 1)])
 
     'declare arrayindex'
     arrayindex = 0

@@ -86,7 +86,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         WebUI.click(findTestObject('Meterai/button_Cari'))
 
         'get stampduty data dari db'
-        result = CustomKeywords.'connection.DataVerif.getStampdutyData'(conneSign, findTestData(excelPathMeterai).getValue(
+        result = CustomKeywords.'connection.Meterai.getStampdutyData'(conneSign, findTestData(excelPathMeterai).getValue(
                 GlobalVariable.NumofColm, 16))
 
         index = 0
@@ -128,7 +128,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         WebUI.click(findTestObject('Meterai/table_NomorMeterai'))
 
         'get stampduty trx data dari db'
-        result = CustomKeywords.'connection.DataVerif.getStampdutyTrxData'(conneSign, findTestData(excelPathMeterai).getValue(
+        result = CustomKeywords.'connection.Meterai.getStampdutyTrxData'(conneSign, findTestData(excelPathMeterai).getValue(
                 GlobalVariable.NumofColm, 16))
 
         index = 0

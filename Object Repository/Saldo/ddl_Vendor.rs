@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>ddl_tenant</name>
+   <name>ddl_Vendor</name>
    <tag></tag>
    <elementGuidId>50ab5629-c4af-4a6f-b93a-f2c23ce02265</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[1]/div/form/select</value>
+         <value>//*[@class = 'content-wrapper']/app-balance/div/div/div/div/div/form/select</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[1]/div/form/select</value>
-      <webElementGuid>123ac8b5-df99-4cac-9c2d-9b645a3a1103</webElementGuid>
+      <value>//*[@class = 'content-wrapper']/app-balance/div/div/div/div/div/form/select</value>
+      <webElementGuid>692522d8-f852-492d-9e85-22f7c7eabfa8</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

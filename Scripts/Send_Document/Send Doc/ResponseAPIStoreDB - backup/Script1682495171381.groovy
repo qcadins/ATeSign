@@ -130,7 +130,7 @@ for (int i = 0; i < docid.size(); i++) {
     (signerSelfPhoto[i]) = (signerSelfPhoto[i]).split(';', -1)
 
     'get data API Send Document dari DB (hanya 1 signer)'
-    ArrayList<String> result = CustomKeywords.'connection.DataVerif.getSendDoc'(conneSign, docid[(i - 1)])
+    ArrayList<String> result = CustomKeywords.'connection.SendSign.getSendDoc'(conneSign, docid[(i - 1)])
 
     'declare arrayindex'
     arrayindex = 0

@@ -45,7 +45,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		'check ada value maka setting email service tenant'
 		if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 52).length() > 0) {
 			'setting email service tenant'
-			CustomKeywords.'connection.Registrasi.settingEmailServiceTenant'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 52))
+			CustomKeywords.'connection.APIFullService.settingEmailServiceTenant'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 52))
 		}
 		
         'check if tidak mau menggunakan tenant code yang benar'
@@ -59,7 +59,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'check if mau menggunakan api_key yang salah atau benar'
         if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 32) == 'Yes') {
             'get api key dari db'
-            GlobalVariable.api_key = CustomKeywords.'connection.DataVerif.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
+            GlobalVariable.api_key = CustomKeywords.'connection.APIFullService.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
         } else if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 32) == 'No') {
             'get api key salah dari excel'
             GlobalVariable.api_key = findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 33)
@@ -115,9 +115,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     WebUI.callTestCase(findTestCase('APIFullService/API Generate Invitation Link/APIGenInvLinkStoreDB'), [('excelPathGenInvLink') : 'APIFullService/API_GenInvLink'], 
 						FailureHandling.CONTINUE_ON_FAILURE)
                 }
-                
+				
                 'call test case daftar akun verif'
-                WebUI.callTestCase(findTestCase('APIFullService/API Generate Invitation Link/DaftarAkunDataVerif'), [('excelPathGenerateLink') : 'APIFullService/API_GenInvLink'], 
+                WebUI.callTestCase(findTestCase('APIFullService/API Generate Invitation Link/DaftarAkunDataVerif'), [('excelPathGenerateLink') : 'APIFullService/API_GenInvLink', ('otpBefore') : saldoBefore[2]], 
                     FailureHandling.CONTINUE_ON_FAILURE)
 				
 				if (GlobalVariable.FlagFailed == 0) {

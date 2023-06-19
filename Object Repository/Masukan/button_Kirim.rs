@@ -7,25 +7,25 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;feedbackPage&quot;]/div/div/div/div/div/form/div/div[6]/div/button</value>
+         <value>//*[@type = 'submit']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>//*[@id=&quot;feedbackPage&quot;]/div/div/div/div/div/form/div/div[6]/div/button</value>
-      <webElementGuid>db469b24-3fd3-4a99-9a41-07ca312c95ef</webElementGuid>
+      <webElementGuid>39702e56-c6ec-4468-a9cd-f600bcfdc28b</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>false</isSelected>
+      <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>text</name>
+      <name>type</name>
       <type>Main</type>
-      <value>Kirim</value>
-      <webElementGuid>749fe9ea-020c-4223-a686-1cfd4449f1bb</webElementGuid>
+      <value>submit</value>
+      <webElementGuid>5f977ce2-d723-4f9b-84e7-7c37a86a2fbe</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

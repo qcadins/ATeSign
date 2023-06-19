@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-inquiry-user/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper/datatable-body-row/div[2]/datatable-body-cell[6]/div/a[2]/em</value>
+         <value>//*[@class = 'datatable-scroll ng-star-inserted']/datatable-row-wrapper/datatable-body-row/div[2]/datatable-body-cell[6]/div/a[2]/em</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-inquiry-user/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper/datatable-body-row/div[2]/datatable-body-cell[6]/div/a[2]/em</value>
-      <webElementGuid>f254baaa-9d7c-4a96-8883-d51aaff856a4</webElementGuid>
+      <value>//*[@class = 'datatable-scroll ng-star-inserted']/datatable-row-wrapper/datatable-body-row/div[2]/datatable-body-cell[6]/div/a[2]/em</value>
+      <webElementGuid>015f9dac-ffec-4fc4-b092-2741c66d8b5b</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

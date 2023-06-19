@@ -11,11 +11,24 @@
       <value></value>
       <variableId>c73f5610-76bc-46b7-9e49-862a26382923</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>dfc61dc6-a39a-426c-a700-388f849e0ce4</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>'Registrasi/BuatUndangan'</defaultValue>
       <description></description>
       <id>c73f5610-76bc-46b7-9e49-862a26382923</id>
       <masked>false</masked>
       <name>excelPathBuatUndangan</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>dfc61dc6-a39a-426c-a700-388f849e0ce4</id>
+      <masked>false</masked>
+      <name>otpBefore</name>
    </variable>
 </TestCaseEntity>

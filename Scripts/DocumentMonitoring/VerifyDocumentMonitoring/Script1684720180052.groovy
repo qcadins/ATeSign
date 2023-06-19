@@ -75,7 +75,7 @@ for (int o = 0 ; o <= 1 ; o++) {
 for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
 	
     'Mengambil email berdasarkan documentId'
-    ArrayList emailSigner = CustomKeywords.'connection.DataVerif.getEmailSigneronRefNumber'(conneSign, nomorKontrakPerPilihan[
+    ArrayList emailSigner = CustomKeywords.'connection.DocumentMonitoring.getEmailSigneronRefNumber'(conneSign, nomorKontrakPerPilihan[
         y]).split(';', -1)
 
     'Pembuatan untuk array Index result Query'
@@ -85,17 +85,17 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
     ArrayList arrayMatch = []
 
     'Mengambil value db untuk input-input monitoring seperti nomor kontrak, cabang, dan wilayah'
-    inputDocumentMonitoring = CustomKeywords.'connection.DataVerif.getInputDocumentMonitoring'(conneSign, nomorKontrakPerPilihan[
+    inputDocumentMonitoring = CustomKeywords.'connection.DocumentMonitoring.getInputDocumentMonitoring'(conneSign, nomorKontrakPerPilihan[
         y])
 
     'Mengisi value hasil komparasi, total sign, dan total signed'
-    documentStatus = CustomKeywords.'connection.DataVerif.getDocumentStatus'(conneSign, nomorKontrakPerPilihan[y])
+    documentStatus = CustomKeywords.'connection.DocumentMonitoring.getDocumentStatus'(conneSign, nomorKontrakPerPilihan[y])
 
     'Mengambil value db mengenai nama Customer'
-    fullNameCust = CustomKeywords.'connection.DataVerif.getuserCustomerondocument'(conneSign, nomorKontrakPerPilihan[y])
+    fullNameCust = CustomKeywords.'connection.DocumentMonitoring.getuserCustomerondocument'(conneSign, nomorKontrakPerPilihan[y])
 
     'Mengambil value db mengenai tipe dokumen'
-    documentType = CustomKeywords.'connection.DataVerif.getDocumentType'(conneSign, nomorKontrakPerPilihan[y])
+    documentType = CustomKeywords.'connection.DocumentMonitoring.getDocumentType'(conneSign, nomorKontrakPerPilihan[y])
 
     'Jika input nama pelanggan telah muncul'
     if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/input_NamaPelanggan'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
@@ -159,11 +159,11 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                 arrayIndex = 0
 
                 'Mengambil value dari db menngenai data yang perlu diverif'
-                resultQuery = CustomKeywords.'connection.DataVerif.getDocumentMonitoring'(conneSign,nomorKontrakPerPilihan[y], 
+                resultQuery = CustomKeywords.'connection.DocumentMonitoring.getDocumentMonitoring'(conneSign,nomorKontrakPerPilihan[y], 
                     , fullNameCust)
 
                 'Mengambil value dari db mengenai total stamping'
-                resultStamping = CustomKeywords.'connection.DataVerif.getTotalStampingandTotalMaterai'(conneSign,nomorKontrakPerPilihan[
+                resultStamping = CustomKeywords.'connection.DocumentMonitoring.getTotalStampingandTotalMaterai'(conneSign,nomorKontrakPerPilihan[
 					y])
 
                 'Looping berdasarkan row yang ada pada value'
@@ -180,7 +180,7 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                             'Split teks proses TTD'
                             totalSignandtotalSigned = WebUI.getText(modifyObjectvalues).split(' / ', -1)
 
-                            jumlahSignerTelahTandaTangan = CustomKeywords.'connection.DataVerif.getProsesTtdProgress'(conneSign, 
+                            jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgress'(conneSign, 
                                 nomorKontrakPerPilihan[y])
 							
                             'Verif hasil split, dimana proses awal hingga akhir. Awal dibandingkan dengan jumlahsignertandatangan, sedangkan akhir dibandingkan dengan total signer dari email'
@@ -231,11 +231,11 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                 arrayIndex = 0
 
                 'Mengambil value dari db menngenai data yang perlu diverif'
-                resultQuery = CustomKeywords.'connection.DataVerif.getDocumentMonitoringBasedOnEmbed'(conneSign, inputDocumentMonitoring[
+                resultQuery = CustomKeywords.'connection.DocumentMonitoring.getDocumentMonitoringBasedOnEmbed'(conneSign, inputDocumentMonitoring[
                     0], fullNameCust)
 
                 'Mengambil value dari db mengenai total stamping'
-                resultStamping = CustomKeywords.'connection.DataVerif.getTotalStampingandTotalMaterai'(conneSign, nomorKontrakPerPilihan[y])
+                resultStamping = CustomKeywords.'connection.DocumentMonitoring.getTotalStampingandTotalMaterai'(conneSign, nomorKontrakPerPilihan[y])
 
                 'Looping berdasarkan row yang ada pada value'
                 for (int j = 1; j <= sizeRowofLabelValue.size(); j++) {
@@ -250,7 +250,7 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                             'Split teks proses TTD'
                             totalSignandtotalSigned = WebUI.getText(modifyObjectvalues).split(' / ', -1)
 
-                            int jumlahSignerTelahTandaTangan = CustomKeywords.'connection.DataVerif.getProsesTtdProgress'(conneSign, 
+                            int jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgress'(conneSign, 
                                 nomorKontrakPerPilihan[y])
 
                             'Verif hasil split, dimana proses awal hingga akhir. Awal dibandingkan dengan jumlahsignertandatangan, sedangkan akhir dibandingkan dengan total signer dari email'

@@ -140,7 +140,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             variable = DriverFactory.webDriver.findElements(By.cssSelector('body > ngb-modal-window > div > div > app-signer > div.modal-body > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
 
             'get signer data dari db'
-            result = CustomKeywords.'connection.DataVerif.getDocumentMonitoringSigner'(conneSign, findTestData(excelPathDocumentMonitoring).getValue(
+            result = CustomKeywords.'connection.DocumentMonitoring.getDocumentMonitoringSigner'(conneSign, findTestData(excelPathDocumentMonitoring).getValue(
                     GlobalVariable.NumofColm, 10).toUpperCase())
 
             'looping table yang muncul pada ui'

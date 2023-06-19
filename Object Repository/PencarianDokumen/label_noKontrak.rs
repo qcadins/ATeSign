@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-view-document-inquiry/div[1]/div[2]/div</value>
+         <value>//*[@class = 'row align-items-center my-3']/div[2]/div</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,15 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-view-document-inquiry/div[1]/div[2]/div</value>
-      <webElementGuid>feb97c6f-c3f0-4889-88b7-28d5e01aa1ed</webElementGuid>
+      <value>//*[@class = 'row align-items-center my-3']/div[2]/div</value>
+      <webElementGuid>65f679fb-4631-4e5f-9c72-16b799f813e7</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>row align-items-center my-3</value>
+      <webElementGuid>f0536a9a-d678-415e-a86f-eeea90e3192a</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

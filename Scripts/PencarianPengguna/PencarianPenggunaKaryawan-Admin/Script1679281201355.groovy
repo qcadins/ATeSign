@@ -51,7 +51,7 @@ if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 
     WebUI.click(findTestObject('PencarianPenggunaAdmin/Karyawan/button_View'))
 
     'get data view dari DB'
-    ArrayList<String> resultData = CustomKeywords.'connection.DataVerif.getPencarianPengguna'(conneSign, findTestData(excelPathPencarianPengguna).getValue(
+    ArrayList<String> resultData = CustomKeywords.'connection.PencarianPengguna.getPencarianPengguna'(conneSign, findTestData(excelPathPencarianPengguna).getValue(
             GlobalVariable.NumofColm, 11).toUpperCase())
 
     index = 0

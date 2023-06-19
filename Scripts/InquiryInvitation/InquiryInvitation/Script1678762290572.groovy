@@ -19,11 +19,11 @@ WebUI.click(findTestObject('InquiryInvitation/menu_InquiryInvitation'))
 'call function check paging'
 checkPaging()
 
-int editAfterRegister = CustomKeywords.'connection.DataVerif.getSetEditAfterRegister'(conneSign)
+int editAfterRegister = CustomKeywords.'connection.InquiryInvitation.getSetEditAfterRegister'(conneSign)
 
-int resendLink = CustomKeywords.'connection.DataVerif.getSetResendLink'(conneSign)
+int resendLink = CustomKeywords.'connection.InquiryInvitation.getSetResendLink'(conneSign)
 
-int invLink = CustomKeywords.'connection.DataVerif.getSetInvLinkAct'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+int invLink = CustomKeywords.'connection.InquiryInvitation.getSetInvLinkAct'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
             15).toUpperCase())
 
 'check if search dengan email/phone/id no'
@@ -49,7 +49,7 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).eq
     WebUI.click(findTestObject('InquiryInvitation/button_Edit'))
 
     'get data buat undangan dari DB'
-    ArrayList<String> result = CustomKeywords.'connection.DataVerif.inquiryInvitationViewDataVerif'(conneSign, findTestData(
+    ArrayList<String> result = CustomKeywords.'connection.InquiryInvitation.inquiryInvitationViewDataVerif'(conneSign, findTestData(
             excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 15).toUpperCase())
 
     '1 karena invited by belum bisa di get value dari UI'

@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div/div/form/select</value>
+         <value>//*[@class = 'content-wrapper']/app-balance/div/div/div/div/div/form/select</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,8 +17,8 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div/div/form/select</value>
-      <webElementGuid>8368e4af-dbdc-44b9-a967-4d1f44118d8c</webElementGuid>
+      <value>//*[@class = 'content-wrapper']/app-balance/div/div/div/div/div/form/select</value>
+      <webElementGuid>63e5ba71-33a5-49d8-9bb6-181fce6623d8</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -26,6 +26,22 @@
       <name>formcontrolname</name>
       <type>Main</type>
       <value>vendorSelect</value>
-      <webElementGuid>dc12bb96-6911-43b1-94e0-c873a32f3bb8</webElementGuid>
+      <webElementGuid>d4d77225-865c-412f-8128-1b8920d868ed</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>content-wrapper</value>
+      <webElementGuid>e6b5ed04-bfe1-4a5f-ae33-b0f877bc3387</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>placeholder</name>
+      <type>Main</type>
+      <value>Select Vendor</value>
+      <webElementGuid>7e44941d-89d6-4a07-b0d4-544ded6e4a66</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

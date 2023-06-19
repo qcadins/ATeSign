@@ -8,7 +8,7 @@ import internal.GlobalVariable as GlobalVariable
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get data buat undangan dari DB'
-result = CustomKeywords.'connection.DataVerif.inquiryInvitationStoreDB'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 9))
+result = CustomKeywords.'connection.InquiryInvitation.inquiryInvitationStoreDB'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 9))
 
 'declare arraylist arraymatch'
 arrayMatch = []

@@ -8,11 +8,11 @@ import java.sql.Connection as Connection
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get data balance mutation dari DB'
-ArrayList<String> result = CustomKeywords.'connection.DataVerif.getIsiSaldoStoreDB'(conneSign, findTestData(excelPathIsiSaldo).getValue(
+ArrayList<String> result = CustomKeywords.'connection.Saldo.getIsiSaldoStoreDB'(conneSign, findTestData(excelPathIsiSaldo).getValue(
         GlobalVariable.NumofColm, 18))
 
 'get data tenant yang tidak topup dari DB'
-String resultTenantTidakTopup = CustomKeywords.'connection.DataVerif.getTenantTidakIsiSaldo'(conneSign, findTestData(excelPathIsiSaldo).getValue(
+String resultTenantTidakTopup = CustomKeywords.'connection.Saldo.getTenantTidakIsiSaldo'(conneSign, findTestData(excelPathIsiSaldo).getValue(
         GlobalVariable.NumofColm, 14), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 18))
 
 'declare arraylist arraymatch'

@@ -7,17 +7,25 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/ngb-modal-window/div/div/app-multi-role/div/form/div[3]/button</value>
+         <value>//*[@class = 'btn btn-primary']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/ngb-modal-window/div/div/app-multi-role/div/form/div[3]/button</value>
-      <webElementGuid>d81bf4e0-bacd-48e0-b5bb-ed7a40cbb09b</webElementGuid>
+      <webElementGuid>d3263f39-fd1f-415d-9376-d9ac9cdccb32</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>btn btn-primary</value>
+      <webElementGuid>3c0c03f7-79c3-4305-845f-e9073e691512</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

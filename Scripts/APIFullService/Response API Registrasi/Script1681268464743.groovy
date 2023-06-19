@@ -33,7 +33,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'check if mau menggunakan api_key yang salah atau benar'
         if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 28) == 'Yes') {
             'get api key dari db'
-            GlobalVariable.api_key = CustomKeywords.'connection.DataVerif.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
+            GlobalVariable.api_key = CustomKeywords.'connection.APIFullService.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
         } else if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 28) == 'No') {
             'get api key salah dari excel'
             GlobalVariable.api_key = findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 29)
@@ -83,13 +83,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     arrayIndex = 0
 
                     'get data from db'
-                    ArrayList<String> result = CustomKeywords.'connection.DataVerif.checkAPIRegisterActive'(conneSign, findTestData(
+                    ArrayList<String> result = CustomKeywords.'connection.APIFullService.checkAPIRegisterActive'(conneSign, findTestData(
                             excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 12).replace('"', ''), findTestData(
                             excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 16).replace('"', ''))
 
-                    String resultTrx = CustomKeywords.'connection.DataVerif.getAPIRegisterTrx'(conneSign, trxNo)
+                    String resultTrx = CustomKeywords.'connection.APIFullService.getAPIRegisterTrx'(conneSign, trxNo)
 
-                    ArrayList<String> resultDataUser = CustomKeywords.'connection.DataVerif.buatUndanganStoreDB'(conneSign, 
+                    ArrayList<String> resultDataUser = CustomKeywords.'connection.Registrasi.buatUndanganStoreDB'(conneSign, 
                         findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 12).replace('"', ''))
 
                     'declare arraylist arraymatch'
@@ -171,7 +171,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     GlobalVariable.StatusFailed, message)
 
                 if ((GlobalVariable.checkStoreDB == 'Yes') && (trxNo != null)) {
-                    String resultTrx = CustomKeywords.'connection.DataVerif.getAPIRegisterTrx'(conneSign, trxNo)
+                    String resultTrx = CustomKeywords.'connection.APIFullService.getAPIRegisterTrx'(conneSign, trxNo)
 
                     'declare arraylist arraymatch'
                     ArrayList<String> arrayMatch = new ArrayList<String>()

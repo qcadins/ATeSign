@@ -25,7 +25,7 @@ arrayIndex = 0
 'looping berdasarkan jumlah dokumen'
 for (int y = 0; y < docId.size(); y++) {
     'Mengambil email berdasarkan documentId'
-    ArrayList emailSigner = CustomKeywords.'connection.DataVerif.getEmailLogin'(conneSign, docId[y]).split(';', -1)
+    ArrayList emailSigner = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, docId[y]).split(';', -1)
 
     'looping berdasarkan email Signer dari dokumen tersebut. '
     for (int t = 0; t < emailSigner.size(); t++) {
@@ -33,7 +33,7 @@ for (int y = 0; y < docId.size(); y++) {
         WebUI.callTestCase(findTestCase('Login/Login_1docManySigner'), [('email') : emailSigner[t]], FailureHandling.STOP_ON_FAILURE)
         
         'get data kotak masuk send document secara asc, dimana customer no 1'
-        ArrayList result = CustomKeywords.'connection.DataVerif.getKotakMasukSendDoc'(conneSign, docId[y])
+        ArrayList result = CustomKeywords.'connection.SendSign.getKotakMasukSendDoc'(conneSign, docId[y])
 
         'declare array proses Ttd pada Pencarian Dokumen. Digunakan untuk membandingkan dengan Kotak Masuk / Beranda. '
         ArrayList prosesTtdPencarianDokumen = []
@@ -42,7 +42,7 @@ for (int y = 0; y < docId.size(); y++) {
         WebUI.click(findTestObject('PencarianDokumen/menu_PencarianDokumen'))
 
         'input status'
-        WebUI.setText(findTestObject('PencarianDokumen/select_Status'), CustomKeywords.'connection.DataVerif.getSignStatus'(
+        WebUI.setText(findTestObject('PencarianDokumen/select_Status'), CustomKeywords.'connection.SendSign.getSignStatus'(
                 conneSign, docId[y]))
 
         'click enter untuk input select ddl'
@@ -95,7 +95,7 @@ for (int y = 0; y < docId.size(); y++) {
                 'Jika kolom dicheck pada Proses TTD, mengambil text mengenai proses tanda tangan dan displit menjadi 2, yang pertama menjadi jumlah signer yang sudah tanda tangan. Yang kedua menjadi total signer'
                 prosesTtdPencarianDokumen = WebUI.getText(modifyObjectPencarianDokumen).split('/', -1)
 				
-				jumlahSignerTelahTandaTangan = CustomKeywords.'connection.DataVerif.getProsesTtdProgress'(conneSign, result[0])
+				jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgress'(conneSign, result[0])
 
                 'Pengecekan proses sign'
                 arrayMatch.add(WebUI.verifyEqual(jumlahSignerTelahTandaTangan, (prosesTtdPencarianDokumen[0]).replace(' ', ''), 
@@ -105,7 +105,7 @@ for (int y = 0; y < docId.size(); y++) {
                 arrayMatch.add(WebUI.verifyEqual(emailSigner.size(), (prosesTtdPencarianDokumen[1]).replace(' ', ''), FailureHandling.CONTINUE_ON_FAILURE))
             } else if (i == 7) {
                 'Jika kolom dicheck pada Total Meterai, keyword untuk mengecek total stamping dan total materai berdasarkan document id'
-                resultStamping = CustomKeywords.'connection.DataVerif.getTotalStampingandTotalMaterai'(conneSign, result[0])
+                resultStamping = CustomKeywords.'connection.SendSign.getTotalStampingandTotalMaterai'(conneSign, result[0])
 
                 'Mengambil teks dari UI dan displit berdasarkan proses stamping dan total materai'
                 totalMateraiPencarianDokumen = WebUI.getText(modifyObjectPencarianDokumen).split('/', -1)
@@ -119,7 +119,7 @@ for (int y = 0; y < docId.size(); y++) {
                 'Untuk ke sembilan tidak dibuat pengecekan dikarenakan itu adalah aksi. AKsi tidak dapat dicheck'
             } else if (i == 8) {
                 'Jika kolom dicheck pada Status, maka Pengecekan sign status'
-                arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectPencarianDokumen), CustomKeywords.'connection.DataVerif.getSignStatus'(
+                arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectPencarianDokumen), CustomKeywords.'connection.SendSign.getSignStatus'(
                             conneSign, docId[y]), false, FailureHandling.CONTINUE_ON_FAILURE))
             } else {
                 'Diverifikasi dengan UI didepan'
@@ -241,7 +241,7 @@ for (int y = 0; y < docId.size(); y++) {
         'loop untuk row popup'
         for (int i = 1; i <= variableRowPopup.size(); i++) {
             'get data kotak masuk send document secara asc, dimana customer no 1'
-            ArrayList resultSigner = CustomKeywords.'connection.DataVerif.getSignerKotakMasukSendDoc'(conneSign, docId[y], 
+            ArrayList resultSigner = CustomKeywords.'connection.SendSign.getSignerKotakMasukSendDoc'(conneSign, docId[y], 
                 emailSigner[(i - 1)])
 
             'declare array index menjadi 0 per result'

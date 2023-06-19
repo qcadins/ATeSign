@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-detail-user/app-page-header/div/div[2]/a</value>
+         <value>//*[@class = 'btn btn-secondary']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>class</name>
       <type>Main</type>
-      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-detail-user/app-page-header/div/div[2]/a</value>
-      <webElementGuid>47cbdd43-e30d-432e-a58b-6b7cc6ec05bf</webElementGuid>
+      <value>btn btn-secondary</value>
+      <webElementGuid>0857b117-e1bf-4284-b7b4-a5972c2e3457</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

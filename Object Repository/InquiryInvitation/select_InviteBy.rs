@@ -7,17 +7,25 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-edit-invitation/div[2]/div/div/div/div/form/div[1]/div[1]/div/ng-select/div/div/div[3]/input</value>
+         <value>//*[@role = 'combobox']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-edit-invitation/div[2]/div/div/div/div/form/div[1]/div[1]/div/ng-select/div/div/div[3]/input</value>
-      <webElementGuid>6b688343-2149-43f5-986c-0262e4c1a8da</webElementGuid>
+      <webElementGuid>a5a5a98b-e222-4e60-9762-e6aea2f31bde</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>role</name>
+      <type>Main</type>
+      <value>combobox</value>
+      <webElementGuid>98e3fad4-e0c7-474b-a827-74815d067918</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

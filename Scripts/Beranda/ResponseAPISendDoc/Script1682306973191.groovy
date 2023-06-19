@@ -19,7 +19,7 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get tenant code dari DB'
-String resultTenant = CustomKeywords.'connection.DataVerif.getTenant'(conneSign, GlobalVariable.userLogin)
+String resultTenant = CustomKeywords.'connection.SendSign.getTenant'(conneSign, GlobalVariable.userLogin)
 
 'Inisialisasi seluruh data yang dibuuthkan'
 String refNo = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 11)
@@ -218,10 +218,10 @@ def responseAPIStoreDB(Connection conneSign) {
 
     for (int r = 0; r < docid.size(); r++) {
         'get data API Send Document dari DB (hanya 1 signer)'
-        ArrayList<String> resultStoreDB = CustomKeywords.'connection.DataVerif.getSendDoc'(conneSign, docid[r])
+        ArrayList<String> resultStoreDB = CustomKeywords.'connection.SendSign.getSendDoc'(conneSign, docid[r])
 		
 		'Mengambil email berdasarkan documentId'
-		ArrayList<String> emailSigner = CustomKeywords.'connection.DataVerif.getEmailLogin'(conneSign, docid[r]).split(';',-1)
+		ArrayList<String> emailSigner = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, docid[r]).split(';',-1)
 
 		'split email dari excel'
 		email = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 40).replace('"','').split(';',-1)
@@ -230,7 +230,7 @@ def responseAPIStoreDB(Connection conneSign) {
 		signerType = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 26).replace('"','').split(';',-1)
 		
 		for(int i = 0; i< emailSigner.size();i++) {
-			ArrayList<String> resultStoreEmailandType = CustomKeywords.'connection.DataVerif.getSendDocForEmailAndSignerType'(conneSign, docid[r], emailSigner[i])
+			ArrayList<String> resultStoreEmailandType = CustomKeywords.'connection.SendSign.getSendDocForEmailAndSignerType'(conneSign, docid[r], emailSigner[i])
 			
 			'declare arrayindex'
 			arrayindex = 0

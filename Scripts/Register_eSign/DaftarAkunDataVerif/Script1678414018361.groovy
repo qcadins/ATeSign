@@ -342,6 +342,29 @@ def checkSaldoOTP() {
 	'select vendor'
 	WebUI.selectOptionByLabel(findTestObject('BuatUndangan/checkSaldo/select_Vendor'), '(?i)' + 'ESIGN/ADINS', true)
 	
+	'get row'
+	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
+
+	for (index = 2; index <= variable.size(); index++) {
+		'modify object box info'
+		modifyObjectBoxInfo = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
+			'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) +
+			']/div/div/div/div/div[1]/h3', true)
+
+		'check if box info = tipe saldo OTP'
+		if (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('OTP')) {
+			'modify object qty'
+			modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
+				'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) +
+				']/div/div/div/div/div[2]/h3', true)
+
+			'verify saldo tidak berkurang'
+			checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectQty).replace(',', ''), saldoBefore, false, FailureHandling.CONTINUE_ON_FAILURE), ' User')
+
+			break
+		}
+	}
+	
 	'input tipe saldo'
 	WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), 'OTP')
 

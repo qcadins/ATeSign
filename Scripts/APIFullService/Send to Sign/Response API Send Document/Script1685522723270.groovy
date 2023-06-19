@@ -386,7 +386,7 @@ if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 44) == 
 'check if mau menggunakan api_key yang salah atau benar'
 if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 42) == 'Yes') {
     'get api key dari db'
-    GlobalVariable.api_key = CustomKeywords.'connection.DataVerif.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
+    GlobalVariable.api_key = CustomKeywords.'connection.APIFullService.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
 } else if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 42) == 'No') {
     'get api key salah dari excel'
     GlobalVariable.api_key = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 43)
@@ -500,12 +500,12 @@ def responseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, St
         pageSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 34).split(enter, splitnum)
 
         'get data API Send Document dari DB (hanya 1 signer)'
-        result = CustomKeywords.'connection.DataVerif.getSendDocSigning'(conneSign, docid[i])
+        result = CustomKeywords.'connection.APIFullService.getSendDocSigning'(conneSign, docid[i])
 
         'Jika documentTemplateCode di dokumen pertama adalah kosong'
         if ((documentTemplateCode[i]).replace('"', '') == '') {
             'Maka pengecekan signlocation yang diinput'
-            arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.DataVerif.getSignLocation'(conneSign, docid[i]), 
+            arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getSignLocation'(conneSign, docid[i]), 
                     signlocStoreDB, false, FailureHandling.CONTINUE_ON_FAILURE))
         }
         
@@ -528,7 +528,7 @@ def responseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, St
         emailExcel = (email[i]).replace('"', '').split(semicolon, splitnum)
 		
         for (int r = 0; r < emailExcel.size(); r++) {
-            ArrayList resultStoreEmailandType = CustomKeywords.'connection.DataVerif.getSendDocForEmailAndSignerType'(conneSign, 
+            ArrayList resultStoreEmailandType = CustomKeywords.'connection.APIFullService.getSendDocForEmailAndSignerType'(conneSign, 
                 docid[i], emailExcel[r])
 			
             'declare arrayindex'
@@ -590,7 +590,7 @@ def responseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, St
                 trxno = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 6)
 
                 'get data result trx untuk signing'
-                resulttrxsigning = CustomKeywords.'connection.DataVerif.getTrxSendDocSigning'(conneSign, trxno)
+                resulttrxsigning = CustomKeywords.'connection.APIFullService.getTrxSendDocSigning'(conneSign, trxno)
 
                 'declare arrayindex'
                 arrayindex = 0

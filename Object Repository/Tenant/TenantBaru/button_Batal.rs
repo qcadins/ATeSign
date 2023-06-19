@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/div[25]/div/button[1]</value>
+         <value>//*[@class = 'btn btn-light mr-2']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>class</name>
       <type>Main</type>
-      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/div[25]/div/button[1]</value>
-      <webElementGuid>145c9ee3-533c-49a3-a2d2-766741d90440</webElementGuid>
+      <value>btn btn-light mr-2</value>
+      <webElementGuid>625e75d1-cba3-473d-be64-8a578f68e158</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

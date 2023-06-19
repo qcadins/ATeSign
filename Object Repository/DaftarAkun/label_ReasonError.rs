@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/ngb-modal-window/div/div/app-msx-alert/div/div/div[1]/ul</value>
+         <value>//*[@class = 'col-12 ng-star-inserted']/ul</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,15 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html/body/ngb-modal-window/div/div/app-msx-alert/div/div/div[1]/ul</value>
-      <webElementGuid>bd595e80-900f-42d3-9327-8e3c322f66f8</webElementGuid>
+      <value>//*[@class = 'col-12 ng-star-inserted']/ul</value>
+      <webElementGuid>f3176f88-6f1e-4ab5-b7b4-8f33270509cf</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>col-12 ng-star-inserted</value>
+      <webElementGuid>6eb84b24-64fa-434c-a1dc-697a957a7cde</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

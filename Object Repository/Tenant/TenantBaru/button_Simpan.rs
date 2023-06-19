@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/div[25]/div/button[2]</value>
+         <value>//*[@class = 'col-12 text-center']/button[2]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,15 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/div[25]/div/button[2]</value>
-      <webElementGuid>0db74757-3313-4e1a-bfb7-c852caae070c</webElementGuid>
+      <value>//*[@class = 'col-12 text-center']/button[2]</value>
+      <webElementGuid>314a58c5-886a-4eb5-af4b-ee25e88451fc</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>col-12 text-center</value>
+      <webElementGuid>8736566b-74f7-4fcb-8be8-09c7c9f14206</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

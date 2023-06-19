@@ -7,18 +7,18 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/ngb-modal-window/div/div/app-verification-email/form/div/button[1]/span</value>
+         <value>//*[@class = 'close']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/ngb-modal-window/div/div/app-verification-email/form/div/button[1]/span</value>
-      <webElementGuid>b68c7bad-b0bf-4723-b7c2-76b6ad18a03e</webElementGuid>
+      <webElementGuid>a15f7cb0-60ad-4cc0-9ecb-5f3f56c638ec</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -26,6 +26,14 @@
       <name>text</name>
       <type>Main</type>
       <value>x</value>
-      <webElementGuid>811146d2-ebed-46df-af0a-525069ebc0b9</webElementGuid>
+      <webElementGuid>dcf39e6e-d1aa-43b9-82ce-8e882ab3f594</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>close</value>
+      <webElementGuid>3654ba27-b75e-450e-8838-a10b33c7793c</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

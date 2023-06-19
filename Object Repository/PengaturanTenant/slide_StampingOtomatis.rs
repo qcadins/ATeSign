@@ -10,12 +10,12 @@
          <value>//label/span</value>
       </entry>
       <entry>
-         <key>BASIC</key>
-         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/label/span</value>
-      </entry>
-      <entry>
          <key>CSS</key>
          <value>span.slider.round</value>
+      </entry>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@class = 'slider round']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -26,23 +26,23 @@
       <name>tag</name>
       <type>Main</type>
       <value>span</value>
-      <webElementGuid>e28c9c0c-7a80-45e5-bfed-5b6a40b11258</webElementGuid>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>class</name>
-      <type>Main</type>
-      <value>slider round</value>
-      <webElementGuid>98072b1f-0fda-4b37-9337-583370027bbe</webElementGuid>
+      <webElementGuid>274da5bf-8724-4438-8ab5-6c5bcc3fa13e</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>slider round</value>
+      <webElementGuid>334fe020-339c-487e-b470-eb8498d6e87b</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/label/span</value>
-      <webElementGuid>73f12327-f7c1-4066-996f-b646bf30c0b4</webElementGuid>
+      <webElementGuid>17cbedf4-3ae1-4a7c-b575-3ef7380e0973</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -50,6 +50,6 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//label/span</value>
-      <webElementGuid>7d913a56-6ba3-49c2-a743-2e5fb1781388</webElementGuid>
+      <webElementGuid>140133e8-8a55-4051-9a09-aa489d99c973</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

@@ -17,8 +17,8 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html/body/ngb-modal-window/div/div/app-msx-alert/div/div/div[1]/h3</value>
-      <webElementGuid>2ebc5c8d-8662-41e9-ba64-20db7f518b8b</webElementGuid>
+      <value>//*[@class = 'col-12 ng-star-inserted']/h3</value>
+      <webElementGuid>57d46f76-6498-432f-bdc5-dba668d192be</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -26,6 +26,6 @@
       <name>text</name>
       <type>Main</type>
       <value>Validation Error</value>
-      <webElementGuid>ba9da594-e748-4633-abeb-be6154cf723e</webElementGuid>
+      <webElementGuid>c942a00f-cb66-4b60-bfef-cd457a2e4bc6</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

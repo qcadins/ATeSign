@@ -10,12 +10,12 @@
          <value>(.//*[normalize-space(text()) and normalize-space(.)='Download Report'])[1]/following::div[11]</value>
       </entry>
       <entry>
-         <key>BASIC</key>
-         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[1]/div/div</value>
-      </entry>
-      <entry>
          <key>CSS</key>
          <value>div.content-header</value>
+      </entry>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@class = 'content-wrapper']/app-tenant-settings/div[1]/div/div</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -23,18 +23,10 @@
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>tag</name>
-      <type>Main</type>
-      <value>div</value>
-      <webElementGuid>6ae7263f-8054-40ab-a14e-4d8988bc66ec</webElementGuid>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>content-header</value>
-      <webElementGuid>5642386d-7021-494d-8703-392a472398a7</webElementGuid>
+      <value>content-wrapper</value>
+      <webElementGuid>aab8bd97-8b24-4ab4-9d08-9c45b71bd10c</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -42,15 +34,15 @@
       <name>text</name>
       <type>Main</type>
       <value> Pengaturan Tenant </value>
-      <webElementGuid>89e957fe-505b-4e00-afdb-48f4ee2f6b0b</webElementGuid>
+      <webElementGuid>b6dd558e-be32-4481-b8b7-c3d50eed6df1</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[1]/div/div</value>
-      <webElementGuid>9d490ae9-6d21-4991-891e-414ed59cb3e8</webElementGuid>
+      <value>//*[@class = 'content-wrapper']/app-tenant-settings/div[1]/div/div</value>
+      <webElementGuid>7741d8eb-35d2-46a7-844c-ae0c948ef785</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -58,7 +50,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Download Report'])[1]/following::div[11]</value>
-      <webElementGuid>95e431c4-8186-4a4b-aa60-a7115fcb1b55</webElementGuid>
+      <webElementGuid>502fe466-001d-4465-b657-5e78a526473e</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -66,7 +58,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Masukan'])[1]/following::div[11]</value>
-      <webElementGuid>8e912a31-c3e9-4f9c-a087-2485ac0da18f</webElementGuid>
+      <webElementGuid>7cf23013-6e6c-4e9c-92e9-41abdc72dfab</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -74,7 +66,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Copy'])[1]/preceding::div[3]</value>
-      <webElementGuid>19621101-d691-4e14-b0e4-2d08b1e91ffd</webElementGuid>
+      <webElementGuid>9363c206-4826-4379-9976-4b1658872646</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -82,7 +74,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='OTP'])[1]/preceding::div[4]</value>
-      <webElementGuid>4669a6f8-8868-4807-ad5c-56be8c4165a5</webElementGuid>
+      <webElementGuid>a52dce2c-61fd-4e95-8515-c58bf7ba3869</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -90,7 +82,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//app-tenant-settings/div/div/div</value>
-      <webElementGuid>e88b6f5e-536b-4559-a512-6f6f18ea64a1</webElementGuid>
+      <webElementGuid>8d26300d-1aaf-4de5-9127-da8b97a8d075</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -98,6 +90,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//div[(text() = ' Pengaturan Tenant ' or . = ' Pengaturan Tenant ')]</value>
-      <webElementGuid>89e7d07d-07d3-4385-b1f1-0eae270b5e54</webElementGuid>
+      <webElementGuid>1dcd3b7a-5745-4e39-a14b-790a05a270dc</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

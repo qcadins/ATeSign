@@ -298,8 +298,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 	    }
 		
 		if ((GlobalVariable.checkStoreDB == 'Yes')) {
-			resultTrx = CustomKeywords.'connection.DataVerif.getAPIGenInvLinkOTPTrx'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(
-						GlobalVariable.NumofColm, 11).replace('"',''))
+			resultTrx = CustomKeywords.'connection.APIFullService.getAPIGenInvLinkOTPTrx'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 11).replace('"',''))
 	
 			'declare arraylist arraymatch'
 			ArrayList<String> arrayMatch = []

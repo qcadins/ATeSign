@@ -261,7 +261,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     }
     
     'call test case daftar akun data verif'
-    WebUI.callTestCase(findTestCase('Register_eSign/DaftarAkunDataVerif'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
+    WebUI.callTestCase(findTestCase('Register_eSign/DaftarAkunDataVerif'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan', ('otpBefore') : saldoBefore[2]], 
         FailureHandling.CONTINUE_ON_FAILURE)
 
     if ((GlobalVariable.checkStoreDB == 'Yes') && (GlobalVariable.FlagFailed == 0)) {
@@ -356,7 +356,7 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
             'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) + 
             ']/div/div/div/div/div[1]/h3', true)
 
-        'check if box info = tipe saldo di excel'
+        'check if box info = tipe saldo verifikasi'
         if (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('Verification')) {
             'modify object qty'
             modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 

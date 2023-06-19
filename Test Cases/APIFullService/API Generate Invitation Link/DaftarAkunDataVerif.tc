@@ -11,11 +11,24 @@
       <value></value>
       <variableId>2392a0fe-e4c5-4cb0-9073-154cd62ec14a</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>c0835804-6c37-45fc-afb2-a898b6bd85e1</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>'APIFullService/API_GenInvLink'</defaultValue>
       <description></description>
       <id>2392a0fe-e4c5-4cb0-9073-154cd62ec14a</id>
       <masked>false</masked>
       <name>excelPathAPIGenerateInvLink</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>c0835804-6c37-45fc-afb2-a898b6bd85e1</id>
+      <masked>false</masked>
+      <name>otpBefore</name>
    </variable>
 </TestCaseEntity>

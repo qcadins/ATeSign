@@ -7,17 +7,33 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/ngb-modal-window/div/div/app-verification-email/form/div/button[2]</value>
+         <value>//*[@type = 'submit']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/ngb-modal-window/div/div/app-verification-email/form/div/button[2]</value>
-      <webElementGuid>87ceccc3-2121-400d-a9b8-d77603c19d38</webElementGuid>
+      <webElementGuid>f9f982f1-c439-434c-b65c-7ee1cabce6dd</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>type</name>
+      <type>Main</type>
+      <value>submit</value>
+      <webElementGuid>e7e51dd2-c044-4022-903b-effedf72b1e1</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>btn btn-info btn-block mt-4</value>
+      <webElementGuid>5e9a0ea4-3da9-404f-8cf2-25887e885af6</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

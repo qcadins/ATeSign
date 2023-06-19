@@ -31,7 +31,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		'check if mau menggunakan api_key yang salah atau benar'
         if (findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 13) == 'Yes') {
             'get api key dari db'
-            GlobalVariable.api_key = CustomKeywords.'connection.DataVerif.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
+            GlobalVariable.api_key = CustomKeywords.'connection.APIFullService.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
         } else if (findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 13) == 'No') {
             'get api key salah dari excel'
             GlobalVariable.api_key = findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 14)
@@ -55,14 +55,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 message = WS.getElementPropertyValue(respon, 'checkStampingStatus.messsage', FailureHandling.OPTIONAL)
 
                 if (GlobalVariable.checkStoreDB == 'Yes') {
-//					'get totalMaterai from db'
-//					String totalMaterai = CustomKeywords.'connection.DataVerif.getTotalMaterai'(conneSign, findTestData(excelPathAPIRequestStamping).getValue(
-//						GlobalVariable.NumofColm, 11).replace('"',''))
-					
+				
                     arrayIndex = 0
 
                     'get data from db'
-                    ArrayList<String> result = CustomKeywords.'connection.DataVerif.getAPICheckStampingStoreDB'(conneSign, 
+                    ArrayList<String> result = CustomKeywords.'connection.APIFullService.getAPICheckStampingStoreDB'(conneSign, 
                         findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, 11).replace('"', ''))
 
                     'declare arraylist arraymatch'

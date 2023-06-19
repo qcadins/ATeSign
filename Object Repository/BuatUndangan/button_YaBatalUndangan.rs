@@ -18,7 +18,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/div[3]/div/div[3]/button[3]</value>
-      <webElementGuid>7c57b108-0c66-4fed-a6fd-dddd5d8bc1e8</webElementGuid>
+      <webElementGuid>4a62598c-eb65-451b-be9a-469dbded2f9e</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -26,6 +26,14 @@
       <name>text</name>
       <type>Main</type>
       <value>Ya</value>
-      <webElementGuid>41d550fc-cc06-4587-98d6-e44bb05a6a2a</webElementGuid>
+      <webElementGuid>d6774646-391c-4db1-84c2-c9f9397da86c</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>swal2-confirm btn btn-primary</value>
+      <webElementGuid>3626cdee-df21-4307-a787-c16090f3c8c4</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

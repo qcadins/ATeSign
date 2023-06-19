@@ -455,7 +455,7 @@ def checkPaging(Connection conneSign) {
     WebUI.click(findTestObject('Tenant/button_Cari'))
 
     'get data tenant'
-    int resultTotalData = CustomKeywords.'connection.DataVerif.getTotalTenant'(conneSign)
+    int resultTotalData = CustomKeywords.'connection.Tenant.getTotalTenant'(conneSign)
 
     'get text total data dari ui'
     Total = WebUI.getText(findTestObject('Tenant/label_TotalData')).split(' ')

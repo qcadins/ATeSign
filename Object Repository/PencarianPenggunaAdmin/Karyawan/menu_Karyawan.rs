@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/app-root/app-full-layout/div/div[1]/app-sidebar/div[2]/div[1]/ul/li[8]/ul/li[1]/a/span</value>
+         <value>//*[@class = 'sidebar-content main-menu-content ng-tns-c133-1 ps']/div[1]/ul/li[8]/ul/li[1]/a/span</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html/body/app-root/app-full-layout/div/div[1]/app-sidebar/div[2]/div[1]/ul/li[8]/ul/li[1]/a/span</value>
-      <webElementGuid>8c535440-bf3e-426a-a328-cd0dec259d66</webElementGuid>
+      <value>//*[@class = 'sidebar-content main-menu-content ng-tns-c133-1 ps']/div[1]/ul/li[8]/ul/li[1]/a/span</value>
+      <webElementGuid>b44b7b4c-afa5-46be-9329-dafa9f53e205</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

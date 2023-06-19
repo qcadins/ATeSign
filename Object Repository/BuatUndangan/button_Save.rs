@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-generate-invitation/div[2]/div/div/div/div/form/div[11]/button[2]</value>
+         <value>//*[@class = 'card-body']/form/div[11]/button[2]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-generate-invitation/div[2]/div/div/div/div/form/div[11]/button[2]</value>
-      <webElementGuid>55ec4f34-b193-4fe1-a730-2bd5c14acbcc</webElementGuid>
+      <value>//*[@class = 'card-body']/form/div[11]/button[2]</value>
+      <webElementGuid>cc6082d7-4c58-4db5-80c4-d73482eaced7</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

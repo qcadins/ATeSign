@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/app-root/app-full-layout/div/div[1]/app-sidebar/div[2]/div[1]/ul/li[2]/a/span</value>
+         <value>//*[@class = 'app-sidebar main-menu menu-fixed menu-native-scroll expanded ng-star-inserted']/app-sidebar/div[2]/div[1]/ul/li[2]/a/span</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,15 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html/body/app-root/app-full-layout/div/div[1]/app-sidebar/div[2]/div[1]/ul/li[2]/a/span</value>
-      <webElementGuid>3d019094-bdea-4a15-87d9-5db668b0193e</webElementGuid>
+      <value>//*[@class = 'app-sidebar main-menu menu-fixed menu-native-scroll expanded ng-star-inserted']/app-sidebar/div[2]/div[1]/ul/li[2]/a/span</value>
+      <webElementGuid>2541563e-8b32-47d8-9709-5ad2d1c0cf06</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>app-sidebar main-menu menu-fixed menu-native-scroll expanded ng-star-inserted</value>
+      <webElementGuid>da5b1f4c-b910-4870-b68c-0604f49e9760</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

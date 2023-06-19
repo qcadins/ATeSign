@@ -54,21 +54,21 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(e
     }
     
     'ambil db checking ke UI Beranda'
-    ArrayList sendToSign = CustomKeywords.'connection.DataVerif.getDataSendtoSign'(conneSign, findTestData(excelPathFESignDocument).getValue(
+    ArrayList sendToSign = CustomKeywords.'connection.SendSign.getDataSendtoSign'(conneSign, findTestData(excelPathFESignDocument).getValue(
             GlobalVariable.NumofColm, 6))
 
     'Mengambil email berdasarkan documentId'
-    ArrayList emailSigner = CustomKeywords.'connection.DataVerif.getEmailLogin'(conneSign, findTestData(excelPathFESignDocument).getValue(
+    ArrayList emailSigner = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, findTestData(excelPathFESignDocument).getValue(
             GlobalVariable.NumofColm, 6)).split(';', -1)
 
     'Declare variable jumlahSignerTelahTtd untuk proses ttd, saldoUsedDocPertama hanya untuk dokumen pertama'
-     int jumlahSignerTelahTtd = CustomKeywords.'connection.DataVerif.getProsesTtdProgress'(conneSign, findTestData(excelPathFESignDocument).getValue(
+     int jumlahSignerTelahTtd = CustomKeywords.'connection.SendSign.getProsesTtdProgress'(conneSign, findTestData(excelPathFESignDocument).getValue(
      GlobalVariable.NumofColm, 6))
 	
 	int saldoUsedDocPertama = 0
 
     'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
-    int jumlahSignerTandaTangan = CustomKeywords.'connection.DataVerif.getTotalSigned'(conneSign, findTestData(excelPathFESignDocument).getValue(
+    int jumlahSignerTandaTangan = CustomKeywords.'connection.SendSign.getTotalSigned'(conneSign, findTestData(excelPathFESignDocument).getValue(
             GlobalVariable.NumofColm, 6))
 	
 	'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
@@ -582,23 +582,23 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(e
                 'looping untuk mendapatkan total saldo yang digunakan per nomor kontrak'
                 for (i = 0; i < noKontrakPerDoc.size(); i++) {
                     'Mengambil value dari db mengenai tipe pembayran'
-                    paymentType = CustomKeywords.'connection.DataVerif.getPaymentType'(conneSign, noKontrakPerDoc[i])
+                    paymentType = CustomKeywords.'connection.SendSign.getPaymentType'(conneSign, noKontrakPerDoc[i])
 
                     'Jika tipe pembayarannya per sign'
                     if (paymentType == 'Per Sign') {
                         'Saldo usednya akan ditambah dengan value db penggunaan saldo'
-                        saldoUsed = (saldoUsed + CustomKeywords.'connection.DataVerif.getSaldoUsedBasedonPaymentType'(conneSign, 
+                        saldoUsed = (saldoUsed + CustomKeywords.'connection.SendSign.getSaldoUsedBasedonPaymentType'(conneSign, 
                             noKontrakPerDoc[i], emailSigner[(o - 1)]))
 
                         if (i == 0) {
-                            saldoUsedDocPertama = (saldoUsedDocPertama + CustomKeywords.'connection.DataVerif.getSaldoUsedBasedonPaymentType'(
+                            saldoUsedDocPertama = (saldoUsedDocPertama + CustomKeywords.'connection.SendSign.getSaldoUsedBasedonPaymentType'(
                                 conneSign, noKontrakPerDoc[i], emailSigner[(o - 1)]))
                         }
                     } else {
                         saldoUsed = (saldoUsed + 1)
 
                         if (i == 0) {
-                            saldoUsedDocPertama = (saldoUsedDocPertama + CustomKeywords.'connection.DataVerif.getSaldoUsedBasedonPaymentType'(
+                            saldoUsedDocPertama = (saldoUsedDocPertama + CustomKeywords.'connection.SendSign.getSaldoUsedBasedonPaymentType'(
                                 conneSign, noKontrakPerDoc[i], emailSigner[(o - 1)]))
                         }
                     }
@@ -683,12 +683,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(e
             inputFilterTrx(conneSign, currentDate, noKontrakPerDoc[i], documentTemplateNamePerDoc[i])
 
             'Mengambil value dari db mengenai tipe pembayran'
-            paymentType = CustomKeywords.'connection.DataVerif.getPaymentType'(conneSign, noKontrakPerDoc[i])
+            paymentType = CustomKeywords.'connection.SendSign.getPaymentType'(conneSign, noKontrakPerDoc[i])
 
             'Jika tipe pembayarannya per sign'
             if (paymentType == 'Per Sign') {
                 'Memanggil saldo total yang telah digunakan per dokumen tersebut'
-                saldoUsedperDoc = CustomKeywords.'connection.DataVerif.getTotalSignedUsingRefNumber'(conneSign, noKontrakPerDoc[
+                saldoUsedperDoc = CustomKeywords.'connection.SendSign.getTotalSignedUsingRefNumber'(conneSign, noKontrakPerDoc[
                     i])
             } else {
                 saldoUsedperDoc = o
@@ -831,7 +831,7 @@ def signingProcessStoreDB(Connection conneSign, String emailSigner, int jumlahSi
     arrayIndex = 0
 
     'SigningDB mengambil value dari hasil query'
-    signingDB = CustomKeywords.'connection.DataVerif.getSigningStatusProcess'(conneSign, findTestData(excelPathFESignDocument).getValue(
+    signingDB = CustomKeywords.'connection.SendSign.getSigningStatusProcess'(conneSign, findTestData(excelPathFESignDocument).getValue(
             GlobalVariable.NumofColm, 6), emailSigner)
 
     'looping berdasarkan size dari signingDB'
@@ -867,7 +867,7 @@ def signingProcessStoreDB(Connection conneSign, String emailSigner, int jumlahSi
 }
 
 def inputFilterTrx(Connection conneSign, String currentDate, String noKontrak, String documentTemplateName) {
-    documentType = CustomKeywords.'connection.DataVerif.getDocumentType'(conneSign, noKontrak)
+    documentType = CustomKeywords.'connection.SendSign.getDocumentType'(conneSign, noKontrak)
 
     'input filter dari saldo'
     WebUI.setText(findTestObject('Saldo/input_tipesaldo'), findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
@@ -912,7 +912,7 @@ def checkSaldoSign() {
     WebUI.click(findTestObject('Saldo/btn_Saldo'))
 
     'klik ddl untuk tenant memilih mengenai Vida'
-    WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_tenant'), findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
+    WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
             67), false)
 
     'get total div di Saldo'
@@ -953,7 +953,7 @@ def checkSaldoOtp() {
     WebUI.click(findTestObject('Saldo/btn_Saldo'))
 
     'klik ddl untuk tenant memilih mengenai Vida'
-    WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_tenant'), findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
+    WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
             69), false)
 
     'get total div di Saldo'

@@ -18,6 +18,6 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[6]/a/i</value>
-      <webElementGuid>4799e256-9259-46c2-bb85-caf2615481e5</webElementGuid>
+      <webElementGuid>b575597b-d567-4ec7-9633-dc407b1c7821</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

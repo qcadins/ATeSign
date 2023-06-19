@@ -52,7 +52,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             FailureHandling.OPTIONAL)
 
         'Mengambil hasil db untuk sebelum diedit untuk mendapatkan total emailnya ada berapa'
-        resultDbPrevious = CustomKeywords.'connection.DataVerif.getPengaturanTenant'(conneSign, findTestData('Login/Login').getValue(
+        resultDbPrevious = CustomKeywords.'connection.PengaturanTenant.getPengaturanTenant'(conneSign, findTestData('Login/Login').getValue(
                 2, 2).toUpperCase())
 
         'diskip 2 karena sekaligus pengecekan after. 2 yang diskip mengenai diupdate oleh siapa dan tanggal updatenya'
@@ -121,7 +121,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 'for', 'equals', ('' + (arrTipeSaldoBefore[i])) + '', true)
 
             'Mengambil deskripsi dari tipe saldo tersebut'
-            descriptionBalanceType = CustomKeywords.'connection.DataVerif.getDescriptionBalanceType'(conneSign, arrTipeSaldoBefore[
+            descriptionBalanceType = CustomKeywords.'connection.PengaturanTenant.getDescriptionBalanceType'(conneSign, arrTipeSaldoBefore[
                 i])
 
             'Jika masih tidak ketemu textnya'
@@ -174,7 +174,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 'for', 'equals', ('' + (tipeSaldo[i])) + '', true)
 
             'Mengambil deskripsi dari tipe saldo tersebut'
-            descriptionBalanceType = CustomKeywords.'connection.DataVerif.getDescriptionBalanceType'(conneSign, tipeSaldo[
+            descriptionBalanceType = CustomKeywords.'connection.PengaturanTenant.getDescriptionBalanceType'(conneSign, tipeSaldo[
                 i])
 
             'Jika pada loopingan terakhir'
@@ -307,7 +307,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         }
         
         'Mengambil value excel setelah diedit pengaturan tenant'
-        resultDbNew = CustomKeywords.'connection.DataVerif.getPengaturanTenant'(conneSign, findTestData('Login/Login').getValue(
+        resultDbNew = CustomKeywords.'connection.PengaturanTenant.getPengaturanTenant'(conneSign, findTestData('Login/Login').getValue(
                 2, 2).toUpperCase())
 
         'declare arrayIndex menjadi 0'

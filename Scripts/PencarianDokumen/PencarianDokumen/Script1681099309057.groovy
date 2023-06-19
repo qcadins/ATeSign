@@ -112,7 +112,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             WebUI.click(findTestObject('PencarianDokumen/button_ViewSigner'))
 
             'get data signer'
-            ArrayList<String> resultDataSigner = CustomKeywords.'connection.DataVerif.getSignerInfo'(conneSign, findTestData(
+            ArrayList<String> resultDataSigner = CustomKeywords.'connection.PencarianDokumen.getSignerInfo'(conneSign, findTestData(
                     excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 10), GlobalVariable.Psre)
 
             'get row'
@@ -269,7 +269,7 @@ public checkPaging(Connection conneSign) {
     WebUI.click(findTestObject('PencarianDokumen/button_Cari'))
 
     'get data signer'
-    int resultTotalData = CustomKeywords.'connection.DataVerif.getTotalPencarianDokumen'(conneSign, GlobalVariable.userLogin, 
+    int resultTotalData = CustomKeywords.'connection.PencarianDokumen.getTotalPencarianDokumen'(conneSign, GlobalVariable.userLogin, 
         GlobalVariable.Tenant)
 
     'get text total data dari ui'

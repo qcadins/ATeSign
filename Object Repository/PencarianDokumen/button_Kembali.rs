@@ -7,17 +7,25 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-view-document-inquiry/div[1]/div[3]/button</value>
+         <value>//*[@class = 'btn btn-secondary']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-view-document-inquiry/div[1]/div[3]/button</value>
-      <webElementGuid>e2b212ff-cbdc-4233-9fb5-a3ed47394980</webElementGuid>
+      <webElementGuid>e05ddbe9-6631-49f5-bfce-af47f1c1ab67</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>btn btn-secondary</value>
+      <webElementGuid>70e6e050-b844-4878-86d4-19676a8e759d</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

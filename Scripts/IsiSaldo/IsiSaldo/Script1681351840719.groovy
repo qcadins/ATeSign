@@ -47,7 +47,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         WebUI.click(findTestObject('isiSaldo/menu_isiSaldo'))
 
         'get ddl tenant'
-        ArrayList<String> resultTenant = CustomKeywords.'connection.DataVerif.getDDLTenant'(conneSign)
+        ArrayList<String> resultTenant = CustomKeywords.'connection.Saldo.getDDLTenant'(conneSign)
 
         'call function check ddl untuk tenant'
         checkDDL(findTestObject('isiSaldo/input_PilihTenant'), resultTenant)
@@ -60,7 +60,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         WebUI.sendKeys(findTestObject('isiSaldo/input_PilihTenant'), Keys.chord(Keys.ENTER))
 
         'get ddl vendor'
-        ArrayList<String> resultVendor = CustomKeywords.'connection.DataVerif.getDDLVendor'(conneSign, findTestData(excelPathIsiSaldo).getValue(
+        ArrayList<String> resultVendor = CustomKeywords.'connection.Saldo.getDDLVendor'(conneSign, findTestData(excelPathIsiSaldo).getValue(
                 GlobalVariable.NumofColm, 14))
 
         'call function check ddl untuk vendor'
@@ -74,7 +74,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         WebUI.sendKeys(findTestObject('isiSaldo/input_PilihVendor'), Keys.chord(Keys.ENTER))
 
         'get ddl tipe saldo'
-        ArrayList<String> resultTipeSaldo = CustomKeywords.'connection.DataVerif.getDDLTipeSaldo'(conneSign, findTestData(
+        ArrayList<String> resultTipeSaldo = CustomKeywords.'connection.Saldo.getDDLTipeSaldo'(conneSign, findTestData(
                 excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 14), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
                 15))
 
@@ -355,7 +355,7 @@ public loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
             variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[9]/div', true)
 
         'get trx dari db'
-        ArrayList<String> result = CustomKeywords.'connection.DataVerif.getIsiSaldoTrx'(conneSign, findTestData(excelPathIsiSaldo).getValue(
+        ArrayList<String> result = CustomKeywords.'connection.Saldo.getIsiSaldoTrx'(conneSign, findTestData(excelPathIsiSaldo).getValue(
                 GlobalVariable.NumofColm, 18))
 
         arrayIndex = 0

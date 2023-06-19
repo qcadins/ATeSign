@@ -31,7 +31,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		'check if mau menggunakan api_key yang salah atau benar'
         if (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, 13) == 'Yes') {
             'get api key dari db'
-            GlobalVariable.api_key = CustomKeywords.'connection.DataVerif.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
+            GlobalVariable.api_key = CustomKeywords.'connection.APIFullService.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
         } else if (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, 13) == 'No') {
             'get api key salah dari excel'
             GlobalVariable.api_key = findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, 14)
@@ -52,7 +52,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 if (GlobalVariable.checkStoreDB == 'Yes') {
 					'get totalMaterai from db'
-					String totalMaterai = CustomKeywords.'connection.DataVerif.getTotalMaterai'(conneSign, findTestData(excelPathAPIRequestStamping).getValue(
+					String totalMaterai = CustomKeywords.'connection.APIFullService.getTotalMaterai'(conneSign, findTestData(excelPathAPIRequestStamping).getValue(
                         GlobalVariable.NumofColm, 11).replace('"',''))
 					
 					'looping untuk delay sebanyak total materai yang ada pada document'
@@ -62,7 +62,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					}
 					
                     'get trx from db'
-                    String result = CustomKeywords.'connection.DataVerif.getAPIRequestStampingTrx'(conneSign, findTestData(excelPathAPIRequestStamping).getValue(
+                    String result = CustomKeywords.'connection.APIFullService.getAPIRequestStampingTrx'(conneSign, findTestData(excelPathAPIRequestStamping).getValue(
                         GlobalVariable.NumofColm, 11).replace('"',''), totalMaterai)
 
                     'declare arraylist arraymatch'

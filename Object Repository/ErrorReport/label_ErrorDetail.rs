@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/ngb-modal-window/div/div/app-error-report-detail/div/div/p</value>
+         <value>//*[@class = 'modal-content']/app-error-report-detail/div/div/p</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,15 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html/body/ngb-modal-window/div/div/app-error-report-detail/div/div/p</value>
-      <webElementGuid>1d140d07-3a9f-4654-a067-530b813b535c</webElementGuid>
+      <value>//*[@class = 'modal-content']/app-error-report-detail/div/div/p</value>
+      <webElementGuid>b310a41d-958a-4820-a7af-d122a8f0aafe</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>modal-content</value>
+      <webElementGuid>7f3a6588-f1d3-4307-a9d9-0ddab28e2d31</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/ngb-modal-window/div/div/app-signer/div[1]/button/span</value>
+         <value>//*[@class = 'modal-header']/button/span</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,15 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html/body/ngb-modal-window/div/div/app-signer/div[1]/button/span</value>
-      <webElementGuid>94a0c0c2-3f21-4e52-813a-8be361eb2ab9</webElementGuid>
+      <value>//*[@class = 'modal-header']/button/span</value>
+      <webElementGuid>5411c48f-0b02-4734-90ba-4d8679afae2d</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>modal-header</value>
+      <webElementGuid>581a0420-db2a-4c2d-9a67-9794c8ecb7d6</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

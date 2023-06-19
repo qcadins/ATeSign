@@ -7,17 +7,25 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/div[3]/div/div[3]/button[3]</value>
+         <value>//*[@class = 'swal2-confirm btn btn-primary']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/div[3]/div/div[3]/button[3]</value>
-      <webElementGuid>7e181fdf-f4be-4d86-ab34-3bbe210d1449</webElementGuid>
+      <webElementGuid>5a47f444-5b09-412b-bb33-745ee014a963</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>swal2-confirm btn btn-primary</value>
+      <webElementGuid>3ded9ac4-a4a4-4dbe-a1d2-bf4db7d4db6f</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

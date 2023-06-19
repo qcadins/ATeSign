@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/ngb-modal-window/div/div/app-view-invitation-link/div/div[1]/div[1]/div/input</value>
+         <value>//*[@class = 'modal-body']/div[1]/div[1]/div/input</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,15 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html/body/ngb-modal-window/div/div/app-view-invitation-link/div/div[1]/div[1]/div/input</value>
-      <webElementGuid>178fcadb-9975-4b36-807a-5e41d9b51acc</webElementGuid>
+      <value>//*[@class = 'modal-body']/div[1]/div[1]/div/input</value>
+      <webElementGuid>28aafe0c-a860-4dfc-9576-9f75a7ae2acd</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>modal-body</value>
+      <webElementGuid>bac54a38-5c63-4d59-8590-e0df90c5d006</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
