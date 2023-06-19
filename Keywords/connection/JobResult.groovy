@@ -54,4 +54,22 @@ public class JobResult {
 		}
 		data
 	}
+	
+	@Keyword
+	jobResultViewReqParamDB(Connection conn, String startDate, String endDate) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select JSONB_EXTRACT_PATH_TEXT(tjr.request_params::JSONB, 'vendorCode') AS vendorCode, JSONB_EXTRACT_PATH_TEXT(tjr.request_params::JSONB, 'tenantCode'), JSONB_EXTRACT_PATH_TEXT(tjr.request_params::JSONB, 'transactionDateStart') AS tenantCodeAndDate, JSONB_EXTRACT_PATH_TEXT(tjr.request_params::JSONB, 'transactionDateEnd') AS transactionDateEnd, JSONB_EXTRACT_PATH_TEXT(tjr.request_params::JSONB, 'balanceType') AS balanceType from tr_job_result tjr left join ms_lov msl on msl.id_lov = tjr.lov_job_type left join ms_job msj on msj.id_ms_job = tjr.id_ms_job where tjr.process_start_time BETWEEN '"+startDate+"' AND '"+endDate+"'order by tjr.dtm_crt desc")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
 }

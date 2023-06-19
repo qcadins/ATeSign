@@ -29,9 +29,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     } else if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
         GlobalVariable.FlagFailed = 0
 
-        'String untuk filter email dan peran'
-        String emailFilter, peranFilter
-
         'Jika kolom kedua'
         if (GlobalVariable.NumofColm == 2) {
             'call testcase login admin credit'
@@ -84,43 +81,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'Enter cabang'
                 WebUI.sendKeys(findTestObject('Object Repository/User Management/input_CabangNew'), Keys.chord(Keys.ENTER))
 
-                'Jika button lanjut disabled'
-                if (WebUI.verifyElementHasAttribute(findTestObject('Object Repository/User Management/button_Lanjut'), 'disabled', 
-                    GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-                    'Klik batal'
-                    WebUI.click(findTestObject('User Management/button_Batal'))
-
-                    'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedSaveGagal'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                        GlobalVariable.StatusFailed, ((findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 
-                            2) + ';') + GlobalVariable.ReasonFailedSaveGagal) + ' pada page New ')
-
-                    continue
-                } else {
-                    'Jika button lanjut tidak disabled, klik button lanjut'
-                    WebUI.click(findTestObject('Object Repository/User Management/button_Lanjut'))
-
-                    'Jika check error log ada'
-                    if (checkErrorLog() == true) {
-                        'Klik batal'
-                        WebUI.click(findTestObject('User Management/button_Batal'))
-
-                        continue
-                    }
-                    
-                    'Jika popupnya ada'
-                    if (checkPopup() == true) {
-                        'write to excel success'
-                        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, 
-                            GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-
-                        'Set email Filter dan peran Filter berdasarkan suksesnya Aksi New'
-                        emailFilter = findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 9)
-
-                        'Set email Filter dan peran Filter berdasarkan suksesnya Aksi New'
-                        peranFilter = findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 10)
-                    }
-                }
+				 if (checkPagingConfirmation(conneSign) == true) {
+					 continue
+				 }
             }
         } else if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Setting')) {
             'Jika aksinya setting, maka set text email untuk dokumen yang mau disetting'
@@ -259,53 +222,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         WebUI.sendKeys(findTestObject('Object Repository/User Management/input_CabangEdit'), Keys.chord(
                                 Keys.ENTER))
                     }
-                    
-					'Jika button simpan ada attribute disabled'
-                    if (WebUI.verifyElementHasAttribute(findTestObject('Object Repository/User Management/button_Simpan'), 
-                        'disabled', GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
-						'Klik batal'
-                        WebUI.click(findTestObject('User Management/button_Batal'))
-
-                        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedSaveGagal'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                            GlobalVariable.StatusFailed, ((findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 
-                                2) + ';') + GlobalVariable.ReasonFailedSaveGagal) + ' pada page Edit ')
-
-                        continue
-                    } else {
-						'Jika button simpan tidak ada disabled, klik simpan'
-                        WebUI.click(findTestObject('Object Repository/User Management/button_Simpan'))
-						
-						'jika check error log true'
-                        if (checkErrorLog() == true) {
-							'Klik batal'
-                            WebUI.click(findTestObject('User Management/button_Batal'))
-
-                            continue
-                        }
-                        
-						'Jika check pop up true'
-                        if (checkPopup() == true) {
-							'Jika tidak ada failed'
-                            if (GlobalVariable.FlagFailed == 0) {
-                                'write to excel success'
-                                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
-                                    0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-                            }
-                            
-							'set email filter berdasarkan hasil edit di excel'
-                            emailFilter = findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 14)
-
-							'set peran filter berdasarkan hasil edit di excel'
-                            peranFilter = findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 17)
-                        }
-                    }
+					if (checkPagingConfirmation(conneSign) == true) {
+						continue
+					}
                 }
             }
         }
         
-		'search data sesuai dengna email dan peran filter'
-        searchData(emailFilter, peranFilter)
+		'search data sesuai dengan email dan peran filter'
+        searchData()
 		
 		WebUI.delay(4)
 		
@@ -317,7 +242,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             index = 0
 
 			'result db'
-            result = CustomKeywords.'connection.UserManagement.getUserManagement'(conneSign, emailFilter)
+            result = CustomKeywords.'connection.UserManagement.getUserManagement'(conneSign, )
 
 			'looping berdasarkan kolom'
             for (i = 1; i <= colValue.size(); i++) {
@@ -426,10 +351,66 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     }
 }
 
-def searchData(String emailFilter, String peranFilter) {
-    WebUI.setText(findTestObject('Object Repository/User Management/input_Email'), emailFilter)
+def checkPagingConfirmation (Connection conneSign) {
+	'Jika button lanjut disabled'
+	if (WebUI.verifyElementHasAttribute(findTestObject('Object Repository/User Management/button_Lanjut'), 'disabled',
+		GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		'Klik batal'
+		WebUI.click(findTestObject('User Management/button_Batal'))
 
-    WebUI.setText(findTestObject('Object Repository/User Management/input_Peran'), peranFilter)
+		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedSaveGagal'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+			GlobalVariable.StatusFailed, ((findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm,
+				2) + ';') + GlobalVariable.ReasonFailedSaveGagal) + ' pada page New ')
+
+		return true
+	} else {
+		'Jika button lanjut tidak disabled, klik button lanjut'
+		WebUI.click(findTestObject('Object Repository/User Management/button_Lanjut'))
+
+		'Jika error lognya muncul'
+		if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+			'ambil teks errormessage'
+			errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
+	
+			'Tulis di excel itu adalah error'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+				(findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + errormessage)
+	
+			WebUI.click(findTestObject('User Management/button_Batal'))
+			
+			return true
+		 	
+		}
+		
+		'Jika popupnya ada'
+		if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		} else {
+        'label popup diambil'
+        lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
+
+        if (!(lblpopup.contains('Success'))) {
+            'Tulis di excel sebagai failed dan error.'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + lblpopup)
+			
+			return true
+        }
+        
+		'Klik OK untuk popupnya'
+		WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
+
+		}
+		'write to excel success'
+		CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Job Result', 0,
+		GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+	}
+}
+
+def searchData() {
+    WebUI.setText(findTestObject('Object Repository/User Management/input_Email'), findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 20))
+
+    WebUI.setText(findTestObject('Object Repository/User Management/input_Peran'), findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 21))
 
     'enter untuk set status meterai'
     WebUI.sendKeys(findTestObject('Object Repository/User Management/input_Peran'), Keys.chord(Keys.ENTER))
@@ -544,23 +525,4 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     }
 }
 
-def checkPopup() {
-    'Jika popup muncul'
-    if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-    } else {
-        'label popup diambil'
-        lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
-
-        if (!(lblpopup.contains('Success'))) {
-            'Tulis di excel sebagai failed dan error.'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + lblpopup)
-        }
-        
-        'Klik OK untuk popupnya'
-        WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
-
-        return true
-    }
-}
 

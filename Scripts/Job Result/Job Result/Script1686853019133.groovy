@@ -71,6 +71,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'click button cari'
         WebUI.click(findTestObject('Job Result/button_Cari'))
 
+		checkErrorLog()
+		
         'Jika value muncul'
         if (WebUI.verifyElementPresent(findTestObject('Job Result/lbl_value'), GlobalVariable.TimeOut)) {
 			'Jika aksi yang dipilih adalah View Request Param'
@@ -92,12 +94,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     rowModal = DriverFactory.webDriver.findElements(By.cssSelector('body > ngb-modal-window > div > div > app-view-request-param > div.modal-body > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-body-cell'))
 
                     'get job result data dari db'
-                    result = CustomKeywords.'connection.JobResult.jobResultDB'(conneSign, findTestData(excelPathJobResult).getValue(
+                    result = CustomKeywords.'connection.JobResult.jobResultViewReqParamDB'(conneSign, findTestData(excelPathJobResult).getValue(
                             GlobalVariable.NumofColm, 9), findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 
                             12))
 
-                    index = 0
-
+					index = 0
                     'looping row Modal'
                     for (j = 1; j <= rowModal.size(); j++) {
                         'modify object label value untuk modal'
@@ -113,12 +114,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					
 					'click button X'
 					WebUI.click(findTestObject('KotakMasuk/btn_X'))
+					
                 } else {
 					'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedNoneUI'
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Job Result', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 					((findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedNoneUI + ' pada View Request Param'))
 				}
-            } else if (findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 7) == '-') {
+            } else {
 				'Jika tidak ada aksi yang dipilih, maka check flag failed'
 				if (GlobalVariable.FlagFailed == 0) {
 					'write to excel success'
@@ -126,6 +128,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 						1, GlobalVariable.StatusSuccess)
 				}
 			}
+				
+			WebUI.refresh()
+			
         } else {
 			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedNoneUI'
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
@@ -298,5 +303,19 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 
         GlobalVariable.FlagFailed = 1
     }
+}
+
+def checkErrorLog() {
+	'Jika error lognya muncul'
+	if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		'ambil teks errormessage'
+		errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
+
+		'Tulis di excel itu adalah error'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+			(findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + errormessage)
+
+		return true
+	}
 }
 

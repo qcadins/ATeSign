@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>User Management Store DB</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>3c271c94-fa56-42ba-ae29-0fbb98257fe5</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>8dda214f-3a83-4f1b-9c7b-ec649853af52</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'User Management/User Management'</defaultValue>
+      <description></description>
+      <id>8dda214f-3a83-4f1b-9c7b-ec649853af52</id>
+      <masked>false</masked>
+      <name>excelPathUserManagement</name>
+   </variable>
+</TestCaseEntity>
