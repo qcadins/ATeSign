@@ -33,7 +33,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         String emailFilter, peranFilter
 
         'Jika kolom kedua'
-  //      if (GlobalVariable.NumofColm == 2) {
+        if (GlobalVariable.NumofColm == 2) {
             'call testcase login admin credit'
             WebUI.callTestCase(findTestCase('Login/Login_AdmCredit'), [:], FailureHandling.CONTINUE_ON_FAILURE)
 
@@ -41,8 +41,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             WebUI.click(findTestObject('User Management/menu_User Management'))
 
             'call function check paging'
-   //         checkPaging(conneSign)
-   //     }
+            checkPaging(conneSign)
+        }
         
         'jika aksinya adalah new'
         if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('New')) {
