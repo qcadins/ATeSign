@@ -3,64 +3,75 @@ import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.testdata.TestData as TestData
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
-import java.sql.Connection
-/*
+import java.sql.Connection as Connection
+
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-	'ambil data role dari db'
-	ArrayList<String> resultDB = CustomKeywords.'userManagement.UserVerif.getNewUserData'(conndev, 
-		findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 18))
+if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('New')) {
+	'declare arraylist arraymatch'
+	ArrayList<String> arrayMatch = new ArrayList<String>()
 	
-	'ambil data role dari excel'
-	ArrayList<String> resultExcel = []
+    'ambil data role dari db'
+    ArrayList<String> resultDB = CustomKeywords.'connection.UserManagement.getUserManagementNewStoreDB'(conneSign, findTestData(
+            excelPathUserManagement).getValue(GlobalVariable.NumofColm, 17), GlobalVariable.Tenant)
+
+    startTakeExcel = 8
+
+    'ambil data role dari excel'
+    ArrayList<String> resultExcel = []
+
+    'cek data untuk tiap alamat di array'
+    for (int i = 0; i < resultDB.size; i++) {
+        'khusus untuk 11, yaitu kode akses masih belum ketemu'
+        if ((startTakeExcel + i) == 11) {
+            continue
+        }
+        
+        'tambahkan data ke resultExcel'
+        resultExcel.add(findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, startTakeExcel + i))
+
+		'verify email'
+		arrayMatch.add(WebUI.verifyMatch(resultExcel[i].toLowerCase(), resultDB[i].toLowerCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+        if (arrayMatch.contains(false)){
+			GlobalVariable.FlagFailed = 1
+			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('User Management', GlobalVariable.NumofColm,
+				GlobalVariable.StatusFailed, ((findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 2) +
+				';') + GlobalVariable.ReasonFailedStoredDB + ' pada data ' + resultExcel[i] + ' dan ' + resultDB[i]))
+        }
+    }
+} else if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Setting')) {
+	'declare arraylist arraymatch'
+	ArrayList<String> arrayMatch = new ArrayList<String>()
 	
-	'cek data untuk tiap alamat di array'
-	for (int i = 0; i < resultDB.size ; i++){
-		
-		'tambahkan data ke resultExcel'
-		resultExcel.add(findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, (18+i)))
-		
-		if(resultExcel[i] != resultDB[i]) {
-			
-			'tulis adanya error pada sistem web'
-			CustomKeywords.'writeToExcel.WriteExcel.writeToExcelStatusReason'('User', GlobalVariable.NumofColm,
-				GlobalVariable.StatusFailed, (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 2) + ';') +
-					GlobalVariable.FailedReasonStoreDB)
-		}
-	}
-}
-else if(findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 8).equalsIgnoreCase('Edit')) {
-	
-	'ambil data role dari db'
-	ArrayList<String> resultDB = CustomKeywords.'userManagement.UserVerif.getEditUserData'(conndev, 
-		findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 14))
-	
-	'ambil data role dari excel'
-	ArrayList<String> resultExcel = []
-		
-	'cek data untuk tiap alamat di array'
-	for (int i = 0; i < resultDB.size ; i++) {
-	
-		if (i == 0) {
-			
-			'tambahkan data ke array resultExcel'
-			resultExcel.add(findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 14))
-		}
-		else {
-			
-			'tambahkan data ke resultExcel'
-			resultExcel.add(findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, (24+i)))
-		}
-		
-		if(resultExcel[i] != resultDB[i]) {
-			
-			'tulis adanya error pada sistem web'
-			CustomKeywords.'writeToExcel.WriteExcel.writeToExcelStatusReason'('User', GlobalVariable.NumofColm,
-				GlobalVariable.StatusFailed, (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 2) + ';') +
-					GlobalVariable.FailedReasonStoreDB)
-		}
-	}
+    'ambil data role dari db'
+    ArrayList<String> resultDB = CustomKeywords.'connection.UserManagement.getUserManagementEditStoreDB'(conneSign, findTestData(
+            excelPathUserManagement).getValue(GlobalVariable.NumofColm, 17), GlobalVariable.Tenant)
+
+    startTakeExcel = 14
+
+    'ambil data role dari excel'
+    ArrayList<String> resultExcel = []
+
+    'cek data untuk tiap alamat di array'
+    for (int i = 0; i < resultDB.size; i++) {
+        'khusus untuk 11, yaitu kode akses masih belum ketemu'
+
+        'tambahkan data ke resultExcel'
+        resultExcel.add(findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, startTakeExcel + i))
+
+		'verify email'
+		arrayMatch.add(WebUI.verifyMatch(resultExcel[i].toLowerCase(), resultDB[i].toLowerCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+        if (arrayMatch.contains(false)){
+			GlobalVariable.FlagFailed = 1
+			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('User Management', GlobalVariable.NumofColm,
+				GlobalVariable.StatusFailed, ((findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 2) +
+				';') + GlobalVariable.ReasonFailedStoredDB + ' pada data ' + resultExcel[i] + ' dan ' + resultDB[i]))
+        }
+    }
 }
 
-*/
