@@ -8,14 +8,14 @@ import com.kms.katalon.core.annotation.Keyword
 import internal.GlobalVariable
 
 public class DocumentMonitoring {
-	
+
 	String data
 	int columnCount, i
 	Statement stm
 	ResultSetMetaData metadata
 	ResultSet resultSet
 	ArrayList<String> listdata = []
-	
+
 	@Keyword
 	getDocumentMonitoringSigner(Connection conn, String refNo) {
 		stm = conn.createStatement()
@@ -33,7 +33,7 @@ public class DocumentMonitoring {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getEmailSigneronRefNumber(Connection conn, String refNumber) {
 		stm = conn.createStatement()
@@ -48,7 +48,7 @@ public class DocumentMonitoring {
 		}
 		data
 	}
-	
+
 	@Keyword
 	getDocumentStatus(Connection conn, String refnumber){
 		String data
@@ -83,7 +83,7 @@ public class DocumentMonitoring {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getuserCustomerondocument(Connection conn, String refnumber){
 		String data
@@ -118,7 +118,7 @@ public class DocumentMonitoring {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getDocumentType(Connection conn, String refnumber){
 		String data
@@ -135,7 +135,7 @@ public class DocumentMonitoring {
 		}
 		data
 	}
-	
+
 	@Keyword
 	getTotalStampingandTotalMaterai(Connection conn, String refNumber) {
 		stm = conn.createStatement()
@@ -153,7 +153,7 @@ public class DocumentMonitoring {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getDocumentMonitoringBasedOnEmbed(Connection conn, String refNumber, String fullname) {
 		stm = conn.createStatement()

@@ -22,6 +22,15 @@ sheet = 'User Management'
 
 int i, j
 
+GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
+
+
+	'call testcase login admin credit'
+	WebUI.callTestCase(findTestCase('Login/Login_AdmCredit'), [:], FailureHandling.CONTINUE_ON_FAILURE)
+
+	'click menu user management'
+	WebUI.click(findTestObject('User Management/menu_User Management'))
+
 'looping User Management'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
@@ -29,6 +38,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     } else if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
         GlobalVariable.FlagFailed = 0
 
+		/*
         'Jika kolom kedua'
         if (GlobalVariable.NumofColm == 2) {
             'call testcase login admin credit'
@@ -41,6 +51,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             checkPaging(conneSign)
         }
         
+        */
         'jika aksinya adalah new'
         if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('New')) {
             'Klik button baru'
@@ -81,29 +92,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'Enter cabang'
                 WebUI.sendKeys(findTestObject('Object Repository/User Management/input_CabangNew'), Keys.chord(Keys.ENTER))
 
-				 if (checkPagingConfirmation(conneSign) == true) {
-					 continue
-				 }
+                if (checkPagingConfirmation(conneSign, ' pada menu New ') == true) {
+                    continue
+                }
             }
         } else if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Setting')) {
-            'Jika aksinya setting, maka set text email untuk dokumen yang mau disetting'
-            WebUI.setText(findTestObject('Object Repository/User Management/input_Email'), findTestData(excelPathUserManagement).getValue(
-                    GlobalVariable.NumofColm, 14))
+            searchData()	
 
-            'set text peran untuk dokumen yang mau disetting'
-            WebUI.setText(findTestObject('Object Repository/User Management/input_Peran'), findTestData(excelPathUserManagement).getValue(
-                    GlobalVariable.NumofColm, 15))
-
-            'enter peran'
-            WebUI.sendKeys(findTestObject('Object Repository/User Management/input_Peran'), Keys.chord(Keys.ENTER))
-
-            'click button cari'
-            WebUI.click(findTestObject('User Management/button_Cari'))
-
-			WebUI.delay(4)
-			
             'Verify element value'
-            if (WebUI.verifyElementPresent(findTestObject('Object Repository/User Management/lbl_Value'), GlobalVariable.TimeOut)) {
+            if (WebUI.verifyElementPresent(findTestObject('Object Repository/User Management/lbl_Value'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
                 'modify object lbl value untuk button setting'
                 modifyObjectLblValue = WebUI.modifyObjectProperty(findTestObject('Object Repository/User Management/lbl_Value'), 
                     'xpath', 'equals', '/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-list-user-management/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[1]/datatable-body-row/div[2]/datatable-body-cell[5]/div/a/em', 
@@ -117,20 +114,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'Klik batal'
                 WebUI.click(findTestObject('Object Repository/User Management/button_Batal'))
 
-                'Set text email kembali'
-                WebUI.setText(findTestObject('Object Repository/User Management/input_Email'), findTestData(excelPathUserManagement).getValue(
-                        GlobalVariable.NumofColm, 14))
-
-                'Set text peran kembali'
-                WebUI.setText(findTestObject('Object Repository/User Management/input_Peran'), findTestData(excelPathUserManagement).getValue(
-                        GlobalVariable.NumofColm, 15))
-
-                'enter peran'
-                WebUI.sendKeys(findTestObject('Object Repository/User Management/input_Peran'), Keys.chord(Keys.ENTER))
-
-                'click button cari'
-                WebUI.click(findTestObject('User Management/button_Cari'))
-
+				searchData()
+				
                 WebUI.delay(3)
 
                 'Klik setting'
@@ -139,61 +124,61 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'Verify element header insert user management sudah muncul'
                 if (WebUI.verifyElementPresent(findTestObject('Object Repository/User Management/lbl_InsertUserManagement'), 
                     GlobalVariable.TimeOut)) {
-				'db result Edit'
-				resultEdit = CustomKeywords.'connection.UserManagement.getUserManagementonEdit'(conneSign, findTestData(
-						excelPathUserManagement).getValue(GlobalVariable.NumofColm, 14))
+                    'db result Edit'
+                    resultEdit = CustomKeywords.'connection.UserManagement.getUserManagementonEdit'(conneSign, findTestData(
+                            excelPathUserManagement).getValue(GlobalVariable.NumofColm, 17), GlobalVariable.Tenant)
 
-				index = 0
-				
-				'verify db dengan ui mengenai nama'
-				checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/User Management/input_NamaEdit'),
-				'value'), resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Nama dengan value db yaitu ' +
-					(resultEdit[(index - 1)]))
-				
-				'verify db dengan ui mengenai email'
-				checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/User Management/input_EmailEdit'),
-				'value'), resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Email dengan value db yaitu ' +
-				 (resultEdit[(index - 1)]))
-				
-				'verify db dengan ui mengenai Activated Date'
-				checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/User Management/input_Activated DateEdit'),
-				'value'), resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Activate Date dengan value db yaitu ' +
-				 (resultEdit[(index - 1)]))
+                    index = 0
 
-				'Klik peran'
-				WebUI.click(findTestObject('Object Repository/User Management/input_PeranEdit'))
-				
-				'get text dari peran'
-				peranBefore = WebUI.getText(findTestObject('Object Repository/User Management/DDLEdit'))
+                    'verify db dengan ui mengenai nama'
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/User Management/input_NamaEdit'), 
+                                'value'), resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Nama dengan value db yaitu ' + 
+                        (resultEdit[(index - 1)]))
 
-				'enter peran'
-				WebUI.sendKeys(findTestObject('Object Repository/User Management/input_PeranEdit'), Keys.chord(Keys.ENTER))
+                    'verify db dengan ui mengenai email'
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/User Management/input_EmailEdit'), 
+                                'value'), resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Email dengan value db yaitu ' + 
+                        (resultEdit[(index - 1)]))
 
-				'Klik cabang'
-				WebUI.click(findTestObject('Object Repository/User Management/input_CabangEdit'))
-				
-				'get text dari cabang'
-				cabangBefore = WebUI.getText(findTestObject('Object Repository/User Management/DDLEdit'))
+                    'verify db dengan ui mengenai Activated Date'
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/User Management/input_Activated DateEdit'), 
+                                'value'), resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Activate Date dengan value db yaitu ' + 
+                        (resultEdit[(index - 1)]))
 
-				'enter cabang'
-				WebUI.sendKeys(findTestObject('Object Repository/User Management/input_CabangEdit'), Keys.chord(Keys.ENTER))
+                    'Klik peran'
+                    WebUI.click(findTestObject('Object Repository/User Management/input_PeranEdit'))
 
-				'verify db dengan ui mengenai peran'
-				checkVerifyEqualOrMatch(WebUI.verifyMatch(peranBefore, resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE),
-					' pada data Edit Peran dengan value db yaitu ' + (resultEdit[(index - 1)]))
+                    'get text dari peran'
+                    peranBefore = WebUI.getText(findTestObject('Object Repository/User Management/DDLEdit'))
 
-				'verify db dengan ui mengenai cabang'
-				checkVerifyEqualOrMatch(WebUI.verifyMatch(cabangBefore, resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE),
-					' pada data Edit Cabang dengan value db yaitu ' + (resultEdit[(index - 1)]))
+                    'enter peran'
+                    WebUI.sendKeys(findTestObject('Object Repository/User Management/input_PeranEdit'), Keys.chord(Keys.ENTER))
 
-				'verify db dengan ui mengenai Status user'
-				checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/User Management/input_Status UserEdit'),
-				 'value'), resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Status user dengan value db yaitu ' +
-				 (resultEdit[(index - 1)]))
+                    'Klik cabang'
+                    WebUI.click(findTestObject('Object Repository/User Management/input_CabangEdit'))
 
-					'jika kolom edit kosong'
-                    if ((findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 17) == '') && (findTestData(
-                        excelPathUserManagement).getValue(GlobalVariable.NumofColm, 18) == '')) {
+                    'get text dari cabang'
+                    cabangBefore = WebUI.getText(findTestObject('Object Repository/User Management/DDLEdit'))
+
+                    'enter cabang'
+                    WebUI.sendKeys(findTestObject('Object Repository/User Management/input_CabangEdit'), Keys.chord(Keys.ENTER))
+
+                    'verify db dengan ui mengenai peran'
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch(peranBefore, resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), 
+                        ' pada data Edit Peran dengan value db yaitu ' + (resultEdit[(index - 1)]))
+
+                    'verify db dengan ui mengenai cabang'
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch(cabangBefore, resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), 
+                        ' pada data Edit Cabang dengan value db yaitu ' + (resultEdit[(index - 1)]))
+
+                    'verify db dengan ui mengenai Status user'
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/User Management/input_Status UserEdit'), 
+                                'value'), resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Status user dengan value db yaitu ' + 
+                        (resultEdit[(index - 1)]))
+
+                    'jika kolom edit kosong'
+                    if ((findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 14) == '') && (findTestData(
+                        excelPathUserManagement).getValue(GlobalVariable.NumofColm, 15) == '')) {
                         'set peran yaitu select role'
                         WebUI.setText(findTestObject('Object Repository/User Management/input_PeranEdit'), 'Select Role')
 
@@ -209,208 +194,232 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     } else {
                         'set peran sesuai excel'
                         WebUI.setText(findTestObject('Object Repository/User Management/input_PeranEdit'), findTestData(
-                                excelPathUserManagement).getValue(GlobalVariable.NumofColm, 17))
+                                excelPathUserManagement).getValue(GlobalVariable.NumofColm, 14))
 
                         'enter peran'
                         WebUI.sendKeys(findTestObject('Object Repository/User Management/input_PeranEdit'), Keys.chord(Keys.ENTER))
 
                         'set cabang sesuai excel'
                         WebUI.setText(findTestObject('Object Repository/User Management/input_CabangEdit'), findTestData(
-                                excelPathUserManagement).getValue(GlobalVariable.NumofColm, 18))
+                                excelPathUserManagement).getValue(GlobalVariable.NumofColm, 15))
 
                         'enter cabang'
                         WebUI.sendKeys(findTestObject('Object Repository/User Management/input_CabangEdit'), Keys.chord(
                                 Keys.ENTER))
                     }
-					if (checkPagingConfirmation(conneSign) == true) {
+					
+					if (checkPagingConfirmation (conneSign, ' pada menu Edit ') == true) {
 						continue
 					}
                 }
-            }
+            } else {
+				'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('User Management', GlobalVariable.NumofColm,
+					GlobalVariable.StatusFailed, ((findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 2) +
+					';') + GlobalVariable.ReasonFailedNoneUI))
+			}
         }
         
-		'search data sesuai dengan email dan peran filter'
-        searchData()
-		
-		WebUI.delay(4)
-		
-		'Jika valuenya muncul'
+        'search data sesuai dengna email dan peran filter'
+        searchDataAfterAction()
+
+        WebUI.delay(4)
+
+        'Jika valuenya muncul'
         if (WebUI.verifyElementPresent(findTestObject('Object Repository/User Management/lbl_Value'), GlobalVariable.TimeOut)) {
             'ambil jumlah kolom'
             colValue = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-list-user-management > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-body-cell'))
 
             index = 0
 
-			'result db'
-            result = CustomKeywords.'connection.UserManagement.getUserManagement'(conneSign, )
+            'result db'
+            result = CustomKeywords.'connection.UserManagement.getUserManagement'(conneSign, findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 17), GlobalVariable.Tenant)
 
-			'looping berdasarkan kolom'
+            'looping berdasarkan kolom'
             for (i = 1; i <= colValue.size(); i++) {
                 'modify object label value per kolom'
                 modifyObjectLblValue = WebUI.modifyObjectProperty(findTestObject('Object Repository/User Management/lbl_Value'), 
                     'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-list-user-management/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[1]/datatable-body-row/div[2]/datatable-body-cell[' + 
                     i) + ']/div', true)
 
-				'Jika yang keempat, yaitu mengenai status tergambar centang'
+                'Jika yang keempat, yaitu mengenai status tergambar centang'
                 if (i == 4) {
                     'modify object kolom keempat'
                     modifyObjectLblValue = WebUI.modifyObjectProperty(findTestObject('Object Repository/User Management/lbl_Value'), 
                         'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-list-user-management/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper/datatable-body-row/div[2]/datatable-body-cell[' + 
                         i) + ']/div/em', true)
 
-					'ambil class dari status tersebut'
+                    'ambil class dari status tersebut'
                     valueStatus = WebUI.getAttribute(modifyObjectLblValue, 'class')
 
-					'Jika value statusnya aktif'
+                    'Jika value statusnya aktif'
                     if ((valueStatus == 'ft-check text-success ng-star-inserted') && ((result[index]) == 'Aktif')) {
-						'verify ui dengan db bahwa statusnya sama dan benar'
+                        'verify ui dengan db bahwa statusnya sama dan benar'
                         checkVerifyEqualOrMatch(true, ((' pada kolom ke ' + i) + ' dimana data db adalah ') + (result[index]))
                     } else if ((valueStatus == 'ng-star-inserted ft-x text-danger') && ((result[index]) == 'Tidak Aktif')) {
                         'Jika value statusnya tidak aktif, verify ui dengan db bahwa statusnya sama dan benar'
-						checkVerifyEqualOrMatch(true, ((' pada kolom ke ' + i) + ' dimana data db adalah ') + (result[index]))
+                        checkVerifyEqualOrMatch(true, ((' pada kolom ke ' + i) + ' dimana data db adalah ') + (result[index]))
                     } else {
-						'Jika bukan 2 2 nya, maka verify ui dengan db bahwa statusnya sama dan benar'
+                        'Jika bukan 2 2 nya, maka verify ui dengan db bahwa statusnya sama dan benar'
                         checkVerifyEqualOrMatch(false, ((' pada kolom ke ' + i) + ' dimana data db adalah ') + (result[index]))
                     }
                 } else if (i == 5) {
-					'Jika kolom kelima, yaitu aksi'
-					 if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Setting')) {
-						 'modify object lbl value untuk button setting'
-						 modifyObjectLblValue = WebUI.modifyObjectProperty(findTestObject('Object Repository/User Management/lbl_Value'),
-							 'xpath', 'equals', '/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-list-user-management/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[1]/datatable-body-row/div[2]/datatable-body-cell[5]/div/a/em',
-							 true)
-		 
-						 WebUI.delay(3)
-		 
-						 'Klik setting'
-						 WebUI.click(modifyObjectLblValue)
-						 
-						 'db result Edit'
-						 resultEdit = CustomKeywords.'connection.UserManagement.getUserManagementonEdit'(conneSign, findTestData(
-								 excelPathUserManagement).getValue(GlobalVariable.NumofColm, 14))
-		 
-						 index = 0
-						 
-						 'verify db dengan ui mengenai nama'
-						 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/User Management/input_NamaEdit'),
-						 'value'), resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Nama dengan value db yaitu ' +
-							 (resultEdit[(index - 1)]))
-						 
-						 'verify db dengan ui mengenai email'
-						 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/User Management/input_EmailEdit'),
-						 'value'), resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Email dengan value db yaitu ' +
-						  (resultEdit[(index - 1)]))
-						 
-						 'verify db dengan ui mengenai Activated Date'
-						 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/User Management/input_Activated DateEdit'),
-						 'value'), resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Activate Date dengan value db yaitu ' +
-						  (resultEdit[(index - 1)]))
-		 
-						 'Klik peran'
-						 WebUI.click(findTestObject('Object Repository/User Management/input_PeranEdit'))
-						 
-						 'get text dari peran'
-						 peranBefore = WebUI.getText(findTestObject('Object Repository/User Management/DDLEdit'))
-		 
-						 'enter peran'
-						 WebUI.sendKeys(findTestObject('Object Repository/User Management/input_PeranEdit'), Keys.chord(Keys.ENTER))
-		 
-						 'Klik cabang'
-						 WebUI.click(findTestObject('Object Repository/User Management/input_CabangEdit'))
-						 
-						 'get text dari cabang'
-						 cabangBefore = WebUI.getText(findTestObject('Object Repository/User Management/DDLEdit'))
-		 
-						 'enter cabang'
-						 WebUI.sendKeys(findTestObject('Object Repository/User Management/input_CabangEdit'), Keys.chord(Keys.ENTER))
-		 
-						 'verify db dengan ui mengenai peran'
-						 checkVerifyEqualOrMatch(WebUI.verifyMatch(peranBefore, resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE),
-							 ' pada data Edit Peran dengan value db yaitu ' + (resultEdit[(index - 1)]))
-		 
-						 'verify db dengan ui mengenai cabang'
-						 checkVerifyEqualOrMatch(WebUI.verifyMatch(cabangBefore, resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE),
-							 ' pada data Edit Cabang dengan value db yaitu ' + (resultEdit[(index - 1)]))
-		 
-						 'verify db dengan ui mengenai Status user'
-						 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/User Management/input_Status UserEdit'),
-						  'value'), resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Status user dengan value db yaitu ' +
-						  (resultEdit[(index - 1)]))
-						 
-						 'Klik batal'
-						 WebUI.click(findTestObject('User Management/button_Batal'))
-					 }
+                    'Jika kolom kelima, yaitu aksi'
+                    if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Setting')) {
+                        'modify object lbl value untuk button setting'
+                        modifyObjectLblValue = WebUI.modifyObjectProperty(findTestObject('Object Repository/User Management/lbl_Value'), 
+                            'xpath', 'equals', '/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-list-user-management/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[1]/datatable-body-row/div[2]/datatable-body-cell[5]/div/a/em', 
+                            true)
+
+                        WebUI.delay(3)
+
+                        'Klik setting'
+                        WebUI.click(modifyObjectLblValue)
+
+                        'db result Edit'
+                        resultEdit = CustomKeywords.'connection.UserManagement.getUserManagementonEdit'(conneSign, findTestData(
+                                excelPathUserManagement).getValue(GlobalVariable.NumofColm, 17), GlobalVariable.Tenant)
+
+                        index = 0
+
+                        'verify db dengan ui mengenai nama'
+                        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/User Management/input_NamaEdit'), 
+                                    'value'), resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Nama dengan value db yaitu ' + 
+                            (resultEdit[(index - 1)]))
+
+                        'verify db dengan ui mengenai email'
+                        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/User Management/input_EmailEdit'), 
+                                    'value'), resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Email dengan value db yaitu ' + 
+                            (resultEdit[(index - 1)]))
+
+                        'verify db dengan ui mengenai Activated Date'
+                        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/User Management/input_Activated DateEdit'), 
+                                    'value'), resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Activate Date dengan value db yaitu ' + 
+                            (resultEdit[(index - 1)]))
+
+                        'Klik peran'
+                        WebUI.click(findTestObject('Object Repository/User Management/input_PeranEdit'))
+
+                        'get text dari peran'
+                        peranBefore = WebUI.getText(findTestObject('Object Repository/User Management/DDLEdit'))
+
+                        'enter peran'
+                        WebUI.sendKeys(findTestObject('Object Repository/User Management/input_PeranEdit'), Keys.chord(Keys.ENTER))
+
+                        'Klik cabang'
+                        WebUI.click(findTestObject('Object Repository/User Management/input_CabangEdit'))
+
+                        'get text dari cabang'
+                        cabangBefore = WebUI.getText(findTestObject('Object Repository/User Management/DDLEdit'))
+
+                        'enter cabang'
+                        WebUI.sendKeys(findTestObject('Object Repository/User Management/input_CabangEdit'), Keys.chord(
+                                Keys.ENTER))
+
+                        'verify db dengan ui mengenai peran'
+                        checkVerifyEqualOrMatch(WebUI.verifyMatch(peranBefore, resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), 
+                            ' pada data Edit Peran dengan value db yaitu ' + (resultEdit[(index - 1)]))
+
+                        'verify db dengan ui mengenai cabang'
+                        checkVerifyEqualOrMatch(WebUI.verifyMatch(cabangBefore, resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), 
+                            ' pada data Edit Cabang dengan value db yaitu ' + (resultEdit[(index - 1)]))
+
+                        'verify db dengan ui mengenai Status user'
+                        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/User Management/input_Status UserEdit'), 
+                                    'value'), resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Status user dengan value db yaitu ' + 
+                            (resultEdit[(index - 1)]))
+
+                        'Klik batal'
+                        WebUI.click(findTestObject('User Management/button_Batal'))
+                    }
                 } else {
-					'Jika bukan semuanya, maka verify ui dengan db'
+                    'Jika bukan semuanya, maka verify ui dengan db'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(result[index++], WebUI.getText(modifyObjectLblValue), false, 
                             FailureHandling.CONTINUE_ON_FAILURE), ((' pada kolom ke ' + i) + ' dimana data db adalah ') + 
                         (result[(index - 1)]))
                 }
             }
+			
+			if (GlobalVariable.FlagFailed == 0) {
+				'write to excel success'
+				CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'User Management', 0,
+				GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+			}
         }
     }
 }
 
-def checkPagingConfirmation (Connection conneSign) {
-	'Jika button lanjut disabled'
-	if (WebUI.verifyElementHasAttribute(findTestObject('Object Repository/User Management/button_Lanjut'), 'disabled',
-		GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-		'Klik batal'
-		WebUI.click(findTestObject('User Management/button_Batal'))
-
-		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedSaveGagal'
-		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-			GlobalVariable.StatusFailed, ((findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm,
-				2) + ';') + GlobalVariable.ReasonFailedSaveGagal) + ' pada page New ')
-
-		return true
+def checkPagingConfirmation(Connection conneSign, String reason) {
+	if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6) == 'Setting') {
+		modifyObjectBtnSave = WebUI.modifyObjectProperty(findTestObject('Object Repository/User Management/button_Lanjut'),
+			'class', 'equals', 'btn btn-info mr-5', true)
 	} else {
-		'Jika button lanjut tidak disabled, klik button lanjut'
-		WebUI.click(findTestObject('Object Repository/User Management/button_Lanjut'))
-
-		'Jika error lognya muncul'
-		if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-			'ambil teks errormessage'
-			errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
-	
-			'Tulis di excel itu adalah error'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-				(findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + errormessage)
-	
-			WebUI.click(findTestObject('User Management/button_Batal'))
-			
-			return true
-		 	
-		}
+		modifyObjectBtnSave = findTestObject('Object Repository/User Management/button_Lanjut')
+	}
 		
-		'Jika popupnya ada'
-		if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-		} else {
-        'label popup diambil'
-        lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
+    'Jika button lanjut disabled'
+    if (WebUI.verifyElementHasAttribute(modifyObjectBtnSave, 'disabled', GlobalVariable.TimeOut, 
+        FailureHandling.OPTIONAL)) {
+        'Klik batal'
+        WebUI.click(findTestObject('User Management/button_Batal'))
 
-        if (!(lblpopup.contains('Success'))) {
-            'Tulis di excel sebagai failed dan error.'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + lblpopup)
-			
-			return true
+        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedSaveGagal'
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            ((findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedSaveGagal) + 
+            reason)
+
+        return true
+    } else {
+        'Jika button lanjut tidak disabled, klik button lanjut'
+        WebUI.click(modifyObjectBtnSave)
+
+        'Jika check error log ada'
+        if (checkErrorLog() == true) {
+            'Klik batal'
+            WebUI.click(findTestObject('User Management/button_Batal'))
+
+            return true
         }
         
-		'Klik OK untuk popupnya'
-		WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
+        'Jika popupnya ada'
+        if (checkPopup() == true) {
+            'write to excel success'
+            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'User Management', 0, 
+                GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 
-		}
-		'write to excel success'
-		CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Job Result', 0,
-		GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-	}
+            'call testcase login admin credit'
+            WebUI.callTestCase(findTestCase('User Management/User Management Store DB'), [:], FailureHandling.CONTINUE_ON_FAILURE)
+
+        }
+    }
 }
 
-def searchData() {
-    WebUI.setText(findTestObject('Object Repository/User Management/input_Email'), findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 20))
+def searchDataAfterAction() {
+	if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6) == 'Setting') {
+		peranAfter = findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 14)
+		}
+		else {
+			peranAfter = findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 18)
+		}
+		WebUI.setText(findTestObject('Object Repository/User Management/input_Email'), findTestData(excelPathUserManagement).getValue(
+		GlobalVariable.NumofColm, 17))
+	
+		WebUI.setText(findTestObject('Object Repository/User Management/input_Peran'),peranAfter)
+	
+		'enter untuk set status meterai'
+		WebUI.sendKeys(findTestObject('Object Repository/User Management/input_Peran'), Keys.chord(Keys.ENTER))
+	
+		'click button cari'
+		WebUI.click(findTestObject('User Management/button_Cari'))
+	}
 
-    WebUI.setText(findTestObject('Object Repository/User Management/input_Peran'), findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 21))
+def searchData() {
+
+    WebUI.setText(findTestObject('Object Repository/User Management/input_Email'), findTestData(excelPathUserManagement).getValue(
+    GlobalVariable.NumofColm, 17))
+
+    WebUI.setText(findTestObject('Object Repository/User Management/input_Peran'), findTestData(excelPathUserManagement).getValue(
+    GlobalVariable.NumofColm, 18))
 
     'enter untuk set status meterai'
     WebUI.sendKeys(findTestObject('Object Repository/User Management/input_Peran'), Keys.chord(Keys.ENTER))
@@ -525,4 +534,23 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     }
 }
 
+def checkPopup() {
+    'Jika popup muncul'
+    if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+    } else {
+        'label popup diambil'
+        lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
+
+        if (!(lblpopup.contains('Success'))) {
+            'Tulis di excel sebagai failed dan error.'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + lblpopup)
+        }
+        
+        'Klik OK untuk popupnya'
+        WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
+
+        return true
+    }
+}
 
