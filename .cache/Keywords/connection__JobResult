@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "7217E82DC601DF0EEAA5809487C6301E",
+  "keywordFileContentHash": "26C0BE6118A8A1F87FFC5924500FBC21",
   "keywordClasses": [
     {
       "name": "connection.JobResult",
@@ -46,7 +46,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "countJobResult",
@@ -90,7 +91,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "jobResultViewReqParamDB",
@@ -134,10 +136,11 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         }
       ]
     }
   ],
-  "javadocParsed": false
+  "javadocParsed": true
 }
