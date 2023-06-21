@@ -65,7 +65,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
 			'search data menggunakan email'
             searchData(email)
-
+			WebUI.delay(4)
 			'klik aksi edit data'
             WebUI.click(findTestObject('Object Repository/Edit Signer Data/button_AksiEditData'))
 
@@ -142,7 +142,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             searchData(email)
 
 			'Klik button edit aktivasi'
-            WebUI.click(findTestObject('Object Repository/Edit Signer Data/button_AksiAktivasiData'))
+            WebUI.click(findTestObject('Object Repository/Edit Signer Data/button_AksiEditAktivasi'))
 
 			'Jika headernya muncul'
             if (WebUI.verifyElementPresent(findTestObject('Object Repository/Edit Signer Data/lbl_HeaderEdit'), GlobalVariable.TimeOut)) {
@@ -197,7 +197,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					continue
 				}
             }
-        }
+        } else {
+			if (GlobalVariable.FlagFailed == 0) {
+				'write to excel success'
+				CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Edit Signer Data', 0,
+					GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+			}
+		}
     }
 }
 

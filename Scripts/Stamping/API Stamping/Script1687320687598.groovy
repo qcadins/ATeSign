@@ -52,25 +52,41 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                int prosesMaterai = CustomKeywords.'connection.Stamping.getProsesMaterai'(conneSign, findTestData(excelPathStamping).getValue(
                         GlobalVariable.NumofColm, 11).replace('"',''))
 				
-			   if (prosesMaterai == 0) {
-				   WebUI.delay(10)
-				   }
-				   else if (prosesMaterai == 51) {
+				   if (prosesMaterai == 51) {
 					   'Write To Excel GlobalVariable.StatusFailed and errormessage'
 					   CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Request Stamping', GlobalVariable.NumofColm,
 						   GlobalVariable.StatusFailed, GlobalVariable.ReasonFailedProsesStamping)
 					   break
 				   } else if (prosesMaterai == 53) {
+					   'get totalMaterai from db'
+					   ArrayList totalMateraiAndTotalStamping = CustomKeywords.'connection.Stamping.getTotalMateraiAndTotalStamping'(conneSign, findTestData(excelPathAPIRequestStamping).getValue(
+						   GlobalVariable.NumofColm, 11).replace('"',''))
+					   
+					   'declare arraylist arraymatch'
+					   arrayMatch = []
+					   
+					   arrayMatch.add(WebUI.verifyMatch(totalMateraiAndTotalStamping[0], totalMateraiAndTotalStamping[1], false, FailureHandling.CONTINUE_ON_FAILURE))
+
+					   'jika data db tidak sesuai dengan excel'
+					   if (arrayMatch.contains(false)) {
+						   'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+						   CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Stamping', GlobalVariable.NumofColm,
+							   GlobalVariable.StatusFailed, (findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm,
+								   2) + ';') + GlobalVariable.ReasonFailedStoredDB)
+					   } else {
+						   'write to excel success'
+						   CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Stamping',
+							   0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+					   }
+					   
+					   call test case ke meterai UI dan document monitoring
+					   
+				   } else {
+						   WebUI.delay(10)
 				   }
 				   
 				}
-                if (GlobalVariable.checkStoreDB == 'Yes') {
 
-
-                    'declare arraylist arraymatch'
-                    arrayMatch = []
-					
-                }
             } else {
                 'mengambil status code berdasarkan response HIT API'
                 message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)

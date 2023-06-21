@@ -107,7 +107,7 @@ public class EditSignerData {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getStatusActivationEditSignerData(Connection conn, String email, String tenantCode, String vendorName) {
 		if (email.length() == 64) {
@@ -128,5 +128,4 @@ public class EditSignerData {
 		}
 		data
 	}
-	
 }

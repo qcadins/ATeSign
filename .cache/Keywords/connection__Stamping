@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "D1261FA0F937FF408CC0CB69AA4F6082",
+  "keywordFileContentHash": "22F8DC1B5B4C0CB041A9C09E9F526826",
   "keywordClasses": [
     {
       "name": "connection.Stamping",
@@ -37,7 +37,7 @@
           "javadoc": ""
         },
         {
-          "name": "getTotalMaterai",
+          "name": "getTotalMateraiAndTotalStamping",
           "parameters": [
             {
               "name": "conn",
