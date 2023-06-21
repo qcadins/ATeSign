@@ -54,7 +54,7 @@ public class JobResult {
 		}
 		data
 	}
-	
+
 	@Keyword
 	jobResultViewReqParamDB(Connection conn, String startDate, String endDate) {
 		stm = conn.createStatement()

@@ -24,13 +24,6 @@ int i, j
 
 GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
 
-
-	'call testcase login admin credit'
-	WebUI.callTestCase(findTestCase('Login/Login_AdmCredit'), [:], FailureHandling.CONTINUE_ON_FAILURE)
-
-	'click menu user management'
-	WebUI.click(findTestObject('User Management/menu_User Management'))
-
 'looping User Management'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
@@ -38,7 +31,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     } else if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
         GlobalVariable.FlagFailed = 0
 
-		/*
+		
         'Jika kolom kedua'
         if (GlobalVariable.NumofColm == 2) {
             'call testcase login admin credit'
@@ -51,7 +44,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             checkPaging(conneSign)
         }
         
-        */
         'jika aksinya adalah new'
         if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('New')) {
             'Klik button baru'
@@ -543,8 +535,8 @@ def checkPopup() {
 
         if (!(lblpopup.contains('Success'))) {
             'Tulis di excel sebagai failed dan error.'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + lblpopup)
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('User Management', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + lblpopup)
         }
         
         'Klik OK untuk popupnya'

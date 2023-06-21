@@ -30,7 +30,7 @@ arrayIndex = 0
 sheet = 'All Send then Sign'
 
 'looping untuk sending document'
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(excelPathFESignDocument).columnNumbers*/ ; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 3 /*findTestData(excelPathFESignDocument).columnNumbers*/ ; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
@@ -909,7 +909,7 @@ def checkSaldoSign() {
     String totalSaldo
 
     'klik button saldo'
-    WebUI.click(findTestObject('Saldo/btn_Saldo'))
+    WebUI.click(findTestObject('isiSaldo/SaldoAdmin/menu_Saldo'))
 
     'klik ddl untuk tenant memilih mengenai Vida'
     WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
@@ -950,7 +950,7 @@ def checkSaldoOtp() {
     String totalSaldo = new ArrayList()
 
     'klik button saldo'
-    WebUI.click(findTestObject('Saldo/btn_Saldo'))
+    WebUI.click(findTestObject('isiSaldo/SaldoAdmin/menu_Saldo'))
 
     'klik ddl untuk tenant memilih mengenai Vida'
     WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 

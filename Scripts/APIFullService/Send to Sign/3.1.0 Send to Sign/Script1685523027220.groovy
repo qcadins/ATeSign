@@ -990,9 +990,9 @@ def inputFilterTrx(Connection conneSign, String currentDate, String noKontrak, S
 
 def checkSaldoSign() {
     String totalSaldo
-
+	
     'klik button saldo'
-    WebUI.click(findTestObject('Saldo/btn_Saldo'))
+    WebUI.click(findTestObject('isiSaldo/SaldoAdmin/menu_Saldo'))
 
     'klik ddl untuk tenant memilih mengenai Vida'
     WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
@@ -1033,7 +1033,7 @@ def checkSaldoOtp() {
     String totalSaldo = new ArrayList()
 
     'klik button saldo'
-    WebUI.click(findTestObject('Saldo/btn_Saldo'))
+    WebUI.click(findTestObject('isiSaldo/SaldoAdmin/menu_Saldo'))
 
     'klik ddl untuk tenant memilih mengenai Vida'
     WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 

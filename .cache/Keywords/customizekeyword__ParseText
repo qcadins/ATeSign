@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "8FA050DBD0F63D0EE8040F1EBCE05599",
+  "keywordFileContentHash": "F23FC51F7B4B0E8EB932BFCF03FA0B46",
   "keywordClasses": [
     {
       "name": "customizekeyword.ParseText",
@@ -54,6 +54,25 @@
             },
             {
               "name": "aesKey",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "convertToSHA256",
+          "parameters": [
+            {
+              "name": "input",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
