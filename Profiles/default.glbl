@@ -116,6 +116,11 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
+      <initValue>'Proses Stamping Gagal'</initValue>
+      <name>ReasonFailedProsesStamping</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
       <initValue>'Falied Resend'</initValue>
       <name>ReasonFailedResend</name>
    </GlobalVariableEntity>

@@ -33,7 +33,7 @@ public class ParseText {
 			e.printStackTrace()
 		}
 	}
-	
+
 	@Keyword
 	convertToSHA256(String input) {
 		MessageDigest digest = MessageDigest.getInstance("SHA-256")

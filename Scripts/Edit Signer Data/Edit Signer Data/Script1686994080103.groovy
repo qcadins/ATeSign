@@ -123,7 +123,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 						'Write failed stored db'
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Edit Signer Data', GlobalVariable.NumofColm, 
                             GlobalVariable.StatusFailed, ((findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, 
-                                2) + ';') + GlobalVariable.ReasonFailedStoredDB) + ' pada Edit Data' + resultBefore + ' dan ' + resultAfter)
+                                2) + ';') + GlobalVariable.ReasonFailedStoredDB) + ' pada Edit Data ')
                     }
                 } else {
 					'Jika tidak sama, maka continue'

@@ -33,4 +33,36 @@ public class Stamping {
 		}
 		listdata
 	}
+	
+	@Keyword
+	getTotalMaterai(Connection conn, String value) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select SUM(total_materai) from tr_document_d tdd JOIN tr_document_h tdh ON tdh.id_document_h = tdd.id_document_h where tdh.ref_number = '"+ value +"'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+	
+	@Keyword
+	getProsesMaterai(Connection conn, String value) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select proses_materai from tr_document_h where ref_number = '"+value+"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		Integer.parseInt(data)
+	}
+	
 }

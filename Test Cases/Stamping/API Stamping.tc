@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>API Stamping</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>2167bfbe-078b-4ad2-95f8-f4d782838d8d</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>735d251a-729a-4cf8-8c56-3f99c4210bd6</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Stamping/Stamping'</defaultValue>
+      <description></description>
+      <id>735d251a-729a-4cf8-8c56-3f99c4210bd6</id>
+      <masked>false</masked>
+      <name>excelPathStamping</name>
+   </variable>
+</TestCaseEntity>
