@@ -21,7 +21,7 @@ int countColmExcel = findTestData(excelPathJobResult).columnNumbers
 sheet = 'Job Result'
 
 'declare variable looping'
-int i,j
+int j
 
 'looping Job Result'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
@@ -138,8 +138,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
 	}
 }
-
-        
+   
 		/*
         'Jika value muncul'
         if (WebUI.verifyElementPresent(findTestObject('Job Result/lbl_value'), GlobalVariable.TimeOut)) {

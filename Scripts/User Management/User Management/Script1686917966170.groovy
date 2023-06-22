@@ -20,7 +20,7 @@ int countColmExcel = findTestData(excelPathUserManagement).columnNumbers
 
 sheet = 'User Management'
 
-int i, j
+int i
 
 GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
 
@@ -84,7 +84,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'Enter cabang'
                 WebUI.sendKeys(findTestObject('Object Repository/User Management/input_CabangNew'), Keys.chord(Keys.ENTER))
 
-                if (checkPagingConfirmation(conneSign, ' pada menu New ') == true) {
+                if (checkPagingConfirmation(' pada menu New ') == true) {
                     continue
                 }
             }
@@ -200,7 +200,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                                 Keys.ENTER))
                     }
 					
-					if (checkPagingConfirmation (conneSign, ' pada menu Edit ') == true) {
+					if (checkPagingConfirmation (' pada menu Edit ') == true) {
 						continue
 					}
                 }
@@ -341,7 +341,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     }
 }
 
-def checkPagingConfirmation(Connection conneSign, String reason) {
+def checkPagingConfirmation(String reason) {
 	if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6) == 'Setting') {
 		modifyObjectBtnSave = WebUI.modifyObjectProperty(findTestObject('Object Repository/User Management/button_Lanjut'),
 			'class', 'equals', 'btn btn-info mr-5', true)
