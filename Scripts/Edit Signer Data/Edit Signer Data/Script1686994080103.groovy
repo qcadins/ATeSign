@@ -19,9 +19,6 @@ int countColmExcel = findTestData(excelPathEditSignerData).columnNumbers
 'get tenant dari setting'
 GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
 
-'declare looping variable'
-int i
-
 'looping Edit Signer Data'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
