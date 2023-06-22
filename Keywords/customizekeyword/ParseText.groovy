@@ -10,34 +10,28 @@ public class ParseText {
 
 	@Keyword
 	parseEncrypt(String value, String aesKey) {
-		try {
-			SecretKeySpec skeySpec = new SecretKeySpec(aesKey.getBytes('UTF-8'), 'AES')
-			Cipher cipher = Cipher.getInstance('AES/ECB/PKCS5Padding')
-			cipher.init(Cipher.ENCRYPT_MODE, skeySpec)
-			byte[] encrypted = cipher.doFinal(value.bytes)
-			return Base64.encodeBase64String(encrypted)
-		} catch (Exception e) {
-			e.printStackTrace()
-		}
+		SecretKeySpec skeySpec = new SecretKeySpec(aesKey.getBytes('UTF-8'), 'AES')
+		Cipher cipher = Cipher.getInstance('AES/ECB/PKCS5Padding')
+		cipher.init(Cipher.ENCRYPT_MODE, skeySpec)
+		byte[] encrypted = cipher.doFinal(value.bytes)
+		return Base64.encodeBase64String(encrypted)
+		
 	}
 
 	@Keyword
 	parseDecrypt(String encrypted, String aesKey) {
-		try {
-			SecretKeySpec skeySpec = new SecretKeySpec(aesKey.getBytes('UTF-8'), 'AES')
-			Cipher cipher = Cipher.getInstance('AES/ECB/PKCS5Padding')
-			cipher.init(Cipher.DECRYPT_MODE, skeySpec)
-			byte[] originalText = cipher.doFinal(Base64.decodeBase64(encrypted))
-			return new String(originalText)
-		} catch (Exception e) {
-			e.printStackTrace()
-		}
+
+		SecretKeySpec skeySpec = new SecretKeySpec(aesKey.getBytes('UTF-8'), 'AES')
+		Cipher cipher = Cipher.getInstance('AES/ECB/PKCS5Padding')
+		cipher.init(Cipher.DECRYPT_MODE, skeySpec)
+		byte[] originalText = cipher.doFinal(Base64.decodeBase64(encrypted))
+		return new String(originalText)
 	}
 
 	@Keyword
 	convertToSHA256(String input) {
-		MessageDigest digest = MessageDigest.getInstance("SHA-256")
-		byte[] encodedHash = digest.digest(input.getBytes("UTF-8"))
-		return encodedHash.collect { String.format("%02x", it) }.join()
+		MessageDigest digest = MessageDigest.getInstance('SHA-256')
+		byte[] encodedHash = digest.digest(input.getBytes('UTF-8'))
+		return encodedHash.collect { String.format('%02x', it) }.join()
 	}
 }

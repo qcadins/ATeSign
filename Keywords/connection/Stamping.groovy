@@ -20,7 +20,7 @@ public class Stamping {
 	getMeterai(Connection conn, String refNumber) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select tsd.stamp_duty_no, to_char(tddstamp.stamping_date,'dd-Mon-yyyy') ,tsd.stamp_duty_fee, mso.office_name, msr.region_name,  mbl.business_line_name from tr_document_d_stampduty tddstamp join tr_document_d tdd on tddstamp.id_document_d = tdd.id_document_d join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h left join tr_stamp_duty tsd on tddstamp.id_stamp_duty = tsd.id_stamp_duty left join tr_balance_mutation tbm on tsd.id_stamp_duty = tbm.id_stamp_duty left join ms_business_line mbl on tdh.id_ms_business_line = mbl.id_ms_business_line left join ms_office mso on mso.id_ms_office = tdh.id_ms_office left join ms_region msr on mso.id_ms_region = msr.id_ms_region where tdh.ref_number = '"+refNumber+"' order by tddstamp.dtm_crt desc")
+		resultSet = stm.executeQuery("select tsd.stamp_duty_no, to_char(tddstamp.stamping_date,'dd-Mon-yyyy') ,tsd.stamp_duty_fee, mso.office_name, msr.region_name,  mbl.business_line_name from tr_document_d_stampduty tddstamp join tr_document_d tdd on tddstamp.id_document_d = tdd.id_document_d join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h left join tr_stamp_duty tsd on tddstamp.id_stamp_duty = tsd.id_stamp_duty left join tr_balance_mutation tbm on tsd.id_stamp_duty = tbm.id_stamp_duty left join ms_business_line mbl on tdh.id_ms_business_line = mbl.id_ms_business_line left join ms_office mso on mso.id_ms_office = tdh.id_ms_office left join ms_region msr on mso.id_ms_region = msr.id_ms_region where tdh.ref_number = '" + refNumber + "' order by tddstamp.dtm_crt desc")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -57,7 +57,7 @@ public class Stamping {
 	getProsesMaterai(Connection conn, String value) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select proses_materai from tr_document_h where ref_number = '"+value+"'")
+		resultSet = stm.executeQuery("select proses_materai from tr_document_h where ref_number = '" + value + "'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -72,7 +72,7 @@ public class Stamping {
 	getInputMeterai(Connection conn, String refNumber) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select tdh.ref_number, msl.description, mbl.business_line_name , msr.region_name, mso.office_name, to_char(tddstamp.stamping_date,'dd-Mon-yyyy'), to_char(tsd.dtm_crt, 'dd-Mon-yyyy'), tsd.stamp_duty_no from tr_document_d_stampduty tddstamp join tr_document_d tdd on tddstamp.id_document_d = tdd.id_document_d join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h left join tr_stamp_duty tsd on tddstamp.id_stamp_duty = tsd.id_stamp_duty left join tr_balance_mutation tbm on tsd.id_stamp_duty = tbm.id_stamp_duty left join ms_business_line mbl on tdh.id_ms_business_line = mbl.id_ms_business_line left join ms_office mso on mso.id_ms_office = tdh.id_ms_office left join ms_region msr on mso.id_ms_region = msr.id_ms_region left join ms_lov msl on tsd.lov_stamp_duty_status = msl.id_lov where tdh.ref_number = '"+refNumber+"' order by tbm.id_balance_mutation asc")
+		resultSet = stm.executeQuery("select tdh.ref_number, msl.description, mbl.business_line_name , msr.region_name, mso.office_name, to_char(tddstamp.stamping_date,'dd-Mon-yyyy'), to_char(tsd.dtm_crt, 'dd-Mon-yyyy'), tsd.stamp_duty_no from tr_document_d_stampduty tddstamp join tr_document_d tdd on tddstamp.id_document_d = tdd.id_document_d join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h left join tr_stamp_duty tsd on tddstamp.id_stamp_duty = tsd.id_stamp_duty left join tr_balance_mutation tbm on tsd.id_stamp_duty = tbm.id_stamp_duty left join ms_business_line mbl on tdh.id_ms_business_line = mbl.id_ms_business_line left join ms_office mso on mso.id_ms_office = tdh.id_ms_office left join ms_region msr on mso.id_ms_region = msr.id_ms_region left join ms_lov msl on tsd.lov_stamp_duty_status = msl.id_lov where tdh.ref_number = '" + refNumber + "' order by tbm.id_balance_mutation asc")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -90,7 +90,7 @@ public class Stamping {
 	getValueMeterai(Connection conn, String refNumber) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select tsd.stamp_duty_no, tdh.ref_number, to_char(tddstamp.stamping_date,'dd-Mon-yyyy') ,tsd.stamp_duty_fee, mso.office_name, msr.region_name,  mbl.business_line_name, msl.code from tr_document_d_stampduty tddstamp join tr_document_d tdd on tddstamp.id_document_d = tdd.id_document_d join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h left join tr_stamp_duty tsd on tddstamp.id_stamp_duty = tsd.id_stamp_duty left join tr_balance_mutation tbm on tsd.id_stamp_duty = tbm.id_stamp_duty left join ms_business_line mbl on tdh.id_ms_business_line = mbl.id_ms_business_line left join ms_office mso on mso.id_ms_office = tdh.id_ms_office join ms_lov msl on msl.id_lov = tsd.lov_stamp_duty_status left join ms_region msr on mso.id_ms_region = msr.id_ms_region where tdh.ref_number = '"+refNumber+"' order by tbm.id_balance_mutation asc ")
+		resultSet = stm.executeQuery("select tsd.stamp_duty_no, tdh.ref_number, to_char(tddstamp.stamping_date,'dd-Mon-yyyy') ,tsd.stamp_duty_fee, mso.office_name, msr.region_name,  mbl.business_line_name, msl.code from tr_document_d_stampduty tddstamp join tr_document_d tdd on tddstamp.id_document_d = tdd.id_document_d join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h left join tr_stamp_duty tsd on tddstamp.id_stamp_duty = tsd.id_stamp_duty left join tr_balance_mutation tbm on tsd.id_stamp_duty = tbm.id_stamp_duty left join ms_business_line mbl on tdh.id_ms_business_line = mbl.id_ms_business_line left join ms_office mso on mso.id_ms_office = tdh.id_ms_office join ms_lov msl on msl.id_lov = tsd.lov_stamp_duty_status left join ms_region msr on mso.id_ms_region = msr.id_ms_region where tdh.ref_number = '" + refNumber + "' order by tbm.id_balance_mutation asc ")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -103,12 +103,12 @@ public class Stamping {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getValueDetailMeterai(Connection conn, String stampdutyno) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select tbm.trx_no, tbm.ref_no, CASE WHEN tdd.id_ms_doc_template IS NULL THEN tdd.document_name ELSE mdt.doc_template_name END, amu.full_name, ml.description, to_char(tbm.trx_date, 'dd-Mon-yyyy HH24:MI') from tr_balance_mutation tbm join tr_document_d tdd on tdd.id_document_d = tbm.id_document_d join ms_lov ml on ml.id_lov = tbm.lov_trx_type join tr_stamp_duty tsd on tsd.id_stamp_duty = tbm.id_stamp_duty left join ms_doc_template mdt on mdt.id_doc_template = tdd.id_ms_doc_template join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h left join am_msuser amu on amu.id_ms_user = tdh.id_msuser_customer where tbm.notes = '"+stampdutyno+"'")
+		resultSet = stm.executeQuery("select tbm.trx_no, tbm.ref_no, CASE WHEN tdd.id_ms_doc_template IS NULL THEN tdd.document_name ELSE mdt.doc_template_name END, amu.full_name, ml.description, to_char(tbm.trx_date, 'dd-Mon-yyyy HH24:MI') from tr_balance_mutation tbm join tr_document_d tdd on tdd.id_document_d = tbm.id_document_d join ms_lov ml on ml.id_lov = tbm.lov_trx_type join tr_stamp_duty tsd on tsd.id_stamp_duty = tbm.id_stamp_duty left join ms_doc_template mdt on mdt.id_doc_template = tdd.id_ms_doc_template join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h left join am_msuser amu on amu.id_ms_user = tdh.id_msuser_customer where tbm.notes = '" + stampdutyno + "'")
 
 		metadata = resultSet.metaData
 
@@ -120,6 +120,5 @@ public class Stamping {
 				listdata.add(data)
 			}
 		}
-		listdata
-	}
+		listdata}
 }

@@ -56,7 +56,7 @@ public class DocumentMonitoring {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select msl.description from tr_document_d tdd join ms_lov msl on tdd.lov_sign_status = msl.id_lov join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h where tdh.ref_number = '" + refnumber + "'")
-		metadata = resultSet.getMetaData()
+		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
 
@@ -91,7 +91,7 @@ public class DocumentMonitoring {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select amm.full_name from tr_document_h tdh join tr_document_d tdd on tdh.id_document_h = tdd.id_document_h join am_msuser amm on tdh.id_msuser_customer = amm.id_ms_user where tdh.ref_number = '" + refnumber + "'")
-		metadata = resultSet.getMetaData()
+		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
 
@@ -126,7 +126,7 @@ public class DocumentMonitoring {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select msl.description from tr_document_h tdh join ms_lov msl on tdh.lov_doc_type = msl.id_lov where tdh.ref_number = '" + refnumber + "'")
-		metadata = resultSet.getMetaData()
+		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
 
@@ -171,5 +171,4 @@ public class DocumentMonitoring {
 		}
 		listdata
 	}
-	
 }
