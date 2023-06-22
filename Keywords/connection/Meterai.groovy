@@ -69,7 +69,7 @@ public class Meterai {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getMeterai(Connection conn, String refNumber) {
 		stm = conn.createStatement()
