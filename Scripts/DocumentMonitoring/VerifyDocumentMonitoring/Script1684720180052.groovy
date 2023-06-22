@@ -27,8 +27,13 @@ nomorKontrakPerPilihan = nomorKontrak.split(';', -1)
 
 'looping untuk membuka dokumen'
 
-for (int o = 0 ; o <= 1 ; o++) {
-	if (linkDocumentMonitoring == '') {
+for (int o = 1 ; o <= 1 ; o++) {
+	if (linkDocumentMonitoring == 'Not Used') {
+		
+		'Klik Button menu Document Monitoring'
+		WebUI.click(findTestObject('DocumentMonitoring/DocumentMonitoring'))
+		
+	} else if (linkDocumentMonitoring == '') {
 		'Call test Case untuk login sebagai admin wom admin client'
 		WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
 	
@@ -74,6 +79,8 @@ for (int o = 0 ; o <= 1 ; o++) {
 'Looping per document'
 for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
 	
+	WebUI.delay(7)
+	
     'Mengambil email berdasarkan documentId'
     ArrayList emailSigner = CustomKeywords.'connection.DocumentMonitoring.getEmailSigneronRefNumber'(conneSign, nomorKontrakPerPilihan[
         y]).split(';', -1)
@@ -97,6 +104,8 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
     'Mengambil value db mengenai tipe dokumen'
     documentType = CustomKeywords.'connection.DocumentMonitoring.getDocumentType'(conneSign, nomorKontrakPerPilihan[y])
 
+	WebUI.delay(7)
+	
     'Jika input nama pelanggan telah muncul'
     if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/input_NamaPelanggan'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
         'Set text mengenai teks customer'
@@ -216,18 +225,19 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
 
             'modify object label Value'
             modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath', 'equals', 
-                '/html/body/app-root/app-content-layout/div/div/div/div[2]/app-inquiry/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper/datatable-body-row/div[2]/datatable-body-cell[1]/div/p', 
+                '//*[@id="listDokumen"]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper/datatable-body-row/div[2]/datatable-body-cell[1]/div/p', 
                 true)
-
-            'Mengambil row size dari value'
-            sizeRowofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-content-layout > div > div > div > div.content-wrapper.p-0 > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
-
-            'Mengambil column size dari value'
-            sizeColumnofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-content-layout > div > div > div > div.content-wrapper.p-0 > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-body-cell'))
 
             'Jika valuenya ada'
             if (WebUI.verifyElementPresent(modifyObjectvalues, GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
-                'Pembuatan untuk array Index result Query'
+				WebUI.delay(5)
+				'Mengambil row size dari value'
+				sizeRowofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-content-layout > div > div > div > div.content-wrapper.p-0 > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
+	
+				'Mengambil column size dari value'
+				sizeColumnofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-content-layout > div > div > div > div.content-wrapper.p-0 > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-body-cell'))
+
+				'Pembuatan untuk array Index result Query'
                 arrayIndex = 0
 
                 'Mengambil value dari db menngenai data yang perlu diverif'
@@ -242,7 +252,7 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                     'Looping berdasarkan column yang ada pada value tanpa aksi.'
                     for (int i = 1; i <= (sizeColumnofLabelValue.size() / sizeRowofLabelValue.size()); i++) {
                         modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 
-                            'xpath', 'equals', ((('/html/body/app-root/app-content-layout/div/div/div/div[2]/app-inquiry/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
+                            'xpath', 'equals', ((('//*[@id="listDokumen"]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
                             j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div', true)
 
                         'Jika berada di column ke 7'
@@ -287,6 +297,7 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
     
     'penggunaan checking print false'
     if (arrayMatch.contains(false)) {
+		GlobalVariable.FlagFailed = 1
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
             ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedStoredDB) + 

@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>API Stamping</name>
+   <name>verifyMeterai</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>2167bfbe-078b-4ad2-95f8-f4d782838d8d</testCaseGuid>
+   <testCaseGuid>4971847c-b098-4034-9eaf-03baae3c8efd</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>735d251a-729a-4cf8-8c56-3f99c4210bd6</variableId>
+      <variableId>718f97e6-22e4-4dfe-97eb-e45c9a173ac3</variableId>
    </variableLinks>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>1848398d-cf87-4d29-865b-9090127edf08</variableId>
+      <variableId>0679fc1b-1427-453e-9e7d-09fe52c314b7</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'Stamping/Stamping'</defaultValue>
+      <defaultValue>''</defaultValue>
       <description></description>
-      <id>735d251a-729a-4cf8-8c56-3f99c4210bd6</id>
+      <id>718f97e6-22e4-4dfe-97eb-e45c9a173ac3</id>
       <masked>false</masked>
-      <name>excelPathStamping</name>
+      <name>excelPathMeterai</name>
    </variable>
    <variable>
-      <defaultValue>'Login/Setting'</defaultValue>
+      <defaultValue>''</defaultValue>
       <description></description>
-      <id>1848398d-cf87-4d29-865b-9090127edf08</id>
+      <id>0679fc1b-1427-453e-9e7d-09fe52c314b7</id>
       <masked>false</masked>
-      <name>excelPathSetting</name>
+      <name>noKontrak</name>
    </variable>
 </TestCaseEntity>
