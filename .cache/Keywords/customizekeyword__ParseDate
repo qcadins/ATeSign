@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "D11021459A5BF57B8A9BA0C0FB4CB313",
+  "keywordFileContentHash": "2494E0BCEFB1DCFA094E339415DC1E56",
   "keywordClasses": [
     {
       "name": "customizekeyword.ParseDate",
@@ -46,11 +46,10 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         }
       ]
     }
   ],
-  "javadocParsed": true
+  "javadocParsed": false
 }

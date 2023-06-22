@@ -204,17 +204,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     }
 }
 
-public correctipAddress() {
-    String ipAddress = InetAddress.getLocalHost().hostAddress
-
-    return ipAddress
+def correctipAddress() {
+    return InetAddress.localHost.hostAddress
 }
 
-public phototoBase64(String filePath) {
+def phototoBase64(String filePath) {
     return CustomKeywords.'customizekeyword.ConvertFile.base64File'(filePath)
 }
 
-public responseAPIStoreDB(Connection conneSign, String ipaddress, String documentId) {
+def responseAPIStoreDB(Connection conneSign, String ipaddress, String documentId) {
     'get current date'
     currentDate = new Date().format('yyyy-MM-dd')
 

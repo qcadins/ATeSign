@@ -6,7 +6,7 @@ import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys
 
 'get current date'
-def currentDate = new Date().format('dd-MMM-yyyy')
+currentDate = new Date().format('dd-MMM-yyyy')
 
 'click menu Inquiry Invitation'
 WebUI.click(findTestObject('InquiryInvitation/menu_InquiryInvitation'))
@@ -49,7 +49,7 @@ checkVerifyEqualOrMatch(WebUI.verifyMatch(invitationDate[0] , currentDate, false
 
 verifyListUndangan()
 
-def verifyListUndangan(){
+def verifyListUndangan() {
 	currentDate = new Date().format('yyyy-MM-dd')
 	
 	'navigate to url esign'

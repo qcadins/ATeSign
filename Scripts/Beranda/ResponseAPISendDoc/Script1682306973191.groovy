@@ -1,16 +1,12 @@
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
-import com.kms.katalon.core.testcase.TestCase as TestCase
-import com.kms.katalon.core.testdata.TestData as TestData
-import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
-import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import internal.GlobalVariable as GlobalVariable
-import org.openqa.selenium.Keys as Keys
-import java.sql.Connection as Connection
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
+import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
+import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
+import internal.GlobalVariable as GlobalVariable
+import java.sql.Connection as Connection
 import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
-import org.openqa.selenium.By as By
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
@@ -90,7 +86,7 @@ String signerSelfPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.Nu
 String stringRefno = ''
 
 'Pembuatan pengisian variable di sendRequest per jumlah signer.'
-ArrayList<String> list = new ArrayList<String>()
+ArrayList list = []
 
 String listSigner = ''
 
@@ -120,7 +116,6 @@ for (int i = 1; i <= signAction.size(); i++) {
 
     'Memasukkan seluruh BodyAPI ke listSigner'
     listSigner = listSigner + list[(i - 1)]
-
 }
 
 'looping berdasarkan jumlah dari documentFile'
@@ -132,7 +127,7 @@ for (int t = 0; t < documentFile.size(); t++) {
         documentTemplateCode) + ', "officeCode": ') + officeCode) + ', "officeName": ') + officeName) + ', "regionCode": ') + 
         regionCode) + ', "regionName": ') + regionName) + ', "businessLineCode": ') + businessLineCode) + ', "businessLineName": ') + 
         businessLineName) + ', "isSequence": ') + isSequence) + ', "signer":[') + (listSigner)) + '], "documentFile": "') + 
-        pdfToBase64(documentFile[t]))+ '", "psreCode" : ') + psreCode) + ', "successURL": ') + successURL) + ', "uploadURL": ') + 
+        pdfToBase64(documentFile[t])) + '", "psreCode" : ') + psreCode) + ', "successURL": ') + successURL) + ', "uploadURL": ') + 
         uploadURL)) + '}')
     } else {
         'Jika tidak diakhir maka membuat body API'
@@ -140,7 +135,7 @@ for (int t = 0; t < documentFile.size(); t++) {
         documentTemplateCode) + ', "officeCode": ') + officeCode) + ', "officeName": ') + officeName) + ', "regionCode": ') + 
         regionCode) + ', "regionName": ') + regionName) + ', "businessLineCode": ') + businessLineCode) + ', "businessLineName": ') + 
         businessLineName) + ', "isSequence": ') + isSequence) + ', "signer":[') + (listSigner)) + '], "documentFile": "') + 
-		pdfToBase64(documentFile[t]))+ '", "psreCode" : ') + psreCode) + ', "successURL": ') + successURL) + ', "uploadURL": ') + uploadURL)) + '},')
+		pdfToBase64(documentFile[t])) + '", "psreCode" : ') + psreCode) + ', "successURL": ') + successURL) + ', "uploadURL": ') + uploadURL)) + '},')
     }
 }
 
@@ -212,7 +207,7 @@ def pdfToBase64(String fileName) {
 
 def responseAPIStoreDB(Connection conneSign) {
     'declare arraylist arraymatch'
-    ArrayList<String> arrayMatch = new ArrayList<String>()
+    ArrayList arrayMatch = []
 
     docid = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 6).split(', ', -1)
 
@@ -224,10 +219,10 @@ def responseAPIStoreDB(Connection conneSign) {
 		ArrayList<String> emailSigner = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, docid[r]).split(';',-1)
 
 		'split email dari excel'
-		email = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 40).replace('"','').split(';',-1)
+		email = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 40).replace('"','').split(';', -1)
 		
 		'split signer type dari excel'
-		signerType = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 26).replace('"','').split(';',-1)
+		signerType = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 26).replace('"','').split(';', -1)
 		
 		for(int i = 0; i< emailSigner.size();i++) {
 			ArrayList<String> resultStoreEmailandType = CustomKeywords.'connection.SendSign.getSendDocForEmailAndSignerType'(conneSign, docid[r], emailSigner[i])

@@ -174,7 +174,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     String resultTrx = CustomKeywords.'connection.APIFullService.getAPIRegisterTrx'(conneSign, trxNo)
 
                     'declare arraylist arraymatch'
-                    ArrayList<String> arrayMatch = new ArrayList<String>()
+                    ArrayList arrayMatch = []
 
                     'verify trx qty = -1'
                     arrayMatch.add(WebUI.verifyMatch(resultTrx, '-1', false, FailureHandling.CONTINUE_ON_FAILURE))

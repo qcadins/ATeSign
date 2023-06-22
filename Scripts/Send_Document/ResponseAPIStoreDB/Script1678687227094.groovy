@@ -8,7 +8,7 @@ import java.sql.Connection as Connection
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'declare arraylist arraymatch'
-ArrayList<String> arrayMatch = new ArrayList<String>()
+ArrayList arrayMatch = new []
 
 docid = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 6).replace('[', '').replace(']', '').split(', ', -1)
 
@@ -17,15 +17,15 @@ for (int i = 0; i < docid.size(); i++) {
     ArrayList<String> result = CustomKeywords.'connection.SendSign.getSendDoc'(conneSign, docid[i])
 
 	'Mengambil email berdasarkan documentId'
-	ArrayList<String> emailSigner = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, docid[i]).split(';',-1)
+	ArrayList<String> emailSigner = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, docid[i]).split(';', -1)
 
 	'split email dari excel'
-	email = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 40).replace('"','').split(';',-1)
+	email = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 40).replace('"','').split(';', -1)
 	
 	'split signer type dari excel'
-	signerType = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 26).replace('"','').split(';',-1)
+	signerType = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 26).replace('"','').split(';', -1)
 	
-	for(int r = 0; r < emailSigner.size();r++) {
+	for(int r = 0 ; r < emailSigner.size() ; r++) {
 		ArrayList<String> resultStoreEmailandType = CustomKeywords.'connection.SendSign.getSendDocForEmailAndSignerType'(conneSign, docid[i], emailSigner[r])
 		
 		'declare arrayindex'
@@ -38,7 +38,6 @@ for (int i = 0; i < docid.size(); i++) {
 		arrayMatch.add(WebUI.verifyMatch(signerType[r], resultStoreEmailandType[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 		
 	}
-	
 	'declare arrayindex'
 	arrayindex = 0
 
@@ -98,7 +97,7 @@ for (int i = 0; i < docid.size(); i++) {
             result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 	
 	'verify total document'
-	arrayMatch.add(WebUI.verifyEqual(docid.size(),result[arrayindex++].toInteger(), FailureHandling.CONTINUE_ON_FAILURE))
+	arrayMatch.add(WebUI.verifyEqual(docid.size(),Integer.parseInt(result[arrayindex++]), FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify sign Action : hardcode. Yang penting tidak boleh kosong'
     arrayMatch.add(WebUI.verifyNotMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 28).replace('"', 
