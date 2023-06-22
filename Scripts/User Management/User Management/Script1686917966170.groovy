@@ -20,8 +20,6 @@ int countColmExcel = findTestData(excelPathUserManagement).columnNumbers
 
 sheet = 'User Management'
 
-int i
-
 GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
 
 'looping User Management'

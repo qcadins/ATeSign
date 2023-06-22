@@ -19,9 +19,6 @@ int countColmExcel = findTestData(excelPathEditSignerData).columnNumbers
 'get tenant dari setting'
 GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
 
-'declare looping variable'
-int i,j
-
 'looping Edit Signer Data'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
@@ -214,7 +211,7 @@ def searchData(String email) {
     WebUI.click(findTestObject('Edit Signer Data/button_Cari'))
 }
 
-def verifyPage(String email, int i, int j) {
+def verifyPage(String email) {
     if (WebUI.verifyElementPresent(findTestObject('Object Repository/Edit Signer Data/lbl_VendorValue'), GlobalVariable.TimeOut)) {
         if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 9).equalsIgnoreCase('NIK')) {
             email = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(email)

@@ -16,9 +16,6 @@ firstDateOfMonth = currentDate.withDayOfMonth(1)
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-'declare looping'
-int j = 1
-
 'looping DocumentMonitoring'
 GlobalVariable.FlagFailed = 0
 
