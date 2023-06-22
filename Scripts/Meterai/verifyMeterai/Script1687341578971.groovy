@@ -16,7 +16,8 @@ firstDateOfMonth = currentDate.withDayOfMonth(1)
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-int j
+'declare looping'
+int j = 1
 
 'looping DocumentMonitoring'
 GlobalVariable.FlagFailed = 0
@@ -30,27 +31,27 @@ WebUI.click(findTestObject('Meterai/menu_Meterai'))
 'get totalMaterai from db'
 ArrayList totalMateraiAndTotalStamping = CustomKeywords.'connection.Stamping.getTotalMateraiAndTotalStamping'(conneSign, noKontrak)
 
-indexInput = 0
-indexValue = 0
-indexGetNomorMaterai = 0
+'declare index yang akan digunakan'
+int indexInput = 0,indexValue = 0,indexGetNomorMaterai = 0
 
+'looping per total meterai yang telah distamp'
 for (j = 1; j <= (Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ',''))); j++) {
-
+	'ambil value db untuk mau input apa'
 	ArrayList inputBasedOnAPIStamping = CustomKeywords.'connection.Stamping.getInputMeterai'(conneSign, noKontrak)
 
-	'set text lini bisnis'
+	'set text lini bisnis all untuk reset'
 	WebUI.setText(findTestObject('Meterai/input_LiniBisnis'),'All')
 
 	'enter untuk set lini bisnis'
 	WebUI.sendKeys(findTestObject('Meterai/input_LiniBisnis'), Keys.chord(Keys.ENTER))
 
-	'set text tanggal wilayah'
+	'set text tanggal wilayah all untuk reset'
 	WebUI.setText(findTestObject('Meterai/input_Wilayah'), 'All')
 
 	'enter untuk set wilayah'
 	WebUI.sendKeys(findTestObject('Meterai/input_Wilayah'), Keys.chord(Keys.ENTER))
 
-	'set text tanggal cabang'
+	'set text tanggal cabang all untuk reset'
 	WebUI.setText(findTestObject('Meterai/input_Cabang'),'All')
 
 	'enter untuk set cabang'
@@ -95,9 +96,10 @@ for (j = 1; j <= (Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ','
     'click button cari'
     WebUI.click(findTestObject('Meterai/button_Cari'))
 
+	'Beri delay 5sec loading Cari'
 	WebUI.delay(5)
 	
-    'get stampduty data dari db'
+    'get value meterai data dari db'
     result = CustomKeywords.'connection.Stamping.getValueMeterai'(conneSign, noKontrak)
 
     'verify no meterai'
@@ -137,8 +139,11 @@ for (j = 1; j <= (Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ','
 
     'get stampduty trx data dari db'
     resultPopup = CustomKeywords.'connection.Stamping.getValueDetailMeterai'(conneSign, result[indexGetNomorMaterai])
-
+	
+	'index get nomor materai ditingkatkan 8 berdasarkan jumalh kolom value'
 	indexGetNomorMaterai = indexGetNomorMaterai + 8
+	
+	'declare index'
 	index = 0
 	
     'verify no meterai'
@@ -167,16 +172,14 @@ for (j = 1; j <= (Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ','
 
     'click button X'
     WebUI.click(findTestObject('Meterai/button_X'))
-	
-
 }
 
-'call testcase login admin'
+'call testcase verify document monitoring'
 WebUI.callTestCase(findTestCase('DocumentMonitoring/verifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathMeterai, ('sheet') : sheet, ('nomorKontrak') : noKontrak, ('linkDocumentMonitoring') : 'Not Used'], FailureHandling.CONTINUE_ON_FAILURE)
 
 if (GlobalVariable.FlagFailed == 0) {
 	'write to excel success'
-	CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Stamping', 0, GlobalVariable.NumofColm -
+	CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet , 0, GlobalVariable.NumofColm -
 		1, GlobalVariable.StatusSuccess)
 }
 
@@ -184,7 +187,7 @@ if (GlobalVariable.FlagFailed == 0) {
 def checkVerifyPaging(Boolean isMatch) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Stamping', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
             (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedPaging)
 
         GlobalVariable.FlagFailed = 1
@@ -194,7 +197,7 @@ def checkVerifyPaging(Boolean isMatch) {
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Stamping', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
             ((findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
             reason)
 

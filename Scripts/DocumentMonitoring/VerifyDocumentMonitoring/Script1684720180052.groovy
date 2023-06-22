@@ -17,6 +17,7 @@ currentDate = new Date().format('yyyy-MM-dd')
 
 ArrayList nomorKontrakPerPilihan = []
 
+'Jika nomor Kontrak kosong'
 if (nomorKontrak == '') {
     'Mengambil documen id dari excel'
     nomorKontrak = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 11).replace('"', '')
@@ -29,10 +30,10 @@ nomorKontrakPerPilihan = nomorKontrak.split(';', -1)
 
 for (int o = 1 ; o <= 1 ; o++) {
 	if (linkDocumentMonitoring == 'Not Used') {
-		
 		'Klik Button menu Document Monitoring'
 		WebUI.click(findTestObject('DocumentMonitoring/DocumentMonitoring'))
 		
+		linkDocumentMonitoring = ''
 	} else if (linkDocumentMonitoring == '') {
 		'Call test Case untuk login sebagai admin wom admin client'
 		WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
