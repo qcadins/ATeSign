@@ -211,7 +211,7 @@ def searchData(String email) {
     WebUI.click(findTestObject('Edit Signer Data/button_Cari'))
 }
 
-def verifyPage(String email, int i, int j) {
+def verifyPage(String email) {
     if (WebUI.verifyElementPresent(findTestObject('Object Repository/Edit Signer Data/lbl_VendorValue'), GlobalVariable.TimeOut)) {
         if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 9).equalsIgnoreCase('NIK')) {
             email = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(email)

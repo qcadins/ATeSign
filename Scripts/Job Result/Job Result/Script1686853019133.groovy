@@ -20,9 +20,6 @@ int countColmExcel = findTestData(excelPathJobResult).columnNumbers
 
 sheet = 'Job Result'
 
-'declare variable looping'
-int j
-
 'looping Job Result'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 1).length() == 0) {

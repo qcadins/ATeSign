@@ -16,9 +16,6 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'get colm excel'
 int countColmExcel = findTestData(excelPathStamping).columnNumbers
 
-'declare variable looping'
-int i
-
 sheet = 'API Stamping'
 
 'looping API stamping'
