@@ -34,7 +34,7 @@ public class PencarianPengguna {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getPencarianPengguna(Connection conn, String email) {
 		stm = conn.createStatement()

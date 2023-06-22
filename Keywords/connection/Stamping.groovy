@@ -103,7 +103,7 @@ public class Stamping {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getValueDetailMeterai(Connection conn, String stampdutyno) {
 		stm = conn.createStatement()
