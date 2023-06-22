@@ -20,16 +20,9 @@ int countColmExcel = findTestData(excelPathUserManagement).columnNumbers
 
 sheet = 'User Management'
 
-int i, j
+int i
 
 GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
-
-
-	'call testcase login admin credit'
-	WebUI.callTestCase(findTestCase('Login/Login_AdmCredit'), [:], FailureHandling.CONTINUE_ON_FAILURE)
-
-	'click menu user management'
-	WebUI.click(findTestObject('User Management/menu_User Management'))
 
 'looping User Management'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
@@ -38,7 +31,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     } else if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
         GlobalVariable.FlagFailed = 0
 
-		/*
+		
         'Jika kolom kedua'
         if (GlobalVariable.NumofColm == 2) {
             'call testcase login admin credit'
@@ -51,7 +44,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             checkPaging(conneSign)
         }
         
-        */
         'jika aksinya adalah new'
         if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('New')) {
             'Klik button baru'
@@ -92,7 +84,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'Enter cabang'
                 WebUI.sendKeys(findTestObject('Object Repository/User Management/input_CabangNew'), Keys.chord(Keys.ENTER))
 
-                if (checkPagingConfirmation(conneSign, ' pada menu New ') == true) {
+                if (checkPagingConfirmation(' pada menu New ') == true) {
                     continue
                 }
             }
@@ -208,7 +200,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                                 Keys.ENTER))
                     }
 					
-					if (checkPagingConfirmation (conneSign, ' pada menu Edit ') == true) {
+					if (checkPagingConfirmation (' pada menu Edit ') == true) {
 						continue
 					}
                 }
@@ -349,7 +341,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     }
 }
 
-def checkPagingConfirmation(Connection conneSign, String reason) {
+def checkPagingConfirmation(String reason) {
 	if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6) == 'Setting') {
 		modifyObjectBtnSave = WebUI.modifyObjectProperty(findTestObject('Object Repository/User Management/button_Lanjut'),
 			'class', 'equals', 'btn btn-info mr-5', true)
@@ -543,8 +535,8 @@ def checkPopup() {
 
         if (!(lblpopup.contains('Success'))) {
             'Tulis di excel sebagai failed dan error.'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + lblpopup)
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('User Management', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + lblpopup)
         }
         
         'Klik OK untuk popupnya'

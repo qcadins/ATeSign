@@ -4,6 +4,7 @@ import com.kms.katalon.core.annotation.Keyword
 import org.apache.commons.codec.binary.Base64
 import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
+import java.security.MessageDigest
 
 public class ParseText {
 
@@ -31,5 +32,12 @@ public class ParseText {
 		} catch (Exception e) {
 			e.printStackTrace()
 		}
+	}
+
+	@Keyword
+	convertToSHA256(String input) {
+		MessageDigest digest = MessageDigest.getInstance("SHA-256")
+		byte[] encodedHash = digest.digest(input.getBytes("UTF-8"))
+		return encodedHash.collect { String.format("%02x", it) }.join()
 	}
 }

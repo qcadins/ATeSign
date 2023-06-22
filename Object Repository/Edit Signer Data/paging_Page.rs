@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>btn_Saldo</name>
+   <name>paging_Page</name>
    <tag></tag>
-   <elementGuidId>9c133f5f-76db-405e-82ed-99cf4700542f</elementGuidId>
+   <elementGuidId>bf20e54a-ce5c-4b53-b675-515da4963d9b</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'sidebar-content main-menu-content ng-tns-c133-1 ps']/div[1]/ul/li[1]/a/span</value>
+         <value>//*[@class = 'datatable-pager ng-star-inserted']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>class</name>
       <type>Main</type>
-      <value>//*[@class = 'sidebar-content main-menu-content ng-tns-c133-1 ps']/div[1]/ul/li[1]/a/span</value>
-      <webElementGuid>d611c621-1aa5-4735-a0f6-9d56c728eef6</webElementGuid>
+      <value>datatable-pager ng-star-inserted</value>
+      <webElementGuid>c8197196-ff12-4777-97d7-f21acfe3042d</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

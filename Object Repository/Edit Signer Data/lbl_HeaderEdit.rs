@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>lbl_HeaderEdit</name>
+   <tag></tag>
+   <elementGuidId>3cd80e9f-a1bb-4c88-b4d3-d131a8b37e6b</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>XPATH</key>
+         <value>(.//*[normalize-space(text()) and normalize-space(.)='Edit Data Signer'])[1]/following::div[11]</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>div.content-header</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>div</value>
+      <webElementGuid>ec74d93d-955d-4f00-b55a-86b9a008dde5</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>content-header</value>
+      <webElementGuid>e082c998-5ac9-435e-81d5-09ee02c209ec</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Edit Data Signer</value>
+      <webElementGuid>7d181763-6104-468d-b598-8108aa5da52a</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html[1]/body[@class=&quot;vertical-layout navbar-static menu-hide  pace-done&quot;]/app-root[1]/app-full-layout[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;wrapper&quot;]/div[@class=&quot;main-panel&quot;]/div[@class=&quot;main-content&quot;]/div[@class=&quot;content-wrapper&quot;]/app-edit-user-data[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;row&quot;]/div[@class=&quot;col-6&quot;]/div[@class=&quot;content-header&quot;]</value>
+      <webElementGuid>dd784ff7-66f2-48ca-90da-90dacba6d1ba</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Edit Data Signer'])[1]/following::div[11]</value>
+      <webElementGuid>95f8da26-c59a-4aec-9fc0-d7c2f25bfb0b</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='User Management'])[1]/following::div[11]</value>
+      <webElementGuid>a438f10c-b8d0-4c7e-afb1-2c70e8210cb1</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Email'])[1]/preceding::div[1]</value>
+      <webElementGuid>c0323dfd-cb3b-4413-aec3-ba4a92c046aa</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Vendor'])[1]/preceding::div[5]</value>
+      <webElementGuid>9b10f8fa-5d3a-4d46-b668-b928b56fcbdc</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//app-edit-user-data/div/div/div</value>
+      <webElementGuid>48c86d4c-59ff-4c04-b62d-212ecc0361d8</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//div[(text() = 'Edit Data Signer' or . = 'Edit Data Signer')]</value>
+      <webElementGuid>e3efa07b-ac52-437c-a07c-dd40dc77d380</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>

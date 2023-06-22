@@ -70,7 +70,7 @@ public class UserManagement {
 	getUserManagementNewStoreDB(Connection conn, String email, String tenantCode) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select amm.full_name, amm.login_id, amr.role_name,case when amr.is_active = '1' then 'Aktif' else 'Tidak Aktif' end from am_memberofrole amor join am_msrole amr on amor.id_ms_role = amr.id_ms_role join ms_useroftenant muot on amor.id_ms_user = muot.id_ms_user join am_msuser amm on muot.id_ms_user = amm.id_ms_user join ms_tenant mst on muot.id_ms_tenant = mst.id_ms_tenant join ms_tenant mste on amr.id_ms_tenant = mste.id_ms_tenant where mst.tenant_code = 'WOMF' and mste.tenant_code = 'WOMF'and amr.is_usermanagement = '1' and amr.is_active = '1' and amr.is_deleted = '0' and amm.login_id = '"+email+"'")
+		resultSet = stm.executeQuery("select amm.full_name, amm.login_id, amr.role_name,case when amr.is_active = '1' then 'Aktif' else 'Tidak Aktif' end from am_memberofrole amor join am_msrole amr on amor.id_ms_role = amr.id_ms_role join ms_useroftenant muot on amor.id_ms_user = muot.id_ms_user join am_msuser amm on muot.id_ms_user = amm.id_ms_user join ms_tenant mst on muot.id_ms_tenant = mst.id_ms_tenant join ms_tenant mste on amr.id_ms_tenant = mste.id_ms_tenant where mst.tenant_code = '"+tenantCode+"' and mste.tenant_code = '"+tenantCode+"'and amr.is_usermanagement = '1' and amr.is_active = '1' and amr.is_deleted = '0' and amm.login_id = '"+email+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

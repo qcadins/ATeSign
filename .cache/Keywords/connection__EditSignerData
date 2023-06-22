@@ -1,30 +1,11 @@
 {
-  "keywordFileContentHash": "7C243EF38A1E2FCA853C6FF90FAA57C0",
+  "keywordFileContentHash": "74C63342876E8BD5CCCF36108814C722",
   "keywordClasses": [
     {
-      "name": "connection.UserManagement",
+      "name": "connection.EditSignerData",
       "keywordMethods": [
         {
-          "name": "getTotalUserManagement",
-          "parameters": [
-            {
-              "name": "conn",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.sql.Connection",
-                "unresolvedClassName": "Connection",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            }
-          ],
-          "javadoc": ""
-        },
-        {
-          "name": "getUserManagement",
+          "name": "countEditSignerDataBasedOnEmail",
           "parameters": [
             {
               "name": "conn",
@@ -69,7 +50,65 @@
           "javadoc": ""
         },
         {
-          "name": "getUserManagementonEdit",
+          "name": "getBeforeEditDataEditSignerData",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "email",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "tenantCode",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "vendorName",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getEditSignerData",
           "parameters": [
             {
               "name": "conn",
@@ -114,7 +153,7 @@
           "javadoc": ""
         },
         {
-          "name": "getUserManagementNewStoreDB",
+          "name": "getEditDataAndEditActivationEditSignerData",
           "parameters": [
             {
               "name": "conn",
@@ -159,7 +198,7 @@
           "javadoc": ""
         },
         {
-          "name": "getUserManagementEditStoreDB",
+          "name": "getStatusActivationEditSignerData",
           "parameters": [
             {
               "name": "conn",
@@ -189,6 +228,19 @@
             },
             {
               "name": "tenantCode",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "vendorName",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

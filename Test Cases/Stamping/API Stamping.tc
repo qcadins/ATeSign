@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>Edit Signer Data</name>
+   <name>API Stamping</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>e12d62ea-8eb2-4bd3-83f3-1bbe1e2ee015</testCaseGuid>
+   <testCaseGuid>2167bfbe-078b-4ad2-95f8-f4d782838d8d</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>a6160d32-19ab-4252-9f13-5d3d75dab5ca</variableId>
+      <variableId>735d251a-729a-4cf8-8c56-3f99c4210bd6</variableId>
    </variableLinks>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>957920ce-0249-4b63-af06-6759dd425001</variableId>
+      <variableId>1848398d-cf87-4d29-865b-9090127edf08</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'Edit Signer Data/Edit Signer Data'</defaultValue>
+      <defaultValue>'Stamping/Stamping'</defaultValue>
       <description></description>
-      <id>a6160d32-19ab-4252-9f13-5d3d75dab5ca</id>
+      <id>735d251a-729a-4cf8-8c56-3f99c4210bd6</id>
       <masked>false</masked>
-      <name>excelPathEditSignerData</name>
+      <name>excelPathStamping</name>
    </variable>
    <variable>
       <defaultValue>'Login/Setting'</defaultValue>
       <description></description>
-      <id>957920ce-0249-4b63-af06-6759dd425001</id>
+      <id>1848398d-cf87-4d29-865b-9090127edf08</id>
       <masked>false</masked>
       <name>excelPathSetting</name>
    </variable>

@@ -512,7 +512,7 @@ def PDFtoBase64(String fileName) {
     return CustomKeywords.'customizekeyword.ConvertFile.base64File'(fileName)
 }
 
-def responseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, String delimiter, String enter) {
+def responseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, String enter) {
     'connect DB eSign'
     Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
