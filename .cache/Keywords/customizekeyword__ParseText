@@ -64,6 +64,7 @@
                 "errorOnParsing": false
               }
             }
+<<<<<<< HEAD
           ]
         },
         {
@@ -83,6 +84,10 @@
               }
             }
           ]
+=======
+          ],
+          "javadoc": ""
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
         }
       ]
     }

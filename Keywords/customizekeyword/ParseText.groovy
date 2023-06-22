@@ -15,12 +15,10 @@ public class ParseText {
 		cipher.init(Cipher.ENCRYPT_MODE, skeySpec)
 		byte[] encrypted = cipher.doFinal(value.bytes)
 		return Base64.encodeBase64String(encrypted)
-		
 	}
 
 	@Keyword
 	parseDecrypt(String encrypted, String aesKey) {
-
 		SecretKeySpec skeySpec = new SecretKeySpec(aesKey.getBytes('UTF-8'), 'AES')
 		Cipher cipher = Cipher.getInstance('AES/ECB/PKCS5Padding')
 		cipher.init(Cipher.DECRYPT_MODE, skeySpec)
