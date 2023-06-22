@@ -18,7 +18,7 @@
       <variableId>1848398d-cf87-4d29-865b-9090127edf08</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'Stamping/Stamping'</defaultValue>
+      <defaultValue>'Meterai/Stamping'</defaultValue>
       <description></description>
       <id>735d251a-729a-4cf8-8c56-3f99c4210bd6</id>
       <masked>false</masked>

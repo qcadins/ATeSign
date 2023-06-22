@@ -26,7 +26,7 @@ WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathMete
 WebUI.click(findTestObject('Meterai/menu_Meterai'))
 
 'get totalMaterai from db'
-ArrayList totalMateraiAndTotalStamping = CustomKeywords.'connection.Stamping.getTotalMateraiAndTotalStamping'(conneSign, noKontrak)
+ArrayList totalMateraiAndTotalStamping = CustomKeywords.'connection.Meterai.getTotalMateraiAndTotalStamping'(conneSign, noKontrak)
 
 'declare index yang akan digunakan'
 int indexInput = 0,indexValue = 0,indexGetNomorMaterai = 0
@@ -34,7 +34,7 @@ int indexInput = 0,indexValue = 0,indexGetNomorMaterai = 0
 'looping per total meterai yang telah distamp'
 for (j = 1; j <= (Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ',''))); j++) {
 	'ambil value db untuk mau input apa'
-	ArrayList inputBasedOnAPIStamping = CustomKeywords.'connection.Stamping.getInputMeterai'(conneSign, noKontrak)
+	ArrayList inputBasedOnAPIStamping = CustomKeywords.'connection.Meterai.getInputMeterai'(conneSign, noKontrak)
 
 	'set text lini bisnis all untuk reset'
 	WebUI.setText(findTestObject('Meterai/input_LiniBisnis'),'All')
@@ -97,7 +97,7 @@ for (j = 1; j <= (Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ','
 	WebUI.delay(5)
 	
     'get value meterai data dari db'
-    result = CustomKeywords.'connection.Stamping.getValueMeterai'(conneSign, noKontrak)
+    result = CustomKeywords.'connection.Meterai.getValueMeterai'(conneSign, noKontrak)
 
     'verify no meterai'
     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_NomorMeterai')), result[indexValue++], 
@@ -135,7 +135,7 @@ for (j = 1; j <= (Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ','
     WebUI.click(findTestObject('Meterai/table_NomorMeterai'))
 
     'get stampduty trx data dari db'
-    resultPopup = CustomKeywords.'connection.Stamping.getValueDetailMeterai'(conneSign, result[indexGetNomorMaterai])
+    resultPopup = CustomKeywords.'connection.Meterai.getValueDetailMeterai'(conneSign, result[indexGetNomorMaterai])
 	
 	'index get nomor materai ditingkatkan 8 berdasarkan jumalh kolom value'
 	indexGetNomorMaterai = indexGetNomorMaterai + 8

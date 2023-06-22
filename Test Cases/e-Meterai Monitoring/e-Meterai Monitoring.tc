@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>New Test Case</name>
+   <name>e-Meterai Monitoring</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>0423d791-1cc0-42b8-9a73-3b3f290113e9</testCaseGuid>
+   <testCaseGuid>1210f05d-c3d5-4f2e-a7e2-847ed5e0ed87</testCaseGuid>
 </TestCaseEntity>

@@ -54,7 +54,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'looping dari 1 hingga 6'
                 for (i = 1; i <= 6; i++) {
                     'mengambil value db proses ttd'
-                    int prosesMaterai = CustomKeywords.'connection.Stamping.getProsesMaterai'(conneSign, findTestData(excelPathStamping).getValue(
+                    int prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, findTestData(excelPathStamping).getValue(
                             GlobalVariable.NumofColm, 11).replace('"', ''))
 
                     'jika proses materai gagal (51)'
@@ -71,7 +71,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         WebUI.delay(3)
 
                         'Mengambil value total stamping dan total meterai'
-                        ArrayList totalMateraiAndTotalStamping = CustomKeywords.'connection.Stamping.getTotalMateraiAndTotalStamping'(
+                        ArrayList totalMateraiAndTotalStamping = CustomKeywords.'connection.Meterai.getTotalMateraiAndTotalStamping'(
                             conneSign, findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 11).replace('"', 
                                 ''))
 
