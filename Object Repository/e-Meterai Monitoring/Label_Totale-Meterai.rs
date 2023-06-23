@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>button_X</name>
+   <name>Label_Totale-Meterai</name>
    <tag></tag>
-   <elementGuidId>5d678612-7922-4051-829f-d277d25713a6</elementGuidId>
+   <elementGuidId>c597870a-6173-42fe-94fd-c282af0ff310</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'modal-body']/button/span</value>
+         <value>//*[@class = 'datatable-footer ng-star-inserted']/div/div</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@class = 'modal-body']/button/span</value>
-      <webElementGuid>df44b29d-c880-4ecd-b890-a840d6df1268</webElementGuid>
+      <value>//*[@class = 'datatable-footer ng-star-inserted']/div/div</value>
+      <webElementGuid>24fe8f44-04c8-4c1a-878e-77d2991c52d3</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

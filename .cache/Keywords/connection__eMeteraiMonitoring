@@ -1,11 +1,11 @@
 {
-  "keywordFileContentHash": "9F551B6BE267194438E4E7DA7FAD2988",
+  "keywordFileContentHash": "EE5E4B9DE6260926438D2879BCFDD19D",
   "keywordClasses": [
     {
-      "name": "connection.SendDocument",
+      "name": "connection.eMeteraiMonitoring",
       "keywordMethods": [
         {
-          "name": "settingEmailServiceVendorRegisteredUser",
+          "name": "geteMeteraiMonitoring",
           "parameters": [
             {
               "name": "conn",
@@ -21,20 +21,7 @@
               }
             },
             {
-              "name": "value",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.lang.String",
-                "unresolvedClassName": "String",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            },
-            {
-              "name": "email",
+              "name": "refNumber",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "E6BDBF2E6D708CB74207476DA4140AEC",
+  "keywordFileContentHash": "84540F638A02F14BBDE1A658E7D799F6",
   "keywordClasses": [
     {
       "name": "customizekeyword.ParseText",
@@ -33,7 +33,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "parseDecrypt",
@@ -64,8 +65,8 @@
                 "errorOnParsing": false
               }
             }
-<<<<<<< HEAD
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "convertToSHA256",
@@ -83,14 +84,11 @@
                 "errorOnParsing": false
               }
             }
-          ]
-=======
           ],
           "javadoc": ""
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
         }
       ]
     }
   ],
-  "javadocParsed": false
+  "javadocParsed": true
 }

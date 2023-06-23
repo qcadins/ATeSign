@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>table_NomorMeterai</name>
+   <name>table_Nomor Seri</name>
    <tag></tag>
-   <elementGuidId>7568b42a-bea5-4fa1-a988-b3613479a9f5</elementGuidId>
+   <elementGuidId>b09a5ef8-18fc-4831-9a77-7b8cc44818f4</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'datatable-row-center datatable-row-group ng-star-inserted']/datatable-body-cell[1]/div</value>
+         <value>//*[@class = 'datatable-row-center datatable-row-group ng-star-inserted']/datatable-body-cell[10]/div</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,8 +17,8 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@class = 'datatable-row-center datatable-row-group ng-star-inserted']/datatable-body-cell[1]/div</value>
-      <webElementGuid>7baf23e9-64e1-4a97-a55d-9f3cb6d8945b</webElementGuid>
+      <value>//*[@class = 'datatable-row-center datatable-row-group ng-star-inserted']/datatable-body-cell[10]/div</value>
+      <webElementGuid>4cb8312c-8fba-40b4-b0b7-447612ee993d</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -26,6 +26,6 @@
       <name>class</name>
       <type>Main</type>
       <value>datatable-row-center datatable-row-group ng-star-inserted</value>
-      <webElementGuid>ee2989e5-8a6c-421b-b0c3-c05764818673</webElementGuid>
+      <webElementGuid>52d4fb17-c3ae-400e-9b7c-6cf34fe5b6aa</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

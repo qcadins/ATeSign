@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_Tanggal Dokumen Mulai</name>
+   <tag></tag>
+   <elementGuidId>ad62216c-912f-4d90-bcd5-b53882d61282</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>XPATH</key>
+         <value>//input[@id='tanggalDokumenMulai']</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>#tanggalDokumenMulai</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>id(&quot;tanggalDokumenMulai&quot;)</value>
+      <webElementGuid>2dffb797-fd4a-4a49-bb85-f2589eb8c66b</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:attributes</name>
+      <type>Main</type>
+      <value>//input[@id='tanggalDokumenMulai']</value>
+      <webElementGuid>365c01ce-cc22-4a51-99c1-bb9050f5b10d</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:idRelative</name>
+      <type>Main</type>
+      <value>//form[@id='searchForm']/div/div[5]/app-question/app-date/div/div[2]/div/input</value>
+      <webElementGuid>b1213cf3-3d2f-40e0-8576-d559606ac5bb</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//app-date/div/div[2]/div/input</value>
+      <webElementGuid>dd6b0df1-92f1-43cb-8bc5-273e5bff350f</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//input[@type = 'text' and @id = 'tanggalDokumenMulai' and @placeholder = 'yyyy-mm-dd']</value>
+      <webElementGuid>d5c305bf-f2a2-474a-97e1-1d885d818f27</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_TipeDokumenPeruri</name>
+   <tag></tag>
+   <elementGuidId>ae5c8be1-8b2b-42cc-9712-b0639481d02e</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>XPATH</key>
+         <value>//ng-select[@id='jenisDokumen']/div</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>div.ng-select-container.ng-has-value</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>id(&quot;jenisDokumen&quot;)</value>
+      <webElementGuid>51f900a4-7251-4186-b5db-9d2fbb37524f</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:idRelative</name>
+      <type>Main</type>
+      <value>//ng-select[@id='jenisDokumen']/div</value>
+      <webElementGuid>f40b33f0-3771-435e-94ce-fce69feba894</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Tipe Dokumen Peruri'])[1]/following::div[2]</value>
+      <webElementGuid>bd5720a7-62a7-42fc-bebb-3deec613c059</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Nomor Dokumen'])[1]/following::div[7]</value>
+      <webElementGuid>7df19345-dabf-434a-876c-67efa83ab9b3</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//ng-select/div</value>
+      <webElementGuid>febc706f-6797-45fc-b2f6-176bf31f02aa</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//div[(text() = 'Pilih jenis dokumen×All×' or . = 'Pilih jenis dokumen×All×')]</value>
+      <webElementGuid>79553c69-2572-4d66-9be7-e73e81071e36</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>

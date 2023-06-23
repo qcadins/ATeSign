@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_Nomor Seri</name>
+   <tag></tag>
+   <elementGuidId>c8d46144-a207-4514-82c6-02406350ef4f</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>XPATH</key>
+         <value>//input[@id='noSN']</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>#noSN</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>id(&quot;noSN&quot;)</value>
+      <webElementGuid>1297204a-173c-4be8-b7df-d109121b626b</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:attributes</name>
+      <type>Main</type>
+      <value>//input[@id='noSN']</value>
+      <webElementGuid>10c43fa0-0b1d-451d-b35c-58a146d8af7c</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:idRelative</name>
+      <type>Main</type>
+      <value>//form[@id='searchForm']/div/div[8]/app-question/app-text/div/div[2]/div/input</value>
+      <webElementGuid>d1eec5de-7786-4904-b0a0-8e3c9cdca923</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//div[8]/app-question/app-text/div/div[2]/div/input</value>
+      <webElementGuid>254f3d42-d975-4a19-a8b7-6280b0a6400f</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//input[@type = 'text' and @id = 'noSN' and @placeholder = 'Tulis nomor seri']</value>
+      <webElementGuid>c8926470-c0e6-4ed9-a272-65f4b2de9a7a</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>
