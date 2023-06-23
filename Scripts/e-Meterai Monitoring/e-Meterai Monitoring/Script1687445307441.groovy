@@ -64,7 +64,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                         GlobalVariable.FlagFailed = 1
                     }
-                    
                     break
                 } else {
                     'Jika error lognya muncul'
