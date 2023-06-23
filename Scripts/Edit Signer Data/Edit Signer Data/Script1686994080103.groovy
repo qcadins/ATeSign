@@ -16,9 +16,6 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'get colm excel'
 int countColmExcel = findTestData(excelPathEditSignerData).columnNumbers
 
-'get tenant dari setting'
-GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
-
 'looping Edit Signer Data'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
@@ -38,18 +35,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             WebUI.click(findTestObject('Edit Signer Data/menu_Edit Signer Data'))
 
             'call function check paging'
-            //checkPaging(conneSign)
+            checkPaging(conneSign)
         }
         
         'check if search dengan email/NIK'
         if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, 9).equalsIgnoreCase('Email')) {
-            email = findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, 10)
+            emailOrNIKExcel = findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, 10)
         } else if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, 9).equalsIgnoreCase('NIK')) {
-            email = findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, 11)
+            emailOrNIKExcel = findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, 11)
         }
         
 		'search data menggunakan email'
-        searchData(email)
+        searchData(emailOrNIKExcel)
 
 		'Jika aksi Edit Data'
         if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Edit Data')) {
@@ -61,8 +58,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             WebUI.click(findTestObject('Object Repository/Edit Signer Data/button_Batal'))
 
 			'search data menggunakan email'
-            searchData(email)
+            searchData(emailOrNIKExcel)
+			
 			WebUI.delay(4)
+			
 			'klik aksi edit data'
             WebUI.click(findTestObject('Object Repository/Edit Signer Data/button_AksiEditData'))
 
@@ -71,10 +70,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				'Jika input menggunakan NIK'
                 if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, 9).equalsIgnoreCase('NIK')) {
                     'convert input menjadi SHA256'
-					emailOrNIKHash = convertSHA256(email)
+					emailOrNIKHash = convertSHA256(emailOrNIKExcel)
                 } else {
 					'email'
-                    emailOrNIKHash = email
+                    emailOrNIKHash = emailOrNIKExcel
                 }
                 
 				'mengambil return vendor dari UI sekaligus check result'
@@ -136,7 +135,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             WebUI.click(findTestObject('Object Repository/Edit Signer Data/button_Batal'))
 
 			'Search data menggunakan email'
-            searchData(email)
+            searchData(emailOrNIKExcel)
 
 			'Klik button edit aktivasi'
             WebUI.click(findTestObject('Object Repository/Edit Signer Data/button_AksiEditAktivasi'))
@@ -145,10 +144,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             if (WebUI.verifyElementPresent(findTestObject('Object Repository/Edit Signer Data/lbl_HeaderEdit'), GlobalVariable.TimeOut)) {
                 if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, 9).equalsIgnoreCase('NIK')) {
                     'convert NIK menjadi SHA256'
-					emailOrNIKHash = convertSHA256(email)
+					emailOrNIKHash = convertSHA256(emailOrNIKExcel)
                 } else {
 					'email'
-                    emailOrNIKHash = email
+                    emailOrNIKHash = emailOrNIKExcel
                 }
                 
 				'mengambil return vendor dari UI'
@@ -204,8 +203,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     }
 }
 
-def searchData(String email) {
-    WebUI.setText(findTestObject('Object Repository/Edit Signer Data/input_loginid'), email)
+def searchData(String emailOrNIKExcel) {
+    WebUI.setText(findTestObject('Object Repository/Edit Signer Data/input_loginid'), emailOrNIKExcel)
 
     'click button cari'
     WebUI.click(findTestObject('Edit Signer Data/button_Cari'))
