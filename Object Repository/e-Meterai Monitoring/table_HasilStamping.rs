@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'datatable-row-center datatable-row-group ng-star-inserted']/datatable-body-cell[9]/div</value>
+         <value>//*[@class = 'datatable-row-center datatable-row-group ng-star-inserted']/datatable-body-cell[9]/div/p</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,8 +17,8 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@class = 'datatable-row-center datatable-row-group ng-star-inserted']/datatable-body-cell[9]/div</value>
-      <webElementGuid>3d4e911a-0b8f-47f3-9567-7d078041165b</webElementGuid>
+      <value>//*[@class = 'datatable-row-center datatable-row-group ng-star-inserted']/datatable-body-cell[9]/div/p</value>
+      <webElementGuid>bd2a1895-877d-4522-a30f-269767d5fe32</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -26,6 +26,6 @@
       <name>class</name>
       <type>Main</type>
       <value>datatable-row-center datatable-row-group ng-star-inserted</value>
-      <webElementGuid>5d139257-c3dc-4704-8e7b-8cc7f94b9ad1</webElementGuid>
+      <webElementGuid>cd622775-713c-4138-b858-d1a1b0ee1e8c</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

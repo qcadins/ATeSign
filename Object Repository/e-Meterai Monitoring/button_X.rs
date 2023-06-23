@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>selected_DDL</name>
+   <name>button_X</name>
    <tag></tag>
-   <elementGuidId>4e9ee5e0-6c4a-4f21-9c7d-4cf6c9e32051</elementGuidId>
+   <elementGuidId>ce30bb90-9ab8-4cb9-9bed-fffa05a110f8</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'ng-option-label ng-star-inserted']</value>
+         <value>//*[@class = 'modal-body']/button/span</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>class</name>
+      <name>xpath</name>
       <type>Main</type>
-      <value>ng-option-label ng-star-inserted</value>
-      <webElementGuid>38f9e2ec-1157-4c9b-aeae-9cea9e071655</webElementGuid>
+      <value>//*[@class = 'modal-body']/button/span</value>
+      <webElementGuid>280d7014-c434-49cb-a167-29ce9c89d775</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

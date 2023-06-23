@@ -10,6 +10,10 @@
          <value>//ng-select[@id='cabang']/div</value>
       </entry>
       <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;cabang&quot;]/div/div/div[3]/input</value>
+      </entry>
+      <entry>
          <key>CSS</key>
          <value>#cabang > div.ng-select-container.ng-has-value</value>
       </entry>
@@ -21,8 +25,8 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>id(&quot;cabang&quot;)</value>
-      <webElementGuid>33cba7d9-226d-4434-b206-5e5635ea0769</webElementGuid>
+      <value>//*[@id=&quot;cabang&quot;]/div/div/div[3]/input</value>
+      <webElementGuid>06c19aa4-99df-49e4-948f-02f33d85bd39</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -30,7 +34,7 @@
       <name>xpath:idRelative</name>
       <type>Main</type>
       <value>//ng-select[@id='cabang']/div</value>
-      <webElementGuid>6c395de5-099f-4b96-90da-851b5b0874a3</webElementGuid>
+      <webElementGuid>62866769-b203-4a82-90cd-31df266030fa</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -38,7 +42,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Cabang'])[1]/following::div[2]</value>
-      <webElementGuid>0255ee8d-5a8b-43f8-b316-bc8640efb03f</webElementGuid>
+      <webElementGuid>1b6a3bc9-c426-4af4-9ddb-bd7d3cf8e5c7</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -46,7 +50,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Nomor Seri'])[1]/following::div[7]</value>
-      <webElementGuid>2f1a38ed-65ef-4bf6-bfef-8c04ef0062ff</webElementGuid>
+      <webElementGuid>75e0a117-5110-4335-9fee-ef6f629774c6</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -54,7 +58,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div[9]/app-question/app-select/div/div[2]/ng-select/div</value>
-      <webElementGuid>440bc548-8ed3-4c76-8146-e34e4dfd9bba</webElementGuid>
+      <webElementGuid>737abdc6-e532-4284-9c01-1173516d36bf</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -62,6 +66,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//div[(text() = 'Select office×All×' or . = 'Select office×All×')]</value>
-      <webElementGuid>53023e62-16de-4a53-9242-f1c10df3a176</webElementGuid>
+      <webElementGuid>d7badeac-3857-4dbf-aab1-1e26e4b9f336</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

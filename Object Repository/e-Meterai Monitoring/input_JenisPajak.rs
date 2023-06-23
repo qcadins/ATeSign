@@ -10,6 +10,10 @@
          <value>//ng-select[@id='taxType']/div</value>
       </entry>
       <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;taxType&quot;]/div/div/div[3]/input</value>
+      </entry>
+      <entry>
          <key>CSS</key>
          <value>#taxType > div.ng-select-container.ng-has-value</value>
       </entry>
@@ -21,8 +25,8 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>id(&quot;taxType&quot;)</value>
-      <webElementGuid>d0960bfc-f0e7-4ac2-95bf-a7cee411cab1</webElementGuid>
+      <value>//*[@id=&quot;taxType&quot;]/div/div/div[3]/input</value>
+      <webElementGuid>e243c0bc-6bf8-4688-91cc-d26a2edb9ebf</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -30,7 +34,7 @@
       <name>xpath:idRelative</name>
       <type>Main</type>
       <value>//ng-select[@id='taxType']/div</value>
-      <webElementGuid>5cc3370b-1421-4bd0-aad1-c0ff976ceea3</webElementGuid>
+      <webElementGuid>e89b3986-f395-48bb-8e17-af921de97a63</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -38,7 +42,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Jenis Pajak'])[1]/following::div[2]</value>
-      <webElementGuid>7ad6e37b-98a9-4e03-9c40-61a0ff87bbd8</webElementGuid>
+      <webElementGuid>32d52a25-1664-4feb-aeeb-bbf9fe52c30b</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -46,7 +50,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='All'])[4]/following::div[6]</value>
-      <webElementGuid>3a106f6a-7742-4245-80e8-fe72ece94589</webElementGuid>
+      <webElementGuid>a1a8dbd0-6644-4387-a783-8fc60b115ab8</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -54,7 +58,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div[10]/app-question/app-select/div/div[2]/ng-select/div</value>
-      <webElementGuid>cf00df5a-a9da-4008-9f10-316b998c0d56</webElementGuid>
+      <webElementGuid>64b89be7-b476-4e63-989b-b263801c2322</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -62,6 +66,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//div[(text() = 'Select tax type×All×' or . = 'Select tax type×All×')]</value>
-      <webElementGuid>e168962e-0bd0-40bf-bf7a-ae0a12b38e0e</webElementGuid>
+      <webElementGuid>ef4d3650-47a2-4ca4-bc92-9becc643b3cf</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

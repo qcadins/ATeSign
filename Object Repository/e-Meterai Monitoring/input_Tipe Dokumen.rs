@@ -10,6 +10,10 @@
          <value>//ng-select[@id='tipeDokumen']/div</value>
       </entry>
       <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;tipeDokumen&quot;]/div/div/div[3]/input</value>
+      </entry>
+      <entry>
          <key>CSS</key>
          <value>#tipeDokumen > div.ng-select-container.ng-has-value</value>
       </entry>
@@ -21,8 +25,8 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>id(&quot;tipeDokumen&quot;)</value>
-      <webElementGuid>9fdd5592-8774-40e1-88e3-bdd85c452556</webElementGuid>
+      <value>//*[@id=&quot;tipeDokumen&quot;]/div/div/div[3]/input</value>
+      <webElementGuid>6e4c6283-86e0-4513-8782-799247d89331</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -30,7 +34,7 @@
       <name>xpath:idRelative</name>
       <type>Main</type>
       <value>//ng-select[@id='tipeDokumen']/div</value>
-      <webElementGuid>9d86e462-d05c-4ca1-8211-89c3128e3fb9</webElementGuid>
+      <webElementGuid>e5bc5b11-16d6-4ac6-9e76-a8775f75bae0</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -38,7 +42,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Tipe Dokumen'])[1]/following::div[2]</value>
-      <webElementGuid>417354be-a9b3-42a0-a6ec-ea8daa898a4d</webElementGuid>
+      <webElementGuid>79eb7ebb-61d5-4054-ab06-9fd6b259c6a7</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -46,7 +50,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='All'])[1]/following::div[6]</value>
-      <webElementGuid>0cc8f94c-3b55-4377-a242-7d8e8ef64311</webElementGuid>
+      <webElementGuid>5452827d-8182-498e-bac0-30f02a022b47</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -54,7 +58,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div[3]/app-question/app-select/div/div[2]/ng-select/div</value>
-      <webElementGuid>0073727d-0278-4900-b6a3-b185d204adc3</webElementGuid>
+      <webElementGuid>9d66b7a4-2d98-4946-a57f-9e93ac315ca9</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -62,6 +66,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//div[(text() = 'Pilih tipe dokumen×All×' or . = 'Pilih tipe dokumen×All×')]</value>
-      <webElementGuid>b751aa04-b40f-4ad2-be67-45636a60cdfd</webElementGuid>
+      <webElementGuid>cadc71c0-020d-43f8-8694-69a7a2a13f53</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

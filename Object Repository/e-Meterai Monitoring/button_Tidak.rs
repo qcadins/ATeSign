@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>selected_DDL</name>
+   <name>button_Tidak</name>
    <tag></tag>
-   <elementGuidId>4e9ee5e0-6c4a-4f21-9c7d-4cf6c9e32051</elementGuidId>
+   <elementGuidId>23dfcc3e-7872-4f92-8532-fa784f917c06</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'ng-option-label ng-star-inserted']</value>
+         <value>//*[@class = 'swal2-cancel btn btn-secondary mr-2']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>ng-option-label ng-star-inserted</value>
-      <webElementGuid>38f9e2ec-1157-4c9b-aeae-9cea9e071655</webElementGuid>
+      <value>swal2-cancel btn btn-secondary mr-2</value>
+      <webElementGuid>9664f9dc-6bd7-48c5-9f71-fd75c6000e1f</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

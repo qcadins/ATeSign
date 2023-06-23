@@ -24,7 +24,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         GlobalVariable.FlagFailed = 0
 
 		'Declare variable yang dibutuhkan'
-		String email, emailOrNIKHash, getVendor
+		String emailOrNIKExcel, emailOrNIKHash, getVendor
 		
         'Jika kolom kedua'
         if (GlobalVariable.NumofColm == 2) {
