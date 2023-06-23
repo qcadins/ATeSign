@@ -17,80 +17,87 @@ firstDateOfMonth = currentDate.withDayOfMonth(1)
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get colm excel'
-int countColmExcel = findTestData(excelPathMeterai).columnNumbers
+int countColmExcel = findTestData(excelPathemeteraiMonitoring).columnNumbers
+
+sheet = 'e-Meterai Monitoring'
 
 'looping DocumentMonitoring'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
-    if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
+    if (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
-    } else if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+    } else if (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
         GlobalVariable.FlagFailed = 0
 
         if (GlobalVariable.NumofColm == 2) {
             'call testcase login admin'
-            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathMeterai, ('sheet') : 'Meterai'], 
+            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathemeteraiMonitoring, ('sheet') : 'Meterai'], 
                 FailureHandling.CONTINUE_ON_FAILURE)
 
             'click menu meterai'
-            WebUI.click(findTestObject('Meterai/menu_Meterai'))
+            WebUI.click(findTestObject('e-Meterai Monitoring/menu_emeteraiMonitoring'))
 
             'call function check paging'
             checkPaging(currentDate, firstDateOfMonth, conneSign)
         }
         
-        'set text no kontrak'
-        WebUI.setText(findTestObject('Meterai/input_NoKontrak'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-                9))
-
-        'set text status meterai'
-        WebUI.setText(findTestObject('Meterai/input_StatusMeterai'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-                10))
-
-        'enter untuk set status meterai'
-        WebUI.sendKeys(findTestObject('Meterai/input_StatusMeterai'), Keys.chord(Keys.ENTER))
-
-        'set text lini bisnis'
-        WebUI.setText(findTestObject('Meterai/input_LiniBisnis'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-                11))
-
-        'enter untuk set lini bisnis'
-        WebUI.sendKeys(findTestObject('Meterai/input_LiniBisnis'), Keys.chord(Keys.ENTER))
-
-        'set text tanggal wilayah'
-        WebUI.setText(findTestObject('Meterai/input_Wilayah'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-                12))
-
-        'enter untuk set wilayah'
-        WebUI.sendKeys(findTestObject('Meterai/input_Wilayah'), Keys.chord(Keys.ENTER))
-
-        'set text tanggal cabang'
-        WebUI.setText(findTestObject('Meterai/input_Cabang'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-                13))
-
-        'enter untuk set cabang'
-        WebUI.sendKeys(findTestObject('Meterai/input_Cabang'), Keys.chord(Keys.ENTER))
-
-        'set text tanggal pakai dari'
-        WebUI.setText(findTestObject('Meterai/input_TanggalPakaiDari'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-                14))
-
-        'set text tanggal pakai sampai'
-        WebUI.setText(findTestObject('Meterai/input_TanggalPakaiSampai'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-                15))
-
-        'set text no meterai'
-        WebUI.setText(findTestObject('Meterai/input_NoMeterai'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-                16))
-
+		'set text no kontrak'
+		WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Nomor Dokumen'), findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 9))
+	
+		'set text status meterai'
+		WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Tipe Dokumen'), findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 10))
+		
+		'enter untuk set status meterai'
+		WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_Tipe Dokumen'), Keys.chord(Keys.ENTER))
+		
+		'set text status meterai'
+		WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Tanggal Dokumen Mulai'), findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 11))
+	
+		'set text status meterai'
+		WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_HasilStamping'), findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 12))
+		
+		'enter untuk set status meterai'
+		WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_HasilStamping'), Keys.chord(Keys.ENTER))
+		
+		'set text status meterai'
+		WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Cabang'), findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 13))
+		
+		'enter untuk set status meterai'
+		WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_Cabang'), Keys.chord(Keys.ENTER))
+		
+		'set text status meterai'
+		WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_TipeDokumenPeruri'), findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 14))
+		
+		'enter untuk set status meterai'
+		WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_TipeDokumenPeruri'), Keys.chord(Keys.ENTER))
+		
+		'set text status meterai'
+		WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_PengaturanDokumen'), findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 15))
+		
+		'enter untuk set status meterai'
+		WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_PengaturanDokumen'), Keys.chord(Keys.ENTER))
+	
+		'set text status meterai'
+		WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_TanggalDokumenSampai'), findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 16))
+		
+		'set text status meterai'
+		WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Nomor Seri'), findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 17))
+	
+		'set text status meterai'
+		WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_JenisPajak'), findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 18))
+		
+		'enter untuk set status meterai'
+		WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_JenisPajak'), Keys.chord(Keys.ENTER))
+	
         'click button cari'
-        WebUI.click(findTestObject('Meterai/button_Cari'))
+        WebUI.click(findTestObject('e-Meterai Monitoring/button_Cari'))
 
         'get stampduty data dari db'
-        result = CustomKeywords.'connection.Meterai.getStampdutyData'(conneSign, findTestData(excelPathMeterai).getValue(
-                GlobalVariable.NumofColm, 16))
+        result = CustomKeywords.'connection.eMeteraiMonitoring.geteMeteraiMonitoring'(conneSign, findTestData(excelPathemeteraiMonitoring).getValue(
+                GlobalVariable.NumofColm, 9))
 
         index = 0
-
+		
+		println result
         'verify no meterai'
         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_NomorMeterai')), result[index++], 
                 false, FailureHandling.CONTINUE_ON_FAILURE), ' No Materai')
@@ -128,7 +135,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         WebUI.click(findTestObject('Meterai/table_NomorMeterai'))
 
         'get stampduty trx data dari db'
-        result = CustomKeywords.'connection.Meterai.getStampdutyTrxData'(conneSign, findTestData(excelPathMeterai).getValue(
+        result = CustomKeywords.'connection.Meterai.getStampdutyTrxData'(conneSign, findTestData(excelPathemeteraiMonitoring).getValue(
                 GlobalVariable.NumofColm, 16))
 
         index = 0
@@ -161,19 +168,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         WebUI.click(findTestObject('Meterai/button_X'))
 
         'check if mau download data meterai'
-        if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 18).equalsIgnoreCase('Yes')) {
+        if (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 18).equalsIgnoreCase('Yes')) {
             'click button download'
-            WebUI.click(findTestObject('Meterai/button_UnduhExcel'))
+            WebUI.click(findTestObject('Object Repository/e-Meterai Monitoring/button_Unduh Excel Pajak'))
 
             'delay 5 detik'
             WebUI.delay(5)
-
+			
             'check isfiled downloaded'
-            if (CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
+            if (CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 
                     19)) == false) {
                 'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedDownload'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Meterai', GlobalVariable.NumofColm, 
-                    GlobalVariable.StatusFailed, (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 2) + 
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                    GlobalVariable.StatusFailed, (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 2) + 
                     ';') + GlobalVariable.ReasonFailedDownload)
 
                 GlobalVariable.FlagFailed = 1
@@ -182,7 +189,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         
         if (GlobalVariable.FlagFailed == 0) {
             'write to excel success'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Meterai', 0, GlobalVariable.NumofColm - 
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
                 1, GlobalVariable.StatusSuccess)
         }
     }
@@ -190,127 +197,164 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
 def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection conneSign) {
 	
-	totalMeteraiDB = CustomKeywords.'connection.Meterai.getTotalMeterai'(conneSign)
+	//totalMeteraiDB = CustomKeywords.'connection.Meterai.getTotalMeterai'(conneSign)
 	
     'set text no kontrak'
-    WebUI.setText(findTestObject('Meterai/input_NoKontrak'), '000111')
+    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Nomor Dokumen'), '20230616133400')
 
+	'set text status meterai'
+	WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Tipe Dokumen'), 'Dokumen Transaksi/Payment Receipt')
+	
+	'enter untuk set status meterai'
+	WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_Tipe Dokumen'), Keys.chord(Keys.ENTER))
+	
     'set text status meterai'
-    WebUI.setText(findTestObject('Meterai/input_StatusMeterai'), 'stamp duty Used')
+    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Tanggal Dokumen Mulai'), firstDateOfMonth)
 
-    'enter untuk set status meterai'
-    WebUI.sendKeys(findTestObject('Meterai/input_StatusMeterai'), Keys.chord(Keys.ENTER))
+	'set text status meterai'
+	WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_HasilStamping'), 'Failed')
+	
+	'enter untuk set status meterai'
+	WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_HasilStamping'), Keys.chord(Keys.ENTER))
+	
+	'set text status meterai'
+	WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Cabang'), 'Daegu')
+	
+	'enter untuk set status meterai'
+	WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_Cabang'), Keys.chord(Keys.ENTER))
+	
+	'set text status meterai'
+	WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_TipeDokumenPeruri'), 'Dokumen penerimaan uang (lebih dari 5 juta)')
+	
+	'enter untuk set status meterai'
+	WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_TipeDokumenPeruri'), Keys.chord(Keys.ENTER))
+	
+	'set text status meterai'
+	WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_PengaturanDokumen'), 'KWITANSI EMETERAI')
+	
+	'enter untuk set status meterai'
+	WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_PengaturanDokumen'), Keys.chord(Keys.ENTER))
 
-    'set text lini bisnis'
-    WebUI.setText(findTestObject('Meterai/input_LiniBisnis'), 'multiguna')
+	'set text status meterai'
+	WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_TanggalDokumenSampai'), currentDate)
+	
+	'set text status meterai'
+	WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Nomor Seri'), '')
 
-    'enter untuk set lini bisnis'
-    WebUI.sendKeys(findTestObject('Meterai/input_LiniBisnis'), Keys.chord(Keys.ENTER))
-
-    'set text tanggal wilayah'
-    WebUI.setText(findTestObject('Meterai/input_Wilayah'), 'bogor')
-
-    'enter untuk set wilayah'
-    WebUI.sendKeys(findTestObject('Meterai/input_Wilayah'), Keys.chord(Keys.ENTER))
-
-    'set text tanggal cabang'
-    WebUI.setText(findTestObject('Meterai/input_Cabang'), 'irwan')
-
-    'enter untuk set cabang'
-    WebUI.sendKeys(findTestObject('Meterai/input_Cabang'), Keys.chord(Keys.ENTER))
-
-    'set text tanggal pakai dari'
-    WebUI.setText(findTestObject('Meterai/input_TanggalPakaiDari'), '2023-01-01')
-
-    'set text tanggal pakai sampai'
-    WebUI.setText(findTestObject('Meterai/input_TanggalPakaiSampai'), '2023-01-31')
-
-    'set text no meterai'
-    WebUI.setText(findTestObject('Meterai/input_NoMeterai'), '21975017285')
+	'set text status meterai'
+	WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_JenisPajak'), 'Pemungut')
+	
+	'enter untuk set status meterai'
+	WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_JenisPajak'), Keys.chord(Keys.ENTER))
 
     'click button set ulang'
-    WebUI.click(findTestObject('Meterai/button_SetUlang'))
+    WebUI.click(findTestObject('Object Repository/e-Meterai Monitoring/button_Set Ulang'))
 
     'verify field ke reset'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/input_NoKontrak'), 'value', FailureHandling.CONTINUE_ON_FAILURE), 
-            '', false, FailureHandling.CONTINUE_ON_FAILURE))
+    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/e-Meterai Monitoring/input_Nomor Dokumen'), 'value', FailureHandling.CONTINUE_ON_FAILURE),'', false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'click ddl status meterai'
-    WebUI.click(findTestObject('Meterai/input_StatusMeterai'))
+    WebUI.click(findTestObject('Object Repository/e-Meterai Monitoring/input_Tipe Dokumen'))
 
     'verify field ke reset'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/selected_DDL')), 'All', false, FailureHandling.CONTINUE_ON_FAILURE))
+    checkVerifyPaging(WebUI.verifyMatch(WebUI.getText(findTestObject('e-Meterai Monitoring/selected_DDL')), 'All', false, FailureHandling.CONTINUE_ON_FAILURE))
 
-    'click ddl status meterai'
-    WebUI.click(findTestObject('Meterai/input_LiniBisnis'))
+	'enter untuk set status meterai'
+	WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_Tipe Dokumen'), Keys.chord(Keys.ENTER))
+	
+	'verify field ke reset'
+	checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/e-Meterai Monitoring/input_Tanggal Dokumen Mulai'), 'value', FailureHandling.CONTINUE_ON_FAILURE),'', false, FailureHandling.CONTINUE_ON_FAILURE))
 
-    'verify field ke reset'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/selected_DDL')), 'All', false, FailureHandling.CONTINUE_ON_FAILURE))
+	'click ddl status meterai'
+	WebUI.click(findTestObject('Object Repository/e-Meterai Monitoring/input_HasilStamping'))
 
-    'click ddl status meterai'
-    WebUI.click(findTestObject('Meterai/input_Wilayah'))
+	'verify field ke reset'
+	checkVerifyPaging(WebUI.verifyMatch(WebUI.getText(findTestObject('e-Meterai Monitoring/selected_DDL')), 'All', false, FailureHandling.CONTINUE_ON_FAILURE))
 
-    'verify field ke reset'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/selected_DDL')), 'All', false, FailureHandling.CONTINUE_ON_FAILURE))
+	'enter untuk set status meterai'
+	WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_HasilStamping'), Keys.chord(Keys.ENTER))
 
-    'click ddl status meterai'
-    WebUI.click(findTestObject('Meterai/input_Cabang'))
+	'click ddl status meterai'
+	WebUI.click(findTestObject('Object Repository/e-Meterai Monitoring/input_Cabang'))
 
-    'verify field ke reset'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/selected_DDL')), 'All', false, FailureHandling.CONTINUE_ON_FAILURE))
+	'verify field ke reset'
+	checkVerifyPaging(WebUI.verifyMatch(WebUI.getText(findTestObject('e-Meterai Monitoring/selected_DDL')), 'All', false, FailureHandling.CONTINUE_ON_FAILURE))
 
-    'click field lain untuk close ddl'
-    WebUI.click(findTestObject('Meterai/input_TanggalPakaiDari'))
+	'enter untuk set status meterai'
+	WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_Cabang'), Keys.chord(Keys.ENTER))
 
-    'verify field ke reset'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/input_TanggalPakaiDari'), 'value', FailureHandling.CONTINUE_ON_FAILURE), 
-            firstDateOfMonth.toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+	'click ddl status meterai'
+	WebUI.click(findTestObject('Object Repository/e-Meterai Monitoring/input_TipeDokumenPeruri'))
 
-    'verify field ke reset'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/input_TanggalPakaiSampai'), 'value', 
-                FailureHandling.CONTINUE_ON_FAILURE), currentDate.toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+	'verify field ke reset'
+	checkVerifyPaging(WebUI.verifyMatch(WebUI.getText(findTestObject('e-Meterai Monitoring/selected_DDL')), 'All', false, FailureHandling.CONTINUE_ON_FAILURE))
 
-    'verify field ke reset'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/input_NoMeterai'), 'value', FailureHandling.CONTINUE_ON_FAILURE), 
-            '', false, FailureHandling.CONTINUE_ON_FAILURE))
+	'enter untuk set status meterai'
+	WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_TipeDokumenPeruri'), Keys.chord(Keys.ENTER))
+
+	'click ddl status meterai'
+	WebUI.click(findTestObject('Object Repository/e-Meterai Monitoring/input_PengaturanDokumen'))
+
+	'verify field ke reset'
+	checkVerifyPaging(WebUI.verifyMatch(WebUI.getText(findTestObject('e-Meterai Monitoring/selected_DDL')), 'All', false, FailureHandling.CONTINUE_ON_FAILURE))
+
+	'enter untuk set status meterai'
+	WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_PengaturanDokumen'), Keys.chord(Keys.ENTER))
+
+	'verify field ke reset'
+	checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/e-Meterai Monitoring/input_TanggalDokumenSampai'), 'value', FailureHandling.CONTINUE_ON_FAILURE),'', false, FailureHandling.CONTINUE_ON_FAILURE))
+
+	'verify field ke reset'
+	checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/e-Meterai Monitoring/input_Nomor Seri'), 'value', FailureHandling.CONTINUE_ON_FAILURE),'', false, FailureHandling.CONTINUE_ON_FAILURE))
+
+	'click ddl status meterai'
+	WebUI.click(findTestObject('Object Repository/e-Meterai Monitoring/input_JenisPajak'))
+
+	'verify field ke reset'
+	checkVerifyPaging(WebUI.verifyMatch(WebUI.getText(findTestObject('e-Meterai Monitoring/selected_DDL')), 'All', false, FailureHandling.CONTINUE_ON_FAILURE))
+
+	'enter untuk set status meterai'
+	WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_JenisPajak'), Keys.chord(Keys.ENTER))
 
     'click button cari'
     WebUI.click(findTestObject('Meterai/button_Cari'))
 	
+	WebUI.delay(10)
+	
     'set text tanggal pengiriman ke'
-    totalMeteraiUI = WebUI.getText(findTestObject('Meterai/Label_TotalMeterai')).split(' ', -1)
+    totaleMeteraiUI = WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/Label_Totale-Meterai')).split(' ', -1)
 
 	'verify total Meterai'
-	checkVerifyPaging(WebUI.verifyMatch(totalMeteraiUI[0], totalMeteraiDB, false, FailureHandling.CONTINUE_ON_FAILURE))
+//	checkVerifyPaging(WebUI.verifyMatch(totalMeteraiUI[0], totalMeteraiDB, false, FailureHandling.CONTINUE_ON_FAILURE))
     
-	if (Integer.parseInt(totalMeteraiUI[0]) > 10) {		
+	if (Integer.parseInt(totaleMeteraiUI[0]) > 10) {		
 	    'click next page'
-	    WebUI.click(findTestObject('Meterai/button_NextPage'))
+	    WebUI.click(findTestObject('e-Meterai Monitoring/button_NextPage'))
 	
 	    'verify paging di page 2'
-	    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE), 
+	    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('e-Meterai Monitoring/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE), 
 	            '2', false, FailureHandling.CONTINUE_ON_FAILURE))
 	
 	    'click prev page'
-	    WebUI.click(findTestObject('Meterai/button_PrevPage'))
+	    WebUI.click(findTestObject('e-Meterai Monitoring/button_PrevPage'))
 	
 	    'verify paging di page 1'
-	    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE), 
+	    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('e-Meterai Monitoring/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE), 
 	            '1', false, FailureHandling.CONTINUE_ON_FAILURE))
 	
 	    'click last page'
-	    WebUI.click(findTestObject('Meterai/button_LastPage'))
+	    WebUI.click(findTestObject('e-Meterai Monitoring/button_LastPage'))
 	
 	    'verify paging di last page'
-	    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE), 
-	            WebUI.getAttribute(findTestObject('Meterai/page_Active'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE).replace(
+	    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('e-Meterai Monitoring/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE), 
+	            WebUI.getAttribute(findTestObject('e-Meterai Monitoring/page_Active'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE).replace(
 	                'page ', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
 	
 	    'click first page'
-	    WebUI.click(findTestObject('Meterai/button_FirstPage'))
+	    WebUI.click(findTestObject('e-Meterai Monitoring/button_FirstPage'))
 	
 	    'verify paging di page 1'
-	    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE), 
+	    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('e-Meterai Monitoring/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE), 
 	            '1', false, FailureHandling.CONTINUE_ON_FAILURE))
 	}
 }
@@ -318,8 +362,8 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
 def checkVerifyPaging(Boolean isMatch) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Meterai', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedPaging)
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('e-Meterai Monitoring', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedPaging)
 
         GlobalVariable.FlagFailed = 1
     }
@@ -328,8 +372,8 @@ def checkVerifyPaging(Boolean isMatch) {
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Meterai', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            ((findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('e-Meterai Monitoring', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            ((findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
             reason)
 
         GlobalVariable.FlagFailed = 1

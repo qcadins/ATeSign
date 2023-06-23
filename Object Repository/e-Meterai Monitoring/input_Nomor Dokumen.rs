@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_Nomor Dokumen</name>
+   <tag></tag>
+   <elementGuidId>ebf06311-41cc-4606-b1d2-190a4f74c411</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>XPATH</key>
+         <value>//input[@id='nomorDokumen']</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>#nomorDokumen</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>id(&quot;nomorDokumen&quot;)</value>
+      <webElementGuid>1c4636d7-7bc8-445b-82d4-92b4f736932b</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:attributes</name>
+      <type>Main</type>
+      <value>//input[@id='nomorDokumen']</value>
+      <webElementGuid>19e2a391-5c6a-4e13-ba4a-420663a78e2e</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:idRelative</name>
+      <type>Main</type>
+      <value>//form[@id='searchForm']/div/div/app-question/app-text/div/div[2]/div/input</value>
+      <webElementGuid>d2966e42-e592-4d2f-8441-f7d8cd1f29d5</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//div/input</value>
+      <webElementGuid>abdb1d48-6fed-4800-a6e5-3b9a7ca5653d</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//input[@type = 'text' and @id = 'nomorDokumen' and @placeholder = 'Tulis nomor dokumen']</value>
+      <webElementGuid>163716f7-4c30-4998-94a6-1baadcd05c5d</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>

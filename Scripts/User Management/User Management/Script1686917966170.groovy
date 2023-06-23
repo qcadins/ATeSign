@@ -371,16 +371,30 @@ def checkPagingConfirmation(String reason) {
             return true
         }
         
-        'Jika popupnya ada'
-        if (checkPopup() == true) {
-            'write to excel success'
-            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'User Management', 0, 
-                GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+		'Jika popup muncul'
+		if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		
+			'label popup diambil'
+			lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
+	
+			'Jika popup bukan success'
+			if (!(lblpopup.contains('Success'))) {
+				'Tulis di excel sebagai failed dan error.'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('User Management', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+					(findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + lblpopup)
+			} else {
+				'write to excel success'
+				CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'User Management', 0,
+					GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+	
+				'call testcase store db'
+				WebUI.callTestCase(findTestCase('User Management/User Management Store DB'), [:], FailureHandling.CONTINUE_ON_FAILURE)
+			}
+			'Klik OK untuk popupnya'
+			WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
 
-            'call testcase login admin credit'
-            WebUI.callTestCase(findTestCase('User Management/User Management Store DB'), [:], FailureHandling.CONTINUE_ON_FAILURE)
+		}
 
-        }
     }
 }
 
@@ -524,23 +538,4 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     }
 }
 
-def checkPopup() {
-    'Jika popup muncul'
-    if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-    } else {
-        'label popup diambil'
-        lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
-
-        if (!(lblpopup.contains('Success'))) {
-            'Tulis di excel sebagai failed dan error.'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('User Management', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + lblpopup)
-        }
-        
-        'Klik OK untuk popupnya'
-        WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
-
-        return true
-    }
-}
 

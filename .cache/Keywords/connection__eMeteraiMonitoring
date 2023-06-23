@@ -1,18 +1,18 @@
 {
-  "keywordFileContentHash": "2494E0BCEFB1DCFA094E339415DC1E56",
+  "keywordFileContentHash": "EE5E4B9DE6260926438D2879BCFDD19D",
   "keywordClasses": [
     {
-      "name": "customizekeyword.ParseDate",
+      "name": "connection.eMeteraiMonitoring",
       "keywordMethods": [
         {
-          "name": "parseDateFormat",
+          "name": "geteMeteraiMonitoring",
           "parameters": [
             {
-              "name": "date",
+              "name": "conn",
               "initialExpression": "",
               "type": {
-                "fullClassName": "java.lang.String",
-                "unresolvedClassName": "String",
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
                 "isArray": false,
                 "isGnericsPlaceHolder": false,
                 "hasImmutableClassName": false,
@@ -21,20 +21,7 @@
               }
             },
             {
-              "name": "format1",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.lang.String",
-                "unresolvedClassName": "String",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            },
-            {
-              "name": "format2",
+              "name": "refNumber",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

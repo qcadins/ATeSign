@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_JenisPajak</name>
+   <tag></tag>
+   <elementGuidId>ed52d0e7-1ddc-47a0-8e3c-975e4409ef44</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>XPATH</key>
+         <value>//ng-select[@id='taxType']/div</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>#taxType > div.ng-select-container.ng-has-value</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>id(&quot;taxType&quot;)</value>
+      <webElementGuid>d0960bfc-f0e7-4ac2-95bf-a7cee411cab1</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:idRelative</name>
+      <type>Main</type>
+      <value>//ng-select[@id='taxType']/div</value>
+      <webElementGuid>5cc3370b-1421-4bd0-aad1-c0ff976ceea3</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Jenis Pajak'])[1]/following::div[2]</value>
+      <webElementGuid>7ad6e37b-98a9-4e03-9c40-61a0ff87bbd8</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='All'])[4]/following::div[6]</value>
+      <webElementGuid>3a106f6a-7742-4245-80e8-fe72ece94589</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//div[10]/app-question/app-select/div/div[2]/ng-select/div</value>
+      <webElementGuid>cf00df5a-a9da-4008-9f10-316b998c0d56</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//div[(text() = 'Select tax type×All×' or . = 'Select tax type×All×')]</value>
+      <webElementGuid>e168962e-0bd0-40bf-bf7a-ae0a12b38e0e</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>
