@@ -159,8 +159,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     'Klik Konfirmasi Yes'
                     WebUI.click(findTestObject('TandaTanganDokumen/btn_KonfirmasiYes'))
 
-                    if (WebUI.verifyElementPresent(findTestObject('Object Repository/TandaTanganDokumen/errorlog'), GlobalVariable.TimeOut, 
-                        FailureHandling.OPTIONAL)) {
+                    if (WebUI.verifyElementPresent(findTestObject('Object Repository/TandaTanganDokumen/errorlog'), GlobalVariable.TimeOut,FailureHandling.OPTIONAL)) {
                         'get reason'
                         ReasonFailed = WebUI.getAttribute(findTestObject('BuatUndangan/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 
@@ -170,9 +169,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                 2).replace('-', '') + semicolon) + ReasonFailed)
 
                         GlobalVariable.FlagFailed = 1
-                    } else if (WebUI.verifyElementPresent(findTestObject('Object Repository/TandaTanganDokumen/btn_ttd'), 
-                        GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-                        'Klik button tanda tangan'
+                    } else if (WebUI.verifyElementPresent(findTestObject('Object Repository/TandaTanganDokumen/btn_ttd'),GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+						'Klik button tanda tangan'
                         WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_ttd'))
 
                         'Klik set tanda tangan'
@@ -593,9 +591,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'count signbox'
             variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-setting-signer > div:nth-child(3) > div > app-document-anotate > section > section.box > div app-bbox'))
 
-            def roleTTD
-
-            def tipeTTD
+            String roleTTD, tipeTTD
 
             'looping signbox sesuai jumlah yang ada di ui'
             for (index = 1; index <= variable.size(); index++) {
@@ -700,12 +696,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         index) + ']/div', true)
 
                     roleTTD = WebUI.getText(modifyObjectRoleSignBox)
-
-                    if (!(roleTTD.equalsIgnoreCase('Meterai'))) {
-                        tipeTTD = (WebUI.getText(modifyObjectTipeSignBox).split(' ')[0])
-                    } else {
-                        tipeTTD = roleTTD
-                    }
+					
+					if (roleTTD.equalsIgnoreCase('Meterai') == false) {
+						tipeTTD = (WebUI.getText(modifyObjectTipeSignBox).split(' ')[0])
+					} else {
+						tipeTTD = roleTTD
+					}
                     
                     if (tipeTTD == 'Prf') {
                         tipeTTD = 'Paraf'
@@ -912,12 +908,12 @@ def checkPaging() {
             'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'get total page'
-    def variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-documents > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
+    variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-documents > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
 
     'modify object next Page'
-    def modifyObjectNextPage = WebUI.modifyObjectProperty(findTestObject('TandaTanganDokumen/modifyObject'), 'xpath', 'equals', 
+    modifyObjectNextPage = WebUI.modifyObjectProperty(findTestObject('TandaTanganDokumen/modifyObject'), 'xpath', 'equals', 
         ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-documents/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' + 
-        (variable.size() - 1).toString()) + ']', true)
+        (variable.size() - 1)) + ']', true)
 
     'click next page'
     WebUI.click(modifyObjectNextPage)
@@ -934,9 +930,9 @@ def checkPaging() {
             'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'modify object last Page'
-    def modifyObjectLastPage = WebUI.modifyObjectProperty(findTestObject('TandaTanganDokumen/modifyObject'), 'xpath', 'equals', 
+    modifyObjectLastPage = WebUI.modifyObjectProperty(findTestObject('TandaTanganDokumen/modifyObject'), 'xpath', 'equals', 
         ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-documents/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' + 
-        (variable.size() - 2).toString()) + ']', true)
+        (variable.size() - 2)) + ']', true)
 
     'click max page'
     WebUI.click(findTestObject('TandaTanganDokumen/button_MaxPage'))

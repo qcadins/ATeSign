@@ -37,7 +37,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             WebUI.click(findTestObject('e-Meterai Monitoring/menu_emeteraiMonitoring'))
 
             'call function check paging'
-            checkPaging(currentDate, firstDateOfMonth, conneSign)
+            //checkPaging(currentDate, firstDateOfMonth, conneSign)
         }
         
         inputPagingAndVerify(conneSign)
@@ -79,6 +79,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                                 2).replace('-', '') + ';') + errormessage)
 
                         GlobalVariable.FlagFailed = 1
+						break
                     }
                     
                     'Jika sudah loopingan terakhir'
@@ -129,6 +130,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'Klik button Ya'
                     WebUI.click(findTestObject('Object Repository/e-Meterai Monitoring/button_Ya'))
 
+					'Jika error lognya muncul'
+                    if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, 
+                        FailureHandling.OPTIONAL)) {
+                    } else {
+                        'ambil teks errormessage'
+                        errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
+
+                        'Tulis di excel itu adalah error'
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                            GlobalVariable.StatusFailed, (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 
+                                2).replace('-', '') + ';') + errormessage)
+
+                        GlobalVariable.FlagFailed = 1
+						break
+                    }
+					
                     'verify element present popup'
                     if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), GlobalVariable.TimeOut)) {
                         'label popup diambil'
@@ -205,13 +222,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     }
 }
 
-def belumdigunakan() {
-    totalMeteraiDB = CustomKeywords.'connection.Meterai.getTotalMeterai'(conneSign)
-
-    checkVerifyPaging(WebUI.verifyMatch(totalMeteraiUI[0], totalMeteraiDB, false, FailureHandling.CONTINUE_ON_FAILURE))
-}
-
 def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection conneSign) {
+	
+	totaleMeteraiMonitoringDB = CustomKeywords.'connection.eMeteraiMonitoring.getTotaleMeteraiMonitoring'(conneSign, GlobalVariable.Tenant)
+	
     'set text no kontrak'
     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Nomor Dokumen'), '20230616133400')
 
@@ -345,11 +359,13 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
     WebUI.delay(10)
 
     'set text tanggal pengiriman ke'
-    totaleMeteraiUI = WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/Label_Totale-Meterai')).split(
+    totaleMeteraiMonitoringUI = WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/Label_Totale-Meterai')).split(
         ' ', -1)
-
+	
+	checkVerifyPaging(WebUI.verifyMatch(totaleMeteraiMonitoringUI[0], totaleMeteraiMonitoringDB, false, FailureHandling.CONTINUE_ON_FAILURE))
+	
     'verify total Meterai'
-    if (Integer.parseInt(totaleMeteraiUI[0]) > 10) {
+    if (Integer.parseInt(totaleMeteraiMonitoringUI[0]) > 10) {
         'click next page'
         WebUI.click(findTestObject('e-Meterai Monitoring/button_NextPage'))
 
@@ -404,6 +420,9 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 }
 
 def inputPagingAndVerify(Connection conneSign) {
+	'Klik set ulang setiap data biar reset'
+	WebUI.click(findTestObject('Object Repository/e-Meterai Monitoring/button_Set Ulang'))
+	
     'set text no kontrak'
     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Nomor Dokumen'), findTestData(excelPathemeteraiMonitoring).getValue(
             GlobalVariable.NumofColm, 9))

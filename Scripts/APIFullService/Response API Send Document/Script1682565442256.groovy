@@ -310,7 +310,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 				'check ada value maka setting email service tenant'
 				if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 47).length() > 0) {
 					'setting email service tenant'
-					CustomKeywords.'connection.APIFullService.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 47), emails[t].replace('"',''))
+					CustomKeywords.'connection.APIFullService.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 47), emails[t].replace('"', ''))
 				}
 				
                 'Memasukkan bodyAPI ke stringRefno'

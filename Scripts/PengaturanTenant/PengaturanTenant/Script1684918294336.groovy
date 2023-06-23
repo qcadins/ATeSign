@@ -8,7 +8,7 @@ import org.openqa.selenium.Keys as Keys
 import java.sql.Connection as Connection
 
 'get current date'
-def currentDate = new Date().format('yyyy-MM-dd')
+currentDate = new Date().format('yyyy-MM-dd')
 
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
@@ -118,7 +118,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         for (i = 0; i < arrTipeSaldoBefore.size(); i++) {
             'modify object mencari object berdasarkan id nya tipe saldo tersebut'
             modifyObjectTipeBatasSaldo = WebUI.modifyObjectProperty(findTestObject('Object Repository/PengaturanTenant/label_TipeBatasSaldo'), 
-                'for', 'equals', ('' + (arrTipeSaldoBefore[i])) + '', true)
+                'for', 'equals', arrTipeSaldoBefore[i], true)
 
             'Mengambil deskripsi dari tipe saldo tersebut'
             descriptionBalanceType = CustomKeywords.'connection.PengaturanTenant.getDescriptionBalanceType'(conneSign, arrTipeSaldoBefore[
@@ -133,7 +133,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             } else if (WebUI.getText(modifyObjectTipeBatasSaldo) == descriptionBalanceType) {
                 'Jika tipe batas saldonya sesuai dengan deskripsi dari balance, maka modify object untuk input batas saldo'
                 modifyObjectInputBatasSaldo = WebUI.modifyObjectProperty(findTestObject('Object Repository/PengaturanTenant/input_BatasSaldo'), 
-                    'id', 'equals', ('' + (arrTipeSaldoBefore[i])) + '', true)
+                    'id', 'equals', arrTipeSaldoBefore[i], true)
 				
 				'verifikasi tipe batas saldo'
                 checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectTipeBatasSaldo), descriptionBalanceType, 
@@ -171,7 +171,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         for (i = 0; i < tipeSaldo.size(); i++) {
             'modify object mencari object berdasarkan id nya tipe saldo tersebut'
             modifyObjectTipeBatasSaldo = WebUI.modifyObjectProperty(findTestObject('Object Repository/PengaturanTenant/label_TipeBatasSaldo'), 
-                'for', 'equals', ('' + (tipeSaldo[i])) + '', true)
+                'for', 'equals', tipeSaldo[i], true)
 
             'Mengambil deskripsi dari tipe saldo tersebut'
             descriptionBalanceType = CustomKeywords.'connection.PengaturanTenant.getDescriptionBalanceType'(conneSign, tipeSaldo[
@@ -192,7 +192,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             if (WebUI.getText(modifyObjectTipeBatasSaldo) == descriptionBalanceType) {
                 'modify object untuk input batas saldo'
                 modifyObjectInputBatasSaldo = WebUI.modifyObjectProperty(findTestObject('Object Repository/PengaturanTenant/input_BatasSaldo'), 
-                    'id', 'equals', ('' + (tipeSaldo[i])) + '', true)
+                    'id', 'equals',tipeSaldo[i], true)
 
                 'Set text di input batas saldo'
                 WebUI.setText(modifyObjectInputBatasSaldo, saldoTipeSaldo[i])
@@ -321,10 +321,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         arrayMatch.add(WebUI.verifyMatch(currentDate, resultDbNew[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'membuat emailDb menjadi sorted berdasarkan asc'
-        emailDb = (resultDbNew[arrayIndex++]).split(',').collect({it.trim() }).sort().join(',')
+        emailDb = (resultDbNew[arrayIndex++]).split(',').collect( { it.trim() } ).sort().join(',')
 
         'membuat email Excel menjadi sorted berdasarkan asc'
-        emailExcel = findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 12).split(',').collect({it.trim()}).sort().join(',')
+        emailExcel = findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 12).split(',').collect( { it.trim() } ).sort().join(',')
 
         'verifikasi email'
         arrayMatch.add(WebUI.verifyMatch(emailExcel, emailDb, false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -348,7 +348,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 balances = (balance[i]).split(':', -1)
 
                 'Jika balances yang ke 0, yaitu Tipe Saldo sama dengan tipe Saldo excel'
-                if ((balances[0]).equals((tipeSaldo[j]).toUpperCase())) {
+                if ((balances[0]) == ((tipeSaldo[j]).toUpperCase())) {
                     'verify tipe saldo'
                     arrayMatch.add(WebUI.verifyMatch(balances[0], tipeSaldo[j], false, FailureHandling.CONTINUE_ON_FAILURE))
 
@@ -386,8 +386,7 @@ if (GlobalVariable.FlagFailed == 0) {
 
 def checkPopup() {
     'Jika popup muncul'
-    if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-    } else {
+    if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
         'label popup diambil'
         lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
 
@@ -403,7 +402,6 @@ def checkPopup() {
         'Klik OK untuk popupnya'
         WebUI.click(findTestObject('PengaturanTenant/errorLog_OK'))
     }
-    
     return false
 }
 

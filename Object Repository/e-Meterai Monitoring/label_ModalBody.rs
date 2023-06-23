@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'modal-body']/p</value>
+         <value>//*[@class = 'modal-body']/div/p</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@class = 'modal-body']/p</value>
-      <webElementGuid>5286ef3d-4cff-4b0b-9689-85a0ae00039f</webElementGuid>
+      <value>//*[@class = 'modal-body']/div/p</value>
+      <webElementGuid>e5f48acd-ba5c-4bc7-a541-18988ff0e3a4</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
