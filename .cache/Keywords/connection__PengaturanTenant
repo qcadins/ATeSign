@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "C7D92A12779B2B63174494A7DFF8F9F8",
+  "keywordFileContentHash": "AC2F990F600BADC283A7169D98366888",
   "keywordClasses": [
     {
       "name": "connection.PengaturanTenant",
@@ -33,7 +33,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getDescriptionBalanceType",
@@ -64,10 +65,11 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         }
       ]
     }
   ],
-  "javadocParsed": false
+  "javadocParsed": true
 }
