@@ -349,6 +349,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(result[index], WebUI.getText(modifyObjectLblValue), false, 
                             FailureHandling.CONTINUE_ON_FAILURE), ((' pada kolom ke ' + i) + ' dimana data db adalah ') + 
                         (result[(index)]))
+					
 					index++
                 }
             }
