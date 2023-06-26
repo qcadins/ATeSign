@@ -15,7 +15,7 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'get colm excel'
 int countColmExcel = findTestData(excelPathAPIRegistrasi).columnNumbers
 
-String selfPhoto, idPhoto, trxNo
+String selfPhoto, idPhoto
 
 'looping API Registrasi'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
@@ -165,21 +165,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
                 trxNo = WS.getElementPropertyValue(respon, 'trxNo', FailureHandling.OPTIONAL)
-				
-				println trxNo
-				
-				trxNo = trxNo.replace('[', '').replace(']', '')
-				
+
                 'Write To Excel GlobalVariable.StatusFailed and errormessage'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Registrasi', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, message)
 
                 if ((GlobalVariable.checkStoreDB == 'Yes') && (trxNo != null)) {
-                    String resultTrx = CustomKeywords.'connection.APIFullService.getAPIRegisterTrx'(conneSign, trxNo)
+					String resultTrx = CustomKeywords.'connection.APIFullService.getAPIRegisterTrx'(conneSign, trxNo.toString().replace('[', '').replace(']', ''))
 
-println resultTrx
-println trxNo
-WebUI.delay(30)
                     'declare arraylist arraymatch'
                     ArrayList arrayMatch = []
 

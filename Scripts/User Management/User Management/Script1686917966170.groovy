@@ -121,19 +121,25 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                     'verify db dengan ui mengenai nama'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/User Management/input_NamaEdit'), 
-                                'value'), resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Nama dengan value db yaitu ' + 
-                        (resultEdit[(index - 1)]))
+                                'value'), resultEdit[index], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Nama dengan value db yaitu ' + 
+                        (resultEdit[(index)]))
+					
+					index++
 
                     'verify db dengan ui mengenai email'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/User Management/input_EmailEdit'), 
-                                'value'), resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Email dengan value db yaitu ' + 
-                        (resultEdit[(index - 1)]))
+                                'value'), resultEdit[index], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Email dengan value db yaitu ' + 
+                        (resultEdit[(index)]))
 
+					index++
+					
                     'verify db dengan ui mengenai Activated Date'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/User Management/input_Activated DateEdit'), 
-                                'value'), resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Activate Date dengan value db yaitu ' + 
-                        (resultEdit[(index - 1)]))
+                                'value'), resultEdit[index], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Activate Date dengan value db yaitu ' + 
+                        (resultEdit[(index)]))
 
+					index++
+					
                     'Klik peran'
                     WebUI.click(findTestObject('Object Repository/User Management/input_PeranEdit'))
 
@@ -153,17 +159,23 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     WebUI.sendKeys(findTestObject('Object Repository/User Management/input_CabangEdit'), Keys.chord(Keys.ENTER))
 
                     'verify db dengan ui mengenai peran'
-                    checkVerifyEqualOrMatch(WebUI.verifyMatch(peranBefore, resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), 
-                        ' pada data Edit Peran dengan value db yaitu ' + (resultEdit[(index - 1)]))
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch(peranBefore, resultEdit[index], false, FailureHandling.CONTINUE_ON_FAILURE), 
+                        ' pada data Edit Peran dengan value db yaitu ' + (resultEdit[(index)]))
+					
+					index++
 
                     'verify db dengan ui mengenai cabang'
-                    checkVerifyEqualOrMatch(WebUI.verifyMatch(cabangBefore, resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), 
-                        ' pada data Edit Cabang dengan value db yaitu ' + (resultEdit[(index - 1)]))
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch(cabangBefore, resultEdit[index], false, FailureHandling.CONTINUE_ON_FAILURE), 
+                        ' pada data Edit Cabang dengan value db yaitu ' + (resultEdit[(index)]))
+					
+					index++
 
                     'verify db dengan ui mengenai Status user'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/User Management/input_Status UserEdit'), 
-                                'value'), resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Status user dengan value db yaitu ' + 
-                        (resultEdit[(index - 1)]))
+                                'value'), resultEdit[index], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Status user dengan value db yaitu ' + 
+                        (resultEdit[(index)]))
+					
+					index++
 
                     'jika kolom edit kosong'
                     if ((findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 14) == '') && (findTestData(
