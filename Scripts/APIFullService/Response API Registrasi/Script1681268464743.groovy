@@ -22,7 +22,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
-        'check if tidak mau menggunakan tenant code yang benar'
+		
+		'check ada value maka setting email service tenant'
+		if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 34).length() > 0) {
+			'setting email service tenant'
+			CustomKeywords.'connection.APIFullService.settingEmailServiceTenant'(conneSign, findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 34))
+		}
+		
+		'check if tidak mau menggunakan tenant code yang benar'
         if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 30) == 'No') {
             'set tenant kosong'
             GlobalVariable.Tenant = findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 30)
