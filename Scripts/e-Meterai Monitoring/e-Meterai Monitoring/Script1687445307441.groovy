@@ -53,41 +53,40 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 WebUI.delay(5)
 
                 'check isfiled downloaded'
-                if (CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathemeteraiMonitoring).getValue(
-                        GlobalVariable.NumofColm, 21)) == true) {
+                if (CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 21)) == true) {
                     'Jika sukses downloadnya lebih dari 10 detik'
                     if (i > 2) {
                         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedPerformance'
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                            GlobalVariable.StatusWarning, ((((findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 
-                                2) + ';') + GlobalVariable.ReasonFailedPerformance) + ' sejumlah ') + (i * 5)) + ' detik ')
+                        GlobalVariable.StatusWarning, ((((findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 
+                        2) + ';') + GlobalVariable.ReasonFailedPerformance) + ' sejumlah ') + (i * 5)) + ' detik ')
 
                         GlobalVariable.FlagFailed = 1
-                    }
-                    break
-                } else {
-                    'Jika error lognya muncul'
-                    if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, 
-                        FailureHandling.OPTIONAL)) {
-                    } else {
-                        'ambil teks errormessage'
-                        errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
-
-                        'Tulis di excel itu adalah error'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                            GlobalVariable.StatusFailed, (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 
-                                2).replace('-', '') + ';') + errormessage)
-
-                        GlobalVariable.FlagFailed = 1
-						break
                     }
                     
+                    break
+                }
+				else {
+					'Jika error lognya muncul'
+					if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+						'ambil teks errormessage'
+						errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
+
+						'Tulis di excel itu adalah error'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+						GlobalVariable.StatusFailed, (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 
+						2).replace('-', '') + ';') + errormessage)
+
+                        GlobalVariable.FlagFailed = 1
+
+                        break
+                    }
                     'Jika sudah loopingan terakhir'
                     if (i == 5) {
-                        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedDownload'
+						'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedDownload'
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                            GlobalVariable.StatusFailed, (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 
-                                2) + ';') + GlobalVariable.ReasonFailedDownload)
+                        GlobalVariable.StatusFailed, (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 
+                        2) + ';') + GlobalVariable.ReasonFailedDownload)
 
                         GlobalVariable.FlagFailed = 1
                     }
@@ -130,7 +129,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'Klik button Ya'
                     WebUI.click(findTestObject('Object Repository/e-Meterai Monitoring/button_Ya'))
 
-					'Jika error lognya muncul'
+                    'Jika error lognya muncul'
                     if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, 
                         FailureHandling.OPTIONAL)) {
                     } else {
@@ -139,11 +138,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                         'Tulis di excel itu adalah error'
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                            GlobalVariable.StatusFailed, (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 
-                                2).replace('-', '') + ';') + errormessage)
+						GlobalVariable.StatusFailed, (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 
+						2).replace('-', '') + ';') + errormessage)
 
                         GlobalVariable.FlagFailed = 1
-						break
+
+                        break
                     }
 					
                     'verify element present popup'
@@ -155,8 +155,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         if (!(lblpopup.contains('retry stamping'))) {
                             'Tulis di excel sebagai failed dan error.'
                             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                                GlobalVariable.StatusFailed, (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 
-                                    2).replace('-', '') + ';') + lblpopup)
+							GlobalVariable.StatusFailed, (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 
+							2).replace('-', '') + ';') + lblpopup)
 
                             'Flag Failed 1'
                             GlobalVariable.FlagFailed = 1
@@ -166,7 +166,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
 
                         if (GlobalVariable.checkStoreDB == 'Yes') {
-                            'looping per'
+                            'looping per 10 detik hingga 60 detik'
                             for (int i = 1; i <= 6; i++) {
                                 'Ambil value db lagi mengenai progress stamping'
                                 progressStampingAfter = CustomKeywords.'connection.eMeteraiMonitoring.getProseseMeteraiMonitoring'(
@@ -223,8 +223,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 }
 
 def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection conneSign) {
-	totaleMeteraiMonitoringDB = CustomKeywords.'connection.eMeteraiMonitoring.getTotaleMeteraiMonitoring'(conneSign, GlobalVariable.Tenant)
-	
+    totaleMeteraiMonitoringDB = CustomKeywords.'connection.eMeteraiMonitoring.getTotaleMeteraiMonitoring'(conneSign, GlobalVariable.Tenant)
+
     'set text no kontrak'
     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Nomor Dokumen'), '20230616133400')
 
@@ -360,9 +360,9 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
     'set text tanggal pengiriman ke'
     totaleMeteraiMonitoringUI = WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/Label_Totale-Meterai')).split(
         ' ', -1)
-	
-	checkVerifyPaging(WebUI.verifyMatch(totaleMeteraiMonitoringUI[0], totaleMeteraiMonitoringDB, false, FailureHandling.CONTINUE_ON_FAILURE))
-	
+
+    checkVerifyPaging(WebUI.verifyMatch(totaleMeteraiMonitoringUI[0], totaleMeteraiMonitoringDB, false, FailureHandling.CONTINUE_ON_FAILURE))
+
     'verify total Meterai'
     if (Integer.parseInt(totaleMeteraiMonitoringUI[0]) > 10) {
         'click next page'
@@ -419,9 +419,9 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 }
 
 def inputPagingAndVerify(Connection conneSign) {
-	'Klik set ulang setiap data biar reset'
-	WebUI.click(findTestObject('Object Repository/e-Meterai Monitoring/button_Set Ulang'))
-	
+    'Klik set ulang setiap data biar reset'
+    WebUI.click(findTestObject('Object Repository/e-Meterai Monitoring/button_Set Ulang'))
+
     'set text no kontrak'
     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Nomor Dokumen'), findTestData(excelPathemeteraiMonitoring).getValue(
             GlobalVariable.NumofColm, 9))

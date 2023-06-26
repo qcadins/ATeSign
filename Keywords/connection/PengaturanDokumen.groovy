@@ -87,5 +87,4 @@ public class PengaturanDokumen {
 			data = resultSet.getObject(1)
 		}
 		data
-	}
-}
+	}}

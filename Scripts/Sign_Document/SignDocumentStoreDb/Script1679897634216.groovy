@@ -11,7 +11,7 @@ ArrayList<String> documentIds = findTestData(API_Excel_Path).getValue(GlobalVari
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'declare arraylist arraymatch'
-ArrayList<String> arrayMatch = new ArrayList<String>()
+ArrayList<String> arrayMatch = []
 
 'looping berdasarkan total document yang ada'
 for (int i = 1; i <= documentIds.size(); i++) {

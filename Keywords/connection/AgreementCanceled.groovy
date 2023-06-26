@@ -30,5 +30,4 @@ public class AgreementCanceled {
 			data = resultSet.getObject(1)
 		}
 		data
-	}
-}
+	}}

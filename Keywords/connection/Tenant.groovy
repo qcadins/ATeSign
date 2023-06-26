@@ -20,7 +20,7 @@ public class Tenant {
 	getTotalTenant(Connection conn) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select count(*) from ms_tenant")
+		resultSet = stm.executeQuery('select count(*) from ms_tenant')
 
 		metadata = resultSet.metaData
 

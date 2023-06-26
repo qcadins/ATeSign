@@ -28,7 +28,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
-		
 		'declare variable array'
 		ArrayList<String> saldoBefore, saldoAfter
 		
@@ -136,7 +135,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				    'verify saldoafter tidak sama dengan saldo before'
 				    checkVerifyEqualOrMatch(saldoAfter.equals(saldoBefore), ' Saldo')
 				}
-				
             } else {
                 'mengambil status code berdasarkan response HIT API'
                 message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)

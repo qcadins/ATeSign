@@ -154,7 +154,7 @@ public class DataVerif {
 	getAesKeyBasedOnTenant(Connection conn, String tenantCode) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select aes_encrypt_key from ms_tenant where tenant_code = '"+tenantCode+"'")
+		resultSet = stm.executeQuery("select aes_encrypt_key from ms_tenant where tenant_code = '" + tenantCode + "' ")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

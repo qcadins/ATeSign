@@ -111,7 +111,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					
 					'click button X'
 					WebUI.click(findTestObject('KotakMasuk/btn_X'))
-					
                 } else {
 					'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedNoneUI'
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Job Result', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
@@ -193,8 +192,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             }
         }
         
-
-
         if (GlobalVariable.FlagFailed == 0) {
             'write to excel success'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Meterai', 0, GlobalVariable.NumofColm - 

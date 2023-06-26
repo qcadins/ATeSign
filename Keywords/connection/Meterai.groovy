@@ -92,8 +92,7 @@ public class Meterai {
 	getTotalMateraiAndTotalStamping(Connection conn, String value) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select SUM(total_materai), SUM(total_stamping) from tr_document_d tdd JOIN tr_document_h tdh ON tdh.id_document_h = tdd.id_document_h where tdh.ref_number = '"+ value +"'")
-
+		resultSet = stm.executeQuery("select SUM(total_materai), SUM(total_stamping) from tr_document_d tdd JOIN tr_document_h tdh ON tdh.id_document_h = tdd.id_document_h where tdh.ref_number = '" + value + "' ")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

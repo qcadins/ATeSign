@@ -222,7 +222,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 }
 
 def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection conneSign) {
-	
 	totalMeteraiDB = CustomKeywords.'connection.Meterai.getTotalMeterai'(conneSign)
 	
     'set text no kontrak'

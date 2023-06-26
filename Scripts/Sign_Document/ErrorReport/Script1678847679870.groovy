@@ -30,7 +30,7 @@ ArrayList<String> resultStatusAktivasi = CustomKeywords.'connection.ErrorReport.
 totalData = WebUI.getText(findTestObject('ErrorReport/label_TotalData')).split(' ')
 
 'verify total data UI dan DB'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(totalData[0].replace(',',''), resultTotalData, false, FailureHandling.CONTINUE_ON_FAILURE), ' Total Data')
+checkVerifyEqualOrMatch(WebUI.verifyMatch(totalData[0].replace(',', ''), resultTotalData, false, FailureHandling.CONTINUE_ON_FAILURE), ' Total Data')
 
 'select modul'
 WebUI.setText(findTestObject('ErrorReport/select_Modul'), 'Sign Document error history')
@@ -48,11 +48,11 @@ WebUI.click(findTestObject('ErrorReport/button_FinalPage'))
 variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-error-report > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
 
 'modify object button view'
-modifyObjectButtonView = WebUI.modifyObjectProperty(findTestObject('ErrorReport/button_View'),'xpath','equals',
+modifyObjectButtonView = WebUI.modifyObjectProperty(findTestObject('ErrorReport/button_View'), 'xpath', 'equals', 
 	"/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-error-report/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[" + variable.size() + "]/datatable-body-row/div[2]/datatable-body-cell[10]/div/a[1]/em",true)
 
 'modify object label nama konsumen'
-modifyObjectLabelNamaKonsumen = WebUI.modifyObjectProperty(findTestObject('ErrorReport/label_NamaKonsumen'),'xpath','equals',
+modifyObjectLabelNamaKonsumen = WebUI.modifyObjectProperty(findTestObject('ErrorReport/label_NamaKonsumen'), 'xpath', 'equals', 
 	"/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-error-report/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[" + variable.size() + "]/datatable-body-row/div[2]/datatable-body-cell[3]/div/p",true)
 
 'get error detail dari DB'
@@ -225,5 +225,4 @@ def checkPaging() {
 	
 	'verify page 1 active'
 	checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/label_Page'), 'ng-reflect-page'), '1', false, FailureHandling.CONTINUE_ON_FAILURE))
-	
 }

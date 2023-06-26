@@ -263,8 +263,7 @@ public loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
             true)
 
         'check if box info = tipe saldo di excel'
-        if (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
-                16))) {
+        if (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 16))) {
             'modify object qty'
             modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('isiSaldo/SaldoAdmin/modifyObject'), 'xpath', 'equals', 
                 ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) + ']/div/div/div/div/div[2]/h3', 

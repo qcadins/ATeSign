@@ -216,7 +216,7 @@ def responseAPIStoreDB(Connection conneSign) {
         ArrayList<String> resultStoreDB = CustomKeywords.'connection.SendSign.getSendDoc'(conneSign, docid[r])
 		
 		'Mengambil email berdasarkan documentId'
-		ArrayList<String> emailSigner = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, docid[r]).split(';',-1)
+		ArrayList<String> emailSigner = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, docid[r]).split(';', -1)
 
 		'split email dari excel'
 		email = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 40).replace('"','').split(';', -1)

@@ -205,8 +205,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                 WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_materai'))
                             }
                             
-                            if ((TipeTandaTangan[(j - 1)]).equalsIgnoreCase('TTD') || (TipeTandaTangan[(j - 1)]).equalsIgnoreCase(
-                                'Paraf')) {
+                            if ((TipeTandaTangan[(j - 1)]).equalsIgnoreCase('TTD') || (TipeTandaTangan[(j - 1)]).equalsIgnoreCase('Paraf')) {
                                 'Verify label tanda tangannya muncul atau tidak'
                                 WebUI.verifyElementPresent(findTestObject('TandaTanganDokumen/lbl_TipeTandaTangan'), GlobalVariable.TimeOut, 
                                     FailureHandling.CONTINUE_ON_FAILURE)

@@ -64,7 +64,7 @@ if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6).
 		'verify email'
 		arrayMatch.add(WebUI.verifyMatch(resultExcel[i].toLowerCase(), resultDB[i].toLowerCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
-        if (arrayMatch.contains(false)){
+        if (arrayMatch.contains(false)) {
 			GlobalVariable.FlagFailed = 1
 			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('User Management', GlobalVariable.NumofColm,
