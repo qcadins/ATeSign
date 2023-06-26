@@ -231,7 +231,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-list-user-management/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[1]/datatable-body-row/div[2]/datatable-body-cell[' + 
                     i) + ']/div', true)
 
-                'Jika yang keempat, yaitu mengenai status tergambar centang'
+                'Jika yang keempat, yaitu mengenai status gambar centang'
                 if (i == 4) {
                     'modify object kolom keempat'
                     modifyObjectLblValue = WebUI.modifyObjectProperty(findTestObject('Object Repository/User Management/lbl_Value'), 
