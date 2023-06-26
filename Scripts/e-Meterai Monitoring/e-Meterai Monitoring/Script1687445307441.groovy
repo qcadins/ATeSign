@@ -37,7 +37,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             WebUI.click(findTestObject('e-Meterai Monitoring/menu_emeteraiMonitoring'))
 
             'call function check paging'
-            //checkPaging(currentDate, firstDateOfMonth, conneSign)
+            checkPaging(currentDate, firstDateOfMonth, conneSign)
         }
         
         inputPagingAndVerify(conneSign)
@@ -223,7 +223,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 }
 
 def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection conneSign) {
-	
 	totaleMeteraiMonitoringDB = CustomKeywords.'connection.eMeteraiMonitoring.getTotaleMeteraiMonitoring'(conneSign, GlobalVariable.Tenant)
 	
     'set text no kontrak'
