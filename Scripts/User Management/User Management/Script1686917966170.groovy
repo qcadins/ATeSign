@@ -331,8 +331,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			
 			if (GlobalVariable.FlagFailed == 0) {
 				'write to excel success'
-				CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'User Management', 0,
-				GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+				CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'User Management', 0, 
+				GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)				
 			}
         }
     }
