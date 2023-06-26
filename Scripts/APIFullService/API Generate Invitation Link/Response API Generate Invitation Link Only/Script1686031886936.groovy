@@ -91,7 +91,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
 				'write to excel Success'
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Generate Invitation Link',
-					5, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+					0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 				
                 if ((GlobalVariable.checkStoreDB == 'Yes') && (GlobalVariable.FlagFailed == 0)) {
                     'call test case ResponseAPIStoreDB'

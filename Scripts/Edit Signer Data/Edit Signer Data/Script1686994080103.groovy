@@ -106,12 +106,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 if (checkPagingConfirmation() == true) {
                     'write to excel success'
                     CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Edit Signer Data', 
-                        0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+                    0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+					
 					'delay update db selama 3'
 					WebUI.delay(3)
+					
 					'ambil value db mengenai hasil edit'
                     ArrayList resultAfter = CustomKeywords.'connection.EditSignerData.getBeforeEditDataEditSignerData'(conneSign, 
-                        emailOrNIKHash, GlobalVariable.Tenant, getVendor)
+                    emailOrNIKHash, GlobalVariable.Tenant, getVendor)
 
 					'jika before sama dengan after'
                     if (resultBefore == resultAfter) {

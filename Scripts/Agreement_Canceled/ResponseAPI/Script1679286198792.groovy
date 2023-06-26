@@ -51,6 +51,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 
             'jika status codenya 0'
             if (status_Code == 0) {
+				message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
+				if (message == 'Success') {
                 'write to excel success'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Agreement Canceled', 
                     0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
@@ -58,6 +60,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
                 'call test case ResponseAPIStoreDB'
                 WebUI.callTestCase(findTestCase('Agreement_Canceled/ResponseAPIStoreDB'), [('API_Excel_Path') : 'Agreement_Canceled/Agreement Canceled'], 
                     FailureHandling.CONTINUE_ON_FAILURE)
+				} else {
+					'write to excel status failed dan reason : '
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Agreement Canceled', GlobalVariable.NumofColm,
+						GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
+							'-', '') + ';') + GlobalVariable.ReasonFailedHitAPI)
+				}
             } else {
                 messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 

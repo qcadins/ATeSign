@@ -56,8 +56,6 @@ if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6).
 
     'cek data untuk tiap alamat di array'
     for (int i = 0; i < resultDB.size; i++) {
-        'khusus untuk 11, yaitu kode akses masih belum ketemu'
-
         'tambahkan data ke resultExcel'
         resultExcel.add(findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, startTakeExcel + i))
 
