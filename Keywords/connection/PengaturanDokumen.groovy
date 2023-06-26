@@ -86,5 +86,4 @@ public class PengaturanDokumen {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		data
-	}}
+		data}}
