@@ -189,7 +189,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                         if (totalDocSign > 1) {
 							'ganti loop'
                             continue
-                        } else {
+                        	} else {
 							'jika hanya 1, maka break'
 							break
 						}

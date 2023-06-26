@@ -216,7 +216,7 @@ def responseAPIStoreDB(Connection conneSign) {
         ArrayList<String> resultStoreDB = CustomKeywords.'connection.SendSign.getSendDoc'(conneSign, docid[r])
 		
 		'Mengambil email berdasarkan documentId'
-		ArrayList<String> emailSigner = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, docid[r]).split(';',-1)
+		ArrayList<String> emailSigner = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, docid[r]).split(';', -1)
 
 		'split email dari excel'
 		email = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 40).replace('"','').split(';', -1)
@@ -224,7 +224,7 @@ def responseAPIStoreDB(Connection conneSign) {
 		'split signer type dari excel'
 		signerType = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 26).replace('"','').split(';', -1)
 		
-		for(int i = 0; i< emailSigner.size();i++) {
+		for(int i = 0; i < emailSigner.size(); i++) {
 			ArrayList<String> resultStoreEmailandType = CustomKeywords.'connection.SendSign.getSendDocForEmailAndSignerType'(conneSign, docid[r], emailSigner[i])
 			
 			'declare arrayindex'
@@ -235,9 +235,7 @@ def responseAPIStoreDB(Connection conneSign) {
 	
 			'verify signerType'
 			arrayMatch.add(WebUI.verifyMatch(signerType[i], resultStoreEmailandType[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-			
 		}
-		
 		'declare arrayindex'
         arrayindex = 0
 

@@ -29,7 +29,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     } else if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
         GlobalVariable.FlagFailed = 0
 
-		
         'Jika kolom kedua'
         if (GlobalVariable.NumofColm == 2) {
             'call testcase login admin credit'
@@ -392,7 +391,6 @@ def checkPagingConfirmation(String reason) {
 			}
 			'Klik OK untuk popupnya'
 			WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
-
 		}
 
     }
@@ -402,9 +400,9 @@ def searchDataAfterAction() {
 	if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6) == 'Setting') {
 		peranAfter = findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 14)
 		}
-		else {
-			peranAfter = findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 18)
-		}
+	else {
+		peranAfter = findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 18)
+	}
 		WebUI.setText(findTestObject('Object Repository/User Management/input_Email'), findTestData(excelPathUserManagement).getValue(
 		GlobalVariable.NumofColm, 17))
 	

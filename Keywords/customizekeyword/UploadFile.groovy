@@ -9,6 +9,7 @@ import java.awt.datatransfer.StringSelection
 import java.awt.event.KeyEvent
 
 public class UploadFile {
+	
 	@Keyword
 	uploadFunction(TestObject to, String filePath) {
 		WebUI.click(to)

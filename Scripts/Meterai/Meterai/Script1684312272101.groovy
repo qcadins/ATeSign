@@ -164,20 +164,53 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 18).equalsIgnoreCase('Yes')) {
             'click button download'
             WebUI.click(findTestObject('Meterai/button_UnduhExcel'))
+			
+			'looping hingga 20 detik'
+			for (int i = 1; i <= 4; i++) {
+				'pemberian delay download 5 sec'
+				WebUI.delay(5)
 
-            'delay 5 detik'
-            WebUI.delay(5)
+				'check isfiled downloaded'
+				if (CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathMeterai).getValue(
+						GlobalVariable.NumofColm, 19)) == true) {
+					'Jika sukses downloadnya lebih dari 10 detik'
+					if (i > 2) {
+						'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedPerformance'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Meterai', GlobalVariable.NumofColm,
+							GlobalVariable.StatusWarning, ((((findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm,
+								2) + ';') + GlobalVariable.ReasonFailedPerformance) + ' sejumlah ') + (i * 5)) + ' detik ')
 
-            'check isfiled downloaded'
-            if (CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-                    19)) == false) {
-                'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedDownload'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Meterai', GlobalVariable.NumofColm, 
-                    GlobalVariable.StatusFailed, (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 2) + 
-                    ';') + GlobalVariable.ReasonFailedDownload)
+						GlobalVariable.FlagFailed = 1
+					}
+					
+					break
+				} else {
+					'Jika error lognya muncul'
+					if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut,
+						FailureHandling.OPTIONAL)) {
+					} else {
+						'ambil teks errormessage'
+						errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
 
-                GlobalVariable.FlagFailed = 1
-            }
+						'Tulis di excel itu adalah error'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Meterai', GlobalVariable.NumofColm,
+							GlobalVariable.StatusFailed, (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm,
+								2).replace('-', '') + ';') + errormessage)
+
+						GlobalVariable.FlagFailed = 1
+					}
+					
+					'Jika sudah loopingan terakhir'
+					if (i == 5) {
+						'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedDownload'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Meterai', GlobalVariable.NumofColm,
+							GlobalVariable.StatusFailed, (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm,
+								2) + ';') + GlobalVariable.ReasonFailedDownload)
+
+						GlobalVariable.FlagFailed = 1
+					}
+				}
+			}
         }
         
         if (GlobalVariable.FlagFailed == 0) {
@@ -189,7 +222,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 }
 
 def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection conneSign) {
-	
 	totalMeteraiDB = CustomKeywords.'connection.Meterai.getTotalMeterai'(conneSign)
 	
     'set text no kontrak'

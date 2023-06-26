@@ -130,10 +130,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(A
 			'setting email service tenant'
 			CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 49), email[(i - 1)].replace('"',''))
 		}
-		
 	}
 	
-	for(int t = 0; t < documentFile.size();t++) {
+	for(int t = 0; t < documentFile.size(); t++) {
 		if(t == documentFile.size() - 1){
 			stringRefno = stringRefno + ((((((((((((((((((((((((((('{"referenceNo" : ' + (refNo)) + ', "documentTemplateCode": ') +
 				(documentTemplateCode)) + ', "officeCode": ') + (officeCode)) + ', "officeName": ') + (officeName)) + ', "regionCode": ') + (regionCode)) + ', "regionName": ') + (regionName)) + ', "businessLineCode": ') +

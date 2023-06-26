@@ -50,7 +50,7 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(Gl
 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 14).toUpperCase(), (result[arrayindex++]).toUpperCase(),
 		false, FailureHandling.CONTINUE_ON_FAILURE))
 
-if(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 15) == 'Email') {
+if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 15) == 'Email') {
 	'verify email'
 	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 15).toUpperCase(), (result[arrayindex++]).toUpperCase(),
 		false, FailureHandling.CONTINUE_ON_FAILURE))

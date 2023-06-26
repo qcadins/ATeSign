@@ -5,7 +5,6 @@ import java.sql.Connection as Connection
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
-import org.openqa.selenium.Keys as Keys
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
@@ -24,7 +23,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         GlobalVariable.FlagFailed = 0
 
 		'Declare variable yang dibutuhkan'
-		String email, emailOrNIKHash, getVendor
+		String emailOrNIKExcel, emailOrNIKHash, getVendor
 		
         'Jika kolom kedua'
         if (GlobalVariable.NumofColm == 2) {
@@ -115,7 +114,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         emailOrNIKHash, GlobalVariable.Tenant, getVendor)
 
 					'jika before sama dengan after'
-                    if (resultBefore.equals(resultAfter) == true) {
+                    if (resultBefore == resultAfter) {
 						'Write failed stored db'
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Edit Signer Data', GlobalVariable.NumofColm, 
                             GlobalVariable.StatusFailed, ((findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, 
@@ -124,8 +123,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 } else {
 					'Jika tidak sama, maka continue'
 					continue
-				}
-
+				}	
             }
         }	else if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Edit Aktivasi')) {
             'Jika aksi edit aktivasi, click button Edit Aktivasi'
@@ -213,10 +211,13 @@ def searchData(String emailOrNIKExcel) {
 def verifyPage(String email) {
     if (WebUI.verifyElementPresent(findTestObject('Object Repository/Edit Signer Data/lbl_VendorValue'), GlobalVariable.TimeOut)) {
         if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 9).equalsIgnoreCase('NIK')) {
-            email = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(email)
+            emailOrNIKHash = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(email)
         }
+		else {
+			emailOrNIKHash = email
+		}
         
-        ArrayList result = CustomKeywords.'connection.EditSignerData.getEditSignerData'(conneSign, email, GlobalVariable.Tenant)
+        ArrayList result = CustomKeywords.'connection.EditSignerData.getEditSignerData'(conneSign, emailOrNIKHash, GlobalVariable.Tenant)
 
         index = 0
 
@@ -329,21 +330,18 @@ def checkErrorLog() {
 
 def checkPopup() {
     'Jika popup muncul'
-    if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-    } else {
-        'label popup diambil'
-        lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
-
-        if (!(lblpopup.contains('Success'))) {
-            'Tulis di excel sebagai failed dan error.'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Edit Signer Data', GlobalVariable.NumofColm, 
-                GlobalVariable.StatusFailed, (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, 2).replace(
-                    '-', '') + ';') + lblpopup)
-        }
+    if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+       'label popup diambil'
+       lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
+       if (!(lblpopup.contains('Success'))) {
+          'Tulis di excel sebagai failed dan error.'
+          CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Edit Signer Data', GlobalVariable.NumofColm, 
+          GlobalVariable.StatusFailed, (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, 2).replace(
+          '-', '') + ';') + lblpopup)
+       }
         
         'Klik OK untuk popupnya'
         WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
-
         return true
     }
 }

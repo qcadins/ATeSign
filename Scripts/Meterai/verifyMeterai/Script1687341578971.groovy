@@ -29,7 +29,7 @@ WebUI.click(findTestObject('Meterai/menu_Meterai'))
 ArrayList totalMateraiAndTotalStamping = CustomKeywords.'connection.Meterai.getTotalMateraiAndTotalStamping'(conneSign, noKontrak)
 
 'declare index yang akan digunakan'
-int indexInput = 0,indexValue = 0,indexGetNomorMaterai = 0
+int indexInput = 0, indexValue = 0, indexGetNomorMaterai = 0
 
 'looping per total meterai yang telah distamp'
 for (j = 1; j <= (Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ',''))); j++) {

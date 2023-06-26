@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>table_Proses Materai</name>
+   <name>table_Aksi Retry Stamping</name>
    <tag></tag>
-   <elementGuidId>054247ba-3fe2-4ad9-91e2-12985d7be88d</elementGuidId>
+   <elementGuidId>fc5cf744-dfdf-4dc6-b7e2-07ad846bfeee</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'datatable-row-center datatable-row-group ng-star-inserted']/datatable-body-cell[11]/div</value>
+         <value>//*[@class = 'datatable-row-center datatable-row-group ng-star-inserted']/datatable-body-cell[13]/div/a[2]/em</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,8 +17,8 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@class = 'datatable-row-center datatable-row-group ng-star-inserted']/datatable-body-cell[11]/div</value>
-      <webElementGuid>e3948ec8-9c0c-422b-aa41-d1def60a31b9</webElementGuid>
+      <value>//*[@class = 'datatable-row-center datatable-row-group ng-star-inserted']/datatable-body-cell[13]/div/a[2]/em</value>
+      <webElementGuid>588bf1a2-1fd1-49ab-9bfa-797a316ce28f</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -26,6 +26,6 @@
       <name>class</name>
       <type>Main</type>
       <value>datatable-row-center datatable-row-group ng-star-inserted</value>
-      <webElementGuid>b62ec70c-32c8-48bd-a1a4-c74919c92b60</webElementGuid>
+      <webElementGuid>6ca88e2d-bef3-427f-a4fa-f49eea99bfc0</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

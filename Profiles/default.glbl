@@ -111,6 +111,11 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
+      <initValue>'Failed dikarenakan Performance'</initValue>
+      <name>ReasonFailedPerformance</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
       <initValue>'Job Process Sign Belum Selesai'</initValue>
       <name>ReasonFailedProcessNotDone</name>
    </GlobalVariableEntity>

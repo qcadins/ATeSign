@@ -55,7 +55,7 @@ public class APIFullService {
 	getAPIGenInvLinkVerifTrx(Connection conn, String name, String phone) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select qty from tr_balance_mutation tbm left join am_msuser am on am.id_ms_user = tbm.id_ms_user join ms_lov ml on ml.id_lov = tbm.lov_trx_type where ml.description = 'Use Verification' AND (am.full_name = '"+ name +"' OR tbm.usr_crt = '"+ phone +"')")
+		resultSet = stm.executeQuery("select qty from tr_balance_mutation tbm left join am_msuser am on am.id_ms_user = tbm.id_ms_user join ms_lov ml on ml.id_lov = tbm.lov_trx_type where ml.description = 'Use Verification' AND (am.full_name = '" + name + "' OR tbm.usr_crt = '" + phone + "')")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -139,7 +139,7 @@ public class APIFullService {
 	settingEmailServiceTenant(Connection conn, String value) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("UPDATE ms_tenant SET email_service = "+ value +" WHERE tenant_code = '"+ GlobalVariable.Tenant +"'")
+		resultSet = stm.executeQuery("UPDATE ms_tenant SET email_service = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "' ")
 	}
 
 	@Keyword
@@ -235,7 +235,7 @@ public class APIFullService {
 	settingEmailServiceVendorRegisteredUser(Connection conn, String value, String email) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("UPDATE ms_vendor_registered_user SET email_service = "+ value +" WHERE signer_registered_email = '"+ email +"'")
+		resultSet = stm.executeQuery("UPDATE ms_vendor_registered_user SET email_service = "+ value +" WHERE signer_registered_email = '" + email + "' ")
 	}
 
 	@Keyword
@@ -521,7 +521,7 @@ public class APIFullService {
 	}
 
 	@Keyword
-	getSaldoUsedBasedonPaymentType(Connection conn, String refnumber, String emailSigner){
+	getSaldoUsedBasedonPaymentType(Connection conn, String refnumber, String emailSigner) {
 		String data
 
 		stm = conn.createStatement()
@@ -606,7 +606,7 @@ public class APIFullService {
 	}
 
 	@Keyword
-	getDocumentType(Connection conn, String refnumber){
+	getDocumentType(Connection conn, String refnumber) {
 		String data
 
 		stm = conn.createStatement()

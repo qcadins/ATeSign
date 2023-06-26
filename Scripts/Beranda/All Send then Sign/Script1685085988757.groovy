@@ -291,7 +291,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(e
         checkKonfirmasiTTD()
 
         'jika page belum pindah'
-        if (!(WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_TandaTanganDokumen'), GlobalVariable.TimeOut, 
+        if ((WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/lbl_TandaTanganDokumen'), GlobalVariable.TimeOut, 
             FailureHandling.OPTIONAL))) {
             'Jika tidak ada, maka datanya tidak ada, atau save gagal'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
@@ -325,7 +325,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(e
         }
         
         'Jika error log tidak muncul, Jika verifikasi penanda tangan tidak muncul'
-        if (!(WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_VerifikasiPenandaTangan'), GlobalVariable.TimeOut, 
+        if ((WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/lbl_VerifikasiPenandaTangan'), GlobalVariable.TimeOut, 
             FailureHandling.OPTIONAL))) {
             'Custom keyword mengenai savenya gagal'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
@@ -947,7 +947,7 @@ def checkSaldoSign() {
 }
 
 def checkSaldoOtp() {
-    String totalSaldo = new ArrayList()
+    String totalSaldo
 
     'klik button saldo'
     WebUI.click(findTestObject('isiSaldo/SaldoAdmin/menu_Saldo'))

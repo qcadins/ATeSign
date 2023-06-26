@@ -39,7 +39,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.api_key = findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, 
                 14)
         }
-        
         'HIT API'
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Get Total Unsigned Documents', [('callerId') : findTestData(
                         excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, 9), ('email') : findTestData(

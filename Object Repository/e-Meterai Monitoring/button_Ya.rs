@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>selected_DDL</name>
+   <name>button_Ya</name>
    <tag></tag>
-   <elementGuidId>4e9ee5e0-6c4a-4f21-9c7d-4cf6c9e32051</elementGuidId>
+   <elementGuidId>eacc39a6-0238-479c-9599-1c15c3a84fcc</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'ng-option-label ng-star-inserted']</value>
+         <value>//*[@class = 'swal2-confirm btn btn-primary']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>ng-option-label ng-star-inserted</value>
-      <webElementGuid>38f9e2ec-1157-4c9b-aeae-9cea9e071655</webElementGuid>
+      <value>swal2-confirm btn btn-primary</value>
+      <webElementGuid>a821d82d-d756-450c-ac45-8eac900184d0</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
