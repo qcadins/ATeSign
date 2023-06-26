@@ -269,22 +269,28 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         resultEdit = CustomKeywords.'connection.UserManagement.getUserManagementonEdit'(conneSign, findTestData(
                                 excelPathUserManagement).getValue(GlobalVariable.NumofColm, 17), GlobalVariable.Tenant)
 
-                        index = 0
+                        indexEdit = 0
 
                         'verify db dengan ui mengenai nama'
                         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/User Management/input_NamaEdit'), 
-                                    'value'), resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Nama dengan value db yaitu ' + 
-                            (resultEdit[(index - 1)]))
-
+                        'value'), resultEdit[indexEdit], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Nama dengan value db yaitu ' + 
+                        (resultEdit[(indexEdit)]))
+						
+						indexEdit++
+						
                         'verify db dengan ui mengenai email'
                         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/User Management/input_EmailEdit'), 
-                                    'value'), resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Email dengan value db yaitu ' + 
-                            (resultEdit[(index - 1)]))
+                                    'value'), resultEdit[indexEdit], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Email dengan value db yaitu ' + 
+                            (resultEdit[(indexEdit)]))
 
+						indexEdit++
+						
                         'verify db dengan ui mengenai Activated Date'
                         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/User Management/input_Activated DateEdit'), 
-                                    'value'), resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Activate Date dengan value db yaitu ' + 
-                            (resultEdit[(index - 1)]))
+                                    'value'), resultEdit[indexEdit], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Activate Date dengan value db yaitu ' + 
+                            (resultEdit[(indexEdit)]))
+						
+						indexEdit++
 
                         'Klik peran'
                         WebUI.click(findTestObject('Object Repository/User Management/input_PeranEdit'))
@@ -306,26 +312,32 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                                 Keys.ENTER))
 
                         'verify db dengan ui mengenai peran'
-                        checkVerifyEqualOrMatch(WebUI.verifyMatch(peranBefore, resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), 
-                            ' pada data Edit Peran dengan value db yaitu ' + (resultEdit[(index - 1)]))
-
+                        checkVerifyEqualOrMatch(WebUI.verifyMatch(peranBefore, resultEdit[indexEdit], false, FailureHandling.CONTINUE_ON_FAILURE), 
+                            ' pada data Edit Peran dengan value db yaitu ' + (resultEdit[(indexEdit)]))
+						
+						indexEdit++
+						
                         'verify db dengan ui mengenai cabang'
-                        checkVerifyEqualOrMatch(WebUI.verifyMatch(cabangBefore, resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), 
-                            ' pada data Edit Cabang dengan value db yaitu ' + (resultEdit[(index - 1)]))
+                        checkVerifyEqualOrMatch(WebUI.verifyMatch(cabangBefore, resultEdit[index], false, FailureHandling.CONTINUE_ON_FAILURE), 
+                            ' pada data Edit Cabang dengan value db yaitu ' + (resultEdit[(index)]))
 
+						indexEdit++
+						
                         'verify db dengan ui mengenai Status user'
                         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/User Management/input_Status UserEdit'), 
-                                    'value'), resultEdit[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Status user dengan value db yaitu ' + 
-                            (resultEdit[(index - 1)]))
-
+                                    'value'), resultEdit[index], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Status user dengan value db yaitu ' + 
+                            (resultEdit[(index)]))
+						
+						indexEdit++
                         'Klik batal'
                         WebUI.click(findTestObject('User Management/button_Batal'))
                     }
                 } else {
                     'Jika bukan semuanya, maka verify ui dengan db'
-                    checkVerifyEqualOrMatch(WebUI.verifyMatch(result[index++], WebUI.getText(modifyObjectLblValue), false, 
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch(result[index], WebUI.getText(modifyObjectLblValue), false, 
                             FailureHandling.CONTINUE_ON_FAILURE), ((' pada kolom ke ' + i) + ' dimana data db adalah ') + 
-                        (result[(index - 1)]))
+                        (result[(index)]))
+					index++
                 }
             }
 			
@@ -399,8 +411,7 @@ def checkPagingConfirmation(String reason) {
 def searchDataAfterAction() {
 	if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6) == 'Setting') {
 		peranAfter = findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 14)
-		}
-	else {
+	} else {
 		peranAfter = findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 18)
 	}
 		WebUI.setText(findTestObject('Object Repository/User Management/input_Email'), findTestData(excelPathUserManagement).getValue(
@@ -416,7 +427,6 @@ def searchDataAfterAction() {
 	}
 
 def searchData() {
-
     WebUI.setText(findTestObject('Object Repository/User Management/input_Email'), findTestData(excelPathUserManagement).getValue(
     GlobalVariable.NumofColm, 17))
 

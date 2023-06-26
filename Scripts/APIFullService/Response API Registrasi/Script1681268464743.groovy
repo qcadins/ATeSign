@@ -15,7 +15,7 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'get colm excel'
 int countColmExcel = findTestData(excelPathAPIRegistrasi).columnNumbers
 
-String selfPhoto, idPhoto
+String selfPhoto, idPhoto, trxNo
 
 'looping API Registrasi'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
@@ -165,7 +165,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
                 trxNo = WS.getElementPropertyValue(respon, 'trxNo', FailureHandling.OPTIONAL)
-
+				
+				println trxNo
+				
+				trxNo = trxNo.replace('[', '').replace(']', '')
+				
                 'Write To Excel GlobalVariable.StatusFailed and errormessage'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Registrasi', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, message)
@@ -173,6 +177,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 if ((GlobalVariable.checkStoreDB == 'Yes') && (trxNo != null)) {
                     String resultTrx = CustomKeywords.'connection.APIFullService.getAPIRegisterTrx'(conneSign, trxNo)
 
+println resultTrx
+println trxNo
+WebUI.delay(30)
                     'declare arraylist arraymatch'
                     ArrayList arrayMatch = []
 
