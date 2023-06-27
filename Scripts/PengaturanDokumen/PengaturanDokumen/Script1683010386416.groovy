@@ -159,7 +159,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     'Klik Konfirmasi Yes'
                     WebUI.click(findTestObject('TandaTanganDokumen/btn_KonfirmasiYes'))
 
-                    if (WebUI.verifyElementPresent(findTestObject('Object Repository/TandaTanganDokumen/errorlog'), GlobalVariable.TimeOut,FailureHandling.OPTIONAL)) {
+                    if (WebUI.verifyElementPresent(findTestObject('Object Repository/TandaTanganDokumen/errorlog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
                         'get reason'
                         ReasonFailed = WebUI.getAttribute(findTestObject('BuatUndangan/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 
@@ -169,7 +169,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                 2).replace('-', '') + semicolon) + ReasonFailed)
 
                         GlobalVariable.FlagFailed = 1
-                    } else if (WebUI.verifyElementPresent(findTestObject('Object Repository/TandaTanganDokumen/btn_ttd'),GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+                    } else if (WebUI.verifyElementPresent(findTestObject('Object Repository/TandaTanganDokumen/btn_ttd'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 						'Klik button tanda tangan'
                         WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_ttd'))
 

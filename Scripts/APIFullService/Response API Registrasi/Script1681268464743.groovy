@@ -22,7 +22,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
-		
 		'check ada value maka setting email service tenant'
 		if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 34).length() > 0) {
 			'setting email service tenant'

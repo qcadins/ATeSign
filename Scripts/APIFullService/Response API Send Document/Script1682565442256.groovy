@@ -481,7 +481,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 'Jika check storedb'
                 if (GlobalVariable.checkStoreDB == 'Yes') {
                     'Fungsi storedb'
-                    responseAPIStoreDB(signlocStoreDB, semicolon, splitnum, delimiter, enter)
+                    responseAPIStoreDB(signlocStoreDB, semicolon, splitnum, enter)
                 }
             } else {
                 'Mengambil message Failed'
