@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "9121414774B67440E59A0FED5796A68B",
+  "keywordFileContentHash": "764B306AB02DA17D790D8D790062641B",
   "keywordClasses": [
     {
       "name": "connection.PengaturanDokumen",
@@ -33,7 +33,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "dataDocTemplateStoreDB",
@@ -64,7 +65,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getLovTipePembayaran",
@@ -82,7 +84,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getTotalDokumenTemplatKode",
@@ -100,10 +103,11 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         }
       ]
     }
   ],
-  "javadocParsed": false
+  "javadocParsed": true
 }

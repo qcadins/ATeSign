@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "D197289EBD48BD43FF3C3A86EDE9BB2A",
+  "keywordFileContentHash": "505724D2FC8CF188104FEE4929625476",
   "keywordClasses": [
     {
       "name": "connection.AgreementCanceled",
@@ -33,10 +33,11 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         }
       ]
     }
   ],
-  "javadocParsed": false
+  "javadocParsed": true
 }
