@@ -29,4 +29,6 @@ public class AgreementCanceled {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		data}}
+		data
+	}
+}
