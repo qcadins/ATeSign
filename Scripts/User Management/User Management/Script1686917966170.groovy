@@ -157,7 +157,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                     'enter cabang'
                     WebUI.sendKeys(findTestObject('Object Repository/User Management/input_CabangEdit'), Keys.chord(Keys.ENTER))
-
+					
                     'verify db dengan ui mengenai peran'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(peranBefore, resultEdit[index], false, FailureHandling.CONTINUE_ON_FAILURE), 
                         ' pada data Edit Peran dengan value db yaitu ' + (resultEdit[(index)]))
@@ -328,19 +328,20 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             ' pada data Edit Peran dengan value db yaitu ' + (resultEdit[(indexEdit)]))
 						
 						indexEdit++
-						
+
                         'verify db dengan ui mengenai cabang'
-                        checkVerifyEqualOrMatch(WebUI.verifyMatch(cabangBefore, resultEdit[index], false, FailureHandling.CONTINUE_ON_FAILURE), 
-                            ' pada data Edit Cabang dengan value db yaitu ' + (resultEdit[(index)]))
+                        checkVerifyEqualOrMatch(WebUI.verifyMatch(cabangBefore, resultEdit[indexEdit], false, FailureHandling.CONTINUE_ON_FAILURE), 
+                            ' pada data Edit Cabang dengan value db yaitu ' + (resultEdit[(indexEdit)]))
 
 						indexEdit++
 						
                         'verify db dengan ui mengenai Status user'
                         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/User Management/input_Status UserEdit'), 
-                                    'value'), resultEdit[index], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Status user dengan value db yaitu ' + 
-                            (resultEdit[(index)]))
+                                    'value'), resultEdit[indexEdit], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada data Edit Status user dengan value db yaitu ' + 
+                            (resultEdit[(indexEdit)]))
 						
 						indexEdit++
+						
                         'Klik batal'
                         WebUI.click(findTestObject('User Management/button_Batal'))
                     }

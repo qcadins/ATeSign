@@ -64,7 +64,7 @@ public class SendSign {
 	getEmailLogin(Connection conn, String documentid) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT STRING_AGG(distinct au.login_id, ';') AS login FROM tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user WHERE tdd.document_id = '" + documentid + "'")
+		resultSet = stm.executeQuery("SELECT STRING_AGG(distinct(alls.login_id),';') as aa FROM (select * from tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user order by tdds.id_document_d_sign asc) as alls where alls.document_id = '" + documentid+  "' ")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

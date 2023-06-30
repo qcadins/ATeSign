@@ -192,7 +192,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             if (WebUI.getText(modifyObjectTipeBatasSaldo) == descriptionBalanceType) {
                 'modify object untuk input batas saldo'
                 modifyObjectInputBatasSaldo = WebUI.modifyObjectProperty(findTestObject('Object Repository/PengaturanTenant/input_BatasSaldo'), 
-                    'id', 'equals',tipeSaldo[i], true)
+                    'id', 'equals', tipeSaldo[i], true)
 
                 'Set text di input batas saldo'
                 WebUI.setText(modifyObjectInputBatasSaldo, saldoTipeSaldo[i])

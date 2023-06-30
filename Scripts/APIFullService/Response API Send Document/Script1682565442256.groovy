@@ -30,7 +30,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         String signlocStoreDB = new String()
 
         'Inisialisasi ref No berdasarkan delimiter ;'
-        refNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 11).split(semicolon, splitnum)
+        refNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 11)
 
         'Inisialisasi document template code berdasarkan delimiter ;'
         documentTemplateCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 12).split(semicolon, 
@@ -115,7 +115,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             String bodyAPI = new String()
 
             'Pengisian body'
-            bodyAPI = (((((((((((((((((((bodyAPI + '{"referenceNo" : ') + (refNo[i])) + ', "documentTemplateCode": ') + 
+            bodyAPI = (((((((((((((((((((bodyAPI + '{"referenceNo" : ') + (refNo)) + ', "documentTemplateCode": ') + 
             (documentTemplateCode[i])) + ', "documentName": ') + (documentName[i])) + ', "officeCode": ') + (officeCode[
             i])) + ', "officeName": ') + (officeName[i])) + ', "regionCode": ') + (regionCode[i])) + ', "regionName": ') + 
             (regionName[i])) + ', "businessLineCode": ') + (businessLineCode[i])) + ', "businessLineName": ') + (businessLineName[
@@ -314,7 +314,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 				}
 				
                 'Memasukkan bodyAPI ke stringRefno'
-                stringRefno = (stringRefno + bodyAPI)
 
                 'Mengkosongkan bodyAPI untuk digunakan selanjutnya'
                 bodyAPI = ''
@@ -431,7 +430,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'input body API kedalam stringRefno'
             stringRefno = (stringRefno + bodyAPI)
         }
-        
+
         'Jika flag tenant no'
         if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 44) == 'No') {
             'set tenant kosong'
@@ -533,7 +532,7 @@ def responseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, St
 
     email = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 32).split(enter, splitnum)
 
-    refNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 11).split(semicolon, splitnum)
+    refNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 11)
 
     'looping berdasarkan jumlah dari document id '
     for (int i = 0; i < docid.size(); i++) {
@@ -584,25 +583,23 @@ def responseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, St
         'declare array index'
         arrayindex = 0
 
-        'Split result dari email berdasarkan db'
-        emailDB = (result[arrayindex++]).split(semicolon, splitnum)
-
-        'Split result dari signerType berdasarkan db'
-        signerTypeDB = (result[arrayindex++]).split(semicolon, splitnum)
-
         'Split result dari signerType per signer berdasarkan excel yang telah displit per dokumen. '
         signerTypeExcel = (signerType[i]).replace('"', '').split(semicolon, splitnum)
 
         'Splitting email berdasarkan excel per dokumen'
         emailExcel = (email[i]).replace('"', '').split(semicolon, splitnum)
 
-        'Mengambil email berdasarkan documentId'
-        ArrayList emailSigner = CustomKeywords.'connection.APIFullService.getEmailLogin'(conneSign, docid[i]).split(';', -1)
+        for (int r = 0; r < emailExcel.size(); r++) {
+			if (emailExcel[r] == '') {
+				'Splitting email berdasarkan excel per dokumen'
+				idKtpExcel = (idKtp[i]).replace('"', '').split(semicolon, splitnum)
+		
+				emailExcel[r] = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(idKtpExcel[r]) 
+			}
 
-        for (int r = 0; r < emailSigner.size(); r++) {
             ArrayList resultStoreEmailandType = CustomKeywords.'connection.APIFullService.getSendDocForEmailAndSignerType'(conneSign, 
-                docid[i], emailSigner[r])
-
+                docid[i], emailExcel[r])
+			
             'declare arrayindex'
             arrayindex = 0
 
@@ -621,7 +618,7 @@ def responseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, St
                     '"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'verify ref number'
-        arrayMatch.add(WebUI.verifyMatch((refNo[i]).replace('"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+        arrayMatch.add(WebUI.verifyMatch((refNo).replace('"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'verify document_id'
         arrayMatch.add(WebUI.verifyMatch(docid[i], result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))

@@ -13,9 +13,6 @@ chromePrefs.put('download.default_directory', System.getProperty('user.dir') + '
 
 RunConfiguration.setWebDriverPreferencesProperty('prefs', chromePrefs)
 
-'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
-
 'open browser'
 WebUI.openBrowser('')
 

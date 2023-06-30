@@ -8,7 +8,7 @@ import java.sql.Connection as Connection
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'declare arraylist arraymatch'
-ArrayList arrayMatch = new []
+ArrayList arrayMatch = []
 
 docid = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 6).replace('[', '').replace(']', '').split(', ', -1)
 

@@ -560,8 +560,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                         'StoreDB mengenai masukan'
                         masukanStoreDB(conneSign, emailSigner[(o - 1)], arrayMatch)
                     }
-                    
-					
+	
 					'Jika flag failednya 0'
 					if (GlobalVariable.FlagFailed == 0) {
 					'write to excel success'

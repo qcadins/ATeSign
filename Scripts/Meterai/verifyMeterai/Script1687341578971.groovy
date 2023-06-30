@@ -37,22 +37,7 @@ for (j = 1; j <= (Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ','
 	ArrayList inputBasedOnAPIStamping = CustomKeywords.'connection.Meterai.getInputMeterai'(conneSign, noKontrak)
 
 	'set text lini bisnis all untuk reset'
-	WebUI.setText(findTestObject('Meterai/input_LiniBisnis'),'All')
-
-	'enter untuk set lini bisnis'
-	WebUI.sendKeys(findTestObject('Meterai/input_LiniBisnis'), Keys.chord(Keys.ENTER))
-
-	'set text tanggal wilayah all untuk reset'
-	WebUI.setText(findTestObject('Meterai/input_Wilayah'), 'All')
-
-	'enter untuk set wilayah'
-	WebUI.sendKeys(findTestObject('Meterai/input_Wilayah'), Keys.chord(Keys.ENTER))
-
-	'set text tanggal cabang all untuk reset'
-	WebUI.setText(findTestObject('Meterai/input_Cabang'),'All')
-
-	'enter untuk set cabang'
-	WebUI.sendKeys(findTestObject('Meterai/input_Cabang'), Keys.chord(Keys.ENTER))
+	WebUI.click(findTestObject('Object Repository/Meterai/button_SetUlang'))
 	
     'set text no kontrak'
     WebUI.setText(findTestObject('Meterai/input_NoKontrak'), inputBasedOnAPIStamping[indexInput++])
