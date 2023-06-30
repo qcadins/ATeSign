@@ -692,7 +692,7 @@ public class APIFullService {
 	getTypeUsedSaldo(Connection conn, String trxno) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select mslo.description from tr_balance_mutation tbm join ms_lov mslo on tbm.lov_balance_type = mslo.id_lov where tbm.trx_no = '" + trxno + "' ")
+		resultSet = stm.executeQuery("select mslo.description from tr_balance_mutation tbm join ms_lov mslo on tbm.lov_trx_type = mslo.id_lov where tbm.trx_no = '" + trxno + "' ")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -702,7 +702,7 @@ public class APIFullService {
 		}
 		data
 	}
-	
+
 	@Keyword
 	getSplitLivenessFaceCompareBill(Connection conn) {
 		stm = conn.createStatement()
