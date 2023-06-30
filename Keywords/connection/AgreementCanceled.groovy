@@ -5,7 +5,6 @@ import java.sql.ResultSet
 import java.sql.ResultSetMetaData
 import java.sql.Statement
 import com.kms.katalon.core.annotation.Keyword
-import internal.GlobalVariable
 
 public class AgreementCanceled {
 

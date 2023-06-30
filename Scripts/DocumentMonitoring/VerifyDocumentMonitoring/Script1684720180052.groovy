@@ -81,7 +81,8 @@ for (int o = 1 ; o <= 1 ; o++) {
 for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
 	
 	WebUI.delay(7)
-	
+	println nomorKontrakPerPilihan[y]
+	println nomorKontrakPerPilihan
     'Mengambil email berdasarkan documentId'
     ArrayList emailSigner = CustomKeywords.'connection.DocumentMonitoring.getEmailSigneronRefNumber'(conneSign, nomorKontrakPerPilihan[
         y]).split(';', -1)

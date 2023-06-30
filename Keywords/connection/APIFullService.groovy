@@ -10,11 +10,12 @@ import internal.GlobalVariable
 public class APIFullService {
 
 	String data
-	int columnCount, i
+	int columnCount, i, countLengthforSHA256 = 64, updateVariable
 	Statement stm
 	ResultSetMetaData metadata
 	ResultSet resultSet
 	ArrayList<String> listdata = []
+	String emailWhere, selectData
 
 	@Keyword
 	getGenInvLink(Connection conn, String tenant, String phone, String idno, String email) {
@@ -139,7 +140,7 @@ public class APIFullService {
 	settingEmailServiceTenant(Connection conn, String value) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("UPDATE ms_tenant SET email_service = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "' ")
+		updateVariable = stm.executeUpdate("UPDATE ms_tenant SET email_service = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "' ")
 	}
 
 	@Keyword
@@ -294,9 +295,17 @@ public class APIFullService {
 
 	@Keyword
 	getSendDocForEmailAndSignerType(Connection conn, String documentid,String emailSigner) {
+		if (emailSigner.length() == countLengthforSHA256) {
+			emailWhere = "amm.hashed_id_no = '" + emailSigner + "'"
+			selectData = "amm.hashed_id_no "
+		} else {
+			emailWhere = "amm.login_id = '" + emailSigner + "'"
+			selectData = "amm.login_id "
+		}
+
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select DISTINCT amm.login_id as email, lov.code as code from tr_document_d as tdd join tr_document_h as tdh on tdd.id_document_h = tdh.id_document_h join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d join am_msuser as amm on tdds.id_ms_user = amm.id_ms_user join ms_tenant as mst on tdd.id_ms_tenant = mst.id_ms_tenant join ms_lov as lov on tdds.lov_signer_type = lov.id_lov where tdd.document_id = '"+documentid+"' and amm.login_id = '"+emailSigner+"'")
+		resultSet = stm.executeQuery("select DISTINCT " + selectData + " as email, lov.code as code from tr_document_d as tdd join tr_document_h as tdh on tdd.id_document_h = tdh.id_document_h join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d join am_msuser as amm on tdds.id_ms_user = amm.id_ms_user join ms_tenant as mst on tdd.id_ms_tenant = mst.id_ms_tenant join ms_lov as lov on tdds.lov_signer_type = lov.id_lov where tdd.document_id = '"+documentid+"' and " + emailWhere + "")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -314,7 +323,7 @@ public class APIFullService {
 	getEmailLogin(Connection conn, String documentid) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT STRING_AGG(distinct au.login_id, ';') AS login FROM tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user WHERE tdd.document_id = '"+documentid+"'")
+		resultSet = stm.executeQuery("SELECT STRING_AGG(distinct(alls.login_id),';') as aa FROM (select * from tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d jOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user order by tdds.id_document_d_sign asc) as alls where alls.document_id = '" + documentid + "' ")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -408,7 +417,12 @@ public class APIFullService {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		Integer.parseInt(data)
+
+		if (data != null) {
+			Integer.parseInt(data)
+		} else {
+			data = 0
+		}
 	}
 
 	@Keyword
@@ -672,5 +686,35 @@ public class APIFullService {
 			}
 		}
 		listdata
+	}
+
+	@Keyword
+	getTypeUsedSaldo(Connection conn, String trxno) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select mslo.description from tr_balance_mutation tbm join ms_lov mslo on tbm.lov_balance_type = mslo.id_lov where tbm.trx_no = '" + trxno + "' ")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+	
+	@Keyword
+	getSplitLivenessFaceCompareBill(Connection conn) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select split_liveness_face_compare_bill from ms_tenant where tenant_code = '" + GlobalVariable.Tenant.toString().toUpperCase() + "' ")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
 	}
 }
