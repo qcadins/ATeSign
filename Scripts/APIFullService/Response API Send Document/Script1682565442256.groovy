@@ -22,7 +22,8 @@ enter = '\\n'
 int splitnum = -1
 
 'looping berdasarkan total kolom'
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathAPISendDoc).columnNumbers; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathAPISendDoc).columnNumbers
+	; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
@@ -314,7 +315,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 				}
 				
                 'Memasukkan bodyAPI ke stringRefno'
-
+				stringRefno = stringRefno + bodyAPI
                 'Mengkosongkan bodyAPI untuk digunakan selanjutnya'
                 bodyAPI = ''
             }
@@ -448,7 +449,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'get api key salah dari excel'
             GlobalVariable.api_key = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 43)
         }
-        
+		
         'Hit API'
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Send Document Signing', [('tenantCode') : findTestData(
                         excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 9), ('request') : stringRefno, ('callerId') : findTestData(
@@ -508,7 +509,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 'Fungsi storedb'
 
 def PDFtoBase64(String fileName) {
-    return CustomKeywords.'customizekeyword.ConvertFile.base64File'(fileName)
+   return CustomKeywords.'customizekeyword.ConvertFile.base64File'(fileName)
 }
 
 def responseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, String enter) {
@@ -599,7 +600,8 @@ def responseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, St
 
             ArrayList resultStoreEmailandType = CustomKeywords.'connection.APIFullService.getSendDocForEmailAndSignerType'(conneSign, 
                 docid[i], emailExcel[r])
-			
+
+			if (resultStoreEmailandType.size() > 1) {
             'declare arrayindex'
             arrayindex = 0
 
@@ -608,6 +610,7 @@ def responseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, St
 
             'verify signerType'
             arrayMatch.add(WebUI.verifyMatch(signerTypeExcel[r], resultStoreEmailandType[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+			}
         }
         
         'declare arrayindex'

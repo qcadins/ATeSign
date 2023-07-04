@@ -30,7 +30,7 @@ arrayIndex = 0
 sheet = 'Send to Sign'
 
 'looping untuk sending document'
-for (GlobalVariable.NumofColm = 14; GlobalVariable.NumofColm <= 14/*findTestData(excelPathFESignDocument).columnNumbers*/ ; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathFESignDocument).columnNumbers ; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
@@ -679,9 +679,6 @@ for (GlobalVariable.NumofColm = 14; GlobalVariable.NumofColm <= 14/*findTestData
                     'Jumlah signer tanda tangan akan ditambah dengan total saldo yang telah digunakan'
                     jumlahSignerTandaTangan = (jumlahSignerTandaTangan + saldoUsed)
 
-                    'Jumlah signer telah ttd lebih kepada proses tanda tangan telah bertambah 1.'
-                    jumlahSignerTelahTtd = (jumlahSignerTelahTtd + 1)
-
                     'Looping maksimal 100 detik untuk signing proses. Perlu lama dikarenakan walaupun requestnya done(3), tapi dari VIDAnya tidak secepat itu.'
                     for (int y = 1; y <= 5; y++) {
                         'Kita berikan delay per 20 detik karena proses signingnya masih dalam status In Progress (1), dan ketika selesai, status tanda tangan akan kembali menjadi 0'
@@ -914,7 +911,7 @@ def signingProcessStoreDB(Connection conneSign, String emailSigner, int jumlahSi
     arrayIndex = 0
 
     'SigningDB mengambil value dari hasil query'
-    signingDB = CustomKeywords.'connection.APIFullService.getSigningStatusProcess'(conneSign, findTestData(excelPathFESignDocument).getValue(
+    signingDB = CustomKeywords.'connection.SendSign.getSigningStatusProcess'(conneSign, findTestData(excelPathFESignDocument).getValue(
             GlobalVariable.NumofColm, 6), emailSigner)
 
     'looping berdasarkan size dari signingDB'
@@ -1136,7 +1133,7 @@ def runWithEmbed(String linkUrl) {
     }
 }
 
-def checkKotakMasuk(Connection conneSign, int jumlahSignerTelahTtd, ArrayList emailSigner, String sheet, TestObject modifyObjectTextRefNumber, TestObject modifyObjectTextDocumentTemplateTipe, TestObject modifyObjectTextDocumentTemplateName, TestObject modifyObjectTextTglPermintaan, TestObject modifyObjectTextStatusTtd, TestObject modifyObjectTextProsesTtd, int row) {
+def checkKotakMasuk(Connection conneSign, ArrayList emailSigner, String sheet, TestObject modifyObjectTextRefNumber, TestObject modifyObjectTextDocumentTemplateTipe, TestObject modifyObjectTextDocumentTemplateName, TestObject modifyObjectTextTglPermintaan, TestObject modifyObjectTextStatusTtd, TestObject modifyObjectTextProsesTtd, int row) {
     'declare arraylist arraymatch'
     ArrayList arrayMatch = []
 
