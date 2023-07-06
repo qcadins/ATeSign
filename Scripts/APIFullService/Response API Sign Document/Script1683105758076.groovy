@@ -225,7 +225,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				'check saldo'
 				saldoAfter = loginAdminGetSaldo(conneSign)
 				
-				'saldo before sama dengan saldo After, maka '
+				'check saldo before dan aftar'
 				if (saldoBefore == saldoAfter) {
 					'Write To Excel GlobalVariable.StatusFailed dengan alasan bahwa saldo transaksi '
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm,
@@ -269,17 +269,9 @@ def responseAPIStoreDB(Connection conneSign, String ipaddress, String[] document
         'get data from db'
         arrayIndex = 0
 
-        println(documentId[i])
-
-        println(findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 11))
-
         'Array result. Value dari db'
         result = CustomKeywords.'connection.APIFullService.getSign'(conneSign, (documentId[i]).replace('"', ''), findTestData(
                 excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 11).replace('"', ''))
-
-        println(result)
-
-        WebUI.delay(30)
 
         'verify qty dalam transaksi. Jika done = 1'
         arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))

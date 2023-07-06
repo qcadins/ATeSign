@@ -81,8 +81,7 @@ for (int o = 1 ; o <= 1 ; o++) {
 for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
 	
 	WebUI.delay(7)
-	println nomorKontrakPerPilihan[y]
-	println nomorKontrakPerPilihan
+
     'Mengambil email berdasarkan documentId'
     ArrayList emailSigner = CustomKeywords.'connection.DocumentMonitoring.getEmailSigneronRefNumber'(conneSign, nomorKontrakPerPilihan[
         y]).split(';', -1)
@@ -221,16 +220,18 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                     ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + 
                     GlobalVariable.ReasonFailedNoneUI) + ' pada Page Document Monitoring.')
+				
+				GlobalVariable.FlagFailed = 1
             }
         } else {
             WebUI.delay(2)
 
             'modify object label Value'
             modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath', 'equals', 
-                '//*[@id="listDokumen"]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper/datatable-body-row/div[2]/datatable-body-cell[1]/div/p', 
+                '/html/body/app-root/app-content-layout/div/div/div/div[2]/app-inquiry/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper/datatable-body-row/div[2]/datatable-body-cell[1]/div/p', 
                 true)
-
-            'Jika valuenya ada'
+			
+			'Jika valuenya ada'
             if (WebUI.verifyElementPresent(modifyObjectvalues, GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
 				WebUI.delay(5)
 				'Mengambil row size dari value'
@@ -243,9 +244,8 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                 arrayIndex = 0
 
                 'Mengambil value dari db menngenai data yang perlu diverif'
-                resultQuery = CustomKeywords.'connection.DocumentMonitoring.getDocumentMonitoringBasedOnEmbed'(conneSign, inputDocumentMonitoring[
-                    0], fullNameCust)
-
+                resultQuery = CustomKeywords.'connection.DocumentMonitoring.getDocumentMonitoringBasedOnEmbed'(conneSign, nomorKontrakPerPilihan[y], fullNameCust)
+	
                 'Mengambil value dari db mengenai total stamping'
                 resultStamping = CustomKeywords.'connection.DocumentMonitoring.getTotalStampingandTotalMaterai'(conneSign, nomorKontrakPerPilihan[y])
 
@@ -254,8 +254,7 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                     'Looping berdasarkan column yang ada pada value tanpa aksi.'
                     for (int i = 1; i <= (sizeColumnofLabelValue.size() / sizeRowofLabelValue.size()); i++) {
                         modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 
-                            'xpath', 'equals', ((('//*[@id="listDokumen"]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-                            j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div', true)
+                            'xpath', 'equals', '/html/body/app-root/app-content-layout/div/div/div/div[2]/app-inquiry/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + j + ']/datatable-body-row/div[2]/datatable-body-cell[' + i + ']/div', true)
 
                         'Jika berada di column ke 7'
                         if (i == 7) {
@@ -293,6 +292,8 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                     ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + 
                     GlobalVariable.ReasonFailedNoneUI) + ' pada Page Document Monitoring.')
+				
+				GlobalVariable.FlagFailed = 1
             }
         }
     }
