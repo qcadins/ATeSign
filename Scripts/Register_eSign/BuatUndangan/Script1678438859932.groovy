@@ -253,7 +253,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).length() > 0) {
         'call test case inquiry invitation'
         WebUI.callTestCase(findTestCase('InquiryInvitation/InquiryInvitation'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
-            FailureHandling.STOP_ON_FAILURE)
+            FailureHandling.CONTINUE_ON_FAILURE)
     } else {
         'call test case verif Submit Data'
         WebUI.callTestCase(findTestCase('Register_eSign/verifSubmitData'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 

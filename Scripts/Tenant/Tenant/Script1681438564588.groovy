@@ -24,9 +24,6 @@ WebUI.callTestCase(findTestCase('Login/Login_AdminEsign'), [:], FailureHandling.
 'click menu tenant'
 WebUI.click(findTestObject('Tenant/menu_Tenant'))
 
-'call function check paging'
-checkPaging(conneSign)
-
 'declare isMmandatory Complete'
 int isMandatoryComplete = Integer.parseInt(findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 5))
 
@@ -35,6 +32,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+		
+		if (GlobalVariable.NumofColm == 2) {
+			'call function check paging'
+			checkPaging(conneSign)
+		}
+		
         'check if action new/services'
         if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('New')) {
             'click button Baru'
@@ -85,8 +88,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/div[' + 
                     index) + ']/button', true)
 
-                'break if index udah lebih dari 20 HARDCODE karena tidak bisa di track objectnya'
-                if (index > 20) {
+                'break if index udah lebih dari 23 HARDCODE karena tidak bisa di track objectnya'
+                if (index > 23) {
                     break
                 }
                 
@@ -122,7 +125,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'modify object input email'
                 modifyObjectInputEmail = WebUI.modifyObjectProperty(findTestObject('Tenant/TenantBaru/modifyObject'), 'xpath', 
                     'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/div[' + 
-                    (20 + index)) + ']/div/input', true)
+                    (23 + index)) + ']/div/input', true)
 
                 'click tambah email'
                 WebUI.click(findTestObject('Tenant/TenantBaru/button_TambahEmail'))
@@ -153,6 +156,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'write to excel success'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Tenant', 0, 
                         GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+					
+					'call function after add'
+					verifyAfterAddEdit()
                 }
             } else if (isMandatoryComplete > 0) {
                 'click button Batal'
@@ -237,6 +243,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'click button edit'
             WebUI.click(findTestObject('Tenant/button_Edit'))
 
+			'input nama tenant'
+            WebUI.setText(findTestObject('Tenant/TenantBaru/input_NamaTenant'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
+                    12))
+			
             'input tenant code'
             WebUI.setText(findTestObject('Tenant/TenantBaru/input_TenantCode'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
                     13), FailureHandling.OPTIONAL)
@@ -288,8 +298,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/div[' + 
                     index) + ']/button', true)
 
-                'break if index udah lebih dari 20 HARDCODE karena tidak bisa di track objectnya'
-                if (index > 20) {
+                'break if index udah lebih dari 23 HARDCODE karena tidak bisa di track objectnya'
+                if (index > 23) {
                     break
                 }
                 
@@ -340,7 +350,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             arrayEmailReminder = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 21).split(';', -1)
 
             'looping untuk hapus email reminder yang tidak ada di excel'
-            for (index = 21; index <= variable.size(); index++) {
+            for (index = 24; index <= variable.size(); index++) {
                 'modify object input email'
                 modifyObjectInputEmail = WebUI.modifyObjectProperty(findTestObject('Tenant/TenantBaru/modifyObject'), 'xpath', 
                     'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/div[' + 
@@ -375,7 +385,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'looping untuk input email reminder yang tidak ada di ui'
             for (indexexcel = 1; indexexcel <= arrayEmailReminder.size(); indexexcel++) {
                 'looping untuk input email reminder'
-                for (index = 21; index <= variable.size(); index++) {
+                for (index = 24; index <= variable.size(); index++) {
                     'modify object input email'
                     modifyObjectInputEmail = WebUI.modifyObjectProperty(findTestObject('Tenant/TenantBaru/modifyObject'), 
                         'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/div[' + 
@@ -410,6 +420,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'write to excel success'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Tenant', 0, 
                         GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+					
+					'call function after edit'
+					verifyAfterAddEdit()
                 }
             } else if (isMandatoryComplete > 0) {
                 'click button Batal'
@@ -499,8 +512,7 @@ def checkPaging(Connection conneSign) {
             'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'modify object last Page'
-    def modifyObjectLastPage = WebUI.modifyObjectProperty(findTestObject('Tenant/modifyObject'), 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' + 
-        variable.size() - 2) + ']', true)
+    def modifyObjectLastPage = WebUI.modifyObjectProperty(findTestObject('Tenant/modifyObject'), 'xpath', 'equals', '//*[@class = "pager"]/li[' + (variable.size() - 2).toString() + ']', true)
 
     'click max page'
     WebUI.click(findTestObject('Tenant/button_MaxPage'))
@@ -543,3 +555,28 @@ def searchTenant() {
     WebUI.click(findTestObject('Tenant/button_Cari'))
 }
 
+def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
+	if (isMatch == false) {
+		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Tenant', GlobalVariable.NumofColm,
+			GlobalVariable.StatusFailed, (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 2) + ';') +
+			GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
+
+		GlobalVariable.FlagFailed = 1
+	}
+}
+
+def verifyAfterAddEdit() {
+	'input nama tenant'
+	WebUI.setText(findTestObject('Tenant/input_NamaTenant'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm,
+			12))
+	
+	'click button cari'
+	WebUI.click(findTestObject('Tenant/button_Cari'))
+	
+	'verify nama tenant after add or edit'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Tenant/label_NamaTenant')), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 12), false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama Tenant after Add or Edit')
+	
+	'verify Kode tenant after add or edit'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Tenant/label_KodeTenant')), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 13), false, FailureHandling.CONTINUE_ON_FAILURE), ' Kode Tenant after Add or Edit')
+}

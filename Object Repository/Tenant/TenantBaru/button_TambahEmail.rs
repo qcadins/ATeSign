@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[(text() = 'Tambah' or . = 'Tambah')]</value>
+         <value>//*[(text() = 'Add' or . = 'Add')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -18,14 +18,14 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/button</value>
-      <webElementGuid>0a3349c2-64da-4bb2-9262-f3a781ea0d85</webElementGuid>
+      <webElementGuid>a924f40a-5f1c-43da-852e-1b5bccce82a7</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>text</name>
       <type>Main</type>
-      <value>Tambah</value>
-      <webElementGuid>5e507c4a-c1c6-4c18-b4af-e08c8fbf3077</webElementGuid>
+      <value>Add</value>
+      <webElementGuid>bd67f3c1-6e71-425c-9e69-004accd5c42f</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
