@@ -12,6 +12,9 @@ import org.openqa.selenium.Keys as Keys
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
+'get data file path'
+GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
+
 'call testcase login admin'
 WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathDocumentMonitoring, ('sheet') : 'DocumentMonitoring'], FailureHandling.CONTINUE_ON_FAILURE)
 
@@ -127,7 +130,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     GlobalVariable.NumofColm, 19)) == false) {
                 'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedDownload'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('DocumentMonitoring', GlobalVariable.NumofColm, 
-                    GlobalVariable.StatusFailed, (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 2) + 
+                    GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 2) + 
                     ';') + GlobalVariable.ReasonFailedDownload)
 
                 GlobalVariable.FlagFailed = 1
@@ -238,7 +241,21 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'click button OK'
                     WebUI.click(findTestObject('DocumentMonitoring/button_OK'))
                 } else {
-                    'get text dari popup message'
+					'check if error alert present'
+					if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/errorLog'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+						'get reason dari error log'
+						errorLog = WebUI.getAttribute(findTestObject('DocumentMonitoring/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
+		
+						'Write To Excel GlobalVariable.StatusFailed and errorLog'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('DocumentMonitoring', GlobalVariable.NumofColm,
+							GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm,
+								2) + ';') + errorLog)
+		
+						GlobalVariable.FlagFailed = 1
+					}
+					
+					if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/PopupMessage'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+					'get text dari popup message'
                     WebUI.getText(findTestObject('DocumentMonitoring/PopUpMessage'))
 
                     'Write To Excel GlobalVariable.StatusFailed and errorLog'
@@ -247,6 +264,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             2) + ';') + errorLog)
 
                     GlobalVariable.FlagFailed = 1
+					}
                 }
             }
         }

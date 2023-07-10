@@ -7,11 +7,12 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
-'call test case login as admin'
-WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathPencarianPengguna, ('sheet') : 'PencarianPengguna-Karyawan'], FailureHandling.CONTINUE_ON_FAILURE)
-
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
+
+'call test case login as admin'
+WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathPencarianPengguna, ('sheet') : 'PencarianPengguna-Karyawan'], 
+    FailureHandling.CONTINUE_ON_FAILURE)
 
 'call function check paging'
 checkPaging()
@@ -19,99 +20,119 @@ checkPaging()
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-'input email'
-WebUI.setText(findTestObject('PencarianPenggunaAdmin/Karyawan/input_Email'), findTestData(excelPathPencarianPengguna).getValue(
-        GlobalVariable.NumofColm, 9))
+'get colm excel'
+int countColmExcel = findTestData(excelPathPencarianPengguna).columnNumbers
 
-'input nama lengkap'
-WebUI.setText(findTestObject('PencarianPenggunaAdmin/Karyawan/input_NamaLengkap'), findTestData(excelPathPencarianPengguna).getValue(
-        GlobalVariable.NumofColm, 10))
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
+    if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
+        break
+    } else if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+        'input email'
+        WebUI.setText(findTestObject('PencarianPenggunaAdmin/Karyawan/input_Email'), findTestData(excelPathPencarianPengguna).getValue(
+                GlobalVariable.NumofColm, 9))
 
-'input tanggal aktivasi dari'
-WebUI.setText(findTestObject('PencarianPenggunaAdmin/Karyawan/input_TanggalAktivasiDari'), findTestData(excelPathPencarianPengguna).getValue(
-        GlobalVariable.NumofColm, 11))
+        'input nama lengkap'
+        WebUI.setText(findTestObject('PencarianPenggunaAdmin/Karyawan/input_NamaLengkap'), findTestData(excelPathPencarianPengguna).getValue(
+                GlobalVariable.NumofColm, 10))
 
-'input tanggal aktivasi sampai'
-WebUI.setText(findTestObject('PencarianPenggunaAdmin/Karyawan/input_TanggalAktivasiSampai'), findTestData(excelPathPencarianPengguna).getValue(
-        GlobalVariable.NumofColm, 12))
+        'input tanggal aktivasi dari'
+        WebUI.setText(findTestObject('PencarianPenggunaAdmin/Karyawan/input_TanggalAktivasiDari'), findTestData(excelPathPencarianPengguna).getValue(
+                GlobalVariable.NumofColm, 11))
 
-'input status aktivasi'
-WebUI.setText(findTestObject('PencarianPenggunaAdmin/Karyawan/Select_Status'), findTestData(excelPathPencarianPengguna).getValue(
-        GlobalVariable.NumofColm, 13))
+        'input tanggal aktivasi sampai'
+        WebUI.setText(findTestObject('PencarianPenggunaAdmin/Karyawan/input_TanggalAktivasiSampai'), findTestData(excelPathPencarianPengguna).getValue(
+                GlobalVariable.NumofColm, 12))
 
-'send keys enter'
-WebUI.sendKeys(findTestObject('PencarianPenggunaAdmin/Karyawan/Select_Status'), Keys.chord(Keys.ENTER))
+        'input status aktivasi'
+        WebUI.setText(findTestObject('PencarianPenggunaAdmin/Karyawan/Select_Status'), findTestData(excelPathPencarianPengguna).getValue(
+                GlobalVariable.NumofColm, 13))
 
-'click button cari'
-WebUI.click(findTestObject('PencarianPenggunaAdmin/Karyawan/button_Cari'))
+        'send keys enter'
+        WebUI.sendKeys(findTestObject('PencarianPenggunaAdmin/Karyawan/Select_Status'), Keys.chord(Keys.ENTER))
 
-'check if view / reset OTP'
-if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('View')) {
-    'click button view'
-    WebUI.click(findTestObject('PencarianPenggunaAdmin/Karyawan/button_View'))
+        'click button cari'
+        WebUI.click(findTestObject('PencarianPenggunaAdmin/Karyawan/button_Cari'))
 
-    'get data view dari DB'
-    ArrayList<String> resultData = CustomKeywords.'connection.PencarianPengguna.getPencarianPengguna'(conneSign, findTestData(excelPathPencarianPengguna).getValue(
-            GlobalVariable.NumofColm, 11).toUpperCase())
+        'check if view / reset OTP'
+        if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('View')) {
+            'click button view'
+            WebUI.click(findTestObject('PencarianPenggunaAdmin/Karyawan/button_View'))
 
-    index = 0
+            'get data view dari DB'
+            ArrayList<String> resultData = CustomKeywords.'connection.PencarianPengguna.getPencarianPengguna'(conneSign, 
+                findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 9).toUpperCase())
 
-    'verify nama'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianPenggunaAdmin/View/input_Nama'), 
-                'value', FailureHandling.OPTIONAL), resultData[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama')
+            index = 0
 
-    'verify Email'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianPenggunaAdmin/View/input_Email'), 
-                'value', FailureHandling.OPTIONAL), resultData[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Email')
+            'verify nama'
+            checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianPenggunaAdmin/View/input_Nama'), 
+                        'value', FailureHandling.OPTIONAL), resultData[index++], false, FailureHandling.CONTINUE_ON_FAILURE), 
+                ' Nama')
 
-    'parse Date from yyyy-MM-dd > dd-MMM-yyyy'
-    sDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(resultData[index++], 'yyyy-MM-dd', 'dd-MMM-yyyy')
+            'verify Email'
+            checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianPenggunaAdmin/View/input_Email'), 
+                        'value', FailureHandling.OPTIONAL), resultData[index++], false, FailureHandling.CONTINUE_ON_FAILURE), 
+                ' Email')
 
-    'verify tanggal lahir'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianPenggunaAdmin/View/input_TanggalLahir'), 
-                'value', FailureHandling.OPTIONAL), sDate, false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Lahir')
+            'parse Date from yyyy-MM-dd > dd-MMM-yyyy'
+            sDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(resultData[index++], 'yyyy-MM-dd', 'dd-MMM-yyyy')
 
-    'verify Status AutoSign'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianPenggunaAdmin/View/input_StatusAutoSign'), 
-                'value', FailureHandling.OPTIONAL), resultData[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Status AutoSign')
+            'verify tanggal lahir'
+            checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianPenggunaAdmin/View/input_TanggalLahir'), 
+                        'value', FailureHandling.OPTIONAL), sDate, false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Lahir')
 
-    'verify Status'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianPenggunaAdmin/View/input_Status'), 
-                'value', FailureHandling.OPTIONAL), resultData[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Status')
+            'verify Status AutoSign'
+            checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianPenggunaAdmin/View/input_StatusAutoSign'), 
+                        'value', FailureHandling.OPTIONAL), resultData[index++], false, FailureHandling.CONTINUE_ON_FAILURE), 
+                ' Status AutoSign')
 
-    'click button kembali'
-    WebUI.click(findTestObject('PencarianPenggunaAdmin/View/button_Kembali'))
-} else if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Reset OTP')) {
-    'click button reset OTP'
-    WebUI.click(findTestObject('PencarianPenggunaAdmin/Karyawan/button_ResetOTP'))
+            'verify Status'
+            checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianPenggunaAdmin/View/input_Status'), 
+                        'value', FailureHandling.OPTIONAL), resultData[index++], false, FailureHandling.CONTINUE_ON_FAILURE), 
+                ' Status')
 
-    'click button Ya Kirim OTP'
-    WebUI.click(findTestObject('PencarianPenggunaAdmin/Karyawan/button_YaKirimOTP'))
+            'click button kembali'
+            WebUI.click(findTestObject('PencarianPenggunaAdmin/View/button_Kembali'))
+			
+			if (GlobalVariable.FlagFailed == 0) {
+				'write to excel success'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PencarianPengguna-Karyawan',
+					0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+			}
+        } else if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Reset OTP')) {
+            'click button reset OTP'
+            WebUI.click(findTestObject('PencarianPenggunaAdmin/Karyawan/button_ResetOTP'))
 
-    if (WebUI.verifyElementPresent(findTestObject('PencarianPenggunaAdmin/Karyawan/MessagePopUp'), GlobalVariable.TimeOut, 
-        FailureHandling.OPTIONAL)) {
-        'click button OK'
-        WebUI.click(findTestObject('PencarianPenggunaAdmin/Karyawan/button_OK'))
+            'click button Ya Kirim OTP'
+            WebUI.click(findTestObject('PencarianPenggunaAdmin/Karyawan/button_YaKirimOTP'))
 
-        'write to excel success'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PencarianPengguna-Karyawan', 
-            0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+            if (WebUI.verifyElementPresent(findTestObject('PencarianPenggunaAdmin/Karyawan/MessagePopUp'), GlobalVariable.TimeOut, 
+                FailureHandling.OPTIONAL)) {
+                'click button OK'
+                WebUI.click(findTestObject('PencarianPenggunaAdmin/Karyawan/button_OK'))
 
-        'get data reset request OTP dari DB'
-        String resultResetOTP = CustomKeywords.'connection.DataVerif.getResetOTP'(conneSign, findTestData(excelPathPencarianPengguna).getValue(
-                GlobalVariable.NumofColm, 11).toUpperCase())
+                'write to excel success'
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PencarianPengguna-Karyawan', 
+                    0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 
-        'verify OTP reset menjadi 0'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(resultResetOTP, '0', false, FailureHandling.CONTINUE_ON_FAILURE), ' OTP')
-    } else {
-        'write to excel status failed dan reason'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PencarianPengguna-Karyawan', GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, ((findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 2).replace(
-                '-', '') + ';') + GlobalVariable.ReasonFailedResend) + ' OTP')
+                'get data reset request OTP dari DB'
+                String resultResetOTP = CustomKeywords.'connection.DataVerif.getResetOTP'(conneSign, findTestData(excelPathPencarianPengguna).getValue(
+                        GlobalVariable.NumofColm, 9).toUpperCase())
+
+                'verify OTP reset menjadi 0'
+                checkVerifyEqualOrMatch(WebUI.verifyMatch(resultResetOTP, '0', false, FailureHandling.CONTINUE_ON_FAILURE), 
+                    ' OTP')
+            } else {
+                'write to excel status failed dan reason'
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PencarianPengguna-Karyawan', GlobalVariable.NumofColm, 
+                    GlobalVariable.StatusFailed, ((findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 
+                        2).replace('-', '') + ';') + GlobalVariable.ReasonFailedResend) + ' OTP')
+            }
+        }
     }
 }
 
-public checkPaging() {
+def checkPaging() {
     'click menu pencarian pengguna'
     WebUI.click(findTestObject('PencarianPenggunaAdmin/menu_PencarianPengguna'))
 
@@ -191,24 +212,25 @@ public checkPaging() {
                 'ng-reflect-page'), '1', false, FailureHandling.CONTINUE_ON_FAILURE))
 }
 
-public checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
-    if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
+def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
+    if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PencarianPengguna-Karyawan', GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 2) + 
-            ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
+            GlobalVariable.StatusFailed, ((findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 2) + 
+            ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + reason)
 
         GlobalVariable.FlagFailed = 1
     }
 }
 
 def checkVerifyPaging(Boolean isMatch) {
-	if (isMatch == false) {
-		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PencarianPengguna-Karyawan', GlobalVariable.NumofColm,
-			GlobalVariable.StatusFailed, (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 2) +
-			';') + GlobalVariable.ReasonFailedPaging)
+    if (isMatch == false) {
+        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PencarianPengguna-Karyawan', GlobalVariable.NumofColm, 
+            GlobalVariable.StatusFailed, (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 2) + 
+            ';') + GlobalVariable.ReasonFailedPaging)
 
-		GlobalVariable.FlagFailed = 1
-	}
+        GlobalVariable.FlagFailed = 1
+    }
 }
+

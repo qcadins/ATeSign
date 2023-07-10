@@ -143,8 +143,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     GlobalVariable.NumofColm, 23))
 
             'check if mandatory complete dan button simpan clickable'
-            if ((isMandatoryComplete == 0) && !(WebUI.verifyElementHasAttribute(findTestObject('Tenant/TenantBaru/button_Simpan'), 
-                'disabled', GlobalVariable.TimeOut, FailureHandling.OPTIONAL))) {
+            if (!(WebUI.verifyElementHasAttribute(findTestObject('Tenant/TenantBaru/button_Simpan'),'disabled', GlobalVariable.TimeOut, FailureHandling.OPTIONAL))) {
                 'click button simpan'
                 WebUI.click(findTestObject('Tenant/TenantBaru/button_Simpan'))
 
@@ -160,7 +159,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					'call function after add'
 					verifyAfterAddEdit()
                 }
-            } else if (isMandatoryComplete > 0) {
+            } else {
+				'click button Batal'
+				WebUI.click(findTestObject('Tenant/TenantBaru/button_Batal'))
+				
+				'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedMandatory'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Tenant', GlobalVariable.NumofColm,
+					GlobalVariable.StatusFailed, (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 2) +
+					';') + GlobalVariable.ReasonFailedSaveGagal)
+				
+				GlobalVariable.FlagFailed = 1
+				}
+			 
+				 if (isMandatoryComplete > 0) {
                 'click button Batal'
                 WebUI.click(findTestObject('Tenant/TenantBaru/button_Batal'))
 
@@ -168,7 +179,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Tenant', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 2) + 
                     ';') + GlobalVariable.ReasonFailedMandatory)
+				
+				GlobalVariable.FlagFailed = 1
             }
+			
         } else if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Service')) {
             'call function search'
             searchTenant()
@@ -436,7 +450,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         'check if store db'
-        if ((GlobalVariable.checkStoreDB == 'Yes') && (isMandatoryComplete == 0)) {
+        if ((GlobalVariable.checkStoreDB == 'Yes') && (isMandatoryComplete == 0) ) {
             'call test case tenant store db'
             WebUI.callTestCase(findTestCase('Tenant/TenantStoreDB'), [('excelPathTenant') : 'Tenant/Tenant'], FailureHandling.STOP_ON_FAILURE)
         }

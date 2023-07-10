@@ -201,48 +201,10 @@ def checkDDL(TestObject objectDDL, ArrayList<String> listDB) {
 
 public loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
     ArrayList<String> saldo = []
-
-    'open browser'
-    WebUI.openBrowser('')
-
-    'navigate to url esign'
-    WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 5))
-
-    'maximize window'
-    WebUI.maximizeWindow()
-
-    'set value userLogin'
-    GlobalVariable.userLogin = findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 9).toUpperCase()
-
-    'input email'
-    WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
-            9))
-
-    'input password'
-    WebUI.setText(findTestObject('Login/input_Password'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
-            10))
-
-    'click button login'
-    WebUI.click(findTestObject('Login/button_Login'), FailureHandling.STOP_ON_FAILURE)
-
-    'input perusahaan'
-    WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
-            11))
-
-    WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
-
-    'input peran'
-    WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
-            12))
-
-    WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
-
-    'click button pilih peran'
-    WebUI.click(findTestObject('Login/button_pilihPeran'), FailureHandling.STOP_ON_FAILURE)
-
-    'click menu saldo'
-    WebUI.click(findTestObject('isiSaldo/SaldoAdmin/menu_Saldo'))
-
+	
+	'call test case mengenai login admin'
+	WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathIsiSaldo, ('sheet') : 'isiSaldo'], FailureHandling.STOP_ON_FAILURE)
+	
     'click ddl bahasa'
     WebUI.click(findTestObject('isiSaldo/SaldoAdmin/button_bahasa'))
 
@@ -275,7 +237,7 @@ public loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
             break
         }
     }
-    
+	
     'input tipe saldo'
     WebUI.setText(findTestObject('isiSaldo/SaldoAdmin/input_TipeSaldo'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
             16))
@@ -283,12 +245,12 @@ public loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
     'enter untuk input tipe saldo'
     WebUI.sendKeys(findTestObject('isiSaldo/SaldoAdmin/input_TipeSaldo'), Keys.chord(Keys.ENTER))
 
-    'input tipe transaksi'
-    WebUI.setText(findTestObject('isiSaldo/SaldoAdmin/input_TipeTransaksi'), 'Topup ' + findTestData(excelPathIsiSaldo).getValue(
-            GlobalVariable.NumofColm, 16))
-
-    'enter untuk input tipe saldo'
-    WebUI.sendKeys(findTestObject('isiSaldo/SaldoAdmin/input_TipeTransaksi'), Keys.chord(Keys.ENTER))
+//    'input tipe transaksi'
+//    WebUI.setText(findTestObject('isiSaldo/SaldoAdmin/input_TipeTransaksi'), 'Topup ' + findTestData(excelPathIsiSaldo).getValue(
+//            GlobalVariable.NumofColm, 16))
+//
+//    'enter untuk input tipe saldo'
+//    WebUI.sendKeys(findTestObject('isiSaldo/SaldoAdmin/input_TipeTransaksi'), Keys.chord(Keys.ENTER))
 
     'click button cari'
     WebUI.click(findTestObject('isiSaldo/SaldoAdmin/button_Cari'))
@@ -311,7 +273,7 @@ public loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 
     'modify object balance'
     modifyObjectBalance = WebUI.modifyObjectProperty(findTestObject('isiSaldo/SaldoAdmin/modifyObject'), 'xpath', 'equals', 
-        ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
+        ('/html/body/app-root/app-full-layout/div/div[2]/ div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
         variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[10]/div', true)
 
     'get trx saldo'

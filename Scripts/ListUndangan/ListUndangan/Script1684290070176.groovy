@@ -6,6 +6,9 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
+'get data file path'
+GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
+
 'call test case login admin'
 WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathListUndangan, ('sheet') : 'ListUndangan'], FailureHandling.CONTINUE_ON_FAILURE)
 
@@ -159,7 +162,7 @@ def checkVerifyPaging(Boolean isMatch) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('ListUndangan', GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 2) + 
+            GlobalVariable.StatusFailed, (findTestData(excelPathListUndangan).getValue(GlobalVariable.NumofColm, 2) + 
             ';') + GlobalVariable.ReasonFailedPaging)
 
         GlobalVariable.FlagFailed = 1

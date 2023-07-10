@@ -218,6 +218,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('User Management', GlobalVariable.NumofColm,
 					GlobalVariable.StatusFailed, ((findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 2) +
 					';') + GlobalVariable.ReasonFailedNoneUI))
+				
+				GlobalVariable.FlagFailed = 1
 			}
         }
         

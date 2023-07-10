@@ -9,7 +9,7 @@ import java.sql.Connection as Connection
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get data masukan dari DB'
-ArrayList<String> result = CustomKeywords.'connection.DataVerif.getFeedbackStoreDB'(conneSign, GlobalVariable.userLogin)
+ArrayList<String> result = CustomKeywords.'connection.DataVerif.getFeedbackStoreDB'(conneSign, GlobalVariable.userLogin.toString().toUpperCase())
 
 'declare arraylist arraymatch'
 ArrayList<String> arrayMatch = []
@@ -18,12 +18,12 @@ ArrayList<String> arrayMatch = []
 arrayindex = 0
 
 'verify rating'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, 9).toUpperCase(), (result[
-        arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, 9), (result[
+        arrayindex++]), false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'verify comment'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, 10).toUpperCase(), (result[
-        arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, 10), (result[
+        arrayindex++]), false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'jika data db tidak sesuai dengan excel'
 if (arrayMatch.contains(false)) {

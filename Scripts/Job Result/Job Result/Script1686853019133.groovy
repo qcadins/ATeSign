@@ -68,7 +68,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'click button cari'
         WebUI.click(findTestObject('Job Result/button_Cari'))
 
-		checkErrorLog()
+		if (checkErrorLog() == true) {
+			break
+		}
 		
         'Jika value muncul'
         if (WebUI.verifyElementPresent(findTestObject('Job Result/lbl_value'), GlobalVariable.TimeOut)) {
@@ -116,16 +118,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Job Result', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 					((findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedNoneUI + ' pada View Request Param'))
 				}
-            } else {
-				'Jika tidak ada aksi yang dipilih, maka check flag failed'
-				if (GlobalVariable.FlagFailed == 0) {
-					'write to excel success'
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
-						1, GlobalVariable.StatusSuccess)
-				}
+            } 
+			
+			'Jika tidak ada aksi yang dipilih, maka check flag failed'
+			if (GlobalVariable.FlagFailed == 0) {
+				'write to excel success'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
+					1, GlobalVariable.StatusSuccess)
 			}
 				
-			WebUI.refresh()
+			    'click button set ulang'
+				WebUI.click(findTestObject('Job Result/button_Set Ulang'))
 			
         } else {
 			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedNoneUI'
