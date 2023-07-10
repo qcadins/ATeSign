@@ -72,7 +72,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					emailOrNIKHash = convertSHA256(emailOrNIKExcel)
                 } else {
 					'email'
-                    emailOrNIKHash = emailOrNIKExcel
+                    emailOrNIKHash = emailOrNIKExcel.toString().toUpperCase()
                 }
                 
 				'mengambil return vendor dari UI sekaligus check result'
@@ -147,7 +147,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					emailOrNIKHash = convertSHA256(emailOrNIKExcel)
                 } else {
 					'email'
-                    emailOrNIKHash = emailOrNIKExcel
+                    emailOrNIKHash = emailOrNIKExcel.toString().toUpperCase()
                 }
                 
 				'mengambil return vendor dari UI'

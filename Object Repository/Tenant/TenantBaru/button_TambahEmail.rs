@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[(text() = 'Tambah' or . = 'Tambah')]</value>
+         <value>//*[@class = 'btn btn-info']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -18,14 +18,22 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/button</value>
-      <webElementGuid>0a3349c2-64da-4bb2-9262-f3a781ea0d85</webElementGuid>
+      <webElementGuid>5665af8f-cf0b-4ec3-8335-64fc775311fd</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>text</name>
       <type>Main</type>
       <value>Tambah</value>
-      <webElementGuid>5e507c4a-c1c6-4c18-b4af-e08c8fbf3077</webElementGuid>
+      <webElementGuid>20157bc6-e1f6-401d-b4ce-e861c86e61ef</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>btn btn-info</value>
+      <webElementGuid>8ce3181e-5e01-476f-acb5-e3df9c9c9394</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

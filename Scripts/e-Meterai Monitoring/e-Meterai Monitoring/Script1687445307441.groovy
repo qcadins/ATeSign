@@ -11,6 +11,9 @@ import org.openqa.selenium.Keys as Keys
 'get dates'
 currentDate = LocalDate.now()
 
+'get data file path'
+GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
+
 firstDateOfMonth = currentDate.withDayOfMonth(1)
 
 'connect DB eSign'
@@ -183,6 +186,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                                             GlobalVariable.StatusWarning, ((((findTestData(excelPathemeteraiMonitoring).getValue(
                                                 GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedPerformance) + 
                                             ' pada retry stamping hingga ') + (i * 10)) + ' detik ')
+										
+										GlobalVariable.FlagFailed = 1
                                     }
                                 } else if ((progressStampingAfter[0]) == 'Failed') {
                                     'Jika retrynya failed, Tulis di excel sebagai failed dan error.'
