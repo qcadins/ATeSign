@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>button_TambahEmail</name>
+   <name>input_BatasSaldo1</name>
    <tag></tag>
-   <elementGuidId>4ce781f1-4df5-44c8-a6be-c971c81f5ee7</elementGuidId>
+   <elementGuidId>4bba2c4e-0763-4e31-bf31-cf83a20e1faa</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[(text() = 'Add' or . = 'Add')]</value>
+         <value>//*[@id=&quot;OTP&quot;]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>text</name>
+      <name>xpath</name>
       <type>Main</type>
-      <value>Add</value>
-      <webElementGuid>0a53609f-64a4-405b-9a51-edb035133b9c</webElementGuid>
+      <value>//*[@id=&quot;OTP&quot;]</value>
+      <webElementGuid>7abb476e-82c3-4d81-9baf-c257f5228458</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

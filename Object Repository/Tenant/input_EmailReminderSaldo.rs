@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>button_TambahEmail</name>
+   <name>input_EmailReminderSaldo</name>
    <tag></tag>
-   <elementGuidId>4ce781f1-4df5-44c8-a6be-c971c81f5ee7</elementGuidId>
+   <elementGuidId>f7350f54-0ee5-4cf9-bd15-adcb743d88ec</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[(text() = 'Add' or . = 'Add')]</value>
+         <value>//*[@class = 'card-content']/div/form/div[24]/div/input</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>text</name>
+      <name>xpath</name>
       <type>Main</type>
-      <value>Add</value>
-      <webElementGuid>0a53609f-64a4-405b-9a51-edb035133b9c</webElementGuid>
+      <value>//*[@class = 'card-content']/div/form/div[24]/div/input</value>
+      <webElementGuid>adc43ab8-7452-45d2-bf38-9a69e3cdb61f</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>button_TambahEmail</name>
+   <name>button_Cancel</name>
    <tag></tag>
-   <elementGuidId>4ce781f1-4df5-44c8-a6be-c971c81f5ee7</elementGuidId>
+   <elementGuidId>c4831752-7e46-48cf-bcdd-81c275decb61</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[(text() = 'Add' or . = 'Add')]</value>
+         <value>//*[@class = 'btn btn-light mr-2 ng-star-inserted']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>text</name>
+      <name>class</name>
       <type>Main</type>
-      <value>Add</value>
-      <webElementGuid>0a53609f-64a4-405b-9a51-edb035133b9c</webElementGuid>
+      <value>btn btn-light mr-2 ng-star-inserted</value>
+      <webElementGuid>1c8af439-f8b1-4cfb-af14-b93d611a0ec2</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

@@ -42,9 +42,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
         LockSignBox = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 19).split(semicolon, splitIndex)
 
+		if (GlobalVariable.NumofColm == 2) {
+			'call function input cancel'
+			inputCancel()
+		}
+		
         'Klik tombol pengaturan dokumen'
         if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('New')) {
-            WebUI.click(findTestObject('TandaTanganDokumen/btn_PengaturanDokumen'))
+            'click menu pengaturan dokumen'
+			WebUI.click(findTestObject('TandaTanganDokumen/btn_PengaturanDokumen'))
 
             'Klik tombol tambah pengaturan dokumen'
             WebUI.click(findTestObject('TandaTanganDokumen/btn_Add'))
@@ -1064,4 +1070,67 @@ def verifyAfterAddorEdit(def TipeTTD) {
 	'verify after add / edit Tipe Pembayaran Dokumen pengaturan dokumen'
 	checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/TandaTanganDokumen/label_TipePembayaranTTD')), findTestData(excelPathPengaturanDokumen).getValue(
 			GlobalVariable.NumofColm, 12), false, FailureHandling.CONTINUE_ON_FAILURE), ' Tipe Pembayaran Dokumen pengaturan dokumen')
+}
+
+def inputCancel() {
+	'click menu pengaturan dokumen'
+	WebUI.click(findTestObject('TandaTanganDokumen/btn_PengaturanDokumen'))
+
+	'Klik tombol tambah pengaturan dokumen'
+	WebUI.click(findTestObject('TandaTanganDokumen/btn_Add'))
+
+	'Input text documentTemplateCode'
+	WebUI.setText(findTestObject('TandaTanganDokumen/input_documentTemplateCode'), findTestData(excelPathPengaturanDokumen).getValue(
+			GlobalVariable.NumofColm, 9))
+	
+	'Input text documentTemplateName'
+	WebUI.setText(findTestObject('TandaTanganDokumen/input_documentTemplateName'), findTestData(excelPathPengaturanDokumen).getValue(
+			GlobalVariable.NumofColm, 10))
+	
+	'Input text documentTemplateDescription'
+	WebUI.setText(findTestObject('TandaTanganDokumen/input_documentTemplateDescription'), findTestData(excelPathPengaturanDokumen).getValue(
+			GlobalVariable.NumofColm, 11))
+	
+	'Input value tipe pembayaran'
+	WebUI.setText(findTestObject('TandaTanganDokumen/input_tipePembayaran'), findTestData(excelPathPengaturanDokumen).getValue(
+			GlobalVariable.NumofColm, 12))
+	
+	'Input enter'
+	WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_tipePembayaran'), Keys.chord(Keys.ENTER))
+	
+	'Input value status'
+	WebUI.setText(findTestObject('TandaTanganDokumen/input_Status'), findTestData(excelPathPengaturanDokumen).getValue(
+			GlobalVariable.NumofColm, 14))
+	
+	'Input enter'
+	WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
+	
+	'Klik button cancel'
+	WebUI.click(findTestObject('TandaTanganDokumen/button_Cancel'))
+	
+	'check if sudah tercancel dan pindah halaman utama'
+	if(WebUI.verifyElementPresent(findTestObject('TandaTanganDokumen/input_tipePembayaran'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		checkVerifyEqualorMatch(false, ' FAILED TO CANCEL')
+	}
+	
+	'Klik tombol tambah pengaturan dokumen'
+	WebUI.click(findTestObject('TandaTanganDokumen/btn_Add'))
+	
+	'verify field kode template dokumen kosong'
+	checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('TandaTanganDokumen/input_documentTemplateCode'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' Field Kode Template Dokumen tidak kosong')
+	
+	'verify field Nama template dokumen kosong'
+	checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('TandaTanganDokumen/input_documentTemplateName'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' Field Nama Template Dokumen tidak kosong')
+	
+	'verify field Deskripsi template dokumen kosong'
+	checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('TandaTanganDokumen/input_documentTemplateDescription'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' Field Deskripsi Template Dokumen tidak kosong')
+	
+	'verify field tipe pembayaran kosong'
+	checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('TandaTanganDokumen/input_tipePembayaran'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' Field Tipe Pembayaran tidak kosong')
+	
+	'verify field status kosong'
+	checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('TandaTanganDokumen/input_Status'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' Field status tidak kosong')
+	
+	'Klik button cancel'
+	WebUI.click(findTestObject('TandaTanganDokumen/button_Cancel'))
 }

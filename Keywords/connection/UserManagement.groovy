@@ -101,4 +101,19 @@ public class UserManagement {
 		}
 		listdata
 	}
+	
+	@Keyword
+	convertRoleCodetoName(Connection conn, String code) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT ROLE_NAME FROM am_msrole WHERE role_code = '"+ code +"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
 }
