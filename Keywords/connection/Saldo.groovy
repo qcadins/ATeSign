@@ -8,14 +8,14 @@ import com.kms.katalon.core.annotation.Keyword
 import internal.GlobalVariable
 
 public class Saldo {
-	
+
 	String data
 	int columnCount, i
 	Statement stm
 	ResultSetMetaData metadata
 	ResultSet resultSet
 	ArrayList<String> listdata = []
-	
+
 	@Keyword
 	getDDLTenant(Connection conn) {
 		stm = conn.createStatement()
@@ -87,7 +87,7 @@ public class Saldo {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getIsiSaldoTrx(Connection conn, String refno) {
 		stm = conn.createStatement()
@@ -106,7 +106,7 @@ public class Saldo {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getTenantTidakIsiSaldo(Connection conn, String tenantname, String refno) {
 		stm = conn.createStatement()
