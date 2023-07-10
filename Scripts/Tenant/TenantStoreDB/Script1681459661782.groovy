@@ -46,7 +46,7 @@ if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 7).equalsIg
             (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify Email reminder'
-    arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 21).toUpperCase(), 
+    arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 21).toUpperCase().replace(';',','), 
             (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
     ArrayList<String> arrayServices = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 18).split(';', -1)
@@ -62,7 +62,7 @@ if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 7).equalsIg
 
         if (services.equalsIgnoreCase(arrayServices[indexExcel])) {
             'verify services'
-            arrayMatch.add(WebUI.verifyMatch(services, (arrayServices[indexExcel]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+            arrayMatch.add(WebUI.verifyMatch(services.toUpperCase(), (arrayServices[indexExcel]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
             'verify service batas saldo'
             arrayMatch.add(WebUI.verifyMatch(resultServices[indexServices++], arrayServicesBatasSaldo[indexExcel], false, 

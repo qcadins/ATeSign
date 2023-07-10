@@ -13,7 +13,7 @@ if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6).
 	
     'ambil data role dari db'
     ArrayList<String> resultDB = CustomKeywords.'connection.UserManagement.getUserManagementNewStoreDB'(conneSign, findTestData(
-            excelPathUserManagement).getValue(GlobalVariable.NumofColm, 17), GlobalVariable.Tenant)
+            excelPathUserManagement).getValue(GlobalVariable.NumofColm, 17).toUpperCase(), GlobalVariable.Tenant)
 
     startTakeExcel = 8
 

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>Button_Baru</name>
+   <name>button_Baru</name>
    <tag></tag>
-   <elementGuidId>23ac6774-fce3-4566-8d27-4eb4333d97d2</elementGuidId>
+   <elementGuidId>93bdf102-de09-40c8-af72-89b991b3820e</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@ng-reflect-ng-class = 'btn btn-primary']</value>
+         <value>//*[@class = 'msx-action btn btn-primary ng-star-inserted']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>ng-reflect-ng-class</name>
+      <name>class</name>
       <type>Main</type>
-      <value>btn btn-primary</value>
-      <webElementGuid>58f752e8-6c84-4bbd-a81b-c44f4d6c2c9a</webElementGuid>
+      <value>msx-action btn btn-primary ng-star-inserted</value>
+      <webElementGuid>4e0ab66d-9a6e-47cb-850d-131eecd59677</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
