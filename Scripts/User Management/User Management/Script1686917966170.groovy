@@ -613,6 +613,11 @@ def inputCancel() {
 	'Klik button batal'
 	WebUI.click(findTestObject('User Management/button_Batal'))
 
+	'check if sudah cancel dan pindah halaman'
+	if(WebUI.verifyElementPresent(findTestObject('Object Repository/User Management/input_CabangNew'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		checkVerifyEqualOrMatch(false, 'FAILED TO CANCEL')
+	}
+	
 	'Klik button baru'
 	WebUI.click(findTestObject('User Management/btn_Baru'))
 	

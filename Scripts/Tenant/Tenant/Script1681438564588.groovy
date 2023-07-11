@@ -38,7 +38,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			checkPaging(conneSign)
 			
 			'call function cancel'
-			verifyCancel()
+			inputCancel()
 		}
 		
         'check if action new/services'
@@ -598,7 +598,7 @@ def verifyAfterAddEdit() {
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Tenant/label_KodeTenant')), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 13), false, FailureHandling.CONTINUE_ON_FAILURE), ' Kode Tenant after Add or Edit')
 }
 
-def verifyCancel() {
+def inputCancel() {
 	
 	'click button Baru'
 	WebUI.click(findTestObject('Tenant/Button_Baru'))
