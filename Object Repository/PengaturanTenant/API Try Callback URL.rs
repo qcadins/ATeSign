@@ -43,7 +43,7 @@
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>POST</restRequestMethod>
-   <restUrl>${base_url}</restUrl>
+   <restUrl>bb45920e-a479-47e7-a138-4bde27802b4e.mock.pstmn.io/activationCallbackSuccess</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>

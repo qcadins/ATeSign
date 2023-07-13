@@ -9,13 +9,6 @@ import internal.GlobalVariable as GlobalVariable
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
-'call test case login admin'
-WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathPencarianPengguna, ('sheet') : 'PencarianPengguna-Pelanggan'], 
-    FailureHandling.CONTINUE_ON_FAILURE)
-
-'call function check paging'
-checkPaging()
-
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
@@ -26,7 +19,20 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
-        if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Email')) {
+        GlobalVariable.FlagFailed = 0
+		
+		String value
+		
+		if (GlobalVariable.NumofColm == 2) {
+			'call test case login admin'
+			WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathPencarianPengguna, ('sheet') : 'PencarianPengguna-Pelanggan'],
+				FailureHandling.CONTINUE_ON_FAILURE)
+			
+			'call function check paging'
+			checkPaging()
+		}
+
+		if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Email')) {
             'set text search box dengan email'
             WebUI.setText(findTestObject('PencarianPenggunaAdmin/Pengguna/input_SearchBox'), findTestData(excelPathPencarianPengguna).getValue(
                     GlobalVariable.NumofColm, 11))
@@ -99,12 +105,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PencarianPengguna-Pelanggan', 
                     0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 
+				if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm,7) == 'Email') {
+					value = findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 11).toUpperCase()
+				} else if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm,7) == 'Phone') {
+					value = convertSHA256(findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 10))
+				} else if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm,7) == 'Id no') {
+					value = convertSHA256(findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, 9))
+				}
+
                 'get data reset request OTP dari DB'
-                String resultResetOTP = CustomKeywords.'connection.DataVerif.getResetOTP'(conneSign, findTestData(excelPathPencarianPengguna).getValue(
-                        GlobalVariable.NumofColm, 11).toUpperCase())
+                int resultResetOTP = CustomKeywords.'connection.DataVerif.getResetOTP'(conneSign, value)
 
                 'verify OTP reset menjadi 0'
-                checkVerifyEqualOrMatch(WebUI.verifyMatch(resultResetOTP, '0', false, FailureHandling.CONTINUE_ON_FAILURE), 
+                checkVerifyEqualOrMatch(WebUI.verifyMatch(resultResetOTP.toString(), '0', false, FailureHandling.CONTINUE_ON_FAILURE), 
                     ' OTP tidak Kereset')
             } else {
                 'write to excel status failed dan reason'
@@ -192,4 +205,6 @@ def checkVerifyPaging(Boolean isMatch) {
         GlobalVariable.FlagFailed = 1
     }
 }
-
+def convertSHA256(String input) {
+	return CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(input)
+}

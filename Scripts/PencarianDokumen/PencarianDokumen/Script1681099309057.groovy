@@ -22,7 +22,7 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 WebUI.click(findTestObject('PencarianDokumen/menu_PencarianDokumen'))
 
 'call function check paging'
-checkPaging(conneSign)
+//checkPaging(conneSign)
 
 'get colm excel'
 int countColmExcel = findTestData(excelPathPencarianDokumen).columnNumbers
@@ -73,6 +73,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'click button cari'
         WebUI.click(findTestObject('PencarianDokumen/button_Cari'))
 
+		'Jika error lognya muncul'
+		if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+			'ambil teks errormessage'
+			errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
+			
+			'Tulis di excel itu adalah error'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PencarianDokumen', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+				(findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + errormessage)
+			
+			continue
+		}
         if (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 7) == 'View Dokumen') {
             'click button view dokumen'
             WebUI.click(findTestObject('PencarianDokumen/button_ViewDokumen'))

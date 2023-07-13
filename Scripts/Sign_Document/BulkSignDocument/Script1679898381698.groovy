@@ -15,11 +15,15 @@ GlobalVariable.Response = 'API Bulk Sign Document'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_Excel_Path).columnNumbers; (GlobalVariable.NumofColm)++) {
+    GlobalVariable.FlagFailed = 0
+
     'Split mengenai documentids'
     documentIds = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 12).split(';', -1)
 
     'Pembuatan pengisian variable di sendRequest per jumlah document.'
-    ArrayList<String> list, listDocument
+    ArrayList list = []
+
+    ArrayList listDocument = []
 
     (listDocument[0]) = ''
 
@@ -57,59 +61,75 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
                 'Get signLink'
                 signLink = WS.getElementPropertyValue(respon_bulksign, 'signLink')
 
-                'Open signLink buat check apakah dokumen yang ada disana dengan documentId excel sama'
-                WebUI.openBrowser(signLink)
+                vendorCode = WS.getElementPropertyValue(respon_bulksign, 'vendorCode')
 
-                'looping berdasarkan berapa banyak dokumen yang ada.'
-                for (int j = 0; j <= documentIds.size(); j++) {
-                    if (j == 0) {
+				'Responsenya diwrite di excel'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Bulk Sign Document', 5, GlobalVariable.NumofColm -
+					1, vendorCode)
+
+                if (signLink.toString() != 'null') {
+                    'Open signLink buat check apakah dokumen yang ada disana dengan documentId excel sama'
+                    WebUI.openBrowser(signLink)
+
+                    'looping berdasarkan berapa banyak dokumen yang ada.'
+                    for (int j = 0; j <= documentIds.size(); j++) {
+                        if (j == 0) {
+                            'fungsi select untuk yang mengarah ke element document pertama'
+                            select = new Select(DriverFactory.webDriver.findElement(By.xpath('//div[@id=\'pdf-main-container\']/div/ul/li')))
+                        }
+                        
                         'fungsi select untuk yang mengarah ke element document pertama'
-                        select = new Select(DriverFactory.webDriver.findElement(By.xpath('//div[@id=\'pdf-main-container\']/div/ul/li')))
-                    }
-                    
-                    'fungsi select untuk yang mengarah ke element document pertama'
-                    select = new Select(DriverFactory.webDriver.findElement(By.xpath(('//[@id=\'pdf-main-container\']/div/ul/li[' + 
-                            (j + 1)) + ']')))
+                        select = new Select(DriverFactory.webDriver.findElement(By.xpath(('//[@id=\'pdf-main-container\']/div/ul/li[' + 
+                                (j + 1)) + ']')))
 
-                    'ambil text yang diselect oleh dropdown list tersebut'
-                    optionLabel = WebUI.getAttribute(select, 'label')
+                        'ambil text yang diselect oleh dropdown list tersebut'
+                        optionLabel = WebUI.getAttribute(select, 'label')
 
-                    if (optionLabel.contains(documentIds[i]) == true) {
-                        //FE Belum done
-                        WebUI.closeBrowser()
+                        if (optionLabel.contains(documentIds[i]) == true) {
+                            //FE Belum done
+                            WebUI.closeBrowser()
 
-                        'Get vendorCode'
-                        GlobalVariable.Response = WS.getElementPropertyValue(respon_bulksign, 'vendorCode')
+                            'Get vendorCode'
+                            GlobalVariable.Response = WS.getElementPropertyValue(respon_bulksign, 'vendorCode')
 
-                        'Get documents'
-                        documents = WS.getElementPropertyValue(respon_bulksign, 'documents')
+                            'Get documents'
+                            documents = WS.getElementPropertyValue(respon_bulksign, 'documents')
 
-                        if (documents == null) {
-                            'Memanggil testCase mengenai Bulk_Sign_DocumentStoreDb'
-                            WebUI.callTestCase(findTestCase('Sign_Document/SignDocumentStoreDb'), [('API_Excel_Path') : 'Registrasi/BulkSignDocument'], 
-                                FailureHandling.CONTINUE_ON_FAILURE)
+                            if (documents == null) {
+                                'Memanggil testCase mengenai Bulk_Sign_DocumentStoreDb'
+                                WebUI.callTestCase(findTestCase('Sign_Document/SignDocumentStoreDb'), [('API_Excel_Path') : 'Registrasi/BulkSignDocument'], 
+                                    FailureHandling.CONTINUE_ON_FAILURE)
 
-                            'write to excel success'
-                            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Bulk Sign Document', 
-                                0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+                                if (GlobalVariable.FlagFailed == 0) {
+                                    'write to excel success'
+                                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 
+                                        'API Bulk Sign Document', 0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+                                }
+                            } else {
+                                'Get documentId yang bermasalah'
+                                documentId = WS.getElementPropertyValue(respon_bulksign, 'documents.documentId')
+
+                                'Get notif / message'
+                                notif = WS.getElementPropertyValue(respon_bulksign, 'documents.notif')
+
+                                'write to excel status failed dan reason'
+                                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Bulk Sign Document', 
+                                    GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (((findTestData(API_Excel_Path).getValue(
+                                        GlobalVariable.NumofColm, 2).replace('-', '') + ';') + notif) + ' : ') + documentId)
+                            }
                         } else {
-                            'Get documentId yang bermasalah'
-                            documentId = WS.getElementPropertyValue(respon_bulksign, 'documents.documentId')
-
-                            'Get notif / message'
-                            notif = WS.getElementPropertyValue(respon_bulksign, 'documents.notif')
-
                             'write to excel status failed dan reason'
                             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Bulk Sign Document', 
-                                GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (((findTestData(API_Excel_Path).getValue(
-                                    GlobalVariable.NumofColm, 2).replace('-', '') + ';') + notif) + ' : ') + documentId)
+                                GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(
+                                    GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
                         }
-                    } else {
-                        'write to excel status failed dan reason'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Bulk Sign Document', 
-                            GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(
-                                GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
                     }
+                }
+                
+                if (GlobalVariable.FlagFailed == 0) {
+                    'write to excel success'
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Bulk Sign Document', 
+                        0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
                 }
             } else {
                 messageFailed = WS.getElementPropertyValue(respon_bulksign, 'status.message', FailureHandling.OPTIONAL).toString()

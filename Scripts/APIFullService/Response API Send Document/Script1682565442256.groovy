@@ -509,7 +509,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 'Fungsi storedb'
 
 def PDFtoBase64(String fileName) {
-   return CustomKeywords.'customizekeyword.ConvertFile.base64File'(fileName)
+   //return CustomKeywords.'customizekeyword.ConvertFile.base64File'(fileName)
+   return fileName
 }
 
 def responseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, String enter) {

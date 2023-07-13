@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "D066C88338FEAA87B14C1DBA9CA65BFB",
+  "keywordFileContentHash": "8D6F92AEC0CDB52F173E9E3974805240",
   "keywordClasses": [
     {
       "name": "connection.DataVerif",
@@ -85,7 +85,7 @@
               }
             },
             {
-              "name": "email",
+              "name": "value",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

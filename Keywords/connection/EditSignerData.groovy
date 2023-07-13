@@ -15,7 +15,7 @@ public class EditSignerData {
 	ResultSetMetaData metadata
 	ResultSet resultSet
 	ArrayList<String> listdata = []
-	String emailWhere
+	String valueWhere
 
 	@Keyword
 	countEditSignerDataBasedOnEmail(Connection conn, String email, String tenantCode) {
@@ -33,16 +33,16 @@ public class EditSignerData {
 	}
 
 	@Keyword
-	getBeforeEditDataEditSignerData(Connection conn, String email, String tenantCode, String vendorName) {
-		if (email.length() == countLengthforSHA256) {
-			emailWhere = "amm.hashed_id_no = '" + email + "'"
+	getBeforeEditDataEditSignerData(Connection conn, String value, String tenantCode, String vendorName) {
+		if (value.length() == countLengthforSHA256) {
+			valueWhere = "amm.hashed_id_no = '" + value + "'"
 		} else {
-			emailWhere = "amm.login_id = '" + email + "'"
+			valueWhere = "amm.login_id = '" + value + "'"
 		}
 
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select amm.full_name, amm.login_id, amm.hashed_phone, amm.hashed_id_no, aupd.date_of_birth from ms_useroftenant muot join am_msuser amm on muot.id_ms_user = amm.id_ms_user join ms_vendor_registered_user msvr on amm.id_ms_user = msvr.id_ms_user join ms_vendor msv on msvr.id_ms_vendor = msv.id_ms_vendor join ms_tenant mst on muot.id_ms_tenant = mst.id_ms_tenant join am_user_personal_data aupd on amm.id_ms_user = aupd.id_ms_user where " + emailWhere + " and msv.is_active = '1' and msv.is_operating = '1' and mst.tenant_code = '" + tenantCode + "' and msv.vendor_name = '" + vendorName + "'")
+		resultSet = stm.executeQuery("select amm.full_name, amm.login_id, amm.hashed_phone, amm.hashed_id_no, aupd.date_of_birth from ms_useroftenant muot join am_msuser amm on muot.id_ms_user = amm.id_ms_user join ms_vendor_registered_user msvr on amm.id_ms_user = msvr.id_ms_user join ms_vendor msv on msvr.id_ms_vendor = msv.id_ms_vendor join ms_tenant mst on muot.id_ms_tenant = mst.id_ms_tenant join am_user_personal_data aupd on amm.id_ms_user = aupd.id_ms_user where " + valueWhere + " and msv.is_active = '1' and msv.is_operating = '1' and mst.tenant_code = '" + tenantCode + "' and msv.vendor_name = '" + vendorName + "'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -57,16 +57,16 @@ public class EditSignerData {
 	}
 
 	@Keyword
-	getEditSignerData(Connection conn, String email, String tenantCode) {
-		if (email.length() == countLengthforSHA256) {
-			emailWhere = "amm.hashed_id_no = '" + email + "'"
+	getEditSignerData(Connection conn, String value, String tenantCode) {
+		if (value.length() == countLengthforSHA256) {
+			valueWhere = "amm.hashed_id_no = '" + value + "'"
 		} else {
-			emailWhere = "amm.login_id = '" + email + "'"
+			valueWhere = "amm.login_id = '" + value + "'"
 		}
 
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select msv.vendor_name, amm.login_id, amm.full_name, case when msvr.is_active = '1' then 'Sudah Aktivasi' else 'Belum Aktivasi' end from ms_useroftenant muot join am_msuser amm on muot.id_ms_user = amm.id_ms_user join ms_vendor_registered_user msvr on amm.id_ms_user = msvr.id_ms_user join ms_vendor msv on msvr.id_ms_vendor = msv.id_ms_vendor join ms_tenant mst on muot.id_ms_tenant = mst.id_ms_tenant join am_user_personal_data aupd on amm.id_ms_user = aupd.id_ms_user where " + emailWhere + " and msv.is_active = '1' and msv.is_operating = '1' and mst.tenant_code = '" + tenantCode + "'")
+		resultSet = stm.executeQuery("select msv.vendor_name, amm.login_id, amm.full_name, case when msvr.is_active = '1' then 'Sudah Aktivasi' else 'Belum Aktivasi' end from ms_useroftenant muot join am_msuser amm on muot.id_ms_user = amm.id_ms_user join ms_vendor_registered_user msvr on amm.id_ms_user = msvr.id_ms_user join ms_vendor msv on msvr.id_ms_vendor = msv.id_ms_vendor join ms_tenant mst on muot.id_ms_tenant = mst.id_ms_tenant join am_user_personal_data aupd on amm.id_ms_user = aupd.id_ms_user where " + valueWhere + " and msv.is_active = '1' and msv.is_operating = '1' and mst.tenant_code = '" + tenantCode + "'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -81,16 +81,16 @@ public class EditSignerData {
 	}
 
 	@Keyword
-	getEditDataAndEditActivationEditSignerData(Connection conn, String email, String tenantCode) {
+	getEditDataAndEditActivationEditSignerData(Connection conn, String value, String tenantCode) {
 		if (email.length() == countLengthforSHA256) {
-			emailWhere = "amm.hashed_id_no = '" + email + "'"
+			valueWhere = "amm.hashed_id_no = '" + value + "'"
 		} else {
-			emailWhere = "amm.login_id = '" + email + "'"
+			valueWhere = "amm.login_id = '" + value + "'"
 		}
 
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select amm.login_id, msv.vendor_name from ms_useroftenant muot join am_msuser amm on muot.id_ms_user = amm.id_ms_user join ms_vendor_registered_user msvr on amm.id_ms_user = msvr.id_ms_user join ms_vendor msv on msvr.id_ms_vendor = msv.id_ms_vendor join ms_tenant mst on muot.id_ms_tenant = mst.id_ms_tenant join am_user_personal_data aupd on amm.id_ms_user = aupd.id_ms_user where " + emailWhere + " and msv.is_active = '1' and msv.is_operating = '1' and mst.tenant_code = '" + tenantCode + "'")
+		resultSet = stm.executeQuery("select amm.login_id, msv.vendor_name from ms_useroftenant muot join am_msuser amm on muot.id_ms_user = amm.id_ms_user join ms_vendor_registered_user msvr on amm.id_ms_user = msvr.id_ms_user join ms_vendor msv on msvr.id_ms_vendor = msv.id_ms_vendor join ms_tenant mst on muot.id_ms_tenant = mst.id_ms_tenant join am_user_personal_data aupd on amm.id_ms_user = aupd.id_ms_user where " + valueWhere + " and msv.is_active = '1' and msv.is_operating = '1' and mst.tenant_code = '" + tenantCode + "'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -105,16 +105,16 @@ public class EditSignerData {
 	}
 
 	@Keyword
-	getStatusActivationEditSignerData(Connection conn, String email, String tenantCode, String vendorName) {
+	getStatusActivationEditSignerData(Connection conn, String value, String tenantCode, String vendorName) {
 		if (email.length() == countLengthforSHA256) {
-			emailWhere = "amm.hashed_id_no = '" + email + "'"
+			valueWhere = "amm.hashed_id_no = '" + value + "'"
 		} else {
-			emailWhere = "amm.login_id = '" + email + "'"
+			valueWhere = "amm.login_id = '" + value + "'"
 		}
 
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select case when msvr.is_active = '1' then 'Sudah Aktivasi' else 'Belum Aktivasi' end from ms_useroftenant muot join am_msuser amm on muot.id_ms_user = amm.id_ms_user join ms_vendor_registered_user msvr on amm.id_ms_user = msvr.id_ms_user join ms_vendor msv on msvr.id_ms_vendor = msv.id_ms_vendor join ms_tenant mst on muot.id_ms_tenant = mst.id_ms_tenant join am_user_personal_data aupd on amm.id_ms_user = aupd.id_ms_user where "+emailWhere+" and msv.is_active = '1' and msv.is_operating = '1' and mst.tenant_code = '"+tenantCode+"' and msv.vendor_name = '"+vendorName+"'")
+		resultSet = stm.executeQuery("select case when msvr.is_active = '1' then 'Sudah Aktivasi' else 'Belum Aktivasi' end from ms_useroftenant muot join am_msuser amm on muot.id_ms_user = amm.id_ms_user join ms_vendor_registered_user msvr on amm.id_ms_user = msvr.id_ms_user join ms_vendor msv on msvr.id_ms_vendor = msv.id_ms_vendor join ms_tenant mst on muot.id_ms_tenant = mst.id_ms_tenant join am_user_personal_data aupd on amm.id_ms_user = aupd.id_ms_user where " + valueWhere + " and msv.is_active = '1' and msv.is_operating = '1' and mst.tenant_code = '"+tenantCode+"' and msv.vendor_name = '"+vendorName+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

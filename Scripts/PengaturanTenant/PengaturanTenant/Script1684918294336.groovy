@@ -1,4 +1,5 @@
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
+
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
@@ -6,6 +7,9 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 import java.sql.Connection
+
+'get data file path'
+GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
 'get current date'
 currentDate = new Date().format('yyyy-MM-dd')
@@ -21,7 +25,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
     if (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
-        'declare result Db setelah edit, result Db untuk sebelum edit, arraylist untuk balance, declare array split dari result di db, array tipe saldo sebelumnya, array saldo dari tipe saldo sebelumnya, dan arrayMatch'
+		 GlobalVariable.FlagFailed = 0
+		 
+		 if (GlobalVariable.NumofColm == 2) {
+			'Call test Case untuk login sebagai admin wom admin client'
+			WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFEPengaturanTenant, ('sheet') : sheet],
+				FailureHandling.STOP_ON_FAILURE)
+        }
+
+		'declare result Db setelah edit, result Db untuk sebelum edit, arraylist untuk balance, declare array split dari result di db, array tipe saldo sebelumnya, array saldo dari tipe saldo sebelumnya, dan arrayMatch'
         ArrayList resultDbNew = [], resultDbPrevious = [], balance = [], arrSplitResultDb = [], arrTipeSaldoBefore = [], arrSaldoTipeSaldoBefore = [], arrayMatch = []
 
         'declare variable inisialisasi for'
@@ -33,10 +45,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         'declare variable string'
         String activationCallBackUrl, descriptionBalanceType
 
-        'Call test Case untuk login sebagai admin wom admin client'
-        WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFEPengaturanTenant, ('sheet') : sheet], 
-            FailureHandling.STOP_ON_FAILURE)
-
+		WebUI.refresh()
+		
         'Klik menu pengaturan tenant'
         WebUI.click(findTestObject('Object Repository/PengaturanTenant/menu_PengaturanTenant'))
 
@@ -62,7 +72,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         countEmailBefore = (resultDbPrevious[arrayIndex++]).split(',', -1)
 
         'looping untuk check email'
-        for (index = 20; index < (20 + countEmailBefore.size()); index++) {
+        for (index = 23; index < (23 + countEmailBefore.size()); index++) {
             'modify object untuk input email'
             modifyObjectInputEmail = WebUI.modifyObjectProperty(findTestObject('Object Repository/PengaturanTenant/input_PenerimaEmailReminderSaldo'), 
                 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/div[' + 
@@ -76,8 +86,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			
 			'verifikasi email'
             checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getAttribute(modifyObjectInputEmail, 'ng-reflect-model'), countEmailBefore[
-            (index - 20)], false, FailureHandling.OPTIONAL), ((' dengan alasan tidak cocok antara ' + WebUI.getAttribute(
-            modifyObjectInputEmail, 'ng-reflect-model')) + ' dan ') + (countEmailBefore[(index - 20)]))
+            (index - 23)], false, FailureHandling.OPTIONAL), ((' dengan alasan tidak cocok antara ' + WebUI.getAttribute(
+            modifyObjectInputEmail, 'ng-reflect-model')) + ' dan ') + (countEmailBefore[(index - 23)]))
         }
         
         'verifikasi label ref number'
@@ -114,6 +124,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             arrSaldoTipeSaldoBefore.add((arrSplitResultDb[i])[1])
         }
         
+		WebUI.delay(5)
         'loop berdasarkan tipe saldo'
         for (i = 0; i < arrTipeSaldoBefore.size(); i++) {
             'modify object mencari object berdasarkan id nya tipe saldo tersebut'
@@ -123,7 +134,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'Mengambil deskripsi dari tipe saldo tersebut'
             descriptionBalanceType = CustomKeywords.'connection.PengaturanTenant.getDescriptionBalanceType'(conneSign, arrTipeSaldoBefore[
                 i])
-
+			
             'Jika masih tidak ketemu textnya'
             if (WebUI.getText(modifyObjectTipeBatasSaldo) == null) {
                 'Write excel tidak ketemu dengan tipe saldo tersebut'
@@ -203,7 +214,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         arrayEmailInput = findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 12).split(',', -1)
 
         'looping untuk hapus email reminder yang tidak ada di excel'
-        for (index = 20; index <= (20 + countEmailBefore.size()); index++) {
+        for (index = 23; index <= (23 + countEmailBefore.size()); index++) {
             'modify object untuk input email'
             modifyObjectInputEmail = WebUI.modifyObjectProperty(findTestObject('Object Repository/PengaturanTenant/input_PenerimaEmailReminderSaldo'), 
                 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/div[' + 
@@ -238,7 +249,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         'looping untuk input email reminder yang tidak ada di ui'
         for (indexexcel = 1; indexexcel <= arrayEmailInput.size(); indexexcel++) {
             'looping untuk delete email reminder'
-            for (index = 20; index <= (20 + countEmailBefore.size()); index++) {
+            for (index = 23; index <= (23 + countEmailBefore.size()); index++) {
                 'modify object untuk delete email'
                 modifyObjectInputEmail = WebUI.modifyObjectProperty(findTestObject('Object Repository/PengaturanTenant/input_PenerimaEmailReminderSaldo'), 
                     'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/div[' + 
@@ -294,7 +305,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         checkPopup()
 
         'Check error log'
-        checkerrorLog()
+        if ( checkerrorLog() == true) {
+			continue
+		}
 
         'Klik button Simpan'
         WebUI.click(findTestObject('Object Repository/PengaturanTenant/button_Simpan'))
@@ -374,14 +387,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                 (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + 
                 GlobalVariable.ReasonFailedStoredDB)
+			
+			GlobalVariable.FlagFailed = 1
         }
+		
+		if (GlobalVariable.FlagFailed == 0) {
+			'write to excel success'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
+				1, GlobalVariable.StatusSuccess)
+		}
     }
-}
-
-if (GlobalVariable.FlagFailed == 0) {
-    'write to excel success'
-    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
-        1, GlobalVariable.StatusSuccess)
 }
 
 def checkPopup() {
@@ -416,6 +431,8 @@ def checkerrorLog() {
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                 (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + 
                 errormessage)
+			
+			return true
         }
     }
 }

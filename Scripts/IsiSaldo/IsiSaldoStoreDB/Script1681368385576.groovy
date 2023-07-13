@@ -16,18 +16,20 @@ String resultTenantTidakTopup = CustomKeywords.'connection.Saldo.getTenantTidakI
         GlobalVariable.NumofColm, 14), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 18))
 
 'declare arraylist arraymatch'
-ArrayList<String> arrayMatch
+ArrayList<String> arrayMatch = []
 
 'declare arrayindex'
 arrayindex = 0
 
+println result
+println GlobalVariable.NumofColm
+println findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 18)
+WebUI.delay(30)
 'verify tenant'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 14).toUpperCase(), (result[
-        arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 14).toUpperCase(), (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'verify vendor'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 15).toUpperCase(), (result[
-        arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 15).toUpperCase(), (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'verify tipe saldo'
 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 16).toUpperCase(), (result[

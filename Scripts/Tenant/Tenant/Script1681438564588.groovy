@@ -18,12 +18,6 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'get colm excel'
 int countColmExcel = findTestData(excelPathTenant).columnNumbers
 
-'call test case login admin esign'
-WebUI.callTestCase(findTestCase('Login/Login_AdminEsign'), [:], FailureHandling.STOP_ON_FAILURE)
-
-'click menu tenant'
-WebUI.click(findTestObject('Tenant/menu_Tenant'))
-
 'declare isMmandatory Complete'
 int isMandatoryComplete = Integer.parseInt(findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 5))
 
@@ -32,19 +26,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
-		
-		if (GlobalVariable.NumofColm == 2) {
+		if (GlobalVariable.NumofColm == 9) {
+			'call test case login admin esign'
+			WebUI.callTestCase(findTestCase('Login/Login_AdminEsign'), [:], FailureHandling.STOP_ON_FAILURE)
+			
 			'call function check paging'
-			checkPaging(conneSign)
+			//checkPaging(conneSign)
 		}
+		int countInput = 0
+		
+		'click menu tenant'
+		WebUI.click(findTestObject('Tenant/menu_Tenant'))
 		
         'check if action new/services'
         if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('New')) {
             'click button Baru'
             WebUI.click(findTestObject('Tenant/Button_Baru'))
-
-            'get total form'
-            variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-add-tenant > div.row.match-height > div > div > div > div > form div'))
 
             'input nama tenant'
             WebUI.setText(findTestObject('Tenant/TenantBaru/input_NamaTenant'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
@@ -57,6 +54,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'input label ref number'
             WebUI.setText(findTestObject('Tenant/TenantBaru/input_LabelRefNumber'), findTestData(excelPathTenant).getValue(
                     GlobalVariable.NumofColm, 14))
+
+			'get total form'
+			variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-add-tenant > div.row.match-height > div > div > div > div > form div'))
 
             'check if ingin menginput api secara manual/generate'
             if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 15) == 'No') {
@@ -100,7 +100,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         continue
                     } else if (!(WebUI.getText(modifyObjectButtonServices).contains(arrayServices[indexExcel]))) {
                         continue
-                    } else if (WebUI.getText(modifyObjectButtonServices).contains(arrayServices[indexExcel])) {
+                    } else if (WebUI.getText(modifyObjectButtonServices) == ('Add '  + arrayServices[indexExcel])) {
                         'click button add services'
                         WebUI.click(modifyObjectButtonServices)
 
@@ -111,10 +111,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                         'input batas saldo'
                         WebUI.setText(modifyObjectInputServices, arrayServicesBatasSaldo[indexExcel])
-
+						
+						countInput++
+						
                         break
                     }
                 }
+				if (countInput == arrayServices.size() || arrayServices.size() == 0) {
+					break
+				}
             }
             
             'get array email reminder dari excel'
@@ -146,7 +151,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             if (!(WebUI.verifyElementHasAttribute(findTestObject('Tenant/TenantBaru/button_Simpan'),'disabled', GlobalVariable.TimeOut, FailureHandling.OPTIONAL))) {
                 'click button simpan'
                 WebUI.click(findTestObject('Tenant/TenantBaru/button_Simpan'))
-
+				
+				if (WebUI.verifyElementPresent(findTestObject('Tenant/errorLog'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+					'ambil teks errormessage'
+					errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
+			
+					'Tulis di excel itu adalah error'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Tenant', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+						(findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + errormessage)
+					
+					GlobalVariable.FlagFailed = 1
+					
+					continue
+				}
                 'verify pop up message berhasil'
                 if (WebUI.verifyElementPresent(findTestObject('Tenant/popUpMsg'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
                     'click button OK'
@@ -450,7 +467,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         'check if store db'
-        if ((GlobalVariable.checkStoreDB == 'Yes') && (isMandatoryComplete == 0) ) {
+        if ((GlobalVariable.checkStoreDB == 'Yes') && (isMandatoryComplete == 0) && (GlobalVariable.FlagFailed == 0)) {
             'call test case tenant store db'
             WebUI.callTestCase(findTestCase('Tenant/TenantStoreDB'), [('excelPathTenant') : 'Tenant/Tenant'], FailureHandling.STOP_ON_FAILURE)
         }
@@ -516,14 +533,14 @@ def checkPaging(Connection conneSign) {
 
     'verify paging di page 2'
     checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/button_Page2'), 'class', FailureHandling.CONTINUE_ON_FAILURE), 
-            'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
+            'pages ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'click prev page'
     WebUI.click(findTestObject('Tenant/button_PrevPage'))
 
     'verify paging di page 1'
     checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/button_Page1'), 'class', FailureHandling.CONTINUE_ON_FAILURE), 
-            'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
+            'pages ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'modify object last Page'
     def modifyObjectLastPage = WebUI.modifyObjectProperty(findTestObject('Tenant/modifyObject'), 'xpath', 'equals', '//*[@class = "pager"]/li[' + (variable.size() - 2).toString() + ']', true)

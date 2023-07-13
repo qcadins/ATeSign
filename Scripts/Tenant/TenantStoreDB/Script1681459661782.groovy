@@ -59,7 +59,6 @@ if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 7).equalsIg
 
     for (indexExcel = 0; indexExcel < arrayServices.size(); indexExcel++) {
         String services = resultServices[indexServices++]
-
         if (services.equalsIgnoreCase(arrayServices[indexExcel])) {
             'verify services'
             arrayMatch.add(WebUI.verifyMatch(services.toUpperCase(), (arrayServices[indexExcel]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))

@@ -36,7 +36,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
             FailureHandling.CONTINUE_ON_FAILURE)
 
         'Jika tidak ada dokumen id di excel'
-        if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 5) == '') {
+        if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 6) == '') {
             'loop selanjutnya'
             continue
         }
@@ -730,7 +730,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
 
                                 'check saldo dari table dengan saldo yang sekarang'
                                 checkVerifyEqualorMatch(WebUI.verifyEqual(Integer.parseInt(WebUI.getText(modifyperrowpercolumn)), 
-                                        saldoUsedperDoc, FailureHandling.CONTINUE_ON_FAILURE), ' pada Saldo di Mutasi Saldo dengan nomor kontrak ' + 
+                                        (Integer.parseInt(saldoSignBefore)- saldoUsedperDoc), FailureHandling.CONTINUE_ON_FAILURE), ' pada Saldo di Mutasi Saldo dengan nomor kontrak ' + 
                                     (noKontrakPerDoc[i]))
                             } else {
                                 'Jika bukan untuk 2 kolom itu, maka check ke db'

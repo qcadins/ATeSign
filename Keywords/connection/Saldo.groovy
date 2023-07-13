@@ -8,14 +8,14 @@ import com.kms.katalon.core.annotation.Keyword
 import internal.GlobalVariable
 
 public class Saldo {
-	
+
 	String data
 	int columnCount, i
 	Statement stm
 	ResultSetMetaData metadata
 	ResultSet resultSet
 	ArrayList<String> listdata = []
-	
+
 	@Keyword
 	getDDLTenant(Connection conn) {
 		stm = conn.createStatement()
@@ -74,7 +74,7 @@ public class Saldo {
 	getIsiSaldoStoreDB(Connection conn, String refno) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT tenant_name, vendor_name, description, qty, ref_no, notes, to_char(trx_date, 'yyyy-mm-dd') FROM tr_balance_mutation tbm JOIN ms_tenant mt ON mt.id_ms_tenant = tbm.id_ms_tenant JOIN ms_vendor mv ON mv.id_ms_vendor = tbm.id_ms_vendor JOIN ms_lov ml ON ml.id_lov = tbm.lov_balance_type WHERE ref_no = '" +  refno  + "'")
+		resultSet = stm.executeQuery("SELECT tenant_name, vendor_name, description, qty, ref_no, notes, to_char(trx_date, 'yyyy-mm-dd') FROM tr_balance_mutation tbm JOIN ms_tenant mt ON mt.id_ms_tenant = tbm.id_ms_tenant JOIN ms_vendor mv ON mv.id_ms_vendor = tbm.id_ms_vendor JOIN ms_lov ml ON ml.id_lov = tbm.lov_balance_type WHERE ref_no = '" +  refno  + "' order by tbm.dtm_crt desc limit 1")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -87,12 +87,12 @@ public class Saldo {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getIsiSaldoTrx(Connection conn, String refno) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT tbm.trx_no, trx_date, description, amu.full_name, ref_no, notes, qty FROM tr_balance_mutation tbm JOIN ms_lov ml ON ml.id_lov = tbm.lov_trx_type JOIN am_msuser amu ON amu.id_ms_user = tbm.id_ms_user WHERE ref_no = '" +  refno  + "'")
+		resultSet = stm.executeQuery("SELECT tbm.trx_no, trx_date, description, amu.full_name, ref_no, notes, qty FROM tr_balance_mutation tbm JOIN ms_lov ml ON ml.id_lov = tbm.lov_trx_type JOIN am_msuser amu ON amu.id_ms_user = tbm.id_ms_user WHERE ref_no = '" +  refno  + "' order by tbm.dtm_crt desc limit 1")
 
 		metadata = resultSet.metaData
 
@@ -106,7 +106,7 @@ public class Saldo {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getTenantTidakIsiSaldo(Connection conn, String tenantname, String refno) {
 		stm = conn.createStatement()

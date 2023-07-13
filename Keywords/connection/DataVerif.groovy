@@ -49,10 +49,10 @@ public class DataVerif {
 	}
 
 	@Keyword
-	getResetOTP(Connection conn, String email) {
+	getResetOTP(Connection conn, String value) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT reset_code_request_num FROM am_msuser where login_id = '" +  email  + "'")
+		resultSet = stm.executeQuery("SELECT reset_code_request_num FROM am_msuser where login_id = '" +  value  + "' or hashed_phone = '" + value + " ' or hashed_id_no = '" + value + " '")
 
 		metadata = resultSet.metaData
 
@@ -61,7 +61,11 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		Integer.parseInt(data)
+		if (data != null) {
+			Integer.parseInt(data)
+		} else {
+			data = 0
+		}
 	}
 
 	@Keyword

@@ -39,7 +39,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 , ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
 
         'Jika tidak ada dokumen id di excel'
-        if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 5) == '') {
+        if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 6) == '') {
             'loop selanjutnya'
             continue
         }
@@ -731,9 +731,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                 'ambil saldo after'
                 saldoSignAfter = checkSaldoSign()
-
+				
+				countResend++
                 'Jika count saldo otp after dengan yang before dikurangi 1 ditambah dengan '
-                if (WebUI.verifyEqual(Integer.parseInt(otpBefore) - (countResend + 1), Integer.parseInt(otpAfter), FailureHandling.OPTIONAL)) {
+                if (WebUI.verifyEqual(Integer.parseInt(otpBefore) - (countResend), Integer.parseInt(otpAfter), FailureHandling.OPTIONAL)) {
                     'Jika count saldo sign/ttd diatas (after) sama dengan yang dulu/pertama (before) dikurang jumlah dokumen yang ditandatangani'
                     if (WebUI.verifyEqual(Integer.parseInt(saldoSignBefore.replace(',','')) - saldoUsed, Integer.parseInt(saldoSignAfter.replace(',','')), 
                         FailureHandling.OPTIONAL)) {
@@ -810,7 +811,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                                 'check saldo dari table dengan saldo yang sekarang'
                                 checkVerifyEqualorMatch(WebUI.verifyEqual(Integer.parseInt(WebUI.getText(modifyperrowpercolumn)), 
-                                        saldoUsedperDoc, FailureHandling.CONTINUE_ON_FAILURE), ' pada Saldo di Mutasi Saldo dengan nomor kontrak ' + 
+                                       (Integer.parseInt(saldoSignBefore) - saldoUsedperDoc), FailureHandling.CONTINUE_ON_FAILURE), ' pada Saldo di Mutasi Saldo dengan nomor kontrak ' + 
                                     (noKontrakPerDoc[i]))
                             } else {
                                 'Jika bukan untuk 2 kolom itu, maka check ke db'

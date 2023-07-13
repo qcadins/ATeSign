@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "6E382C64750C5EAB5230E5F47C2179F9",
+  "keywordFileContentHash": "8A348EAB8B249AD6C1562D0B412B969A",
   "keywordClasses": [
     {
       "name": "connection.Saldo",
@@ -20,8 +20,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getDDLVendor",
@@ -52,8 +51,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getDDLTipeSaldo",
@@ -97,8 +95,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getIsiSaldoStoreDB",
@@ -129,8 +126,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getIsiSaldoTrx",
@@ -161,8 +157,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getTenantTidakIsiSaldo",
@@ -206,11 +201,10 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         }
       ]
     }
   ],
-  "javadocParsed": true
+  "javadocParsed": false
 }
