@@ -43,6 +43,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'call test case login admin esign'
         WebUI.callTestCase(findTestCase('Login/Login_AdminEsign'), [:], FailureHandling.STOP_ON_FAILURE)
 
+//		if(GlobalVariable.NumofColm == 2) {
+//			'call function input cancel'
+//			inputCancel()
+//		}
+
         'click menu isi saldo'
         WebUI.click(findTestObject('isiSaldo/menu_isiSaldo'))
 
@@ -132,9 +137,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'isiSaldo', 0, GlobalVariable.NumofColm - 
                 1, GlobalVariable.StatusSuccess)
 			}
-			WebUI.delay(10)
 			
             if (GlobalVariable.checkStoreDB == 'Yes') {
+                'delay 5 detik untuk menunggu trx'
+				WebUI.delay(5)
+				
                 'call test case store db'
                 WebUI.callTestCase(findTestCase('IsiSaldo/IsiSaldoStoreDB'), [('excelPathIsiSaldo') : 'Saldo/isiSaldo'], 
                     FailureHandling.CONTINUE_ON_FAILURE)
@@ -355,3 +362,86 @@ public loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
     return saldo
 }
 
+def inputCancel() {
+	'input tenant'
+	WebUI.setText(findTestObject('isiSaldo/input_PilihTenant'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm,
+			14))
+
+	'enter untuk input tenant'
+	WebUI.sendKeys(findTestObject('isiSaldo/input_PilihTenant'), Keys.chord(Keys.ENTER))
+	
+	'input vendor'
+	WebUI.setText(findTestObject('isiSaldo/input_PilihVendor'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm,
+			15))
+
+	'enter untuk input vendor'
+	WebUI.sendKeys(findTestObject('isiSaldo/input_PilihVendor'), Keys.chord(Keys.ENTER))
+	
+	'input tipe saldo'
+	WebUI.setText(findTestObject('isiSaldo/input_TipeSaldo'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm,
+			16))
+
+	'enter untuk input tipe saldo'
+	WebUI.sendKeys(findTestObject('isiSaldo/input_TipeSaldo'), Keys.chord(Keys.ENTER))
+
+	'input tambah saldo'
+	WebUI.setText(findTestObject('isiSaldo/input_TambahSaldo'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm,
+			17))
+	
+	'input nomor tagihan'
+	WebUI.setText(findTestObject('isiSaldo/input_nomorTagihan'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm,
+			18))
+
+	'input catatan'
+	WebUI.setText(findTestObject('isiSaldo/input_Catatan'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm,
+			19))
+
+	'input tanggal pembelian'
+	WebUI.setText(findTestObject('isiSaldo/input_TanggalPembelian'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm,
+			20))
+
+	'click field untuk refresh button lanjut agar bisa di click'
+	WebUI.click(findTestObject('isiSaldo/input_Catatan'))
+	
+	'click batal'
+	WebUI.click(findTestObject('isiSaldo/button_Batal'))
+	
+	'click tenant ddl'
+	WebUI.click(findTestObject('isiSaldo/input_PilihTenant'))
+	
+	'verify ddl tenant kereset'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('isiSaldo/selected_DDL')), 'Pilih Tenant', false, FailureHandling.CONTINUE_ON_FAILURE), ' ddl tenant tidak tereset')
+	
+	'enter untuk input tenant'
+	WebUI.sendKeys(findTestObject('isiSaldo/input_PilihTenant'), Keys.chord(Keys.ENTER))
+	
+	'click vendor ddl'
+	WebUI.click(findTestObject('isiSaldo/input_PilihVendor'))
+	
+	'verify ddl vendor kereset'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('isiSaldo/selected_DDL')), 'Pilih Vendor', false, FailureHandling.CONTINUE_ON_FAILURE), ' ddl vendor tidak tereset')
+	
+	'enter untuk input vendor'
+	WebUI.sendKeys(findTestObject('isiSaldo/input_PilihVendor'), Keys.chord(Keys.ENTER))
+	
+	'click tipe saldo ddl'
+	WebUI.click(findTestObject('isiSaldo/input_TipeSaldo'))
+	
+	'verify ddl tipe saldo kereset'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('isiSaldo/selected_DDL')), 'Pilih Tipe Saldo', false, FailureHandling.CONTINUE_ON_FAILURE), ' ddl tipe saldo tidak tereset')
+	
+	'enter untuk input tipe saldo'
+	WebUI.sendKeys(findTestObject('isiSaldo/input_TipeSaldo'), Keys.chord(Keys.ENTER))
+	
+	'verify field tambah saldo kosong'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('isiSaldo/input_TambahSaldo'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field tambah saldo')
+	
+	'verify field no tagihan kosong'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('isiSaldo/input_nomorTagihan'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field nomor tagihan')
+	
+	'verify field Catatan kosong'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('isiSaldo/input_Catatan'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field catatan')
+	
+	'verify field tanggal pemeblian kosong'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('isiSaldo/input_TanggalPembelian'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field tanggal pembelian')
+}

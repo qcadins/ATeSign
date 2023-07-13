@@ -35,81 +35,11 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 64).l
 	CustomKeywords.'connection.Registrasi.settingEmailServiceTenant'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 64))
 }
 
-'click menu buat undangan'
-WebUI.click(findTestObject('BuatUndangan/menu_BuatUndangan'))
+'call function input > cancel > verify form kosong'
+inputCancel()
 
-'input NIK'
-WebUI.setText(findTestObject('BuatUndangan/input_NIK'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-        9))
-
-'input nama lengkap'
-WebUI.setText(findTestObject('BuatUndangan/input_NamaLengkap'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-        10))
-
-'input tempat lahir'
-WebUI.setText(findTestObject('BuatUndangan/input_TempatLahir'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-        11))
-
-'input tanggal lahir'
-WebUI.setText(findTestObject('BuatUndangan/input_TanggalLahir'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-        12))
-
-'cek if pria(M) / wanita(F)'
-if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 13).equalsIgnoreCase('M')) {
-    'click radio pria'
-    WebUI.click(findTestObject('BuatUndangan/radio_Pria'))
-} else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 13).equalsIgnoreCase('F')) {
-    'click radio wanita'
-    WebUI.click(findTestObject('BuatUndangan/radio_Wanita'))
-}
-
-'input no handphone'
-WebUI.setText(findTestObject('BuatUndangan/input_noHandphone'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-        14))
-
-'input email'
-WebUI.setText(findTestObject('BuatUndangan/input_Email'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-        15))
-
-'input alamat lengkap'
-WebUI.setText(findTestObject('BuatUndangan/input_AlamatLengkap'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-        17))
-
-'input provinsi'
-WebUI.setText(findTestObject('BuatUndangan/input_Provinsi'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-        18))
-
-'input kota'
-WebUI.setText(findTestObject('BuatUndangan/input_Kota'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-        19))
-
-'input kecamatan'
-WebUI.setText(findTestObject('BuatUndangan/input_Kecamatan'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-        20))
-
-'input kelurahan'
-WebUI.setText(findTestObject('BuatUndangan/input_Kelurahan'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-        21))
-
-'input kode pos'
-WebUI.setText(findTestObject('BuatUndangan/input_KodePos'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-        22))
-
-'input wilayah'
-WebUI.setText(findTestObject('BuatUndangan/input_Wilayah'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-        23))
-
-'input office'
-WebUI.setText(findTestObject('BuatUndangan/input_Office'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-        25))
-
-'input lini bisnis'
-WebUI.setText(findTestObject('BuatUndangan/input_LiniBisnis'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-        26))
-
-'input task no'
-WebUI.setText(findTestObject('BuatUndangan/input_TaskNo'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-        27))
+'input form buat undangan'
+inputBuatUndangan()
 
 'click button save'
 WebUI.click(findTestObject('BuatUndangan/button_Save'))
@@ -685,3 +615,156 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     }
 }
 
+def inputBuatUndangan() {
+	'click menu buat undangan'
+	WebUI.click(findTestObject('BuatUndangan/menu_BuatUndangan'))
+	
+	'input NIK'
+	WebUI.setText(findTestObject('BuatUndangan/input_NIK'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+			9))
+	
+	'input nama lengkap'
+	WebUI.setText(findTestObject('BuatUndangan/input_NamaLengkap'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+			10))
+	
+	'input tempat lahir'
+	WebUI.setText(findTestObject('BuatUndangan/input_TempatLahir'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+			11))
+	
+	'input tanggal lahir'
+	WebUI.setText(findTestObject('BuatUndangan/input_TanggalLahir'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+			12))
+	
+	'cek if pria(M) / wanita(F)'
+	if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 13).equalsIgnoreCase('M')) {
+		'click radio pria'
+		WebUI.click(findTestObject('BuatUndangan/radio_Pria'))
+	} else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 13).equalsIgnoreCase('F')) {
+		'click radio wanita'
+		WebUI.click(findTestObject('BuatUndangan/radio_Wanita'))
+	}
+	
+	'input no handphone'
+	WebUI.setText(findTestObject('BuatUndangan/input_noHandphone'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+			14))
+	
+	'input email'
+	WebUI.setText(findTestObject('BuatUndangan/input_Email'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+			15))
+	
+	'input alamat lengkap'
+	WebUI.setText(findTestObject('BuatUndangan/input_AlamatLengkap'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+			17))
+	
+	'input provinsi'
+	WebUI.setText(findTestObject('BuatUndangan/input_Provinsi'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+			18))
+	
+	'input kota'
+	WebUI.setText(findTestObject('BuatUndangan/input_Kota'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+			19))
+	
+	'input kecamatan'
+	WebUI.setText(findTestObject('BuatUndangan/input_Kecamatan'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+			20))
+	
+	'input kelurahan'
+	WebUI.setText(findTestObject('BuatUndangan/input_Kelurahan'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+			21))
+	
+	'input kode pos'
+	WebUI.setText(findTestObject('BuatUndangan/input_KodePos'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+			22))
+	
+	'input wilayah'
+	WebUI.setText(findTestObject('BuatUndangan/input_Wilayah'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+			23))
+	
+	'input office'
+	WebUI.setText(findTestObject('BuatUndangan/input_Office'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+			25))
+	
+	'input lini bisnis'
+	WebUI.setText(findTestObject('BuatUndangan/input_LiniBisnis'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+			26))
+	
+	'input task no'
+	WebUI.setText(findTestObject('BuatUndangan/input_TaskNo'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+			27))
+}
+
+def inputCancel() {
+	if (GlobalVariable.NumofColm == 2) {
+		
+			'input form buat undangan'
+			inputBuatUndangan()
+			
+			'click button cancel'
+			WebUI.click(findTestObject('BuatUndangan/button_Cancel'))
+		
+			'click button ya batal undangan'
+			WebUI.click(findTestObject('BuatUndangan/button_YaBatalUndangan'))
+			
+			'check if sudah ter cancel dan pindah page ke home'
+			if(WebUI.verifyElementPresent(findTestObject('BuatUndangan/input_Kecamatan'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+				checkVerifyEqualOrMatch(false, 'FAILED TO CANCEL')
+			}
+			
+			'click menu buat undangan'
+			WebUI.click(findTestObject('BuatUndangan/menu_BuatUndangan'))
+			
+			'verify field NIK kosong'
+			checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_NIK'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field NIK tidak kosong')
+			
+			'verify field Nama Lengkap kosong'
+			checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_NamaLengkap'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field Nama Lengkap tidak kosong')
+			
+			'verify field tempat lahir kosong'
+			checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_TempatLahir'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field Tempat Lahir tidak kosong')
+			
+			'verify field tanggal lahir kosong'
+			checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_TanggalLahir'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field tanggal Lahir tidak kosong')
+			
+			'verify field no handphone kosong'
+			checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_noHandphone'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field no Handphone tidak kosong')
+			
+			'verify field email kosong'
+			checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_Email'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field Email tidak kosong')
+			
+			'verify field alamat Lengkap kosong'
+			checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_AlamatLengkap'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field alamat lengkap tidak kosong')
+			
+			'verify field Provinsi kosong'
+			checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_Provinsi'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field Provinsi tidak kosong')
+			
+			'verify field Kota kosong'
+			checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_Kota'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field Kota tidak kosong')
+			
+			'verify field kecamatan kosong'
+			checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_Kecamatan'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field Kecamatan tidak kosong')
+			
+			'verify field kelurahan kosong'
+			checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_Kelurahan'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field kelurahan tidak kosong')
+		
+			'verify field kode pos kosong'
+			checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_KodePos'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field kode pos tidak kosong')
+		
+			'verify field wilayah kosong'
+			checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_Wilayah'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field wilayah tidak kosong')
+			
+			'verify field office kosong'
+			checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_Office'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field office tidak kosong')
+			
+			'verify field lini bisnis kosong'
+			checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_LiniBisnis'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field Lini Bisnis tidak kosong')
+			
+			'verify field task no kosong'
+			checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_TaskNo'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field task no tidak kosong')
+			
+			'click button cancel'
+			WebUI.click(findTestObject('BuatUndangan/button_Cancel'))
+			
+			'click button ya batal undangan'
+			WebUI.click(findTestObject('BuatUndangan/button_YaBatalUndangan'))
+		}
+}

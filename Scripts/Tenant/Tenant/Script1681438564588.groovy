@@ -18,6 +18,12 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'get colm excel'
 int countColmExcel = findTestData(excelPathTenant).columnNumbers
 
+'call test case login admin esign'
+WebUI.callTestCase(findTestCase('Login/Login_AdminEsign'), [:], FailureHandling.STOP_ON_FAILURE)
+
+'click menu tenant'
+WebUI.click(findTestObject('Tenant/menu_Tenant'))
+
 'declare isMmandatory Complete'
 int isMandatoryComplete = Integer.parseInt(findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 5))
 
@@ -26,22 +32,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
-		if (GlobalVariable.NumofColm == 9) {
-			'call test case login admin esign'
-			WebUI.callTestCase(findTestCase('Login/Login_AdminEsign'), [:], FailureHandling.STOP_ON_FAILURE)
-			
-			'call function check paging'
-			//checkPaging(conneSign)
-		}
-		int countInput = 0
 		
-		'click menu tenant'
-		WebUI.click(findTestObject('Tenant/menu_Tenant'))
+		if (GlobalVariable.NumofColm == 2) {
+			'call function check paging'
+			checkPaging(conneSign)
+			
+			'call function cancel'
+			inputCancel()
+		}
 		
         'check if action new/services'
         if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('New')) {
             'click button Baru'
             WebUI.click(findTestObject('Tenant/Button_Baru'))
+
+            'get total form'
+            variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-add-tenant > div.row.match-height > div > div > div > div > form div'))
 
             'input nama tenant'
             WebUI.setText(findTestObject('Tenant/TenantBaru/input_NamaTenant'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
@@ -54,9 +60,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'input label ref number'
             WebUI.setText(findTestObject('Tenant/TenantBaru/input_LabelRefNumber'), findTestData(excelPathTenant).getValue(
                     GlobalVariable.NumofColm, 14))
-
-			'get total form'
-			variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-add-tenant > div.row.match-height > div > div > div > div > form div'))
 
             'check if ingin menginput api secara manual/generate'
             if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 15) == 'No') {
@@ -100,7 +103,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         continue
                     } else if (!(WebUI.getText(modifyObjectButtonServices).contains(arrayServices[indexExcel]))) {
                         continue
-                    } else if (WebUI.getText(modifyObjectButtonServices) == ('Add '  + arrayServices[indexExcel])) {
+                    } else if (WebUI.getText(modifyObjectButtonServices).contains(arrayServices[indexExcel])) {
                         'click button add services'
                         WebUI.click(modifyObjectButtonServices)
 
@@ -111,15 +114,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                         'input batas saldo'
                         WebUI.setText(modifyObjectInputServices, arrayServicesBatasSaldo[indexExcel])
-						
-						countInput++
-						
+
                         break
                     }
                 }
-				if (countInput == arrayServices.size() || arrayServices.size() == 0) {
-					break
-				}
             }
             
             'get array email reminder dari excel'
@@ -151,19 +149,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             if (!(WebUI.verifyElementHasAttribute(findTestObject('Tenant/TenantBaru/button_Simpan'),'disabled', GlobalVariable.TimeOut, FailureHandling.OPTIONAL))) {
                 'click button simpan'
                 WebUI.click(findTestObject('Tenant/TenantBaru/button_Simpan'))
-				
-				if (WebUI.verifyElementPresent(findTestObject('Tenant/errorLog'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
-					'ambil teks errormessage'
-					errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
-			
-					'Tulis di excel itu adalah error'
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Tenant', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-						(findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + errormessage)
-					
-					GlobalVariable.FlagFailed = 1
-					
-					continue
-				}
+
                 'verify pop up message berhasil'
                 if (WebUI.verifyElementPresent(findTestObject('Tenant/popUpMsg'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
                     'click button OK'
@@ -467,7 +453,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         'check if store db'
-        if ((GlobalVariable.checkStoreDB == 'Yes') && (isMandatoryComplete == 0) && (GlobalVariable.FlagFailed == 0)) {
+        if ((GlobalVariable.checkStoreDB == 'Yes') && (isMandatoryComplete == 0) ) {
             'call test case tenant store db'
             WebUI.callTestCase(findTestCase('Tenant/TenantStoreDB'), [('excelPathTenant') : 'Tenant/Tenant'], FailureHandling.STOP_ON_FAILURE)
         }
@@ -533,14 +519,14 @@ def checkPaging(Connection conneSign) {
 
     'verify paging di page 2'
     checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/button_Page2'), 'class', FailureHandling.CONTINUE_ON_FAILURE), 
-            'pages ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
+            'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'click prev page'
     WebUI.click(findTestObject('Tenant/button_PrevPage'))
 
     'verify paging di page 1'
     checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/button_Page1'), 'class', FailureHandling.CONTINUE_ON_FAILURE), 
-            'pages ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
+            'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'modify object last Page'
     def modifyObjectLastPage = WebUI.modifyObjectProperty(findTestObject('Tenant/modifyObject'), 'xpath', 'equals', '//*[@class = "pager"]/li[' + (variable.size() - 2).toString() + ']', true)
@@ -610,4 +596,94 @@ def verifyAfterAddEdit() {
 	
 	'verify Kode tenant after add or edit'
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Tenant/label_KodeTenant')), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 13), false, FailureHandling.CONTINUE_ON_FAILURE), ' Kode Tenant after Add or Edit')
+}
+
+def inputCancel() {
+	
+	'click button Baru'
+	WebUI.click(findTestObject('Tenant/Button_Baru'))
+
+	'get total form'
+	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-add-tenant > div.row.match-height > div > div > div > div > form div'))
+	
+	'input nama tenant'
+	WebUI.setText(findTestObject('Tenant/TenantBaru/input_NamaTenant'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm,
+			12))
+
+	'input tenant code'
+	WebUI.setText(findTestObject('Tenant/TenantBaru/input_TenantCode'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm,
+			13))
+
+	'input label ref number'
+	WebUI.setText(findTestObject('Tenant/TenantBaru/input_LabelRefNumber'), findTestData(excelPathTenant).getValue(
+			GlobalVariable.NumofColm, 14))
+
+	'click button generate api key'
+	WebUI.click(findTestObject('Tenant/TenantBaru/button_GenerateAPIKEY'))
+	
+	'click button batas saldo 1'
+	WebUI.click(findTestObject('Tenant/button_BatasSaldo1'))
+	
+	'input batas saldo 1'
+	WebUI.setText(findTestObject('Tenant/input_BatasSaldo1'), '10')
+	
+	'click button Email Reminder Saldo'
+	WebUI.click(findTestObject('Tenant/button_EmailReminderSaldo'))
+	
+	'input Email Reminder Saldo'
+	WebUI.setText(findTestObject('Tenant/input_EmailReminderSaldo'), 'ABCDE@GMAIL.COM')
+
+	'input email user admin'
+	WebUI.setText(findTestObject('Tenant/TenantBaru/input_EmailUserAdmin'), findTestData(excelPathTenant).getValue(
+			GlobalVariable.NumofColm, 22))
+
+	'input kode akses user admin'
+	WebUI.setText(findTestObject('Tenant/TenantBaru/input_KodeAksesUserAdmin'), findTestData(excelPathTenant).getValue(
+			GlobalVariable.NumofColm, 23))
+	
+	'click button batal'
+	WebUI.click(findTestObject('Object Repository/Tenant/TenantBaru/button_Batal'))
+
+	if(WebUI.verifyElementPresent(findTestObject('Tenant/button_BatasSaldo1'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		checkVerifyEqualOrMatch(false, 'FAILED TO CANCEL')
+	}
+	
+	'click button Baru'
+	WebUI.click(findTestObject('Tenant/Button_Baru'))
+
+	'delay untuk tunggu button batas saldo'
+	WebUI.delay(5)
+	
+	'check field nama tenant'	
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/TenantBaru/input_NamaTenant'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), 'Field Nama Tenant Tidak Kosong')
+	
+	'check field kode tenant'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/TenantBaru/input_TenantCode'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), 'Field Kode Tenant Tidak Kosong')
+	
+	'check field label ref number tenant'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/TenantBaru/input_LabelRefNumber'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), 'Field Label Ref Number Tenant Tidak Kosong')
+	
+	'check field API Key'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/TenantBaru/input_APIKEY'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), 'Field API Key Tidak Kosong')
+	
+	'click button batas saldo 1'
+	WebUI.click(findTestObject('Tenant/button_BatasSaldo1'))
+	
+	'check field Batas Saldo'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/input_BatasSaldo1'), 'value', FailureHandling.OPTIONAL), '0', false, FailureHandling.CONTINUE_ON_FAILURE), 'Field Batas Saldo Tidak Kosong')
+	
+	'click button Email Reminder Saldo'
+	WebUI.click(findTestObject('Tenant/button_EmailReminderSaldo'))
+	
+	'check field EmailReminderSaldo'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/input_EmailReminderSaldo'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), 'Field EmailReminderSaldo Tidak Kosong')
+	
+	'check field email user admin'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/TenantBaru/input_EmailUserAdmin'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), 'Field email user admin Tidak Kosong')
+
+	'check kode akses user admin'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/TenantBaru/input_KodeAksesUserAdmin'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), 'Field kode akses user admin Tidak Kosong')
+	
+	'click button batal'
+	WebUI.click(findTestObject('Object Repository/Tenant/TenantBaru/button_Batal'))
 }

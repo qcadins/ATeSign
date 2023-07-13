@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_BatasSaldo1</name>
+   <tag></tag>
+   <elementGuidId>4bba2c4e-0763-4e31-bf31-cf83a20e1faa</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;OTP&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;OTP&quot;]</value>
+      <webElementGuid>7abb476e-82c3-4d81-9baf-c257f5228458</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>
