@@ -453,7 +453,7 @@ def checkSaldoOTP() {
 				']/div/div/div/div/div[2]/h3', true)
 
 			'verify saldo tidak berkurang'
-			checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectQty).replace(',', ''), otpBefore, false, FailureHandling.CONTINUE_ON_FAILURE), ' User')
+			checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectQty).replace(',', ''), otpBefore, false, FailureHandling.CONTINUE_ON_FAILURE), ' SALDO OTP TIDAK SESUAI')
 
 			break
 		}
