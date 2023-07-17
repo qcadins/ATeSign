@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "9B167BBBAA13F8DD61C9557451DDF27A",
+  "keywordFileContentHash": "45342A2D3CCADA3B91C22FFE4F6B8FBD",
   "keywordClasses": [
     {
       "name": "connection.APIFullService",
@@ -1234,6 +1234,19 @@
             },
             {
               "name": "refnumber",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "limit",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

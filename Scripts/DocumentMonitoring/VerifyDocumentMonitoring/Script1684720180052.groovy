@@ -105,8 +105,6 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
     'Mengambil value db mengenai tipe dokumen'
     documentType = CustomKeywords.'connection.DocumentMonitoring.getDocumentType'(conneSign, nomorKontrakPerPilihan[y])
 
-	WebUI.delay(7)
-	
     'Jika input nama pelanggan telah muncul'
     if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/input_NamaPelanggan'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
         'Set text mengenai teks customer'
@@ -127,6 +125,7 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
         'Set text mengneai input nomor kontrak'
         WebUI.setText(findTestObject('DocumentMonitoring/input_NoKontrak'), nomorKontrakPerPilihan[y])
 
+		if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 80) == '1') {
         'Set text mengenai input cabang'
         WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndex++])
 
@@ -138,7 +137,11 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
 
         'Enter'
         WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER))
-
+		}
+		else {
+			arrayIndex = arrayIndex + 2
+		}
+		
         'Set text tanggal permintaan sampai'
         WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalPermintaanSampai'), currentDate)
 

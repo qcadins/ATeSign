@@ -11,6 +11,9 @@ import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
+'Inisalisasi base url dengan perubahan base url pada saat menggunakan stamping'
+GlobalVariable.base_url = findTestData(excelPathSetting).getValue(7,2)
+
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 

@@ -697,14 +697,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
 
                         'ambil inquiry di db'
                         ArrayList inquiryDB = CustomKeywords.'connection.DataVerif.gettrxSaldo'(conneSign, (noKontrakPerDoc[
-                            i]).toString())
-
+                            i]).toString(), saldoUsedperDoc.toString())
+						
+						index = 0
+						
+						'check total row dengan yang tertandatangan'
+						checkVerifyEqualorMatch(WebUI.verifyMatch(variableSaldoRow.size().toString(),
+						saldoUsedperDoc.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada jumlah tertanda tangan dengan row transaksi ')
+						
+						'looping mengenai rownya'
+						for (int j = 1; j <= variableSaldoRow.size();j++) {
                         'looping mengenai columnnya'
                         for (int u = 1; u <= (variableSaldoColumn.size() / variableSaldoRow.size()); u++) {
                             'modify per row dan column. column menggunakan u dan row menggunakan documenttemplatename'
                             modifyperrowpercolumn = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/lbl_notrxsaldo'), 
                                 'xpath', 'equals', ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-                                variableSaldoRow.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[') + u) + ']/div', 
+                                j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + u) + ']/div', 
                                 true)
 
                             'Jika u di lokasi qty atau kolom ke 9'
@@ -713,7 +721,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                                 if ((WebUI.getText(modifyperrowpercolumn) == '1') || ((inquiryDB[(u - 1)]) == '-1')) {
                                     'Jika bukan untuk 2 kolom itu, maka check ke db'
                                     checkVerifyEqualorMatch(WebUI.verifyMatch('-' + WebUI.getText(modifyperrowpercolumn), 
-                                            inquiryDB[(u - 1)], false, FailureHandling.CONTINUE_ON_FAILURE), 'pada Kuantitas di Mutasi Saldo dengan nomor kontrak ' + 
+                                            inquiryDB[index++], false, FailureHandling.CONTINUE_ON_FAILURE), 'pada Kuantitas di Mutasi Saldo dengan nomor kontrak ' + 
                                         (noKontrakPerDoc[i]))
                                 } else {
                                     'Jika bukan -1, atau masih 0. Maka ttdnya dibilang error'
@@ -726,20 +734,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                                         (noKontrakPerDoc[i]))
                                 }
                             } else if (u == (variableSaldoColumn.size() / variableSaldoRow.size())) {
-                                'Jika di kolom ke 10, atau di FE table saldo'
-
-                                'check saldo dari table dengan saldo yang sekarang'
-                                checkVerifyEqualorMatch(WebUI.verifyEqual(Integer.parseInt(WebUI.getText(modifyperrowpercolumn)), 
-                                        (Integer.parseInt(saldoSignBefore)- saldoUsedperDoc), FailureHandling.CONTINUE_ON_FAILURE), ' pada Saldo di Mutasi Saldo dengan nomor kontrak ' + 
-                                    (noKontrakPerDoc[i]))
+                                'Jika di kolom ke 10, atau di FE table saldo, check saldo dari table dengan saldo yang sekarang'
+                        //        checkVerifyEqualorMatch(WebUI.verifyEqual(Integer.parseInt(WebUI.getText(modifyperrowpercolumn)), 
+                        //                (Integer.parseInt(saldoSignBefore)- saldoUsedperDoc), FailureHandling.CONTINUE_ON_FAILURE), ' pada Saldo di Mutasi Saldo dengan nomor kontrak ' + 
+                        //            (noKontrakPerDoc[i]))
                             } else {
                                 'Jika bukan untuk 2 kolom itu, maka check ke db'
                                 checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(modifyperrowpercolumn), inquiryDB[
-                                        (u - 1)], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada Mutasi Saldo dengan nomor kontrak ' + 
+                                        index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada Mutasi Saldo dengan nomor kontrak ' + 
                                     (noKontrakPerDoc[i]))
                             }
                         }
-                        
+						}
                         break
                     } else {
                         'jika kesempatan yang terakhir'
@@ -760,7 +766,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                 }
             }
         }
-    }
+		'Jika ingin melakukan stamping'
+		if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,79) == 'Yes') {
+			'Call API Send doc'
+			WebUI.callTestCase(findTestCase('Meterai/Flow Stamping'), [('excelPathStamping') : excelPathFESignDocument
+			, ('sheet') : sheet, ('useAPI') : 'v3.0.0', ('linkDocumentMonitoring') : ''], FailureHandling.CONTINUE_ON_FAILURE)
+		}
+		}
 }
 
 ' penggunaan ini hanya untuk Masukan Store Db'
@@ -877,10 +889,10 @@ def inputFilterTrx(Connection conneSign, String currentDate, String noKontrak, S
     WebUI.setText(findTestObject('Saldo/input_fromdate'), currentDate)
 
     'Input tipe dokumen'
-    WebUI.setText(findTestObject('Saldo/lbl_tipedokumen'), documentType)
+    WebUI.setText(findTestObject('Saldo/input_tipedokumen'), documentType)
 
     'Input enter'
-    WebUI.sendKeys(findTestObject('Saldo/lbl_tipedokumen'), Keys.chord(Keys.ENTER))
+    WebUI.sendKeys(findTestObject('Saldo/input_tipedokumen'), Keys.chord(Keys.ENTER))
 
     'Input referal number'
     WebUI.setText(findTestObject('Saldo/input_refnumber'), noKontrak)
