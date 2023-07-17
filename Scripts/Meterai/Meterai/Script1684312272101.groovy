@@ -22,12 +22,7 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'get colm excel'
 int countColmExcel = findTestData(excelPathMeterai).columnNumbers
 
-result = CustomKeywords.'connection.Meterai.getStampdutyTrxData'(conneSign, findTestData(excelPathMeterai).getValue(
-	GlobalVariable.NumofColm, 16))
-println result
-
-println findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm,16)
-'looping DocumentMonitoring'
+'looping meterai'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break

@@ -1,46 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>API Stamping</name>
+   <name>Flow Stamping</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>2167bfbe-078b-4ad2-95f8-f4d782838d8d</testCaseGuid>
+   <testCaseGuid>b559a56f-fad2-4548-b0ec-909fd9619856</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>735d251a-729a-4cf8-8c56-3f99c4210bd6</variableId>
+      <variableId>20543456-27ed-4002-b538-cb056d8218dd</variableId>
    </variableLinks>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>1848398d-cf87-4d29-865b-9090127edf08</variableId>
+      <variableId>d12ce16c-5f1a-4a6b-b204-6a3de53311b0</variableId>
    </variableLinks>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>7a422192-2c72-43f3-b4ad-469e2b7a1534</variableId>
-   </variableLinks>
-   <variableLinks>
-      <testDataLinkId></testDataLinkId>
-      <type>DEFAULT</type>
-      <value></value>
-      <variableId>2dbc2cdd-e4bf-4b0a-8ec4-2b3508fd808b</variableId>
+      <variableId>5c214055-c106-472b-9ffc-5ea06c4c2f0f</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'Meterai/Stamping'</defaultValue>
+      <defaultValue>''</defaultValue>
       <description></description>
-      <id>735d251a-729a-4cf8-8c56-3f99c4210bd6</id>
+      <id>20543456-27ed-4002-b538-cb056d8218dd</id>
       <masked>false</masked>
       <name>excelPathStamping</name>
    </variable>
    <variable>
       <defaultValue>'Login/Setting'</defaultValue>
       <description></description>
-      <id>1848398d-cf87-4d29-865b-9090127edf08</id>
+      <id>d12ce16c-5f1a-4a6b-b204-6a3de53311b0</id>
       <masked>false</masked>
       <name>excelPathSetting</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>5c214055-c106-472b-9ffc-5ea06c4c2f0f</id>
+      <masked>false</masked>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>

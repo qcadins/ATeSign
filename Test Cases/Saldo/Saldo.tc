@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>Saldo</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>93a0622f-d958-4fb5-865e-39a3727b67c7</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>971997c4-ea67-4a01-996e-302eace277e4</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>971997c4-ea67-4a01-996e-302eace277e4</id>
+      <masked>false</masked>
+      <name>excelPathSaldo</name>
+   </variable>
+</TestCaseEntity>

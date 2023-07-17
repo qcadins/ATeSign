@@ -156,15 +156,18 @@ for (j = 1; j <= (Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ','
     WebUI.click(findTestObject('Meterai/button_X'))
 }
 
+if (linkDocumentMonitoring == '') {
+linkDocumentMonitoring = 'Not Used'
+}
+
 'call testcase verify document monitoring'
-WebUI.callTestCase(findTestCase('DocumentMonitoring/verifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathMeterai, ('sheet') : sheet, ('nomorKontrak') : noKontrak, ('linkDocumentMonitoring') : 'Not Used'], FailureHandling.CONTINUE_ON_FAILURE)
+WebUI.callTestCase(findTestCase('DocumentMonitoring/verifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathMeterai, ('sheet') : sheet, ('nomorKontrak') : noKontrak, ('linkDocumentMonitoring') : linkDocumentMonitoring], FailureHandling.CONTINUE_ON_FAILURE)
 
 if (GlobalVariable.FlagFailed == 0) {
 	'write to excel success'
 	CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet , 0, GlobalVariable.NumofColm -
 		1, GlobalVariable.StatusSuccess)
 }
-
 
 def checkVerifyPaging(Boolean isMatch) {
     if (isMatch == false) {

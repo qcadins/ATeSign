@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>lbl_tipedokumen</name>
+   <name>input_tipedokumen</name>
    <tag></tag>
    <elementGuidId>4f3bf6ad-690a-47e2-8997-3046d34c305f</elementGuidId>
    <selectorCollection>
