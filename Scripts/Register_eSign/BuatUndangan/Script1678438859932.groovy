@@ -217,7 +217,11 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
 	    saldoAfter = loginAdminGetSaldo(countCheckSaldo, conneSign)
 	
 	    'verify saldoafter tidak sama dengan saldo before'
-	    checkVerifyEqualOrMatch(saldoAfter.equals(saldoBefore), ' Saldo')
+	    checkVerifyEqualOrMatch(WebUI.verifyMatch(saldoAfter.toString(), saldoBefore.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Saldo')
+		
+		'print untuk menunjukan saldobefore dan saldoafter'
+		println('saldoBefore : ' + saldoBefore.toString())
+		println('saldoAfter : ' + saldoAfter.toString())
 	}
 }
 
@@ -265,6 +269,12 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
     'click button pilih peran'
     WebUI.click(findTestObject('Login/button_pilihPeran'), FailureHandling.STOP_ON_FAILURE)
 
+	'check if button menu visible atau tidak'
+	if(WebUI.verifyElementPresent(findTestObject('BuatUndangan/checkSaldo/menu_Saldo'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		'click menu saldo'
+		WebUI.click(findTestObject('Saldo/button_HamburberSideMenu'))
+	}
+	
     'click menu saldo'
     WebUI.click(findTestObject('BuatUndangan/checkSaldo/menu_Saldo'))
 
