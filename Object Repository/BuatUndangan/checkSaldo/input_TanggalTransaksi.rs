@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_TanggalTransaksi</name>
+   <tag></tag>
+   <elementGuidId>e090df27-62d7-480a-a162-94b2a69b6d28</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;transactionDateStart&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;transactionDateStart&quot;]</value>
+      <webElementGuid>ac1dc0f2-6d7e-4b20-b19d-3a60c71e378a</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

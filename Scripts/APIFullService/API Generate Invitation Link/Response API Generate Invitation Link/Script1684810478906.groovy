@@ -116,19 +116,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 }
 				
                 'call test case daftar akun verif'
-                WebUI.callTestCase(findTestCase('APIFullService/API Generate Invitation Link/DaftarAkunDataVerif'), [('excelPathGenerateLink') : 'APIFullService/API_GenInvLink', ('otpBefore') : saldoBefore[2]], 
+                WebUI.callTestCase(findTestCase('APIFullService/API Generate Invitation Link/DaftarAkunDataVerif'), [('excelPathGenerateLink') : 'APIFullService/API_GenInvLink', ('otpBefore') : saldoBefore[1]], 
                     FailureHandling.CONTINUE_ON_FAILURE)
 				
 				if (GlobalVariable.FlagFailed == 0) {
 					'kurang saldo before dengan proses verifikasi'
 				    saldoBefore.set(0, (Integer.parseInt(saldoBefore[0]) - 1).toString())
 				
-				    saldoBefore.set(1, (Integer.parseInt(saldoBefore[1]) - 1).toString())
+//				    saldoBefore.set(1, (Integer.parseInt(saldoBefore[1]) - 1).toString())
 				
 				    'kurang saldo before dengan jumlah counter send OTP'
-				    saldoBefore.set(2, (Integer.parseInt(saldoBefore[2]) - GlobalVariable.Counter).toString())
+				    saldoBefore.set(1, (Integer.parseInt(saldoBefore[1]) - GlobalVariable.Counter).toString())
 				
-				    saldoBefore.set(3, (Integer.parseInt(saldoBefore[3]) - GlobalVariable.Counter).toString())
+//				    saldoBefore.set(3, (Integer.parseInt(saldoBefore[3]) - GlobalVariable.Counter).toString())
 					
 				    saldoAfter = loginAdminGetSaldo(countCheckSaldo, conneSign)
 				
@@ -157,6 +157,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 	ArrayList<String> saldo = []
 
+	'get current date'
+	currentDate = new Date().format('yyyy-MM-dd')
+	
 	'navigate to url esign'
 	WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 5))
 
@@ -226,46 +229,49 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 		}
 	}
 	
-	'input tipe saldo'
-	WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), 'Verification')
-
-	'enter untuk input tipe saldo'
-	WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), Keys.chord(Keys.ENTER))
-
-//	'input tipe transaksi'
-//	WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TipeTransaksi'), 'Use Verification')
+//	'modify object balance'
+//	modifyObjectBalance = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 'equals',
+//		('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+//		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[10]/div', true)
 //
-//	'enter untuk input tipe saldo'
-//	WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeTransaksi'), Keys.chord(Keys.ENTER))
-
-	'click button cari'
-	WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_Cari'))
-
-	'get row'
-	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
-
-	'modify object button last page'
-	modifyObjectButtonLastPage = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
-		'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' +
-		variable.size()) + ']', true)
-
-	if (WebUI.getAttribute(modifyObjectButtonLastPage, 'class', FailureHandling.OPTIONAL) != 'disabled') {
-		'click button last page'
-		WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_LastPage'))
-	}
-	
-	'get row'
-	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
-
-	'modify object balance'
-	modifyObjectBalance = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 'equals',
-		('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[10]/div', true)
-
-	'get trx saldo'
-	saldo.add(WebUI.getText(modifyObjectBalance).replace(',', ''))
+//	'get trx saldo'
+//	saldo.add(WebUI.getText(modifyObjectBalance).replace(',', ''))
 
 	if ((countCheckSaldo == 1) && (GlobalVariable.FlagFailed == 0)) {
+		'input tipe saldo'
+		WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), 'Verification')
+	
+		'enter untuk input tipe saldo'
+		WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), Keys.chord(Keys.ENTER))
+	
+		'input tanggal Transaksi'
+		WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TanggalTransaksi'), currentDate)
+		
+	//	'input tipe transaksi'
+	//	WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TipeTransaksi'), 'Use Verification')
+	//
+	//	'enter untuk input tipe saldo'
+	//	WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeTransaksi'), Keys.chord(Keys.ENTER))
+	
+		'click button cari'
+		WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_Cari'))
+	
+		'get row'
+		variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
+	
+		'modify object button last page'
+		modifyObjectButtonLastPage = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
+			'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' +
+			variable.size()) + ']', true)
+	
+		if (WebUI.getAttribute(modifyObjectButtonLastPage, 'class', FailureHandling.OPTIONAL) != 'disabled') {
+			'click button last page'
+			WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_LastPage'))
+		}
+		
+		'get row'
+		variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
+	
 		'modify object no transaksi'
 		modifyObjectNoTransaksi = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
 			'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
@@ -355,47 +361,50 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 			break
 		}
 	}
-	
-	'input tipe saldo'
-	WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), 'OTP')
 
-	'enter untuk input tipe saldo'
-	WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), Keys.chord(Keys.ENTER))
-
-//	'input tipe transaksi'
-//	WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TipeTransaksi'), 'Use OTP')
+//	'modify object balance'
+//	modifyObjectBalance = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 'equals',
+//		('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+//		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[10]/div', true)
 //
-//	'enter untuk input tipe saldo'
-//	WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeTransaksi'), Keys.chord(Keys.ENTER))
-
-	'click button cari'
-	WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_Cari'))
-
-	'get row'
-	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
-
-	'modify object button last page'
-	modifyObjectButtonLastPage = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
-		'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' +
-		variable.size()) + ']', true)
-
-	if (WebUI.getAttribute(modifyObjectButtonLastPage, 'class', FailureHandling.OPTIONAL) != 'disabled') {
-		'click button last page'
-		WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_LastPage'))
-	}
-	
-	'get row'
-	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
-
-	'modify object balance'
-	modifyObjectBalance = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 'equals',
-		('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[10]/div', true)
-
-	'get trx saldo'
-	saldo.add(WebUI.getText(modifyObjectBalance).replace(',', ''))
+//	'get trx saldo'
+//	saldo.add(WebUI.getText(modifyObjectBalance).replace(',', ''))
 
 	if ((countCheckSaldo == 1) && (GlobalVariable.FlagFailed == 0)) {
+		'input tipe saldo'
+		WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), 'OTP')
+	
+		'enter untuk input tipe saldo'
+		WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), Keys.chord(Keys.ENTER))
+	
+		'input tanggal Transaksi'
+		WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TanggalTransaksi'), currentDate)
+		
+	//	'input tipe transaksi'
+	//	WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TipeTransaksi'), 'Use OTP')
+	//
+	//	'enter untuk input tipe saldo'
+	//	WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeTransaksi'), Keys.chord(Keys.ENTER))
+	
+		'click button cari'
+		WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_Cari'))
+	
+		'get row'
+		variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
+	
+		'modify object button last page'
+		modifyObjectButtonLastPage = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
+			'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' +
+			variable.size()) + ']', true)
+	
+		if (WebUI.getAttribute(modifyObjectButtonLastPage, 'class', FailureHandling.OPTIONAL) != 'disabled') {
+			'click button last page'
+			WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_LastPage'))
+		}
+		
+		'get row'
+		variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
+		
 		'modify object no transaksi'
 		modifyObjectNoTransaksi = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
 			'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +

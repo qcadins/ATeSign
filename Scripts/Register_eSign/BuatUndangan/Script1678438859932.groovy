@@ -207,12 +207,12 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
 	    'kurang saldo before dengan proses verifikasi'
 	    saldoBefore.set(0, (Integer.parseInt(saldoBefore[0]) - 1).toString())
 	
-	    saldoBefore.set(1, (Integer.parseInt(saldoBefore[1]) - 1).toString())
+//	    saldoBefore.set(1, (Integer.parseInt(saldoBefore[1]) - 1).toString())
 	
 	    'kurang saldo before dengan jumlah counter send OTP'
-	    saldoBefore.set(2, (Integer.parseInt(saldoBefore[2]) - GlobalVariable.Counter).toString())
+	    saldoBefore.set(1, (Integer.parseInt(saldoBefore[1]) - GlobalVariable.Counter).toString())
 	
-	    saldoBefore.set(3, (Integer.parseInt(saldoBefore[3]) - GlobalVariable.Counter).toString())
+//	    saldoBefore.set(3, (Integer.parseInt(saldoBefore[3]) - GlobalVariable.Counter).toString())
 	
 	    saldoAfter = loginAdminGetSaldo(countCheckSaldo, conneSign)
 	
@@ -305,7 +305,7 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 
     'enter untuk input tipe saldo'
     WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), Keys.chord(Keys.ENTER))
-
+//
 //    'input tipe transaksi'
 //    WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TipeTransaksi'), 'Use Verification')
 //
@@ -331,13 +331,13 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
     'get row'
     variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
 
-    'modify object balance'
-    modifyObjectBalance = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 'equals', 
-        ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-        variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[10]/div', true)
-
-    'get trx saldo'
-    saldo.add(WebUI.getText(modifyObjectBalance).replace(',', ''))
+//    'modify object balance'
+//    modifyObjectBalance = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 'equals', 
+//        ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
+//        variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[10]/div', true)
+//
+//    'get trx saldo'
+//    saldo.add(WebUI.getText(modifyObjectBalance).replace(',', ''))
 
     if ((countCheckSaldo == 1) && (GlobalVariable.FlagFailed == 0)) {
         'modify object no transaksi'
@@ -461,13 +461,13 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
     'get row'
     variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
 
-    'modify object balance'
-    modifyObjectBalance = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 'equals', 
-        ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-        variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[10]/div', true)
-
-    'get trx saldo'
-    saldo.add(WebUI.getText(modifyObjectBalance).replace(',', ''))
+//    'modify object balance'
+//    modifyObjectBalance = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 'equals', 
+//        ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
+//        variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[10]/div', true)
+//
+//    'get trx saldo'
+//    saldo.add(WebUI.getText(modifyObjectBalance).replace(',', ''))
 
     if ((countCheckSaldo == 1) && (GlobalVariable.FlagFailed == 0)) {
         'modify object no transaksi'
