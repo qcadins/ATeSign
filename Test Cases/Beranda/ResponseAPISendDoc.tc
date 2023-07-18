@@ -11,11 +11,24 @@
       <value></value>
       <variableId>bc58f57e-8d54-48da-8bb9-13d26383a903</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>f5464f56-54e5-4404-8b4f-02b2674764f5</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
       <id>bc58f57e-8d54-48da-8bb9-13d26383a903</id>
       <masked>false</masked>
       <name>API_Excel_Path</name>
+   </variable>
+   <variable>
+      <defaultValue>'Login/Setting'</defaultValue>
+      <description></description>
+      <id>f5464f56-54e5-4404-8b4f-02b2674764f5</id>
+      <masked>false</masked>
+      <name>excelPathSetting</name>
    </variable>
 </TestCaseEntity>

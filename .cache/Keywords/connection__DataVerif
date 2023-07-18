@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "9EC631B4ED7942A1BD2FC2A2D6DC14C9",
+  "keywordFileContentHash": "EE31BD28D8EF21C9B8AD9A3B40900326",
   "keywordClasses": [
     {
       "name": "connection.DataVerif",
@@ -394,6 +394,38 @@
             },
             {
               "name": "refNumber",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getTenantCode",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "loginId",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

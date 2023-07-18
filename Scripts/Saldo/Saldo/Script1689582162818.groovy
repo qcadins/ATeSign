@@ -12,9 +12,10 @@ import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 import org.openqa.selenium.WebDriver as WebDriver
 import org.openqa.selenium.By as By
+import java.time.LocalDate as LocalDate
 
 'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign.xlsx')
+GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
@@ -22,7 +23,12 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'get colm excel'
 int countColmExcel = findTestData(excelPathSaldo).columnNumbers
 
-'looping meterai'
+'get dates'
+currentDate = LocalDate.now()
+
+firstDateOfMonth = currentDate.withDayOfMonth(1)
+
+'looping saldo'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
 	if (findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
 		break
@@ -36,38 +42,27 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 FailureHandling.CONTINUE_ON_FAILURE)
 
             'click menu meterai'
-            WebUI.click(findTestObject('Meterai/menu_Meterai'))
+            WebUI.click(findTestObject('saldo/menu_saldo'))
 
+			'click ddl bahasa'
+			WebUI.click(findTestObject('Login/button_bahasa'))
+			
+			'click english'
+			WebUI.click(findTestObject('Login/button_English'))
+			
             'call function check paging'
             checkPaging(currentDate, firstDateOfMonth, conneSign)
         }
 	}
-
-		
-	'status kosong berhentikan testing, status selain unexecuted akan dilewat'
-	if (findTestData(excelPathSaldo).getValue(GlobalVariable.NumOfColumn, 1).length() == 0) {
-		
-		break
-	} 
-	else if (findTestData(excelPathSaldo).getValue(GlobalVariable.NumOfColumn, 1).equalsIgnoreCase('Unexecuted')) {
-		
-		'angka untuk menghitung data mandatory yang tidak terpenuhi'
-		int isMandatoryComplete = Integer.parseInt(findTestData(excelPathSaldo).getValue(GlobalVariable.NumOfColumn, 5))
-		
-		'panggil fungsi cek filter saldo'
-		filterSaldo()
-		
-		'scroll ke bawah halaman'
-		WebUI.scrollToElement(findTestObject('Object Repository/API_KEY/Page_Balance/i_Catatan_datatable-icon-skip'), GlobalVariable.Timeout)
-		
-		'panggil fungsi cek table dan paging'
-		checkTableandPaging(conn, tenantcode, findTestData(excelPathSaldo).getValue(GlobalVariable.NumOfColumn, 9))
-		
+	
+	'dari sini sampe kebawah belum. Check ddl tipe transaksi querynya udah dapet, tpi count ddlnya belum'
+	
+	'check dropdownlist dari tipe saldo'
+	checkddlTipeTransaksi(conneSign, findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 9))
+	
+	WebUI.delay(100)
 		'check dropdownlist dari tipe saldo'
 		checkddlTipeSaldo(conn, tenantcode)
-		
-		'check dropdownlist dari tipe saldo'
-		checkddlTipeTransaksi(conn, findTestData(excelPathSaldo).getValue(GlobalVariable.NumOfColumn, 9))
 		
 		'check dropdownlist dari office'
 		checkddlOffice(conn, tenantcode)
@@ -135,7 +130,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					GlobalVariable.FailedReasonUnknown)
 		}
 	}
-}
+
 
 'klik garis tiga di kanan atas web'
 WebUI.click(findTestObject('Object Repository/Profile/Page_Balance/i_LINA_ft-chevron-down'))
@@ -154,7 +149,6 @@ WebUI.closeBrowser()
 
 'fungsi untuk filter saldo berdasarkan input user'
 def filterSaldo() {
-	
 	'driver chrome untuk pengalihan proses download'
 	WebDriver driver = DriverFactory.getWebDriver()
 	
@@ -472,10 +466,10 @@ def checkddlTipeSaldo(Connection Conn, String tenantcode) {
 	WebUI.click(findTestObject('Object Repository/Saldo/Page_Balance/inputtipesaldo'))
 	
 	'ambil list tipesaldo'
-	def elementjumlahTipeSaldo = DriverFactory.getWebDriver().findElements(By.xpath('/html/body/app-root/app-full-layout/'+
-		'div/div[2]/div/div[2]/app-balance-prod/div[3]/app-msx-paging-v2/app-search-filter-v2/div/div/div/div/div/'+
-		'form/div[1]/div[1]/app-select/div/div[2]/ng-select/ng-dropdown-panel/div/div[2]/div'))
+	def elementjumlahTipeSaldo = DriverFactory.getWebDriver().findElements(By.xpath('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-search-filter/div/div/div/div/div/form/div[1]/div[1]/app-question/app-select/div/div[2]/ng-select/ng-dropdown-panel/div/div[2]/div'))
 		
+	println elementjumlahTipeSaldo.size()
+	WebUI.delay(20)
 	'ambil hitungan tipesaldo yang ada'
 	int countWeb = (elementjumlahTipeSaldo.size()) - 1
 	
@@ -533,13 +527,15 @@ def checkddlTipeSaldo(Connection Conn, String tenantcode) {
 'cek jumlah ddl tipe saldo DB dan UI'
 def checkddlTipeTransaksi(Connection Conn, String tipeSaldo) {
 	
+	'klik ddl untuk tenant memilih mengenai Vida'
+	WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), tipeSaldo, false)
+	
 	'klik pada tipe saldo'
-	WebUI.click(findTestObject('Object Repository/Saldo/Page_Balance/inputtipetransaksi'))
+	WebUI.click(findTestObject('Object Repository/Saldo/input_tipetransaksi'))
 	
 	'ambil list tipesaldo'
-	def elementjumlahTipeTransaksi = DriverFactory.getWebDriver().findElements(By.xpath('/html/body/app-root/'+
-		'app-full-layout/div/div[2]/div/div[2]/app-balance-prod/div[3]/app-msx-paging-v2/app-search-filter-v2/div/div/'+
-		'div/div/div/form/div[1]/div[3]/app-select/div/div[2]/ng-select/ng-dropdown-panel/div/div[2]/div'))
+	def elementjumlahTipeTransaksi = DriverFactory.getWebDriver().findElements(By.cssSelector
+		('#searchForm > div:nth-child(5) > div:nth-child(1) > app-question > app-select > div > div.col-7 > ng-dropdown-panel > div > div:nth-child(2)'))
 		
 	'ambil hitungan tipesaldo yang ada'
 	int countWeb = (elementjumlahTipeTransaksi.size()) - 1
@@ -548,7 +544,7 @@ def checkddlTipeTransaksi(Connection Conn, String tipeSaldo) {
 	int isTipeTransaksiMatch = 1
 	
 	'ambil nama balance dari DB'
-	ArrayList<String> namatipetransaksiDB = CustomKeywords.'saldo.VerifSaldo.getListTipeTransaksi'(Conn, tipeSaldo)
+	ArrayList<String> namatipetransaksiDB = CustomKeywords.'connection.Saldo.getAllBalanceType'(Conn)
 	
 	'nama-nama tipe saldo sedang aktif dari UI'
 	ArrayList<String> namatipetransaksiUI = []
@@ -564,15 +560,19 @@ def checkddlTipeTransaksi(Connection Conn, String tipeSaldo) {
 			
 			'ambil object dari ddl'
 			def modifyNamatipetransaksi = WebUI.modifyObjectProperty(findTestObject('Object Repository/Saldo/'+
-				'Page_Balance/modifyobjectddl'), 'xpath', 'equals', "/html/body/app-root/app-full-layout/div/div[2]/div/"+
-				"div[2]/app-balance-prod/div[3]/app-msx-paging-v2/app-search-filter-v2/div/div/div/div/div/form/div[1]/div[3]/"+
-				"app-select/div/div[2]/ng-select/ng-dropdown-panel/div/div[2]/div["+(i+1)+"]/span", true)
+				'Page_Balance/modifyobjectddl'), 'xpath', 'equals', "/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-search-filter/div/div/div/div/div/form/div[1]/div[1]/app-question/app-select/div/div[2]/ng-select/ng-dropdown-panel/div['" + i + 1 + "']/span", true)
 				
 			'tambahkan nama tipe saldo ke array'
 			String data = WebUI.getText(modifyNamatipetransaksi)
+			
+			println data
+			
+			WebUI.delay(20)
+			
 			namatipetransaksiUI.add(data)
 		}
-			
+			println namatipetransaksiUI
+			println namatipetransaksiDB
 		'jika ada data yang tidak terdapat pada arraylist yang lain'
 		if (!namatipetransaksiUI.containsAll(namatipetransaksiDB)){
 			
@@ -581,6 +581,9 @@ def checkddlTipeTransaksi(Connection Conn, String tipeSaldo) {
 		}
 		
 	}
+	
+	println countWeb
+	println countDB
 	
 	'jika hitungan di UI dan DB tidak sesuai'
 	if(countWeb != countDB || isTipeTransaksiMatch == 0){
@@ -673,12 +676,144 @@ def checkVerifyReset(Boolean isMatch) {
 	}
 }
 
+
+def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection conneSign) {
+	'klik ddl untuk tenant memilih mengenai Vida'
+	WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'Vida', false)
+	
+   'input filter dari saldo'
+    WebUI.setText(findTestObject('Saldo/input_tipesaldo'),'Sign')
+
+    'Input enter'
+    WebUI.sendKeys(findTestObject('Saldo/input_tipesaldo'), Keys.chord(Keys.ENTER))
+
+    'Input tipe transaksi'
+    WebUI.setText(findTestObject('Saldo/input_tipetransaksi'), 'Use Sign')
+
+    'Input enter'
+    WebUI.sendKeys(findTestObject('Saldo/input_tipetransaksi'), Keys.chord(Keys.ENTER))
+
+    'Input date sekarang'
+    WebUI.setText(findTestObject('Saldo/input_fromdate'), '2023-07-13')
+
+    'Input tipe dokumen'
+    WebUI.setText(findTestObject('Saldo/input_tipedokumen'), 'Dokumen Kontrak')
+
+    'Input enter'
+    WebUI.sendKeys(findTestObject('Saldo/input_tipedokumen'), Keys.chord(Keys.ENTER))
+
+    'Input referal number'
+    WebUI.setText(findTestObject('Saldo/input_refnumber'), 'TTDQEWHJULI05')
+
+    'Input documentTemplateName'
+    WebUI.setText(findTestObject('Saldo/input_namadokumen'), 'DOKUMEN DIKIRIM PER SATU CAPITAL')
+
+    'Input date sekarang'
+    WebUI.setText(findTestObject('Saldo/input_todate'), '2023-07-13')
+
+    'Klik set ulang'
+    WebUI.click(findTestObject('Saldo/button_SetUlang'))
+
+	'verify field ke reset'
+	checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Saldo/input_fromdate'), 'value', FailureHandling.CONTINUE_ON_FAILURE),
+	'', false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	'verify field ke reset'
+	checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Saldo/input_refnumber'), 'value', FailureHandling.CONTINUE_ON_FAILURE),
+	'', false, FailureHandling.CONTINUE_ON_FAILURE))
+
+	'verify field ke reset'
+	checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Saldo/input_namadokumen'), 'value', FailureHandling.CONTINUE_ON_FAILURE),
+	'', false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	'verify field ke reset'
+	checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Saldo/input_todate'), 'value', FailureHandling.CONTINUE_ON_FAILURE),
+	'', false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	'click ddl tipe saldo'
+	WebUI.click(findTestObject('Saldo/input_tipesaldo'))
+
+	'verify field ke reset'
+	checkVerifyPaging(WebUI.verifyMatch(WebUI.getText(findTestObject('Saldo/selected_DDL')), 'All', false, FailureHandling.CONTINUE_ON_FAILURE))
+
+	'Input enter'
+	WebUI.sendKeys(findTestObject('Saldo/input_tipesaldo'), Keys.chord(Keys.ENTER))
+	
+	'click ddl tipe transaksi'
+	WebUI.click(findTestObject('Saldo/input_tipetransaksi'))
+
+	'verify field ke reset'
+	checkVerifyPaging(WebUI.verifyMatch(WebUI.getText(findTestObject('Saldo/selected_DDL')), 'All', false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	'Input enter'
+	WebUI.sendKeys(findTestObject('Saldo/input_tipetransaksi'), Keys.chord(Keys.ENTER))
+	
+	'click ddl tipe dokumen'
+	WebUI.click(findTestObject('Saldo/input_tipedokumen'))
+
+	'verify field ke reset'
+	checkVerifyPaging(WebUI.verifyMatch(WebUI.getText(findTestObject('Saldo/selected_DDL')), 'All', false, FailureHandling.CONTINUE_ON_FAILURE))
+
+	'Input enter'
+	WebUI.sendKeys(findTestObject('Saldo/input_tipedokumen'), Keys.chord(Keys.ENTER))
+	
+	'input filter dari saldo'
+	WebUI.setText(findTestObject('Saldo/input_tipesaldo'), 'Sign')
+
+	'Input enter'
+	WebUI.sendKeys(findTestObject('Saldo/input_tipesaldo'), Keys.chord(Keys.ENTER))
+
+	'Klik cari'
+	WebUI.click(findTestObject('Saldo/btn_cari'))
+
+	'ambil total trx berdasarkan filter yang telah disiapkan pada ui'
+	totalTrxUI = WebUI.getText(findTestObject('Saldo/Label_TotalSaldo')).split(' ', -1)
+	
+	tenantCodeByUserLogin = CustomKeywords.'connection.DataVerif.getTenantCode'(conneSign, findTestData(excelPathSetting).getValue(2,2).toUpperCase())
+	
+	'ambil total trx berdasarkan filter yang telah disiapkan pada db'
+	totalTrxDB = CustomKeywords.'connection.Saldo.getTotalTrxBasedOnVendorAndBalanceType'(conneSign, tenantCodeByUserLogin, 'VIDA', 'Sign')
+	
+	'verify total Meterai'
+	checkVerifyPaging(WebUI.verifyMatch(totalTrxUI[0], totalTrxDB, false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	if (Integer.parseInt(totalTrxUI[0]) > 10) {
+		'click next page'
+		WebUI.click(findTestObject('Saldo/button_NextPage'))
+	
+		'verify paging di page 2'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Saldo/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE),
+				'2', false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+		'click prev page'
+		WebUI.click(findTestObject('Saldo/button_PrevPage'))
+	
+		'verify paging di page 1'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Saldo/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE),
+				'1', false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+		'click last page'
+		WebUI.click(findTestObject('Saldo/button_LastPage'))
+	
+		'verify paging di last page'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Saldo/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE),
+				WebUI.getAttribute(findTestObject('Saldo/page_Active'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE).replace(
+					'page ', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+		'click first page'
+		WebUI.click(findTestObject('Saldo/button_FirstPage'))
+	
+		'verify paging di page 1'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Saldo/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE),
+				'1', false, FailureHandling.CONTINUE_ON_FAILURE))
+	}
+}
+
 def checkVerifyPaging(Boolean isMatch) {
 	if (isMatch == false) {
 		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-		CustomKeywords.'writeToExcel.WriteExcel.writeToExcelStatusReason'('Saldo', GlobalVariable.NumOfColumn, 
-			GlobalVariable.StatusFailed,(findTestData(excelPathSaldo).getValue(GlobalVariable.NumOfColumn, 2) + 
-				';') + GlobalVariable.FailedReasonPagingError)
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Meterai', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+			(findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedPaging)
 
 		GlobalVariable.FlagFailed = 1
 	}
