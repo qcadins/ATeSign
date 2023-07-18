@@ -46,7 +46,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
 			'click ddl bahasa'
 			WebUI.click(findTestObject('Login/button_bahasa'))
-			
+			aaa
 			'click english'
 			WebUI.click(findTestObject('Login/button_English'))
 			
