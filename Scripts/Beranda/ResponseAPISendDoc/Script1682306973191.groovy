@@ -142,6 +142,12 @@ for (int t = 0; t < documentFile.size(); t++) {
     }
 }
 
+'Input tenant'
+GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
+
+'get api key dari db'
+ GlobalVariable.api_key = CustomKeywords.'connection.APIFullService.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
+
 'Hit API'
 respon = WS.sendRequest(findTestObject('Postman/Send Document', [('tenantCode') : findTestData(API_Excel_Path).getValue(
                 GlobalVariable.NumofColm, 9), ('request') : stringRefno, ('callerId') : findTestData(API_Excel_Path).getValue(
@@ -205,7 +211,8 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 def pdfToBase64(String fileName) {
     String base64 = CustomKeywords.'customizekeyword.ConvertFile.base64File'(fileName)
 
-    return base64
+    //return base64
+	return fileName
 }
 
 def responseAPIStoreDB(Connection conneSign) {

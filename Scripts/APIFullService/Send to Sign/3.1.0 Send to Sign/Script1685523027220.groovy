@@ -323,6 +323,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             if (checkPopup() == true) {
                 continue
             }
+			
+			'check error log'
+			if (checkErrorLog() == true) {
+				continue
+			}
             
             'Jika total document sign excel tidak sama dengan total document sign paging'
             if (totalDocSign != documentTemplateNamePerDoc.size()) {
@@ -746,7 +751,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     WebUI.refresh()
                 }
             }
-            
+
             'looping berdasarkan total dokumen dari dokumen template code'
             for (int i = 0; i < noKontrakPerDoc.size(); i++) {
                 'Input filter di Mutasi Saldo'

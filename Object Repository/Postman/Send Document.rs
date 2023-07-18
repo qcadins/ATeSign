@@ -36,7 +36,7 @@
       <matchCondition>equals</matchCondition>
       <name>x-api-key</name>
       <type>Main</type>
-      <value>ASDFGH@WOMF</value>
+      <value>${api_key}@${tenant_code}</value>
       <webElementGuid>9c870ca8-7b58-4dd1-be5f-5ab883f6adf0</webElementGuid>
    </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
@@ -58,6 +58,20 @@
       <id>92b27132-647a-4d08-b978-eaf024125a1f</id>
       <masked>false</masked>
       <name>base_url</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.api_key</defaultValue>
+      <description></description>
+      <id>97437dd5-4ac8-4a2a-805c-d0a844c24328</id>
+      <masked>false</masked>
+      <name>api_key</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.Tenant</defaultValue>
+      <description></description>
+      <id>9598cd05-6753-430d-91c0-a2f152e7fa2e</id>
+      <masked>false</masked>
+      <name>tenant_code</name>
    </variables>
    <verificationScript>import static org.assertj.core.api.Assertions.*
 

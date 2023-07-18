@@ -201,4 +201,20 @@ public class DataVerif {
 		}
 		data
 	}
+
+	@Keyword
+	getTenantCode(Connection conn, String loginId) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select mst.tenant_code from ms_tenant mst join ms_useroftenant muot on mst.id_ms_tenant = muot.id_ms_tenant join am_msuser amm on amm.id_ms_user = muot.id_ms_user where amm.login_id = '" + loginId + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
 }

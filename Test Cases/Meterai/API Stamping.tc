@@ -17,18 +17,6 @@
       <value></value>
       <variableId>1848398d-cf87-4d29-865b-9090127edf08</variableId>
    </variableLinks>
-   <variableLinks>
-      <testDataLinkId></testDataLinkId>
-      <type>DEFAULT</type>
-      <value></value>
-      <variableId>7a422192-2c72-43f3-b4ad-469e2b7a1534</variableId>
-   </variableLinks>
-   <variableLinks>
-      <testDataLinkId></testDataLinkId>
-      <type>DEFAULT</type>
-      <value></value>
-      <variableId>2dbc2cdd-e4bf-4b0a-8ec4-2b3508fd808b</variableId>
-   </variableLinks>
    <variable>
       <defaultValue>'Meterai/Stamping'</defaultValue>
       <description></description>
