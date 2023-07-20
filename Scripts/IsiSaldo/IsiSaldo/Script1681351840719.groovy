@@ -43,6 +43,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'call test case login admin esign'
         WebUI.callTestCase(findTestCase('Login/Login_AdminEsign'), [:], FailureHandling.STOP_ON_FAILURE)
 
+		'check if button menu visible atau tidak'
+		if(WebUI.verifyElementVisible(findTestObject('isiSaldo/menu_isiSaldo'), FailureHandling.OPTIONAL)) {
+			'click menu saldo'
+			WebUI.click(findTestObject('button_HamburberSideMenu'))
+		}
+		
 //		if(GlobalVariable.NumofColm == 2) {
 //			'call function input cancel'
 //			inputCancel()
