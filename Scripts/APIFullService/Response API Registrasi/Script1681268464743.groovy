@@ -92,12 +92,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     ArrayList<String> result = CustomKeywords.'connection.APIFullService.checkAPIRegisterActive'(conneSign, findTestData(
                             excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 12).replace('"', ''), findTestData(
                             excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 16).replace('"', ''))
-
-                    String resultTrx = CustomKeywords.'connection.APIFullService.getAPIRegisterTrx'(conneSign, trxNo)
+					
+                    String resultTrx = CustomKeywords.'connection.APIFullService.getAPIRegisterTrx'(conneSign, trxNo.toString().replace('[', '').replace(']', ''))
 
                     ArrayList<String> resultDataUser = CustomKeywords.'connection.Registrasi.buatUndanganStoreDB'(conneSign, 
                         findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 12).replace('"', ''))
-
+					
                     'declare arraylist arraymatch'
                     arrayMatch = []
 
@@ -110,6 +110,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'verify trx qty = -1'
                     arrayMatch.add(WebUI.verifyMatch(resultTrx, '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
 
+					'reset index kembali 0 untuk array selanjutnya'
+					arrayIndex = 0
+					
                     'verify full name'
                     arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathAPIRegistrasi).getValue(
                                 GlobalVariable.NumofColm, 11).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -119,12 +122,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                                 GlobalVariable.NumofColm, 13).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
                     'parse Date from MM/dd/yyyy > yyyy-MM-dd'
-                    sDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(findTestData(excelPathAPIRegistrasi).getValue(
-                            GlobalVariable.NumofColm, 14).replace('"', ''), 'MM/dd/yyyy', 'yyyy-MM-dd')
+                    sDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(resultDataUser[arrayIndex++], 'MM/dd/yyyy', 'yyyy-MM-dd')
 
                     'verify tanggal lahir'
-                    arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), sDate.toUpperCase(), 
-                            false, FailureHandling.CONTINUE_ON_FAILURE))
+                    arrayMatch.add(WebUI.verifyMatch(sDate.toUpperCase(), findTestData(excelPathAPIRegistrasi).getValue(
+                            GlobalVariable.NumofColm, 14).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
                     'verify jenis kelamin'
                     arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathAPIRegistrasi).getValue(
@@ -182,8 +184,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'declare arraylist arraymatch'
                     ArrayList arrayMatch = []
 
-                    'verify trx qty = -1'
-                    arrayMatch.add(WebUI.verifyMatch(resultTrx, '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
+					if (GlobalVariable.Psre == 'VIDA') {
+	                    'verify trx qty = -1'
+	                    arrayMatch.add(WebUI.verifyMatch(resultTrx, '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
+					} else if (GlobalVariable.Psre == 'PRIVY') {
+	                    'verify trx qty = 0'
+	                    arrayMatch.add(WebUI.verifyMatch(resultTrx, '0', false, FailureHandling.CONTINUE_ON_FAILURE))
+					}
 
                     'jika data db tidak sesuai dengan excel'
                     if (arrayMatch.contains(false)) {

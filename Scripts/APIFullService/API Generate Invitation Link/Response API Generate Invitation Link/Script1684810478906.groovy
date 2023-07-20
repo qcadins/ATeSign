@@ -187,21 +187,23 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 	WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excelPathAPIGenerateInvLink).getValue(2,
 			56))
 
+	'enter untuk select perusahaan'
 	WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
 
 	'input peran'
 	WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excelPathAPIGenerateInvLink).getValue(2,
 			57))
 
+	'enter untuk select peran'
 	WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
 
 	'click button pilih peran'
 	WebUI.click(findTestObject('Login/button_pilihPeran'), FailureHandling.CONTINUE_ON_FAILURE)
 
 	'check if button menu visible atau tidak'
-	if(WebUI.verifyElementPresent(findTestObject('BuatUndangan/checkSaldo/menu_Saldo'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+	if(WebUI.verifyElementVisible(findTestObject('BuatUndangan/checkSaldo/menu_Saldo'), FailureHandling.OPTIONAL)) {
 		'click menu saldo'
-		WebUI.click(findTestObject('Saldo/button_HamburberSideMenu'))
+		WebUI.click(findTestObject('button_HamburberSideMenu'))
 	}
 	
 	'click menu saldo'
