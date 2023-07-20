@@ -498,10 +498,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
     }
 }
 
-'Fungsi PDF to Base64'
-
-'Fungsi storedb'
-
 def PDFtoBase64(String fileName) {
    return CustomKeywords.'customizekeyword.ConvertFile.base64File'(fileName)
 }
