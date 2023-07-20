@@ -224,4 +224,14 @@
       <initValue>''</initValue>
       <name>tenant_code</name>
    </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>''</initValue>
+      <name>merchant-key</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>''</initValue>
+      <name>access_token</name>
+   </GlobalVariableEntity>
 </GlobalVariableEntities>

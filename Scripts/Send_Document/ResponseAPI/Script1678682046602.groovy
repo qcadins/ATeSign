@@ -126,9 +126,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(A
 	    listSigner = listSigner + list[(i - 1)]
 		
 		'check ada value maka setting email service tenant'
-		if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 49).length() > 0) {
+		if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 50).length() > 0) {
 			'setting email service tenant'
-			CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 49), email[(i - 1)].replace('"',''))
+			CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 50), email[(i - 1)].replace('"',''))
 		}
 	}
 	
@@ -157,6 +157,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(A
 		String isDeleteDownloadedDocument = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 48)
 		
 		String isViewDocument = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 49)
+
+		'Input tenant'
+		GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
+		
+		'get api key dari db'
+		 GlobalVariable.api_key = CustomKeywords.'connection.APIFullService.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
 		
 	'Hit API'
     respon = WS.sendRequest(findTestObject('Postman/Send Document', [('tenantCode') : findTestData(API_Excel_Path).getValue(
@@ -211,6 +217,21 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(A
                     FailureHandling.CONTINUE_ON_FAILURE)
             }
         }
+    }  else {
+        'write to excel status failed dan reason : failed hit api'
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm, 
+            GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace('-', 
+                '') + ';') + GlobalVariable.ReasonFailedHitAPI)
+
+        'call test case login inveditor'
+        WebUI.callTestCase(findTestCase('Login/Login_Inveditor'), [:], FailureHandling.STOP_ON_FAILURE)
+
+        'call test case error report'
+        WebUI.callTestCase(findTestCase('Sign_Document/ErrorReport'), [('excelPathSignDoc') : 'Registrasi/SendDocument'], 
+            FailureHandling.STOP_ON_FAILURE)
+
+        'close browser'
+        WebUI.closeBrowser()
     }
 }
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>modifyObjectDDL</name>
+   <tag></tag>
+   <elementGuidId>3d43a479-1f46-4c0c-a3b7-4e7f0e9e8541</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value></value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value></value>
+      <webElementGuid>e9ca603c-8b6b-4e22-92a8-70c5f6c05fa3</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>
