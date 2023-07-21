@@ -338,7 +338,7 @@ public class APIFullService {
 	getResetCodeRequestNum(Connection conn, String email) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select reset_code_request_num from am_msuser where login_id = '" + email + "'")
+		resultSet = stm.executeQuery("select reset_code_request_num from am_msuser where login_id = '" + email + "' limit 1 ")
 
 		metadata = resultSet.metaData
 
@@ -735,5 +735,20 @@ public class APIFullService {
 			}
 		}
 		listdata
+	}
+
+	@Keyword
+	getVendorAccessToken(Connection conn, String emailSigner) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select msvr.vendor_access_token from ms_vendor_registered_user msvr join am_msuser amm on amm.id_ms_user = msvr.id_ms_user where amm.login_id = '" + emailSigner + "'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
 	}
 }
