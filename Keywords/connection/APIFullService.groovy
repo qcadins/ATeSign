@@ -736,4 +736,34 @@ public class APIFullService {
 		}
 		listdata
 	}
+	
+	@Keyword
+	getPrivyId(Connection conn, String email) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT VENDOR_REGISTRATION_ID FROM ms_vendor_registered_user WHERE SIGNER_REGISTERED_EMAIL = '"+ email +"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+	
+	@Keyword
+	getVendorAccessToken(Connection conn, String email) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT vendor_access_token FROM ms_vendor_registered_user WHERE SIGNER_REGISTERED_EMAIL = '"+ email +"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
 }
