@@ -101,7 +101,7 @@ public class UserManagement {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	convertRoleCodetoName(Connection conn, String code) {
 		stm = conn.createStatement()
@@ -115,5 +115,24 @@ public class UserManagement {
 			data = resultSet.getObject(1)
 		}
 		data
+	}
+	
+	@Keyword
+	getddlRoleUserManagement(Connection conn, String tenantCode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select role_name from am_msrole amm join ms_tenant mst on amm.id_ms_tenant = mst.id_ms_tenant where mst.tenant_code = '" + tenantCode + "' and is_usermanagement = '1' order by id_ms_role asc")
+		
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
 	}
 }

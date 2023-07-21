@@ -6,16 +6,16 @@
    <elementGuidId>b529de54-4dee-463c-8b24-0090a5a12f81</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>XPATH</key>
-         <value>(//input[@type='text'])[5]</value>
-      </entry>
-      <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;roleCode&quot;]/div/div/div[3]/input</value>
+         <value>//*[@id=&quot;roleCode&quot;]/div/div/div[3]</value>
       </entry>
       <entry>
          <key>CSS</key>
          <value>#officeCode > div.ng-select-container.ng-has-value > div.ng-value-container > div.ng-input > input[type=&quot;text&quot;]</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>(//input[@type='text'])[5]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -25,8 +25,8 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@id=&quot;roleCode&quot;]/div/div/div[3]/input</value>
-      <webElementGuid>e31c363a-66ec-4ed4-871d-26131ccf0527</webElementGuid>
+      <value>//*[@id=&quot;roleCode&quot;]/div/div/div[3]</value>
+      <webElementGuid>ea0ba29e-b3c8-43b3-9b2f-4ae280468fb8</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -34,7 +34,7 @@
       <name>xpath:attributes</name>
       <type>Main</type>
       <value>(//input[@type='text'])[5]</value>
-      <webElementGuid>43f25f6f-c6ab-4812-80b8-631f67b0dd70</webElementGuid>
+      <webElementGuid>ac8ef3fb-e3c6-473f-824d-77437b423765</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -42,7 +42,7 @@
       <name>xpath:idRelative</name>
       <type>Main</type>
       <value>//ng-select[@id='officeCode']/div/div/div[3]/input</value>
-      <webElementGuid>0be042be-3024-4f77-8f16-9ead2d3b767c</webElementGuid>
+      <webElementGuid>0e5aa31f-704a-47ef-9f8d-eda65c0d6e65</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -50,7 +50,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div[5]/div/app-select/div/div[2]/ng-select/div/div/div[3]/input</value>
-      <webElementGuid>6b99ce5f-246b-4c87-a3a3-7fa293277c8e</webElementGuid>
+      <webElementGuid>7f829c76-6f43-400c-80df-c52543825a6a</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -58,6 +58,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//input[@type = 'text']</value>
-      <webElementGuid>588a6dc3-ba11-4816-b63a-c1be17ed9e59</webElementGuid>
+      <webElementGuid>6fc6e842-8b0e-465d-b7a9-bc89c404ec1d</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

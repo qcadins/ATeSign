@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>ResponseAPI</name>
+   <name>API Upload Document</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>c42e6543-e3fa-4023-8050-0d88f1426850</testCaseGuid>
+   <testCaseGuid>052a3142-dd14-4570-83c5-91919b9fe760</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>a631a2b3-eb1f-450d-91d6-02e08bd89b31</variableId>
+      <variableId>e64ba528-ef15-447e-9eb7-91078e51612d</variableId>
    </variableLinks>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>04705f35-3d93-4bc4-9652-21b28161d404</variableId>
+      <variableId>94a56b07-fb58-4acf-bf87-b4cef4b1e0bd</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'Registrasi/SendDocument'</defaultValue>
+      <defaultValue>'APIFullService-Privy/API Upload Document'</defaultValue>
       <description></description>
-      <id>a631a2b3-eb1f-450d-91d6-02e08bd89b31</id>
+      <id>e64ba528-ef15-447e-9eb7-91078e51612d</id>
       <masked>false</masked>
-      <name>API_Excel_Path</name>
+      <name>excelPathUploadDocument</name>
    </variable>
    <variable>
       <defaultValue>'Login/Setting'</defaultValue>
       <description></description>
-      <id>04705f35-3d93-4bc4-9652-21b28161d404</id>
+      <id>94a56b07-fb58-4acf-bf87-b4cef4b1e0bd</id>
       <masked>false</masked>
       <name>excelPathSetting</name>
    </variable>

@@ -1,7 +1,8 @@
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.model.FailureHandling
+import com.kms.katalon.core.testobject.TestObject
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
@@ -17,6 +18,8 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 
 'get colm excel'
 int countColmExcel = findTestData(excelPathUserManagement).columnNumbers
+
+int isCheckDDL = 0
 
 sheet = 'User Management'
 
@@ -34,6 +37,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'call testcase login admin credit'
             WebUI.callTestCase(findTestCase('Login/Login_AdmCredit'), [:], FailureHandling.CONTINUE_ON_FAILURE)
 
+			'get db tenant code dari user yang telah login'
+			tenantCode = CustomKeywords.'connection.DataVerif.getTenantCode'(conneSign, findTestData('Login/Login').getValue(2, 6).toUpperCase())
+			
             'click menu user management'
             WebUI.click(findTestObject('User Management/menu_User Management'))
 
@@ -42,6 +48,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			
 			'call function inputcancel'
 			inputCancel()
+			
+			listDB = CustomKeywords.'connection.UserManagement.getddlRoleUserManagement'(conneSign, tenantCode)
+			
+			'call function check ddl untuk Peran pada Setting'
+			checkDDL(findTestObject('Object Repository/User Management/input_Peran'), listDB)
         }
         
         'jika aksinya adalah new'
@@ -98,7 +109,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 WebUI.click(modifyObjectLblValue)
 
                 'Klik batal'
-                WebUI.click(findTestObject('Object Repository/User Management/button_Batal'))
+                WebUI.click(findTestObject('Object Repository/User Management/button_SettingBatal'))
 
 				searchData()
 				
@@ -110,10 +121,26 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'Verify element header insert user management sudah muncul'
                 if (WebUI.verifyElementPresent(findTestObject('Object Repository/User Management/lbl_InsertUserManagement'), 
                     GlobalVariable.TimeOut)) {
-                    'db result Edit'
+		
+					if (isCheckDDL == 0) {
+					'get db tenant code dari user yang telah login'
+					tenantCode = CustomKeywords.'connection.DataVerif.getTenantCode'(conneSign, findTestData('Login/Login').getValue(2, 6).toUpperCase())
+			
+					listDBPeran = CustomKeywords.'connection.UserManagement.getddlRoleUserManagement'(conneSign, tenantCode)
+					
+					WebUI.delay(10)
+					checkDDL(findTestObject('Object Repository/User Management/input_PeranEdit'), listDBPeran)
+				
+					//listDBPeran = CustomKeywords.'connection.UserManagement.getddlRoleUserManagement'(conneSign, tenantCode)
+					
+					//checkDDL(WebUI.click(findTestObject('Object Repository/User Management/input_CabangEdit')), listDBPeran)
+					
+					isCheckDDL == 1
+					}
+					'db result Edit'
                     resultEdit = CustomKeywords.'connection.UserManagement.getUserManagementonEdit'(conneSign, findTestData(
                             excelPathUserManagement).getValue(GlobalVariable.NumofColm, 17).toUpperCase(), GlobalVariable.Tenant)
-
+					
                     index = 0
 
                     'verify db dengan ui mengenai nama'
@@ -553,6 +580,36 @@ def checkPaging(Connection conneSign) {
         checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('User Management/paging_Page'), 'ng-reflect-page', 
                     FailureHandling.CONTINUE_ON_FAILURE), '1', false, FailureHandling.CONTINUE_ON_FAILURE))
     }
+}
+
+def checkDDL(TestObject objectDDL, ArrayList<String> listDB) {
+	'declare array untuk menampung ddl'
+	ArrayList<String> list = []
+
+	'click untuk memunculkan ddl'
+	WebUI.click(objectDDL)
+
+	'get id ddl'
+	id = WebUI.getAttribute(findTestObject('isiSaldo/ddlClass'), 'id', FailureHandling.CONTINUE_ON_FAILURE)
+
+	'get row'
+	variable = DriverFactory.webDriver.findElements(By.cssSelector(('#' + id) + '> div > div:nth-child(2) div'))
+
+	'looping untuk get ddl kedalam array'
+	for (i = 1; i < variable.size(); i++) {
+		'modify object DDL'
+		modifyObjectDDL = WebUI.modifyObjectProperty(findTestObject('isiSaldo/modifyObject'), 'xpath', 'equals', ((('//*[@id=\'' +
+			id) + '-') + i) + '\']', true)
+
+		'add ddl ke array'
+		list.add(WebUI.getText(modifyObjectDDL))
+	}
+	
+	'verify ddl ui = db'
+	checkVerifyEqualOrMatch(listDB.containsAll(list), ' DDL SALDO')
+
+	'verify jumlah ddl ui = db'
+	checkVerifyEqualOrMatch(WebUI.verifyEqual(list.size(), listDB.size(), FailureHandling.CONTINUE_ON_FAILURE), ' Jumlah DDL Saldo')
 }
 
 def checkVerifyPaging(Boolean isMatch) {
