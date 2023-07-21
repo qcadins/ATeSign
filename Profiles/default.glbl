@@ -56,6 +56,11 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
+      <initValue>findTestData('Login/Setting').getValue(11, 2)</initValue>
+      <name>Merchantkey</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
       <initValue>2</initValue>
       <name>NumofColm</name>
    </GlobalVariableEntity>
@@ -63,6 +68,11 @@
       <description></description>
       <initValue>findTestData('Login/Setting').getValue(5, 2)</initValue>
       <name>Psre</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>''</initValue>
+      <name>PrivyId</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
