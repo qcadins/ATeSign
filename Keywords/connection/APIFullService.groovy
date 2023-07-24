@@ -751,7 +751,7 @@ public class APIFullService {
 		}
 		data
 	}
-	
+
 	@Keyword
 	getPrivyId(Connection conn, String email) {
 		stm = conn.createStatement()
