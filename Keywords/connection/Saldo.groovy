@@ -189,4 +189,58 @@ public class Saldo {
 		}
 		listdata
 	}
+	
+	@Keyword
+	getDDLTipeTrx(Connection conn) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT description FROM ms_lov WHERE lov_group = 'TRX_TYPE' AND is_active = '1'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+	
+	@Keyword
+	getDDLTipeDokumen(Connection conn) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT description FROM ms_lov WHERE lov_group = 'DOC_TYPE' AND is_active = '1'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+	
+	@Keyword
+	getTrxSaldo(Connection conn, String date, String refNo, String trxType, String documentName) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT tbm.trx_no, TO_CHAR(trx_date, 'yyyy-MM-dd HH24:MI:SS'), ml.description, full_name, ref_no, ml2.code, document_name, notes, qty*-1 FROM tr_balance_mutation tbm JOIN ms_lov ml ON tbm.lov_trx_type = ml.id_lov JOIN tr_document_h tdh ON tbm.id_document_h = tdh.id_document_h JOIN tr_document_d tdd ON tbm.id_document_d = tdd.id_document_d JOIN am_msuser amu ON tbm.id_ms_user = amu.id_ms_user JOIN ( SELECT id_lov, code FROM ms_lov ) ml2 ON tdh.lov_doc_type = ml2.id_lov WHERE TO_CHAR(trx_date, 'yyyy-MM-dd') = '"+ date +"' AND ml.description = '"+ trxType +"' AND ref_no = '"+ refNo +"' AND document_name = '"+ documentName +"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
 }

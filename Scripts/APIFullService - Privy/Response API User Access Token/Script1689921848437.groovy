@@ -13,10 +13,10 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get colm excel'
-int countColmExcel = findTestData(exelPath).columnNumbers
+int countColmExcel = findTestData(excelPath).columnNumbers
 
 'get privyId dari DB'
-privyId = CustomKeywords.'connection.APIFullService.getPrivyId'(conneSign, findTestData(exelPath).getValue(GlobalVariable.NumofColm, 11).replace('"', ''))
+privyId = CustomKeywords.'connection.APIFullService.getPrivyId'(conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, 11).replace('"', ''))
 
 'HIT API user access token'
 respon = WS.sendRequest(findTestObject('APIFullService/Postman/API User Access Token', [('privyId') : privyId]))
@@ -28,37 +28,13 @@ if (WS.verifyResponseStatusCode(respon, 201, FailureHandling.OPTIONAL) == true) 
         'mengambil response'
         token = WS.getElementPropertyValue(respon, 'data.token', FailureHandling.OPTIONAL)
 
+		'print token'
 		println(token)
 		
 		'write to excel success'          
 		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sent OTP Signing',
 		      0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 		
-//        if (GlobalVariable.checkStoreDB == 'Yes') {
-//            arrayIndex = 0
-//
-//            'get vendor access token from db'
-//            resultAccessTokenDB = CustomKeywords.'connection.APIFullService.getVendorAccessToken'(conneSign, findTestData(exelPath).getValue(
-//				GlobalVariable.NumofColm, 11).replace('"', ''))
-//
-//            'declare arraylist arraymatch'
-//            ArrayList<String> arrayMatch = []
-//
-//       		'verify vendor'
-//       		arrayMatch.add(WebUI.verifyMatch(resultAccessTokenDB, token, false, FailureHandling.CONTINUE_ON_FAILURE))
-//            
-//            'jika data db tidak sesuai dengan excel'
-//            if (arrayMatch.contains(false)) {
-//                'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-//                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Sent OTP Signing', GlobalVariable.NumofColm, 
-//                    GlobalVariable.StatusFailed, (findTestData(exelPath).getValue(GlobalVariable.NumofColm, 
-//                        2) + ';') + GlobalVariable.ReasonFailedStoredDB)
-//            } else {
-//                'write to excel success'
-//                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sent OTP Signing', 
-//                    0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-//            }
-//        }
 } else {
     'mengambil status code berdasarkan response HIT API'
     message = WS.getElementPropertyValue(respon, 'errors.messages', FailureHandling.OPTIONAL).toString().replace('[', '').replace(']', '')

@@ -16,6 +16,6 @@
       <description></description>
       <id>3df878c6-120f-4a6d-91a1-210031b5a82b</id>
       <masked>false</masked>
-      <name>exelPath</name>
+      <name>excelPath</name>
    </variable>
 </TestCaseEntity>
