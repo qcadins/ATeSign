@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>API Confirm OTP</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>cf2240fa-4dbc-4444-a712-f9219c72c62d</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>c2730ddc-8e93-4c1e-af18-2613d8bd9a44</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'APIFullService-Privy/API Confirm OTP'</defaultValue>
+      <description></description>
+      <id>c2730ddc-8e93-4c1e-af18-2613d8bd9a44</id>
+      <masked>false</masked>
+      <name>excelPathConfirmOTP</name>
+   </variable>
+</TestCaseEntity>

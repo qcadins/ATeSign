@@ -4,43 +4,43 @@
    <name>Response API Sent OTP Signing</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>cd123424-4d03-4796-a47c-67da5ce82c5d</testCaseGuid>
+   <testCaseGuid>22478cda-3c39-4d40-9ee2-9788faa1d2ea</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>4abe51c1-f4be-43f2-bce5-10b35328294f</variableId>
+      <variableId>c3c07d6f-2ae9-4a88-9d34-a25a2ff0e6a8</variableId>
    </variableLinks>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>9a09403f-a01e-45de-9ba9-6e8e123af2e8</variableId>
+      <variableId>4a20a5c6-bccc-4073-8875-2b7629e322ff</variableId>
    </variableLinks>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>29bba4d0-7846-40de-98c8-f17e41319494</variableId>
+      <variableId>c635a307-e9a2-451f-ad9c-c7f164370df9</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'APIFullService/API_SentOTPSigning'</defaultValue>
+      <defaultValue>''</defaultValue>
       <description></description>
-      <id>4abe51c1-f4be-43f2-bce5-10b35328294f</id>
+      <id>c3c07d6f-2ae9-4a88-9d34-a25a2ff0e6a8</id>
       <masked>false</masked>
       <name>excelPathAPISentOTPSigning</name>
    </variable>
    <variable>
       <defaultValue>'Login/Setting'</defaultValue>
       <description></description>
-      <id>9a09403f-a01e-45de-9ba9-6e8e123af2e8</id>
+      <id>4a20a5c6-bccc-4073-8875-2b7629e322ff</id>
       <masked>false</masked>
       <name>excelPathSetting</name>
    </variable>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
-      <id>29bba4d0-7846-40de-98c8-f17e41319494</id>
+      <id>c635a307-e9a2-451f-ad9c-c7f164370df9</id>
       <masked>false</masked>
       <name>sheet</name>
    </variable>

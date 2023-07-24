@@ -338,7 +338,7 @@ public class APIFullService {
 	getResetCodeRequestNum(Connection conn, String email) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select reset_code_request_num from am_msuser where login_id = '" + email + "'")
+		resultSet = stm.executeQuery("select reset_code_request_num from am_msuser where login_id = '" + email + "' limit 1 ")
 
 		metadata = resultSet.metaData
 
@@ -736,12 +736,12 @@ public class APIFullService {
 		}
 		listdata
 	}
-	
+
 	@Keyword
-	getPrivyId(Connection conn, String email) {
+	getVendorAccessToken(Connection conn, String emailSigner) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT VENDOR_REGISTRATION_ID FROM ms_vendor_registered_user WHERE SIGNER_REGISTERED_EMAIL = '"+ email +"'")
+		resultSet = stm.executeQuery("select msvr.vendor_access_token from ms_vendor_registered_user msvr join am_msuser amm on amm.id_ms_user = msvr.id_ms_user where amm.login_id = '" + emailSigner + "'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -753,10 +753,10 @@ public class APIFullService {
 	}
 	
 	@Keyword
-	getVendorAccessToken(Connection conn, String email) {
+	getPrivyId(Connection conn, String email) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT vendor_access_token FROM ms_vendor_registered_user WHERE SIGNER_REGISTERED_EMAIL = '"+ email +"'")
+		resultSet = stm.executeQuery("SELECT VENDOR_REGISTRATION_ID FROM ms_vendor_registered_user WHERE SIGNER_REGISTERED_EMAIL = '"+ email +"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
