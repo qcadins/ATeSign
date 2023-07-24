@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "8A27B8EA81B0210A1ADDA8B112F7FC76",
+  "keywordFileContentHash": "AC7E2DB857F43BAA411F64B176AAB4D7",
   "keywordClasses": [
     {
       "name": "connection.APIFullService",
@@ -1514,8 +1514,8 @@
                 "errorOnParsing": false
               }
             }
-<<<<<<< HEAD
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getVendorAccessToken",
@@ -1546,8 +1546,6 @@
                 "errorOnParsing": false
               }
             }
-          ]
-=======
           ],
           "javadoc": ""
         },
@@ -1582,39 +1580,6 @@
             }
           ],
           "javadoc": ""
-        },
-        {
-          "name": "getVendorAccessToken",
-          "parameters": [
-            {
-              "name": "conn",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.sql.Connection",
-                "unresolvedClassName": "Connection",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            },
-            {
-              "name": "email",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.lang.String",
-                "unresolvedClassName": "String",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            }
-          ],
-          "javadoc": ""
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
         }
       ]
     }
