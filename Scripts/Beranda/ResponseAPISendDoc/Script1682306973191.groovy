@@ -210,9 +210,8 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 
 def pdfToBase64(String fileName) {
     String base64 = CustomKeywords.'customizekeyword.ConvertFile.base64File'(fileName)
-
-    //return base64
-	return fileName
+	
+    return base64
 }
 
 def responseAPIStoreDB(Connection conneSign) {

@@ -217,4 +217,20 @@ public class DataVerif {
 		}
 		data
 	}
+
+	@Keyword
+	getVendorNameForSaldo(Connection conn, String refNumber) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select msv.vendor_name from ms_vendor msv left join tr_document_d tdd on tdd.id_ms_vendor = msv.id_ms_vendor left join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h where tdh.ref_number = '" + refNumber + "' limit 1")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
 }

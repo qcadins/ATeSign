@@ -107,7 +107,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 FailureHandling.STOP_ON_FAILURE)
 
             'mengambil saldo before'
-            saldoSignBefore = checkSaldoSign()
+            saldoSignBefore = checkSaldoSign(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 11).replace('"',''))
 
             'mengambil saldo otp before'
             otpBefore = checkSaldoOtp()
@@ -129,6 +129,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'Klik button ttd bulk'
             WebUI.click(findTestObject('Object Repository/APIFullService/Send to Sign/button_TTDBulk'))
 
+			if (checkPopup() == true) {
+				continue
+			}
+			
             'klik tombol Batal'
             WebUI.click(findTestObject('Object Repository/APIFullService/Send to Sign/button_BatalTandaTanganDokumen'))
 
@@ -734,7 +738,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 otpAfter = checkSaldoOtp()
 
                 'ambil saldo after'
-                saldoSignAfter = checkSaldoSign()
+                saldoSignAfter = checkSaldoSign(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 11).replace('"',''))
 				
 				countResend++
                 'Jika count saldo otp after dengan yang before dikurangi 1 ditambah dengan '
@@ -751,7 +755,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     WebUI.refresh()
                 }
             }
-
+			
             'looping berdasarkan total dokumen dari dokumen template code'
             for (int i = 0; i < noKontrakPerDoc.size(); i++) {
                 'Input filter di Mutasi Saldo'
@@ -1006,12 +1010,13 @@ def inputFilterTrx(Connection conneSign, String currentDate, String noKontrak, S
     WebUI.click(findTestObject('Saldo/btn_cari'))
 }
 
-def checkSaldoSign() {
+def checkSaldoSign(Connection conneSign, String refNumber) {
     String totalSaldo
-
-    'klik ddl untuk tenant memilih mengenai Vida'
-    WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
-            68), false)
+	
+	String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, refNumber)
+	
+    'klik ddl untuk vendor memilih mengenai sesuai dengan dokumen tersebut'
+    WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), vendor, false)
 
     'get total div di Saldo'
     variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))

@@ -288,6 +288,16 @@ for (int y = 0; y < docId.size(); y++) {
             'Klik View Document'
             WebUI.click(modifyObjectBtnViewDoc)
 
+			'Jika error lognya muncul'
+			if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+				'ambil teks errormessage'
+				errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
+
+					'Tulis di excel itu adalah error'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+						(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + errormessage)
+		}
+		
             'Pemberian waktu 3 detik karena loading terus menerus'
             WebUI.delay(4)
 

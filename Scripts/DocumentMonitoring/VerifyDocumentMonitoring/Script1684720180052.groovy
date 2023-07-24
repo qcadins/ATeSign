@@ -125,7 +125,22 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
         'Set text mengneai input nomor kontrak'
         WebUI.setText(findTestObject('DocumentMonitoring/input_NoKontrak'), nomorKontrakPerPilihan[y])
 
-		if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 80) == '1') {
+		if (linkDocumentMonitoring == '') {
+			'Set text mengenai input cabang'
+			WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndex++])
+	
+			'Enter'
+			WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER))
+	
+			'Set text mengenai wilayah'
+			WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndex++])
+	
+			'Enter'
+			WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER))
+	
+		}
+		
+		if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 80, FailureHandling.OPTIONAL) == '1') {
         'Set text mengenai input cabang'
         WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndex++])
 
@@ -306,8 +321,7 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
 		GlobalVariable.FlagFailed = 1
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedStoredDB) + 
-            ' pada menu Document Monitoring ')
+            ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedStoredDB) +  ' pada menu Document Monitoring ')
     }
 }
 }
