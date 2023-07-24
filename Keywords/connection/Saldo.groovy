@@ -53,7 +53,7 @@ public class Saldo {
 	}
 
 	@Keyword
-	getDDLTipeSaldo(Connection conn, String tenant, String vendor) {
+	getDDLTipeSaldoActive(Connection conn, String tenant, String vendor) {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select description from ms_balancevendoroftenant mbv JOIN ms_vendor mv ON mv.id_ms_vendor = mbv.id_ms_vendor JOIN ms_tenant mt ON mt.id_ms_tenant = mbv.id_ms_tenant JOIN ms_lov ml ON ml.id_lov = mbv.lov_balance_type where tenant_name = '" +  tenant  + "' AND vendor_name = '" +  vendor  + "'")
@@ -127,7 +127,7 @@ public class Saldo {
 	getTotalTrxBasedOnVendorAndBalanceType(Connection conn, String tenantCode, String vendorCode, String balanceType) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select count(*) from tr_balance_mutation tbm join ms_tenant mst on tbm.id_ms_tenant = mst.id_ms_tenant join ms_vendor msv on tbm.id_ms_vendor = msv.id_ms_vendor join ms_lov msl on tbm.lov_balance_type = msl.id_lov where tbm.dtm_crt >= date_trunc('month', now()) and tbm.dtm_crt <= now() and mst.tenant_code = '" + tenantCode + "' and msv.vendor_code = '" + vendorCode + "' and msl.description = '" + balanceType + "' ")
+		resultSet = stm.executeQuery("select count(*) from tr_balance_mutation tbm join ms_tenant mst on tbm.id_ms_tenant = mst.id_ms_tenant join ms_vendor msv on tbm.id_ms_vendor = msv.id_ms_vendor join ms_lov msl on tbm.lov_balance_type = msl.id_lov where tbm.trx_date >= date_trunc('month', now()) and tbm.trx_date <= now() and mst.tenant_code = '" + tenantCode + "' and msv.vendor_code = '" + vendorCode + "' and msl.description = '" + balanceType + "' ")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -143,6 +143,40 @@ public class Saldo {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select description from ms_lov where lov_group = 'BALANCE_TYPE' and is_active = '1'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+	
+	@Keyword
+	getTenantName(Connection conn) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT tenant_name FROM ms_tenant WHERE tenant_code = '"+ GlobalVariable.Tenant +"'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+	
+	@Keyword
+	getDDLTipeSaldo(Connection conn) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT description FROM ms_lov WHERE lov_group = 'BALANCE_TYPE' AND is_active = '1'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

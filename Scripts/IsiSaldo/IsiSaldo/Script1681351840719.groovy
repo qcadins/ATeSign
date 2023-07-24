@@ -85,7 +85,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         WebUI.sendKeys(findTestObject('isiSaldo/input_PilihVendor'), Keys.chord(Keys.ENTER))
 
         'get ddl tipe saldo'
-        ArrayList<String> resultTipeSaldo = CustomKeywords.'connection.Saldo.getDDLTipeSaldo'(conneSign, findTestData(
+        ArrayList<String> resultTipeSaldo = CustomKeywords.'connection.Saldo.getDDLTipeSaldoActive'(conneSign, findTestData(
                 excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 14), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
                 15))
 

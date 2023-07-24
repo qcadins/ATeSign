@@ -46,103 +46,92 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
 			'click ddl bahasa'
 			WebUI.click(findTestObject('Login/button_bahasa'))
-			aaa
+			
 			'click english'
 			WebUI.click(findTestObject('Login/button_English'))
 			
             'call function check paging'
             checkPaging(currentDate, firstDateOfMonth, conneSign)
+			
+			'get ddl tenant'
+			ArrayList<String> resultVendor = CustomKeywords.'connection.Saldo.getDDLVendor'(conneSign, CustomKeywords.'connection.Saldo.getTenantName'(conneSign))
+	
+			'verify vendor DDL'
+			WebUI.verifyOptionsPresent(findTestObject('Saldo/ddl_Vendor'), resultVendor, FailureHandling.CONTINUE_ON_FAILURE)
+			
+			'get ddl tipe Saldo'
+			ArrayList<String> resultTipeSaldo = CustomKeywords.'connection.Saldo.getDDLTipeSaldo'(conneSign)
+			
+			'call function check ddl untuk Tipe Saldo'
+			checkDDL(findTestObject('Saldo/input_tipesaldo'), resultTipeSaldo, 'DDL Tipe Saldo')
         }
 	}
 	
 	'dari sini sampe kebawah belum. Check ddl tipe transaksi querynya udah dapet, tpi count ddlnya belum'
-	
-	'check dropdownlist dari tipe saldo'
-	checkddlTipeTransaksi(conneSign, findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 9))
-	
-	WebUI.delay(100)
-		'check dropdownlist dari tipe saldo'
-		checkddlTipeSaldo(conn, tenantcode)
 		
-		'check dropdownlist dari office'
-		checkddlOffice(conn, tenantcode)
-		
-		'ambil nama saldo tenant yang aktif di DB'
-		ArrayList<String> activeBalanceDB = CustomKeywords.'saldo.VerifSaldo.getListActiveBalance'(conn, tenantcode)
-		
-		'ambil nama saldo tenant aktif di UI'
-		ArrayList<String> activeBalanceUI = []
-		
-		'cari element dengan nama saldo'
-		def elementNamaSaldo = DriverFactory.getWebDriver().findElements(By.cssSelector('body > app-root > app-full-layout >'+
-			' div > div.main-panel > div > div.content-wrapper > app-balance-prod >'+
-			' div.row.match-height > div > lib-balance-summary > div > div'))
-		
-		'lakukan loop untuk cari nama saldo yang ditentukan'
-		for (int i=1; i<=elementNamaSaldo.size(); i++){
-			
-			'cari nama saldo yang sesuai di list saldo'
-			def modifyNamaSaldo = WebUI.modifyObjectProperty(findTestObject('Object Repository/API_KEY/Page_Balance/span_OCR KK'),
-				 'xpath', 'equals', "/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance-prod/div[1]/div/"+
-				 "lib-balance-summary/div/div["+ (i) +"]/div/div/div/div/div[1]/span", true)
-			
-			'tambahkan nama saldo ke array'
-			activeBalanceUI.add(WebUI.getText(modifyNamaSaldo))
-		}
-		
-		'jika hasil UI dan DB tidak sama'
-		if (!activeBalanceUI.containsAll(activeBalanceDB)){
-			
-			GlobalVariable.FlagFailed = 1
-			
-			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.FailedReasonBalanceUI'
-			CustomKeywords.'writeToExcel.WriteExcel.writeToExcelStatusReason'('Saldo', GlobalVariable.NumOfColumn,
-			GlobalVariable.StatusFailed, (findTestData(excelPathSaldo).getValue(GlobalVariable.NumOfColumn, 2) +
-			';') + GlobalVariable.FailedReasonBalanceUI)
-		}
-		
-		'check if mandatory complete dan button simpan clickable'
-		if ((isMandatoryComplete == 0) && GlobalVariable.FlagFailed == 0){
-			
-			'write to excel success'
-			CustomKeywords.'writeToExcel.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Saldo', 0,
-				GlobalVariable.NumOfColumn - 1, GlobalVariable.StatusSuccess)
-		}
-		else if (isMandatoryComplete > 0){
-			
-			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.FailedReasonMandatory'
-			CustomKeywords.'writeToExcel.WriteExcel.writeToExcelStatusReason'('Saldo', GlobalVariable.NumOfColumn,
-				GlobalVariable.StatusFailed, (findTestData(excelPathSaldo).getValue(GlobalVariable.NumOfColumn, 2) +
-				';') + GlobalVariable.FailedReasonMandatory)
-		}
-		
-		WebUI.refresh()
-		
-		'cek apakah muncul error unknown setelah refresh'
-		if (WebUI.verifyElementNotPresent(findTestObject('Object Repository/Profile/Page_Balance/div_Unknown Error'),
-			GlobalVariable.Timeout, FailureHandling.OPTIONAL) == false) {
-			
-			GlobalVariable.FlagFailed = 1
-			
-			'tulis adanya error pada sistem web'
-			CustomKeywords.'writeToExcel.WriteExcel.writeToExcelStatusReason'('Saldo', GlobalVariable.NumOfColumn,
-				GlobalVariable.StatusWarning, (findTestData(excelPathSaldo).getValue(GlobalVariable.NumOfColumn, 2) + ';') +
-					GlobalVariable.FailedReasonUnknown)
-		}
+//		'ambil nama saldo tenant yang aktif di DB'
+//		ArrayList<String> activeBalanceDB = CustomKeywords.'saldo.VerifSaldo.getListActiveBalance'(conn, tenantcode)
+//		
+//		'ambil nama saldo tenant aktif di UI'
+//		ArrayList<String> activeBalanceUI = []
+//		
+//		'cari element dengan nama saldo'
+//		def elementNamaSaldo = DriverFactory.getWebDriver().findElements(By.cssSelector('body > app-root > app-full-layout >'+
+//			' div > div.main-panel > div > div.content-wrapper > app-balance-prod >'+
+//			' div.row.match-height > div > lib-balance-summary > div > div'))
+//		
+//		'lakukan loop untuk cari nama saldo yang ditentukan'
+//		for (int i=1; i<=elementNamaSaldo.size(); i++){
+//			
+//			'cari nama saldo yang sesuai di list saldo'
+//			def modifyNamaSaldo = WebUI.modifyObjectProperty(findTestObject('Object Repository/API_KEY/Page_Balance/span_OCR KK'),
+//				 'xpath', 'equals', "/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance-prod/div[1]/div/"+
+//				 "lib-balance-summary/div/div["+ (i) +"]/div/div/div/div/div[1]/span", true)
+//			
+//			'tambahkan nama saldo ke array'
+//			activeBalanceUI.add(WebUI.getText(modifyNamaSaldo))
+//		}
+//		
+//		'jika hasil UI dan DB tidak sama'
+//		if (!activeBalanceUI.containsAll(activeBalanceDB)){
+//			
+//			GlobalVariable.FlagFailed = 1
+//			
+//			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.FailedReasonBalanceUI'
+//			CustomKeywords.'writeToExcel.WriteExcel.writeToExcelStatusReason'('Saldo', GlobalVariable.NumOfColumn,
+//			GlobalVariable.StatusFailed, (findTestData(excelPathSaldo).getValue(GlobalVariable.NumOfColumn, 2) +
+//			';') + GlobalVariable.FailedReasonBalanceUI)
+//		}
+//		
+//		'check if mandatory complete dan button simpan clickable'
+//		if ((isMandatoryComplete == 0) && GlobalVariable.FlagFailed == 0){
+//			
+//			'write to excel success'
+//			CustomKeywords.'writeToExcel.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Saldo', 0,
+//				GlobalVariable.NumOfColumn - 1, GlobalVariable.StatusSuccess)
+//		}
+//		else if (isMandatoryComplete > 0){
+//			
+//			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.FailedReasonMandatory'
+//			CustomKeywords.'writeToExcel.WriteExcel.writeToExcelStatusReason'('Saldo', GlobalVariable.NumOfColumn,
+//				GlobalVariable.StatusFailed, (findTestData(excelPathSaldo).getValue(GlobalVariable.NumOfColumn, 2) +
+//				';') + GlobalVariable.FailedReasonMandatory)
+//		}
+//		
+//		WebUI.refresh()
+//		
+//		'cek apakah muncul error unknown setelah refresh'
+//		if (WebUI.verifyElementNotPresent(findTestObject('Object Repository/Profile/Page_Balance/div_Unknown Error'),
+//			GlobalVariable.Timeout, FailureHandling.OPTIONAL) == false) {
+//			
+//			GlobalVariable.FlagFailed = 1
+//			
+//			'tulis adanya error pada sistem web'
+//			CustomKeywords.'writeToExcel.WriteExcel.writeToExcelStatusReason'('Saldo', GlobalVariable.NumOfColumn,
+//				GlobalVariable.StatusWarning, (findTestData(excelPathSaldo).getValue(GlobalVariable.NumOfColumn, 2) + ';') +
+//					GlobalVariable.FailedReasonUnknown)
+//		}
 	}
-
-
-'klik garis tiga di kanan atas web'
-WebUI.click(findTestObject('Object Repository/Profile/Page_Balance/i_LINA_ft-chevron-down'))
-
-'klik tombol keluar'
-WebUI.click(findTestObject('Object Repository/Saldo/Page_Balance/span_Logout'))
-
-'verifikasi apakah login dengan google muncul'
-WebUI.verifyElementPresent(findTestObject('Object Repository/RegisterLogin/Page_Login - eendigo Platform/check_Recaptcha'), GlobalVariable.Timeout)
-
-'verifikasi apakah captcha muncul'
-WebUI.verifyElementPresent(findTestObject('Object Repository/Saldo/Page_Login - eendigo Platform/span_Lanjutkan dengan Google'), GlobalVariable.Timeout)
 
 'tutup browser'
 WebUI.closeBrowser()
@@ -459,227 +448,9 @@ def checkTableandPaging(Connection connection, String tenantcode, String tipeSal
 	}
 }
 
-'cek jumlah ddl tipe saldo DB dan UI'
-def checkddlTipeSaldo(Connection Conn, String tenantcode) {
-	
-	'klik pada tipe saldo'
-	WebUI.click(findTestObject('Object Repository/Saldo/Page_Balance/inputtipesaldo'))
-	
-	'ambil list tipesaldo'
-	def elementjumlahTipeSaldo = DriverFactory.getWebDriver().findElements(By.xpath('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-search-filter/div/div/div/div/div/form/div[1]/div[1]/app-question/app-select/div/div[2]/ng-select/ng-dropdown-panel/div/div[2]/div'))
-		
-	println elementjumlahTipeSaldo.size()
-	WebUI.delay(20)
-	'ambil hitungan tipesaldo yang ada'
-	int countWeb = (elementjumlahTipeSaldo.size()) - 1
-	
-	'flag apakah tipesaldo sesuai pada verifikasi'
-	int isTipeSaldoMatch = 1
-	
-	'ambil nama balance dari DB'
-	ArrayList<String> namatipesaldoDB = CustomKeywords.'saldo.VerifSaldo.getListTipeSaldo'(Conn, tenantcode)
-	
-	'nama-nama tipe saldo sedang aktif dari UI'
-	ArrayList<String> namatipesaldoUI = []
-	
-	'ambil hitungan tipesaldo dari DB'
-	int countDB = namatipesaldoDB.size()
-	
-	'jika jumlah data di UI sama dengan DB'
-	if(countWeb == countDB){
-		
-		'mulai perhitungan data'
-		for(int i=1; i<=countWeb; i++){
-			
-			'ambil object dari ddl'
-			def modifyNamatipesaldo = WebUI.modifyObjectProperty(findTestObject('Object Repository/Saldo/'+
-				'Page_Balance/modifyobjectddl'), 'xpath', 'equals', "/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/"+
-				"app-balance-prod/div[3]/app-msx-paging-v2/app-search-filter-v2/div/div/div/div/div/form/div[1]/div[1]/app-select/"+
-				"div/div[2]/ng-select/ng-dropdown-panel/div/div[2]/div["+(i+1)+"]/span", true)
-				
-			'tambahkan nama tipe saldo ke array'
-			String data = WebUI.getText(modifyNamatipesaldo)
-			namatipesaldoUI.add(data)
-		}
-			
-		'jika ada data yang tidak terdapat pada arraylist yang lain'
-		if (!namatipesaldoUI.containsAll(namatipesaldoDB)){
-			
-			'ada data yang tidak match'
-			isTipeSaldoMatch = 0;
-		}
-	}
-	
-	'jika hitungan di UI dan DB tidak sesuai'
-	if(countWeb != countDB || isTipeSaldoMatch == 0){
-		
-		GlobalVariable.FlagFailed = 1
-		'Write to excel status failed and reason topup failed'
-		CustomKeywords.'writeToExcel.WriteExcel.writeToExcelStatusReason'('Saldo', GlobalVariable.NumOfColumn,
-		GlobalVariable.StatusFailed, (findTestData(excelPathSaldo).getValue(GlobalVariable.NumOfColumn, 2) + ';') +
-		GlobalVariable.FailedReasonDDL)
-	}
-	
-	'pencet enter'
-	WebUI.sendKeys(findTestObject('Object Repository/API_KEY/Page_Balance/inputtipesaldo'), Keys.chord(Keys.ENTER))
-}
-
-'cek jumlah ddl tipe saldo DB dan UI'
-def checkddlTipeTransaksi(Connection Conn, String tipeSaldo) {
-	
-	'klik ddl untuk tenant memilih mengenai Vida'
-	WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), tipeSaldo, false)
-	
-	'klik pada tipe saldo'
-	WebUI.click(findTestObject('Object Repository/Saldo/input_tipetransaksi'))
-	
-	'ambil list tipesaldo'
-	def elementjumlahTipeTransaksi = DriverFactory.getWebDriver().findElements(By.cssSelector
-		('#searchForm > div:nth-child(5) > div:nth-child(1) > app-question > app-select > div > div.col-7 > ng-dropdown-panel > div > div:nth-child(2)'))
-		
-	'ambil hitungan tipesaldo yang ada'
-	int countWeb = (elementjumlahTipeTransaksi.size()) - 1
-	
-	'flag apakah tipesaldo sesuai pada verifikasi'
-	int isTipeTransaksiMatch = 1
-	
-	'ambil nama balance dari DB'
-	ArrayList<String> namatipetransaksiDB = CustomKeywords.'connection.Saldo.getAllBalanceType'(Conn)
-	
-	'nama-nama tipe saldo sedang aktif dari UI'
-	ArrayList<String> namatipetransaksiUI = []
-	
-	'ambil hitungan tipesaldo dari DB'
-	int countDB = namatipetransaksiDB.size()
-	
-	'jika jumlah data di UI sama dengan DB'
-	if(countWeb == countDB){
-		
-		'mulai perhitungan data'
-		for(int i=1; i<=countWeb; i++){
-			
-			'ambil object dari ddl'
-			def modifyNamatipetransaksi = WebUI.modifyObjectProperty(findTestObject('Object Repository/Saldo/'+
-				'Page_Balance/modifyobjectddl'), 'xpath', 'equals', "/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-search-filter/div/div/div/div/div/form/div[1]/div[1]/app-question/app-select/div/div[2]/ng-select/ng-dropdown-panel/div['" + i + 1 + "']/span", true)
-				
-			'tambahkan nama tipe saldo ke array'
-			String data = WebUI.getText(modifyNamatipetransaksi)
-			
-			println data
-			
-			WebUI.delay(20)
-			
-			namatipetransaksiUI.add(data)
-		}
-			println namatipetransaksiUI
-			println namatipetransaksiDB
-		'jika ada data yang tidak terdapat pada arraylist yang lain'
-		if (!namatipetransaksiUI.containsAll(namatipetransaksiDB)){
-			
-			'ada data yang tidak match'
-			isTipeTransaksiMatch = 0;
-		}
-		
-	}
-	
-	println countWeb
-	println countDB
-	
-	'jika hitungan di UI dan DB tidak sesuai'
-	if(countWeb != countDB || isTipeTransaksiMatch == 0){
-		
-		GlobalVariable.FlagFailed = 1
-		'Write to excel status failed and reason topup failed'
-		CustomKeywords.'writeToExcel.WriteExcel.writeToExcelStatusReason'('Saldo', GlobalVariable.NumOfColumn,
-		GlobalVariable.StatusFailed, (findTestData(excelPathSaldo).getValue(GlobalVariable.NumOfColumn, 2) + ';') +
-		GlobalVariable.FailedReasonDDL)
-	}
-	
-	'pencet enter'
-	WebUI.sendKeys(findTestObject('Object Repository/API_KEY/Page_Balance/inputtipetransaksi'), Keys.chord(Keys.ENTER))
-}
-
-'cek jumlah ddl office DB dan UI'
-def checkddlOffice(Connection Conn, String tenantcode) {
-	
-	'klik pada input kantor'
-	WebUI.click(findTestObject('Object Repository/Saldo/Page_Balance/inputkantor'))
-	
-	'ambil list kantor'
-	def elementjumlahKantor = DriverFactory.getWebDriver().findElements(By.xpath('/html/body/app-root/app-full-layout/'+
-		'div/div[2]/div/div[2]/app-balance-prod/div[3]/app-msx-paging-v2/app-search-filter-v2/div/div/div/div/div/form/'+
-		'div[1]/div[8]/app-question/app-select/div/div[2]/ng-select/ng-dropdown-panel/div/div[2]/div'))
-		
-	'ambil hitungan Kantor yang ada'
-	int countWeb = (elementjumlahKantor.size()) - 1
-	
-	'flag apakah Kantor sesuai pada verifikasi'
-	int isKantorMatch = 1
-	
-	'ambil nama kantor dari DB'
-	ArrayList<String> namaKantorDB = CustomKeywords.'saldo.VerifSaldo.getListKantor'(Conn, tenantcode)
-	
-	'nama-nama kantor yang aktif dari UI'
-	ArrayList<String> namaKantorUI = []
-	
-	'ambil hitungan Kantor dari DB'
-	int countDB = namaKantorDB.size()
-	
-	'jika jumlah data di UI sama dengan DB'
-	if(countWeb == countDB){
-		
-		'mulai perhitungan data'
-		for(int i=1; i<=countWeb; i++){
-			
-			'ambil object dari ddl'
-			def modifyNamaKantor = WebUI.modifyObjectProperty(findTestObject('Object Repository/Saldo/'+
-				'Page_Balance/modifyobjectddl'), 'xpath', 'equals', "/html/body/app-root/app-full-layout/div/div[2]/div/"+
-				"div[2]/app-balance-prod/div[3]/app-msx-paging-v2/app-search-filter-v2/div/div/div/div/div/form/div[1]/div[8]/"+
-				"app-question/app-select/div/div[2]/ng-select/ng-dropdown-panel/div/div[2]/div["+(i+1)+"]/span", true)
-
-			'tambahkan nama kantor ke array'
-			String data = WebUI.getText(modifyNamaKantor)
-			namaKantorUI.add(data)
-		}
-		
-		'jika ada data yang tidak terdapat pada arraylist yang lain'
-		if (!namaKantorUI.containsAll(namaKantorDB)){
-			
-			'data tidak match'
-			isKantorMatch = 0;
-		}
-		
-	}
-	
-	'jika hitungan di UI dan DB tidak sesuai'
-	if(countWeb != countDB || isKantorMatch == 0){
-		
-		GlobalVariable.FlagFailed = 1
-		'Write to excel status failed and reason topup failed'
-		CustomKeywords.'writeToExcel.WriteExcel.writeToExcelStatusReason'('Saldo', GlobalVariable.NumOfColumn,
-		GlobalVariable.StatusFailed, (findTestData(excelPathSaldo).getValue(GlobalVariable.NumOfColumn, 2) + ';') +
-		GlobalVariable.FailedReasonDDL)
-	}
-	
-	'pencet enter'
-	WebUI.sendKeys(findTestObject('Object Repository/API_KEY/Page_Balance/inputkantor'), Keys.chord(Keys.ENTER))
-}
-
-def checkVerifyReset(Boolean isMatch) {
-	if (isMatch == false) {
-		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-		CustomKeywords.'writeToExcel.WriteExcel.writeToExcelStatusReason'('Saldo', GlobalVariable.NumOfColumn, 
-			GlobalVariable.StatusFailed,(findTestData(excelPathSaldo).getValue(GlobalVariable.NumOfColumn, 2) + 
-				';') + GlobalVariable.FailedReasonSetFailed)
-
-		GlobalVariable.FlagFailed = 1
-	}
-}
-
-
 def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection conneSign) {
 	'klik ddl untuk tenant memilih mengenai Vida'
-	WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'Vida', false)
+	WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), '(?i)Vida', true)
 	
    'input filter dari saldo'
     WebUI.setText(findTestObject('Saldo/input_tipesaldo'),'Sign')
@@ -812,9 +583,49 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
 def checkVerifyPaging(Boolean isMatch) {
 	if (isMatch == false) {
 		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Meterai', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-			(findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedPaging)
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Saldo', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+			(findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedPaging)
 
 		GlobalVariable.FlagFailed = 1
 	}
+}
+
+def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
+	if (isMatch == false) {
+		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Saldo', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+			(findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
+
+		GlobalVariable.FlagFailed = 1
+	}
+}
+
+def checkDDL(TestObject objectDDL, ArrayList<String> listDB, String reason) {
+	'declare array untuk menampung ddl'
+	ArrayList<String> list = []
+
+	'click untuk memunculkan ddl'
+	WebUI.click(objectDDL)
+
+	'get id ddl'
+	id = WebUI.getAttribute(findTestObject('isiSaldo/ddlClass'), 'id', FailureHandling.CONTINUE_ON_FAILURE)
+
+	'get row'
+	variable = DriverFactory.webDriver.findElements(By.cssSelector(('#' + id) + '> div > div:nth-child(2) div'))
+
+	'looping untuk get ddl kedalam array'
+	for (i = 1; i < variable.size(); i++) {
+		'modify object DDL'
+		modifyObjectDDL = WebUI.modifyObjectProperty(findTestObject('isiSaldo/modifyObject'), 'xpath', 'equals', ((('//*[@id=\'' +
+			id) + '-') + i) + '\']', true)
+
+		'add ddl ke array'
+		list.add(WebUI.getText(modifyObjectDDL))
+	}
+	
+	'verify ddl ui = db'
+	checkVerifyEqualOrMatch(listDB.containsAll(list), reason)
+
+	'verify jumlah ddl ui = db'
+	checkVerifyEqualOrMatch(WebUI.verifyEqual(list.size(), listDB.size(), FailureHandling.CONTINUE_ON_FAILURE), ' Jumlah DDL Saldo')
 }
