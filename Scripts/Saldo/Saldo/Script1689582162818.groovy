@@ -52,6 +52,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			
             'call function check paging'
             checkPaging(currentDate, firstDateOfMonth, conneSign)
+			
+			'get ddl tenant'
+			ArrayList<String> resultVendor = CustomKeywords.'connection.Saldo.getDDLVendor'(conneSign, CustomKeywords.'connection.Saldo.getTenantName'(conneSign))
+	
+			'verify vendor DDL'
+			WebUI.verifyOptionsPresent(findTestObject('Saldo/ddl_Vendor'), resultVendor, FailureHandling.CONTINUE_ON_FAILURE)
+			
+			'get ddl tipe Saldo'
+			ArrayList<String> resultTipeSaldo = CustomKeywords.'connection.Saldo.getDDLTipeSaldo'(conneSign)
+			
+			'call function check ddl untuk Tipe Saldo'
+			checkDDL(findTestObject('Saldo/input_tipesaldo'), resultTipeSaldo, 'DDL Tipe Saldo')
         }
 	}
 	
@@ -588,7 +600,7 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 	}
 }
 
-def checkDDL(TestObject objectDDL, ArrayList<String> listDB) {
+def checkDDL(TestObject objectDDL, ArrayList<String> listDB, String reason) {
 	'declare array untuk menampung ddl'
 	ArrayList<String> list = []
 
@@ -612,7 +624,7 @@ def checkDDL(TestObject objectDDL, ArrayList<String> listDB) {
 	}
 	
 	'verify ddl ui = db'
-	checkVerifyEqualOrMatch(listDB.containsAll(list), ' DDL SALDO')
+	checkVerifyEqualOrMatch(listDB.containsAll(list), reason)
 
 	'verify jumlah ddl ui = db'
 	checkVerifyEqualOrMatch(WebUI.verifyEqual(list.size(), listDB.size(), FailureHandling.CONTINUE_ON_FAILURE), ' Jumlah DDL Saldo')
