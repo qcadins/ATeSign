@@ -36,7 +36,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
     } else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
 
 		'Call API Send doc'
-        WebUI.callTestCase(findTestCase('APIFullService/Send to Sign/Response API Send Document'), [('excelPathAPISendDoc') : excelPathFESignDocument
+        WebUI.callTestCase(findTestCase('APIFullService/APIFullService - VIDA/Send to Sign/Response API Send Document'), [('excelPathAPISendDoc') : excelPathFESignDocument
                 , ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
 
         'Jika tidak ada dokumen id di excel'

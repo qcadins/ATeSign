@@ -95,7 +95,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				
                 if ((GlobalVariable.checkStoreDB == 'Yes') && (GlobalVariable.FlagFailed == 0)) {
                     'call test case ResponseAPIStoreDB'
-                    WebUI.callTestCase(findTestCase('APIFullService/API Generate Invitation Link/APIGenInvLinkStoreDB'), [('excelPathGenInvLink') : 'APIFullService/API_GenInvLink'], 
+                    WebUI.callTestCase(findTestCase('APIFullService/APIFullService - VIDA/API Generate Invitation Link/APIGenInvLinkStoreDB'), [('excelPathGenInvLink') : 'APIFullService/API_GenInvLink'], 
 						FailureHandling.CONTINUE_ON_FAILURE)
                 }
             } else {

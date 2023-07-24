@@ -21,7 +21,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     if (findTestData(excelPathConfirmOTP).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathConfirmOTP).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
-        WebUI.callTestCase(findTestCase('APIFullService - Privy/Response API Sent OTP Signing'), [('excelPathAPISentOTPSigning') : excelPathConfirmOTP
+        WebUI.callTestCase(findTestCase('APIFullService/APIFullService - Privy/Response API Sent OTP Signing'), [('excelPathAPISentOTPSigning') : excelPathConfirmOTP
                 , ('sheet') : 'API Confirm OTP'], FailureHandling.CONTINUE_ON_FAILURE)
 
         if (findTestData(excelPathConfirmOTP).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Success')) {

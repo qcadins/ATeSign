@@ -22,7 +22,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         break
     } else if (findTestData(excelPathRequestOTP).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
         'call test case untuk ambil user access token'
-		WebUI.callTestCase(findTestCase('APIFullService - Privy/Response API User Access Token'), [('excelPath') : excelPathRequestOTP
+		WebUI.callTestCase(findTestCase('APIFullService/APIFullService - Privy/Response API User Access Token'), [('excelPath') : excelPathRequestOTP
                 , ('sheet') : 'API Request OTP'], FailureHandling.CONTINUE_ON_FAILURE)
 
         if (findTestData(excelPathRequestOTP).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Success')) {
