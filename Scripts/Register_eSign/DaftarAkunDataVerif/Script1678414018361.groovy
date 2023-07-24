@@ -258,7 +258,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     } else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), GlobalVariable.TimeOut, 
         FailureHandling.OPTIONAL)) {
         'call testcase form aktivasi vida'
-        WebUI.callTestCase(findTestCase('APIFullService/API Generate Invitation Link/FormAktivasiVida'), [('excelPathBuatUndangan') : 'APIFullService/API_GenInvLink'], 
+        WebUI.callTestCase(findTestCase('APIFullService/APIFullService - VIDA/API Generate Invitation Link/FormAktivasiVida'), [('excelPathBuatUndangan') : 'APIFullService/API_GenInvLink'], 
             FailureHandling.CONTINUE_ON_FAILURE)
     } else if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_PopupMsg'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
         reason = WebUI.getText(findTestObject('DaftarAkun/label_PopupMsg'))
