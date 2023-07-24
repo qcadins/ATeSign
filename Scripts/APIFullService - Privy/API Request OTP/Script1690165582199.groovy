@@ -14,32 +14,30 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get colm excel'
-int countColmExcel = findTestData(excelPathConfirmOTP).columnNumbers
+int countColmExcel = findTestData(excelPathRequestOTP).columnNumbers
 
-'looping API Sent OTP Signing'
+'looping API Request OTP'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
-    if (findTestData(excelPathConfirmOTP).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
+    if (findTestData(excelPathRequestOTP).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
-    } else if (findTestData(excelPathConfirmOTP).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
-        WebUI.callTestCase(findTestCase('APIFullService - Privy/Response API Sent OTP Signing'), [('excelPathAPISentOTPSigning') : excelPathConfirmOTP
-                , ('sheet') : 'API Confirm OTP'], FailureHandling.CONTINUE_ON_FAILURE)
+    } else if (findTestData(excelPathRequestOTP).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+        'call test case untuk ambil user access token'
+		WebUI.callTestCase(findTestCase('APIFullService - Privy/Response API User Access Token'), [('excelPath') : excelPathRequestOTP
+                , ('sheet') : 'API Request OTP'], FailureHandling.CONTINUE_ON_FAILURE)
 
-        if (findTestData(excelPathConfirmOTP).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Success')) {
-            if (findTestData(excelPathConfirmOTP).getValue(GlobalVariable.NumofColm, 19) == 'Yes') {
-                'diberikan delay 40 detik untuk update db sesuai dengan otp code yang telah diterima'
-                'Untuk privy, otp code tidak ada di db dan perlu diinput manual karena otp codenya ada di email'
-                WebUI.delay(40)
+        if (findTestData(excelPathRequestOTP).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Success')) {
+                baseUrl = findTestData(excelPathRequestOTP).getValue(2, 14)
 
-                baseUrl = findTestData(excelPathConfirmOTP).getValue(2, 22)
-
-                merchantKey = findTestData(excelPathConfirmOTP).getValue(2, 23)
-
-                GlobalVariable.access_token = CustomKeywords.'connection.APIFullService.getVendorAccessToken'(conneSign, findTestData(excelPathConfirmOTP).getValue(
-                        GlobalVariable.NumofColm, 11).toString().replace('"', ''))
+                merchantKey = findTestData(excelPathRequestOTP).getValue(2, 15)
+				
+				'Jika access token tidak yang sebenarnya atau berasal dari call test case user access token'
+				if (findTestData(excelPathRequestOTP).getValue(GlobalVariable.NumofColm,11) == 'No') {
+					GlobalVariable.access_token = findTestData(excelPathRequestOTP).getValue(GlobalVariable.NumofColm,12)
+				}
 
                 'HIT API'
-                responConfirm = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/API Confirm OTP', [('base_url') : baseUrl
-                            , ('merchant-key') : merchantKey, ('access_token') : accessToken, ('otpCode') : findTestData(excelPathConfirmOTP).getValue(GlobalVariable.NumofColm, 20)]))
+                responConfirm = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/API OTP Request', [('base_url') : baseUrl
+                            , ('merchant-key') : merchantKey, ('access_token') : GlobalVariable.access_token]))
 
                 'Jika status HIT API 200 atau 201'
                 if (WS.verifyResponseStatusCodeInRange(responConfirm, 200, 202, FailureHandling.OPTIONAL) == true) {
@@ -50,10 +48,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         'get message'
                         message = WS.getElementPropertyValue(responConfirm, 'message', FailureHandling.OPTIONAL)
 
-                        if (message.toString().contains('success')) {
+                        if (message.toString().contains('OTP sent to +62')) {
                             if (GlobalVariable.FlagFailed == 0) {
                                 'write to excel success'
-                                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Confirm OTP', 
+                                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Request OTP', 
                                     0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
                             }
                         }
@@ -62,7 +60,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         message = WS.getElementPropertyValue(responConfirm, 'message', FailureHandling.OPTIONAL)
 
                         'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Confirm OTP', GlobalVariable.NumofColm, 
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Request OTP', GlobalVariable.NumofColm, 
                             GlobalVariable.StatusFailed, message)
                     }
                 } else {
@@ -70,10 +68,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         message = WS.getElementPropertyValue(responConfirm, 'message', FailureHandling.OPTIONAL)
 
                         'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Confirm OTP', GlobalVariable.NumofColm, 
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Request OTP', GlobalVariable.NumofColm, 
                             GlobalVariable.StatusFailed, message)
                     }
-            }
+            
         }
     }
 }

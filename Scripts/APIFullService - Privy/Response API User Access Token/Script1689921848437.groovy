@@ -6,17 +6,27 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
-'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - Full API Services.xlsx')
-
+if (sheet == '') {
+	'get data file path'
+	GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - Full API Services.xlsx')
+	
+	sheet = 'API Sent OTP Signing'
+	
+	emailSigner =  findTestData(excelPath).getValue(GlobalVariable.NumofColm, 11).replace('"', '')
+}
+else {
+	emailSigner = findTestData(excelPath).getValue(GlobalVariable.NumofColm, 9).replace('"', '')
+	
+	GlobalVariable.Merchantkey = findTestData(excelPath).getValue(2, 15)
+}
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get colm excel'
-int countColmExcel = findTestData(exelPath).columnNumbers
+int countColmExcel = findTestData(excelPath).columnNumbers
 
 'get privyId dari DB'
-privyId = CustomKeywords.'connection.APIFullService.getPrivyId'(conneSign, findTestData(exelPath).getValue(GlobalVariable.NumofColm, 11).replace('"', ''))
+privyId = CustomKeywords.'connection.APIFullService.getPrivyId'(conneSign, emailSigner)
 
 'HIT API user access token'
 respon = WS.sendRequest(findTestObject('APIFullService/Postman/API User Access Token', [('privyId') : privyId]))
@@ -28,17 +38,19 @@ if (WS.verifyResponseStatusCode(respon, 201, FailureHandling.OPTIONAL) == true) 
         'mengambil response'
         token = WS.getElementPropertyValue(respon, 'data.token', FailureHandling.OPTIONAL)
 
+		GlobalVariable.access_token = token
+		
 		println(token)
 		
 		'write to excel success'          
-		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Sent OTP Signing',
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
 		      0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 		
 //        if (GlobalVariable.checkStoreDB == 'Yes') {
 //            arrayIndex = 0
 //
 //            'get vendor access token from db'
-//            resultAccessTokenDB = CustomKeywords.'connection.APIFullService.getVendorAccessToken'(conneSign, findTestData(exelPath).getValue(
+//            resultAccessTokenDB = CustomKeywords.'connection.APIFullService.getVendorAccessToken'(conneSign, findTestData(excelPath).getValue(
 //				GlobalVariable.NumofColm, 11).replace('"', ''))
 //
 //            'declare arraylist arraymatch'
@@ -51,7 +63,7 @@ if (WS.verifyResponseStatusCode(respon, 201, FailureHandling.OPTIONAL) == true) 
 //            if (arrayMatch.contains(false)) {
 //                'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
 //                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Sent OTP Signing', GlobalVariable.NumofColm, 
-//                    GlobalVariable.StatusFailed, (findTestData(exelPath).getValue(GlobalVariable.NumofColm, 
+//                    GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
 //                        2) + ';') + GlobalVariable.ReasonFailedStoredDB)
 //            } else {
 //                'write to excel success'
@@ -64,7 +76,7 @@ if (WS.verifyResponseStatusCode(respon, 201, FailureHandling.OPTIONAL) == true) 
     message = WS.getElementPropertyValue(respon, 'errors.messages', FailureHandling.OPTIONAL).toString().replace('[', '').replace(']', '')
 	
     'Write To Excel GlobalVariable.StatusFailed and errormessage'
-    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Sent OTP Signing', GlobalVariable.NumofColm, 
+    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
         GlobalVariable.StatusFailed, '<' + message + '>')
 }
 
