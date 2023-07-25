@@ -11,11 +11,24 @@
       <value></value>
       <variableId>3df878c6-120f-4a6d-91a1-210031b5a82b</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>291ffa9d-e903-48aa-a5f8-85b39c488c6e</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>'APIFullService/API_SentOTPSigning'</defaultValue>
       <description></description>
       <id>3df878c6-120f-4a6d-91a1-210031b5a82b</id>
       <masked>false</masked>
       <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>291ffa9d-e903-48aa-a5f8-85b39c488c6e</id>
+      <masked>false</masked>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>

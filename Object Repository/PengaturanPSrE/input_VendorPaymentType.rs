@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_VendorPaymentType</name>
+   <tag></tag>
+   <elementGuidId>16745c02-1af0-4642-8436-92307e402e3a</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;paymentSignType&quot;]/div/div/div[3]/input</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;paymentSignType&quot;]/div/div/div[3]/input</value>
+      <webElementGuid>6e8d30a3-e169-4923-b1c0-9a0081023d24</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>
