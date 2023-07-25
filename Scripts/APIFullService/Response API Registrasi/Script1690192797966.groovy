@@ -64,18 +64,20 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			idPhoto = findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 25)
 		}
         
-		'declare variable array'
-		String saldoBefore, saldoAfter
-		
-		int countCheckSaldo = 0
-		
-		WebUI.openBrowser('')
-		
-		saldoBefore = loginAdminGetSaldo(countCheckSaldo, conneSign)
-		
-		countCheckSaldo = 1
-		
-		println(saldoBefore)
+		if(GlobalVariable.Psre == 'VIDA') {
+			'declare variable array'
+			String saldoBefore, saldoAfter
+			
+			int countCheckSaldo = 0
+			
+			WebUI.openBrowser('')
+			
+			saldoBefore = loginAdminGetSaldo(countCheckSaldo, conneSign)
+			
+			countCheckSaldo = 1
+			
+			println(saldoBefore)
+		}
 		
         'HIT API'
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Register', [('callerId') : findTestData(excelPathAPIRegistrasi).getValue(
@@ -186,15 +188,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
                     }
 					
-					'kurang saldo before dengan proses verifikasi'
-					saldoBefore = (Integer.parseInt(saldoBefore) - 1).toString()
-					
-					saldoAfter = loginAdminGetSaldo(countCheckSaldo, conneSign)
-					
-					println(saldoAfter)
-					
-					'verify saldo before dan after'
-					checkVerifyEqualOrMatch(WebUI.verifyEqual(Integer.parseInt(saldoBefore), Integer.parseInt(saldoAfter), FailureHandling.CONTINUE_ON_FAILURE), ' Saldo Gagal Potong')
+					if(GlobalVariable.Psre == 'VIDA') {
+						'kurang saldo before dengan proses verifikasi'
+						saldoBefore = (Integer.parseInt(saldoBefore) - 1).toString()
+						
+						saldoAfter = loginAdminGetSaldo(countCheckSaldo, conneSign)
+						
+						println(saldoAfter)
+						
+						'verify saldo before dan after'
+						checkVerifyEqualOrMatch(WebUI.verifyEqual(Integer.parseInt(saldoBefore), Integer.parseInt(saldoAfter), FailureHandling.CONTINUE_ON_FAILURE), ' Saldo Gagal Potong')
+					}
                 }
             } else {
                 'mengambil status code berdasarkan response HIT API'
@@ -215,12 +219,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					if (GlobalVariable.Psre == 'VIDA') {
 	                    'kurang saldo before dengan proses verifikasi'
 						saldoBefore = (Integer.parseInt(saldoBefore) - 1).toString()
+					
+						saldoAfter = loginAdminGetSaldo(countCheckSaldo, conneSign)
+						
+						'verify saldo before dan after'
+						checkVerifyEqualOrMatch(WebUI.verifyEqual(Integer.parseInt(saldoBefore), Integer.parseInt(saldoAfter), FailureHandling.CONTINUE_ON_FAILURE), ' Saldo Gagal Potong')
+					} else if (GlobalVariable.Psre == 'PRIVY') {
+						'verify saldo privy'
+						checkVerifyEqualOrMatch(WebUI.verifyMatch(resultTrx, '0', false, FailureHandling.CONTINUE_ON_FAILURE), ' Gaga Verifikasi Saldo Terpotong - Privy')
 					}
-					
-					saldoAfter = loginAdminGetSaldo(countCheckSaldo, conneSign)
-					
-					'verify saldo before dan after'
-					checkVerifyEqualOrMatch(WebUI.verifyEqual(Integer.parseInt(saldoBefore), Integer.parseInt(saldoAfter), FailureHandling.CONTINUE_ON_FAILURE), ' Saldo Gagal Potong')
 
                     'jika data db tidak sesuai dengan excel'
                     if (arrayMatch.contains(false)) {

@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "EDD3605D458E5ABDF2D12F8F06025A73",
+  "keywordFileContentHash": "343952201AE28E8269F39BC0B9368812",
   "keywordClasses": [
     {
       "name": "connection.PengaturanDokumen",
@@ -89,6 +89,25 @@
         },
         {
           "name": "getTotalDokumenTemplatKode",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getDDLVendor",
           "parameters": [
             {
               "name": "conn",

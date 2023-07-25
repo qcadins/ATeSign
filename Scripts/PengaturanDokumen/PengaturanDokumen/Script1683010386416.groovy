@@ -1,7 +1,8 @@
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.model.FailureHandling
+import com.kms.katalon.core.testobject.TestObject
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
@@ -70,20 +71,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         GlobalVariable.NumofColm, 11))
 
                 'get data tipe-tipe pembayaran secara asc'
-                ArrayList<String> tipePembayaran_DB = CustomKeywords.'connection.PengaturanDokumen.getLovTipePembayaran'(conneSign)
+                ArrayList<String> tipePembayaranDB = CustomKeywords.'connection.PengaturanDokumen.getLovTipePembayaran'(conneSign)
 
-                'Click dropdown mengenai tipe pembayaran'
-                WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_openddlTipePembayaran'))
-
-                'Mengambil value yang ada di UI dan displit dengan enter'
-                tipePembayaran_UI = WebUI.getText(findTestObject('Object Repository/TandaTanganDokumen/ddl_tipepembayaran')).split(
-                    '\\n')
-
-                'Jika db dan UI tidak cocok maka'
-                if (tipePembayaran_UI != tipePembayaran_DB) {
-                    'Flag false'
-                    checkVerifyEqualorMatch(false, ' pada tipe pembayaran Ttd ')
-                }
+				'check ddl tipe pembayaran'
+				checkDDL(findTestObject('TandaTanganDokumen/input_tipePembayaran'), tipePembayaranDB, ' pada tipe pembayaran Ttd ')
                 
                 'Input value tipe pembayaran'
                 WebUI.setText(findTestObject('TandaTanganDokumen/input_tipePembayaran'), findTestData(excelPathPengaturanDokumen).getValue(
@@ -92,6 +83,26 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 'Input enter'
                 WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_tipePembayaran'), Keys.chord(Keys.ENTER))
 
+				'get data tipe-tipe pembayaran secara asc'
+				ArrayList<String> resultVendorDDL = CustomKeywords.'connection.PengaturanDokumen.getDDLVendor'(conneSign)
+
+				'check ddl psre'
+				checkDDL(findTestObject('Object Repository/TandaTanganDokumen/select_Psre'), resultVendorDDL, ' pada DDL Psre ')
+				
+				'Input value Psre'
+				WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/select_Psre'), findTestData(excelPathPengaturanDokumen).getValue(
+						GlobalVariable.NumofColm, 20))
+
+				'Input enter'
+				WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_Psre'), Keys.chord(Keys.ENTER))
+				
+				'Input value sequential sign'
+				WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/select_SequentialSigning'), findTestData(excelPathPengaturanDokumen).getValue(
+						GlobalVariable.NumofColm, 21))
+
+				'Input enter'
+				WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_SequentialSigning'), Keys.chord(Keys.ENTER))
+				
                 'Input value status'
                 WebUI.setText(findTestObject('TandaTanganDokumen/input_Status'), findTestData(excelPathPengaturanDokumen).getValue(
                         GlobalVariable.NumofColm, 14))
@@ -296,7 +307,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
             'get data doc template from db'
             result = CustomKeywords.'connection.PengaturanDokumen.getDataDocTemplate'(conneSign, findTestData(excelPathPengaturanDokumen).getValue(
-                    GlobalVariable.NumofColm, 21))
+                    GlobalVariable.NumofColm, 23))
 
             arrayIndex = 0
 
@@ -336,7 +347,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
             'get data doc template from db'
             result = CustomKeywords.'connection.PengaturanDokumen.dataDocTemplateStoreDB'(conneSign, findTestData(excelPathPengaturanDokumen).getValue(
-                    GlobalVariable.NumofColm, 21))
+                    GlobalVariable.NumofColm, 23))
 
             arrayIndex = 0
 
@@ -611,7 +622,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
             'get data doc template from db'
             result = CustomKeywords.'connection.PengaturanDokumen.getDataDocTemplate'(conneSign, findTestData(excelPathPengaturanDokumen).getValue(
-                    GlobalVariable.NumofColm, 21))
+                    GlobalVariable.NumofColm, 23))
 
             arrayIndex = 0
 
@@ -1007,15 +1018,15 @@ def searchPengaturanDokumen() {
 
     'Input teks kode template dokumen'
     WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_KodeTemplatDokumen'), findTestData(excelPathPengaturanDokumen).getValue(
-            GlobalVariable.NumofColm, 21))
+            GlobalVariable.NumofColm, 23))
 
     'Input teks di nama template dokumen'
     WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_NamaTemplatDokumen'), findTestData(excelPathPengaturanDokumen).getValue(
-            GlobalVariable.NumofColm, 22))
+            GlobalVariable.NumofColm, 24))
 
     'Input AKtif pada input Status'
     WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_Status'), findTestData(excelPathPengaturanDokumen).getValue(
-            GlobalVariable.NumofColm, 23))
+            GlobalVariable.NumofColm, 25))
 
     'Klik enter'
     WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
@@ -1052,7 +1063,7 @@ def verifyAfterAddorEdit(def TipeTTD) {
 	
 	'verify after add / edit nama pengaturan dokumen'
 	checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/TandaTanganDokumen/label_NamaPengaturanDokumen')), findTestData(excelPathPengaturanDokumen).getValue(
-			GlobalVariable.NumofColm, 10), false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama pengaturan dokumen')
+			GlobalVariable.NumofColm, 10).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama pengaturan dokumen')
 	
 	'verify after add / edit deskripsi pengaturan dokumen'
 	checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/TandaTanganDokumen/label_DeskripsiPengaturanDokumen')), findTestData(excelPathPengaturanDokumen).getValue(
@@ -1133,4 +1144,50 @@ def inputCancel() {
 	
 	'Klik button cancel'
 	WebUI.click(findTestObject('TandaTanganDokumen/button_Cancel'))
+}
+
+def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
+	if (isMatch == false) {
+		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+			(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
+
+		GlobalVariable.FlagFailed = 1
+	}
+}
+
+def checkDDL(TestObject objectDDL, ArrayList<String> listDB, String reason) {
+	'declare array untuk menampung ddl'
+	ArrayList<String> list = []
+
+	'click untuk memunculkan ddl'
+	WebUI.click(objectDDL)
+
+	'get id ddl'
+	id = WebUI.getAttribute(findTestObject('TandaTanganDokumen/ddlClass'), 'id', FailureHandling.CONTINUE_ON_FAILURE)
+
+	'get row'
+	variable = DriverFactory.webDriver.findElements(By.cssSelector(('#' + id) + '> div > div:nth-child(2) div'))
+
+	'looping untuk get ddl kedalam array'
+	for (i = 1; i < variable.size(); i++) {
+		'modify object DDL'
+		modifyObjectDDL = WebUI.modifyObjectProperty(findTestObject('TandaTanganDokumen/modifyObject'), 'xpath', 'equals', ((('//*[@id=\'' +
+			id) + '-') + i) + '\']', true)
+
+		'add ddl ke array'
+		list.add(WebUI.getText(modifyObjectDDL))
+	}
+	
+	'verify ddl ui = db'
+	checkVerifyEqualOrMatch(listDB.containsAll(list), reason)
+
+	println(listDB)
+	println(list)
+	
+	'verify jumlah ddl ui = db'
+	checkVerifyEqualOrMatch(WebUI.verifyEqual(list.size(), listDB.size(), FailureHandling.CONTINUE_ON_FAILURE), ' Jumlah ' + reason)
+	
+	'Input enter untuk tutup ddl'
+	WebUI.sendKeys(objectDDL, Keys.chord(Keys.ENTER))
 }
