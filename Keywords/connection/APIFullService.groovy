@@ -243,7 +243,7 @@ public class APIFullService {
 	getSendDocSigning(Connection conn, String documentid) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT mst.tenant_code, tdh.ref_number, tdd.document_id,CASE WHEN mdt.doc_template_code IS NULL THEN '' ELSE mdt.doc_template_code END,mso.office_code,mso.office_name, msr.region_code, msr.region_name,mbl.business_line_code, mbl.business_line_name,tdh.total_document from tr_document_d as tdd join tr_document_h as tdh on tdd.id_document_h = tdh.id_document_h join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d join am_msuser as amm on tdds.id_ms_user = amm.id_ms_user join ms_tenant as mst on tdd.id_ms_tenant = mst.id_ms_tenant join ms_lov as lov on tdds.lov_signer_type = lov.id_lov left join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template left join ms_office as mso on tdh.id_ms_office = mso.id_ms_office left join ms_region as msr on mso.id_ms_region = msr.id_ms_region left join ms_business_line as mbl on tdh.id_ms_business_line = mbl.id_ms_business_line join ms_vendor as msv on tdd.id_ms_vendor = msv.id_ms_vendor where tdd.document_id = '" + documentid + "' GROUP BY mst.tenant_code, tdh.ref_number, tdd.document_id,mdt.doc_template_code, mso.office_code,mso.office_name, msr.region_code, msr.region_name,mbl.business_line_code, mbl.business_line_name, mso.office_code, tdd.is_sequence,msv.vendor_code,tdh.total_document")
+		resultSet = stm.executeQuery("SELECT msv.vendor_code, mst.tenant_code, tdh.ref_number, tdd.document_id,CASE WHEN mdt.doc_template_code IS NULL THEN '' ELSE mdt.doc_template_code END,mso.office_code,mso.office_name, msr.region_code, msr.region_name,mbl.business_line_code, mbl.business_line_name,tdh.total_document, tdd.is_sequence from tr_document_d as tdd join tr_document_h as tdh on tdd.id_document_h = tdh.id_document_h join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d join am_msuser as amm on tdds.id_ms_user = amm.id_ms_user join ms_tenant as mst on tdd.id_ms_tenant = mst.id_ms_tenant join ms_lov as lov on tdds.lov_signer_type = lov.id_lov left join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template left join ms_office as mso on tdh.id_ms_office = mso.id_ms_office left join ms_region as msr on mso.id_ms_region = msr.id_ms_region left join ms_business_line as mbl on tdh.id_ms_business_line = mbl.id_ms_business_line left join ms_vendor as msv on tdd.id_ms_vendor = msv.id_ms_vendor where tdd.document_id = '" + documentid + "' GROUP BY mst.tenant_code, tdh.ref_number, tdd.document_id,mdt.doc_template_code, mso.office_code,mso.office_name, msr.region_code, msr.region_name,mbl.business_line_code, mbl.business_line_name, mso.office_code, tdd.is_sequence,msv.vendor_code,tdh.total_document")
 
 		metadata = resultSet.metaData
 
@@ -305,7 +305,7 @@ public class APIFullService {
 
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select DISTINCT " + selectData + " as email, lov.code as code from tr_document_d as tdd join tr_document_h as tdh on tdd.id_document_h = tdh.id_document_h join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d join am_msuser as amm on tdds.id_ms_user = amm.id_ms_user join ms_tenant as mst on tdd.id_ms_tenant = mst.id_ms_tenant join ms_lov as lov on tdds.lov_signer_type = lov.id_lov where tdd.document_id = '"+documentid+"' and " + emailWhere + "")
+		resultSet = stm.executeQuery("select DISTINCT " + selectData + " as email, lov.code as code, tdds.seq_no from tr_document_d as tdd join tr_document_h as tdh on tdd.id_document_h = tdh.id_document_h join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d join am_msuser as amm on tdds.id_ms_user = amm.id_ms_user join ms_tenant as mst on tdd.id_ms_tenant = mst.id_ms_tenant join ms_lov as lov on tdds.lov_signer_type = lov.id_lov where tdd.document_id = '"+documentid+"' and " + emailWhere + "")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -765,5 +765,40 @@ public class APIFullService {
 			data = resultSet.getObject(1)
 		}
 		data
+	}
+
+	@Keyword
+	getVendorCodeUsingDocId(Connection conn, String docId) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select case when msv.vendor_code is not null then msv.vendor_code else msv1.vendor_code end from tr_document_d tdd left join ms_doc_template mdt on tdd.id_ms_doc_template = mdt.id_doc_template left join ms_vendor msv on mdt.id_ms_vendor = msv.id_ms_vendor left join ms_vendoroftenant mvot on tdd.id_ms_tenant = mvot.id_ms_tenant left join ms_vendor msv1 on mvot.id_ms_vendor = msv1.id_ms_vendor where tdd.document_id = '"+ docId  +"' order by mvot.default_vendor asc limit 1")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+	
+	@Keyword
+	getSeqNoBasedOnDocTemplate(Connection conn, String docTemplate, String signerType) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select seq_no from ms_doc_template_sign_loc mdtsl join ms_doc_template mdt on mdtsl.id_doc_template = mdt.id_doc_template left join ms_lov msl on mdtsl.lov_sign_type = msl.id_lov left join ms_lov msl1 on mdtsl.lov_signer_type = msl1.id_lov where mdt.doc_template_code = '"+ docTemplate +"' and msl.description = 'Tanda tangan' and msl1.code = '"+ signerType +"' limit 1")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		
+		if (data != null) {
+			Integer.parseInt(data)
+		} else {
+			data = 0
+		}
 	}
 }

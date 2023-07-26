@@ -12,7 +12,7 @@
       <variableId>ddb4f825-b33e-473a-b371-20fb48d744a1</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'APIFullService-Privy/API Request OTP'</defaultValue>
+      <defaultValue>''</defaultValue>
       <description></description>
       <id>ddb4f825-b33e-473a-b371-20fb48d744a1</id>
       <masked>false</masked>

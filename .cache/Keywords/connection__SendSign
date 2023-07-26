@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "0530F37DFDA295A6093414EE8B30B9E9",
+  "keywordFileContentHash": "10BEF2B2920AAED515C0F52416BE8AA6",
   "keywordClasses": [
     {
       "name": "connection.SendSign",
@@ -663,6 +663,38 @@
             },
             {
               "name": "documentids",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getVendorCodeUsingDocId",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "docId",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

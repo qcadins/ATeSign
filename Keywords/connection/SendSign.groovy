@@ -332,4 +332,19 @@ public class SendSign {
 		}
 		listdata
 	}
+
+	@Keyword
+	getVendorCodeUsingDocId(Connection conn, String docId) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select case when msv.vendor_code is not null then msv.vendor_code else msv1.vendor_code end from tr_document_d tdd left join ms_doc_template mdt on tdd.id_ms_doc_template = mdt.id_doc_template left join ms_vendor msv on tdd.id_ms_vendor = msv.id_ms_vendor left join ms_vendor msv1 on mdt.id_ms_vendor = msv1.id_ms_vendor where tdd.document_id = '"+ docId +"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
 }

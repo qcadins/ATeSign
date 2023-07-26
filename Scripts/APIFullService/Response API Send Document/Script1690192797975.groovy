@@ -7,7 +7,7 @@ import internal.GlobalVariable as GlobalVariable
 import java.sql.Connection as Connection
 
 'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - Full API Services - Privy.xlsx')
+GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - Full API Services.xlsx')
 
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
@@ -22,65 +22,73 @@ enter = '\\n'
 int splitnum = -1
 
 'looping berdasarkan total kolom'
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathUploadDocument).columnNumbers
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathAPISendDoc).columnNumbers
 	; (GlobalVariable.NumofColm)++) {
-    if (findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
+    if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
-    } else if (findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+    } else if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
         'Deklarasi variable mengenai signLoc untuk store db'
         String signlocStoreDB = new String()
 
         'Inisialisasi ref No berdasarkan delimiter ;'
-        refNo = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 11)
+        refNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 11)
 
         'Inisialisasi document template code berdasarkan delimiter ;'
-        documentTemplateCode = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 12).split(semicolon, 
+        documentTemplateCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 12).split(semicolon, 
             splitnum)
 
         'Inisialisasi document name berdasarkan delimiter ;'
-        documentName = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 13).split(semicolon, splitnum)
+        documentName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 13).split(semicolon, splitnum)
 
         'Inisialisasi office Code berdasarkan delimiter ;'
-        officeCode = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 14).split(semicolon, splitnum)
+        officeCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 14).split(semicolon, splitnum)
 
         'Inisialisasi office name berdasarkan delimiter ;'
-        officeName = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 15).split(semicolon, splitnum)
+        officeName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 15).split(semicolon, splitnum)
 
         'Inisialisasi region code berdasarkan delimiter ;'
-        regionCode = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 16).split(semicolon, splitnum)
+        regionCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 16).split(semicolon, splitnum)
 
         'Inisialisasi region name berdasarkan delimiter ;'
-        regionName = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 17).split(semicolon, splitnum)
+        regionName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 17).split(semicolon, splitnum)
 
         'Inisialisasi business line code berdasarkan delimiter ;'
-        businessLineCode = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 18).split(semicolon, splitnum)
+        businessLineCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 18).split(semicolon, splitnum)
 
         'Inisialisasi business line name berdasarkan delimiter ;'
-        businessLineName = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 19).split(semicolon, splitnum)
+        businessLineName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 19).split(semicolon, splitnum)
+
+		'Inisialisasi is sequence berdasarkan delimiter ;'
+		isSequence = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 20).split(semicolon, splitnum)
+
+		'Inisialisasi is sequence berdasarkan delimiter ;'
+		psreCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 21).split(semicolon, splitnum)
 
         'Inisialisasi document file berdasarkan delimiter ;'
-        documentFile = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 20).split(enter, splitnum)
+        documentFile = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 22).split(enter, splitnum)
 
         'split signer untuk doc1 dan signer untuk doc2'
-        signAction = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 28).split(enter, splitnum)
+        signAction = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 30).split(enter, splitnum)
 
-        signerType = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 29).split(enter, splitnum)
+        signerType = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 31).split(enter, splitnum)
 
-        tlp = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 30).split(enter, splitnum)
+		seqNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 32).split(delimiter, splitnum)
+		
+        tlp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 33).split(enter, splitnum)
 
-        idKtp = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 31).split(enter, splitnum)
+        idKtp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 34).split(enter, splitnum)
 
-        email = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 32).split(enter, splitnum)
+        email = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 35).split(enter, splitnum)
 
-        pageStamp = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 22).split(delimiter, splitnum)
+        pageStamp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 24).split(delimiter, splitnum)
 
-        llxStamp = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 23).split(delimiter, splitnum)
+        llxStamp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 25).split(delimiter, splitnum)
 
-        llyStamp = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 24).split(delimiter, splitnum)
+        llyStamp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 26).split(delimiter, splitnum)
 
-        urxStamp = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 25).split(delimiter, splitnum)
+        urxStamp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 27).split(delimiter, splitnum)
 
-        uryStamp = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 26).split(delimiter, splitnum)
+        uryStamp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 28).split(delimiter, splitnum)
 
         'Deklarasi variable string Ref no untuk full body API.'
         String stringRefno = new String()
@@ -95,6 +103,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
             signerTypes = (signerType[i]).split(semicolon, splitnum)
 
+			seqNos = seqNo[i].split(semicolon,splitnum)
+			
             tlps = (tlp[i]).split(semicolon, splitnum)
 
             idKtps = (idKtp[i]).split(semicolon, splitnum)
@@ -116,11 +126,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             String bodyAPI = new String()
 
             'Pengisian body'
-            bodyAPI = (((((((((((((((((((bodyAPI + '{"referenceNo" : ') + (refNo)) + ', "documentTemplateCode": ') + 
-            (documentTemplateCode[i])) + ', "documentName": ') + (documentName[i])) + ', "officeCode": ') + (officeCode[
-            i])) + ', "officeName": ') + (officeName[i])) + ', "regionCode": ') + (regionCode[i])) + ', "regionName": ') + 
-            (regionName[i])) + ', "businessLineCode": ') + (businessLineCode[i])) + ', "businessLineName": ') + (businessLineName[
-            i])) + ',')
+            bodyAPI = bodyAPI + '{"referenceNo" : ' + refNo + ', "documentTemplateCode": ' + 
+            documentTemplateCode[i] + ', "documentName": ' + documentName[i] + ', "officeCode": ' + officeCode[
+            i] + ', "officeName": ' + officeName[i] + ', "regionCode": ' + regionCode[i] + ', "regionName": ' + 
+            regionName[i] + ', "businessLineCode": ' + businessLineCode[i] + ', "businessLineName": ' + businessLineName[
+            i] + ', "isSequence": ' + isSequence[i] + ',  "psreCode": ' + psreCode[i] + ','
 
             'Memasukkan bodyAPI ke stringRefno'
             stringRefno = (stringRefno + bodyAPI)
@@ -131,21 +141,21 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'looping berdasarkan jumlah dari signAction di dokumen pertama'
             for (int t = 0; t < signActions.size(); t++) {
                 'Jika semua data mengenai Sign Location seperti page, llx, lly, urx, ury tidak kosong'
-                if (!(((((findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 34).length() == 0) && (findTestData(
-                    excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 35).length() == 0)) && (findTestData(excelPathUploadDocument).getValue(
-                    GlobalVariable.NumofColm, 36).length() == 0)) && (findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 
-                    37).length() == 0)) && (findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 38).length() == 
+                if (!(((((findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 37).length() == 0) && (findTestData(
+                    excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 38).length() == 0)) && (findTestData(excelPathAPISendDoc).getValue(
+                    GlobalVariable.NumofColm, 39).length() == 0)) && (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 
+                    40).length() == 0)) && (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 41).length() == 
                 0))) {
                     'Split mengenai signLocation dimana berdasarkan dokumen'
-                    pageSign = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 34).split(enter, splitnum)
+                    pageSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 37).split(enter, splitnum)
 
-                    llxSign = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 35).split(enter, splitnum)
+                    llxSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 38).split(enter, splitnum)
 
-                    llySign = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 36).split(enter, splitnum)
+                    llySign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 39).split(enter, splitnum)
 
-                    urxSign = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 37).split(enter, splitnum)
+                    urxSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 40).split(enter, splitnum)
 
-                    urySign = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 38).split(enter, splitnum)
+                    urySign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 41).split(enter, splitnum)
 
                     'Split mengenai signLocation dimana berdasarkan dokumen dan berdasarkan signer'
                     pageSigns = (pageSign[i]).split(delimiter, splitnum)
@@ -283,30 +293,44 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     }
                 }
                 
+				'Pembuatan string untuk sequence number'
+				seqNoBodyAPI = ''
+				
+				'Jika seqno input excel tidak kosong'
+				if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm,32) != '') {
+					seqNoBodyAPI = ',"seqNo": ' + seqNos[t]
+				}
+				
                 'Jika signAction yang pertama untuk dokumen pertama'
                 if (t == 0) {
                     if (t == (signActions.size() - 1)) {
                         'isi bodyAPI dengan bodyAPI yang atas'
-                        bodyAPI = ((((((((((('"signers" : [{"signAction": ' + (signActions[t])) + ',"signerType": ') + (signerTypes[
-                        t])) + ',"tlp": ') + (tlps[t])) + ',"idKtp": ') + (idKtps[t])) + ',"email": ') + (emails[t])) + 
-                        bodyAPI) + '}],')
+                        bodyAPI = '"signers" : [{"signAction": ' + signActions[t] + ',"signerType": ' + signerTypes[
+                        t] + ',"tlp": ' + tlps[t] + ',"idKtp": ' + idKtps[t] + ',"email": ' + emails[t] + seqNoBodyAPI + 
+                        bodyAPI + '}],'
                     } else {
                         'isi bodyAPI dengan bodyAPI yang atas'
                         bodyAPI = ((((((((((('"signers" : [{"signAction": ' + (signActions[t])) + ',"signerType": ') + (signerTypes[
-                        t])) + ',"tlp": ') + (tlps[t])) + ',"idKtp": ') + (idKtps[t])) + ',"email": ') + (emails[t])) + 
+                        t])) + ',"tlp": ') + (tlps[t])) + ',"idKtp": ') + (idKtps[t])) + ',"email": ') + (emails[t])) + seqNoBodyAPI + 
                         bodyAPI) + '},')
                     }
                 } else if (t == (signActions.size() - 1)) {
                     'isi bodyAPI dengan bodyAPI yang atas'
                     bodyAPI = ((((((((((('{"signAction": ' + (signActions[t])) + ',"signerType": ') + (signerTypes[t])) + 
-                    ',"tlp": ') + (tlps[t])) + ',"idKtp": ') + (idKtps[t])) + ',"email": ') + (emails[t])) + bodyAPI) + 
+                    ',"tlp": ') + (tlps[t])) + ',"idKtp": ') + (idKtps[t])) + ',"email": ') + (emails[t])) + seqNoBodyAPI + bodyAPI) + 
                     '}],')
                 } else {
                     'isi bodyAPI dengan bodyAPI yang atas'
                     bodyAPI = ((((((((((('{"signAction": ' + (signActions[t])) + ',"signerType": ') + (signerTypes[t])) + 
-                    ',"tlp": ') + (tlps[t])) + ',"idKtp": ') + (idKtps[t])) + ',"email": ') + (emails[t])) + bodyAPI) + 
+                    ',"tlp": ') + (tlps[t])) + ',"idKtp": ') + (idKtps[t])) + ',"email": ') + (emails[t])) + seqNoBodyAPI + bodyAPI) + 
                     '},')
                 }
+				
+				'check ada value maka setting email service tenant'
+				if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 50).length() > 0) {
+					'setting email service tenant'
+					CustomKeywords.'connection.APIFullService.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 47), emails[t].replace('"', ''))
+				}
 				
                 'Memasukkan bodyAPI ke stringRefno'
 				stringRefno = stringRefno + bodyAPI
@@ -318,7 +342,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             bodyAPI = new String()
 
             'Jika dokumennya menggunakan base64'
-            if (findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 46) == 'Yes') {
+            if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 49) == 'Yes') {
                 'input bodyAPI dengan Base64'
                 bodyAPI = (((bodyAPI + '"documentFile": "') + PDFtoBase64(documentFile[i])) + '"')
             } else {
@@ -333,10 +357,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             bodyAPI = ''
 
             'Jika informasi di excel mengenai stampLocation seperti page dan koordinat ada, maka'
-            if (!(((((findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 22).length() == 0) && (findTestData(
-                excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 23).length() == 0)) && (findTestData(excelPathUploadDocument).getValue(
-                GlobalVariable.NumofColm, 24).length() == 0)) && (findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 
-                25).length() == 0)) && (findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 26).length() == 
+            if (!(((((findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 24).length() == 0) && (findTestData(
+                excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 25).length() == 0)) && (findTestData(excelPathAPISendDoc).getValue(
+                GlobalVariable.NumofColm, 26).length() == 0)) && (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 
+                27).length() == 0)) && (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 28).length() == 
             0))) {
                 'looping berdasarkan pagestamp per dokumen'
                 for (int b = 0; b < pageStamps.size(); b++) {
@@ -427,27 +451,27 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         }
 
         'Jika flag tenant no'
-        if (findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 44) == 'No') {
+        if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 47) == 'No') {
             'set tenant kosong'
-            GlobalVariable.Tenant = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 45)
-        } else if (findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 44) == 'Yes') {
+            GlobalVariable.Tenant = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 48)
+        } else if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 46) == 'Yes') {
             'Input tenant'
             GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
         }
         
         'check if mau menggunakan api_key yang salah atau benar'
-        if (findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 42) == 'Yes') {
+        if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 45) == 'Yes') {
             'get api key dari db'
             GlobalVariable.api_key = CustomKeywords.'connection.APIFullService.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
-        } else if (findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 42) == 'No') {
+        } else if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 45) == 'No') {
             'get api key salah dari excel'
-            GlobalVariable.api_key = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 43)
+            GlobalVariable.api_key = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 46)
         }
 		
         'Hit API'
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Send Document Signing', [('tenantCode') : findTestData(
-                        excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 9), ('request') : stringRefno, ('callerId') : findTestData(
-                        excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 40)]))
+                        excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 9), ('request') : stringRefno, ('callerId') : findTestData(
+                        excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 43)]))
 
         'jika response 200 / hit api berhasil'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
@@ -462,14 +486,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 trxno = WS.getElementPropertyValue(respon, 'documents.trxNos', FailureHandling.OPTIONAL)
 
                 'Memasukkan documentid dan trxno ke dalam excel'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Upload Document', 
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 
                     5, GlobalVariable.NumofColm - 1, documentId.toString().replace('[', '').replace(']', ''))
 
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Upload Document', 
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 
                     6, GlobalVariable.NumofColm - 1, trxno.toString().replace('[', '').replace(']', ''))
 
                 'write to excel success'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Upload Document', 
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 
                     0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 
                 'Jika check storedb'
@@ -482,8 +506,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL).toString()
 
                 'write to excel status failed dan reason'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Upload Document', GlobalVariable.NumofColm, 
-                    GlobalVariable.StatusFailed, (findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 2).replace(
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm, 
+                    GlobalVariable.StatusFailed, (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 2).replace(
                         '-', '') + semicolon) + messageFailed)
             }
         } else {
@@ -491,12 +515,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL).toString()
 
             'write to excel status failed dan reason'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Upload Document', GlobalVariable.NumofColm, 
-                GlobalVariable.StatusFailed, (findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 2).replace(
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm, 
+                GlobalVariable.StatusFailed, (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 2).replace(
                     '-', '') + semicolon) + messageFailed.toString())
         }
     }
 }
+
+'Fungsi PDF to Base64'
+
+'Fungsi storedb'
 
 def PDFtoBase64(String fileName) {
    return CustomKeywords.'customizekeyword.ConvertFile.base64File'(fileName)
@@ -510,50 +538,58 @@ def responseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, St
     arrayMatch = []
 
     'Mengambil documentid di excel dan displit'
-    docid = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 6).split(', ', splitnum)
+    docid = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 6).split(', ', splitnum)
 
     'split signer untuk doc1 dan signer untuk doc2'
-    signAction = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 28).split(enter, splitnum)
+    signAction = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 30).split(enter, splitnum)
 
-    signerType = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 29).split(enter, splitnum)
+    signerType = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 31).split(enter, splitnum)
+	
+	seqNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 32).split(enter, splitnum)
 
-    tlp = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 30).split(enter, splitnum)
+    tlp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 33).split(enter, splitnum)
 
-    idKtp = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 31).split(enter, splitnum)
+    idKtp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 34).split(enter, splitnum)
 
-    email = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 32).split(enter, splitnum)
+    email = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 35).split(enter, splitnum)
 
-    refNo = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 11)
+    refNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 11)
 
     'looping berdasarkan jumlah dari document id '
     for (int i = 0; i < docid.size(); i++) {
         'Inisialisasi document template code berdasarkan delimiter ;'
-        documentTemplateCode = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 12).split(semicolon, 
+        documentTemplateCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 12).split(semicolon, 
             splitnum)
 
         'Inisialisasi document template code berdasarkan delimiter ;'
-        documentName = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 13).split(semicolon, splitnum)
+        documentName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 13).split(semicolon, splitnum)
 
         'Inisialisasi office Code berdasarkan delimiter ;'
-        officeCode = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 14).split(semicolon, splitnum)
+        officeCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 14).split(semicolon, splitnum)
 
         'Inisialisasi office name berdasarkan delimiter ;'
-        officeName = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 15).split(semicolon, splitnum)
+        officeName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 15).split(semicolon, splitnum)
 
         'Inisialisasi region code berdasarkan delimiter ;'
-        regionCode = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 16).split(semicolon, splitnum)
+        regionCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 16).split(semicolon, splitnum)
 
         'Inisialisasi region name berdasarkan delimiter ;'
-        regionName = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 17).split(semicolon, splitnum)
+        regionName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 17).split(semicolon, splitnum)
 
         'Inisialisasi business line code berdasarkan delimiter ;'
-        businessLineCode = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 18).split(semicolon, splitnum)
+        businessLineCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 18).split(semicolon, splitnum)
 
         'Inisialisasi business line name berdasarkan delimiter ;'
-        businessLineName = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 19).split(semicolon, splitnum)
+        businessLineName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 19).split(semicolon, splitnum)
+
+		'Inisialisasi is sequence berdasarkan delimiter ;'
+		isSequence = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 20).split(semicolon, splitnum)
+
+		'Inisialisasi psre code berdasarkan delimiter ;'
+		psreCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 21).split(semicolon, splitnum)
 
         'Inisialisasi pageSign berdasarkan delimiter ||'
-        pageSign = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 34).split(enter, splitnum)
+        pageSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 37).split(enter, splitnum)
 
         'get data API Send Document dari DB (hanya 1 signer)'
         result = CustomKeywords.'connection.APIFullService.getSendDocSigning'(conneSign, docid[i])
@@ -567,7 +603,7 @@ def responseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, St
             arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getSignLocation'(conneSign, docid[i]), 
                     signlocStoreDB, false, FailureHandling.CONTINUE_ON_FAILURE))
         }
-        
+		
         'get current date'
         currentDate = new Date().format('yyyy-MM-dd')
 
@@ -580,6 +616,12 @@ def responseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, St
         'Splitting email berdasarkan excel per dokumen'
         emailExcel = (email[i]).replace('"', '').split(semicolon, splitnum)
 
+		'Splitting email berdasarkan excel per dokumen'
+		emailExcel = (email[i]).replace('"', '').split(semicolon, splitnum)
+		
+		'Splitting sequence number berdasarkan excel per signer'
+		seqNoExcel = seqNo[i].split(semicolon,splitnum)
+		
         for (int r = 0; r < emailExcel.size(); r++) {
 			if (emailExcel[r] == '') {
 				'Splitting email berdasarkan excel per dokumen'
@@ -600,19 +642,37 @@ def responseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, St
 
             'verify signerType'
             arrayMatch.add(WebUI.verifyMatch(signerTypeExcel[r], resultStoreEmailandType[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-			}
-        }
+			
+			'Jika documentTemplateCode di dokumen pertama adalah kosong'
+			if ((documentTemplateCode[i]).replace('"', '') == '') {
+				'verify sequence number'
+				arrayMatch.add(WebUI.verifyMatch(seqNoExcel[r], resultStoreEmailandType[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+			} 
+			else {
+				seqNoBasedOnDocTemplate = CustomKeywords.'connection.APIFullService.getSeqNoBasedOnDocTemplate'(conneSign,documentTemplateCode[i],resultStoreEmailandType[arrayindex - 1])
+				
+				'verify sequence number'
+				arrayMatch.add(WebUI.verifyMatch(seqNoBasedOnDocTemplate.toString(), resultStoreEmailandType[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+			}	
+		}
+       }
         
         'declare arrayindex'
         arrayindex = 0
 
+		'get data psre code'
+		psreCodeDB = CustomKeywords.'connection.APIFullService.getVendorCodeUsingDocId'(conneSign, docid[i])
+		
+		'verify psre Code'
+		arrayMatch.add(WebUI.verifyMatch(psreCodeDB, result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+
         'verify tenant code'
-        arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 9).replace(
+        arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 9).replace(
                     '"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'verify ref number'
         arrayMatch.add(WebUI.verifyMatch((refNo).replace('"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
+		
         'verify document_id'
         arrayMatch.add(WebUI.verifyMatch(docid[i], result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
@@ -640,16 +700,19 @@ def responseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, St
         'verify total document'
         arrayMatch.add(WebUI.verifyMatch(docid.size().toString(), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
+		'verify is Sequence'
+		arrayMatch.add(WebUI.verifyMatch(isSequence[i].replace('"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+		
         'Looping berdasarkan jumlah dari signAction'
         for (int z = 0; z < signAction.size(); z++) {
             'Jika signAction tersebut adalah AT'
             if ((signAction[z]).replace('"', '') == 'at') {
                 'Mengambil emailSign dari excel dan displit kembali'
-                emailSign = (findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 32).replace('"', '').split(
+                emailSign = (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 33).replace('"', '').split(
                     semicolon, splitnum)[z])
 
                 'Mengambil trxno dari column tersebut'
-                trxno = findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 6)
+                trxno = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 6)
 
                 'get data result trx untuk signing'
                 resulttrxsigning = CustomKeywords.'connection.APIFullService.getTrxSendDocSigning'(conneSign, trxno)
@@ -661,7 +724,7 @@ def responseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, St
                 arrayMatch.add(WebUI.verifyMatch(trxno, resulttrxsigning[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
                 'verify ref no di trx'
-                arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 11).replace(
+                arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 11).replace(
                             '"', ''), resulttrxsigning[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
                 'verify date req di trx'
@@ -679,8 +742,8 @@ def responseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, St
         'jika data db tidak sesuai dengan excel'
         if (arrayMatch.contains(false)) {
             'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Upload Document', GlobalVariable.NumofColm, 
-                GlobalVariable.StatusFailed, (findTestData(excelPathUploadDocument).getValue(GlobalVariable.NumofColm, 2) + 
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm, 
+                GlobalVariable.StatusFailed, (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 2) + 
                 semicolon) + GlobalVariable.ReasonFailedStoredDB)
         }
     }

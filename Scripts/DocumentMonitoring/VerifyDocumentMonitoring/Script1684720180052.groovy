@@ -140,7 +140,9 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
 	
 		}
 		
-		if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 80, FailureHandling.OPTIONAL) == '1') {
+		settingHO = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 83)
+		
+		if (WebUI.verifyMatch(settingHO.toString(),'1', true, FailureHandling.OPTIONAL) == true) {
         'Set text mengenai input cabang'
         WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndex++])
 

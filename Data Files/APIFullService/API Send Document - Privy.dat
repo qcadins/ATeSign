@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DataFileEntity>
    <description></description>
-   <name>API Request OTP</name>
+   <name>API Send Document - Privy</name>
    <tag></tag>
    <containsHeaders>false</containsHeaders>
    <csvSeperator></csvSeperator>
-   <dataFileGUID>02a5a24c-27b0-4033-9cd2-a6a4011b8050</dataFileGUID>
-   <dataSourceUrl>Excel/2.1 Esign - Full API Services - Privy.xlsx</dataSourceUrl>
+   <dataFileGUID>5012b326-3468-43d8-ac63-330018095b1b</dataFileGUID>
+   <dataSourceUrl>Excel/2.1 Esign - Full API Services.xlsx</dataSourceUrl>
    <driver>ExcelFile</driver>
    <isInternalPath>true</isInternalPath>
    <query></query>
    <secureUserAccount>false</secureUserAccount>
-   <sheetName>API Request OTP</sheetName>
+   <sheetName>API Send Document - Privy</sheetName>
    <usingGlobalDBSetting>false</usingGlobalDBSetting>
 </DataFileEntity>

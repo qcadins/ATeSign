@@ -12,7 +12,7 @@
       <variableId>c2730ddc-8e93-4c1e-af18-2613d8bd9a44</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'APIFullService-Privy/API Confirm OTP'</defaultValue>
+      <defaultValue>'APIFullService/API Confirm OTP - Privy'</defaultValue>
       <description></description>
       <id>c2730ddc-8e93-4c1e-af18-2613d8bd9a44</id>
       <masked>false</masked>

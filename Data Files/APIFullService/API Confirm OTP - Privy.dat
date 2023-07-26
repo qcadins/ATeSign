@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DataFileEntity>
    <description></description>
-   <name>API Confirm OTP</name>
+   <name>API Confirm OTP - Privy</name>
    <tag></tag>
    <containsHeaders>false</containsHeaders>
    <csvSeperator></csvSeperator>
    <dataFileGUID>b24a8824-bc6b-47f3-9b39-d14fc36e305f</dataFileGUID>
-   <dataSourceUrl>Excel/2.1 Esign - Full API Services - Privy.xlsx</dataSourceUrl>
+   <dataSourceUrl>Excel/2.1 Esign - Full API Services.xlsx</dataSourceUrl>
    <driver>ExcelFile</driver>
    <isInternalPath>true</isInternalPath>
    <properties>
@@ -17,6 +17,6 @@
    </properties>
    <query></query>
    <secureUserAccount>false</secureUserAccount>
-   <sheetName>API Confirm OTP</sheetName>
+   <sheetName>API Confirm OTP - Privy</sheetName>
    <usingGlobalDBSetting>false</usingGlobalDBSetting>
 </DataFileEntity>

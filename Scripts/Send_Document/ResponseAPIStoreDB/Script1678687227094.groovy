@@ -16,6 +16,9 @@ for (int i = 0; i < docid.size(); i++) {
     'get data API Send Document dari DB (hanya 1 signer)'
     ArrayList<String> result = CustomKeywords.'connection.SendSign.getSendDoc'(conneSign, docid[i])
 
+	'get data psre code'
+	String psreCodeDB = CustomKeywords.'connection.SendSign.getVendorCodeUsingDocId'(conneSign, docid[i].toString())
+
 	'Mengambil email berdasarkan documentId'
 	ArrayList<String> emailSigner = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, docid[i]).split(';', -1)
 
@@ -83,11 +86,19 @@ for (int i = 0; i < docid.size(); i++) {
     'verify is sequence'
     arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 19).replace('"', ''), 
             result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-    'verify psre/vendor code'
-    arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 21).replace('"', ''), 
-            result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
+	
+	'verify psre/vendor code'
+	if (WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 21).replace('"', ''), 
+    result[arrayindex], false, FailureHandling.CONTINUE_ON_FAILURE)) {
+		'verify psre/vendor code == true'
+		arrayMatch.add(true)	
+	} else {
+		'verify psre Code'
+		arrayMatch.add(WebUI.verifyMatch(psreCodeDB, result[arrayindex], false, FailureHandling.CONTINUE_ON_FAILURE))
+	}
+	
+	arrayindex++
+	
     'verify success url'
     arrayMatch.add(WebUI.verifyMatch(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 22).replace('"', ''), 
             result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))

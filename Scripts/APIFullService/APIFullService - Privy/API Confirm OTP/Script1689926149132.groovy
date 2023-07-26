@@ -8,7 +8,7 @@ import java.sql.Connection as Connection
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 
 'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - Full API Services - Privy.xlsx')
+GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - Full API Services.xlsx')
 
 'Connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
@@ -16,63 +16,55 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'get colm excel'
 int countColmExcel = findTestData(excelPathConfirmOTP).columnNumbers
 
-'looping API Sent OTP Signing'
+'looping API Confirm OTP'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathConfirmOTP).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathConfirmOTP).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
-        WebUI.callTestCase(findTestCase('APIFullService/APIFullService - Privy/Response API Sent OTP Signing'), [('excelPathAPISentOTPSigning') : excelPathConfirmOTP
-                , ('sheet') : 'API Confirm OTP'], FailureHandling.CONTINUE_ON_FAILURE)
+    WebUI.callTestCase(findTestCase('APIFullService/APIFullService - Privy/API Request OTP'), [('excelPathRequestOTP') : excelPathConfirmOTP
+            , ('sheet') : 'API Confirm OTP - Privy'], FailureHandling.CONTINUE_ON_FAILURE)
 
-        if (findTestData(excelPathConfirmOTP).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Success')) {
-            if (findTestData(excelPathConfirmOTP).getValue(GlobalVariable.NumofColm, 19) == 'Yes') {
-                'diberikan delay 40 detik untuk update db sesuai dengan otp code yang telah diterima'
-                'Untuk privy, otp code tidak ada di db dan perlu diinput manual karena otp codenya ada di email'
-                WebUI.delay(40)
+    if (findTestData(excelPathConfirmOTP).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Success')) {
+        if (findTestData(excelPathConfirmOTP).getValue(GlobalVariable.NumofColm, 14) == 'Yes') {
+            'delay 40 detik untuk input otp code manual via SMS ke excel(otp privy tidak masuk ke db)'
+			WebUI.delay(40)
+		}
 
-                baseUrl = findTestData(excelPathConfirmOTP).getValue(2, 22)
+        'HIT API'
+        responConfirm = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/API Confirm OTP', [('base_url') : GlobalVariable.base_url
+                    , ('merchant-key') : GlobalVariable.Merchantkey, ('access_token') : GlobalVariable.AccessToken, ('otpCode') : findTestData(excelPathConfirmOTP).getValue(GlobalVariable.NumofColm, 15)]))
 
-                merchantKey = findTestData(excelPathConfirmOTP).getValue(2, 23)
+        'Jika status HIT API 200 atau 201'
+        if (WS.verifyResponseStatusCodeInRange(responConfirm, 200, 202, FailureHandling.OPTIONAL) == true) {
+            'get status code'
+            code = WS.getElementPropertyValue(responConfirm, 'code', FailureHandling.OPTIONAL)
 
-                GlobalVariable.access_token = CustomKeywords.'connection.APIFullService.getVendorAccessToken'(conneSign, findTestData(excelPathConfirmOTP).getValue(
-                        GlobalVariable.NumofColm, 11).toString().replace('"', ''))
+            if ((code == 200) || (code == 201)) {
+                'get message'
+                message = WS.getElementPropertyValue(responConfirm, 'message', FailureHandling.OPTIONAL)
 
-                'HIT API'
-                responConfirm = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/API Confirm OTP', [('base_url') : baseUrl
-                            , ('merchant-key') : merchantKey, ('access_token') : accessToken, ('otpCode') : findTestData(excelPathConfirmOTP).getValue(GlobalVariable.NumofColm, 20)]))
-
-                'Jika status HIT API 200 atau 201'
-                if (WS.verifyResponseStatusCodeInRange(responConfirm, 200, 202, FailureHandling.OPTIONAL) == true) {
-                    'get status code'
-                    code = WS.getElementPropertyValue(responConfirm, 'code', FailureHandling.OPTIONAL)
-
-                    if ((code == 200) || (code == 201)) {
-                        'get message'
-                        message = WS.getElementPropertyValue(responConfirm, 'message', FailureHandling.OPTIONAL)
-
-                        if (message.toString().contains('success')) {
-                            if (GlobalVariable.FlagFailed == 0) {
-                                'write to excel success'
-                                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Confirm OTP', 
-                                    0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-                            }
-                        }
-                    } else {
-                        'get message'
-                        message = WS.getElementPropertyValue(responConfirm, 'message', FailureHandling.OPTIONAL)
-
-                        'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Confirm OTP', GlobalVariable.NumofColm, 
-                            GlobalVariable.StatusFailed, message)
+                if (message.toString().contains('success')) {
+                    if (GlobalVariable.FlagFailed == 0) {
+                        'write to excel success'
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Confirm OTP - Privy', 
+                            0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
                     }
-                } else {
-                        'get message'
-                        message = WS.getElementPropertyValue(responConfirm, 'message', FailureHandling.OPTIONAL)
+                }
+            } else {
+                'get message'
+                message = WS.getElementPropertyValue(responConfirm, 'message', FailureHandling.OPTIONAL)
 
-                        'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Confirm OTP', GlobalVariable.NumofColm, 
-                            GlobalVariable.StatusFailed, message)
-                    }
+                'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Confirm OTP - Privy', GlobalVariable.NumofColm, 
+                    GlobalVariable.StatusFailed, message)
+            }
+        } else {
+                'get message'
+                message = WS.getElementPropertyValue(responConfirm, 'message', FailureHandling.OPTIONAL)
+
+                'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Confirm OTP - Privy', GlobalVariable.NumofColm, 
+                    GlobalVariable.StatusFailed, message)
             }
         }
     }

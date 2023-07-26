@@ -15,8 +15,6 @@ if (sheet == '') {
     emailSigner = findTestData(excelPath).getValue(GlobalVariable.NumofColm, 11).replace('"', '')
 } else {
     emailSigner = findTestData(excelPath).getValue(GlobalVariable.NumofColm, 9).replace('"', '')
-
-    GlobalVariable.Merchantkey = findTestData(excelPath).getValue(2, 15)
 }
 
 'connect DB eSign'
@@ -39,8 +37,9 @@ if (WS.verifyResponseStatusCode(respon, 201, FailureHandling.OPTIONAL) == true) 
     token = WS.getElementPropertyValue(respon, 'data.token', FailureHandling.OPTIONAL)
 
     'print token'
-    GlobalVariable.access_token = token
+    GlobalVariable.AccessToken = token
 
+	'print token yang ada'
     println(token)
 
     'write to excel success'

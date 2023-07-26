@@ -31,12 +31,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				
 				'Jika access token tidak yang sebenarnya atau berasal dari call test case user access token'
 				if (findTestData(excelPathCheckDocumentStatus).getValue(GlobalVariable.NumofColm,11) == 'No') {
-					GlobalVariable.access_token = findTestData(excelPathCheckDocumentStatus).getValue(GlobalVariable.NumofColm,12)
+					GlobalVariable.AccessToken = findTestData(excelPathCheckDocumentStatus).getValue(GlobalVariable.NumofColm,12)
 				}
 
                 'HIT API'
                 responConfirm = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/API OTP Request', [('base_url') : baseUrl
-                            , ('merchant-key') : merchantKey, ('access_token') : GlobalVariable.access_token]))
+                            , ('merchant-key') : merchantKey, ('access_token') : GlobalVariable.AccessToken]))
 
                 'Jika status HIT API 200 atau 201'
                 if (WS.verifyResponseStatusCodeInRange(responConfirm, 200, 202, FailureHandling.OPTIONAL) == true) {
