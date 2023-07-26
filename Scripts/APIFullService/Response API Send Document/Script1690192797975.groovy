@@ -72,7 +72,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
         signerType = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 31).split(enter, splitnum)
 
-		seqNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 32).split(delimiter, splitnum)
+		seqNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 32).split(enter, splitnum)
 		
         tlp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 33).split(enter, splitnum)
 
@@ -103,8 +103,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
             signerTypes = (signerType[i]).split(semicolon, splitnum)
 
-			seqNos = seqNo[i].split(semicolon,splitnum)
-			
+			'Jika seqno input excel tidak kosong'
+			if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm,32) != '') {
+				seqNos = seqNo[i].split(semicolon,splitnum)
+			}
+
             tlps = (tlp[i]).split(semicolon, splitnum)
 
             idKtps = (idKtp[i]).split(semicolon, splitnum)
@@ -459,6 +462,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
         }
         
+		'check ada value maka setting email service tenant'
+		if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 50).length() > 0) {
+			'setting email service tenant'
+			CustomKeywords.'connection.APIFullService.settingEmailServiceTenant'(conneSign, findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 50))
+		}
+		
         'check if mau menggunakan api_key yang salah atau benar'
         if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 45) == 'Yes') {
             'get api key dari db'
@@ -467,7 +476,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'get api key salah dari excel'
             GlobalVariable.api_key = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 46)
         }
-		
+
         'Hit API'
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Send Document Signing', [('tenantCode') : findTestData(
                         excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 9), ('request') : stringRefno, ('callerId') : findTestData(
@@ -644,12 +653,12 @@ def responseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, St
             arrayMatch.add(WebUI.verifyMatch(signerTypeExcel[r], resultStoreEmailandType[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 			
 			'Jika documentTemplateCode di dokumen pertama adalah kosong'
-			if ((documentTemplateCode[i]).replace('"', '') == '') {
+			if ((documentTemplateCode[i]).replace('"', '') == '' && isSequence[i].replace('"','') != '') {
 				'verify sequence number'
 				arrayMatch.add(WebUI.verifyMatch(seqNoExcel[r], resultStoreEmailandType[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 			} 
 			else {
-				seqNoBasedOnDocTemplate = CustomKeywords.'connection.APIFullService.getSeqNoBasedOnDocTemplate'(conneSign,documentTemplateCode[i],resultStoreEmailandType[arrayindex - 1])
+				seqNoBasedOnDocTemplate = CustomKeywords.'connection.APIFullService.getSeqNoBasedOnDocTemplate'(conneSign,documentTemplateCode[i].replace('"',''),resultStoreEmailandType[arrayindex - 1])
 				
 				'verify sequence number'
 				arrayMatch.add(WebUI.verifyMatch(seqNoBasedOnDocTemplate.toString(), resultStoreEmailandType[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))

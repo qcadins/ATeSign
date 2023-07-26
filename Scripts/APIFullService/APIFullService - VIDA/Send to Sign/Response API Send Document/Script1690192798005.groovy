@@ -225,7 +225,7 @@ def responseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, St
 				arrayMatch.add(WebUI.verifyMatch(seqNoExcel[r], resultStoreEmailandType[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 			}
 			else {
-				seqNoBasedOnDocTemplate = CustomKeywords.'connection.APIFullService.getSeqNoBasedOnDocTemplate'(conneSign,documentTemplateCode[i],resultStoreEmailandType[arrayindex - 1])
+				seqNoBasedOnDocTemplate = CustomKeywords.'connection.APIFullService.getSeqNoBasedOnDocTemplate'(conneSign,documentTemplateCode[i].replace('"',''),resultStoreEmailandType[arrayindex - 1])
 				
 				'verify sequence number'
 				arrayMatch.add(WebUI.verifyMatch(seqNoBasedOnDocTemplate.toString(), resultStoreEmailandType[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
