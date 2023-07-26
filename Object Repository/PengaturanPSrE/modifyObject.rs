@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>modifyObject</name>
+   <tag></tag>
+   <elementGuidId>04b0aaa2-06d4-45a1-bb1b-010f46a4534e</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;isActive&quot;]/div/span[2]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;isActive&quot;]/div/span[2]</value>
+      <webElementGuid>3c04b6ab-49b1-4705-add3-6d0d155fe8fa</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

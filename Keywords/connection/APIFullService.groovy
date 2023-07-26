@@ -781,7 +781,7 @@ public class APIFullService {
 		}
 		data
 	}
-	
+
 	@Keyword
 	getSeqNoBasedOnDocTemplate(Connection conn, String docTemplate, String signerType) {
 		stm = conn.createStatement()
@@ -794,7 +794,7 @@ public class APIFullService {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		
+
 		if (data != null) {
 			Integer.parseInt(data)
 		} else {

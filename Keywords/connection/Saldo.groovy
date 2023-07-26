@@ -155,7 +155,7 @@ public class Saldo {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getTenantName(Connection conn) {
 		stm = conn.createStatement()
@@ -171,7 +171,7 @@ public class Saldo {
 		}
 		data
 	}
-	
+
 	@Keyword
 	getDDLTipeSaldo(Connection conn) {
 		stm = conn.createStatement()
@@ -189,7 +189,7 @@ public class Saldo {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getDDLTipeTrx(Connection conn) {
 		stm = conn.createStatement()
@@ -207,7 +207,7 @@ public class Saldo {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getDDLTipeDokumen(Connection conn) {
 		stm = conn.createStatement()
@@ -225,7 +225,7 @@ public class Saldo {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getTrxSaldo(Connection conn, String date, String refNo, String trxType, String documentName) {
 		stm = conn.createStatement()

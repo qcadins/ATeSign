@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>select_SequentialSigning</name>
+   <tag></tag>
+   <elementGuidId>8b9e13b7-fe20-4cdf-9799-e9284dd5bf24</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;isSequence&quot;]/div/div/div[3]/input</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;isSequence&quot;]/div/div/div[3]/input</value>
+      <webElementGuid>47716dca-ff5b-47a0-a115-e916f41101c8</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_StatusOperational</name>
+   <tag></tag>
+   <elementGuidId>6bc40d50-f97f-43b9-a943-1331e96d0cc7</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;statusOperating&quot;]/div/div/div[3]/input</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;statusOperating&quot;]/div/div/div[3]/input</value>
+      <webElementGuid>43830294-efc1-4ab3-b18f-c20086d3e5ea</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

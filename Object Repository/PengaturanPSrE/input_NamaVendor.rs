@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_NamaVendor</name>
+   <tag></tag>
+   <elementGuidId>fdd72c91-2a80-42e0-b6cf-045097d9c0f9</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;vendorName&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;vendorName&quot;]</value>
+      <webElementGuid>28ca580d-dc5d-4337-ae48-4646e046f14e</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

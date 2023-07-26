@@ -37,6 +37,14 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getVal
 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 14).toUpperCase(), 
         (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
+'verify Psre'
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 20).toUpperCase(),
+		(result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+'verify isSequence'
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 21).toUpperCase(),
+		(result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
 'jika data db tidak sesuai dengan excel'
 if (arrayMatch.contains(false)) {
     'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'

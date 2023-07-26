@@ -41,7 +41,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathSaldo, ('sheet') : 'Saldo'], 
                 FailureHandling.CONTINUE_ON_FAILURE)
 
-            'click menu meterai'
+            'click menu saldo'
             WebUI.click(findTestObject('saldo/menu_saldo'))
 
 			'click ddl bahasa'
@@ -253,7 +253,7 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
 	'ambil total trx berdasarkan filter yang telah disiapkan pada db'
 	totalTrxDB = CustomKeywords.'connection.Saldo.getTotalTrxBasedOnVendorAndBalanceType'(conneSign, tenantCodeByUserLogin, 'VIDA', 'Sign')
 	
-	'verify total Meterai'
+	'verify total Saldo'
 	checkVerifyPaging(WebUI.verifyMatch(totalTrxUI[0], totalTrxDB, false, FailureHandling.CONTINUE_ON_FAILURE))
 	
 	if (Integer.parseInt(totalTrxUI[0]) > 10) {

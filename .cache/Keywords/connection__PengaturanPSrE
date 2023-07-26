@@ -1,11 +1,11 @@
 {
-  "keywordFileContentHash": "87E52F12EA716EB68B6C2B16FAE12939",
+  "keywordFileContentHash": "870B72C812915DF4DCD0D652E3F4D173",
   "keywordClasses": [
     {
-      "name": "connection.PengaturanDokumen",
+      "name": "connection.PengaturanPSrE",
       "keywordMethods": [
         {
-          "name": "getDataDocTemplate",
+          "name": "getDataVendor",
           "parameters": [
             {
               "name": "conn",
@@ -21,7 +21,7 @@
               }
             },
             {
-              "name": "docTempCode",
+              "name": "vendorCode",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -33,43 +33,10 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
-          "name": "dataDocTemplateStoreDB",
-          "parameters": [
-            {
-              "name": "conn",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.sql.Connection",
-                "unresolvedClassName": "Connection",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            },
-            {
-              "name": "docTempCode",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.lang.String",
-                "unresolvedClassName": "String",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            }
-          ],
-          "javadoc": ""
-        },
-        {
-          "name": "getLovTipePembayaran",
+          "name": "getTotalPSrE",
           "parameters": [
             {
               "name": "conn",
@@ -84,11 +51,10 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
-          "name": "getTotalDokumenTemplatKode",
+          "name": "getDDLVendorPaymentType",
           "parameters": [
             {
               "name": "conn",
@@ -103,11 +69,10 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         }
       ]
     }
   ],
-  "javadocParsed": true
+  "javadocParsed": false
 }
