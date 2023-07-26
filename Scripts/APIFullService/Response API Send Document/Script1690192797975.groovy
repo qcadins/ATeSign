@@ -180,7 +180,8 @@ for (GlobalVariable.NumofColm = 74; GlobalVariable.NumofColm <= findTestData(exc
         
                     'looping menuju jumlah lokasi pageSign di 1 signer'
                     for (int l = 0; l < pageSigns.size(); l++) {
-
+						
+						'split seq number per documentnya'
 						seqNos = (seqNo[i]).split(semicolon, splitnum)
 
 						for (int p = 0 ; p < seqNos.size();p++) {
