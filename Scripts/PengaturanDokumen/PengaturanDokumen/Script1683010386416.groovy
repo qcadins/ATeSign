@@ -32,7 +32,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
     if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+		
+		'declare isMmandatory Complete'
+		int isMandatoryComplete = Integer.parseInt(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm,
+				5))
+		
         GlobalVariable.FlagFailed = 0
+		
 		'Pembuatan variable mengenai jumlah delete, jumlah lock, dan indexlock untuk loop kedepannya'
         RoleTandaTangan = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 15).split(semicolon, splitIndex)
 
@@ -125,10 +131,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 
                 'Klik button lanjut'
                 WebUI.click(findTestObject('TandaTanganDokumen/btn_Lanjut'))
-
-                'declare isMmandatory Complete'
-                int isMandatoryComplete = Integer.parseInt(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
-                        5))
 
                 if (isMandatoryComplete > 0) {
                     'write to excel status failed dan reason'
@@ -274,23 +276,44 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         'click button simpan'
                         WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_SimpanPengaturanDokumen'))
 
-                        'check if pengaturan document berhasil disimpan'
-                        if (isMandatoryComplete > 0) {
-                            'write to excel status failed dan reason'
-                            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm, 
-                                GlobalVariable.StatusFailed, (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
-                                    2).replace('-', '') + semicolon) + GlobalVariable.ReasonFailedMandatory)
-
-                            GlobalVariable.FlagFailed = 1
-                        } else if (WebUI.verifyElementNotPresent(findTestObject('Object Repository/TandaTanganDokumen/signBox'), 
-                            GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+						'check if Sequential signing iya'
+						if(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 21).equalsIgnoreCase('Iya')) {
+							'get urutan seq sign dari excel'
+							ArrayList<String> seqSignRole = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 22).split(';',-1)
 							
-							if (GlobalVariable.FlagFailed == 0) {
-	                            'write to excel success'
-	                            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PengaturanDokumen', 
-	                                0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+							'count box'
+							variable = DriverFactory.webDriver.findElements(By.cssSelector('#cdk-drop-list-0 div'))
+							
+							'looping seq sign'
+							for (seq = 1; seq <= variable.size(); seq++) {
+								'modify label tipe tanda tangan di kotak'
+								modifyObject = WebUI.modifyObjectProperty(findTestObject('TandaTanganDokumen/modifyObject'),
+									'xpath', 'equals', '//*[@id="cdk-drop-list-0"]/div['+ seq +']', true)
+								
+								index = seqSignRole.indexOf(WebUI.getText(modifyObject)) + 1
+								
+								if (seq != index) {
+									'modify label tipe tanda tangan di kotak'
+									modifyObjectNew = WebUI.modifyObjectProperty(findTestObject('TandaTanganDokumen/modifyObject'),
+										'xpath', 'equals', '//*[@id="cdk-drop-list-0"]/div['+ index +']', true)
+									
+									'pindahin ke urutan sesuai excel'
+									WebUI.dragAndDropToObject(modifyObject, modifyObjectNew)
+									
+									'mines karena ada perpindahan object'
+									seq--
+								}
 							}
-                        }
+							
+							'click button simpan'
+							WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_SimpanPengaturanDokumen'))
+							
+							'delay untuk loading simpan'
+							WebUI.delay(3)
+						}
+						
+						'call function checkpopupberhasil'
+						checkPopUpBerhasil(isMandatoryComplete)
                     }
                 } else {
 					'write to excel status failed dan reason'
@@ -308,7 +331,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
             'get data doc template from db'
             result = CustomKeywords.'connection.PengaturanDokumen.getDataDocTemplate'(conneSign, findTestData(excelPathPengaturanDokumen).getValue(
-                    GlobalVariable.NumofColm, 23))
+                    GlobalVariable.NumofColm, 24))
 
             arrayIndex = 0
 
@@ -333,11 +356,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
             if (WebUI.verifyElementPresent(findTestObject('Object Repository/TandaTanganDokumen/input_KodeTemplatDokumen'), 
                 GlobalVariable.TimeOut, FailureHandling.OPTIONAL) && (GlobalVariable.FlagFailed == 0)) {
-							if (GlobalVariable.FlagFailed == 0) {
-                            'write to excel success'
-                            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PengaturanDokumen', 
-                                0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-							}
+				if (GlobalVariable.FlagFailed == 0) {
+                'write to excel success'
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PengaturanDokumen', 
+                    0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+				}
             }
         } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Edit')) {
             'call function search pengaturan dokumen'
@@ -348,7 +371,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
             'get data doc template from db'
             result = CustomKeywords.'connection.PengaturanDokumen.dataDocTemplateStoreDB'(conneSign, findTestData(excelPathPengaturanDokumen).getValue(
-                    GlobalVariable.NumofColm, 23))
+                    GlobalVariable.NumofColm, 24))
 
             arrayIndex = 0
 
@@ -465,10 +488,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
 					(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + errormessage)
 				}
-				
-                'declare isMmandatory Complete'
-                int isMandatoryComplete = Integer.parseInt(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
-                        5))
 
                 if (isMandatoryComplete > 0) {
                     'write to excel status failed dan reason'
@@ -479,10 +498,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     GlobalVariable.FlagFailed = 1
                 } else if (WebUI.verifyElementPresent(findTestObject('Object Repository/TandaTanganDokumen/input_KodeTemplatDokumen'), 
                     GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-				if (GlobalVariable.FlagFailed == 0) {
-					'write to excel success'
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PengaturanDokumen',
-						0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+					if (GlobalVariable.FlagFailed == 0) {
+						'write to excel success'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PengaturanDokumen',
+							0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 					}
                 } else if (WebUI.verifyElementPresent(findTestObject('Object Repository/TandaTanganDokumen/btn_ttd'), GlobalVariable.TimeOut, 
                     FailureHandling.OPTIONAL)) {
@@ -597,21 +616,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 						(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + errormessage)
 					}
 					
-                    'check if pengaturan document berhasil disimpan'
-                    if (WebUI.verifyElementNotPresent(findTestObject('Object Repository/TandaTanganDokumen/signBox'), GlobalVariable.TimeOut, 
-                        FailureHandling.CONTINUE_ON_FAILURE)) {
-							if (GlobalVariable.FlagFailed == 0) {
-                            'write to excel success'
-                            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PengaturanDokumen', 
-                                0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-							}
-                    } else {
-                        'write to excel failed'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PengaturanDokumen', 
-                            0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusFailed)
-
-                        GlobalVariable.FlagFailed = 1
-                    }
+                    'call function checkpopupberhasil'
+					checkPopUpBerhasil(isMandatoryComplete)
                 }
             }
         } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Setting')) {
@@ -623,7 +629,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
             'get data doc template from db'
             result = CustomKeywords.'connection.PengaturanDokumen.getDataDocTemplate'(conneSign, findTestData(excelPathPengaturanDokumen).getValue(
-                    GlobalVariable.NumofColm, 23))
+                    GlobalVariable.NumofColm, 24))
 
             arrayIndex = 0
 
@@ -673,7 +679,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     tipeTTD = (WebUI.getText(modifyObjectTipeSignBox).split(' ')[0])
                 }
                 
-                if (tipeTTD == 'Prf') {
+                if (tipeTTD == 'Prf disini') {
                     tipeTTD = 'Paraf'
                 }
                 
@@ -866,36 +872,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'click button simpan'
             WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_SimpanPengaturanDokumen'))
 
-            'declare isMmandatory Complete'
-            int isMandatoryComplete = Integer.parseInt(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
-                    5))
-
-            'check if pengaturan document berhasil disimpan'
-            if (isMandatoryComplete > 0) {
-                'write to excel status failed dan reason'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm, 
-                    GlobalVariable.StatusFailed, (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
-                        2).replace('-', '') + semicolon) + GlobalVariable.ReasonFailedMandatory)
-
-                GlobalVariable.FlagFailed = 1
-            } else if (WebUI.verifyElementNotPresent(findTestObject('Object Repository/TandaTanganDokumen/signBox'), GlobalVariable.TimeOut, 
-                FailureHandling.CONTINUE_ON_FAILURE)) {
-							if (GlobalVariable.FlagFailed == 0) {
-                            'write to excel success'
-                            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PengaturanDokumen', 
-                                0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-							}
-            }
+            'call function checkpopupberhasil'
+			checkPopUpBerhasil(isMandatoryComplete)
         }
         
         'check if new or edit'
         if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('New') || findTestData(
             excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Edit')) {
-            'check if storedb = yes dan flagfailed = 0'
 			
 			'call fucntion after edit'
 			verifyAfterAddorEdit(TipeTandaTangan)
 			
+			'check if storedb = yes dan flagfailed = 0'
             if ((GlobalVariable.checkStoreDB == 'Yes') && (GlobalVariable.FlagFailed == 0)) {
                 'call test case pengaturan dokumen store db'
                 WebUI.callTestCase(findTestCase('PengaturanDokumen/PengaturanDokumenStoreDB'), [('excelPathPengaturanDokumen') : 'PengaturanDokumen/PengaturanDokumen'], 
@@ -1019,15 +1007,15 @@ def searchPengaturanDokumen() {
 
     'Input teks kode template dokumen'
     WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_KodeTemplatDokumen'), findTestData(excelPathPengaturanDokumen).getValue(
-            GlobalVariable.NumofColm, 23))
+            GlobalVariable.NumofColm, 24))
 
     'Input teks di nama template dokumen'
     WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_NamaTemplatDokumen'), findTestData(excelPathPengaturanDokumen).getValue(
-            GlobalVariable.NumofColm, 24))
+            GlobalVariable.NumofColm, 25))
 
     'Input AKtif pada input Status'
     WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_Status'), findTestData(excelPathPengaturanDokumen).getValue(
-            GlobalVariable.NumofColm, 25))
+            GlobalVariable.NumofColm, 26))
 
     'Klik enter'
     WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
@@ -1077,7 +1065,7 @@ def verifyAfterAddorEdit(def TipeTTD) {
 	checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/TandaTanganDokumen/label_Paraf')), TipeTTD.count('Paraf').toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Paraf pengaturan dokumen')
 	
 	'verify after add / edit Meterai pengaturan dokumen'
-	checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/TandaTanganDokumen/label_Meterai')), TipeTTD.count('Paraf').toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Meterai pengaturan dokumen')
+	checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/TandaTanganDokumen/label_Meterai')), TipeTTD.count('Meterai').toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Meterai pengaturan dokumen')
 	
 	'verify after add / edit Tipe Pembayaran Dokumen pengaturan dokumen'
 	checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/TandaTanganDokumen/label_TipePembayaranTTD')), findTestData(excelPathPengaturanDokumen).getValue(
@@ -1191,4 +1179,25 @@ def checkDDL(TestObject objectDDL, ArrayList<String> listDB, String reason) {
 	
 	'Input enter untuk tutup ddl'
 	WebUI.sendKeys(objectDDL, Keys.chord(Keys.ENTER))
+}
+
+def checkPopUpBerhasil(int isMandatoryComplete) {
+	'check if pengaturan document berhasil disimpan'
+	if (isMandatoryComplete > 0) {
+		'write to excel status failed dan reason'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm,
+			GlobalVariable.StatusFailed, (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm,
+				2).replace('-', '') + semicolon) + GlobalVariable.ReasonFailedMandatory)
+
+		GlobalVariable.FlagFailed = 1
+	} else if (WebUI.getText(findTestObject('TandaTanganDokumen/label_PopUp')).equalsIgnoreCase('Document Template berhasil di simpan')) {
+		'click button ok'
+		WebUI.click(findTestObject('TandaTanganDokumen/button_Ok'))
+		
+		if(GlobalVariable.FlagFailed == 0) {
+			'write to excel success'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PengaturanDokumen',
+					0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+		}
+	}
 }
