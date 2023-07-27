@@ -102,9 +102,6 @@ for (int i = 0; i < docid.size(); i++) {
     'Splitting email berdasarkan excel per dokumen'
     emailExcel = (email[i]).replace('"', '').split(semicolon, splitnum)
 
-    'Splitting email berdasarkan excel per dokumen'
-    emailExcel = (email[i]).replace('"', '').split(semicolon, splitnum)
-
     'Splitting sequence number berdasarkan excel per signer'
     seqNoExcel = (seqNo[i]).split(semicolon, splitnum)
 
@@ -116,8 +113,7 @@ for (int i = 0; i < docid.size(); i++) {
             (emailExcel[r]) = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(idKtpExcel[r])
         }
         
-        ArrayList resultStoreEmailandType = CustomKeywords.'connection.APIFullService.getSendDocForEmailAndSignerType'(conneSign, 
-            docid[i], emailExcel[r])
+        ArrayList resultStoreEmailandType = CustomKeywords.'connection.APIFullService.getSendDocForEmailAndSignerType'(conneSign, docid[i], emailExcel[r])
 
         if (resultStoreEmailandType.size() > 1) {
             'declare arrayindex'
@@ -202,8 +198,8 @@ for (int i = 0; i < docid.size(); i++) {
         'Jika signAction tersebut adalah AT'
         if ((signAction[z]).replace('"', '') == 'at') {
             'Mengambil emailSign dari excel dan displit kembali'
-            emailSign = (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 33).replace('"', '').split(
-                semicolon, splitnum)[z])
+            emailSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 33).replace('"', '').split(
+                semicolon, splitnum)[z]
 
             'Mengambil trxno dari column tersebut'
             trxno = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 6)

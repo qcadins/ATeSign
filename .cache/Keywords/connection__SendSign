@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "10BEF2B2920AAED515C0F52416BE8AA6",
+  "keywordFileContentHash": "1F220BDECA5C34FA07DA1490BDEC892E",
   "keywordClasses": [
     {
       "name": "connection.SendSign",
@@ -695,6 +695,38 @@
             },
             {
               "name": "docId",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getTrxSendDocSigning",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "trxno",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

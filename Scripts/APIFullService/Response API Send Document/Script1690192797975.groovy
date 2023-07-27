@@ -465,7 +465,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 47) == 'No') {
             'set tenant kosong'
             GlobalVariable.Tenant = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 48)
-        } else if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 46) == 'Yes') {
+        } else if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 47) == 'Yes') {
             'Input tenant'
             GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
         }
@@ -491,11 +491,21 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
             'jika status codenya 0, verifikasi datanya benar'
             if (status_Code == 0) {
-                'mengambil documentid dan trxno dari hasil response API'
+                'mengambil documentid, trxno dan response doc template code dari hasil response API'
                 documentId = WS.getElementPropertyValue(respon, 'documents.documentId', FailureHandling.OPTIONAL)
 
                 trxno = WS.getElementPropertyValue(respon, 'documents.trxNos', FailureHandling.OPTIONAL)
+				
+				responseDocTemplateCode = WS.getElementPropertyValue(respon, 'documents.docTemplateCode', FailureHandling.OPTIONAL)
 
+				'Jika doc template code di excel tidak sesuai dengan response doc template code'
+				if (documentTemplateCode.toString().replace('"','') != responseDocTemplateCode.toString()) {
+					'write to excel status failed dan reason failed h'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm,
+						GlobalVariable.StatusFailed, (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 2).replace(
+							'-', '') + semicolon) + GlobalVariable.ReasonFailedSaveGagal + ' pada perbedaan document template code ')
+				}
+			
                 'Memasukkan documentid dan trxno ke dalam excel'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 
                     5, GlobalVariable.NumofColm - 1, documentId.toString().replace('[', '').replace(']', ''))
@@ -503,9 +513,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 
                     6, GlobalVariable.NumofColm - 1, trxno.toString().replace('[', '').replace(']', ''))
 
-                'write to excel success'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 
-                    0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+				'write to excel success'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document',
+					0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 
                 'Jika check storedb'
                 if (GlobalVariable.checkStoreDB == 'Yes') {

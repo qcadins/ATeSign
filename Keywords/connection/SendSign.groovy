@@ -10,11 +10,12 @@ import internal.GlobalVariable
 public class SendSign {
 
 	String data
-	int columnCount, i
+	int columnCount, i, countLengthforSHA256 = 64, updateVariable
 	Statement stm
 	ResultSetMetaData metadata
 	ResultSet resultSet
 	ArrayList<String> listdata = []
+	String emailWhere, selectData
 
 	@Keyword
 	settingEmailServiceVendorRegisteredUser(Connection conn, String value, String email) {
@@ -208,10 +209,18 @@ public class SendSign {
 	}
 
 	@Keyword
-	getSendDocForEmailAndSignerType(Connection conn, String documentid, String emailSigner) {
+	getSendDocForEmailAndSignerType(Connection conn, String documentid,String emailSigner) {
+		if (emailSigner.length() == countLengthforSHA256) {
+			emailWhere = "amm.hashed_id_no = '" + emailSigner + "'"
+			selectData = "amm.hashed_id_no "
+		} else {
+			emailWhere = "amm.login_id = '" + emailSigner + "'"
+			selectData = "amm.login_id "
+		}
+
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select DISTINCT amm.login_id as email, lov.code as code from tr_document_d as tdd join tr_document_h as tdh on tdd.id_document_h = tdh.id_document_h join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d join am_msuser as amm on tdds.id_ms_user = amm.id_ms_user join ms_tenant as mst on tdd.id_ms_tenant = mst.id_ms_tenant join ms_lov as lov on tdds.lov_signer_type = lov.id_lov where tdd.document_id = '" + documentid + "' and amm.login_id = '" + emailSigner + "'")
+		resultSet = stm.executeQuery("select DISTINCT " + selectData + " as email, lov.code as code, tdds.seq_no from tr_document_d as tdd join tr_document_h as tdh on tdd.id_document_h = tdh.id_document_h join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d join am_msuser as amm on tdds.id_ms_user = amm.id_ms_user join ms_tenant as mst on tdd.id_ms_tenant = mst.id_ms_tenant join ms_lov as lov on tdds.lov_signer_type = lov.id_lov where tdd.document_id = '"+documentid+"' and " + emailWhere + "")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -346,5 +355,24 @@ public class SendSign {
 			data = resultSet.getObject(1)
 		}
 		data
+	}
+
+	@Keyword
+	getTrxSendDocSigning(Connection conn, String trxno) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select trx_no,ref_no, TO_CHAR(trx_date, 'yyyy-MM-DD'), qty, notes from tr_balance_mutation where trx_no = '" + trxno + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
 	}
 }
