@@ -11,7 +11,6 @@ import java.sql.Connection as Connection
 import com.kms.katalon.core.testobject.TestObject as TestObject
 import com.kms.katalon.core.configuration.RunConfiguration
 
-'aa'
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
@@ -35,11 +34,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
-aa
+
 		'Call API Send doc'
         WebUI.callTestCase(findTestCase('APIFullService/APIFullService - VIDA/Send to Sign/Response API Send Document'), [('excelPathAPISendDoc') : excelPathFESignDocument
                 , ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
-
+		
         'Jika tidak ada dokumen id di excel'
         if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 6) == '') {
             'loop selanjutnya'
@@ -108,7 +107,7 @@ aa
                 FailureHandling.STOP_ON_FAILURE)
 
             'mengambil saldo before'
-            saldoSignBefore = checkSaldoSign()
+            saldoSignBefore = checkSaldoSign(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 11).replace('"',''))
 
             'mengambil saldo otp before'
             otpBefore = checkSaldoOtp()
@@ -388,7 +387,7 @@ aa
 
             'check error log'
             if (checkErrorLog() == true) {
-				continue
+				break
 			}
 			
             'Jika error log tidak muncul, Jika verifikasi penanda tangan tidak muncul'
@@ -415,7 +414,7 @@ aa
 
                 'verifikasi objek text yang diambil valuenya dengan password'
                 checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('KotakMasuk/Sign/input_KataSandiAfterKonfirmasi'), 
-                            'value'), findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 55), false), 
+                            'value'), findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 58), false), 
                     'pada nomor telepon Signer')
 
                 'Jika cara verifikasinya menggunakan OTP'
@@ -733,7 +732,7 @@ aa
                 otpAfter = checkSaldoOtp()
 
                 'ambil saldo after'
-                saldoSignAfter = checkSaldoSign()
+                saldoSignAfter = checkSaldoSign(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 11).replace('"',''))
 				
 				countResend++
                 'Jika count saldo otp after dengan yang before dikurangi 1 ditambah dengan '
@@ -1005,7 +1004,7 @@ def inputFilterTrx(Connection conneSign, String currentDate, String noKontrak, S
     WebUI.click(findTestObject('Saldo/btn_cari'))
 }
 
-def checkSaldoSign() {
+def checkSaldoSign(Connection conneSign, String refNumber) {
     String totalSaldo
 
 	String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, refNumber)

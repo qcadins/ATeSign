@@ -18,6 +18,7 @@ String valueRefNum
 
 'penggunaan versi 3.1.0 atau 3.0.0 dengan 1 api yang sama'
 if (useAPI == 'v3.1.0') {
+	println GlobalVariable.base_url
 	'set base url menjadi v.3.1.0'
 	GlobalVariable.base_url = GlobalVariable.base_url + '/services/external/document/requestStamping'
 	
@@ -33,11 +34,9 @@ if (useAPI == 'v3.1.0') {
 
 saldoBefore = loginAdminGetSaldo(conneSign, 'No', sheet)
 
-GlobalVariable.FlagFailed = 0
-
 'HIT API stamping'
 respon = WS.sendRequest(findTestObject('Flow Stamping', [('callerId') : findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 
-                40), ('valueRefNum') : valueRefNum ,('refNumber') : findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 11)]))
+                43), ('valueRefNum') : valueRefNum ,('refNumber') : findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 11)]))
 
 'Jika status HIT API 200 OK'
 if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
@@ -45,8 +44,8 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 
     'jika code 0'
     if (code == 0) {
-        'looping dari 1 hingga 6'
-        for (i = 1; i <= 6; i++) {
+        'looping dari 1 hingga 12'
+        for (i = 1; i <= 12; i++) {
             'mengambil value db proses ttd'
             int prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, findTestData(excelPathStamping).getValue(
                     GlobalVariable.NumofColm, 11).replace('"', ''))
@@ -86,15 +85,15 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
                 }
                 break
             } else {
-                'Jika bukan 51 dan 51, maka diberikan delay 10 detik'
-                WebUI.delay(10)
+                'Jika bukan 51 dan 51, maka diberikan delay 20 detik'
+                WebUI.delay(20)
 
                 'Jika looping berada di akhir, tulis error failed proses stamping'
-                if (i == 6) {
+                if (i == 12) {
                     'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 
-                            2) + ';') + GlobalVariable.ReasonFailedProsesStamping) + ' dengan jeda waktu 60 detik ')
+                            2) + ';') + GlobalVariable.ReasonFailedProsesStamping) + ' dengan jeda waktu '+ (i * 12) +' detik ')
 
                     GlobalVariable.FlagFailed = 1
                 }
@@ -126,7 +125,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
     } else {
         'Jika code bukan 0, mengambil status code berdasarkan response HIT API'
         message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
-
+		
         'write to excel status failed dan reason'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
             (findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + message)
@@ -135,6 +134,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
     'mengambil status code berdasarkan response HIT API'
     message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
+	println message
     'write to excel status failed dan reason'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
         (findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + message)
