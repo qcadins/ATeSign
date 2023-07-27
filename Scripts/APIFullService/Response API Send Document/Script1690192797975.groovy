@@ -22,7 +22,7 @@ enter = '\\n'
 int splitnum = -1
 
 'looping berdasarkan total kolom'
-for (GlobalVariable.NumofColm = 74; GlobalVariable.NumofColm <= findTestData(excelPathAPISendDoc).columnNumbers; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathAPISendDoc).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
@@ -60,7 +60,7 @@ for (GlobalVariable.NumofColm = 74; GlobalVariable.NumofColm <= findTestData(exc
         'Inisialisasi is sequence berdasarkan delimiter ;'
         isSequence = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 20).split(semicolon, splitnum)
 
-        'Inisialisasi is sequence berdasarkan delimiter ;'
+        'Inisialisasi psre Code berdasarkan delimiter ;'
         psreCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 21).split(semicolon, splitnum)
 
         'Inisialisasi document file berdasarkan delimiter ;'
@@ -99,7 +99,7 @@ for (GlobalVariable.NumofColm = 74; GlobalVariable.NumofColm <= findTestData(exc
             signActions = (signAction[i]).split(semicolon, splitnum)
 
             signerTypes = (signerType[i]).split(semicolon, splitnum)
-			
+
             tlps = (tlp[i]).split(semicolon, splitnum)
 
             idKtps = (idKtp[i]).split(semicolon, splitnum)
@@ -133,8 +133,9 @@ for (GlobalVariable.NumofColm = 74; GlobalVariable.NumofColm <= findTestData(exc
             'inisialisasi bodyAPI untuk menyusun body'
             bodyAPI = new String()
 
-			'inisialisasi body untuk seq no sebagai array'
-			ArrayList seqNoBodyAPI = []
+            'inisialisasi body untuk seq no sebagai array'
+            ArrayList seqNoBodyAPI = []
+
             'looping berdasarkan jumlah dari signAction di dokumen pertama'
             for (int t = 0; t < signActions.size(); t++) {
                 'Jika semua data mengenai Sign Location seperti page, llx, lly, urx, ury tidak kosong'
@@ -146,8 +147,6 @@ for (GlobalVariable.NumofColm = 74; GlobalVariable.NumofColm <= findTestData(exc
                     'Split mengenai signLocation dimana berdasarkan dokumen'
                     pageSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 37).split(enter, splitnum)
 
-                    seqNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 32).split(enter, splitnum)
-
                     llxSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 38).split(enter, splitnum)
 
                     llySign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 39).split(enter, splitnum)
@@ -155,6 +154,9 @@ for (GlobalVariable.NumofColm = 74; GlobalVariable.NumofColm <= findTestData(exc
                     urxSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 40).split(enter, splitnum)
 
                     urySign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 41).split(enter, splitnum)
+
+                    'split mengenai sequence Number'
+                    seqNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 32).split(enter, splitnum)
 
                     'Split mengenai signLocation dimana berdasarkan dokumen dan berdasarkan signer'
                     pageSigns = (pageSign[i]).split(delimiter, splitnum)
@@ -169,7 +171,7 @@ for (GlobalVariable.NumofColm = 74; GlobalVariable.NumofColm <= findTestData(exc
 
                     'Split mengenai signLocation dimana berdasarkan dokumen dan berdasarkan signer. Didapatlah semua lokasi signLocation di satu signer.'
                     pageSigns = (pageSigns[t]).split(semicolon, splitnum)
-					
+
                     llxSigns = (llxSigns[t]).split(semicolon, splitnum)
 
                     llySigns = (llySigns[t]).split(semicolon, splitnum)
@@ -177,30 +179,31 @@ for (GlobalVariable.NumofColm = 74; GlobalVariable.NumofColm <= findTestData(exc
                     urxSigns = (urxSigns[t]).split(semicolon, splitnum)
 
                     urySigns = (urySigns[t]).split(semicolon, splitnum)
-        
+
                     'looping menuju jumlah lokasi pageSign di 1 signer'
                     for (int l = 0; l < pageSigns.size(); l++) {
-						
-						'split seq number per documentnya'
-						seqNos = (seqNo[i]).split(semicolon, splitnum)
+                        'split seq number per documentnya'
+                        seqNos = (seqNo[i]).split(semicolon, splitnum)
 
-						for (int p = 0 ; p < seqNos.size();p++) {
-							if (seqNos[p] != '') {
-								seqNoBodyAPI.add(',"seqNo": ' + (seqNos[p]))
-							}
-							else {
-								seqNoBodyAPI.add('')
-							}
-						}
-
+                        'looping mengenai total sequence number'
+                        for (int p = 0; p < seqNos.size(); p++) {
+                            'jika seq numbernya tidak kosong'
+                            if ((seqNos[p]) != '') {
+                                'Memasukkan value seqNo dan body API kepada array'
+                                seqNoBodyAPI.add(',"seqNo": ' + (seqNos[p]))
+                            } else {
+                                'Jika seq number kosong ,maka input kosong'
+                                seqNoBodyAPI.add('')
+                            }
+                        }
+                        
                         'Jika loopingan pertama'
                         if (l == 0) {
                             'Jika dari loopingan pertama, pageSignnya hanya ada 1 dan yang terakhir'
-                            if (l == (pageSigns.size() - 1)) {				
-
+                            if (l == (pageSigns.size() - 1)) {
                                 if (((pageSigns[l]) != '') || ((llxSigns[l]) != '""')) {
                                     'Isi bodyAPI'
-                                    bodyAPI = (bodyAPI + seqNoBodyAPI[t] +  ',"signLocations": [')
+                                    bodyAPI = ((bodyAPI + (seqNoBodyAPI[t])) + ',"signLocations": [')
 
                                     'Jika pageSign untuk yang pertama di signer pertama kosong'
                                     if ((pageSigns[l]) == '') {
@@ -231,7 +234,7 @@ for (GlobalVariable.NumofColm = 74; GlobalVariable.NumofColm <= findTestData(exc
                             } else {
                                 if (((pageSigns[l]) != '') || ((llxSigns[l]) != '""')) {
                                     'Isi bodyAPI'
-                                    bodyAPI = (bodyAPI + seqNoBodyAPI[t] + ',"signLocations": [')
+                                    bodyAPI = ((bodyAPI + (seqNoBodyAPI[t])) + ',"signLocations": [')
 
                                     'Jika pageSign yang pertama di signer pertama kosong'
                                     if ((pageSigns[l]) == '') {
@@ -303,40 +306,39 @@ for (GlobalVariable.NumofColm = 74; GlobalVariable.NumofColm <= findTestData(exc
                             signlocStoreDB = (((((((((signlocStoreDB + '{"llx":') + (llxSigns[l])) + ',"lly":') + (llySigns[
                             l])) + ',"urx":') + (urxSigns[l])) + ',"ury":') + (urySigns[l])) + '};')
                         }
-                    
                     }
                 }
-
+                
                 'Jika signAction yang pertama untuk dokumen pertama'
                 if (t == 0) {
                     if (t == (signActions.size() - 1)) {
                         'isi bodyAPI dengan bodyAPI yang atas'
-                        bodyAPI = (((((((((((('"signers" : [{"signAction": ' + (signActions[t])) + ',"signerType": ') + 
-                        (signerTypes[t])) + ',"tlp": ') + (tlps[t])) + ',"idKtp": ') + (idKtps[t])) + ',"email": ') + (emails[
-                        t]))) + bodyAPI) + '}],')
+                        bodyAPI = ((((((((((('"signers" : [{"signAction": ' + (signActions[t])) + ',"signerType": ') + (signerTypes[
+                        t])) + ',"tlp": ') + (tlps[t])) + ',"idKtp": ') + (idKtps[t])) + ',"email": ') + (emails[t])) + 
+                        bodyAPI) + '}],')
                     } else {
                         'isi bodyAPI dengan bodyAPI yang atas'
-                        bodyAPI = (((((((((((('"signers" : [{"signAction": ' + (signActions[t])) + ',"signerType": ') + 
-                        (signerTypes[t])) + ',"tlp": ') + (tlps[t])) + ',"idKtp": ') + (idKtps[t])) + ',"email": ') + (emails[
-                        t]))) + bodyAPI) + '},')
+                        bodyAPI = ((((((((((('"signers" : [{"signAction": ' + (signActions[t])) + ',"signerType": ') + (signerTypes[
+                        t])) + ',"tlp": ') + (tlps[t])) + ',"idKtp": ') + (idKtps[t])) + ',"email": ') + (emails[t])) + 
+                        bodyAPI) + '},')
                     }
                 } else if (t == (signActions.size() - 1)) {
                     'isi bodyAPI dengan bodyAPI yang atas'
-                    bodyAPI = (((((((((((('{"signAction": ' + (signActions[t])) + ',"signerType": ') + (signerTypes[t])) + 
-                    ',"tlp": ') + (tlps[t])) + ',"idKtp": ') + (idKtps[t])) + ',"email": ') + (emails[t]))) + 
-                    bodyAPI) + '}],')
+                    bodyAPI = ((((((((((('{"signAction": ' + (signActions[t])) + ',"signerType": ') + (signerTypes[t])) + 
+                    ',"tlp": ') + (tlps[t])) + ',"idKtp": ') + (idKtps[t])) + ',"email": ') + (emails[t])) + bodyAPI) + 
+                    '}],')
                 } else {
                     'isi bodyAPI dengan bodyAPI yang atas'
-                    bodyAPI = (((((((((((('{"signAction": ' + (signActions[t])) + ',"signerType": ') + (signerTypes[t])) + 
-                    ',"tlp": ') + (tlps[t])) + ',"idKtp": ') + (idKtps[t])) + ',"email": ') + (emails[t]))) + 
-                    bodyAPI) + '},')
+                    bodyAPI = ((((((((((('{"signAction": ' + (signActions[t])) + ',"signerType": ') + (signerTypes[t])) + 
+                    ',"tlp": ') + (tlps[t])) + ',"idKtp": ') + (idKtps[t])) + ',"email": ') + (emails[t])) + bodyAPI) + 
+                    '},')
                 }
                 
                 'check ada value maka setting email service tenant'
                 if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 50).length() > 0) {
                     'setting email service tenant'
                     CustomKeywords.'connection.APIFullService.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(
-                            excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 47), (emails[t]).replace('"', ''))
+                            excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 50), (emails[t]).replace('"', ''))
                 }
                 
                 'Memasukkan bodyAPI ke stringRefno'
@@ -345,8 +347,7 @@ for (GlobalVariable.NumofColm = 74; GlobalVariable.NumofColm <= findTestData(exc
                 'Mengkosongkan bodyAPI untuk digunakan selanjutnya'
                 bodyAPI = ''
             }
-
-			
+            
             'Deklarasi bodyAPI kembali'
             bodyAPI = new String()
 
@@ -466,13 +467,6 @@ for (GlobalVariable.NumofColm = 74; GlobalVariable.NumofColm <= findTestData(exc
         } else if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 46) == 'Yes') {
             'Input tenant'
             GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
-        }
-        
-        'check ada value maka setting email service tenant'
-        if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 50).length() > 0) {
-            'setting email service tenant'
-            CustomKeywords.'connection.APIFullService.settingEmailServiceTenant'(conneSign, findTestData(excelPathAPISendDoc).getValue(
-                    GlobalVariable.NumofColm, 50))
         }
         
         'check if mau menggunakan api_key yang salah atau benar'
@@ -604,10 +598,11 @@ def responseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, St
         'Inisialisasi psre code berdasarkan delimiter ;'
         psreCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 21).split(semicolon, splitnum)
 
-        'Inisialisasi pageSign berdasarkan delimiter ||'
+        'Inisialisasi pageSign berdasarkan delimiter enter'
         pageSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 37).split(enter, splitnum)
 
-		seqNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 32).split(enter, splitnum)
+		'Inisialisasi sequence number berdasarkan delimiter enter'
+        seqNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 32).split(enter, splitnum)
 
         'get data API Send Document dari DB (hanya 1 signer)'
         result = CustomKeywords.'connection.APIFullService.getSendDocSigning'(conneSign, docid[i])
@@ -663,7 +658,9 @@ def responseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, St
 
                 'Jika documentTemplateCode di dokumen pertama adalah kosong'
                 if ((documentTemplateCode[i]).replace('"', '') == '') {
+					'Jika is sequence nya bukan 0'
                     if ((isSequence[i]).replace('"', '') != '0') {
+						'Jika looping i lebih kecil dari sequence number'
                         if (i < seqNoExcel.size()) {
                             'verify sequence number'
                             arrayMatch.add(WebUI.verifyMatch(seqNoExcel[r], resultStoreEmailandType[arrayindex++], false, 
@@ -671,6 +668,7 @@ def responseAPIStoreDB(String signlocStoreDB, String semicolon, int splitnum, St
                         }
                     }
                 } else {
+					'Get value db mengenai seq Number berdasarkan signer type dan doc template'
                     seqNoBasedOnDocTemplate = CustomKeywords.'connection.APIFullService.getSeqNoBasedOnDocTemplate'(conneSign, 
                         (documentTemplateCode[i]).replace('"', ''), resultStoreEmailandType[(arrayindex - 1)])
 
