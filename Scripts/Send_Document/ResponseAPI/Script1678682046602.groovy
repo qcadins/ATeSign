@@ -17,110 +17,143 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 String resultTenant = CustomKeywords.'connection.SendSign.getTenant'(conneSign, GlobalVariable.userLogin)
 
 sheet = 'API Send Document'
+'variable untuk keperluan split excel'
 semicolon = ';'
-splitIndex = -1
 
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(API_Excel_Path).columnNumbers*/; (GlobalVariable.NumofColm)++) {
+int splitnum = -1
+
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_Excel_Path).columnNumbers; (GlobalVariable.NumofColm)++) {
 	if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
 		break
-	} else if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
- 
-	String refNo = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 11)
+	} else if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) { 
+
+    'Inisialisasi ref No berdasarkan delimiter ;'
+    refNo = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 11)
+
+    'Inisialisasi document template code berdasarkan delimiter ;'
+    documentTemplateCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 12).split(semicolon, 
+        splitnum)
+
+    'Inisialisasi office Code berdasarkan delimiter ;'
+    officeCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 13).split(semicolon, splitnum)
+
+    'Inisialisasi office name berdasarkan delimiter ;'
+    officeName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 14).split(semicolon, splitnum)
+
+    'Inisialisasi region code berdasarkan delimiter ;'
+    regionCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 15).split(semicolon, splitnum)
+
+    'Inisialisasi region name berdasarkan delimiter ;'
+    regionName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 16).split(semicolon, splitnum)
+
+    'Inisialisasi business line code berdasarkan delimiter ;'
+    businessLineCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 17).split(semicolon, splitnum)
+
+    'Inisialisasi business line name berdasarkan delimiter ;'
+    businessLineName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 18).split(semicolon, splitnum)
+
+    'Inisialisasi is sequence berdasarkan delimiter ;'
+    isSequence = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 19).split(semicolon, splitnum)
+
+	'Inisialisasi document file berdasarkan delimiter ;'
+	documentFile = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 20).split(semicolon, splitnum)
 	
-    String documentTemplateCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 12)
+    'Inisialisasi psre Code berdasarkan delimiter ;'
+    psreCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 21).split(semicolon, splitnum)
+
+	'Inisialisasi successUrl berdasarkan delimiter ;'
+	successURL = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 22).split(semicolon, splitnum)
 	
-    String officeCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 13)
-
-    String officeName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 14)
-
-    String regionCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 15)
-
-    String regionName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 16)
-
-    String businessLineCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 17)
-
-    String businessLineName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 18)
-
-    String isSequence = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 19)
-
-    String psreCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 21)
-
-    String successURL = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 22)
-
-    String uploadURL = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 23)
-
-    ArrayList<String> documentFile = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 20).split(semicolon, splitIndex)
+	'Inisialisasi psre Code berdasarkan delimiter ;'
+	uploadURL = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 23).split(semicolon, splitnum)
 
     'split signer untuk doc1 dan signer untuk doc2'
-    ArrayList<String> signAction = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 25).split(semicolon, splitIndex)
+    signAction = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 25).split(semicolon, splitnum)
 
-    ArrayList<String> signerType = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 26).split(semicolon, splitIndex)
+    signerType = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 26).split(semicolon, splitnum)
 
-    ArrayList<String> signSequence = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 27).split(semicolon, splitIndex)
-
-    ArrayList<String> alamat = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 28).split(semicolon, splitIndex)
-
-    ArrayList<String> jenisKelamin = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 29).split(semicolon, splitIndex)
-
-    ArrayList<String> kecamatan = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 30).split(semicolon, splitIndex)
-
-    ArrayList<String> kelurahan = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 31).split(semicolon, splitIndex)
-
-    ArrayList<String> kodePos = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 32).split(semicolon, splitIndex)
-
-    ArrayList<String> kota = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 33).split(semicolon, splitIndex)
-
-    ArrayList<String> nama = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 34).split(semicolon, splitIndex)
-
-    ArrayList<String> tlp = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 35).split(semicolon, splitIndex)
-
-    ArrayList<String> tglLahir = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 36).split(semicolon, splitIndex)
-
-    ArrayList<String> provinsi = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 37).split(semicolon, splitIndex)
-
-    ArrayList<String> idKtp = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 38).split(semicolon, splitIndex)
-
-    ArrayList<String> tmpLahir = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 39).split(semicolon, splitIndex)
-
-    ArrayList<String> email = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 40).split(semicolon, splitIndex)
-
-    ArrayList<String> npwp = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 41).split(semicolon, splitIndex)
-
-    String idPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 42)
+	signSequence = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 27).split(semicolon, splitnum)
 	
-    String signerSelfPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 43)
+	alamat = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 28).split(semicolon, splitnum)
+	
+	jenisKelamin = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 29).split(semicolon, splitnum)
+	
+	kecamatan = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 30).split(semicolon, splitnum)
+	
+	kelurahan = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 31).split(semicolon, splitnum)
+	
+	kodePos = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 32).split(semicolon, splitnum)
+	
+	kota = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 33).split(semicolon, splitnum)
+	
+	nama = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 34).split(semicolon, splitnum)
+	
+	tlp = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 35).split(semicolon, splitnum)
+	
+	tglLahir = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 36).split(semicolon, splitnum)
+	
+	provinsi = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 37).split(semicolon, splitnum)
+	
+	idKtp = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 38).split(semicolon, splitnum)
+	
+	tmpLahir = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 39).split(semicolon, splitnum)
+	
+	email = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 40).split(semicolon, splitnum)
+	
+	npwp = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 41).split(semicolon, splitnum)
+	
+	seqNo = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 42).split(semicolon, splitnum)
+	
+	idPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 43)
+		
+	signerSelfPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 44)
 	
     String stringRefno = new String()
 	
 	stringRefno = ''
 	
 	'Pembuatan pengisian variable di sendRequest per jumlah signer.'
-	ArrayList<String> list = new ArrayList<String>()
+	ArrayList list = []
 
 	String listSigner
 
 	listSigner = ''
+	ArrayList seqNoBodyAPI = []
+	
+	'looping mengenai total sequence number'
+	for (int p = 0; p < seqNo.size(); p++) {
+		'jika seq numbernya tidak kosong'
+		if ((seqNo[p]) != '') {
+			'Memasukkan value seqNo dan body API kepada array'
+			seqNoBodyAPI.add(',"seqNo": ' + (seqNo[p]))
+		} else {
+			'Jika seq number kosong ,maka input kosong'
+			seqNoBodyAPI.add('')
+		}
+	}
 
-	for (int i = 1; i <= signAction.size(); i++) {
-		if (i == signAction.size()) {
-			list.add(((((((((((((((((((((((((((((((((((((('{"signAction": ' + (signAction[(i - 1)])) + ',"signerType": ') +
-				(signerType[(i - 1)])) + ',"signSequence":') + (signSequence[(i - 1)])) + ',"alamat": ') + (alamat[(i -
-				1)])) + ',"jenisKelamin": ') + (jenisKelamin[(i - 1)])) + ',"kecamatan": ') + (kecamatan[(i - 1)])) + ',"kelurahan": ') +
-				(kelurahan[(i - 1)])) + ',"kodePos": ') + (kodePos[(i - 1)])) + ',"kota": ') + (kota[(i - 1)])) + ',"nama": ') +
-				(nama[(i - 1)])) + ',"tlp": ') + (tlp[(i - 1)])) + ',"tglLahir": ') + (tglLahir[(i - 1)])) + ',"provinsi": ') +
-				(provinsi[(i - 1)])) + ',"idKtp": ') + (idKtp[(i - 1)])) + ',"tmpLahir": ') + (tmpLahir[(i - 1)])) + ',"email": ') +
-				(email[(i - 1)])) + ',"npwp": ') + (npwp[(i - 1)])) + ',"idPhoto": ') + idPhoto + ',"signerSelfPhoto": ') + signerSelfPhoto
-					)) + '}')
+	',"seqNo": ' + seqNo[i]
+	
+	for (int i = 0; i < signAction.size(); i++) {
+		if (i == signAction.size() - 1) {
+			list.add('{"signAction": ' + signAction[i] + ',"signerType": ' +
+				signerType[i] + ',"signSequence":' + signSequence[i] + ',"alamat": ' + alamat[i -
+				1] + ',"jenisKelamin": ' + jenisKelamin[i] + ',"kecamatan": ' + kecamatan[i] + ',"kelurahan": ' +
+				kelurahan[i] + ',"kodePos": ' + kodePos[i] + ',"kota": ' + kota[i] + ',"nama": ' +
+				nama[i] + ',"tlp": ' + tlp[i] + ',"tglLahir": ' + tglLahir[i] + ',"provinsi": ' +
+				provinsi[i] + ',"idKtp": ' + idKtp[i] + ',"tmpLahir": ' + tmpLahir[i] + ',"email": ' +
+				email[i] + ',"npwp": ' + npwp[i] + seqNoBodyAPI + ',"idPhoto": ' + idPhoto + ',"signerSelfPhoto": ' + signerSelfPhoto
+					 + '}')
 		}
 		
-		list.add(((((((((((((((((((((((((((((((((((((('{"signAction": ' + (signAction[(i - 1)])) + ',"signerType": ') +
-		(signerType[(i - 1)])) + ',"signSequence":') + (signSequence[(i - 1)])) + ',"alamat": ') + (alamat[(i -
-		 1)])) + ',"jenisKelamin": ') + (jenisKelamin[(i - 1)])) + ',"kecamatan": ') + (kecamatan[(i - 1)])) + ',"kelurahan": ') +
-		 (kelurahan[(i - 1)])) + ',"kodePos": ') + (kodePos[(i - 1)])) + ',"kota": ') + (kota[(i - 1)])) + ',"nama": ') +
-		 (nama[(i - 1)])) + ',"tlp": ') + (tlp[(i - 1)])) + ',"tglLahir": ') + (tglLahir[(i - 1)])) + ',"provinsi": ') +
-		 (provinsi[(i - 1)])) + ',"idKtp": ') + (idKtp[(i - 1)])) + ',"tmpLahir": ') + (tmpLahir[(i - 1)])) + ',"email": ') +
-		 (email[(i - 1)])) + ',"npwp": ') + (npwp[(i - 1)])) + ',"idPhoto": ') + idPhoto + ',"signerSelfPhoto": ') + signerSelfPhoto
-		  )) + '},')
+		list.add('{"signAction": ' + signAction[i - 1] + ',"signerType": ' +
+		signerType[i - 1] + ',"signSequence":' + signSequence[i - 1] + ',"alamat": ' + alamat[i -
+		 1] + ',"jenisKelamin": ' + jenisKelamin[i - 1] + ',"kecamatan": ' + kecamatan[i - 1] + ',"kelurahan": ' +
+		 kelurahan[i - 1] + ',"kodePos": ' + kodePos[i - 1] + ',"kota": ' + kota[i - 1] + ',"nama": ' +
+		 nama[i - 1] + ',"tlp": ' + tlp[i - 1] + ',"tglLahir": ' + tglLahir[i - 1] + ',"provinsi": ' +
+		 provinsi[i - 1] + ',"idKtp": ' + idKtp[i - 1] + ',"tmpLahir": ' + tmpLahir[i - 1] + ',"email": ' +
+		 email[i - 1] + ',"npwp": ' + npwp[i - 1] + ',"idPhoto": ' + idPhoto + ',"signerSelfPhoto": ' + signerSelfPhoto
+		   + '},')
 
 	    'Memasukkan seluruh BodyAPI ke listSigner'
 	    listSigner = listSigner + list[(i - 1)]
