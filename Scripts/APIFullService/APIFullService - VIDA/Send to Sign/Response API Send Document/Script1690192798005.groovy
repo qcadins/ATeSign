@@ -750,7 +750,7 @@ def setBodyAPI(String semicolon, int splitnum, String delimiter, String enter, S
 			'input body API berdasarkan bodyAPI diatasnya'
 			bodyAPI = (bodyAPI + '},')
 		}
-		
+		aa
 		'input body API kedalam stringRefno'
 		stringRefno = (stringRefno + bodyAPI)
 	
