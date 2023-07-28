@@ -801,4 +801,23 @@ public class APIFullService {
 			data = 0
 		}
 	}
+	
+	@Keyword
+	getDocSignSequence(Connection conn, String docId) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT document_id, CASE WHEN is_sequence = '0' OR is_sequence IS NULL THEN '0' WHEN is_sequence = '1' AND description = 'Complete' THEN '0' WHEN is_sequence = '1' AND description = 'Need Sign' THEN '2' END FROM tr_document_d tdd JOIN ms_lov ml ON tdd.lov_sign_status = ml.id_lov WHERE document_id = '" + docId + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
 }
