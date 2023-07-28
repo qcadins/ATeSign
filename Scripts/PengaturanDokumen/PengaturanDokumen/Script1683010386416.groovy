@@ -276,41 +276,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         'click button simpan'
                         WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_SimpanPengaturanDokumen'))
 
-						'check if Sequential signing iya'
-						if(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 21).equalsIgnoreCase('Iya')) {
-							'get urutan seq sign dari excel'
-							ArrayList<String> seqSignRole = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 22).split(';',-1)
-							
-							'count box'
-							variable = DriverFactory.webDriver.findElements(By.cssSelector('#cdk-drop-list-0 div'))
-							
-							'looping seq sign'
-							for (seq = 1; seq <= variable.size(); seq++) {
-								'modify label tipe tanda tangan di kotak'
-								modifyObject = WebUI.modifyObjectProperty(findTestObject('TandaTanganDokumen/modifyObject'),
-									'xpath', 'equals', '//*[@id="cdk-drop-list-0"]/div['+ seq +']', true)
-								
-								index = seqSignRole.indexOf(WebUI.getText(modifyObject)) + 1
-								
-								if (seq != index) {
-									'modify label tipe tanda tangan di kotak'
-									modifyObjectNew = WebUI.modifyObjectProperty(findTestObject('TandaTanganDokumen/modifyObject'),
-										'xpath', 'equals', '//*[@id="cdk-drop-list-0"]/div['+ index +']', true)
-									
-									'pindahin ke urutan sesuai excel'
-									WebUI.dragAndDropToObject(modifyObject, modifyObjectNew)
-									
-									'mines karena ada perpindahan object'
-									seq--
-								}
-							}
-							
-							'click button simpan'
-							WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_SimpanPengaturanDokumen'))
-							
-							'delay untuk loading simpan'
-							WebUI.delay(3)
-						}
+						'call function untuk sorting sequence sign'
+						sortingSequenceSign()
 						
 						'call function checkpopupberhasil'
 						checkPopUpBerhasil(isMandatoryComplete)
@@ -616,6 +583,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 						(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + errormessage)
 					}
 					
+					'call function sorting sequence sign'
+					sortingSequenceSign()
+					
                     'call function checkpopupberhasil'
 					checkPopUpBerhasil(isMandatoryComplete)
                 }
@@ -872,6 +842,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'click button simpan'
             WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_SimpanPengaturanDokumen'))
 
+			'call function sorting sequence sign'
+			sortingSequenceSign()
+			
             'call function checkpopupberhasil'
 			checkPopUpBerhasil(isMandatoryComplete)
         }
@@ -1199,5 +1172,45 @@ def checkPopUpBerhasil(int isMandatoryComplete) {
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PengaturanDokumen',
 					0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 		}
+	}
+}
+
+def sortingSequenceSign() {
+	'check if Sequential signing iya'
+	if(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 21).equalsIgnoreCase('Iya')) {
+		'get urutan seq sign dari excel'
+		ArrayList<String> seqSignRole = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 22).split(';',-1)
+		
+		'count box'
+		variable = DriverFactory.webDriver.findElements(By.cssSelector('#cdk-drop-list-0 div'))
+		
+		'looping seq sign'
+		for (int seq = 1; seq <= variable.size(); seq++) {			
+			'modify label tipe tanda tangan di kotak'
+			modifyObject = WebUI.modifyObjectProperty(findTestObject('TandaTanganDokumen/modifyObject'),
+				'xpath', 'equals', '//*[@id="cdk-drop-list-0"]/div['+ seq +']', true)
+			
+			index = seqSignRole.indexOf(WebUI.getText(modifyObject)) + 1
+			
+			if (seq != index) {
+				'modify label tipe tanda tangan di kotak'
+				modifyObjectNew = WebUI.modifyObjectProperty(findTestObject('TandaTanganDokumen/modifyObject'),
+					'xpath', 'equals', '//*[@id="cdk-drop-list-0"]/div['+ index +']', true)
+				
+				'pindahin ke urutan sesuai excel'
+				WebUI.dragAndDropToObject(modifyObject, modifyObjectNew)
+				
+				'untuk proses pemindahan'
+				WebUI.delay(2)
+				
+				seq--
+			}
+		}
+		
+		'click button simpan'
+		WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_SimpanPengaturanDokumen'))
+		
+		'delay untuk loading simpan'
+		WebUI.delay(3)
 	}
 }
