@@ -30,7 +30,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'declare variable array'
         ArrayList saldoBefore = [], saldoAfter = []
 
-        //saldoBefore = loginAdminGetSaldo(conneSign)
+        saldoBefore = loginAdminGetSaldo(conneSign)
 		
         GlobalVariable.FlagFailed = 0
 
@@ -252,7 +252,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 }
 
 				'check saldo'
-				//saldoAfter = loginAdminGetSaldo(conneSign)
+				saldoAfter = loginAdminGetSaldo(conneSign)
 				
 				'check saldo before dan aftar'
 				if (saldoBefore == saldoAfter) {
