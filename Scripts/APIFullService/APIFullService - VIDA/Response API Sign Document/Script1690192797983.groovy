@@ -30,7 +30,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'declare variable array'
         ArrayList saldoBefore = [], saldoAfter = []
 
-        saldoBefore = loginAdminGetSaldo(conneSign)
+        //saldoBefore = loginAdminGetSaldo(conneSign)
 		
         GlobalVariable.FlagFailed = 0
 
@@ -61,11 +61,38 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.api_key = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 18)
         }
         
-        'check if mau menggunakan OTP yang salah atau benar'
-        if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 21) == 'Yes') {
-            'request OTP dengan HIT API'
+			String refNumber = CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, documentId[0])
+			
+			String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, refNumber)
 
-            'Constaint : Dokumen yang dipasang selalu dengan referal number di dokumen pertama.'
+			if (vendor.equalsIgnoreCase('Privy')) {
+				'request OTP dengan HIT API'
+				'Constraint : Dokumen yang dipasang selalu dengan referal number di dokumen pertama.'
+				respon_OTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing', [('callerId') : findTestData(
+								excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 26), ('phoneNo') : findTestData(
+								excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 8), ('email') : findTestData(excelPathAPISignDocument).getValue(
+								GlobalVariable.NumofColm, 11), ('refnumber') : ('"' + CustomKeywords.'connection.APIFullService.getRefNumber'(
+								conneSign, documentId[0])) + '"']))
+	
+				'Jika status HIT API 200 OK'
+				if (WS.verifyResponseStatusCode(respon_OTP, 200, FailureHandling.OPTIONAL) == true) {
+					'get status code'
+					code_otp = WS.getElementPropertyValue(respon_OTP, 'status.code', FailureHandling.OPTIONAL)
+					
+					'jika codenya 0'
+					if (code_otp == 0) {
+						'Dikasih delay 50 detik dikarenakan loading untuk mendapatkan OTP.'
+						WebUI.delay(50)
+						
+						otp = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 22)
+					}
+				}
+			}
+			
+         else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 21) == 'Yes') {
+			 'check if mau menggunakan OTP yang salah atau benar'
+            'request OTP dengan HIT API'
+            'Constraint : Dokumen yang dipasang selalu dengan referal number di dokumen pertama.'
             respon_OTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing', [('callerId') : findTestData(
                             excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 26), ('phoneNo') : findTestData(
                             excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 8), ('email') : findTestData(excelPathAPISignDocument).getValue(
@@ -76,8 +103,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             if (WS.verifyResponseStatusCode(respon_OTP, 200, FailureHandling.OPTIONAL) == true) {
                 'get status code'
                 code_otp = WS.getElementPropertyValue(respon_OTP, 'status.code', FailureHandling.OPTIONAL)
-
-                'jika codenya 0'
+              'jika codenya 0'
                 if (code_otp == 0) {
                     'Dikasih delay 1 detik dikarenakan loading untuk mendapatkan OTP.'
                     WebUI.delay(1)
@@ -88,10 +114,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 } else {
                     'mengambil status code berdasarkan response HIT API'
                     message = WS.getElementPropertyValue(respon_OTP, 'status.message', FailureHandling.OPTIONAL)
-
-                    'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm, 
-                        GlobalVariable.StatusFailed, message)
+					
+					'Write To Excel GlobalVariable.StatusFailed and message'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm,
+						GlobalVariable.StatusFailed, ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm,
+							2) + ';') + message))
                 }
             } else {
                 'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.HITAPI Gagal'
@@ -103,6 +130,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'get otp dari excel'
             otp = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 22)
         }
+    
         
         'check if mau menggunakan base64 untuk photo yang salah atau benar'
         if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 23) == 'Yes') {
@@ -128,7 +156,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'Memasukkan input dari total signed'
             (totalSignedBefore[z]) = CustomKeywords.'connection.APIFullService.getTotalSigned'(conneSign, documentId[z])
         }
-        
+		
         'HIT API Sign'
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Sign Document', [('callerId') : findTestData(excelPathAPISignDocument).getValue(
                         GlobalVariable.NumofColm, 26), ('documentId') : findTestData(excelPathAPISignDocument).getValue(
@@ -199,7 +227,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm, 
-                    GlobalVariable.StatusFailed, message)
+                    GlobalVariable.StatusFailed, (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
+                                    2) + ';') + message)
 
                 GlobalVariable.FlagFailed = 1
             }
@@ -223,7 +252,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 }
 
 				'check saldo'
-				saldoAfter = loginAdminGetSaldo(conneSign)
+				//saldoAfter = loginAdminGetSaldo(conneSign)
 				
 				'check saldo before dan aftar'
 				if (saldoBefore == saldoAfter) {
@@ -242,7 +271,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
             'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm, 
-                GlobalVariable.StatusFailed, message)
+                GlobalVariable.StatusFailed, (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
+                                    2) + ';') + message)
 
             GlobalVariable.FlagFailed = 1
         }
@@ -359,9 +389,9 @@ def loginAdminGetSaldo(Connection conneSign) {
 
     'klik button saldo'
     WebUI.click(findTestObject('isiSaldo/SaldoAdmin/menu_Saldo'))
-
+	
     'klik ddl untuk tenant memilih mengenai Vida'
-    WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'Vida', false)
+    WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), "VIDA", false)
 
     'get total div di Saldo'
     variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))

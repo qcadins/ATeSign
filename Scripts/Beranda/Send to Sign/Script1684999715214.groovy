@@ -42,7 +42,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
         }
         
         'Jika document tersebut tidak membutuhkan tanda tangan'
-        if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 47) == 'No') {
+        if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 57) == 'No') {
 			'loop selanjutnya'
             continue
         }
@@ -81,7 +81,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                 FailureHandling.STOP_ON_FAILURE)
 
             'mengambil saldo before'
-            saldoSignBefore = checkSaldoSign(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 11).replace('"',''))
+            saldoSignBefore = checkSaldoSign(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 21).replace('"',''))
 
             'mengambil saldo otp before'
             otpBefore = checkSaldoOtp()
@@ -92,6 +92,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
             'call Test Case untuk login sebagai user berdasarkan doc id'
             WebUI.callTestCase(findTestCase('Login/Login_1docManySigner'), [('email') : emailSigner[(o - 1)]], FailureHandling.STOP_ON_FAILURE)
 
+			if (checkPopup() == true) {
+				break
+			}
+			
             'Klik checkbox ttd untuk semua'
             WebUI.click(findTestObject('KotakMasuk/Sign/checkbox_ttdsemua'))
 
@@ -124,10 +128,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                  2) + ']/a/i', true)
 
             'Jika ingin dilakukannya bulk sign'
-            if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 49) == 'Yes') {
+            if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 59) == 'Yes') {
                 'Ambil data dari excel mengenai total dokumen yang ditandatangani'
-                totalDocSign = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 50).toInteger()
-            } else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 49) == 'No') {
+                totalDocSign = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 60).toInteger()
+            } else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 59) == 'No') {
                 'Total document sign hanya 1 (single)'
                 totalDocSign = 1
             }
@@ -196,7 +200,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                     }
                     
 					'Jika bulk sign'
-                    if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 49) == 'Yes') {
+                    if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 59) == 'Yes') {
 						'jika j nya sudah di last row dari document yang ingin diambil'
                         if (j == (rowBeranda.size() - totalDocSign)) {
 							'break looping'
@@ -333,7 +337,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
 
                 'input text password'
                 WebUI.setText(findTestObject('KotakMasuk/Sign/input_KataSandiAfterKonfirmasi'), findTestData(excelPathFESignDocument).getValue(
-                        GlobalVariable.NumofColm, 54))
+                        GlobalVariable.NumofColm, 64))
 
                 'klik buka * pada passworod'
                 WebUI.click(findTestObject('KotakMasuk/Sign/btn_EyePassword'))
@@ -344,7 +348,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                     'pada nomor telepon Signer')
 
                 'Jika cara verifikasinya menggunakan OTP'
-                if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 52) == 'OTP') {
+                if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 62) == 'OTP') {
                     'Klik verifikasi by OTP'
                     WebUI.click(findTestObject('KotakMasuk/Sign/btn_verifOTP'))
 
@@ -352,7 +356,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                     modifyObjectlabelRequestOTP = findTestObject('KotakMasuk/Sign/lbl_RequestOTP')
 
                     'Jika button menyetujuinya yes'
-                    if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 53) == 'Yes') {
+                    if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 63) == 'Yes') {
                         'Klik button menyetujui untuk menandatangani'
                         WebUI.click(findTestObject('KotakMasuk/Sign/btn_MenyetujuiMenandatangani'))
                     }
@@ -398,13 +402,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                         listOTP.add(OTP)
 
                         'bikin flag untuk dilakukan OTP by db'
-                        if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 57) == 'Yes') {
+                        if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 67) == 'Yes') {
                             'value OTP dari db'
                             WebUI.setText(findTestObject('KotakMasuk/Sign/input_OTP'), OTP)
                         } else {
                             'value OTP dari excel'
                             WebUI.setText(findTestObject('KotakMasuk/Sign/input_OTP'), findTestData(excelPathFESignDocument).getValue(
-                                    GlobalVariable.NumofColm, 58))
+                                    GlobalVariable.NumofColm, 68))
                         }
                         
                         'klik verifikasi OTP'
@@ -419,9 +423,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                         }
                         
                         'Resend OTP'
-                        if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 59) == 'Yes') {
+                        if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 69) == 'Yes') {
                             'Ambil data dari excel mengenai countResend'
-                            countResend = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 60).toInteger()
+                            countResend = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 70).toInteger()
 
                             'Looping dari 1 hingga total count resend OTP'
                             for (int w = 1; w <= countResend; w++) {
@@ -485,7 +489,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                     modifyObjectlabelRequestOTP = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/lbl_RequestOTP'), 
                         'xpath', 'equals', '/html/body/ngb-modal-window/div/div/app-camera-liveness/div[1]/h4', true)
 
-                    if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 53) == 'Yes') {
+                    if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 63) == 'Yes') {
                         'Klik button menyetujui untuk menandatangani'
                         WebUI.click(findTestObject('KotakMasuk/Sign/btn_MenyetujuiMenandatangani'))
                     }
@@ -510,29 +514,29 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                     String countFailedSign = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_Failed'))
 
                     'Menarik value count success ke excel'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 71, GlobalVariable.NumofColm - 
-                        1, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 72) + ';') + countSuccessSign)
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 81, GlobalVariable.NumofColm - 
+                        1, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 82) + ';') + countSuccessSign)
 					
 					'Menarik value count failed ke excel'
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 72, GlobalVariable.NumofColm -
-						1, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 73) + ';') + countFailedSign)
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 82, GlobalVariable.NumofColm -
+						1, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 83) + ';') + countFailedSign)
 
                     'Jika masukan ratingnya tidak kosong'
-                    if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 62) != '') {
+                    if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 72) != '') {
                         'modify object starmasukan, jika bintang 1 = 2, jika bintang 2 = 4'
                         modifyObjectstarMasukan = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/span_starMasukan'), 
                             'xpath', 'equals', ('//ngb-rating[@id=\'rating\']/span[' + (findTestData(excelPathFESignDocument).getValue(
-                                GlobalVariable.NumofColm, 62).toInteger() * 2)) + ']/span', true)
+                                GlobalVariable.NumofColm, 72).toInteger() * 2)) + ']/span', true)
 
                         'Klik bintangnya bintang berapa'
                         WebUI.click(modifyObjectstarMasukan)
                     }
                     
                     'Jika komentarnya tidak kosoong'
-                    if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 63) != '') {
+                    if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 73) != '') {
                         'Input komentar di rating'
                         WebUI.setText(findTestObject('KotakMasuk/Sign/input_komentarMasukan'), findTestData(excelPathFESignDocument).getValue(
-                                GlobalVariable.NumofColm, 63))
+                                GlobalVariable.NumofColm, 73))
                     }
                     
                     'Scroll ke btn Kirim'
@@ -556,7 +560,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                     }
                     
                     'Jika masukan ratingnya tidak kosong'
-                    if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 62) != '') {
+                    if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 72) != '') {
                         'StoreDB mengenai masukan'
                         masukanStoreDB(conneSign, emailSigner[(o - 1)], arrayMatch)
                     }
@@ -650,7 +654,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                 otpAfter = checkSaldoOtp()
 
                 'ambil saldo after'
-                saldoSignAfter = checkSaldoSign(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 11).replace('"',''))
+                saldoSignAfter = checkSaldoSign(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 21).replace('"',''))
 
                 'Jika count saldo otp after dengan yang before dikurangi 1 ditambah dengan '
                 if (WebUI.verifyEqual(Integer.parseInt(otpBefore) - (countResend + 1), Integer.parseInt(otpAfter), FailureHandling.OPTIONAL)) {
@@ -766,7 +770,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
             }
         }
 		'Jika ingin melakukan stamping'
-		if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,79) == 'Yes') {
+		if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,85) == 'Yes') {
 			'Call API Send doc'
 			WebUI.callTestCase(findTestCase('Meterai/Flow Stamping'), [('excelPathStamping') : excelPathFESignDocument
 			, ('sheet') : sheet, ('useAPI') : 'v3.0.0', ('linkDocumentMonitoring') : ''], FailureHandling.CONTINUE_ON_FAILURE)

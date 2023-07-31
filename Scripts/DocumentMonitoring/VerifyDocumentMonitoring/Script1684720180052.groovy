@@ -17,6 +17,8 @@ currentDate = new Date().format('yyyy-MM-dd')
 
 ArrayList nomorKontrakPerPilihan = []
 
+String settingHO = ''
+
 'Jika nomor Kontrak kosong'
 if (nomorKontrak == '') {
     'Mengambil documen id dari excel'
@@ -43,6 +45,8 @@ for (int o = 1 ; o <= 1 ; o++) {
 	} else {
 		'check if ingin menggunakan embed atau tidakk'
 		if (GlobalVariable.RunWithEmbed == 'Yes') {
+			settingHO = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 83)
+			
 			'navigate url ke daftar akun'
 			WebUI.openBrowser(GlobalVariable.embedUrl)
 	
@@ -105,9 +109,7 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
     'Mengambil value db mengenai tipe dokumen'
     documentType = CustomKeywords.'connection.DocumentMonitoring.getDocumentType'(conneSign, nomorKontrakPerPilihan[y])
 
-    'Jika input nama pelanggan telah muncul'
-    if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/input_NamaPelanggan'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
-        'Set text mengenai teks customer'
+	        'Set text mengenai teks customer'
         WebUI.setText(findTestObject('DocumentMonitoring/input_NamaPelanggan'), fullNameCust)
 
         'Set text mengenai tanggal permintaan dari'
@@ -139,8 +141,6 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
 			WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER))
 	
 		}
-		
-		settingHO = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 83)
 		
 		if (WebUI.verifyMatch(settingHO.toString(),'1', true, FailureHandling.OPTIONAL) == true) {
         'Set text mengenai input cabang'
@@ -189,8 +189,7 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                 arrayIndex = 0
 
                 'Mengambil value dari db menngenai data yang perlu diverif'
-                resultQuery = CustomKeywords.'connection.DocumentMonitoring.getDocumentMonitoring'(conneSign,nomorKontrakPerPilihan[y], 
-                    , fullNameCust)
+                resultQuery = CustomKeywords.'connection.DocumentMonitoring.getDocumentMonitoringBasedOnEmbed'(conneSign, nomorKontrakPerPilihan[y], fullNameCust)
 
                 'Mengambil value dari db mengenai total stamping'
                 resultStamping = CustomKeywords.'connection.DocumentMonitoring.getTotalStampingandTotalMaterai'(conneSign,nomorKontrakPerPilihan[
@@ -204,36 +203,36 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                         modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 
                             'xpath', 'equals', ((('//*[@id="listDokumen"]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
                             j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div', true)
+						'Jika berada di column ke 7'
+						if (i == 7) {
+							'Split teks proses TTD'
+							totalSignandtotalSigned = WebUI.getText(modifyObjectvalues).split(' / ', -1)
 
-                        'Jika berada di column ke 7'
-                        if (i == 7) {
-                            'Split teks proses TTD'
-                            totalSignandtotalSigned = WebUI.getText(modifyObjectvalues).split(' / ', -1)
+							int jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgress'(conneSign,
+								nomorKontrakPerPilihan[y])
 
-                            jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgress'(conneSign, 
-                                nomorKontrakPerPilihan[y])
-							
-                            'Verif hasil split, dimana proses awal hingga akhir. Awal dibandingkan dengan jumlahsignertandatangan, sedangkan akhir dibandingkan dengan total signer dari email'
-                            arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[0], jumlahSignerTelahTandaTangan, FailureHandling.CONTINUE_ON_FAILURE))
+							'Verif hasil split, dimana proses awal hingga akhir. Awal dibandingkan dengan jumlahsignertandatangan, sedangkan akhir dibandingkan dengan total signer dari email'
+							arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[0], jumlahSignerTelahTandaTangan, FailureHandling.CONTINUE_ON_FAILURE))
 
-                            arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[1], emailSigner.size(), FailureHandling.CONTINUE_ON_FAILURE))
-                        } else if (i == 8) {
-                            'Jika berada di column ke 8'
+							arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[1], emailSigner.size(), FailureHandling.CONTINUE_ON_FAILURE))
+						} else if (i == 8) {
+							'Jika berada di column ke 8'
 
-                            'Split teks total Stamping'
-                            totalStampingAndTotalMaterai = WebUI.getText(modifyObjectvalues).split('/', -1)
+							'Split teks total Stamping'
+							totalStampingAndTotalMaterai = WebUI.getText(modifyObjectvalues).split('/', -1)
 
-                            'looping berdasarkan total split dan diverif berdasarkan db.'
-                            for (int k = 0; k < totalStampingAndTotalMaterai.size(); k++) {
-                                'Verifikasi UI dengan db'
-                                arrayMatch.add(WebUI.verifyEqual(totalStampingAndTotalMaterai[k], resultStamping[k], FailureHandling.CONTINUE_ON_FAILURE))
-                            }
-                        } else {
-                            'Selain di column 7 dan 8 maka akan diverif dengan db.'
-                            arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectvalues), resultQuery[arrayIndex++], 
-                                    false, FailureHandling.CONTINUE_ON_FAILURE))
-                        }
-                    }
+							'looping berdasarkan total split dan diverif berdasarkan db.'
+							for (int k = 0; k < totalStampingAndTotalMaterai.size(); k++) {
+								'Verifikasi UI dengan db'
+								arrayMatch.add(WebUI.verifyEqual(totalStampingAndTotalMaterai[k], resultStamping[k], FailureHandling.CONTINUE_ON_FAILURE))
+							}
+						} else if (i == 10) {
+						} else {
+							'Selain di column 7 dan 8 maka akan diverif dengan db.'
+							arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectvalues), resultQuery[arrayIndex++],
+									false, FailureHandling.CONTINUE_ON_FAILURE))
+						}
+					}
                 }
             } else {
                 'Jika tidak ada, maka datanya tidak ada di UI.'
@@ -316,7 +315,7 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
 				GlobalVariable.FlagFailed = 1
             }
         }
-    }
+    
     
     'penggunaan checking print false'
     if (arrayMatch.contains(false)) {

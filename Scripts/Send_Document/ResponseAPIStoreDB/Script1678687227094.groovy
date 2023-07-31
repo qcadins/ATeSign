@@ -109,9 +109,6 @@ for (int i = 0; i < docid.size(); i++) {
 	'Splitting email berdasarkan excel per dokumen'
 	emailExcel = (email[i]).replace('"', '').split(semicolon, splitnum)
 
-	'Splitting email berdasarkan excel per dokumen'
-	emailExcel = (email[i]).replace('"', '').split(semicolon, splitnum)
-
 	'get current date'
 	currentDate = new Date().format('yyyy-MM-dd')
 	
@@ -129,7 +126,7 @@ for (int i = 0; i < docid.size(); i++) {
 			(emailExcel[r]) = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(idKtpExcel[r])
 		}
   
-		ArrayList resultStoreEmailandType = CustomKeywords.'connection.SendSign.getSendDocForEmailAndSignerType'(conneSign, docid[i], emailSigner[r])
+		ArrayList resultStoreEmailandType = CustomKeywords.'connection.SendSign.getSendDocForEmailAndSignerType'(conneSign, docid[i], emailExcel[r])
 		
 		if (resultStoreEmailandType.size() > 1) {
 			'declare arrayindex'
