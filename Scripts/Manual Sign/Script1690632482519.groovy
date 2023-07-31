@@ -138,10 +138,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			else {
 				modifyObjectLblDaftarPenandaTangan = findTestObject('ManualSign/lbl_daftarpenandatangan')
 			}
-			
+			'aa'
 			WebUI.verifyElementPresent(modifyObjectLblDaftarPenandaTangan, GlobalVariable.TimeOut)
 			
 			WebUI.click(findTestObject('ManualSign/button_tambahtandaTangan'))
+			
+			WebUI.delay(3)
 			
 			WebUI.click(findTestObject('ManualSign/button_Cancel'))
 			
