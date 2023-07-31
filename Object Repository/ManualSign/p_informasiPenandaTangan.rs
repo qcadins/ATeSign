@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>p_informasiPenandaTangan</name>
+   <tag></tag>
+   <elementGuidId>93ed9da3-cb3e-4ba8-a05c-0d26456d02bc</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>CSS</key>
+         <value>p</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>//form[@id='msxForm']/div[10]/div[3]/table/tr/td/p</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>XPATH</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>p</value>
+      <webElementGuid>e413e974-5bd1-4e35-9aff-c0b5948a1418</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>USERCIIE 081233444403,  USERCIIE@AD-INS.COM </value>
+      <webElementGuid>a0832fd0-dff7-4c71-919c-6d06615da98a</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>id(&quot;msxForm&quot;)/div[@class=&quot;row&quot;]/div[@class=&quot;col-12&quot;]/table[@class=&quot;table table-striped table-hover&quot;]/tr[@class=&quot;ng-star-inserted&quot;]/td[1]/p[1]</value>
+      <webElementGuid>97b052c6-8a8f-4ffe-a20e-14508bb42662</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:idRelative</name>
+      <type>Main</type>
+      <value>//form[@id='msxForm']/div[10]/div[3]/table/tr/td/p</value>
+      <webElementGuid>f00e5fe6-f9a1-4c1a-baa0-d29f7faa1cd9</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Tambah'])[1]/following::p[1]</value>
+      <webElementGuid>995987fa-6a61-42e7-a737-88ac21f37310</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Penanda Tangan'])[1]/following::p[1]</value>
+      <webElementGuid>bf13ed04-333e-4ddd-a2e0-be4c9a2398b4</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Batal'])[1]/preceding::p[1]</value>
+      <webElementGuid>fc256a57-388b-47f2-96a9-739799ad91cb</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>//*/text()[normalize-space(.)='081233444403,']/parent::*</value>
+      <webElementGuid>c304c47a-0df5-4e46-8476-13458f9a23a9</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//p</value>
+      <webElementGuid>d10cfb1c-79aa-46f4-83df-895e7ff59f90</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//p[(text() = 'USERCIIE 081233444403,  USERCIIE@AD-INS.COM ' or . = 'USERCIIE 081233444403,  USERCIIE@AD-INS.COM ')]</value>
+      <webElementGuid>17a0af7e-17aa-4d8f-bcb2-9fb4c1e30f19</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>

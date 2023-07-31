@@ -21,7 +21,7 @@ public class SendSign {
 	settingEmailServiceVendorRegisteredUser(Connection conn, String value, String email) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("UPDATE ms_vendor_registered_user SET email_service = " + value + " WHERE signer_registered_email = '" + email + "'")
+		updateVariable = stm.executeUpdate("UPDATE ms_vendor_registered_user SET email_service = " + value + " WHERE signer_registered_email = '" + email + "'")
 	}
 
 	@Keyword
@@ -65,7 +65,7 @@ public class SendSign {
 	getEmailLogin(Connection conn, String documentid) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT STRING_AGG(distinct(alls.login_id),';') as aa FROM (select * from tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user order by tdds.id_document_d_sign asc) as alls where alls.document_id = '" + documentid+  "' ")
+		resultSet = stm.executeQuery("SELECT STRING_AGG(login_id, ';' ORDER BY seq_no) AS aa FROM (SELECT DISTINCT tdds.id_ms_user,au.login_id, FIRST_VALUE(tdds.seq_no) OVER (PARTITION BY tdds.id_ms_user ORDER BY tdds.seq_no) AS seq_no FROM tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user WHERE tdd.document_id = '"+ documentid +"') AS alls;")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -238,7 +238,7 @@ public class SendSign {
 	getKotakMasukSendDoc(Connection conn, String documentid) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select tdh.ref_number, msl.description as doctype,case when mdt.doc_template_name is null then tdd.document_name else mdt.doc_template_name end, TO_CHAR(tdd.dtm_crt, 'DD-Mon-YYYY HH24:MI') as timee, CASE WHEN msl_sign.description = 'Need Sign' THEN 'Belum TTD' END as description , case when tdd.completed_date is null then '-' else TO_CHAR(tdd.completed_date, 'DD-Mon-YYYY HH24:MI') end from tr_document_d tdd join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join ms_lov msl on tdh.lov_doc_type = msl.id_lov left join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d join ms_lov ms on tdds.lov_signer_type = ms.id_lov join am_msuser amm on tdds.id_ms_user = amm.id_ms_user join ms_lov msl_sign on tdd.lov_sign_status = msl_sign.id_lov where document_id = '" + documentid + "' ORDER BY tdds.id_document_d_sign asc limit 1")
+		resultSet = stm.executeQuery("select tdh.ref_number, msl.description as doctype,case when mdt.doc_template_name is null then tdd.document_name else mdt.doc_template_name end, amm2.full_name, TO_CHAR(tdd.dtm_crt, 'DD-Mon-YYYY HH24:MI') as timee, case when tdd.completed_date is null then '-' else TO_CHAR(tdd.completed_date, 'DD-Mon-YYYY HH24:MI') end , msl_sign.description as description  from tr_document_d tdd join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join ms_lov msl on tdh.lov_doc_type = msl.id_lov left join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d join ms_lov ms on tdds.lov_signer_type = ms.id_lov join am_msuser amm on tdds.id_ms_user = amm.id_ms_user join ms_lov msl_sign on tdd.lov_sign_status = msl_sign.id_lov left join am_msuser amm2 on tdh.id_msuser_customer = amm2.id_ms_user where document_id = '"+ documentid +"' ORDER BY tdds.id_document_d_sign asc limit 1")
 
 		metadata = resultSet.metaData
 
@@ -363,6 +363,24 @@ public class SendSign {
 
 		resultSet = stm.executeQuery("select trx_no,ref_no, TO_CHAR(trx_date, 'yyyy-MM-DD'), qty, notes from tr_balance_mutation where trx_no = '" + trxno + "'")
 
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+
+	@Keyword
+	getDataPencarianDokumen(Connection conn, String emailSigner, String documentId) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select msl_signertype.code, case when amm2.full_name is null then '' else amm2.full_name end, tdh.ref_number, msl.description from tr_document_d_sign tdds join am_msuser amm on tdds.id_ms_user = amm.id_ms_user join tr_document_d tdd on tdds.id_document_d = tdd.id_document_d join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join ms_lov msl_signertype on tdds.lov_signer_type = msl_signertype.id_lov join ms_lov msl on tdh.lov_doc_type = msl.id_lov left join am_msuser amm2 on tdh.id_msuser_customer = amm2.id_ms_user where amm.login_id = '"+ emailSigner +"' and tdd.document_id = '"+ documentId +"' limit 1")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

@@ -1657,6 +1657,7 @@
             }
           ],
           "javadoc": ""
+<<<<<<< HEAD
         },
         {
           "name": "getDocSignSequence",
@@ -1689,6 +1690,8 @@
             }
           ],
           "javadoc": ""
+=======
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
         }
       ]
     }

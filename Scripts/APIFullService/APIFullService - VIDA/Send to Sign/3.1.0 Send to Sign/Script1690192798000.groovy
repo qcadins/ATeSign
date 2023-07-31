@@ -30,7 +30,7 @@ arrayIndex = 0
 sheet = 'Send to Sign'
 
 'looping untuk sending document'
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathFESignDocument).columnNumbers ; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(excelPathFESignDocument).columnNumbers*/ ; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
@@ -117,11 +117,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
             'Open browser dengan embed kotak masuk'
             runWithEmbed(linkKotakMasuk)
-
-            'check error log'
-            if (checkErrorLog() == true) {
-                continue
-            }
             
             'Klik checkbox ttd untuk semua'
             WebUI.click(findTestObject('Object Repository/APIFullService/Send to Sign/checkboxTtdSemua'))
@@ -314,6 +309,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'Klik button Tanda tangan bulk'
             WebUI.click(findTestObject('Object Repository/APIFullService/Send to Sign/button_TTDBulk'))
 
+			'check error log'
+			if (checkErrorLog() == true) {
+				break
+			}
+			
             'Split document Template Name berdasarkan delimiter'
             documentTemplateNamePerDoc = documentTemplateName.split(';', -1)
 

@@ -29,7 +29,7 @@ int splitnum = -1
 
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_Excel_Path).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
-        break //call test case mengenai sign doc FE (kemungkinan)
+        break
     } else if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
         'Inisialisasi ref No berdasarkan delimiter ;'
         refNo = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 11)
@@ -273,11 +273,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
                     1, GlobalVariable.StatusSuccess)
 
-//                'Call Test case mengneai Kotak Masuk'
-//                WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('excelPathFESignDocument') : API_Excel_Path
-//                        , ('jumlahsignertandatangan') : jumlahsignertandatangan, ('isDownloadDocument') : isDownloadDocument
-//                        , ('isDeleteDownloadedDocument') : isDeleteDownloadedDocument, ('isViewDocument') : isViewDocument
-//                        , ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
+                'Call Test case mengneai Kotak Masuk'
+                WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('excelPathFESignDocument') : API_Excel_Path
+                        , ('jumlahsignertandatangan') : jumlahsignertandatangan, ('isDownloadDocument') : isDownloadDocument
+                        , ('isDeleteDownloadedDocument') : isDeleteDownloadedDocument, ('isViewDocument') : isViewDocument
+                        , ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
 
                 if (GlobalVariable.checkStoreDB == 'Yes') {
                     'call test case ResponseAPIStoreDB'
@@ -301,21 +301,21 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
                 }
             }
         } else {
-            'write to excel status failed dan reason : failed hit api'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm, 
-                GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
-                    '-', '') + ';') + GlobalVariable.ReasonFailedHitAPI)
+             messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL).toString()
 
-            'call test case login inveditor'
-            WebUI.callTestCase(findTestCase('Login/Login_Inveditor'), [:], FailureHandling.STOP_ON_FAILURE)
+                'write to excel status failed dan reason'
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                    (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + semicolon) + 
+                    messageFailed)
 
-            'call test case error report'
-            WebUI.callTestCase(findTestCase('Sign_Document/ErrorReport'), [('excelPathSignDoc') : 'Registrasi/SendDocument'], 
-                FailureHandling.STOP_ON_FAILURE)
-
-            'close browser'
-            WebUI.closeBrowser()
+                if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 9).replace('"', '') == resultTenant) {
+                    'call test case error report'
+                    WebUI.callTestCase(findTestCase('Send_Document/ErrorReport'), [('API_Excel_Path') : API_Excel_Path], 
+                        FailureHandling.CONTINUE_ON_FAILURE)
+                }
         }
+		'close browser'
+		WebUI.closeBrowser()
     }
 }
 

@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "1F220BDECA5C34FA07DA1490BDEC892E",
+  "keywordFileContentHash": "A0931EC2BCC72282AB0FF732223F6BF4",
   "keywordClasses": [
     {
       "name": "connection.SendSign",
@@ -727,6 +727,51 @@
             },
             {
               "name": "trxno",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getDataPencarianDokumen",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "emailSigner",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "documentId",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
