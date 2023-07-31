@@ -20,6 +20,7 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'get colm excel'
 int countColmExcel = findTestData(excelPathAPISignDocument).columnNumbers
 
+'declafe split'
 int splitnum = -1
 
 'looping API Sign Document'
