@@ -1,5 +1,6 @@
 package connection
 
+import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import java.sql.Connection
 import java.sql.ResultSet
 import java.sql.ResultSetMetaData
@@ -819,7 +820,7 @@ public class APIFullService {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getEmailBasedOnSequence(Connection conn, String documentid) {
 		stm = conn.createStatement()
@@ -833,5 +834,12 @@ public class APIFullService {
 			data = resultSet.getObject(1)
 		}
 		data
+	}
+	
+	@Keyword
+	settingBaseUrl(String excelPath, int colm, int row) {
+		if(findTestData(excelPath).getValue(colm, row) == 'No') {
+			GlobalVariable.base_url = 'Salah Url'
+		}
 	}
 }

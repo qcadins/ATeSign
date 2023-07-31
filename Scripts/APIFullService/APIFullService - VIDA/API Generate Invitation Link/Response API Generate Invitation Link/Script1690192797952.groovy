@@ -28,6 +28,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+		
+		'setting menggunakan base url yang benar atau salah'
+		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPIGenerateInvLink, GlobalVariable.NumofColm, 53)
+		
 		'declare variable array'
 		ArrayList<String> saldoBefore, saldoAfter
 		
@@ -171,28 +175,28 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 	WebUI.maximizeWindow()
 
 	'set value userLogin'
-	GlobalVariable.userLogin = findTestData(excelPathAPIGenerateInvLink).getValue(2, 54).toUpperCase()
+	GlobalVariable.userLogin = findTestData(excelPathAPIGenerateInvLink).getValue(2, 55).toUpperCase()
 
 	'input email'
-	WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathAPIGenerateInvLink).getValue(2, 54))
+	WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathAPIGenerateInvLink).getValue(2, 55))
 
 	'input password'
 	WebUI.setText(findTestObject('Login/input_Password'), findTestData(excelPathAPIGenerateInvLink).getValue(2,
-			55))
+			56))
 
 	'click button login'
 	WebUI.click(findTestObject('Login/button_Login'), FailureHandling.CONTINUE_ON_FAILURE)
 
 	'input perusahaan'
 	WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excelPathAPIGenerateInvLink).getValue(2,
-			56))
+			57))
 
 	'enter untuk select perusahaan'
 	WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
 
 	'input peran'
 	WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excelPathAPIGenerateInvLink).getValue(2,
-			57))
+			58))
 
 	'enter untuk select peran'
 	WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))

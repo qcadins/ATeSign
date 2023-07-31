@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>button_MaxPage</name>
+   <name>button_NextPage</name>
    <tag></tag>
-   <elementGuidId>9f8a6bde-6ebc-4a6d-b31f-80158ab4ee4d</elementGuidId>
+   <elementGuidId>e1d08355-a502-4af2-aa10-ec825ba90711</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'datatable-icon-skip']</value>
+         <value>//*[@class = 'datatable-icon-right']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>datatable-icon-skip</value>
-      <webElementGuid>000f208c-c5a7-436b-8cb8-b88d908b3c56</webElementGuid>
+      <value>datatable-icon-right</value>
+      <webElementGuid>c608abec-c647-413e-a55f-08046c931e2d</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

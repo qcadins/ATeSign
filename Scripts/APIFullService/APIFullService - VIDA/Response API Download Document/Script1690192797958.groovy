@@ -19,6 +19,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     if (findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+		
+		'setting menggunakan base url yang benar atau salah'
+		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPIDownload, GlobalVariable.NumofColm, 19)
+		
         'check if tidak mau menggunakan tenant code yang benar'
         if (findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, 15) == 'No') {
             'set tenant kosong'

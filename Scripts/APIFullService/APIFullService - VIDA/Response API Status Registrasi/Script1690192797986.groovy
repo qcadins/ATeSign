@@ -20,6 +20,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     if (findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+		
+		'setting menggunakan base url yang benar atau salah'
+		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPICheckRegistrasi, GlobalVariable.NumofColm, 16)
+		
         'check if mau menggunakan api_key yang salah atau benar'
         if (findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, 14) == 'Yes') {
             'get api key dari db'

@@ -20,6 +20,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     if (findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+		
+		'setting menggunakan base url yang benar atau salah'
+		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPICheckSigning, GlobalVariable.NumofColm, 17)
+		
         'check if tidak mau menggunakan tenant code yang benar'
         if (findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, 15) == 'No') {
             'set tenant kosong'

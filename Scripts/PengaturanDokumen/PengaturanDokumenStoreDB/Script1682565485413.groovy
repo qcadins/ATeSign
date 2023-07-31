@@ -37,12 +37,23 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getVal
 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 14).toUpperCase(), 
         (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
-'verify Psre'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 20).toUpperCase(),
-		(result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+if(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 20).length() > 0) {
+	'verify Psre == inputan excel'
+	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 20).toUpperCase(),
+			(result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))	
+} else {
+	String defaultVendor = CustomKeywords.'connection.PengaturanDokumen.getDefaultVendor'(conneSign)
+	
+	'verify Psre == default vendor yang active'
+	arrayMatch.add(WebUI.verifyMatch(defaultVendor.toUpperCase(), (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+}
 
 'verify isSequence'
 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 21).toUpperCase(),
+		(result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+'verify urutan sequence sign'
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 22).toUpperCase(),
 		(result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'jika data db tidak sesuai dengan excel'

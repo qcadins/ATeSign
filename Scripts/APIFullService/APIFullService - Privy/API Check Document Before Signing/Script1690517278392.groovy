@@ -21,6 +21,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     if (findTestData(excelPathCheckDocBeforeSigning).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathCheckDocBeforeSigning).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+		
+		'setting menggunakan base url yang benar atau salah'
+		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathCheckDocBeforeSigning, GlobalVariable.NumofColm, 15)
+		
 	    'HIT API'
 	    responLogin = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/Login', [('email') : findTestData(excelPathCheckDocBeforeSigning).getValue(
 			GlobalVariable.NumofColm, 10).replace('"',''), ('password') : findTestData(excelPathCheckDocBeforeSigning).getValue(GlobalVariable.NumofColm, 11)]))
