@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>lbl_ManualSign</name>
+   <name>lbl_TambahPenandaTangan</name>
    <tag></tag>
-   <elementGuidId>e4051118-30f8-489e-95ff-320ff9f35351</elementGuidId>
+   <elementGuidId>774cb48b-00c5-49c2-a190-015f9022b1da</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[(text() = 'Pengaturan Dokumen' or . = 'Pengaturan Dokumen')]</value>
+         <value>//*[@class = 'modal-title']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>text</name>
+      <name>class</name>
       <type>Main</type>
-      <value>Pengaturan Dokumen</value>
-      <webElementGuid>2a2791fa-1967-418a-81f8-0c9201f446b0</webElementGuid>
+      <value>modal-title</value>
+      <webElementGuid>e419b49e-1727-4c55-8b00-a8eb0b511d6d</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

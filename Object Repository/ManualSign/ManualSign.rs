@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[contains(@class, 'sidebar-content main-menu-content')]/div[1]/ul/li[6]</value>
+         <value>//*[contains(@class, 'sidebar-content main-menu-content')]/div[1]/ul/li[7]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[contains(@class, 'sidebar-content main-menu-content')]/div[1]/ul/li[6]</value>
-      <webElementGuid>d3b9636d-ffa2-48eb-82d0-067f0f683f38</webElementGuid>
+      <value>//*[contains(@class, 'sidebar-content main-menu-content')]/div[1]/ul/li[7]</value>
+      <webElementGuid>a1ed459d-6cdb-4ba1-b9e0-d70bab852cec</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

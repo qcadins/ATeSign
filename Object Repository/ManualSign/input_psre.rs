@@ -6,15 +6,19 @@
    <elementGuidId>63a41e93-287f-49c5-b91e-a0aebe95a971</elementGuidId>
    <selectorCollection>
       <entry>
+         <key>XPATH</key>
+         <value>//input[@type='text']</value>
+      </entry>
+      <entry>
          <key>CSS</key>
          <value>input[type=&quot;text&quot;]</value>
       </entry>
       <entry>
-         <key>XPATH</key>
-         <value>//input[@type='text']</value>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;psreCode&quot;]/div/div/div[3]/input</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>true</useRalativeImagePath>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -22,7 +26,7 @@
       <name>tag</name>
       <type>Main</type>
       <value>input</value>
-      <webElementGuid>0abf24b1-cb70-4e2c-888a-d2ef694d4b1a</webElementGuid>
+      <webElementGuid>14a38b9d-fda0-4545-982b-06d53be2c04c</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -30,15 +34,15 @@
       <name>role</name>
       <type>Main</type>
       <value>combobox</value>
-      <webElementGuid>693cf541-3b2d-4da2-a81a-b9ee7f6aea3e</webElementGuid>
+      <webElementGuid>c0de00c9-5bb9-4d9d-a4d6-eeb268cf2ce7</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>type</name>
       <type>Main</type>
       <value>text</value>
-      <webElementGuid>5f75b11e-9174-4a97-bed1-f8962495d43f</webElementGuid>
+      <webElementGuid>6c26ace1-3e82-4646-bbd0-69bf370849a3</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -46,7 +50,7 @@
       <name>autocorrect</name>
       <type>Main</type>
       <value>off</value>
-      <webElementGuid>84052948-b5ad-49d1-b2e9-057f84d96087</webElementGuid>
+      <webElementGuid>59f5f6da-bf06-49b6-be41-f7c73f14c1f3</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -54,7 +58,7 @@
       <name>autocapitalize</name>
       <type>Main</type>
       <value>off</value>
-      <webElementGuid>7d2f938c-751b-4dff-bafe-908dd426b993</webElementGuid>
+      <webElementGuid>a034c094-6c12-46ab-a5d3-54cb6e3ab61e</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -62,7 +66,7 @@
       <name>autocomplete</name>
       <type>Main</type>
       <value>a3cc0de7eae9</value>
-      <webElementGuid>da4393ea-4d77-4965-92dd-ff01204d219e</webElementGuid>
+      <webElementGuid>0fbdfdee-a1f5-4066-97a0-e77e8a06ecd6</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -70,7 +74,7 @@
       <name>aria-expanded</name>
       <type>Main</type>
       <value>true</value>
-      <webElementGuid>b4c77af4-2839-4965-9e91-11e2f859aaf6</webElementGuid>
+      <webElementGuid>69202e99-45b4-4d38-8f37-a310563fe6b6</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -78,7 +82,7 @@
       <name>aria-owns</name>
       <type>Main</type>
       <value>a3cc0de7eae9</value>
-      <webElementGuid>42ad02e6-b7ad-422c-a7b2-ac383617dec6</webElementGuid>
+      <webElementGuid>121a1181-d79f-40d8-b906-2033395bacd6</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -86,15 +90,23 @@
       <name>aria-activedescendant</name>
       <type>Main</type>
       <value>a3cc0de7eae9-0</value>
-      <webElementGuid>b396e5d1-713f-4e55-80f5-d9bcc7493ace</webElementGuid>
+      <webElementGuid>76c192d8-3ab0-42dc-ac45-83e2b8ceba5b</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;psreCode&quot;]/div/div/div[3]/input</value>
+      <webElementGuid>9d8c1f99-ff73-4106-8ece-c9b75a6764e3</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>id</name>
       <type>Main</type>
-      <value>id(&quot;psreCode&quot;)/div[@class=&quot;ng-select-container ng-has-value&quot;]/div[@class=&quot;ng-value-container&quot;]/div[@class=&quot;ng-input&quot;]/input[1]</value>
-      <webElementGuid>273db5ec-c0df-4239-9dec-2d4d775f8dca</webElementGuid>
+      <value>psreCode</value>
+      <webElementGuid>6de79299-139b-4655-99a2-793c1f3b0e76</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -102,7 +114,7 @@
       <name>xpath:attributes</name>
       <type>Main</type>
       <value>//input[@type='text']</value>
-      <webElementGuid>ef4572d2-b294-4376-a28f-6b238e871546</webElementGuid>
+      <webElementGuid>eb1ea6bc-3599-4618-93e6-ea89546c6f4e</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -110,7 +122,7 @@
       <name>xpath:idRelative</name>
       <type>Main</type>
       <value>//ng-select[@id='psreCode']/div/div/div[3]/input</value>
-      <webElementGuid>d661c1a4-69eb-443c-9344-a237cb84a011</webElementGuid>
+      <webElementGuid>6b2f9a86-80a5-4563-9c3f-456e18312b22</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -118,7 +130,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//input</value>
-      <webElementGuid>091eead5-425d-4404-a4f5-801cf092361e</webElementGuid>
+      <webElementGuid>f9715635-c627-4f25-8f4c-7b3f66ca753a</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -126,6 +138,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//input[@type = 'text']</value>
-      <webElementGuid>92ca99c5-167a-4ad8-b8d4-78897cb26f33</webElementGuid>
+      <webElementGuid>1dd6b659-e8f2-47f8-8529-c463f7758c3f</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

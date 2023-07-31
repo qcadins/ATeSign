@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>lbl_ManualSign</name>
+   <name>button_tambahSigner</name>
    <tag></tag>
-   <elementGuidId>e4051118-30f8-489e-95ff-320ff9f35351</elementGuidId>
+   <elementGuidId>0cd63ca2-4f7b-4ef1-bf30-15f2765cc514</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[(text() = 'Pengaturan Dokumen' or . = 'Pengaturan Dokumen')]</value>
+         <value>//*[@id=&quot;msxForm&quot;]/div[10]/div[2]/a</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>text</name>
+      <name>xpath</name>
       <type>Main</type>
-      <value>Pengaturan Dokumen</value>
-      <webElementGuid>2a2791fa-1967-418a-81f8-0c9201f446b0</webElementGuid>
+      <value>//*[@id=&quot;msxForm&quot;]/div[10]/div[2]/a</value>
+      <webElementGuid>536457d9-d6a3-4044-8e7d-f2a3d424075c</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

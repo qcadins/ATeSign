@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>input__emailPenandaTangan</name>
+   <name>input_documentExample</name>
    <tag></tag>
-   <elementGuidId>5af5a6d9-5f8d-4733-817d-4b6afd21ea2e</elementGuidId>
+   <elementGuidId>13820336-dbad-4e3d-b5dd-8af06ae5ee12</elementGuidId>
    <selectorCollection>
       <entry>
          <key>CSS</key>
-         <value>#email</value>
+         <value>#documentExample</value>
       </entry>
       <entry>
          <key>XPATH</key>
-         <value>//input[@id='email']</value>
+         <value>//input[@id='documentExample']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>XPATH</selectorMethod>
@@ -22,86 +22,102 @@
       <name>tag</name>
       <type>Main</type>
       <value>input</value>
-      <webElementGuid>e99ec35e-8816-4300-a624-1f123551d53d</webElementGuid>
+      <webElementGuid>a729bed1-9f71-4fac-8ae6-34ab4dfcd124</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>type</name>
       <type>Main</type>
-      <value>email</value>
-      <webElementGuid>d0bc45cb-3764-46db-ace1-2dd95e16da41</webElementGuid>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>formcontrolname</name>
-      <type>Main</type>
-      <value>email</value>
-      <webElementGuid>470c024a-4a31-4766-97b4-6dcf1419755a</webElementGuid>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>id</name>
-      <type>Main</type>
-      <value>email</value>
-      <webElementGuid>361a1e3a-5e06-4005-ad0b-ce05778d75eb</webElementGuid>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>placeholder</name>
-      <type>Main</type>
-      <value>Fill signer email here</value>
-      <webElementGuid>95556eac-21b6-4dae-ace4-a0a832840460</webElementGuid>
+      <value>file</value>
+      <webElementGuid>30ddb875-f0ff-4ff8-8e89-a1a165c520e9</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>form-control ng-untouched ng-pristine ng-valid</value>
-      <webElementGuid>d82c09a1-7da4-494d-a915-4fd831205eef</webElementGuid>
+      <value>form-control ng-untouched ng-pristine ng-invalid</value>
+      <webElementGuid>fb693126-cfa4-433c-bd0c-f010cd57610f</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>ng-reflect-name</name>
       <type>Main</type>
-      <value>email</value>
-      <webElementGuid>d4f85027-92d2-477e-8524-c8cc5ce40ad8</webElementGuid>
+      <value>documentExample</value>
+      <webElementGuid>c800cc65-6f1b-428d-9c03-0d18563cb098</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>id</name>
+      <type>Main</type>
+      <value>documentExample</value>
+      <webElementGuid>23622822-9ef4-494c-acef-43a809e75188</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>placeholder</name>
+      <type>Main</type>
+      <value>Pilih Dokumen</value>
+      <webElementGuid>a17cfb47-83af-479d-80d8-193ad0383759</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>ng-reflect-required</name>
+      <type>Main</type>
+      <value>true</value>
+      <webElementGuid>73645f38-33a9-4b73-a803-a2a3dd20c3f5</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>accept</name>
+      <type>Main</type>
+      <value>application/pdf</value>
+      <webElementGuid>fc049be6-5623-44b9-841f-b698fbd6c00f</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>id(&quot;email&quot;)</value>
-      <webElementGuid>20b95695-a9c1-40b4-883a-b0f214b65472</webElementGuid>
+      <value>id(&quot;documentExample&quot;)</value>
+      <webElementGuid>47d5c4cc-aacc-44ba-91e6-24ef0d874e86</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:attributes</name>
       <type>Main</type>
-      <value>//input[@id='email']</value>
-      <webElementGuid>aba6ff1e-92cd-4398-b5c8-a3b79f467365</webElementGuid>
+      <value>//input[@id='documentExample']</value>
+      <webElementGuid>b8009a9f-3f62-4c03-bc73-3d74e7215b66</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:idRelative</name>
+      <type>Main</type>
+      <value>//form[@id='msxForm']/div[6]/div/app-file/fieldset/input</value>
+      <webElementGuid>07b172e9-cba1-43bc-9ad0-79e7f90af1b3</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:position</name>
       <type>Main</type>
-      <value>//div[2]/div/div[2]/div/input</value>
-      <webElementGuid>364e1f48-5be8-4d7a-a323-3506c8b60e89</webElementGuid>
+      <value>//fieldset/input</value>
+      <webElementGuid>c8799192-aa59-4c48-a52e-71c31b3a651a</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:customAttributes</name>
       <type>Main</type>
-      <value>//input[@type = 'email' and @id = 'email' and @placeholder = 'Fill signer email here']</value>
-      <webElementGuid>056edf70-0566-42fa-bd02-d323efc47130</webElementGuid>
+      <value>//input[@type = 'file' and @id = 'documentExample' and @placeholder = 'Pilih Dokumen']</value>
+      <webElementGuid>72c2cec6-67b7-4768-a2c3-e76583cc09d8</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

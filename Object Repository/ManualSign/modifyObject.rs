@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>lbl_ManualSign</name>
+   <name>modifyObject</name>
    <tag></tag>
-   <elementGuidId>e4051118-30f8-489e-95ff-320ff9f35351</elementGuidId>
+   <elementGuidId>882ff92a-b3ad-4d9c-b372-2e40335f7230</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[(text() = 'Pengaturan Dokumen' or . = 'Pengaturan Dokumen')]</value>
+         <value>//*[@id=&quot;isActive&quot;]/div/span[2]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>text</name>
+      <name>xpath</name>
       <type>Main</type>
-      <value>Pengaturan Dokumen</value>
-      <webElementGuid>2a2791fa-1967-418a-81f8-0c9201f446b0</webElementGuid>
+      <value>//*[@id=&quot;isActive&quot;]/div/span[2]</value>
+      <webElementGuid>04bc92ab-46ef-4cbf-b590-a75eaa519eb6</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
