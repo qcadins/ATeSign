@@ -322,7 +322,7 @@ public class APIFullService {
 	getEmailLogin(Connection conn, String documentid) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT STRING_AGG(login_id, ';' ORDER BY seq_no) AS aa FROM (SELECT DISTINCT tdds.id_ms_user,au.login_id, FIRST_VALUE(tdds.seq_no) OVER (PARTITION BY tdds.id_ms_user ORDER BY tdds.seq_no) AS seq_no FROM tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user WHERE tdd.document_id = '"+ documentid +"') AS alls;")
+		resultSet = stm.executeQuery("SELECT STRING_AGG(login_id, ';' ORDER BY id_document_d_sign) AS aa FROM (SELECT DISTINCT tdds.id_ms_user,au.login_id, FIRST_VALUE(tdds.id_document_d_sign) OVER (PARTITION BY tdds.id_ms_user ORDER BY tdds.id_document_d_sign) AS id_document_d_sign FROM tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user WHERE tdd.document_id = '"+ documentid +"') AS alls;")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -818,5 +818,20 @@ public class APIFullService {
 			}
 		}
 		listdata
+	}
+	
+	@Keyword
+	getEmailBasedOnSequence(Connection conn, String documentid) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT STRING_AGG(login_id, ';' ORDER BY seq_no) AS aa FROM (SELECT DISTINCT tdds.id_ms_user,au.login_id, FIRST_VALUE(tdds.seq_no) OVER (PARTITION BY tdds.id_ms_user ORDER BY tdds.seq_no) AS seq_no FROM tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user WHERE tdd.document_id = '"+ documentid +"') AS alls;")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
 	}
 }

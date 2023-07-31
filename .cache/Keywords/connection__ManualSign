@@ -1,0 +1,10 @@
+{
+  "keywordFileContentHash": "648C7E90BAA41123A0AC817EBFBAF32D",
+  "keywordClasses": [
+    {
+      "name": "connection.ManualSign",
+      "keywordMethods": []
+    }
+  ],
+  "javadocParsed": true
+}

@@ -35,7 +35,9 @@ for (int y = 0; y < docId.size(); y++) {
         'call Test Case untuk login sebagai user berdasarkan doc id'
         WebUI.callTestCase(findTestCase('Login/Login_1docManySigner'), [('email') : emailSigner[t]], FailureHandling.STOP_ON_FAILURE)
         
+		'Diberikan delay dengan sign yang membutuhkan click login tenant dan peran'
 		WebUI.delay(20)
+		
         'get data kotak masuk send document secara asc, dimana customer no 1'
         ArrayList result = CustomKeywords.'connection.SendSign.getKotakMasukSendDoc'(conneSign, docId[y])
 
@@ -117,7 +119,9 @@ for (int y = 0; y < docId.size(); y++) {
         'ambil column lastest pencarian dokumen'
         variablePencarianDokumenColumn = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-body-cell'))
 
+		'Tambahan column untuk MF dan Cust agar dapat 1 code saja'
 		tambahanColumn = 0
+		
         'loop berdasarkan jumlah kolom dan dicheck dari 1 - 10.'
         for (int i = 1; i <= (variablePencarianDokumenColumn.size() / variablePencarianDokumenRow.size()); i++) {
 
@@ -199,7 +203,9 @@ for (int y = 0; y < docId.size(); y++) {
         'get row pada beranda'
         variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
 
+		'index row distart dari 2 karena yang 1 adalah button ttd'
 		indexRow = 2
+		
         'modify object text refnum'
         modifyObjectTextRefNum = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_refnum'), 'xpath', 'equals', 
             ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
@@ -309,9 +315,12 @@ for (int y = 0; y < docId.size(); y++) {
 
         'loop untuk row popup'
         for (int i = 1; i <= variableRowPopup.size(); i++) {
+			'Input email signer based on sequentialnya'
+			emailSignerBasedOnSequence = CustomKeywords.'connection.APIFullService.getEmailBasedOnSequence'(conneSign, docId[y]).split(';', -1)
+			
             'get data kotak masuk send document secara asc, dimana customer no 1'
             ArrayList resultSigner = CustomKeywords.'connection.SendSign.getSignerKotakMasukSendDoc'(conneSign, docId[y], 
-                emailSigner[(i - 1)])
+                emailSignerBasedOnSequence[(i - 1)])
 
             'declare array index menjadi 0 per result'
             arrayIndex = 0

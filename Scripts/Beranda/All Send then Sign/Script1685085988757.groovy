@@ -15,6 +15,9 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
+'inisialisasi flag break untuk sequential'
+int flagBreak = 0
+
 'get current date'
 def currentDate = new Date().format('yyyy-MM-dd')
 
@@ -258,11 +261,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(e
 
         noKontrakPerDoc = noKontrak.split(';', -1)
 
+		'diberi delay 2 detik untuk muncul popup'
+		WebUI.delay(2)
+		
         'check popup'
         if (checkPopup() == true) {
-            continue
+			'break untuk looping selanjutnya'
+			flagBreak = 1
+			
+			'diberi break dengan alasan sequential signing'
+            break
         }
-        
+		
         'Jika total document sign excel tidak sama dengan total document sign paging'
         if (totalDocSign != documentTemplateNamePerDoc.size()) {
             CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
@@ -778,6 +788,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(e
             }
         }
     }
+	'check flagBreak untuk sequential'
+	if (flagBreak == 1) {
+		continue
+	}
+
+	'Jika ingin melakukan stamping'
+	if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,85) == 'Yes') {
+		'Call API Send doc'
+		WebUI.callTestCase(findTestCase('Meterai/Flow Stamping'), [('excelPathStamping') : excelPathFESignDocument
+		, ('sheet') : sheet, ('useAPI') : 'v3.0.0', ('linkDocumentMonitoring') : ''], FailureHandling.CONTINUE_ON_FAILURE)
+	}
 }
 
 ' penggunaan ini hanya untuk Masukan Store Db'

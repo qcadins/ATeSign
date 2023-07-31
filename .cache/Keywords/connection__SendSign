@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "A0931EC2BCC72282AB0FF732223F6BF4",
+  "keywordFileContentHash": "F06B1396B39476C3F2038834D1FB62EF",
   "keywordClasses": [
     {
       "name": "connection.SendSign",
@@ -46,8 +46,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getSigningStatusProcess",
@@ -91,8 +90,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getDataSendtoSign",
@@ -123,8 +121,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getEmailLogin",
@@ -155,8 +152,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getProsesTtdProgress",
@@ -187,8 +183,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getTotalSigned",
@@ -219,8 +214,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getPaymentType",
@@ -251,8 +245,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getSaldoUsedBasedonPaymentType",
@@ -296,8 +289,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getTotalSignedUsingRefNumber",
@@ -328,8 +320,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getDocumentType",
@@ -360,8 +351,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getTenant",
@@ -392,8 +382,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getSendDoc",
@@ -424,8 +413,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getSendDocForEmailAndSignerType",
@@ -469,8 +457,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getKotakMasukSendDoc",
@@ -501,8 +488,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getSignStatus",
@@ -533,8 +519,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getTotalStampingandTotalMaterai",
@@ -565,8 +550,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getSignerKotakMasukSendDoc",
@@ -610,8 +594,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getEmailsSign",
@@ -642,8 +625,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getbulkSign",
@@ -674,8 +656,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getVendorCodeUsingDocId",
@@ -706,8 +687,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getTrxSendDocSigning",
@@ -738,8 +718,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getDataPencarianDokumen",
@@ -783,11 +762,10 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         }
       ]
     }
   ],
-  "javadocParsed": true
+  "javadocParsed": false
 }

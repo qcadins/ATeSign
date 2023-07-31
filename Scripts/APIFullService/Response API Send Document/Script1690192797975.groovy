@@ -355,7 +355,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'Jika dokumennya menggunakan base64'
             if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 49) == 'Yes') {
                 'input bodyAPI dengan Base64'
-                bodyAPI = (((bodyAPI + '"documentFile": "') + PDFtoBase64(documentFile[i])) + '"')
+                bodyAPI = (((bodyAPI + '"documentFile": "') + CustomKeywords.'customizekeyword.ConvertFile.base64File'(documentFile[i])) + '"')
             } else {
                 'input bodyAPI tidak dengan Base64'
                 bodyAPI = (((bodyAPI + '"documentFile": "') + (documentFile[i])) + '"')
@@ -524,22 +524,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 						, ('sheet') : 'API Send Document', ('signlocStoreDB') : signlocStoreDB], FailureHandling.CONTINUE_ON_FAILURE)
                 }
             } else {
-                'Mengambil message Failed'
-                messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL).toString()
-
-                'write to excel status failed dan reason'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm, 
-                    GlobalVariable.StatusFailed, (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 2).replace(
-                        '-', '') + semicolon) + messageFailed)
+				getErrorMessageAPI(respon)
             }
         } else {
-            'mengambil message Failed'
-            messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL).toString()
-
-            'write to excel status failed dan reason'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm, 
-                GlobalVariable.StatusFailed, (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 2).replace(
-                    '-', '') + semicolon) + messageFailed.toString())
+			getErrorMessageAPI(respon)
         }
     }
 }
@@ -553,4 +541,11 @@ def PDFtoBase64(String fileName) {
 }
 
 
+def getErrorMessageAPI(def respon) {
+	'mengambil status code berdasarkan response HIT API'
+	message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
+	'Write To Excel GlobalVariable.StatusFailed and errormessage'
+	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm,
+		GlobalVariable.StatusFailed, '<' + message + '>')
+}

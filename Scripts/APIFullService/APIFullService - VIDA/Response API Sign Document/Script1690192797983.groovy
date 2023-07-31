@@ -236,11 +236,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             
             if ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 6) != '')) {
                 'ambil trx no untuk displit'
-                trxNo = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 6).split(',', -1)
+                trxNo = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 6).split(', ', -1)
 
+				'Diberikan delay dengan pembuatan trx no di db sebesar 5 detik'
+				WebUI.delay(5)
+				
                 'looping per trx no'
                 for (int i = 0; i < trxNo.size(); i++) {
-                    'Mengambil tipe saldo yang tela hdigunakan'
+                    'Mengambil tipe saldo yang telah digunakan'
                     checkTypeofUsedSaldo = CustomKeywords.'connection.APIFullService.getTypeUsedSaldo'(conneSign, trxNo[
                         i])
 
@@ -498,7 +501,7 @@ def verifySaldoUsed(Connection conneSign) {
 	
 	'input tipe saldo'
 	WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), checkTypeofUsedSaldo.replace('Use ',''))
-
+	
 	'enter untuk input tipe saldo'
 	WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), Keys.chord(Keys.ENTER))
 	

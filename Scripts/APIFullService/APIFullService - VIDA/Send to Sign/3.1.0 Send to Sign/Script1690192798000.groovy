@@ -20,6 +20,9 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 'get current date'
 def currentDate = new Date().format('yyyy-MM-dd')
 
+'Inisialisasi flag break untuk sequential'
+int flagBreak = 0
+
 'Inisialisasi array untuk Listotp, arraylist arraymatch'
 ArrayList listOTP = [], arrayMatch = []
 
@@ -123,7 +126,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(e
 
             'Klik button ttd bulk'
             WebUI.click(findTestObject('Object Repository/APIFullService/Send to Sign/button_TTDBulk'))
-
+	
             'klik tombol Batal'
             WebUI.click(findTestObject('Object Repository/APIFullService/Send to Sign/button_BatalTandaTanganDokumen'))
 
@@ -308,20 +311,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(e
 
             'Klik button Tanda tangan bulk'
             WebUI.click(findTestObject('Object Repository/APIFullService/Send to Sign/button_TTDBulk'))
-
-			'check error log'
-			if (checkErrorLog() == true) {
-				break
-			}
 			
             'Split document Template Name berdasarkan delimiter'
             documentTemplateNamePerDoc = documentTemplateName.split(';', -1)
 
             noKontrakPerDoc = noKontrak.split(';', -1)
 
+			'diberi delay 2 detik untuk muncul popup'
+			WebUI.delay(2)
+			
             'check popup'
             if (checkPopup() == true) {
-                continue
+				'break untuk looping selanjutnya'
+				flagBreak = 1
+				
+				'diberi break dengan alasan sequential signing'
+                break
             }
 			
 			'check error log'
@@ -853,6 +858,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(e
                 }
             }
         }
+		
+		'check flagBreak untuk sequential'
+		if (flagBreak == 1) {
+			continue
+		}
+		
 		'Jika ingin melakukan stamping'
 		if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,90) == 'Yes') {
 			'Call API Send doc'
@@ -1148,7 +1159,7 @@ def runWithEmbed(String linkUrl) {
 }
 
 def checkKotakMasuk(Connection conneSign, ArrayList emailSigner, String sheet, TestObject modifyObjectTextRefNumber, TestObject modifyObjectTextDocumentTemplateTipe, TestObject modifyObjectTextDocumentTemplateName, TestObject modifyObjectTextTglPermintaan, TestObject modifyObjectTextStatusTtd, TestObject modifyObjectTextProsesTtd, int row) {
-    'declare arraylist arraymatch'
+	'declare arraylist arraymatch'
     ArrayList arrayMatch = []
 
     'declare arrayIndexnya 0'
@@ -1238,8 +1249,10 @@ def checkKotakMasuk(Connection conneSign, ArrayList emailSigner, String sheet, T
 
     'loop untuk row popup'
     for (int i = 1; i <= variableRowPopup.size(); i++) {
+		emailSignerBasedOnSequence = CustomKeywords.'connection.APIFullService.getEmailBasedOnSequence'(conneSign, docId).split(';', -1)
+		
         'get data kotak masuk send document secara asc, dimana customer no 1'
-        ArrayList resultSigner = CustomKeywords.'connection.APIFullService.getSignerKotakMasukSendDoc'(conneSign, docId, emailSigner[
+        ArrayList resultSigner = CustomKeywords.'connection.APIFullService.getSignerKotakMasukSendDoc'(conneSign, docId, emailSignerBasedOnSequence[
             (i - 1)])
 
         'declare arrayIndexnya 0'

@@ -107,9 +107,6 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + semicolon) + messageFailed.toString())
 }
 
-def PDFtoBase64(String fileName) {
-    return CustomKeywords.'customizekeyword.ConvertFile.base64File'(fileName)
-}
 
 def getDataExcel(String semicolon, int splitnum, String delimiter, String enter) {
     'Inisialisasi ref No berdasarkan delimiter ;'
@@ -438,7 +435,7 @@ def setBodyAPI(String semicolon, int splitnum, String delimiter, String enter, S
 		'Jika dokumennya menggunakan base64'
 		if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 49) == 'Yes') {
 			'input bodyAPI dengan Base64'
-			bodyAPI = (((bodyAPI + '"documentFile": "') + PDFtoBase64(documentFile[i])) + '"')
+			bodyAPI = (((bodyAPI + '"documentFile": "') + CustomKeywords.'customizekeyword.ConvertFile.base64File'(documentFile[i])) + '"')
 		} else {
 			'input bodyAPI tidak dengan Base64'
 			bodyAPI = (((bodyAPI + '"documentFile": "') + (documentFile[i])) + '"')

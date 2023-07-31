@@ -12,6 +12,9 @@ import java.sql.Connection as Connection
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
+'Inisialisasi flag break untuk sequential'
+int flagBreak = 0
+
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
@@ -81,7 +84,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                 FailureHandling.STOP_ON_FAILURE)
 
             'mengambil saldo before'
-            saldoSignBefore = checkSaldoSign(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 21).replace('"',''))
+            saldoSignBefore = checkSaldoSign(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 11).replace('"',''))
 
             'mengambil saldo otp before'
             otpBefore = checkSaldoOtp()
@@ -161,10 +164,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                         'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
                         j) + ']/datatable-body-row/div[2]/datatable-body-cell[1]/div/div/input', true)
 
+					'modify object lbl nama pelanggan'
+					modifyObjectTextNamaPelanggan = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/checkbox_ttd'),
+						'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+						j) + ']/datatable-body-row/div[2]/datatable-body-cell[5]/div', true)
+					
                     'modify object lbl tanggal permintaan'
                     modifyObjectTextTglPermintaan = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/checkbox_ttd'), 
                         'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-                        j) + ']/datatable-body-row/div[2]/datatable-body-cell[5]/div/span', true)
+                        j) + ']/datatable-body-row/div[2]/datatable-body-cell[6]/div/span', true)
 
                     'modify object text no kontrak di beranda'
                     modifyObjectTextRefNumber = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/lbl_refnumber'), 'xpath', 
@@ -254,10 +262,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
 
 			noKontrakPerDoc = noKontrak.split(';', -1)
 
-			'check popup'
-			if (checkPopup() == true) {
-				continue
-			}
+			'diberi delay 2 detik untuk muncul popup'
+			WebUI.delay(2)
+			
+            'check popup'
+            if (checkPopup() == true) {
+				'break untuk looping selanjutnya'
+				flagBreak = 1
+				
+				'diberi break dengan alasan sequential signing'
+                break
+            }
 			
 			'Jika total document sign excel tidak sama dengan total document sign paging'
 			if (totalDocSign != documentTemplateNamePerDoc.size()) {
@@ -654,7 +669,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                 otpAfter = checkSaldoOtp()
 
                 'ambil saldo after'
-                saldoSignAfter = checkSaldoSign(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 21).replace('"',''))
+                saldoSignAfter = checkSaldoSign(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 11).replace('"',''))
 
                 'Jika count saldo otp after dengan yang before dikurangi 1 ditambah dengan '
                 if (WebUI.verifyEqual(Integer.parseInt(otpBefore) - (countResend + 1), Integer.parseInt(otpAfter), FailureHandling.OPTIONAL)) {
@@ -769,6 +784,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2 /*findTestData(
                 }
             }
         }
+		
+		'check flagBreak untuk sequential'
+		if (flagBreak == 1) {
+			continue
+		}
+
 		'Jika ingin melakukan stamping'
 		if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,85) == 'Yes') {
 			'Call API Send doc'
@@ -910,7 +931,7 @@ def inputFilterTrx(Connection conneSign, String currentDate, String noKontrak, S
     WebUI.click(findTestObject('Saldo/btn_cari'))
 }
 
-def checkSaldoSign(Connection conneSign, refNumber) {
+def checkSaldoSign(Connection conneSign,String refNumber) {
     String totalSaldo
 
 	String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, refNumber)
@@ -932,7 +953,7 @@ def checkSaldoSign(Connection conneSign, refNumber) {
 
         'verifikasi label saldonya '
         if (WebUI.verifyElementText(modifyObjectFindSaldoSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
-                68), FailureHandling.OPTIONAL)) {
+                78), FailureHandling.OPTIONAL)) {
             'modify object mengenai ambil total jumlah saldo'
             modifyObjecttotalSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_countsaldo'), 'xpath', 'equals', 
                 ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + (c + 1)) + ']/div/div/div/div/div[2]', 
@@ -960,7 +981,7 @@ def checkSaldoOtp() {
 
     'klik ddl untuk tenant memilih mengenai Vida'
     WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
-            69), false)
+            79), false)
 
     'get total div di Saldo'
     variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
@@ -973,7 +994,7 @@ def checkSaldoOtp() {
 
         'verifikasi label saldonya '
         if (WebUI.verifyElementText(modifyObjectFindSaldoSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
-                70), FailureHandling.OPTIONAL)) {
+                80), FailureHandling.OPTIONAL)) {
             'modify object mengenai ambil total jumlah saldo'
             modifyObjecttotalSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_countsaldo'), 'xpath', 'equals', 
                 ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + (c + 1)) + ']/div/div/div/div/div[2]', 

@@ -199,7 +199,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
             }
             
             if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 51) == 'Yes') {
-                bodyAPI = (('"documentFile": "' + pdftoBase64(documentFile[o])) + '"')
+                bodyAPI = (('"documentFile": "' + CustomKeywords.'customizekeyword.ConvertFile.base64File'(documentFile[o])) + '"')
             } else {
                 bodyAPI = (('"documentFile": "' + (documentFile[o])) + '"')
             }
@@ -319,7 +319,4 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
     }
 }
 
-def pdftoBase64(String fileName) {
-    return CustomKeywords.'customizekeyword.ConvertFile.base64File'(fileName)
-}
 
