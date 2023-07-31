@@ -918,60 +918,58 @@ def checkPaging() {
     checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Object Repository/TandaTanganDokumen/input_Status'), 
                 'value', FailureHandling.CONTINUE_ON_FAILURE), '', false, FailureHandling.CONTINUE_ON_FAILURE))
 
-    'click page 2'
-    WebUI.click(findTestObject('TandaTanganDokumen/button_Page2'))
-
-    'verify paging di page 2'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('TandaTanganDokumen/button_Page2'), 'class', FailureHandling.CONTINUE_ON_FAILURE), 
-            'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
-
-    'click page 1'
-    WebUI.click(findTestObject('TandaTanganDokumen/button_Page1'))
-
-    'verify paging di page 1'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('TandaTanganDokumen/button_Page1'), 'class', FailureHandling.CONTINUE_ON_FAILURE), 
-            'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
-
-    'get total page'
-    variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-documents > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
-
-    'modify object next Page'
-    modifyObjectNextPage = WebUI.modifyObjectProperty(findTestObject('TandaTanganDokumen/modifyObject'), 'xpath', 'equals', 
-        ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-documents/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' + 
-        (variable.size() - 1)) + ']', true)
-
-    'click next page'
-    WebUI.click(modifyObjectNextPage)
-
-    'verify paging di page 2'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('TandaTanganDokumen/button_Page2'), 'class', FailureHandling.CONTINUE_ON_FAILURE), 
-            'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
-
-    'click prev page'
-    WebUI.click(findTestObject('TandaTanganDokumen/button_PrevPage'))
-
-    'verify paging di page 1'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('TandaTanganDokumen/button_Page1'), 'class', FailureHandling.CONTINUE_ON_FAILURE), 
-            'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
-
-    'modify object last Page'
-    modifyObjectLastPage = WebUI.modifyObjectProperty(findTestObject('TandaTanganDokumen/modifyObject'), 'xpath', 'equals', 
-        ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-documents/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' + 
-        (variable.size() - 2)) + ']', true)
-
-    'click max page'
-    WebUI.click(findTestObject('TandaTanganDokumen/button_MaxPage'))
-
-    'verify paging di page terakhir'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(modifyObjectLastPage, 'class', FailureHandling.CONTINUE_ON_FAILURE), 
-            'pages ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
-
-    'click min page'
-    WebUI.click(findTestObject('TandaTanganDokumen/button_MinPage'))
-
-    'verify paging di page 1'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('TandaTanganDokumen/button_Page1'), 'class', FailureHandling.CONTINUE_ON_FAILURE), 
-            'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
+	'check if ada paging'
+	if(WebUI.verifyElementVisible(findTestObject('TandaTanganDokumen/button_NextPage'), FailureHandling.OPTIONAL)) {
+	    'click page 2'
+	    WebUI.click(findTestObject('TandaTanganDokumen/button_Page2'))
+	
+	    'verify paging di page 2'
+	    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('TandaTanganDokumen/button_Page2'), 'class', FailureHandling.CONTINUE_ON_FAILURE), 
+	            'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	    'click page 1'
+	    WebUI.click(findTestObject('TandaTanganDokumen/button_Page1'))
+	
+	    'verify paging di page 1'
+	    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('TandaTanganDokumen/button_Page1'), 'class', FailureHandling.CONTINUE_ON_FAILURE), 
+	            'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	    'click next page'
+	    WebUI.click(findTestObject('TandaTanganDokumen/button_NextPage'))
+	
+	    'verify paging di page 2'
+	    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('TandaTanganDokumen/button_Page2'), 'class', FailureHandling.CONTINUE_ON_FAILURE), 
+	            'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	    'click prev page'
+	    WebUI.click(findTestObject('TandaTanganDokumen/button_PrevPage'))
+	
+	    'verify paging di page 1'
+	    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('TandaTanganDokumen/button_Page1'), 'class', FailureHandling.CONTINUE_ON_FAILURE), 
+	            'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+		'get total page'
+		variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-documents > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
+		
+	    'modify object last Page'
+	    modifyObjectLastPage = WebUI.modifyObjectProperty(findTestObject('TandaTanganDokumen/modifyObject'), 'xpath', 'equals', 
+	        ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-documents/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' + 
+	        (variable.size() - 2)) + ']', true)
+	
+	    'click max page'
+	    WebUI.click(findTestObject('TandaTanganDokumen/button_MaxPage'))
+	
+	    'verify paging di page terakhir'
+	    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(modifyObjectLastPage, 'class', FailureHandling.CONTINUE_ON_FAILURE), 
+	            'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	    'click min page'
+	    WebUI.click(findTestObject('TandaTanganDokumen/button_MinPage'))
+	
+	    'verify paging di page 1'
+	    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('TandaTanganDokumen/button_Page1'), 'class', FailureHandling.CONTINUE_ON_FAILURE), 
+	            'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
+	}
 }
 
 def searchPengaturanDokumen() {
@@ -985,6 +983,12 @@ def searchPengaturanDokumen() {
     'Input teks di nama template dokumen'
     WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_NamaTemplatDokumen'), findTestData(excelPathPengaturanDokumen).getValue(
             GlobalVariable.NumofColm, 25))
+
+	'Input All untuk reset ddl agar tidak salah pilih'
+	WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_Status'), 'All')
+
+	'Klik enter'
+	WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
 
     'Input AKtif pada input Status'
     WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_Status'), findTestData(excelPathPengaturanDokumen).getValue(

@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-documents/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[3]</value>
+         <value>//*[@class = 'datatable-pager ng-star-inserted']/ul/li[3]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-documents/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[3]</value>
-      <webElementGuid>25e1170c-c9c5-4f43-a496-9add3c3fbb89</webElementGuid>
+      <value>//*[@class = 'datatable-pager ng-star-inserted']/ul/li[3]</value>
+      <webElementGuid>b3d398e7-ac69-4fe5-b2c2-6b549f741ac2</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
