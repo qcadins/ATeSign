@@ -242,28 +242,28 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
     WebUI.maximizeWindow()
 
     'set value userLogin'
-    GlobalVariable.userLogin = findTestData(excelPathBuatUndangan).getValue(2, 66).toUpperCase()
+    GlobalVariable.userLogin = findTestData(excelPathBuatUndangan).getValue(2, 63).toUpperCase()
 
     'input email'
-    WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathBuatUndangan).getValue(2, 66))
+    WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathBuatUndangan).getValue(2, 63))
 
     'input password'
     WebUI.setText(findTestObject('Login/input_Password'), findTestData(excelPathBuatUndangan).getValue(2, 
-            67))
+            64))
 
     'click button login'
     WebUI.click(findTestObject('Login/button_Login'), FailureHandling.STOP_ON_FAILURE)
 
     'input perusahaan'
     WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excelPathBuatUndangan).getValue(2, 
-            68))
+            65))
 
 	'enter untuk select perusahaan'
     WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
 
     'input peran'
     WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excelPathBuatUndangan).getValue(2, 
-            69))
+            66))
 
 	'enter untuk select peran'
     WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
