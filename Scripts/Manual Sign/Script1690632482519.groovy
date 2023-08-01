@@ -21,6 +21,8 @@ semicolon = ';'
 
 splitIndex = -1
 
+index = 8
+
 'looping berdasarkan jumlah kolom'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathManualSign).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
@@ -113,6 +115,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             WebUI.uploadFile(findTestObject('ManualSign/input_documentExample'), filePath, FailureHandling.CONTINUE_ON_FAILURE)
 
             if (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 14) == 'Yes') {
+				index = index + 2 
+				
                 'Input AKtif pada input Status'
                 WebUI.click(findTestObject('ManualSign/input_isE-Meterai'))
 
@@ -130,10 +134,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 'Klik enter'
                 WebUI.sendKeys(findTestObject('ManualSign/input_isAutomatedStamp'), Keys.chord(Keys.ENTER))
 				
-				
 				'get row lastest'
 				modifyObjectLblDaftarPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/lbl_daftarpenandatangan'),
-				'xpath', 'equals', '//*[@id="msxForm"]/div[10]/div[3]/table/tr/td/small', true)
+				'xpath', 'equals', '//*[@id="msxForm"]/div['+ (index) +']/div[3]/table/tr/td/small', true)
             }
 			else {
 				modifyObjectLblDaftarPenandaTangan = findTestObject('ManualSign/lbl_daftarpenandatangan')
@@ -145,7 +148,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			
 			WebUI.delay(3)
 			
-			WebUI.click(findTestObject('ManualSign/button_Cancel'))
+			WebUI.click(findTestObject('ManualSign/button_x'))
+			
+			WebUI.delay(3)
 			
 			WebUI.verifyElementPresent(modifyObjectLblDaftarPenandaTangan, GlobalVariable.TimeOut)
 			
@@ -163,24 +168,26 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 						if (emailSearchByFrontEnd[i] == 'Yes') {
 							WebUI.click(findTestObject('ManualSign/button_searchPenandaTangan'))
 							
-							WebUI.delay(7)
+							WebUI.delay(15)
 							}
 							
 							String verifikasiSigner = CustomKeywords.'connection.ManualSign.getVerificationSigner'(conneSign, emailPenandaTangan[i])
 
-							checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ManualSign/input_emailPenandaTangan').toString()),emailPenandaTangan[i], FailureHandling.CONTINUE_ON_FAILURE), ' pada email Penanda Tangan ')
+							checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualSign/input_emailPenandaTangan'), 'value'),emailPenandaTangan[i], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada email Penanda Tangan ')
 							
 							if (namaPenandaTangan[i] != "") {
-								checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ManualSign/input_namaPenandaTangan').toString()),namaPenandaTangan[i], FailureHandling.CONTINUE_ON_FAILURE), ' pada email Penanda Tangan ')
+								checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualSign/input_namaPenandaTangan'), 'value'),namaPenandaTangan[i], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada email Penanda Tangan ')
 							}
 							
-							checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ManualSign/input_namaPenandaTangan').toString()),verifikasiSigner, FailureHandling.CONTINUE_ON_FAILURE), ' pada email Penanda Tangan ')
+							checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualSign/input_namaPenandaTangan'), 'value'),verifikasiSigner, false, FailureHandling.CONTINUE_ON_FAILURE), ' pada email Penanda Tangan ')
 					}
+					WebUI.delay(3)
+					
+					WebUI.click(findTestObject('ManualSign/button_Save'))
 				}
-				
-				WebUI.click(findTestObject('ManualSign/button_Save'))
 			}
             
+			for (index; index < )
 			'Pembuatan variable mengenai jumlah delete, jumlah lock, dan indexlock untuk loop kedepannya'
 			emailPenandaTangan = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 20).split(semicolon, splitIndex)
 	
