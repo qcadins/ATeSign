@@ -56,8 +56,6 @@ if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 45) == 
     GlobalVariable.api_key = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 46)
 }
 
-println stringRefno
-WebUI.delay(20)
 'Hit API'
 respon = WS.sendRequest(findTestObject('APIFullService/Postman/Send Document Signing', [('tenantCode') : findTestData(excelPathAPISendDoc).getValue(
                 GlobalVariable.NumofColm, 9), ('request') : stringRefno, ('callerId') : findTestData(excelPathAPISendDoc).getValue(

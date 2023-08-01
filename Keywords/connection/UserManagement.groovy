@@ -116,13 +116,13 @@ public class UserManagement {
 		}
 		data
 	}
-	
+
 	@Keyword
 	getddlRoleUserManagement(Connection conn, String tenantCode) {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select role_name from am_msrole amm join ms_tenant mst on amm.id_ms_tenant = mst.id_ms_tenant where mst.tenant_code = '" + tenantCode + "' and is_usermanagement = '1' order by id_ms_role asc")
-		
+
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
