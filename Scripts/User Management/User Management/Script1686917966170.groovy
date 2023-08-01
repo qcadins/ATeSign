@@ -468,20 +468,25 @@ def searchDataAfterAction(Connection conneSign) {
 	'click button cari'
 	WebUI.click(findTestObject('User Management/button_Cari'))
 	
-	'verify username after add / setting'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/User Management/label_UserName')).toUpperCase(), findTestData(excelPathUserManagement).getValue(
-			GlobalVariable.NumofColm, 8).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' username tidak sama')
-	
-	'verify email after add / setting'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/User Management/label_Email')).toUpperCase(), findTestData(excelPathUserManagement).getValue(
-			GlobalVariable.NumofColm, 9).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Email tidak sama')
-	
-	'write to excel success'
+	'Get Role Name'
 	rolename = CustomKeywords.'connection.UserManagement.convertRoleCodetoName'(conneSign, WebUI.getText(findTestObject('Object Repository/User Management/label_Role')))
 	
+	if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6) == 'Setting') {
+		'verify email after setting'
+		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/User Management/label_Email')).toUpperCase(), findTestData(excelPathUserManagement).getValue(
+				GlobalVariable.NumofColm, 17).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Email tidak sama')		
+	} else {
+		'verify username after add'
+		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/User Management/label_UserName')).toUpperCase(), findTestData(excelPathUserManagement).getValue(
+				GlobalVariable.NumofColm, 8).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' username tidak sama')
+		
+		'verify email after add'
+		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/User Management/label_Email')).toUpperCase(), findTestData(excelPathUserManagement).getValue(
+				GlobalVariable.NumofColm, 9).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Email tidak sama')		
+	}
+	
 	'verify Role after add / setting'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(rolename.toUpperCase(), findTestData(excelPathUserManagement).getValue(
-			GlobalVariable.NumofColm, 10).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Role tidak sama')
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(rolename.toUpperCase(), peranAfter.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Role tidak sama')
 }
 
 def searchData() {
