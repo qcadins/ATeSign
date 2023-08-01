@@ -16,9 +16,6 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 String valueRefNum
 
-'reset flag field ketika masuk meterai'
-GlobalVariable.FlagFailed = 0
-
 'penggunaan versi 3.1.0 atau 3.0.0 dengan 1 api yang sama'
 if (useAPI == 'v3.1.0') {
 	'set base url menjadi v.3.1.0'
