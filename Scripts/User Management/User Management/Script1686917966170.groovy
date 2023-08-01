@@ -25,6 +25,9 @@ sheet = 'User Management'
 
 GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
 
+'call testcase login admin credit'
+WebUI.callTestCase(findTestCase('Login/Login_AdmCredit'), [:], FailureHandling.CONTINUE_ON_FAILURE)
+
 'looping User Management'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
@@ -34,9 +37,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
         'Jika kolom kedua'
         if (GlobalVariable.NumofColm == 2) {
-            'call testcase login admin credit'
-            WebUI.callTestCase(findTestCase('Login/Login_AdmCredit'), [:], FailureHandling.CONTINUE_ON_FAILURE)
-
 			'get db tenant code dari user yang telah login'
 			tenantCode = CustomKeywords.'connection.DataVerif.getTenantCode'(conneSign, findTestData('Login/Login').getValue(2, 6).toUpperCase())
 			

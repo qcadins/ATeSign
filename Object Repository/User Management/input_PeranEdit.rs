@@ -6,12 +6,12 @@
    <elementGuidId>b529de54-4dee-463c-8b24-0090a5a12f81</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>BASIC</key>
-         <value>//*[@id=&quot;roleCode&quot;]/div/div/div[3]</value>
-      </entry>
-      <entry>
          <key>CSS</key>
          <value>#officeCode > div.ng-select-container.ng-has-value > div.ng-value-container > div.ng-input > input[type=&quot;text&quot;]</value>
+      </entry>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;roleCode&quot;]/div/div/div[3]/input</value>
       </entry>
       <entry>
          <key>XPATH</key>
@@ -25,8 +25,8 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@id=&quot;roleCode&quot;]/div/div/div[3]</value>
-      <webElementGuid>ea0ba29e-b3c8-43b3-9b2f-4ae280468fb8</webElementGuid>
+      <value>//*[@id=&quot;roleCode&quot;]/div/div/div[3]/input</value>
+      <webElementGuid>df6252ae-c568-4718-9098-4622e372faf6</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -34,7 +34,7 @@
       <name>xpath:attributes</name>
       <type>Main</type>
       <value>(//input[@type='text'])[5]</value>
-      <webElementGuid>ac8ef3fb-e3c6-473f-824d-77437b423765</webElementGuid>
+      <webElementGuid>8ad37d3d-cb27-4979-81db-1123c03d8565</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -42,7 +42,7 @@
       <name>xpath:idRelative</name>
       <type>Main</type>
       <value>//ng-select[@id='officeCode']/div/div/div[3]/input</value>
-      <webElementGuid>0e5aa31f-704a-47ef-9f8d-eda65c0d6e65</webElementGuid>
+      <webElementGuid>c6fccbcd-b47b-456e-a5fc-7d771faadc55</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -50,7 +50,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div[5]/div/app-select/div/div[2]/ng-select/div/div/div[3]/input</value>
-      <webElementGuid>7f829c76-6f43-400c-80df-c52543825a6a</webElementGuid>
+      <webElementGuid>2a774f07-4a5a-42aa-b645-955e7493acfc</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -58,6 +58,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//input[@type = 'text']</value>
-      <webElementGuid>6fc6e842-8b0e-465d-b7a9-bc89c404ec1d</webElementGuid>
+      <webElementGuid>2590cc9d-6270-41e2-a194-e391f352862b</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>
