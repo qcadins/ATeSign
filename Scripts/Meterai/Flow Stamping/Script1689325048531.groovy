@@ -18,7 +18,6 @@ String valueRefNum
 
 'penggunaan versi 3.1.0 atau 3.0.0 dengan 1 api yang sama'
 if (useAPI == 'v3.1.0') {
-	println GlobalVariable.base_url
 	'set base url menjadi v.3.1.0'
 	GlobalVariable.base_url = GlobalVariable.base_url + '/services/external/document/requestStamping'
 	

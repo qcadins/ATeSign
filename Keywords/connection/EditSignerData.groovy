@@ -82,7 +82,7 @@ public class EditSignerData {
 
 	@Keyword
 	getEditDataAndEditActivationEditSignerData(Connection conn, String value, String tenantCode) {
-		if (email.length() == countLengthforSHA256) {
+		if (value.length() == countLengthforSHA256) {
 			valueWhere = "amm.hashed_id_no = '" + value + "'"
 		} else {
 			valueWhere = "amm.login_id = '" + value + "'"
@@ -106,7 +106,7 @@ public class EditSignerData {
 
 	@Keyword
 	getStatusActivationEditSignerData(Connection conn, String value, String tenantCode, String vendorName) {
-		if (email.length() == countLengthforSHA256) {
+		if (value.length() == countLengthforSHA256) {
 			valueWhere = "amm.hashed_id_no = '" + value + "'"
 		} else {
 			valueWhere = "amm.login_id = '" + value + "'"
