@@ -272,7 +272,7 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
     WebUI.click(findTestObject('Login/button_pilihPeran'), FailureHandling.STOP_ON_FAILURE)
 
 	'check if button menu visible atau tidak'
-	if(WebUI.verifyElementVisible(findTestObject('BuatUndangan/checkSaldo/menu_Saldo'), FailureHandling.OPTIONAL)) {
+	if(WebUI.verifyElementNotVisible(findTestObject('BuatUndangan/checkSaldo/menu_Saldo'), FailureHandling.OPTIONAL)) {
 		'click menu saldo'
 		WebUI.click(findTestObject('button_HamburberSideMenu'))
 	}
