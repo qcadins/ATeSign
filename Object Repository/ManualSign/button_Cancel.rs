@@ -6,15 +6,19 @@
    <elementGuidId>7468e8d1-6362-4e7b-a728-2a7b08de7586</elementGuidId>
    <selectorCollection>
       <entry>
+         <key>XPATH</key>
+         <value>(//button[@type='button'])[3]</value>
+      </entry>
+      <entry>
          <key>CSS</key>
          <value>button.btn.btn-light.ng-star-inserted</value>
       </entry>
       <entry>
-         <key>XPATH</key>
-         <value>(//button[@type='button'])[3]</value>
+         <key>BASIC</key>
+         <value>//*[@class = 'btn btn-light ng-star-inserted']</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>true</useRalativeImagePath>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -22,31 +26,31 @@
       <name>tag</name>
       <type>Main</type>
       <value>button</value>
-      <webElementGuid>3c982173-e360-494a-8508-411a5a77e145</webElementGuid>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>type</name>
-      <type>Main</type>
-      <value>button</value>
-      <webElementGuid>ee7ab9eb-c89f-4f38-a780-8d8417efb365</webElementGuid>
+      <webElementGuid>cb822391-faaa-4a83-9318-2e16ecc9be67</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>class</name>
+      <name>type</name>
       <type>Main</type>
-      <value>btn btn-light ng-star-inserted</value>
-      <webElementGuid>5366a40f-7cdb-407c-bf41-534b27d5546e</webElementGuid>
+      <value>button</value>
+      <webElementGuid>28f45969-8ffd-4712-96a7-5abd8fd160bf</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>btn btn-light ng-star-inserted</value>
+      <webElementGuid>4a1c7737-ff49-4e1f-aa35-fbb9ce951965</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
       <name>text</name>
       <type>Main</type>
       <value>Cancel</value>
-      <webElementGuid>46758f94-d47d-4d9e-affa-b798c8497c88</webElementGuid>
+      <webElementGuid>2c7f145e-e565-48cb-bec7-c3f652c77043</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -54,7 +58,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html[1]/body[@class=&quot;vertical-layout menu-expanded menu-open vertical-menu navbar-static pace-done navbar-scrolled page-scrolled modal-open&quot;]/ngb-modal-window[@class=&quot;d-block modal fade show&quot;]/div[@class=&quot;modal-dialog&quot;]/div[@class=&quot;modal-content&quot;]/app-add-signer[1]/form[@class=&quot;ng-invalid ng-touched ng-dirty&quot;]/div[@class=&quot;modal-footer&quot;]/button[@class=&quot;btn btn-light ng-star-inserted&quot;]</value>
-      <webElementGuid>1ad690f0-35cc-48eb-8529-778ca3657e5c</webElementGuid>
+      <webElementGuid>5cb918e5-ad85-41e0-b08d-92f2096b3087</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -62,7 +66,7 @@
       <name>xpath:attributes</name>
       <type>Main</type>
       <value>(//button[@type='button'])[3]</value>
-      <webElementGuid>4d0ea048-2431-4ecc-9ac8-12a73fd58235</webElementGuid>
+      <webElementGuid>d661da45-98a4-4a29-813c-ea38d4f65631</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -70,7 +74,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='*'])[9]/following::button[1]</value>
-      <webElementGuid>19f92c50-c3ca-40b2-81c0-005d12ab11e4</webElementGuid>
+      <webElementGuid>b8e175a9-6a2f-4ffa-8625-80daeff3a37e</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -78,7 +82,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Save'])[1]/preceding::button[1]</value>
-      <webElementGuid>bc6f5386-24f2-4264-ac93-790afc344587</webElementGuid>
+      <webElementGuid>74937d66-9c26-417c-be04-be80cdde2916</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -86,7 +90,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Capture object:'])[1]/preceding::button[2]</value>
-      <webElementGuid>c86dcdd3-fe60-497e-b360-6ec8deaf9b1b</webElementGuid>
+      <webElementGuid>d315a25b-646e-4263-bbc7-2fc17de188d6</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -94,7 +98,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='Cancel']/parent::*</value>
-      <webElementGuid>1a1197de-6330-48dd-ad5f-60ca09fa363f</webElementGuid>
+      <webElementGuid>ec21ed97-20ac-43b8-8eb2-4322066b3ac3</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -102,7 +106,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div[3]/button</value>
-      <webElementGuid>75f4886d-6811-4593-9468-d85741932641</webElementGuid>
+      <webElementGuid>649359b1-5ba0-4168-bb29-8d6d9a9f85ec</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -110,6 +114,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//button[@type = 'button' and (text() = 'Cancel' or . = 'Cancel')]</value>
-      <webElementGuid>b84186f7-3406-418c-8f73-56b8481cde65</webElementGuid>
+      <webElementGuid>fbaf7408-7675-4683-b61b-4f11371ab7c2</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

@@ -6,15 +6,19 @@
    <elementGuidId>b048f5e5-457c-4354-ba50-46d5aaa64574</elementGuidId>
    <selectorCollection>
       <entry>
+         <key>XPATH</key>
+         <value>//form[@id='msxForm']/div[10]/div[2]/a</value>
+      </entry>
+      <entry>
          <key>CSS</key>
          <value>div.col-6.text-right > a</value>
       </entry>
       <entry>
-         <key>XPATH</key>
-         <value>//form[@id='msxForm']/div[10]/div[2]/a</value>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;msxForm&quot;]/div[10]/div[2]/a</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>true</useRalativeImagePath>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -22,31 +26,31 @@
       <name>tag</name>
       <type>Main</type>
       <value>a</value>
-      <webElementGuid>16db8af7-cb9f-4963-8b5b-84062dce1ae0</webElementGuid>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>href</name>
-      <type>Main</type>
-      <value>javascript:</value>
-      <webElementGuid>9b67c90f-a680-43b6-9cee-bc553bc411a1</webElementGuid>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>text</name>
-      <type>Main</type>
-      <value>Tambah</value>
-      <webElementGuid>f5fc52dd-ceb2-4df0-83ff-4b2860300e93</webElementGuid>
+      <webElementGuid>9162e9da-6df5-457a-a269-6845d93c24b8</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
+      <name>href</name>
+      <type>Main</type>
+      <value>javascript:</value>
+      <webElementGuid>8dbb6d24-7dc3-474b-92d8-64878a364d72</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Tambah</value>
+      <webElementGuid>5ad6a996-a6f2-44b6-8f55-7a66fe94f4e8</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>id(&quot;msxForm&quot;)/div[@class=&quot;row&quot;]/div[@class=&quot;col-6 text-right&quot;]/a[1]</value>
-      <webElementGuid>bfb2be95-85ec-4e47-abe8-0da045e2bb45</webElementGuid>
+      <value>//*[@id=&quot;msxForm&quot;]/div[10]/div[2]/a</value>
+      <webElementGuid>7d10ce5b-9fd2-44c1-91c7-ce4233e93f36</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -54,7 +58,7 @@
       <name>xpath:idRelative</name>
       <type>Main</type>
       <value>//form[@id='msxForm']/div[10]/div[2]/a</value>
-      <webElementGuid>a43f9107-e7e0-48a6-88ed-dab1c0fbdac9</webElementGuid>
+      <webElementGuid>ded938db-fa19-413c-a4f5-f089a63c95fb</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -62,7 +66,7 @@
       <name>xpath:link</name>
       <type>Main</type>
       <value>//a[contains(text(),'Tambah')]</value>
-      <webElementGuid>085cdefe-de74-444f-8601-322379fab2c2</webElementGuid>
+      <webElementGuid>dd0a4bc4-2739-4722-858c-90def8d9860d</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -70,7 +74,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Penanda Tangan'])[1]/following::a[1]</value>
-      <webElementGuid>ee6614c4-522d-4a68-84a6-ffaa7d4fab14</webElementGuid>
+      <webElementGuid>0d64f812-1399-485d-a4db-46ad50f1266a</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -78,7 +82,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Tidak'])[1]/following::a[1]</value>
-      <webElementGuid>9ccacfff-4cd0-4685-a93e-3e066b34350e</webElementGuid>
+      <webElementGuid>28c9bef3-3c3e-449a-a64e-8e851d448b4a</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -86,7 +90,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Belum ada daftar penanda tangan!'])[1]/preceding::a[1]</value>
-      <webElementGuid>145b648f-c280-4a7b-b6a2-740f4a525935</webElementGuid>
+      <webElementGuid>e1a97153-f180-4023-abf6-36334153789d</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -94,7 +98,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Batal'])[1]/preceding::a[1]</value>
-      <webElementGuid>e64bb74f-5762-4897-aeb2-9176c87f51c6</webElementGuid>
+      <webElementGuid>249fcfca-fcee-4d42-9003-d965312b3900</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -102,7 +106,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='Tambah']/parent::*</value>
-      <webElementGuid>a47a59dc-91dc-4fe4-bad2-f8adde83d875</webElementGuid>
+      <webElementGuid>52db4419-ebee-4942-80ad-81a1fd7c47c7</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -110,7 +114,7 @@
       <name>xpath:href</name>
       <type>Main</type>
       <value>(//a[contains(@href, 'javascript:')])[7]</value>
-      <webElementGuid>8c60b74b-8911-4f4f-b8b2-75aa0eecb75a</webElementGuid>
+      <webElementGuid>8eaa917e-59b1-4f76-96d4-0739df61d715</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -118,7 +122,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div[2]/a</value>
-      <webElementGuid>9f762d3c-ce51-44b5-8def-74cadb90bc99</webElementGuid>
+      <webElementGuid>7ce0b65e-1d17-4855-8671-3985fc48c3ce</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -126,6 +130,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//a[@href = 'javascript:' and (text() = 'Tambah' or . = 'Tambah')]</value>
-      <webElementGuid>a702a924-a8b3-41d3-bcd3-65b587c9ab31</webElementGuid>
+      <webElementGuid>cb350554-000a-4bd1-8d97-eca23695cc15</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

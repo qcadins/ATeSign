@@ -12,7 +12,7 @@
       <variableId>e5c47f19-ee20-40c8-94d3-5fd90e42bedf</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>''</defaultValue>
+      <defaultValue>'ManualSign/ManualSign'</defaultValue>
       <description></description>
       <id>e5c47f19-ee20-40c8-94d3-5fd90e42bedf</id>
       <masked>false</masked>

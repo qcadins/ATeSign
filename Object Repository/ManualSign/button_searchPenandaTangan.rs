@@ -6,15 +6,19 @@
    <elementGuidId>5705135a-82e1-4748-8cc9-b9b971abb376</elementGuidId>
    <selectorCollection>
       <entry>
+         <key>XPATH</key>
+         <value>//div/div/span/i</value>
+      </entry>
+      <entry>
          <key>CSS</key>
          <value>i.ft-search</value>
       </entry>
       <entry>
-         <key>XPATH</key>
-         <value>//div/div/span/i</value>
+         <key>BASIC</key>
+         <value>//*[@class = 'ft-search']</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>true</useRalativeImagePath>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -22,23 +26,23 @@
       <name>tag</name>
       <type>Main</type>
       <value>i</value>
-      <webElementGuid>4d9c50f5-687f-4201-865b-5c8b3131d64b</webElementGuid>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>class</name>
-      <type>Main</type>
-      <value>ft-search</value>
-      <webElementGuid>41ba850a-8bc4-4a48-aaf5-4b804d356612</webElementGuid>
+      <webElementGuid>2bd5fcd3-2421-4265-833a-d8d12530f2ca</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>ft-search</value>
+      <webElementGuid>4cee246e-f311-45aa-9ddf-dd779abf9e7c</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html[1]/body[@class=&quot;vertical-layout menu-expanded menu-open vertical-menu navbar-static pace-done navbar-scrolled page-scrolled modal-open&quot;]/ngb-modal-window[@class=&quot;d-block modal fade show&quot;]/div[@class=&quot;modal-dialog&quot;]/div[@class=&quot;modal-content&quot;]/app-add-signer[1]/form[@class=&quot;ng-invalid ng-touched ng-dirty&quot;]/div[@class=&quot;modal-body&quot;]/div[@class=&quot;form-group row align-items-center&quot;]/div[@class=&quot;col-lg-8 col-8&quot;]/div[@class=&quot;input-group&quot;]/div[@class=&quot;input-group-append&quot;]/span[@class=&quot;input-group-text&quot;]/i[@class=&quot;ft-search&quot;]</value>
-      <webElementGuid>6901c119-c8da-43b5-9b03-d8633ab6f217</webElementGuid>
+      <value>//*[@class=&quot;input-group&quot;]/div</value>
+      <webElementGuid>a4639b85-675f-46eb-b2ad-a4c200c5bfe2</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -46,6 +50,6 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div/div/span/i</value>
-      <webElementGuid>10a126c5-d540-42a8-906e-7f307d5e4cc3</webElementGuid>
+      <webElementGuid>3f68bb1d-1c64-48e6-82d0-fe610cc369cb</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

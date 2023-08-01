@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>lbl_ManualSign</name>
+   <name>ddlClass</name>
    <tag></tag>
-   <elementGuidId>e4051118-30f8-489e-95ff-320ff9f35351</elementGuidId>
+   <elementGuidId>4925eafb-5db0-4112-aaba-b93a0f089b88</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[(text() = 'Pengaturan Dokumen' or . = 'Pengaturan Dokumen')]</value>
+         <value>//*[contains(@class, 'ng-dropdown-panel ng-star-inserted')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>text</name>
+      <matchCondition>contains</matchCondition>
+      <name>class</name>
       <type>Main</type>
-      <value>Pengaturan Dokumen</value>
-      <webElementGuid>2a2791fa-1967-418a-81f8-0c9201f446b0</webElementGuid>
+      <value>ng-dropdown-panel ng-star-inserted</value>
+      <webElementGuid>0dc30dbd-6ebd-44e9-9cfc-cee630c96056</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

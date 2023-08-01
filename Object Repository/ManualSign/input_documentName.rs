@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>input__documentName</name>
+   <name>input_documentName</name>
    <tag></tag>
    <elementGuidId>a3f12a68-9d91-409b-9ae8-7c23f857a481</elementGuidId>
    <selectorCollection>
+      <entry>
+         <key>XPATH</key>
+         <value>//input[@id='documentName']</value>
+      </entry>
       <entry>
          <key>CSS</key>
          <value>#documentName</value>
       </entry>
       <entry>
-         <key>XPATH</key>
-         <value>//input[@id='documentName']</value>
+         <key>BASIC</key>
+         <value>//*[@ng-reflect-name = 'documentName']</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>true</useRalativeImagePath>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -22,15 +26,15 @@
       <name>tag</name>
       <type>Main</type>
       <value>input</value>
-      <webElementGuid>1c7fe1ce-0f7e-474b-b686-251d82a51531</webElementGuid>
+      <webElementGuid>e0812b6e-f90d-4894-8305-54f3c6b7a2cb</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>type</name>
       <type>Main</type>
       <value>text</value>
-      <webElementGuid>ccf1bf5f-052f-4d09-8d86-c326681621ef</webElementGuid>
+      <webElementGuid>9aaa7f25-2d92-4d57-903d-4fa445b3765a</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -38,31 +42,31 @@
       <name>class</name>
       <type>Main</type>
       <value>form-control ng-pristine ng-invalid ng-touched</value>
-      <webElementGuid>7675c207-4af6-4674-9942-28c13d201d0e</webElementGuid>
+      <webElementGuid>fe12585b-6994-4335-a779-0705dea76797</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>false</isSelected>
+      <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>ng-reflect-name</name>
       <type>Main</type>
       <value>documentName</value>
-      <webElementGuid>c77e7bc0-fb0d-445e-bc4d-cbbf88e51f01</webElementGuid>
+      <webElementGuid>46995c71-3a84-41b5-9a17-b470b7c3f96d</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>id</name>
       <type>Main</type>
       <value>documentName</value>
-      <webElementGuid>f00b0c99-a8f6-4dd6-85d3-5841ab8843f3</webElementGuid>
+      <webElementGuid>08d5a44e-b1a3-4fd8-8dec-8595d04470ba</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>placeholder</name>
       <type>Main</type>
       <value>Tulis nama dokumen</value>
-      <webElementGuid>574b6f4a-b2ac-4627-8ecf-93a4aa467420</webElementGuid>
+      <webElementGuid>5e0fc04e-5ba6-4cf0-b01d-c3782d178daa</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -70,7 +74,7 @@
       <name>ng-reflect-required</name>
       <type>Main</type>
       <value>true</value>
-      <webElementGuid>810ad73d-008d-4328-a40d-6e7e80a8d826</webElementGuid>
+      <webElementGuid>6f9ab398-347a-42d3-ae38-90e2ff6d584b</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -78,7 +82,7 @@
       <name>maxlength</name>
       <type>Main</type>
       <value>100</value>
-      <webElementGuid>de02dc3a-bd97-4281-8c1b-1c0908ef8f57</webElementGuid>
+      <webElementGuid>a3a145e3-6f9b-4a5f-ba0f-6af689d16648</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -86,7 +90,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>id(&quot;documentName&quot;)</value>
-      <webElementGuid>4e40452c-5dce-4cd3-8f3b-c5dad97f8c1e</webElementGuid>
+      <webElementGuid>bfe3b3b1-8cbc-4495-80da-1a0a453ebd70</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -94,7 +98,7 @@
       <name>xpath:attributes</name>
       <type>Main</type>
       <value>//input[@id='documentName']</value>
-      <webElementGuid>cdfe8129-dd57-4b8f-b35b-5c96e0fd3e3f</webElementGuid>
+      <webElementGuid>2b490d81-59cd-4e94-ac63-61bb57645f4c</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -102,7 +106,7 @@
       <name>xpath:idRelative</name>
       <type>Main</type>
       <value>//form[@id='msxForm']/div[3]/div/app-text/fieldset/div/input</value>
-      <webElementGuid>2f0edd5e-9909-4402-abbe-5936ddbafd34</webElementGuid>
+      <webElementGuid>eebea776-4dfc-4fea-b9cc-aaea1981e59e</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -110,7 +114,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div[3]/div/app-text/fieldset/div/input</value>
-      <webElementGuid>d4ba5778-6876-4435-a96f-04357e3accb5</webElementGuid>
+      <webElementGuid>09566cd2-df9f-4a4b-9031-c062f4c733f5</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -118,6 +122,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//input[@type = 'text' and @id = 'documentName' and @placeholder = 'Tulis nama dokumen']</value>
-      <webElementGuid>36141934-8ed8-4019-9869-aa579128fe99</webElementGuid>
+      <webElementGuid>68bc5790-a3ad-4ba5-bb24-0883067c9b05</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

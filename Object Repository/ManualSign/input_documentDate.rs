@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>input__namaPenandaTangan</name>
+   <name>input_documentDate</name>
    <tag></tag>
-   <elementGuidId>fffd2cb1-199d-4081-9e51-754af45ae998</elementGuidId>
+   <elementGuidId>037b2b1d-9411-4b25-8be5-0111b87bcf26</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>CSS</key>
-         <value>#name</value>
+         <key>XPATH</key>
+         <value>//input[@id='documentDate']</value>
       </entry>
       <entry>
-         <key>XPATH</key>
-         <value>//input[@id='name']</value>
+         <key>CSS</key>
+         <value>#documentDate</value>
+      </entry>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@ng-reflect-name = 'documentDate']</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>true</useRalativeImagePath>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -22,86 +26,86 @@
       <name>tag</name>
       <type>Main</type>
       <value>input</value>
-      <webElementGuid>f9a59b8f-7617-4266-a7e6-b9d60aa6650f</webElementGuid>
+      <webElementGuid>0e6906d6-8edd-49a7-91a7-b46413eedf9e</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>formcontrolname</name>
-      <type>Main</type>
-      <value>name</value>
-      <webElementGuid>87f4d986-52f4-4010-9fad-00660555fbee</webElementGuid>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
       <name>type</name>
       <type>Main</type>
       <value>text</value>
-      <webElementGuid>040edc8b-239a-4f34-81ed-b3e4f3d629ee</webElementGuid>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>id</name>
-      <type>Main</type>
-      <value>name</value>
-      <webElementGuid>7a204f01-e166-4565-9a0d-b3cfeabf49ab</webElementGuid>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>placeholder</name>
-      <type>Main</type>
-      <value>Fill signer name here</value>
-      <webElementGuid>c1a6990c-3175-4d42-b0ed-8fbc4a2fdee5</webElementGuid>
+      <webElementGuid>a544716b-cb61-40e2-a1a3-f12712a57897</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>form-control ng-pristine ng-invalid ng-touched</value>
-      <webElementGuid>3146ec76-27d7-46b6-83a4-bfa7bbdeedeb</webElementGuid>
+      <value>form-control ng-untouched ng-pristine ng-valid</value>
+      <webElementGuid>966a901a-21be-4988-ac73-9a6ff28bcc0b</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>ng-reflect-name</name>
+      <type>Main</type>
+      <value>documentDate</value>
+      <webElementGuid>7331966a-e0d9-4de9-9ed6-1a3e1c6aad13</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>ng-reflect-name</name>
+      <name>id</name>
       <type>Main</type>
-      <value>name</value>
-      <webElementGuid>0f5365c2-3502-4875-a7cf-3dee988939f4</webElementGuid>
+      <value>documentDate</value>
+      <webElementGuid>be031fea-4873-48be-8419-3052769e74c7</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>placeholder</name>
+      <type>Main</type>
+      <value>yyyy-mm-dd</value>
+      <webElementGuid>383218d2-15df-40f9-9186-46d2970dbf7c</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>id(&quot;name&quot;)</value>
-      <webElementGuid>43fd065d-7b75-4e86-9312-6df7a007496f</webElementGuid>
+      <value>id(&quot;documentDate&quot;)</value>
+      <webElementGuid>5cb2ec8a-594e-4857-9a13-4a7c60efd6c7</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:attributes</name>
       <type>Main</type>
-      <value>//input[@id='name']</value>
-      <webElementGuid>12458627-52f7-4cdc-8a63-78d440fcf813</webElementGuid>
+      <value>//input[@id='documentDate']</value>
+      <webElementGuid>e09a1d4a-f9df-4303-bd55-401995fa7ef7</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:idRelative</name>
+      <type>Main</type>
+      <value>//form[@id='msxForm']/div[4]/div/app-date/fieldset/div/input</value>
+      <webElementGuid>5efd28e3-4409-4164-b954-2b2fadd07532</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:position</name>
       <type>Main</type>
-      <value>//div[2]/input</value>
-      <webElementGuid>734dbee1-164e-4b28-9c69-8a175840e48f</webElementGuid>
+      <value>//app-date/fieldset/div/input</value>
+      <webElementGuid>a9692710-b389-48b6-bf54-45535556f4ce</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:customAttributes</name>
       <type>Main</type>
-      <value>//input[@type = 'text' and @id = 'name' and @placeholder = 'Fill signer name here']</value>
-      <webElementGuid>5a20f3cb-034a-40ee-bf7a-bd88d2c74f3f</webElementGuid>
+      <value>//input[@type = 'text' and @id = 'documentDate' and @placeholder = 'yyyy-mm-dd']</value>
+      <webElementGuid>69ddbd78-6a15-44c9-a19f-39e9c8ac6606</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

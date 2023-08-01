@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>lbl_ManualSign</name>
+   <name>lbl_daftarpenandatangan</name>
    <tag></tag>
-   <elementGuidId>e4051118-30f8-489e-95ff-320ff9f35351</elementGuidId>
+   <elementGuidId>1ccf31b0-de95-4b4a-a11b-14cc6b2d9d10</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[(text() = 'Pengaturan Dokumen' or . = 'Pengaturan Dokumen')]</value>
+         <value>//*[@id=&quot;msxForm&quot;]/div[8]/div[3]/table/tr/td/small</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>text</name>
+      <name>xpath</name>
       <type>Main</type>
-      <value>Pengaturan Dokumen</value>
-      <webElementGuid>2a2791fa-1967-418a-81f8-0c9201f446b0</webElementGuid>
+      <value>//*[@id=&quot;msxForm&quot;]/div[8]/div[3]/table/tr/td/small</value>
+      <webElementGuid>b4cf13ce-1438-41cb-93a2-1ce6e78baf2d</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
