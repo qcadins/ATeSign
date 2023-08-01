@@ -379,13 +379,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             0))) {
                 'looping berdasarkan pagestamp per dokumen'
                 for (int b = 0; b < pageStamps.size(); b++) {
+
                     'Jika dia loopingan yang pertama'
                     if (b == 0) {
-                        if (b == (pageStamps.size() - 1)) {
-                            'Isi bodyAPI'
-                            bodyAPI = (bodyAPI + ',"stampLocations": [')
 
-                            'Jika pageStampnya kosong'
+                        if (b == (pageStamps.size() - 1)) {
+							if (((pageStamps[b]) != '') || ((llxStamps[b]) != '""')) {
+
                             if ((pageStamps[b]) == '') {
                                 'Input body mengenai koordinat'
                                 bodyAPI = (((((((((bodyAPI + '{"llx" : ') + (llxStamps[b])) + ', "lly" : ') + (llyStamps[
@@ -399,7 +399,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                 b])) + ', "lly" : ') + (llyStamps[b])) + ', "urx" : ') + (urxStamps[b])) + ', "ury" : ') + 
                                 (uryStamps[b])) + '}]')
                             }
+							
+                        }
                         } else {
+							if (((pageStamps[b]) != '') || ((llxStamps[b]) != '""')) {
                             'Isi bodyAPI'
                             bodyAPI = (bodyAPI + ',"stampLocations": [')
 
@@ -418,7 +421,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                 (uryStamps[b])) + '},')
                             }
                         }
+                        }
                     } else if (b == (pageStamps.size() - 1)) {
+						if (((pageStamps[b]) != '') || ((llxStamps[b]) != '""')) {
+
                         'Jika pageStampnya kosong'
                         if ((pageStamps[b]) == '') {
                             'Input body mengenai koordinat'
@@ -433,7 +439,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             b])) + ', "lly" : ') + (llyStamps[b])) + ', "urx" : ') + (urxStamps[b])) + ', "ury" : ') + (uryStamps[
                             b])) + '}]')
                         }
+						}
                     } else {
+						if (((pageStamps[b]) != '') || ((llxStamps[b]) != '""')) {
                         'Jika pageStampnya kosong'
                         if ((pageStamps[b]) == '') {
                             'Input body mengenai koordinat'
@@ -449,7 +457,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             b])) + '},')
                         }
                     }
-                }
+                }}
             }
             
             'jika dokumennya di akhir'
@@ -482,7 +490,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'get api key salah dari excel'
             GlobalVariable.api_key = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 46)
         }
-
+		println stringRefno
+		
         'Hit API'
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Send Document Signing', [('tenantCode') : findTestData(
                         excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 9), ('request') : stringRefno, ('callerId') : findTestData(
