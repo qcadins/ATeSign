@@ -835,11 +835,13 @@ public class APIFullService {
 		}
 		data
 	}
-	
+
 	@Keyword
 	settingBaseUrl(String excelPath, int colm, int row) {
 		if(findTestData(excelPath).getValue(colm, row) == 'No') {
-			GlobalVariable.base_url = 'Salah Url'
+			GlobalVariable.base_url = 'http://gdkwebsvr:7021/'
+		} else {
+			GlobalVariable.base_url = findTestData('Login/Setting').getValue(7, 2)
 		}
 	}
 }
