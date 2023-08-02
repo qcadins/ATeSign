@@ -100,7 +100,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		'click button simpan'
 		WebUI.click(findTestObject('PengaturanPSrE/button_Simpan'))
 		
-		if(WebUI.getText(findTestObject('PengaturanPSrE/label_PopUP')).equalsIgnoreCase('Successs')) {
+		if(WebUI.getText(findTestObject('PengaturanPSrE/label_PopUP')).equalsIgnoreCase('Success')) {
 			'click button OK'
 			WebUI.click(findTestObject('PengaturanPSrE/button_OK'))
 			
