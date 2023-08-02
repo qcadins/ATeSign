@@ -280,7 +280,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 						sortingSequenceSign()
 						
 						'call function checkpopupberhasil'
-						checkPopUpBerhasil(isMandatoryComplete)
+						checkPopUpBerhasil(isMandatoryComplete, semicolon)
                     }
                 } else {
 					'write to excel status failed dan reason'
@@ -587,7 +587,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 					sortingSequenceSign()
 					
                     'call function checkpopupberhasil'
-					checkPopUpBerhasil(isMandatoryComplete)
+					checkPopUpBerhasil(isMandatoryComplete, semicolon)
                 }
             }
         } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Setting')) {
@@ -846,7 +846,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			sortingSequenceSign()
 			
             'call function checkpopupberhasil'
-			checkPopUpBerhasil(isMandatoryComplete)
+			checkPopUpBerhasil(isMandatoryComplete, semicolon)
         }
         
         'check if new or edit'
@@ -1158,7 +1158,7 @@ def checkDDL(TestObject objectDDL, ArrayList<String> listDB, String reason) {
 	WebUI.sendKeys(objectDDL, Keys.chord(Keys.ENTER))
 }
 
-def checkPopUpBerhasil(int isMandatoryComplete) {
+def checkPopUpBerhasil(int isMandatoryComplete, String semicolon) {
 	'check if pengaturan document berhasil disimpan'
 	if (isMandatoryComplete > 0) {
 		'write to excel status failed dan reason'

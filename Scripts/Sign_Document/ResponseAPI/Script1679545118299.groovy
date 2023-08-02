@@ -12,6 +12,9 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 'Pembuatan pengisian variable di sendRequest per jumlah documentId.'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_Excel_Path).columnNumbers; (GlobalVariable.NumofColm)++) {
 
+	'setting menggunakan base url yang benar atau salah'
+	CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPIDownload, GlobalVariable.NumofColm, 28)
+	
     'declare arraylist untuk list, listdocid, listemail'
     ArrayList<String> list, listDocId, listEmail
 
