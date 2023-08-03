@@ -170,7 +170,7 @@ if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm,
             WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFotoKTP'))
 
             'delay untuk camera on'
-            WebUI.delay(2)
+            WebUI.delay(5)
 
             'click ambil foto'
             WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFoto'))
