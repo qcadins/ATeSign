@@ -29,7 +29,6 @@ if (nomorKontrak == '') {
 nomorKontrakPerPilihan = nomorKontrak.split(';', -1)
 
 'looping untuk membuka dokumen'
-
 for (int o = 1 ; o <= 1 ; o++) {
 	if (linkDocumentMonitoring == 'Not Used') {
 		'Klik Button menu Document Monitoring'
@@ -83,6 +82,7 @@ for (int o = 1 ; o <= 1 ; o++) {
 
 'Looping per document'
 for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
+	println nomorKontrakPerPilihan[y]
 	
 	WebUI.delay(7)
 
@@ -109,20 +109,24 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
     'Mengambil value db mengenai tipe dokumen'
     documentType = CustomKeywords.'connection.DocumentMonitoring.getDocumentType'(conneSign, nomorKontrakPerPilihan[y])
 
-	        'Set text mengenai teks customer'
-        WebUI.setText(findTestObject('DocumentMonitoring/input_NamaPelanggan'), fullNameCust)
+	println fullNameCust
+	println nomorKontrakPerPilihan[y]
+	println nomorKontrakPerPilihan
+	WebUI.delay(10)
+	'Set text mengenai teks customer'
+    WebUI.setText(findTestObject('DocumentMonitoring/input_NamaPelanggan'), fullNameCust)
 
-        'Set text mengenai tanggal permintaan dari'
-        WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalPermintaanDari'), currentDate)
+    'Set text mengenai tanggal permintaan dari'
+     WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalPermintaanDari'), currentDate)
 
-        'Set text mengenai tanggal selesai dari'
-        WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalSelesaiDari'), currentDate)
+     'Set text mengenai tanggal selesai dari'
+     WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalSelesaiDari'), currentDate)
 
-        'Set text mengenai tipe dokumen'
-        WebUI.setText(findTestObject('DocumentMonitoring/input_TipeDok'), documentType)
+     'Set text mengenai tipe dokumen'
+     WebUI.setText(findTestObject('DocumentMonitoring/input_TipeDok'), documentType)
 
-        'Enter'
-        WebUI.sendKeys(findTestObject('DocumentMonitoring/input_TipeDok'), Keys.chord(Keys.ENTER))
+     'Enter'
+     WebUI.sendKeys(findTestObject('DocumentMonitoring/input_TipeDok'), Keys.chord(Keys.ENTER))
 
         'Set text mengneai input nomor kontrak'
         WebUI.setText(findTestObject('DocumentMonitoring/input_NoKontrak'), nomorKontrakPerPilihan[y])

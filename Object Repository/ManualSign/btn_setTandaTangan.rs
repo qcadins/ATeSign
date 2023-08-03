@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>btn_setTandaTangan</name>
+   <tag></tag>
+   <elementGuidId>49e99cb3-ac52-44de-a2ab-f5825dbb16c1</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/ngb-modal-window/div/div/app-label-modal/div/button</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/ngb-modal-window/div/div/app-label-modal/div/button</value>
+      <webElementGuid>335d1f55-edfe-4524-ad3b-5d5c0316c7f4</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>
