@@ -33,7 +33,7 @@ arrayIndex = 0
 sheet = 'Send to Sign'
 
 'looping untuk sending document'
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(excelPathFESignDocument).columnNumbers*/ ; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathFESignDocument).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
@@ -90,13 +90,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(e
             linkKotakMasuk = ((((findTestData(excelPathFESignDocument).getValue(2, 85) + '?msg=') + encryptMsg) + '&tenantCode=') + 
             tenantCode)
 			
-            'Inisialisasi variable yang dibutuhkan'
-            String noKontrak, saldoSignBefore, saldoSignAfter, otpBefore, otpAfter, documentTemplateName, noTelpSigner
-
-            'Mengkosongkan nomor kontrak dan document Template Name'
-            noKontrak = ''
-			
-			documentTemplateName = ''
+            'Inisialisasi variable yang dibutuhkan, Mengkosongkan nomor kontrak dan document Template Name'
+            String noKontrak = '', saldoSignBefore, saldoSignAfter, otpBefore, otpAfter, documentTemplateName = '', noTelpSigner
 
             'Inisialisasi variable total document yang akan disign, count untuk resend, dan saldo yang akan digunakan'
             int totalDocSign, countResend
@@ -242,11 +237,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(e
                         
                         'Mengenai tipe dokumen template'
                         checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectTextDocumentTemplateTipe), sendToSign[
-                                arrayIndex++], false, FailureHandling.OPTIONAL), '')
+                                arrayIndex++], false, FailureHandling.OPTIONAL), ' pada tipe document template ')
 
                         'Mengenai tanggal permintaan'
                         checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectTextTglPermintaan), sendToSign[
-                                arrayIndex++], false, FailureHandling.OPTIONAL), '')
+                                arrayIndex++], false, FailureHandling.OPTIONAL), ' pada tanggal permintaan ')
 
                         'Input document Template Name dan nomor kontrak dari UI'
                         documentTemplateName = WebUI.getText(modifyObjectTextDocumentTemplateName)
@@ -377,7 +372,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(e
 
                     'verify nama dokumen dengan nama dokumen di paging'
                     checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectlabelnamadokumenafterkonfirmasi), 
-                            documentTemplateNamePerDoc[(documentTemplateNamePerDoc.size() - (i + 1))], false), '')
+                            documentTemplateNamePerDoc[(documentTemplateNamePerDoc.size() - (i + 1))], false), ' pada nama dokumen setelah konfirmasi ')
                 }
             }
             
@@ -420,7 +415,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(e
                 'verifikasi objek text yang diambil valuenya dengan password'
                 checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('KotakMasuk/Sign/input_KataSandiAfterKonfirmasi'), 
                             'value'), findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 58), false), 
-                    'pada nomor telepon Signer')
+                    'pada Kata Sandi Signer')
 
                 'Jika cara verifikasinya menggunakan OTP'
                 if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 56) == 'OTP') {
@@ -465,7 +460,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(e
                     } else {
                         'Verifikasi antara no telp yang dinput dengan yang sebelumnya'
                         checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('KotakMasuk/Sign/lbl_phoneNo'), 
-                                    'value'), noTelpSigner, false), '')
+                                    'value'), noTelpSigner, false), ' pada nomor telepon signer ')
 
                         'OTP yang pertama dimasukkan kedalam 1 var'
                         OTP = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, emailSigner[(o - 1)])
@@ -784,7 +779,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(e
                     if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_notrxsaldo'), GlobalVariable.TimeOut, 
                         FailureHandling.OPTIONAL)) {
                         'get column di saldo'
-                        variableSaldoColumn = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller > datatable-row-wrapper > datatable-body-row datatable-body-cell'))
+                        variableSaldoColumn = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller > datatable-body-cell'))
 
                         'get row di saldo'
                         variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper '))
@@ -801,7 +796,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= 2/*findTestData(e
 						'looping mengenai rownya'
 						for (int j = 1; j <= variableSaldoRow.size();j++) {
 							'looping mengenai columnnya'
-							for (int u = 1; u <= (variableSaldoColumn.size() / variableSaldoRow.size()); u++) {
+							for (int u = 1; u <= (variableSaldoColumn.size()); u++) {
 								'modify per row dan column. column menggunakan u dan row menggunakan documenttemplatename'
 								modifyperrowpercolumn = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/lbl_notrxsaldo'), 
                                 'xpath', 'equals', ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 

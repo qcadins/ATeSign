@@ -33,7 +33,7 @@ public class ManualSign {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getPaymentTypeBasedOnTenantAndVendor(Connection conn, String tenantCode, String vendorName) {
 		stm = conn.createStatement()
@@ -51,7 +51,7 @@ public class ManualSign {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getVerificationSigner(Connection conn, String emailSigner){
 		stm = conn.createStatement()
@@ -65,5 +65,24 @@ public class ManualSign {
 			data = resultSet.getObject(1)
 		}
 		data
+	}
+	
+	@Keyword
+	getInformationUser(Connection conn, String emailSigner) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select full_name, hashed_phone from am_msuser where login_id = '"+ emailSigner +"'")
+		
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
 	}
 }

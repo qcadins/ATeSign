@@ -125,8 +125,14 @@ if (findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 29) =
 
 'cek centang syarat dan ketentuan'
 if (findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 27).equalsIgnoreCase('Yes')) {
-    'click checkbox'
+     'click checkbox'
     WebUI.click(findTestObject('DaftarAkun/checkbox_SyaratdanKetentuan'))
+
+    'click checkbox setuju'
+    WebUI.click(findTestObject('DaftarAkun/checkbox_Setuju'))
+	
+	'click checkbox setuju'
+	WebUI.click(findTestObject('DaftarAkun/checkbox_SetujuVIDA'))
 }
 
 'click daftar akun'

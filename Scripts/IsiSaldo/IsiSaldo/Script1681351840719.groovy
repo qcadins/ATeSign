@@ -44,7 +44,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         WebUI.callTestCase(findTestCase('Login/Login_AdminEsign'), [:], FailureHandling.STOP_ON_FAILURE)
 
 		'check if button menu visible atau tidak'
-		if(WebUI.verifyElementVisible(findTestObject('isiSaldo/menu_isiSaldo'), FailureHandling.OPTIONAL)) {
+		if(WebUI.verifyElementNotVisible(findTestObject('isiSaldo/menu_isiSaldo'), FailureHandling.OPTIONAL)) {
 			'click menu saldo'
 			WebUI.click(findTestObject('button_HamburberSideMenu'))
 		}

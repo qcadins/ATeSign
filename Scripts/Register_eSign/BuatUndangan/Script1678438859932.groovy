@@ -30,9 +30,9 @@ GlobalVariable.FlagFailed = 0
 WebUI.callTestCase(findTestCase('Login/Login_Inveditor'), [:], FailureHandling.CONTINUE_ON_FAILURE)
 
 'check ada value maka setting email service tenant'
-if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 64).length() > 0) {
+if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 63).length() > 0) {
 	'setting email service tenant'
-	CustomKeywords.'connection.Registrasi.settingEmailServiceTenant'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 64))
+	CustomKeywords.'connection.Registrasi.settingEmailServiceTenant'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 63))
 }
 
 'call function input > cancel > verify form kosong'
@@ -120,7 +120,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     GlobalVariable.Link = WebUI.getAttribute(findTestObject('BuatUndangan/PopUp/input_Link'), 'value')
 
     'write to excel Link buat undangan'
-    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'BuatUndangan', 66, GlobalVariable.NumofColm - 
+    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'BuatUndangan', 68, GlobalVariable.NumofColm - 
         1, GlobalVariable.Link)
 
     'HIT API Login untuk token : invenditor@womf'
@@ -242,28 +242,28 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
     WebUI.maximizeWindow()
 
     'set value userLogin'
-    GlobalVariable.userLogin = findTestData(excelPathBuatUndangan).getValue(2, 63).toUpperCase()
+    GlobalVariable.userLogin = findTestData(excelPathBuatUndangan).getValue(2, 65).toUpperCase()
 
     'input email'
-    WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathBuatUndangan).getValue(2, 63))
+    WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathBuatUndangan).getValue(2, 65))
 
     'input password'
     WebUI.setText(findTestObject('Login/input_Password'), findTestData(excelPathBuatUndangan).getValue(2, 
-            64))
+            66))
 
     'click button login'
     WebUI.click(findTestObject('Login/button_Login'), FailureHandling.STOP_ON_FAILURE)
 
     'input perusahaan'
     WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excelPathBuatUndangan).getValue(2, 
-            65))
+            67))
 
 	'enter untuk select perusahaan'
     WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
 
     'input peran'
     WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excelPathBuatUndangan).getValue(2, 
-            66))
+            68))
 
 	'enter untuk select peran'
     WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
