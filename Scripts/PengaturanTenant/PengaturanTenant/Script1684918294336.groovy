@@ -140,7 +140,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 'Write excel tidak ketemu dengan tipe saldo tersebut'
                 CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                     (((findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedNoneUI) + 
-                    'mengenai tipe saldo ') + (arrTipeSaldoBefore[i]))
+                    'mengenai tipe saldo ') + '<' + (arrTipeSaldoBefore[i]) + '>')
             } else if (WebUI.getText(modifyObjectTipeBatasSaldo) == descriptionBalanceType) {
                 'Jika tipe batas saldonya sesuai dengan deskripsi dari balance, maka modify object untuk input batas saldo'
                 modifyObjectInputBatasSaldo = WebUI.modifyObjectProperty(findTestObject('Object Repository/PengaturanTenant/input_BatasSaldo'), 
@@ -195,7 +195,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     'Write excel tidak ketemu dengan tipe saldo tersebut'
                     CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, (((findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 
-                            2) + ';') + GlobalVariable.ReasonFailedNoneUI) + 'mengenai tipe saldo ') + (tipeSaldo[i]))
+                            2) + ';') + GlobalVariable.ReasonFailedNoneUI) + 'mengenai tipe saldo ') + '<' + (tipeSaldo[i]) + '>')
                 }
             }
             
@@ -409,7 +409,7 @@ def checkPopup() {
             'Tulis di excel sebagai failed dan error.'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                 (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + 
-                lblpopup)
+                '<' + lblpopup + '>')
 
             return true
         }
@@ -430,7 +430,7 @@ def checkerrorLog() {
             'Tulis di excel itu adalah error'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                 (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + 
-                errormessage)
+                '<' + errormessage + '>')
 			
 			return true
         }

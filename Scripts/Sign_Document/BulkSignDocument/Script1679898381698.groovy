@@ -65,7 +65,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 
 				'Responsenya diwrite di excel'
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Bulk Sign Document', 5, GlobalVariable.NumofColm -
-					1, vendorCode)
+					1, '<' + vendorCode + '>')
 
                 if (signLink.toString() != 'null') {
                     'Open signLink buat check apakah dokumen yang ada disana dengan documentId excel sama'
@@ -115,7 +115,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
                                 'write to excel status failed dan reason'
                                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Bulk Sign Document', 
                                     GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (((findTestData(API_Excel_Path).getValue(
-                                        GlobalVariable.NumofColm, 2).replace('-', '') + ';') + notif) + ' : ') + documentId)
+                                        GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<' + notif + '>') + ' : ') + '<' + documentId + '>')
                             }
                         } else {
                             'write to excel status failed dan reason'
@@ -137,7 +137,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
                 'write to excel status failed dan reason'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Bulk Sign Document', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
-                        '-', '') + ';') + messageFailed)
+                        '-', '') + ';') + '<' + messageFailed + '>')
             }
         } else {
             'write to excel status failed dan reason'

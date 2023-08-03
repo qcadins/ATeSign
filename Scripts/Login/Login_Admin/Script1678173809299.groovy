@@ -57,7 +57,7 @@ if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), Globa
 	'Tulis di excel itu adalah error'
 	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 		GlobalVariable.StatusWarning, (findTestData(excel).getValue(GlobalVariable.NumofColm, 2).replace(
-		'-', '') + ';') + errormessage)
+		'-', '') + ';') + '<' + errormessage + '>')
 	
 	GlobalVariable.FlagFailed = 1
 } else if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL) && GlobalVariable.FlagFailed > 0) {
@@ -67,6 +67,6 @@ if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), Globa
 	'write to excel reason warning'
 	CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
 		1, GlobalVariable.NumofColm - 1, (findTestData(excel).getValue(GlobalVariable.NumofColm, 2).replace(
-		'-', '') + ';') + errormessage)
+		'-', '') + ';') + '<' + errormessage + '>')
 }
 

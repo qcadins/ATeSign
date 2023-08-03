@@ -80,7 +80,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			
 			'Tulis di excel itu adalah error'
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PencarianDokumen', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-				(findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + errormessage)
+				(findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<' + errormessage + '>')
 			
 			continue
 		}

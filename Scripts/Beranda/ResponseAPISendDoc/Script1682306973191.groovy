@@ -252,7 +252,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 
         'Write to excel mengenai Document ID'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 5, GlobalVariable.NumofColm - 
-            1, GlobalVariable.Response.toString().replace('[', '').replace(']', ''))
+            1, '<' + GlobalVariable.Response.toString().replace('[', '').replace(']', '') + '>')
 
         'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
         int jumlahsignertandatangan = 0
@@ -278,7 +278,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 
         'write to excel status failed dan reason'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + semicolon) + messageFailed)
+            (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + semicolon) + '<' + messageFailed + '>')
 
         if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 9).replace('"', '') == resultTenant) {
             'call test case error report'
@@ -290,7 +290,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 
     'write to excel status failed dan reason'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-        (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + semicolon) + messageFailed)
+        (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + semicolon) + '<' + messageFailed + '>')
 
     if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 9).replace('"', '') == resultTenant) {
         'call test case error report'

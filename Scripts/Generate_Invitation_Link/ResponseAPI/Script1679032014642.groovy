@@ -98,7 +98,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         'write to excel status failed dan reason : errorLog UI'
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Inv Link', GlobalVariable.NumofColm, 
                             GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 
-                                2).replace('-', '') + ';') + errorLog)
+                                2).replace('-', '') + ';') + '<' + errorLog + '>')
                     }
                     
                     'Klik pop up link'
@@ -148,7 +148,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'write to excel status failed dan reason : '
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Inv Link', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
-                        '-', '') + ';') + messageFailed)
+                        '-', '') + ';') + '<' + messageFailed + '>')
             }
         } else {
             'write to excel status failed dan reason : '

@@ -309,7 +309,7 @@ def checkErrorLog() {
 
 		'Tulis di excel itu adalah error'
 		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-			(findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + errormessage)
+			(findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<' + errormessage + '>')
 
 		return true
 	}

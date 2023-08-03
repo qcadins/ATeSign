@@ -75,7 +75,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                    message.toString())
+                    '<' + message.toString() + '>')
             }
         } else {
             'Jika status tidak 200, maka mengambil status code berdasarkan response HIT API'
@@ -85,7 +85,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			if (message != null) {
             'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
              CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-             message.toString())
+             '<' + message.toString() + '>')
         } else {
 			'Jika messagenya null maka Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, GlobalVariable.ReasonFailedHitAPI + ' dengan hasil ' + message)

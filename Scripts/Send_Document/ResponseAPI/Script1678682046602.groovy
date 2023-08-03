@@ -292,7 +292,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
                 'write to excel status failed dan reason'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                     (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + semicolon) + 
-                    messageFailed)
+                    '<' + messageFailed + '>')
 
                 if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 9).replace('"', '') == resultTenant) {
                     'call test case error report'
@@ -306,7 +306,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
                 'write to excel status failed dan reason'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                     (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + semicolon) + 
-                    messageFailed)
+                    '<' + messageFailed + '>')
 
                 if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 9).replace('"', '') == resultTenant) {
                     'call test case error report'

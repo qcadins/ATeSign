@@ -49,7 +49,7 @@ if (findTestData(excelPathRequestOTP).getValue(GlobalVariable.NumofColm, 1).equa
 
         'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            message)
+            '<' + message + '>')
     }
 }
 

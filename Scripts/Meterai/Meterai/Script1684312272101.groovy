@@ -196,7 +196,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 						'Tulis di excel itu adalah error'
 						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Meterai', GlobalVariable.NumofColm,
 							GlobalVariable.StatusFailed, (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm,
-								2).replace('-', '') + ';') + errormessage)
+								2).replace('-', '') + ';') + '<' + errormessage + '>')
 
 						GlobalVariable.FlagFailed = 1
 					}

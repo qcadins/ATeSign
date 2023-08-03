@@ -330,7 +330,7 @@ def checkErrorLog() {
         'Tulis di excel itu adalah error'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Edit Signer Data', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, 2).replace(
-                '-', '') + ';') + errormessage)
+                '-', '') + ';') + '<' + errormessage + '>')
 
         return true
     }
@@ -345,7 +345,7 @@ def checkPopup() {
           'Tulis di excel sebagai failed dan error.'
           CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Edit Signer Data', GlobalVariable.NumofColm, 
           GlobalVariable.StatusFailed, (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, 2).replace(
-          '-', '') + ';') + lblpopup)
+          '-', '') + ';') + '<' + lblpopup + '>')
        }
         
         'Klik OK untuk popupnya'

@@ -104,7 +104,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'Write To Excel GlobalVariable.StatusFailed and errorLog'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('DocumentMonitoring', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 
-                        2) + ';') + errorLog)
+                        2) + ';') + '<' + errorLog + '>')
 
                 GlobalVariable.FlagFailed = 1
             }
@@ -120,7 +120,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'Write To Excel GlobalVariable.StatusFailed and errorLog'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('DocumentMonitoring', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 
-                        2) + ';') + errorLog)
+                        2) + ';') + '<' + errorLog + '>')
 
                 GlobalVariable.FlagFailed = 1
             }
@@ -222,7 +222,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'Write To Excel GlobalVariable.StatusFailed and errorLog'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('DocumentMonitoring', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 
-                        2) + ';') + errorLog)
+                        2) + ';') + '<' + errorLog + '>')
 
                 GlobalVariable.FlagFailed = 1
             } else if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/button_YaProses'), GlobalVariable.TimeOut, 
@@ -249,19 +249,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 						'Write To Excel GlobalVariable.StatusFailed and errorLog'
 						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('DocumentMonitoring', GlobalVariable.NumofColm,
 							GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm,
-								2) + ';') + errorLog)
+								2) + ';') + '<' + errorLog + '>')
 		
 						GlobalVariable.FlagFailed = 1
 					}
 					
 					if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/PopupMessage'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
 					'get text dari popup message'
-                    WebUI.getText(findTestObject('DocumentMonitoring/PopUpMessage'))
+                    errorLog = WebUI.getText(findTestObject('DocumentMonitoring/PopUpMessage'))
 
                     'Write To Excel GlobalVariable.StatusFailed and errorLog'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('DocumentMonitoring', GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 
-                            2) + ';') + errorLog)
+                            2) + ';') + '<' + errorLog + '>')
 
                     GlobalVariable.FlagFailed = 1
 					}

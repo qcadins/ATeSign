@@ -59,7 +59,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
 
     'write to excel status failed dan reason'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-        (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + ReasonFailed)
+        (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<' + ReasonFailed + '>')
 
     'click button tutup error'
     WebUI.click(findTestObject('BuatUndangan/button_TutupError'))
@@ -77,7 +77,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
 
     'write to excel status failed dan reason'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-        (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + ReasonFailed)
+        (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<' + ReasonFailed + '>')
 
     if (ReasonFailed.contains('sudah digunakan oleh link undangan lain') || ReasonFailed.contains('sudah terdaftar')) {
         'declare error type error'
@@ -163,7 +163,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
                 'write to excel status failed dan reason'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-                        2).replace('-', '') + ';') + messageFailed)
+                        2).replace('-', '') + ';') + '<' + messageFailed + '>')
             }
         } else {
             'write to excel status failed dan reason'

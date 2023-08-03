@@ -24,6 +24,13 @@ int countColmExcel = findTestData(excelPathemeteraiMonitoring).columnNumbers
 
 sheet = 'e-Meterai Monitoring'
 
+'call testcase login admin'
+WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathemeteraiMonitoring, ('sheet') : sheet],
+	FailureHandling.CONTINUE_ON_FAILURE)
+
+'click menu meterai'
+WebUI.click(findTestObject('e-Meterai Monitoring/menu_emeteraiMonitoring'))
+
 'looping e meterai monitoring'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
@@ -32,13 +39,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         GlobalVariable.FlagFailed = 0
 
         if (GlobalVariable.NumofColm == 2) {
-            'call testcase login admin'
-            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathemeteraiMonitoring, ('sheet') : sheet], 
-                FailureHandling.CONTINUE_ON_FAILURE)
-
-            'click menu meterai'
-            WebUI.click(findTestObject('e-Meterai Monitoring/menu_emeteraiMonitoring'))
-
             'call function check paging'
             checkPaging(currentDate, firstDateOfMonth, conneSign)
         }
@@ -78,7 +78,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 						'Tulis di excel itu adalah error'
 						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
 						GlobalVariable.StatusFailed, (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 
-						2).replace('-', '') + ';') + errormessage)
+						2).replace('-', '') + ';') + '<' + errormessage + '>')
 
                         GlobalVariable.FlagFailed = 1
 
@@ -140,7 +140,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         'Tulis di excel itu adalah error'
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
 						GlobalVariable.StatusFailed, (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 
-						2).replace('-', '') + ';') + errormessage)
+						2).replace('-', '') + ';') + '<' + errormessage + '>')
 
                         GlobalVariable.FlagFailed = 1
 
@@ -157,7 +157,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             'Tulis di excel sebagai failed dan error.'
                             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
 							GlobalVariable.StatusFailed, (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 
-							2).replace('-', '') + ';') + lblpopup)
+							2).replace('-', '') + ';') + '<' + lblpopup + '>')
 
                             'Flag Failed 1'
                             GlobalVariable.FlagFailed = 1
@@ -494,7 +494,7 @@ def inputPagingAndVerify(Connection conneSign) {
         'Tulis di excel itu adalah error'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('e-Meterai Monitoring', GlobalVariable.NumofColm, 
             GlobalVariable.StatusWarning, (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 
-                2).replace('-', '') + ';') + errormessage)
+                2).replace('-', '') + ';') + '<' + errormessage + '>')
 
         GlobalVariable.FlagFailed = 1
     }
@@ -563,4 +563,3 @@ def clickRetryAction() {
         WebUI.click(findTestObject('Object Repository/e-Meterai Monitoring/table_Aksi Retry Stamping From Upload'))
     }
 }
-
