@@ -6,16 +6,16 @@
    <elementGuidId>b048f5e5-457c-4354-ba50-46d5aaa64574</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>XPATH</key>
-         <value>//form[@id='msxForm']/div[10]/div[2]/a</value>
-      </entry>
-      <entry>
          <key>CSS</key>
          <value>div.col-6.text-right > a</value>
       </entry>
       <entry>
+         <key>XPATH</key>
+         <value>//form[@id='msxForm']/div[10]/div[2]/a</value>
+      </entry>
+      <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;msxForm&quot;]/div[10]/div[2]/a</value>
+         <value>//*[@id=&quot;msxForm&quot;]/div[8]/div[2]/a</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -26,7 +26,7 @@
       <name>tag</name>
       <type>Main</type>
       <value>a</value>
-      <webElementGuid>9162e9da-6df5-457a-a269-6845d93c24b8</webElementGuid>
+      <webElementGuid>a00d36ed-a351-4f4e-9f61-0d73c2d781a5</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -34,7 +34,7 @@
       <name>href</name>
       <type>Main</type>
       <value>javascript:</value>
-      <webElementGuid>8dbb6d24-7dc3-474b-92d8-64878a364d72</webElementGuid>
+      <webElementGuid>cf8178d0-8060-459a-8e69-b27bceea3058</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -42,15 +42,15 @@
       <name>text</name>
       <type>Main</type>
       <value>Tambah</value>
-      <webElementGuid>5ad6a996-a6f2-44b6-8f55-7a66fe94f4e8</webElementGuid>
+      <webElementGuid>f8556510-bafa-4386-adf6-ae6a489f9b3d</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@id=&quot;msxForm&quot;]/div[10]/div[2]/a</value>
-      <webElementGuid>7d10ce5b-9fd2-44c1-91c7-ce4233e93f36</webElementGuid>
+      <value>//*[@id=&quot;msxForm&quot;]/div[8]/div[2]/a</value>
+      <webElementGuid>4ab9171b-a644-447e-a538-3cbdfc73a1a2</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -58,7 +58,7 @@
       <name>xpath:idRelative</name>
       <type>Main</type>
       <value>//form[@id='msxForm']/div[10]/div[2]/a</value>
-      <webElementGuid>ded938db-fa19-413c-a4f5-f089a63c95fb</webElementGuid>
+      <webElementGuid>05bdd94e-8aeb-459c-825f-9568b6f15c86</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -66,7 +66,7 @@
       <name>xpath:link</name>
       <type>Main</type>
       <value>//a[contains(text(),'Tambah')]</value>
-      <webElementGuid>dd0a4bc4-2739-4722-858c-90def8d9860d</webElementGuid>
+      <webElementGuid>92789e9d-293e-4343-a481-cca98552ec4a</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -74,7 +74,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Penanda Tangan'])[1]/following::a[1]</value>
-      <webElementGuid>0d64f812-1399-485d-a4db-46ad50f1266a</webElementGuid>
+      <webElementGuid>5ccd1391-34b1-42f3-84a9-bf73f3cf77ec</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -82,7 +82,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Tidak'])[1]/following::a[1]</value>
-      <webElementGuid>28c9bef3-3c3e-449a-a64e-8e851d448b4a</webElementGuid>
+      <webElementGuid>aaefb974-508e-41aa-a889-f7bf60e62805</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -90,7 +90,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Belum ada daftar penanda tangan!'])[1]/preceding::a[1]</value>
-      <webElementGuid>e1a97153-f180-4023-abf6-36334153789d</webElementGuid>
+      <webElementGuid>398eba08-b7b2-49c9-9b4e-55a41b8c8842</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -98,7 +98,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Batal'])[1]/preceding::a[1]</value>
-      <webElementGuid>249fcfca-fcee-4d42-9003-d965312b3900</webElementGuid>
+      <webElementGuid>ea038c6d-29c4-43f2-a312-82b90159d41a</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -106,7 +106,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='Tambah']/parent::*</value>
-      <webElementGuid>52db4419-ebee-4942-80ad-81a1fd7c47c7</webElementGuid>
+      <webElementGuid>4ba1d7f0-c427-40c8-9853-3bbc6dd727cd</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -114,7 +114,7 @@
       <name>xpath:href</name>
       <type>Main</type>
       <value>(//a[contains(@href, 'javascript:')])[7]</value>
-      <webElementGuid>8eaa917e-59b1-4f76-96d4-0739df61d715</webElementGuid>
+      <webElementGuid>16d09371-15cf-4b45-968f-a4a465faf302</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -122,7 +122,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div[2]/a</value>
-      <webElementGuid>7ce0b65e-1d17-4855-8671-3985fc48c3ce</webElementGuid>
+      <webElementGuid>df5f7e05-a6a1-4de1-9ab7-96fd650b430f</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -130,6 +130,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//a[@href = 'javascript:' and (text() = 'Tambah' or . = 'Tambah')]</value>
-      <webElementGuid>cb350554-000a-4bd1-8d97-eca23695cc15</webElementGuid>
+      <webElementGuid>7451490d-9b20-4647-a899-1eba7c93a308</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

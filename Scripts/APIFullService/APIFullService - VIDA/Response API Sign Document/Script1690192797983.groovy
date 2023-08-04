@@ -225,8 +225,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 }
             } else {
 				getErrorMessageAPI(respon)
-
-                GlobalVariable.FlagFailed = 1
             }
             
             if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 6) != '') {
@@ -266,7 +264,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         } else {
             getErrorMessageAPI(respon)
 
-            GlobalVariable.FlagFailed = 1
         }
     }
 }
@@ -611,5 +608,7 @@ def getErrorMessageAPI(def respon) {
     'Write To Excel GlobalVariable.StatusFailed and errormessage'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm, 
         GlobalVariable.StatusFailed, ('<' + message) + '>')
+	
+	GlobalVariable.FlagFailed = 1
 }
 

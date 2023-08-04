@@ -6,12 +6,12 @@
    <elementGuidId>64366a4b-3b58-4470-baa5-899f3ae40268</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>CSS</key>
-         <value>button.btn.btn-light.ml-1.mr-1.ng-star-inserted</value>
+         <key>BASIC</key>
+         <value>//*[@class = 'btn btn-light ml-1 mr-1 ng-star-inserted']</value>
       </entry>
       <entry>
-         <key>BASIC</key>
-         <value>//button[@class = 'btn btn-light ml-1 mr-1 ng-star-inserted']</value>
+         <key>CSS</key>
+         <value>button.btn.btn-light.ml-1.mr-1.ng-star-inserted</value>
       </entry>
       <entry>
          <key>XPATH</key>
@@ -21,12 +21,12 @@
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>true</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>tag</name>
       <type>Main</type>
       <value>button</value>
-      <webElementGuid>e75642f4-dd1a-440e-9b8c-80bd50c55587</webElementGuid>
+      <webElementGuid>6c23c054-33ff-4618-8ae7-260e6bde19fd</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -34,7 +34,7 @@
       <name>class</name>
       <type>Main</type>
       <value>btn btn-light ml-1 mr-1 ng-star-inserted</value>
-      <webElementGuid>d84c5455-a0dd-4789-8aea-7593da6446d7</webElementGuid>
+      <webElementGuid>4168fe6f-9f50-493c-bb2e-69eda7cfa158</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -42,7 +42,7 @@
       <name>text</name>
       <type>Main</type>
       <value> TTD </value>
-      <webElementGuid>b796bd69-ebdb-431f-9922-a39997412e85</webElementGuid>
+      <webElementGuid>6355bc9d-09ff-4aa0-8c79-8e7f2143df72</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -50,7 +50,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[1]/div/button[1]</value>
-      <webElementGuid>4146fbd7-2279-4cdc-80db-4d1a13033b1f</webElementGuid>
+      <webElementGuid>6ae4962e-2ff9-4f40-a0c9-47c38603dee5</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -58,7 +58,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Halaman 1 dari 1'])[1]/following::button[2]</value>
-      <webElementGuid>0ede5e09-73c4-496f-898a-1a7a7a9831a8</webElementGuid>
+      <webElementGuid>3dcea32b-4737-48d4-9fad-0bb5637d478e</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -66,7 +66,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Simpan'])[1]/following::button[4]</value>
-      <webElementGuid>6567265b-942b-44ed-b550-c01d5ca40003</webElementGuid>
+      <webElementGuid>a0725a6e-610e-422b-b0ce-b51b9165accb</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -74,7 +74,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Paraf'])[1]/preceding::button[1]</value>
-      <webElementGuid>4223919d-637c-4ac7-83c6-bcbfd9bad507</webElementGuid>
+      <webElementGuid>ceb30da0-4298-4422-8705-a3bfb9e952c6</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -82,7 +82,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Meterai'])[1]/preceding::button[2]</value>
-      <webElementGuid>f2c5a3ad-c482-472c-aba8-2ed3d1446b34</webElementGuid>
+      <webElementGuid>b7086786-8108-43e1-a5b8-4795c5bf3717</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -90,7 +90,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='TTD']/parent::*</value>
-      <webElementGuid>8b4c1c1f-e08c-44b2-976a-54007e4a7232</webElementGuid>
+      <webElementGuid>a0332c19-1da9-43f9-a902-7fef4f2723ab</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -98,7 +98,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//section/div/button</value>
-      <webElementGuid>19ab635f-1488-4a3c-8d42-9fe78f02fae8</webElementGuid>
+      <webElementGuid>39027456-2b0b-4042-ab39-4428fca5c01c</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -106,6 +106,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//button[(text() = ' TTD ' or . = ' TTD ')]</value>
-      <webElementGuid>791a15ea-2d41-4881-9083-34d55f834299</webElementGuid>
+      <webElementGuid>2b12323d-5a05-45d5-a627-b067b946ccea</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

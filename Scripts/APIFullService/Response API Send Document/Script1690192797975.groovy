@@ -561,4 +561,6 @@ def getErrorMessageAPI(def respon) {
 	'Write To Excel GlobalVariable.StatusFailed and errormessage'
 	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm,
 		GlobalVariable.StatusFailed, '<' + message + '>')
+	
+	GlobalVariable.FlagFailed = 1
 }

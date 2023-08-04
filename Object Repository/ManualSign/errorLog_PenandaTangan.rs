@@ -6,6 +6,10 @@
    <elementGuidId>4997d2a7-a8df-49c5-a39d-de02b6531bb4</elementGuidId>
    <selectorCollection>
       <entry>
+         <key>BASIC</key>
+         <value>//*[@role = 'alert' and @type = 'danger']</value>
+      </entry>
+      <entry>
          <key>CSS</key>
          <value>ngb-alert.alert.show.alert-danger.fade.ng-star-inserted</value>
       </entry>
@@ -14,7 +18,7 @@
          <value>//ngb-alert[@type='danger']</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>true</useRalativeImagePath>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -22,15 +26,15 @@
       <name>tag</name>
       <type>Main</type>
       <value>ngb-alert</value>
-      <webElementGuid>8c3baad8-7aee-440d-b765-ab4623db6614</webElementGuid>
+      <webElementGuid>b72b0e6b-4694-4453-be2d-a977085ee052</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>false</isSelected>
+      <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>role</name>
       <type>Main</type>
       <value>alert</value>
-      <webElementGuid>c4aa2ac3-49a0-4771-85c2-99b8d63e9558</webElementGuid>
+      <webElementGuid>c3894e76-5ed8-494f-a7b2-33c6cef0c74d</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -38,7 +42,7 @@
       <name>type</name>
       <type>Main</type>
       <value>danger</value>
-      <webElementGuid>9bfcd261-8357-468e-83db-7016a9afeda0</webElementGuid>
+      <webElementGuid>9f4e5703-2492-4bba-bb3c-e54d650b9bcc</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -46,7 +50,7 @@
       <name>class</name>
       <type>Main</type>
       <value>alert show alert-danger fade ng-star-inserted</value>
-      <webElementGuid>90d4cdad-04e4-4df2-a662-a1d4e3fe27ec</webElementGuid>
+      <webElementGuid>75299784-2008-47c2-a0e4-b11de846fc36</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -54,7 +58,7 @@
       <name>ng-reflect-type</name>
       <type>Main</type>
       <value>danger</value>
-      <webElementGuid>eb80b519-b8d0-41eb-8b9d-03337f1ff03d</webElementGuid>
+      <webElementGuid>5ed8a25a-0234-4ccb-b21d-665d451cb04f</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -62,23 +66,23 @@
       <name>ng-reflect-dismissible</name>
       <type>Main</type>
       <value>false</value>
-      <webElementGuid>23147e85-74b9-447b-ab5d-bf0e0d268d1d</webElementGuid>
+      <webElementGuid>41c15820-1cda-4d6d-9991-acb26a704c4e</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>text</name>
       <type>Main</type>
       <value>User tidak ditemukan!</value>
-      <webElementGuid>decfa7d5-1236-4057-9e7e-2ba69db4f1fa</webElementGuid>
+      <webElementGuid>73b977a5-d3c2-434e-898f-503b1d7933df</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html[1]/body[@class=&quot;vertical-layout menu-expanded menu-open vertical-menu navbar-static pace-done navbar-scrolled page-scrolled modal-open&quot;]/ngb-modal-window[@class=&quot;d-block modal fade show&quot;]/div[@class=&quot;modal-dialog&quot;]/div[@class=&quot;modal-content&quot;]/app-add-signer[1]/form[@class=&quot;ng-invalid ng-touched ng-dirty&quot;]/div[@class=&quot;modal-body&quot;]/ngb-alert[@class=&quot;alert show alert-danger fade ng-star-inserted&quot;]</value>
-      <webElementGuid>c1519889-000c-4e3a-831e-c32befc46e3e</webElementGuid>
+      <value>//*[@role = 'alertdialog']</value>
+      <webElementGuid>b637503a-936b-4b66-8649-613980cfe7bb</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -86,7 +90,7 @@
       <name>xpath:attributes</name>
       <type>Main</type>
       <value>//ngb-alert[@type='danger']</value>
-      <webElementGuid>4a5c0e76-2a45-41a1-9e87-662349fab6c8</webElementGuid>
+      <webElementGuid>9978e20e-f61b-4ff1-a6d6-c386147ecbea</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -94,7 +98,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Tambah Penanda Tangan'])[1]/following::ngb-alert[1]</value>
-      <webElementGuid>d42a2dd5-3d9e-4a3d-93f9-a5e9935895c0</webElementGuid>
+      <webElementGuid>4b6a22e3-3496-4bc8-8f62-55e3514d4885</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -102,7 +106,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Updates Available'])[1]/following::ngb-alert[1]</value>
-      <webElementGuid>359091d2-f58d-4912-a488-d09913f7fe10</webElementGuid>
+      <webElementGuid>869f467a-1254-46bc-94f2-26fb59be188a</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -110,7 +114,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='*'])[8]/preceding::ngb-alert[1]</value>
-      <webElementGuid>bba20d32-ccbc-4e3e-9806-e2a018cd9da2</webElementGuid>
+      <webElementGuid>235749d0-2ac8-4f5e-bddc-c4f0ee60244f</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -118,7 +122,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='User tidak ditemukan!']/parent::*</value>
-      <webElementGuid>996e8b6d-a9c8-4d53-8c3b-bfc434370dec</webElementGuid>
+      <webElementGuid>7a425fb5-6e55-4f24-9e98-2e5d65153c40</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -126,7 +130,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//ngb-alert</value>
-      <webElementGuid>ea527038-d17b-402a-be52-4df9102188d0</webElementGuid>
+      <webElementGuid>06cb76d3-8574-4cbc-985a-5bbbd1f2db4f</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -134,6 +138,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//ngb-alert[@type = 'danger' and (text() = 'User tidak ditemukan!' or . = 'User tidak ditemukan!')]</value>
-      <webElementGuid>5afff578-1ef5-41a3-962c-9b6d5722f44d</webElementGuid>
+      <webElementGuid>3c0829d5-6f48-4e8b-8d8f-38fab90bf6d4</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>
