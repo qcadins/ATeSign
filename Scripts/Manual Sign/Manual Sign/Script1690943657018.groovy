@@ -28,8 +28,8 @@ splitIndex = -1
 indexForCatatanStamp = 0
 
 'memanggil test case login untuk admin wom dengan Admin Client'
+WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualSign, ('sheet') : 'Manual Sign'], FailureHandling.CONTINUE_ON_FAILURE)
 
-//WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualSign, ('sheet') : 'Manual Sign'], FailureHandling.CONTINUE_ON_FAILURE)
 'looping berdasarkan jumlah kolom'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathManualSign).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
@@ -40,13 +40,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         GlobalVariable.FlagFailed = 0
 
         'Inisialisasi array dan variable'
-        ArrayList namaTandaTangan = []
-
-        ArrayList notelpTandaTangan = []
+        ArrayList namaTandaTangan = [], notelpTandaTangan = []
 
         indexEmail = 0
 
-        'inisiasi index menjadi 8 untuk tidak menggunakan e-meterai berada di index 8.'
+        'inisiasi index menjadi 8 untuk modify object ketika tidak pada e-meterai'
         index = 8
 
         'Inisialisasi variable yang dibutuhkan'
@@ -67,12 +65,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
         catatanStamping = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 26).split(semicolon, splitIndex)
 
+		'Klik tombol menu manual sign'
+		WebUI.click(findTestObject('ManualSign/ManualSign'))
+		
         'Jika kolomnya berada pada kedua'
         if (GlobalVariable.NumofColm == 2) {
             inputCancel(conneSign)
-        } else {
-            'Klik tombol menu manual sign'
-            WebUI.click(findTestObject('ManualSign/ManualSign'))
         }
         
         'Pengecekan apakah masuk page manual sign'
@@ -159,7 +157,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         'write excel mengenai error log tersebut'
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Sign', GlobalVariable.NumofColm, 
                             GlobalVariable.StatusFailed, (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 
-                                2) + ';') + error)
+                                2) + ';') + '<' + error + '>')
 
                         'diberikan delay 2 detik agar sudah ter write sebelum button cancel'
                         WebUI.delay(2)
@@ -486,10 +484,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 }
 
 def inputCancel(Connection conneSign) {
-    'Klik tombol pengaturan dokumen'
-    WebUI.click(findTestObject('ManualSign/ManualSign'))
-
-    inputForm()
+	inputForm()
 
     'get data tipe-tipe pembayaran secara asc'
     ArrayList vendorOfTenantDB = CustomKeywords.'connection.ManualSign.getVendorofTenant'(conneSign, GlobalVariable.Tenant)
@@ -544,8 +539,8 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Sign', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            ((((findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
-            '<') + reason) + '>')
+            ((((findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) 
+            ) + reason) )
 
         GlobalVariable.FlagFailed = 1
     }
