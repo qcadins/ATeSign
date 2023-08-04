@@ -70,21 +70,24 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 							'-', '') + ';') + GlobalVariable.ReasonFailedHitAPI)
 				}
             } else {
-                messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
-
-                'write to excel status failed dan reason : '
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Agreement Canceled', GlobalVariable.NumofColm, 
-                    GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
-                        '-', '') + ';') + '<' + messageFailed + '>')
+                'call function get error message'
+				getErrorMessage(respon)
             }
         } else {
-            messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
-
-            'write to excel status failed dan reason : '
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Agreement Canceled', GlobalVariable.NumofColm, 
-                GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
-                    '-', '') + ';') + '<' + messageFailed + '>')
+			'call function get error message'
+            getErrorMessage(respon)
         }
     }
+}
+
+def getErrorMessage(def respon) {
+	messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
+	
+	'write to excel status failed dan reason : '
+	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Agreement Canceled', GlobalVariable.NumofColm,
+		GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
+			'-', '') + ';') + '<' + messageFailed + '>')
+	
+	GlobalVariable.FlagFailed = 1
 }
 
