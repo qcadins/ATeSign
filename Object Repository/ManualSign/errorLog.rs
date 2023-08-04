@@ -3,14 +3,11 @@
    <description></description>
    <name>errorLog</name>
    <tag></tag>
-   <elementGuidId>995684e8-463e-48ef-8905-a06e9c159995</elementGuidId>
+   <elementGuidId>311053f9-8e93-4ada-b2e8-8853a579e739</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>XPATH</key>
-      </entry>
-      <entry>
          <key>BASIC</key>
-         <value>//*[@role = 'alertdialog']</value>
+         <value>//*[@class=&quot;overlay-container&quot;]/div/div/div</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -18,17 +15,17 @@
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>class</name>
       <type>Main</type>
-      <value>/div/div[2]</value>
-      <webElementGuid>9675ac7d-e71b-4cfc-9024-107980c77786</webElementGuid>
+      <value>overlay-container/div</value>
+      <webElementGuid>9e9ace69-5672-4ff4-b761-3bb2a70d12af</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>role</name>
+      <name>xpath</name>
       <type>Main</type>
-      <value>alertdialog</value>
-      <webElementGuid>48e25aac-af34-4a40-ba3a-54958962862a</webElementGuid>
+      <value>//*[@class=&quot;overlay-container&quot;]/div/div/div</value>
+      <webElementGuid>b732148f-4ee5-4024-9737-a0e5f4787095</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

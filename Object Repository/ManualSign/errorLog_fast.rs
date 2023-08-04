@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>errorLog</name>
+   <name>errorLog_fast</name>
    <tag></tag>
-   <elementGuidId>995684e8-463e-48ef-8905-a06e9c159995</elementGuidId>
+   <elementGuidId>b6c4723b-cd45-47c9-9822-28f2bad663bb</elementGuidId>
    <selectorCollection>
-      <entry>
-         <key>XPATH</key>
-      </entry>
       <entry>
          <key>BASIC</key>
          <value>//*[@role = 'alertdialog']</value>
@@ -16,19 +13,11 @@
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>xpath</name>
-      <type>Main</type>
-      <value>/div/div[2]</value>
-      <webElementGuid>9675ac7d-e71b-4cfc-9024-107980c77786</webElementGuid>
-   </webElementProperties>
-   <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>role</name>
       <type>Main</type>
       <value>alertdialog</value>
-      <webElementGuid>48e25aac-af34-4a40-ba3a-54958962862a</webElementGuid>
+      <webElementGuid>06d8ebda-8b30-40e2-8c78-616d996cce5e</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

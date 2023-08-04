@@ -519,7 +519,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 							'-', '') + semicolon) + GlobalVariable.ReasonFailedSaveGagal + ' pada perbedaan document template code ')
 				}
 			
-                'Memasukkan documentid dan trxno ke dalam excel'
+               'Memasukkan documentid dan trxno ke dalam excel'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 
                     5, GlobalVariable.NumofColm - 1, '<' + documentId.toString().replace('[', '').replace(']', '') + '>')
 
@@ -561,4 +561,6 @@ def getErrorMessageAPI(def respon) {
 	'Write To Excel GlobalVariable.StatusFailed and errormessage'
 	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm,
 		GlobalVariable.StatusFailed, '<' + message + '>')
+	
+	GlobalVariable.FlagFailed = 1
 }

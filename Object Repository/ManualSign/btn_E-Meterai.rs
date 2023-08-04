@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>button_batalCatatanStamping</name>
+   <name>btn_E-Meterai</name>
    <tag></tag>
-   <elementGuidId>85fc2b7f-f635-4811-90e0-b8892dbda0bf</elementGuidId>
+   <elementGuidId>b5df5e99-6c1d-4ddb-8ab3-28f882b94ca1</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'swal2-cancel btn btn-secondary mr-2']</value>
+         <value>//*[@id=&quot;msxForm&quot;]/div[7]/div/div/label</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>class</name>
+      <name>xpath</name>
       <type>Main</type>
-      <value>swal2-cancel btn btn-secondary mr-2</value>
-      <webElementGuid>15738808-c1cb-486e-9a3f-3976345ccfac</webElementGuid>
+      <value>//*[@id=&quot;msxForm&quot;]/div[7]/div/div/label</value>
+      <webElementGuid>04f08fc1-39fa-4789-8f26-a1611afab2d9</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
