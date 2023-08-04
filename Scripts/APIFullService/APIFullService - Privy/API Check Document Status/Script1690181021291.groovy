@@ -22,59 +22,57 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         break
     } else if (findTestData(excelPathCheckDocumentStatus).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
         'call function untuk Upload Document'
-		uploadDocument()
+        uploadDocument()
 
         if (findTestData(excelPathCheckDocumentStatus).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Success')) {
-                baseUrl = findTestData(excelPathCheckDocumentStatus).getValue(2, 14)
+            baseUrl = findTestData(excelPathCheckDocumentStatus).getValue(2, 14)
 
-                merchantKey = findTestData(excelPathCheckDocumentStatus).getValue(2, 15)
-				
-				'Jika access token tidak yang sebenarnya atau berasal dari call test case user access token'
-				if (findTestData(excelPathCheckDocumentStatus).getValue(GlobalVariable.NumofColm,11) == 'No') {
-					GlobalVariable.AccessToken = findTestData(excelPathCheckDocumentStatus).getValue(GlobalVariable.NumofColm,12)
-				}
+            merchantKey = findTestData(excelPathCheckDocumentStatus).getValue(2, 15)
 
-                'HIT API'
-                responConfirm = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/API OTP Request', [('base_url') : baseUrl
-                            , ('merchant-key') : merchantKey, ('access_token') : GlobalVariable.AccessToken]))
+            'Jika access token tidak yang sebenarnya atau berasal dari call test case user access token'
+            if (findTestData(excelPathCheckDocumentStatus).getValue(GlobalVariable.NumofColm, 11) == 'No') {
+                GlobalVariable.AccessToken = findTestData(excelPathCheckDocumentStatus).getValue(GlobalVariable.NumofColm, 
+                    12)
+            }
+            
+            'HIT API'
+            responConfirm = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/API OTP Request', [('base_url') : baseUrl
+                        , ('merchant-key') : merchantKey, ('access_token') : GlobalVariable.AccessToken]))
 
-                'Jika status HIT API 200 atau 201'
-                if (WS.verifyResponseStatusCodeInRange(responConfirm, 200, 202, FailureHandling.OPTIONAL) == true) {
-                    'get status code'
-                    code = WS.getElementPropertyValue(responConfirm, 'code', FailureHandling.OPTIONAL)
+            'Jika status HIT API 200 atau 201'
+            if (WS.verifyResponseStatusCodeInRange(responConfirm, 200, 202, FailureHandling.OPTIONAL) == true) {
+                'get status code'
+                code = WS.getElementPropertyValue(responConfirm, 'code', FailureHandling.OPTIONAL)
 
-                    if ((code == 200) || (code == 201)) {
-                        'get message'
-                        message = WS.getElementPropertyValue(responConfirm, 'message', FailureHandling.OPTIONAL)
+                if ((code == 200) || (code == 201)) {
+                    'get message'
+                    message = WS.getElementPropertyValue(responConfirm, 'message', FailureHandling.OPTIONAL)
 
-                        if (message.toString().contains('OTP sent to +62')) {
-                            if (GlobalVariable.FlagFailed == 0) {
-                                'write to excel success'
-                                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Request OTP', 
-                                    0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-                            }
+                    if (message.toString().contains('OTP sent to +62')) {
+                        if (GlobalVariable.FlagFailed == 0) {
+                            'write to excel success'
+                            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Request OTP', 
+                                0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
                         }
-                    } else {
-                        'get message'
-                        message = WS.getElementPropertyValue(responConfirm, 'message', FailureHandling.OPTIONAL)
-
-                        'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Request OTP', GlobalVariable.NumofColm, 
-                            GlobalVariable.StatusFailed, '<' + message + '>')
                     }
                 } else {
-                        'get message'
-                        message = WS.getElementPropertyValue(responConfirm, 'message', FailureHandling.OPTIONAL)
-
-                        'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Request OTP', GlobalVariable.NumofColm, 
-                            GlobalVariable.StatusFailed, '<' + message + '>')
-                    }
-            
+                    'call function get error message'
+                    getErrorMessage(responConfirm)
+                }
+            } else {
+                'call function get error message'
+                getErrorMessage(responConfirm)
+            }
         }
     }
 }
 
-def uploadDocument() {
-	
+def getErrorMessage(def responConfirm) {
+    'get message'
+    message = WS.getElementPropertyValue(responConfirm, 'message', FailureHandling.OPTIONAL)
+
+    'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
+    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Request OTP', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+        ('<' + message) + '>')
 }
+
