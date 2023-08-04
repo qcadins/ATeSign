@@ -212,13 +212,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 'Write To Excel GlobalVariable.StatusFailed and errormessage'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Registrasi', GlobalVariable.NumofColm, 
-                    GlobalVariable.StatusFailed, message)
+                    GlobalVariable.StatusFailed, '<' + message + '>')
 
                 if ((GlobalVariable.checkStoreDB == 'Yes') && (trxNo != null)) {
 					String resultTrx = CustomKeywords.'connection.APIFullService.getAPIRegisterTrx'(conneSign, trxNo.toString().replace('[', '').replace(']', ''))
-
-                    'declare arraylist arraymatch'
-                    ArrayList arrayMatch = []
 
 					if (GlobalVariable.Psre == 'VIDA') {
 	                    'kurang saldo before dengan proses verifikasi'
@@ -248,7 +245,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
             'Write To Excel GlobalVariable.StatusFailed and errormessage'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Registrasi', GlobalVariable.NumofColm, 
-                GlobalVariable.StatusFailed, message)
+                GlobalVariable.StatusFailed, '<' + message + '>')
         }
     }
 }

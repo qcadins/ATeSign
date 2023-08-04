@@ -76,7 +76,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
     'write to excel status failed dan reason'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Inv Link', GlobalVariable.NumofColm, 
         GlobalVariable.StatusFailed, (findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 2).replace(
-            '-', '') + ';') + reason)
+            '-', '') + ';') + '<' + reason + '>')
 
     GlobalVariable.FlagFailed = 1
 } else if (WebUI.verifyElementClickable(findTestObject('BuatUndangan/FormAktivasi/button_Proses'), FailureHandling.OPTIONAL)) {
@@ -126,7 +126,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
                     'write to excel status failed dan reason'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Inv Link', GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, (findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 
-                            2).replace('-', '') + ';') + reason)
+                            2).replace('-', '') + ';') + '<' + reason + '>')
 
                     'click button tutup error'
                     WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_OK'))
@@ -257,7 +257,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
             'write to excel status failed dan reason'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Inv Link', GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, (findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 2).replace(
-                    '-', '') + ';') + reason)
+                    '-', '') + ';') + '<' + reason + '>')
 
             'click button tutup error'
             WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_OK'))

@@ -125,14 +125,16 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
             verifySaldoUsed(conneSign, sheet)
         }
     } else {
+
         getErrorMessageAPI(respon)
     }
-} //   checkVerifyEqualOrMatch(WebUI.verifyEqual(Integer.parseInt(WebUI.getText(modifyperrowpercolumn)), p, FailureHandling.CONTINUE_ON_FAILURE), 
-//        'pada Saldo di Mutasi Saldo dengan nomor kontrak ' + findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 
-//            11).replace('"', ''))
-else {
+} else {
     getErrorMessageAPI(respon)
 }
+
+//   checkVerifyEqualOrMatch(WebUI.verifyEqual(Integer.parseInt(WebUI.getText(modifyperrowpercolumn)), p, FailureHandling.CONTINUE_ON_FAILURE), 
+//        'pada Saldo di Mutasi Saldo dengan nomor kontrak ' + findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 
+//            11).replace('"', ''))
 
 def loginAdminGetSaldo(Connection conneSign, String start, String sheet) {
     String totalSaldo

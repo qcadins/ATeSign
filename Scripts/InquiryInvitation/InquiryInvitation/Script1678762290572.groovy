@@ -228,7 +228,7 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).eq
         'write to excel status failed dan reason'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
-                '-', '') + ';') + ReasonFailed)
+                '-', '') + ';') + '<' + ReasonFailed + '>')
 
         'click button OK'
         WebUI.click(findTestObject('InquiryInvitation/button_OkSuccess'))
@@ -255,7 +255,7 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).eq
                 'write to excel status failed dan ReasonFailed'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-                        2).replace('-', '') + ';') + ReasonFailed)
+                        2).replace('-', '') + ';') + '<' + ReasonFailed + '>')
 
                 if (invitedBy.equalsIgnoreCase('SMS')) {
                     'get data saldo'
@@ -286,7 +286,7 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).eq
         'write to excel status failed dan reason'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
-                '-', '') + ';') + ReasonFailed)
+                '-', '') + ';') + '<' + ReasonFailed + '>')
     }
 }else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Kirim Ulang Aktivasi') && resendLink == 1) {
     'get label invited by'
@@ -307,7 +307,7 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).eq
                 'write to excel status failed dan ReasonFailed'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-                        2).replace('-', '') + ';') + ReasonFailed)
+                        2).replace('-', '') + ';') + '<' + ReasonFailed + '>')
 
                 if (invitedBy.equalsIgnoreCase('SMS')) {
 
@@ -339,7 +339,7 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).eq
         'write to excel status failed dan reason'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
-                '-', '') + ';') + ReasonFailed)
+                '-', '') + ';') + '<' + ReasonFailed + '>')
     }
 }
 

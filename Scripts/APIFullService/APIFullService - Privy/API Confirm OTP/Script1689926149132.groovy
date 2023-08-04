@@ -64,7 +64,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Confirm OTP - Privy', GlobalVariable.NumofColm, 
-                    GlobalVariable.StatusFailed, message)
+                    GlobalVariable.StatusFailed, '<' + message + '>')
             }
         }
     }

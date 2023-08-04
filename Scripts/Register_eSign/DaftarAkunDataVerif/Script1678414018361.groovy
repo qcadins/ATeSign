@@ -150,7 +150,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
 
     'write to excel status failed dan reason'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-        (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + ReasonFailed)
+        (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<' + ReasonFailed + '>')
 
     'click button tutup error'
     WebUI.click(findTestObject('DaftarAkun/button_TutupError'))
@@ -252,7 +252,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
         'write to excel status failed dan reason'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
-                '-', '') + ';') + reason)
+                '-', '') + ';') + '<' + reason + '>')
 
         GlobalVariable.FlagFailed = 1
     } else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), GlobalVariable.TimeOut, 
@@ -266,7 +266,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
         'write to excel status failed dan reason'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
-                '-', '') + ';') + reason)
+                '-', '') + ';') + '<' + reason + '>')
 
         'click button tutup error'
         WebUI.click(findTestObject('DaftarAkun/button_OK'))
@@ -413,4 +413,3 @@ def checkSaldoOTP() {
 	'swicth tab ke new tab'
 	WebUI.switchToWindowIndex(0)
 }
-

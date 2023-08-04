@@ -67,8 +67,8 @@ for (int o = 1 ; o <= 1 ; o++) {
 			if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 				'Tulis di excel itu adalah error'
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-					(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + ';') + WebUI.getAttribute(
-						findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label'))
+					(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + ';') + '<' + WebUI.getAttribute(
+						findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label') + '>')
 				
 				break
 			}
@@ -207,6 +207,7 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                         modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 
                             'xpath', 'equals', ((('//*[@id="listDokumen"]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
                             j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div', true)
+						
 						'Jika berada di column ke 7'
 						if (i == 7) {
 							'Split teks proses TTD'
