@@ -142,7 +142,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                    GlobalVariable.StatusFailed, message)
+                    GlobalVariable.StatusFailed, '<' + message + '>')
 				
 				String result = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(
 					excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 6))
@@ -166,7 +166,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
             'Write To Excel GlobalVariable.StatusFailed and errormessage'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                GlobalVariable.StatusFailed, message)
+                GlobalVariable.StatusFailed, '<' + message + '>')
         }
     }
 }
