@@ -214,7 +214,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     'write to excel status failed dan reason'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link', GlobalVariable.NumofColm, 
         GlobalVariable.StatusFailed, (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 2).replace(
-            '-', '') + ';') + ReasonFailed)
+            '-', '') + ';') + '<' + ReasonFailed + '>')
 
     'click button tutup error'
     WebUI.click(findTestObject('DaftarAkun/button_TutupError'))
@@ -315,7 +315,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
         'write to excel status failed dan reason'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 2).replace(
-                '-', '') + ';') + reason + ' Daftar Akun Esign')
+                '-', '') + ';') + '<' + reason + '> Daftar Akun Esign')
 
         GlobalVariable.FlagFailed = 1
 
@@ -338,7 +338,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
         'write to excel status failed dan reason'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link', GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 2).replace(
-                '-', '') + ';') + reason)
+                '-', '') + ';') + '<' + reason + '>')
 
         'click button tutup error'
         WebUI.click(findTestObject('DaftarAkun/button_OK'))
