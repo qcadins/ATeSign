@@ -7,17 +7,25 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[contains(@class, 'sidebar-content main-menu-content')]/div[1]/ul/li[5]</value>
+         <value>//*[(text() = 'Document Monitoring' or . = 'Document Monitoring')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>//*[contains(@class, 'sidebar-content main-menu-content')]/div[1]/ul/li[5]</value>
-      <webElementGuid>fdfe5a9c-e9b8-46d9-a3dc-97f0b5ef7351</webElementGuid>
+      <webElementGuid>788d966b-f52f-4da2-9286-79d9c9412e87</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Document Monitoring</value>
+      <webElementGuid>f9d65a64-2309-49bb-84c8-f5815011c8a4</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

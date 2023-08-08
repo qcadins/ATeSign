@@ -120,7 +120,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
             'write to excel status failed dan reason'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                 ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
-                ' terhadap total saldo ')
+                ' terhadap total saldo dimana saldo awal dan saldo setelah meterai sama ')
         } else {
             verifySaldoUsed(conneSign, sheet)
         }
@@ -142,10 +142,10 @@ def loginAdminGetSaldo(Connection conneSign, String start, String sheet) {
     if (start == 'Yes') {
         'Call test Case untuk login sebagai admin wom admin client'
         WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathStamping, ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
+		
+		'klik button saldo'
+		WebUI.click(findTestObject('isiSaldo/SaldoAdmin/menu_Saldo'))
     }
-    
-    'klik button saldo'
-    WebUI.click(findTestObject('isiSaldo/SaldoAdmin/menu_Saldo'))
 
     'klik ddl untuk tenant memilih mengenai Vida'
     WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)

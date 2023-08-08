@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;listDokumen&quot;]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[1]/datatable-body-row/div[2]/datatable-body-cell[12]/div/a[4]/em</value>
+         <value>//*[@id=&quot;listDokumen&quot;]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[1]/datatable-body-row/div[2]/datatable-body-cell[10]/div/a[4]/em</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@id=&quot;listDokumen&quot;]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[1]/datatable-body-row/div[2]/datatable-body-cell[12]/div/a[4]/em</value>
-      <webElementGuid>0e18833d-c0c3-4fbd-a811-1d39db71361b</webElementGuid>
+      <value>//*[@id=&quot;listDokumen&quot;]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[1]/datatable-body-row/div[2]/datatable-body-cell[10]/div/a[4]/em</value>
+      <webElementGuid>9b3f792e-48ac-4dc4-807f-e3b01142b3e7</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

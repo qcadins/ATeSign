@@ -8,6 +8,7 @@ import org.openqa.selenium.Keys as Keys
 import org.openqa.selenium.By as By
 import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import java.sql.Connection as Connection
+import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
@@ -24,6 +25,8 @@ semicolon = ';'
 splitIndex = -1
 
 indexForCatatanStamp = 0
+
+countValue = 0
 
 'memanggil test case login untuk admin wom dengan Admin Client'
 WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualSign, ('sheet') : 'Manual Sign'], FailureHandling.CONTINUE_ON_FAILURE)
@@ -55,20 +58,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
         tipeTandaTangan = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 22).split(semicolon, splitIndex)
 
-        pindahkanSignBox = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 23).split(semicolon, splitIndex)
+		totalTandaTangan = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 23).split(semicolon, splitIndex)
+		
+        pindahkanSignBox = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 24).split(semicolon, splitIndex)
 
-        lokasiSignBox = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 24).split('\\n', splitIndex)
+        lokasiSignBox = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 25).split('\\n', splitIndex)
 
-        lockSignBox = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 25).split(semicolon, splitIndex)
+        lockSignBox = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 26).split(semicolon, splitIndex)
 
-        catatanStamping = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 26).split(semicolon, splitIndex)
+        catatanStamping = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 27).split(semicolon, splitIndex)
 
 		'Klik tombol menu manual sign'
 		WebUI.click(findTestObject('ManualSign/ManualSign'))
 		
         'Jika kolomnya berada pada kedua'
         if (GlobalVariable.NumofColm == 2) {
-            inputCancel(conneSign)
+           // inputCancel(conneSign)
         }
         
         'Pengecekan apakah masuk page manual sign'
@@ -317,6 +322,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 break
             }
             
+			index = 0
+			
             'looping berdasarkan total tanda tangan'
             for (int j = 1; j <= tipeTandaTangan.size(); j++) {
                 if ((tipeTandaTangan[(j - 1)]).equalsIgnoreCase('TTD')) {
@@ -336,11 +343,21 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                     'Klik set tanda tangan'
                     WebUI.click(findTestObject('ManualSign/ddl_TipeTandaTangan'))
+					
+					println Integer.parseInt(totalTandaTangan[index])
+					println countValue
+					if (countValue == Integer.parseInt(totalTandaTangan[index])) {
+						index++
+						countValue = 0
+					}
 
                     'Memilih tipe signer apa berdasarkan excel'
-                    WebUI.selectOptionByLabel(findTestObject('ManualSign/ddl_TipeTandaTangan'), ((namaTandaTangan[(j - 1)]) + 
-                        ' - ') + (notelpTandaTangan[(j - 1)]), false)
+                    WebUI.selectOptionByLabel(findTestObject('ManualSign/ddl_TipeTandaTangan'), ((namaTandaTangan[index]) + 
+                        ' - ') + (notelpTandaTangan[index]), false)
 
+					countValue++
+					
+					
                     'Klik set tanda tangan'
                     WebUI.click(findTestObject('ManualSign/btn_setTandaTangan'))
 
@@ -350,13 +367,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         j) + ']/div/div/small', true)
 
                     'Verifikasi antara excel dan UI, apakah tipenya sama'
-                    WebUI.verifyMatch(namaTandaTangan[(j - 1)], WebUI.getText(modifyobjectTTDlblRoleTandaTangan), false)
+                    WebUI.verifyMatch(namaTandaTangan[index], WebUI.getText(modifyobjectTTDlblRoleTandaTangan), false)
                 }
                 
                 'Verify apakah tanda tangannya ada'
                 if (WebUI.verifyElementPresent(modifyobjectTTDlblRoleTandaTangan, GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
                     'check if signbox mau dipindahkan'
-                    println(pindahkanSignBox)
 
                     if ((pindahkanSignBox[(j - 1)]).equalsIgnoreCase('Yes')) {
                         'memindahkan sign box'

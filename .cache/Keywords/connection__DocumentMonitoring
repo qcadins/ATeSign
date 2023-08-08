@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "53F1F2CAC0E56502861388E803BA1907",
+  "keywordFileContentHash": "69FD43E9ECE7376CE2B796CC7145DA44",
   "keywordClasses": [
     {
       "name": "connection.DocumentMonitoring",
@@ -69,38 +69,6 @@
           "javadoc": ""
         },
         {
-          "name": "getDocumentStatus",
-          "parameters": [
-            {
-              "name": "conn",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.sql.Connection",
-                "unresolvedClassName": "Connection",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            },
-            {
-              "name": "refnumber",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.lang.String",
-                "unresolvedClassName": "String",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            }
-          ],
-          "javadoc": ""
-        },
-        {
           "name": "getInputDocumentMonitoring",
           "parameters": [
             {
@@ -118,38 +86,6 @@
             },
             {
               "name": "refNumber",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.lang.String",
-                "unresolvedClassName": "String",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            }
-          ],
-          "javadoc": ""
-        },
-        {
-          "name": "getuserCustomerondocument",
-          "parameters": [
-            {
-              "name": "conn",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.sql.Connection",
-                "unresolvedClassName": "Connection",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            },
-            {
-              "name": "refnumber",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -195,38 +131,6 @@
             },
             {
               "name": "fullname",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.lang.String",
-                "unresolvedClassName": "String",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            }
-          ],
-          "javadoc": ""
-        },
-        {
-          "name": "getDocumentType",
-          "parameters": [
-            {
-              "name": "conn",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.sql.Connection",
-                "unresolvedClassName": "Connection",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            },
-            {
-              "name": "refnumber",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -301,9 +205,28 @@
                 "genericsTypes": [],
                 "errorOnParsing": false
               }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getManualUpload",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
             },
             {
-              "name": "fullname",
+              "name": "refNumber",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

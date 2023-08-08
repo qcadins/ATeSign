@@ -82,8 +82,6 @@ for (int o = 1 ; o <= 1 ; o++) {
 
 'Looping per document'
 for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
-	println nomorKontrakPerPilihan[y]
-	
 	WebUI.delay(7)
 
     'Mengambil email berdasarkan documentId'
@@ -100,50 +98,48 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
     inputDocumentMonitoring = CustomKeywords.'connection.DocumentMonitoring.getInputDocumentMonitoring'(conneSign, nomorKontrakPerPilihan[
         y])
 
-    'Mengisi value hasil komparasi, total sign, dan total signed'
-    documentStatus = CustomKeywords.'connection.DocumentMonitoring.getDocumentStatus'(conneSign, nomorKontrakPerPilihan[y])
-
-    'Mengambil value db mengenai nama Customer'
-    fullNameCust = CustomKeywords.'connection.DocumentMonitoring.getuserCustomerondocument'(conneSign, nomorKontrakPerPilihan[y])
-
-    'Mengambil value db mengenai tipe dokumen'
-    documentType = CustomKeywords.'connection.DocumentMonitoring.getDocumentType'(conneSign, nomorKontrakPerPilihan[y])
-
-	println fullNameCust
-	println nomorKontrakPerPilihan[y]
-	println nomorKontrakPerPilihan
-	WebUI.delay(10)
 	'Set text mengenai teks customer'
-    WebUI.setText(findTestObject('DocumentMonitoring/input_NamaPelanggan'), fullNameCust)
+    WebUI.setText(findTestObject('DocumentMonitoring/input_NamaPelanggan'), inputDocumentMonitoring[arrayIndex++])
+	
+	'Set text mengneai input nomor kontrak'
+	WebUI.setText(findTestObject('DocumentMonitoring/input_NoKontrak'), nomorKontrakPerPilihan[y])
 
     'Set text mengenai tanggal permintaan dari'
-     WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalPermintaanDari'), currentDate)
+     WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalPermintaanDari'), inputDocumentMonitoring[arrayIndex++])
 
      'Set text mengenai tanggal selesai dari'
-     WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalSelesaiDari'), currentDate)
+     WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalSelesaiDari'), inputDocumentMonitoring[arrayIndex - 1])
+	 
+	 'Set text tanggal permintaan sampai'
+	 WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalPermintaanSampai'), inputDocumentMonitoring[arrayIndex++])
+
+	 'Set text tanggal selesai sampai'
+	 WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalSelesaiSampai'), inputDocumentMonitoring[arrayIndex - 1])
 
      'Set text mengenai tipe dokumen'
-     WebUI.setText(findTestObject('DocumentMonitoring/input_TipeDok'), documentType)
+     WebUI.setText(findTestObject('DocumentMonitoring/input_TipeDok'), inputDocumentMonitoring[arrayIndex++])
 
      'Enter'
      WebUI.sendKeys(findTestObject('DocumentMonitoring/input_TipeDok'), Keys.chord(Keys.ENTER))
+	 
+	 'Set text mengenai status dokumen'
+	 WebUI.setText(findTestObject('DocumentMonitoring/input_Status'), inputDocumentMonitoring[arrayIndex++])
 
-        'Set text mengneai input nomor kontrak'
-        WebUI.setText(findTestObject('DocumentMonitoring/input_NoKontrak'), nomorKontrakPerPilihan[y])
+	 'Enter'
+	 WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Status'), Keys.chord(Keys.ENTER))
 
 		if (linkDocumentMonitoring == '') {
-			'Set text mengenai input cabang'
-			WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndex++])
-	
-			'Enter'
-			WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER))
-	
 			'Set text mengenai wilayah'
 			WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndex++])
 	
 			'Enter'
 			WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER))
+			
+			'Set text mengenai input cabang'
+			WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndex++])
 	
+			'Enter'
+			WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER))
 		}
 		
 		if (WebUI.verifyMatch(settingHO.toString(),'1', true, FailureHandling.OPTIONAL) == true) {
@@ -159,21 +155,6 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
         'Enter'
         WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER))
 		}
-		else {
-			arrayIndex = arrayIndex + 2
-		}
-		
-        'Set text tanggal permintaan sampai'
-        WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalPermintaanSampai'), currentDate)
-
-        'Set text tanggal selesai sampai'
-        WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalSelesaiSampai'), currentDate)
-
-        'Set text mengenai status dokumen'
-        WebUI.setText(findTestObject('DocumentMonitoring/input_Status'), documentStatus)
-
-        'Enter'
-        WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Status'), Keys.chord(Keys.ENTER))
 
         'Klik enter Cari'
         WebUI.click(findTestObject('DocumentMonitoring/button_Cari'))
@@ -193,7 +174,7 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                 arrayIndex = 0
 
                 'Mengambil value dari db menngenai data yang perlu diverif'
-                resultQuery = CustomKeywords.'connection.DocumentMonitoring.getDocumentMonitoringBasedOnEmbed'(conneSign, nomorKontrakPerPilihan[y], fullNameCust)
+                resultQuery = CustomKeywords.'connection.DocumentMonitoring.getDocumentMonitoringBasedOnEmbed'(conneSign, nomorKontrakPerPilihan[y])
 
                 'Mengambil value dari db mengenai total stamping'
                 resultStamping = CustomKeywords.'connection.DocumentMonitoring.getTotalStampingandTotalMaterai'(conneSign,nomorKontrakPerPilihan[
@@ -268,7 +249,7 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                 arrayIndex = 0
 
                 'Mengambil value dari db menngenai data yang perlu diverif'
-                resultQuery = CustomKeywords.'connection.DocumentMonitoring.getDocumentMonitoringBasedOnEmbed'(conneSign, nomorKontrakPerPilihan[y], fullNameCust)
+                resultQuery = CustomKeywords.'connection.DocumentMonitoring.getDocumentMonitoringBasedOnEmbed'(conneSign, nomorKontrakPerPilihan[y])
 	
                 'Mengambil value dari db mengenai total stamping'
                 resultStamping = CustomKeywords.'connection.DocumentMonitoring.getTotalStampingandTotalMaterai'(conneSign, nomorKontrakPerPilihan[y])

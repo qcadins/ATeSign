@@ -252,7 +252,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 
         'Write to excel mengenai Document ID'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 5, GlobalVariable.NumofColm - 
-            1, '<' + GlobalVariable.Response.toString().replace('[', '').replace(']', '') + '>')
+            1, GlobalVariable.Response.toString().replace('[', '').replace(']', ''))
 
         'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
         int jumlahsignertandatangan = 0

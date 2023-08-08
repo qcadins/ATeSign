@@ -267,7 +267,99 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					}
                 }
             }
-        }
+        } else if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Start Stamping')) {
+			'click button start stamping'
+			WebUI.click(findTestObject('DocumentMonitoring/button_startStamping'))
+			
+			'Jika start stamping'
+			if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/label_startStamping'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+				'klik cancel'
+				WebUI.click(findTestObject('Object Repository/DocumentMonitoring/button_cancelStartStamping'))
+				
+				'click button start stamping'
+				WebUI.click(findTestObject('DocumentMonitoring/button_startStamping'))
+				
+				'klik yes'
+				WebUI.click(findTestObject('Object Repository/DocumentMonitoring/button_yesStartStamping'))
+				
+				'diberikan delay 10 dengan loading'
+				WebUI.delay(10)
+				
+				'jika ada error log'
+				if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/errorLog'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+					'ambil teks errormessage'
+					errormessage = WebUI.getAttribute(findTestObject('DocumentMonitoring/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
+						
+					'Tulis di excel itu adalah error'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('DocumentMonitoring', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+						(findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<' + errormessage + '>')
+				}
+				
+				'jika start stamping muncul'
+				if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/label_startStamping'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+					'klik start ok untuk start stamping'
+					WebUI.click(findTestObject('Object Repository/DocumentMonitoring/button_OKStartStamping'))
+					
+					'looping dari 1 hingga 12'
+					for (i = 1; i <= 12; i++) {
+						'mengambil value db proses ttd'
+						int prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, findTestData(excelPathDocumentMonitoring).getValue(
+								GlobalVariable.NumofColm, 10))
+			
+						'jika proses materai gagal (51)'
+						if (prosesMaterai == 51) {
+							'Write To Excel GlobalVariable.StatusFailed and errormessage'
+							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('DocumentMonitoring', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+								GlobalVariable.ReasonFailedProsesStamping)
+			
+							GlobalVariable.FlagFailed = 1
+			
+							break
+						} else if (prosesMaterai == 53) {
+							'Jika proses meterai sukses (53), berikan delay 3 sec untuk update di db'
+							WebUI.delay(3)
+			
+							'Mengambil value total stamping dan total meterai'
+							ArrayList totalMateraiAndTotalStamping = CustomKeywords.'connection.Meterai.getTotalMateraiAndTotalStamping'(
+								conneSign, findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 10))
+			
+							'declare arraylist arraymatch'
+							arrayMatch = []
+			
+							'dibandingkan total meterai dan total stamp'
+							arrayMatch.add(WebUI.verifyMatch(totalMateraiAndTotalStamping[0], totalMateraiAndTotalStamping[1], false,
+									FailureHandling.CONTINUE_ON_FAILURE))
+			
+							'jika data db tidak bertambah'
+							if (arrayMatch.contains(false)) {
+								'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+								CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('DocumentMonitoring', GlobalVariable.NumofColm,
+									GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm,
+										2) + ';') + GlobalVariable.ReasonFailedStoredDB)
+			
+								GlobalVariable.FlagFailed = 1
+							}
+							
+							break
+						} else {
+							'Jika bukan 51 dan 51, maka diberikan delay 20 detik'
+							WebUI.delay(10)
+			
+							'Jika looping berada di akhir, tulis error failed proses stamping'
+							if (i == 12) {
+								'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+								CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('DocumentMonitoring', GlobalVariable.NumofColm,
+									GlobalVariable.StatusFailed, ((((findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm,
+										2) + ';') + GlobalVariable.ReasonFailedProsesStamping) + ' dengan jeda waktu ') + (i * 12)) +
+									' detik ')
+			
+								GlobalVariable.FlagFailed = 1
+							}
+						}
+					}
+				}
+			}
+		}
         
         if (GlobalVariable.FlagFailed == 0) {
             'write to excel success'
