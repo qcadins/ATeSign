@@ -455,6 +455,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         continue
                     }
                     
+					'Jika running menggunakan embed, maka'
+					if (GlobalVariable.RunWithEmbed == 'Yes') {
+						'Ganti frame ke default'
+						WebUI.switchToDefaultContent(FailureHandling.CONTINUE_ON_FAILURE)
+		
+						'scroll element atas yaitu button embed'
+						WebUI.scrollToElement(findTestObject('EmbedView/button_Embed'), GlobalVariable.TimeOut)
+		
+						'swith to iframe'
+						WebUI.switchToFrame(findTestObject('EmbedView/iFrameEsign'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
+					} else {
+						'Jika running tidak menggunakan embed, maka refresh saja'
+						WebUI.refresh()
+					}
+					
+					
                     'Jika tidak muncul untuk element selanjutnya'
                     if (!(WebUI.verifyElementPresent(modifyObjectlabelRequestOTP, GlobalVariable.TimeOut))) {
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
@@ -864,10 +880,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		'Jika ingin melakukan stamping'
 		if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 90) == 'Yes') {
 			
-			if (findTestData(excelPathFESignDocument))
-			'Call API Send doc'
-			WebUI.callTestCase(findTestCase('Meterai/Flow Stamping'), [('excelPathStamping') : excelPathFESignDocument
-			, ('sheet') : sheet, ('useAPI') : 'v3.1.0', ('linkDocumentMonitoring') : linkDocumentMonitoring], FailureHandling.CONTINUE_ON_FAILURE)
+			'Jika melakukan stamping menggunakan API Stamping'
+			if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 91) == 'API Stamping') {
+				'Call API Stamping'
+				WebUI.callTestCase(findTestCase('Meterai/Flow Stamping'), [('excelPathStamping') : excelPathFESignDocument
+					, ('sheet') : sheet, ('useAPI') : 'v3.1.0', ('linkDocumentMonitoring') : linkDocumentMonitoring], FailureHandling.CONTINUE_ON_FAILURE)
+			} else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 91) == 'Front End Document Monitoring') {
+				'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
+				WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument
+				 , ('sheet') : sheet, ('linkDocumentMonitoring') : 'Not Used', ("nomorKontrak") : noKontrakPerDoc[0], ('isStamping') : 'Yes'], FailureHandling.CONTINUE_ON_FAILURE)
+			}
 		}
 	}
 }

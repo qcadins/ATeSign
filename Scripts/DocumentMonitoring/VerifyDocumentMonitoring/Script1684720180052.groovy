@@ -143,17 +143,17 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
 		}
 		
 		if (WebUI.verifyMatch(settingHO.toString(),'1', true, FailureHandling.OPTIONAL) == true) {
-        'Set text mengenai input cabang'
-        WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndex++])
+			'Set text mengenai wilayah'
+			WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndex++])
+	
+			'Enter'
+			WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER))
+			
+			'Set text mengenai input cabang'
+			WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndex++])
 
-        'Enter'
-        WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER))
-
-        'Set text mengenai wilayah'
-        WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndex++])
-
-        'Enter'
-        WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER))
+			'Enter'
+			WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER))
 		}
 
         'Klik enter Cari'
@@ -302,7 +302,6 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
             }
         }
     
-    
     'penggunaan checking print false'
     if (arrayMatch.contains(false)) {
 		GlobalVariable.FlagFailed = 1
@@ -310,6 +309,98 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
             ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedStoredDB) +  ' pada menu Document Monitoring ')
     }
+	}
+	
+	if (isStamping == 'Yes') {
+		'click button start stamping'
+		WebUI.click(findTestObject('DocumentMonitoring/button_startStamping'))
+		
+		'Jika start stamping'
+		if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/label_startStamping'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+			'klik cancel'
+			WebUI.click(findTestObject('Object Repository/DocumentMonitoring/button_cancelStartStamping'))
+			
+			'click button start stamping'
+			WebUI.click(findTestObject('DocumentMonitoring/button_startStamping'))
+			
+			'klik yes'
+			WebUI.click(findTestObject('Object Repository/DocumentMonitoring/button_yesStartStamping'))
+			
+			'diberikan delay 10 dengan loading'
+			WebUI.delay(10)
+			
+			'jika ada error log'
+			if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/errorLog'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+				'ambil teks errormessage'
+				errormessage = WebUI.getAttribute(findTestObject('DocumentMonitoring/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
+					
+				'Tulis di excel itu adalah error'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+					(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<' + errormessage + '>')
+			}
+			
+			'jika start stamping muncul'
+			if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/label_startStamping'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+				'klik start ok untuk start stamping'
+				WebUI.click(findTestObject('Object Repository/DocumentMonitoring/button_OKStartStamping'))
+				
+				'looping dari 1 hingga 12'
+				for (i = 1; i <= 12; i++) {
+					'mengambil value db proses ttd'
+					int prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, nomorKontrakPerPilihan[y])
+		
+					'jika proses materai gagal (51)'
+					if (prosesMaterai == 51) {
+						'Write To Excel GlobalVariable.StatusFailed and errormessage'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+							GlobalVariable.ReasonFailedProsesStamping)
+		
+						GlobalVariable.FlagFailed = 1
+		
+						break
+					} else if (prosesMaterai == 53) {
+						'Jika proses meterai sukses (53), berikan delay 3 sec untuk update di db'
+						WebUI.delay(3)
+		
+						'Mengambil value total stamping dan total meterai'
+						ArrayList totalMateraiAndTotalStamping = CustomKeywords.'connection.Meterai.getTotalMateraiAndTotalStamping'(
+							conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 10))
+		
+						'declare arraylist arraymatch'
+						arrayMatch = []
+		
+						'dibandingkan total meterai dan total stamp'
+						arrayMatch.add(WebUI.verifyMatch(totalMateraiAndTotalStamping[0], totalMateraiAndTotalStamping[1], false,
+								FailureHandling.CONTINUE_ON_FAILURE))
+		
+						'jika data db tidak bertambah'
+						if (arrayMatch.contains(false)) {
+							'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+								GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+									2) + ';') + GlobalVariable.ReasonFailedStoredDB)
+		
+							GlobalVariable.FlagFailed = 1
+						}
+						
+						break
+					} else {
+						'Jika bukan 51 dan 51, maka diberikan delay 20 detik'
+						WebUI.delay(10)
+		
+						'Jika looping berada di akhir, tulis error failed proses stamping'
+						if (i == 12) {
+							'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+								GlobalVariable.StatusFailed, ((((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+									2) + ';') + GlobalVariable.ReasonFailedProsesStamping) + ' dengan jeda waktu ') + (i * 12)) +
+								' detik ')
+		
+							GlobalVariable.FlagFailed = 1
+						}
+					}
+				}
+			}
+		}
+	}
 }
-}
-

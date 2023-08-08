@@ -23,6 +23,12 @@
       <value></value>
       <variableId>1337cc4c-243e-41bd-9c3d-4e7088d1a49b</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>360a0efe-54f3-4794-b1f0-d844cc7bfd56</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -43,5 +49,12 @@
       <id>1337cc4c-243e-41bd-9c3d-4e7088d1a49b</id>
       <masked>false</masked>
       <name>nomorKontrak</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>360a0efe-54f3-4794-b1f0-d844cc7bfd56</id>
+      <masked>false</masked>
+      <name>isStamping</name>
    </variable>
 </TestCaseEntity>

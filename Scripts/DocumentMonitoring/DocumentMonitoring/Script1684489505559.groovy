@@ -342,7 +342,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 							
 							break
 						} else {
-							'Jika bukan 51 dan 51, maka diberikan delay 20 detik'
+							'Jika bukan 51 dan 53, maka diberikan delay 20 detik'
 							WebUI.delay(10)
 			
 							'Jika looping berada di akhir, tulis error failed proses stamping'
