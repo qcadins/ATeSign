@@ -835,7 +835,7 @@ public class APIFullService {
 		}
 		data
 	}
-	
+
 	@Keyword
 	settingBaseUrl(String excelPath, int colm, int row) {
 		if(findTestData(excelPath).getValue(colm, row) == 'No') {
@@ -844,7 +844,7 @@ public class APIFullService {
 			GlobalVariable.base_url = findTestData('Login/Setting').getValue(7, 2)
 		}
 	}
-	
+
 	@Keyword
 	getHashedNo(Connection conn, String emailSigner) {
 		stm = conn.createStatement()

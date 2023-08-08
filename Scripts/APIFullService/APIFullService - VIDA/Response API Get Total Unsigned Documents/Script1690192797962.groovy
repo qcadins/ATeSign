@@ -80,7 +80,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Get Total Unsigned Document', 
                             GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (((((findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(
                                 GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + ' dimana Value DB yaitu ') + 
-                            (result)) + ' dan Value Excel yaitu ') + findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(
+                            '<' + (result)) + '> dan Value Excel yaitu ') + findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(
                                 GlobalVariable.NumofColm, 6))
                     }
                 }
@@ -90,7 +90,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Get Total Unsigned Document', 
-                    GlobalVariable.NumofColm, GlobalVariable.StatusFailed, message)
+                    GlobalVariable.NumofColm, GlobalVariable.StatusFailed, '<' + message + '>')
             }
         } else {
             'mengambil status code berdasarkan response HIT API'
@@ -98,7 +98,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
             'Write To Excel GlobalVariable.StatusFailed and errormessage'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Get Total Unsigned Document', GlobalVariable.NumofColm, 
-                GlobalVariable.StatusFailed, message)
+                GlobalVariable.StatusFailed, '<' + message + '>')
         }
     }
 }
