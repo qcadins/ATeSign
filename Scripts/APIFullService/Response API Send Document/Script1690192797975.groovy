@@ -472,7 +472,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'input body API kedalam stringRefno'
             stringRefno = (stringRefno + bodyAPI)
         }
-        
+
         'Jika flag tenant no'
         if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 47) == 'No') {
             'set tenant kosong'
@@ -520,10 +520,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			
                'Memasukkan documentid dan trxno ke dalam excel'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 
-                    5, GlobalVariable.NumofColm - 1, '<' + documentId.toString().replace('[', '').replace(']', '') + '>')
+                    5, GlobalVariable.NumofColm - 1, documentId.toString().replace('[', '').replace(']', ''))
 
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 
-                    6, GlobalVariable.NumofColm - 1, '<' + trxno.toString().replace('[', '').replace(']', '') + '>')
+                    6, GlobalVariable.NumofColm - 1, trxno.toString().replace('[', '').replace(']', ''))
 
 				'write to excel success'
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document',
@@ -551,7 +551,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 def PDFtoBase64(String fileName) {
     return CustomKeywords.'customizekeyword.ConvertFile.base64File'(fileName)
 }
-
 
 def getErrorMessageAPI(def respon) {
 	'mengambil status code berdasarkan response HIT API'

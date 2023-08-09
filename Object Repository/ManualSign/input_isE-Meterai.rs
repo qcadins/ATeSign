@@ -6,12 +6,12 @@
    <elementGuidId>354ef3ec-ffd8-455d-b829-a70be1ba0be5</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>BASIC</key>
-         <value>//*[@id=&quot;isMeterei&quot;]</value>
-      </entry>
-      <entry>
          <key>CSS</key>
          <value>label.custom-control-label</value>
+      </entry>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;isMeterei&quot;]</value>
       </entry>
       <entry>
          <key>XPATH</key>
@@ -26,7 +26,7 @@
       <name>tag</name>
       <type>Main</type>
       <value>label</value>
-      <webElementGuid>9967c1c8-b6f8-449e-9c3c-babdd7ca416a</webElementGuid>
+      <webElementGuid>24d5e588-62b0-4474-a95b-4b24e5bd5968</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -34,7 +34,7 @@
       <name>for</name>
       <type>Main</type>
       <value>isMeterei</value>
-      <webElementGuid>3ec86afb-a085-49e5-a460-30b64604e07f</webElementGuid>
+      <webElementGuid>2b66d511-a2d7-4f19-8973-d8d299197e97</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -42,7 +42,7 @@
       <name>class</name>
       <type>Main</type>
       <value>custom-control-label</value>
-      <webElementGuid>e98b7b6c-20ba-41e9-ae45-82f5ef3a3184</webElementGuid>
+      <webElementGuid>af3dbd2e-4f15-487f-b941-dbe97d7ad1e3</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -50,7 +50,7 @@
       <name>text</name>
       <type>Main</type>
       <value>Apakah dokumen membutuhkan e-Meterai?</value>
-      <webElementGuid>2be8bfd5-355d-446a-a42f-2cbc201fd08a</webElementGuid>
+      <webElementGuid>7c25474f-5b6a-4222-a6b0-0f2e2d75a5b8</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -58,7 +58,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>//*[@id=&quot;isMeterei&quot;]</value>
-      <webElementGuid>13913487-cd12-4839-b5db-2da580ff1776</webElementGuid>
+      <webElementGuid>a807aa28-72b1-4520-a738-9fdee126e94e</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -66,7 +66,7 @@
       <name>xpath:idRelative</name>
       <type>Main</type>
       <value>//form[@id='msxForm']/div[7]/div/div/label</value>
-      <webElementGuid>77fdec68-62d6-41a6-9c5a-9c3feffa591c</webElementGuid>
+      <webElementGuid>912eca64-8850-4241-80e8-d575e0c345f2</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -74,7 +74,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='*'])[6]/following::label[1]</value>
-      <webElementGuid>28f818ea-c3da-438d-a591-506e81c22f7e</webElementGuid>
+      <webElementGuid>693f7f35-c97c-4e02-9647-f5a5f932609d</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -82,7 +82,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Tipe Dokumen Peruri'])[1]/preceding::label[1]</value>
-      <webElementGuid>798c095b-675a-4a7a-820f-93554e45ae2a</webElementGuid>
+      <webElementGuid>541f9366-8a51-4b81-80ef-fceefbf2ac05</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -90,7 +90,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Select Document Type Peruri'])[1]/preceding::label[2]</value>
-      <webElementGuid>90771f5f-d1db-41ef-8f1f-d998df99d0a1</webElementGuid>
+      <webElementGuid>f654aeca-7d70-4405-8cc9-c5a4c31a3994</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -98,7 +98,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='Apakah dokumen membutuhkan e-Meterai?']/parent::*</value>
-      <webElementGuid>13524b74-b318-451f-a756-43b854707b25</webElementGuid>
+      <webElementGuid>5f63305e-b4f0-4f2c-933e-ed3e2723dd2f</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -106,7 +106,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div/div/label</value>
-      <webElementGuid>379dca32-53da-4381-b23f-8a2377549d5e</webElementGuid>
+      <webElementGuid>9ea7fcc3-ff44-41b3-8fa6-6e299044a12a</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -114,6 +114,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//label[(text() = 'Apakah dokumen membutuhkan e-Meterai?' or . = 'Apakah dokumen membutuhkan e-Meterai?')]</value>
-      <webElementGuid>639df540-f7c7-4c61-acd7-1c26cbe6a7de</webElementGuid>
+      <webElementGuid>764b6bd2-f98e-4cf8-9ee6-289eca83cf15</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

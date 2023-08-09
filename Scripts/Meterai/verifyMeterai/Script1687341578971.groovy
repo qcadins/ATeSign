@@ -19,9 +19,6 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'looping DocumentMonitoring'
 GlobalVariable.FlagFailed = 0
 
-'call testcase login admin'
-WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathMeterai, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
-
 'click menu meterai'
 WebUI.click(findTestObject('Meterai/menu_Meterai'))
 

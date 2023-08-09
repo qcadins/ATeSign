@@ -379,7 +379,7 @@ public class SendSign {
 	getDataPencarianDokumen(Connection conn, String emailSigner, String documentId) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select msl_signertype.code, case when amm2.full_name is null then '' else amm2.full_name end, tdh.ref_number, msl.description from tr_document_d_sign tdds join am_msuser amm on tdds.id_ms_user = amm.id_ms_user join tr_document_d tdd on tdds.id_document_d = tdd.id_document_d join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join ms_lov msl_signertype on tdds.lov_signer_type = msl_signertype.id_lov join ms_lov msl on tdh.lov_doc_type = msl.id_lov left join am_msuser amm2 on tdh.id_msuser_customer = amm2.id_ms_user where amm.login_id = '"+ emailSigner +"' and tdd.document_id = '"+ documentId +"' limit 1")
+		resultSet = stm.executeQuery("select case when amm2.full_name is null then '' else amm2.full_name end, tdh.ref_number, msl.description from tr_document_d_sign tdds join am_msuser amm on tdds.id_ms_user = amm.id_ms_user join tr_document_d tdd on tdds.id_document_d = tdd.id_document_d join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join ms_lov msl_signertype on tdds.lov_signer_type = msl_signertype.id_lov join ms_lov msl on tdh.lov_doc_type = msl.id_lov left join am_msuser amm2 on tdh.id_msuser_customer = amm2.id_ms_user where amm.login_id = '"+ emailSigner +"' and tdd.document_id = '"+ documentId +"' limit 1")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -391,5 +391,20 @@ public class SendSign {
 			}
 		}
 		listdata
+	}
+	
+	@Keyword
+	getRoleLogin(Connection conn, String emailSigner, String tenantCode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select amr.role_code from ms_useroftenant muot join ms_tenant mst on muot.id_ms_tenant = mst.id_ms_tenant join am_memberofrole amor on muot.id_ms_user = amor.id_ms_user join am_msuser amm on muot.id_ms_user = amm.id_ms_user join am_msrole amr on amor.id_ms_role = amr.id_ms_role where amm.login_id = '"+emailSigner+"' and mst.tenant_code = '"+tenantCode+"' limit 1")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
 	}
 }

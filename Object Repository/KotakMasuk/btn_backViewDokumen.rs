@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'btn btn-secondary']</value>
+         <value>//*[@class = 'btn btn-secondary' and (text() = 'Kembali' or . = 'Kembali')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -18,7 +18,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-view-document-inquiry/div[1]/div[3]/button</value>
-      <webElementGuid>15775f3b-10ee-4c09-975a-d21004e8307a</webElementGuid>
+      <webElementGuid>21a9b744-f6e3-4711-9395-81a2b953ad66</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -26,6 +26,14 @@
       <name>class</name>
       <type>Main</type>
       <value>btn btn-secondary</value>
-      <webElementGuid>27f0e209-95e9-4b57-b07a-8d4c33e92915</webElementGuid>
+      <webElementGuid>01e241d9-2993-48c9-bcc9-b35989e6711d</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Kembali</value>
+      <webElementGuid>4da122c5-6474-42a1-b2ff-94bce6ee64b8</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

@@ -26,8 +26,6 @@ splitIndex = -1
 
 indexForCatatanStamp = 0
 
-countValue = 0
-
 'memanggil test case login untuk admin wom dengan Admin Client'
 WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualSign, ('sheet') : 'Manual Sign'], FailureHandling.CONTINUE_ON_FAILURE)
 
@@ -262,27 +260,21 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                 continue
             } else {
-                WebUI.click(findTestObject('ManualSign/button_Next'))
-
-                'ambil teks errormessage'
-                errormessage = WebUI.getText(findTestObject('ManualSign/errorLog_fast'), FailureHandling.OPTIONAL)
-
-                if (errormessage.toString() != 'null') {
-                    'Tulis di excel itu adalah error'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Sign', GlobalVariable.NumofColm, 
-                        GlobalVariable.StatusFailed, (((findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 
-                            2).replace('-', '') + ';') + '<') + errormessage) + '>')
-
-                    'klik button cancel'
-                    WebUI.click(findTestObject('ManualSign/button_Cancel'), FailureHandling.OPTIONAL)
-
-                    continue
-                } else if (errormessage.toString() == 'null') {
-                }
+				
+				if (WebUI.verifyElementPresent(modifyObjectLblDaftarPenandaTangan, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+					'write to excel bahwa save gagal'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Sign', GlobalVariable.NumofColm,
+						GlobalVariable.StatusFailed, (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 2) +
+						';') + '<' + 'Silahkan tambah penanda tangan terlebih dulu!' +'>')
+		
+				}
+				else {
+					WebUI.click(findTestObject('ManualSign/button_Next'))
+				}
             }
-            
-            'check element presend pada next tanda tangan'
-            if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_NextTtd'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+			
+            'check element present pada next tanda tangan'
+            if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_documentNo'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
                 'check ui dan excel pada nomor dokumen'
                 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualSign/lbl_documentNo'), 
                             'value'), findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 9), false, FailureHandling.CONTINUE_ON_FAILURE), 
@@ -319,10 +311,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 checkVerifyEqualOrMatch(WebUI.verifyElementNotPresent(findTestObject('ManualSign/signBox'), GlobalVariable.TimeOut, 
                         FailureHandling.CONTINUE_ON_FAILURE), ' pada deletenya box Sign ')
             } else {
-                break
+                continue
             }
             
 			index = 0
+			
+			countValue = 0
 			
             'looping berdasarkan total tanda tangan'
             for (int j = 1; j <= tipeTandaTangan.size(); j++) {
@@ -343,9 +337,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                     'Klik set tanda tangan'
                     WebUI.click(findTestObject('ManualSign/ddl_TipeTandaTangan'))
-					
-					println Integer.parseInt(totalTandaTangan[index])
+
 					println countValue
+					println Integer.parseInt(totalTandaTangan[index])
+					println totalTandaTangan
+					println index
 					if (countValue == Integer.parseInt(totalTandaTangan[index])) {
 						index++
 						countValue = 0
@@ -422,7 +418,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
             WebUI.delay(1)
 
-            checkErrorLog()
+            if (checkErrorLog() == true) {
+				continue
+			}
 
             if (GlobalVariable.FlagFailed == 0) {
                 'write to excel success'
@@ -660,7 +658,7 @@ def inputForm() {
             WebUI.click(findTestObject('ManualSign/btn_E-Meterai'))
         }
         
-        'Input AKtif pada input Status'
+        'Input Aktif pada input Status'
         WebUI.setText(findTestObject('ManualSign/input_tipeDokumenPeruri'), findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 
                 16))
 
@@ -676,7 +674,7 @@ def inputForm() {
     } else if (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 14) == 'No') {
         if (WebUI.verifyElementChecked(findTestObject('ManualSign/input_isE-Meterai'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
             'Input AKtif pada input Status'
-            WebUI.click(findTestObject('ManualSign/input_isE-Meterai'))
+            WebUI.click(findTestObject('ManualSign/btn_E-Meterai'))
         }
     }
 }

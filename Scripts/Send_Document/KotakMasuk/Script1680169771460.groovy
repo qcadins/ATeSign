@@ -34,9 +34,6 @@ for (int y = 0; y < docId.size(); y++) {
     for (int t = 0; t < emailSigner.size(); t++) {
         'call Test Case untuk login sebagai user berdasarkan doc id'
         WebUI.callTestCase(findTestCase('Login/Login_1docManySigner'), [('email') : emailSigner[t]], FailureHandling.STOP_ON_FAILURE)
-        
-		'Diberikan delay dengan sign yang membutuhkan click login tenant dan peran'
-		WebUI.delay(20)
 		
         'get data kotak masuk send document secara asc, dimana customer no 1'
         ArrayList result = CustomKeywords.'connection.SendSign.getKotakMasukSendDoc'(conneSign, docId[y])
@@ -50,10 +47,12 @@ for (int y = 0; y < docId.size(); y++) {
 		'query untuk input pencarian dokumen'
 		ArrayList inputPencarianDokumen = CustomKeywords.'connection.SendSign.getDataPencarianDokumen'(conneSign, emailSigner[t], docId[y])  
 		
+		String roleInput = CustomKeywords.'connection.SendSign.getRoleLogin'(conneSign, emailSigner[t], GlobalVariable.Tenant)
+		
 		'inisialisasi arrayindex'
 		arrayIndex = 0
 
-	if (inputPencarianDokumen[arrayIndex++] == 'MF') {
+	if (roleInput == 'MF') {
 		'input nama pelanggan'
 		WebUI.setText(findTestObject('PencarianDokumen/input_NamaPelanggan'), inputPencarianDokumen[arrayIndex++])
 
@@ -163,14 +162,12 @@ for (int y = 0; y < docId.size(); y++) {
                             conneSign, docId[y]), false, FailureHandling.CONTINUE_ON_FAILURE))
             } else if (i == 4) {
 				'Jika login sebagai MF'
-				if (inputPencarianDokumen[0] != 'CUST') {
+				if (roleInput != 'CUST') {
 					'Diverifikasi dengan UI didepan'
 					arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectPencarianDokumen), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 					
 					tambahanColumn = 1
 				} else {
-					arrayIndex++
-				
 					'Diverifikasi dengan UI didepan'
 					arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectPencarianDokumen), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 				}
@@ -224,7 +221,7 @@ for (int y = 0; y < docId.size(); y++) {
             'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
             variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell['+ indexRow++ +']/div', true)
 
-		if (inputPencarianDokumen[0] != 'CUST') {
+		if (roleInput != 'CUST') {
 			'modify object text nama customer'
 			modifyObjectTextNamaCustomer = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_Berandaname'), 'xpath',
 				'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
@@ -270,12 +267,10 @@ for (int y = 0; y < docId.size(); y++) {
         arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectTextDocumentTemplateName), result[arrayIndex++], false, 
                 FailureHandling.CONTINUE_ON_FAILURE))
 		
-		if (inputPencarianDokumen[0] != 'CUST') {
+		if (roleInput != 'CUST') {
 			'verifikasi nama customer'
 			arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectTextNamaCustomer), result[arrayIndex++], false,
 				FailureHandling.CONTINUE_ON_FAILURE))
-		} else {
-			arrayIndex++
 		}
         'verifikasi tanggal permintaan dengan database'
         arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectTextTanggalPermintaan), result[arrayIndex++], false, 

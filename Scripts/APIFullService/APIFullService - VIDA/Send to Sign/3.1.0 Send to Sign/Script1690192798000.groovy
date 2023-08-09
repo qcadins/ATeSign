@@ -465,14 +465,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		
 						'swith to iframe'
 						WebUI.switchToFrame(findTestObject('EmbedView/iFrameEsign'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
-					} else {
-						'Jika running tidak menggunakan embed, maka refresh saja'
-						WebUI.refresh()
 					}
 					
-					
                     'Jika tidak muncul untuk element selanjutnya'
-                    if (!(WebUI.verifyElementPresent(modifyObjectlabelRequestOTP, GlobalVariable.TimeOut))) {
+                    if (!(WebUI.verifyElementPresent(modifyObjectlabelRequestOTP, GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE))) {
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                             GlobalVariable.StatusFailed, ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                                 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedSaveGagal) + ' dengan alasan tidak muncul page input OTP')
@@ -1076,8 +1072,8 @@ def checkSaldoSign(Connection conneSign, String refNumber) {
 }
 
 def checkSaldoOtp() {
-    String totalSaldo = new ArrayList()
-
+    String totalSaldo
+	
     'klik ddl untuk tenant memilih mengenai Vida'
     WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
             73), false)
@@ -1347,8 +1343,13 @@ def checkKotakMasuk(Connection conneSign, ArrayList emailSigner, String sheet, T
             'Diverifikasi dengan UI didepan'
             arrayMatch.add(WebUI.verifyMatch(labelRefNum, labelViewDoc, false, FailureHandling.CONTINUE_ON_FAILURE))
 
-            'Klik kembali'
+            'Klik kembali'					
             WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_backViewDokumen'))
+			
+			if (WebUI.verifyElementPresent(modifyObjectTextTitelViewDokumen, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+				'Klik kembali'
+				WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_backViewDokumen'))
+			}
         } else {
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                 ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedProcessNotDone) + 

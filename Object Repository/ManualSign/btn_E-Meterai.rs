@@ -18,6 +18,14 @@
       <name>xpath</name>
       <type>Main</type>
       <value>//*[@id=&quot;msxForm&quot;]/div[7]/div/div/label</value>
-      <webElementGuid>04f08fc1-39fa-4789-8f26-a1611afab2d9</webElementGuid>
+      <webElementGuid>44f4fc1d-f565-4fca-9784-fe332b84f567</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>for</name>
+      <type>Main</type>
+      <value>isMeterei</value>
+      <webElementGuid>8ce88733-0b49-4f52-acdd-6cd52f9c498f</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
