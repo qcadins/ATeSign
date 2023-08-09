@@ -96,7 +96,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 
         'write to excel status failed dan reason'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + semicolon) + messageFailed)
+            (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + semicolon) + '<' + messageFailed + '>')
     }
 } else {
     'mengambil message Failed'
@@ -104,7 +104,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 
     'write to excel status failed dan reason'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-        (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + semicolon) + messageFailed.toString())
+        (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + semicolon) + '<' + messageFailed.toString() + '>')
 }
 
 
