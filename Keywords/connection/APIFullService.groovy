@@ -859,4 +859,23 @@ public class APIFullService {
 		}
 		data
 	}
+
+	@Keyword
+	getAPIRegisterPrivyStoreDB(Connection conn, String trxNo) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT request_status, is_external FROM tr_balance_mutation tbm JOIN tr_job_check_register_status tjc ON tbm.id_balance_mutation = tjc.id_balance_mutation WHERE trx_no = '" +  trxNo  + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
 }
