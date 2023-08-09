@@ -244,7 +244,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         'Write To Excel GlobalVariable.StatusFailed dengan alasan bahwa saldo transaksi '
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Sign Document', GlobalVariable.NumofColm, 
                             GlobalVariable.StatusFailed, ((((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
-                                2) + ';') + ' Transaksi dengan nomor ') + (trxNo[i])) + ' digunakan untuk ') + checkTypeofUsedSaldo)
+                                2) + ';') + ' Transaksi dengan nomor ') + ('<' + trxNo[i])) + '> digunakan untuk ') + checkTypeofUsedSaldo)
                     }
                 }
                 

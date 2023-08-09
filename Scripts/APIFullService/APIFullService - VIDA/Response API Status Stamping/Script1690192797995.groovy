@@ -121,7 +121,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 'Write To Excel GlobalVariable.StatusFailed and errormessage'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Check Stamping Status', GlobalVariable.NumofColm, 
-                    GlobalVariable.StatusFailed, message)
+                    GlobalVariable.StatusFailed, '<' + message + '>')
             }
         } else {
             'mengambil status code berdasarkan response HIT API'
@@ -129,7 +129,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
             'Write To Excel GlobalVariable.StatusFailed and errormessage'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Check Stamping Status', GlobalVariable.NumofColm, 
-                GlobalVariable.StatusFailed, message)
+                GlobalVariable.StatusFailed, '<' + message + '>')
         }
     }
 }
