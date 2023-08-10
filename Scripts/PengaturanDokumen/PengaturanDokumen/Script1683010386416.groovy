@@ -1167,7 +1167,17 @@ def checkPopUpBerhasil(int isMandatoryComplete, String semicolon) {
 				2).replace('-', '') + semicolon) + GlobalVariable.ReasonFailedMandatory)
 
 		GlobalVariable.FlagFailed = 1
-	} else if (WebUI.getText(findTestObject('TandaTanganDokumen/label_PopUp')).equalsIgnoreCase('Document Template berhasil di simpan')) {
+	} else if (WebUI.verifyElementPresent(findTestObject('TandaTanganDokumen/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		'get reason from error log'
+		reason = WebUI.getAttribute(findTestObject('TandaTanganDokumen/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
+		
+		'write to excel status failed dan reason'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm,
+			GlobalVariable.StatusFailed, (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm,
+				2).replace('-', '') + semicolon) + '<' + reason + '>')
+		
+		GlobalVariable.FlagFailed = 1
+	} else if (WebUI.getText(findTestObject('TandaTanganDokumen/label_PopUp'), FailureHandling.OPTIONAL).equalsIgnoreCase('Document Template berhasil di simpan')) {
 		'click button ok'
 		WebUI.click(findTestObject('TandaTanganDokumen/button_Ok'))
 		
