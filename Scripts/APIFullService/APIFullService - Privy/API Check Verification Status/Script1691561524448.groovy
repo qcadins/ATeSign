@@ -25,16 +25,26 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		'setting menggunakan base url yang benar atau salah'
 		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathCheckVerificationStatus, GlobalVariable.NumofColm, 16)
 		
+		'check if tidak mau menggunakan tenant code yang benar'
+		if (findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, 14) == 'No') {
+			'set tenant kosong'
+			GlobalVariable.Tenant = findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, 15)
+		} else if (findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, 14) == 'Yes') {
+			GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
+		}
+		
+		'check if mau menggunakan api_key yang salah atau benar'
+		if (findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, 12) == 'Yes') {
+			'get api key dari db'
+			GlobalVariable.api_key = CustomKeywords.'connection.APIFullService.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
+		} else if (findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, 12) == 'No') {
+			'get api key salah dari excel'
+			GlobalVariable.api_key = findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, 13)
+		}
+		
 	    'HIT API'
-	    responLogin = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/API CheckVerificationStatus', [('callerId') : findTestData(excelPathCheckVerificationStatus).getValue(
-			GlobalVariable.NumofColm, 10), ('trxNo') : findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, 11)]))
-	
-	    'Jika status HIT API 200 OK'
-	    if (WS.verifyResponseStatusCode(responLogin, 200, FailureHandling.OPTIONAL) == true) {
-		   
-		   'HIT API'
-		   respon = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/API Check Document Before Signing', [('callerId') : findTestData(excelPathCheckVerificationStatus).getValue(
-			   GlobalVariable.NumofColm, 9), ('trxNo') : findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, 10)]))
+	    respon = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/API CheckVerificationStatus', [('callerId') : findTestData(excelPathCheckVerificationStatus).getValue(
+			GlobalVariable.NumofColm, 9), ('trxNo') : findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, 10)]))
 	
 		   if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
 			   'get  doc id'
@@ -43,51 +53,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			   'get  signing Process'
 			   results = WS.getElementPropertyValue(respon, 'results', FailureHandling.OPTIONAL)
 			
-//			   println(docId)
-//			   println(signingProcess)
-//	
-//			   if (GlobalVariable.checkStoreDB == 'Yes') {
-//				   
-//				   'declare arraylist arraymatch'
-//				   ArrayList<String> arrayMatch = []
-//				   
-//				   for(index = 0 ; index < docId.size() ; index++) {
-//					   
-//					   'get data from DB'
-//					   ArrayList<String> resultDB = CustomKeywords.'connection.APIFullService.getDocSignSequence'(conneSign, docId[index])
-//					   
-//					   arrayIndex = 0
-//					   
-//					   'verify doc ID'
-//					   arrayMatch.add(WebUI.verifyMatch(docId[index], resultDB[arrayIndex++],
-//							   false, FailureHandling.CONTINUE_ON_FAILURE))
-//					   
-//					   'verify status'
-//					   arrayMatch.add(WebUI.verifyMatch(signingProcess[index], resultDB[arrayIndex++],
-//							   false, FailureHandling.CONTINUE_ON_FAILURE))
-//				   }
-//				   
-//				   'jika data db tidak sesuai dengan excel'
-//				   if (arrayMatch.contains(false)) {
-//					   'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-//					   CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Check Verification Status',
-//						   GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (findTestData(excelPathCheckVerificationStatus).getValue(
-//							   GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
-//				   } else {
-//					   'write to excel success'
-//					   CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Check Verification Status',
-//						   0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-//				   }
-//			   }
-			   
+			   'write to excel success'
+			   CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Check Verification Status',
+				   0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+
+			   'write to excel verif status'
+			   CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Check Verification Status',
+				   5, GlobalVariable.NumofColm - 1, verifStatus)
 		   } else {
 		        'call function get error message API'
 				getErrorMessageAPI(respon)
 		   }	
-	    } else {
-			'call function get error message API'
-			getErrorMessageAPI(responLogin)
-	    }
     }
 }
 

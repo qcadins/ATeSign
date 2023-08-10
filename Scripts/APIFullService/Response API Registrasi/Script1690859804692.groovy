@@ -22,6 +22,8 @@ int countColmExcel = findTestData(excelPathAPIRegistrasi).columnNumbers
 
 String selfPhoto, idPhoto, saldoBefore, saldoAfter
 
+int countCheckSaldo
+
 'looping API Registrasi'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
@@ -69,7 +71,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		}
         
 		if(GlobalVariable.Psre == 'VIDA') {			
-			int countCheckSaldo = 0
+			countCheckSaldo = 0
 			
 			WebUI.openBrowser('')
 			
