@@ -225,6 +225,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                 WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_materai'))
                             }
 							
+							'modify label tipe tanda tangan di kotak'
+							modifyobjectTTDlblRoleTandaTangan = WebUI.modifyObjectProperty(findTestObject('Object Repository/TandaTanganDokumen/lbl_TTDTipeTandaTangan'),
+								'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' +
+								j) + ']/div/div/small', true)
+							
                             if ((TipeTandaTangan[(j - 1)]).equalsIgnoreCase('TTD') || (TipeTandaTangan[(j - 1)]).equalsIgnoreCase('Paraf')) {
                                 'Verify label tanda tangannya muncul atau tidak'
                                 WebUI.verifyElementPresent(findTestObject('TandaTanganDokumen/lbl_TipeTandaTangan'), GlobalVariable.TimeOut, 
@@ -239,11 +244,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                                 'Klik set tanda tangan'
                                 WebUI.click(findTestObject('TandaTanganDokumen/btn_setTandaTangan'))
-
-                                'modify label tipe tanda tangan di kotak'
-                                modifyobjectTTDlblRoleTandaTangan = WebUI.modifyObjectProperty(findTestObject('Object Repository/TandaTanganDokumen/lbl_TTDTipeTandaTangan'), 
-                                    'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' + 
-                                    j) + ']/div/div/small', true)
 
                                 'Verifikasi antara excel dan UI, apakah tipenya sama'
                                 WebUI.verifyMatch(RoleTandaTangan[(j - 1)], WebUI.getText(modifyobjectTTDlblRoleTandaTangan), 
@@ -523,6 +523,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_materai'))
                         }
                         
+						'modify label tipe tanda tangan di kotak'
+						modifyobjectTTDlblRoleTandaTangan = WebUI.modifyObjectProperty(findTestObject('Object Repository/TandaTanganDokumen/lbl_TTDTipeTandaTangan'),
+							'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' +
+							j) + ']/div/div/small', true)
+						
                         if ((TipeTandaTangan[(j - 1)]).equalsIgnoreCase('TTD') || (TipeTandaTangan[(j - 1)]).equalsIgnoreCase(
                             'Paraf')) {
                             'Verify label tanda tangannya muncul atau tidak'
@@ -535,11 +540,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                             'Klik set tanda tangan'
                             WebUI.click(findTestObject('TandaTanganDokumen/btn_setTandaTangan'))
-
-                            'modify label tipe tanda tangan di kotak'
-                            modifyobjectTTDlblRoleTandaTangan = WebUI.modifyObjectProperty(findTestObject('Object Repository/TandaTanganDokumen/lbl_TTDTipeTandaTangan'), 
-                                'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' + 
-                                j) + ']/div/div/small', true)
 
                             'Verifikasi antara excel dan UI, apakah tipenya sama'
                             WebUI.verifyMatch(RoleTandaTangan[(j - 1)], WebUI.getText(modifyobjectTTDlblRoleTandaTangan), 
