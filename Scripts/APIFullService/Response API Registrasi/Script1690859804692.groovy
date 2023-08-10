@@ -102,6 +102,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			'get status code'
             code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
+			'declare arraylist arraymatch'
+			arrayMatch = []
+			
             if (code == 0) {
                 'mengambil response'
                 trxNo = WS.getElementPropertyValue(respon, 'trxNo', FailureHandling.OPTIONAL)
@@ -110,9 +113,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
 				println(trxNo)
                 if (GlobalVariable.checkStoreDB == 'Yes') {
-                	'declare arraylist arraymatch'
-                	arrayMatch = []
-					
 					if (GlobalVariable.Psre != 'PRIVY') {
 						
 	                    arrayIndex = 0
