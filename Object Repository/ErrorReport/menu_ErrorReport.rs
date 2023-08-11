@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'nav-container ng-tns-c133-1']/ul/li[4]/a/span</value>
+         <value>//*[@href = '/error-report']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,10 +15,10 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>href</name>
       <type>Main</type>
-      <value>//*[@class = 'nav-container ng-tns-c133-1']/ul/li[4]/a/span</value>
-      <webElementGuid>4e2a0e22-eb98-41a4-9f9d-dbce1625fe5c</webElementGuid>
+      <value>/error-report</value>
+      <webElementGuid>149f4a3a-529c-4d45-b244-48b61cd80116</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -26,6 +26,6 @@
       <name>class</name>
       <type>Main</type>
       <value>nav-container ng-tns-c133-1</value>
-      <webElementGuid>83de915a-6d62-4bc0-a3cd-07e991ca32a6</webElementGuid>
+      <webElementGuid>a1feac1e-1835-42d1-8fdb-46cd951bc22e</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
