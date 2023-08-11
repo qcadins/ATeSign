@@ -94,7 +94,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
             'call Test Case untuk login sebagai user berdasarkan doc id'
             WebUI.callTestCase(findTestCase('Login/Login_1docManySigner'), [('email') : emailSigner[(o - 1)]], FailureHandling.CONTINUE_ON_FAILURE)
-
+			
+			String roleInput = CustomKeywords.'connection.SendSign.getRoleLogin'(conneSign, emailSigner[o - 1], GlobalVariable.Tenant)
+		
 			if (checkPopup() == true) {
 				break
 			}
@@ -149,35 +151,40 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     'deklarasi arrayIndex untuk pemakaian'
                     arrayIndex = 0
 
-                    'modify object text document template name di beranda'
-                    modifyObjectTextDocumentTemplateName = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_namadokumentemplate'), 
-                        'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-                        j) + ']/datatable-body-row/div[2]/datatable-body-cell[4]/div/p', true)
-
-                    'modify object text document template tipe di beranda'
-                    modifyObjectTextDocumentTemplateTipe = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_namadokumentemplate'), 
-                        'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-                        j) + ']/datatable-body-row/div[2]/datatable-body-cell[3]/div/p', true)
-
-                    'modify object btn TTD Dokumen di beranda'
-                    modifyObjectCheckboxTtd = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/checkbox_ttd'), 
-                        'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-                        j) + ']/datatable-body-row/div[2]/datatable-body-cell[1]/div/div/input', true)
-
-					'modify object lbl nama pelanggan'
-					modifyObjectTextNamaPelanggan = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/checkbox_ttd'),
-						'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-						j) + ']/datatable-body-row/div[2]/datatable-body-cell[5]/div', true)
+                   'index row distart dari 2 karena yang 1 adalah button ttd'
+					indexRow = 2
 					
-                    'modify object lbl tanggal permintaan'
-                    modifyObjectTextTglPermintaan = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/checkbox_ttd'), 
-                        'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-                        j) + ']/datatable-body-row/div[2]/datatable-body-cell[6]/div/span', true)
+					'modify object text refnum'
+					modifyObjectTextRefNumber = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_refnum'), 'xpath', 'equals',
+						('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+						j) + ']/datatable-body-row/div[2]/datatable-body-cell['+ indexRow++ +']/div', true)
+					
+					'modify object text document template tipe di beranda'
+					modifyObjectTextDocumentTemplateTipe = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_namadokumentemplate'),
+						'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+						j) + ']/datatable-body-row/div[2]/datatable-body-cell['+ indexRow++ +']/div/p', true)
+					
+					'modify object text document template name di beranda'
+					modifyObjectTextDocumentTemplateName = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_namadokumentemplate'),
+						'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+						j) + ']/datatable-body-row/div[2]/datatable-body-cell['+ indexRow++ +']/div/p', true)
 
-                    'modify object text no kontrak di beranda'
-                    modifyObjectTextRefNumber = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/lbl_refnumber'), 'xpath', 
-                        'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-                        j) + ']/datatable-body-row/div[2]/datatable-body-cell[2]/div/p', true)
+					if (roleInput != 'CUST') {
+						'modify object text nama customer'
+						modifyObjectTextNamaPelanggan = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_Berandaname'), 'xpath',
+							'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+							j) + ']/datatable-body-row/div[2]/datatable-body-cell['+ indexRow++ +']/div', true)
+					}
+					
+					'modify object lbl tanggal permintaan'
+					modifyObjectTextTglPermintaan = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/checkbox_ttd'),
+						'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+						j) + ']/datatable-body-row/div[2]/datatable-body-cell['+ indexRow++ +']/div/span', true)
+					
+					'modify object btn TTD Dokumen di beranda'
+					modifyObjectCheckboxTtd = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/checkbox_ttd'),
+						'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+						j) + ']/datatable-body-row/div[2]/datatable-body-cell[1]/div/div/input', true)
 
                     'Jika datanya match dengan db, mengenai referal number'
                     if (WebUI.verifyMatch(WebUI.getText(modifyObjectTextRefNumber), sendToSign[arrayIndex++], false, FailureHandling.OPTIONAL) == true) {

@@ -182,7 +182,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 						'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
 						j) + ']/datatable-body-row/div[2]/datatable-body-cell[1]/div/div/input', true)
 
-
 					'Jika datanya match dengan db, mengenai referal number'
 					if (WebUI.verifyMatch(WebUI.getText(modifyObjectTextRefNumber), sendToSign[arrayIndex++], false, FailureHandling.OPTIONAL) == true) {
 						'Mengenai tipe dokumen template'
