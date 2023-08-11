@@ -39,7 +39,7 @@ public class PengaturanPSrE {
 	getTotalPSrE(Connection conn) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT count(*) FROM ms_vendor WHERE is_active = '1' AND is_Operating IS NOT NULL")
+		resultSet = stm.executeQuery("SELECT count(*) FROM ms_vendor WHERE is_active IS NOT NULL AND is_Operating IS NOT NULL")
 
 		metadata = resultSet.metaData
 
@@ -50,7 +50,7 @@ public class PengaturanPSrE {
 		}
 		data
 	}
-	
+
 	@Keyword
 	getDDLVendorPaymentType(Connection conn) {
 		stm = conn.createStatement()
