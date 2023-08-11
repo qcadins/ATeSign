@@ -14,7 +14,7 @@ import org.openqa.selenium.Keys as Keys
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-String valueRefNum
+String valueRefNum, nomorKontrakDocument
 
 'penggunaan versi 3.1.0 atau 3.0.0 dengan 1 api yang sama'
 if (useAPI == 'v3.1.0') {
@@ -31,12 +31,17 @@ if (useAPI == 'v3.1.0') {
     valueRefNum = '"agreementNo"'
 }
 
+if (excelPathStamping == 'Beranda/ManualSigntoSign') {
+	nomorKontrakDocument = '"' + findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 9) + '"'
+} else {
+	nomorKontrakDocument = findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 11)
+}
+
 saldoBefore = loginAdminGetSaldo(conneSign, 'No', sheet)
 
 'HIT API stamping'
 respon = WS.sendRequest(findTestObject('Flow Stamping', [('callerId') : findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 
-                43), ('valueRefNum') : valueRefNum, ('refNumber') : findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 
-                11)]))
+                43), ('valueRefNum') : valueRefNum, ('refNumber') : nomorKontrakDocument]))
 
 'Jika status HIT API 200 OK'
 if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
@@ -82,7 +87,9 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
                             2) + ';') + GlobalVariable.ReasonFailedStoredDB)
 
                     GlobalVariable.FlagFailed = 1
-                }
+                } else {
+					GlobalVariable.FlagFailed = 0
+				}
                 
                 break
             } else {
@@ -107,22 +114,22 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
             'write to excel success'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
                 1, GlobalVariable.StatusSuccess)
-        }
-        
-        'Call verify meterai'
-        WebUI.callTestCase(findTestCase('Meterai/verifyMeterai'), [('excelPathMeterai') : excelPathStamping, ('sheet') : sheet
-                , ('noKontrak') : findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 11).replace('"', '')
-                , ('linkDocumentMonitoring') : linkDocumentMonitoring], FailureHandling.CONTINUE_ON_FAILURE)
-
-        saldoAfter = loginAdminGetSaldo(conneSign, 'Yes', sheet)
-
-        if (saldoBefore == saldoAfter) {
-            'write to excel status failed dan reason'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
-                ' terhadap total saldo dimana saldo awal dan saldo setelah meterai sama ')
-        } else {
-            verifySaldoUsed(conneSign, sheet)
+			
+			'Call verify meterai'
+			WebUI.callTestCase(findTestCase('Meterai/verifyMeterai'), [('excelPathMeterai') : excelPathStamping, ('sheet') : sheet
+					, ('noKontrak') : findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 11).replace('"', '')
+					, ('linkDocumentMonitoring') : linkDocumentMonitoring], FailureHandling.CONTINUE_ON_FAILURE)
+	
+			saldoAfter = loginAdminGetSaldo(conneSign, 'Yes', sheet)
+	
+			if (saldoBefore == saldoAfter) {
+				'write to excel status failed dan reason'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+					((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) +
+					' terhadap total saldo dimana saldo awal dan saldo setelah meterai sama ')
+			} else {
+				verifySaldoUsed(conneSign, sheet)
+			}
         }
     } else {
 

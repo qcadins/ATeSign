@@ -129,7 +129,7 @@ public class SendSign {
 
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select CASE WHEN msl_tdd.description = 'Per Document' then '1' WHEN msl_tdd.description = 'Per Sign' then count(tdds.sign_location) end from tr_document_d_sign tdds join tr_document_d tdd on tdds.id_document_d = tdd.id_document_d join ms_lov msl on tdds.lov_signer_type = msl.id_lov join ms_lov msl_tdd on tdd.lov_payment_sign_type = msl_tdd.id_lov join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join am_msuser amm on tdds.id_ms_user = amm.id_ms_user where tdh.ref_number = '" + refnumber + "' and amm.login_id = '" + emailSigner + "' GROUP BY msl.description, msl_tdd.description")
+		resultSet = stm.executeQuery("select CASE WHEN msl_tdd.description = 'Per Document' then '1' WHEN msl_tdd.description = 'Per Sign' then count(tdds.sign_location) end from tr_document_d_sign tdds join tr_document_d tdd on tdds.id_document_d = tdd.id_document_d left join ms_lov msl on tdds.lov_signer_type = msl.id_lov join ms_lov msl_tdd on tdd.lov_payment_sign_type = msl_tdd.id_lov join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join am_msuser amm on tdds.id_ms_user = amm.id_ms_user where tdh.ref_number = '" + refnumber + "' and amm.login_id = '" + emailSigner + "' GROUP BY msl.description, msl_tdd.description")
 		metadata = resultSet.getMetaData()
 
 		columnCount = metadata.getColumnCount()
@@ -237,8 +237,7 @@ public class SendSign {
 	getKotakMasukSendDoc(Connection conn, String documentid) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select tdh.ref_number, msl.description as doctype,case when mdt.doc_template_name is null then tdd.document_name else mdt.doc_template_name end, amm2.full_name, TO_CHAR(tdd.dtm_crt, 'DD-Mon-YYYY HH24:MI') as timee, case when tdd.completed_date is null then '-' else TO_CHAR(tdd.completed_date, 'DD-Mon-YYYY HH24:MI') end , msl_sign.description as description  from tr_document_d tdd join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join ms_lov msl on tdh.lov_doc_type = msl.id_lov left join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d join ms_lov ms on tdds.lov_signer_type = ms.id_lov join am_msuser amm on tdds.id_ms_user = amm.id_ms_user join ms_lov msl_sign on tdd.lov_sign_status = msl_sign.id_lov left join am_msuser amm2 on tdh.id_msuser_customer = amm2.id_ms_user where document_id = '"+ documentid +"' ORDER BY tdds.id_document_d_sign asc limit 1")
-
+		resultSet = stm.executeQuery("select tdh.ref_number, msl.description as doctype,case when mdt.doc_template_name is null then tdd.document_name else mdt.doc_template_name end,  case when amm2.full_name != '' or amm2.full_name != null then amm2.full_name else '' end, TO_CHAR(tdd.request_date, 'DD-Mon-YYYY HH24:MI') as timee, case when tdd.completed_date is null then '-' else TO_CHAR(tdd.completed_date, 'DD-Mon-YYYY HH24:MI') end , msl_sign.description as description  from tr_document_d tdd join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h left join ms_lov msl on tdh.lov_doc_type = msl.id_lov left join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d left join ms_lov ms on tdds.lov_signer_type = ms.id_lov join am_msuser amm on tdds.id_ms_user = amm.id_ms_user join ms_lov msl_sign on tdd.lov_sign_status = msl_sign.id_lov left join am_msuser amm2 on tdh.id_msuser_customer = amm2.id_ms_user  where document_id = '"+documentid+"' ORDER BY tdds.id_document_d_sign asc limit 1")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -290,7 +289,7 @@ public class SendSign {
 	getSignerKotakMasukSendDoc(Connection conn, String documentid, String emailSigner) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select ms.description as signertype,amm.full_name as name, amm.login_id as email,CASE WHEN amm.is_active = '1' THEN 'Sudah Aktivasi' END as aktivasi, CASE WHEN tdds.sign_date is not null THEN 'Signed' ELSE msl.description END as status, CASE WHEN tdds.sign_date IS null THEN '-' else to_char(tdds.sign_date, 'DD-Mon-YYYY HH24:MI') END sign_date from tr_document_d tdd join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join ms_lov msl on tdd.lov_sign_status = msl.id_lov left join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d join ms_lov ms on tdds.lov_signer_type = ms.id_lov join am_msuser amm on tdds.id_ms_user = amm.id_ms_user where document_id = '" + documentid + "' and amm.login_id = '" + emailSigner + "' ORDER BY tdds.id_document_d_sign asc limit 1")
+		resultSet = stm.executeQuery("select case when ms.description != '' or ms.description != null then ms.description else 'Signer' end as signertype,amm.full_name as name, amm.login_id as email,CASE WHEN amm.is_active = '1' THEN 'Sudah Aktivasi' END as aktivasi, CASE WHEN tdds.sign_date is not null THEN 'Signed' ELSE msl.description END as status, CASE WHEN tdds.sign_date IS null THEN '-' else to_char(tdds.sign_date, 'DD-Mon-YYYY HH24:MI') END sign_date from tr_document_d tdd join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join ms_lov msl on tdd.lov_sign_status = msl.id_lov left join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d left join ms_lov ms on tdds.lov_signer_type = ms.id_lov join am_msuser amm on tdds.id_ms_user = amm.id_ms_user where document_id = '" + documentid + "' and amm.login_id = '" + emailSigner + "' ORDER BY tdds.id_document_d_sign asc limit 1")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -392,7 +391,7 @@ public class SendSign {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getRoleLogin(Connection conn, String emailSigner, String tenantCode) {
 		stm = conn.createStatement()

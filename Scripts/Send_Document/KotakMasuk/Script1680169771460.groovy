@@ -35,6 +35,8 @@ for (int y = 0; y < docId.size(); y++) {
         'call Test Case untuk login sebagai user berdasarkan doc id'
         WebUI.callTestCase(findTestCase('Login/Login_1docManySigner'), [('email') : emailSigner[t]], FailureHandling.STOP_ON_FAILURE)
 		
+		WebUI.delay(20)
+		
         'get data kotak masuk send document secara asc, dimana customer no 1'
         ArrayList result = CustomKeywords.'connection.SendSign.getKotakMasukSendDoc'(conneSign, docId[y])
 
@@ -44,6 +46,8 @@ for (int y = 0; y < docId.size(); y++) {
         'click menu pencarian dokumen'
         WebUI.click(findTestObject('PencarianDokumen/menu_PencarianDokumen'))
 
+		WebUI.delay(20)
+		
 		'query untuk input pencarian dokumen'
 		ArrayList inputPencarianDokumen = CustomKeywords.'connection.SendSign.getDataPencarianDokumen'(conneSign, emailSigner[t], docId[y])  
 		
@@ -168,6 +172,8 @@ for (int y = 0; y < docId.size(); y++) {
 					
 					tambahanColumn = 1
 				} else {
+					arrayIndex++
+					
 					'Diverifikasi dengan UI didepan'
 					arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectPencarianDokumen), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 				}
@@ -271,6 +277,8 @@ for (int y = 0; y < docId.size(); y++) {
 			'verifikasi nama customer'
 			arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectTextNamaCustomer), result[arrayIndex++], false,
 				FailureHandling.CONTINUE_ON_FAILURE))
+		} else {
+			arrayIndex++
 		}
         'verifikasi tanggal permintaan dengan database'
         arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectTextTanggalPermintaan), result[arrayIndex++], false, 
@@ -407,7 +415,7 @@ for (int y = 0; y < docId.size(); y++) {
     
 	'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
 	WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument
-	 , ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
+	 , ('sheet') : sheet, ('isManualSign') : 'Yes'], FailureHandling.CONTINUE_ON_FAILURE)
 
 
     'jika data db tidak sesuai dengan excel'

@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "keywordFileContentHash": "8747102F75CABB728D6F65E93AA26C40",
-=======
-  "keywordFileContentHash": "3BD57E6049B3756E0B836BEE551716AC",
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+  "keywordFileContentHash": "8D367F4EB4E15E86D43F4B9B165D4FDA",
   "keywordClasses": [
     {
       "name": "connection.APIFullService",
@@ -1800,11 +1796,8 @@
                 "errorOnParsing": false
               }
             }
-<<<<<<< HEAD
           ],
           "javadoc": ""
-=======
-          ]
         },
         {
           "name": "getAPIRegisterPrivyStoreDB",
@@ -1835,8 +1828,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+          ],
+          "javadoc": ""
         }
       ]
     }
