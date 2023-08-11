@@ -127,10 +127,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					'kurang saldo before dengan proses verifikasi'
 				    saldoBefore.set(0, (Integer.parseInt(saldoBefore[0]) - 1).toString())
 				
-//				    saldoBefore.set(1, (Integer.parseInt(saldoBefore[1]) - 1).toString())
+					'kurang saldo before dengan prose PNBP'
+				    saldoBefore.set(1, (Integer.parseInt(saldoBefore[1]) - 1).toString())
 				
 				    'kurang saldo before dengan jumlah counter send OTP'
-				    saldoBefore.set(1, (Integer.parseInt(saldoBefore[1]) - GlobalVariable.Counter).toString())
+				    saldoBefore.set(2, (Integer.parseInt(saldoBefore[2]) - GlobalVariable.Counter).toString())
 				
 //				    saldoBefore.set(3, (Integer.parseInt(saldoBefore[3]) - GlobalVariable.Counter).toString())
 					
@@ -144,29 +145,27 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					println('saldoAfter : ' + saldoAfter.toString())
 				}
             } else {
-                'mengambil status code berdasarkan response HIT API'
-                message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
-
-                'Write To Excel GlobalVariable.StatusFailed and errormessage'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link', GlobalVariable.NumofColm, 
-                    GlobalVariable.StatusFailed, '<' + message + '>')
+               'call function get API error message'
+			   getAPIErrorMessage(respon)
             }
         } else {
-            'mengambil status code berdasarkan response HIT API'
-            message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
-
-            'Write To Excel GlobalVariable.StatusFailed and errormessage'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link', GlobalVariable.NumofColm, 
-                GlobalVariable.StatusFailed, '<' + message + '>')
+			'call function get API error message'
+			getAPIErrorMessage(respon)
         }
     }
 }
 
+def getAPIErrorMessage(def respon) {
+	'mengambil status code berdasarkan response HIT API'
+	message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
+
+	'Write To Excel GlobalVariable.StatusFailed and errormessage'
+	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link', GlobalVariable.NumofColm,
+		GlobalVariable.StatusFailed, '<' + message + '>')
+}
+
 def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 	ArrayList<String> saldo = []
-
-	'get current date'
-	currentDate = new Date().format('yyyy-MM-dd')
 	
 	'navigate to url esign'
 	WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 5))
@@ -232,7 +231,7 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 			']/div/div/div/div/div[1]/h3', true)
 
 		'check if box info = tipe saldo di excel'
-		if (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('Verification')) {
+		if (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('Verification') || WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('PNBP')) {
 			'modify object qty'
 			modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
 				'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) +
@@ -241,7 +240,12 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 			'get qty saldo before'
 			saldo.add(WebUI.getText(modifyObjectQty).replace(',', ''))
 
-			break
+			'if saldo sudah terisi 2 verification dan pnbp'
+			if(saldo.size() == 2) {
+				break
+			}
+			
+			continue
 		}
 	}
 	
@@ -253,103 +257,14 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 //	'get trx saldo'
 //	saldo.add(WebUI.getText(modifyObjectBalance).replace(',', ''))
 
-	if ((countCheckSaldo == 1) && (GlobalVariable.FlagFailed == 0)) {
-		'input tipe saldo'
-		WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), 'Verification')
-	
-		'enter untuk input tipe saldo'
-		WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), Keys.chord(Keys.ENTER))
-	
-		'input tanggal Transaksi'
-		WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TanggalTransaksi'), currentDate)
+	if ((countCheckSaldo == 1)) {
+		'call function input filter saldo'
+		inputFilterSaldo('Verification', conneSign)
 		
-	//	'input tipe transaksi'
-	//	WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TipeTransaksi'), 'Use Verification')
-	//
-	//	'enter untuk input tipe saldo'
-	//	WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeTransaksi'), Keys.chord(Keys.ENTER))
-	
-		'click button cari'
-		WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_Cari'))
-	
-		'get row'
-		variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
-	
-		'modify object button last page'
-		modifyObjectButtonLastPage = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
-			'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' +
-			variable.size()) + ']', true)
-	
-		if (WebUI.getAttribute(modifyObjectButtonLastPage, 'class', FailureHandling.OPTIONAL) != 'disabled') {
-			'click button last page'
-			WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_LastPage'))
+		if(GlobalVariable.FlagFailed == 0) {
+			'call function input filter saldo'
+			inputFilterSaldo('PNBP', conneSign)
 		}
-		
-		'get row'
-		variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
-	
-		'modify object no transaksi'
-		modifyObjectNoTransaksi = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
-			'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-			variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[1]/div', true)
-
-		'modify object tanggal transaksi'
-		modifyObjectTanggalTransaksi = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'),
-			'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-			variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[2]/div', true)
-
-		'modify object tipe transaksi'
-		modifyObjectTipeTransaksi = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
-			'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-			variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[3]/div', true)
-
-		'modify object user'
-		modifyObjectUser = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 'equals',
-			('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-			variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[4]/div', true)
-
-		'modify object no kontrak'
-		modifyObjectNoKontrak = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
-			'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-			variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[5]/div', true)
-
-		'modify object Catatan'
-		modifyObjectCatatan = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
-			'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-			variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[8]/div', true)
-
-		'modify object qty'
-		modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 'equals',
-			('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-			variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[9]/div', true)
-
-		'get trx dari db'
-		ArrayList<String> result = CustomKeywords.'connection.DataVerif.getSaldoTrx'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(
-				GlobalVariable.NumofColm, 12).replace('"', ''), findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 16).replace('"', ''),
-			'Use Verification')
-
-		arrayIndex = 0
-
-		'verify no trx ui = db'
-		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectNoTransaksi), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' No Trx')
-
-		'verify tgl trx ui = db'
-		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectTanggalTransaksi), (result[arrayIndex++]).replace(
-					'.0', ''), false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Trx')
-
-		'verify tipe trx ui = db'
-		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectTipeTransaksi), result[arrayIndex++], false,
-				FailureHandling.CONTINUE_ON_FAILURE), ' Tipe Trx')
-
-		'verify user trx ui = db'
-		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectUser), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' User')
-
-		'verify note trx ui = db'
-		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectCatatan), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Notes')
-
-		'verify qty trx ui = db'
-		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectQty), (result[arrayIndex++]).replace('-', ''),
-				false, FailureHandling.CONTINUE_ON_FAILURE), ' Qty Trx')
 	}
 	
 	'select vendor'
@@ -387,105 +302,8 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 //	saldo.add(WebUI.getText(modifyObjectBalance).replace(',', ''))
 
 	if ((countCheckSaldo == 1) && (GlobalVariable.FlagFailed == 0)) {
-		'input tipe saldo'
-		WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), 'OTP')
-	
-		'enter untuk input tipe saldo'
-		WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), Keys.chord(Keys.ENTER))
-	
-		'input tanggal Transaksi'
-		WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TanggalTransaksi'), currentDate)
-		
-	//	'input tipe transaksi'
-	//	WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TipeTransaksi'), 'Use OTP')
-	//
-	//	'enter untuk input tipe saldo'
-	//	WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeTransaksi'), Keys.chord(Keys.ENTER))
-	
-		'click button cari'
-		WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_Cari'))
-	
-		'get row'
-		variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
-	
-		'modify object button last page'
-		modifyObjectButtonLastPage = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
-			'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' +
-			variable.size()) + ']', true)
-	
-		if (WebUI.getAttribute(modifyObjectButtonLastPage, 'class', FailureHandling.OPTIONAL) != 'disabled') {
-			'click button last page'
-			WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_LastPage'))
-		}
-		
-		'get row'
-		variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
-		
-		'modify object no transaksi'
-		modifyObjectNoTransaksi = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
-			'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-			variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[1]/div', true)
-
-		'modify object tanggal transaksi'
-		modifyObjectTanggalTransaksi = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'),
-			'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-			variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[2]/div', true)
-
-		'modify object tipe transaksi'
-		modifyObjectTipeTransaksi = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
-			'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-			variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[3]/div', true)
-
-		'modify object user'
-		modifyObjectUser = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 'equals',
-			('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-			variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[4]/div', true)
-
-		'modify object Catatan'
-		modifyObjectCatatan = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
-			'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-			variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[8]/div', true)
-
-		'modify object qty'
-		modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 'equals',
-			('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-			variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[9]/div', true)
-
-		'get trx dari db'
-		ArrayList<String> result = CustomKeywords.'connection.DataVerif.getSaldoTrx'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(
-				GlobalVariable.NumofColm, 12).replace('"', ''), findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 16).replace('"', ''),
-			'Use OTP')
-
-		'get count trx'
-		String resultCount = CustomKeywords.'connection.DataVerif.getCountTrx'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(
-				GlobalVariable.NumofColm, 12).replace('"', ''), findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 16).replace('"', ''),
-			'Use OTP')
-
-		arrayIndex = 0
-
-		'verify no trx ui = db'
-		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectNoTransaksi), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' No Trx')
-
-		'verify tgl trx ui = db'
-		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectTanggalTransaksi), (result[arrayIndex++]).replace(
-					'.0', ''), false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Trx')
-
-		'verify tipe trx ui = db'
-		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectTipeTransaksi), result[arrayIndex++], false,
-				FailureHandling.CONTINUE_ON_FAILURE), ' Tipe Trx')
-
-		'verify user trx ui = db'
-		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectUser), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' User')
-
-		'verify note trx ui = db'
-		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectCatatan), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Notes')
-
-		'verify qty trx ui = db'
-		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectQty), (result[arrayIndex++]).replace('-', ''),
-				false, FailureHandling.CONTINUE_ON_FAILURE), ' Qty trx')
-
-		'verify count transaction'
-		checkVerifyEqualOrMatch(WebUI.verifyMatch(resultCount, GlobalVariable.Counter.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Count Trx')
+		'call function input filter saldo'
+		inputFilterSaldo('OTP', conneSign)
 		
 //		'call function verify list undangan'
 //		verifyListUndangan()
@@ -503,4 +321,100 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 
 		GlobalVariable.FlagFailed = 1
 	}
+}
+
+def inputFilterSaldo(String tipeSaldo, Connection conneSign) {
+	'get current date'
+	currentDate = new Date().format('yyyy-MM-dd')
+	
+	'input tipe saldo'
+	WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), tipeSaldo)
+
+	'enter untuk input tipe saldo'
+	WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), Keys.chord(Keys.ENTER))
+
+	'input tanggal Transaksi'
+	WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TanggalTransaksi'), currentDate)
+
+	'click button cari'
+	WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_Cari'))
+
+	'get row'
+	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
+
+	'modify object button last page'
+	modifyObjectButtonLastPage = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
+		'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' +
+		variable.size()) + ']', true)
+
+	if (WebUI.getAttribute(modifyObjectButtonLastPage, 'class', FailureHandling.OPTIONAL) != 'disabled') {
+		'click button last page'
+		WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_LastPage'))
+	}
+	
+	'get row'
+	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
+
+	'modify object no transaksi'
+	modifyObjectNoTransaksi = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
+		'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[1]/div', true)
+
+	'modify object tanggal transaksi'
+	modifyObjectTanggalTransaksi = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'),
+		'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[2]/div', true)
+
+	'modify object tipe transaksi'
+	modifyObjectTipeTransaksi = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
+		'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[3]/div', true)
+
+	'modify object user'
+	modifyObjectUser = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 'equals',
+		('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[4]/div', true)
+
+	'modify object no kontrak'
+	modifyObjectNoKontrak = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
+		'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[5]/div', true)
+
+	'modify object Catatan'
+	modifyObjectCatatan = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
+		'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[8]/div', true)
+
+	'modify object qty'
+	modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 'equals',
+		('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[9]/div', true)
+
+	'get trx dari db'
+	ArrayList<String> result = CustomKeywords.'connection.DataVerif.getSaldoTrx'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(
+			GlobalVariable.NumofColm, 12).replace('"', ''), findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 16).replace('"', ''),
+		'Use ' + tipeSaldo)
+
+	arrayIndex = 0
+
+	'verify no trx ui = db'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectNoTransaksi), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' No Trx ' + tipeSaldo)
+
+	'verify tgl trx ui = db'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectTanggalTransaksi), (result[arrayIndex++]).replace(
+				'.0', ''), false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Trx ' + tipeSaldo)
+
+	'verify tipe trx ui = db'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectTipeTransaksi), result[arrayIndex++], false,
+			FailureHandling.CONTINUE_ON_FAILURE), ' Tipe Trx ' + tipeSaldo)
+
+	'verify user trx ui = db'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectUser), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' User ' + tipeSaldo)
+
+	'verify note trx ui = db'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectCatatan), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Notes ' + tipeSaldo)
+
+	'verify qty trx ui = db'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectQty), (result[arrayIndex++]).replace('-', ''),
+			false, FailureHandling.CONTINUE_ON_FAILURE), ' Qty Trx ' + tipeSaldo)
 }

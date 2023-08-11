@@ -89,7 +89,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                 'Input enter'
                 WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_tipePembayaran'), Keys.chord(Keys.ENTER))
-
+				WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_tipePembayaran'), Keys.chord(Keys.ENTER))
+				
 				'get data tipe-tipe pembayaran secara asc'
 				ArrayList<String> resultVendorDDL = CustomKeywords.'connection.PengaturanDokumen.getDDLVendor'(conneSign)
 
@@ -102,12 +103,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
 				'Input enter'
 				WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_Psre'), Keys.chord(Keys.ENTER))
+				WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_Psre'), Keys.chord(Keys.ENTER))
 				
 				'Input value sequential sign'
 				WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/select_SequentialSigning'), findTestData(excelPathPengaturanDokumen).getValue(
 						GlobalVariable.NumofColm, 21))
 
 				'Input enter'
+				WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_SequentialSigning'), Keys.chord(Keys.ENTER))
 				WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_SequentialSigning'), Keys.chord(Keys.ENTER))
 				
                 'Input value status'
@@ -116,6 +119,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                 'Input enter'
                 WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
+				WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
 
                 'Jika panjang dokumen lebih besar dari 0'
                 if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 13).length() > 0) {
@@ -287,6 +291,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm,
 						GlobalVariable.StatusFailed, (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm,
 							2).replace('-', '') + semicolon) + GlobalVariable.ReasonFailedSaveGagal + ' pada Pembuatan Document Template ')
+					
+					GlobalVariable.FlagFailed = 1
 				}
             }
         } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('View')) {
@@ -454,6 +460,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 					'Tulis di excel itu adalah error'
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
 					(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<' + errormessage + '>')
+					
+					GlobalVariable.FlagFailed = 1
 				}
 
                 if (isMandatoryComplete > 0) {
@@ -581,6 +589,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 						'Tulis di excel itu adalah error'
 						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 						(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<' + errormessage + '>')
+						
+						GlobalVariable.FlagFailed = 1
 					}
 					
 					'call function sorting sequence sign'
