@@ -39,10 +39,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		
 		if (GlobalVariable.NumofColm == 2) {
 			'call function chceck paging'
-			//checkPaging()
+			checkPaging()
 			
 			'call function input cancel'
-			//inputCancel()
+			inputCancel()
 		}
 		
 		'Pembuatan variable mengenai jumlah delete, jumlah lock, dan indexlock untuk loop kedepannya'
@@ -90,7 +90,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                 'Input enter'
                 WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_tipePembayaran'), Keys.chord(Keys.ENTER))
-				WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_tipePembayaran'), Keys.chord(Keys.ENTER))
 				
 				'get data tipe-tipe pembayaran secara asc'
 				ArrayList<String> resultVendorDDL = CustomKeywords.'connection.PengaturanDokumen.getDDLVendor'(conneSign)
@@ -112,15 +111,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
 				'Input enter'
 				WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_SequentialSigning'), Keys.chord(Keys.ENTER))
-				WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_SequentialSigning'), Keys.chord(Keys.ENTER))
-				
+
                 'Input value status'
                 WebUI.setText(findTestObject('TandaTanganDokumen/input_Status'), findTestData(excelPathPengaturanDokumen).getValue(
                         GlobalVariable.NumofColm, 14))
 
                 'Input enter'
                 WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
-				WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
 
                 'Jika panjang dokumen lebih besar dari 0'
                 if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 13).length() > 0) {
