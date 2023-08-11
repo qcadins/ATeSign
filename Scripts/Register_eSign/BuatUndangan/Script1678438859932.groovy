@@ -191,7 +191,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     }
     
     'call test case daftar akun data verif'
-    WebUI.callTestCase(findTestCase('Register_eSign/DaftarAkunDataVerif'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan', ('otpBefore') : saldoBefore[2]], 
+    WebUI.callTestCase(findTestCase('Register_eSign/DaftarAkunDataVerif'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan', ('saldoBefore') : saldoBefore[2]], 
         FailureHandling.CONTINUE_ON_FAILURE)
 
     if ((GlobalVariable.checkStoreDB == 'Yes') && (GlobalVariable.FlagFailed == 0)) {

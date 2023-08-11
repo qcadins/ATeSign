@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'nav-container ng-tns-c133-1']/ul/li[2]/a/span</value>
+         <value>//*[@href = '/inquiry/invitation-register']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>href</name>
       <type>Main</type>
-      <value>//*[@class = 'nav-container ng-tns-c133-1']/ul/li[2]/a/span</value>
-      <webElementGuid>6da441f2-c139-415f-a538-2fea74c30297</webElementGuid>
+      <value>/inquiry/invitation-register</value>
+      <webElementGuid>b56f7cd8-f4f7-43f0-9289-160288687f9e</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
