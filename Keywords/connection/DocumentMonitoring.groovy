@@ -107,7 +107,7 @@ public class DocumentMonitoring {
 	getDocumentMonitoringBasedOnEmbed(Connection conn, String refNumber) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT tdh.ref_number, msl_doctype.description, CASE WHEN tdd.id_ms_doc_template IS NULL THEN CASE WHEN tdd.document_name IS NULL THEN '' ELSE tdd.document_name END ELSE mdt.doc_template_name END, CASE WHEN amm.full_name IS NULL THEN '' ELSE amm.full_name END, TO_CHAR(tdh.dtm_crt, 'DD-Mon-YYYY HH24:MI'), CASE WHEN tdd.completed_date IS NULL THEN '-' ELSE TO_CHAR(tdd.completed_date, 'DD-Mon-YYYY HH24:MI') END, msl_signstatus.description, mso.office_name, msr.region_name, CASE WHEN tdh.proses_materai = 0 THEN 'Not Started' WHEN tdh.proses_materai IN (1, 51, 321, 521) THEN 'Failed' WHEN tdh.proses_materai IN (2, 52, 322, 522, 5, 55, 325, 525) THEN 'In Progress' WHEN tdh.proses_materai IN (3, 53, 323, 523) THEN 'Success' END FROM tr_document_d tdd JOIN tr_document_h tdh ON tdd.id_document_h = tdh.id_document_h LEFT JOIN ms_lov msl_doctype ON tdh.lov_doc_type = msl_doctype.id_lov LEFT JOIN ms_doc_template mdt ON tdd.id_ms_doc_template = mdt.id_doc_template LEFT JOIN am_msuser amm ON tdh.id_msuser_customer = amm.id_ms_user LEFT JOIN ms_lov msl_signstatus ON tdd.lov_sign_status = msl_signstatus.id_lov LEFT JOIN ms_office mso ON tdh.id_ms_office = mso.id_ms_office LEFT JOIN ms_region msr ON mso.id_ms_region = msr.id_ms_region WHERE tdh.ref_number = '"+refNumber+"' ORDER BY tdd.document_name DESC, mdt.doc_template_name DESC")
+		resultSet = stm.executeQuery("SELECT tdh.ref_number, msl_doctype.description, CASE WHEN tdd.id_ms_doc_template IS NULL THEN CASE WHEN tdd.document_name IS NULL THEN '' ELSE tdd.document_name END ELSE mdt.doc_template_name END, CASE WHEN amm.full_name IS NULL THEN '' ELSE amm.full_name END, TO_CHAR(tdd.request_date, 'DD-Mon-YYYY HH24:MI'), CASE WHEN tdd.completed_date IS NULL THEN '-' ELSE TO_CHAR(tdd.completed_date, 'DD-Mon-YYYY HH24:MI') END, msl_signstatus.description, mso.office_name, msr.region_name, CASE WHEN tdh.proses_materai = 0 THEN 'Not Started' WHEN tdh.proses_materai IN (1, 51, 321, 521) THEN 'Failed' WHEN tdh.proses_materai IN (2, 52, 322, 522, 5, 55, 325, 525) THEN 'In Progress' WHEN tdh.proses_materai IN (3, 53, 323, 523) THEN 'Success' END FROM tr_document_d tdd JOIN tr_document_h tdh ON tdd.id_document_h = tdh.id_document_h LEFT JOIN ms_lov msl_doctype ON tdh.lov_doc_type = msl_doctype.id_lov LEFT JOIN ms_doc_template mdt ON tdd.id_ms_doc_template = mdt.id_doc_template LEFT JOIN am_msuser amm ON tdh.id_msuser_customer = amm.id_ms_user LEFT JOIN ms_lov msl_signstatus ON tdd.lov_sign_status = msl_signstatus.id_lov LEFT JOIN ms_office mso ON tdh.id_ms_office = mso.id_ms_office LEFT JOIN ms_region msr ON mso.id_ms_region = msr.id_ms_region WHERE tdh.ref_number = '"+refNumber+"' ORDER BY tdh.dtm_crt desc limit 1")
 
 		metadata = resultSet.metaData
 
@@ -121,7 +121,7 @@ public class DocumentMonitoring {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getManualUpload(Connection conn, String refNumber) {
 		stm = conn.createStatement()

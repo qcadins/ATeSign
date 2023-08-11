@@ -21,8 +21,13 @@ String settingHO = ''
 
 'Jika nomor Kontrak kosong'
 if (nomorKontrak == '') {
-    'Mengambil documen id dari excel'
+	if (isManualSign == '') {
+    'Mengambil nomor kontrak dari excel'
     nomorKontrak = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 11).replace('"', '')
+	} else if (isManualSign == 'Yes') {
+		'Mengambil documen id dari excel'
+		nomorKontrak = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 9)
+	}
 }
 
 'mengambil hasil split dari totalLoop'
