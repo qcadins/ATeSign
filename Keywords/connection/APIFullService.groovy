@@ -186,19 +186,22 @@ public class APIFullService {
 	}
 
 	@Keyword
-	getAPIRegisterTrx(Connection conn, String trxno) {
+	getAPIRegisterTrx(Connection conn, String trxNo, String trxNo1) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select qty from tr_balance_mutation WHERE trx_no = '" +  trxno  + "'")
+		resultSet = stm.executeQuery("select qty from tr_balance_mutation WHERE trx_no IN('" + trxNo + "', '" + trxNo1 + "')")
 
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
-			data = resultSet.getObject(1)
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
 		}
-		data
+		listdata
 	}
 
 	@Keyword
