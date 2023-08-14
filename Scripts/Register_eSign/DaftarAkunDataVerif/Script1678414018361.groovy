@@ -155,8 +155,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     'click button tutup error'
     WebUI.click(findTestObject('DaftarAkun/button_TutupError'))
 
-    GlobalVariable.FlagFailed = 1 //	if (WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).contains('berhasil')) {
-    //	    } 
+    GlobalVariable.FlagFailed = 1 
 } else {
     ArrayList listOTP = []
 
@@ -242,10 +241,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Verifikasi'))
 
     'get reason error log'
-    reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).toString()
-
-	'check saldo OTP'
-	checkSaldoOTP()
+    reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).toString()	
 	
     'cek if berhasil pindah page'
     if ((reason.contains('gagal') || reason.contains('Saldo')) || reason.contains('Invalid')) {
@@ -276,6 +272,9 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
 
         GlobalVariable.FlagFailed = 1
     }
+	
+	'check saldo OTP'
+	checkSaldoOTP()
 }
 
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {

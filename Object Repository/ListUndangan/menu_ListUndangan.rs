@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[contains(@class, 'sidebar-content main-menu-content')]/div[1]/ul/li[4]</value>
+         <value>//*[@href = '/reportlinkinvitation']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>href</name>
       <type>Main</type>
-      <value>//*[contains(@class, 'sidebar-content main-menu-content')]/div[1]/ul/li[4]</value>
-      <webElementGuid>69484073-9f55-4e4a-9336-a5119af583bb</webElementGuid>
+      <value>/reportlinkinvitation</value>
+      <webElementGuid>0737f1f7-1f98-478d-8bba-ede58429503d</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
