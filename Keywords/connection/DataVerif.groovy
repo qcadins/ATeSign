@@ -233,7 +233,7 @@ public class DataVerif {
 		}
 		data
 	}
-	
+
 	@Keyword
 	getDocId(Connection conn, String refNumber, String tenantCode) {
 		stm = conn.createStatement()

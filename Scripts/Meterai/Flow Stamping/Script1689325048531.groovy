@@ -57,9 +57,15 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 
             'jika proses materai gagal (51)'
             if (prosesMaterai == 51) {
-                'Write To Excel GlobalVariable.StatusFailed and errormessage'
+				'Kasih delay untuk mendapatkan update db untuk error stamping'
+				WebUI.delay(3)
+				
+				'get reason gailed error message untuk stamping'
+				errorMessageDB = CustomKeywords.'connection.Meterai.getErrorMessage'(conneSign, nomorKontrakDocument)
+               
+				 'Write To Excel GlobalVariable.StatusFailed and errormessage'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                    GlobalVariable.ReasonFailedProsesStamping)
+                    GlobalVariable.ReasonFailedProsesStamping + ' dengan alasan ' + errorMessageDB.toString())
 
                 GlobalVariable.FlagFailed = 1
 

@@ -65,6 +65,27 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 						WebUI.delay(10)
 					}
 					
+					'mengambil value db proses ttd'
+					int prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, findTestData(excelPathAPIRequestStamping).getValue(
+                        GlobalVariable.NumofColm, 11).replace('"',''))
+
+					'jika proses materai gagal (51)'
+					if (prosesMaterai == 51) {
+						
+						'Diberikan delay 3 detik untuk update error message pada db'
+						WebUI.delay(3)
+						
+						'get reason gailed error message untuk stamping'
+						errorMessageDB = CustomKeywords.'connection.Meterai.getErrorMessage'(conneSign, findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 11).replace('"',''))
+					   
+						'Write To Excel GlobalVariable.StatusFailed and errormessage'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Request Stamping', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+						GlobalVariable.ReasonFailedProsesStamping + ' dengan alasan ' + errorMessageDB.toString())
+
+						GlobalVariable.FlagFailed = 1
+
+					}
+					
                     'get trx from db'
                     String result = CustomKeywords.'connection.APIFullService.getAPIRequestStampingTrx'(conneSign, findTestData(excelPathAPIRequestStamping).getValue(
                         GlobalVariable.NumofColm, 11).replace('"',''), totalMaterai)
