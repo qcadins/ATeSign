@@ -70,7 +70,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					   'verify doc ID'
 					   arrayMatch.add(WebUI.verifyMatch(docId[index], resultDB[arrayIndex++],
 							   false, FailureHandling.CONTINUE_ON_FAILURE))
-					   
+					   aa
 					   'verify status'
 					   arrayMatch.add(WebUI.verifyMatch(signingProcess[index], resultDB[arrayIndex++],
 							   false, FailureHandling.CONTINUE_ON_FAILURE))
