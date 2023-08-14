@@ -1,13 +1,5 @@
 {
-<<<<<<< HEAD
-  "keywordFileContentHash": "16C372677B4B5C6E214D089628711FD2",
-=======
-<<<<<<< HEAD
-  "keywordFileContentHash": "8D367F4EB4E15E86D43F4B9B165D4FDA",
-=======
-  "keywordFileContentHash": "4E5412DA1A1D125500AD188E366C1C78",
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+  "keywordFileContentHash": "665DCF89F4982693800BF0555C6536CD",
   "keywordClasses": [
     {
       "name": "connection.APIFullService",
@@ -1819,7 +1811,6 @@
             }
           ],
           "javadoc": ""
-<<<<<<< HEAD
         },
         {
           "name": "getAPIRegisterPrivyStoreDB",
@@ -1852,8 +1843,70 @@
             }
           ],
           "javadoc": ""
-=======
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+        },
+        {
+          "name": "getInvitationCode",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "email",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "settingFlagNeedPassword",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "value",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
         }
       ]
     }

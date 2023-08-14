@@ -2,12 +2,11 @@ import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import java.sql.Connection as Connection
-import com.kms.katalon.core.model.FailureHandling
-import com.kms.katalon.core.webui.driver.DriverFactory
+import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import internal.GlobalVariable
-
-import org.openqa.selenium.By
+import internal.GlobalVariable as GlobalVariable
+import org.openqa.selenium.By as By
 import org.openqa.selenium.Keys as Keys
 
 'declare userDir'
@@ -135,9 +134,9 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 29).e
 
     'click checkbox setuju'
     WebUI.click(findTestObject('DaftarAkun/checkbox_Setuju'))
-	
-	'click checkbox setuju'
-	WebUI.click(findTestObject('DaftarAkun/checkbox_SetujuVIDA'))
+
+    'click checkbox setuju'
+    WebUI.click(findTestObject('DaftarAkun/checkbox_SetujuVIDA'))
 }
 
 'click daftar akun'
@@ -150,14 +149,15 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
 
     'write to excel status failed dan reason'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-        (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<' + ReasonFailed + '>')
+        (((findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<') + ReasonFailed) + 
+        '>')
 
     'click button tutup error'
     WebUI.click(findTestObject('DaftarAkun/button_TutupError'))
 
-    GlobalVariable.FlagFailed = 1 
+    GlobalVariable.FlagFailed = 1
 } else {
-    ArrayList listOTP = []
+    ArrayList<String> listOTP = []
 
     'get otp dari DB'
     String otp = CustomKeywords.'connection.DataVerif.getOTP'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
@@ -241,28 +241,28 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Verifikasi'))
 
     'get reason error log'
-    reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).toString()	
-	
+    reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).toString()
+
     'cek if berhasil pindah page'
     if ((reason.contains('gagal') || reason.contains('Saldo')) || reason.contains('Invalid')) {
         'write to excel status failed dan reason'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
-                '-', '') + ';') + '<' + reason + '>')
+            GlobalVariable.StatusFailed, (((findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
+                '-', '') + ';') + '<') + reason) + '>')
 
         GlobalVariable.FlagFailed = 1
     } else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), GlobalVariable.TimeOut, 
         FailureHandling.OPTIONAL)) {
         'call testcase form aktivasi vida'
-        WebUI.callTestCase(findTestCase('APIFullService/APIFullService - VIDA/API Generate Invitation Link/FormAktivasiVida'), [('excelPathBuatUndangan') : 'APIFullService/API_GenInvLink'], 
+        WebUI.callTestCase(findTestCase('Register_eSign/FormAktivasiVida'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
             FailureHandling.CONTINUE_ON_FAILURE)
     } else if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_PopupMsg'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
         reason = WebUI.getText(findTestObject('DaftarAkun/label_PopupMsg'))
 
         'write to excel status failed dan reason'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
-                '-', '') + ';') + '<' + reason + '>')
+            GlobalVariable.StatusFailed, (((findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
+                '-', '') + ';') + '<') + reason) + '>')
 
         'click button tutup error'
         WebUI.click(findTestObject('DaftarAkun/button_OK'))
@@ -272,9 +272,9 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
 
         GlobalVariable.FlagFailed = 1
     }
-	
-	'check saldo OTP'
-	checkSaldoOTP()
+    
+    'check saldo OTP'
+    checkSaldoOTP()
 }
 
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
@@ -291,124 +291,124 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 def checkSaldoOTP() {
     'open new tab'
     WebUI.executeJavaScript('window.open();', [])
-	
-	'swicth tab ke new tab'
-	WebUI.switchToWindowIndex(1)
-	
-	'navigate to url esign'
+
+    'swicth tab ke new tab'
+    WebUI.switchToWindowIndex(1)
+
+    'navigate to url esign'
     WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 5))
 
     'maximize window'
     WebUI.maximizeWindow()
 
-   'set value userLogin'
-	GlobalVariable.userLogin = findTestData(excelPathBuatUndangan).getValue(2, 65).toUpperCase()
+    'set value userLogin'
+    GlobalVariable.userLogin = findTestData(excelPathBuatUndangan).getValue(2, 65).toUpperCase()
 
-	'input email'
+    'input email'
     WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathBuatUndangan).getValue(2, 65))
 
     'input password'
-    WebUI.setText(findTestObject('Login/input_Password'), findTestData(excelPathBuatUndangan).getValue(2, 
-            66))
+    WebUI.setText(findTestObject('Login/input_Password'), findTestData(excelPathBuatUndangan).getValue(2, 66))
 
     'click button login'
     WebUI.click(findTestObject('Login/button_Login'), FailureHandling.STOP_ON_FAILURE)
 
     'input perusahaan'
-    WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excelPathBuatUndangan).getValue(2, 
-            67))
+    WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excelPathBuatUndangan).getValue(2, 67))
 
     WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
 
     'input peran'
-    WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excelPathBuatUndangan).getValue(2, 
-            68))
+    WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excelPathBuatUndangan).getValue(2, 68))
 
     WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
 
-	'click button pilih peran'
-	WebUI.click(findTestObject('Login/button_pilihPeran'), FailureHandling.STOP_ON_FAILURE)
+    'click button pilih peran'
+    WebUI.click(findTestObject('Login/button_pilihPeran'), FailureHandling.STOP_ON_FAILURE)
 
     'click menu saldo'
     WebUI.click(findTestObject('BuatUndangan/checkSaldo/menu_Saldo'))
-	
-	'click ddl bahasa'
-	WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_bahasa'))
 
-	'click english'
-	WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_English'))
+    'click ddl bahasa'
+    WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_bahasa'))
 
-	'select vendor'
-	WebUI.selectOptionByLabel(findTestObject('BuatUndangan/checkSaldo/select_Vendor'), '(?i)' + 'ESIGN/ADINS', true)
-	
-	'get row'
-	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
+    'click english'
+    WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_English'))
 
-	for (index = 2; index <= variable.size(); index++) {
-		'modify object box info'
-		modifyObjectBoxInfo = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
-			'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) +
-			']/div/div/div/div/div[1]/h3', true)
+    'select vendor'
+    WebUI.selectOptionByLabel(findTestObject('BuatUndangan/checkSaldo/select_Vendor'), '(?i)' + 'ESIGN/ADINS', true)
 
-		'check if box info = tipe saldo OTP'
-		if (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('OTP')) {
-			'modify object qty'
-			modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
-				'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) +
-				']/div/div/div/div/div[2]/h3', true)
+    'get row'
+    variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
 
-			'verify saldo tidak berkurang'
-			checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectQty).replace(',', ''), saldoBefore, false, FailureHandling.CONTINUE_ON_FAILURE), ' User')
+    for (index = 2; index <= variable.size(); index++) {
+        'modify object box info'
+        modifyObjectBoxInfo = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 
+            'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) + 
+            ']/div/div/div/div/div[1]/h3', true)
 
-			break
-		}
-	}
-	
-	'input tipe saldo'
-	WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), 'OTP')
+        'check if box info = tipe saldo OTP'
+        if (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('OTP')) {
+            'modify object qty'
+            modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 
+                'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) + 
+                ']/div/div/div/div/div[2]/h3', true)
 
-	'enter untuk input tipe saldo'
-	WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), Keys.chord(Keys.ENTER))
+            'verify saldo tidak berkurang'
+            checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectQty).replace(',', ''), saldoBefore, false, 
+                    FailureHandling.CONTINUE_ON_FAILURE), ' User')
 
-	'input tipe transaksi'
-	WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TipeTransaksi'), 'Use OTP')
+            break
+        }
+    }
+    
+    'input tipe saldo'
+    WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), 'OTP')
 
-	'enter untuk input tipe saldo'
-	WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeTransaksi'), Keys.chord(Keys.ENTER))
+    'enter untuk input tipe saldo'
+    WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), Keys.chord(Keys.ENTER))
 
-	'click button cari'
-	WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_Cari'))
+    'input tipe transaksi'
+    WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TipeTransaksi'), 'Use OTP')
 
-	'get row'
-	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
+    'enter untuk input tipe saldo'
+    WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeTransaksi'), Keys.chord(Keys.ENTER))
 
-	'modify object button last page'
-	modifyObjectButtonLastPage = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
-		'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' +
-		variable.size()) + ']', true)
+    'click button cari'
+    WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_Cari'))
 
-	if (WebUI.getAttribute(modifyObjectButtonLastPage, 'class', FailureHandling.OPTIONAL) != 'disabled') {
-		'click button last page'
-		WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_LastPage'))
-	}
-	
-	'get row'
-	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
-	
-	'modify object user'
-	modifyObjectUser = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 'equals',
-		('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[4]/div', true)
+    'get row'
+    variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
 
-	'verify user name ui = excel'
-	checkVerifyEqualOrMatch(WebUI.verifyNotMatch(WebUI.getText(modifyObjectUser), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 10).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' User')
+    'modify object button last page'
+    modifyObjectButtonLastPage = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 
+        'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' + 
+        variable.size()) + ']', true)
 
-	'swicth tab ke new tab'
-	WebUI.switchToWindowIndex(0)
-	
-	'close tab saldo'
-	WebUI.closeWindowIndex(1)
-	
-	'swicth tab ke new tab'
-	WebUI.switchToWindowIndex(0)
+    if (WebUI.getAttribute(modifyObjectButtonLastPage, 'class', FailureHandling.OPTIONAL) != 'disabled') {
+        'click button last page'
+        WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_LastPage'))
+    }
+    
+    'get row'
+    variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
+
+    'modify object user'
+    modifyObjectUser = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 'equals', 
+        ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
+        variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[4]/div', true)
+
+    'verify user name ui = excel'
+    checkVerifyEqualOrMatch(WebUI.verifyNotMatch(WebUI.getText(modifyObjectUser), findTestData(excelPathBuatUndangan).getValue(
+                GlobalVariable.NumofColm, 10).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' User')
+
+    'swicth tab ke new tab'
+    WebUI.switchToWindowIndex(0)
+
+    'close tab saldo'
+    WebUI.closeWindowIndex(1)
+
+    'swicth tab ke new tab'
+    WebUI.switchToWindowIndex(0)
 }
+

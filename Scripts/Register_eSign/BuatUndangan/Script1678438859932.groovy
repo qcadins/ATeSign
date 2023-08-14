@@ -674,8 +674,8 @@ def inputFilterSaldo(String tipeSaldo, Connection conneSign) {
 		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[9]/div', true)
 
 	'get trx dari db'
-	ArrayList<String> result = CustomKeywords.'connection.DataVerif.getSaldoTrx'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(
-			GlobalVariable.NumofColm, 12).replace('"', ''), findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 16).replace('"', ''),
+	ArrayList<String> result = CustomKeywords.'connection.DataVerif.getSaldoTrx'(conneSign, findTestData(excelPathBuatUndangan).getValue(
+			GlobalVariable.NumofColm, 12).replace('"', ''), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 16).replace('"', ''),
 		'Use ' + tipeSaldo)
 
 	arrayIndex = 0
@@ -695,7 +695,7 @@ def inputFilterSaldo(String tipeSaldo, Connection conneSign) {
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectUser), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' User ' + tipeSaldo)
 
 	'verify note trx ui = db'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectCatatan), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Notes ' + tipeSaldo)
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectCatatan).replace('\u00A0', ' '), result[arrayIndex++].replace('\u00A0', ' '), false, FailureHandling.CONTINUE_ON_FAILURE), ' Notes ' + tipeSaldo)
 
 	'verify qty trx ui = db'
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectQty), (result[arrayIndex++]).replace('-', ''),

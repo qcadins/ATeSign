@@ -867,7 +867,7 @@ public class APIFullService {
 	getAPIRegisterPrivyStoreDB(Connection conn, String trxNo) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT request_status, is_external FROM tr_balance_mutation tbm JOIN tr_job_check_register_status tjc ON tbm.id_balance_mutation = tjc.id_balance_mutation WHERE trx_no = '" +  trxNo  + "'")
+		resultSet = stm.executeQuery("SELECT request_status, is_external FROM tr_balance_mutation tbm JOIN tr_job_check_register_status tjc ON tbm.id_balance_mutation = tjc.id_balance_mutation WHERE trx_no = '" + trxNo + "'")
 
 		metadata = resultSet.metaData
 
@@ -880,5 +880,28 @@ public class APIFullService {
 			}
 		}
 		listdata
+	}
+
+	@Keyword
+	getInvitationCode(Connection conn, String email) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select invitation_code from tr_invitation_link where receiver_detail = '" +  email  + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+	
+	@Keyword
+	settingFlagNeedPassword(Connection conn, String value) {
+		stm = conn.createStatement()
+
+		updateVariable = stm.executeUpdate("UPDATE ms_tenant SET need_password_for_signing = '" + value + "' WHERE tenant_code = '" + GlobalVariable.Tenant + "' ")
 	}
 }
