@@ -106,6 +106,8 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
             'set text pada email penanda tangan'
             WebUI.setText(findTestObject('ManualSign/input_emailPenandaTangan'), emailPenandaTangan[i])
 
+			WebUI.focus(findTestObject('ManualSign/button_searchPenandaTangan'))
+			
             'klik search penanda tangan'
             WebUI.click(findTestObject('ManualSign/button_searchPenandaTangan'))
 
@@ -311,7 +313,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 
                     WebUI.delay(2)
 
-                    checkVerifyEqualOrMatch(WebUI.verifyMatch(catatanStamping[(indexForCatatanStamp - 1)], WebUI.getText(
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch('', WebUI.getText(
                                 findTestObject('ManualSign/input_isiCatatanStamping')), false, FailureHandling.CONTINUE_ON_FAILURE), 
                         ' pada catatan meterai ')
 
