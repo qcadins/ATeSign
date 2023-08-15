@@ -26,8 +26,7 @@ splitIndex = -1
 
 indexForCatatanStamp = 0
 
-'memanggil test case login untuk admin wom dengan Admin Client'
-WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualSign, ('sheet') : 'Manual Sign'], FailureHandling.CONTINUE_ON_FAILURE)
+int isLoggedin = 0
 
 'looping berdasarkan jumlah kolom'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathManualSign).columnNumbers; (GlobalVariable.NumofColm)++) {
@@ -35,6 +34,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         break
     } else if (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted') || 
     findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Warning')) {
+	
+		'panggil fungsi login admin'
+		if (isLoggedin == 0) {
+			
+			'memanggil test case login untuk admin wom dengan Admin Client'
+			WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualSign, ('sheet') : 'Manual Sign'], FailureHandling.CONTINUE_ON_FAILURE)
+			
+			isLoggedin = 1
+		}
+		
         'declare flag failed'
         GlobalVariable.FlagFailed = 0
 
