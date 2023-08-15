@@ -253,6 +253,9 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
         GlobalVariable.FlagFailed = 1
     } else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), GlobalVariable.TimeOut, 
         FailureHandling.OPTIONAL)) {
+		'check saldo OTP'
+		checkSaldoOTP()
+	
         'call testcase form aktivasi vida'
         WebUI.callTestCase(findTestCase('Register_eSign/FormAktivasiVida'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
             FailureHandling.CONTINUE_ON_FAILURE)
@@ -272,9 +275,6 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
 
         GlobalVariable.FlagFailed = 1
     }
-    
-    'check saldo OTP'
-    checkSaldoOTP()
 }
 
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {

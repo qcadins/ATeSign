@@ -58,7 +58,7 @@ public class PengaturanDokumen {
 	getLovTipePembayaran(Connection conn) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select description from ms_lov where lov_group = 'PAYMENT_SIGN_TYPE' order by description asc")
+		resultSet = stm.executeQuery("select description from ms_lov ml JOIN ms_paymentsigntypeoftenant pt ON ml.id_lov = pt.lov_payment_sign_type JOIN ms_tenant mt ON mt.id_ms_tenant = pt.id_ms_tenant where lov_group = 'PAYMENT_SIGN_TYPE' AND mt.tenant_code = '"+ GlobalVariable.Tenant +"' order by description asc")
 
 		metadata = resultSet.metaData
 
