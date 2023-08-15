@@ -202,7 +202,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     WebUI.click(findTestObject('ManualSign/button_Save'))
                 }
 				
-				for (int p = 1; p <= emailPenandaTangan.size();p++) {
+				for (int p = 0; p < emailPenandaTangan.size();p++) {
                 'Inisialisasi array dan index yang dibutuhkan'
                 arrayIndex = 0
 
@@ -212,7 +212,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                 'gmofidy modifyObjectInformasiPenandaTangan'
                 modifyObjectInformasiPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/modifyObject'), 
-                    'xpath', 'equals', ((('//*[@id="msxForm"]/div[' + index) + ']/div[3]/table/tr[') + (p)) + ']/td/p', 
+                    'xpath', 'equals', ((('//*[@id="msxForm"]/div[' + index) + ']/div[3]/table/tr[') + (p + 1)) + ']/td/p', 
                     true)
 				
                 'mengambil informasi signer '
@@ -242,8 +242,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             namaTandaTangan.add(valueInformasi[0])
 
             notelpTandaTangan.add(valueInformasi[1])
-			
+
 			break
+				}
+				else {
+					indexEmail--
 				}
         }
             }
@@ -295,11 +298,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 'click button lock signbox'
                 WebUI.click(findTestObject('TandaTanganDokumen/btn_LockSignBox'))
 
-                isLocked = WebUI.getAttribute(findTestObject('TandaTanganDokumen/btn_LockSignBox'), 'ng-reflect-ng-class', 
+                isLocked = WebUI.getAttribute(findTestObject('TandaTanganDokumen/btn_LockSignBox'), 'class', 
                     FailureHandling.STOP_ON_FAILURE)
 
                 'verify sign box is locked'
-                checkVerifyEqualOrMatch(WebUI.verifyMatch(isLocked, 'fa-lock', false, FailureHandling.CONTINUE_ON_FAILURE), 
+                checkVerifyEqualOrMatch(WebUI.verifyMatch(isLocked, 'fa fa-2x fa-lock', false, FailureHandling.CONTINUE_ON_FAILURE), 
                     ' pada sign locked ')
 
                 'Klik button Delete'
@@ -318,6 +321,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			
             'looping berdasarkan total tanda tangan'
             for (int j = 1; j <= tipeTandaTangan.size(); j++) {
+				println j
+				println tipeTandaTangan
                 if ((tipeTandaTangan[(j - 1)]).equalsIgnoreCase('TTD')) {
                     'Klik button tanda tangan'
                     WebUI.click(findTestObject('Object Repository/ManualSign/btn_ttd'))
@@ -505,7 +510,7 @@ def inputCancel(Connection conneSign) {
     'check ddl tipe pembayaran'
     checkDDL(findTestObject('ManualSign/input_jenisPembayaran'), jenisPembayaranByVendorDB, ' pada DDL jenis pembayaran ')
 
-    'Klik button cancel'
+	    'Klik button cancel'
     WebUI.click(findTestObject('ManualSign/button_batal'))
 
     'verify field kode template dokumen kosong'
