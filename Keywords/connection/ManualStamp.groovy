@@ -7,10 +7,8 @@ import java.sql.Statement
 import com.kms.katalon.core.annotation.Keyword
 import internal.GlobalVariable
 
-import internal.GlobalVariable
-
 public class ManualStamp {
-	
+
 	String data
 	int columnCount, i
 	Statement stm
@@ -35,7 +33,7 @@ public class ManualStamp {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getDocTypePeruri(Connection conn) {
 		stm = conn.createStatement()

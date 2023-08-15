@@ -6,16 +6,16 @@
    <elementGuidId>dc7c84a2-49cb-4d39-b9ea-0923aeac2f65</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>XPATH</key>
-         <value>//input[@id='referenceNo']</value>
-      </entry>
-      <entry>
          <key>CSS</key>
          <value>#referenceNo</value>
       </entry>
       <entry>
          <key>BASIC</key>
-         <value>//*[@ng-reflect-name = 'referenceNo']</value>
+         <value>//*[@id = 'referenceNo']</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>//input[@id='referenceNo']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -26,7 +26,7 @@
       <name>tag</name>
       <type>Main</type>
       <value>input</value>
-      <webElementGuid>49247f0a-e05f-4f9d-bca7-3ab1d95d030a</webElementGuid>
+      <webElementGuid>0038fa8c-d712-46ae-b305-b8e318fd4a5a</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -34,7 +34,7 @@
       <name>type</name>
       <type>Main</type>
       <value>text</value>
-      <webElementGuid>41c8a157-2510-42fe-8c9d-ee9ee721fc82</webElementGuid>
+      <webElementGuid>937dc7f3-9e13-4203-870d-7d7ea3abca6f</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -42,23 +42,23 @@
       <name>class</name>
       <type>Main</type>
       <value>form-control ng-untouched ng-pristine ng-invalid</value>
-      <webElementGuid>5852cf76-70d0-44b3-8b39-cf2d8506f7a4</webElementGuid>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>ng-reflect-name</name>
-      <type>Main</type>
-      <value>referenceNo</value>
-      <webElementGuid>8eaed93c-9e02-43cd-a6c6-5f2277cf31d7</webElementGuid>
+      <webElementGuid>0fe697b0-01dd-4cf7-8391-2fbb4fa63019</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
+      <name>ng-reflect-name</name>
+      <type>Main</type>
+      <value>referenceNo</value>
+      <webElementGuid>b010590d-f0b4-4269-a1b1-9d58d390ec92</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
       <name>id</name>
       <type>Main</type>
       <value>referenceNo</value>
-      <webElementGuid>894f28c3-97cd-4fdd-920c-caa69b362bf7</webElementGuid>
+      <webElementGuid>3ef0a531-4dac-4959-9a36-9538ae4cf03f</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -66,7 +66,7 @@
       <name>placeholder</name>
       <type>Main</type>
       <value>Type document number here</value>
-      <webElementGuid>a74a9611-4786-4dc4-81bb-a01674163a36</webElementGuid>
+      <webElementGuid>df919fc0-816f-4e72-9a18-c436034ae1c0</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -74,7 +74,7 @@
       <name>ng-reflect-required</name>
       <type>Main</type>
       <value>true</value>
-      <webElementGuid>a3541701-b48f-48fe-8064-084560e0f164</webElementGuid>
+      <webElementGuid>b04e4dfc-3ff7-4bf8-9eea-7d607666d608</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -82,7 +82,7 @@
       <name>maxlength</name>
       <type>Main</type>
       <value>100</value>
-      <webElementGuid>6c588b72-f695-4115-b683-11ad030b3e39</webElementGuid>
+      <webElementGuid>32e2eec6-0cc8-45e7-a68e-cb15801068ad</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -90,7 +90,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>id(&quot;referenceNo&quot;)</value>
-      <webElementGuid>3033d8dc-f32a-43c1-aff4-5496020c8b1e</webElementGuid>
+      <webElementGuid>3944c03a-31b6-456a-a407-a568d9777c2e</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -98,7 +98,7 @@
       <name>xpath:attributes</name>
       <type>Main</type>
       <value>//input[@id='referenceNo']</value>
-      <webElementGuid>b018a7f5-6861-4aee-aa4c-26fd5d676968</webElementGuid>
+      <webElementGuid>77148eae-d19e-468a-ad1d-efe42c82bbc3</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -106,7 +106,7 @@
       <name>xpath:idRelative</name>
       <type>Main</type>
       <value>//form[@id='msxForm']/div[2]/div/app-text/fieldset/div/input</value>
-      <webElementGuid>5c5706c5-22a2-4c68-b030-cb5711c4faed</webElementGuid>
+      <webElementGuid>e37875cb-f98c-4232-b460-a5f3555e4ab5</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -114,7 +114,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//fieldset/div/input</value>
-      <webElementGuid>7dbb5264-886f-4c19-920e-8e1018e3a234</webElementGuid>
+      <webElementGuid>ce2c3dbc-4c47-4115-883c-e3f0ff51cf8b</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -122,6 +122,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//input[@type = 'text' and @id = 'referenceNo' and @placeholder = 'Type document number here']</value>
-      <webElementGuid>32503860-e768-46d3-afb4-5ac7768fdca1</webElementGuid>
+      <webElementGuid>13bc04d7-660c-4813-b6db-4a459b9ba8fc</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

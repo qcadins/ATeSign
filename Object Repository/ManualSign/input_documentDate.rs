@@ -6,16 +6,16 @@
    <elementGuidId>037b2b1d-9411-4b25-8be5-0111b87bcf26</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>XPATH</key>
-         <value>//input[@id='documentDate']</value>
-      </entry>
-      <entry>
          <key>CSS</key>
          <value>#documentDate</value>
       </entry>
       <entry>
          <key>BASIC</key>
-         <value>//*[@ng-reflect-name = 'documentDate']</value>
+         <value>//*[@id = 'documentDate']</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>//input[@id='documentDate']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -26,7 +26,7 @@
       <name>tag</name>
       <type>Main</type>
       <value>input</value>
-      <webElementGuid>0e6906d6-8edd-49a7-91a7-b46413eedf9e</webElementGuid>
+      <webElementGuid>0e7d6016-758e-42cf-8e94-b7358a4c51b3</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -34,7 +34,7 @@
       <name>type</name>
       <type>Main</type>
       <value>text</value>
-      <webElementGuid>a544716b-cb61-40e2-a1a3-f12712a57897</webElementGuid>
+      <webElementGuid>5cdd986f-c545-460b-8ede-acfc724615a2</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -42,23 +42,23 @@
       <name>class</name>
       <type>Main</type>
       <value>form-control ng-untouched ng-pristine ng-valid</value>
-      <webElementGuid>966a901a-21be-4988-ac73-9a6ff28bcc0b</webElementGuid>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>ng-reflect-name</name>
-      <type>Main</type>
-      <value>documentDate</value>
-      <webElementGuid>7331966a-e0d9-4de9-9ed6-1a3e1c6aad13</webElementGuid>
+      <webElementGuid>06755e7a-2027-4fcd-aabb-74a39fafb63a</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
+      <name>ng-reflect-name</name>
+      <type>Main</type>
+      <value>documentDate</value>
+      <webElementGuid>43bdab95-87f5-4b87-bc82-40170967ee0d</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
       <name>id</name>
       <type>Main</type>
       <value>documentDate</value>
-      <webElementGuid>be031fea-4873-48be-8419-3052769e74c7</webElementGuid>
+      <webElementGuid>b2c9a54e-7176-4c6f-a546-bf1581ea997a</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -66,7 +66,7 @@
       <name>placeholder</name>
       <type>Main</type>
       <value>yyyy-mm-dd</value>
-      <webElementGuid>383218d2-15df-40f9-9186-46d2970dbf7c</webElementGuid>
+      <webElementGuid>9d87e9a2-f7d5-4890-a683-f6e2a12d5fdd</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -74,7 +74,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>id(&quot;documentDate&quot;)</value>
-      <webElementGuid>5cb2ec8a-594e-4857-9a13-4a7c60efd6c7</webElementGuid>
+      <webElementGuid>36983ecd-90c1-44d2-bc68-092bdf3a022a</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -82,7 +82,7 @@
       <name>xpath:attributes</name>
       <type>Main</type>
       <value>//input[@id='documentDate']</value>
-      <webElementGuid>e09a1d4a-f9df-4303-bd55-401995fa7ef7</webElementGuid>
+      <webElementGuid>e9f4b82a-ec73-4cf2-b22a-891d13fdec2c</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -90,7 +90,7 @@
       <name>xpath:idRelative</name>
       <type>Main</type>
       <value>//form[@id='msxForm']/div[4]/div/app-date/fieldset/div/input</value>
-      <webElementGuid>5efd28e3-4409-4164-b954-2b2fadd07532</webElementGuid>
+      <webElementGuid>d2a36488-86d1-4855-8518-1a0ef7f9d142</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -98,7 +98,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//app-date/fieldset/div/input</value>
-      <webElementGuid>a9692710-b389-48b6-bf54-45535556f4ce</webElementGuid>
+      <webElementGuid>88d7bbbd-99c8-45c9-b950-f1a1afc4dfaf</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -106,6 +106,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//input[@type = 'text' and @id = 'documentDate' and @placeholder = 'yyyy-mm-dd']</value>
-      <webElementGuid>69ddbd78-6a15-44c9-a19f-39e9c8ac6606</webElementGuid>
+      <webElementGuid>88d664e2-e5a8-4e73-bdf1-5adf8ad225f8</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

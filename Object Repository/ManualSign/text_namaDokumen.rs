@@ -10,11 +10,15 @@
          <value>#documentName</value>
       </entry>
       <entry>
+         <key>BASIC</key>
+         <value>//*[@id = 'documentName']</value>
+      </entry>
+      <entry>
          <key>XPATH</key>
          <value>//input[@id='documentName']</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>true</useRalativeImagePath>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -22,15 +26,15 @@
       <name>tag</name>
       <type>Main</type>
       <value>input</value>
-      <webElementGuid>149a7a23-5075-4228-9cc5-f458af80069e</webElementGuid>
+      <webElementGuid>cb76cdf6-cd4b-4369-b7ba-031852ce6212</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>type</name>
       <type>Main</type>
       <value>text</value>
-      <webElementGuid>0c4524f1-9739-4001-80b0-342f2deee336</webElementGuid>
+      <webElementGuid>60151e76-626a-4a29-b180-077c17dba427</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -38,7 +42,7 @@
       <name>class</name>
       <type>Main</type>
       <value>form-control ng-pristine ng-valid ng-touched</value>
-      <webElementGuid>7861e9d5-0694-449f-a066-e677599e5547</webElementGuid>
+      <webElementGuid>762f4c4d-37f3-4a8f-baa2-82080abd216e</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -46,7 +50,7 @@
       <name>ng-reflect-name</name>
       <type>Main</type>
       <value>documentName</value>
-      <webElementGuid>b85819c9-59c5-4eaf-ac78-21794f046810</webElementGuid>
+      <webElementGuid>8a9edf35-c060-4a60-ba4f-0a7fab31127d</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -54,15 +58,15 @@
       <name>id</name>
       <type>Main</type>
       <value>documentName</value>
-      <webElementGuid>2efbc9a1-12d2-4a3a-89ce-6c602bc4e758</webElementGuid>
+      <webElementGuid>9e79c7d7-6f79-4c7d-b21d-4581cb588733</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>placeholder</name>
       <type>Main</type>
       <value>Document template name</value>
-      <webElementGuid>358d5414-e4d6-4efe-9759-05a39ac57080</webElementGuid>
+      <webElementGuid>beaf13da-44eb-4e31-aef5-df0f5bdadd2e</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -70,7 +74,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>id(&quot;documentName&quot;)</value>
-      <webElementGuid>63d0fab4-e4a0-4766-a95a-5d2aa233f213</webElementGuid>
+      <webElementGuid>aae17cc1-027e-4676-b7c1-fb5e1177d1c6</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -78,7 +82,7 @@
       <name>xpath:attributes</name>
       <type>Main</type>
       <value>//input[@id='documentName']</value>
-      <webElementGuid>fbcd543b-45f8-4760-b98f-17c5a6d40ad9</webElementGuid>
+      <webElementGuid>34046255-1160-4916-be0d-fd02a731239e</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -86,7 +90,7 @@
       <name>xpath:idRelative</name>
       <type>Main</type>
       <value>//form[@id='msxForm']/div/div[2]/app-question/app-text/div/div[2]/div/input</value>
-      <webElementGuid>234eb8dc-7577-4759-b89c-2a75bb2ce304</webElementGuid>
+      <webElementGuid>3568723a-8a49-4b37-9c70-d6ce9ad8efcc</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -94,7 +98,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div[2]/app-question/app-text/div/div[2]/div/input</value>
-      <webElementGuid>5817298d-36ae-41a7-abe3-715ab4c47b58</webElementGuid>
+      <webElementGuid>532656ad-a91f-42fe-b44e-5e7a8751b6bb</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -102,6 +106,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//input[@type = 'text' and @id = 'documentName' and @placeholder = 'Document template name']</value>
-      <webElementGuid>4e5f5378-8c69-4cad-9490-99a42b9ebf9d</webElementGuid>
+      <webElementGuid>de8034f7-3d1d-4d99-b2f9-a6541531305e</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

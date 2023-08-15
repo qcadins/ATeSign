@@ -10,6 +10,10 @@
          <value>div.ng-select-container.ng-has-value</value>
       </entry>
       <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;documentType&quot;]/div/div/div[3]/input</value>
+      </entry>
+      <entry>
          <key>XPATH</key>
          <value>//ng-select[@id='documentType']/div</value>
       </entry>
@@ -19,10 +23,10 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>id</name>
+      <name>xpath</name>
       <type>Main</type>
-      <value>documentType</value>
-      <webElementGuid>6c03138b-20ca-4102-9335-e59b16b2fcbe</webElementGuid>
+      <value>//*[@id=&quot;documentType&quot;]/div/div/div[3]/input</value>
+      <webElementGuid>1a8ae140-8e39-4180-9594-eeebe9ad39fa</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -30,7 +34,7 @@
       <name>xpath:idRelative</name>
       <type>Main</type>
       <value>//ng-select[@id='documentType']/div</value>
-      <webElementGuid>3c6c2593-40ea-4d90-8320-dc5acdf9e497</webElementGuid>
+      <webElementGuid>e377da60-b0d7-4310-9802-606fe989f849</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -38,7 +42,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='*'])[4]/following::div[1]</value>
-      <webElementGuid>bef6a457-5637-4ab2-bf16-ff6e61a5898c</webElementGuid>
+      <webElementGuid>e62b5bce-e45b-4150-bd25-c7476c060736</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -46,7 +50,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//ng-select/div</value>
-      <webElementGuid>5ad684b6-5f41-4f34-b095-2a094c4d93f9</webElementGuid>
+      <webElementGuid>b37e579b-ee37-46e5-a75b-c9b2f2faa1ef</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -54,6 +58,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//div[(text() = 'Pilih tipe dokumen×All×' or . = 'Pilih tipe dokumen×All×')]</value>
-      <webElementGuid>886f95b3-dcb3-40c7-b0cc-4bfbbea52c16</webElementGuid>
+      <webElementGuid>f5c41c9d-92a1-4677-9319-3163bc929067</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

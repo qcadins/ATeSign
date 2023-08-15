@@ -10,11 +10,15 @@
          <value>#documentExample</value>
       </entry>
       <entry>
+         <key>BASIC</key>
+         <value>//*[@id = 'documentExample']</value>
+      </entry>
+      <entry>
          <key>XPATH</key>
          <value>//input[@id='documentExample']</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>true</useRalativeImagePath>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -22,15 +26,15 @@
       <name>tag</name>
       <type>Main</type>
       <value>input</value>
-      <webElementGuid>a729bed1-9f71-4fac-8ae6-34ab4dfcd124</webElementGuid>
+      <webElementGuid>a82f29b1-0e98-4d26-89b8-a646a24cdaea</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>type</name>
       <type>Main</type>
       <value>file</value>
-      <webElementGuid>30ddb875-f0ff-4ff8-8e89-a1a165c520e9</webElementGuid>
+      <webElementGuid>159a1c34-57b5-4377-8727-9a2b3e1ba169</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -38,7 +42,7 @@
       <name>class</name>
       <type>Main</type>
       <value>form-control ng-untouched ng-pristine ng-invalid</value>
-      <webElementGuid>fb693126-cfa4-433c-bd0c-f010cd57610f</webElementGuid>
+      <webElementGuid>b84f0c32-c198-4901-8fea-80475051ca9d</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -46,7 +50,7 @@
       <name>ng-reflect-name</name>
       <type>Main</type>
       <value>documentExample</value>
-      <webElementGuid>c800cc65-6f1b-428d-9c03-0d18563cb098</webElementGuid>
+      <webElementGuid>becc7819-b53e-44a1-868a-b8a619d0f6f9</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -54,15 +58,15 @@
       <name>id</name>
       <type>Main</type>
       <value>documentExample</value>
-      <webElementGuid>23622822-9ef4-494c-acef-43a809e75188</webElementGuid>
+      <webElementGuid>cba6427b-e13f-41e8-a476-ee3dca8dc307</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>placeholder</name>
       <type>Main</type>
       <value>Pilih Dokumen</value>
-      <webElementGuid>a17cfb47-83af-479d-80d8-193ad0383759</webElementGuid>
+      <webElementGuid>1962cd70-b4f7-4766-99e1-19697ccc7b32</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -70,7 +74,7 @@
       <name>ng-reflect-required</name>
       <type>Main</type>
       <value>true</value>
-      <webElementGuid>73645f38-33a9-4b73-a803-a2a3dd20c3f5</webElementGuid>
+      <webElementGuid>157abb98-915b-4cb4-bb1a-7cc9977b81ac</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -78,7 +82,7 @@
       <name>accept</name>
       <type>Main</type>
       <value>application/pdf</value>
-      <webElementGuid>fc049be6-5623-44b9-841f-b698fbd6c00f</webElementGuid>
+      <webElementGuid>7f3cd110-aa32-4e31-bdd5-a39259e34ee0</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -86,7 +90,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>id(&quot;documentExample&quot;)</value>
-      <webElementGuid>47d5c4cc-aacc-44ba-91e6-24ef0d874e86</webElementGuid>
+      <webElementGuid>147574cf-0421-439e-95c1-e2bb3e7a14f3</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -94,7 +98,7 @@
       <name>xpath:attributes</name>
       <type>Main</type>
       <value>//input[@id='documentExample']</value>
-      <webElementGuid>b8009a9f-3f62-4c03-bc73-3d74e7215b66</webElementGuid>
+      <webElementGuid>d8a6254b-fb0c-40a2-bef7-f86eea691a79</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -102,7 +106,7 @@
       <name>xpath:idRelative</name>
       <type>Main</type>
       <value>//form[@id='msxForm']/div[6]/div/app-file/fieldset/input</value>
-      <webElementGuid>07b172e9-cba1-43bc-9ad0-79e7f90af1b3</webElementGuid>
+      <webElementGuid>a235a92d-acc9-4994-93c8-9330b25a25dd</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -110,7 +114,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//fieldset/input</value>
-      <webElementGuid>c8799192-aa59-4c48-a52e-71c31b3a651a</webElementGuid>
+      <webElementGuid>565192aa-553a-4c23-b2a6-139a2904cfae</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -118,6 +122,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//input[@type = 'file' and @id = 'documentExample' and @placeholder = 'Pilih Dokumen']</value>
-      <webElementGuid>72c2cec6-67b7-4768-a2c3-e76583cc09d8</webElementGuid>
+      <webElementGuid>2c86132f-d796-4514-9569-40b6850be010</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>
