@@ -57,16 +57,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 6))
 
         'Mengambil email berdasarkan documentId'
-<<<<<<< HEAD
         ArrayList emailSigner = CustomKeywords.'connection.APIFullService.getEmailLogin'(conneSign, findTestData(
                 excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 6)).split(';', -1)
-=======
+				
         ArrayList emailSigner = CustomKeywords.'connection.APIFullService.getEmailLogin'(conneSign, findTestData(excelPathFESignDocument).getValue(
                 GlobalVariable.NumofColm, 6)).split(';', -1)
 		
 		'ambil nama vendor dari DB'		
 		String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 11).replace('"',''))
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 
         'Mengambil tenantCode dari excel berdasarkan input body API'
         String tenantCode = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 9).replace('"', '')
@@ -114,12 +112,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 FailureHandling.CONTINUE_ON_FAILURE)
 
             'mengambil saldo before'
-<<<<<<< HEAD
             saldoSignBefore = checkSaldoSign(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                     11).replace('"', ''))
-=======
+
             saldoSignBefore = checkSaldoSign(conneSign, vendor)
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 
             'mengambil saldo otp before'
             otpBefore = checkSaldoOtp()
@@ -701,7 +697,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         'Mengambil value dari db mengenai tipe pembayran'
                         paymentType = CustomKeywords.'connection.APIFullService.getPaymentType'(conneSign, noKontrakPerDoc[
                             i])
-
+						
+						if (i == 0) {
+							saldoUsedDocPertama = (saldoUsedDocPertama + CustomKeywords.'connection.APIFullService.getSaldoUsedBasedonPaymentType'(
+								conneSign, noKontrakPerDoc[i], emailSigner[(o - 1)]))
+						}
+						
                         'Jika tipe pembayarannya per sign'
                         if (paymentType == 'Per Sign') {
                             'Saldo usednya akan ditambah dengan value db penggunaan saldo'
@@ -709,11 +710,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                 conneSign, noKontrakPerDoc[i], emailSigner[(o - 1)]))
                         } else {
                             saldoUsed = (saldoUsed + 1)
-                        }
-                        
-                        if (i == 0) {
-                            saldoUsedDocPertama = (saldoUsedDocPertama + CustomKeywords.'connection.APIFullService.getSaldoUsedBasedonPaymentType'(
-                                conneSign, noKontrakPerDoc[i], emailSigner[(o - 1)]))
                         }
                     }
                     
@@ -772,14 +768,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 otpAfter = checkSaldoOtp()
 
                 'ambil saldo after'
-<<<<<<< HEAD
                 saldoSignAfter = checkSaldoSign(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                         11).replace('"', ''))
 
-=======
                 saldoSignAfter = checkSaldoSign(conneSign, vendor)
 				
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
                 'Jika count saldo otp after dengan yang before dikurangi 1 ditambah dengan '
                 if (WebUI.verifyEqual(Integer.parseInt(otpBefore) - countResend, Integer.parseInt(otpAfter), FailureHandling.OPTIONAL)) {
                     'Jika count saldo sign/ttd diatas (after) sama dengan yang dulu/pertama (before) dikurang jumlah dokumen yang ditandatangani'
@@ -1063,11 +1056,8 @@ def inputFilterTrx(Connection conneSign, String currentDate, String noKontrak, S
 
 def checkSaldoSign(Connection conneSign, String vendor) {
     String totalSaldo
-<<<<<<< HEAD
 
     String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, refNumber)
-=======
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 
     'klik ddl untuk tenant memilih mengenai Vida'
     WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), vendor, false)

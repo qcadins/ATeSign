@@ -604,23 +604,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         'Mengambil value dari db mengenai tipe pembayran'
                         paymentType = CustomKeywords.'connection.SendSign.getPaymentType'(conneSign, noKontrakPerDoc[i])
 
+						if (i == 0) {
+							saldoUsedDocPertama = (saldoUsedDocPertama + CustomKeywords.'connection.SendSign.getSaldoUsedBasedonPaymentType'(
+								conneSign, noKontrakPerDoc[i], emailSigner[(o - 1)]))
+						}
+						
                         'Jika tipe pembayarannya per sign'
                         if (paymentType == 'Per Sign') {
                             'Saldo usednya akan ditambah dengan value db penggunaan saldo'
                             saldoUsed = (saldoUsed + CustomKeywords.'connection.SendSign.getSaldoUsedBasedonPaymentType'(
                                 conneSign, noKontrakPerDoc[i], emailSigner[(o - 1)]))
-
-                            if (i == 0) {
-                                saldoUsedDocPertama = (saldoUsedDocPertama + CustomKeywords.'connection.SendSign.getSaldoUsedBasedonPaymentType'(
-                                    conneSign, noKontrakPerDoc[i], emailSigner[(o - 1)]))
-                            }
                         } else {
                             saldoUsed = (saldoUsed + 1)
-
-                            if (i == 0) {
-                                saldoUsedDocPertama = (saldoUsedDocPertama + CustomKeywords.'connection.SendSign.getSaldoUsedBasedonPaymentType'(
-                                    conneSign, noKontrakPerDoc[i], emailSigner[(o - 1)]))
-                            }
                         }
                     }
                     
@@ -833,10 +828,8 @@ def checkVerifyEqualorMatch(Boolean isMatch, String reason) {
             ((findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
             reason)
 
-        return false
     }
-    
-    return true
+
 }
 
 def checkKonfirmasiTTD() {
