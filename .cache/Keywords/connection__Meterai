@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "415B7EF65FE4B0827DC438C84111D7FE",
+  "keywordFileContentHash": "AB9D17DD1ECC862420C1E3FB29421B63",
   "keywordClasses": [
     {
       "name": "connection.Meterai",
@@ -265,6 +265,38 @@
             },
             {
               "name": "stampdutyno",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getErrorMessage",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "refNumber",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

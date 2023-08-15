@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'nav-container ng-tns-c133-1']/ul/li[3]/a/span</value>
+         <value>//*[@href = '/users/generate/invitation']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,10 +15,10 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>href</name>
       <type>Main</type>
-      <value>//*[@class = 'nav-container ng-tns-c133-1']/ul/li[3]/a/span</value>
-      <webElementGuid>cec13058-3d77-41c6-8deb-18a805aabd38</webElementGuid>
+      <value>/users/generate/invitation</value>
+      <webElementGuid>fbc9388f-eeaa-4870-b5f1-da9a1e6d40d3</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -26,6 +26,6 @@
       <name>class</name>
       <type>Main</type>
       <value>nav-container ng-tns-c133-1</value>
-      <webElementGuid>20ce9c03-73dd-4469-b90e-8d43f903fc15</webElementGuid>
+      <webElementGuid>d2b0f181-b8a2-4591-b742-6e968daf62fe</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

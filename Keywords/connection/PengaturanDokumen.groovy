@@ -106,12 +106,12 @@ public class PengaturanDokumen {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getDefaultVendor(Connection conn) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT vendor_name FROM ms_vendoroftenant mvt JOIN ms_vendor mv on mvt.id_ms_vendor = mv.id_ms_vendor JOIN ms_tenant mt ON mt.id_ms_tenant = mvt.id_ms_tenant WHERE mt.tenant_code = '"+ GlobalVariable.Psre +"' AND is_operating = '1' AND mv.is_active = '1' AND default_vendor = '1'")
+		resultSet = stm.executeQuery("SELECT vendor_name FROM ms_vendoroftenant mvt JOIN ms_vendor mv on mvt.id_ms_vendor = mv.id_ms_vendor JOIN ms_tenant mt ON mt.id_ms_tenant = mvt.id_ms_tenant WHERE mt.tenant_code = '"+ GlobalVariable.Tenant +"' AND is_operating = '1' AND mv.is_active = '1' AND default_vendor = '1'")
 
 		metadata = resultSet.metaData
 

@@ -356,12 +356,18 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
 		
 					'jika proses materai gagal (51)'
 					if (prosesMaterai == 51) {
+						'Kasih delay untuk mendapatkan update db untuk error stamping'
+						WebUI.delay(3)
+				
+						'get reason gailed error message untuk stamping'
+						errorMessageDB = CustomKeywords.'connection.Meterai.getErrorMessage'(conneSign, nomorKontrakPerPilihan[y])
+               
 						'Write To Excel GlobalVariable.StatusFailed and errormessage'
-						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-							GlobalVariable.ReasonFailedProsesStamping)
-		
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+						GlobalVariable.ReasonFailedProsesStamping + ' dengan alasan ' + errorMessageDB.toString())
+
 						GlobalVariable.FlagFailed = 1
-		
+						
 						break
 					} else if (prosesMaterai == 53) {
 						'Jika proses meterai sukses (53), berikan delay 3 sec untuk update di db'

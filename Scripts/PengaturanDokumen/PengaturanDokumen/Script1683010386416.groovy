@@ -19,9 +19,6 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'memanggil test case login untuk admin wom dengan Admin Legal'
 WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathPengaturanDokumen, ('sheet') : 'PengaturanDokumen'], FailureHandling.CONTINUE_ON_FAILURE)
 
-'call function chceck paging'
-checkPaging()
-
 'declare untuk split array excel'
 semicolon = ';'
 
@@ -31,13 +28,22 @@ splitIndex = -1
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathPengaturanDokumen).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
-    } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+    } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted') ||
+		findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Warning')) {
 		
 		'declare isMmandatory Complete'
 		int isMandatoryComplete = Integer.parseInt(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm,
 				5))
 		
         GlobalVariable.FlagFailed = 0
+		
+		if (GlobalVariable.NumofColm == 2) {
+			'call function chceck paging'
+			checkPaging()
+			
+			'call function input cancel'
+			inputCancel()
+		}
 		
 		'Pembuatan variable mengenai jumlah delete, jumlah lock, dan indexlock untuk loop kedepannya'
         RoleTandaTangan = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 15).split(semicolon, splitIndex)
@@ -49,11 +55,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         SignBoxLocation = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 18).split('\\n', splitIndex)
 
         LockSignBox = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 19).split(semicolon, splitIndex)
-
-		if (GlobalVariable.NumofColm == 2) {
-			'call function input cancel'
-			inputCancel()
-		}
 		
         'Klik tombol pengaturan dokumen'
         if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('New')) {
@@ -89,7 +90,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                 'Input enter'
                 WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_tipePembayaran'), Keys.chord(Keys.ENTER))
-
+				
 				'get data tipe-tipe pembayaran secara asc'
 				ArrayList<String> resultVendorDDL = CustomKeywords.'connection.PengaturanDokumen.getDDLVendor'(conneSign)
 
@@ -102,6 +103,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
 				'Input enter'
 				WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_Psre'), Keys.chord(Keys.ENTER))
+				WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_Psre'), Keys.chord(Keys.ENTER))
 				
 				'Input value sequential sign'
 				WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/select_SequentialSigning'), findTestData(excelPathPengaturanDokumen).getValue(
@@ -109,7 +111,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
 				'Input enter'
 				WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_SequentialSigning'), Keys.chord(Keys.ENTER))
-				
+
                 'Input value status'
                 WebUI.setText(findTestObject('TandaTanganDokumen/input_Status'), findTestData(excelPathPengaturanDokumen).getValue(
                         GlobalVariable.NumofColm, 14))
@@ -199,11 +201,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         'click button lock signbox'
                         WebUI.click(findTestObject('TandaTanganDokumen/btn_LockSignBox'))
 
-                        isLocked = WebUI.getAttribute(findTestObject('TandaTanganDokumen/btn_LockSignBox'), 'ng-reflect-ng-class', 
+                        isLocked = WebUI.getAttribute(findTestObject('TandaTanganDokumen/btn_LockSignBox'), 'class', 
                             FailureHandling.STOP_ON_FAILURE)
 
                         'verify sign box is locked'
-                        checkVerifyEqualorMatch(WebUI.verifyMatch(isLocked, 'fa-lock', false, FailureHandling.CONTINUE_ON_FAILURE), ' pada sign locked ')
+                        checkVerifyEqualorMatch(WebUI.verifyMatch(isLocked, 'fa fa-2x fa-lock', false, FailureHandling.CONTINUE_ON_FAILURE), ' pada sign locked ')
 
                         'Klik button Delete'
                         WebUI.click(findTestObject('TandaTanganDokumen/btn_DeleteSignBox'))
@@ -287,6 +289,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm,
 						GlobalVariable.StatusFailed, (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm,
 							2).replace('-', '') + semicolon) + GlobalVariable.ReasonFailedSaveGagal + ' pada Pembuatan Document Template ')
+					
+					GlobalVariable.FlagFailed = 1
 				}
             }
         } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('View')) {
@@ -454,6 +458,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 					'Tulis di excel itu adalah error'
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
 					(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<' + errormessage + '>')
+					
+					GlobalVariable.FlagFailed = 1
 				}
 
                 if (isMandatoryComplete > 0) {
@@ -581,6 +587,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 						'Tulis di excel itu adalah error'
 						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 						(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<' + errormessage + '>')
+						
+						GlobalVariable.FlagFailed = 1
 					}
 					
 					'call function sorting sequence sign'

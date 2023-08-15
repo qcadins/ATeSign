@@ -34,6 +34,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		
 		'setting menggunakan base url yang benar atau salah'
 		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPIRegistrasi, GlobalVariable.NumofColm, 35)
+		
+		'check ada value maka setting need password for signing'
+		if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 36).length() > 0) {
+			'setting email service tenant'
+			CustomKeywords.'connection.APIFullService.settingFlagNeedPassword'(conneSign, findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 36))
+		}
 			
 		'check ada value maka setting email service tenant'
 		if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 34).length() > 0) {
@@ -193,7 +199,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 	                                GlobalVariable.NumofColm, 23).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 					
 					} else {
-						resultDataUser = CustomKeywords.'connection.APIFullService.getAPIRegisterPrivyStoreDB'(conneSign, trxNo.toString().replace('[', '').replace(']', ''))
+						resultDataUser = CustomKeywords.'connection.APIFullService.getAPIRegisterPrivyStoreDB'(conneSign, trxNo[0])
 						
 						arrayIndex = 0
 						
@@ -298,28 +304,28 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 	WebUI.maximizeWindow()
 
 	'set value userLogin'
-	GlobalVariable.userLogin = findTestData(excelPathAPIRegistrasi).getValue(2, 37).toUpperCase()
+	GlobalVariable.userLogin = findTestData(excelPathAPIRegistrasi).getValue(2, 38).toUpperCase()
 
 	'input email'
-	WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathAPIRegistrasi).getValue(2, 37))
+	WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathAPIRegistrasi).getValue(2, 38))
 
 	'input password'
 	WebUI.setText(findTestObject('Login/input_Password'), findTestData(excelPathAPIRegistrasi).getValue(2,
-			38))
+			39))
 
 	'click button login'
 	WebUI.click(findTestObject('Login/button_Login'), FailureHandling.CONTINUE_ON_FAILURE)
 
 	'input perusahaan'
 	WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excelPathAPIRegistrasi).getValue(2,
-			39))
+			40))
 
 	'enter untuk select perusahaan'
 	WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
 
 	'input peran'
 	WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excelPathAPIRegistrasi).getValue(2,
-			40))
+			41))
 
 	'enter untuk select peran'
 	WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))

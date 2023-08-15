@@ -71,9 +71,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                     'jika proses materai gagal (51)'
                     if (prosesMaterai == 51) {
-                        'Write To Excel GlobalVariable.StatusFailed and errormessage'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Stamping', GlobalVariable.NumofColm, 
-                            GlobalVariable.StatusFailed, GlobalVariable.ReasonFailedProsesStamping)
+						
+						'Diberikan delay 3 detik untuk update error message pada db'
+						WebUI.delay(3)
+						
+						'get reason gailed error message untuk stamping'
+						errorMessageDB = CustomKeywords.'connection.Meterai.getErrorMessage'(conneSign, findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 11))
+					   
+						 'Write To Excel GlobalVariable.StatusFailed and errormessage'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Stamping', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+						GlobalVariable.ReasonFailedProsesStamping + ' dengan alasan ' + errorMessageDB.toString())
 
                         GlobalVariable.FlagFailed = 1
 

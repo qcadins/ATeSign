@@ -42,7 +42,7 @@ WebUI.sendKeys(findTestObject('ErrorReport/select_Modul'), Keys.chord(Keys.ENTER
 WebUI.click(findTestObject('ErrorReport/button_Cari'))
 
 'click final page'
-WebUI.click(findTestObject('ErrorReport/button_FinalPage'))
+WebUI.click(findTestObject('ErrorReport/button_MaxPage'))
 
 'get row'
 variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-error-report > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>ManualSign</name>
+   <name>button_MinPage</name>
    <tag></tag>
-   <elementGuidId>ead0c5bd-9895-4a6d-a4dd-7bd77e5a6109</elementGuidId>
+   <elementGuidId>f6443db1-22e1-4c97-8a85-bbb4f3babb16</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[(text() = 'Tanda Tangan Dokumen' or . = 'Tanda Tangan Dokumen')]</value>
+         <value>//*[@class = 'datatable-icon-left']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,15 +17,15 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[contains(@class, 'sidebar-content main-menu-content')]/div[1]/ul/li[7]</value>
-      <webElementGuid>9e3fe07b-8eb1-4f26-91f7-d940dc3cf44e</webElementGuid>
+      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-error-report/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[9]/a</value>
+      <webElementGuid>a95cdf96-0ba9-4d83-936d-ad17c74e93c4</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>text</name>
+      <name>class</name>
       <type>Main</type>
-      <value>Tanda Tangan Dokumen</value>
-      <webElementGuid>1cc1676e-e06a-4e30-b4db-eb625dc7e54a</webElementGuid>
+      <value>datatable-icon-left</value>
+      <webElementGuid>ed93ec4f-bf2d-4e6e-a1c3-06daf7eb8541</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

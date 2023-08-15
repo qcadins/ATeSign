@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@ng-reflect-router-link = '/psre-setting']</value>
+         <value>//*[@href = '/psre-setting']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>ng-reflect-router-link</name>
+      <name>href</name>
       <type>Main</type>
       <value>/psre-setting</value>
-      <webElementGuid>20cee3fd-463b-4c67-b7b4-92db97aae0fb</webElementGuid>
+      <webElementGuid>f3d5d9c6-b08c-4da6-ba30-db977d743bb0</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

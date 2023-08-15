@@ -392,8 +392,7 @@ public class APIFullService {
 	getSign(Connection conn, String documentid, String emailsigner) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select tbm.qty, tbm.trx_no, tdsr.request_status, tdh.ref_number, CASE WHEN tdsr.user_request_ip is null then '' else tdsr.user_request_ip end, CASE WHEN tdsr.user_request_browser_information is null then '' else tdsr.user_request_browser_information end, tdsr.usr_crt, tdd.signing_process, TO_CHAR(tdds.sign_date, 'yyyy-MM-dd'), mst.api_key, mst.tenant_code from tr_document_signing_request tdsr join tr_document_d tdd on tdd.id_document_d = tdsr.id_document_d join tr_document_d_sign tdds on tdsr.id_document_d = tdds.id_document_d join am_msuser amm on tdds.id_ms_user = amm.id_ms_user join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join tr_balance_mutation tbm on tdd.id_document_d = tbm.id_document_d join ms_tenant mst on tbm.id_ms_tenant = mst.id_ms_tenant where tdd.document_id = '" + documentid + "' and amm.login_id = '" + emailsigner + "' order by tbm.dtm_crt asc, tdds.sign_date desc")
-
+		resultSet = stm.executeQuery("select tbm.qty, tbm.trx_no, tdsr.request_status, tdh.ref_number, CASE WHEN tdsr.user_request_ip is null then '' else tdsr.user_request_ip end,  CASE WHEN tdsr.user_request_browser_information is null then '' else tdsr.user_request_browser_information end, tdsr.usr_crt, tdd.signing_process, TO_CHAR(tdds.sign_date, 'yyyy-MM-dd'), mst.api_key, mst.tenant_code from tr_document_signing_request tdsr join tr_document_h tdh on tdh.id_document_h = tdsr.id_document_h left join tr_document_d tdd on tdd.id_document_h = tdh.id_document_h left join tr_document_d_sign tdds on tdd.id_document_d = tdds.id_document_d left join am_msuser amm on tdds.id_ms_user = amm.id_ms_user  left join tr_balance_mutation tbm on tdd.id_document_d = tbm.id_document_d  left join ms_tenant mst on tbm.id_ms_tenant = mst.id_ms_tenant join tr_document_signing_request_detail tdsrd on tdd.id_document_d = tdsrd.id_document_d join tr_document_signing_request_detail tdsrd1 on tdh.id_document_h = tdsrd1.id_document_h where tdd.document_id = '"+documentid+"' and amm.login_id = '"+emailSigner+"' order by tbm.dtm_crt asc, tdds.sign_date desc")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -867,7 +866,7 @@ public class APIFullService {
 	getAPIRegisterPrivyStoreDB(Connection conn, String trxNo) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT request_status, is_external FROM tr_balance_mutation tbm JOIN tr_job_check_register_status tjc ON tbm.id_balance_mutation = tjc.id_balance_mutation WHERE trx_no = '" +  trxNo  + "'")
+		resultSet = stm.executeQuery("SELECT request_status, is_external FROM tr_balance_mutation tbm JOIN tr_job_check_register_status tjc ON tbm.id_balance_mutation = tjc.id_balance_mutation WHERE trx_no = '" + trxNo + "'")
 
 		metadata = resultSet.metaData
 
@@ -880,5 +879,28 @@ public class APIFullService {
 			}
 		}
 		listdata
+	}
+
+	@Keyword
+	getInvitationCode(Connection conn, String email) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select invitation_code from tr_invitation_link where receiver_detail = '" +  email  + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+	
+	@Keyword
+	settingFlagNeedPassword(Connection conn, String value) {
+		stm = conn.createStatement()
+
+		updateVariable = stm.executeUpdate("UPDATE ms_tenant SET need_password_for_signing = '" + value + "' WHERE tenant_code = '" + GlobalVariable.Tenant + "' ")
 	}
 }
