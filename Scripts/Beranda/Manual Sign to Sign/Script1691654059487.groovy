@@ -809,9 +809,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 				'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
 				WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathManualSigntoSign
 				 , ('sheet') : sheet, ('linkDocumentMonitoring') : 'Not Used', ("nomorKontrak") : noKontrakPerDoc[0], ('isStamping') : 'Yes'], FailureHandling.CONTINUE_ON_FAILURE)
-				}
 			}
 		}
+	}
 }
 
 'penggunaan ini hanya untuk Masukan Store Db'

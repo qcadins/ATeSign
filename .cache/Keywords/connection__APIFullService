@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "keywordFileContentHash": "8D367F4EB4E15E86D43F4B9B165D4FDA",
-=======
-  "keywordFileContentHash": "4E5412DA1A1D125500AD188E366C1C78",
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+  "keywordFileContentHash": "03BADF09D76C538EA6A6DB450C33CB1E",
   "keywordClasses": [
     {
       "name": "connection.APIFullService",
@@ -423,7 +419,20 @@
               }
             },
             {
-              "name": "trxno",
+              "name": "trxNo",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "trxNo1",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -1802,7 +1811,6 @@
             }
           ],
           "javadoc": ""
-<<<<<<< HEAD
         },
         {
           "name": "getAPIRegisterPrivyStoreDB",
@@ -1835,8 +1843,6 @@
             }
           ],
           "javadoc": ""
-=======
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
         }
       ]
     }
