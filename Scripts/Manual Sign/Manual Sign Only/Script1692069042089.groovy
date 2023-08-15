@@ -107,7 +107,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
             'diberikan delay 3 detik dengan loading'
             WebUI.delay(3)
-
+			
+			if (checkErrorLog() == true) {
+				continue
+			}
+			
             'klik button x untuk keluar dari tambahan penanda tangan'
             WebUI.click(findTestObject('ManualSign/button_x'))
 

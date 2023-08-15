@@ -30,7 +30,7 @@ indexForCatatanStamp = 0
 
 'memanggil test case login untuk admin wom dengan Admin Client'
 WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualStamp, ('sheet') : 'Manual Stamp'], FailureHandling.CONTINUE_ON_FAILURE)
-aa
+
 'looping berdasarkan jumlah kolom'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathManualStamp).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathManualStamp).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
@@ -59,9 +59,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         GlobalVariable.FlagFailed = 0
 
         'Inisialisasi array dan variable'
-        ArrayList<String> namaTandaTangan = []
-
-        ArrayList<String> notelpTandaTangan = []
+        ArrayList<String> namaTandaTangan = [], notelpTandaTangan = []
 
         indexEmail = 0
 
@@ -92,13 +90,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             inputForm()
 
             'check save ada attribute disabled'
-            if (WebUI.verifyElementHasAttribute(findTestObject('ManualStamp/button_Next'), 'disabled', GlobalVariable.TimeOut, 
+            if (WebUI.verifyElementHasAttribute(findTestObject('ManualStamp/button_Selanjutnya'), 'disabled', GlobalVariable.TimeOut, 
                 FailureHandling.OPTIONAL)) {
+            }
+			else {
                 if (WebUI.verifyElementPresent(findTestObject('ManualStamp/lbl_KonfirmasiNext'), GlobalVariable.TimeOut, 
                     FailureHandling.CONTINUE_ON_FAILURE)) {
                     WebUI.click(findTestObject('ManualStamp/button_BackNext'))
 
-                    WebUI.verifyElementPresent(findTestObject('ManualStamp/button_Next'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
+                    WebUI.verifyElementPresent(findTestObject('ManualStamp/button_Selanjutnya'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
 
                     WebUI.click(findTestObject('ManualStamp/button_Next'))
                 }
