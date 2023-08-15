@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_docType</name>
+   <tag></tag>
+   <elementGuidId>d2adf16c-217e-48fd-86af-0ef718831198</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>CSS</key>
+         <value>div.ng-select-container.ng-has-value</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>//ng-select[@id='documentType']/div</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>id</name>
+      <type>Main</type>
+      <value>documentType</value>
+      <webElementGuid>6c03138b-20ca-4102-9335-e59b16b2fcbe</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:idRelative</name>
+      <type>Main</type>
+      <value>//ng-select[@id='documentType']/div</value>
+      <webElementGuid>3c6c2593-40ea-4d90-8320-dc5acdf9e497</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='*'])[4]/following::div[1]</value>
+      <webElementGuid>bef6a457-5637-4ab2-bf16-ff6e61a5898c</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//ng-select/div</value>
+      <webElementGuid>5ad684b6-5f41-4f34-b095-2a094c4d93f9</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//div[(text() = 'Pilih tipe dokumen×All×' or . = 'Pilih tipe dokumen×All×')]</value>
+      <webElementGuid>886f95b3-dcb3-40c7-b0cc-4bfbbea52c16</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>

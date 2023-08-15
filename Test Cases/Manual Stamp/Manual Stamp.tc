@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>Manual Sign to Sign</name>
+   <name>Manual Stamp</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>c04dc312-6581-43a3-a59d-a5cb9d432b38</testCaseGuid>
+   <testCaseGuid>bd430a8b-a0b2-4cd4-a6af-5c5d75e9dea9</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>aa1d5421-a304-4f0e-9e93-17a8fc8691ba</variableId>
+      <variableId>ffa1c7a8-1c73-4944-9953-c85579b87471</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'ManualSign/ManualSigntoSign'</defaultValue>
+      <defaultValue>'ManualStamp/ManualStamp'</defaultValue>
       <description></description>
-      <id>aa1d5421-a304-4f0e-9e93-17a8fc8691ba</id>
+      <id>ffa1c7a8-1c73-4944-9953-c85579b87471</id>
       <masked>false</masked>
-      <name>excelPathManualSigntoSign</name>
+      <name>excelPathManualStamp</name>
    </variable>
 </TestCaseEntity>

@@ -389,7 +389,7 @@ public class APIFullService {
 	}
 
 	@Keyword
-	getSign(Connection conn, String documentid, String emailsigner) {
+	getSign(Connection conn, String documentid, String emailSigner) {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select tbm.qty, tbm.trx_no, tdsr.request_status, tdh.ref_number, CASE WHEN tdsr.user_request_ip is null then '' else tdsr.user_request_ip end,  CASE WHEN tdsr.user_request_browser_information is null then '' else tdsr.user_request_browser_information end, tdsr.usr_crt, tdd.signing_process, TO_CHAR(tdds.sign_date, 'yyyy-MM-dd'), mst.api_key, mst.tenant_code from tr_document_signing_request tdsr join tr_document_h tdh on tdh.id_document_h = tdsr.id_document_h left join tr_document_d tdd on tdd.id_document_h = tdh.id_document_h left join tr_document_d_sign tdds on tdd.id_document_d = tdds.id_document_d left join am_msuser amm on tdds.id_ms_user = amm.id_ms_user  left join tr_balance_mutation tbm on tdd.id_document_d = tbm.id_document_d  left join ms_tenant mst on tbm.id_ms_tenant = mst.id_ms_tenant join tr_document_signing_request_detail tdsrd on tdd.id_document_d = tdsrd.id_document_d join tr_document_signing_request_detail tdsrd1 on tdh.id_document_h = tdsrd1.id_document_h where tdd.document_id = '"+documentid+"' and amm.login_id = '"+emailSigner+"' order by tbm.dtm_crt asc, tdds.sign_date desc")

@@ -759,6 +759,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                     }
                                 } else if (u == variableSaldoColumn.size()) {
                                     'Jika di kolom ke 10, atau di FE table saldo, check saldo dari table dengan saldo yang sekarang'
+									//        checkVerifyEqualorMatch(WebUI.verifyEqual(Integer.parseInt(WebUI.getText(modifyperrowpercolumn)),
+									//                (Integer.parseInt(saldoSignBefore)- saldoUsedperDoc), FailureHandling.CONTINUE_ON_FAILURE), ' pada Saldo di Mutasi Saldo dengan nomor kontrak ' +
+									//            (noKontrakPerDoc[i]))
                                 } else {
                                     'Jika bukan untuk 2 kolom itu, maka check ke db'
                                     checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(modifyperrowpercolumn), inquiryDB[

@@ -9,15 +9,15 @@ public class ConnectDB {
 
 	@Keyword
 	connectDBeSign() {
-		String servername = findTestData('Login/Login').getValue(1, 8)
+		String servername = findTestData('Login/Login').getValue(1, 13)
 
-		String port = findTestData('Login/Login').getValue(2, 8)
+		String port = findTestData('Login/Login').getValue(2, 13)
 
-		String database = findTestData('Login/Login').getValue(3, 8)
+		String database = findTestData('Login/Login').getValue(3, 13)
 
-		String username = findTestData('Login/Login').getValue(4, 8)
+		String username = findTestData('Login/Login').getValue(4, 13)
 
-		String password = findTestData('Login/Login').getValue(5, 8)
+		String password = findTestData('Login/Login').getValue(5, 13)
 
 		String url = servername + ':' + port + '/' + database
 
