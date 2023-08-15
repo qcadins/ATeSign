@@ -243,6 +243,9 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     'get reason error log'
     reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).toString()
 
+	'check saldo OTP'
+	checkSaldoOTP()
+	
     'cek if berhasil pindah page'
     if ((reason.contains('gagal') || reason.contains('Saldo')) || reason.contains('Invalid')) {
         'write to excel status failed dan reason'
@@ -253,9 +256,6 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
         GlobalVariable.FlagFailed = 1
     } else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), GlobalVariable.TimeOut, 
         FailureHandling.OPTIONAL)) {
-		'check saldo OTP'
-		checkSaldoOTP()
-	
         'call testcase form aktivasi vida'
         WebUI.callTestCase(findTestCase('Register_eSign/FormAktivasiVida'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
             FailureHandling.CONTINUE_ON_FAILURE)
