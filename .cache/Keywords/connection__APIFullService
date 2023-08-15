@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "keywordFileContentHash": "06ECA52A926C7BCB43851B0D4351156C",
+=======
+  "keywordFileContentHash": "F7A275DC995B909632F7FECCDDA3274E",
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
   "keywordClasses": [
     {
       "name": "connection.APIFullService",
@@ -1780,6 +1784,7 @@
             },
             {
               "name": "trxNo",
+<<<<<<< HEAD
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -1842,6 +1847,8 @@
             },
             {
               "name": "value",
+=======
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

@@ -57,8 +57,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 6))
 
         'Mengambil email berdasarkan documentId'
+<<<<<<< HEAD
         ArrayList emailSigner = CustomKeywords.'connection.APIFullService.getEmailLogin'(conneSign, findTestData(
                 excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 6)).split(';', -1)
+=======
+        ArrayList emailSigner = CustomKeywords.'connection.APIFullService.getEmailLogin'(conneSign, findTestData(excelPathFESignDocument).getValue(
+                GlobalVariable.NumofColm, 6)).split(';', -1)
+		
+		'ambil nama vendor dari DB'		
+		String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 11).replace('"',''))
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 
         'Mengambil tenantCode dari excel berdasarkan input body API'
         String tenantCode = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 9).replace('"', '')
@@ -106,8 +114,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 FailureHandling.CONTINUE_ON_FAILURE)
 
             'mengambil saldo before'
+<<<<<<< HEAD
             saldoSignBefore = checkSaldoSign(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                     11).replace('"', ''))
+=======
+            saldoSignBefore = checkSaldoSign(conneSign, vendor)
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 
             'mengambil saldo otp before'
             otpBefore = checkSaldoOtp()
@@ -424,6 +436,20 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         CustomKeywords.'connection.APIFullService.getHashedNo'(conneSign, emailSigner[(o - 1)]), false), 
                     'pada nomor telepon Signer')
 
+				'cek jika vendor yang dipakai adalah privy'
+				if (vendor.equalsIgnoreCase('Privy')) {
+					
+					'pastikan tombol verifikasi biometrik tidak muncul'
+					if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/btn_verifBiom'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+						GlobalVariable.FlagFailed = 1
+						
+						'jika muncul, tulis error ke excel'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+							GlobalVariable.StatusFailed, ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+								2).replace('-', '') + ';') + 'Tombol Liveness muncul saat vendor Privy'))
+					}
+				}
+				
                 'Jika cara verifikasinya menggunakan OTP'
                 if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 56) == 'OTP') {
                     'Klik verifikasi by OTP'
@@ -574,13 +600,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         continue
                     }
                 } else {
-                    'Klik verifikasi by Biometric'
-                    modifyObjectverifBiometric = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/btn_verifOTP'), 
-                        'xpath', 'equals', '/html/body/ngb-modal-window/div/div/app-signer-signing-verification/div/div/form/div[4]/div[1]/span', 
-                        true)
-
+					
                     'Klik biometric object'
-                    WebUI.click(modifyObjectverifBiometric)
+                    WebUI.click(findTestObject('Object Repository/KotakMasuk/Sign/btn_verifBiom'))
 
                     'Changing check di label request'
                     modifyObjectlabelRequestOTP = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/lbl_RequestOTP'), 
@@ -750,9 +772,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 otpAfter = checkSaldoOtp()
 
                 'ambil saldo after'
+<<<<<<< HEAD
                 saldoSignAfter = checkSaldoSign(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                         11).replace('"', ''))
 
+=======
+                saldoSignAfter = checkSaldoSign(conneSign, vendor)
+				
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
                 'Jika count saldo otp after dengan yang before dikurangi 1 ditambah dengan '
                 if (WebUI.verifyEqual(Integer.parseInt(otpBefore) - countResend, Integer.parseInt(otpAfter), FailureHandling.OPTIONAL)) {
                     'Jika count saldo sign/ttd diatas (after) sama dengan yang dulu/pertama (before) dikurang jumlah dokumen yang ditandatangani'
@@ -1034,10 +1061,13 @@ def inputFilterTrx(Connection conneSign, String currentDate, String noKontrak, S
     WebUI.click(findTestObject('Saldo/btn_cari'))
 }
 
-def checkSaldoSign(Connection conneSign, String refNumber) {
+def checkSaldoSign(Connection conneSign, String vendor) {
     String totalSaldo
+<<<<<<< HEAD
 
     String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, refNumber)
+=======
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 
     'klik ddl untuk tenant memilih mengenai Vida'
     WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), vendor, false)
