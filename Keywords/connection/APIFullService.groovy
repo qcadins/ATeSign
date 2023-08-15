@@ -896,7 +896,7 @@ public class APIFullService {
 		}
 		data
 	}
-	
+
 	@Keyword
 	settingFlagNeedPassword(Connection conn, String value) {
 		stm = conn.createStatement()
