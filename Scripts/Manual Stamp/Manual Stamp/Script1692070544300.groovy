@@ -30,7 +30,7 @@ indexForCatatanStamp = 0
 
 'memanggil test case login untuk admin wom dengan Admin Client'
 WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualStamp, ('sheet') : 'Manual Stamp'], FailureHandling.CONTINUE_ON_FAILURE)
-
+aa
 'looping berdasarkan jumlah kolom'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathManualStamp).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathManualStamp).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
