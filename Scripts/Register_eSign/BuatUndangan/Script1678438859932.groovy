@@ -675,7 +675,7 @@ def inputFilterSaldo(String tipeSaldo, Connection conneSign) {
 
 	'get trx dari db'
 	ArrayList<String> result = CustomKeywords.'connection.DataVerif.getSaldoTrx'(conneSign, findTestData(excelPathBuatUndangan).getValue(
-			GlobalVariable.NumofColm, 12).replace('"', ''), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 16).replace('"', ''),
+			GlobalVariable.NumofColm, 15), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 14),
 		'Use ' + tipeSaldo)
 
 	arrayIndex = 0

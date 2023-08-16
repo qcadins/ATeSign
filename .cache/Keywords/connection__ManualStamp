@@ -1,31 +1,37 @@
 {
-  "keywordFileContentHash": "BF7FB41C4DE553948878A24C13AB277E",
+  "keywordFileContentHash": "18567199DE441521BEE90502ED6573F1",
   "keywordClasses": [
     {
-      "name": "customizekeyword.UploadFile",
+      "name": "connection.ManualStamp",
       "keywordMethods": [
         {
-          "name": "uploadFunction",
+          "name": "getDocType",
           "parameters": [
             {
-              "name": "to",
+              "name": "conn",
               "initialExpression": "",
               "type": {
-                "fullClassName": "com.kms.katalon.core.testobject.TestObject",
-                "unresolvedClassName": "TestObject",
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
                 "isArray": false,
                 "isGnericsPlaceHolder": false,
                 "hasImmutableClassName": false,
                 "genericsTypes": [],
                 "errorOnParsing": false
               }
-            },
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getDocTypePeruri",
+          "parameters": [
             {
-              "name": "filePath",
+              "name": "conn",
               "initialExpression": "",
               "type": {
-                "fullClassName": "java.lang.String",
-                "unresolvedClassName": "String",
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
                 "isArray": false,
                 "isGnericsPlaceHolder": false,
                 "hasImmutableClassName": false,

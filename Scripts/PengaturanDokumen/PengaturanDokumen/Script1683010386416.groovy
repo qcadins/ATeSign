@@ -507,7 +507,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         FailureHandling.STOP_ON_FAILURE)
 
                     'verify sign box is locked'
-                    checkVerifyEqualorMatch(WebUI.verifyMatch(isLocked, 'fa-lock', false, FailureHandling.CONTINUE_ON_FAILURE), ' pada sign Box ')
+                    checkVerifyEqualorMatch(WebUI.verifyMatch(isLocked, 'fa fa-2x fa-lock', false, FailureHandling.CONTINUE_ON_FAILURE), ' pada sign Box ')
 
                     'Klik button Delete'
                     WebUI.click(findTestObject('TandaTanganDokumen/btn_DeleteSignBox'))
@@ -702,12 +702,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         statusLock = WebUI.getAttribute(modifyObjectButtonLockSignBox, 'ng-reflect-ng-class', FailureHandling.CONTINUE_ON_FAILURE).toString()
 
                         if ((LockSignBox[indexExcel]).equalsIgnoreCase('Yes')) {
-                            if (!(statusLock.equalsIgnoreCase('fa-lock'))) {
+                            if (!(statusLock.equalsIgnoreCase('fa fa-2x fa-lock'))) {
                                 'click lock signbox'
                                 WebUI.click(modifyObjectButtonLockSignBox)
                             }
                         } else if ((LockSignBox[indexExcel]).equalsIgnoreCase('Yes')) {
-                            if (statusLock.equalsIgnoreCase('fa-lock')) {
+                            if (statusLock.equalsIgnoreCase('fa fa-2x fa-lock')) {
                                 'click lock signbox'
                                 WebUI.click(modifyObjectButtonLockSignBox)
                             }
@@ -831,12 +831,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         statusLock = WebUI.getAttribute(modifyObjectButtonLockSignBox, 'ng-reflect-ng-class', FailureHandling.CONTINUE_ON_FAILURE).toString()
 
                         if ((LockSignBox[indexExcel]).equalsIgnoreCase('Yes')) {
-                            if (!(statusLock.equalsIgnoreCase('fa-lock'))) {
+                            if (!(statusLock.equalsIgnoreCase('fa fa-2x fa-lock'))) {
                                 'click lock signbox'
                                 WebUI.click(modifyObjectButtonLockSignBox)
                             }
                         } else if ((LockSignBox[indexExcel]).equalsIgnoreCase('Yes')) {
-                            if (statusLock.equalsIgnoreCase('fa-lock')) {
+                            if (statusLock.equalsIgnoreCase('fa fa-2x fa-lock')) {
                                 'click lock signbox'
                                 WebUI.click(modifyObjectButtonLockSignBox)
                             }

@@ -10,11 +10,15 @@
          <value>#name</value>
       </entry>
       <entry>
+         <key>BASIC</key>
+         <value>//*[@id = 'name']</value>
+      </entry>
+      <entry>
          <key>XPATH</key>
          <value>//input[@id='name']</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>true</useRalativeImagePath>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -22,7 +26,7 @@
       <name>tag</name>
       <type>Main</type>
       <value>input</value>
-      <webElementGuid>f9a59b8f-7617-4266-a7e6-b9d60aa6650f</webElementGuid>
+      <webElementGuid>43d5f28d-ad51-4150-b282-bfdde070baac</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -30,15 +34,15 @@
       <name>formcontrolname</name>
       <type>Main</type>
       <value>name</value>
-      <webElementGuid>87f4d986-52f4-4010-9fad-00660555fbee</webElementGuid>
+      <webElementGuid>58f5d0d9-be6c-4cc3-9cb1-7d5508c53ef5</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>type</name>
       <type>Main</type>
       <value>text</value>
-      <webElementGuid>040edc8b-239a-4f34-81ed-b3e4f3d629ee</webElementGuid>
+      <webElementGuid>291e9d17-6f21-44fb-8104-14d9f9bd8e4b</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -46,15 +50,15 @@
       <name>id</name>
       <type>Main</type>
       <value>name</value>
-      <webElementGuid>7a204f01-e166-4565-9a0d-b3cfeabf49ab</webElementGuid>
+      <webElementGuid>b6de7760-3934-4f50-a192-6328ad0eeddd</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>placeholder</name>
       <type>Main</type>
       <value>Fill signer name here</value>
-      <webElementGuid>c1a6990c-3175-4d42-b0ed-8fbc4a2fdee5</webElementGuid>
+      <webElementGuid>71ead267-deab-46aa-9672-785206e28d4e</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -62,7 +66,7 @@
       <name>class</name>
       <type>Main</type>
       <value>form-control ng-pristine ng-invalid ng-touched</value>
-      <webElementGuid>3146ec76-27d7-46b6-83a4-bfa7bbdeedeb</webElementGuid>
+      <webElementGuid>71599894-60ce-4188-9ecb-21c44e80c4cd</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -70,7 +74,7 @@
       <name>ng-reflect-name</name>
       <type>Main</type>
       <value>name</value>
-      <webElementGuid>0f5365c2-3502-4875-a7cf-3dee988939f4</webElementGuid>
+      <webElementGuid>fd779579-3745-48f9-804d-d68f06e2269d</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -78,7 +82,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>id(&quot;name&quot;)</value>
-      <webElementGuid>43fd065d-7b75-4e86-9312-6df7a007496f</webElementGuid>
+      <webElementGuid>0ae8483f-0d92-4fbc-ae06-6d635a3d1bc5</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -86,7 +90,7 @@
       <name>xpath:attributes</name>
       <type>Main</type>
       <value>//input[@id='name']</value>
-      <webElementGuid>12458627-52f7-4cdc-8a63-78d440fcf813</webElementGuid>
+      <webElementGuid>b3ff9567-99ce-4955-b35a-589846ce9b67</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -94,7 +98,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div[2]/input</value>
-      <webElementGuid>734dbee1-164e-4b28-9c69-8a175840e48f</webElementGuid>
+      <webElementGuid>364383ff-9079-476e-a8da-71128032d1e7</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -102,6 +106,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//input[@type = 'text' and @id = 'name' and @placeholder = 'Fill signer name here']</value>
-      <webElementGuid>5a20f3cb-034a-40ee-bf7a-bd88d2c74f3f</webElementGuid>
+      <webElementGuid>622180c7-6bb6-45ea-8801-da079da2dff4</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

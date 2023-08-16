@@ -243,6 +243,9 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     'get reason error log'
     reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).toString()
 
+	'check saldo OTP'
+	checkSaldoOTP()
+	
     'cek if berhasil pindah page'
     if ((reason.contains('gagal') || reason.contains('Saldo')) || reason.contains('Invalid')) {
         'write to excel status failed dan reason'
@@ -272,9 +275,6 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
 
         GlobalVariable.FlagFailed = 1
     }
-    
-    'check saldo OTP'
-    checkSaldoOTP()
 }
 
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {

@@ -10,6 +10,10 @@
          <value>p</value>
       </entry>
       <entry>
+         <key>BASIC</key>
+         <value>//*[(text() = 'USERCIIE 081233444403,  USERCIIE@AD-INS.COM ' or . = 'USERCIIE 081233444403,  USERCIIE@AD-INS.COM ')]</value>
+      </entry>
+      <entry>
          <key>XPATH</key>
          <value>//form[@id='msxForm']/div[10]/div[3]/table/tr/td/p</value>
       </entry>
@@ -22,7 +26,7 @@
       <name>tag</name>
       <type>Main</type>
       <value>p</value>
-      <webElementGuid>e413e974-5bd1-4e35-9aff-c0b5948a1418</webElementGuid>
+      <webElementGuid>eb9a3970-ffe7-478b-b50e-4dc10ea152ad</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -30,7 +34,7 @@
       <name>text</name>
       <type>Main</type>
       <value>USERCIIE 081233444403,  USERCIIE@AD-INS.COM </value>
-      <webElementGuid>a0832fd0-dff7-4c71-919c-6d06615da98a</webElementGuid>
+      <webElementGuid>b9aee9d2-71a4-4413-b1ea-6d7464919d97</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -38,7 +42,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>id(&quot;msxForm&quot;)/div[@class=&quot;row&quot;]/div[@class=&quot;col-12&quot;]/table[@class=&quot;table table-striped table-hover&quot;]/tr[@class=&quot;ng-star-inserted&quot;]/td[1]/p[1]</value>
-      <webElementGuid>97b052c6-8a8f-4ffe-a20e-14508bb42662</webElementGuid>
+      <webElementGuid>a781875b-700f-4c66-b751-25f78a17350d</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -46,7 +50,7 @@
       <name>xpath:idRelative</name>
       <type>Main</type>
       <value>//form[@id='msxForm']/div[10]/div[3]/table/tr/td/p</value>
-      <webElementGuid>f00e5fe6-f9a1-4c1a-baa0-d29f7faa1cd9</webElementGuid>
+      <webElementGuid>ab98695c-693d-4eaa-b5f4-4eef819a22ba</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -54,7 +58,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Tambah'])[1]/following::p[1]</value>
-      <webElementGuid>995987fa-6a61-42e7-a737-88ac21f37310</webElementGuid>
+      <webElementGuid>3490b0a5-0caa-4724-9edf-71ca9bb1c326</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -62,7 +66,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Penanda Tangan'])[1]/following::p[1]</value>
-      <webElementGuid>bf13ed04-333e-4ddd-a2e0-be4c9a2398b4</webElementGuid>
+      <webElementGuid>b7e2abbf-8dbe-4755-b41d-d484d20843d4</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -70,7 +74,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Batal'])[1]/preceding::p[1]</value>
-      <webElementGuid>fc256a57-388b-47f2-96a9-739799ad91cb</webElementGuid>
+      <webElementGuid>ce30aab7-30e9-4841-934a-be4a993d3fa7</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -78,7 +82,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='081233444403,']/parent::*</value>
-      <webElementGuid>c304c47a-0df5-4e46-8476-13458f9a23a9</webElementGuid>
+      <webElementGuid>95c034f0-8503-4db7-b456-3ed1e870c630</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -86,7 +90,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//p</value>
-      <webElementGuid>d10cfb1c-79aa-46f4-83df-895e7ff59f90</webElementGuid>
+      <webElementGuid>2f1777e3-e56e-4fda-a498-ccb0eca5eee1</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -94,6 +98,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//p[(text() = 'USERCIIE 081233444403,  USERCIIE@AD-INS.COM ' or . = 'USERCIIE 081233444403,  USERCIIE@AD-INS.COM ')]</value>
-      <webElementGuid>17a0af7e-17aa-4d8f-bcb2-9fb4c1e30f19</webElementGuid>
+      <webElementGuid>55da8557-1805-45e2-b548-520f0569441d</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>
