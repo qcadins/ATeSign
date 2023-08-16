@@ -7,25 +7,25 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[contains(@class, 'sidebar-content main-menu-content')]/div[1]/ul/li[1]/a/span</value>
+         <value>//*[@href = '/balance']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>//*[contains(@class, 'sidebar-content main-menu-content')]/div[1]/ul/li[1]/a/span</value>
-      <webElementGuid>676cd774-7f76-43ab-a00a-b0f72258a507</webElementGuid>
+      <webElementGuid>43bb532f-c1b2-4b01-b306-d5c8939f251a</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>contains</matchCondition>
-      <name>class</name>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>href</name>
       <type>Main</type>
-      <value>sidebar-content main-menu-content</value>
-      <webElementGuid>13ec0d5a-67e9-43b1-b3a1-a1b1d6eefcdb</webElementGuid>
+      <value>/balance</value>
+      <webElementGuid>9c246316-2272-4d07-8cf4-6f8cc8a3ef4f</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

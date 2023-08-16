@@ -794,26 +794,27 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     }
                 }
             }
-        }
-        
-        'check flagBreak untuk sequential'
-        if (flagBreak == 1) {
-            continue
-        }
-        
-        'Jika ingin melakukan stamping'
-        if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 61) == 'Yes') {
-            if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 62) == 'API Stamping') {
-                'Call API Send doc'
-                WebUI.callTestCase(findTestCase('Meterai/Flow Stamping'), [('excelPathStamping') : excelPathManualSigntoSign
-                        , ('sheet') : sheet, ('useAPI') : 'v3.0.0', ('linkDocumentMonitoring') : ''], FailureHandling.CONTINUE_ON_FAILURE)
-            } else if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 62) == 'Front End Document Monitoring') {
-                'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
-                WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathManualSigntoSign
-                        , ('sheet') : sheet, ('linkDocumentMonitoring') : 'Not Used', ('nomorKontrak') : noKontrakPerDoc[
-                        0], ('isStamping') : 'Yes'], FailureHandling.CONTINUE_ON_FAILURE)
+			
+            'check flagBreak untuk sequential'
+            if (flagBreak == 1) {
+            	continue
+            }
+            
+            'Jika ingin melakukan stamping'
+            if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 61) == 'Yes') {
+            	if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 62) == 'API Stamping') {
+            		'Call API Send doc'
+            		WebUI.callTestCase(findTestCase('Meterai/Flow Stamping'), [('excelPathStamping') : excelPathManualSigntoSign
+            		                                                           , ('sheet') : sheet, ('useAPI') : 'v3.0.0', ('linkDocumentMonitoring') : ''], FailureHandling.CONTINUE_ON_FAILURE)
+            	} else if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 62) == 'Front End Document Monitoring') {
+            		'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
+            		WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathManualSigntoSign
+            		                                                                                 , ('sheet') : sheet, ('linkDocumentMonitoring') : 'Not Used', ('nomorKontrak') : noKontrakPerDoc[
+            		                                                                                                                                                                                  0], ('isStamping') : 'Yes'], FailureHandling.CONTINUE_ON_FAILURE)
+            	}
             }
         }
+        
     }
 }
 
@@ -877,36 +878,34 @@ def signingProcessStoreDB(Connection conneSign, String emailSigner, int jumlahSi
     signingDB = CustomKeywords.'connection.SendSign.getSigningStatusProcess'(conneSign, findTestData(excelPathManualSigntoSign).getValue(
             GlobalVariable.NumofColm, 6), emailSigner)
 
-    'looping berdasarkan size dari signingDB'
-    for (int t = 1; t <= signingDB.size(); t++) {
+//    'looping berdasarkan size dari signingDB'
+//    for (int t = 1; t <= signingDB.size(); t++) {
         ArrayList arrayMatch = new ArrayList()
 
         'verify request status. 3 berarti done request. Terpaksa hardcode karena tidak ada masternya untuk 3.'
-        arrayMatch.add(WebUI.verifyMatch('3', signingDB[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+        arrayMatch.add(WebUI.verifyMatch('3', signingDB[arrayIndex++], false, FailureHandling.OPTIONAL))
 
         'verify sign date. Jika ada, maka teksnya Sudah TTD. Sign Date sudah dijoin ke email masing-masing, sehingga pengecekan apakah sudah sign atau belum ditandai disini'
-        arrayMatch.add(WebUI.verifyMatch('Sudah TTD', signingDB[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+        arrayMatch.add(WebUI.verifyMatch('Sudah TTD', signingDB[arrayIndex++], false, FailureHandling.OPTIONAL))
 
         'verify total signed. Total signed harusnya seusai dengan variable jumlah signed'
-        arrayMatch.add(WebUI.verifyEqual(jumlahSignerTandaTangan, Integer.parseInt(signingDB[arrayIndex++]), FailureHandling.CONTINUE_ON_FAILURE))
+        arrayMatch.add(WebUI.verifyEqual(jumlahSignerTandaTangan, Integer.parseInt(signingDB[arrayIndex++]), FailureHandling.OPTIONAL))
 
         'Jika arraymatchnya ada false'
         if (arrayMatch.contains(false)) {
             'mengembalikan false'
             return false
             
-            'dibreak ke looping code'
-            break
+//            'dibreak ke looping code'
+//            break
         } else {
-            'jika semuanya true'
-
-            'mengembalikan true'
+            'jika semuanya true, mengembalikan true'
             return true
             
-            'dibreak ke looping code'
-            break
+//            'dibreak ke looping code'
+//            break
         }
-    }
+//    }
 }
 
 def inputFilterTrx(Connection conneSign, String currentDate, String noKontrak, String documentTemplateName) {
