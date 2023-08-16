@@ -41,9 +41,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         GlobalVariable.FlagFailed = 0
 
         'Inisialisasi otp, photo, ipaddress, dan total signed sebelumnya yang dikosongkan'
-        String otp,photo, ipaddress
+        String otp,photo, ipaddress, passwrd
 
-        ArrayList totalSignedBefore = [], totalSignedAfter = []
+        ArrayList totalSignedBefore = [], totalSignedAfter = [], flaggingOTP = []
 
         'Split dokumen id agar mendapat dokumenid 1 per 1 dengan case bulk'
         documentId = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 10).replace('[', '').replace(
@@ -70,7 +70,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         String refNumber = CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, documentId[0])
 
         String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, refNumber)
-
+		
+		passwrd = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 12)
+		
+		flaggingOTP = CustomKeywords.'connection.DataVerif.getParameterFlagPassOTP'(conneSign, findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 10).replace('"','').replace('[','').replace(']',''))
+		
         if (vendor.equalsIgnoreCase('Privy')) {
             'request OTP dengan HIT API'
 
@@ -158,11 +162,24 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             (totalSignedBefore[z]) = CustomKeywords.'connection.APIFullService.getTotalSigned'(conneSign, documentId[z])
         }
         
+		if (flaggingOTP[0] == '0') {
+			
+			if (flaggingOTP[1] == '0') {
+				
+				otp = '""'
+				photo = '""'
+			}
+			if (flaggingOTP[2] == '0') {
+				
+				passwrd = '""'
+			}
+		}
+		
         'HIT API Sign'
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Sign Document', [('callerId') : findTestData(excelPathAPISignDocument).getValue(
                         GlobalVariable.NumofColm, 27), ('documentId') : findTestData(excelPathAPISignDocument).getValue(
                         GlobalVariable.NumofColm, 10), ('email') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
-                        11), ('password') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 12)
+                        11), ('password') : passwrd
                     , ('ipAddress') : ipaddress, ('browserInfo') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
                         14), ('otp') : otp, ('selfPhoto') : photo]))
 

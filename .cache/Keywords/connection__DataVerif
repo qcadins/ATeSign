@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "A96968F1F67BA32D452C14DCE1B61AE7",
+  "keywordFileContentHash": "BDB73623FE28B36F913CA4EF56DC4AC3",
   "keywordClasses": [
     {
       "name": "connection.DataVerif",
@@ -503,6 +503,38 @@
             },
             {
               "name": "tenantCode",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getParameterFlagPassOTP",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "docID",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
