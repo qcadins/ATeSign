@@ -23,13 +23,42 @@ int countColmExcel = findTestData(excelPathAPISignDocument).columnNumbers
 'declafe split'
 int splitnum = -1
 
+'declare all number'
+int needVendorOTP, needOTPTenant, needPassTenant = 0
+
 'looping API Sign Document'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+		'ambil tenant dan vendor code yang akan digunakan document'
+		ArrayList tenantVendor = CustomKeywords.'connection.DataVerif.getTenantandVendorCode'(conneSign,
+			findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 10).replace('"','').replace('[','').replace(']',''))
+		
         'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPISignDocument, GlobalVariable.NumofColm, 25)
+		
+		'setting vendor otp dimatikan/diaktifkan'
+		if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 26).equalsIgnoreCase('Yes')) {
+			'ubah value ke 1'
+			needVendorOTP = 1
+		} 
+		'setting tenant otp dimatikan/diaktifkan'
+		if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 27).equalsIgnoreCase('Yes')) {
+			'ubah value ke 1'
+			needOTPTenant = 1	
+		}
+		'setting tenant otp dimatikan/diaktifkan'
+		if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 27).equalsIgnoreCase('Yes')) {
+			'ubah value ke 1'
+			needPassTenant = 1
+		}
+		
+		'update setting vendor otp ke table di DB'
+		CustomKeywords.'connection.UpdateData.updateVendorOTP'(conneSign, tenantVendor[1], needVendorOTP)
+		
+		'update setting otp dan pass tenant ke table di DB'
+		CustomKeywords.'connection.UpdateData.updateTenantOTPpass'(conneSign, tenantVendor[0], needOTPTenant, needPassTenant)
 
         'declare variable array'
         ArrayList saldoBefore = []
@@ -41,7 +70,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         GlobalVariable.FlagFailed = 0
 
         'Inisialisasi otp, photo, ipaddress, dan total signed sebelumnya yang dikosongkan'
-        String otp,photo, ipaddress, passwrd
+        String otp, photo, ipaddress
 
         ArrayList totalSignedBefore = [], totalSignedAfter = [], flaggingOTP = []
 
@@ -71,8 +100,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
         String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, refNumber)
 		
-		passwrd = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 12)
-		
 		flaggingOTP = CustomKeywords.'connection.DataVerif.getParameterFlagPassOTP'(conneSign, findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 10).replace('"','').replace('[','').replace(']',''))
 		
         if (vendor.equalsIgnoreCase('Privy')) {
@@ -80,7 +107,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
             'Constraint : Dokumen yang dipasang selalu dengan referal number di dokumen pertama.'
             respon_OTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing', [('callerId') : findTestData(
-                            excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 27), ('phoneNo') : findTestData(
+                            excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 30), ('phoneNo') : findTestData(
                             excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 8), ('email') : findTestData(excelPathAPISignDocument).getValue(
                             GlobalVariable.NumofColm, 11), ('refnumber') : ('"' + CustomKeywords.'connection.APIFullService.getRefNumber'(
                             conneSign, documentId[0])) + '"']))
@@ -105,7 +132,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
             'Constraint : Dokumen yang dipasang selalu dengan referal number di dokumen pertama.'
             respon_OTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing', [('callerId') : findTestData(
-                            excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 27), ('phoneNo') : findTestData(
+                            excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 30), ('phoneNo') : findTestData(
                             excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 8), ('email') : findTestData(excelPathAPISignDocument).getValue(
                             GlobalVariable.NumofColm, 11), ('refnumber') : ('"' + CustomKeywords.'connection.APIFullService.getRefNumber'(
                             conneSign, documentId[0])) + '"']))
@@ -161,25 +188,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'Memasukkan input dari total signed'
             (totalSignedBefore[z]) = CustomKeywords.'connection.APIFullService.getTotalSigned'(conneSign, documentId[z])
         }
-        
-		if (flaggingOTP[0] == '0') {
-			
-			if (flaggingOTP[1] == '0') {
-				
-				otp = '""'
-				photo = '""'
-			}
-			if (flaggingOTP[2] == '0') {
-				
-				passwrd = '""'
-			}
-		}
 		
         'HIT API Sign'
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Sign Document', [('callerId') : findTestData(excelPathAPISignDocument).getValue(
-                        GlobalVariable.NumofColm, 27), ('documentId') : findTestData(excelPathAPISignDocument).getValue(
+                        GlobalVariable.NumofColm, 30), ('documentId') : findTestData(excelPathAPISignDocument).getValue(
                         GlobalVariable.NumofColm, 10), ('email') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
-                        11), ('password') : passwrd
+                        11), ('password') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 12)
                     , ('ipAddress') : ipaddress, ('browserInfo') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
                         14), ('otp') : otp, ('selfPhoto') : photo]))
 
@@ -350,7 +364,7 @@ def responseAPIStoreDB(Connection conneSign, String ipaddress, String[] document
 
         'verify callerId'
         arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
-                    27).replace('"', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
+                    30).replace('"', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'verify signing proces. 0 berarti tidak ada proses tanda tangan lagi.'
         arrayMatch.add(WebUI.verifyEqual(result[arrayIndex++], 0, FailureHandling.CONTINUE_ON_FAILURE))
@@ -573,7 +587,7 @@ def verifySaldoUsed(Connection conneSign) {
         'get trx dari db'
         ArrayList result = CustomKeywords.'connection.DataVerif.getSaldoTrx'(conneSign, findTestData(excelPathAPISignDocument).getValue(
                 GlobalVariable.NumofColm, 11).replace('"', ''), findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
-                27).replace('"', ''), checkTypeofUsedSaldo)
+                30).replace('"', ''), checkTypeofUsedSaldo)
 
         arrayIndex = 0
 
