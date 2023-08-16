@@ -27,7 +27,7 @@ semicolon = ';'
 splitIndex = -1
 
 indexForCatatanStamp = 0
-aa
+
 'memanggil test case login untuk admin wom dengan Admin Client'
 WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualStamp, ('sheet') : 'Manual Stamp'], FailureHandling.CONTINUE_ON_FAILURE)
 
@@ -94,13 +94,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 FailureHandling.OPTIONAL)) {
             }
 			else {
+				
+				WebUI.click(findTestObject('ManualStamp/button_Selanjutnya'))
+				
                 if (WebUI.verifyElementPresent(findTestObject('ManualStamp/lbl_KonfirmasiNext'), GlobalVariable.TimeOut, 
                     FailureHandling.CONTINUE_ON_FAILURE)) {
                     WebUI.click(findTestObject('ManualStamp/button_BackNext'))
 
                     WebUI.verifyElementPresent(findTestObject('ManualStamp/button_Selanjutnya'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
 
-                    WebUI.click(findTestObject('ManualStamp/button_Next'))
+                    WebUI.click(findTestObject('ManualStamp/button_Selanjutnya'))
+					
+					WebUI.click(findTestObject('ManualStamp/button_Next'))
                 }
             }
         }

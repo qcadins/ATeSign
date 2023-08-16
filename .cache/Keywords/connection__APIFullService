@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "keywordFileContentHash": "D28DBBBE29381B20686385D177E9D6E3",
+=======
+  "keywordFileContentHash": "5E70D3BE577E41C6AC70F9EBD82863F7",
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
   "keywordClasses": [
     {
       "name": "connection.APIFullService",
