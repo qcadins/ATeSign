@@ -248,4 +248,42 @@ public class DataVerif {
 		}
 		data
 	}
+
+	@Keyword
+	getParameterFlagPassOTP(Connection conn, String docID) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT mv.must_user_vendor_otp, mt.need_otp_for_signing, mt.need_password_for_signing FROM tr_document_d tdd LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = tdd.id_ms_tenant LEFT JOIN ms_vendor mv ON mv.id_ms_vendor = tdd.id_ms_vendor where document_id = '" + docID + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+
+	@Keyword
+	getTenantandVendorCode(Connection conn, String docID) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT mt.tenant_code, mv.vendor_code FROM tr_document_d tdd LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = tdd.id_ms_tenant LEFT JOIN ms_vendor mv ON mv.id_ms_vendor = tdd.id_ms_vendor where document_id = '" + docID + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
 }

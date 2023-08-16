@@ -60,6 +60,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         'Mengambil email berdasarkan documentId'
         ArrayList emailSigner = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, findTestData(excelPathFESignDocument).getValue(
                 GlobalVariable.NumofColm, 6)).split(';', -1)
+				
+		'ambil nama vendor dari DB'
+		String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 11).replace('"',''))
 		
 		'declare saldo used untuk document pertama yaitu 0'
 		int saldoUsedDocPertama = 0
@@ -87,7 +90,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 FailureHandling.CONTINUE_ON_FAILURE)
 
             'mengambil saldo before'
-            saldoSignBefore = checkSaldoSign(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 11).replace('"',''))
+            saldoSignBefore = checkSaldoSign(conneSign, vendor)
 
             'mengambil saldo otp before'
             otpBefore = checkSaldoOtp()
@@ -694,7 +697,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 otpAfter = checkSaldoOtp()
 
                 'ambil saldo after'
-                saldoSignAfter = checkSaldoSign(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 11).replace('"',''))
+                saldoSignAfter = checkSaldoSign(conneSign, vendor)
 
                 'Jika count saldo otp after dengan yang before dikurangi 1 ditambah dengan '
                 if (WebUI.verifyEqual(Integer.parseInt(otpBefore) - (countResend), Integer.parseInt(otpAfter), FailureHandling.OPTIONAL)) {
@@ -955,11 +958,9 @@ def inputFilterTrx(Connection conneSign, String currentDate, String noKontrak, S
     WebUI.click(findTestObject('Saldo/btn_cari'))
 }
 
-def checkSaldoSign(Connection conneSign, String refNumber) {
+def checkSaldoSign(Connection conneSign, String vendor) {
     String totalSaldo
 
-	String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, refNumber)
-	
     'klik button saldo'
     WebUI.click(findTestObject('isiSaldo/SaldoAdmin/menu_Saldo'))
 
