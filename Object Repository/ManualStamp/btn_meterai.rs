@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>btn_meterai</name>
+   <tag></tag>
+   <elementGuidId>564205be-6897-4648-bf5f-3e2f7c59a1e1</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@class=&quot;actions-bar&quot;]/button</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@class=&quot;actions-bar&quot;]/button</value>
+      <webElementGuid>a7f1b0ca-f937-4145-bd01-a5e79a78cf44</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

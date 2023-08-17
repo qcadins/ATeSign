@@ -174,13 +174,13 @@ public class Meterai {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getErrorMessage(Connection conn, String refNumber) {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select error_message from tr_document_h_stampduty_error tdhse  order by tdhse.dtm_crt desc limit 1 left join tr_document_h tdh on tdhse.id_document_h = tdh.id_document_h where tdh.ref_number = '"+refNumber+"' order by tdhse.dtm_crt desc limit 1")
-		
+
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

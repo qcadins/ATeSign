@@ -24,7 +24,7 @@ def currentDate = new Date().format('yyyy-MM-dd')
 int flagBreak = 0
 
 'Inisialisasi array untuk Listotp, arraylist arraymatch'
-ArrayList<String> listOTP = [], arrayMatch = []
+ArrayList listOTP = [], arrayMatch = []
 
 'declare arrayindex'
 arrayIndex = 0
@@ -132,9 +132,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'Klik button ttd bulk'
             WebUI.click(findTestObject('Object Repository/APIFullService/Send to Sign/button_TTDBulk'))
 
-            'klik tombol Batal'
-            WebUI.click(findTestObject('Object Repository/APIFullService/Send to Sign/button_BatalTandaTanganDokumen'))
-
+			if (checkPopupWarning() == false) {
+				'klik tombol Batal'
+				WebUI.click(findTestObject('Object Repository/APIFullService/Send to Sign/button_BatalTandaTanganDokumen'))
+			}
+ 
             'Jika running menggunakan embed, maka'
             if (GlobalVariable.RunWithEmbed == 'Yes') {
                 'Ganti frame ke default'
@@ -1147,6 +1149,22 @@ def checkPopup() {
         'Klik OK untuk popupnya'
         WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
     }
+}
+
+def checkPopupWarning() {
+	'Jika popup muncul'
+	if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		'label popup diambil'
+		lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
+
+			'Tulis di excel sebagai failed dan error.'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusWarning,
+				(((findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') +
+				'<') + lblpopup) + '>')
+			
+		'Klik OK untuk popupnya'
+		WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
+	}
 }
 
 def checkErrorLog() {

@@ -296,9 +296,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 WebUI.click(findTestObject('ManualSign/btn_setTandaTangan'))
 
                 'click button lock signbox'
-                WebUI.click(findTestObject('TandaTanganDokumen/btn_LockSignBox'))
+                WebUI.click(findTestObject('ManualSign/btn_LockSignBox'))
 
-                isLocked = WebUI.getAttribute(findTestObject('TandaTanganDokumen/btn_LockSignBox'), 'class', 
+                isLocked = WebUI.getAttribute(findTestObject('ManualSign/btn_LockSignBox'), 'class', 
                     FailureHandling.STOP_ON_FAILURE)
 
                 'verify sign box is locked'
@@ -321,9 +321,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			
             'looping berdasarkan total tanda tangan'
             for (int j = 1; j <= tipeTandaTangan.size(); j++) {
-				println j
-				println tipeTandaTangan
-                if ((tipeTandaTangan[(j - 1)]).equalsIgnoreCase('TTD')) {
+               if ((tipeTandaTangan[(j - 1)]).equalsIgnoreCase('TTD')) {
                     'Klik button tanda tangan'
                     WebUI.click(findTestObject('Object Repository/ManualSign/btn_ttd'))
                 } else if ((tipeTandaTangan[(j - 1)]).equalsIgnoreCase('Meterai')) {
@@ -352,19 +350,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
 					countValue++
 					
-					
-                    'Klik set tanda tangan'
+					'modify label tipe tanda tangan di kotak'
+					modifyobjectTTDlblRoleTandaTangan = WebUI.modifyObjectProperty(findTestObject('Object Repository/ManualSign/modifyObject'),
+						'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' +
+						j) + ']/div/div/small', true)
+	
+					'Verifikasi antara excel dan UI, apakah tipenya sama'
+					WebUI.verifyMatch(namaTandaTangan[index], WebUI.getText(modifyobjectTTDlblRoleTandaTangan), false)
+                    
+					'Klik set tanda tangan'
                     WebUI.click(findTestObject('ManualSign/btn_setTandaTangan'))
-
-                    'modify label tipe tanda tangan di kotak'
-                    modifyobjectTTDlblRoleTandaTangan = WebUI.modifyObjectProperty(findTestObject('Object Repository/ManualSign/modifyObject'), 
-                        'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' + 
-                        j) + ']/div/div/small', true)
-
-                    'Verifikasi antara excel dan UI, apakah tipenya sama'
-                    WebUI.verifyMatch(namaTandaTangan[index], WebUI.getText(modifyobjectTTDlblRoleTandaTangan), false)
                 }
-                
+
                 'Verify apakah tanda tangannya ada'
                 if (WebUI.verifyElementPresent(modifyobjectTTDlblRoleTandaTangan, GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
                     'check if signbox mau dipindahkan'
@@ -379,7 +376,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     'check if signbox mau dilock posisinya'
                     if ((lockSignBox[(j - 1)]).equalsIgnoreCase('Yes')) {
                         'modify obejct lock signbox'
-                        modifyobjectLockSignBox = WebUI.modifyObjectProperty(findTestObject('TandaTanganDokumen/btn_LockSignBox'), 
+                        modifyobjectLockSignBox = WebUI.modifyObjectProperty(findTestObject('ManualSign/btn_LockSignBox'), 
                             'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' + 
                             j) + ']/div/button[1]/span', true)
 
@@ -489,6 +486,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
                     }
                 }
+				
+				
             }
         }
     }
@@ -621,6 +620,9 @@ def inputForm() {
 
     'Klik enter'
     WebUI.sendKeys(findTestObject('ManualSign/input_psre'), Keys.chord(Keys.ENTER))
+	
+	'Klik enter'
+	WebUI.sendKeys(findTestObject('ManualSign/input_psre'), Keys.chord(Keys.ENTER))
 
     'Input teks kode template dokumen'
     WebUI.setText(findTestObject('ManualSign/input_referenceNo'), findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 

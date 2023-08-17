@@ -169,7 +169,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
             WebUI.click(findTestObject('ManualSign/button_Save'))
         }
         
-        for (int p = 1; p <= emailPenandaTangan.size(); p++) {
+        for (int p = 0; p < emailPenandaTangan.size(); p++) {
             'Inisialisasi array dan index yang dibutuhkan'
             arrayIndex = 0
 
@@ -179,7 +179,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 
             'gmofidy modifyObjectInformasiPenandaTangan'
             modifyObjectInformasiPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/modifyObject'), 'xpath', 
-                'equals', ((('//*[@id="msxForm"]/div[' + index) + ']/div[3]/table/tr[') + p) + ']/td/p', true)
+                'equals', ((('//*[@id="msxForm"]/div[' + index) + ']/div[3]/table/tr[') + p + 1) + ']/td/p', true)
 
             'mengambil informasi signer '
             valueInformasi = WebUI.getText(modifyObjectInformasiPenandaTangan).replace('\n', ', ')
@@ -211,7 +211,9 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
                 notelpTandaTangan.add(valueInformasi[1])
 
                 break
-            }
+            } else {
+				indexEmail--
+			}
         }
     }
     
@@ -266,17 +268,17 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
                 (notelpTandaTangan[index]), false)
 
             countValue++
-
+		
+			'modify label tipe tanda tangan di kotak'
+			modifyobjectTTDlblRoleTandaTangan = WebUI.modifyObjectProperty(findTestObject('Object Repository/ManualSign/modifyObject'),
+				'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' +
+				j) + ']/div/div/small', true)
+	
+			'Verifikasi antara excel dan UI, apakah tipenya sama'
+			WebUI.verifyMatch(namaTandaTangan[index], WebUI.getText(modifyobjectTTDlblRoleTandaTangan), false)
+		   
             'Klik set tanda tangan'
             WebUI.click(findTestObject('ManualSign/btn_setTandaTangan'))
-
-            'modify label tipe tanda tangan di kotak'
-            modifyobjectTTDlblRoleTandaTangan = WebUI.modifyObjectProperty(findTestObject('Object Repository/ManualSign/modifyObject'), 
-                'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' + 
-                j) + ']/div/div/small', true)
-
-            'Verifikasi antara excel dan UI, apakah tipenya sama'
-            WebUI.verifyMatch(namaTandaTangan[index], WebUI.getText(modifyobjectTTDlblRoleTandaTangan), false)
         }
         
         'Verify apakah tanda tangannya ada'

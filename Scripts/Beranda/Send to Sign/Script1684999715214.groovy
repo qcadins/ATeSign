@@ -107,8 +107,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'Klik button ttd bulk'
             WebUI.click(findTestObject('KotakMasuk/Sign/btn_ttdbulk'))
 
-            'klik tombol Batal'
-            WebUI.click(findTestObject('KotakMasuk/Sign/btn_Batal'))
+			if (checkPopupWarning() == false) {
+				'klik tombol Batal'
+				WebUI.click(findTestObject('KotakMasuk/Sign/btn_Batal'))
+			}
 
             'refresh buat reset nav bar selanjutnya'
             WebUI.refresh()
@@ -1056,4 +1058,20 @@ def checkErrorLog() {
     }
     
     return false
+}
+
+def checkPopupWarning() {
+	'Jika popup muncul'
+	if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		'label popup diambil'
+		lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
+
+			'Tulis di excel sebagai failed dan error.'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusWarning,
+				(((findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') +
+				'<') + lblpopup) + '>')
+			
+		'Klik OK untuk popupnya'
+		WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
+	}
 }
