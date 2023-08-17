@@ -1,5 +1,9 @@
 {
-  "keywordFileContentHash": "AB9D17DD1ECC862420C1E3FB29421B63",
+<<<<<<< HEAD
+  "keywordFileContentHash": "E69BC2E3D6BB4147E230550C9706FDA5",
+=======
+  "keywordFileContentHash": "CBD232FED1A1E0B5095CF2AC096675B2",
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
   "keywordClasses": [
     {
       "name": "connection.Meterai",
@@ -20,8 +24,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getStampdutyData",
@@ -52,8 +55,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getStampdutyTrxData",
@@ -84,8 +86,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getMeterai",
@@ -116,8 +117,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getTotalMateraiAndTotalStamping",
@@ -148,8 +148,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getProsesMaterai",
@@ -180,8 +179,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getInputMeterai",
@@ -212,8 +210,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getValueMeterai",
@@ -244,8 +241,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getValueDetailMeterai",
@@ -276,8 +272,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getErrorMessage",
@@ -308,11 +303,10 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         }
       ]
     }
   ],
-  "javadocParsed": true
+  "javadocParsed": false
 }
