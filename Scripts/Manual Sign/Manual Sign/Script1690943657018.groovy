@@ -279,7 +279,6 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 	
 			'Verifikasi antara excel dan UI, apakah tipenya sama'
 			WebUI.verifyMatch(namaTandaTangan[index], WebUI.getText(modifyobjectTTDlblRoleTandaTangan), false)
-
         }
         
         'Verify apakah tanda tangannya ada'

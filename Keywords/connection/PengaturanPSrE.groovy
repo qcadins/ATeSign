@@ -69,4 +69,23 @@ public class PengaturanPSrE {
 		}
 		listdata
 	}
+	
+	@Keyword
+	getPsrePriority(Connection conn, String tenantCode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT VENDOR_NAME FROM ms_vendoroftenant mvt JOIN ms_tenant mt ON mvt.id_ms_tenant = mt.id_ms_tenant JOIN ms_vendor mv ON mvt.id_ms_vendor = mv.id_ms_vendor WHERE mt.tenant_code = '"+ tenantCode +"' ORDER BY mvt.default_vendor ASC")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
 }
