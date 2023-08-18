@@ -274,11 +274,11 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 				'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' +
 				j) + ']/div/div/small', true)
 	
+			'Klik set tanda tangan'
+			WebUI.click(findTestObject('ManualSign/btn_setTandaTangan'))
+
 			'Verifikasi antara excel dan UI, apakah tipenya sama'
-			WebUI.verifyMatch(namaTandaTangan[index], WebUI.getText(modifyobjectTTDlblRoleTandaTangan), false)
-		   
-            'Klik set tanda tangan'
-            WebUI.click(findTestObject('ManualSign/btn_setTandaTangan'))
+			WebUI.verifyMatch(namaTandaTangan[index], WebUI.getText(modifyobjectTTDlblRoleTandaTangan), false)		   
         }
         
         'Verify apakah tanda tangannya ada'
