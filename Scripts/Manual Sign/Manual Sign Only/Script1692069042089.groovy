@@ -620,9 +620,6 @@ def inputForm() {
 
     'Klik enter'
     WebUI.sendKeys(findTestObject('ManualSign/input_psre'), Keys.chord(Keys.ENTER))
-	
-	'Klik enter'
-	WebUI.sendKeys(findTestObject('ManualSign/input_psre'), Keys.chord(Keys.ENTER))
 
     'Input teks kode template dokumen'
     WebUI.setText(findTestObject('ManualSign/input_referenceNo'), findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 
