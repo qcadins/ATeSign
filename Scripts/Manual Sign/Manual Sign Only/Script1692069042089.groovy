@@ -350,6 +350,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
 					countValue++
 					
+					'Klik set tanda tangan'
+					WebUI.click(findTestObject('ManualSign/btn_setTandaTangan'))
+					
 					'modify label tipe tanda tangan di kotak'
 					modifyobjectTTDlblRoleTandaTangan = WebUI.modifyObjectProperty(findTestObject('Object Repository/ManualSign/modifyObject'),
 						'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' +
@@ -357,9 +360,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 	
 					'Verifikasi antara excel dan UI, apakah tipenya sama'
 					WebUI.verifyMatch(namaTandaTangan[index], WebUI.getText(modifyobjectTTDlblRoleTandaTangan), false)
-                    
-					'Klik set tanda tangan'
-                    WebUI.click(findTestObject('ManualSign/btn_setTandaTangan'))
                 }
 
                 'Verify apakah tanda tangannya ada'

@@ -51,7 +51,7 @@ public class ManualStamp {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getManualStamp(Connection conn, String refNumber, String tenantCode) {
 		stm = conn.createStatement()
@@ -69,7 +69,7 @@ public class ManualStamp {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getInputeMeteraiMonitoring(Connection conn, String refNumber, String tenantCode) {
 		stm = conn.createStatement()
