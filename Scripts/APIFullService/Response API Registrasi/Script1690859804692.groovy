@@ -199,15 +199,35 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 	                                GlobalVariable.NumofColm, 23).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 					
 					} else {
-						resultDataUser = CustomKeywords.'connection.APIFullService.getAPIRegisterPrivyStoreDB'(conneSign, trxNo[0])
-						
-						arrayIndex = 0
-						
-						'verify request status = 0'
-						arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]), '0', false, FailureHandling.CONTINUE_ON_FAILURE))
-						
-						'verify is external = 0'
-						arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]), '0', false, FailureHandling.CONTINUE_ON_FAILURE))
+						'looping untuk delay 100detik menunggu proses request status'
+						for(delay = 1; delay <= 5; delay++) {
+							resultDataUser = CustomKeywords.'connection.APIFullService.getAPIRegisterPrivyStoreDB'(conneSign, trxNo[0])
+							
+							'reset arraymatch'
+							arrayMatch = []
+							
+							arrayIndex = 0
+							
+							'verify request status = 1'
+							arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]), '1', false, FailureHandling.OPTIONAL))
+							
+							'verify is external = 1'
+							arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]), '1', false, FailureHandling.OPTIONAL))
+							
+							if (arrayMatch.contains(false)) {
+								'jika sudah delay ke 5 maka dianggap failed'
+								if(delay == 5) {
+									'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+									CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Registrasi', GlobalVariable.NumofColm,
+										GlobalVariable.StatusFailed, (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm,
+											2) + ';') + GlobalVariable.ReasonFailedStoredDB + ' Karena Job Tidak Jalan')
+								}
+								'delay 20detik'
+								WebUI.delay(20)
+							} else {
+								break
+							}
+						}
 					}
 					
                     'jika data db tidak sesuai dengan excel'

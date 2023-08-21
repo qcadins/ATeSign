@@ -255,13 +255,25 @@ def inputSearchPSrE() {
 	'input kode vendor'
 	WebUI.setText(findTestObject('PengaturanPSrE/input_KodeVendor'), findTestData(excelPath).getValue(GlobalVariable.NumofColm, 10))
 	
-	'input status'
+	'input status all untuk reset'
+	WebUI.setText(findTestObject('PengaturanPSrE/input_Status'), 'All')
+	
+	'Input enter'
+	WebUI.sendKeys(findTestObject('PengaturanPSrE/input_Status'), Keys.chord(Keys.ENTER))
+	
+	'input status sesuai excel'
 	WebUI.setText(findTestObject('PengaturanPSrE/input_Status'), findTestData(excelPath).getValue(GlobalVariable.NumofColm, 11))
 	
 	'Input enter'
     WebUI.sendKeys(findTestObject('PengaturanPSrE/input_Status'), Keys.chord(Keys.ENTER))
 	
-	'input status operational'
+	'input status operational all untuk reset'
+	WebUI.setText(findTestObject('PengaturanPSrE/input_StatusOperational'), 'All')
+	
+	'Input enter'
+	WebUI.sendKeys(findTestObject('PengaturanPSrE/input_StatusOperational'), Keys.chord(Keys.ENTER))
+	
+	'input status operational sesuai excel'
 	WebUI.setText(findTestObject('PengaturanPSrE/input_StatusOperational'), findTestData(excelPath).getValue(GlobalVariable.NumofColm, 12))
 	
 	'Input enter'

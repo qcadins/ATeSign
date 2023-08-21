@@ -75,7 +75,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                                     false, FailureHandling.CONTINUE_ON_FAILURE))
 
                             'verify vendor status'
-                            arrayMatch.add(WebUI.verifyMatch(vendorStatusDB.toUpperCase(), (vendoractive[index]).toUpperCase(), 
+                            arrayMatch.add(WebUI.verifyMatch(vendorStatusDB, (vendoractive[index]), 
                                     false, FailureHandling.CONTINUE_ON_FAILURE))
                         }
                     }

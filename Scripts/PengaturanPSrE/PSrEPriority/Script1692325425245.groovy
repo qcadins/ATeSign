@@ -24,6 +24,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 	} else if (findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted') ||
 		findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('WARNING')) {
 		
+		if(findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {			
+			GlobalVariable.FlagFailed = 0
+		}
+		
 		'click menu priority PSrE'
 		WebUI.click(findTestObject('PengaturanPSrE/PSRe Priority/menu_PsrePriority'))
 		

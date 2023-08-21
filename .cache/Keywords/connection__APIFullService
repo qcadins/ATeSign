@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "85B8571946DFDEEB6F06A0190EE5A80B",
+  "keywordFileContentHash": "347FC90106EE2C85A04090C55D6021A1",
   "keywordClasses": [
     {
       "name": "connection.APIFullService",
@@ -1689,6 +1689,19 @@
             },
             {
               "name": "docId",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "email",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

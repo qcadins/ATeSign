@@ -47,19 +47,27 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			GlobalVariable.NumofColm, 9), ('trxNo') : findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, 10)]))
 	
 		   if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
-			   'get  doc id'
-			   verifStatus = WS.getElementPropertyValue(respon, 'verifStatus', FailureHandling.OPTIONAL)
+			   'get status code'
+			   statusCode = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 			   
-			   'get  signing Process'
-			   results = WS.getElementPropertyValue(respon, 'results', FailureHandling.OPTIONAL)
-			
-			   'write to excel success'
-			   CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Check Verification Status',
-				   0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-
-			   'write to excel verif status'
-			   CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Check Verification Status',
-				   5, GlobalVariable.NumofColm - 1, verifStatus)
+			   if(statusCode == 0) {				   
+				   'get  doc id'
+				   verifStatus = WS.getElementPropertyValue(respon, 'verifStatus', FailureHandling.OPTIONAL)
+				   
+				   'get  signing Process'
+				   results = WS.getElementPropertyValue(respon, 'results', FailureHandling.OPTIONAL)
+				
+				   'write to excel success'
+				   CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Check Verification Status',
+					   0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+	
+				   'write to excel verif status'
+				   CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Check Verification Status',
+					   5, GlobalVariable.NumofColm - 1, verifStatus.toString())
+			   } else {
+				   'call function get error message API'
+				   getErrorMessageAPI(respon)
+			   }
 		   } else {
 		        'call function get error message API'
 				getErrorMessageAPI(respon)
