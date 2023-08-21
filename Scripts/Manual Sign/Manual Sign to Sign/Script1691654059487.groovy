@@ -440,7 +440,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         'add otp ke list'
                         listOTP.add(OTP)
 
-						WebUI.delay(40)
+						WebUI.delay(60)
 						
                         'bikin flag untuk dilakukan OTP by db'
                         if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 43) == 'Yes') {
@@ -1098,4 +1098,6 @@ def checkPopupWarning() {
 		'Klik OK untuk popupnya'
 		WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
 	}
+	
+	return false
 }
