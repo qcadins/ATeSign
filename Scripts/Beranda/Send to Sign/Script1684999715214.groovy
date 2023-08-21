@@ -110,8 +110,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'Klik button ttd bulk'
             WebUI.click(findTestObject('KotakMasuk/Sign/btn_ttdbulk'))
 
-            'klik tombol Batal'
-            WebUI.click(findTestObject('KotakMasuk/Sign/btn_Batal'))
+			if (checkPopupWarning() == false) {
+				'klik tombol Batal'
+				WebUI.click(findTestObject('KotakMasuk/Sign/btn_Batal'))
+			}
 
             'refresh buat reset nav bar selanjutnya'
             WebUI.refresh()
@@ -376,6 +378,20 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 				checkVerifyEqualorMatch(WebUI.verifyMatch(CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(noTelpSigner), CustomKeywords.'connection.APIFullService.getHashedNo'(conneSign, emailSigner[o-1]), false),
 				'pada nomor telepon Signer')
 
+				'cek jika vendor yang dipakai adalah privy'
+				if (vendor.equalsIgnoreCase('Privy')) {
+					
+					'pastikan tombol verifikasi biometrik tidak muncul'
+					if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/btn_verifBiom'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+						GlobalVariable.FlagFailed = 1
+						
+						'jika muncul, tulis error ke excel'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+							GlobalVariable.StatusFailed, ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+								2).replace('-', '') + ';') + 'Tombol Liveness muncul saat vendor Privy'))
+					}
+				}
+				
                 'Jika cara verifikasinya menggunakan OTP'
                 if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 63) == 'OTP') {
                     'Klik verifikasi by OTP'
@@ -1057,4 +1073,20 @@ def checkErrorLog() {
     }
     
     return false
+}
+
+def checkPopupWarning() {
+	'Jika popup muncul'
+	if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		'label popup diambil'
+		lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
+
+			'Tulis di excel sebagai failed dan error.'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusWarning,
+				(((findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') +
+				'<') + lblpopup) + '>')
+			
+		'Klik OK untuk popupnya'
+		WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
+	}
 }

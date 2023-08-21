@@ -56,7 +56,7 @@ public class ManualSign {
 	getVerificationSigner(Connection conn, String emailSigner){
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select full_name from am_msuser where login_id = '"+ emailSigner +"'")
+		resultSet = stm.executeQuery("select full_name from am_msuser where login_id = '"+emailSigner+"' or hashed_phone = '"+emailSigner+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -71,7 +71,7 @@ public class ManualSign {
 	getInformationUser(Connection conn, String emailSigner, String vendorName) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select amm.full_name, amm.hashed_phone from am_msuser amm left join ms_vendor_registered_user msvr on msvr.id_ms_user = amm.id_ms_user left join ms_vendor msv on msvr.id_ms_vendor = msv.id_ms_vendor where amm.login_id = '"+emailSigner+"' and msv.vendor_name = '"+vendorName+"'")
+		resultSet = stm.executeQuery("select amm.full_name, amm.hashed_phone from am_msuser amm left join ms_vendor_registered_user msvr on msvr.id_ms_user = amm.id_ms_user left join ms_vendor msv on msvr.id_ms_vendor = msv.id_ms_vendor where (amm.login_id = '"+emailSigner+"' or amm.hashed_phone = '"+emailSigner+"')and msv.vendor_name = '"+vendorName+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

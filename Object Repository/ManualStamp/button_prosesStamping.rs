@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>menu_Saldo</name>
+   <name>button_prosesStamping</name>
    <tag></tag>
-   <elementGuidId>737676d9-4ede-4e42-9bb3-ca9b34c56ecd</elementGuidId>
+   <elementGuidId>da157340-9d73-41d9-91e5-42033ebaabec</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@href = '/balance']</value>
+         <value>//*[@id = 'hasilStamping']/div/div/div[3]/input</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>false</isSelected>
+      <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[contains(@class, 'sidebar-content main-menu-content')]/div[1]/ul/li[1]/a/span</value>
-      <webElementGuid>43bb532f-c1b2-4b01-b306-d5c8939f251a</webElementGuid>
+      <value>//*[@id = 'hasilStamping']/div/div/div[3]/input</value>
+      <webElementGuid>cae1d76b-ab18-4caf-936e-69bd759d6c20</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>href</name>
+      <name>id</name>
       <type>Main</type>
-      <value>/balance</value>
-      <webElementGuid>9c246316-2272-4d07-8cf4-6f8cc8a3ef4f</webElementGuid>
+      <value>hasilStamping</value>
+      <webElementGuid>34e9e8c7-7f20-46c0-85f6-4ac314c11243</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

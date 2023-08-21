@@ -37,7 +37,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		
 		'check ada value maka setting need password for signing'
 		if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 36).length() > 0) {
-			'setting email service tenant'
+			'setting need password for signing'
 			CustomKeywords.'connection.APIFullService.settingFlagNeedPassword'(conneSign, findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 36))
 		}
 			

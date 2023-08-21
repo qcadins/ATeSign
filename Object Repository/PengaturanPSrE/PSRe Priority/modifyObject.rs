@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>modifyObject</name>
+   <tag></tag>
+   <elementGuidId>f22a1621-502c-4a38-a802-0caa993fc9e7</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;cdk-drop-list-0&quot;]/div[1]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;cdk-drop-list-0&quot;]/div[1]</value>
+      <webElementGuid>f94b289d-a9c8-4b17-8533-972f5765d521</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>
