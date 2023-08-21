@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "keywordFileContentHash": "E69BC2E3D6BB4147E230550C9706FDA5",
-=======
   "keywordFileContentHash": "D44DAC06A1B4FE0A0AE59BFA36E57A12",
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
   "keywordClasses": [
     {
       "name": "connection.Meterai",
