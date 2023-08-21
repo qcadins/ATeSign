@@ -38,23 +38,25 @@ indexEmail = 0
 index = 8
 
 'Inisialisasi variable yang dibutuhkan'
-emailPenandaTangan = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 19).split(semicolon, splitIndex)
+phonePenandaTangan = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 19).split(semicolon, splitIndex)
 
-editNamaAfterSearch = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 20).split(semicolon, splitIndex)
+emailPenandaTangan = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 20).split(semicolon, splitIndex)
 
-namaPenandaTangan = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 21).split(semicolon, splitIndex)
+editNamaAfterSearch = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 21).split(semicolon, splitIndex)
 
-tipeTandaTangan = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 22).split(semicolon, splitIndex)
+namaPenandaTangan = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 22).split(semicolon, splitIndex)
 
-totalTandaTangan = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 23).split(semicolon, splitIndex)
+tipeTandaTangan = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 23).split(semicolon, splitIndex)
 
-pindahkanSignBox = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 24).split(semicolon, splitIndex)
+totalTandaTangan = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 24).split(semicolon, splitIndex)
 
-lokasiSignBox = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 25).split('\\n', splitIndex)
+pindahkanSignBox = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 25).split(semicolon, splitIndex)
 
-lockSignBox = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 26).split(semicolon, splitIndex)
+lokasiSignBox = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 26).split('\\n', splitIndex)
 
-catatanStamping = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 27).split(semicolon, splitIndex)
+lockSignBox = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 27).split(semicolon, splitIndex)
+
+catatanStamping = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 28).split(semicolon, splitIndex)
 
 'Klik tombol menu manual sign'
 WebUI.click(findTestObject('ManualSign/ManualSign'))
@@ -103,6 +105,9 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
         'jika label tambah penanda tangan muncul'
         if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_TambahPenandaTangan'), GlobalVariable.TimeOut) == 
         true) {
+			'set text pada email penanda tangan'
+			WebUI.setText(findTestObject('ManualSign/input_phonePenandaTangan'), phonePenandaTangan[i])
+
             'set text pada email penanda tangan'
             WebUI.setText(findTestObject('ManualSign/input_emailPenandaTangan'), emailPenandaTangan[i])
 
@@ -135,9 +140,17 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
                 WebUI.delay(2)
             }
             
-            'verifikasi signer ketika sudah submit signer'
-            String verifikasiSigner = CustomKeywords.'connection.ManualSign.getVerificationSigner'(conneSign, emailPenandaTangan[
-                i])
+			if (emailPenandaTangan[i] != '') {
+				'verifikasi signer ketika sudah submit signer'
+				String verifikasiSigner = CustomKeywords.'connection.ManualSign.getVerificationSigner'(conneSign, emailPenandaTangan[i])
+			} else if (phonePenandaTangan[i] != '') {
+				'verifikasi signer ketika sudah submit signer'
+				String verifikasiSigner = CustomKeywords.'connection.ManualSign.getVerificationSigner'(conneSign, phonePenandaTangan[i])
+			}
+			
+			'check data mengenai email penanda tangan'
+			checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualSign/input_phonePenandaTangan'),
+						'value'), phonePenandaTangan[i], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada email Penanda Tangan ')
 
             'check data mengenai email penanda tangan'
             checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualSign/input_emailPenandaTangan'), 

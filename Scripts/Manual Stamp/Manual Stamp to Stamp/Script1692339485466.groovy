@@ -222,7 +222,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                     'click lock signbox'
                                     WebUI.click(modifyobjectLockSignBox)
 
-                                    WebUI.setText(findTestObject('ManualStamp/input_isiCatatanStamping'), catatanStamping[j])
+                                    WebUI.setText(findTestObject('ManualStamp/input_isiCatatanStamping'), catatanStamping[j - 1])
 
                                     WebUI.click(findTestObject('ManualStamp/button_SimpanCatatanStamping'))
                                 }
@@ -640,9 +640,8 @@ def inputEMeteraiMonitoring(Connection conneSign) {
 							result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Hasil Stamping ')
 
 					'verify nomor seri'
-					//checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_Nomor Seri')),
-					//		result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Nomor Seri ')
-					index++
+					checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_Nomor Seri')),
+							result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Nomor Seri ')
 					
 					'verify proses meterai'
 					checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_Proses Materai')),
@@ -654,7 +653,17 @@ def inputEMeteraiMonitoring(Connection conneSign) {
 				}
 				break
 			} else {
-				WebUI.delay(15)
+				if (i == 10) {
+					WebUI.delay(15)
+					
+					'write to excel bahwa save gagal'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Stamp to Stamp', GlobalVariable.NumofColm,
+						GlobalVariable.StatusFailed, (findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm,
+							2) + ';') + GlobalVariable.ReasonFailedProsesStamping + ' yaitu status meterai adalah ' + inputMeterai[6] + ' pada nomor dokumen tersebut selama ' + (i * 15))
+				} else {
+					WebUI.delay(15)
+				}
+
 			}
 		}
 	}

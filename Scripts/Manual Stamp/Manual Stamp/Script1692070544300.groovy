@@ -216,7 +216,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                     WebUI.click(modifyobjectLockSignBox)
 
                                     WebUI.setText(findTestObject('ManualStamp/input_isiCatatanStamping'), catatanStamping[
-                                        j])
+                                        j - 1])
 
                                     WebUI.click(findTestObject('ManualStamp/button_SimpanCatatanStamping'))
                                 }
@@ -620,7 +620,16 @@ indexInput++
                 }		
 				break
             } else {
-                WebUI.delay(15)
+				if (i == 10) {
+					WebUI.delay(15)
+					
+					'write to excel bahwa save gagal'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Stamp to Stamp', GlobalVariable.NumofColm,
+						GlobalVariable.StatusFailed, (findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm,
+							2) + ';') + GlobalVariable.ReasonFailedProsesStamping + ' yaitu status meterai adalah ' + inputMeterai[6] + ' pada nomor dokumen tersebut selama ' + (i * 15))
+				} else {
+					WebUI.delay(15)
+				}
             }
         }
     }
