@@ -58,6 +58,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         ArrayList emailSigner = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, findTestData(excelPathManualSigntoSign).getValue(
                 GlobalVariable.NumofColm, 6)).split(';', -1)
 
+		'ambil nama vendor dari DB'
+		String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 11).replace('"',''))
+		
         'declare saldo used untuk document pertama yaitu 0'
         int saldoUsedDocPertama = 0
 
@@ -370,6 +373,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         CustomKeywords.'connection.APIFullService.getHashedNo'(conneSign, emailSigner[(o - 1)]), false), 
                     'pada nomor telepon Signer')
 
+				'cek jika vendor yang dipakai adalah privy'
+				if (vendor.equalsIgnoreCase('Privy')) {
+					
+					'pastikan tombol verifikasi biometrik tidak muncul'
+					if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/btn_verifBiom'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+						GlobalVariable.FlagFailed = 1
+						
+						'jika muncul, tulis error ke excel'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+							GlobalVariable.StatusFailed, ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+								2).replace('-', '') + ';') + 'Tombol Liveness muncul saat vendor Privy'))
+					}
+				}
                 'Jika cara verifikasinya menggunakan OTP'
                 if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 38) == 'OTP') {
                     'Klik verifikasi by OTP'
@@ -809,7 +825,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             	} else if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 62) == 'Front End Document Monitoring') {
             		'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
             		WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathManualSigntoSign
-            		                                                                                 , ('sheet') : sheet, ('linkDocumentMonitoring') : 'Not Used', ('nomorKontrak') : noKontrakPerDoc[                                                                                                                                                                                 0], ('isStamping') : 'Yes'], FailureHandling.CONTINUE_ON_FAILURE)
+				    , ('sheet') : sheet, ('linkDocumentMonitoring') : 'Not Used', ('nomorKontrak') : noKontrakPerDoc[0], ('isStamping') : 'Yes'], FailureHandling.CONTINUE_ON_FAILURE)
             	}
             }
         }

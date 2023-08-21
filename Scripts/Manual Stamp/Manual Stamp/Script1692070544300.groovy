@@ -41,8 +41,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         'Inisialisasi array dan variable'
         indexEmail = 0
 
-		indexForCatatanStamp = 0
-
         'Inisialisasi variable yang dibutuhkan'
         totalMeterai = findTestData(excelPathManualStamp).getValue(GlobalVariable.NumofColm, 15)
 
@@ -148,7 +146,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             FailureHandling.CONTINUE_ON_FAILURE)
 
 						'set text catatan stamping'
-                        WebUI.setText(findTestObject('ManualStamp/input_isiCatatanStamping'), catatanStamping[indexForCatatanStamp++])
+                        WebUI.setText(findTestObject('ManualStamp/input_isiCatatanStamping'), catatanStamping[0])
 
 						'klik batal catatan stamping'
                         WebUI.click(findTestObject('ManualStamp/button_batalCatatanStamping'))
@@ -163,8 +161,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         false, FailureHandling.CONTINUE_ON_FAILURE), ' pada catatan meterai ')
 
 						'isi catatan stamping'
-                        WebUI.setText(findTestObject('ManualStamp/input_isiCatatanStamping'), catatanStamping[(indexForCatatanStamp - 
-                            1)])
+                        WebUI.setText(findTestObject('ManualStamp/input_isiCatatanStamping'), catatanStamping[0])
 
 						'klik simpan catatan stamping'
                         WebUI.click(findTestObject('ManualStamp/button_SimpanCatatanStamping'))
@@ -172,7 +169,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 						'check is locked'
                         isLocked = WebUI.getAttribute(findTestObject('ManualStamp/btn_LockSignBox'), 'class', FailureHandling.STOP_ON_FAILURE)
 
-						if (catatanStamping[indexForCatatanStamp -1] != '') {
+						if (catatanStamping[0] != '') {
                         'verify sign box is locked'
                         checkVerifyEqualOrMatch(WebUI.verifyMatch(isLocked, 'fa fa-2x fa-lock', false, FailureHandling.CONTINUE_ON_FAILURE), 
                             ' pada sign locked ')
@@ -219,7 +216,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                     WebUI.click(modifyobjectLockSignBox)
 
                                     WebUI.setText(findTestObject('ManualStamp/input_isiCatatanStamping'), catatanStamping[
-                                        (indexForCatatanStamp - 1)])
+                                        j])
 
                                     WebUI.click(findTestObject('ManualStamp/button_SimpanCatatanStamping'))
                                 }
@@ -306,7 +303,7 @@ def checkErrorLog() {
         'ambil teks errormessage'
         errormessage = WebUI.getAttribute(findTestObject('ManualSign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
 
-        if (!(errormessage.contains('Permintaan e-Meterai berhasil dibuat.'))) {
+        if (!(errormessage.contains('Permintaan pembubuhan e-Materai berhasil dibuat.'))) {
             'Tulis di excel itu adalah error'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Stamp', GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, (((findTestData(excelPathManualStamp).getValue(GlobalVariable.NumofColm, 2).replace(
