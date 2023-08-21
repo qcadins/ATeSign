@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
   "keywordFileContentHash": "2FE714BCDC8C97C9794BEC1B4D275C5D",
-=======
-  "keywordFileContentHash": "02C0B67FEB60F6B0CF7A108B460C204C",
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
   "keywordClasses": [
     {
       "name": "connection.PengaturanPSrE",

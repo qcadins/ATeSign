@@ -8,14 +8,14 @@ import com.kms.katalon.core.annotation.Keyword
 import internal.GlobalVariable
 
 public class UpdateData {
-	
+
 	String data
 	int columnCount, i
 	Statement stm
 	ResultSetMetaData metadata
 	ResultSet resultSet
 	ArrayList<String> listdata = []
-	
+
 	@Keyword
 	updateVendorOTP(Connection conn, String vendor, int number) {
 
