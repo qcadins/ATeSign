@@ -33,6 +33,10 @@ if (nomorKontrak == '') {
 'mengambil hasil split dari totalLoop'
 nomorKontrakPerPilihan = nomorKontrak.split(';', -1)
 
+if (isStamping == 'Yes') {
+    saldoBefore = loginAdminGetSaldo(conneSign, 'No', sheet)
+}
+
 'looping untuk membuka dokumen'
 for (int o = 1; o <= 1; o++) {
     if (linkDocumentMonitoring == 'Not Used') {
@@ -91,9 +95,15 @@ for (int o = 1; o <= 1; o++) {
         WebUI.delay(7)
 
         'Mengambil email berdasarkan documentId'
-        ArrayList emailSigner = CustomKeywords.'connection.DocumentMonitoring.getEmailSigneronRefNumber'(conneSign, nomorKontrakPerPilihan[
-            y]).split(';', -1)
-
+        String emailSigner = CustomKeywords.'connection.DocumentMonitoring.getEmailSigneronRefNumber'(conneSign, nomorKontrakPerPilihan[
+            y])
+		
+		if (emailSigner.toString() != 'null') {
+			emailSigner = emailSigner.split(';', -1)
+		} else {
+			emailSigner = []
+		}
+		
         'Pembuatan untuk array Index result Query'
         arrayIndex = 0
 
@@ -177,7 +187,7 @@ for (int o = 1; o <= 1; o++) {
             sizeColumnofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('#listDokumen > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-body-cell'))
 
             'Jika valuenya ada'
-            if (WebUI.verifyElementPresent(modifyObjectvalues, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+            if (WebUI.verifyElementPresent(modifyObjectvalues, GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
                 'Pembuatan untuk array Index result Query'
                 arrayIndex = 0
 
@@ -246,7 +256,7 @@ for (int o = 1; o <= 1; o++) {
                 true)
 
             'Jika valuenya ada'
-            if (WebUI.verifyElementPresent(modifyObjectvalues, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+            if (WebUI.verifyElementPresent(modifyObjectvalues, GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
                 WebUI.delay(5)
 
                 'Mengambil row size dari value'
@@ -378,8 +388,8 @@ for (int o = 1; o <= 1; o++) {
 
                             'Write To Excel GlobalVariable.StatusFailed and errormessage'
                             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                                GlobalVariable.StatusFailed, (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
-                                    2) + ';') + GlobalVariable.ReasonFailedProsesStamping) + ' dengan alasan ') + errorMessageDB.toString())
+                                GlobalVariable.StatusFailed, (GlobalVariable.ReasonFailedProsesStamping + ' dengan alasan ') + 
+                                errorMessageDB.toString())
 
                             GlobalVariable.FlagFailed = 1
 
@@ -428,7 +438,161 @@ for (int o = 1; o <= 1; o++) {
                     }
                 }
             }
+            
+            saldoAfter = loginAdminGetSaldo(conneSign, 'Yes', sheet)
+
+            if (saldoBefore == saldoAfter) {
+                'write to excel status failed dan reason'
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                    ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
+                    ' terhadap total saldo dimana saldo awal dan saldo setelah meterai sama ')
+            } else {
+				verifySaldoUsed(conneSign, sheet)
+			}
         }
     }
 }
 
+def loginAdminGetSaldo(Connection conneSign, String start, String sheet) {
+    String totalSaldo
+
+    if (start == 'Yes') {
+        'klik button saldo'
+        WebUI.click(findTestObject('isiSaldo/SaldoAdmin/menu_Saldo'))
+    }
+    
+    'klik ddl untuk tenant memilih mengenai Vida'
+    WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)
+
+    'get total div di Saldo'
+    variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
+
+    'looping berdasarkan total div yang ada di saldo'
+    for (int c = 1; c <= variableDivSaldo.size(); c++) {
+        'modify object mengenai find tipe saldo'
+        modifyObjectFindSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_saldo'), 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + 
+            (c + 1)) + ']/div/div/div/div/div[1]', true)
+
+        'verifikasi label saldonya '
+        if (WebUI.verifyElementText(modifyObjectFindSaldoSign, 'Meterai', FailureHandling.OPTIONAL)) {
+            'modify object mengenai ambil total jumlah saldo'
+            modifyObjecttotalSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_countsaldo'), 'xpath', 'equals', 
+                ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + (c + 1)) + ']/div/div/div/div/div[2]', 
+                true)
+
+            'mengambil total saldo yang pertama'
+            totalSaldo = WebUI.getText(modifyObjecttotalSaldoSign)
+
+            break
+        }
+    }
+    
+    'return total saldo awal'
+    return totalSaldo
+}
+
+
+def verifySaldoUsed(Connection conneSign, String sheet) {
+	'get current date'
+	def currentDate = new Date().format('yyyy-MM-dd')
+
+	documentType = CustomKeywords.'connection.APIFullService.getDocumentType'(conneSign, findTestData(excelPathStamping).getValue(
+			GlobalVariable.NumofColm, 11).replace('"', ''))
+
+	documentName = CustomKeywords.'connection.DataVerif.getDocumentName'(conneSign, findTestData(excelPathStamping).getValue(
+			GlobalVariable.NumofColm, 11).replace('"', ''))
+
+	'klik ddl untuk tenant memilih mengenai Vida'
+	WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)
+
+	'input filter dari saldo'
+	WebUI.setText(findTestObject('Saldo/input_tipesaldo'), 'Stamp Duty')
+
+	'enter'
+	WebUI.sendKeys(findTestObject('Saldo/input_tipeSaldo'), Keys.chord(Keys.ARROW_DOWN))
+
+	'enter'
+	WebUI.sendKeys(findTestObject('Saldo/input_tipeSaldo'), Keys.chord(Keys.ENTER))
+
+	'Input tipe transaksi'
+	WebUI.setText(findTestObject('Saldo/input_tipetransaksi'), 'Use Stamp Duty')
+
+	'Input enter'
+	WebUI.sendKeys(findTestObject('Saldo/input_tipetransaksi'), Keys.chord(Keys.ENTER))
+
+	'Input date sekarang'
+	WebUI.setText(findTestObject('Saldo/input_fromdate'), currentDate)
+
+	'Input tipe dokumen'
+	WebUI.setText(findTestObject('Saldo/input_tipedokumen'), documentType)
+
+	'Input enter'
+	WebUI.sendKeys(findTestObject('Saldo/input_tipedokumen'), Keys.chord(Keys.ENTER))
+
+	'Input referal number'
+	WebUI.setText(findTestObject('Saldo/input_refnumber'), findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm,
+			11).replace('"', ''))
+
+	'Input documentTemplateName'
+	WebUI.setText(findTestObject('Saldo/input_namadokumen'), documentName, FailureHandling.CONTINUE_ON_FAILURE)
+
+	'Input date sekarang'
+	WebUI.setText(findTestObject('Saldo/input_todate'), currentDate)
+
+	'Klik cari'
+	WebUI.click(findTestObject('Saldo/btn_cari'))
+
+	'get column di saldo'
+	variableSaldoColumn = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller > datatable-row-wrapper > datatable-body-row datatable-body-cell'))
+
+	'get row di saldo'
+	variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper '))
+
+	'ambil inquiry di db'
+	ArrayList inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldoForMeterai'(conneSign, findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 11).replace('"', ''))
+
+	index = 0
+
+	for (int p = 1; p <= variableSaldoRow.size(); p++) {
+		'looping mengenai columnnya'
+		for (int u = 1; u <= (variableSaldoColumn.size() / variableSaldoRow.size()); u++) {
+			'modify per row dan column. column menggunakan u dan row menggunakan documenttemplatename'
+			modifyperrowpercolumn = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/lbl_notrxsaldo'), 'xpath',
+				'equals', ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+				p) + ']/datatable-body-row/div[2]/datatable-body-cell[') + u) + ']/div', true)
+
+			'Jika u di lokasi qty atau kolom ke 9'
+			if (u == 9) {
+				'Jika yang qtynya 1 dan databasenya juga, berhasil'
+				if ((WebUI.getText(modifyperrowpercolumn) == '1') || ((inquiryDB[index]) == '-1')) {
+					'Jika bukan untuk 2 kolom itu, maka check ke db'
+					checkVerifyEqualOrMatch(WebUI.verifyMatch('-' + WebUI.getText(modifyperrowpercolumn), inquiryDB[index],
+							false, FailureHandling.CONTINUE_ON_FAILURE), 'pada Kuantitas di Mutasi Saldo dengan nomor kontrak ' +
+						findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 11).replace('"', ''))
+
+					index++
+				} else {
+					'Jika bukan -1, atau masih 0. Maka ttdnya dibilang error'
+					GlobalVariable.FlagFailed = 1
+
+					'Jika saldonya belum masuk dengan flag, maka signnya gagal.'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+						GlobalVariable.StatusFailed, (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+							2) + ';') + GlobalVariable.ReasonFailedSignGagal) + ' terlihat pada Kuantitas di Mutasi Saldo dengan nomor kontrak ') +
+						findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 11).replace('"', ''))
+
+					index++
+				}
+			} else if (u == (variableSaldoColumn.size() / variableSaldoRow.size())) {
+				'Jika di kolom ke 10, atau di FE table saldo'
+			} else {
+				'check table'
+				checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyperrowpercolumn), inquiryDB[index], false,
+						FailureHandling.CONTINUE_ON_FAILURE), 'pada Mutasi Saldo dengan nomor Kontrak ' + findTestData(excelPathStamping).getValue(
+						GlobalVariable.NumofColm, 11).replace('"', ''))
+
+				index++
+			}
+		}
+	}
+}

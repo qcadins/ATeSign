@@ -55,7 +55,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         catatanStamping = findTestData(excelPathManualStamp).getValue(GlobalVariable.NumofColm, 19).split(semicolon, splitIndex)
 
 		'ambil index tab yang sedang dibuka di chrome'
-		int currentTab = WebUI.getWindowIndex()
+		currentTab = WebUI.getWindowIndex()
 
 		'setting zoom menuju 80 persen'
 		zoomSetting(80)
@@ -66,6 +66,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         'Klik tombol menu Manual Stamp'
         WebUI.click(findTestObject('ManualStamp/menu_ManualStamp'))
 
+		'ambil index tab yang sedang dibuka di chrome'
+		currentTab = WebUI.getWindowIndex()
+
+		'setting zoom menuju 80 persen'
+		zoomSetting(100)
+
+		'ganti fokus robot ke tab baru'
+		WebUI.switchToWindowIndex(currentTab)
+		
         'Jika kolomnya berada pada kedua'
         if (GlobalVariable.NumofColm == 2) {
             inputCancel(conneSign)
@@ -444,7 +453,7 @@ def zoomSetting(int percentage) {
     WebDriver driver = DriverFactory.webDriver
 
     'buka tab baru'
-        ((driver) as JavascriptExecutor).executeScript('window.open();')
+     ((driver) as JavascriptExecutor).executeScript('window.open();')
 
     'ambil index tab yang sedang dibuka di chrome'
     int currentTab = WebUI.getWindowIndex()
@@ -469,8 +478,10 @@ def inputEMeteraiMonitoring(Connection conneSign) {
             ArrayList inputEMeterai = CustomKeywords.'connection.ManualStamp.getInputeMeteraiMonitoring'(conneSign, findTestData(
                     excelPathManualStamp).getValue(GlobalVariable.NumofColm, 8), GlobalVariable.Tenant)
 
-            index = 0
+            indexInput = 0
 
+			index = 0
+			
             if (((inputEMeterai[6]) == 'Failed') || ((inputEMeterai[6]) == 'Success')) {
 				if (inputEMeterai[6] == 'Failed') {
 					totalMeterai = 1
@@ -482,11 +493,11 @@ def inputEMeteraiMonitoring(Connection conneSign) {
 			
                     'set text no kontrak'
                     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Nomor Dokumen'), inputEMeterai[
-                        index++])
+                        indexInput++])
 
                     'set text status meterai'
                     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_TipeDokumenPeruri'), inputEMeterai[
-                        index++])
+                        indexInput++])
 
                     'enter untuk set status meterai'
                     WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_TipeDokumenPeruri'), Keys.chord(
@@ -494,7 +505,7 @@ def inputEMeteraiMonitoring(Connection conneSign) {
 
                     'set text status meterai'
                     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Tipe Dokumen'), inputEMeterai[
-                        index++])
+                        indexInput++])
 
                     'enter untuk set status meterai'
                     WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_Tipe Dokumen'), Keys.chord(
@@ -502,7 +513,7 @@ def inputEMeteraiMonitoring(Connection conneSign) {
 
                     'set text status meterai'
                     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_PengaturanDokumen'), inputEMeterai[
-                        index++])
+                        indexInput++])
 
                     'enter untuk set status meterai'
                     WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_PengaturanDokumen'), Keys.chord(
@@ -510,33 +521,33 @@ def inputEMeteraiMonitoring(Connection conneSign) {
 
                     'set text status meterai'
                     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Tanggal Dokumen Mulai'), 
-                        inputEMeterai[index++])
+                        inputEMeterai[indexInput++])
 
                     'set text status meterai'
                     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_TanggalDokumenSampai'), inputEMeterai[
-                        index++])
+                        indexInput++])
 
                     'set text status meterai'
                     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/button_prosesStamping'), inputEMeterai[
-                        index++])
+                        indexInput++])
 
                     'enter untuk set status meterai'
                     WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/button_prosesStamping'), Keys.chord(
                             Keys.ENTER))
 
                     'set text status meterai'
-                    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Nomor Seri'), inputEMeterai[
-                        index++])
-
+                   // WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Nomor Seri'), inputEMeterai[
+                   //     indexInput++])
+indexInput++
                     'set text status meterai'
-                    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Cabang'), inputEMeterai[index++])
+                    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Cabang'), inputEMeterai[indexInput++])
 
                     'enter untuk set status meterai'
                     WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_Cabang'), Keys.chord(Keys.ENTER))
 
                     'set text status meterai'
                     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_JenisPajak'), inputEMeterai[
-                        index++])
+                        indexInput++])
 
                     'enter untuk set status meterai'
                     WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_JenisPajak'), Keys.chord(
@@ -551,7 +562,7 @@ def inputEMeteraiMonitoring(Connection conneSign) {
                         errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
 
                         'Tulis di excel itu adalah error'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('e-Meterai Monitoring', GlobalVariable.NumofColm, 
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Stamping', GlobalVariable.NumofColm, 
                             GlobalVariable.StatusWarning, (((findTestData(excelPathManualStamp).getValue(GlobalVariable.NumofColm, 
                                 2).replace('-', '') + ';') + '<') + errormessage) + '>')
 
@@ -562,56 +573,54 @@ def inputEMeteraiMonitoring(Connection conneSign) {
                     result = CustomKeywords.'connection.eMeteraiMonitoring.geteMeteraiMonitoring'(conneSign, findTestData(
                             excelPathManualStamp).getValue(GlobalVariable.NumofColm, 8))
 
-                    index = 0
-
-                    'verify no meterai'
+                    'verify no dokumen'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_NomorDokumen')), 
                             result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Nomor Dokumen ')
 
-                    'verify no kontrak'
+                    'verify tanggal dokumen'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_TanggalDokumen')), 
                             result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Dokumen ')
 
-                    'verify tanggal pakai'
+                    'verify cabang'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_Cabang')), 
                             result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Cabang ')
 
-                    'verify biaya'
+                    'verify nama dokumen'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_NamaDokumen')), 
                             result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama Dokumen ')
 
-                    'verify cabang'
+                    'verify tipe dokumen peruri'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_TipeDokumenPeruri')), 
                             result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Tipe Dokumen Peruri ')
 
-                    'verify wilayah'
+                    'verify tipe dokumen'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_TipeDokumen')), 
                             result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Tipe Dokumen ')
 
-                    'verify lini bisnis'
+                    'verify nominal dokumen'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_NominalDokumen')).replace(
                                 ',', ''), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Nominal Dokumen ')
 
-                    'verify lini bisnis'
+                    'verify pengaturan dokumen'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_PengaturanDokumen')), 
                             result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Pengaturan Dokumen ')
 
-                    'verify lini bisnis'
+                    'verify hasil stamping'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_HasilStamping')), 
                             result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Hasil Stamping ')
 
-                    'verify lini bisnis'
+                    'verify nomor seri'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_Nomor Seri')), 
                             result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Nomor Seri ')
 
-                    'verify lini bisnis'
+                    'verify proses materai'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_Proses Materai')), 
                             result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Proses Materai ')
 
-                    'verify lini bisnis'
+                    'verify jenis pajak'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_JenisPajak')), 
                             result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Jenis Pajak ')
-                }
+                }		
 				break
             } else {
                 WebUI.delay(15)
