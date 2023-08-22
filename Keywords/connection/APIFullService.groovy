@@ -808,7 +808,7 @@ public class APIFullService {
 	getDocSignSequence(Connection conn, String docId, String email) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT document_id, CASE WHEN is_sequence = '0' OR is_sequence IS NULL THEN '0' WHEN is_sequence = '1' AND sign_date is not null AND description = 'Need Sign' THEN '2' WHEN tdsr.request_status = '1' THEN '1' WHEN is_sequence = '1' AND sign_date is null AND (description = 'Need Sign' OR description = 'Complete') THEN '0' END FROM tr_document_d tdd JOIN ms_lov ml ON tdd.lov_sign_status = ml.id_lov JOIN tr_document_h tdh on tdd.id_document_h = tdh.id_document_h LEFT JOIN tr_document_signing_request tdsr on tdsr.id_document_h = tdh.id_document_h LEFT JOIN tr_document_signing_request_detail tdsrd on tdsrd.id_document_d = tdd.id_document_d JOIN tr_document_d_sign tdds ON tdds.id_document_d = tdd.id_document_d JOIN am_msuser amu ON amu.id_ms_user = tdds.id_ms_user WHERE document_id = '"+docId+"' AND login_id = '"+ email +"'")
+		resultSet = stm.executeQuery("SELECT login_id, seq_no, is_sequence, document_id, sign_date FROM tr_document_d tdd JOIN tr_document_d_sign tdds ON tdds.id_document_d = tdd.id_document_d JOIN am_msuser amu ON amu.id_ms_user = tdds.id_ms_user WHERE document_id = '"+docId+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -819,7 +819,36 @@ public class APIFullService {
 				listdata.add(data)
 			}
 		}
-		listdata
+		
+		ArrayList<String> resultList = []
+		
+		'hardcode untuk direct langsung ke colm is_sequence'
+		if (listdata[2] == '0') {
+			'hardcode untuk direct langsung ke colm document_id'
+			resultList.add(listdata[3])
+			resultList.add('0')
+		} else if(listdata[2] == '1') {
+			'hardcode untuk direct langsung ke colm document_id'
+			resultList.add(listdata[3])
+			
+			int index = listdata.indexOf(email) + 1
+			
+			if (index - 5 >= 0) {
+				if (listdata[index - 2] != null) {
+					resultList.add('0')
+				} else {
+					resultList.add('2')
+				}
+			} else if (index - 5 <= 0) {
+				if (listdata[index + 3] != null) {
+					resultList.add('2')
+				} else {
+					resultList.add('0')
+				}
+			}
+		}
+		
+		resultList
 	}
 
 	@Keyword
