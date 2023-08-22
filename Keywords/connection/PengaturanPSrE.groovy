@@ -39,7 +39,7 @@ public class PengaturanPSrE {
 	getTotalPSrE(Connection conn) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT count(*) FROM ms_vendor WHERE is_active IS NOT NULL AND is_Operating IS NOT NULL")
+		resultSet = stm.executeQuery("SELECT Count(*) FROM ms_vendor mv JOIN ms_lov ml ON mv.lov_vendor_type = ml.id_lov WHERE is_Operating IS NOT NULL AND ml.id_lov = 48")
 
 		metadata = resultSet.metaData
 
@@ -69,7 +69,7 @@ public class PengaturanPSrE {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getPsrePriority(Connection conn, String tenantCode) {
 		stm = conn.createStatement()

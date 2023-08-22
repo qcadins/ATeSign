@@ -195,25 +195,25 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
 
 	'verify field ke reset'
 	checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Saldo/input_fromdate'), 'value', FailureHandling.CONTINUE_ON_FAILURE),
-	'', false, FailureHandling.CONTINUE_ON_FAILURE))
+	'', false, FailureHandling.CONTINUE_ON_FAILURE), ' field search form tidak kereset - tanggal dari')
 	
 	'verify field ke reset'
 	checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Saldo/input_refnumber'), 'value', FailureHandling.CONTINUE_ON_FAILURE),
-	'', false, FailureHandling.CONTINUE_ON_FAILURE))
+	'', false, FailureHandling.CONTINUE_ON_FAILURE), ' field search form tidak kereset - ref number')
 
 	'verify field ke reset'
 	checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Saldo/input_namadokumen'), 'value', FailureHandling.CONTINUE_ON_FAILURE),
-	'', false, FailureHandling.CONTINUE_ON_FAILURE))
+	'', false, FailureHandling.CONTINUE_ON_FAILURE), ' field search form tidak kereset - nama dokumen')
 	
 	'verify field ke reset'
 	checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Saldo/input_todate'), 'value', FailureHandling.CONTINUE_ON_FAILURE),
-	'', false, FailureHandling.CONTINUE_ON_FAILURE))
+	'', false, FailureHandling.CONTINUE_ON_FAILURE), ' field search form tidak kereset - tanggal sampai')
 	
 	'click ddl tipe saldo'
 	WebUI.click(findTestObject('Saldo/input_tipesaldo'))
 
 	'verify field ke reset'
-	checkVerifyPaging(WebUI.verifyMatch(WebUI.getText(findTestObject('Saldo/selected_DDL')), 'All', false, FailureHandling.CONTINUE_ON_FAILURE))
+	checkVerifyPaging(WebUI.verifyMatch(WebUI.getText(findTestObject('Saldo/selected_DDL')), 'All', false, FailureHandling.CONTINUE_ON_FAILURE), ' field search form tidak kereset - DDL tipe saldo')
 
 	'Input enter'
 	WebUI.sendKeys(findTestObject('Saldo/input_tipesaldo'), Keys.chord(Keys.ENTER))
@@ -222,7 +222,7 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
 	WebUI.click(findTestObject('Saldo/input_tipetransaksi'))
 
 	'verify field ke reset'
-	checkVerifyPaging(WebUI.verifyMatch(WebUI.getText(findTestObject('Saldo/selected_DDL')), 'All', false, FailureHandling.CONTINUE_ON_FAILURE))
+	checkVerifyPaging(WebUI.verifyMatch(WebUI.getText(findTestObject('Saldo/selected_DDL')), 'All', false, FailureHandling.CONTINUE_ON_FAILURE), ' field search form tidak kereset - DDL tipe transaksi')
 	
 	'Input enter'
 	WebUI.sendKeys(findTestObject('Saldo/input_tipetransaksi'), Keys.chord(Keys.ENTER))
@@ -231,7 +231,7 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
 	WebUI.click(findTestObject('Saldo/input_tipedokumen'))
 
 	'verify field ke reset'
-	checkVerifyPaging(WebUI.verifyMatch(WebUI.getText(findTestObject('Saldo/selected_DDL')), 'All', false, FailureHandling.CONTINUE_ON_FAILURE))
+	checkVerifyPaging(WebUI.verifyMatch(WebUI.getText(findTestObject('Saldo/selected_DDL')), 'All', false, FailureHandling.CONTINUE_ON_FAILURE), ' field search form tidak kereset - DDL tipe dokumen')
 
 	'Input enter'
 	WebUI.sendKeys(findTestObject('Saldo/input_tipedokumen'), Keys.chord(Keys.ENTER))
@@ -251,10 +251,10 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
 	tenantCodeByUserLogin = CustomKeywords.'connection.DataVerif.getTenantCode'(conneSign, findTestData(excelPathSetting).getValue(2,2).toUpperCase())
 	
 	'ambil total trx berdasarkan filter yang telah disiapkan pada db'
-	totalTrxDB = CustomKeywords.'connection.Saldo.getTotalTrxBasedOnVendorAndBalanceType'(conneSign, tenantCodeByUserLogin, 'VIDA', 'Sign')
+	totalTrxDB = CustomKeywords.'connection.Saldo.getTotalTrxBasedOnVendorAndBalanceType'(conneSign, tenantCodeByUserLogin, findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 9).toUpperCase(), 'Sign')
 	
 	'verify total Saldo'
-	checkVerifyPaging(WebUI.verifyMatch(totalTrxUI[0], totalTrxDB, false, FailureHandling.CONTINUE_ON_FAILURE))
+	checkVerifyPaging(WebUI.verifyMatch(totalTrxUI[0], totalTrxDB, false, FailureHandling.CONTINUE_ON_FAILURE), ' total transaksi ui dan db tidak match')
 	
 	if (Integer.parseInt(totalTrxUI[0]) > 10) {
 		'click next page'
@@ -262,14 +262,14 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
 	
 		'verify paging di page 2'
 		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Saldo/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE),
-				'2', false, FailureHandling.CONTINUE_ON_FAILURE))
+				'2', false, FailureHandling.CONTINUE_ON_FAILURE), ' button page selanjutnya tidak berfungsi')
 	
 		'click prev page'
 		WebUI.click(findTestObject('Saldo/button_PrevPage'))
 	
 		'verify paging di page 1'
 		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Saldo/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE),
-				'1', false, FailureHandling.CONTINUE_ON_FAILURE))
+				'1', false, FailureHandling.CONTINUE_ON_FAILURE), ' button page sebelumnya tidak berfungsi')
 	
 		'click last page'
 		WebUI.click(findTestObject('Saldo/button_LastPage'))
@@ -277,22 +277,22 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
 		'verify paging di last page'
 		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Saldo/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE),
 				WebUI.getAttribute(findTestObject('Saldo/page_Active'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE).replace(
-					'page ', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
+					'page ', ''), false, FailureHandling.CONTINUE_ON_FAILURE), ' button page terakhir tidak berfungsi')
 	
 		'click first page'
 		WebUI.click(findTestObject('Saldo/button_FirstPage'))
 	
 		'verify paging di page 1'
 		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Saldo/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE),
-				'1', false, FailureHandling.CONTINUE_ON_FAILURE))
+				'1', false, FailureHandling.CONTINUE_ON_FAILURE), ' button page pertama tidak berfungsi')
 	}
 }
 
-def checkVerifyPaging(Boolean isMatch) {
+def checkVerifyPaging(Boolean isMatch, String reason) {
 	if (isMatch == false) {
 		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
 		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Saldo', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-			(findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedPaging)
+			(findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedPaging + reason)
 
 		GlobalVariable.FlagFailed = 1
 	}

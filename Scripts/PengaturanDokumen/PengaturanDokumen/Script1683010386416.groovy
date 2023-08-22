@@ -503,7 +503,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     'click button lock signbox'
                     WebUI.click(findTestObject('TandaTanganDokumen/btn_LockSignBox'))
 
-                    isLocked = WebUI.getAttribute(findTestObject('TandaTanganDokumen/btn_LockSignBox'), 'ng-reflect-ng-class', 
+                    isLocked = WebUI.getAttribute(findTestObject('TandaTanganDokumen/btn_LockSignBox'), 'class', 
                         FailureHandling.STOP_ON_FAILURE)
 
                     'verify sign box is locked'
@@ -699,7 +699,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' + 
                             index) + ']/div/button[1]', true)
 
-                        statusLock = WebUI.getAttribute(modifyObjectButtonLockSignBox, 'ng-reflect-ng-class', FailureHandling.CONTINUE_ON_FAILURE).toString()
+                        statusLock = WebUI.getAttribute(modifyObjectButtonLockSignBox, 'class', FailureHandling.CONTINUE_ON_FAILURE).toString()
 
                         if ((LockSignBox[indexExcel]).equalsIgnoreCase('Yes')) {
                             if (!(statusLock.equalsIgnoreCase('fa fa-2x fa-lock'))) {
@@ -828,7 +828,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' + 
                             index) + ']/div/button[1]', true)
 
-                        statusLock = WebUI.getAttribute(modifyObjectButtonLockSignBox, 'ng-reflect-ng-class', FailureHandling.CONTINUE_ON_FAILURE).toString()
+                        statusLock = WebUI.getAttribute(modifyObjectButtonLockSignBox, 'class', FailureHandling.CONTINUE_ON_FAILURE).toString()
 
                         if ((LockSignBox[indexExcel]).equalsIgnoreCase('Yes')) {
                             if (!(statusLock.equalsIgnoreCase('fa fa-2x fa-lock'))) {
@@ -1082,6 +1082,20 @@ def inputCancel() {
 	
 	'Input enter'
 	WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_tipePembayaran'), Keys.chord(Keys.ENTER))
+	
+	'Input value Psre'
+	WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/select_Psre'), findTestData(excelPathPengaturanDokumen).getValue(
+			GlobalVariable.NumofColm, 20))
+	
+	'Input enter'
+	WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_Psre'), Keys.chord(Keys.ENTER))
+	
+	'Input value sequential sign'
+	WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/select_SequentialSigning'), findTestData(excelPathPengaturanDokumen).getValue(
+			GlobalVariable.NumofColm, 21))
+	
+	'Input enter'
+	WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_SequentialSigning'), Keys.chord(Keys.ENTER))
 	
 	'Input value status'
 	WebUI.setText(findTestObject('TandaTanganDokumen/input_Status'), findTestData(excelPathPengaturanDokumen).getValue(

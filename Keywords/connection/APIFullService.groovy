@@ -805,10 +805,10 @@ public class APIFullService {
 	}
 
 	@Keyword
-	getDocSignSequence(Connection conn, String docId) {
+	getDocSignSequence(Connection conn, String docId, String email) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT document_id, CASE WHEN is_sequence = '0' OR is_sequence IS NULL THEN '0' WHEN is_sequence = '1' AND description = 'Complete' THEN '0' WHEN tdsr.request_status = '1' THEN '1' WHEN is_sequence = '1' AND description = 'Need Sign' THEN '2' END FROM tr_document_d tdd JOIN ms_lov ml ON tdd.lov_sign_status = ml.id_lov JOIN tr_document_h tdh on tdd.id_document_h = tdh.id_document_h LEFT JOIN tr_document_signing_request tdsr on tdsr.id_document_h = tdh.id_document_h LEFT JOIN tr_document_signing_request_detail tdsrd on tdsrd.id_document_d = tdd.id_document_d WHERE document_id = '"+docId+"'")
+		resultSet = stm.executeQuery("SELECT document_id, CASE WHEN is_sequence = '0' OR is_sequence IS NULL THEN '0' WHEN is_sequence = '1' AND sign_date is not null AND description = 'Need Sign' THEN '2' WHEN tdsr.request_status = '1' THEN '1' WHEN is_sequence = '1' AND sign_date is null AND (description = 'Need Sign' OR description = 'Complete') THEN '0' END FROM tr_document_d tdd JOIN ms_lov ml ON tdd.lov_sign_status = ml.id_lov JOIN tr_document_h tdh on tdd.id_document_h = tdh.id_document_h LEFT JOIN tr_document_signing_request tdsr on tdsr.id_document_h = tdh.id_document_h LEFT JOIN tr_document_signing_request_detail tdsrd on tdsrd.id_document_d = tdd.id_document_d JOIN tr_document_d_sign tdds ON tdds.id_document_d = tdd.id_document_d JOIN am_msuser amu ON amu.id_ms_user = tdds.id_ms_user WHERE document_id = '"+docId+"' AND login_id = '"+ email +"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

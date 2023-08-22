@@ -63,7 +63,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				   for(index = 0 ; index < docId.size() ; index++) {
 					   
 					   'get data from DB'
-					   ArrayList<String> resultDB = CustomKeywords.'connection.APIFullService.getDocSignSequence'(conneSign, docId[index])
+					   ArrayList<String> resultDB = CustomKeywords.'connection.APIFullService.getDocSignSequence'(conneSign, docId[index], findTestData(excelPathCheckDocBeforeSigning).getValue(GlobalVariable.NumofColm, 10).replace('"',''))
 					   
 					   arrayIndex = 0
 					   

@@ -1699,6 +1699,19 @@
                 "genericsTypes": [],
                 "errorOnParsing": false
               }
+            },
+            {
+              "name": "email",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
             }
           ],
           "javadoc": ""
