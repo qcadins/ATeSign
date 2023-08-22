@@ -307,16 +307,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                 GlobalVariable.FlagFailed = 1
                             } else {
                                 verifySaldoUsed(conneSign, sheet)
-								
-				//				if (linkDocumentMonitoring == '') {
-				//					linkDocumentMonitoring = 'Not Used'
-				//				}
-								
-				//				'call testcase verify document monitoring'
-				//				WebUI.callTestCase(findTestCase('DocumentMonitoring/verifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathManualStamptoStamp
-				//						, ('sheet') : sheet, ('nomorKontrak') : findTestData(excelPathManualStamptoStamp).getValue(
-				//							GlobalVariable.NumofColm, 8), ('linkDocumentMonitoring') : linkDocumentMonitoring],
-				//					FailureHandling.CONTINUE_ON_FAILURE)
                             }
 
                         }
@@ -515,7 +505,6 @@ def inputEMeteraiMonitoring(Connection conneSign) {
 				}
 
 				for (int j = 1; j <= Integer.parseInt(totalMeterai); j++) {
-					println totalMeterai
 					'Klik set ulang setiap data biar reset'
 					WebUI.click(findTestObject('Object Repository/e-Meterai Monitoring/button_Set Ulang'))
 			
@@ -659,7 +648,7 @@ def inputEMeteraiMonitoring(Connection conneSign) {
 					'write to excel bahwa save gagal'
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Stamp to Stamp', GlobalVariable.NumofColm,
 						GlobalVariable.StatusFailed, (findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm,
-							2) + ';') + GlobalVariable.ReasonFailedProsesStamping + ' yaitu status meterai adalah ' + inputMeterai[6] + ' pada nomor dokumen tersebut selama ' + (i * 15))
+							2) + ';') + GlobalVariable.ReasonFailedProsesStamping + ' yaitu status meterai adalah ' + inputEMeterai[6] + ' pada nomor dokumen tersebut selama ' + (i * 15))
 				} else {
 					WebUI.delay(15)
 				}

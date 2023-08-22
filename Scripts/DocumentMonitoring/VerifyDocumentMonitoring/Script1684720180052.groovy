@@ -93,90 +93,24 @@ for (int o = 1; o <= 1; o++) {
     'Looping per document'
     for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
         WebUI.delay(7)
-
-        'Mengambil email berdasarkan documentId'
-        String emailSigner = CustomKeywords.'connection.DocumentMonitoring.getEmailSigneronRefNumber'(conneSign, nomorKontrakPerPilihan[
-            y])
 		
-		if (emailSigner.toString() != 'null') {
-			emailSigner = emailSigner.split(';', -1)
-		} else {
-			emailSigner = []
+		'inisialisasi emailSigner menjadi array list'
+		ArrayList emailSigner = []
+		
+        'Mengambil email berdasarkan documentId'
+        String emailSignerString = CustomKeywords.'connection.DocumentMonitoring.getEmailSigneronRefNumber'(conneSign, nomorKontrakPerPilihan[y])
+		
+		'jika email signer string tidak null, maka'
+		if (emailSignerString != null) {
+			'split email signer dan dimasukkan kepada ArrayList'
+			emailSigner = emailSignerString.split(';', -1)
 		}
 		
-        'Pembuatan untuk array Index result Query'
-        arrayIndex = 0
-
-        'declare arraylist arraymatch'
-        ArrayList arrayMatch = []
-
-        'Mengambil value db untuk input-input monitoring seperti nomor kontrak, cabang, dan wilayah'
-        inputDocumentMonitoring = CustomKeywords.'connection.DocumentMonitoring.getInputDocumentMonitoring'(conneSign, nomorKontrakPerPilihan[
-            y])
-
-        'Set text mengenai teks customer'
-        WebUI.setText(findTestObject('DocumentMonitoring/input_NamaPelanggan'), inputDocumentMonitoring[arrayIndex++])
-
-        'Set text mengneai input nomor kontrak'
-        WebUI.setText(findTestObject('DocumentMonitoring/input_NoKontrak'), nomorKontrakPerPilihan[y])
-
-        'Set text mengenai tanggal permintaan dari'
-        WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalPermintaanDari'), inputDocumentMonitoring[arrayIndex++])
-
-        'Set text mengenai tanggal selesai dari'
-        WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalSelesaiDari'), inputDocumentMonitoring[(arrayIndex - 
-            1)])
-
-        'Set text tanggal permintaan sampai'
-        WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalPermintaanSampai'), inputDocumentMonitoring[arrayIndex++])
-
-        'Set text tanggal selesai sampai'
-        WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalSelesaiSampai'), inputDocumentMonitoring[(arrayIndex - 
-            1)])
-
-        'Set text mengenai tipe dokumen'
-        WebUI.setText(findTestObject('DocumentMonitoring/input_TipeDok'), inputDocumentMonitoring[arrayIndex++])
-
-        'Enter'
-        WebUI.sendKeys(findTestObject('DocumentMonitoring/input_TipeDok'), Keys.chord(Keys.ENTER))
-
-        'Set text mengenai status dokumen'
-        WebUI.setText(findTestObject('DocumentMonitoring/input_Status'), inputDocumentMonitoring[arrayIndex++])
-
-        'Enter'
-        WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Status'), Keys.chord(Keys.ENTER))
-
-        if (linkDocumentMonitoring == '') {
-            'Set text mengenai wilayah'
-            WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndex++])
-
-            'Enter'
-            WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER))
-
-            'Set text mengenai input cabang'
-            WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndex++])
-
-            'Enter'
-            WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER))
-        }
-        
-        if (WebUI.verifyMatch(settingHO.toString(), '1', true, FailureHandling.OPTIONAL) == true) {
-            'Set text mengenai wilayah'
-            WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndex++])
-
-            'Enter'
-            WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER))
-
-            'Set text mengenai input cabang'
-            WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndex++])
-
-            'Enter'
-            WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER))
-        }
-        
-        'Klik enter Cari'
-        WebUI.click(findTestObject('DocumentMonitoring/button_Cari'))
-
+		'declare arraylist arraymatch'
+		ArrayList arrayMatch = []
+		
+       inputDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, settingHO)
+	   
         if (linkDocumentMonitoring == '') {
             modifyObjectvalues = findTestObject('DocumentMonitoring/lbl_Value')
 
@@ -439,68 +373,7 @@ for (int o = 1; o <= 1; o++) {
                 }
             }
 
-			'Set text mengenai teks customer'
-			WebUI.setText(findTestObject('DocumentMonitoring/input_NamaPelanggan'), inputDocumentMonitoring[arrayIndex++])
-	
-			'Set text mengneai input nomor kontrak'
-			WebUI.setText(findTestObject('DocumentMonitoring/input_NoKontrak'), nomorKontrakPerPilihan[y])
-	
-			'Set text mengenai tanggal permintaan dari'
-			WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalPermintaanDari'), inputDocumentMonitoring[arrayIndex++])
-	
-			'Set text mengenai tanggal selesai dari'
-			WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalSelesaiDari'), inputDocumentMonitoring[(arrayIndex -
-				1)])
-	
-			'Set text tanggal permintaan sampai'
-			WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalPermintaanSampai'), inputDocumentMonitoring[arrayIndex++])
-	
-			'Set text tanggal selesai sampai'
-			WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalSelesaiSampai'), inputDocumentMonitoring[(arrayIndex -
-				1)])
-	
-			'Set text mengenai tipe dokumen'
-			WebUI.setText(findTestObject('DocumentMonitoring/input_TipeDok'), inputDocumentMonitoring[arrayIndex++])
-	
-			'Enter'
-			WebUI.sendKeys(findTestObject('DocumentMonitoring/input_TipeDok'), Keys.chord(Keys.ENTER))
-	
-			'Set text mengenai status dokumen'
-			WebUI.setText(findTestObject('DocumentMonitoring/input_Status'), inputDocumentMonitoring[arrayIndex++])
-	
-			'Enter'
-			WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Status'), Keys.chord(Keys.ENTER))
-	
-			if (linkDocumentMonitoring == '') {
-				'Set text mengenai wilayah'
-				WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndex++])
-	
-				'Enter'
-				WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER))
-	
-				'Set text mengenai input cabang'
-				WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndex++])
-	
-				'Enter'
-				WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER))
-			}
-			
-			if (WebUI.verifyMatch(settingHO.toString(), '1', true, FailureHandling.OPTIONAL) == true) {
-				'Set text mengenai wilayah'
-				WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndex++])
-	
-				'Enter'
-				WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER))
-	
-				'Set text mengenai input cabang'
-				WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndex++])
-	
-				'Enter'
-				WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER))
-			}
-			
-			'Klik enter Cari'
-			WebUI.click(findTestObject('DocumentMonitoring/button_Cari'))
+		    inputDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, settingHO)
 	
 			modifyObjectvalues = findTestObject('DocumentMonitoring/lbl_Value')
 
@@ -577,7 +450,7 @@ for (int o = 1; o <= 1; o++) {
             if (saldoBefore == saldoAfter) {
                 'write to excel status failed dan reason'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                    ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
+                    ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
                     ' terhadap total saldo dimana saldo awal dan saldo setelah meterai sama ')
             } else {
 				verifySaldoUsed(conneSign, sheet)
@@ -728,4 +601,75 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
 			}
 		}
 	}
+}
+
+def inputDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan, String linkDocumentMonitoring, String settingHO) {
+	'Pembuatan untuk array Index result Query'
+	arrayIndex = 0
+
+	'Mengambil value db untuk input-input monitoring seperti nomor kontrak, cabang, dan wilayah'
+	inputDocumentMonitoring = CustomKeywords.'connection.DocumentMonitoring.getInputDocumentMonitoring'(conneSign, nomorKontrakPerPilihan)
+
+	'Set text mengenai teks customer'
+	WebUI.setText(findTestObject('DocumentMonitoring/input_NamaPelanggan'), inputDocumentMonitoring[arrayIndex++])
+
+	'Set text mengneai input nomor kontrak'
+	WebUI.setText(findTestObject('DocumentMonitoring/input_NoKontrak'), nomorKontrakPerPilihan)
+
+	'Set text mengenai tanggal permintaan dari'
+	WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalPermintaanDari'), inputDocumentMonitoring[arrayIndex++])
+
+	'Set text mengenai tanggal selesai dari'
+	WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalSelesaiDari'), inputDocumentMonitoring[(arrayIndex -
+		1)])
+
+	'Set text tanggal permintaan sampai'
+	WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalPermintaanSampai'), inputDocumentMonitoring[arrayIndex++])
+
+	'Set text tanggal selesai sampai'
+	WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalSelesaiSampai'), inputDocumentMonitoring[(arrayIndex -
+		1)])
+
+	'Set text mengenai tipe dokumen'
+	WebUI.setText(findTestObject('DocumentMonitoring/input_TipeDok'), inputDocumentMonitoring[arrayIndex++])
+
+	'Enter'
+	WebUI.sendKeys(findTestObject('DocumentMonitoring/input_TipeDok'), Keys.chord(Keys.ENTER))
+
+	'Set text mengenai status dokumen'
+	WebUI.setText(findTestObject('DocumentMonitoring/input_Status'), inputDocumentMonitoring[arrayIndex++])
+
+	'Enter'
+	WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Status'), Keys.chord(Keys.ENTER))
+
+	if (linkDocumentMonitoring == '') {
+		'Set text mengenai wilayah'
+		WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndex++])
+
+		'Enter'
+		WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER))
+
+		'Set text mengenai input cabang'
+		WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndex++])
+
+		'Enter'
+		WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER))
+	}
+	
+	if (WebUI.verifyMatch(settingHO.toString(), '1', true, FailureHandling.OPTIONAL) == true) {
+		'Set text mengenai wilayah'
+		WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndex++])
+
+		'Enter'
+		WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER))
+
+		'Set text mengenai input cabang'
+		WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndex++])
+
+		'Enter'
+		WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER))
+	}
+	
+	'Klik enter Cari'
+	WebUI.click(findTestObject('DocumentMonitoring/button_Cari'))
 }

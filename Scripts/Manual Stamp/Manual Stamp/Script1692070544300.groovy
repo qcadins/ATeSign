@@ -484,7 +484,7 @@ def inputEMeteraiMonitoring(Connection conneSign) {
 					totalMeterai = 1
 				}
 
-                for (int j = 1; j <= totalMeterai; j++) {
+                for (int j = 1; j <= Integer.parseInt(totalMeterai); j++) {
 					'Klik set ulang setiap data biar reset'
 					WebUI.click(findTestObject('Object Repository/e-Meterai Monitoring/button_Set Ulang'))
 			

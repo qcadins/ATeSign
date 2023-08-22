@@ -31,17 +31,22 @@ if (useAPI == 'v3.1.0') {
     valueRefNum = '"agreementNo"'
 }
 
-if (excelPathStamping == 'Beranda/ManualSigntoSign') {
+if (excelPathStamping == 'ManualSign/ManualSigntoSign') {
 	nomorKontrakDocument = '"' + findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 9) + '"'
+	callerId = '"ADINS"'
 } else {
 	nomorKontrakDocument = findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 11)
+	
+	callerId = findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 43)
 }
 
 saldoBefore = loginAdminGetSaldo(conneSign, 'No', sheet)
 
+'get api key dari db'
+GlobalVariable.api_key = CustomKeywords.'connection.APIFullService.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
+
 'HIT API stamping'
-respon = WS.sendRequest(findTestObject('Flow Stamping', [('callerId') : findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 
-                43), ('valueRefNum') : valueRefNum, ('refNumber') : nomorKontrakDocument]))
+respon = WS.sendRequest(findTestObject('Flow Stamping', [('callerId') : callerId, ('valueRefNum') : valueRefNum, ('refNumber') : nomorKontrakDocument]))
 
 'Jika status HIT API 200 OK'
 if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
@@ -52,8 +57,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         'looping dari 1 hingga 12'
         for (i = 1; i <= 12; i++) {
             'mengambil value db proses ttd'
-            int prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, findTestData(excelPathStamping).getValue(
-                    GlobalVariable.NumofColm, 11).replace('"', ''))
+            int prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, nomorKontrakDocument.replace('"', ''))
 
             'jika proses materai gagal (51)'
             if (prosesMaterai == 51) {
@@ -61,7 +65,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 				WebUI.delay(3)
 				
 				'get reason gailed error message untuk stamping'
-				errorMessageDB = CustomKeywords.'connection.Meterai.getErrorMessage'(conneSign, nomorKontrakDocument)
+				errorMessageDB = CustomKeywords.'connection.Meterai.getErrorMessage'(conneSign, nomorKontrakDocument.replace('"', ''))
                
 				 'Write To Excel GlobalVariable.StatusFailed and errormessage'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
@@ -76,7 +80,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 
                 'Mengambil value total stamping dan total meterai'
                 ArrayList totalMateraiAndTotalStamping = CustomKeywords.'connection.Meterai.getTotalMateraiAndTotalStamping'(
-                    conneSign, findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 11).replace('"', ''))
+                    conneSign, nomorKontrakDocument.replace('"', ''))
 
                 'declare arraylist arraymatch'
                 arrayMatch = []
@@ -123,7 +127,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 			
 			'Call verify meterai'
 			WebUI.callTestCase(findTestCase('Meterai/verifyMeterai'), [('excelPathMeterai') : excelPathStamping, ('sheet') : sheet
-					, ('noKontrak') : findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 11).replace('"', '')
+					, ('noKontrak') : nomorKontrakDocument.replace('"', '')
 					, ('linkDocumentMonitoring') : linkDocumentMonitoring], FailureHandling.CONTINUE_ON_FAILURE)
 	
 			saldoAfter = loginAdminGetSaldo(conneSign, 'Yes', sheet)
@@ -138,7 +142,6 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 			}
         }
     } else {
-
         getErrorMessageAPI(respon)
     }
 } else {
@@ -311,8 +314,7 @@ def getErrorMessageAPI(def respon) {
     message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
     'Write To Excel GlobalVariable.StatusFailed and errormessage'
-    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 2) + ';')
-        ('<' + message) + '>')
+    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 2) + ';' + '<' + message + '>')
 	
 	GlobalVariable.FlagFailed = 1
 }

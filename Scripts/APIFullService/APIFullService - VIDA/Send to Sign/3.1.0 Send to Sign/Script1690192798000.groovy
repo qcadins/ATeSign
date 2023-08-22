@@ -59,9 +59,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         'Mengambil email berdasarkan documentId'
         ArrayList emailSigner = CustomKeywords.'connection.APIFullService.getEmailLogin'(conneSign, findTestData(
                 excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 6)).split(';', -1)
-				
-        ArrayList emailSigner = CustomKeywords.'connection.APIFullService.getEmailLogin'(conneSign, findTestData(excelPathFESignDocument).getValue(
-                GlobalVariable.NumofColm, 6)).split(';', -1)
 		
 		'ambil nama vendor dari DB'		
 		String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 11).replace('"',''))
@@ -112,9 +109,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 FailureHandling.CONTINUE_ON_FAILURE)
 
             'mengambil saldo before'
-            saldoSignBefore = checkSaldoSign(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
-                    11).replace('"', ''))
-
             saldoSignBefore = checkSaldoSign(conneSign, vendor)
 
             'mengambil saldo otp before'
@@ -334,12 +328,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 'diberi break dengan alasan sequential signing'
                 break
             }
-            
-            'check error log'
-            if (checkErrorLog() == true) {
-                continue
-            }
-            
+
             'Jika total document sign excel tidak sama dengan total document sign paging'
             if (totalDocSign != documentTemplateNamePerDoc.size()) {
                 CustomKeywords.'customizeKeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
@@ -635,11 +624,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                     'Menarik value count success ke excel'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 75, GlobalVariable.NumofColm - 
-                        1, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 76) + ';') + countSuccessSign)
+                        1, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 76) + ';') + '<' + countSuccessSign + '>')
 
                     'Menarik value count failed ke excel'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 76, GlobalVariable.NumofColm - 
-                        1, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 77) + ';') + countFailedSign)
+                        1, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 77) + ';') + '<' + countFailedSign + '>')
 
                     'Jika masukan ratingnya tidak kosong'
                     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 66) != '') {
@@ -770,9 +759,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 otpAfter = checkSaldoOtp()
 
                 'ambil saldo after'
-                saldoSignAfter = checkSaldoSign(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
-                        11).replace('"', ''))
-
                 saldoSignAfter = checkSaldoSign(conneSign, vendor)
 				
                 'Jika count saldo otp after dengan yang before dikurangi 1 ditambah dengan '
@@ -1058,9 +1044,7 @@ def inputFilterTrx(Connection conneSign, String currentDate, String noKontrak, S
 
 def checkSaldoSign(Connection conneSign, String vendor) {
     String totalSaldo
-
-    String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, refNumber)
-
+	
     'klik ddl untuk tenant memilih mengenai Vida'
     WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), vendor, false)
 
@@ -1159,7 +1143,7 @@ def checkPopupWarning() {
 
 			'Tulis di excel sebagai failed dan error.'
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusWarning,
-				(((findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') +
+				(((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') +
 				'<') + lblpopup) + '>')
 			
 		'Klik OK untuk popupnya'
