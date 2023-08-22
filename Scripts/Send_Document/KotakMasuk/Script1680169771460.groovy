@@ -35,7 +35,7 @@ for (int y = 0; y < docId.size(); y++) {
         'call Test Case untuk login sebagai user berdasarkan doc id'
         WebUI.callTestCase(findTestCase('Login/Login_1docManySigner'), [('email') : emailSigner[t]], FailureHandling.STOP_ON_FAILURE)
 		
-		WebUI.delay(20)
+		WebUI.delay(10)
 		
         'get data kotak masuk send document secara asc, dimana customer no 1'
         ArrayList result = CustomKeywords.'connection.SendSign.getKotakMasukSendDoc'(conneSign, docId[y])
@@ -46,7 +46,7 @@ for (int y = 0; y < docId.size(); y++) {
         'click menu pencarian dokumen'
         WebUI.click(findTestObject('PencarianDokumen/menu_PencarianDokumen'))
 
-		WebUI.delay(20)
+		WebUI.delay(10)
 		
 		'query untuk input pencarian dokumen'
 		ArrayList inputPencarianDokumen = CustomKeywords.'connection.SendSign.getDataPencarianDokumen'(conneSign, emailSigner[t], docId[y])  

@@ -72,7 +72,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		
         'Jika kolomnya berada pada kedua'
         if (GlobalVariable.NumofColm == 2) {
-           //inputCancel(conneSign)
+           inputCancel(conneSign)
         }
         
         'Pengecekan apakah masuk page manual sign'
@@ -238,8 +238,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                 'split informasi signer berdasarkan delimiter'
                 valueInformasi = valueInformasi.split(', ', -1)
-				
-				indexEmail = 0
+
 				if (emailPenandaTangan[i] != '') {
 					'query check informasi dari user tersebut'
 					queryCheckInformationUser = CustomKeywords.'connection.ManualSign.getInformationUser'(conneSign, emailPenandaTangan[indexEmail++], findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 8))
@@ -259,7 +258,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 					' pada informasi nomor telepon penanda tangan ')
 
             'check ui dan query mengenai email signer'
-            checkVerifyEqualOrMatch(WebUI.verifyMatch(valueInformasi[arrayIndexValue++], emailPenandaTangan[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada informasi email penanda tangan ')
+            checkVerifyEqualOrMatch(WebUI.verifyMatch(valueInformasi[arrayIndexValue++], queryCheckInformationUser[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada informasi email penanda tangan ')
 
             'add nama tanda tangan yang sukses dan nomor telepon'
             namaTandaTangan.add(valueInformasi[0])
@@ -435,7 +434,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'click button simpan'
             WebUI.click(findTestObject('Object Repository/ManualSign/btn_simpan'))
 
-            WebUI.delay(1)
+            WebUI.delay(3)
 
             if (checkErrorLog() == true) {
 				continue
