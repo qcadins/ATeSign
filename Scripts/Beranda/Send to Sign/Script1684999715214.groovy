@@ -1088,5 +1088,9 @@ def checkPopupWarning() {
 			
 		'Klik OK untuk popupnya'
 		WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
+		
+		return true
 	}
+	
+	return false
 }

@@ -31,34 +31,31 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+		CustomKeywords.
 		'ambil tenant dan vendor code yang akan digunakan document'
-		ArrayList tenantVendor = CustomKeywords.'connection.DataVerif.getTenantandVendorCode'(conneSign,
-			findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 10).replace('"','').replace('[','').replace(']',''))
+		ArrayList tenantVendor = CustomKeywords.'connection.DataVerif.getTenantandVendorCode'(conneSign, findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 10).replace('"','').replace('[','').replace(']',''))
 		
         'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPISignDocument, GlobalVariable.NumofColm, 25)
 		
 		'setting vendor otp dimatikan/diaktifkan'
-		if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 26).equalsIgnoreCase('Yes')) {
-			'ubah value ke 1'
-			needVendorOTP = 1
+		if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 26).length() > 0) {
+			
+			'update setting vendor otp ke table di DB'
+			CustomKeywords.'connection.UpdateData.updateVendorOTP'(conneSign, tenantVendor[1], findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 26))
 		} 
 		'setting tenant otp dimatikan/diaktifkan'
-		if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 27).equalsIgnoreCase('Yes')) {
-			'ubah value ke 1'
-			needOTPTenant = 1	
+		if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 27).length() > 0) {
+			
+			'update setting otp ke table di DB'
+			CustomKeywords.'connection.UpdateData.updateTenantOTPReq'(conneSign, tenantVendor[0], findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 27))
 		}
-		'setting tenant otp dimatikan/diaktifkan'
-		if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 27).equalsIgnoreCase('Yes')) {
-			'ubah value ke 1'
-			needPassTenant = 1
+		'setting tenant password dimatikan/diaktifkan'
+		if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 28).length() > 0) {
+			
+			'update setting pass tenant ke table di DB'
+			CustomKeywords.'connection.UpdateData.updateTenantPassReq'(conneSign, tenantVendor[0], findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 28))
 		}
-		
-		'update setting vendor otp ke table di DB'
-		CustomKeywords.'connection.UpdateData.updateVendorOTP'(conneSign, tenantVendor[1], needVendorOTP)
-		
-		'update setting otp dan pass tenant ke table di DB'
-		CustomKeywords.'connection.UpdateData.updateTenantOTPpass'(conneSign, tenantVendor[0], needOTPTenant, needPassTenant)
 
         'declare variable array'
         ArrayList saldoBefore = []

@@ -27,7 +27,7 @@ ArrayList listOTP = [], arrayMatch = []
 'declare arrayindex'
 arrayIndex = 0
 
-sheet = 'Send to Sign'
+sheet = 'All Send then Sign'
 
 'looping untuk sending document'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathFESignDocument).columnNumbers ; (GlobalVariable.NumofColm)++) {
@@ -388,7 +388,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 				if (vendor.equalsIgnoreCase('Privy')) {
 					
 					'pastikan tombol verifikasi biometrik tidak muncul'
-					if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/btn_verifBiom'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+					if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/btn_verifBiom'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 						GlobalVariable.FlagFailed = 1
 						
 						'jika muncul, tulis error ke excel'
