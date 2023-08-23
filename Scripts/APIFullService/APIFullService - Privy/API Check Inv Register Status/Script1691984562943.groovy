@@ -25,10 +25,24 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     } else if (findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
 		
 		'setting menggunakan base url yang benar atau salah'
-		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathCheckInvRegisterStatus, GlobalVariable.NumofColm, 12)
+		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathCheckInvRegisterStatus, GlobalVariable.NumofColm, 16)
 		
-		'get invitationcode dari DB > encrypt invitation code > encode invitation code yang sudah di encrypt'
-		value = encodeValue(findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, 10), conneSign)
+		if (findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, 13).equalsIgnoreCase('No')) {
+			GlobalVariable.Psre = findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, 14)
+		} else if (findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, 13).equalsIgnoreCase('Yes')) {
+			GlobalVariable.Psre = findTestData('Login/Setting').getValue(5, 2)
+		}
+		
+		String value
+		
+		if (findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, 10).equalsIgnoreCase('Yes')) {
+			'get invitationcode dari DB > encrypt invitation code > encode invitation code yang sudah di encrypt'
+			value = encodeValue(findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, 11), conneSign)
+		} else if (findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, 10).equalsIgnoreCase('No')) {
+			value = findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, 12)
+		}
+		
+		println(value)
 		
 	    'HIT API'
 	    respon = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/API Check Inv Register Status', [('callerId') : findTestData(excelPathCheckInvRegisterStatus).getValue(
@@ -58,7 +72,44 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 	
 				   'write to excel verif status'
 				   CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Check Inv Register Status',
-					   5, GlobalVariable.NumofColm - 1, verifStatus)
+					   5, GlobalVariable.NumofColm - 1, activeStatus + ';' + registrationStatus + ';' + verificationInProgress + ';' + verificationResult)
+				   
+				   if(GlobalVariable.checkStoreDB == 'Yes') {
+					   'declare arraylist arraymatch'
+					   ArrayList<String> arrayMatch = []
+					   
+					   if(GlobalVariable.Psre == 'PRIVY') {
+						   'get result dari db'
+						   result = CustomKeywords.'connection.APIFullService.getCheckInvRegisStoreDB'(conneSign, findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, 11))
+						   
+						   arrayIndex = 0 
+						   
+						   'verify activeStatus'
+						   arrayMatch.add(WebUI.verifyMatch(activeStatus, result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+						   
+						   'verify registrationStatus'
+						   arrayMatch.add(WebUI.verifyMatch(registrationStatus, result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+						   
+						   'verify verificationInProgress'
+						   arrayMatch.add(WebUI.verifyMatch(verificationInProgress, result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+						   
+						   'verify verificationResult'
+						   arrayMatch.add(WebUI.verifyMatch(verificationResult, result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+						   
+					   } else if(GlobalVariable.Psre == 'VIDA') {
+						   'verify activeStatus'
+						   arrayMatch.add(WebUI.verifyMatch(activeStatus, '0', false, FailureHandling.CONTINUE_ON_FAILURE))
+						   
+						   'verify registrationStatus'
+						   arrayMatch.add(WebUI.verifyMatch(registrationStatus, '1', false, FailureHandling.CONTINUE_ON_FAILURE))
+						   
+						   'verify verificationInProgress'
+						   arrayMatch.add(WebUI.verifyMatch(verificationInProgress, '0', false, FailureHandling.CONTINUE_ON_FAILURE))
+						   
+						   'verify verificationResult'
+						   arrayMatch.add(WebUI.verifyMatch(verificationResult, '', false, FailureHandling.CONTINUE_ON_FAILURE))
+					   }
+				   }
 			   } else {
 				   'call function get error message API'
 				   getErrorMessageAPI(respon)
@@ -81,16 +132,15 @@ def getErrorMessageAPI(def respon) {
 
 
 def encodeValue(String value, Connection conneSign) {
-	
 	'get invitation code dari db'
 	String invCode = CustomKeywords.'connection.APIFullService.getInvitationCode'(conneSign, value)
-	
+
 	'Mengambil aes key based on tenant tersebut'
-	String aesKey = CustomKeywords.'connection.APIFullService.getAesKeyBasedOnTenant'(conneSign, GlobalVariable.Tenant)
+	String aesKey = CustomKeywords.'connection.APIFullService.getAesKeyEncryptUrl'(conneSign)
 	
 	'encrypt invitation code'
 	String encryptCode = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(invCode, aesKey)
-	
+
 	try {
 		return URLEncoder.encode(encryptCode, StandardCharsets.UTF_8.toString());
 	} catch (UnsupportedEncodingException ex) {
