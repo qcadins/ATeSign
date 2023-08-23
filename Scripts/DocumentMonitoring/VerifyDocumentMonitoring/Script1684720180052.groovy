@@ -307,7 +307,7 @@ for (int o = 1; o <= 1; o++) {
 
                     'looping dari 1 hingga 12'
                     for (i = 1; i <= 12; i++) {
-                        'mengambil value db proses ttd'
+                        'mengambil value db proses meterai'
                         int prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, nomorKontrakPerPilihan[
                             y])
 
@@ -447,13 +447,28 @@ for (int o = 1; o <= 1; o++) {
 			
             saldoAfter = loginAdminGetSaldo(conneSign, 'Yes', sheet)
 
-            if (saldoBefore == saldoAfter) {
+			'mengambil value db proses meterai'
+			int prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, nomorKontrakPerPilihan[
+				y])
+
+			'jika proses meterai tidak Failed'
+			if (prosesMaterai != 51) {
+				'jika saldo before sama dengan saldo after'
+				if (saldoBefore == saldoAfter) {
                 'write to excel status failed dan reason'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                     ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
                     ' terhadap total saldo dimana saldo awal dan saldo setelah meterai sama ')
-            } else {
-				verifySaldoUsed(conneSign, sheet)
+				} else {
+					verifySaldoUsed(conneSign, sheet)
+				}
+			} else {
+				if (saldoBefore != saldoAfter) {
+                'write to excel status failed dan reason'
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                    ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
+                    ' terhadap total saldo dimana saldo awal dan saldo setelah meterai tidak sama ')
+				}
 			}
         }
     }

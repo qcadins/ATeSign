@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>Login_Admin</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>0f7c0522-a036-4c73-902d-0ce413138c4c</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>b6dcc5db-308e-4875-afff-8aa9868c481b</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>975389f4-f0e7-4a5a-9d76-52dadfbe9611</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>b6dcc5db-308e-4875-afff-8aa9868c481b</id>
+      <masked>false</masked>
+      <name>excel</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>975389f4-f0e7-4a5a-9d76-52dadfbe9611</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>

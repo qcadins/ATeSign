@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DataFileEntity>
    <description></description>
-   <name>ManualStamp</name>
+   <name>Main</name>
    <tag></tag>
    <containsHeaders>false</containsHeaders>
    <csvSeperator></csvSeperator>
-   <dataFileGUID>054b75fa-2f55-4d3a-97fe-b6139389963c</dataFileGUID>
+   <dataFileGUID>e919414b-4103-422f-bfc0-ef7e02ffaa77</dataFileGUID>
    <dataSourceUrl>Excel/2. Esign.xlsx</dataSourceUrl>
    <driver>ExcelFile</driver>
    <isInternalPath>true</isInternalPath>
    <query></query>
    <secureUserAccount>false</secureUserAccount>
-   <sheetName>Manual Stamp</sheetName>
+   <sheetName>Main</sheetName>
    <usingGlobalDBSetting>false</usingGlobalDBSetting>
 </DataFileEntity>
