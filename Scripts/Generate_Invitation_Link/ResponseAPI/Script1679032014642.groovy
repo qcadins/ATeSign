@@ -144,9 +144,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
                             '-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
                 }
-                
-                'jika status codenya bukan 0, yang berarti antara salah verifikasi data dan error'
             } else {
+            	'jika status codenya bukan 0, yang berarti antara salah verifikasi data dan error'
                 messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
                 'write to excel status failed dan reason : '
