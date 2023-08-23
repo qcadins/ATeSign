@@ -23,9 +23,6 @@ int countColmExcel = findTestData(excelPathAPISignDocument).columnNumbers
 'declafe split'
 int splitnum = -1
 
-'declare all number'
-int needVendorOTP, needOTPTenant, needPassTenant = 0
-
 'looping API Sign Document'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
@@ -40,19 +37,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		
 		'setting vendor otp dimatikan/diaktifkan'
 		if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 26).length() > 0) {
-			
 			'update setting vendor otp ke table di DB'
 			CustomKeywords.'connection.UpdateData.updateVendorOTP'(conneSign, tenantVendor[1], findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 26))
-		} 
+		}
+		
 		'setting tenant otp dimatikan/diaktifkan'
 		if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 27).length() > 0) {
-			
 			'update setting otp ke table di DB'
 			CustomKeywords.'connection.UpdateData.updateTenantOTPReq'(conneSign, tenantVendor[0], findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 27))
 		}
+		
 		'setting tenant password dimatikan/diaktifkan'
 		if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 28).length() > 0) {
-			
 			'update setting pass tenant ke table di DB'
 			CustomKeywords.'connection.UpdateData.updateTenantPassReq'(conneSign, tenantVendor[0], findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 28))
 		}
