@@ -23,11 +23,20 @@ public class UpdateData {
 
 		int updateCount = stm.executeUpdate("UPDATE ms_vendor SET must_user_vendor_otp = '" + number + "' WHERE vendor_code = '" + vendor + "';")
 	}
+	
 	@Keyword
-	updateTenantOTPpass(Connection conn, String tenant, int number1, int number2) {
+	updateTenantPassReq(Connection conn, String tenant, int number) {
 
 		Statement stm = conn.createStatement()
 
-		int updateCount = stm.executeUpdate("UPDATE ms_tenant SET need_password_for_signing = '" + number1 + "', need_otp_for_signing = '" + number2 + "' WHERE tenant_code = '" + tenant + "';")
+		int updateCount = stm.executeUpdate("UPDATE ms_tenant SET need_password_for_signing = '" + number + "' WHERE tenant_code = '" + tenant + "';")
+	}
+	
+	@Keyword
+	updateTenantOTPReq(Connection conn, String tenant, int number) {
+
+		Statement stm = conn.createStatement()
+
+		int updateCount = stm.executeUpdate("UPDATE ms_tenant SET need_otp_for_signing = '" + number + "' WHERE tenant_code = '" + tenant + "';")
 	}
 }
