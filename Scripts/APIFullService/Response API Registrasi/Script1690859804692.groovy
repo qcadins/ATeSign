@@ -380,8 +380,8 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 			'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) +
 			']/div/div/div/div/div[1]/h3', true)
 
-		'check if box info = tipe verification'
-		if (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('Verification') || WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('PNBP')) {
+		'check if box info = tipe saldo di excel'
+		if (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('Verification') || (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('PNBP') && GlobalVariable.Psre == 'VIDA')) {
 			'modify object qty'
 			modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
 				'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) +
@@ -390,7 +390,10 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 			'get qty saldo before'
 			saldo.add(WebUI.getText(modifyObjectQty).replace(',', ''))
 
-			if(saldo.size() == 2) {
+			'if saldo sudah terisi 2 verification dan pnbp'
+			if(saldo.size() == 3 && GlobalVariable.Psre == 'VIDA') {
+				break
+			} else if(saldo.size() == 2 && GlobalVariable.Psre == 'PRIVY') {
 				break
 			}
 			
@@ -399,11 +402,11 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 	}
 
 	if ((countCheckSaldo == 1)) {
-		'call function input filter saldo untuk cek detail pada tabel saldo verification'
+		'call function input filter saldo'
 		inputFilterSaldo('Verification', conneSign)
 		
-		if(GlobalVariable.FlagFailed == 0) {
-			'call function input filter saldo untuk cek detail pada tabel saldo PNBP'
+		if(GlobalVariable.FlagFailed == 0 && GlobalVariable.Psre == 'VIDA') {
+			'call function input filter saldo'
 			inputFilterSaldo('PNBP', conneSign)
 		}
 	}

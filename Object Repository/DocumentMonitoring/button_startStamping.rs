@@ -7,17 +7,25 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;listDokumen&quot;]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[1]/datatable-body-row/div[2]/datatable-body-cell[10]/div/a[5]/em</value>
+         <value>//*[@title = 'Start Stamping']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>//*[@id=&quot;listDokumen&quot;]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[1]/datatable-body-row/div[2]/datatable-body-cell[10]/div/a[5]/em</value>
-      <webElementGuid>70840e2e-2b9f-4495-9451-1947da374bb5</webElementGuid>
+      <webElementGuid>0fdfbd4f-c4c0-4007-ace3-dd45b286b72c</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>title</name>
+      <type>Main</type>
+      <value>Start Stamping</value>
+      <webElementGuid>fdb08112-7e15-47cf-9a22-fcaf3931b466</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

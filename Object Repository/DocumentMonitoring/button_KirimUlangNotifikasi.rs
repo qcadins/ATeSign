@@ -7,17 +7,25 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;listDokumen&quot;]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[1]/datatable-body-row/div[2]/datatable-body-cell[10]/div/a[4]/em</value>
+         <value>//*[@title = 'Kirim Notifikasi Ulang']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>//*[@id=&quot;listDokumen&quot;]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[1]/datatable-body-row/div[2]/datatable-body-cell[10]/div/a[4]/em</value>
-      <webElementGuid>9b3f792e-48ac-4dc4-807f-e3b01142b3e7</webElementGuid>
+      <webElementGuid>671bf82d-97c0-45d9-96ba-993c882fe522</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>title</name>
+      <type>Main</type>
+      <value>Kirim Notifikasi Ulang</value>
+      <webElementGuid>db6d91c9-42e8-4970-b651-671037a05626</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
