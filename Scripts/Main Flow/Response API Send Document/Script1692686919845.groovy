@@ -26,7 +26,7 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
         String signlocStoreDB = new String()
 
         'Inisialisasi ref No'															  
-        refNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo //External'))
+        refNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo (External)'))
 
         'Inisialisasi document template code berdasarkan delimiter ;'
         documentTemplateCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, inputStartRow + 12).split(semicolon, 

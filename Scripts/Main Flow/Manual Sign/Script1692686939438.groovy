@@ -111,10 +111,10 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
             'set text pada email penanda tangan'
             WebUI.setText(findTestObject('ManualSign/input_emailPenandaTangan'), emailPenandaTangan[i])
 
-            WebUI.focus(findTestObject('ManualSign/button_searchPenandaTangan'))
+            WebUI.focus(findTestObject('ManualSign/button_searchPenandaTanganViaPhone'))
 
             'klik search penanda tangan'
-            WebUI.click(findTestObject('ManualSign/button_searchPenandaTangan'))
+            WebUI.click(findTestObject('ManualSign/button_searchPenandaTanganViaPhone'))
 
             'diberikan delay 10 detik dengan loading search'
             WebUI.delay(10)
