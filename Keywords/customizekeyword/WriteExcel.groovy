@@ -4,6 +4,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import com.kms.katalon.core.annotation.Keyword
 import internal.GlobalVariable
+import org.apache.poi.xssf.usermodel.XSSFRow
 
 public class WriteExcel {
 	@Keyword
@@ -87,4 +88,32 @@ public class WriteExcel {
 		filePath
 	}
 
+	//keyword getExcelRow
+	@Keyword
+	public int getExcelRow(String filePath, String sheetName, String cellValue) {
+		FileInputStream file = new FileInputStream (new File(filePath)) //initiate excel repository
+
+		XSSFWorkbook workbook = new XSSFWorkbook(file);
+		XSSFSheet sheet = workbook.getSheet(sheetName); //getSheet -> sheet num n (start from index 0)
+		XSSFRow row = null;
+		int row_num=-1;
+		for(int i=0; i <= sheet.getLastRowNum(); i++)
+		{
+			row = sheet.getRow(i)
+			try{
+				if(row.getCell(0).getStringCellValue().equals(cellValue)){
+					row_num = i
+					break
+				}
+			}
+			catch(Exception e){
+
+			}
+
+		}
+
+		return row_num+1
+
+
+	}
 }

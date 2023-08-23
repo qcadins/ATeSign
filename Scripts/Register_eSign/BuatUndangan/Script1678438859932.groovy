@@ -79,7 +79,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
         (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<' + ReasonFailed + '>')
 
-    if (ReasonFailed.contains('sudah digunakan oleh link undangan lain') || ReasonFailed.contains('sudah terdaftar')) {
+    if (ReasonFailed.contains('sudah digunakan di link') || ReasonFailed.contains('sudah terdaftar')) {
         'declare error type error'
         GlobalVariable.ErrorType = 'ERROR'
     } else {
@@ -191,7 +191,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     }
     
     'call test case daftar akun data verif'
-    WebUI.callTestCase(findTestCase('Register_eSign/DaftarAkunDataVerif'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan', ('saldoBefore') : saldoBefore[2]], 
+    WebUI.callTestCase(findTestCase('Register_eSign/DaftarAkunDataVerif'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan', ('saldoBefore') : saldoBefore[0]], 
         FailureHandling.CONTINUE_ON_FAILURE)
 
     if ((GlobalVariable.checkStoreDB == 'Yes') && (GlobalVariable.FlagFailed == 0)) {
@@ -205,14 +205,18 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     
 	if (GlobalVariable.FlagFailed == 0) {		
 	    'kurang saldo before dengan proses verifikasi'
-	    saldoBefore.set(0, (Integer.parseInt(saldoBefore[0]) - 1).toString())
-	
 	    saldoBefore.set(1, (Integer.parseInt(saldoBefore[1]) - 1).toString())
 	
-	    'kurang saldo before dengan jumlah counter send OTP'
-	    saldoBefore.set(2, (Integer.parseInt(saldoBefore[2]) - GlobalVariable.Counter).toString())
-	
-//	    saldoBefore.set(3, (Integer.parseInt(saldoBefore[3]) - GlobalVariable.Counter).toString())
+		if (GlobalVariable.Psre == 'VIDA') {
+			'kurang saldo before dengan prose PNBP'
+			saldoBefore.set(2, (Integer.parseInt(saldoBefore[2]) - 1).toString())
+									
+			'kurang saldo before dengan jumlah counter send OTP'
+			saldoBefore.set(0, (Integer.parseInt(saldoBefore[0]) - GlobalVariable.Counter).toString())
+		} else {
+			'kurang saldo before dengan jumlah counter send OTP'
+			saldoBefore.set(0, (Integer.parseInt(saldoBefore[0]) - GlobalVariable.Counter).toString())
+		}
 	
 	    saldoAfter = loginAdminGetSaldo(countCheckSaldo, conneSign)
 	
@@ -285,55 +289,6 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 
 	'click english'
 	WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_English'))
-
-	'select vendor'
-	WebUI.selectOptionByLabel(findTestObject('BuatUndangan/checkSaldo/select_Vendor'), '(?i)' + 'VIDA', true)
-
-	'get row'
-	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
-
-	for (index = 2; index <= variable.size(); index++) {
-		'modify object box info'
-		modifyObjectBoxInfo = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
-			'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) +
-			']/div/div/div/div/div[1]/h3', true)
-
-		'check if box info = tipe saldo di excel'
-		if (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('Verification') || WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('PNBP')) {
-			'modify object qty'
-			modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
-				'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) +
-				']/div/div/div/div/div[2]/h3', true)
-
-			'get qty saldo before'
-			saldo.add(WebUI.getText(modifyObjectQty).replace(',', ''))
-
-			'if saldo sudah terisi 2 verification dan pnbp'
-			if(saldo.size() == 2) {
-				break
-			}
-			
-			continue
-		}
-	}
-	
-//	'modify object balance'
-//	modifyObjectBalance = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 'equals',
-//		('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-//		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[10]/div', true)
-//
-//	'get trx saldo'
-//	saldo.add(WebUI.getText(modifyObjectBalance).replace(',', ''))
-
-	if ((countCheckSaldo == 1)) {
-		'call function input filter saldo'
-		inputFilterSaldo('Verification', conneSign)
-		
-		if(GlobalVariable.FlagFailed == 0) {
-			'call function input filter saldo'
-			inputFilterSaldo('PNBP', conneSign)
-		}
-	}
 	
 	'select vendor'
 	WebUI.selectOptionByLabel(findTestObject('BuatUndangan/checkSaldo/select_Vendor'), '(?i)' + 'ESIGN/ADINS', true)
@@ -361,22 +316,57 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 		}
 	}
 
-//	'modify object balance'
-//	modifyObjectBalance = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 'equals',
-//		('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-//		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[10]/div', true)
-//
-//	'get trx saldo'
-//	saldo.add(WebUI.getText(modifyObjectBalance).replace(',', ''))
-
-	if ((countCheckSaldo == 1) && (GlobalVariable.FlagFailed == 0)) {
+	if ((countCheckSaldo == 1) && (GlobalVariable.FlagFailed == 0) && GlobalVariable.Psre == 'VIDA') {
 		'call function input filter saldo'
 		inputFilterSaldo('OTP', conneSign)
+	}
+
+	'select vendor'
+	WebUI.selectOptionByLabel(findTestObject('BuatUndangan/checkSaldo/select_Vendor'), '(?i)' + GlobalVariable.Psre, true)
+
+	'get row'
+	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
+
+	for (index = 2; index <= variable.size(); index++) {
+		'modify object box info'
+		modifyObjectBoxInfo = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
+			'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) +
+			']/div/div/div/div/div[1]/h3', true)
+
+		'check if box info = tipe saldo di excel'
+		if (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('Verification') || (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('PNBP') && GlobalVariable.Psre == 'VIDA')) {
+			'modify object qty'
+			modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
+				'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) +
+				']/div/div/div/div/div[2]/h3', true)
+
+			'get qty saldo before'
+			saldo.add(WebUI.getText(modifyObjectQty).replace(',', ''))
+
+			'if saldo sudah terisi 2 verification dan pnbp'
+			if(saldo.size() == 3 && GlobalVariable.Psre == 'VIDA') {
+				break
+			} else if(saldo.size() == 2 && GlobalVariable.Psre == 'PRIVY') {
+				break
+			}
+			
+			continue
+		}
+	}
+
+	if ((countCheckSaldo == 1)) {
+		'call function input filter saldo'
+		inputFilterSaldo('Verification', conneSign)
+		
+		if(GlobalVariable.FlagFailed == 0 && GlobalVariable.Psre == 'VIDA') {
+			'call function input filter saldo'
+			inputFilterSaldo('PNBP', conneSign)
+		}
 		
 		'call function verify list undangan'
 		verifyListUndangan()
 	}
-
+	
 	'close browser'
 	WebUI.closeBrowser()
 	

@@ -500,9 +500,6 @@ def inputEMeteraiMonitoring(Connection conneSign) {
 			index = 0
 			
 			if (((inputEMeterai[6]) == 'Failed') || ((inputEMeterai[6]) == 'Success')) {
-				if (inputEMeterai[6] == 'Failed') {
-					totalMeterai = 1
-				}
 
 				for (int j = 1; j <= Integer.parseInt(totalMeterai); j++) {
 					'Klik set ulang setiap data biar reset'

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>ResponseAPIStoreDB</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>58f79825-725f-48eb-9a00-2db4bc504e7d</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>f6f9aa9a-c25f-433f-ae2b-4770ab0d511a</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Registrasi/SendDocument'</defaultValue>
+      <description></description>
+      <id>f6f9aa9a-c25f-433f-ae2b-4770ab0d511a</id>
+      <masked>false</masked>
+      <name>API_Excel_Path</name>
+   </variable>
+</TestCaseEntity>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>button_searchPenandaTanganViaEmail</name>
+   <tag></tag>
+   <elementGuidId>29dfd6c5-f1ca-4d7c-9cff-6bc3f58233ec</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/ngb-modal-window/div/div/app-add-signer/form/div[2]/div[2]/div[2]/div/div/span/i</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/ngb-modal-window/div/div/app-add-signer/form/div[2]/div[2]/div[2]/div/div/span/i</value>
+      <webElementGuid>595d147e-9dbd-47ad-9b0b-9ee7b118f9a0</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

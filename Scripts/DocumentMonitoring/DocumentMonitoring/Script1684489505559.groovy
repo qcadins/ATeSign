@@ -18,14 +18,6 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 'call testcase login admin'
 WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathDocumentMonitoring, ('sheet') : 'DocumentMonitoring'], FailureHandling.CONTINUE_ON_FAILURE)
 
-GlobalVariable.FlagFailed = 0
-
-'click menu DocumentMonitoring'
-WebUI.click(findTestObject('DocumentMonitoring/DocumentMonitoring'))
-
-'call function check paging'
-checkPaging()
-
 'get colm excel'
 int countColmExcel = findTestData(excelPathDocumentMonitoring).columnNumbers
 
@@ -33,9 +25,21 @@ int countColmExcel = findTestData(excelPathDocumentMonitoring).columnNumbers
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
-    } else if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
-        GlobalVariable.FlagFailed = 0
+    } else if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted') ||
+		findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Warning')) {
+		
+		'click menu DocumentMonitoring'
+		WebUI.click(findTestObject('DocumentMonitoring/DocumentMonitoring'))
+		
+		if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+			GlobalVariable.FlagFailed = 0
+		}
 
+		if(GlobalVariable.NumofColm == 2) {
+			'call function check paging'
+			checkPaging()
+		}
+		
         'set text nama Pelanggan'
         WebUI.setText(findTestObject('DocumentMonitoring/input_NamaPelanggan'), findTestData(excelPathDocumentMonitoring).getValue(
                 GlobalVariable.NumofColm, 9))
@@ -97,7 +101,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             WebUI.click(findTestObject('DocumentMonitoring/button_View'))
 
             'check if error alert present'
-            if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/errorLog'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+            if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
                 'get reason dari error log'
                 errorLog = WebUI.getAttribute(findTestObject('DocumentMonitoring/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 
@@ -107,13 +111,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         2) + ';') + '<' + errorLog + '>')
 
                 GlobalVariable.FlagFailed = 1
-            }
+            } else if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/label_NoKontrakView'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+				'check if no kontrak sama dengan inputan excel'
+				checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('DocumentMonitoring/label_NoKontrakView')), 'No Kontrak ' + findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 
+                        10), false, FailureHandling.CONTINUE_ON_FAILURE), ' dokuemn yang di view berbeda')
+			} else if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/button_View'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+				checkVerifyEqualOrMatch(false, ' button view tidak berfungsi')
+			}
         } else if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Download')) {
             'click button download'
             WebUI.click(findTestObject('DocumentMonitoring/button_Download'))
 
             'check if error alert present'
-            if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/errorLog'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+            if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
                 'get reason dari error log'
                 errorLog = WebUI.getAttribute(findTestObject('DocumentMonitoring/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 
@@ -215,7 +225,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             WebUI.click(findTestObject('DocumentMonitoring/button_KirimUlangNotifikasi'))
 
             'check if error alert present'
-            if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/errorLog'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+            if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
                 'get reason dari error log'
                 errorLog = WebUI.getAttribute(findTestObject('DocumentMonitoring/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 
@@ -226,7 +236,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 GlobalVariable.FlagFailed = 1
             } else if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/button_YaProses'), GlobalVariable.TimeOut, 
-                FailureHandling.CONTINUE_ON_FAILURE)) {
+                FailureHandling.OPTIONAL)) {
                 'click button tidak batalkan'
                 WebUI.click(findTestObject('DocumentMonitoring/button_TidakBatalkan'))
 
@@ -237,12 +247,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 WebUI.click(findTestObject('DocumentMonitoring/button_YaProses'))
 
                 'check if pop up success message'
-                if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/button_OK'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+                if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/button_OK'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
                     'click button OK'
                     WebUI.click(findTestObject('DocumentMonitoring/button_OK'))
                 } else {
 					'check if error alert present'
-					if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/errorLog'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+					if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 						'get reason dari error log'
 						errorLog = WebUI.getAttribute(findTestObject('DocumentMonitoring/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 		
@@ -254,7 +264,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 						GlobalVariable.FlagFailed = 1
 					}
 					
-					if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/PopupMessage'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+					if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/PopupMessage'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 					'get text dari popup message'
                     errorLog = WebUI.getText(findTestObject('DocumentMonitoring/PopUpMessage'))
 
@@ -272,7 +282,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			WebUI.click(findTestObject('DocumentMonitoring/button_startStamping'))
 			
 			'Jika start stamping'
-			if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/label_startStamping'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+			if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/label_startStamping'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 				'klik cancel'
 				WebUI.click(findTestObject('Object Repository/DocumentMonitoring/button_cancelStartStamping'))
 				
@@ -286,9 +296,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				WebUI.delay(10)
 				
 				'jika ada error log'
-				if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/errorLog'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+				if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 					'ambil teks errormessage'
-					errormessage = WebUI.getAttribute(findTestObject('DocumentMonitoring/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
+					errormessage = WebUI.getAttribute(findTestObject('DocumentMonitoring/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 						
 					'Tulis di excel itu adalah error'
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('DocumentMonitoring', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
@@ -296,7 +306,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				}
 				
 				'jika start stamping muncul'
-				if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/label_startStamping'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+				if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/label_startStamping'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 					'klik start ok untuk start stamping'
 					WebUI.click(findTestObject('Object Repository/DocumentMonitoring/button_OKStartStamping'))
 					

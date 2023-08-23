@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>Manual Stamp</name>
+   <name>Response API Send Document Store DB</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>bd430a8b-a0b2-4cd4-a6af-5c5d75e9dea9</testCaseGuid>
+   <testCaseGuid>f38b28c1-76fd-4f46-8aca-e86b359baf01</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>ffa1c7a8-1c73-4944-9953-c85579b87471</variableId>
+      <variableId>f1a5724a-13a7-43a4-9b3d-30c22d2c51e2</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'ManualStamp/ManualStamp'</defaultValue>
+      <defaultValue>''</defaultValue>
       <description></description>
-      <id>ffa1c7a8-1c73-4944-9953-c85579b87471</id>
+      <id>f1a5724a-13a7-43a4-9b3d-30c22d2c51e2</id>
       <masked>false</masked>
-      <name>excelPathManualStamp</name>
+      <name>signlocStoreDB</name>
    </variable>
 </TestCaseEntity>

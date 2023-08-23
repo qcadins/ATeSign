@@ -819,9 +819,9 @@ public class APIFullService {
 				listdata.add(data)
 			}
 		}
-		
+
 		ArrayList<String> resultList = []
-		
+
 		'hardcode untuk direct langsung ke colm is_sequence'
 		if (listdata[2] == '0') {
 			'hardcode untuk direct langsung ke colm document_id'
@@ -830,9 +830,9 @@ public class APIFullService {
 		} else if(listdata[2] == '1') {
 			'hardcode untuk direct langsung ke colm document_id'
 			resultList.add(listdata[3])
-			
+
 			int index = listdata.indexOf(email) + 1
-			
+
 			if (index - 5 >= 0) {
 				if (listdata[index - 2] != null) {
 					resultList.add('0')
@@ -847,7 +847,7 @@ public class APIFullService {
 				}
 			}
 		}
-		
+
 		resultList
 	}
 

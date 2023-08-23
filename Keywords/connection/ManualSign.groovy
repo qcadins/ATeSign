@@ -53,10 +53,10 @@ public class ManualSign {
 	}
 
 	@Keyword
-	getVerificationSigner(Connection conn, String emailSigner){
+	getVerificationSigner(Connection conn, String value){
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select full_name from am_msuser where login_id = '"+emailSigner+"' or hashed_phone = '"+emailSigner+"'")
+		resultSet = stm.executeQuery("select full_name from am_msuser where login_id = '"+value+"' or hashed_phone = '"+value+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -68,10 +68,10 @@ public class ManualSign {
 	}
 
 	@Keyword
-	getInformationUser(Connection conn, String emailSigner, String vendorName) {
+	getInformationUser(Connection conn, String value, String vendorName) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select amm.full_name, amm.hashed_phone, amm.login_id from am_msuser amm left join ms_vendor_registered_user msvr on msvr.id_ms_user = amm.id_ms_user left join ms_vendor msv on msvr.id_ms_vendor = msv.id_ms_vendor where (amm.login_id = '"+emailSigner+"' or amm.hashed_phone = '"+emailSigner+"')and msv.vendor_name = '"+vendorName+"'")
+		resultSet = stm.executeQuery("select amm.full_name, amm.hashed_phone, amm.login_id from am_msuser amm left join ms_vendor_registered_user msvr on msvr.id_ms_user = amm.id_ms_user left join ms_vendor msv on msvr.id_ms_vendor = msv.id_ms_vendor where (amm.login_id = '"+value+"' or amm.hashed_phone = '"+value+"') and msv.vendor_name = '"+vendorName+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

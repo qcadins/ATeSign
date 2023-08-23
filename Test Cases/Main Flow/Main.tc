@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>Main</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>12fbd585-a15f-4f64-93d8-194f294682ca</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>27383196-e193-4ebf-aafd-0354514ee333</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Main/Main'</defaultValue>
+      <description></description>
+      <id>27383196-e193-4ebf-aafd-0354514ee333</id>
+      <masked>false</masked>
+      <name>excelPathMain</name>
+   </variable>
+</TestCaseEntity>
