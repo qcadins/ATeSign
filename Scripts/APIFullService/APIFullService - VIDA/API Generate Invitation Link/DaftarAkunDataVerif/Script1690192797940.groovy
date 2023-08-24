@@ -424,27 +424,27 @@ def checkSaldoOTP() {
 	WebUI.maximizeWindow()
 
    'set value userLogin'
-	GlobalVariable.userLogin = findTestData(excelPathAPIGenerateInvLink).getValue(2, 55).toUpperCase()
+	GlobalVariable.userLogin = findTestData(excelPathAPIGenerateInvLink).getValue(2, 57).toUpperCase()
 
 	'input email'
-	WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathAPIGenerateInvLink).getValue(2, 55))
+	WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathAPIGenerateInvLink).getValue(2, 57))
 
 	'input password'
 	WebUI.setText(findTestObject('Login/input_Password'), findTestData(excelPathAPIGenerateInvLink).getValue(2,
-			56))
+			58))
 
 	'click button login'
 	WebUI.click(findTestObject('Login/button_Login'), FailureHandling.CONTINUE_ON_FAILURE)
 
 	'input perusahaan'
 	WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excelPathAPIGenerateInvLink).getValue(2,
-			57))
+			59))
 
 	WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
 
 	'input peran'
 	WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excelPathAPIGenerateInvLink).getValue(2,
-			58))
+			60))
 
 	WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
 	

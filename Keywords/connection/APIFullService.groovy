@@ -946,7 +946,7 @@ public class APIFullService {
 		}
 		data
 	}
-	
+
 	@Keyword
 	getCheckInvRegisStoreDB(Connection conn, String email) {
 		stm = conn.createStatement()
@@ -964,5 +964,19 @@ public class APIFullService {
 			}
 		}
 		listdata
+	}
+
+	@Keyword
+	settingAllowRegenerateLink(Connection conn, String value) {
+		stm = conn.createStatement()
+
+		updateVariable = stm.executeUpdate("WITH rows_to_update AS ( SELECT mvt.id_ms_vendoroftenant FROM ms_vendoroftenant mvt JOIN ms_tenant mt ON mvt.id_ms_tenant = mt.id_ms_tenant JOIN ms_vendor mv ON mv.id_ms_vendor = mvt.id_ms_vendor WHERE mt.tenant_code = '"+ GlobalVariable.Tenant +"' AND mv.vendor_code = '"+ GlobalVariable.Psre +"' ) UPDATE ms_vendoroftenant mvt SET allow_regenerate_inv_link = "+ value +" FROM rows_to_update rtu WHERE mvt.id_ms_vendoroftenant = rtu.id_ms_vendoroftenant")
+	}
+
+	@Keyword
+	settingLinkIsActive(Connection conn, String value, String email) {
+		stm = conn.createStatement()
+
+		updateVariable = stm.executeUpdate("UPDATE tr_invitation_link SET is_active = '"+ value +"' WHERE receiver_detail = '"+ email +"'")
 	}
 }

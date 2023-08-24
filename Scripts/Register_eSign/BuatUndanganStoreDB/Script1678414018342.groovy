@@ -81,26 +81,36 @@ if(GlobalVariable.Psre == 'VIDA') {
 	'verify Taskno'
 	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 27).toUpperCase(), 
 	        (resultDataPerusahaan[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	'jika data db tidak sesuai dengan excel'
+	if (arrayMatch.contains(false)) {
+		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+			(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
+	}
 } else if (GlobalVariable.Psre == 'PRIVY') {
 	'looping untuk delay 100detik menunggu proses request status'
 	for(delay = 1; delay <= 5; delay++) {
+		'reset array index'
+		arrayindex = 0
+		
 		'get data status request dari tr_job_check_register_status DB'
 		ArrayList<String> result = CustomKeywords.'connection.Registrasi.getRegisterPrivyStoreDB'(conneSign, findTestData(excelPathBuatUndangan).getValue(
 				GlobalVariable.NumofColm, 15).toUpperCase())
 		
 		'verify request status'
-		arrayMatch.add(WebUI.verifyMatch('1', (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+		arrayMatch.add(WebUI.verifyMatch('1', (result[arrayindex++]), false, FailureHandling.OPTIONAL))
 		
-		'verify is external'
-		arrayMatch.add(WebUI.verifyMatch('1', (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+		'verify is external 0 karena melalui UI buatundangan'
+		arrayMatch.add(WebUI.verifyMatch('0', (result[arrayindex++]), false, FailureHandling.OPTIONAL))
 		
 		
 		if (arrayMatch.contains(false)) {
 			'jika sudah delay ke 5 maka dianggap failed'
 			if(delay == 5) {
 				'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Registrasi', GlobalVariable.NumofColm,
-					GlobalVariable.StatusFailed, (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm,
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm,
+					GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
 						2) + ';') + GlobalVariable.ReasonFailedStoredDB + ' Karena Job Tidak Jalan')
 			}
 			'delay 20detik'
@@ -110,11 +120,3 @@ if(GlobalVariable.Psre == 'VIDA') {
 		}
 	}
 }
-
-'jika data db tidak sesuai dengan excel'
-if (arrayMatch.contains(false)) {
-    'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-        (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
-}
-

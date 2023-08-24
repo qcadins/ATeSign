@@ -51,6 +51,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			CustomKeywords.'connection.APIFullService.settingEmailServiceTenant'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 52))
 		}
 		
+		'check ada value maka setting allow regenerate link'
+		if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 54).length() > 0) {
+			'setting allow regenerate link'
+			CustomKeywords.'connection.APIFullService.settingAllowRegenerateLink'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 54))
+		}
+		
         'check if tidak mau menggunakan tenant code yang benar'
         if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 34) == 'No') {
             'set tenant kosong'
@@ -119,6 +125,57 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 						FailureHandling.CONTINUE_ON_FAILURE)
                 }
 				
+				'check ada value maka setting Link Is Active'
+				if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 55).length() > 0) {
+					'setting Link Is Active'
+					CustomKeywords.'connection.APIFullService.settingLinkIsActive'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 55), 
+						findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 12).replace('"', ''))
+					
+					'HIT API'
+					respon = WS.sendRequest(findTestObject('APIFullService/Postman/Generate Invitation Link', [('nama') : findTestData(
+									excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 11), ('email') : findTestData(excelPathAPIGenerateInvLink).getValue(
+									GlobalVariable.NumofColm, 12), ('tmpLahir') : findTestData(excelPathAPIGenerateInvLink).getValue(
+									GlobalVariable.NumofColm, 13), ('tglLahir') : findTestData(excelPathAPIGenerateInvLink).getValue(
+									GlobalVariable.NumofColm, 14), ('jenisKelamin') : findTestData(excelPathAPIGenerateInvLink).getValue(
+									GlobalVariable.NumofColm, 15), ('tlp') : findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm,
+									16), ('idKtp') : findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 17)
+								, ('alamat') : findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 18), ('kecamatan') : findTestData(
+									excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 19), ('kelurahan') : findTestData(
+									excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 20), ('kota') : findTestData(excelPathAPIGenerateInvLink).getValue(
+									GlobalVariable.NumofColm, 21), ('provinsi') : findTestData(excelPathAPIGenerateInvLink).getValue(
+									GlobalVariable.NumofColm, 22), ('kodePos') : findTestData(excelPathAPIGenerateInvLink).getValue(
+									GlobalVariable.NumofColm, 23), ('selfPhoto') : selfPhoto, ('idPhoto') : idPhoto, ('region') : findTestData(
+									excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 26), ('type') : findTestData(excelPathAPIGenerateInvLink).getValue(
+									GlobalVariable.NumofColm, 27), ('office') : findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm,
+									28), ('businessLine') : findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm,
+									29), ('taskNo') : findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 30)
+								, ('callerId') : findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 9)]))
+					
+					'Jika status HIT API 200 OK'
+					if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
+						'get status code'
+						code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
+						
+						if (code == 0) {
+							'mengambil response'
+							GlobalVariable.Link = WS.getElementPropertyValue(respon, 'link', FailureHandling.OPTIONAL)
+							
+							'write to excel failed'
+							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link', GlobalVariable.NumofColm,
+								GlobalVariable.StatusFailed, (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 2).replace(
+									'-', '') + ';') + ' Link tergenerate walupun sudah tidak active')
+						} else {
+			               'call function get API error message'
+						   getAPIErrorMessage(respon)
+			            }
+					} else {
+		               'call function get API error message'
+					   getAPIErrorMessage(respon)
+		            }
+					
+					continue
+				}
+				
 				'call test case daftar akun verif'
 				WebUI.callTestCase(findTestCase('APIFullService/APIFullService - VIDA/API Generate Invitation Link/DaftarAkunDataVerif'), [('excelPathGenerateLink') : 'APIFullService/API_GenInvLink', ('otpBefore') : saldoBefore[0]], 
 						FailureHandling.CONTINUE_ON_FAILURE)
@@ -177,28 +234,28 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 	WebUI.maximizeWindow()
 
 	'set value userLogin'
-	GlobalVariable.userLogin = findTestData(excelPathAPIGenerateInvLink).getValue(2, 55).toUpperCase()
+	GlobalVariable.userLogin = findTestData(excelPathAPIGenerateInvLink).getValue(2, 57).toUpperCase()
 
 	'input email'
-	WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathAPIGenerateInvLink).getValue(2, 55))
+	WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathAPIGenerateInvLink).getValue(2, 57))
 
 	'input password'
 	WebUI.setText(findTestObject('Login/input_Password'), findTestData(excelPathAPIGenerateInvLink).getValue(2,
-			56))
+			58))
 
 	'click button login'
 	WebUI.click(findTestObject('Login/button_Login'), FailureHandling.CONTINUE_ON_FAILURE)
 
 	'input perusahaan'
 	WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excelPathAPIGenerateInvLink).getValue(2,
-			57))
+			59))
 
 	'enter untuk select perusahaan'
 	WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
 
 	'input peran'
 	WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excelPathAPIGenerateInvLink).getValue(2,
-			58))
+			60))
 
 	'enter untuk select peran'
 	WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
