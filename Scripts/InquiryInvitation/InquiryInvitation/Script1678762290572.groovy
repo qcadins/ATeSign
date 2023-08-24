@@ -16,8 +16,8 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'click menu inquiry invitation'
 WebUI.click(findTestObject('InquiryInvitation/menu_InquiryInvitation'))
 
-'call function check paging'
-checkPaging()
+//'call function check paging'
+//checkPaging()
 
 int editAfterRegister = CustomKeywords.'connection.InquiryInvitation.getSetEditAfterRegister'(conneSign)
 
@@ -26,20 +26,8 @@ int resendLink = CustomKeywords.'connection.InquiryInvitation.getSetResendLink'(
 int invLink = CustomKeywords.'connection.InquiryInvitation.getSetInvLinkAct'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
             15).toUpperCase())
 
-'check if search dengan email/phone/id no'
-if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Email')) {
-    'set text search box dengan email'
-    WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-            15))
-} else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Phone')) {
-    'set text search box dengan Phone'
-    WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-            14))
-} else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Id no')) {
-    'set text search box dengan NIK'
-    WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-            9))
-}
+'call function inputSearch'
+inputSearch()
 
 'click button cari'
 WebUI.click(findTestObject('InquiryInvitation/button_Cari'))
@@ -341,6 +329,55 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).eq
             GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
                 '-', '') + ';') + '<' + ReasonFailed + '>')
     }
+} else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Regenerate invitation link')) {
+	'click button Regenerate invitation link'
+	WebUI.click(findTestObject('InquiryInvitation/button_RegenerateInvLink'))
+	
+	if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/button_YaProses'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		'click button ya proses'
+		WebUI.click(findTestObject('InquiryInvitation/button_YaProses'))
+		if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+			'get reason'
+			ReasonFailed = WebUI.getAttribute(findTestObject('BuatUndangan/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
+	
+			'write to excel status failed dan reason'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm,
+				GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
+					'-', '') + ';') + '<' + ReasonFailed + '>')
+		} else if(WebUI.getText(findTestObject('InquiryInvitation/label_PopUp'), FailureHandling.OPTIONAL).equalsIgnoreCase('Success')) {
+			'click button OK'
+			WebUI.click(findTestObject('InquiryInvitation/button_OkSuccess'))
+	
+			'call function input search'
+			inputSearch()
+			
+			'click button cari'
+			WebUI.click(findTestObject('InquiryInvitation/button_Cari'))
+			
+			'click button ViewLink'
+			WebUI.click(findTestObject('InquiryInvitation/button_ViewLink'))
+	
+			'get link'
+			GlobalVariable.Link = WebUI.getAttribute(findTestObject('InquiryInvitation/input_Link'), 'value', FailureHandling.OPTIONAL)
+	
+			'verify link bukan undefined atau kosong'
+			if (GlobalVariable.Link.equalsIgnoreCase('Undefined') || GlobalVariable.Link.equalsIgnoreCase('')) {
+				'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm,
+					GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2) +
+					';') + ' Link tidak ter-regenerated')
+	
+				GlobalVariable.FlagFailed = 1
+			}
+			
+			'click button TutupDapatLink'
+			WebUI.click(findTestObject('InquiryInvitation/button_TutupDapatLink'))
+			
+			'write to excel success'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'BuatUndangan', 0, GlobalVariable.NumofColm -
+				1, GlobalVariable.StatusSuccess)
+		}
+	}
 }
 
 def checkPaging() {
@@ -395,3 +432,19 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     }
 }
 
+def inputSearch() {
+	'check if search dengan email/phone/id no'
+	if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Email')) {
+		'set text search box dengan email'
+		WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+				15))
+	} else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Phone')) {
+		'set text search box dengan Phone'
+		WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+				14))
+	} else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Id no')) {
+		'set text search box dengan NIK'
+		WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+				9))
+	}
+}

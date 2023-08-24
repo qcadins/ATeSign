@@ -25,7 +25,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     } else if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
 		
 		'setting menggunakan base url yang benar atau salah'
-		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPIDownload, GlobalVariable.NumofColm, 55)
+		CustomKeywords.'connection.APIFullService.settingBaseUrl'(API_Excel_Path, GlobalVariable.NumofColm, 55)
 		
         'Open test case untuk login sebagai Invenditor'
         WebUI.callTestCase(findTestCase('Login/Login_Inveditor'), [:], FailureHandling.STOP_ON_FAILURE)
@@ -34,6 +34,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 54).length() > 0) {
 			'setting email service tenant'
 			CustomKeywords.'connection.Registrasi.settingEmailServiceTenant'(conneSign, findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 54))
+		}
+		
+		'check ada value maka setting allow regenerate link'
+		if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 56).length() > 0) {
+			'setting allow regenerate link'
+			CustomKeywords.'connection.APIFullService.settingAllowRegenerateLink'(conneSign, findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 56))
 		}
 
         'Pembuatan pengisian variable di sendRequest per column berdasarkan data excel.'
@@ -67,6 +73,42 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'Mengambil links berdasarkan response HIT API'
                 links = WS.getElementPropertyValue(respon, 'links', FailureHandling.OPTIONAL)
 
+				'check ada value maka setting Link Is Active'
+				if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 56) == '0') {
+					'setting Link Is Active'
+					CustomKeywords.'connection.APIFullService.settingLinkIsActive'(conneSign, findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 56),
+						findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 13).replace('"', ''))
+					
+					'HIT API'
+			        respon = WS.sendRequest(findTestObject('Postman/Gen Invitation Link', [('callerId') : findTestData(API_Excel_Path).getValue(
+			                        GlobalVariable.NumofColm, 9), ('tenantCode') : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 
+			                        11), ('users') : listInvitation[0]]))
+					
+					'Jika status HIT API 200 OK'
+					if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
+						'get status code'
+						code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
+						
+						if (code == 0) {
+							'Mengambil links berdasarkan response HIT API'
+							links = WS.getElementPropertyValue(respon, 'links', FailureHandling.OPTIONAL)
+							
+							'write to excel failed'
+							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Inv Link', GlobalVariable.NumofColm,
+								GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
+									'-', '') + ';') + ' Link tergenerate walupun sudah tidak active')
+						} else {
+						   'call function get API error message'
+						   getAPIErrorMessage(respon)
+						}
+					} else {
+					   'call function get API error message'
+					   getAPIErrorMessage(respon)
+					}
+					
+					continue
+				}
+				
                 'Klik menu Inquiry Invitation'
                 WebUI.click(findTestObject('Object Repository/InquiryInvitation/menu_InquiryInvitation'))
 
@@ -145,13 +187,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             '-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
                 }
             } else {
-            	'jika status codenya bukan 0, yang berarti antara salah verifikasi data dan error'
-                messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
-
-                'write to excel status failed dan reason : '
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Inv Link', GlobalVariable.NumofColm, 
-                    GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
-                        '-', '') + ';') + '<' + messageFailed + '>')
+				'call function get API error message'
+				getAPIErrorMessage(respon)
             }
         } else {
             'write to excel status failed dan reason : '
@@ -165,3 +202,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     }
 }
 
+def getAPIErrorMessage(def respon) {
+	'jika status codenya bukan 0, yang berarti antara salah verifikasi data dan error'
+	messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
+
+	'write to excel status failed dan reason : '
+	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Inv Link', GlobalVariable.NumofColm,
+		GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace(
+			'-', '') + ';') + '<' + messageFailed + '>')
+}
