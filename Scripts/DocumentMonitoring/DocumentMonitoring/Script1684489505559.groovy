@@ -15,8 +15,12 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
-'call testcase login admin'
-WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathDocumentMonitoring, ('sheet') : 'DocumentMonitoring'], FailureHandling.CONTINUE_ON_FAILURE)
+'panggil fungsi login'
+WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('TC') : 'DocumentMonitoring', ('SheetName') : 'DocumentMonitoring',
+	('Path') : excelPathDocumentMonitoring], FailureHandling.CONTINUE_ON_FAILURE)
+
+//'call testcase login admin'
+//WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathDocumentMonitoring, ('sheet') : 'DocumentMonitoring'], FailureHandling.CONTINUE_ON_FAILURE)
 
 'get colm excel'
 int countColmExcel = findTestData(excelPathDocumentMonitoring).columnNumbers

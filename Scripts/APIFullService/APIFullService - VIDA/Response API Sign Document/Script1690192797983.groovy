@@ -399,8 +399,12 @@ def loginAdminGetSaldo(Connection conneSign) {
         noKontrak = (noKontrak + CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, docid[(i - 1)]))
     }
     
-    'Call test Case untuk login sebagai admin wom admin client'
-    WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathAPISignDocument, ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
+	'panggil fungsi login'
+	WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('TC') : 'ResponseAPISignDoc', ('SheetName') : sheet,
+		('Path') : excelPathAPISignDocument], FailureHandling.STOP_ON_FAILURE)
+	
+//    'Call test Case untuk login sebagai admin wom admin client'
+//    WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathAPISignDocument, ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
 
     'klik button saldo'
     WebUI.click(findTestObject('isiSaldo/SaldoAdmin/menu_Saldo'))
@@ -476,7 +480,7 @@ def loginAdminGetSaldo(Connection conneSign) {
     
     'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
     WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathAPISignDocument
-            , ('sheet') : sheet, ('linkDocumentMonitoring') : 'Not Used', ('nomorKontrak') : noKontrak], FailureHandling.CONTINUE_ON_FAILURE)
+            , ('sheet') : sheet, ('linkDocumentMonitoring') : 'Not Used', ('nomorKontrak') : noKontrak, ('TC') : 'ResponseAPISignDoc'], FailureHandling.CONTINUE_ON_FAILURE)
 
     'return total saldo awal'
     return totalSaldo

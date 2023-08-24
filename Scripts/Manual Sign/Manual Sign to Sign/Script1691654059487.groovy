@@ -682,11 +682,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             
             'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
             WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathManualSigntoSign
-                    , ('sheet') : sheet, ('nomorKontrak') : noKontrak], FailureHandling.CONTINUE_ON_FAILURE)
+                    , ('sheet') : sheet, ('nomorKontrak') : noKontrak, ('TC') : 'ManualSigntoSign'], FailureHandling.CONTINUE_ON_FAILURE)
 
-            'Call test Case untuk login sebagai admin wom admin client'
-            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualSigntoSign, ('sheet') : sheet], 
-                FailureHandling.CONTINUE_ON_FAILURE)
+			'panggil fungsi login'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('TC') : 'ManualSigntoSign', ('SheetName') : sheet,
+				('Path') : excelPathManualSigntoSign], FailureHandling.CONTINUE_ON_FAILURE)
+			
+//            'Call test Case untuk login sebagai admin wom admin client'
+//            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualSigntoSign, ('sheet') : sheet], 
+//                FailureHandling.CONTINUE_ON_FAILURE)
 
             'Split dokumen template name dan nomor kontrak per dokumen berdasarkan delimiter ;'
             documentTemplateNamePerDoc = documentTemplateName.split(';', -1)
@@ -827,11 +831,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             	if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 63) == 'API Stamping') {
             		'Call API Flow Stamping'
             		WebUI.callTestCase(findTestCase('Meterai/Flow Stamping'), [('excelPathStamping') : excelPathManualSigntoSign
-            		, ('sheet') : sheet, ('useAPI') : 'v.3.0.0', ('linkDocumentMonitoring') : ''], FailureHandling.CONTINUE_ON_FAILURE)
+            		, ('sheet') : sheet, ('useAPI') : 'v.3.0.0', ('linkDocumentMonitoring') : '', ('TC') : 'ManualSigntoSign'], FailureHandling.CONTINUE_ON_FAILURE)
             	} else if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 63) == 'Front End Document Monitoring') {
             		'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
             		WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathManualSigntoSign
-				    , ('sheet') : sheet, ('linkDocumentMonitoring') : 'Not Used', ('nomorKontrak') : noKontrakPerDoc[0], ('isStamping') : 'Yes'], FailureHandling.CONTINUE_ON_FAILURE)
+				    , ('sheet') : sheet, ('linkDocumentMonitoring') : 'Not Used', ('nomorKontrak') : noKontrakPerDoc[0], ('isStamping') : 'Yes', ('TC') : 'ManualSigntoSign'], FailureHandling.CONTINUE_ON_FAILURE)
             	}
             } else if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 17) == 'Ya') {
 				'looping dari 1 hingga 12'
@@ -1186,18 +1190,27 @@ def checkPopup() {
 
 def checkErrorLog() {
     'Jika error lognya muncul'
-    if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+    if (WebUI.verifyElementPresent(findTestObject('ManualSign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
         'ambil teks errormessage'
-        errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
+        errormessage = WebUI.getAttribute(findTestObject('ManualSign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
 
-        if (!(errormessage.contains('Verifikasi OTP berhasil')) && !(errormessage.contains('feedback'))) {
-            'Tulis di excel itu adalah error'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (((findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + 
-                '<') + errormessage) + '>')
-
-            return true
-        }
+		'jika error message null, masuk untuk tulis error non-sistem'
+		if (errormessage != null) {
+			
+			if (!(errormessage.contains('Permintaan tanda tangan berhasil dibuat.'))) {
+				'Tulis di excel itu adalah error'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Sign', GlobalVariable.NumofColm,
+					GlobalVariable.StatusFailed, (((findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 2).replace(
+						'-', '') + ';') + '<') + errormessage) + '>')
+			}
+		} else {
+			
+			'Tulis di excel itu adalah error'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Sign', GlobalVariable.NumofColm,
+				GlobalVariable.StatusFailed, (((findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 2).replace(
+					'-', '') + ';')) + 'Error tidak berhasil ditangkap'))
+		}
+		return true
     }
     
     return false

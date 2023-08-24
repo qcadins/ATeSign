@@ -82,9 +82,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'Inisialisasi variable total document yang akan disign, count untuk resend, dan saldo yang akan digunakan'
             int totalDocSign, countResend, saldoUsed = 0
 
-            'Call test Case untuk login sebagai admin wom admin client'
-            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
-                FailureHandling.CONTINUE_ON_FAILURE)
+			'panggil fungsi login'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('TC') : 'SendtoSign', ('SheetName') : sheet,
+				('Path') : excelPathFESignDocument], FailureHandling.CONTINUE_ON_FAILURE)
+			
+//            'Call test Case untuk login sebagai admin wom admin client'
+//            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
+//                FailureHandling.CONTINUE_ON_FAILURE)
 
             'mengambil saldo before'
             saldoSignBefore = checkSaldoSign(conneSign, vendor)
@@ -678,11 +682,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             
 			'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
 			WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument
-			 , ('sheet') : sheet, ("nomorKontrak") : noKontrak], FailureHandling.CONTINUE_ON_FAILURE)
+			 , ('sheet') : sheet, ("nomorKontrak") : noKontrak, ('TC') : 'SendtoSign'], FailureHandling.CONTINUE_ON_FAILURE)
 
-            'Call test Case untuk login sebagai admin wom admin client'
-            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
-                FailureHandling.CONTINUE_ON_FAILURE)
+			'panggil fungsi login'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('TC') : 'SendtoSign', ('SheetName') : sheet,
+				('Path') : excelPathFESignDocument], FailureHandling.CONTINUE_ON_FAILURE)
+			
+//            'Call test Case untuk login sebagai admin wom admin client'
+//            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
+//                FailureHandling.CONTINUE_ON_FAILURE)
 
             'Split dokumen template name dan nomor kontrak per dokumen berdasarkan delimiter ;'
             documentTemplateNamePerDoc = documentTemplateName.split(';', -1)
@@ -820,9 +828,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,86) == 'Yes') {
 			'Call API Send doc'
 			WebUI.callTestCase(findTestCase('Meterai/Flow Stamping'), [('excelPathStamping') : excelPathFESignDocument
-			, ('sheet') : sheet, ('useAPI') : 'v3.0.0', ('linkDocumentMonitoring') : ''], FailureHandling.CONTINUE_ON_FAILURE)
+			, ('sheet') : sheet, ('useAPI') : 'v3.0.0', ('linkDocumentMonitoring') : '', ('TC') : 'SendtoSign'], FailureHandling.CONTINUE_ON_FAILURE)
 		}
-		}
+	}
 }
 
 'penggunaan ini hanya untuk Masukan Store Db'
