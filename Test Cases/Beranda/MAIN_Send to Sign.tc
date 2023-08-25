@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>All Manual Sign to Sign</name>
+   <name>MAIN_Send to Sign</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>4b3444a7-8158-486b-b0ac-9c37b00f3bb6</testCaseGuid>
+   <testCaseGuid>c02cb56b-cde6-4f3b-8201-0de46b3989bb</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>decf9446-f4b9-4076-aad7-8c84b457e9ef</variableId>
+      <variableId>6c83ec0d-0404-44ed-a290-5f231bbe81c0</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'ManualSign/AllManualSigntoSign'</defaultValue>
+      <defaultValue>'Beranda/SendtoSign'</defaultValue>
       <description></description>
-      <id>decf9446-f4b9-4076-aad7-8c84b457e9ef</id>
+      <id>6c83ec0d-0404-44ed-a290-5f231bbe81c0</id>
       <masked>false</masked>
-      <name>excelPathManualSigntoSign</name>
+      <name>excelPathFESignDocument</name>
    </variable>
 </TestCaseEntity>

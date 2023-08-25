@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>e-Meterai Monitoring</name>
+   <name>MAIN_APISignDocument</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>1210f05d-c3d5-4f2e-a7e2-847ed5e0ed87</testCaseGuid>
+   <testCaseGuid>3c1b378f-0dbe-466c-965b-23da5b8fce3a</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>7cd7eb69-fbfc-4d43-a1bc-7a8581a53b53</variableId>
+      <variableId>152465a1-206d-4e39-8cfa-c4c3bfe394f2</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'e-Meterai Monitoring/e-Meterai Monitoring'</defaultValue>
+      <defaultValue>'Registrasi/SignDocument'</defaultValue>
       <description></description>
-      <id>7cd7eb69-fbfc-4d43-a1bc-7a8581a53b53</id>
+      <id>152465a1-206d-4e39-8cfa-c4c3bfe394f2</id>
       <masked>false</masked>
-      <name>excelPathemeteraiMonitoring</name>
+      <name>API_Excel_Path</name>
    </variable>
 </TestCaseEntity>

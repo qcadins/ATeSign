@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>ResponseAPI</name>
+   <name>MAIN_All Manual Sign to Sign</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>3c1b378f-0dbe-466c-965b-23da5b8fce3a</testCaseGuid>
+   <testCaseGuid>4b3444a7-8158-486b-b0ac-9c37b00f3bb6</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>152465a1-206d-4e39-8cfa-c4c3bfe394f2</variableId>
+      <variableId>decf9446-f4b9-4076-aad7-8c84b457e9ef</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'Registrasi/SignDocument'</defaultValue>
+      <defaultValue>'ManualSign/AllManualSigntoSign'</defaultValue>
       <description></description>
-      <id>152465a1-206d-4e39-8cfa-c4c3bfe394f2</id>
+      <id>decf9446-f4b9-4076-aad7-8c84b457e9ef</id>
       <masked>false</masked>
-      <name>API_Excel_Path</name>
+      <name>excelPathManualSigntoSign</name>
    </variable>
 </TestCaseEntity>

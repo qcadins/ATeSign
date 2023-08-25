@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>ResponseAPI</name>
+   <name>MAIN_Manual Stamp to Stamp</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>c42e6543-e3fa-4023-8050-0d88f1426850</testCaseGuid>
+   <testCaseGuid>3b19b4f4-cb38-4233-95f4-661d5f2997c0</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>a631a2b3-eb1f-450d-91d6-02e08bd89b31</variableId>
+      <variableId>64851fc8-0c13-4197-9eb0-9bca920fc756</variableId>
    </variableLinks>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>04705f35-3d93-4bc4-9652-21b28161d404</variableId>
+      <variableId>3eb80b35-564e-4c4e-8b03-12309ca63fef</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'Registrasi/SendDocument'</defaultValue>
+      <defaultValue>'ManualStamp/ManualStamptoStamp'</defaultValue>
       <description></description>
-      <id>a631a2b3-eb1f-450d-91d6-02e08bd89b31</id>
+      <id>64851fc8-0c13-4197-9eb0-9bca920fc756</id>
       <masked>false</masked>
-      <name>API_Excel_Path</name>
+      <name>excelPathManualStamptoStamp</name>
    </variable>
    <variable>
-      <defaultValue>'Login/Setting'</defaultValue>
+      <defaultValue>''</defaultValue>
       <description></description>
-      <id>04705f35-3d93-4bc4-9652-21b28161d404</id>
+      <id>3eb80b35-564e-4c4e-8b03-12309ca63fef</id>
       <masked>false</masked>
-      <name>excelPathSetting</name>
+      <name>linkDocumentMonitoring</name>
    </variable>
 </TestCaseEntity>

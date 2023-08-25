@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>All Send then Sign</name>
+   <name>MAIN_e-Meterai Monitoring</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>df4b57d8-7361-4e7a-a5fd-993355eefaf2</testCaseGuid>
+   <testCaseGuid>1210f05d-c3d5-4f2e-a7e2-847ed5e0ed87</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>e79b4264-7ac4-4228-bdcb-69ebdae80209</variableId>
+      <variableId>7cd7eb69-fbfc-4d43-a1bc-7a8581a53b53</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'Beranda/AllSendthenSign'</defaultValue>
+      <defaultValue>'e-Meterai Monitoring/e-Meterai Monitoring'</defaultValue>
       <description></description>
-      <id>e79b4264-7ac4-4228-bdcb-69ebdae80209</id>
+      <id>7cd7eb69-fbfc-4d43-a1bc-7a8581a53b53</id>
       <masked>false</masked>
-      <name>excelPathFESignDocument</name>
+      <name>excelPathemeteraiMonitoring</name>
    </variable>
 </TestCaseEntity>
