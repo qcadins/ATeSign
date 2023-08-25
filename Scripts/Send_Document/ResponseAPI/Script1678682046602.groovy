@@ -13,9 +13,6 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-'get tenant code dari DB'
-String resultTenant = CustomKeywords.'connection.SendSign.getTenant'(conneSign, GlobalVariable.userLogin)
-
 sheet = 'API Send Document'
 
 'variable untuk keperluan split excel'
@@ -297,11 +294,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
                     (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + semicolon) + 
                     '<' + messageFailed + '>')
 
-                if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 9).replace('"', '') == resultTenant) {
-                    'call test case error report'
+                     'call test case error report'
                     WebUI.callTestCase(findTestCase('Send_Document/ErrorReport'), [('API_Excel_Path') : API_Excel_Path], 
                         FailureHandling.CONTINUE_ON_FAILURE)
-                }
+                
             }
         } else {
              messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL).toString()
@@ -309,13 +305,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
                 'write to excel status failed dan reason'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                     (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + semicolon) + 
-                    '<' + messageFailed + '>')
-
-                if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 9).replace('"', '') == resultTenant) {
-                    'call test case error report'
-                    WebUI.callTestCase(findTestCase('Send_Document/ErrorReport'), [('API_Excel_Path') : API_Excel_Path], 
-                        FailureHandling.CONTINUE_ON_FAILURE)
-                }
+                    '<' + messageFailed + '>')    
         }
 		'close browser'
 		WebUI.closeBrowser()

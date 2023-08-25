@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "3E9FD0CDA6856A51888482716850F967",
+  "keywordFileContentHash": "EDFC3D7AC76BF10F09B09ADBBCFD7DBE",
   "keywordClasses": [
     {
       "name": "connection.APIFullService",
@@ -1920,6 +1920,8 @@
             }
           ],
           "javadoc": ""
+<<<<<<< HEAD
+=======
         },
         {
           "name": "getAesKeyEncryptUrl",
@@ -1971,8 +1973,6 @@
             }
           ],
           "javadoc": ""
-<<<<<<< HEAD
-=======
         },
         {
           "name": "settingAllowRegenerateLink",
@@ -2050,6 +2050,10 @@
             }
           ],
           "javadoc": ""
+<<<<<<< HEAD
+=======
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 >>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
         }
       ]

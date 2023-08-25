@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>ResponseAPIStoreDB</name>
+   <name>API Send Document Normal StoreDB</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>58f79825-725f-48eb-9a00-2db4bc504e7d</testCaseGuid>
+   <testCaseGuid>67f1fee5-9edc-4987-b8ac-4aac3816fb11</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>f6f9aa9a-c25f-433f-ae2b-4770ab0d511a</variableId>
+      <variableId>5f5f9bbe-1592-40b4-a603-b9493a7e76b4</variableId>
    </variableLinks>
    <variable>
       <defaultValue>'Registrasi/SendDocument'</defaultValue>
       <description></description>
-      <id>f6f9aa9a-c25f-433f-ae2b-4770ab0d511a</id>
+      <id>5f5f9bbe-1592-40b4-a603-b9493a7e76b4</id>
       <masked>false</masked>
       <name>API_Excel_Path</name>
    </variable>
