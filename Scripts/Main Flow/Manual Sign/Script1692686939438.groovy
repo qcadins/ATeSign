@@ -23,19 +23,12 @@ splitIndex = -1
 
 indexForCatatanStamp = 0
 
-<<<<<<< HEAD
-int looping
-
-'memanggil test case login untuk admin wom dengan Admin Client'
-WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualSigntoSign, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
-=======
 'panggil fungsi login'
 WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('TC') : 'ManualSigntoSign', ('SheetName') : sheet,
 	('Path') : excelPathManualSigntoSign], FailureHandling.CONTINUE_ON_FAILURE)
 
 //'memanggil test case login untuk admin wom dengan Admin Client'
 //WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualSigntoSign, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 
 'declare flag failed'
 GlobalVariable.FlagFailed = 0
@@ -102,15 +95,8 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
     'check element present kepada daftar penanda tangan yang kosong'
     WebUI.verifyElementPresent(modifyObjectLblDaftarPenandaTangan, GlobalVariable.TimeOut)
 
-	if (phonePenandaTangan.toString() == '[]') {
-		looping = emailPenandaTangan.size()
-	}
-	else {
-		looping = phonePenandaTangan.size()
-	}
-	
     'looping berdasarkan email penanda tangan'
-    for (int i = 0; i < looping; i++) {
+    for (int i = 0; i < emailPenandaTangan.size(); i++) {
         'jika email atau nama penanda tangan tidak kosong'
 		if (((emailPenandaTangan[i]) != '' || phonePenandaTangan[i] != '')) {
 			'klik tambah penanda tangan'
@@ -123,26 +109,17 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
         'jika label tambah penanda tangan muncul'
         if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_TambahPenandaTangan'), GlobalVariable.TimeOut) == 
         true) {
-					if (emailPenandaTangan[i] != '') {
-						'set text pada email penanda tangan'
-						WebUI.setText(findTestObject('ManualSign/input_emailPenandaTangan'), emailPenandaTangan[i])
-					}
-					
-					if (WebUI.verifyElementPresent(findTestObject('ManualSign/input_phonePenandaTangan'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-						if (phonePenandaTangan[i] != '') {
-						'set text pada email penanda tangan'
-						WebUI.setText(findTestObject('ManualSign/input_phonePenandaTangan'), phonePenandaTangan[i])
-						
-						'klik search penanda tangan'
-						WebUI.click(findTestObject('ManualSign/button_searchPenandaTanganViaPhone'))
-					} else {
-						'klik search penanda tangan'
-						WebUI.click(findTestObject('ManualSign/button_searchPenandaTanganViaEmail'))
-						}
-					} else {
-						'klik search penanda tangan'
-						WebUI.click(findTestObject('ManualSign/button_searchPenandaTanganViaPhone'))
-					}
+			'set text pada email penanda tangan'
+			WebUI.setText(findTestObject('ManualSign/input_phonePenandaTangan'), phonePenandaTangan[i])
+
+            'set text pada email penanda tangan'
+            WebUI.setText(findTestObject('ManualSign/input_emailPenandaTangan'), emailPenandaTangan[i])
+
+            WebUI.focus(findTestObject('ManualSign/button_searchPenandaTanganViaPhone'))
+
+            'klik search penanda tangan'
+            WebUI.click(findTestObject('ManualSign/button_searchPenandaTanganViaPhone'))
+
             'diberikan delay 10 detik dengan loading search'
             WebUI.delay(10)
 
@@ -169,11 +146,11 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
             
 					if (emailPenandaTangan[i] != '') {
 						'verifikasi signer ketika sudah submit signer'
-						String verifikasiSigner = CustomKeywords.'connection.ManualSign.getVerificationSigner'(conneSign, emailPenandaTangan[i].toString().toUpperCase())
+						String verifikasiSigner = CustomKeywords.'connection.ManualSign.getVerificationSigner'(conneSign, emailPenandaTangan[i])
 						
 						'check data mengenai email penanda tangan'
 						checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualSign/input_emailPenandaTangan'),
-						'value'), emailPenandaTangan[i].toString().toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada email Penanda Tangan ')
+						'value'), emailPenandaTangan[i], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada email Penanda Tangan ')
 						
 						'check data nama dari UI dengan db'
 						checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualSign/input_namaPenandaTangan'),
@@ -215,7 +192,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
             WebUI.click(findTestObject('ManualSign/button_Save'))
         }
         
-        for (int p = 0; p < looping; p++) {
+        for (int p = 0; p < emailPenandaTangan.size(); p++) {
             'Inisialisasi array dan index yang dibutuhkan'
             arrayIndex = 0
 
@@ -235,7 +212,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 
 			if (emailPenandaTangan[i] != '') {
 				'query check informasi dari user tersebut'
-				queryCheckInformationUser = CustomKeywords.'connection.ManualSign.getInformationUser'(conneSign, emailPenandaTangan[indexEmail++].toString().toUpperCase(), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 8))
+				queryCheckInformationUser = CustomKeywords.'connection.ManualSign.getInformationUser'(conneSign, emailPenandaTangan[indexEmail++], findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 8))
 			} else {
 				'query check informasi dari user tersebut'
 				queryCheckInformationUser = CustomKeywords.'connection.ManualSign.getInformationUser'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(phonePenandaTangan[indexEmail++]), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 8))
@@ -252,7 +229,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 					' pada informasi nomor telepon penanda tangan ')
 
 					'check ui dan query mengenai email signer'
-					checkVerifyEqualOrMatch(WebUI.verifyMatch(valueInformasi[arrayIndexValue++], queryCheckInformationUser[arrayIndex++].toString().toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada informasi email penanda tangan ')
+					checkVerifyEqualOrMatch(WebUI.verifyMatch(valueInformasi[arrayIndexValue++], queryCheckInformationUser[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada informasi email penanda tangan ')
 
                 'add nama tanda tangan yang sukses dan nomor telepon'
                 namaTandaTangan.add(valueInformasi[0])
@@ -492,23 +469,16 @@ def checkErrorLog() {
         'ambil teks errormessage'
         errormessage = WebUI.getAttribute(findTestObject('ManualSign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
 
-		'jika error message null, masuk untuk tulis error non-sistem'
-		if (errormessage != null) {
-			
-			if (!(errormessage.contains('Permintaan tanda tangan berhasil dibuat.'))) {
-				'Tulis di excel itu adalah error'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-					GlobalVariable.StatusFailed, (((findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 2).replace(
-						'-', '') + ';') + '<') + errormessage) + '>')
-			}
-		} else {
-			
-			'Tulis di excel itu adalah error'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-				GlobalVariable.StatusFailed, (((findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 2).replace(
-					'-', '') + ';')) + 'Error tidak berhasil ditangkap'))
-		}
-		return true
+        if (!(errormessage.contains('Permintaan tanda tangan berhasil dibuat.'))) {
+            'Tulis di excel itu adalah error'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                (((findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + 
+                '<') + errormessage) + '>')
+
+            GlobalVariable.FlagFailed = 1
+
+            return true
+        }
     }
     
     return false

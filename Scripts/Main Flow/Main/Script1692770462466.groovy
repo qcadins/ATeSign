@@ -61,13 +61,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 						(findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, 2) + ';') + ' total signer pada Send Document dengan signer yang terdaftar tidak sesuai ')
 				}
-				
-				isUsedAPIExternal = false
-				isUsedAPINormal = false
-				isUsedWebview = false
-				isUsedEmbed = false
-				isUsedInboxSigner = false
-				
+
 				int indexReadDataExcelAPIExternal
 				int indexReadDataExcelAPINormal
 				int indexReadDataExcelWebview

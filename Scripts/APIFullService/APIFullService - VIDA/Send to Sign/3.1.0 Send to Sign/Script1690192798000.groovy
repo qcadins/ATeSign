@@ -101,12 +101,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
             'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
             WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument
-                    , ('sheet') : sheet, ('linkDocumentMonitoring') : linkDocumentMonitoring, ('nomorKontrak') : noKontrak], 
+                    , ('sheet') : sheet, ('linkDocumentMonitoring') : linkDocumentMonitoring, ('nomorKontrak') : noKontrak, ('TC') : '3.1.0SendSign'], 
                 FailureHandling.CONTINUE_ON_FAILURE)
 
-            'Call test Case untuk login sebagai admin wom admin client'
-            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
-                FailureHandling.CONTINUE_ON_FAILURE)
+			'panggil fungsi login'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('TC') : '3.1.0SendSign', ('SheetName') : sheet,
+				('Path') : excelPathFESignDocument], FailureHandling.CONTINUE_ON_FAILURE)
+			
+//            'Call test Case untuk login sebagai admin wom admin client'
+//            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
+//                FailureHandling.CONTINUE_ON_FAILURE)
 
             'mengambil saldo before'
             saldoSignBefore = checkSaldoSign(conneSign, vendor)
@@ -741,12 +745,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             
             'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
             WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument
-                    , ('sheet') : sheet, ('linkDocumentMonitoring') : linkDocumentMonitoring, ('nomorKontrak') : noKontrak], 
+                    , ('sheet') : sheet, ('linkDocumentMonitoring') : linkDocumentMonitoring, ('nomorKontrak') : noKontrak, ('TC') : '3.1.0SendSign'], 
                 FailureHandling.CONTINUE_ON_FAILURE)
 
-            'Call test Case untuk login sebagai admin wom admin client'
-            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
-                FailureHandling.CONTINUE_ON_FAILURE)
+			'panggil fungsi login'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('TC') : '3.1.0SendSign', ('SheetName') : sheet,
+				('Path') : excelPathFESignDocument], FailureHandling.CONTINUE_ON_FAILURE)
+			
+//            'Call test Case untuk login sebagai admin wom admin client'
+//            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
+//                FailureHandling.CONTINUE_ON_FAILURE)
 
             'Split dokumen template name dan nomor kontrak per dokumen berdasarkan delimiter ;'
             documentTemplateNamePerDoc = documentTemplateName.split(';', -1)
@@ -894,7 +902,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 90) == 'Yes') {
             'Call API Stamping'
             WebUI.callTestCase(findTestCase('Meterai/Flow Stamping'), [('excelPathStamping') : excelPathFESignDocument, ('sheet') : sheet
-                    , ('useAPI') : 'v3.1.0', ('linkDocumentMonitoring') : linkDocumentMonitoring], FailureHandling.CONTINUE_ON_FAILURE)
+                    , ('useAPI') : 'v3.1.0', ('linkDocumentMonitoring') : linkDocumentMonitoring, ('TC') : '3.1.0SendSign'], FailureHandling.CONTINUE_ON_FAILURE)
         }
     }
 }
@@ -1148,7 +1156,11 @@ def checkPopupWarning() {
 			
 		'Klik OK untuk popupnya'
 		WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
+		
+		return true
 	}
+	
+	return false
 }
 
 def checkErrorLog() {

@@ -28,8 +28,12 @@ indexForCatatanStamp = 0
 
 int looping
 
-'memanggil test case login untuk admin wom dengan Admin Client'
-WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualSign, ('sheet') : 'Manual Sign'], FailureHandling.CONTINUE_ON_FAILURE)
+'panggil fungsi login'
+WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('TC') : 'ManualSignOnly', ('SheetName') : 'Manual Sign',
+	('Path') : excelPathManualSign], FailureHandling.CONTINUE_ON_FAILURE)
+
+//'memanggil test case login untuk admin wom dengan Admin Client'
+//WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualSign, ('sheet') : 'Manual Sign'], FailureHandling.CONTINUE_ON_FAILURE)
 
 'looping berdasarkan jumlah kolom'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathManualSign).columnNumbers; (GlobalVariable.NumofColm)++) {
@@ -648,14 +652,23 @@ def checkErrorLog() {
         'ambil teks errormessage'
         errormessage = WebUI.getAttribute(findTestObject('ManualSign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
 
-        if (!(errormessage.contains('Permintaan tanda tangan berhasil dibuat.'))) {
-            'Tulis di excel itu adalah error'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Sign', GlobalVariable.NumofColm, 
-                GlobalVariable.StatusFailed, (((findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 2).replace(
-                    '-', '') + ';') + '<') + errormessage) + '>')
-
-            return true
-        }
+		'jika error message null, masuk untuk tulis error non-sistem'
+		if (errormessage != null) {
+			
+			if (!(errormessage.contains('Permintaan tanda tangan berhasil dibuat.'))) {
+				'Tulis di excel itu adalah error'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Sign', GlobalVariable.NumofColm,
+					GlobalVariable.StatusFailed, (((findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 2).replace(
+						'-', '') + ';') + '<') + errormessage) + '>')
+			}
+		} else {
+			
+			'Tulis di excel itu adalah error'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Sign', GlobalVariable.NumofColm,
+				GlobalVariable.StatusFailed, (((findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 2).replace(
+					'-', '') + ';')) + 'Error tidak berhasil ditangkap'))
+		}
+		return true
     }
     
     return false

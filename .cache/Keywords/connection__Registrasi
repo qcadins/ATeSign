@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "2DD631C785D1A0E347C7E04A08677B7C",
+  "keywordFileContentHash": "EBC368A34FCF953C540F62A5DC9D4E31",
   "keywordClasses": [
     {
       "name": "connection.Registrasi",
@@ -141,6 +141,38 @@
         },
         {
           "name": "getBuatUndanganDataPerusahaanStoreDB",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "email",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getRegisterPrivyStoreDB",
           "parameters": [
             {
               "name": "conn",

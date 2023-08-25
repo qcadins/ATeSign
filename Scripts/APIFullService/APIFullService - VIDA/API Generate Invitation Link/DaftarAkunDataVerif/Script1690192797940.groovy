@@ -196,11 +196,13 @@ if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm,
     'click checkbox'
     WebUI.click(findTestObject('DaftarAkun/checkbox_SyaratdanKetentuan'))
 
-    'click checkbox setuju'
-    WebUI.click(findTestObject('DaftarAkun/checkbox_Setuju'))
-	
-	'click checkbox setuju'
-	WebUI.click(findTestObject('DaftarAkun/checkbox_SetujuVIDA'))
+	if(GlobalVariable.Psre == 'VIDA') {
+	    'click checkbox setuju'
+	    WebUI.click(findTestObject('DaftarAkun/checkbox_Setuju'))
+		
+		'click checkbox setuju'
+		WebUI.click(findTestObject('DaftarAkun/checkbox_SetujuVIDA'))
+	}
 }
 
 'click daftar akun'
@@ -304,50 +306,75 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     'click verifikasi'
     WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Verifikasi'))
 
-    'get reason error log'
-    reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).toString()
+	if(GlobalVariable.Psre == 'VIDA') {		
+	    'get reason error log'
+	    reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).toString()
 	
-	'check saldo OTP'
-	checkSaldoOTP()
+		'check saldo OTP'
+		checkSaldoOTP()
+		
+	    'cek if berhasil pindah page'
+	    if (reason.contains('gagal') || reason.contains('Saldo') || reason.contains('Invalid')) {	
+	        'write to excel status failed dan reason'
+	        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link', GlobalVariable.NumofColm, 
+	            GlobalVariable.StatusFailed, (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 2).replace(
+	                '-', '') + ';') + '<' + reason + '> Daftar Akun Esign')
 	
-    'cek if berhasil pindah page'
-    if (reason.contains('gagal') || reason.contains('Saldo') || reason.contains('Invalid')) {	
-        'write to excel status failed dan reason'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link', GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 2).replace(
-                '-', '') + ';') + '<' + reason + '> Daftar Akun Esign')
-
-        GlobalVariable.FlagFailed = 1
-
-		'if gagal verifikasi wajah maka cek saldo verifikasi berkurang 1'		
-		if (reason.contains('gagal')) {
-			'call function checkTrxMutation'
+	        GlobalVariable.FlagFailed = 1
+	
+			'if gagal verifikasi wajah maka cek saldo verifikasi berkurang 1'		
+			if (reason.contains('gagal')) {
+				'call function checkTrxMutation'
+				checkTrxMutation(conneSign)
+			}
+	    } else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), GlobalVariable.TimeOut, 
+	        FailureHandling.OPTIONAL)) {
+			
+			checkTrxMutation(conneSign)
+		
+	        'call testcase form aktivasi vida'
+	        WebUI.callTestCase(findTestCase('APIFullService/APIFullService - VIDA/API Generate Invitation Link/FormAktivasiVida'), [('excelPathAPIGenerateInvLink') : 'APIFullService/API_GenInvLink'], 
+				FailureHandling.CONTINUE_ON_FAILURE)
+	    } else if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_PopupMsg'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+	        reason = WebUI.getText(findTestObject('DaftarAkun/label_PopupMsg'))
+	
+	        'write to excel status failed dan reason'
+	        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link', GlobalVariable.NumofColm, 
+	            GlobalVariable.StatusFailed, (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 2).replace(
+	                '-', '') + ';') + '<' + reason + '>')
+	
+	        'click button tutup error'
+	        WebUI.click(findTestObject('DaftarAkun/button_OK'))
+	
+	        'click button X tutup popup otp'
+	        WebUI.click(findTestObject('DaftarAkun/button_X'))
+	
+	        GlobalVariable.FlagFailed = 1
+	    }
+	} else if(GlobalVariable.Psre == 'PRIVY') {
+		if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_SuccessPrivy'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+			'get message dari ui'
+			reason = WebUI.getText(findTestObject('DaftarAkun/label_SuccessPrivy'))
+		
+			'check if registrasi berhasil dan write ke excel'
+			if (reason.equalsIgnoreCase('Proses verifikasi anda sedang diproses. Harap menunggu proses verifikasi selesai.') && GlobalVariable.FlagFailed == 0) {
+				'write to excel success'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Generate Invitation Link',
+					0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+			} else {
+				'write to excel status failed dan reason'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link', GlobalVariable.NumofColm,
+					GlobalVariable.StatusFailed, (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 2).replace(
+						'-', '') + ';') + '<' + reason + '>')
+			}
+			
+			'check saldo OTP'
+			checkSaldoOTP()
+			
+			'call function check mutation trx'
 			checkTrxMutation(conneSign)
 		}
-    } else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), GlobalVariable.TimeOut, 
-        FailureHandling.OPTIONAL)) {
-		
-		checkTrxMutation(conneSign)
-	
-        'call testcase form aktivasi vida'
-        WebUI.callTestCase(findTestCase('APIFullService/APIFullService - VIDA/API Generate Invitation Link/FormAktivasiVida'), [('excelPathAPIGenerateInvLink') : 'APIFullService/API_GenInvLink'], 
-			FailureHandling.CONTINUE_ON_FAILURE)
-    } else if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_PopupMsg'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-        reason = WebUI.getText(findTestObject('DaftarAkun/label_PopupMsg'))
-
-        'write to excel status failed dan reason'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link', GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 2).replace(
-                '-', '') + ';') + '<' + reason + '>')
-
-        'click button tutup error'
-        WebUI.click(findTestObject('DaftarAkun/button_OK'))
-
-        'click button X tutup popup otp'
-        WebUI.click(findTestObject('DaftarAkun/button_X'))
-
-        GlobalVariable.FlagFailed = 1
-    }
+	}
 }
 
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
@@ -378,7 +405,7 @@ def checkTrxMutation(Connection conneSign) {
 			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link',
 				GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (findTestData(excelPathAPIGenerateInvLink).getValue(
-					GlobalVariable.NumofColm, 2) + ';') + 'Saldo tidak terpotong')
+					GlobalVariable.NumofColm, 2) + ';') + 'Saldo Verif tidak terpotong')
 		}
 	}
 }
@@ -397,27 +424,27 @@ def checkSaldoOTP() {
 	WebUI.maximizeWindow()
 
    'set value userLogin'
-	GlobalVariable.userLogin = findTestData(excelPathAPIGenerateInvLink).getValue(2, 55).toUpperCase()
+	GlobalVariable.userLogin = findTestData(excelPathAPIGenerateInvLink).getValue(2, 57).toUpperCase()
 
 	'input email'
-	WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathAPIGenerateInvLink).getValue(2, 55))
+	WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathAPIGenerateInvLink).getValue(2, 57))
 
 	'input password'
 	WebUI.setText(findTestObject('Login/input_Password'), findTestData(excelPathAPIGenerateInvLink).getValue(2,
-			56))
+			58))
 
 	'click button login'
 	WebUI.click(findTestObject('Login/button_Login'), FailureHandling.CONTINUE_ON_FAILURE)
 
 	'input perusahaan'
 	WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excelPathAPIGenerateInvLink).getValue(2,
-			57))
+			59))
 
 	WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
 
 	'input peran'
 	WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excelPathAPIGenerateInvLink).getValue(2,
-			58))
+			60))
 
 	WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
 	

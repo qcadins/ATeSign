@@ -45,9 +45,13 @@ for (int o = 1; o <= 1; o++) {
 
         linkDocumentMonitoring = ''
     } else if (linkDocumentMonitoring == '') {
-        'Call test Case untuk login sebagai admin wom admin client'
-        WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
-            FailureHandling.STOP_ON_FAILURE)
+//        'Call test Case untuk login sebagai admin wom admin client'
+//        WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
+//            FailureHandling.STOP_ON_FAILURE)
+		
+		'panggil fungsi login'
+		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('TC') : TC, ('SheetName') : sheet,
+			('Path') : excelPathFESignDocument], FailureHandling.CONTINUE_ON_FAILURE)
 
         'Klik Button menu Document Monitoring'
         WebUI.click(findTestObject('DocumentMonitoring/DocumentMonitoring'))

@@ -228,7 +228,45 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
                         'Panggil function responseAPIStoreDB dengan parameter totalSigned, ipaddress, dan array dari documentId'
                         responseAPIStoreDB(conneSign, ipaddress, documentId, trxNo)
                     }
-                    
+					
+					
+					if (trxNo != null) {
+					'ambil trx no untuk displit'
+					trxNo = trxNo.split(', ', -1)
+			
+					'Diberikan delay dengan pembuatan trx no di db sebesar 5 detik'
+					WebUI.delay(5)
+			
+					'looping per trx no'
+					for (int i = 0; i < trxNo.size(); i++) {
+						'Mengambil tipe saldo yang telah digunakan'
+						checkTypeofUsedSaldo = CustomKeywords.'connection.APIFullService.getTypeUsedSaldo'(conneSign, trxNo[i])
+			
+						if (GlobalVariable.FlagFailed == 1) {
+							'Write To Excel GlobalVariable.StatusFailed dengan alasan bahwa saldo transaksi '
+							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+								GlobalVariable.StatusFailed, ((((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm,
+									2) + ';') + ' Transaksi dengan nomor ') + ('<' + (trxNo[i]))) + '> digunakan untuk ') + checkTypeofUsedSaldo)
+						}
+					}
+				}
+				
+				'check saldo'
+				saldoAfter = loginAdminGetSaldo(conneSign)
+			
+				'check saldo before dan aftar'
+				if (saldoBefore == saldoAfter) {
+					'Write To Excel GlobalVariable.StatusFailed dengan alasan bahwa saldo transaksi '
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+						GlobalVariable.StatusFailed, ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm,
+							2) + ';') + GlobalVariable.ReasonFailedNoneUI) + ' terhadap pemotongan saldo ')
+				} else {
+					if (trxNo != null) {
+						verifySaldoUsedForLiveness(conneSign, trxNo)
+					}
+					verifySaldoSigned(conneSign, documentId[0])
+					
+				}
                     break
                 } else if (v == 20) {
                     'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
@@ -246,43 +284,6 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
     } else {
         getErrorMessageAPI(respon)
     }
-
-	    if (trxNo != null) {
-        'ambil trx no untuk displit'
-        trxNo = trxNo.split(', ', -1)
-
-        'Diberikan delay dengan pembuatan trx no di db sebesar 5 detik'
-        WebUI.delay(5)
-
-        'looping per trx no'
-        for (int i = 0; i < trxNo.size(); i++) {
-            'Mengambil tipe saldo yang telah digunakan'
-            checkTypeofUsedSaldo = CustomKeywords.'connection.APIFullService.getTypeUsedSaldo'(conneSign, trxNo[i])
-
-            if (GlobalVariable.FlagFailed == 1) {
-                'Write To Excel GlobalVariable.StatusFailed dengan alasan bahwa saldo transaksi '
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                    GlobalVariable.StatusFailed, ((((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
-                        2) + ';') + ' Transaksi dengan nomor ') + ('<' + (trxNo[i]))) + '> digunakan untuk ') + checkTypeofUsedSaldo)
-            }
-        }
-    }
-	'check saldo'
-	saldoAfter = loginAdminGetSaldo(conneSign)
-
-	'check saldo before dan aftar'
-	if (saldoBefore == saldoAfter) {
-		'Write To Excel GlobalVariable.StatusFailed dengan alasan bahwa saldo transaksi '
-		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-			GlobalVariable.StatusFailed, ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm,
-				2) + ';') + GlobalVariable.ReasonFailedNoneUI) + ' terhadap pemotongan saldo ')
-	} else {
-		if (trxNo != null) {
-			verifySaldoUsedForLiveness(conneSign, trxNo)
-		}
-		verifySaldoSigned(conneSign, documentId[0])
-		
-	}
 } else {
     getErrorMessageAPI(respon)
 }

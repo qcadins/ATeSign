@@ -51,6 +51,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			CustomKeywords.'connection.APIFullService.settingEmailServiceTenant'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 52))
 		}
 		
+		'check ada value maka setting allow regenerate link'
+		if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 54).length() > 0) {
+			'setting allow regenerate link'
+			CustomKeywords.'connection.APIFullService.settingAllowRegenerateLink'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 54))
+		}
+		
         'check if tidak mau menggunakan tenant code yang benar'
         if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 34) == 'No') {
             'set tenant kosong'
@@ -119,21 +125,75 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 						FailureHandling.CONTINUE_ON_FAILURE)
                 }
 				
-                'call test case daftar akun verif'
-                WebUI.callTestCase(findTestCase('APIFullService/APIFullService - VIDA/API Generate Invitation Link/DaftarAkunDataVerif'), [('excelPathGenerateLink') : 'APIFullService/API_GenInvLink', ('otpBefore') : saldoBefore[1]], 
-                    FailureHandling.CONTINUE_ON_FAILURE)
+				'check ada value maka setting Link Is Active'
+				if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 55).length() > 0) {
+					'setting Link Is Active'
+					CustomKeywords.'connection.APIFullService.settingLinkIsActive'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 55), 
+						findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 12).replace('"', ''))
+					
+					'HIT API'
+					respon = WS.sendRequest(findTestObject('APIFullService/Postman/Generate Invitation Link', [('nama') : findTestData(
+									excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 11), ('email') : findTestData(excelPathAPIGenerateInvLink).getValue(
+									GlobalVariable.NumofColm, 12), ('tmpLahir') : findTestData(excelPathAPIGenerateInvLink).getValue(
+									GlobalVariable.NumofColm, 13), ('tglLahir') : findTestData(excelPathAPIGenerateInvLink).getValue(
+									GlobalVariable.NumofColm, 14), ('jenisKelamin') : findTestData(excelPathAPIGenerateInvLink).getValue(
+									GlobalVariable.NumofColm, 15), ('tlp') : findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm,
+									16), ('idKtp') : findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 17)
+								, ('alamat') : findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 18), ('kecamatan') : findTestData(
+									excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 19), ('kelurahan') : findTestData(
+									excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 20), ('kota') : findTestData(excelPathAPIGenerateInvLink).getValue(
+									GlobalVariable.NumofColm, 21), ('provinsi') : findTestData(excelPathAPIGenerateInvLink).getValue(
+									GlobalVariable.NumofColm, 22), ('kodePos') : findTestData(excelPathAPIGenerateInvLink).getValue(
+									GlobalVariable.NumofColm, 23), ('selfPhoto') : selfPhoto, ('idPhoto') : idPhoto, ('region') : findTestData(
+									excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 26), ('type') : findTestData(excelPathAPIGenerateInvLink).getValue(
+									GlobalVariable.NumofColm, 27), ('office') : findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm,
+									28), ('businessLine') : findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm,
+									29), ('taskNo') : findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 30)
+								, ('callerId') : findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 9)]))
+					
+					'Jika status HIT API 200 OK'
+					if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
+						'get status code'
+						code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
+						
+						if (code == 0) {
+							'mengambil response'
+							GlobalVariable.Link = WS.getElementPropertyValue(respon, 'link', FailureHandling.OPTIONAL)
+							
+							'write to excel failed'
+							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Generate Invitation Link', GlobalVariable.NumofColm,
+								GlobalVariable.StatusFailed, (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 2).replace(
+									'-', '') + ';') + ' Link tergenerate walupun sudah tidak active')
+						} else {
+			               'call function get API error message'
+						   getAPIErrorMessage(respon)
+			            }
+					} else {
+		               'call function get API error message'
+					   getAPIErrorMessage(respon)
+		            }
+					
+					continue
+				}
 				
+				'call test case daftar akun verif'
+				WebUI.callTestCase(findTestCase('APIFullService/APIFullService - VIDA/API Generate Invitation Link/DaftarAkunDataVerif'), [('excelPathGenerateLink') : 'APIFullService/API_GenInvLink', ('otpBefore') : saldoBefore[0]], 
+						FailureHandling.CONTINUE_ON_FAILURE)
+					
 				if (GlobalVariable.FlagFailed == 0) {
 					'kurang saldo before dengan proses verifikasi'
-				    saldoBefore.set(0, (Integer.parseInt(saldoBefore[0]) - 1).toString())
-				
-					'kurang saldo before dengan prose PNBP'
 				    saldoBefore.set(1, (Integer.parseInt(saldoBefore[1]) - 1).toString())
 				
-				    'kurang saldo before dengan jumlah counter send OTP'
-				    saldoBefore.set(2, (Integer.parseInt(saldoBefore[2]) - GlobalVariable.Counter).toString())
-				
-//				    saldoBefore.set(3, (Integer.parseInt(saldoBefore[3]) - GlobalVariable.Counter).toString())
+					if (GlobalVariable.Psre == 'VIDA') {
+						'kurang saldo before dengan prose PNBP'
+						saldoBefore.set(2, (Integer.parseInt(saldoBefore[2]) - 1).toString())
+												
+						'kurang saldo before dengan jumlah counter send OTP'
+						saldoBefore.set(0, (Integer.parseInt(saldoBefore[0]) - GlobalVariable.Counter).toString())
+					} else {
+						'kurang saldo before dengan jumlah counter send OTP'
+						saldoBefore.set(0, (Integer.parseInt(saldoBefore[0]) - GlobalVariable.Counter).toString())
+					}
 					
 				    saldoAfter = loginAdminGetSaldo(countCheckSaldo, conneSign)
 				
@@ -174,28 +234,28 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 	WebUI.maximizeWindow()
 
 	'set value userLogin'
-	GlobalVariable.userLogin = findTestData(excelPathAPIGenerateInvLink).getValue(2, 55).toUpperCase()
+	GlobalVariable.userLogin = findTestData(excelPathAPIGenerateInvLink).getValue(2, 57).toUpperCase()
 
 	'input email'
-	WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathAPIGenerateInvLink).getValue(2, 55))
+	WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathAPIGenerateInvLink).getValue(2, 57))
 
 	'input password'
 	WebUI.setText(findTestObject('Login/input_Password'), findTestData(excelPathAPIGenerateInvLink).getValue(2,
-			56))
+			58))
 
 	'click button login'
 	WebUI.click(findTestObject('Login/button_Login'), FailureHandling.CONTINUE_ON_FAILURE)
 
 	'input perusahaan'
 	WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excelPathAPIGenerateInvLink).getValue(2,
-			57))
+			59))
 
 	'enter untuk select perusahaan'
 	WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
 
 	'input peran'
 	WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excelPathAPIGenerateInvLink).getValue(2,
-			58))
+			60))
 
 	'enter untuk select peran'
 	WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
@@ -217,55 +277,6 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 
 	'click english'
 	WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_English'))
-
-	'select vendor'
-	WebUI.selectOptionByLabel(findTestObject('BuatUndangan/checkSaldo/select_Vendor'), '(?i)' + 'VIDA', true)
-
-	'get row'
-	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
-
-	for (index = 2; index <= variable.size(); index++) {
-		'modify object box info'
-		modifyObjectBoxInfo = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
-			'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) +
-			']/div/div/div/div/div[1]/h3', true)
-
-		'check if box info = tipe saldo di excel'
-		if (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('Verification') || WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('PNBP')) {
-			'modify object qty'
-			modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
-				'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) +
-				']/div/div/div/div/div[2]/h3', true)
-
-			'get qty saldo before'
-			saldo.add(WebUI.getText(modifyObjectQty).replace(',', ''))
-
-			'if saldo sudah terisi 2 verification dan pnbp'
-			if(saldo.size() == 2) {
-				break
-			}
-			
-			continue
-		}
-	}
-	
-//	'modify object balance'
-//	modifyObjectBalance = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 'equals',
-//		('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-//		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[10]/div', true)
-//
-//	'get trx saldo'
-//	saldo.add(WebUI.getText(modifyObjectBalance).replace(',', ''))
-
-	if ((countCheckSaldo == 1)) {
-		'call function input filter saldo'
-		inputFilterSaldo('Verification', conneSign)
-		
-		if(GlobalVariable.FlagFailed == 0) {
-			'call function input filter saldo'
-			inputFilterSaldo('PNBP', conneSign)
-		}
-	}
 	
 	'select vendor'
 	WebUI.selectOptionByLabel(findTestObject('BuatUndangan/checkSaldo/select_Vendor'), '(?i)' + 'ESIGN/ADINS', true)
@@ -293,15 +304,7 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 		}
 	}
 
-//	'modify object balance'
-//	modifyObjectBalance = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 'equals',
-//		('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-//		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[10]/div', true)
-//
-//	'get trx saldo'
-//	saldo.add(WebUI.getText(modifyObjectBalance).replace(',', ''))
-
-	if ((countCheckSaldo == 1) && (GlobalVariable.FlagFailed == 0)) {
+	if ((countCheckSaldo == 1) && (GlobalVariable.FlagFailed == 0) && GlobalVariable.Psre == 'VIDA') {
 		'call function input filter saldo'
 		inputFilterSaldo('OTP', conneSign)
 		
@@ -309,6 +312,48 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 //		verifyListUndangan()
 	}
 
+	'select vendor'
+	WebUI.selectOptionByLabel(findTestObject('BuatUndangan/checkSaldo/select_Vendor'), '(?i)' + GlobalVariable.Psre, true)
+
+	'get row'
+	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
+
+	for (index = 2; index <= variable.size(); index++) {
+		'modify object box info'
+		modifyObjectBoxInfo = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
+			'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) +
+			']/div/div/div/div/div[1]/h3', true)
+
+		'check if box info = tipe saldo di excel'
+		if (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('Verification') || (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('PNBP') && GlobalVariable.Psre == 'VIDA')) {
+			'modify object qty'
+			modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
+				'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) +
+				']/div/div/div/div/div[2]/h3', true)
+
+			'get qty saldo before'
+			saldo.add(WebUI.getText(modifyObjectQty).replace(',', ''))
+
+			'if saldo sudah terisi 2 verification dan pnbp'
+			if(saldo.size() == 3 && GlobalVariable.Psre == 'VIDA') {
+				break
+			} else if(saldo.size() == 2 && GlobalVariable.Psre == 'PRIVY') {
+				break
+			}
+			
+			continue
+		}
+	}
+	
+	if ((countCheckSaldo == 1)) {
+		'call function input filter saldo'
+		inputFilterSaldo('Verification', conneSign)
+		
+		if(GlobalVariable.FlagFailed == 0 && GlobalVariable.Psre == 'VIDA') {
+			'call function input filter saldo'
+			inputFilterSaldo('PNBP', conneSign)
+		}
+	}
 	return saldo
 }
 
