@@ -41,6 +41,36 @@
       <value></value>
       <variableId>ccef44fe-6f7a-46eb-8158-514a925dd6f7</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>d26fafc0-7e84-4bbf-b1c0-95b3c45c7fb1</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>33f27d7f-d074-4c76-a906-d09a2034d147</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>9f74454e-d7f1-400f-8c97-70b44de7d3af</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>53000c7c-39ce-4d2a-8261-7a6e094a63d3</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>f0ba1cd1-cbe1-49f4-98a4-be18fa76a878</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>'Main/Main'</defaultValue>
       <description></description>
@@ -82,5 +112,40 @@
       <id>ccef44fe-6f7a-46eb-8158-514a925dd6f7</id>
       <masked>false</masked>
       <name>isUsedInboxSigner</name>
+   </variable>
+   <variable>
+      <defaultValue>0</defaultValue>
+      <description></description>
+      <id>d26fafc0-7e84-4bbf-b1c0-95b3c45c7fb1</id>
+      <masked>false</masked>
+      <name>indexReadDataExcelAPIExternal</name>
+   </variable>
+   <variable>
+      <defaultValue>0</defaultValue>
+      <description></description>
+      <id>33f27d7f-d074-4c76-a906-d09a2034d147</id>
+      <masked>false</masked>
+      <name>indexReadDataExcelAPINormal</name>
+   </variable>
+   <variable>
+      <defaultValue>0</defaultValue>
+      <description></description>
+      <id>9f74454e-d7f1-400f-8c97-70b44de7d3af</id>
+      <masked>false</masked>
+      <name>indexReadDataExcelWebview</name>
+   </variable>
+   <variable>
+      <defaultValue>0</defaultValue>
+      <description></description>
+      <id>53000c7c-39ce-4d2a-8261-7a6e094a63d3</id>
+      <masked>false</masked>
+      <name>indexReadDataExcelEmbed</name>
+   </variable>
+   <variable>
+      <defaultValue>0</defaultValue>
+      <description></description>
+      <id>f0ba1cd1-cbe1-49f4-98a4-be18fa76a878</id>
+      <masked>false</masked>
+      <name>indexReadDataExcelInboxSigner</name>
    </variable>
 </TestCaseEntity>

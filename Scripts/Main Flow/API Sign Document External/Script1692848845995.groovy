@@ -17,8 +17,6 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'declafe split'
 int splitnum = -1
 
-GlobalVariable.FlagFailed = 0
-
 'declare all number'
 int needVendorOTP, needOTPTenant, needPassTenant = 0
 

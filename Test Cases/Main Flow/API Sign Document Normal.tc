@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>API Sign Document Normal</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>ac57e911-f4e8-4da5-afae-d524fd7e4064</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>6aea91bd-eccb-473f-bdf9-34c7b2004dab</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>87578fa8-2667-4791-95ed-1987194ce50f</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>01d6d464-ed85-42ba-afeb-d3ec28449711</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>6aea91bd-eccb-473f-bdf9-34c7b2004dab</id>
+      <masked>false</masked>
+      <name>API_Excel_Path</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>87578fa8-2667-4791-95ed-1987194ce50f</id>
+      <masked>false</masked>
+      <name>indexUsed</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>01d6d464-ed85-42ba-afeb-d3ec28449711</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>

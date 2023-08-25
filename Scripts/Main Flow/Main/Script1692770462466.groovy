@@ -61,12 +61,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 						(findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, 2) + ';') + ' total signer pada Send Document dengan signer yang terdaftar tidak sesuai ')
 				}
-
-				int indexReadDataExcelAPIExternal
-				int indexReadDataExcelAPINormal
-				int indexReadDataExcelWebview
-				int indexReadDataExcelEmbed
-				int indexReadDataExcelInboxSigner
 				
 				for (int i = 0; i <= emailSigner.size(); i++) {
 					if (opsiSigning[i] == 'API Sign Document External') {
@@ -76,6 +70,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 							, ('sheet') : sheet, ('indexUsed') : indexReadDataExcelAPIExternal], FailureHandling.CONTINUE_ON_FAILURE)
 						
 						isUsedAPIExternal = true
+					} else if (opsiSigning[i] == 'API Sign Document Normal') {
+						indexReadDataExcelAPINormal = inisializeArray(isUsedAPINormal, indexReadDataExcelAPINormal)
+					
+						WebUI.callTestCase(findTestCase('Main Flow/API Sign Document Normal'), [('API_Excel_Path') : excelPathMain
+							, ('sheet') : sheet, ('indexUsed') : indexReadDataExcelAPINormal], FailureHandling.CONTINUE_ON_FAILURE)
+						
+						isUsedAPINormal = true
 					}
 				}
 			}
@@ -85,7 +86,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
 def inisializeArray(boolean isUsed, int indexReadDataExcel) {
 	if (isUsed == false) {
-		return 0
+		return indexReadDataExcel
 	} else {
 		return indexReadDataExcel + 1
 	}
