@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN-ListUndangan</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>f651c352-5cdf-46fb-9940-f329fa74cf40</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>b350fb13-7186-442d-8c99-4b4d3389abe6</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'ListUndangan/ListUndangan'</defaultValue>
+      <description></description>
+      <id>b350fb13-7186-442d-8c99-4b4d3389abe6</id>
+      <masked>false</masked>
+      <name>excelPathListUndangan</name>
+   </variable>
+</TestCaseEntity>
