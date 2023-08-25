@@ -23,19 +23,14 @@ splitIndex = -1
 
 indexForCatatanStamp = 0
 
-<<<<<<< HEAD
 int looping
 
-'memanggil test case login untuk admin wom dengan Admin Client'
-WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualSigntoSign, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
-=======
 'panggil fungsi login'
 WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('TC') : 'ManualSigntoSign', ('SheetName') : sheet,
 	('Path') : excelPathManualSigntoSign], FailureHandling.CONTINUE_ON_FAILURE)
 
 //'memanggil test case login untuk admin wom dengan Admin Client'
 //WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualSigntoSign, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 
 'declare flag failed'
 GlobalVariable.FlagFailed = 0
