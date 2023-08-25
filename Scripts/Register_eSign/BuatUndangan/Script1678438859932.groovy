@@ -169,9 +169,9 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     WebUI.click(findTestObject('BuatUndangan/button_TutupDapatLink'))
 
 	'check ada value maka setting Link Is Active'
-	if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 64) == '0') {
+	if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 65).length() > 0) {
 		'setting Link Is Active'
-		CustomKeywords.'connection.APIFullService.settingLinkIsActive'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 64),
+		CustomKeywords.'connection.APIFullService.settingLinkIsActive'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 65),
 			findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 15))
 		
 		inputBuatUndangan()
@@ -192,6 +192,12 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm,
 				GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
 					'-', '') + ';') + ' Link tergenerate walupun sudah tidak active')
+		}
+		
+		if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).length() > 0) {
+			'call test case inquiry invitation'
+			WebUI.callTestCase(findTestCase('InquiryInvitation/InquiryInvitation'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'],
+				FailureHandling.CONTINUE_ON_FAILURE)
 		}
 	} else {	
 	    if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 6).length() > 0) {

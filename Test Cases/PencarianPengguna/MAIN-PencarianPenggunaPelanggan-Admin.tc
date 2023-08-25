@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN-PencarianPenggunaPelanggan-Admin</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>7dd10472-6160-45f9-9d4e-0158d00334d4</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>42136a90-efcc-4d22-abf8-f94e253c0c74</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'PencarianPengguna/PencarianPengguna-Pelanggan'</defaultValue>
+      <description></description>
+      <id>42136a90-efcc-4d22-abf8-f94e253c0c74</id>
+      <masked>false</masked>
+      <name>excelPathPencarianPengguna</name>
+   </variable>
+</TestCaseEntity>

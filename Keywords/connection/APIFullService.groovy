@@ -141,7 +141,7 @@ public class APIFullService {
 	settingEmailServiceTenant(Connection conn, String value) {
 		stm = conn.createStatement()
 
-		updateVariable = stm.executeUpdate("UPDATE ms_tenant SET email_service = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "' ")
+		updateVariable = stm.executeUpdate("UPDATE ms_tenant SET email_service = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
 	}
 
 	@Keyword
@@ -978,5 +978,12 @@ public class APIFullService {
 		stm = conn.createStatement()
 
 		updateVariable = stm.executeUpdate("UPDATE tr_invitation_link SET is_active = '"+ value +"' WHERE receiver_detail = '"+ email +"'")
+	}
+	
+	@Keyword
+	settingRegisterasDukcapilCheck(Connection conn, String value) {
+		stm = conn.createStatement()
+
+		updateVariable = stm.executeUpdate("UPDATE ms_tenant SET register_as_dukcapil_check = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
 	}
 }

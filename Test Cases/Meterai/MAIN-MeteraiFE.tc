@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN-MeteraiFE</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>3757313d-5d9f-4b23-ad40-40ab02c5fa8d</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>33639cb8-f217-4727-82ec-f7d530b09d59</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Meterai/Meterai'</defaultValue>
+      <description></description>
+      <id>33639cb8-f217-4727-82ec-f7d530b09d59</id>
+      <masked>false</masked>
+      <name>excelPathMeterai</name>
+   </variable>
+</TestCaseEntity>

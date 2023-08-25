@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN-API Check Document Status</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>eb3dfa7d-0c5b-4eba-b062-35b7a5b6627b</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>a6118dab-71f5-4e6e-9538-1ebe97357b2a</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'APIFullService-Privy/API Request OTP'</defaultValue>
+      <description></description>
+      <id>a6118dab-71f5-4e6e-9538-1ebe97357b2a</id>
+      <masked>false</masked>
+      <name>excelPathCheckDocumentStatus</name>
+   </variable>
+</TestCaseEntity>

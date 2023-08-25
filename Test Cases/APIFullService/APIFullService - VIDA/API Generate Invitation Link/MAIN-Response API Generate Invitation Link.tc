@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN-Response API Generate Invitation Link</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>40ccd84d-b1d5-4690-ba0a-9723784b4fef</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>c6c1d3de-a851-4c25-929c-91905e9f2b77</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>6f083b69-9229-48cd-a0f5-912815eb6693</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'APIFullService/API_GenInvLink'</defaultValue>
+      <description></description>
+      <id>c6c1d3de-a851-4c25-929c-91905e9f2b77</id>
+      <masked>false</masked>
+      <name>excelPathAPIGenerateInvLink</name>
+   </variable>
+   <variable>
+      <defaultValue>'Login/Setting'</defaultValue>
+      <description></description>
+      <id>6f083b69-9229-48cd-a0f5-912815eb6693</id>
+      <masked>false</masked>
+      <name>excelPathSetting</name>
+   </variable>
+</TestCaseEntity>
