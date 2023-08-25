@@ -392,7 +392,7 @@ public class APIFullService {
 	getSign(Connection conn, String documentid, String emailSigner) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select tbm.qty, tbm.trx_no, tdsr.request_status, tdh.ref_number, CASE WHEN tdsr.user_request_ip is null then '' else tdsr.user_request_ip end,  CASE WHEN tdsr.user_request_browser_information is null then '' else tdsr.user_request_browser_information end, tdsr.usr_crt, tdd.signing_process, TO_CHAR(tdds.sign_date, 'yyyy-MM-dd'), mst.api_key, mst.tenant_code from tr_document_signing_request tdsr join tr_document_h tdh on tdh.id_document_h = tdsr.id_document_h left join tr_document_d tdd on tdd.id_document_h = tdh.id_document_h left join tr_document_d_sign tdds on tdd.id_document_d = tdds.id_document_d left join am_msuser amm on tdds.id_ms_user = amm.id_ms_user  left join tr_balance_mutation tbm on tdd.id_document_d = tbm.id_document_d  left join ms_tenant mst on tbm.id_ms_tenant = mst.id_ms_tenant join tr_document_signing_request_detail tdsrd on tdd.id_document_d = tdsrd.id_document_d where tdd.document_id = '"+documentid+"' and amm.login_id = '"+emailSigner+"' order by tbm.dtm_crt asc, tdds.sign_date desc")
+		resultSet = stm.executeQuery("select tbm.qty, tbm.trx_no, tdsr.request_status, tdh.ref_number, CASE WHEN tdsr.user_request_ip is null then '' else tdsr.user_request_ip end,  CASE WHEN tdsr.user_request_browser_information is null then '' else tdsr.user_request_browser_information end, tdsr.usr_crt, tdd.signing_process, TO_CHAR(tdds.sign_date, 'yyyy-MM-dd'), mst.api_key, mst.tenant_code from tr_document_signing_request tdsr  join tr_document_h tdh on tdh.id_document_h = tdsr.id_document_h left join tr_document_d tdd on tdd.id_document_h = tdh.id_document_h left join tr_document_d_sign tdds on tdd.id_document_d = tdds.id_document_d left join tr_balance_mutation tbm on tdd.id_document_d = tbm.id_document_d left join am_msuser amm on tdds.id_ms_user = amm.id_ms_user left join ms_tenant mst on tbm.id_ms_tenant = mst.id_ms_tenant left join tr_document_signing_request_detail tdsrd on tdd.id_document_d = tdsrd.id_document_d where tdd.document_id = '"+documentid+"' and amm.login_id = '"+emailSigner+"' order by tbm.dtm_crt asc, tdds.sign_date desc, tdsr.id_document_signing_request desc limit 1")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -587,7 +587,7 @@ public class APIFullService {
 	gettrxSaldo(Connection conn, String refnumber, String limit) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select tbm.trx_no, TO_CHAR(tbm.dtm_crt,'YYYY-MM-DD HH24:MI:SS'), ml.description ,amm.full_name, case when amm_two.full_name != '' or amm_two.full_name != null then tdh.ref_number||'('||amm_two.full_name||')' else tdh.ref_number end ,ml_doc_h.code,case when mdt.doc_template_name != null then mdt.doc_template_name else tdd.document_name end, tbm.notes, tbm.qty from tr_balance_mutation as tbm join ms_lov as ml on tbm.lov_trx_type = ml.id_lov join am_msuser as amm on tbm.id_ms_user = amm.id_ms_user join tr_document_h as tdh on tbm.id_document_h = tdh.id_document_h join ms_lov as ml_doc_h on tdh.lov_doc_type = ml_doc_h.id_lov join tr_document_d as tdd on tbm.id_document_d = tdd.id_document_d left join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template left join am_msuser as amm_two on tdh.id_msuser_customer = amm_two.id_ms_user where tdh.ref_number = '" + refnumber + "' order by tbm.dtm_crt asc limit " + limit + " ")
+		resultSet = stm.executeQuery("select tbm.trx_no, TO_CHAR(tbm.dtm_crt,'YYYY-MM-DD HH24:MI:SS'), ml.description ,amm.full_name, case when amm_two.full_name != '' or amm_two.full_name != null then tdh.ref_number||'('||amm_two.full_name||')' else tdh.ref_number end ,ml_doc_h.code,case when mdt.doc_template_name != null or mdt.doc_template_name != '' then mdt.doc_template_name else tdd.document_name end, tbm.notes, tbm.qty from tr_balance_mutation as tbm join ms_lov as ml on tbm.lov_trx_type = ml.id_lov join am_msuser as amm on tbm.id_ms_user = amm.id_ms_user join tr_document_h as tdh on tbm.id_document_h = tdh.id_document_h join ms_lov as ml_doc_h on tdh.lov_doc_type = ml_doc_h.id_lov join tr_document_d as tdd on tbm.id_document_d = tdd.id_document_d left join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template left join am_msuser as amm_two on tdh.id_msuser_customer = amm_two.id_ms_user where tdh.ref_number = '" + refnumber + "' order by tbm.dtm_crt asc limit " + limit + " ")
 
 		metadata = resultSet.metaData
 
@@ -819,9 +819,9 @@ public class APIFullService {
 				listdata.add(data)
 			}
 		}
-		
+
 		ArrayList<String> resultList = []
-		
+
 		'hardcode untuk direct langsung ke colm is_sequence'
 		if (listdata[2] == '0') {
 			'hardcode untuk direct langsung ke colm document_id'
@@ -830,9 +830,9 @@ public class APIFullService {
 		} else if(listdata[2] == '1') {
 			'hardcode untuk direct langsung ke colm document_id'
 			resultList.add(listdata[3])
-			
+
 			int index = listdata.indexOf(email) + 1
-			
+
 			if (index - 5 >= 0) {
 				if (listdata[index - 2] != null) {
 					resultList.add('0')
@@ -847,7 +847,7 @@ public class APIFullService {
 				}
 			}
 		}
-		
+
 		resultList
 	}
 

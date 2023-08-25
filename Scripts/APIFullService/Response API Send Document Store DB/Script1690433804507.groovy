@@ -198,7 +198,7 @@ for (int i = 0; i < docid.size(); i++) {
         'Jika signAction tersebut adalah AT'
         if ((signAction[z]).replace('"', '') == 'at') {
             'Mengambil emailSign dari excel dan displit kembali'
-            emailSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 33).replace('"', '').split(
+            emailSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 35).replace('"', '').split(
                 semicolon, splitnum)[z]
 
             'Mengambil trxno dari column tersebut'

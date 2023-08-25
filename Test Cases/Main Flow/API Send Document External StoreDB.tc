@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>Response API Send Document Store DB</name>
+   <name>API Send Document External StoreDB</name>
    <tag></tag>
    <comment></comment>
    <testCaseGuid>f38b28c1-76fd-4f46-8aca-e86b359baf01</testCaseGuid>
