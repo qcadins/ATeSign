@@ -4,30 +4,30 @@
    <name>Login_Admin</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>0f7c0522-a036-4c73-902d-0ce413138c4c</testCaseGuid>
+   <testCaseGuid>a023e871-0fa6-4481-865f-02db028ad9f6</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>b6dcc5db-308e-4875-afff-8aa9868c481b</variableId>
+      <variableId>ee35aabb-6379-4ccb-8b39-255af4f8287f</variableId>
    </variableLinks>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>975389f4-f0e7-4a5a-9d76-52dadfbe9611</variableId>
+      <variableId>f0863c7e-ffad-4f69-95a7-fed126417090</variableId>
    </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
-      <id>b6dcc5db-308e-4875-afff-8aa9868c481b</id>
+      <id>ee35aabb-6379-4ccb-8b39-255af4f8287f</id>
       <masked>false</masked>
       <name>excel</name>
    </variable>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
-      <id>975389f4-f0e7-4a5a-9d76-52dadfbe9611</id>
+      <id>f0863c7e-ffad-4f69-95a7-fed126417090</id>
       <masked>false</masked>
       <name>sheet</name>
    </variable>

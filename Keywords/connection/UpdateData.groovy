@@ -23,7 +23,7 @@ public class UpdateData {
 
 		int updateCount = stm.executeUpdate("UPDATE ms_vendor SET must_user_vendor_otp = '" + number + "' WHERE vendor_code = '" + vendor + "';")
 	}
-	
+
 	@Keyword
 	updateTenantPassReq(Connection conn, String tenant, int number) {
 
@@ -31,7 +31,7 @@ public class UpdateData {
 
 		int updateCount = stm.executeUpdate("UPDATE ms_tenant SET need_password_for_signing = '" + number + "' WHERE tenant_code = '" + tenant + "';")
 	}
-	
+
 	@Keyword
 	updateTenantOTPReq(Connection conn, String tenant, int number) {
 

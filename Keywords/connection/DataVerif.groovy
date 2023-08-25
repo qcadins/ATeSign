@@ -191,7 +191,7 @@ public class DataVerif {
 	getDocumentName(Connection conn, String refNumber) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select case when mdt.doc_template_name != null then mdt.doc_template_name else tdd.document_name end from tr_document_d tdd left join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h where tdh.ref_number = '" + refNumber + "'")
+		resultSet = stm.executeQuery("select case when mdt.doc_template_name != '' or mdt.doc_template_name != null then mdt.doc_template_name else tdd.document_name end from tr_document_d tdd left join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h where tdh.ref_number = '" + refNumber + "'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

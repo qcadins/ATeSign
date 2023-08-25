@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>Response API Send Document</name>
+   <name>API Send Document External</name>
    <tag></tag>
    <comment></comment>
    <testCaseGuid>78fd63f9-0663-4f86-a8f9-ccc6f9215316</testCaseGuid>
@@ -15,40 +15,14 @@
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>1846cbd1-16da-452c-a124-16c103a6e803</variableId>
-   </variableLinks>
-   <variableLinks>
-      <testDataLinkId></testDataLinkId>
-      <type>DEFAULT</type>
-      <value></value>
-      <variableId>56e75694-a4e5-4c33-868d-17f7916cc021</variableId>
-   </variableLinks>
-   <variableLinks>
-      <testDataLinkId></testDataLinkId>
-      <type>DEFAULT</type>
-      <value></value>
       <variableId>44568a94-3eca-4fa3-ae37-f4599766ce15</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'APIFullService/API_SendDoc'</defaultValue>
+      <defaultValue>''</defaultValue>
       <description></description>
       <id>94746f25-96f6-4989-8c97-706a29976c32</id>
       <masked>false</masked>
       <name>excelPathAPISendDoc</name>
-   </variable>
-   <variable>
-      <defaultValue>'Login/Setting'</defaultValue>
-      <description></description>
-      <id>1846cbd1-16da-452c-a124-16c103a6e803</id>
-      <masked>false</masked>
-      <name>excelPathSetting</name>
-   </variable>
-   <variable>
-      <defaultValue>0</defaultValue>
-      <description></description>
-      <id>56e75694-a4e5-4c33-868d-17f7916cc021</id>
-      <masked>false</masked>
-      <name>inputStartRow</name>
    </variable>
    <variable>
       <defaultValue>''</defaultValue>

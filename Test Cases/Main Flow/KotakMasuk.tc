@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>KotakMasuk</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>378363ae-5978-489d-a491-3be7f1625cea</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>180fcd06-76c5-4eb1-8301-05499a09dca0</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>514a5b09-bf35-4602-b96b-c1cf616de457</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>d0d1dc26-9dd1-4600-8a3c-48e648591983</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>180fcd06-76c5-4eb1-8301-05499a09dca0</id>
+      <masked>false</masked>
+      <name>excelPathFESignDocument</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>514a5b09-bf35-4602-b96b-c1cf616de457</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>d0d1dc26-9dd1-4600-8a3c-48e648591983</id>
+      <masked>false</masked>
+      <name>statusTtd</name>
+   </variable>
+</TestCaseEntity>

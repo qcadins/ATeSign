@@ -176,6 +176,11 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
+      <initValue>''</initValue>
+      <name>roleLogin</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
       <initValue>findTestData('Login/Setting').getValue(8, 2)</initValue>
       <name>RunWith</name>
    </GlobalVariableEntity>

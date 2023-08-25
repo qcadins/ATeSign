@@ -78,7 +78,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		
         'Jika kolomnya berada pada kedua'
         if (GlobalVariable.NumofColm == 2) {
-           //inputCancel(conneSign)
+           inputCancel(conneSign)
         }
         
         'Pengecekan apakah masuk page manual sign'
