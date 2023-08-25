@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN-PengaturanPSrE</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>4f3f099e-445f-47e0-8cf7-74a7d0f95674</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>3be4c65f-ffb3-43aa-908c-4f6f79fbed15</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'PengaturanPSrE/PengaturanPSrE'</defaultValue>
+      <description></description>
+      <id>3be4c65f-ffb3-43aa-908c-4f6f79fbed15</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+</TestCaseEntity>

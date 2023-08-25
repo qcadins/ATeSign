@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN-RegisterFE</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>b1f8a6b3-a8a9-4d1d-a7c7-89d118015f94</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>6d46885c-9ba1-4c62-b46b-c8ead05e5745</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Registrasi/BuatUndangan'</defaultValue>
+      <description></description>
+      <id>6d46885c-9ba1-4c62-b46b-c8ead05e5745</id>
+      <masked>false</masked>
+      <name>excelPathBuatUndangan</name>
+   </variable>
+</TestCaseEntity>
