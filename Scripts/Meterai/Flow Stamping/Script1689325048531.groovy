@@ -158,7 +158,7 @@ def loginAdminGetSaldo(Connection conneSign, String start, String sheet) {
     if (start == 'Yes') {
 		
 		'panggil fungsi login'
-		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('TC') : TC, ('SheetName') : sheet,
+		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
 			('Path') : excelPathStamping], FailureHandling.CONTINUE_ON_FAILURE)
 		
 //        'Call test Case untuk login sebagai admin wom admin client'

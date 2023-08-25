@@ -29,7 +29,7 @@ indexForCatatanStamp = 0
 int looping
 
 'panggil fungsi login'
-WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('TC') : 'ManualSignOnly', ('SheetName') : 'Manual Sign',
+WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : 'Manual Sign',
 	('Path') : excelPathManualSign], FailureHandling.CONTINUE_ON_FAILURE)
 
 //'memanggil test case login untuk admin wom dengan Admin Client'

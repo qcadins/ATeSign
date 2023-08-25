@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_APIGenInvLink</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>88fb2047-3ed0-41f2-b207-37ba8a5aec59</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>be2278b7-84c5-4522-bed0-c862f077cab3</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Registrasi/Generate_Inv_Link'</defaultValue>
+      <description></description>
+      <id>be2278b7-84c5-4522-bed0-c862f077cab3</id>
+      <masked>false</masked>
+      <name>API_Excel_Path</name>
+   </variable>
+</TestCaseEntity>

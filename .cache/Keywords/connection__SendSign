@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
+  "keywordFileContentHash": "D6235039E104707F85D7F0CB53D10734",
+=======
   "keywordFileContentHash": "5B881258D7A746F07B48BA711A3723C6",
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
   "keywordClasses": [
     {
       "name": "connection.SendSign",

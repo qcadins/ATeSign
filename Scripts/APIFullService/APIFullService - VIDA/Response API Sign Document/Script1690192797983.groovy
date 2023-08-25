@@ -400,7 +400,7 @@ def loginAdminGetSaldo(Connection conneSign) {
     }
     
 	'panggil fungsi login'
-	WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('TC') : 'ResponseAPISignDoc', ('SheetName') : sheet,
+	WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
 		('Path') : excelPathAPISignDocument], FailureHandling.STOP_ON_FAILURE)
 	
 //    'Call test Case untuk login sebagai admin wom admin client'
@@ -480,7 +480,7 @@ def loginAdminGetSaldo(Connection conneSign) {
     
     'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
     WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathAPISignDocument
-            , ('sheet') : sheet, ('linkDocumentMonitoring') : 'Not Used', ('nomorKontrak') : noKontrak, ('TC') : 'ResponseAPISignDoc'], FailureHandling.CONTINUE_ON_FAILURE)
+            , ('sheet') : sheet, ('linkDocumentMonitoring') : 'Not Used', ('nomorKontrak') : noKontrak], FailureHandling.CONTINUE_ON_FAILURE)
 
     'return total saldo awal'
     return totalSaldo

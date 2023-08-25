@@ -415,7 +415,7 @@ for (int y = 0; y < docId.size(); y++) {
     
 	'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
 	WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument
-	 , ('sheet') : sheet, ('isManualSign') : 'Yes', ('TC') : TC], FailureHandling.CONTINUE_ON_FAILURE)
+	 , ('sheet') : sheet, ('isManualSign') : 'Yes'], FailureHandling.CONTINUE_ON_FAILURE)
 
 
     'jika data db tidak sesuai dengan excel'

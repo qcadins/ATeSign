@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_Job Result</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>79f750b3-d447-47a0-b6e6-274e7e814b13</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>60470219-abfd-4f74-91fc-a25038ebc0ee</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Job Result/Job Result'</defaultValue>
+      <description></description>
+      <id>60470219-abfd-4f74-91fc-a25038ebc0ee</id>
+      <masked>false</masked>
+      <name>excelPathJobResult</name>
+   </variable>
+</TestCaseEntity>

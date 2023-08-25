@@ -86,7 +86,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             int totalDocSign, countResend, saldoUsed = 0
 
 			'panggil fungsi login'
-			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('TC') : 'AllSendthenSign', ('SheetName') : sheet,
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
 				('Path') : excelPathFESignDocument], FailureHandling.CONTINUE_ON_FAILURE)
 			
 //            'Call test Case untuk login sebagai admin wom admin client'
@@ -689,10 +689,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             
 			'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
 			WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument
-			 , ('sheet') : sheet, ("nomorKontrak") : noKontrak, ('TC') : 'AllSendthenSign'], FailureHandling.CONTINUE_ON_FAILURE)
+			 , ('sheet') : sheet, ("nomorKontrak") : noKontrak], FailureHandling.CONTINUE_ON_FAILURE)
 
 			'panggil fungsi login'
-			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('TC') : 'AllSendthenSign', ('SheetName') : sheet,
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
 				('Path') : excelPathFESignDocument], FailureHandling.CONTINUE_ON_FAILURE)
 			
 //            'Call test Case untuk login sebagai admin wom admin client'
@@ -835,7 +835,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,86) == 'Yes') {
 			'Call API Send doc'
 			WebUI.callTestCase(findTestCase('Meterai/Flow Stamping'), [('excelPathStamping') : excelPathFESignDocument
-			, ('sheet') : sheet, ('useAPI') : 'v3.0.0', ('linkDocumentMonitoring') : '', ('TC') : 'AllSendthenSign'], FailureHandling.CONTINUE_ON_FAILURE)
+			, ('sheet') : sheet, ('useAPI') : 'v3.0.0', ('linkDocumentMonitoring') : ''], FailureHandling.CONTINUE_ON_FAILURE)
 		}
 }
 

@@ -28,8 +28,12 @@ splitIndex = -1
 
 sheet = 'Manual Stamp to Stamp'
 
-'memanggil test case login untuk admin wom dengan Admin Client. Khusus login menuju ADMIN@ADINS.CO.ID'
-WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualStamptoStamp, ('sheet') : 'Manual Stamp to Stamp'], FailureHandling.CONTINUE_ON_FAILURE)
+'panggil fungsi login'
+WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
+	('Path') : excelPathManualStamptoStamp], FailureHandling.CONTINUE_ON_FAILURE)
+
+//'memanggil test case login untuk admin wom dengan Admin Client. Khusus login menuju ADMIN@ADINS.CO.ID'
+//WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualStamptoStamp, ('sheet') : 'Manual Stamp to Stamp'], FailureHandling.CONTINUE_ON_FAILURE)
 
 'looping berdasarkan jumlah kolom'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathManualStamptoStamp).columnNumbers; (GlobalVariable.NumofColm)++) {
@@ -659,8 +663,12 @@ def loginAdminGetSaldo(Connection conneSign, String start, String sheet) {
     String totalSaldo
 
     if (start == 'Yes') {
-        'Call test Case untuk login sebagai admin wom admin client'
-        WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualStamptoStamp, ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
+		'panggil fungsi login'
+		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
+			('Path') : excelPathManualStamptoStamp], FailureHandling.STOP_ON_FAILURE)
+		
+//        'Call test Case untuk login sebagai admin wom admin client'
+//        WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualStamptoStamp, ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
     }
     
 	'klik button saldo'
