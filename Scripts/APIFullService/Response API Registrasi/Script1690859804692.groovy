@@ -47,6 +47,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			CustomKeywords.'connection.APIFullService.settingEmailServiceTenant'(conneSign, findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 34))
 		}
 		
+		'check ada value maka setting register as dukcapil check'
+		if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 35).length() > 0) {
+			'setting register as dukcapil check'
+			CustomKeywords.'connection.APIFullService.settingRegisterasDukcapilCheck'(conneSign, findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 35))
+		}
+		
 		'check if tidak mau menggunakan tenant code yang benar'
         if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 30) == 'No') {
             'set tenant kosong'
@@ -245,7 +251,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					if(GlobalVariable.Psre == 'VIDA') {
 						'kurang saldo before dengan proses verifikasi'
 						saldoBefore.set(0, (Integer.parseInt(saldoBefore[0]) - 1).toString())
-						
+					
+						'kurang saldo before dengan proses PNBP'
 						saldoBefore.set(1, (Integer.parseInt(saldoBefore[1]) - 1).toString())
 						
 						saldoAfter = loginAdminGetSaldo(countCheckSaldo, conneSign)
@@ -269,27 +276,33 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				GlobalVariable.FlagFailed = 1
 				
                 if ((GlobalVariable.checkStoreDB == 'Yes') && (trxNo != null)) {
+					'get trx dari db'
 					ArrayList<String> resultTrx = CustomKeywords.'connection.APIFullService.getAPIRegisterTrx'(conneSign, trxNo[0], trxNo[1])
 
+					arrayIndex = 0
+					
+					'verify saldo privy Verification'
+					checkVerifyEqualOrMatch(WebUI.verifyMatch(resultTrx[arrayIndex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE), ' Gagal Verifikasi Saldo Terpotong - Privy')
+					
 					if (GlobalVariable.Psre == 'VIDA') {
+						'verify saldo privy PNBP'
+						checkVerifyEqualOrMatch(WebUI.verifyMatch(resultTrx[arrayIndex++].toString(), '-1', false, FailureHandling.CONTINUE_ON_FAILURE), ' Gagal Verifikasi Saldo Terpotong - Privy')
+						
 	                    'kurang saldo before dengan proses verifikasi'
 						saldoBefore.set(0, (Integer.parseInt(saldoBefore[0]) - 1).toString())
 					
+						'kurang saldo before dengan proses PNBP'
+						saldoBefore.set(1, (Integer.parseInt(saldoBefore[1]) - 1).toString())
+						
 						saldoAfter = loginAdminGetSaldo(countCheckSaldo, conneSign)
 						
 						'verify saldo before dan after'
 						checkVerifyEqualOrMatch(WebUI.verifyMatch(saldoBefore.toString(), saldoAfter.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Saldo Gagal Potong')
-					}
-						
-						arrayIndex = 0
-						
-						'verify saldo privy Verification'
-						checkVerifyEqualOrMatch(WebUI.verifyMatch(resultTrx[arrayIndex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE), ' Gagal Verifikasi Saldo Terpotong - Privy')
-						
+					} else if (GlobalVariable.Psre == 'PRIVY') {
 						'verify saldo privy PNBP'
 						checkVerifyEqualOrMatch(WebUI.verifyMatch(resultTrx[arrayIndex++].toString(), 'null', false, FailureHandling.CONTINUE_ON_FAILURE), ' Gagal Verifikasi Saldo Terpotong - Privy')
+					}
 					
-
                     'jika data db tidak sesuai dengan excel'
                     if (arrayMatch.contains(false)) {
                         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
@@ -324,28 +337,28 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 	WebUI.maximizeWindow()
 
 	'set value userLogin'
-	GlobalVariable.userLogin = findTestData(excelPathAPIRegistrasi).getValue(2, 38).toUpperCase()
+	GlobalVariable.userLogin = findTestData(excelPathAPIRegistrasi).getValue(2, 39).toUpperCase()
 
 	'input email'
-	WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathAPIRegistrasi).getValue(2, 38))
+	WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathAPIRegistrasi).getValue(2, 39))
 
 	'input password'
 	WebUI.setText(findTestObject('Login/input_Password'), findTestData(excelPathAPIRegistrasi).getValue(2,
-			39))
+			40))
 
 	'click button login'
 	WebUI.click(findTestObject('Login/button_Login'), FailureHandling.CONTINUE_ON_FAILURE)
 
 	'input perusahaan'
 	WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excelPathAPIRegistrasi).getValue(2,
-			40))
+			41))
 
 	'enter untuk select perusahaan'
 	WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
 
 	'input peran'
 	WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excelPathAPIRegistrasi).getValue(2,
-			41))
+			42))
 
 	'enter untuk select peran'
 	WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
@@ -391,9 +404,9 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 			saldo.add(WebUI.getText(modifyObjectQty).replace(',', ''))
 
 			'if saldo sudah terisi 2 verification dan pnbp'
-			if(saldo.size() == 3 && GlobalVariable.Psre == 'VIDA') {
+			if(saldo.size() == 2 && GlobalVariable.Psre == 'VIDA') {
 				break
-			} else if(saldo.size() == 2 && GlobalVariable.Psre == 'PRIVY') {
+			} else if(saldo.size() == 1 && GlobalVariable.Psre == 'PRIVY') {
 				break
 			}
 			

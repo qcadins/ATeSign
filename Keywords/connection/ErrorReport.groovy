@@ -20,7 +20,7 @@ public class ErrorReport {
 	getTotalDataError(Connection conn, String date) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select COUNT(*) from tr_error_history where error_date >= '" +  date  + "' AND id_ms_tenant = 1")
+		resultSet = stm.executeQuery("select COUNT(*) from tr_error_history trh JOIN ms_tenant mt ON trh.id_ms_tenant = mt.id_ms_tenant where error_date >= '" +  date  + "' AND mt.tenant_code = '"+ GlobalVariable.Tenant +"'")
 
 		metadata = resultSet.metaData
 
@@ -47,7 +47,7 @@ public class ErrorReport {
 		}
 		data
 	}
-	
+
 	@Keyword
 	getStatusActivation(Connection conn) {
 		stm = conn.createStatement()
