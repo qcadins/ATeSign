@@ -10,7 +10,6 @@ import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.By as By
 import org.openqa.selenium.Keys as Keys
 
-
 'get row'
 variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-header > div > div.datatable-row-center.ng-star-inserted datatable-header-cell'))
 
@@ -226,7 +225,7 @@ public loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
     ArrayList<String> saldo = []
 	
 	'panggil fungsi login'
-	WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('TC') : 'IsiSaldo', ('SheetName') : 'isiSaldo',
+	WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : 'isiSaldo',
 		('Path') : excelPathIsiSaldo], FailureHandling.CONTINUE_ON_FAILURE)
 	
 //	'call test case mengenai login admin'

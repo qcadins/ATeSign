@@ -682,10 +682,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             
             'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
             WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathManualSigntoSign
-                    , ('sheet') : sheet, ('nomorKontrak') : noKontrak, ('TC') : 'ManualSigntoSign'], FailureHandling.CONTINUE_ON_FAILURE)
+                    , ('sheet') : sheet, ('nomorKontrak') : noKontrak], FailureHandling.CONTINUE_ON_FAILURE)
 
 			'panggil fungsi login'
-			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('TC') : 'ManualSigntoSign', ('SheetName') : sheet,
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
 				('Path') : excelPathManualSigntoSign], FailureHandling.CONTINUE_ON_FAILURE)
 			
 //            'Call test Case untuk login sebagai admin wom admin client'
@@ -831,11 +831,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             	if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 63) == 'API Stamping') {
             		'Call API Flow Stamping'
             		WebUI.callTestCase(findTestCase('Meterai/Flow Stamping'), [('excelPathStamping') : excelPathManualSigntoSign
-            		, ('sheet') : sheet, ('useAPI') : 'v.3.0.0', ('linkDocumentMonitoring') : '', ('TC') : 'ManualSigntoSign'], FailureHandling.CONTINUE_ON_FAILURE)
+            		, ('sheet') : sheet, ('useAPI') : 'v.3.0.0', ('linkDocumentMonitoring') : ''], FailureHandling.CONTINUE_ON_FAILURE)
             	} else if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 63) == 'Front End Document Monitoring') {
             		'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
             		WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathManualSigntoSign
-				    , ('sheet') : sheet, ('linkDocumentMonitoring') : 'Not Used', ('nomorKontrak') : noKontrakPerDoc[0], ('isStamping') : 'Yes', ('TC') : 'ManualSigntoSign'], FailureHandling.CONTINUE_ON_FAILURE)
+				    , ('sheet') : sheet, ('linkDocumentMonitoring') : 'Not Used', ('nomorKontrak') : noKontrakPerDoc[0], ('isStamping') : 'Yes'], FailureHandling.CONTINUE_ON_FAILURE)
             	}
             } else if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 17) == 'Ya') {
 				'looping dari 1 hingga 12'

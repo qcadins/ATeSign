@@ -50,7 +50,7 @@ for (int o = 1; o <= 1; o++) {
 //            FailureHandling.STOP_ON_FAILURE)
 		
 		'panggil fungsi login'
-		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('TC') : TC, ('SheetName') : sheet,
+		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
 			('Path') : excelPathFESignDocument], FailureHandling.CONTINUE_ON_FAILURE)
 
         'Klik Button menu Document Monitoring'

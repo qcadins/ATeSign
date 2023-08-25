@@ -10,7 +10,7 @@ import org.openqa.selenium.Keys as Keys
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
 'panggil fungsi login'
-WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('TC') : 'ListUndangan', ('SheetName') : 'ListUndangan',
+WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : 'ListUndangan',
 	('Path') : excelPathListUndangan], FailureHandling.CONTINUE_ON_FAILURE)
 
 //'call test case login admin'

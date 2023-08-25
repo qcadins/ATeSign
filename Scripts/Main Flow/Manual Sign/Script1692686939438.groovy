@@ -24,7 +24,7 @@ splitIndex = -1
 indexForCatatanStamp = 0
 
 'panggil fungsi login'
-WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('TC') : 'ManualSigntoSign', ('SheetName') : sheet,
+WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
 	('Path') : excelPathManualSigntoSign], FailureHandling.CONTINUE_ON_FAILURE)
 
 //'memanggil test case login untuk admin wom dengan Admin Client'
@@ -446,7 +446,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
             'Call Test case mengneai Kotak Masuk'
             WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('excelPathFESignDocument') : excelPathManualSigntoSign
                     , ('jumlahsignertandatangan') : jumlahsignertandatangan, ('isDownloadDocument') : isDownloadDocument
-                    , ('isDeleteDownloadedDocument') : isDeleteDownloadedDocument, ('isViewDocument') : isViewDocument, ('sheet') : sheet, ('TC') : 'ManualSigntoSign'], 
+                    , ('isDeleteDownloadedDocument') : isDeleteDownloadedDocument, ('isViewDocument') : isViewDocument, ('sheet') : sheet], 
                 FailureHandling.CONTINUE_ON_FAILURE)
         }
     }
