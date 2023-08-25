@@ -87,7 +87,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
     'Jika check storedb'
     if (GlobalVariable.checkStoreDB == 'Yes') {
         'call test case storedb'
-		WebUI.callTestCase(findTestCase('APIFullService/MAIN-Response API Send Document Store DB'), [('excelPathAPISendDoc') : excelPathAPISendDoc
+		WebUI.callTestCase(findTestCase('APIFullService/MAIN_Response API Send Document Store DB'), [('excelPathAPISendDoc') : excelPathAPISendDoc
 		, ('sheet') : sheet, ('signlocStoreDB') : signlocStoreDB], FailureHandling.CONTINUE_ON_FAILURE)
     }
     } else {
