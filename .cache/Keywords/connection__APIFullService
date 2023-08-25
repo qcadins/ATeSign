@@ -1971,8 +1971,6 @@
             }
           ],
           "javadoc": ""
-<<<<<<< HEAD
-=======
         },
         {
           "name": "settingAllowRegenerateLink",
@@ -2050,7 +2048,6 @@
             }
           ],
           "javadoc": ""
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
         }
       ]
     }
