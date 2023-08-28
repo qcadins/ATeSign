@@ -13,7 +13,7 @@ WebUI.click(findTestObject('InquiryInvitation/menu_InquiryInvitation'))
 
 'input email'
 WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-        15))
+        rowExcel('Email')))
 
 'Looping delay untuk handling search data selama +- 2 menit'
 for (int i = 1; i <= 8; i++) {
@@ -31,15 +31,15 @@ for (int i = 1; i <= 8; i++) {
 
 'verify nama'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('InquiryInvitation/tr_Name')).toUpperCase(), findTestData(
-            excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 10).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama')
+            excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama')
 
 'verify email'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('InquiryInvitation/tr_Receiver')).toUpperCase(), 
-        findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 15).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Email')
+        findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Email')
 
 'verify phone'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('InquiryInvitation/tr_Phone')).toUpperCase(), findTestData(
-            excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 14).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Phone')
+            excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('$No Handphone')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Phone')
 
 'split date and time'
 invitationDate = WebUI.getText(findTestObject('InquiryInvitation/tr_InvitationDate')).split(' ', -1)
@@ -58,44 +58,48 @@ def verifyListUndangan() {
 	'maximize window'
 	WebUI.maximizeWindow()
 
-	'set value userLogin'
-	GlobalVariable.userLogin = findTestData(excelPathBuatUndangan).getValue(2, 65).toUpperCase()
-
+	'store user login'	
+	GlobalVariable.userLogin = findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')).toUpperCase()
+	
 	'input email'
-    WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathBuatUndangan).getValue(2, 65))
-
-    'input password'
-    WebUI.setText(findTestObject('Login/input_Password'), findTestData(excelPathBuatUndangan).getValue(2, 
-            66))
-
-    'click button login'
-    WebUI.click(findTestObject('Login/button_Login'), FailureHandling.STOP_ON_FAILURE)
-
-    'input perusahaan'
-    WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excelPathBuatUndangan).getValue(2, 
-            67))
-
-    WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
-
-    'input peran'
-    WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excelPathBuatUndangan).getValue(2, 
-            68))
-
-    WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
-
-	'click button pilih peran'
-	WebUI.click(findTestObject('Login/button_pilihPeran'), FailureHandling.STOP_ON_FAILURE)
+	WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')))
+	
+	'store GV user login'
+	GlobalVariable.userLogin = findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))
+	
+	'input password'
+	WebUI.setText(findTestObject('Login/input_Password'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Password Login')))
+	
+	'click button login'
+	WebUI.click(findTestObject('Login/button_Login'))
+	
+	if(WebUI.verifyElementPresent(findTestObject('Login/input_Perusahaan'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {	
+		'input perusahaan'
+		WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Perusahaan Login')))
+		
+		'enter untuk input perusahaan'
+		WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
+		
+		'input peran'
+		WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Peran Login')))
+		
+		'enter untuk input peran'
+		WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
+		
+		'click button pilih peran'
+		WebUI.click(findTestObject('Login/button_pilihPeran'))
+	}
 	
 	'click menu list undangan'
 	WebUI.click(findTestObject('ListUndangan/menu_ListUndangan'))
 	
 	'set text nama'
 	WebUI.setText(findTestObject('ListUndangan/input_Nama'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
-			10))
+			rowExcel('$Nama')))
 	
 	'set text penerima undangan'
 	WebUI.setText(findTestObject('ListUndangan/input_PenerimaUndangan'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
-			15))
+			rowExcel('Email')))
 	
 	'set text tanggal pengiriman dari'
 	WebUI.setText(findTestObject('ListUndangan/input_TanggalPengirimanDari'), currentDate)
@@ -108,7 +112,7 @@ def verifyListUndangan() {
 	
 	'verify nama'
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_Nama')), findTestData(excelPathBuatUndangan).getValue(
-				GlobalVariable.NumofColm, 10), false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama')
+				GlobalVariable.NumofColm, rowExcel('$Nama')), false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama')
 	
 	'verify pengiriman melalui'
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_PengirimanMelalui')), 'Email',
@@ -116,7 +120,7 @@ def verifyListUndangan() {
 	
 	'verify penerima undangan'
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_PenerimaUndangan')), findTestData(
-				excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 15), false, FailureHandling.CONTINUE_ON_FAILURE), ' Penerima Undangan')
+				excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email')), false, FailureHandling.CONTINUE_ON_FAILURE), ' Penerima Undangan')
 	
 	tanggalPengiriman = WebUI.getText(findTestObject('ListUndangan/table_TanggalPengiriman')).split(' ', -1)
 	
@@ -141,11 +145,14 @@ def verifyListUndangan() {
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2) + ';') + 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, 
+            GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
             GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
 
         GlobalVariable.FlagFailed = 1
     }
 }
 
+def rowExcel(String cellValue) {
+	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, SheetName, cellValue)
+}

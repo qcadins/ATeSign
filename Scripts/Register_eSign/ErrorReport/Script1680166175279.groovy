@@ -30,7 +30,7 @@ String resultTotalData = CustomKeywords.'connection.ErrorReport.getTotalDataErro
 
 'get error detail dari DB'
 String resultErrorDetail = CustomKeywords.'connection.ErrorReport.getErrorReportDetail'(conneSign, findTestData(excelPathBuatUndangan).getValue(
-        GlobalVariable.NumofColm, 10).toUpperCase())
+        GlobalVariable.NumofColm, rowExcel('$Nama')).toUpperCase())
 
 'get total data'
 totalData = WebUI.getText(findTestObject('ErrorReport/label_TotalData')).split(' ')
@@ -46,7 +46,7 @@ WebUI.sendKeys(findTestObject('ErrorReport/select_Modul'), Keys.chord(Keys.ENTER
 
 'input nama'
 WebUI.setText(findTestObject('ErrorReport/input_Nama'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-        10))
+        rowExcel('$Nama')))
 
 'input tanggal dari'
 WebUI.setText(findTestObject('ErrorReport/input_TanggalDari'), currentDate)
@@ -92,8 +92,8 @@ WebUI.click(findTestObject('ErrorReport/button_X'))
 public checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2) + ';') + 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, 
+            GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
             GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
 
         GlobalVariable.FlagFailed = 1
@@ -103,8 +103,8 @@ public checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 def checkVerifyPaging(Boolean isMatch, String reason) {
 	if (isMatch == false) {
 		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm,
-			GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2) +
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm,
+			GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) +
 			';') + GlobalVariable.ReasonFailedPaging + reason)
 
 		GlobalVariable.FlagFailed = 1
@@ -244,3 +244,6 @@ public checkPaging() {
     checkVerifyPaging(WebUI.getAttribute(findTestObject('ErrorReport/page_1'), 'class', FailureHandling.CONTINUE_ON_FAILURE).contains('active'), ' first page')
 }
 
+def rowExcel(String cellValue) {
+	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, SheetName, cellValue)
+}

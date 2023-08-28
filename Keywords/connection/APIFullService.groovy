@@ -447,7 +447,7 @@ public class APIFullService {
 	getAPICheckRegisterStoreDB(Connection conn, String value) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select mv.vendor_name, CASE WHEN mvru.is_registered = '1' AND mvru.is_active = '1' THEN '2' WHEN mvru.is_registered = '1' AND mvru.is_active = '0' THEN '1' END from ms_vendor_registered_user mvru JOIN am_msuser amu ON amu.id_ms_user = mvru.id_ms_user JOIN ms_vendor mv ON mv.id_ms_vendor = mvru.id_ms_vendor where login_id = '" +  value  + "' OR amu.hashed_id_no = encode(sha256('" +  value  + "'), 'hex') OR amu.hashed_phone = encode(sha256('" +  value  + "'), 'hex')")
+		resultSet = stm.executeQuery("select mv.vendor_name, CASE WHEN mvru.is_registered = '0' AND mvru.is_active = '0' THEN '0' WHEN mvru.is_registered = '1' AND mvru.is_active = '1' THEN '2' WHEN mvru.is_registered = '1' AND mvru.is_active = '0' THEN '1' END from ms_vendor_registered_user mvru JOIN am_msuser amu ON amu.id_ms_user = mvru.id_ms_user JOIN ms_vendor mv ON mv.id_ms_vendor = mvru.id_ms_vendor where login_id = '" +  value  + "' OR amu.hashed_id_no = encode(sha256('" +  value  + "'), 'hex') OR amu.hashed_phone = encode(sha256('" +  value  + "'), 'hex')")
 
 		metadata = resultSet.metaData
 
@@ -979,7 +979,7 @@ public class APIFullService {
 
 		updateVariable = stm.executeUpdate("UPDATE tr_invitation_link SET is_active = '"+ value +"' WHERE receiver_detail = '"+ email +"'")
 	}
-	
+
 	@Keyword
 	settingRegisterasDukcapilCheck(Connection conn, String value) {
 		stm = conn.createStatement()

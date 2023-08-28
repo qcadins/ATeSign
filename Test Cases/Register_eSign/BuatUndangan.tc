@@ -11,11 +11,24 @@
       <value></value>
       <variableId>242bd001-6e43-4d97-9ee2-31ed68a2d12a</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>adc3ae7c-8ee6-478f-a1d5-96606b15a2ed</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>'Registrasi/BuatUndangan'</defaultValue>
       <description></description>
       <id>242bd001-6e43-4d97-9ee2-31ed68a2d12a</id>
       <masked>false</masked>
       <name>excelPathBuatUndangan</name>
+   </variable>
+   <variable>
+      <defaultValue>'BuatUndangan'</defaultValue>
+      <description></description>
+      <id>adc3ae7c-8ee6-478f-a1d5-96606b15a2ed</id>
+      <masked>false</masked>
+      <name>SheetName</name>
    </variable>
 </TestCaseEntity>

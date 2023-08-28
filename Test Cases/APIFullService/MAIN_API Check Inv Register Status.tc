@@ -25,10 +25,10 @@
       <name>excelPathCheckInvRegisterStatus</name>
    </variable>
    <variable>
-      <defaultValue>'Login/Setting'</defaultValue>
+      <defaultValue>'API Check Inv Register Status'</defaultValue>
       <description></description>
       <id>19c2b20d-2e1a-430e-af46-b99db8717cfa</id>
       <masked>false</masked>
-      <name>excelPathSetting</name>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>

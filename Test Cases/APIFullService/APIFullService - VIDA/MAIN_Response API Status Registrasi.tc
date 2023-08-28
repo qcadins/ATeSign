@@ -11,11 +11,24 @@
       <value></value>
       <variableId>f33931ef-70ac-463d-a00c-ccb1a6b31033</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>aaa892c3-0371-42f9-9e69-ca78b1451216</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>'APIFullService/API_CheckRegistrasi'</defaultValue>
       <description></description>
       <id>f33931ef-70ac-463d-a00c-ccb1a6b31033</id>
       <masked>false</masked>
       <name>excelPathAPICheckRegistrasi</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Check Registrasi'</defaultValue>
+      <description></description>
+      <id>aaa892c3-0371-42f9-9e69-ca78b1451216</id>
+      <masked>false</masked>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>

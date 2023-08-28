@@ -55,7 +55,7 @@ if(WebUI.verifyElementPresent(findTestObject('Login/input_Perusahaan'), GlobalVa
 }
 
 'Jika error lognya muncul'
-if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL) && GlobalVariable.FlagFailed == 0) {
+if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 	'ambil teks errormessage'
 	errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
 	
@@ -65,14 +65,6 @@ if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), Globa
 		'-', '') + ';') + '<' + errormessage + '>')
 	
 	GlobalVariable.FlagFailed = 1
-} else if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL) && GlobalVariable.FlagFailed > 0) {
-	'ambil teks errormessage'
-	errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
-	
-	'write to excel reason warning'
-	CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, SheetName,
-		1, GlobalVariable.NumofColm - 1, (findTestData(Path).getValue(GlobalVariable.NumofColm, 2).replace(
-		'-', '') + ';') + '<' + errormessage + '>')
 }
 
 def rowExcel(String cellValue) {

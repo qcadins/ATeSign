@@ -19,9 +19,7 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'get colm excel'
 int countColmExcel = findTestData(excelPathAPIRegistrasi).columnNumbers
 
-String selfPhoto
-
-String idPhoto
+String selfPhoto, idPhoto
 
 int countCheckSaldo
 
@@ -30,9 +28,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
     } else if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
-        ArrayList<String> saldoBefore = []
-
-        ArrayList<String> saldoAfter = []
+        ArrayList<String> saldoBefore = [], saldoAfter = []
+		
+		GlobalVariable.FlagFailed = 0
 
 		'get Psre per case'
 		GlobalVariable.Psre = findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
@@ -254,6 +252,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                             GlobalVariable.StatusFailed, (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 
                                 rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
+						
+						GlobalVariable.FlagFailed = 1
                     } else {
                         'write to excel success'
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
