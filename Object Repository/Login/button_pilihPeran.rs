@@ -18,7 +18,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/ngb-modal-window/div/div/app-multi-role/div/form/div[3]/button</value>
-      <webElementGuid>d3263f39-fd1f-415d-9376-d9ac9cdccb32</webElementGuid>
+      <webElementGuid>0d0b794a-854b-4b35-a8b6-9f626eb8a5a2</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -26,6 +26,14 @@
       <name>class</name>
       <type>Main</type>
       <value>btn btn-primary</value>
-      <webElementGuid>3c0c03f7-79c3-4305-845f-e9073e691512</webElementGuid>
+      <webElementGuid>a3ae9a4b-a2ea-4a51-97ab-5f6c8a2502cd</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>type</name>
+      <type>Main</type>
+      <value>submit</value>
+      <webElementGuid>bdd87b43-3e6c-4e92-bc18-a8a478cbc5b4</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
