@@ -28,7 +28,7 @@ class chromePref {
 	 * Executes before every test case starts.
 	 * @param testCaseContext related information of the executed test case.
 	 */
-	@BeforeTestCase
+	@BeforeTestCase @BeforeTestSuite
 	def sampleBeforeTestCase(TestCaseContext testCaseContext) {
 		'setting untuk membuat lokasi default folder download'
 		HashMap<String, ArrayList> chromePrefs = new HashMap<String, ArrayList>()
