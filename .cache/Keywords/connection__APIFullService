@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "EDFC3D7AC76BF10F09B09ADBBCFD7DBE",
+  "keywordFileContentHash": "83847AD70A1D1A0028C4C2E09A5B12BD",
   "keywordClasses": [
     {
       "name": "connection.APIFullService",
@@ -1920,8 +1920,6 @@
             }
           ],
           "javadoc": ""
-<<<<<<< HEAD
-=======
         },
         {
           "name": "getAesKeyEncryptUrl",
@@ -2050,11 +2048,38 @@
             }
           ],
           "javadoc": ""
-<<<<<<< HEAD
-=======
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+        },
+        {
+          "name": "settingRegisterasDukcapilCheck",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "value",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
         }
       ]
     }

@@ -14,8 +14,12 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-'call test case login adm esign'
-WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathPriorityPsre, ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
+'panggil fungsi login'
+WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
+	('Path') : excelPathPriorityPsre], FailureHandling.STOP_ON_FAILURE)
+
+//'call test case login adm esign'
+//WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathPriorityPsre, ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
 
 'looping berdasarkan jumlah kolom'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathPriorityPsre).columnNumbers; (GlobalVariable.NumofColm)++) {

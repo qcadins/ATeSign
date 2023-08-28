@@ -175,8 +175,12 @@ def loginAdminGetSaldo(Connection conneSign, String start) {
     sheet = 'API Stamping'
 
     if (start == 'Yes') {
-        'Call test Case untuk login sebagai admin wom admin client'
-        WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathStamping, ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
+		'panggil fungsi login'
+		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
+			('Path') : excelPathStamping], FailureHandling.CONTINUE_ON_FAILURE)
+		
+//        'Call test Case untuk login sebagai admin wom admin client'
+//        WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathStamping, ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
     }
     
     'klik button saldo'
