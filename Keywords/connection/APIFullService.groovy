@@ -808,7 +808,7 @@ public class APIFullService {
 	getDocSignSequence(Connection conn, String docId, String email) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT login_id, seq_no, is_sequence, document_id, sign_date FROM tr_document_d tdd JOIN tr_document_d_sign tdds ON tdds.id_document_d = tdd.id_document_d JOIN am_msuser amu ON amu.id_ms_user = tdds.id_ms_user WHERE document_id = '"+docId+"'")
+		resultSet = stm.executeQuery("SELECT login_id, seq_no, is_sequence, document_id, sign_date FROM tr_document_d tdd JOIN tr_document_d_sign tdds ON tdds.id_document_d = tdd.id_document_d JOIN am_msuser amu ON amu.id_ms_user = tdds.id_ms_user WHERE document_id = '"+docId+"' ORDER BY seq_no ASC")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -820,6 +820,7 @@ public class APIFullService {
 			}
 		}
 
+		println(listdata)
 		ArrayList<String> resultList = []
 
 		'hardcode untuk direct langsung ke colm is_sequence'

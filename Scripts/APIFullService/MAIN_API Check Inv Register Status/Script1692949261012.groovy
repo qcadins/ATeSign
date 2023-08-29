@@ -83,7 +83,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					   
 					   if(GlobalVariable.Psre == 'PRIVY') {
 						   'get result dari db'
-						   result = CustomKeywords.'connection.APIFullService.getCheckInvRegisStoreDB'(conneSign, findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, 11))
+						   result = CustomKeywords.'connection.APIFullService.getCheckInvRegisStoreDB'(conneSign, findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Email')))
 						   
 						   arrayIndex = 0 
 						   

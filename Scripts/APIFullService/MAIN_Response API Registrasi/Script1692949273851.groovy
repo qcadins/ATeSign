@@ -223,7 +223,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             arrayIndex = 0
 
                             'verify request status = 1'
-                            arrayMatch.add(WebUI.verifyMatch(resultDataUser[arrayIndex++], '1', false, FailureHandling.OPTIONAL))
+                            arrayMatch.add(WebUI.verifyMatch(resultDataUser[arrayIndex++], '0', false, FailureHandling.OPTIONAL))
 
                             'verify is external = 1'
                             arrayMatch.add(WebUI.verifyMatch(resultDataUser[arrayIndex++], '1', false, FailureHandling.OPTIONAL))

@@ -358,6 +358,41 @@ if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryInv
 						';') + ' Link tidak ter-regenerated')
 		
 					GlobalVariable.FlagFailed = 1
+				} else {
+					'HIT API get Invitation Link'
+					responGetInvLink = WS.sendRequest(findTestObject('Postman/Get Inv Link', [('callerId') : '""', ('receiverDetail') : ('"' +
+								findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email'))) + '"', ('tenantCode') : ('"' +
+								GlobalVariable.Tenant) + '"', ('vendorCode') : ('"' + GlobalVariable.Psre) + '"']))
+			
+					'Jika status HIT API 200 OK'
+					if (WS.verifyResponseStatusCode(responGetInvLink, 200, FailureHandling.OPTIONAL) == true) {
+						'get Status Code'
+						status_Code = WS.getElementPropertyValue(responGetInvLink, 'status.code')
+			
+						'Jika status codenya 0'
+						if (status_Code == 0) {
+							'Get invitation Link'
+							InvitationLink = WS.getElementPropertyValue(responGetInvLink, 'invitationLink')
+			
+							if (WebUI.verifyMatch(GlobalVariable.Link, InvitationLink, false)) {
+								'write to excel success'
+								CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, SheetName, 0, GlobalVariable.NumofColm -
+									1, GlobalVariable.StatusSuccess)
+							} else {
+								'write to excel status failed dan reason'
+								CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm,
+									GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+										rowExcel('Reason Failed')).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
+							}
+						} else {
+							messageFailed = WS.getElementPropertyValue(responGetInvLink, 'status.message', FailureHandling.OPTIONAL).toString()
+			
+							'write to excel status failed dan reason'
+							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+								(((findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+									'-', '') + ';') + '<') + messageFailed) + '>')
+						}
+					}
 				}
 				
 				'click button TutupDapatLink'

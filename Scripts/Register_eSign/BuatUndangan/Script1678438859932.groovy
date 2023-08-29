@@ -427,19 +427,27 @@ def verifyListUndangan() {
     'verify tanggal pengiriman'
     checkVerifyEqualOrMatch(WebUI.verifyMatch(parsedDate, currentDate, false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Pengiriman')
 
-    tanggalRegistrasi = WebUI.getText(findTestObject('ListUndangan/table_TanggalRegistrasi')).split(' ', -1)
+    if (GlobalVariable.Psre == 'VIDA') {
+		tanggalRegistrasi = WebUI.getText(findTestObject('ListUndangan/table_TanggalRegistrasi')).split(' ', -1)
 
-    if ((tanggalRegistrasi[0]) != '-') {
         parsedDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(tanggalRegistrasi[0], 'dd-MMM-yyyy', 'yyyy-MM-dd')
 
         'verify tanggal registrasi'
         checkVerifyEqualOrMatch(WebUI.verifyMatch(parsedDate, currentDate, false, FailureHandling.CONTINUE_ON_FAILURE), 
             ' Tanggal Registrasi')
-    }
     
-    'verify status registrasi'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusRegistrasi')), 'DONE', 
-            false, FailureHandling.CONTINUE_ON_FAILURE), ' Status Registrasi')
+	    'verify status registrasi'
+	    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusRegistrasi')), 'DONE', 
+	            false, FailureHandling.CONTINUE_ON_FAILURE), ' Status Registrasi')
+    } else if(GlobalVariable.Psre == 'PRIVY') {
+		'verify tanggal registrasi'
+		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_TanggalRegistrasi')), '-', false, FailureHandling.CONTINUE_ON_FAILURE),
+			' Tanggal Registrasi')
+	
+		'verify status registrasi'
+		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusRegistrasi')), 'NOT DONE',
+				false, FailureHandling.CONTINUE_ON_FAILURE), ' Status Registrasi')
+	}
 
     'verify Status undangan'
     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusUndangan')), 'NON AKTIF', 

@@ -98,8 +98,8 @@ if(GlobalVariable.Psre == 'VIDA') {
 		ArrayList<String> result = CustomKeywords.'connection.Registrasi.getRegisterPrivyStoreDB'(conneSign, findTestData(excelPathBuatUndangan).getValue(
 				GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase())
 		
-		'verify request status'
-		arrayMatch.add(WebUI.verifyMatch('1', (result[arrayindex++]), false, FailureHandling.OPTIONAL))
+		'verify request status 0 karena belum terverifikasi'
+		arrayMatch.add(WebUI.verifyMatch('0', (result[arrayindex++]), false, FailureHandling.OPTIONAL))
 		
 		'verify is external 0 karena melalui UI buatundangan'
 		arrayMatch.add(WebUI.verifyMatch('0', (result[arrayindex++]), false, FailureHandling.OPTIONAL))
