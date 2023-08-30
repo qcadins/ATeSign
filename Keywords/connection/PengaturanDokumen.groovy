@@ -39,7 +39,7 @@ public class PengaturanDokumen {
 	dataDocTemplateStoreDB(Connection conn, String docTempCode) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT mdt.doc_template_code, mdt.doc_template_name, mdt.doc_template_description, (SELECT description FROM ms_lov WHERE id_lov = mdt.lov_payment_sign_type) AS description1, CASE WHEN mdt.is_active = '1' THEN 'Active' ELSE 'Inactive' END, mv.vendor_name, CASE WHEN mdt.is_sequence = '1' THEN 'Iya' ELSE 'Tidak' END, STRING_AGG(ml2.description, ';' ORDER BY mdtsl.seq_no ASC) AS concatenated_descriptions FROM esign.ms_doc_template mdt JOIN ms_doc_template_sign_loc mdtsl ON mdt.id_doc_template = mdtsl.id_doc_template JOIN ms_lov ml2 ON ml2.id_lov = mdtsl.lov_signer_type JOIN ms_vendor mv ON mv.id_ms_vendor = mdt.id_ms_tenant WHERE mdt.doc_template_code = '"+ docTempCode +"' GROUP BY mdt.doc_template_code, mdt.doc_template_name, mdt.doc_template_description, description1, mdt.is_active, mv.vendor_name, mdt.is_sequence")
+		resultSet = stm.executeQuery("SELECT mdt.doc_template_code, mdt.doc_template_name, mdt.doc_template_description, (SELECT description FROM ms_lov WHERE id_lov = mdt.lov_payment_sign_type) AS description1, CASE WHEN mdt.is_active = '1' THEN 'Active' ELSE 'Inactive' END, mv.vendor_name, CASE WHEN mdt.is_sequence = '1' THEN 'Iya' ELSE 'Tidak' END, STRING_AGG(ml2.description, ';' ORDER BY mdtsl.seq_no ASC) AS concatenated_descriptions FROM esign.ms_doc_template mdt JOIN ms_doc_template_sign_loc mdtsl ON mdt.id_doc_template = mdtsl.id_doc_template JOIN ms_lov ml2 ON ml2.id_lov = mdtsl.lov_signer_type LEFT JOIN ms_vendor mv ON mv.id_ms_vendor = mdt.id_ms_vendor WHERE mdt.doc_template_code = '"+ docTempCode +"' GROUP BY mdt.doc_template_code, mdt.doc_template_name, mdt.doc_template_description, description1, mdt.is_active, mv.vendor_name, mdt.is_sequence")
 
 		metadata = resultSet.metaData
 
@@ -58,7 +58,7 @@ public class PengaturanDokumen {
 	getLovTipePembayaran(Connection conn) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select description from ms_lov ml JOIN ms_paymentsigntypeoftenant pt ON ml.id_lov = pt.lov_payment_sign_type JOIN ms_tenant mt ON mt.id_ms_tenant = pt.id_ms_tenant where lov_group = 'PAYMENT_SIGN_TYPE' AND mt.tenant_code = '"+ GlobalVariable.Tenant +"' order by description asc")
+		resultSet = stm.executeQuery("select DISTINCT description from ms_lov ml JOIN ms_paymentsigntypeoftenant pt ON ml.id_lov = pt.lov_payment_sign_type JOIN ms_tenant mt ON mt.id_ms_tenant = pt.id_ms_tenant where lov_group = 'PAYMENT_SIGN_TYPE' AND mt.tenant_code = '"+ GlobalVariable.Tenant +"' order by description asc")
 
 		metadata = resultSet.metaData
 

@@ -16,28 +16,35 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-'panggil fungsi login'
-WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : 'PengaturanDokumen',
-	('Path') : excelPathPengaturanDokumen], FailureHandling.CONTINUE_ON_FAILURE)
-
-//'memanggil test case login untuk admin wom dengan Admin Legal'
-//WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathPengaturanDokumen, ('sheet') : 'PengaturanDokumen'], FailureHandling.CONTINUE_ON_FAILURE)
-
 'declare untuk split array excel'
 semicolon = ';'
 
 splitIndex = -1
 
+int checked = 0
+
 'looping berdasarkan jumlah kolom'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathPengaturanDokumen).columnNumbers; (GlobalVariable.NumofColm)++) {
-    if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
+    if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
-    } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted') ||
-		findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Warning')) {
+    } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted') ||
+		findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Warning')) {
+		
+		'panggil fungsi login'
+		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathPengaturanDokumen], FailureHandling.CONTINUE_ON_FAILURE)
+		
+		'get Tenant per case dari excel'
+		GlobalVariable.Tenant = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
+		
+		'get Psre per case dari excel'
+		GlobalVariable.Psre = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
+		
+		'click menu pengaturan dokumen'
+		WebUI.click(findTestObject('TandaTanganDokumen/btn_PengaturanDokumen'))
 		
 		'declare isMmandatory Complete'
 		int isMandatoryComplete = Integer.parseInt(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm,
-				5))
+				rowExcel('Is Mandatory Complete')))
 		
         GlobalVariable.FlagFailed = 0
 		
@@ -46,103 +53,38 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			checkPaging()
 			
 			'call function input cancel'
-			inputCancel()
+			inputCancel(conneSign, checked)
 		}
 		
 		'Pembuatan variable mengenai jumlah delete, jumlah lock, dan indexlock untuk loop kedepannya'
-        RoleTandaTangan = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 15).split(semicolon, splitIndex)
+        RoleTandaTangan = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('$RoleTandaTangan')).split(semicolon, splitIndex)
 
-        TipeTandaTangan = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 16).split(semicolon, splitIndex)
+        TipeTandaTangan = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('$TipeTandaTangan')).split(semicolon, splitIndex)
 
-        SignBoxAction = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 17).split(semicolon, splitIndex)
+        SignBoxAction = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('$Pindahkan SignBox')).split(semicolon, splitIndex)
 
-        SignBoxLocation = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 18).split('\\n', splitIndex)
+        SignBoxLocation = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('$Lokasi Pemindahan signbox')).split('\\n', splitIndex)
 
-        LockSignBox = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 19).split(semicolon, splitIndex)
+        LockSignBox = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('$Lock Sign Box')).split(semicolon, splitIndex)
 		
         'Klik tombol pengaturan dokumen'
         if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('New')) {
-            'click menu pengaturan dokumen'
-			WebUI.click(findTestObject('TandaTanganDokumen/btn_PengaturanDokumen'))
-
             'Klik tombol tambah pengaturan dokumen'
             WebUI.click(findTestObject('TandaTanganDokumen/btn_Add'))
 
             'Pengecekan apakah masuk page tambah pengaturan dokumen'
             if (WebUI.verifyElementPresent(findTestObject('TandaTanganDokumen/lbl_TambahTemplatDokumen'), GlobalVariable.TimeOut)) {
-                'Input text documentTemplateCode'
-                WebUI.setText(findTestObject('TandaTanganDokumen/input_documentTemplateCode'), findTestData(excelPathPengaturanDokumen).getValue(
-                        GlobalVariable.NumofColm, 9))
-
-                'Input text documentTemplateName'
-                WebUI.setText(findTestObject('TandaTanganDokumen/input_documentTemplateName'), findTestData(excelPathPengaturanDokumen).getValue(
-                        GlobalVariable.NumofColm, 10))
-
-                'Input text documentTemplateDescription'
-                WebUI.setText(findTestObject('TandaTanganDokumen/input_documentTemplateDescription'), findTestData(excelPathPengaturanDokumen).getValue(
-                        GlobalVariable.NumofColm, 11))
-
-                'get data tipe-tipe pembayaran secara asc'
-                ArrayList<String> tipePembayaranDB = CustomKeywords.'connection.PengaturanDokumen.getLovTipePembayaran'(conneSign)
-
-				'check ddl tipe pembayaran'
-				checkDDL(findTestObject('TandaTanganDokumen/input_tipePembayaran'), tipePembayaranDB, ' pada tipe pembayaran Ttd ')
-                
-                'Input value tipe pembayaran'
-                WebUI.setText(findTestObject('TandaTanganDokumen/input_tipePembayaran'), findTestData(excelPathPengaturanDokumen).getValue(
-                        GlobalVariable.NumofColm, 12))
-
-                'Input enter'
-                WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_tipePembayaran'), Keys.chord(Keys.ENTER))
-				
-				'get data tipe-tipe pembayaran secara asc'
-				ArrayList<String> resultVendorDDL = CustomKeywords.'connection.PengaturanDokumen.getDDLVendor'(conneSign)
-
-				'check ddl psre'
-				checkDDL(findTestObject('Object Repository/TandaTanganDokumen/select_Psre'), resultVendorDDL, ' pada DDL Psre ')
-				
-				'Input value Psre'
-				WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/select_Psre'), findTestData(excelPathPengaturanDokumen).getValue(
-						GlobalVariable.NumofColm, 20))
-
-				'Input enter'
-				WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_Psre'), Keys.chord(Keys.ENTER))
-				WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_Psre'), Keys.chord(Keys.ENTER))
-				
-				'Input value sequential sign'
-				WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/select_SequentialSigning'), findTestData(excelPathPengaturanDokumen).getValue(
-						GlobalVariable.NumofColm, 21))
-
-				'Input enter'
-				WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_SequentialSigning'), Keys.chord(Keys.ENTER))
-
-                'Input value status'
-                WebUI.setText(findTestObject('TandaTanganDokumen/input_Status'), findTestData(excelPathPengaturanDokumen).getValue(
-                        GlobalVariable.NumofColm, 14))
-
-                'Input enter'
-                WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
-
-                'Jika panjang dokumen lebih besar dari 0'
-                if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 13).length() > 0) {
-                    'Code untuk mengambil file berdasarkan direktori masing-masing sekaligus ambil value dari excel'
-                    String userDir = System.getProperty('user.dir')
-
-                    String filePath = userDir + findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
-                        13)
-
-                    'Upload file berdasarkan filePath yang telah dirancang'
-                    WebUI.uploadFile(findTestObject('TandaTanganDokumen/input_documentExample'), filePath, FailureHandling.CONTINUE_ON_FAILURE)
-                }
+                'call function input form'
+				inputForm(conneSign, checked)
                 
                 'Klik button lanjut'
                 WebUI.click(findTestObject('TandaTanganDokumen/btn_Lanjut'))
 
                 if (isMandatoryComplete > 0) {
                     'write to excel status failed dan reason'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm, 
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
-                            2).replace('-', '') + semicolon) + GlobalVariable.ReasonFailedMandatory)
+                            rowExcel('Reason Failed')).replace('-', '') + semicolon) + GlobalVariable.ReasonFailedMandatory)
 
                     GlobalVariable.FlagFailed = 1
                 } else if (WebUI.verifyElementPresent(findTestObject('TandaTanganDokumen/lbl_konfirmasi'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
@@ -151,15 +93,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                     'Data document template code, template name, template description yang telah diinput diverifikasi dengan excel'
                     checkVerifyEqualorMatch(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
-                                9), WebUI.getAttribute(findTestObject('TandaTanganDokumen/input_documentTemplateCode'), 
+                                rowExcel('Kode Templat Dokumen')), WebUI.getAttribute(findTestObject('TandaTanganDokumen/input_documentTemplateCode'), 
                                 'value'), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada Document Template Code ')
 
                     checkVerifyEqualorMatch(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
-                                10), WebUI.getAttribute(findTestObject('TandaTanganDokumen/input_documentTemplateName'), 
+                                rowExcel('Nama Templat Dokumen')), WebUI.getAttribute(findTestObject('TandaTanganDokumen/input_documentTemplateName'), 
                                 'value'), false, FailureHandling.CONTINUE_ON_FAILURE), 'pada Document Template Name')
 
                     checkVerifyEqualorMatch(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
-                                11), WebUI.getAttribute(findTestObject('TandaTanganDokumen/input_documentTemplateDescription'), 
+                                rowExcel('$Deskripsi')), WebUI.getAttribute(findTestObject('TandaTanganDokumen/input_documentTemplateDescription'), 
                                 'value'), false, FailureHandling.CONTINUE_ON_FAILURE), 'pada Deskripsi Document Template')
 
                     'Klik dropdown mengenai tipe pembayaran'
@@ -167,14 +109,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                     'Verifikasi input tipe pembayaran dengan excel'
                     checkVerifyEqualorMatch(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
-                                12), WebUI.getText(findTestObject('TandaTanganDokumen/check_tipePembayaran')), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada Tipe Pembayaran ')
+                                rowExcel('$Tipe Pembayaran TTD')), WebUI.getText(findTestObject('TandaTanganDokumen/check_tipePembayaran')), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada Tipe Pembayaran ')
 
                     'Klik dropdown mengenai status'
                     WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_ddlaktif'))
 
                     'Verifikasi input status dengan excel'
                     checkVerifyEqualorMatch(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
-                                14), WebUI.getText(findTestObject('TandaTanganDokumen/check_tipePembayaran')), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada Status ')
+                                rowExcel('Status Active')), WebUI.getText(findTestObject('TandaTanganDokumen/check_tipePembayaran')), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada Status ')
 
                     'Input enter'
                     WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
@@ -190,98 +132,33 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         ReasonFailed = WebUI.getAttribute(findTestObject('BuatUndangan/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 
                         'write to excel status failed dan reason'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm, 
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                             GlobalVariable.StatusFailed, (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
-                                2).replace('-', '') + semicolon) + '<' + ReasonFailed + '>')
+                                rowExcel('Reason Failed')).replace('-', '') + semicolon) + '<' + ReasonFailed + '>')
 
                         GlobalVariable.FlagFailed = 1
                     } else if (WebUI.verifyElementPresent(findTestObject('Object Repository/TandaTanganDokumen/btn_ttd'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-						'Klik button tanda tangan'
-                        WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_ttd'))
-
-                        'Klik set tanda tangan'
-                        WebUI.click(findTestObject('TandaTanganDokumen/btn_setTandaTangan'))
-
-                        'click button lock signbox'
-                        WebUI.click(findTestObject('TandaTanganDokumen/btn_LockSignBox'))
-
-                        isLocked = WebUI.getAttribute(findTestObject('TandaTanganDokumen/btn_LockSignBox'), 'class', 
-                            FailureHandling.STOP_ON_FAILURE)
-
-                        'verify sign box is locked'
-                        checkVerifyEqualorMatch(WebUI.verifyMatch(isLocked, 'fa fa-2x fa-lock', false, FailureHandling.CONTINUE_ON_FAILURE), ' pada sign locked ')
-
-                        'Klik button Delete'
-                        WebUI.click(findTestObject('TandaTanganDokumen/btn_DeleteSignBox'))
-
-                        'verify sign box is deleted'
-                        checkVerifyEqualorMatch(WebUI.verifyElementNotPresent(findTestObject('TandaTanganDokumen/signBox'), 
-                                GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE), ' pada deletenya box Sign ')
-
-                        'looping berdasarkan total tanda tangan'
-                        for (int j = 1; j <= RoleTandaTangan.size(); j++) {
-                            if ((TipeTandaTangan[(j - 1)]).equalsIgnoreCase('TTD')) {
-                                'Klik button tanda tangan'
-                                WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_ttd'))
-                            } else if ((TipeTandaTangan[(j - 1)]).equalsIgnoreCase('Paraf')) {
-                                'Klik button tanda tangan'
-                                WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_paraf'))
-                            } else if ((TipeTandaTangan[(j - 1)]).equalsIgnoreCase('Meterai')) {
-                                'Klik button tanda tangan'
-                                WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_materai'))
-                            }
-							
-							'modify label tipe tanda tangan di kotak'
-							modifyobjectTTDlblRoleTandaTangan = WebUI.modifyObjectProperty(findTestObject('Object Repository/TandaTanganDokumen/lbl_TTDTipeTandaTangan'),
-								'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' +
-								j) + ']/div/div/small', true)
-							
-                            if ((TipeTandaTangan[(j - 1)]).equalsIgnoreCase('TTD') || (TipeTandaTangan[(j - 1)]).equalsIgnoreCase('Paraf')) {
-                                'Verify label tanda tangannya muncul atau tidak'
-                                WebUI.verifyElementPresent(findTestObject('TandaTanganDokumen/lbl_TipeTandaTangan'), GlobalVariable.TimeOut, 
-                                    FailureHandling.CONTINUE_ON_FAILURE)
-
-								'Klik set tanda tangan'
-								WebUI.click(findTestObject('TandaTanganDokumen/ddl_TipeTandaTangan'))
-								
-                                'Memilih tipe signer apa berdasarkan excel'
-                                WebUI.selectOptionByLabel(findTestObject('TandaTanganDokumen/ddl_TipeTandaTangan'), RoleTandaTangan[
-                                    (j - 1)], false)
-
-                                'Klik set tanda tangan'
-                                WebUI.click(findTestObject('TandaTanganDokumen/btn_setTandaTangan'))
-
-                                'Verifikasi antara excel dan UI, apakah tipenya sama'
-                                WebUI.verifyMatch(RoleTandaTangan[(j - 1)], WebUI.getText(modifyobjectTTDlblRoleTandaTangan), 
-                                    false)
-                            }
-                            
-                            'Verify apakah tanda tangannya ada'
-                            if (WebUI.verifyElementPresent(modifyobjectTTDlblRoleTandaTangan, GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
-                                'check if signbox mau dipindahkan'
-                                if ((SignBoxAction[(j - 1)]).equalsIgnoreCase('Yes')) {
-                                    'memindahkan sign box'
-                                    CustomKeywords.'customizekeyword.JSExecutor.jsExecutionFunction'('arguments[0].style.transform = arguments[1]', 
-                                        ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' + 
-                                        j) + ']/div', SignBoxLocation[(j - 1)])
-                                }
-                                
-                                'check if signbox mau dilock posisinya'
-                                if ((LockSignBox[(j - 1)]).equalsIgnoreCase('Yes')) {
-                                    'modify obejct lock signbox'
-                                    modifyobjectLockSignBox = WebUI.modifyObjectProperty(findTestObject('TandaTanganDokumen/btn_LockSignBox'), 
-                                        'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' + 
-                                        j) + ']/div/button[1]/span', true)
-
-                                    'click lock signbox'
-                                    WebUI.click(modifyobjectLockSignBox)
-                                }
-                            }
-                        }
+						'call function input signbox'
+						inputSignBox()
                         
                         'click button simpan'
                         WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_SimpanPengaturanDokumen'))
 
+						'Jika error lognya muncul'
+						if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+							GlobalVariable.FlagFailed = 1
+							'ambil teks errormessage'
+							errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
+							
+							'Tulis di excel itu adalah error'
+							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+							(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + '<' + errormessage + '>')
+							
+							GlobalVariable.FlagFailed = 1
+							
+							continue
+						}
+						
 						'call function untuk sorting sequence sign'
 						sortingSequenceSign()
 						
@@ -290,9 +167,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     }
                 } else {
 					'write to excel status failed dan reason'
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm,
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 						GlobalVariable.StatusFailed, (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm,
-							2).replace('-', '') + semicolon) + GlobalVariable.ReasonFailedSaveGagal + ' pada Pembuatan Document Template ')
+							rowExcel('Reason Failed')).replace('-', '') + semicolon) + GlobalVariable.ReasonFailedSaveGagal + ' pada Pembuatan Document Template ')
 					
 					GlobalVariable.FlagFailed = 1
 				}
@@ -306,7 +183,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
             'get data doc template from db'
             result = CustomKeywords.'connection.PengaturanDokumen.getDataDocTemplate'(conneSign, findTestData(excelPathPengaturanDokumen).getValue(
-                    GlobalVariable.NumofColm, 24))
+                    GlobalVariable.NumofColm, rowExcel('Kode Templat Dokumen - Search')))
 
             arrayIndex = 0
 
@@ -333,7 +210,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 GlobalVariable.TimeOut, FailureHandling.OPTIONAL) && (GlobalVariable.FlagFailed == 0)) {
 				if (GlobalVariable.FlagFailed == 0) {
                 'write to excel success'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PengaturanDokumen', 
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
                     0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 				}
             }
@@ -346,7 +223,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
             'get data doc template from db'
             result = CustomKeywords.'connection.PengaturanDokumen.dataDocTemplateStoreDB'(conneSign, findTestData(excelPathPengaturanDokumen).getValue(
-                    GlobalVariable.NumofColm, 24))
+                    GlobalVariable.NumofColm, rowExcel('Kode Templat Dokumen - Search')))
 
             arrayIndex = 0
 
@@ -376,39 +253,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             checkVerifyPaging(WebUI.verifyMatch(WebUI.getText(findTestObject('TandaTanganDokumen/check_tipePembayaran')), 
                     result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-            'Input text documentTemplateName'
-            WebUI.setText(findTestObject('TandaTanganDokumen/input_documentTemplateName'), findTestData(excelPathPengaturanDokumen).getValue(
-                    GlobalVariable.NumofColm, 10))
-
-            'Input text documentTemplateDescription'
-            WebUI.setText(findTestObject('TandaTanganDokumen/input_documentTemplateDescription'), findTestData(excelPathPengaturanDokumen).getValue(
-                    GlobalVariable.NumofColm, 11))
-
-            'Input value tipe pembayaran'
-            WebUI.setText(findTestObject('TandaTanganDokumen/input_tipePembayaran'), findTestData(excelPathPengaturanDokumen).getValue(
-                    GlobalVariable.NumofColm, 12))
-
-            'Input enter'
-            WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_tipePembayaran'), Keys.chord(Keys.ENTER))
-
-            'Jika panjang dokumen lebih besar dari 0'
-            if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 13).length() > 0) {
-                'Code untuk mengambil file berdasarkan direktori masing-masing sekaligus ambil value dari excel'
-                String userDir = System.getProperty('user.dir')
-
-                String filePath = userDir + findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
-                    13)
-
-                'Upload file berdasarkan filePath yang telah dirancang'
-                WebUI.uploadFile(findTestObject('TandaTanganDokumen/input_documentExample'), filePath)
-            }
-            
-            'Input value status'
-            WebUI.setText(findTestObject('TandaTanganDokumen/input_Status'), findTestData(excelPathPengaturanDokumen).getValue(
-                    GlobalVariable.NumofColm, 14))
-
-            'Input enter'
-            WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
+			'call function input form'
+            inputForm(conneSign, checked)
 
             'Klik button lanjut'
             WebUI.click(findTestObject('TandaTanganDokumen/btn_Lanjut'))
@@ -420,15 +266,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                 'Data document template code, template name, template description yang telah diinput diverifikasi dengan excel'
                 checkVerifyEqualorMatch(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
-                            9), WebUI.getAttribute(findTestObject('TandaTanganDokumen/input_documentTemplateCode'), 'value'), 
+                            rowExcel('Kode Templat Dokumen')), WebUI.getAttribute(findTestObject('TandaTanganDokumen/input_documentTemplateCode'), 'value'), 
                         false, FailureHandling.CONTINUE_ON_FAILURE), ' pada Document Template Code ')
 
                 checkVerifyEqualorMatch(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
-                            10), WebUI.getAttribute(findTestObject('TandaTanganDokumen/input_documentTemplateName'), 'value'), 
+                            rowExcel('Nama Templat Dokumen')), WebUI.getAttribute(findTestObject('TandaTanganDokumen/input_documentTemplateName'), 'value'), 
                         false, FailureHandling.CONTINUE_ON_FAILURE), ' pada Document Template Name ')
 
                 checkVerifyEqualorMatch(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
-                            11), WebUI.getAttribute(findTestObject('TandaTanganDokumen/input_documentTemplateDescription'), 
+                            rowExcel('$Deskripsi')), WebUI.getAttribute(findTestObject('TandaTanganDokumen/input_documentTemplateDescription'), 
                             'value'), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada Deskripsi Document Template ')
 
                 'Klik dropdown mengenai tipe pembayaran'
@@ -436,14 +282,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                 'Verifikasi input tipe pembayaran dengan excel'
                 checkVerifyEqualorMatch(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
-                            12), WebUI.getText(findTestObject('TandaTanganDokumen/check_tipePembayaran')), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada tipe pembayaran ')
+                            rowExcel('$Tipe Pembayaran TTD')), WebUI.getText(findTestObject('TandaTanganDokumen/check_tipePembayaran')), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada tipe pembayaran ')
 
                 'Klik dropdown mengenai status'
                 WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_ddlaktif'))
 
                 'Verifikasi input status dengan excel'
                 checkVerifyEqualorMatch(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
-                            14), WebUI.getText(findTestObject('TandaTanganDokumen/check_tipePembayaran')), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada status ')
+                            rowExcel('Status Active')), WebUI.getText(findTestObject('TandaTanganDokumen/check_tipePembayaran')), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada status ')
 
                 'Input enter'
                 WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
@@ -460,124 +306,30 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 					errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
 					
 					'Tulis di excel itu adalah error'
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-					(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<' + errormessage + '>')
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+					(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + '<' + errormessage + '>')
 					
 					GlobalVariable.FlagFailed = 1
 				}
 
                 if (isMandatoryComplete > 0) {
                     'write to excel status failed dan reason'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm, 
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
-                            2).replace('-', '') + semicolon) + GlobalVariable.ReasonFailedMandatory)
+                            rowExcel('Reason Failed')).replace('-', '') + semicolon) + GlobalVariable.ReasonFailedMandatory)
 
                     GlobalVariable.FlagFailed = 1
                 } else if (WebUI.verifyElementPresent(findTestObject('Object Repository/TandaTanganDokumen/input_KodeTemplatDokumen'), 
                     GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 					if (GlobalVariable.FlagFailed == 0) {
 						'write to excel success'
-						CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PengaturanDokumen',
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
 							0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 					}
                 } else if (WebUI.verifyElementPresent(findTestObject('Object Repository/TandaTanganDokumen/btn_ttd'), GlobalVariable.TimeOut, 
                     FailureHandling.OPTIONAL)) {
-                    'Pembuatan variable mengenai jumlah delete, jumlah lock, dan indexlock untuk loop kedepannya'
-                    RoleTandaTangan = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 15).split(
-                        semicolon, splitIndex)
-
-                    TipeTandaTangan = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 16).split(
-                        semicolon, splitIndex)
-
-                    SignBoxAction = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 17).split(
-                        semicolon, splitIndex)
-
-                    SignBoxLocation = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 18).split(
-                        '\\n', splitIndex)
-
-                    LockSignBox = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 19).split(
-                        semicolon, splitIndex)
-
-                    'Klik button tanda tangan'
-                    WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_ttd'))
-
-                    'Klik set tanda tangan'
-                    WebUI.click(findTestObject('TandaTanganDokumen/btn_setTandaTangan'))
-
-                    'click button lock signbox'
-                    WebUI.click(findTestObject('TandaTanganDokumen/btn_LockSignBox'))
-
-                    isLocked = WebUI.getAttribute(findTestObject('TandaTanganDokumen/btn_LockSignBox'), 'class', 
-                        FailureHandling.STOP_ON_FAILURE)
-
-                    'verify sign box is locked'
-                    checkVerifyEqualorMatch(WebUI.verifyMatch(isLocked, 'fa fa-2x fa-lock', false, FailureHandling.CONTINUE_ON_FAILURE), ' pada sign Box ')
-
-                    'Klik button Delete'
-                    WebUI.click(findTestObject('TandaTanganDokumen/btn_DeleteSignBox'))
-
-                    'verify sign box is deleted'
-                    checkVerifyEqualorMatch(WebUI.verifyElementNotPresent(findTestObject('TandaTanganDokumen/signBox'), 
-                            GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE),' pada deletenya sign Box ')
-
-                    'looping berdasarkan total tanda tangan'
-                    for (int j = 1; j <= RoleTandaTangan.size(); j++) {
-                        if ((TipeTandaTangan[(j - 1)]).equalsIgnoreCase('TTD')) {
-                            'Klik button tanda tangan'
-                            WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_ttd'))
-                        } else if ((TipeTandaTangan[(j - 1)]).equalsIgnoreCase('Paraf')) {
-                            'Klik button tanda tangan'
-                            WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_paraf'))
-                        } else if ((TipeTandaTangan[(j - 1)]).equalsIgnoreCase('Meterai')) {
-                            'Klik button tanda tangan'
-                            WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_materai'))
-                        }
-                        
-						'modify label tipe tanda tangan di kotak'
-						modifyobjectTTDlblRoleTandaTangan = WebUI.modifyObjectProperty(findTestObject('Object Repository/TandaTanganDokumen/lbl_TTDTipeTandaTangan'),
-							'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' +
-							j) + ']/div/div/small', true)
-						
-                        if ((TipeTandaTangan[(j - 1)]).equalsIgnoreCase('TTD') || (TipeTandaTangan[(j - 1)]).equalsIgnoreCase(
-                            'Paraf')) {
-                            'Verify label tanda tangannya muncul atau tidak'
-                            WebUI.verifyElementPresent(findTestObject('TandaTanganDokumen/lbl_TipeTandaTangan'), GlobalVariable.TimeOut, 
-                                FailureHandling.CONTINUE_ON_FAILURE)
-
-                            'Memilih tipe signer apa berdasarkan excel'
-                            WebUI.selectOptionByLabel(findTestObject('TandaTanganDokumen/ddl_TipeTandaTangan'), RoleTandaTangan[
-                                (j - 1)], false)
-
-                            'Klik set tanda tangan'
-                            WebUI.click(findTestObject('TandaTanganDokumen/btn_setTandaTangan'))
-
-                            'Verifikasi antara excel dan UI, apakah tipenya sama'
-                            WebUI.verifyMatch(RoleTandaTangan[(j - 1)], WebUI.getText(modifyobjectTTDlblRoleTandaTangan), 
-                                false)
-                        }
-                        
-                        'Verify apakah tanda tangannya ada'
-                        if (WebUI.verifyElementPresent(modifyobjectTTDlblRoleTandaTangan, GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
-                            'check if signbox mau dipindahkan'
-                            if ((SignBoxAction[(j - 1)]).equalsIgnoreCase('Yes')) {
-                                'memindahkan sign box'
-                                CustomKeywords.'customizekeyword.JSExecutor.jsExecutionFunction'('arguments[0].style.transform = arguments[1]', 
-                                    ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' + 
-                                    j) + ']/div', SignBoxLocation[(j - 1)])
-                            }
-                            
-                            'check if signbox mau dilock posisinya'
-                            if ((LockSignBox[(j - 1)]).equalsIgnoreCase('Yes')) {
-                                'modify obejct lock signbox'
-                                modifyobjectLockSignBox = WebUI.modifyObjectProperty(findTestObject('TandaTanganDokumen/btn_LockSignBox'), 
-                                    'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' + 
-                                    j) + ']/div/button[1]/span', true)
-
-                                'click lock signbox'
-                                WebUI.click(modifyobjectLockSignBox)
-                            }
-                        }
-                    }
+					'call function input signbox'
+                    inputSignBox()
                     
                     'click button simpan'
                     WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_SimpanPengaturanDokumen'))
@@ -589,10 +341,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 						errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
 						
 						'Tulis di excel itu adalah error'
-						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-						(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<' + errormessage + '>')
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+						(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + '<' + errormessage + '>')
 						
 						GlobalVariable.FlagFailed = 1
+						
+						continue
 					}
 					
 					'call function sorting sequence sign'
@@ -611,7 +365,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
             'get data doc template from db'
             result = CustomKeywords.'connection.PengaturanDokumen.getDataDocTemplate'(conneSign, findTestData(excelPathPengaturanDokumen).getValue(
-                    GlobalVariable.NumofColm, 24))
+                    GlobalVariable.NumofColm, rowExcel('Kode Templat Dokumen - Search')))
 
             arrayIndex = 0
 
@@ -883,8 +637,8 @@ def checkVerifyEqualorMatch(Boolean isMatch, String reason) {
         'Write to excel status failed and ReasonFailedVerifyEqualorMatch'
         GlobalVariable.FlagFailed = 1
 
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 2) + 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+            GlobalVariable.StatusFailed, (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
             ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
     }
 }
@@ -892,8 +646,8 @@ def checkVerifyEqualorMatch(Boolean isMatch, String reason) {
 def checkVerifyPaging(Boolean isMatch) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedPaging)
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+            GlobalVariable.StatusFailed, (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedPaging)
 
         GlobalVariable.FlagFailed = 1
     }
@@ -990,11 +744,11 @@ def searchPengaturanDokumen() {
 
     'Input teks kode template dokumen'
     WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_KodeTemplatDokumen'), findTestData(excelPathPengaturanDokumen).getValue(
-            GlobalVariable.NumofColm, 24))
+            GlobalVariable.NumofColm, rowExcel('Kode Templat Dokumen - Search')))
 
     'Input teks di nama template dokumen'
     WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_NamaTemplatDokumen'), findTestData(excelPathPengaturanDokumen).getValue(
-            GlobalVariable.NumofColm, 25))
+            GlobalVariable.NumofColm, rowExcel('Nama Templat Dokumen - Search')))
 
 	'Input All untuk reset ddl agar tidak salah pilih'
 	WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_Status'), 'All')
@@ -1004,7 +758,7 @@ def searchPengaturanDokumen() {
 
     'Input AKtif pada input Status'
     WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_Status'), findTestData(excelPathPengaturanDokumen).getValue(
-            GlobalVariable.NumofColm, 26))
+            GlobalVariable.NumofColm, rowExcel('Status Active - Search')))
 
     'Klik enter'
     WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
@@ -1019,15 +773,15 @@ def verifyAfterAddorEdit(def TipeTTD) {
 
 	'Input teks kode template dokumen'
 	WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_KodeTemplatDokumen'), findTestData(excelPathPengaturanDokumen).getValue(
-			GlobalVariable.NumofColm, 9))
+			GlobalVariable.NumofColm, rowExcel('Kode Templat Dokumen')))
 
 	'Input teks di nama template dokumen'
 	WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_NamaTemplatDokumen'), findTestData(excelPathPengaturanDokumen).getValue(
-			GlobalVariable.NumofColm, 10))
+			GlobalVariable.NumofColm, rowExcel('Nama Templat Dokumen')))
 
 	'Input AKtif pada input Status'
 	WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/input_Status'), findTestData(excelPathPengaturanDokumen).getValue(
-			GlobalVariable.NumofColm, 14))
+			GlobalVariable.NumofColm, rowExcel('Status Active')))
 
 	'Klik enter'
 	WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
@@ -1037,15 +791,15 @@ def verifyAfterAddorEdit(def TipeTTD) {
 	
 	'verify after add / edit kode pengaturan dokumen'
 	checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/TandaTanganDokumen/label_KodePengaturanDokumen')), findTestData(excelPathPengaturanDokumen).getValue(
-			GlobalVariable.NumofColm, 9), false, FailureHandling.CONTINUE_ON_FAILURE), ' kode pengaturan dokumen')
+			GlobalVariable.NumofColm, rowExcel('Kode Templat Dokumen')), false, FailureHandling.CONTINUE_ON_FAILURE), ' kode pengaturan dokumen')
 	
 	'verify after add / edit nama pengaturan dokumen'
 	checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/TandaTanganDokumen/label_NamaPengaturanDokumen')), findTestData(excelPathPengaturanDokumen).getValue(
-			GlobalVariable.NumofColm, 10).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama pengaturan dokumen')
+			GlobalVariable.NumofColm, rowExcel('Nama Templat Dokumen')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama pengaturan dokumen')
 	
 	'verify after add / edit deskripsi pengaturan dokumen'
 	checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/TandaTanganDokumen/label_DeskripsiPengaturanDokumen')), findTestData(excelPathPengaturanDokumen).getValue(
-			GlobalVariable.NumofColm, 11).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Deskripsi pengaturan dokumen')
+			GlobalVariable.NumofColm, rowExcel('$Deskripsi')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Deskripsi pengaturan dokumen')
 	
 	'verify after add / edit TTD pengaturan dokumen'
 	checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/TandaTanganDokumen/label_TTD')), TipeTTD.count('TTD').toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' TTD pengaturan dokumen')
@@ -1058,55 +812,18 @@ def verifyAfterAddorEdit(def TipeTTD) {
 	
 	'verify after add / edit Tipe Pembayaran Dokumen pengaturan dokumen'
 	checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/TandaTanganDokumen/label_TipePembayaranTTD')), findTestData(excelPathPengaturanDokumen).getValue(
-			GlobalVariable.NumofColm, 12), false, FailureHandling.CONTINUE_ON_FAILURE), ' Tipe Pembayaran Dokumen pengaturan dokumen')
+			GlobalVariable.NumofColm, rowExcel('$Tipe Pembayaran TTD')), false, FailureHandling.CONTINUE_ON_FAILURE), ' Tipe Pembayaran Dokumen pengaturan dokumen')
 }
 
-def inputCancel() {
+def inputCancel(Connection conneSign, int checked) {
 	'click menu pengaturan dokumen'
 	WebUI.click(findTestObject('TandaTanganDokumen/btn_PengaturanDokumen'))
 
 	'Klik tombol tambah pengaturan dokumen'
 	WebUI.click(findTestObject('TandaTanganDokumen/btn_Add'))
 
-	'Input text documentTemplateCode'
-	WebUI.setText(findTestObject('TandaTanganDokumen/input_documentTemplateCode'), findTestData(excelPathPengaturanDokumen).getValue(
-			GlobalVariable.NumofColm, 9))
-	
-	'Input text documentTemplateName'
-	WebUI.setText(findTestObject('TandaTanganDokumen/input_documentTemplateName'), findTestData(excelPathPengaturanDokumen).getValue(
-			GlobalVariable.NumofColm, 10))
-	
-	'Input text documentTemplateDescription'
-	WebUI.setText(findTestObject('TandaTanganDokumen/input_documentTemplateDescription'), findTestData(excelPathPengaturanDokumen).getValue(
-			GlobalVariable.NumofColm, 11))
-	
-	'Input value tipe pembayaran'
-	WebUI.setText(findTestObject('TandaTanganDokumen/input_tipePembayaran'), findTestData(excelPathPengaturanDokumen).getValue(
-			GlobalVariable.NumofColm, 12))
-	
-	'Input enter'
-	WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_tipePembayaran'), Keys.chord(Keys.ENTER))
-	
-	'Input value Psre'
-	WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/select_Psre'), findTestData(excelPathPengaturanDokumen).getValue(
-			GlobalVariable.NumofColm, 20))
-	
-	'Input enter'
-	WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_Psre'), Keys.chord(Keys.ENTER))
-	
-	'Input value sequential sign'
-	WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/select_SequentialSigning'), findTestData(excelPathPengaturanDokumen).getValue(
-			GlobalVariable.NumofColm, 21))
-	
-	'Input enter'
-	WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_SequentialSigning'), Keys.chord(Keys.ENTER))
-	
-	'Input value status'
-	WebUI.setText(findTestObject('TandaTanganDokumen/input_Status'), findTestData(excelPathPengaturanDokumen).getValue(
-			GlobalVariable.NumofColm, 14))
-	
-	'Input enter'
-	WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
+	'call function input form'
+	inputForm(conneSign, checked)
 	
 	'Klik button cancel'
 	WebUI.click(findTestObject('TandaTanganDokumen/button_Cancel'))
@@ -1141,8 +858,8 @@ def inputCancel() {
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 	if (isMatch == false) {
 		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-			(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+			(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
 
 		GlobalVariable.FlagFailed = 1
 	}
@@ -1180,6 +897,8 @@ def checkDDL(TestObject objectDDL, ArrayList<String> listDB, String reason) {
 	'verify jumlah ddl ui = db'
 	checkVerifyEqualOrMatch(WebUI.verifyEqual(list.size(), listDB.size(), FailureHandling.CONTINUE_ON_FAILURE), ' Jumlah ' + reason)
 	
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(list.toString(), listDB.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Jumlah ' + reason)
+	
 	'Input enter untuk tutup ddl'
 	WebUI.sendKeys(objectDDL, Keys.chord(Keys.ENTER))
 }
@@ -1188,9 +907,9 @@ def checkPopUpBerhasil(int isMandatoryComplete, String semicolon) {
 	'check if pengaturan document berhasil disimpan'
 	if (isMandatoryComplete > 0) {
 		'write to excel status failed dan reason'
-		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm,
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 			GlobalVariable.StatusFailed, (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm,
-				2).replace('-', '') + semicolon) + GlobalVariable.ReasonFailedMandatory)
+				rowExcel('Reason Failed')).replace('-', '') + semicolon) + GlobalVariable.ReasonFailedMandatory)
 
 		GlobalVariable.FlagFailed = 1
 	} else if (WebUI.verifyElementPresent(findTestObject('TandaTanganDokumen/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
@@ -1198,9 +917,9 @@ def checkPopUpBerhasil(int isMandatoryComplete, String semicolon) {
 		reason = WebUI.getAttribute(findTestObject('TandaTanganDokumen/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 		
 		'write to excel status failed dan reason'
-		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PengaturanDokumen', GlobalVariable.NumofColm,
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 			GlobalVariable.StatusFailed, (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm,
-				2).replace('-', '') + semicolon) + '<' + reason + '>')
+				rowExcel('Reason Failed')).replace('-', '') + semicolon) + '<' + reason + '>')
 		
 		GlobalVariable.FlagFailed = 1
 	} else if (WebUI.getText(findTestObject('TandaTanganDokumen/label_PopUp'), FailureHandling.OPTIONAL).equalsIgnoreCase('Document Template berhasil di simpan')) {
@@ -1209,7 +928,7 @@ def checkPopUpBerhasil(int isMandatoryComplete, String semicolon) {
 		
 		if(GlobalVariable.FlagFailed == 0) {
 			'write to excel success'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PengaturanDokumen',
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
 					0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 		}
 	}
@@ -1217,9 +936,9 @@ def checkPopUpBerhasil(int isMandatoryComplete, String semicolon) {
 
 def sortingSequenceSign() {
 	'check if Sequential signing iya'
-	if(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 21).equalsIgnoreCase('Iya')) {
+	if(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Sequential Signing')).equalsIgnoreCase('Iya')) {
 		'get urutan seq sign dari excel'
-		ArrayList<String> seqSignRole = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 22).split(';',-1)
+		ArrayList<String> seqSignRole = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Urutan Signing')).split(';',-1)
 		
 		'count box'
 		variable = DriverFactory.webDriver.findElements(By.cssSelector('#cdk-drop-list-0 div'))
@@ -1253,4 +972,177 @@ def sortingSequenceSign() {
 		'delay untuk loading simpan'
 		WebUI.delay(3)
 	}
+}
+
+def inputForm(Connection conneSign, int checked) {
+	if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('New')) {		
+		'Input text documentTemplateCode'
+		WebUI.setText(findTestObject('TandaTanganDokumen/input_documentTemplateCode'), findTestData(excelPathPengaturanDokumen).getValue(
+				GlobalVariable.NumofColm, rowExcel('Kode Templat Dokumen')))
+	}
+
+	'Input text documentTemplateName'
+	WebUI.setText(findTestObject('TandaTanganDokumen/input_documentTemplateName'), findTestData(excelPathPengaturanDokumen).getValue(
+			GlobalVariable.NumofColm, rowExcel('Nama Templat Dokumen')))
+
+	'Input text documentTemplateDescription'
+	WebUI.setText(findTestObject('TandaTanganDokumen/input_documentTemplateDescription'), findTestData(excelPathPengaturanDokumen).getValue(
+			GlobalVariable.NumofColm, rowExcel('$Deskripsi')))
+
+	if(GlobalVariable.NumofColm == 2 && checked == 0) {
+		'get data tipe-tipe pembayaran secara asc'
+		ArrayList<String> tipePembayaranDB = CustomKeywords.'connection.PengaturanDokumen.getLovTipePembayaran'(conneSign)
+	
+		'check ddl tipe pembayaran'
+		checkDDL(findTestObject('TandaTanganDokumen/input_tipePembayaran'), tipePembayaranDB, ' pada tipe pembayaran Ttd ')
+	}
+	
+	'Input value tipe pembayaran'
+	WebUI.setText(findTestObject('TandaTanganDokumen/input_tipePembayaran'), findTestData(excelPathPengaturanDokumen).getValue(
+			GlobalVariable.NumofColm, rowExcel('$Tipe Pembayaran TTD')))
+
+	'Input enter'
+	WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_tipePembayaran'), Keys.chord(Keys.ENTER))
+
+	if(GlobalVariable.NumofColm == 2 && checked == 0) {		
+		'get data tipe-tipe pembayaran secara asc'
+		ArrayList<String> resultVendorDDL = CustomKeywords.'connection.PengaturanDokumen.getDDLVendor'(conneSign)
+	
+		'check ddl psre'
+		checkDDL(findTestObject('Object Repository/TandaTanganDokumen/select_Psre'), resultVendorDDL, ' pada DDL Psre ')
+		
+		checked = 1
+	}
+	
+	'Input value Psre'
+	WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/select_Psre'), findTestData(excelPathPengaturanDokumen).getValue(
+			GlobalVariable.NumofColm, rowExcel('Input Psre')))
+
+	'Input enter'
+	WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_Psre'), Keys.chord(Keys.ENTER))
+	WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_Psre'), Keys.chord(Keys.ENTER))
+	
+	'Input value sequential sign'
+	WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/select_SequentialSigning'), findTestData(excelPathPengaturanDokumen).getValue(
+			GlobalVariable.NumofColm, rowExcel('Sequential Signing')))
+
+	'Input enter'
+	WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_SequentialSigning'), Keys.chord(Keys.ENTER))
+
+	'Input value status'
+	WebUI.setText(findTestObject('TandaTanganDokumen/input_Status'), findTestData(excelPathPengaturanDokumen).getValue(
+			GlobalVariable.NumofColm, rowExcel('Status Active')))
+
+	'Input enter'
+	WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
+
+	'Jika panjang dokumen lebih besar dari 0'
+	if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('$Dokumen')).length() > 0) {
+		'Code untuk mengambil file berdasarkan direktori masing-masing sekaligus ambil value dari excel'
+		String userDir = System.getProperty('user.dir')
+
+		String filePath = userDir + findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm,
+			rowExcel('$Dokumen'))
+
+		'Upload file berdasarkan filePath yang telah dirancang'
+		WebUI.uploadFile(findTestObject('TandaTanganDokumen/input_documentExample'), filePath, FailureHandling.CONTINUE_ON_FAILURE)
+	}
+}	
+
+def inputSignBox() {
+	'Pembuatan variable mengenai jumlah delete, jumlah lock, dan indexlock untuk loop kedepannya'
+	RoleTandaTangan = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('$RoleTandaTangan')).split(semicolon, splitIndex)
+
+	TipeTandaTangan = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('$TipeTandaTangan')).split(semicolon, splitIndex)
+
+	SignBoxAction = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('$Pindahkan SignBox')).split(semicolon, splitIndex)
+
+	SignBoxLocation = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('$Lokasi Pemindahan signbox')).split('\\n', splitIndex)
+
+	LockSignBox = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('$Lock Sign Box')).split(semicolon, splitIndex)
+	
+	'Klik button tanda tangan'
+	WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_ttd'))
+
+	'Klik set tanda tangan'
+	WebUI.click(findTestObject('TandaTanganDokumen/btn_setTandaTangan'))
+
+	'click button lock signbox'
+	WebUI.click(findTestObject('TandaTanganDokumen/btn_LockSignBox'))
+
+	isLocked = WebUI.getAttribute(findTestObject('TandaTanganDokumen/btn_LockSignBox'), 'class',
+		FailureHandling.STOP_ON_FAILURE)
+
+	'verify sign box is locked'
+	checkVerifyEqualorMatch(WebUI.verifyMatch(isLocked, 'fa fa-2x fa-lock', false, FailureHandling.CONTINUE_ON_FAILURE), ' pada sign Box ')
+
+	'Klik button Delete'
+	WebUI.click(findTestObject('TandaTanganDokumen/btn_DeleteSignBox'))
+
+	'verify sign box is deleted'
+	checkVerifyEqualorMatch(WebUI.verifyElementNotPresent(findTestObject('TandaTanganDokumen/signBox'),
+			GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE),' pada deletenya sign Box ')
+
+	'looping berdasarkan total tanda tangan'
+	for (int j = 1; j <= RoleTandaTangan.size(); j++) {
+		if ((TipeTandaTangan[(j - 1)]).equalsIgnoreCase('TTD')) {
+			'Klik button tanda tangan'
+			WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_ttd'))
+		} else if ((TipeTandaTangan[(j - 1)]).equalsIgnoreCase('Paraf')) {
+			'Klik button tanda tangan'
+			WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_paraf'))
+		} else if ((TipeTandaTangan[(j - 1)]).equalsIgnoreCase('Meterai')) {
+			'Klik button tanda tangan'
+			WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_materai'))
+		}
+		
+		'modify label tipe tanda tangan di kotak'
+		modifyobjectTTDlblRoleTandaTangan = WebUI.modifyObjectProperty(findTestObject('Object Repository/TandaTanganDokumen/lbl_TTDTipeTandaTangan'),
+			'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' +
+			j) + ']/div/div/small', true)
+		
+		if ((TipeTandaTangan[(j - 1)]).equalsIgnoreCase('TTD') || (TipeTandaTangan[(j - 1)]).equalsIgnoreCase(
+			'Paraf')) {
+			'Verify label tanda tangannya muncul atau tidak'
+			WebUI.verifyElementPresent(findTestObject('TandaTanganDokumen/lbl_TipeTandaTangan'), GlobalVariable.TimeOut,
+				FailureHandling.CONTINUE_ON_FAILURE)
+
+			'Memilih tipe signer apa berdasarkan excel'
+			WebUI.selectOptionByLabel(findTestObject('TandaTanganDokumen/ddl_TipeTandaTangan'), RoleTandaTangan[
+				(j - 1)], false)
+
+			'Klik set tanda tangan'
+			WebUI.click(findTestObject('TandaTanganDokumen/btn_setTandaTangan'))
+
+			'Verifikasi antara excel dan UI, apakah tipenya sama'
+			WebUI.verifyMatch(RoleTandaTangan[(j - 1)], WebUI.getText(modifyobjectTTDlblRoleTandaTangan),
+				false)
+		}
+		
+		'Verify apakah tanda tangannya ada'
+		if (WebUI.verifyElementPresent(modifyobjectTTDlblRoleTandaTangan, GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+			'check if signbox mau dipindahkan'
+			if ((SignBoxAction[(j - 1)]).equalsIgnoreCase('Yes')) {
+				'memindahkan sign box'
+				CustomKeywords.'customizekeyword.JSExecutor.jsExecutionFunction'('arguments[0].style.transform = arguments[1]',
+					('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' +
+					j) + ']/div', SignBoxLocation[(j - 1)])
+			}
+			
+			'check if signbox mau dilock posisinya'
+			if ((LockSignBox[(j - 1)]).equalsIgnoreCase('Yes')) {
+				'modify obejct lock signbox'
+				modifyobjectLockSignBox = WebUI.modifyObjectProperty(findTestObject('TandaTanganDokumen/btn_LockSignBox'),
+					'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' +
+					j) + ']/div/button[1]/span', true)
+
+				'click lock signbox'
+				WebUI.click(modifyobjectLockSignBox)
+			}
+		}
+	}
+}
+
+def rowExcel(String cellValue) {
+	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
