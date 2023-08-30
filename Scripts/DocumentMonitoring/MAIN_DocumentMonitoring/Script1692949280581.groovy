@@ -16,7 +16,7 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
 'panggil fungsi login'
-WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('TC') : 'DocumentMonitoring', ('SheetName') : 'DocumentMonitoring',
+WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : 'DocumentMonitoring',
 	('Path') : excelPathDocumentMonitoring], FailureHandling.CONTINUE_ON_FAILURE)
 
 //'call testcase login admin'

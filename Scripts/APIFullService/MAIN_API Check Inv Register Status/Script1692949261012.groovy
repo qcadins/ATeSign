@@ -20,33 +20,36 @@ int countColmExcel = findTestData(excelPathCheckInvRegisterStatus).columnNumbers
 
 'looping API Check Inv Register Status'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
-    if (findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
+    if (findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
-    } else if (findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+    } else if (findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
+		
+		'get tenant dari excel per case'
+    	GlobalVariable.Tenant = findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
 		
 		'setting menggunakan base url yang benar atau salah'
-		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathCheckInvRegisterStatus, GlobalVariable.NumofColm, 16)
+		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathCheckInvRegisterStatus, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 		
-		if (findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, 13).equalsIgnoreCase('No')) {
-			GlobalVariable.Psre = findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, 14)
-		} else if (findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, 13).equalsIgnoreCase('Yes')) {
-			GlobalVariable.Psre = findTestData('Login/Setting').getValue(5, 2)
+		if (findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Psre')).equalsIgnoreCase('No')) {
+			GlobalVariable.Psre = findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Psre'))
+		} else if (findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Psre')).equalsIgnoreCase('Yes')) {
+			GlobalVariable.Psre = findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
 		}
 		
 		String value
 		
-		if (findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, 10).equalsIgnoreCase('Yes')) {
+		if (findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Input correct Message')).equalsIgnoreCase('Yes')) {
 			'get invitationcode dari DB > encrypt invitation code > encode invitation code yang sudah di encrypt'
-			value = encodeValue(findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, 11), conneSign)
-		} else if (findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, 10).equalsIgnoreCase('No')) {
-			value = findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, 12)
+			value = encodeValue(findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Email')), conneSign)
+		} else if (findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Input correct Message')).equalsIgnoreCase('No')) {
+			value = findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Message'))
 		}
 		
 		println(value)
 		
 	    'HIT API'
 	    respon = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/API Check Inv Register Status', [('callerId') : findTestData(excelPathCheckInvRegisterStatus).getValue(
-			GlobalVariable.NumofColm, 9), ('msg') : '"' + value + '"']))
+			GlobalVariable.NumofColm, rowExcel('CallerId')), ('msg') : '"' + value + '"']))
 	
 		   if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
 			   
@@ -67,11 +70,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				   verificationResult = WS.getElementPropertyValue(respon, 'verificationResult', FailureHandling.OPTIONAL)
 				
 				   'write to excel success'
-				   CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Check Inv Register Status',
+				   CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
 					   0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 	
 				   'write to excel verif status'
-				   CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Check Inv Register Status',
+				   CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
 					   5, GlobalVariable.NumofColm - 1, activeStatus + ';' + registrationStatus + ';' + verificationInProgress + ';' + verificationResult)
 				   
 				   if(GlobalVariable.checkStoreDB == 'Yes') {
@@ -80,7 +83,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					   
 					   if(GlobalVariable.Psre == 'PRIVY') {
 						   'get result dari db'
-						   result = CustomKeywords.'connection.APIFullService.getCheckInvRegisStoreDB'(conneSign, findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, 11))
+						   result = CustomKeywords.'connection.APIFullService.getCheckInvRegisStoreDB'(conneSign, findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Email')))
 						   
 						   arrayIndex = 0 
 						   
@@ -109,6 +112,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 						   'verify verificationResult'
 						   arrayMatch.add(WebUI.verifyMatch(verificationResult, '', false, FailureHandling.CONTINUE_ON_FAILURE))
 					   }
+					   
+					   'jika data db tidak sesuai dengan excel'
+					   if (arrayMatch.contains(false)) {
+						   'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+						   CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+							   GlobalVariable.StatusFailed, (findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm,
+								   rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
+						   
+						   GlobalVariable.FlagFailed = 1
+					   }
 				   }
 			   } else {
 				   'call function get error message API'
@@ -126,7 +139,7 @@ def getErrorMessageAPI(def respon) {
 	message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
 	'Write To Excel GlobalVariable.StatusFailed and errormessage'
-	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Check Inv Register Status', GlobalVariable.NumofColm,
+	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 		GlobalVariable.StatusFailed, '<' + message + '>')
 }
 
@@ -146,4 +159,8 @@ def encodeValue(String value, Connection conneSign) {
 	} catch (UnsupportedEncodingException ex) {
 		throw new RuntimeException(ex.getCause());
 	}
+}
+
+def rowExcel(String cellValue) {
+	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }

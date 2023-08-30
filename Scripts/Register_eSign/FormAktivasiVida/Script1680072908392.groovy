@@ -14,12 +14,12 @@ ArrayList<String> listOTP = []
 'check email sesuai dengan inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/FormAktivasi/input_Email'), 'value', 
             FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-            15).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Email')
+            rowExcel('Email')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Email')
 
 'check nama lengkap sesuai dengan inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/FormAktivasi/input_NamaLengkap'), 
             'value', FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-            10).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama Lengkap')
+            rowExcel('$Nama')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama Lengkap')
 
 'input kata sandi untuk verify button set ulang'
 WebUI.setText(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), '@Abcd1234')
@@ -42,7 +42,7 @@ checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Bua
 
 'input kata sandi'
 WebUI.setText(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), findTestData(excelPathBuatUndangan).getValue(
-        GlobalVariable.NumofColm, 53))
+        GlobalVariable.NumofColm, rowExcel('Password')))
 
 'click button mata kata sandi'
 WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_MataKataSandi'))
@@ -52,11 +52,11 @@ KataSandi = WebUI.getAttribute(findTestObject('BuatUndangan/FormAktivasi/input_K
 
 'check kata sandi sesuai inputan excel'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(KataSandi, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-            53), false, FailureHandling.CONTINUE_ON_FAILURE), ' Kata sandi tidak sesuai inputan')
+            rowExcel('Password')), false, FailureHandling.CONTINUE_ON_FAILURE), ' Kata sandi tidak sesuai inputan')
 
 'input ulang kata sandi'
 WebUI.setText(findTestObject('BuatUndangan/FormAktivasi/input_UlangKataSandi'), findTestData(excelPathBuatUndangan).getValue(
-        GlobalVariable.NumofColm, 54))
+        GlobalVariable.NumofColm, rowExcel('Retype Password')))
 
 'click button mata ulang kata sandi'
 WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_MataUlangKataSandi'))
@@ -66,7 +66,7 @@ UlangKataSandi = WebUI.getAttribute(findTestObject('BuatUndangan/FormAktivasi/in
 
 'check ulang kata sandi sesuai inputan excel'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(UlangKataSandi, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-            54), false, FailureHandling.CONTINUE_ON_FAILURE), ' Ulang Kata Sandi tidak sesuai inputan')
+            rowExcel('Retype Password')), false, FailureHandling.CONTINUE_ON_FAILURE), ' Ulang Kata Sandi tidak sesuai inputan')
 
 'verify warning password'
 if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertText'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
@@ -74,8 +74,8 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
     reason = WebUI.getText(findTestObject('BuatUndangan/FormAktivasi/alertText'))
 
     'write to excel status failed dan reason'
-    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-        (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<' + reason + '>')
+    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+        (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + '<' + reason + '>')
 
     GlobalVariable.FlagFailed = 1
 } else if (WebUI.verifyElementClickable(findTestObject('BuatUndangan/FormAktivasi/button_Proses'), FailureHandling.OPTIONAL)) {
@@ -87,7 +87,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 
     'get otp dari DB'
     otp = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-            15).toUpperCase())
+            rowExcel('Email')).toUpperCase())
 
     '+1 count send otp'
     (GlobalVariable.Counter)++
@@ -98,7 +98,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
     'add otp ke list'
     listOTP.add(otp)
 
-    if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 55).equalsIgnoreCase('Yes')) {
+    if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Autofill OTP')).equalsIgnoreCase('Yes')) {
         'delay untuk menunggu otp'
         WebUI.delay(5)
 
@@ -106,7 +106,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
         WebUI.setText(findTestObject('BuatUndangan/FormAktivasi/input_OTP'), otp)
 
         'get count untuk resend otp dari excel'
-        countResend = Integer.parseInt(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 57))
+        countResend = Integer.parseInt(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Resend OTP')))
 
         'jika count resend otp excel > 0'
         if (countResend > 0) {
@@ -129,9 +129,9 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
                     reason = WebUI.getText(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'))
 
                     'write to excel status failed dan reason'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-                            2).replace('-', '') + ';') + '<' + reason + '>')
+                            rowExcel('Reason Failed')).replace('-', '') + ';') + '<' + reason + '>')
 
                     'click button tutup error'
                     WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_OK'))
@@ -142,7 +142,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
                 } else {
                     'get data reset request otp dari DB'
                     Integer resultResetOTP = CustomKeywords.'connection.DataVerif.getResetOTP'(conneSign, findTestData(excelPathBuatUndangan).getValue(
-                            GlobalVariable.NumofColm, 15).toUpperCase())
+                            GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase())
 
                     'verify counter otp Katalon sesuai dengan counter otp DB'
                     checkVerifyEqualOrMatch(WebUI.verifyEqual(resultResetOTP, OTPResendCount++, FailureHandling.CONTINUE_ON_FAILURE), ' OTP')
@@ -153,7 +153,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 
                 'get otp dari DB'
                 otp = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathBuatUndangan).getValue(
-                        GlobalVariable.NumofColm, 15).toUpperCase())
+                        GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase())
 
                 'add otp ke list'
                 listOTP.add(otp)
@@ -176,16 +176,16 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
         if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/popUp_AktivasiBerhasil'), GlobalVariable.TimeOut, 
             FailureHandling.OPTIONAL) && (GlobalVariable.FlagFailed == 0)) {
             'write to excel success'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'BuatUndangan', 0, GlobalVariable.NumofColm - 
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, SheetName, 0, GlobalVariable.NumofColm - 
                 1, GlobalVariable.StatusSuccess)
         }
     } else {
         'input otp'
         WebUI.setText(findTestObject('BuatUndangan/FormAktivasi/input_OTP'), findTestData(excelPathBuatUndangan).getValue(
-                GlobalVariable.NumofColm, 56))
+                GlobalVariable.NumofColm, rowExcel('Manual OTP')))
 
         'get count untuk resend otp dari excel'
-        countResend = Integer.parseInt(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 57))
+        countResend = Integer.parseInt(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Resend OTP')))
 
         'jika count resend otp excel > 0'
         if (countResend > 0) {
@@ -208,9 +208,9 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
                     reason = WebUI.getText(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'))
 
                     'write to excel status failed dan reason'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-                            2).replace('-', '') + ';') + '<' + reason + '>')
+                            rowExcel('Reason Failed')).replace('-', '') + ';') + '<' + reason + '>')
 
                     'click button tutup error'
                     WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_OK'))
@@ -221,7 +221,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
                 } else {
                     'get data reset request otp dari DB'
                     Integer resultResetOTP = CustomKeywords.'connection.DataVerif.getResetOTP'(conneSign, findTestData(excelPathBuatUndangan).getValue(
-                            GlobalVariable.NumofColm, 15).toUpperCase())
+                            GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase())
 
                     'verify counter otp Katalon sesuai dengan counter otp DB'
                     checkVerifyEqualOrMatch(WebUI.verifyEqual(resultResetOTP, OTPResendCount++, FailureHandling.CONTINUE_ON_FAILURE), ' OTP')
@@ -232,7 +232,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 
                 'get otp dari DB'
                 otp = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathBuatUndangan).getValue(
-                        GlobalVariable.NumofColm, 15).toUpperCase())
+                        GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase())
 
                 'add otp ke list'
                 listOTP.add(otp)
@@ -242,7 +242,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 
                 'input otp'
                 WebUI.setText(findTestObject('BuatUndangan/FormAktivasi/input_OTP'), findTestData(excelPathBuatUndangan).getValue(
-                        GlobalVariable.NumofColm, 56))
+                        GlobalVariable.NumofColm, rowExcel('Manual OTP')))
             }
         }
         
@@ -253,8 +253,8 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
         if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/popUp_AktivasiBerhasil'), GlobalVariable.TimeOut, 
             FailureHandling.OPTIONAL)) {
             'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
-                GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2) + 
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, 
+                GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
                 ';') + GlobalVariable.ReasonFailedOTPError)
 
             GlobalVariable.FlagFailed = 1
@@ -263,8 +263,8 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
             reason = WebUI.getText(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'))
 
             'write to excel status failed dan reason'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
-                GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2).replace(
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, 
+                GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
                     '-', '') + ';') + '<' + reason + '>')
 
             'click button tutup error'
@@ -281,11 +281,14 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('BuatUndangan', GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 2) + ';') + 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, 
+            GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
             GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
 
         GlobalVariable.FlagFailed = 1
     }
 }
 
+def rowExcel(String cellValue) {
+	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, SheetName, cellValue)
+}

@@ -21,36 +21,41 @@ WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 2))
 
 'maximized window'
 WebUI.maximizeWindow()
-	
+
+'store user login'	
+GlobalVariable.userLogin = findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')).toUpperCase()
+
 'input email'
-WebUI.setText(findTestObject('Login/input_Email'), findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel('EmailWeb')))
+WebUI.setText(findTestObject('Login/input_Email'), findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')))
 
 'store GV user login'
-GlobalVariable.userLogin = findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel('EmailWeb'))
+GlobalVariable.userLogin = findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))
 
 'input password'
-WebUI.setText(findTestObject('Login/input_Password'), findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel('PasswordWeb')))
+WebUI.setText(findTestObject('Login/input_Password'), findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel('Password Login')))
 
 'click button login'
-WebUI.click(findTestObject(Path), FailureHandling.STOP_ON_FAILURE)
+WebUI.click(findTestObject('Login/button_Login'))
 
-'input perusahaan'
-WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel('PerusahaanWeb')))
-
-'enter untuk input perusahaan'
-WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
-
-'input peran'
-WebUI.setText(findTestObject('Login/input_Peran'), findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel('PeranWeb')))
-
-'enter untuk input peran'
-WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
-
-'click button pilih peran'
-WebUI.click(findTestObject('Login/button_pilihPeran'), FailureHandling.STOP_ON_FAILURE)
+if(WebUI.verifyElementPresent(findTestObject('Login/input_Perusahaan'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {	
+	'input perusahaan'
+	WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel('Perusahaan Login')))
+	
+	'enter untuk input perusahaan'
+	WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
+	
+	'input peran'
+	WebUI.setText(findTestObject('Login/input_Peran'), findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel('Peran Login')))
+	
+	'enter untuk input peran'
+	WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
+	
+	'click button pilih peran'
+	WebUI.click(findTestObject('Login/button_pilihPeran'))
+}
 
 'Jika error lognya muncul'
-if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL) && GlobalVariable.FlagFailed == 0) {
+if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 	'ambil teks errormessage'
 	errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
 	
@@ -60,16 +65,8 @@ if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), Globa
 		'-', '') + ';') + '<' + errormessage + '>')
 	
 	GlobalVariable.FlagFailed = 1
-} else if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL) && GlobalVariable.FlagFailed > 0) {
-	'ambil teks errormessage'
-	errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
-	
-	'write to excel reason warning'
-	CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, SheetName,
-		1, GlobalVariable.NumofColm - 1, (findTestData(Path).getValue(GlobalVariable.NumofColm, 2).replace(
-		'-', '') + ';') + '<' + errormessage + '>')
 }
 
 def rowExcel(String cellValue) {
-	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, 'Main', cellValue)
+	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, SheetName, cellValue)
 }

@@ -25,10 +25,10 @@
       <name>excelPathAPIGenerateInvLink</name>
    </variable>
    <variable>
-      <defaultValue>'Login/Setting'</defaultValue>
+      <defaultValue>'API Generate Invitation Link'</defaultValue>
       <description></description>
       <id>6f083b69-9229-48cd-a0f5-912815eb6693</id>
       <masked>false</masked>
-      <name>excelPathSetting</name>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>

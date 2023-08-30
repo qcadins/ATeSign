@@ -16,8 +16,12 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-'memanggil test case login untuk admin wom dengan Admin Legal'
-WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathPengaturanDokumen, ('sheet') : 'PengaturanDokumen'], FailureHandling.CONTINUE_ON_FAILURE)
+'panggil fungsi login'
+WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : 'PengaturanDokumen',
+	('Path') : excelPathPengaturanDokumen], FailureHandling.CONTINUE_ON_FAILURE)
+
+//'memanggil test case login untuk admin wom dengan Admin Legal'
+//WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathPengaturanDokumen, ('sheet') : 'PengaturanDokumen'], FailureHandling.CONTINUE_ON_FAILURE)
 
 'declare untuk split array excel'
 semicolon = ';'

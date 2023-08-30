@@ -447,7 +447,7 @@ public class APIFullService {
 	getAPICheckRegisterStoreDB(Connection conn, String value) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select mv.vendor_name, CASE WHEN mvru.is_registered = '1' AND mvru.is_active = '1' THEN '2' WHEN mvru.is_registered = '1' AND mvru.is_active = '0' THEN '1' END from ms_vendor_registered_user mvru JOIN am_msuser amu ON amu.id_ms_user = mvru.id_ms_user JOIN ms_vendor mv ON mv.id_ms_vendor = mvru.id_ms_vendor where login_id = '" +  value  + "' OR amu.hashed_id_no = encode(sha256('" +  value  + "'), 'hex') OR amu.hashed_phone = encode(sha256('" +  value  + "'), 'hex')")
+		resultSet = stm.executeQuery("select mv.vendor_name, CASE WHEN mvru.is_registered = '0' AND mvru.is_active = '0' THEN '0' WHEN mvru.is_registered = '1' AND mvru.is_active = '1' THEN '2' WHEN mvru.is_registered = '1' AND mvru.is_active = '0' THEN '1' END from ms_vendor_registered_user mvru JOIN am_msuser amu ON amu.id_ms_user = mvru.id_ms_user JOIN ms_vendor mv ON mv.id_ms_vendor = mvru.id_ms_vendor where login_id = '" +  value  + "' OR amu.hashed_id_no = encode(sha256('" +  value  + "'), 'hex') OR amu.hashed_phone = encode(sha256('" +  value  + "'), 'hex')")
 
 		metadata = resultSet.metaData
 
@@ -808,7 +808,7 @@ public class APIFullService {
 	getDocSignSequence(Connection conn, String docId, String email) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT login_id, seq_no, is_sequence, document_id, sign_date FROM tr_document_d tdd JOIN tr_document_d_sign tdds ON tdds.id_document_d = tdd.id_document_d JOIN am_msuser amu ON amu.id_ms_user = tdds.id_ms_user WHERE document_id = '"+docId+"'")
+		resultSet = stm.executeQuery("SELECT login_id, seq_no, is_sequence, document_id, sign_date FROM tr_document_d tdd JOIN tr_document_d_sign tdds ON tdds.id_document_d = tdd.id_document_d JOIN am_msuser amu ON amu.id_ms_user = tdds.id_ms_user WHERE document_id = '"+docId+"' ORDER BY seq_no ASC")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -820,6 +820,7 @@ public class APIFullService {
 			}
 		}
 
+		println(listdata)
 		ArrayList<String> resultList = []
 
 		'hardcode untuk direct langsung ke colm is_sequence'
@@ -979,7 +980,7 @@ public class APIFullService {
 
 		updateVariable = stm.executeUpdate("UPDATE tr_invitation_link SET is_active = '"+ value +"' WHERE receiver_detail = '"+ email +"'")
 	}
-	
+
 	@Keyword
 	settingRegisterasDukcapilCheck(Connection conn, String value) {
 		stm = conn.createStatement()

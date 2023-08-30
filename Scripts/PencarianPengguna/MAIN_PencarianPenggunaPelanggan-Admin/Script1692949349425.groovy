@@ -24,9 +24,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		String value
 		
 		if (GlobalVariable.NumofColm == 2) {
-			'call test case login admin'
-			WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathPencarianPengguna, ('sheet') : 'PencarianPengguna-Pelanggan'],
-				FailureHandling.CONTINUE_ON_FAILURE)
+			'panggil fungsi login'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : 'PencarianPengguna-Pelanggan',
+				('Path') : excelPathPencarianPengguna], FailureHandling.CONTINUE_ON_FAILURE)
+			
+//			'call test case login admin'
+//			WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathPencarianPengguna, ('sheet') : 'PencarianPengguna-Pelanggan'],
+//				FailureHandling.CONTINUE_ON_FAILURE)
 			
 			'call function check paging'
 			checkPaging()

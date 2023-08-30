@@ -30,9 +30,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         GlobalVariable.FlagFailed = 0
 
         if (GlobalVariable.NumofColm == 2) {
-            'call testcase login admin'
-            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathMeterai, ('sheet') : 'Meterai'], 
-                FailureHandling.CONTINUE_ON_FAILURE)
+			'panggil fungsi login'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : 'Meterai',
+				('Path') : excelPathMeterai], FailureHandling.CONTINUE_ON_FAILURE)
+			
+//            'call testcase login admin'
+//            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathMeterai, ('sheet') : 'Meterai'], 
+//                FailureHandling.CONTINUE_ON_FAILURE)
 
             'click menu meterai'
             WebUI.click(findTestObject('Meterai/menu_Meterai'))

@@ -5,4 +5,30 @@
    <tag></tag>
    <comment></comment>
    <testCaseGuid>9e6f462b-e3fa-4426-8139-1836c04615e5</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>4a1e9584-0144-433d-ab57-ea039aaee718</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>b34259ea-88cd-43d2-a9e8-27cd056db686</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>4a1e9584-0144-433d-ab57-ea039aaee718</id>
+      <masked>false</masked>
+      <name>SheetName</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>b34259ea-88cd-43d2-a9e8-27cd056db686</id>
+      <masked>false</masked>
+      <name>Path</name>
+   </variable>
 </TestCaseEntity>

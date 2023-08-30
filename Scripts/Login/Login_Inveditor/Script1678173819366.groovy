@@ -17,30 +17,34 @@ WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 4))
 WebUI.maximizeWindow()
 
 'set value userLogin'
-GlobalVariable.userLogin = findTestData('Login/Login').getValue(2, 4).toUpperCase()
+GlobalVariable.userLogin = findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel('Inveditor Login')).toUpperCase()
 
 'input email'
-WebUI.setText(findTestObject('Login/input_Email'), findTestData('Login/Login').getValue(2, 4))
+WebUI.setText(findTestObject('Login/input_Email'), findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel('Inveditor Login')))
 
 'input password'
-WebUI.setText(findTestObject('Login/input_Password'), findTestData('Login/Login').getValue(3, 4))
+WebUI.setText(findTestObject('Login/input_Password'), findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel('Inveditor Password Login')))
 
 'click button login'
 WebUI.click(findTestObject('Login/button_Login'), FailureHandling.STOP_ON_FAILURE)
 
 if(WebUI.verifyElementPresent(findTestObject('Login/input_Perusahaan'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {	
 	'input perusahaan'
-	WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData('Login/Login').getValue(4, 4))
+	WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel('Inveditor Perusahaan Login')))
 	
 	'enter untuk input perusahaan'
 	WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
 	
 	'input peran'
-	WebUI.setText(findTestObject('Login/input_Peran'), findTestData('Login/Login').getValue(5, 4))
+	WebUI.setText(findTestObject('Login/input_Peran'), findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel('Inveditor Peran Login')))
 	
 	'enter untuk input peran'
 	WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
 	
 	'click button pilih peran'
 	WebUI.click(findTestObject('Login/button_pilihPeran'), FailureHandling.STOP_ON_FAILURE)
+}
+
+def rowExcel(String cellValue) {
+	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, SheetName, cellValue)
 }

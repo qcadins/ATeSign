@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'btn btn-primary']</value>
+         <value>//*[@class = 'btn btn-primary' and @type = 'submit']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -18,7 +18,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/ngb-modal-window/div/div/app-multi-role/div/form/div[3]/button</value>
-      <webElementGuid>d3263f39-fd1f-415d-9376-d9ac9cdccb32</webElementGuid>
+      <webElementGuid>2b2ad0c3-05de-454b-8dfe-18022546356a</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -26,6 +26,14 @@
       <name>class</name>
       <type>Main</type>
       <value>btn btn-primary</value>
-      <webElementGuid>3c0c03f7-79c3-4305-845f-e9073e691512</webElementGuid>
+      <webElementGuid>a773f73f-6591-4842-89c4-d6c8a3ed3b33</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>type</name>
+      <type>Main</type>
+      <value>submit</value>
+      <webElementGuid>67834e24-217b-42db-9e17-1e26e455d6de</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
