@@ -33,6 +33,7 @@ WebUI.setText(findTestObject('Login/input_Password'), findTestData(excel).getVal
 'click button login'
 WebUI.click(findTestObject('Login/button_Login'), FailureHandling.STOP_ON_FAILURE)
 
+
 if (WebUI.verifyElementPresent(findTestObject('Login/input_Perusahaan'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 'input perusahaan'
 WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Perusahaan')))

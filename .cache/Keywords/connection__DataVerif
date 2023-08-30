@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "29984B7A95A92A205C73E913F3674BCE",
+  "keywordFileContentHash": "ADD56133C0269F152A53F240DF0F61A7",
   "keywordClasses": [
     {
       "name": "connection.DataVerif",
@@ -598,7 +598,20 @@
               }
             },
             {
-              "name": "documentId",
+              "name": "refNumber",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "tenantCode",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

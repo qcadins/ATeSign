@@ -35,7 +35,7 @@ for (int y = 0; y < docId.size(); y++) {
         'call Test Case untuk login sebagai user berdasarkan doc id'
         WebUI.callTestCase(findTestCase('Main Flow/Login_1docManySigner'), [('email') : emailSigner[t], ('excel') : excelPathFESignDocument], FailureHandling.STOP_ON_FAILURE)
 		
-		WebUI.delay(10)
+		WebUI.delay(5)
 		
         'get data kotak masuk send document secara asc, dimana customer no 1'
         ArrayList result = CustomKeywords.'connection.SendSign.getKotakMasukSendDoc'(conneSign, docId[y])
@@ -46,7 +46,7 @@ for (int y = 0; y < docId.size(); y++) {
         'click menu pencarian dokumen'
         WebUI.click(findTestObject('PencarianDokumen/menu_PencarianDokumen'))
 
-		WebUI.delay(10)
+		WebUI.delay(5)
 		
 		'query untuk input pencarian dokumen'
 		ArrayList inputPencarianDokumen = CustomKeywords.'connection.SendSign.getDataPencarianDokumen'(conneSign, emailSigner[t], docId[y])  
@@ -54,7 +54,6 @@ for (int y = 0; y < docId.size(); y++) {
 		'inisialisasi arrayindex'
 		arrayIndex = 0
 
-		println inputPencarianDokumen
 	if (WebUI.verifyElementPresent(findTestObject('PencarianDokumen/input_NamaPelanggan'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 		GlobalVariable.roleLogin = 'BM MF'
 		
@@ -347,6 +346,9 @@ for (int y = 0; y < docId.size(); y++) {
         'set ulang array index untuk pencarian dokumen'
         arrayIndex = 0
 
+		'focus klik x'
+		WebUI.focus(findTestObject('KotakMasuk/btn_X'))
+		
         'Klik x terlebih dahulu pada popup'
         WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_X'))
 

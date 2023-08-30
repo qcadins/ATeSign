@@ -5,6 +5,7 @@ import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable
 import org.openqa.selenium.Keys as Keys
+import java.sql.Connection as Connection
 
 'setting untuk membuat lokasi default folder download'
 HashMap<String, ArrayList> chromePrefs = new HashMap<String, ArrayList>()
@@ -45,6 +46,9 @@ WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excel).getValue(
 
 'enter untuk input peran'
 WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
+
+'fokus pada tombol pilih peran'
+WebUI.focus(findTestObject('Login/button_pilihPeran'))
 
 'click button pilih peran'
 WebUI.click(findTestObject('Login/button_pilihPeran'), FailureHandling.STOP_ON_FAILURE)

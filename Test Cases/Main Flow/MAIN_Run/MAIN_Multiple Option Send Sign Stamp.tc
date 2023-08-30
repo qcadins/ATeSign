@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>Main</name>
+   <name>MAIN_Multiple Option Send Sign Stamp</name>
    <tag></tag>
    <comment></comment>
    <testCaseGuid>12fbd585-a15f-4f64-93d8-194f294682ca</testCaseGuid>

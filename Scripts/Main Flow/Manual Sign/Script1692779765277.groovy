@@ -26,7 +26,7 @@ indexForCatatanStamp = 0
 int looping
 
 'memanggil test case login untuk admin wom dengan Admin Client'
-WebUI.callTestCase(findTestCase('Main Flow/Login_Admin'), [('excel') : excelPathManualSigntoSign, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
+WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excelPathManualSigntoSign, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
 
 'declare flag failed'
 GlobalVariable.FlagFailed = 0

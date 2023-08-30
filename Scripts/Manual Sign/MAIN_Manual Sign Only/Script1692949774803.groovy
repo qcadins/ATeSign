@@ -29,11 +29,11 @@ indexForCatatanStamp = 0
 int looping
 
 'panggil fungsi login'
-WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : 'Manual Sign',
-	('Path') : excelPathManualSign], FailureHandling.CONTINUE_ON_FAILURE)
+//WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : 'Manual Sign',
+//	('Path') : excelPathManualSign], FailureHandling.CONTINUE_ON_FAILURE)
 
-//'memanggil test case login untuk admin wom dengan Admin Client'
-//WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualSign, ('sheet') : 'Manual Sign'], FailureHandling.CONTINUE_ON_FAILURE)
+'memanggil test case login untuk admin wom dengan Admin Client'
+WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualSign, ('sheet') : 'Manual Sign'], FailureHandling.CONTINUE_ON_FAILURE)
 
 'looping berdasarkan jumlah kolom'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathManualSign).columnNumbers; (GlobalVariable.NumofColm)++) {
@@ -399,15 +399,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 					
 					'Klik set tanda tangan'
 					WebUI.click(findTestObject('ManualSign/btn_setTandaTangan'))
-					
-					'modify label tipe tanda tangan di kotak'
-					modifyobjectTTDlblRoleTandaTangan = WebUI.modifyObjectProperty(findTestObject('Object Repository/ManualSign/modifyObject'),
-						'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' +
-						j) + ']/div/div/small', true)
 	
 					'Verifikasi antara excel dan UI, apakah tipenya sama'
 					WebUI.verifyMatch(namaTandaTangan[index], WebUI.getText(modifyobjectTTDlblRoleTandaTangan), false)
                 }
+				
+				'modify label tipe tanda tangan di kotak'
+				modifyobjectTTDlblRoleTandaTangan = WebUI.modifyObjectProperty(findTestObject('Object Repository/ManualSign/modifyObject'),
+					'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' +
+					j) + ']/div/div/small', true)
 
                 'Verify apakah tanda tangannya ada'
                 if (WebUI.verifyElementPresent(modifyobjectTTDlblRoleTandaTangan, GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
