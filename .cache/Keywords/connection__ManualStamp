@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "keywordFileContentHash": "0FEAB8BC11CFF26C37AD4AC09433ADA4",
-=======
   "keywordFileContentHash": "C0D82D5E4627AA6887D65BC4C888A308",
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
   "keywordClasses": [
     {
       "name": "connection.ManualStamp",

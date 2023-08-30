@@ -6,11 +6,15 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import java.sql.Connection as Connection
+import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
+import org.openqa.selenium.By as By
 
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 documentId = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ', -1)
+
+documentIdInput = '"documentId":"' + documentId[0] + '",'
 
 String refNumber = CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, documentId[0])
 
@@ -25,16 +29,18 @@ ArrayList totalSignedBefore = [], totalSignedAfter = []
 
 saldoBefore = loginAdminGetSaldo(conneSign, vendor, refNumber)
 
-'mengambil isi email signer berdasarkan excel dan di split.'
 emailSigner = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$email (Sign Normal)')).split(';', -1)
+
+'mengambil isi email signer berdasarkan excel dan di split.'
+emailSignerInput = '"email": '+emailSigner[indexUsed]+','
 
 'Mengambil aes key based on tenant tersebut'
 String aesKey = CustomKeywords.'connection.APIFullService.getAesKeyBasedOnTenant'(conneSign, GlobalVariable.Tenant)
 
-msg = encryptLink(conneSign, documentId, emailSigner[indexUsed], aesKey)
+msg = encryptLink(conneSign, documentId[0].toString(), emailSigner[indexUsed], aesKey)
 
 'HIT API Login untuk token : andy@ad-ins.com'
-respon_login = WS.sendRequest(findTestObject('Postman/Login', [('username') : emailSigner[indexUsed]
+respon_login = WS.sendRequest(findTestObject('Postman/Login', [('username') : emailSigner[indexUsed].toString().replace('"','')
             , ('password') : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Password Signer'))]))
 
 'Jika status HIT API Login 200 OK'
@@ -42,9 +48,15 @@ if (WS.verifyResponseStatusCode(respon_login, 200, FailureHandling.OPTIONAL) == 
     'Parsing token menjadi GlobalVariable'
     GlobalVariable.token = WS.getElementPropertyValue(respon_login, 'access_token')
 
+	'looping berdasarkan ukuran dari dokumen id'
+	for (int z = 0; z < documentId.size(); z++) {
+		'Memasukkan input dari total signed'
+		(totalSignedBefore[z]) = CustomKeywords.'connection.APIFullService.getTotalSigned'(conneSign, (documentId[z]).toString())
+	}
+	
     'HIT API Sign Document'
     respon_signdoc = WS.sendRequest(findTestObject('Postman/Sign Doc', [('callerId') : ('"' + findTestData(API_Excel_Path).getValue(
-                    GlobalVariable.NumofColm, rowExcel('callerId (Sign Normal)')).split(';', -1)[indexUsed] ) + '"', ('email') : emailSigner[indexUsed], ('documentId') : documentId, ('msg') : ('"' + 
+                    GlobalVariable.NumofColm, rowExcel('callerId (Sign Normal)')).split(';', -1)[indexUsed] ) + '"', ('email') : emailSignerInput, ('documentId') : documentIdInput, ('msg') : ('"' + 
                 msg) + '"']))
 
     'Jika status HIT API 200 OK'
@@ -59,15 +71,19 @@ if (WS.verifyResponseStatusCode(respon_login, 200, FailureHandling.OPTIONAL) == 
 
 			'Loop berdasarkan jumlah documen id'
 			for (int x = 0; x < documentId.size(); x++) {
-				signCount = CustomKeywords.'connection.APIFullService.getTotalSigner'(conneSign, documentId[x].toString(), findTestData(
-						API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$email (Sign Normal)')).split(';', -1)[indexUsed].replace('"', ''))
+				println documentId[x].toString()
+				println emailSigner[indexUsed].replace('"', '')
+				signCount = CustomKeywords.'connection.APIFullService.getTotalSigner'(conneSign, documentId[x].toString(), emailSigner[indexUsed].replace('"', ''))
 	
 				'Loop untuk check db update sign. Maksimal 200 detik.'
 				for (int v = 1; v <= 20; v++) {
 					'Mengambil total Signed setelah sign'
-					(totalSignedAfter[x]) = CustomKeywords.'connection.APIFullService.getTotalSigned'(conneSign, documentId[
-						x])
+					(totalSignedAfter[x]) = CustomKeywords.'connection.APIFullService.getTotalSigned'(conneSign, documentId[x])
 	
+					println totalSignedAfter[x]
+					println totalSignedBefore[x]
+					println signCount
+					println Integer.parseInt(signCount)
 					'Verify total signed sebelum dan sesudah. Jika sesuai maka break'
 					if ((totalSignedAfter[x]) == ((totalSignedBefore[x]) + Integer.parseInt(signCount))) {
 						WebUI.verifyEqual(totalSignedAfter[x], (totalSignedBefore[x]) + Integer.parseInt(signCount), FailureHandling.CONTINUE_ON_FAILURE)
@@ -144,13 +160,6 @@ if (WS.verifyResponseStatusCode(respon_login, 200, FailureHandling.OPTIONAL) == 
         GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + 
         ';') + GlobalVariable.ReasonFailedHitAPI)
 
-    'call test case login inveditor'
-    WebUI.callTestCase(findTestCase('Login/Login_Inveditor'), [:], FailureHandling.STOP_ON_FAILURE)
-
-    'call test case error report'
-    WebUI.callTestCase(findTestCase('Sign_Document/ErrorReport'), [('excelPathSignDoc') : API_Excel_Path], 
-        FailureHandling.STOP_ON_FAILURE)
-
     'close browser'
     WebUI.closeBrowser()
 }
@@ -160,10 +169,10 @@ def rowExcel(String cellValue) {
 }
 
 def encryptLink(Connection conneSign, String documentId, String emailSigner, String aesKey) {
-	officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, documentId)
+	officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, documentId, findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Tenant')))
 	
 	'pembuatan message yang akan dienkrip'
-	msg = '{"tenantCode":"'+GlobalVariable.Tenant+'","officeCode":"'+officeCode+'","email":"'+emailSigner+'"}'
+	msg = '{"tenantCode":"'+findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))+'","officeCode":"'+officeCode+'","email":"'+emailSigner+'"}'
 	
 	'enkripsi msg'
 	encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(msg, aesKey)
@@ -172,6 +181,9 @@ def encryptLink(Connection conneSign, String documentId, String emailSigner, Str
 }
 
 def loginAdminGetSaldo(Connection conneSign, String vendor, String noKontrak) {
+	'klik button saldo'
+	WebUI.click(findTestObject('isiSaldo/SaldoAdmin/menu_Saldo'), FailureHandling.CONTINUE_ON_FAILURE)
+	
 	String totalSaldo
 	
 	'klik ddl untuk tenant memilih mengenai Vida'
@@ -187,8 +199,8 @@ def loginAdminGetSaldo(Connection conneSign, String vendor, String noKontrak) {
 			(c + 1)) + ']/div/div/div/div/div[1]', true)
 
 		'verifikasi label saldonya '
-		if (WebUI.verifyElementText(modifyObjectFindSaldoSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
-				72), FailureHandling.OPTIONAL)) {
+		if (WebUI.verifyElementText(modifyObjectFindSaldoSign, findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,
+				rowExcel('Tipe')), FailureHandling.OPTIONAL)) {
 			'modify object mengenai ambil total jumlah saldo'
 			modifyObjecttotalSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_countsaldo'), 'xpath', 'equals',
 				('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + (c + 1)) + ']/div/div/div/div/div[2]',
@@ -201,11 +213,6 @@ def loginAdminGetSaldo(Connection conneSign, String vendor, String noKontrak) {
 		}
 	}
 	
-	'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
-	WebUI.callTestCase(findTestCase('Main Flow/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : API_Excel_Path
-			, ('sheet') : sheet, ('linkDocumentMonitoring') : 'Not Used', ('nomorKontrak') : noKontrak], FailureHandling.CONTINUE_ON_FAILURE)
-
-
 	'return total saldo awal'
 	return totalSaldo
 }

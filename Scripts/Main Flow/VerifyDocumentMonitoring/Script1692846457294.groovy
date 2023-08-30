@@ -45,6 +45,9 @@ if (isStamping == 'Yes') {
 'looping untuk membuka dokumen'
 for (int o = 1; o <= 1; o++) {
     if (linkDocumentMonitoring == 'Not Used') {
+		'Fokus ke document monitoring'
+		WebUI.focus(findTestObject('DocumentMonitoring/DocumentMonitoring'))
+		
         'Klik Button menu Document Monitoring'
         WebUI.click(findTestObject('DocumentMonitoring/DocumentMonitoring'))
 
@@ -54,6 +57,9 @@ for (int o = 1; o <= 1; o++) {
         WebUI.callTestCase(findTestCase('Main Flow/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
             FailureHandling.STOP_ON_FAILURE)
 
+		'Fokus ke document monitoring'
+		WebUI.focus(findTestObject('DocumentMonitoring/DocumentMonitoring'))
+		
         'Klik Button menu Document Monitoring'
         WebUI.click(findTestObject('DocumentMonitoring/DocumentMonitoring'))
     } else {

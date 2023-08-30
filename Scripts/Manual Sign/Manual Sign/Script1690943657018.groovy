@@ -26,11 +26,11 @@ indexForCatatanStamp = 0
 int looping
 
 'panggil fungsi login'
-WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
-	('Path') : excelPathManualSigntoSign], FailureHandling.CONTINUE_ON_FAILURE)
+//WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
+//	('Path') : excelPathManualSigntoSign], FailureHandling.CONTINUE_ON_FAILURE)
 
-//'memanggil test case login untuk admin wom dengan Admin Client'
-//WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualSigntoSign, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
+'memanggil test case login untuk admin wom dengan Admin Client'
+WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualSigntoSign, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
 
 'declare flag failed'
 GlobalVariable.FlagFailed = 0
