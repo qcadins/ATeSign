@@ -54,7 +54,7 @@ for (int o = 1; o <= 1; o++) {
         linkDocumentMonitoring = ''
     } else if (linkDocumentMonitoring == '') {
         'Call test Case untuk login sebagai admin wom admin client'
-        WebUI.callTestCase(findTestCase('Main Flow/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
+        WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
             FailureHandling.STOP_ON_FAILURE)
 
 		'Fokus ke document monitoring'

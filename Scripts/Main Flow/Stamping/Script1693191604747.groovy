@@ -161,7 +161,7 @@ def loginAdminGetSaldo(Connection conneSign, String start, String sheet) {
 
     if (start == 'Yes') {
         'Call test Case untuk login sebagai admin wom admin client'
-        WebUI.callTestCase(findTestCase('Main Flow/Login_Admin'), [('excel') : excelPathStamping, ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
+        WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excelPathStamping, ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
 
         'klik button saldo'
         WebUI.click(findTestObject('isiSaldo/SaldoAdmin/menu_Saldo'))

@@ -30,7 +30,7 @@ vendorSigning = vendor
 
 if (WebUI.verifyElementNotPresent(findTestObject('Saldo/ddl_Vendor'), GlobalVariable.TimeOut, FailureHandling.STOP_ON_FAILURE)) {
 	'Call test Case untuk login sebagai admin wom admin client'
-	WebUI.callTestCase(findTestCase('Main Flow/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet],
+	WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excelPathFESignDocument, ('sheet') : sheet],
 		FailureHandling.CONTINUE_ON_FAILURE)
 }
 

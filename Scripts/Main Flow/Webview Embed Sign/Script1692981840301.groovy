@@ -58,7 +58,7 @@ for (int o = 0; o < documentId.size(); o++) {
     int totalDocSign, countResend
 
     'Call test Case untuk login sebagai admin wom admin client'
-    WebUI.callTestCase(findTestCase('Main Flow/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
+    WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
         FailureHandling.CONTINUE_ON_FAILURE)
 
 	HashMap<String, String> resultSaldoBefore = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathFESignDocument, ('sheet') : sheet, ('vendor') : vendor],
@@ -558,7 +558,7 @@ for (int o = 0; o < documentId.size(); o++) {
         FailureHandling.CONTINUE_ON_FAILURE)
 
     'Call test Case untuk login sebagai admin wom admin client'
-    WebUI.callTestCase(findTestCase('Main Flow/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet],
+    WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excelPathFESignDocument, ('sheet') : sheet],
     FailureHandling.CONTINUE_ON_FAILURE)
 	
     'Split dokumen template name dan nomor kontrak per dokumen berdasarkan delimiter ;'
