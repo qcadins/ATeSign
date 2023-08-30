@@ -25,10 +25,10 @@
       <name>excelPathAPIDownload</name>
    </variable>
    <variable>
-      <defaultValue>'Login/Setting'</defaultValue>
+      <defaultValue>'API Download Document'</defaultValue>
       <description></description>
       <id>f5c5fce9-8882-4c78-b239-703586ba777b</id>
       <masked>false</masked>
-      <name>excelPathSetting</name>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>

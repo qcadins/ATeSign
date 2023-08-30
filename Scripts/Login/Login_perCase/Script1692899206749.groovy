@@ -11,6 +11,8 @@ HashMap<String, ArrayList> chromePrefs = new HashMap<String, ArrayList>()
 
 chromePrefs.put('download.default_directory', System.getProperty('user.dir') + '\\Download')
 
+chromePrefs.put("profile.default_content_setting_values.media_stream_camera", 1)
+
 RunConfiguration.setWebDriverPreferencesProperty('prefs', chromePrefs)
 
 'open browser'
@@ -27,9 +29,6 @@ GlobalVariable.userLogin = findTestData(Path).getValue(GlobalVariable.NumofColm,
 
 'input email'
 WebUI.setText(findTestObject('Login/input_Email'), findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')))
-
-'store GV user login'
-GlobalVariable.userLogin = findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))
 
 'input password'
 WebUI.setText(findTestObject('Login/input_Password'), findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel('Password Login')))

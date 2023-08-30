@@ -18,33 +18,36 @@ int countColmExcel = findTestData(excelPathCheckVerificationStatus).columnNumber
 
 'looping API Check Verification Status'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
-    if (findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
+    if (findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
-    } else if (findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+    } else if (findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 		
 		'setting menggunakan base url yang benar atau salah'
-		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathCheckVerificationStatus, GlobalVariable.NumofColm, 16)
+		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathCheckVerificationStatus, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
+		
+		'get psre dari excel per case'
+		GlobalVariable.Psre = findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
 		
 		'check if tidak mau menggunakan tenant code yang benar'
-		if (findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, 14) == 'No') {
+		if (findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code')) == 'No') {
 			'set tenant kosong'
-			GlobalVariable.Tenant = findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, 15)
-		} else if (findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, 14) == 'Yes') {
-			GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
+			GlobalVariable.Tenant = findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Tenant Code'))
+		} else if (findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code')) == 'Yes') {
+			GlobalVariable.Tenant = findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
 		}
 		
 		'check if mau menggunakan api_key yang salah atau benar'
-		if (findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, 12) == 'Yes') {
+		if (findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct API Key')) == 'Yes') {
 			'get api key dari db'
 			GlobalVariable.api_key = CustomKeywords.'connection.APIFullService.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
-		} else if (findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, 12) == 'No') {
+		} else if (findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct API Key')) == 'No') {
 			'get api key salah dari excel'
-			GlobalVariable.api_key = findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, 13)
+			GlobalVariable.api_key = findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, rowExcel('Wrong API Key'))
 		}
 		
 	    'HIT API'
 	    respon = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/API CheckVerificationStatus', [('callerId') : findTestData(excelPathCheckVerificationStatus).getValue(
-			GlobalVariable.NumofColm, 9), ('trxNo') : findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, 10)]))
+			GlobalVariable.NumofColm, rowExcel('$CallerId')), ('trxNo') : findTestData(excelPathCheckVerificationStatus).getValue(GlobalVariable.NumofColm, rowExcel('$TrxNo'))]))
 	
 		   if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
 			   'get status code'
@@ -58,11 +61,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				   results = WS.getElementPropertyValue(respon, 'results', FailureHandling.OPTIONAL)
 				
 				   'write to excel success'
-				   CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Check Verification Status',
+				   CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
 					   0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 	
 				   'write to excel verif status'
-				   CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Check Verification Status',
+				   CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
 					   5, GlobalVariable.NumofColm - 1, verifStatus.toString())
 			   } else {
 				   'call function get error message API'
@@ -80,6 +83,10 @@ def getErrorMessageAPI(def respon) {
 	message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
 	'Write To Excel GlobalVariable.StatusFailed and errormessage'
-	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Check Verification Status', GlobalVariable.NumofColm,
+	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 		GlobalVariable.StatusFailed, '<' + message + '>')
+}
+
+def rowExcel(String cellValue) {
+	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }

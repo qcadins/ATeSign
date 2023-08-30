@@ -25,10 +25,10 @@
       <name>excelPathCheckVerificationStatus</name>
    </variable>
    <variable>
-      <defaultValue>'Login/Setting'</defaultValue>
+      <defaultValue>'API Check Verification Status'</defaultValue>
       <description></description>
       <id>d053b52b-90b6-4cad-9a5e-ad2c9ed7bad0</id>
       <masked>false</masked>
-      <name>excelPathSetting</name>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>

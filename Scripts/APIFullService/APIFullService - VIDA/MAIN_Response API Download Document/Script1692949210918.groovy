@@ -16,34 +16,37 @@ int countColmExcel = findTestData(excelPathAPIDownload).columnNumbers
 
 'looping API Download Document'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
-    if (findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
+    if (findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
-    } else if (findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+    } else if (findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 		
 		'setting menggunakan base url yang benar atau salah'
-		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPIDownload, GlobalVariable.NumofColm, 19)
+		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPIDownload, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
+		
+		'get psre dari excel per case'
+		GlobalVariable.Psre = findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
 		
         'check if tidak mau menggunakan tenant code yang benar'
-        if (findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, 15) == 'No') {
+        if (findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code')) == 'No') {
             'set tenant kosong'
-            GlobalVariable.Tenant = findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, 16)
-        } else if (findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, 15) == 'Yes') {
-            GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
+            GlobalVariable.Tenant = findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Tenant Code'))
+        } else if (findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code')) == 'Yes') {
+            GlobalVariable.Tenant = findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
         }
         
         'check if mau menggunakan api_key yang salah atau benar'
-        if (findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, 13) == 'Yes') {
+        if (findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct API Key')) == 'Yes') {
             'get api key dari db'
             GlobalVariable.api_key = CustomKeywords.'connection.APIFullService.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
-        } else if (findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, 13) == 'No') {
+        } else if (findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct API Key')) == 'No') {
             'get api key salah dari excel'
-            GlobalVariable.api_key = findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, 14)
+            GlobalVariable.api_key = findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Wrong API Key'))
         }
         
         'HIT API check Download Document'
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Download Document', [('callerId') : findTestData(
-                        excelPathAPIDownload).getValue(GlobalVariable.NumofColm, 9), ('documentId') : findTestData(excelPathAPIDownload).getValue(
-                        GlobalVariable.NumofColm, 11)]))
+                        excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('documentId') : findTestData(excelPathAPIDownload).getValue(
+                        GlobalVariable.NumofColm, rowExcel('documentId'))]))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
@@ -55,13 +58,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 'decode Bas64 to File PDF'
                 CustomKeywords.'customizekeyword.ConvertFile.decodeBase64'(base64PDF, findTestData(excelPathAPIDownload).getValue(
-                        GlobalVariable.NumofColm, 18))
+                        GlobalVariable.NumofColm, rowExcel('File Name')))
 
                 'check is file downloaded dan apakah mau di delete'
                 if (CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathAPIDownload).getValue(
-                        GlobalVariable.NumofColm, 17)) == true) {
+                        GlobalVariable.NumofColm, rowExcel('Delete File ?'))) == true) {
                     'write to excel success'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Download Document', 
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
                         0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
                 }
             } else {
@@ -69,7 +72,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
                 'Write To Excel GlobalVariable.StatusFailed and errormessage'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Download Document', GlobalVariable.NumofColm, 
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, '<' + message + '>')
             }
         } else {
@@ -77,9 +80,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
             'Write To Excel GlobalVariable.StatusFailed and errormessage'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Download Document', GlobalVariable.NumofColm, 
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, '<' + message + '>')
         }
     }
 }
 
+def rowExcel(String cellValue) {
+	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+}

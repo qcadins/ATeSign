@@ -4,6 +4,7 @@ import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import java.sql.Connection as Connection
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
+import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 
@@ -208,6 +209,8 @@ if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryInv
 	            GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
 	                '-', '') + ';') + '<' + ReasonFailed + '>')
 	
+			GlobalVariable.FlagFailed = 1
+			
 	        'click button OK'
 	        WebUI.click(findTestObject('InquiryInvitation/button_OkSuccess'))
 	
@@ -242,6 +245,8 @@ if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryInv
 	                    'verify saldo'
 	                    checkVerifyEqualOrMatch(WebUI.verifyMatch(result, '0', false, FailureHandling.CONTINUE_ON_FAILURE), ' Saldo tidak sesuai')
 	                }
+					
+					GlobalVariable.FlagFailed = 1
 	            } else {
 	                'write to excel success'
 	                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, SheetName, 0, 
@@ -265,6 +270,8 @@ if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryInv
 	        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, 
 	            GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
 	                '-', '') + ';') + '<' + ReasonFailed + '>')
+			
+			GlobalVariable.FlagFailed = 1
 	    }
 	}else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase('Kirim Ulang Aktivasi') && resendLink == 1) {
 	    'get label invited by'
@@ -287,6 +294,8 @@ if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryInv
 	                    GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
 	                        rowExcel('Reason Failed')).replace('-', '') + ';') + '<' + ReasonFailed + '>')
 	
+					GlobalVariable.FlagFailed = 1
+					
 	                if (invitedBy.equalsIgnoreCase('SMS')) {
 	
 	                    'get data saldo'
@@ -318,6 +327,8 @@ if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryInv
 	        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, 
 	            GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
 	                '-', '') + ';') + '<' + ReasonFailed + '>')
+			
+			GlobalVariable.FlagFailed = 1
 	    }
 	} else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase('Regenerate invitation link')) {
 		'click button Regenerate invitation link'
@@ -334,6 +345,8 @@ if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryInv
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm,
 					GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
 						'-', '') + ';') + '<' + ReasonFailed + '>')
+				
+				GlobalVariable.FlagFailed = 1
 			} else if(WebUI.getText(findTestObject('InquiryInvitation/label_PopUp'), FailureHandling.OPTIONAL).equalsIgnoreCase('Success')) {
 				'click button OK'
 				WebUI.click(findTestObject('InquiryInvitation/button_OkSuccess'))
@@ -374,15 +387,13 @@ if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryInv
 							'Get invitation Link'
 							InvitationLink = WS.getElementPropertyValue(responGetInvLink, 'invitationLink')
 			
-							if (WebUI.verifyMatch(GlobalVariable.Link, InvitationLink, false)) {
-								'write to excel success'
-								CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, SheetName, 0, GlobalVariable.NumofColm -
-									1, GlobalVariable.StatusSuccess)
-							} else {
+							if (!WebUI.verifyMatch(GlobalVariable.Link, InvitationLink, false, FailureHandling.CONTINUE_ON_FAILURE)) {
 								'write to excel status failed dan reason'
 								CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm,
 									GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
-										rowExcel('Reason Failed')).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
+										rowExcel('Reason Failed')).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch + ' FE Inquiry Inv View Link dan API Get Inv Link')
+								
+								GlobalVariable.FlagFailed = 1
 							}
 						} else {
 							messageFailed = WS.getElementPropertyValue(responGetInvLink, 'status.message', FailureHandling.OPTIONAL).toString()
@@ -391,6 +402,8 @@ if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryInv
 							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 								(((findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
 									'-', '') + ';') + '<') + messageFailed) + '>')
+							
+							GlobalVariable.FlagFailed = 1
 						}
 					}
 				}
@@ -398,9 +411,11 @@ if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryInv
 				'click button TutupDapatLink'
 				WebUI.click(findTestObject('InquiryInvitation/button_TutupDapatLink'))
 				
-				'write to excel success'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, SheetName, 0, GlobalVariable.NumofColm -
-					1, GlobalVariable.StatusSuccess)
+				if(GlobalVariable.FlagFailed == 0) {
+					'write to excel success'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, SheetName, 0, GlobalVariable.NumofColm -
+						1, GlobalVariable.StatusSuccess)
+				}
 			}
 		}
 	}

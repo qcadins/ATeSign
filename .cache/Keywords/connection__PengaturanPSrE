@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "501CD7A9C635DCB9892A93E1B0E2AE3E",
+  "keywordFileContentHash": "1FE969100C7B8C15253D8563C5B4DCBF",
   "keywordClasses": [
     {
       "name": "connection.PengaturanPSrE",
@@ -33,8 +33,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getTotalPSrE",
@@ -52,8 +51,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getDDLVendorPaymentType",
@@ -71,8 +69,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getPsrePriority",
@@ -89,25 +86,11 @@
                 "genericsTypes": [],
                 "errorOnParsing": false
               }
-            },
-            {
-              "name": "tenantCode",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.lang.String",
-                "unresolvedClassName": "String",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
             }
-          ],
-          "javadoc": ""
+          ]
         }
       ]
     }
   ],
-  "javadocParsed": true
+  "javadocParsed": false
 }
