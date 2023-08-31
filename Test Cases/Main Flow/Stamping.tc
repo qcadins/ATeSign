@@ -23,18 +23,6 @@
       <value></value>
       <variableId>906091c5-254f-47e1-9d03-0ce7eeec8c0b</variableId>
    </variableLinks>
-   <variableLinks>
-      <testDataLinkId></testDataLinkId>
-      <type>DEFAULT</type>
-      <value></value>
-      <variableId>71ec04e4-83cb-4c80-8a35-437433cbd55c</variableId>
-   </variableLinks>
-   <variableLinks>
-      <testDataLinkId></testDataLinkId>
-      <type>DEFAULT</type>
-      <value></value>
-      <variableId>38a6a508-56a7-4519-be31-293b0a7406a2</variableId>
-   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -55,19 +43,5 @@
       <id>906091c5-254f-47e1-9d03-0ce7eeec8c0b</id>
       <masked>false</masked>
       <name>sheet</name>
-   </variable>
-   <variable>
-      <defaultValue>''</defaultValue>
-      <description></description>
-      <id>71ec04e4-83cb-4c80-8a35-437433cbd55c</id>
-      <masked>false</masked>
-      <name>isUsingAPI</name>
-   </variable>
-   <variable>
-      <defaultValue>''</defaultValue>
-      <description></description>
-      <id>38a6a508-56a7-4519-be31-293b0a7406a2</id>
-      <masked>false</masked>
-      <name>useAPI</name>
    </variable>
 </TestCaseEntity>

@@ -11,11 +11,24 @@
       <value></value>
       <variableId>3668bcda-421d-4038-9106-300b7922b214</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>30de0820-4fdc-4a43-9fd6-bc8712901acd</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>'DocumentMonitoring/DocumentMonitoring'</defaultValue>
       <description></description>
       <id>3668bcda-421d-4038-9106-300b7922b214</id>
       <masked>false</masked>
       <name>excelPathDocumentMonitoring</name>
+   </variable>
+   <variable>
+      <defaultValue>'DocumentMonitoring'</defaultValue>
+      <description></description>
+      <id>30de0820-4fdc-4a43-9fd6-bc8712901acd</id>
+      <masked>false</masked>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>

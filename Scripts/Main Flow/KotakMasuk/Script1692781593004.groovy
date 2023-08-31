@@ -33,7 +33,7 @@ for (int y = 0; y < docId.size(); y++) {
     'looping berdasarkan email Signer dari dokumen tersebut. '
     for (int t = 0; t < emailSigner.size(); t++) {
         'call Test Case untuk login sebagai user berdasarkan doc id'
-        WebUI.callTestCase(findTestCase('Main Flow/Login_1docManySigner'), [('email') : emailSigner[t], ('excel') : excelPathFESignDocument], FailureHandling.STOP_ON_FAILURE)
+        WebUI.callTestCase(findTestCase('Main Flow/Login'), [('email') : emailSigner[t], ('excel') : excelPathFESignDocument, ('checkBeforeSigning') : checkBeforeSigning], FailureHandling.STOP_ON_FAILURE)
 		
 		WebUI.delay(5)
 		
@@ -43,6 +43,8 @@ for (int y = 0; y < docId.size(); y++) {
         'declare array proses Ttd pada Pencarian Dokumen. Digunakan untuk membandingkan dengan Kotak Masuk / Beranda. '
         ArrayList prosesTtdPencarianDokumen = []
 
+		WebUI.focus(findTestObject('PencarianDokumen/menu_PencarianDokumen'))
+		
         'click menu pencarian dokumen'
         WebUI.click(findTestObject('PencarianDokumen/menu_PencarianDokumen'))
 
@@ -417,12 +419,10 @@ for (int y = 0; y < docId.size(); y++) {
             }
         }
     }
-    
-	isManualSign = CustomKeywords.'connection.SendSign.getIsManualUpload'(conneSign, docId[0])
 	
 	'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
 	WebUI.callTestCase(findTestCase('Main Flow/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument
-	 , ('sheet') : sheet, ('isManualSign') : isManualSign], FailureHandling.CONTINUE_ON_FAILURE)
+	 , ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
 
 
     'jika data db tidak sesuai dengan excel'

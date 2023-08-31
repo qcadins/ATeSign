@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_Response API Sign Document Only</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>85e89034-bb75-4721-b816-1aa030b8d977</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>bab10660-b447-4c77-900b-7a9574b805cb</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>c48c7836-7b6f-4680-b563-1e453ea8ea45</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'APIFullService/API_SignDoc'</defaultValue>
+      <description></description>
+      <id>bab10660-b447-4c77-900b-7a9574b805cb</id>
+      <masked>false</masked>
+      <name>excelPathAPISignDocument</name>
+   </variable>
+   <variable>
+      <defaultValue>'Login/Setting'</defaultValue>
+      <description></description>
+      <id>c48c7836-7b6f-4680-b563-1e453ea8ea45</id>
+      <masked>false</masked>
+      <name>excelPathSetting</name>
+   </variable>
+</TestCaseEntity>

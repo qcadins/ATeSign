@@ -29,12 +29,6 @@
       <value></value>
       <variableId>e2bdb3e6-333b-41d9-81b5-c2ca6a45b5c9</variableId>
    </variableLinks>
-   <variableLinks>
-      <testDataLinkId></testDataLinkId>
-      <type>DEFAULT</type>
-      <value></value>
-      <variableId>24882299-e374-4a63-8a7e-b45e48fe1cfd</variableId>
-   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -62,12 +56,5 @@
       <id>e2bdb3e6-333b-41d9-81b5-c2ca6a45b5c9</id>
       <masked>false</masked>
       <name>isStamping</name>
-   </variable>
-   <variable>
-      <defaultValue>''</defaultValue>
-      <description></description>
-      <id>24882299-e374-4a63-8a7e-b45e48fe1cfd</id>
-      <masked>false</masked>
-      <name>isManualSign</name>
    </variable>
 </TestCaseEntity>

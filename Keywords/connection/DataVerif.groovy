@@ -288,10 +288,10 @@ public class DataVerif {
 	}
 
 	@Keyword
-	getOfficeCode(Connection conn, String refNumber, String tenantCode) {
+	getOfficeCode(Connection conn, String documentId) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select tdd.document_id from tr_document_h tdh join tr_document_d tdd on tdh.id_document_h = tdd.id_document_h join ms_tenant mst on tdh.id_ms_tenant = mst.id_ms_tenant join ms_vendor msv on tdd.id_ms_vendor = msv.id_ms_vendor where tdh.ref_number = '"+refNumber+"' and mst.tenant_code = '"+tenantCode+"' order by tdh.dtm_crt desc limit 1")
+		resultSet = stm.executeQuery("select mso.office_code from ms_office mso left join tr_document_h tdh on tdh.id_ms_office = mso.id_ms_office left join tr_document_d tdd on tdd.id_document_h = tdh.id_document_h where tdd.document_id = '"+documentId+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

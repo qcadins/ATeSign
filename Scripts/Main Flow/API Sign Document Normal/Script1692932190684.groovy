@@ -32,15 +32,15 @@ saldoBefore = loginAdminGetSaldo(conneSign, vendor, refNumber)
 emailSigner = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$email (Sign Normal)')).split(';', -1)
 
 'mengambil isi email signer berdasarkan excel dan di split.'
-emailSignerInput = '"email": '+emailSigner[indexUsed]+','
+emailSignerInput = '"email": '+emailSigner[GlobalVariable.GlobalVariable.indexUsed]+','
 
 'Mengambil aes key based on tenant tersebut'
 String aesKey = CustomKeywords.'connection.APIFullService.getAesKeyBasedOnTenant'(conneSign, GlobalVariable.Tenant)
 
-msg = encryptLink(conneSign, documentId[0].toString(), emailSigner[indexUsed], aesKey)
+msg = encryptLink(conneSign, documentId[0].toString(), emailSigner[GlobalVariable.indexUsed], aesKey)
 
 'HIT API Login untuk token : andy@ad-ins.com'
-respon_login = WS.sendRequest(findTestObject('Postman/Login', [('username') : emailSigner[indexUsed].toString().replace('"','')
+respon_login = WS.sendRequest(findTestObject('Postman/Login', [('username') : emailSigner[GlobalVariable.indexUsed].toString().replace('"','')
             , ('password') : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Password Signer'))]))
 
 'Jika status HIT API Login 200 OK'
@@ -56,7 +56,7 @@ if (WS.verifyResponseStatusCode(respon_login, 200, FailureHandling.OPTIONAL) == 
 	
     'HIT API Sign Document'
     respon_signdoc = WS.sendRequest(findTestObject('Postman/Sign Doc', [('callerId') : ('"' + findTestData(API_Excel_Path).getValue(
-                    GlobalVariable.NumofColm, rowExcel('callerId (Sign Normal)')).split(';', -1)[indexUsed] ) + '"', ('email') : emailSignerInput, ('documentId') : documentIdInput, ('msg') : ('"' + 
+                    GlobalVariable.NumofColm, rowExcel('callerId (Sign Normal)')).split(';', -1)[GlobalVariable.indexUsed] ) + '"', ('email') : emailSignerInput, ('documentId') : documentIdInput, ('msg') : ('"' + 
                 msg) + '"']))
 
     'Jika status HIT API 200 OK'
@@ -72,8 +72,8 @@ if (WS.verifyResponseStatusCode(respon_login, 200, FailureHandling.OPTIONAL) == 
 			'Loop berdasarkan jumlah documen id'
 			for (int x = 0; x < documentId.size(); x++) {
 				println documentId[x].toString()
-				println emailSigner[indexUsed].replace('"', '')
-				signCount = CustomKeywords.'connection.APIFullService.getTotalSigner'(conneSign, documentId[x].toString(), emailSigner[indexUsed].replace('"', ''))
+				println emailSigner[GlobalVariable.indexUsed].replace('"', '')
+				signCount = CustomKeywords.'connection.APIFullService.getTotalSigner'(conneSign, documentId[x].toString(), emailSigner[GlobalVariable.indexUsed].replace('"', ''))
 	
 				'Loop untuk check db update sign. Maksimal 200 detik.'
 				for (int v = 1; v <= 20; v++) {
@@ -105,7 +105,7 @@ if (WS.verifyResponseStatusCode(respon_login, 200, FailureHandling.OPTIONAL) == 
 							'Panggil function responseAPIStoreDB dengan parameter totalSigned, ipaddress, dan array dari documentId'
 							
 							'Memanggil testCase mengenai SignDocumentStoreDb'
-							WebUI.callTestCase(findTestCase('Main Flow/API Sign Document Normal StoreDB'), [('API_Excel_Path') : API_Excel_Path, ('indexUsed') : indexUsed, ('sheet') : sheet],
+							WebUI.callTestCase(findTestCase('Main Flow/API Sign Document Normal StoreDB'), [('API_Excel_Path') : API_Excel_Path, ('sheet') : sheet],
 								FailureHandling.CONTINUE_ON_FAILURE)
 						}
 

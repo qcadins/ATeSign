@@ -25,10 +25,10 @@
       <name>excelPathSaldo</name>
    </variable>
    <variable>
-      <defaultValue>'Login/Login'</defaultValue>
+      <defaultValue>'Saldo'</defaultValue>
       <description></description>
       <id>9408ef45-baa3-4be6-bfb5-79416cfe4f5b</id>
       <masked>false</masked>
-      <name>excelPathSetting</name>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>

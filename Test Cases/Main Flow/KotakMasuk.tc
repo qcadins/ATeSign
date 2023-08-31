@@ -23,6 +23,12 @@
       <value></value>
       <variableId>d0d1dc26-9dd1-4600-8a3c-48e648591983</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>b908cf8b-051b-4555-8fe3-048e3989f2eb</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -43,5 +49,12 @@
       <id>d0d1dc26-9dd1-4600-8a3c-48e648591983</id>
       <masked>false</masked>
       <name>statusTtd</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>b908cf8b-051b-4555-8fe3-048e3989f2eb</id>
+      <masked>false</masked>
+      <name>checkBeforeSigning</name>
    </variable>
 </TestCaseEntity>

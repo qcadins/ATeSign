@@ -14,7 +14,9 @@ import org.openqa.selenium.Keys as Keys
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-String valueRefNum, nomorKontrakDocument
+String valueRefNum
+
+String nomorKontrakDocument
 
 documentId = findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ', -1)
 
@@ -22,7 +24,10 @@ String refNumber = CustomKeywords.'connection.APIFullService.getRefNumber'(conne
 
 saldoBefore = loginAdminGetSaldo(conneSign, 'No', sheet)
 
-if (isUsingAPI == 'Yes') {
+int prosesMaterai
+
+if ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Option for Stamp Document :')) == 'API Stamping External') || 
+(findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Option for Stamp Document :')) == 'API Stamping Normal')) {
     'penggunaan versi 3.1.0 atau 3.0.0 dengan 1 api yang sama'
     if (findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Option for Stamp Document :')) == 'API Stamping External') {
         'set base url menjadi v.3.1.0'
@@ -30,16 +35,18 @@ if (isUsingAPI == 'Yes') {
 
         'setting value body di api berdasarkan versi stamp nya'
         valueRefNum = '"refNumber"'
-    } else if (findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Option for Stamp Document :')) == 'API Stamping Normal') {
+    } else if (findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Option for Stamp Document :')) == 
+    'API Stamping Normal') {
         'set base url menjadi v.3.0.0'
         GlobalVariable.base_url = (GlobalVariable.base_url + '/services/confins/stampduty/attachMeteraiPajakku')
 
         'setting value body di api berdasarkan versi stamp nya'
         valueRefNum = '"agreementNo"'
     }
-        nomorKontrakDocument = '"' + refNumber  + '"'
+    
+    nomorKontrakDocument = (('"' + refNumber) + '"')
 
-        callerId = findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('callerId (API Stamping External and API Stamping Normal)'))
+    callerId = findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('callerId (API Stamping External and API Stamping Normal)'))
 
     'get api key dari db'
     GlobalVariable.api_key = CustomKeywords.'connection.APIFullService.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
@@ -56,7 +63,8 @@ if (isUsingAPI == 'Yes') {
             'looping dari 1 hingga 12'
             for (i = 1; i <= 12; i++) {
                 'mengambil value db proses ttd'
-                int prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, nomorKontrakDocument.replace('"',''))
+                prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, nomorKontrakDocument.replace(
+                        '"', ''))
 
                 'jika proses materai gagal (51)'
                 if (prosesMaterai == 51) {
@@ -64,11 +72,13 @@ if (isUsingAPI == 'Yes') {
                     WebUI.delay(3)
 
                     'get reason gailed error message untuk stamping'
-                    errorMessageDB = CustomKeywords.'connection.Meterai.getErrorMessage'(conneSign, nomorKontrakDocument.replace('"',''))
+                    errorMessageDB = CustomKeywords.'connection.Meterai.getErrorMessage'(conneSign, nomorKontrakDocument.replace(
+                            '"', ''))
 
                     'Write To Excel GlobalVariable.StatusFailed and errormessage'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                        GlobalVariable.StatusFailed, (findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 2) + ';' + GlobalVariable.ReasonFailedProsesStamping + ' dengan alasan ') + errorMessageDB.toString())
+                        GlobalVariable.StatusFailed, (((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 
+                            2) + ';') + GlobalVariable.ReasonFailedProsesStamping) + ' dengan alasan ') + errorMessageDB.toString())
 
                     GlobalVariable.FlagFailed = 1
 
@@ -79,7 +89,7 @@ if (isUsingAPI == 'Yes') {
 
                     'Mengambil value total stamping dan total meterai'
                     ArrayList totalMateraiAndTotalStamping = CustomKeywords.'connection.Meterai.getTotalMateraiAndTotalStamping'(
-                        conneSign,nomorKontrakDocument.replace('"',''))
+                        conneSign, nomorKontrakDocument.replace('"', ''))
 
                     'declare arraylist arraymatch'
                     arrayMatch = []
@@ -135,27 +145,37 @@ if (isUsingAPI == 'Yes') {
     } else {
         getErrorMessageAPI(respon)
     }
-	
-} else {
-	'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
-	WebUI.callTestCase(findTestCase('Main Flow/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathStamping
-	, ('sheet') : sheet, ('linkDocumentMonitoring') : 'Not Used', ('nomorKontrak') : nomorKontrakDocument.replace('"',''), ('isStamping') : 'Yes'], FailureHandling.CONTINUE_ON_FAILURE)
-
+} else if (findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Option for Stamp Document :')) == 
+'Start Stamping') {
+    'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
+    WebUI.callTestCase(findTestCase('Main Flow/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathStamping
+            , ('sheet') : sheet, ('linkDocumentMonitoring') : 'Not Used', ('nomorKontrak') : refNumber, ('isStamping') : 'Yes'], 
+        FailureHandling.CONTINUE_ON_FAILURE)
 }
 
 saldoAfter = loginAdminGetSaldo(conneSign, 'Yes', sheet)
 
-	if (saldoBefore == saldoAfter) {
-		'write to excel status failed dan reason'
-		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-			GlobalVariable.StatusFailed, ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm,
-				2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + ' terhadap total saldo dimana saldo awal dan saldo setelah meterai sama ')
-	} else {
-		verifySaldoUsed(conneSign, sheet)
-	} //   checkVerifyEqualOrMatch(WebUI.verifyEqual(Integer.parseInt(WebUI.getText(modifyperrowpercolumn)), p, FailureHandling.CONTINUE_ON_FAILURE), 
-//        'pada Saldo di Mutasi Saldo dengan nomor kontrak ' + findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 
-//            11).replace('"', ''))
+'mengambil value db proses ttd'
+prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, nomorKontrakDocument.replace(
+		'"', ''))
 
+if (prosesMaterai == 53) {
+    if (saldoBefore == saldoAfter) {
+        'write to excel status failed dan reason'
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
+            ' terhadap total saldo dimana saldo awal dan saldo setelah meterai sama ')
+    } else {
+    verifySaldoUsed(conneSign, sheet, nomorKontrakDocument.replace('"', ''))
+}
+} else if (prosesMaterai == 51) {
+    if (saldoBefore != saldoAfter) {
+        'write to excel status failed dan reason'
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
+            ' terhadap total saldo dimana saldo awal dan saldo setelah meterai tidak sama ')
+    }
+}
 def loginAdminGetSaldo(Connection conneSign, String start, String sheet) {
     String totalSaldo
 
@@ -208,15 +228,13 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     }
 }
 
-def verifySaldoUsed(Connection conneSign, String sheet) {
+def verifySaldoUsed(Connection conneSign, String sheet, String nomorKontrakDocument) {
     'get current date'
     def currentDate = new Date().format('yyyy-MM-dd')
 
-    documentType = CustomKeywords.'connection.APIFullService.getDocumentType'(conneSign, findTestData(excelPathStamping).getValue(
-            GlobalVariable.NumofColm, 11).replace('"', ''))
+    documentType = CustomKeywords.'connection.APIFullService.getDocumentType'(conneSign, nomorKontrakDocument)
 
-    documentName = CustomKeywords.'connection.DataVerif.getDocumentName'(conneSign, findTestData(excelPathStamping).getValue(
-            GlobalVariable.NumofColm, 11).replace('"', ''))
+    documentName = CustomKeywords.'connection.DataVerif.getDocumentName'(conneSign, nomorKontrakDocument)
 
     'klik ddl untuk tenant memilih mengenai Vida'
     WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)
@@ -246,8 +264,7 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
     WebUI.sendKeys(findTestObject('Saldo/input_tipedokumen'), Keys.chord(Keys.ENTER))
 
     'Input referal number'
-    WebUI.setText(findTestObject('Saldo/input_refnumber'), findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 
-            11).replace('"', ''))
+    WebUI.setText(findTestObject('Saldo/input_refnumber'), nomorKontrakDocument)
 
     'Input documentTemplateName'
     WebUI.setText(findTestObject('Saldo/input_namadokumen'), documentName, FailureHandling.CONTINUE_ON_FAILURE)
@@ -265,8 +282,7 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
     variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper '))
 
     'ambil inquiry di db'
-    ArrayList inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldoForMeterai'(conneSign, findTestData(excelPathStamping).getValue(
-            GlobalVariable.NumofColm, 11).replace('"', ''))
+    ArrayList inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldoForMeterai'(conneSign, nomorKontrakDocument)
 
     index = 0
 
@@ -326,5 +342,6 @@ def getErrorMessageAPI(def respon) {
 }
 
 def rowExcel(String cellValue) {
-	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, 'Main', cellValue)
+    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, 'Main', cellValue)
 }
+

@@ -45,9 +45,20 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'counter after check saldo'
         countCheckSaldo = 1
 
+		'get tenant code per case'
+		GlobalVariable.Tenant = findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
+		
+		'get psre code per case'
+		GlobalVariable.Psre = findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
+		
         'call test case login admin esign'
-        WebUI.callTestCase(findTestCase('Login/Login_AdminEsign'), [:], FailureHandling.STOP_ON_FAILURE)
-
+		if(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) !=
+			findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))) {
+			'call testcase login admin'
+			WebUI.callTestCase(findTestCase('Login/Login_PerCase'), [('SheetName') : sheet, ('Path') : excelPathIsiSaldo],
+					FailureHandling.CONTINUE_ON_FAILURE)
+		}
+		
 		'check if button menu visible atau tidak'
 		if(WebUI.verifyElementNotVisible(findTestObject('isiSaldo/menu_isiSaldo'), FailureHandling.OPTIONAL)) {
 			'click menu saldo'
@@ -70,63 +81,63 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
         'input tenant'
         WebUI.setText(findTestObject('isiSaldo/input_PilihTenant'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
-                14))
+                rowExcel('$Tenant')))
 
         'enter untuk input tenant'
         WebUI.sendKeys(findTestObject('isiSaldo/input_PilihTenant'), Keys.chord(Keys.ENTER))
 
         'get ddl vendor'
         ArrayList<String> resultVendor = CustomKeywords.'connection.Saldo.getDDLVendor'(conneSign, findTestData(excelPathIsiSaldo).getValue(
-                GlobalVariable.NumofColm, 14))
+                GlobalVariable.NumofColm, rowExcel('$Tenant')))
 
         'call function check ddl untuk vendor'
         checkDDL(findTestObject('isiSaldo/input_PilihVendor'), resultVendor)
 
         'input vendor'
         WebUI.setText(findTestObject('isiSaldo/input_PilihVendor'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
-                15))
+                rowExcel('$Vendor')))
 
         'enter untuk input vendor'
         WebUI.sendKeys(findTestObject('isiSaldo/input_PilihVendor'), Keys.chord(Keys.ENTER))
 
         'get ddl tipe saldo'
         ArrayList<String> resultTipeSaldo = CustomKeywords.'connection.Saldo.getDDLTipeSaldoActive'(conneSign, findTestData(
-                excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 14), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
-                15))
+                excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, rowExcel('$Tenant')), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
+                rowExcel('$Vendor')))
 
         'call function check ddl untuk vendor'
         checkDDL(findTestObject('isiSaldo/input_TipeSaldo'), resultTipeSaldo)
 
         'input tipe saldo'
         WebUI.setText(findTestObject('isiSaldo/input_TipeSaldo'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
-                16))
+                rowExcel('$Tipe Saldo')))
 
         'enter untuk input tipe saldo'
         WebUI.sendKeys(findTestObject('isiSaldo/input_TipeSaldo'), Keys.chord(Keys.ENTER))
 
         'input tambah saldo'
         WebUI.setText(findTestObject('isiSaldo/input_TambahSaldo'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
-                17))
-		if (findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 17) != '') {
+                rowExcel('$Tambah Saldo')))
+		if (findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, rowExcel('$Tambah Saldo')) != '') {
         'tambah saldo before dengan jumlah isi saldo'
         saldoBefore.set(0, (Integer.parseInt(saldoBefore[0]) + Integer.parseInt(findTestData(excelPathIsiSaldo).getValue(
-                    GlobalVariable.NumofColm, 17))))
+                    GlobalVariable.NumofColm, rowExcel('$Tambah Saldo')))))
 
         saldoBefore.set(1, (Integer.parseInt(saldoBefore[1]) + Integer.parseInt(findTestData(excelPathIsiSaldo).getValue(
-                    GlobalVariable.NumofColm, 17))))
+                    GlobalVariable.NumofColm, rowExcel('$Tambah Saldo')))))
 		}
 		
         'input nomor tagihan'
         WebUI.setText(findTestObject('isiSaldo/input_nomorTagihan'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
-                18))
+                rowExcel('$Nomor Tagihan')))
 
         'input catatan'
         WebUI.setText(findTestObject('isiSaldo/input_Catatan'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
-                19))
+                rowExcel('$Catatan')))
 
         'input tanggal pembelian'
         WebUI.setText(findTestObject('isiSaldo/input_TanggalPembelian'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
-                20))
+                rowExcel('$Tanggal Pembelian')))
 
         'click field untuk refresh button lanjut agar bisa di click'
         WebUI.click(findTestObject('isiSaldo/input_Catatan'))
@@ -145,7 +156,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
 			if (GlobalVariable.FlagFailed == 0) {
             'write to excel success'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'isiSaldo', 0, GlobalVariable.NumofColm - 
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
                 1, GlobalVariable.StatusSuccess)
 			}
 			
@@ -171,7 +182,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             WebUI.click(findTestObject('isiSaldo/button_Batal'))
 
             'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedMandatory'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('isiSaldo', GlobalVariable.NumofColm, 
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, (findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 2) + ';') + 
                 GlobalVariable.ReasonFailedMandatory)
 
@@ -184,7 +195,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('isiSaldo', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
             (findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
 
         GlobalVariable.FlagFailed = 1
@@ -225,11 +236,7 @@ public loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
     ArrayList<String> saldo = []
 	
 	'panggil fungsi login'
-	WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : 'isiSaldo',
-		('Path') : excelPathIsiSaldo], FailureHandling.CONTINUE_ON_FAILURE)
-	
-//	'call test case mengenai login admin'
-//	WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathIsiSaldo, ('sheet') : 'isiSaldo'], FailureHandling.STOP_ON_FAILURE)
+	WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathIsiSaldo], FailureHandling.CONTINUE_ON_FAILURE)
 	
     'click ddl bahasa'
     WebUI.click(findTestObject('isiSaldo/SaldoAdmin/button_bahasa'))
@@ -239,7 +246,7 @@ public loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 
     'select vendor'
     WebUI.selectOptionByLabel(findTestObject('isiSaldo/SaldoAdmin/select_Vendor'), '(?i)' + findTestData(excelPathIsiSaldo).getValue(
-            GlobalVariable.NumofColm, 15), true)
+            GlobalVariable.NumofColm, rowExcel('$Vendor')), true)
 
     'get row'
     variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
@@ -251,7 +258,7 @@ public loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
             true)
 
         'check if box info = tipe saldo di excel'
-        if (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 16))) {
+        if (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, rowExcel('$Tipe Saldo')))) {
             'modify object qty'
             modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('isiSaldo/SaldoAdmin/modifyObject'), 'xpath', 'equals', 
                 ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) + ']/div/div/div/div/div[2]/h3', 
@@ -266,14 +273,14 @@ public loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 	
     'input tipe saldo'
     WebUI.setText(findTestObject('isiSaldo/SaldoAdmin/input_TipeSaldo'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
-            16))
+            rowExcel('$Tipe Saldo')))
 
     'enter untuk input tipe saldo'
     WebUI.sendKeys(findTestObject('isiSaldo/SaldoAdmin/input_TipeSaldo'), Keys.chord(Keys.ENTER))
 
     'input tipe transaksi'
     WebUI.setText(findTestObject('isiSaldo/SaldoAdmin/input_TipeTransaksi'), 'Topup ' + findTestData(excelPathIsiSaldo).getValue(
-            GlobalVariable.NumofColm, 16))
+            GlobalVariable.NumofColm, rowExcel('$Tipe Saldo')))
 
     'enter untuk input tipe saldo'
     WebUI.sendKeys(findTestObject('isiSaldo/SaldoAdmin/input_TipeTransaksi'), Keys.chord(Keys.ENTER))
@@ -343,7 +350,7 @@ public loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 
         'get trx dari db'
         ArrayList<String> result = CustomKeywords.'connection.Saldo.getIsiSaldoTrx'(conneSign, findTestData(excelPathIsiSaldo).getValue(
-                GlobalVariable.NumofColm, 18))
+                GlobalVariable.NumofColm, rowExcel('$Nomor Tagihan')))
 
         arrayIndex = 0
 
@@ -380,40 +387,40 @@ public loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 def inputCancel() {
 	'input tenant'
 	WebUI.setText(findTestObject('isiSaldo/input_PilihTenant'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm,
-			14))
+			rowExcel('$Tenant')))
 
 	'enter untuk input tenant'
 	WebUI.sendKeys(findTestObject('isiSaldo/input_PilihTenant'), Keys.chord(Keys.ENTER))
 	
 	'input vendor'
 	WebUI.setText(findTestObject('isiSaldo/input_PilihVendor'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm,
-			15))
+			rowExcel('$Vendor')))
 
 	'enter untuk input vendor'
 	WebUI.sendKeys(findTestObject('isiSaldo/input_PilihVendor'), Keys.chord(Keys.ENTER))
 	
 	'input tipe saldo'
 	WebUI.setText(findTestObject('isiSaldo/input_TipeSaldo'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm,
-			16))
+			rowExcel('$Tipe Saldo')))
 
 	'enter untuk input tipe saldo'
 	WebUI.sendKeys(findTestObject('isiSaldo/input_TipeSaldo'), Keys.chord(Keys.ENTER))
 
 	'input tambah saldo'
 	WebUI.setText(findTestObject('isiSaldo/input_TambahSaldo'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm,
-			17))
+			rowExcel('$Tambah Saldo')))
 	
 	'input nomor tagihan'
 	WebUI.setText(findTestObject('isiSaldo/input_nomorTagihan'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm,
-			18))
+			rowExcel('$Nomor Tagihan')))
 
 	'input catatan'
 	WebUI.setText(findTestObject('isiSaldo/input_Catatan'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm,
-			19))
+			rowExcel('$Catatan')))
 
 	'input tanggal pembelian'
 	WebUI.setText(findTestObject('isiSaldo/input_TanggalPembelian'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm,
-			20))
+			rowExcel('$Tanggal Pembelian')))
 
 	'click field untuk refresh button lanjut agar bisa di click'
 	WebUI.click(findTestObject('isiSaldo/input_Catatan'))
@@ -459,4 +466,8 @@ def inputCancel() {
 	
 	'verify field tanggal pemeblian kosong'
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('isiSaldo/input_TanggalPembelian'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field tanggal pembelian')
+}
+
+def rowExcel(String cellValue) {
+	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }

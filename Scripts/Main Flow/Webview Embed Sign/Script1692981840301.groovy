@@ -29,8 +29,8 @@ arrayIndex = 0
 documentId = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ', 
     -1)
 
-for (int o = 0; o < documentId.size(); o++) {
-    String refNumber = CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, documentId[0])
+for (o = 0; o < documentId.size(); o++) {
+    String refNumber = CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, documentId[o])
 
     'ambil nama vendor dari DB'
     String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, refNumber)
@@ -49,7 +49,7 @@ for (int o = 0; o < documentId.size(); o++) {
 
 	HashMap<String,String> result = new HashMap<>()
 	
-    result = generateEncryptMessage(conneSign, documentId[0], emailSigner, tenantCode)
+    result = generateEncryptMessage(conneSign, documentId[o], emailSigner, tenantCode)
 
     'Inisialisasi variable yang dibutuhkan, Mengkosongkan nomor kontrak dan document Template Name'
     String noKontrak = '', documentTemplateName = '', noTelpSigner
@@ -61,7 +61,7 @@ for (int o = 0; o < documentId.size(); o++) {
     WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
         FailureHandling.CONTINUE_ON_FAILURE)
 
-	HashMap<String, String> resultSaldoBefore = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathFESignDocument, ('sheet') : sheet, ('vendor') : vendor],
+	def HashMap<String, String> resultSaldoBefore = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathFESignDocument, ('sheet') : sheet, ('vendor') : vendor],
 		FailureHandling.CONTINUE_ON_FAILURE)
 	
     'mengambil saldo before'
@@ -77,35 +77,27 @@ for (int o = 0; o < documentId.size(); o++) {
     'tutup browsernya'
     WebUI.closeBrowser()
 
-    'Open browser dengan embed kotak masuk'
-    runWithEmbed(result.get('encryptKotakMasuk'))
+	'Call test Case untuk login sebagai admin wom admin client'
+	WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excelPathFESignDocument, ('sheet') : sheet, ('linkUrl') : result.get('encryptKotakMasuk'), ('indexUsed') : indexUsed],
+		FailureHandling.CONTINUE_ON_FAILURE)
 
 	checkBulkSigning()
     
-    'Jika running menggunakan embed, maka'
-    if (GlobalVariable.RunWithEmbed == 'Yes') {
-        'Ganti frame ke default'
-        WebUI.switchToDefaultContent(FailureHandling.CONTINUE_ON_FAILURE)
+	refreshWebsite()
 
-        'click button embed untuk refresh'
-        WebUI.click(findTestObject('EmbedView/button_Embed'))
+		'Get row lastest'
+	variableLastest = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-content-layout > div > div > div > div.content-wrapper.p-0 > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
 
-        'swith to iframe'
-        WebUI.switchToFrame(findTestObject('EmbedView/iFrameEsign'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
-    } else {
-        'Jika running tidak menggunakan embed, maka refresh saja'
-        WebUI.refresh()
-    }
-    
-    'Diberikan delay 1 sec dikarenakan agar Lastest dapat diambil'
-    WebUI.delay(1)
+	'get row lastest'
+	modifyObjectBtnLastest = WebUI.modifyObjectProperty(findTestObject('Object Repository/APIFullService/Send to Sign/button_Lastest'),
+		'xpath', 'equals', ('/html/body/app-root/app-content-layout/div/div/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' +
+		variableLastest.size()) + ']/a', true)
 
-	TestObject variableLastest = checkPageLastest()
-	
-    'modify page untuk previous. Ini akan digunakan jika datanya tidak ditemukan'
-    modifyObjectBtnPrevious = WebUI.modifyObjectProperty(findTestObject('Object Repository/APIFullService/Send to Sign/button_Lastest'), 
-        'xpath', 'equals', ('/html/body/app-root/app-content-layout/div/div/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' + 
-        2) + ']/a', true)
+	'jika btn lastest dapat diclick'
+	if (WebUI.verifyElementClickable(modifyObjectBtnLastest, FailureHandling.OPTIONAL)) {
+		'Klik button Lastest'
+		WebUI.click(modifyObjectBtnLastest, FailureHandling.OPTIONAL)
+	}
 
     'Jika ingin dilakukannya bulk sign'
     if (z[indexUsed] == 'Yes') {
@@ -117,12 +109,12 @@ for (int o = 0; o < documentId.size(); o++) {
     }
     
     'Looping berdasarkan page agar bergeser ke page sebelumnya'
-    for (int k = 1; k <= (variableLastest.size() - 4); k++) {
+    for (k = 1; k <= (variableLastest.size() - 4); k++) {
         'get row beranda'
         rowBeranda = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-content-layout > div > div > div > div.content-wrapper.p-0 > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
 
         'looping untuk mengambil seluruh row'
-        for (int j = rowBeranda.size(); j >= 1; j--) {
+        for (j = rowBeranda.size(); j >= 1; j--) {
             'deklarasi arrayIndex untuk pemakaian'
             arrayIndex = 0
 			HashMap<String, TestObject> resultObject = modifyObject(j)
@@ -183,7 +175,7 @@ for (int o = 0; o < documentId.size(); o++) {
         'Jika masih tidak ditemukan datanya, maka'
         if (documentTemplateName == '') {
             'Klik previous'
-            WebUI.click(modifyObjectBtnPrevious)
+            WebUI.click(findTestObject('APIFullService/Send to Sign/button_Previous'))
         } else {
             'Jika sudah ditemukan, maka break'
             break
@@ -226,7 +218,7 @@ for (int o = 0; o < documentId.size(); o++) {
     }
     
     'Looping berdasarkan total document sign'
-    for (int c = 0; c < documentTemplateNamePerDoc.size(); c++) {
+    for (c = 0; c < documentTemplateNamePerDoc.size(); c++) {
         'modify object btn Nama Dokumen '
         modifyObjectbtnNamaDokumen = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/btn_NamaDokumen'), 'xpath', 
             'equals', ('id("ngb-nav-' + c) + '")', true, FailureHandling.CONTINUE_ON_FAILURE)
@@ -253,7 +245,7 @@ for (int o = 0; o < documentId.size(); o++) {
             ' dengan alasan page tidak berpindah di Bulk Sign View.')
     } else {
         'Looping berdasarkan document template name per dokumen'
-        for (int i = 0; i < documentTemplateNamePerDoc.size(); i++) {
+        for (i = 0; i < documentTemplateNamePerDoc.size(); i++) {
             'Jika page sudah berpindah maka modify object text document template name di Tanda Tangan Dokumen'
             modifyObjectlabelnamadokumenafterkonfirmasi = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/lbl_NamaDokumenAfterKonfirmasi'), 
                 'xpath', 'equals', ('//*[@id="pdf-main-container"]/div[1]/ul/li[' + (i + 1)) + ']/label', true)
@@ -381,7 +373,7 @@ for (int o = 0; o < documentId.size(); o++) {
                     countResend = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('CountResendOTP')).split(';', -1)[indexUsed].toInteger()
 
                     'Looping dari 1 hingga total count resend OTP'
-                    for (int w = 1; w <= countResend; w++) {
+                    for ( w = 1; w <= countResend; w++) {
                         'taruh waktu delay'
                         WebUI.delay(298)
 
@@ -498,20 +490,20 @@ for (int o = 0; o < documentId.size(); o++) {
             noKontrakPerDoc = noKontrak.split(';', -1)
 
             'looping untuk mendapatkan total saldo yang digunakan per nomor kontrak'
-            for (i = 0; i < noKontrakPerDoc.size(); i++) {
+            for (y = 0; y < noKontrakPerDoc.size(); y++) {
                 'Mengambil value dari db mengenai tipe pembayran'
                 paymentType = CustomKeywords.'connection.APIFullService.getPaymentType'(conneSign, noKontrakPerDoc[i])
 
-                if (i == 0) {
+                if (y == 0) {
                     saldoUsedDocPertama = (saldoUsedDocPertama + CustomKeywords.'connection.APIFullService.getSaldoUsedBasedonPaymentType'(
-                        conneSign, noKontrakPerDoc[i], emailSigner))
+                        conneSign, noKontrakPerDoc[y], emailSigner))
                 }
                 
                 'Jika tipe pembayarannya per sign'
                 if (paymentType == 'Per Sign') {
                     'Saldo usednya akan ditambah dengan value db penggunaan saldo'
                     saldoUsed = (saldoUsed + CustomKeywords.'connection.APIFullService.getSaldoUsedBasedonPaymentType'(conneSign, 
-                        noKontrakPerDoc[i], emailSigner))
+                        noKontrakPerDoc[y], emailSigner))
                 } else {
                     saldoUsed = (saldoUsed + 1)
                 }
@@ -521,12 +513,12 @@ for (int o = 0; o < documentId.size(); o++) {
             jumlahSignerTandaTangan = (jumlahSignerTandaTangan + saldoUsed)
 
             'Looping maksimal 100 detik untuk signing proses. Perlu lama dikarenakan walaupun requestnya done(3), tapi dari VIDAnya tidak secepat itu.'
-            for (int y = 1; y <= 5; y++) {
+            for (y = 1; y <= 5; y++) {
                 'Kita berikan delay per 20 detik karena proses signingnya masih dalam status In Progress (1), dan ketika selesai, status tanda tangan akan kembali menjadi 0'
                 WebUI.delay(20)
 
                 'Jika signing process db untuk signing false, maka'
-                if (signingProcessStoreDB(conneSign, emailSigner, saldoUsedDocPertama) == false) {
+                if (signingProcessStoreDB(conneSign, emailSigner, saldoUsedDocPertama, documentId[o]) == false) {
                     'Jika looping waktu delaynya yang terakhir, maka'
                     if (y == 5) {
                         'Failed dengan alasan prosesnya belum selesai'
@@ -567,12 +559,15 @@ for (int o = 0; o < documentId.size(); o++) {
     noKontrakPerDoc = noKontrak.split(';', -1)
 
     'beri maks 30 sec mengenai perubahan total sign'
-    for (int b = 1; b <= 3; b++) {
+    for (b = 1; b <= 3; b++) {
+		def HashMap<String, String> resultSaldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathFESignDocument, ('sheet') : sheet, ('vendor') : vendor],
+			FailureHandling.CONTINUE_ON_FAILURE)
+
 		'mengambil saldo before'
-		saldoSignBefore = resultSaldoBefore.get('saldoSign')
+		saldoSignAfter = resultSaldoAfter.get('saldoSign')
 
 		'mengambil saldo otp before'
-		otpBefore = resultSaldoBefore.get('saldoOTP')
+		otpAfter = resultSaldoAfter.get('saldoOTP')
 
         'Jika count saldo otp after dengan yang before dikurangi 1 ditambah dengan '
         if (WebUI.verifyEqual(Integer.parseInt(otpBefore) - countResend, Integer.parseInt(otpAfter), FailureHandling.OPTIONAL)) {
@@ -590,7 +585,7 @@ for (int o = 0; o < documentId.size(); o++) {
     }
     
     'looping berdasarkan total dokumen dari dokumen template code'
-    for (int i = 0; i < noKontrakPerDoc.size(); i++) {
+    for (i = 0; i < noKontrakPerDoc.size(); i++) {
         'Input filter di Mutasi Saldo'
         inputFilterTrx(conneSign, currentDate, noKontrakPerDoc[i], documentTemplateNamePerDoc[i])
 
@@ -615,7 +610,7 @@ for (int o = 0; o < documentId.size(); o++) {
         }
         
         'delay dari 10 sampe 60 detik'
-        for (int d = 1; d <= 6; d++) {
+        for (d = 1; d <= 6; d++) {
 			'check total row dengan yang tertandatangan'
 			checkVerifyEqualorMatch(WebUI.verifyMatch(variableSaldoRow.size().toString(), saldoUsedperDoc.toString(),
 					false, FailureHandling.CONTINUE_ON_FAILURE), ' pada jumlah tertanda tangan dengan row transaksi ')
@@ -635,9 +630,9 @@ for (int o = 0; o < documentId.size(); o++) {
                 index = 0
 
                 'looping mengenai rownya'
-                for (int j = 1; j <= variableSaldoRow.size(); j++) {
+                for (j = 1; j <= variableSaldoRow.size(); j++) {
                     'looping mengenai columnnya'
-                    for (int u = 1; u <= variableSaldoColumn.size(); u++) {
+                    for (u = 1; u <= variableSaldoColumn.size(); u++) {
                         'modify per row dan column. column menggunakan u dan row menggunakan documenttemplatename'
                         modifyperrowpercolumn = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/lbl_notrxsaldo'), 
                             'xpath', 'equals', ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
@@ -812,7 +807,7 @@ def checkErrorLog() {
 	if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 		'ambil teks errormessage'
 		errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
-
+		if (errormessage != null) {
 		if (!(errormessage.contains('Verifikasi OTP berhasil')) && !(errormessage.contains('feedback'))) {
 			'Tulis di excel itu adalah error'
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
@@ -821,6 +816,7 @@ def checkErrorLog() {
 
 			return true
 		}
+	}
 	}
 	
 	return false
@@ -1016,24 +1012,6 @@ def modifyObject(int j) {
 	return result
 }
 
-def checkPageLastest() {
-	'Get row lastest'
-	variableLastest = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-content-layout > div > div > div > div.content-wrapper.p-0 > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
-
-	'get row lastest'
-	modifyObjectBtnLastest = WebUI.modifyObjectProperty(findTestObject('Object Repository/APIFullService/Send to Sign/button_Lastest'),
-		'xpath', 'equals', ('/html/body/app-root/app-content-layout/div/div/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' +
-		variableLastest.size()) + ']/a', true)
-
-	'jika btn lastest dapat diclick'
-	if (WebUI.verifyElementClickable(modifyObjectBtnLastest, FailureHandling.OPTIONAL)) {
-		'Klik button Lastest'
-		WebUI.click(modifyObjectBtnLastest, FailureHandling.OPTIONAL)
-	}
-	
-	return variableLastest
-}
-
 def checkBulkSigning() {
 	'Klik checkbox ttd untuk semua'
 	WebUI.click(findTestObject('Object Repository/APIFullService/Send to Sign/checkboxTtdSemua'))
@@ -1086,4 +1064,79 @@ def inputMasukanAndWriteResultSign() {
 
 	'klik button Kirim'
 	WebUI.click(findTestObject('KotakMasuk/Sign/btn_Kirim'))
+}
+
+def refreshWebsite() {
+	'Jika running menggunakan embed, maka'
+	if (GlobalVariable.RunWithEmbed == 'Yes') {
+		'Ganti frame ke default'
+		WebUI.switchToDefaultContent(FailureHandling.CONTINUE_ON_FAILURE)
+
+		'click button embed untuk refresh'
+		WebUI.click(findTestObject('EmbedView/button_Embed'))
+
+		'swith to iframe'
+		WebUI.switchToFrame(findTestObject('EmbedView/iFrameEsign'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
+	} else {
+		'Jika running tidak menggunakan embed, maka refresh saja'
+		WebUI.refresh()
+	}
+	
+	'Diberikan delay 1 sec dikarenakan agar Lastest dapat diambil'
+	WebUI.delay(1)
+}
+
+def masukanStoreDB(Connection conneSign, String emailSigner, ArrayList<String> arrayMatch) {
+	'deklarasi arrayIndex untuk penggunakan selanjutnya'
+	arrayIndex = 0
+
+	'MasukanDB mengambil value dari hasil query'
+	masukanDB = CustomKeywords.'connection.APIFullService.getFeedbackStoreDB'(conneSign, emailSigner)
+
+	'verify rating'
+	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('$Rating')).split(';', -1)[indexUsed], masukanDB[
+			arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+
+	'verify komentar'
+	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('comment')).split(';', -1)[indexUsed], masukanDB[
+			arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+}
+
+def signingProcessStoreDB(Connection conneSign, String emailSigner, int jumlahSignerTandaTangan, String documentId) {
+	'deklarasi arrayIndex untuk penggunakan selanjutnya'
+	arrayIndex = 0
+
+	'SigningDB mengambil value dari hasil query'
+	signingDB = CustomKeywords.'connection.SendSign.getSigningStatusProcess'(conneSign, documentId, emailSigner)
+
+	'looping berdasarkan size dari signingDB'
+	for (t = 1; t <= signingDB.size(); t++) {
+		ArrayList<String> arrayMatch = new ArrayList<String>()
+
+		'verify request status. 3 berarti done request. Terpaksa hardcode karena tidak ada masternya untuk 3.'
+		arrayMatch.add(WebUI.verifyMatch('3', signingDB[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+
+		'verify sign date. Jika ada, maka teksnya Sudah TTD. Sign Date sudah dijoin ke email masing-masing, sehingga pengecekan apakah sudah sign atau belum ditandai disini'
+		arrayMatch.add(WebUI.verifyMatch('Sudah TTD', signingDB[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+
+		'verify total signed. Total signed harusnya seusai dengan variable jumlah signed'
+		arrayMatch.add(WebUI.verifyEqual(jumlahSignerTandaTangan, Integer.parseInt(signingDB[arrayIndex++]), FailureHandling.CONTINUE_ON_FAILURE))
+
+		'Jika arraymatchnya ada false'
+		if (arrayMatch.contains(false)) {
+			'mengembalikan false'
+			return false
+			
+			'dibreak ke looping code'
+			break
+		} else {
+			'jika semuanya true'
+
+			'mengembalikan true'
+			return true
+			
+			'dibreak ke looping code'
+			break
+		}
+	}
 }
