@@ -380,12 +380,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                 'verifikasi objek text yang diambil valuenya dengan password'
                 checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('KotakMasuk/Sign/input_KataSandiAfterKonfirmasi'), 
-                            'value'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 41), false), 
+                            'value'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 41), false, FailureHandling.CONTINUE_ON_FAILURE), 
                     'pada Kata Sandi Signer')
 
                 'verifikasi objek text yang diambil valuenya dengan nomor telepon'
                 checkVerifyEqualorMatch(WebUI.verifyMatch(CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(noTelpSigner), 
-                        CustomKeywords.'connection.APIFullService.getHashedNo'(conneSign, emailSigner[(o - 1)]), false), 
+                        CustomKeywords.'connection.APIFullService.getHashedNo'(conneSign, emailSigner[(o - 1)]), false, FailureHandling.CONTINUE_ON_FAILURE), 
                     'pada nomor telepon Signer')
 
 				'cek jika vendor yang dipakai adalah privy'
@@ -1279,24 +1279,21 @@ def checkErrorLog() {
 
 		'jika error message null, masuk untuk tulis error non-sistem'
 		if (errormessage != null) {
-			
-			if (!(errormessage.contains('Permintaan tanda tangan berhasil dibuat.'))) {
+			if (!(errormessage.contains('Verifikasi OTP berhasil')) && !(errormessage.contains('feedback'))) {
 				'Tulis di excel itu adalah error'
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Sign', GlobalVariable.NumofColm,
-					GlobalVariable.StatusFailed, (((findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 2).replace(
+					GlobalVariable.StatusFailed, (((findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 2).replace(
 						'-', '') + ';') + '<') + errormessage) + '>')
 				
 				return true
 			}
 		} else {
-			
 			'Tulis di excel itu adalah error'
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Sign', GlobalVariable.NumofColm,
-				GlobalVariable.StatusFailed, (((findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 2).replace(
+				GlobalVariable.StatusFailed, (((findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 2).replace(
 					'-', '') + ';')) + 'Error tidak berhasil ditangkap'))
 		}
     }
-    
     return false
 }
 

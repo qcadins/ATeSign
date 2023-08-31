@@ -15,22 +15,24 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'panggil fungsi login'
-WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
-	('Path') : excelPathPriorityPsre], FailureHandling.STOP_ON_FAILURE)
-
-//'call test case login adm esign'
-//WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathPriorityPsre, ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
+WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathPriorityPsre], FailureHandling.STOP_ON_FAILURE)
 
 'looping berdasarkan jumlah kolom'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathPriorityPsre).columnNumbers; (GlobalVariable.NumofColm)++) {
-	if (findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
+	if (findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
 		break
-	} else if (findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted') ||
-		findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('WARNING')) {
+	} else if (findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted') ||
+		findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('WARNING')) {
 		
-		if(findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {			
+		if(findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {			
 			GlobalVariable.FlagFailed = 0
 		}
+		
+		'get tenant code dari excel per case'
+		GlobalVariable.Tenant = findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
+		
+		'get Psre code dari excel per case'
+		GlobalVariable.Psre = findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
 		
 		'click menu priority PSrE'
 		WebUI.click(findTestObject('PengaturanPSrE/PSRe Priority/menu_PsrePriority'))
@@ -38,7 +40,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		'declare array list'
 		ArrayList<String> resultDB = [], resultUI = [], seqPsreRole = []
 		
-		resultDB = CustomKeywords.'connection.PengaturanPSrE.getPsrePriority'(conneSign, findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, 13))
+		resultDB = CustomKeywords.'connection.PengaturanPSrE.getPsrePriority'(conneSign)
 		
 		'count PSrE'
 		variable = DriverFactory.webDriver.findElements(By.cssSelector('#cdk-drop-list-0 div'))
@@ -57,7 +59,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		checkVerifyEqualorMatch(WebUI.verifyMatch(resultDB.toString(), resultUI.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' urutan psre tidak sesuai dengan default vendor DB')
 		
 		'get urutan seq psre dari excel'
-		seqPsreRole = findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, 16).split('\\n',-1)
+		seqPsreRole = findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, rowExcel('Urutan Psre')).split('\\n',-1)
 		
 		'looping seq Psre'
 		for (seq = 1; seq <= variable.size(); seq++) {
@@ -91,17 +93,24 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		'check if muncul popup'
 		if(WebUI.verifyElementPresent(findTestObject('PengaturanPSrE/label_PopUP'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)){
 			if(WebUI.getText(findTestObject('PengaturanPSrE/label_PopUP')).equalsIgnoreCase('Success')){
+				if(GlobalVariable.checkStoreDB == 'Yes') {
+					resultDB = CustomKeywords.'connection.PengaturanPSrE.getPsrePriority'(conneSign)
+					
+					'verify default vendor psre db = Excel'
+					checkVerifyEqualorMatch(WebUI.verifyMatch(resultDB.toString(), seqPsreRole.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' urutan psre tidak sesuai dengan yang baru di edit')
+				}
+				
 				if(GlobalVariable.FlagFailed == 0) {
 					'write to excel success'
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PSrE Priority',
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
 						0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 				}
 			} else {
 				'Write to excel status failed'
 				GlobalVariable.FlagFailed = 1
 		
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PSrE Priority', GlobalVariable.NumofColm,
-					GlobalVariable.StatusFailed, (findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, 2) +
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+					GlobalVariable.StatusFailed, (findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) +
 					';') + ' GAGAL PENGATURAN PRIORITAS PSRE')
 			}
 			
@@ -116,8 +125,12 @@ def checkVerifyEqualorMatch(Boolean isMatch, String reason) {
 		'Write to excel status failed and ReasonFailedVerifyEqualorMatch'
 		GlobalVariable.FlagFailed = 1
 
-		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PSrE Priority', GlobalVariable.NumofColm,
-			GlobalVariable.StatusFailed, (findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, 2) +
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+			GlobalVariable.StatusFailed, (findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) +
 			';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
 	}
+}
+
+def rowExcel(String cellValue) {
+	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }

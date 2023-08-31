@@ -18,32 +18,35 @@ int countColmExcel = findTestData(excelPathCheckDocBeforeSigning).columnNumbers
 
 'looping API Confirm OTP'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
-    if (findTestData(excelPathCheckDocBeforeSigning).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
+    if (findTestData(excelPathCheckDocBeforeSigning).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
-    } else if (findTestData(excelPathCheckDocBeforeSigning).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+    } else if (findTestData(excelPathCheckDocBeforeSigning).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 		
 		'setting menggunakan base url yang benar atau salah'
-		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathCheckDocBeforeSigning, GlobalVariable.NumofColm, 15)
+		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathCheckDocBeforeSigning, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
+		
+		'set psre sesuai inputan excel per case'
+		GlobalVariable.Psre = findTestData(excelPathCheckDocBeforeSigning).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
 		
 	    'HIT API'
 	    responLogin = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/Login', [('email') : findTestData(excelPathCheckDocBeforeSigning).getValue(
-			GlobalVariable.NumofColm, 10).replace('"',''), ('password') : findTestData(excelPathCheckDocBeforeSigning).getValue(GlobalVariable.NumofColm, 11)]))
+			GlobalVariable.NumofColm, rowExcel('email')).replace('"',''), ('password') : findTestData(excelPathCheckDocBeforeSigning).getValue(GlobalVariable.NumofColm, rowExcel('password'))]))
 	
 	    'Jika status HIT API 200 OK'
 	    if (WS.verifyResponseStatusCode(responLogin, 200, FailureHandling.OPTIONAL) == true) {
 			
-			if(findTestData(excelPathCheckDocBeforeSigning).getValue(GlobalVariable.NumofColm, 13).equalsIgnoreCase('Yes')) {
+			if(findTestData(excelPathCheckDocBeforeSigning).getValue(GlobalVariable.NumofColm, rowExcel('Use True Token?')).equalsIgnoreCase('Yes')) {
 				'Parsing token menjadi GlobalVariable'
 				GlobalVariable.token = WS.getElementPropertyValue(responLogin, 'access_token')			
-			} else if(findTestData(excelPathCheckDocBeforeSigning).getValue(GlobalVariable.NumofColm, 13).equalsIgnoreCase('No')) {
-				GlobalVariable.token = findTestData(excelPathCheckDocBeforeSigning).getValue(GlobalVariable.NumofColm, 14)
+			} else if(findTestData(excelPathCheckDocBeforeSigning).getValue(GlobalVariable.NumofColm, rowExcel('Use True Token')).equalsIgnoreCase('No')) {
+				GlobalVariable.token = findTestData(excelPathCheckDocBeforeSigning).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Token'))
 	    	}
 	
 	       println(GlobalVariable.token)
 		   
 		   'HIT API'
 		   respon = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/API Check Document Before Signing', [('docId') : findTestData(excelPathCheckDocBeforeSigning).getValue(
-			   GlobalVariable.NumofColm, 9), ('email') : findTestData(excelPathCheckDocBeforeSigning).getValue(GlobalVariable.NumofColm, 10)]))
+			   GlobalVariable.NumofColm, rowExcel('Doc ID')), ('email') : findTestData(excelPathCheckDocBeforeSigning).getValue(GlobalVariable.NumofColm, rowExcel('email'))]))
 	
 		   if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
 			   'get  doc id'
@@ -63,7 +66,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				   for(index = 0 ; index < docId.size() ; index++) {
 					   
 					   'get data from DB'
-					   ArrayList<String> resultDB = CustomKeywords.'connection.APIFullService.getDocSignSequence'(conneSign, docId[index], findTestData(excelPathCheckDocBeforeSigning).getValue(GlobalVariable.NumofColm, 10).replace('"',''))
+					   ArrayList<String> resultDB = CustomKeywords.'connection.APIFullService.getDocSignSequence'(conneSign, docId[index], findTestData(excelPathCheckDocBeforeSigning).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace('"',''))
 					   
 					   arrayIndex = 0
 					   
@@ -79,12 +82,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				   'jika data db tidak sesuai dengan excel'
 				   if (arrayMatch.contains(false)) {
 					   'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-					   CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Check Doc Before Signing',
+					   CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet,
 						   GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (findTestData(excelPathCheckDocBeforeSigning).getValue(
-							   GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
+							   GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
 				   } else {
 					   'write to excel success'
-					   CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Check Doc Before Signing',
+					   CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
 						   0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 				   }
 			   }
@@ -105,6 +108,10 @@ def getErrorMessageAPI(def respon) {
 	message = WS.getElementPropertyValue(respon, 'error_description', FailureHandling.OPTIONAL)
 
 	'Write To Excel GlobalVariable.StatusFailed and errormessage'
-	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Check Doc Before Signing', GlobalVariable.NumofColm,
+	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 		GlobalVariable.StatusFailed, '<' + message + '>')
+}
+
+def rowExcel(String cellValue) {
+	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }

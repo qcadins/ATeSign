@@ -13,15 +13,11 @@ int countColmExcel = findTestData(excelPathMasukan).columnNumbers
 
 'looping masukan'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
-    if (findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
+    if (findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
-    } else if (findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+    } else if (findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 		'panggil fungsi login'
-		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : 'Masukan',
-			('Path') : excelPathMasukan], FailureHandling.CONTINUE_ON_FAILURE)
-		
-//		'call test case login admin'
-//        WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathMasukan, ('sheet') : 'Masukan'], FailureHandling.CONTINUE_ON_FAILURE)
+		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathMasukan], FailureHandling.CONTINUE_ON_FAILURE)
 
         'delay untuk nunggu alert error hilang'
         WebUI.delay(10)
@@ -30,9 +26,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         WebUI.click(findTestObject('Masukan/menu_Masukan'))
 
         'check if cell rating > 0'
-        if (findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, 9).length() > 0) {
+        if (findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, rowExcel('$Rating')).length() > 0) {
             'get bintang dari excel untuk modify object bintang yang ingin di click'
-            index = (Integer.parseInt(findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, 9)) * 2)
+            index = (Integer.parseInt(findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, rowExcel('$Rating'))) * 2)
 
             'modify object button Bintang'
             modifyObjectButtonBintang = WebUI.modifyObjectProperty(findTestObject('Masukan/button_RatingBintang'), 'xpath', 
@@ -44,13 +40,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         
         'input comment'
         WebUI.setText(findTestObject('Masukan/input_CommentMasukan'), findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, 
-                10))
+                rowExcel('Comment')))
 
         'click kirim'
         WebUI.click(findTestObject('Masukan/button_Kirim'))
 
         'declare isMmandatory Complete'
-        int isMandatoryComplete = Integer.parseInt(findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, 5))
+        int isMandatoryComplete = Integer.parseInt(findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, rowExcel('Is Mandatory Complete')))
 
         'check if alert berhasil muncul'
         if (WebUI.verifyElementPresent(findTestObject('Masukan/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
@@ -58,7 +54,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             if (WebUI.getAttribute(findTestObject('Masukan/errorLog'), 'aria-label', FailureHandling.OPTIONAL).contains(
                 'Terimakasih') && (isMandatoryComplete == 0)) {
                 'write to excel success'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Masukan', 0, GlobalVariable.NumofColm - 
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
                     1, GlobalVariable.StatusSuccess)
 
                 if (GlobalVariable.checkStoreDB == 'Yes') {
@@ -70,8 +66,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         } else if (WebUI.verifyElementNotPresent(findTestObject('Masukan/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL) && 
         (isMandatoryComplete > 0)) {
             'write to excel status failed dan reason'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Masukan', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedMandatory)
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                (findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + GlobalVariable.ReasonFailedMandatory)
         }
         
         'close Browser'
@@ -79,3 +75,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     }
 }
 
+def rowExcel(String cellValue) {
+	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+}

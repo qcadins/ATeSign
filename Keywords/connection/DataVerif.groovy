@@ -288,7 +288,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	getOfficeCode(Connection conn, String documentId) {
+	getOfficeCode(Connection conn, String refNumber, String tenantCode) {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select tdd.document_id from tr_document_h tdh join tr_document_d tdd on tdh.id_document_h = tdd.id_document_h join ms_tenant mst on tdh.id_ms_tenant = mst.id_ms_tenant join ms_vendor msv on tdd.id_ms_vendor = msv.id_ms_vendor where tdh.ref_number = '"+refNumber+"' and mst.tenant_code = '"+tenantCode+"' order by tdh.dtm_crt desc limit 1")

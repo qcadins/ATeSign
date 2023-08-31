@@ -11,11 +11,24 @@
       <value></value>
       <variableId>f29c3495-34f7-40a2-8d3e-1e6c8bc5ecd3</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>eab16422-3938-41f2-a656-bd65dcfc0558</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>'PengaturanDokumen/PengaturanDokumen'</defaultValue>
       <description></description>
       <id>f29c3495-34f7-40a2-8d3e-1e6c8bc5ecd3</id>
       <masked>false</masked>
       <name>excelPathPengaturanDokumen</name>
+   </variable>
+   <variable>
+      <defaultValue>'PengaturanDokumen'</defaultValue>
+      <description></description>
+      <id>eab16422-3938-41f2-a656-bd65dcfc0558</id>
+      <masked>false</masked>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>

@@ -3,9 +3,19 @@ import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 
 import org.openqa.selenium.Keys
 
+import com.kms.katalon.core.configuration.RunConfiguration
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
+
+'setting untuk membuat lokasi default folder download'
+HashMap<String, ArrayList> chromePrefs = new HashMap<String, ArrayList>()
+
+chromePrefs.put('download.default_directory', System.getProperty('user.dir') + '\\Download')
+
+chromePrefs.put("profile.default_content_setting_values.media_stream_camera", 1)
+
+RunConfiguration.setWebDriverPreferencesProperty('prefs', chromePrefs)
 
 'open browser'
 WebUI.openBrowser('')
@@ -46,5 +56,5 @@ if(WebUI.verifyElementPresent(findTestObject('Login/input_Perusahaan'), GlobalVa
 }
 
 def rowExcel(String cellValue) {
-	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, SheetName, cellValue)
 }

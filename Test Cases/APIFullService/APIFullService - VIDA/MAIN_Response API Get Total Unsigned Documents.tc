@@ -25,10 +25,10 @@
       <name>excelPathAPIGetTotalUnsignedDocuments</name>
    </variable>
    <variable>
-      <defaultValue>'Login/Setting'</defaultValue>
+      <defaultValue>'API Get Total Unsigned Document'</defaultValue>
       <description></description>
       <id>166c4434-6077-45bc-bfbb-a5b4d5a4ffd0</id>
       <masked>false</masked>
-      <name>excelPathSetting</name>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>

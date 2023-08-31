@@ -112,10 +112,6 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
         (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', 
             '') + ';') + GlobalVariable.ReasonFailedMandatory)
 } else {
-    'write to excel success'
-    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, SheetName, 0, GlobalVariable.NumofColm - 
-        1, GlobalVariable.StatusSuccess)
-
     'get link'
     GlobalVariable.Link = WebUI.getAttribute(findTestObject('BuatUndangan/PopUp/input_Link'), 'value')
 
@@ -148,15 +144,13 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
                 'Get invitation Link'
                 InvitationLink = WS.getElementPropertyValue(responGetInvLink, 'invitationLink')
 
-                if (WebUI.verifyMatch(GlobalVariable.Link, InvitationLink, false)) {
-                    'write to excel success'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, SheetName, 0, GlobalVariable.NumofColm - 
-                        1, GlobalVariable.StatusSuccess)
-                } else {
+                if (!WebUI.verifyMatch(GlobalVariable.Link, InvitationLink, false, FailureHandling.CONTINUE_ON_FAILURE)) {
                     'write to excel status failed dan reason'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-                            rowExcel('Reason Failed')).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
+                            rowExcel('Reason Failed')).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch + ' FE Buat Undangan Gen Link dan API Get Inv Link')
+					
+					GlobalVariable.FlagFailed = 1
                 }
             } else {
                 messageFailed = WS.getElementPropertyValue(responGetInvLink, 'status.message', FailureHandling.OPTIONAL).toString()
@@ -165,22 +159,34 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                     (((findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
                         '-', '') + ';') + '<') + messageFailed) + '>')
+
+				GlobalVariable.FlagFailed = 1
             }
         } else {
             'write to excel status failed dan reason'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                 (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
                     '-', '') + ';') + GlobalVariable.ReasonFailedHitAPI)
+			
+			GlobalVariable.FlagFailed = 1
         }
     } else {
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
             (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', 
                 '') + ';') + GlobalVariable.ReasonFailedHitAPI)
+		
+		GlobalVariable.FlagFailed = 1
     }
     
     'click tutup popup'
     WebUI.click(findTestObject('BuatUndangan/button_TutupDapatLink'))
 
+	if(GlobalVariable.FlagFailed == 0) {
+		'write to excel success'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, SheetName, 0, GlobalVariable.NumofColm -
+			1, GlobalVariable.StatusSuccess)
+	}
+	
     'check ada value maka setting Link Is Active'
     if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting is_active Link')).length() > 
     0) {
@@ -208,6 +214,8 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                 (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
                     '-', '') + ';') + ' Link tergenerate walupun sudah tidak active')
+			
+			GlobalVariable.FlagFailed = 1
         } else {
             'click tutup popup'
             WebUI.click(findTestObject('BuatUndangan/button_TutupDapatLink'))
@@ -234,7 +242,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
 	    WebUI.callTestCase(findTestCase('Register_eSign/DaftarAkunDataVerif'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'
 	            , ('saldoBefore') : saldoBefore[0]], FailureHandling.CONTINUE_ON_FAILURE)
 	
-	    if ((GlobalVariable.checkStoreDB == 'Yes') && (GlobalVariable.FlagFailed == 0)) {
+	    if ((GlobalVariable.checkStoreDB == 'Yes')) {
 	        'delay nunggu data db'
 	        WebUI.delay(5)
 	
@@ -427,23 +435,35 @@ def verifyListUndangan() {
     'verify tanggal pengiriman'
     checkVerifyEqualOrMatch(WebUI.verifyMatch(parsedDate, currentDate, false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Pengiriman')
 
-    tanggalRegistrasi = WebUI.getText(findTestObject('ListUndangan/table_TanggalRegistrasi')).split(' ', -1)
+    if (GlobalVariable.Psre == 'VIDA') {
+		tanggalRegistrasi = WebUI.getText(findTestObject('ListUndangan/table_TanggalRegistrasi')).split(' ', -1)
 
-    if ((tanggalRegistrasi[0]) != '-') {
         parsedDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(tanggalRegistrasi[0], 'dd-MMM-yyyy', 'yyyy-MM-dd')
 
         'verify tanggal registrasi'
         checkVerifyEqualOrMatch(WebUI.verifyMatch(parsedDate, currentDate, false, FailureHandling.CONTINUE_ON_FAILURE), 
             ' Tanggal Registrasi')
-    }
     
-    'verify status registrasi'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusRegistrasi')), 'DONE', 
-            false, FailureHandling.CONTINUE_ON_FAILURE), ' Status Registrasi')
-
-    'verify Status undangan'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusUndangan')), 'NON AKTIF', 
-            false, FailureHandling.CONTINUE_ON_FAILURE), ' Status Undangan')
+	    'verify status registrasi'
+	    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusRegistrasi')), 'DONE', 
+	            false, FailureHandling.CONTINUE_ON_FAILURE), ' Status Registrasi')
+		
+		'verify Status undangan'
+		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusUndangan')), 'NON AKTIF',
+				false, FailureHandling.CONTINUE_ON_FAILURE), ' Status Undangan')
+    } else if(GlobalVariable.Psre == 'PRIVY') {
+		'verify tanggal registrasi'
+		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_TanggalRegistrasi')), '-', false, FailureHandling.CONTINUE_ON_FAILURE),
+			' Tanggal Registrasi')
+	
+		'verify status registrasi'
+		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusRegistrasi')), 'NOT DONE',
+				false, FailureHandling.CONTINUE_ON_FAILURE), ' Status Registrasi')
+		
+		'verify Status undangan'
+		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusUndangan')), 'AKTIF',
+				false, FailureHandling.CONTINUE_ON_FAILURE), ' Status Undangan')
+	}
 }
 
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {

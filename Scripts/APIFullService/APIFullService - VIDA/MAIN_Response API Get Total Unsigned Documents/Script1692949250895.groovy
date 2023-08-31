@@ -17,36 +17,38 @@ int countColmExcel = findTestData(excelPathAPIGetTotalUnsignedDocuments).columnN
 
 'looping API get Total Unsigned Documents'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
-    if (findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
+    if (findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
-    } else if (findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase(
+    } else if (findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase(
         'Unexecuted')) {
 	
 		'setting menggunakan base url yang benar atau salah'
-		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPIGetTotalUnsignedDocuments, GlobalVariable.NumofColm, 17)
+		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPIGetTotalUnsignedDocuments, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 	
+		'get psre dari excel per case'
+		GlobalVariable.Psre = findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
+		
         'check if tidak mau menggunakan tenant code yang benar'
-        if (findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, 15) == 'No') {
+        if (findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code')) == 'No') {
             'set tenant kosong'
-            GlobalVariable.Tenant = findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, 
-                16)
-        } else if (findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, 15) == 'Yes') {
-            GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
+            GlobalVariable.Tenant = findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Tenant Code'))
+        } else if (findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code')) == 'Yes') {
+            GlobalVariable.Tenant = findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
         }
         
         'check if mau menggunakan api_key yang salah atau benar'
-        if (findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, 13) == 'Yes') {
+        if (findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct API Key')) == 'Yes') {
             'get api key dari db'
             GlobalVariable.api_key = CustomKeywords.'connection.APIFullService.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
-        } else if (findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, 13) == 'No') {
+        } else if (findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct API Key')) == 'No') {
             'get api key salah dari excel'
-            GlobalVariable.api_key = findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, 
-                14)
+            GlobalVariable.api_key = findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('Wrong API Key'))
         }
+		
         'HIT API'
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Get Total Unsigned Documents', [('callerId') : findTestData(
-                        excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, 9), ('email') : findTestData(
-                        excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, 11)]))
+                        excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('email') : findTestData(
+                        excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('email'))]))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
@@ -59,29 +61,29 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 totalUnsignedDocuments = WS.getElementPropertyValue(respon, 'totalUnsignedDocuments', FailureHandling.OPTIONAL)
 
                 'input di excel mengenai totalUnsignedDocuments yang telah didapat'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Get Total Unsigned Document', 
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
                     5, GlobalVariable.NumofColm - 1, totalUnsignedDocuments.toString())
 
                 'check Db'
                 if (GlobalVariable.checkStoreDB == 'Yes') {
                     'get data from db'
                     result = CustomKeywords.'connection.APIFullService.getTotalUnsignedDocuments'(conneSign, GlobalVariable.Tenant, 
-                        findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, 11).replace(
+                        findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace(
                             '"', ''))
 					
                     'verify total Unsigned Documents'
                     if (WebUI.verifyEqual(result, findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, 
-                            6), FailureHandling.CONTINUE_ON_FAILURE)) {
+                            rowExcel('Total Unsigned Documents')), FailureHandling.CONTINUE_ON_FAILURE)) {
                         'write to excel success'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Get Total Unsigned Document', 
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
                             0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
                     } else {
                         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Get Total Unsigned Document', 
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, 
                             GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (((((findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(
-                                GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + ' dimana Value DB yaitu ') + 
+                                GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + ' dimana Value DB yaitu ') + 
                             '<' + (result)) + '> dan Value Excel yaitu ') + findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(
-                                GlobalVariable.NumofColm, 6))
+                                GlobalVariable.NumofColm, rowExcel('Total Unsigned Documents')))
                     }
                 }
             } else {
@@ -89,7 +91,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
                 'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Get Total Unsigned Document', 
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, 
                     GlobalVariable.NumofColm, GlobalVariable.StatusFailed, '<' + message + '>')
             }
         } else {
@@ -97,9 +99,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
             'Write To Excel GlobalVariable.StatusFailed and errormessage'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Get Total Unsigned Document', GlobalVariable.NumofColm, 
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, '<' + message + '>')
         }
     }
 }
 
+def rowExcel(String cellValue) {
+	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+}

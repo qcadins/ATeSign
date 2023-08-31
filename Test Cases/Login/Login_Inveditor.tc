@@ -29,6 +29,6 @@
       <description></description>
       <id>45938e0e-e67d-4804-b52c-72dfeaa7fdce</id>
       <masked>false</masked>
-      <name>sheet</name>
+      <name>SheetName</name>
    </variable>
 </TestCaseEntity>
