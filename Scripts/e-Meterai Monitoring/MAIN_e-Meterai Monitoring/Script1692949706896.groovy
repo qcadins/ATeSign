@@ -24,9 +24,13 @@ int countColmExcel = findTestData(excelPathemeteraiMonitoring).columnNumbers
 
 sheet = 'e-Meterai Monitoring'
 
-'call testcase login admin'
-WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathemeteraiMonitoring, ('sheet') : sheet],
-	FailureHandling.CONTINUE_ON_FAILURE)
+'panggil fungsi login'
+WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
+	('Path') : excelPathemeteraiMonitoring], FailureHandling.CONTINUE_ON_FAILURE)
+
+//'call testcase login admin'
+//WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathemeteraiMonitoring, ('sheet') : sheet],
+//	FailureHandling.CONTINUE_ON_FAILURE)
 
 'click menu meterai'
 WebUI.click(findTestObject('e-Meterai Monitoring/menu_emeteraiMonitoring'))

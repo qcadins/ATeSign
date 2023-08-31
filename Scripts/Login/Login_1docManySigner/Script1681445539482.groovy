@@ -15,11 +15,30 @@ chromePrefs.put('download.default_directory', System.getProperty('user.dir') + '
 
 RunConfiguration.setWebDriverPreferencesProperty('prefs', chromePrefs)
 
-'open browser'
-WebUI.openBrowser('')
-
-'navigate to url esign'
-WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 2))
+if (mustFaceComp == '0' || mustFaceComp == null) {
+	
+	'open browser'
+	WebUI.openBrowser('')
+	
+	'navigate to url esign'
+	WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 2))
+} else {
+//	
+//	'bukan dan arahkan ke gdk esign'
+//	WebUI.openBrowser(findTestData('Login/Login').getValue(1, 2))
+//	
+//	'delay 3 detik'
+//	WebUI.delay(3)
+	
+	'navigate to url localhost'
+	WebUI.openBrowser('')
+	
+	WebUI.delay(8)
+	
+	WebUI.navigateToUrl(GlobalVariable.urlLocalHost + '/login')
+	
+	WebUI.refresh()
+}
 
 'maximized window'
 WebUI.maximizeWindow()

@@ -35,14 +35,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 	} else if (findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 		'set penanda error menjadi 0'
 		GlobalVariable.FlagFailed = 0
-		
+
 		if(findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) != 
 			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))) {
 			'call testcase login admin'
 			WebUI.callTestCase(findTestCase('Login/Login_PerCase'), [('SheetName') : sheet, ('Path') : excelPathSaldo], 
 					FailureHandling.CONTINUE_ON_FAILURE)
 		}
-
+	
         if (GlobalVariable.NumofColm == 2) {
             'click menu saldo'
             WebUI.click(findTestObject('saldo/menu_saldo'))
