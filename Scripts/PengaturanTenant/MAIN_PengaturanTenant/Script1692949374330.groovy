@@ -28,9 +28,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		 GlobalVariable.FlagFailed = 0
 		 
 		 if (GlobalVariable.NumofColm == 2) {
-			'Call test Case untuk login sebagai admin wom admin client'
-			WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFEPengaturanTenant, ('sheet') : sheet],
-				FailureHandling.STOP_ON_FAILURE)
+//			'Call test Case untuk login sebagai admin wom admin client'
+//			WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFEPengaturanTenant, ('sheet') : sheet],
+//				FailureHandling.STOP_ON_FAILURE)
+			 
+			'panggil fungsi login'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
+				 ('Path') : excelPathFEPengaturanTenant], FailureHandling.CONTINUE_ON_FAILURE)
         }
 
 		'declare result Db setelah edit, result Db untuk sebelum edit, arraylist untuk balance, declare array split dari result di db, array tipe saldo sebelumnya, array saldo dari tipe saldo sebelumnya, dan arrayMatch'

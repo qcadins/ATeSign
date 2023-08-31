@@ -17,7 +17,7 @@ public class UpdateData {
 	ArrayList<String> listdata = []
 
 	@Keyword
-	updateVendorOTP(Connection conn, String vendor, int number) {
+	updateVendorOTP(Connection conn, String vendor, String number) {
 
 		Statement stm = conn.createStatement()
 
@@ -25,7 +25,7 @@ public class UpdateData {
 	}
 
 	@Keyword
-	updateTenantPassReq(Connection conn, String tenant, int number) {
+	updateTenantPassReq(Connection conn, String tenant, String number) {
 
 		Statement stm = conn.createStatement()
 
@@ -33,7 +33,7 @@ public class UpdateData {
 	}
 
 	@Keyword
-	updateTenantOTPReq(Connection conn, String tenant, int number) {
+	updateTenantOTPReq(Connection conn, String tenant, String number) {
 
 		Statement stm = conn.createStatement()
 

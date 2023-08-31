@@ -37,9 +37,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		GlobalVariable.FlagFailed = 0
 		
         if (GlobalVariable.NumofColm == 2) {
-            'call testcase login admin'
-            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathSaldo, ('sheet') : 'Saldo'], 
-                FailureHandling.CONTINUE_ON_FAILURE)
+			
+			'panggil fungsi login'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : 'Saldo',
+				 ('Path') : excelPathSaldo], FailureHandling.CONTINUE_ON_FAILURE)
+			
+//            'call testcase login admin'
+//            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathSaldo, ('sheet') : 'Saldo'], 
+//                FailureHandling.CONTINUE_ON_FAILURE)
 
             'click menu saldo'
             WebUI.click(findTestObject('saldo/menu_saldo'))
