@@ -366,8 +366,6 @@ def checkSaldoOTP() {
 		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm,
 			GlobalVariable.StatusWarning, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
 			'-', '') + ';') + '<' + errormessage + '>')
-		
-		GlobalVariable.FlagFailed = 1
 	}
 
     'click menu saldo'

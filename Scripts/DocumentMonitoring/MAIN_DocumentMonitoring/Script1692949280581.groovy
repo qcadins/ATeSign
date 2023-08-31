@@ -16,26 +16,22 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
 'panggil fungsi login'
-WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : 'DocumentMonitoring',
-	('Path') : excelPathDocumentMonitoring], FailureHandling.CONTINUE_ON_FAILURE)
-
-//'call testcase login admin'
-//WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathDocumentMonitoring, ('sheet') : 'DocumentMonitoring'], FailureHandling.CONTINUE_ON_FAILURE)
+WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathDocumentMonitoring], FailureHandling.CONTINUE_ON_FAILURE)
 
 'get colm excel'
 int countColmExcel = findTestData(excelPathDocumentMonitoring).columnNumbers
 
 'looping DocumentMonitoring'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
-    if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
+    if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
-    } else if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted') ||
-		findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Warning')) {
+    } else if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted') ||
+		findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Warning')) {
 		
 		'click menu DocumentMonitoring'
 		WebUI.click(findTestObject('DocumentMonitoring/DocumentMonitoring'))
 		
-		if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+		if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 			GlobalVariable.FlagFailed = 0
 		}
 
@@ -46,52 +42,52 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		
         'set text nama Pelanggan'
         WebUI.setText(findTestObject('DocumentMonitoring/input_NamaPelanggan'), findTestData(excelPathDocumentMonitoring).getValue(
-                GlobalVariable.NumofColm, 9))
+                GlobalVariable.NumofColm, rowExcel('Nama Pelanggan')))
 
         'set text no kontrak'
         WebUI.setText(findTestObject('DocumentMonitoring/input_NoKontrak'), findTestData(excelPathDocumentMonitoring).getValue(
-                GlobalVariable.NumofColm, 10))
+                GlobalVariable.NumofColm, rowExcel('No Kontrak')))
 
         'set text tanggal permintaan dari'
         WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalPermintaanDari'), findTestData(excelPathDocumentMonitoring).getValue(
-                GlobalVariable.NumofColm, 11))
+                GlobalVariable.NumofColm, rowExcel('Tanggal Permintaan Dari')))
 
         'set text tanggal permintaan sampai'
         WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalPermintaanSampai'), findTestData(excelPathDocumentMonitoring).getValue(
-                GlobalVariable.NumofColm, 12))
+                GlobalVariable.NumofColm, rowExcel('Tanggal Permintaan Sampai')))
 
         'set text TanggalSelesaoSampai'
         WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalSelesaiDari'), findTestData(excelPathDocumentMonitoring).getValue(
-                GlobalVariable.NumofColm, 13))
+                GlobalVariable.NumofColm, rowExcel('Tanggal Selesai Dari')))
 
         'set text TanggalSelesaoSampai'
         WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalSelesaiSampai'), findTestData(excelPathDocumentMonitoring).getValue(
-                GlobalVariable.NumofColm, 14))
+                GlobalVariable.NumofColm, rowExcel('Tanggal Selesai Sampai')))
 
         'set text tipe dok'
         WebUI.setText(findTestObject('DocumentMonitoring/input_TipeDok'), findTestData(excelPathDocumentMonitoring).getValue(
-                GlobalVariable.NumofColm, 15))
+                GlobalVariable.NumofColm, rowExcel('Tipe Dokumen')))
 
         'enter untuk set tipe dok'
         WebUI.sendKeys(findTestObject('DocumentMonitoring/input_TipeDok'), Keys.chord(Keys.ENTER))
 
         'set text status'
         WebUI.setText(findTestObject('DocumentMonitoring/input_Status'), findTestData(excelPathDocumentMonitoring).getValue(
-                GlobalVariable.NumofColm, 16))
+                GlobalVariable.NumofColm, rowExcel('Status Dokumen')))
 
         'enter untuk set status'
         WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Status'), Keys.chord(Keys.ENTER))
 
         'set text tanggal wilayah'
         WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), findTestData(excelPathDocumentMonitoring).getValue(
-                GlobalVariable.NumofColm, 17))
+                GlobalVariable.NumofColm, rowExcel('Wilayah')))
 
         'enter untuk set wilayah'
         WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER))
 
         'set text tanggal cabang'
         WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), findTestData(excelPathDocumentMonitoring).getValue(
-                GlobalVariable.NumofColm, 18))
+                GlobalVariable.NumofColm, rowExcel('Cabang')))
 
         'enter untuk set cabang'
         WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER))
@@ -100,7 +96,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         WebUI.click(findTestObject('DocumentMonitoring/button_Cari'))
 		
         'check if action yang dilakukan sesuai excel'
-        if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('View Dokumen')) {
+        if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('View Dokumen')) {
             'click button view dokumen'
             WebUI.click(findTestObject('DocumentMonitoring/button_View'))
 
@@ -110,19 +106,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 errorLog = WebUI.getAttribute(findTestObject('DocumentMonitoring/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 
                 'Write To Excel GlobalVariable.StatusFailed and errorLog'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('DocumentMonitoring', GlobalVariable.NumofColm, 
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 
-                        2) + ';') + '<' + errorLog + '>')
+                        rowExcel('Reason Failed')) + ';') + '<' + errorLog + '>')
 
                 GlobalVariable.FlagFailed = 1
             } else if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/label_NoKontrakView'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 				'check if no kontrak sama dengan inputan excel'
 				checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('DocumentMonitoring/label_NoKontrakView')), 'No Kontrak ' + findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 
-                        10), false, FailureHandling.CONTINUE_ON_FAILURE), ' dokuemn yang di view berbeda')
+                        rowExcel('No Kontrak')), false, FailureHandling.CONTINUE_ON_FAILURE), ' dokuemn yang di view berbeda')
 			} else if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/button_View'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 				checkVerifyEqualOrMatch(false, ' button view tidak berfungsi')
 			}
-        } else if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Download')) {
+        } else if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('Download')) {
             'click button download'
             WebUI.click(findTestObject('DocumentMonitoring/button_Download'))
 
@@ -132,24 +128,24 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 errorLog = WebUI.getAttribute(findTestObject('DocumentMonitoring/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 
                 'Write To Excel GlobalVariable.StatusFailed and errorLog'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('DocumentMonitoring', GlobalVariable.NumofColm, 
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 
-                        2) + ';') + '<' + errorLog + '>')
+                        rowExcel('Reason Failed')) + ';') + '<' + errorLog + '>')
 
                 GlobalVariable.FlagFailed = 1
             }
             
             'check isfiled downloaded'
             if (CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathDocumentMonitoring).getValue(
-                    GlobalVariable.NumofColm, 19)) == false) {
+                    GlobalVariable.NumofColm, rowExcel('Delete Downloaded File ?'))) == false) {
                 'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedDownload'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('DocumentMonitoring', GlobalVariable.NumofColm, 
-                    GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 2) + 
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                    GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
                     ';') + GlobalVariable.ReasonFailedDownload)
 
                 GlobalVariable.FlagFailed = 1
             }
-        } else if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('View Signer')) {
+        } else if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('View Signer')) {
             'click button view signer'
             WebUI.click(findTestObject('DocumentMonitoring/button_Signer'))
 
@@ -158,7 +154,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
             'get signer data dari db'
             result = CustomKeywords.'connection.DocumentMonitoring.getDocumentMonitoringSigner'(conneSign, findTestData(excelPathDocumentMonitoring).getValue(
-                    GlobalVariable.NumofColm, 10).toUpperCase())
+                    GlobalVariable.NumofColm, rowExcel('No Kontrak')).toUpperCase())
 
             'looping table yang muncul pada ui'
             for (index = 1; index <= variable.size(); index++) {
@@ -224,7 +220,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             
             'click button X'
             WebUI.click(findTestObject('DocumentMonitoring/button_X'))
-        } else if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Kirim Ulang Notifikasi')) {
+        } else if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('Kirim Ulang Notifikasi')) {
             'click button KirimUlangNotifikasi'
             WebUI.click(findTestObject('DocumentMonitoring/button_KirimUlangNotifikasi'))
 
@@ -234,9 +230,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 errorLog = WebUI.getAttribute(findTestObject('DocumentMonitoring/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 
                 'Write To Excel GlobalVariable.StatusFailed and errorLog'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('DocumentMonitoring', GlobalVariable.NumofColm, 
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 
-                        2) + ';') + '<' + errorLog + '>')
+                        rowExcel('Reason Failed')) + ';') + '<' + errorLog + '>')
 
                 GlobalVariable.FlagFailed = 1
             } else if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/button_YaProses'), GlobalVariable.TimeOut, 
@@ -261,9 +257,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 						errorLog = WebUI.getAttribute(findTestObject('DocumentMonitoring/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 		
 						'Write To Excel GlobalVariable.StatusFailed and errorLog'
-						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('DocumentMonitoring', GlobalVariable.NumofColm,
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 							GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm,
-								2) + ';') + '<' + errorLog + '>')
+								rowExcel('Reason Failed')) + ';') + '<' + errorLog + '>')
 		
 						GlobalVariable.FlagFailed = 1
 					}
@@ -273,15 +269,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     errorLog = WebUI.getText(findTestObject('DocumentMonitoring/PopUpMessage'))
 
                     'Write To Excel GlobalVariable.StatusFailed and errorLog'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('DocumentMonitoring', GlobalVariable.NumofColm, 
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 
-                            2) + ';') + '<' + errorLog + '>')
+                            rowExcel('Reason Failed')) + ';') + '<' + errorLog + '>')
 
                     GlobalVariable.FlagFailed = 1
 					}
                 }
             }
-        } else if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Start Stamping')) {
+        } else if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('Start Stamping')) {
 			'click button start stamping'
 			WebUI.click(findTestObject('DocumentMonitoring/button_startStamping'))
 			
@@ -305,8 +301,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					errormessage = WebUI.getAttribute(findTestObject('DocumentMonitoring/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 						
 					'Tulis di excel itu adalah error'
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('DocumentMonitoring', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-						(findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<' + errormessage + '>')
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+						(findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + '<' + errormessage + '>')
 				}
 				
 				'jika start stamping muncul'
@@ -318,12 +314,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					for (i = 1; i <= 12; i++) {
 						'mengambil value db proses ttd'
 						int prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, findTestData(excelPathDocumentMonitoring).getValue(
-								GlobalVariable.NumofColm, 10))
+								GlobalVariable.NumofColm, rowExcel('No Kontrak')))
 			
 						'jika proses materai gagal (51)'
 						if (prosesMaterai == 51) {
 							'Write To Excel GlobalVariable.StatusFailed and errormessage'
-							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('DocumentMonitoring', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 								GlobalVariable.ReasonFailedProsesStamping)
 			
 							GlobalVariable.FlagFailed = 1
@@ -335,7 +331,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			
 							'Mengambil value total stamping dan total meterai'
 							ArrayList totalMateraiAndTotalStamping = CustomKeywords.'connection.Meterai.getTotalMateraiAndTotalStamping'(
-								conneSign, findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 10))
+								conneSign, findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('No Kontrak')))
 			
 							'declare arraylist arraymatch'
 							arrayMatch = []
@@ -347,9 +343,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 							'jika data db tidak bertambah'
 							if (arrayMatch.contains(false)) {
 								'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-								CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('DocumentMonitoring', GlobalVariable.NumofColm,
+								CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 									GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm,
-										2) + ';') + GlobalVariable.ReasonFailedStoredDB)
+										rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
 			
 								GlobalVariable.FlagFailed = 1
 							}
@@ -362,9 +358,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 							'Jika looping berada di akhir, tulis error failed proses stamping'
 							if (i == 12) {
 								'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-								CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('DocumentMonitoring', GlobalVariable.NumofColm,
+								CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 									GlobalVariable.StatusFailed, ((((findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm,
-										2) + ';') + GlobalVariable.ReasonFailedProsesStamping) + ' dengan jeda waktu ') + (i * 12)) +
+										rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedProsesStamping) + ' dengan jeda waktu ') + (i * 12)) +
 									' detik ')
 			
 								GlobalVariable.FlagFailed = 1
@@ -377,7 +373,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         
         if (GlobalVariable.FlagFailed == 0) {
             'write to excel success'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'DocumentMonitoring', 
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
                 0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
         }
     }
@@ -522,8 +518,8 @@ def checkPaging() {
 def checkVerifyPaging(Boolean isMatch) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('DocumentMonitoring', GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 2) + 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+            GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
             ';') + GlobalVariable.ReasonFailedPaging)
 
         GlobalVariable.FlagFailed = 1
@@ -533,11 +529,14 @@ def checkVerifyPaging(Boolean isMatch) {
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('DocumentMonitoring', GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 2) + 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+            GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
             ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
 
         GlobalVariable.FlagFailed = 1
     }
 }
 
+def rowExcel(String cellValue) {
+	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+}

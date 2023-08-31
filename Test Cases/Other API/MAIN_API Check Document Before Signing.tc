@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API Check Document Before Signing</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>4552099c-be21-46a3-a675-d40077a86411</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>860404bd-ee8e-4c73-8ba7-a3e1d8033990</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>84750c05-0cae-464f-a19f-3085d3dff56d</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'APIFullService/API Check Doc Before Signing'</defaultValue>
+      <description></description>
+      <id>860404bd-ee8e-4c73-8ba7-a3e1d8033990</id>
+      <masked>false</masked>
+      <name>excelPathCheckDocBeforeSigning</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Check Doc Before Signing'</defaultValue>
+      <description></description>
+      <id>84750c05-0cae-464f-a19f-3085d3dff56d</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>

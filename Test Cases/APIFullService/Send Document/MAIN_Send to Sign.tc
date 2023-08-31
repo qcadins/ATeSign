@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_Send to Sign</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>f8a6e845-abba-4c66-8677-2a608c62ffaa</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>7e16dd65-bf99-4f9e-9135-b6de53ac8fd8</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'APIFullService/SendtoSign'</defaultValue>
+      <description></description>
+      <id>7e16dd65-bf99-4f9e-9135-b6de53ac8fd8</id>
+      <masked>false</masked>
+      <name>excelPathFESignDocument</name>
+   </variable>
+</TestCaseEntity>

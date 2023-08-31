@@ -11,11 +11,24 @@
       <value></value>
       <variableId>3be4c65f-ffb3-43aa-908c-4f6f79fbed15</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>4caf46da-f879-4396-a241-c9407061de58</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>'PengaturanPSrE/PengaturanPSrE'</defaultValue>
       <description></description>
       <id>3be4c65f-ffb3-43aa-908c-4f6f79fbed15</id>
       <masked>false</masked>
       <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'PengaturanPSrE'</defaultValue>
+      <description></description>
+      <id>4caf46da-f879-4396-a241-c9407061de58</id>
+      <masked>false</masked>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>

@@ -100,7 +100,7 @@ for (o = 0; o < documentId.size(); o++) {
 	}
 
     'Jika ingin dilakukannya bulk sign'
-    if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Bulk Signing ? (Yes/No)')).split(';', -1)[indexUsed] == 'Yes') {
+    if (z[indexUsed] == 'Yes') {
         'Ambil data dari excel mengenai total dokumen yang ditandatangani'
         totalDocSign = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Total Doc for Bulk Sign ?')).split(';', -1)[indexUsed].toInteger()
     } else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Bulk Signing ? (Yes/No)')).split(';', -1)[indexUsed] == 'No') {

@@ -301,4 +301,54 @@ public class DataVerif {
 		}
 		data
 	}
+	
+	@Keyword
+	getMustLivenessFaceCompare(Connection conn, String tenant) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT use_liveness_facecompare_first FROM ms_tenant WHERE tenant_code = '" + tenant + "'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+	
+	@Keyword
+	getCountFaceCompDaily(Connection conn, String email) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT liveness_facecompare_request_num FROM am_msuser WHERE login_id = '" + email + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		if (data != null) {
+			Integer.parseInt(data)
+		} else {
+			data = 0
+		}
+	}
+	
+	@Keyword
+	getLimitLivenessDaily(Connection conn) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select gs_value from am_generalsetting WHERE gs_code = 'LIVENESS_FACECOMPARE_USER_DAILY_LIMIT'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
 }

@@ -71,10 +71,10 @@ public class PengaturanPSrE {
 	}
 
 	@Keyword
-	getPsrePriority(Connection conn, String tenantCode) {
+	getPsrePriority(Connection conn) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT VENDOR_NAME FROM ms_vendoroftenant mvt JOIN ms_tenant mt ON mvt.id_ms_tenant = mt.id_ms_tenant JOIN ms_vendor mv ON mvt.id_ms_vendor = mv.id_ms_vendor WHERE mt.tenant_code = '"+ tenantCode +"' ORDER BY mvt.default_vendor ASC")
+		resultSet = stm.executeQuery("SELECT VENDOR_NAME FROM ms_vendoroftenant mvt JOIN ms_tenant mt ON mvt.id_ms_tenant = mt.id_ms_tenant JOIN ms_vendor mv ON mvt.id_ms_vendor = mv.id_ms_vendor WHERE mt.tenant_code = '"+ GlobalVariable.Tenant +"' ORDER BY mvt.default_vendor ASC")
 
 		metadata = resultSet.metaData
 

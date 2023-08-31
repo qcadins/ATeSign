@@ -11,11 +11,24 @@
       <value></value>
       <variableId>ffe1c153-9c6e-4df6-9cf6-a67489adcc8e</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>ef490e0a-b9b3-43da-b441-deb6772ad105</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>'Masukan/Masukan'</defaultValue>
       <description></description>
       <id>ffe1c153-9c6e-4df6-9cf6-a67489adcc8e</id>
       <masked>false</masked>
       <name>excelPathMasukan</name>
+   </variable>
+   <variable>
+      <defaultValue>'Masukan'</defaultValue>
+      <description></description>
+      <id>ef490e0a-b9b3-43da-b441-deb6772ad105</id>
+      <masked>false</masked>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>

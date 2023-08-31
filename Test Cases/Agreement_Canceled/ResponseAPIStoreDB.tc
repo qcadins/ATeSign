@@ -5,4 +5,17 @@
    <tag></tag>
    <comment></comment>
    <testCaseGuid>a1fb9385-2831-4272-8ea6-287bacf35a0b</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>05e12b23-e40a-4065-949c-cda345ae3cef</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API Agreement Canceled'</defaultValue>
+      <description></description>
+      <id>05e12b23-e40a-4065-949c-cda345ae3cef</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
 </TestCaseEntity>
