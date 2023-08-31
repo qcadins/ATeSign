@@ -1918,8 +1918,42 @@
                 "errorOnParsing": false
               }
             }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
           ],
           "javadoc": ""
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+<<<<<<< HEAD
+          ],
+          "javadoc": ""
+=======
+<<<<<<< HEAD
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+          ],
+          "javadoc": ""
+<<<<<<< HEAD
+=======
+=======
+          ]
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
         },
         {
           "name": "getAesKeyEncryptUrl",
@@ -2046,6 +2080,26 @@
                 "errorOnParsing": false
               }
             }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+          ],
+          "javadoc": ""
+=======
+<<<<<<< HEAD
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
           ],
           "javadoc": ""
         },
@@ -2080,6 +2134,61 @@
             }
           ],
           "javadoc": ""
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+=======
+          ]
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+        },
+        {
+          "name": "settingRegisterasDukcapilCheck",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "value",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+<<<<<<< HEAD
+          ],
+          "javadoc": ""
+<<<<<<< HEAD
+=======
+=======
+          ]
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
         }
       ]
     }
