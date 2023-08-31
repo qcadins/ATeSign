@@ -54,7 +54,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         }
         
         if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).length() > 0) {
-            WebUI.callTestCase(findTestCase('Main Flow/KotakMasuk'), [('excelPathFESignDocument') : excelPathMain, ('sheet') : sheet], 
+            WebUI.callTestCase(findTestCase('Main Flow/KotakMasuk'), [('excelPathFESignDocument') : excelPathMain, ('sheet') : sheet, ('checkBeforeSigning') : 'Yes'], 
                 FailureHandling.STOP_ON_FAILURE)
 
             if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Need Sign for this document? ')) == 
@@ -79,15 +79,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     if ((opsiSigning[i]) == 'API Sign Document External') {
                         indexReadDataExcelAPIExternal = inisializeArray(isUsedAPIExternal, indexReadDataExcelAPIExternal)
 
-                        WebUI.callTestCase(findTestCase('Main Flow/API Sign Document External'), [('excelPathAPISignDocument') : excelPathMain
-                                , ('sheet') : sheet, ('indexUsed') : indexReadDataExcelAPIExternal], FailureHandling.CONTINUE_ON_FAILURE)
+						GlobalVariable.indexUsed =  indexReadDataExcelAPIExternal
+						
+                        WebUI.callTestCase(findTestCase('Main Flow/API Sign Document External'), [('excelPathAPISignDocument') : excelPathMain, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
 
                         isUsedAPIExternal = true
                     } else if ((opsiSigning[i]) == 'API Sign Document Normal') {
                         indexReadDataExcelAPINormal = inisializeArray(isUsedAPINormal, indexReadDataExcelAPINormal)
 
+						GlobalVariable.indexUsed =  indexReadDataExcelAPINormal
+						
                         WebUI.callTestCase(findTestCase('Main Flow/API Sign Document Normal'), [('API_Excel_Path') : excelPathMain
-                                , ('sheet') : sheet, ('indexUsed') : indexReadDataExcelAPINormal], FailureHandling.CONTINUE_ON_FAILURE)
+                                , ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
 
                         isUsedAPINormal = true
                     } else if ((opsiSigning[i]) == 'Webview Sign') {
@@ -119,7 +122,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			
 			if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Do Stamp for this document? ')) == 'Yes') {
 				WebUI.callTestCase(findTestCase('Main Flow/Stamping'), [('excelPathStamping') : excelPathMain
-				, ('sheet') : sheet, ('isUsingAPI'):'No', ('linkDocumentMonitoring') : ''], FailureHandling.CONTINUE_ON_FAILURE)
+				, ('sheet') : sheet, ('linkDocumentMonitoring') : ''], FailureHandling.CONTINUE_ON_FAILURE)
 
 			}
         }

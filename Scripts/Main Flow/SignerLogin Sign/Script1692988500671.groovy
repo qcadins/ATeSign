@@ -29,7 +29,7 @@ arrayIndex = 0
 documentId = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ', 
     -1)
 
-for (int o = 0; o < documentId.size(); o++) {
+for (o = 0; o < documentId.size(); o++) {
     String refNumber = CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, documentId[0])
 
     'ambil nama vendor dari DB'
@@ -139,12 +139,12 @@ for (int o = 0; o < documentId.size(); o++) {
     }
     
     'Looping berdasarkan page agar bergeser ke page sebelumnya'
-    for (int k = 1; k <= (variableLastest.size() - 4); k++) {
+    for (k = 1; k <= (variableLastest.size() - 4); k++) {
                 'get row beranda'
                 rowBeranda = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
 
         'looping untuk mengambil seluruh row'
-        for (int j = rowBeranda.size(); j >= 1; j--) {
+        for (j = rowBeranda.size(); j >= 1; j--) {
              'deklarasi arrayIndex untuk pemakaian'
                     arrayIndex = 0
 
@@ -288,7 +288,7 @@ for (int o = 0; o < documentId.size(); o++) {
     }
     
     'Looping berdasarkan total document sign'
-    for (int c = 0; c < documentTemplateNamePerDoc.size(); c++) {
+    for (c = 0; c < documentTemplateNamePerDoc.size(); c++) {
 				'modify object btn Nama Dokumen '
 				modifyObjectbtnNamaDokumen = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/btn_NamaDokumen'),
 					'xpath', 'equals', ('id("ngb-nav-' + (c + 2)) + '")', true, FailureHandling.CONTINUE_ON_FAILURE)
@@ -315,7 +315,7 @@ for (int o = 0; o < documentId.size(); o++) {
             ' dengan alasan page tidak berpindah di Bulk Sign View.')
     } else {
         'Looping berdasarkan document template name per dokumen'
-        for (int i = 0; i < documentTemplateNamePerDoc.size(); i++) {
+        for (i = 0; i < documentTemplateNamePerDoc.size(); i++) {
 					'Jika page sudah berpindah maka modify object text document template name di Tanda Tangan Dokumen'
 					modifyObjectlabelnamadokumenafterkonfirmasi = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/lbl_NamaDokumenAfterKonfirmasi'),
 						'xpath', 'equals', ('//*[@id="pdf-main-container"]/div[1]/ul/li[' + (i + 1)) + ']/label', true)
@@ -642,7 +642,7 @@ for (int o = 0; o < documentId.size(); o++) {
             jumlahSignerTandaTangan = (jumlahSignerTandaTangan + saldoUsed)
 
             'Looping maksimal 100 detik untuk signing proses. Perlu lama dikarenakan walaupun requestnya done(3), tapi dari VIDAnya tidak secepat itu.'
-            for (int y = 1; y <= 5; y++) {
+            for (y = 1; y <= 5; y++) {
                 'Kita berikan delay per 20 detik karena proses signingnya masih dalam status In Progress (1), dan ketika selesai, status tanda tangan akan kembali menjadi 0'
                 WebUI.delay(20)
 
@@ -688,7 +688,7 @@ for (int o = 0; o < documentId.size(); o++) {
     noKontrakPerDoc = noKontrak.split(';', -1)
 
     'beri maks 30 sec mengenai perubahan total sign'
-    for (int b = 1; b <= 3; b++) {
+    for (b = 1; b <= 3; b++) {
         'ambil saldo otp after'
         otpAfter = checkSaldoOtp(vendor)
 
@@ -832,18 +832,6 @@ for (int o = 0; o < documentId.size(); o++) {
 
 def rowExcel(String cellValue) {
     return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, 'Main', cellValue)
-}
-
-def encryptLink(Connection conneSign, String documentId, String emailSigner, String aesKey) {
-    officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, documentId)
-
-    'pembuatan message yang akan dienkrip'
-    msg = (((('{"officeCode" : ' + officeCode) + ', "email" : "') + emailSigner) + '"}')
-
-    'enkripsi msg'
-    encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(msg, aesKey)
-
-    return encryptMsg
 }
 
 def checkSaldoSign(String vendor) {
