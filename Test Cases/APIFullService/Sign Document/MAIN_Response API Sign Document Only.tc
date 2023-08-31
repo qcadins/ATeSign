@@ -4,30 +4,30 @@
    <name>MAIN_Response API Sign Document Only</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>85e89034-bb75-4721-b816-1aa030b8d977</testCaseGuid>
+   <testCaseGuid>f14d8ad3-0516-4a01-aae4-ffd75524ac18</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>bab10660-b447-4c77-900b-7a9574b805cb</variableId>
+      <variableId>6378c521-7f1f-4ce4-b141-bd145027bc2f</variableId>
    </variableLinks>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>c48c7836-7b6f-4680-b563-1e453ea8ea45</variableId>
+      <variableId>d24e7b1d-cee5-4551-a22d-e5d8bb654323</variableId>
    </variableLinks>
    <variable>
       <defaultValue>'APIFullService/API_SignDoc'</defaultValue>
       <description></description>
-      <id>bab10660-b447-4c77-900b-7a9574b805cb</id>
+      <id>6378c521-7f1f-4ce4-b141-bd145027bc2f</id>
       <masked>false</masked>
       <name>excelPathAPISignDocument</name>
    </variable>
    <variable>
       <defaultValue>'Login/Setting'</defaultValue>
       <description></description>
-      <id>c48c7836-7b6f-4680-b563-1e453ea8ea45</id>
+      <id>d24e7b1d-cee5-4551-a22d-e5d8bb654323</id>
       <masked>false</masked>
       <name>excelPathSetting</name>
    </variable>
