@@ -166,7 +166,7 @@ if (prosesMaterai == 53) {
             ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
             ' terhadap total saldo dimana saldo awal dan saldo setelah meterai sama ')
     } else {
-    verifySaldoUsed(conneSign, sheet, nomorKontrakDocument.replace('"', ''))
+    verifySaldoUsed(conneSign, sheet, refNumber)
 }
 } else if (prosesMaterai == 51) {
     if (saldoBefore != saldoAfter) {
@@ -228,13 +228,13 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     }
 }
 
-def verifySaldoUsed(Connection conneSign, String sheet, String nomorKontrakDocument) {
+def verifySaldoUsed(Connection conneSign, String sheet, String refNumber) {
     'get current date'
     def currentDate = new Date().format('yyyy-MM-dd')
 
-    documentType = CustomKeywords.'connection.APIFullService.getDocumentType'(conneSign, nomorKontrakDocument)
+    documentType = CustomKeywords.'connection.APIFullService.getDocumentType'(conneSign, refNumber)
 
-    documentName = CustomKeywords.'connection.DataVerif.getDocumentName'(conneSign, nomorKontrakDocument)
+    documentName = CustomKeywords.'connection.DataVerif.getDocumentName'(conneSign, refNumber)
 
     'klik ddl untuk tenant memilih mengenai Vida'
     WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)
@@ -264,7 +264,7 @@ def verifySaldoUsed(Connection conneSign, String sheet, String nomorKontrakDocum
     WebUI.sendKeys(findTestObject('Saldo/input_tipedokumen'), Keys.chord(Keys.ENTER))
 
     'Input referal number'
-    WebUI.setText(findTestObject('Saldo/input_refnumber'), nomorKontrakDocument)
+    WebUI.setText(findTestObject('Saldo/input_refnumber'), refNumber)
 
     'Input documentTemplateName'
     WebUI.setText(findTestObject('Saldo/input_namadokumen'), documentName, FailureHandling.CONTINUE_ON_FAILURE)
@@ -282,7 +282,7 @@ def verifySaldoUsed(Connection conneSign, String sheet, String nomorKontrakDocum
     variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper '))
 
     'ambil inquiry di db'
-    ArrayList inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldoForMeterai'(conneSign, nomorKontrakDocument)
+    ArrayList inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldoForMeterai'(conneSign, refNumber)
 
     index = 0
 
@@ -301,7 +301,7 @@ def verifySaldoUsed(Connection conneSign, String sheet, String nomorKontrakDocum
                     'Jika bukan untuk 2 kolom itu, maka check ke db'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch('-' + WebUI.getText(modifyperrowpercolumn), inquiryDB[index], 
                             false, FailureHandling.CONTINUE_ON_FAILURE), 'pada Kuantitas di Mutasi Saldo dengan nomor kontrak ' + 
-                        findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 11).replace('"', ''))
+                        refNumber)
 
                     index++
                 } else {
@@ -312,7 +312,7 @@ def verifySaldoUsed(Connection conneSign, String sheet, String nomorKontrakDocum
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                             2) + ';') + GlobalVariable.ReasonFailedSignGagal) + ' terlihat pada Kuantitas di Mutasi Saldo dengan nomor kontrak ') + 
-                        findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 11).replace('"', ''))
+                        refNumber)
 
                     index++
                 }
@@ -321,8 +321,7 @@ def verifySaldoUsed(Connection conneSign, String sheet, String nomorKontrakDocum
             } else {
                 'check table'
                 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyperrowpercolumn), inquiryDB[index], false, 
-                        FailureHandling.CONTINUE_ON_FAILURE), 'pada Mutasi Saldo dengan nomor Kontrak ' + findTestData(excelPathStamping).getValue(
-                        GlobalVariable.NumofColm, 11).replace('"', ''))
+                        FailureHandling.CONTINUE_ON_FAILURE), 'pada Mutasi Saldo dengan nomor Kontrak ' + refNumber)
 
                 index++
             }
