@@ -30,17 +30,20 @@ firstDateOfMonth = currentDate.withDayOfMonth(1)
 
 'looping saldo'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
-	if (findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
+	if (findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
 		break
-	} else if (findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+	} else if (findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 		'set penanda error menjadi 0'
 		GlobalVariable.FlagFailed = 0
 		
-        if (GlobalVariable.NumofColm == 2) {
-            'call testcase login admin'
-            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathSaldo, ('sheet') : 'Saldo'], 
-                FailureHandling.CONTINUE_ON_FAILURE)
+		if(findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) != 
+			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))) {
+			'call testcase login admin'
+			WebUI.callTestCase(findTestCase('Login/Login_PerCase'), [('SheetName') : sheet, ('Path') : excelPathSaldo], 
+					FailureHandling.CONTINUE_ON_FAILURE)
+		}
 
+        if (GlobalVariable.NumofColm == 2) {
             'click menu saldo'
             WebUI.click(findTestObject('saldo/menu_saldo'))
 
@@ -78,7 +81,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			checkDDL(findTestObject('Saldo/input_tipedokumen'), resultTipeDokumen, 'DDL Tipe Dokumen')
         }
 		
-		
 		inputSaldo()
 		
 		'klik pada button cari'
@@ -91,13 +93,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			GlobalVariable.FlagFailed = 1
 			
 			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.FailedReasonsearchFailed'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Saldo', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-				(findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 2) + ';') + ' Failed Search Saldo Data')
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+				(findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + ' Failed Search Saldo Data')
 		}
 		
-		ArrayList<String> result = CustomKeywords.'connection.Saldo.getTrxSaldo'(conneSign, findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 13), 
-			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 15), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 12), 
-			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 16))
+		ArrayList<String> result = CustomKeywords.'connection.Saldo.getTrxSaldo'(conneSign, findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Transaksi Dari')), 
+			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Nomor Kontrak')), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tipe Transaksi')), 
+			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Nama Dokumen')))
 		
 		arrayIndex = 0
 		
@@ -131,7 +133,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		'verify Total Data ui = db'
 		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Saldo/Label_TotalSaldo')), (result.size()/9).toString() + ' total', false, FailureHandling.CONTINUE_ON_FAILURE), ' Total Data Tidak Match')
 		
-		if (findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 19) == 'Yes'){
+		if (findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Download File')) == 'Yes'){
 			
 			'klik pada tombol unduh excel'
 			WebUI.click(findTestObject('Object Repository/Saldo/button_UnduhExcel'))
@@ -139,7 +141,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			WebUI.delay(10)
 			
 			'pengecekan file yang sudah didownload'
-			boolean isDownloaded = CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 20))
+			boolean isDownloaded = CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Delete Downloaded File ?')))
 			
 			println(isDownloaded)
 		
@@ -154,37 +156,37 @@ WebUI.closeBrowser()
 
 def inputSaldo() {
 	'klik ddl untuk tenant memilih mengenai Vida'
-	WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), '(?i)' + findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 9), true)
+	WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), '(?i)' + findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login')), true)
 	
    'input filter dari saldo'
-	WebUI.setText(findTestObject('Saldo/input_tipesaldo'), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 11))
+	WebUI.setText(findTestObject('Saldo/input_tipesaldo'), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('$Tipe Saldo')))
 
 	'Input enter'
 	WebUI.sendKeys(findTestObject('Saldo/input_tipesaldo'), Keys.chord(Keys.ENTER))
 
 	'Input tipe transaksi'
-	WebUI.setText(findTestObject('Saldo/input_tipetransaksi'), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 12))
+	WebUI.setText(findTestObject('Saldo/input_tipetransaksi'), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tipe Transaksi')))
 
 	'Input enter'
 	WebUI.sendKeys(findTestObject('Saldo/input_tipetransaksi'), Keys.chord(Keys.ENTER))
 
 	'Input date sekarang'
-	WebUI.setText(findTestObject('Saldo/input_fromdate'), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 13))
+	WebUI.setText(findTestObject('Saldo/input_fromdate'), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Transaksi Dari')))
 
 	'Input tipe dokumen'
-	WebUI.setText(findTestObject('Saldo/input_tipedokumen'), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 14))
+	WebUI.setText(findTestObject('Saldo/input_tipedokumen'), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tipe Dokumen')))
 
 	'Input enter'
 	WebUI.sendKeys(findTestObject('Saldo/input_tipedokumen'), Keys.chord(Keys.ENTER))
 
 	'Input referal number'
-	WebUI.setText(findTestObject('Saldo/input_refnumber'), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 15))
+	WebUI.setText(findTestObject('Saldo/input_refnumber'), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Nomor Kontrak')))
 
 	'Input documentTemplateName'
-	WebUI.setText(findTestObject('Saldo/input_namadokumen'), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 16))
+	WebUI.setText(findTestObject('Saldo/input_namadokumen'), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Nama Dokumen')))
 
 	'Input date sekarang'
-	WebUI.setText(findTestObject('Saldo/input_todate'), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 17))
+	WebUI.setText(findTestObject('Saldo/input_todate'), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Transaksi Sampai')))
 }
 
 def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection conneSign) {
@@ -248,10 +250,10 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
 	'ambil total trx berdasarkan filter yang telah disiapkan pada ui'
 	totalTrxUI = WebUI.getText(findTestObject('Saldo/Label_TotalSaldo')).split(' ', -1)
 	
-	tenantCodeByUserLogin = CustomKeywords.'connection.DataVerif.getTenantCode'(conneSign, findTestData(excelPathSetting).getValue(2,2).toUpperCase())
+	tenantCodeByUserLogin = CustomKeywords.'connection.DataVerif.getTenantCode'(conneSign, findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')).toUpperCase())
 	
 	'ambil total trx berdasarkan filter yang telah disiapkan pada db'
-	totalTrxDB = CustomKeywords.'connection.Saldo.getTotalTrxBasedOnVendorAndBalanceType'(conneSign, tenantCodeByUserLogin, findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 9).toUpperCase(), 'Sign')
+	totalTrxDB = CustomKeywords.'connection.Saldo.getTotalTrxBasedOnVendorAndBalanceType'(conneSign, tenantCodeByUserLogin, findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login')).toUpperCase(), 'Sign')
 	
 	'verify total Saldo'
 	checkVerifyPaging(WebUI.verifyMatch(totalTrxUI[0], totalTrxDB, false, FailureHandling.CONTINUE_ON_FAILURE), ' total transaksi ui dan db tidak match')
@@ -291,8 +293,8 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
 def checkVerifyPaging(Boolean isMatch, String reason) {
 	if (isMatch == false) {
 		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Saldo', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-			(findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedPaging + reason)
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+			(findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedPaging + reason)
 
 		GlobalVariable.FlagFailed = 1
 	}
@@ -301,8 +303,8 @@ def checkVerifyPaging(Boolean isMatch, String reason) {
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 	if (isMatch == false) {
 		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Saldo', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-			(findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+			(findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
 
 		GlobalVariable.FlagFailed = 1
 	}
@@ -339,4 +341,8 @@ def checkDDL(TestObject objectDDL, ArrayList<String> listDB, String reason) {
 	
 	'Input enter untuk tutup ddl'
 	WebUI.sendKeys(objectDDL, Keys.chord(Keys.ENTER))
+}
+
+def rowExcel(String cellValue) {
+	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }

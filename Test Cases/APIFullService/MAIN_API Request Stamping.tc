@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>MAIN_DocumentMonitoring</name>
+   <name>MAIN_API Request Stamping</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>5a09054f-ac14-40ab-bb4d-d91d28e20394</testCaseGuid>
+   <testCaseGuid>3dc690a1-c806-45b4-9d8e-ec7c31afb588</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>3668bcda-421d-4038-9106-300b7922b214</variableId>
+      <variableId>7d8f1839-362d-44ea-8990-9951ba361aeb</variableId>
    </variableLinks>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>30de0820-4fdc-4a43-9fd6-bc8712901acd</variableId>
+      <variableId>83612fd7-5547-4163-b43e-f5ebb4318b19</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'DocumentMonitoring/DocumentMonitoring'</defaultValue>
+      <defaultValue>'APIFullService/API_RequestStamping'</defaultValue>
       <description></description>
-      <id>3668bcda-421d-4038-9106-300b7922b214</id>
+      <id>7d8f1839-362d-44ea-8990-9951ba361aeb</id>
       <masked>false</masked>
-      <name>excelPathDocumentMonitoring</name>
+      <name>excelPathAPIRequestStamping</name>
    </variable>
    <variable>
-      <defaultValue>'DocumentMonitoring'</defaultValue>
+      <defaultValue>'API Request Stamping'</defaultValue>
       <description></description>
-      <id>30de0820-4fdc-4a43-9fd6-bc8712901acd</id>
+      <id>83612fd7-5547-4163-b43e-f5ebb4318b19</id>
       <masked>false</masked>
       <name>sheet</name>
    </variable>
