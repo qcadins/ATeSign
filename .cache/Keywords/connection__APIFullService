@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "keywordFileContentHash": "B14BA647EEF75FECE30FB227081C382F",
-=======
   "keywordFileContentHash": "06207EE069FD817F6C2F97B708E73500",
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
   "keywordClasses": [
     {
       "name": "connection.APIFullService",
@@ -1922,22 +1918,8 @@
                 "errorOnParsing": false
               }
             }
-<<<<<<< HEAD
           ],
           "javadoc": ""
-=======
-<<<<<<< HEAD
-          ],
-          "javadoc": ""
-=======
-<<<<<<< HEAD
-          ],
-          "javadoc": ""
-=======
-          ]
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
         },
         {
           "name": "getAesKeyEncryptUrl",
@@ -2064,14 +2046,6 @@
                 "errorOnParsing": false
               }
             }
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-          ],
-          "javadoc": ""
-=======
-<<<<<<< HEAD
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
           ],
           "javadoc": ""
         },
@@ -2106,49 +2080,6 @@
             }
           ],
           "javadoc": ""
-<<<<<<< HEAD
-=======
-=======
-          ]
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
-        },
-        {
-          "name": "settingRegisterasDukcapilCheck",
-          "parameters": [
-            {
-              "name": "conn",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.sql.Connection",
-                "unresolvedClassName": "Connection",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            },
-            {
-              "name": "value",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.lang.String",
-                "unresolvedClassName": "String",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            }
-<<<<<<< HEAD
-          ],
-          "javadoc": ""
-=======
-          ]
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
         }
       ]
     }
