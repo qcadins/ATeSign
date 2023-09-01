@@ -20,9 +20,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : 'Masukan',
 			('Path') : excelPathMasukan], FailureHandling.CONTINUE_ON_FAILURE)
 		
-//		'call test case login admin'
-//        WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathMasukan, ('sheet') : 'Masukan'], FailureHandling.CONTINUE_ON_FAILURE)
-
         'delay untuk nunggu alert error hilang'
         WebUI.delay(10)
 

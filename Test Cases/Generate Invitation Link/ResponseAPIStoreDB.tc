@@ -5,4 +5,30 @@
    <tag></tag>
    <comment></comment>
    <testCaseGuid>b34ebbe7-0085-42ec-ae00-b332d79dc41e</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>38fa39fe-9f82-43e4-a9ed-13efc8eae4aa</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>4ba5bba4-b103-4323-8a64-a7ff5fcb10fd</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API Generate Inv Link'</defaultValue>
+      <description></description>
+      <id>38fa39fe-9f82-43e4-a9ed-13efc8eae4aa</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+   <variable>
+      <defaultValue>'Registrasi/Generate_Inv_Link'</defaultValue>
+      <description></description>
+      <id>4ba5bba4-b103-4323-8a64-a7ff5fcb10fd</id>
+      <masked>false</masked>
+      <name>excelPathGenerateLink</name>
+   </variable>
 </TestCaseEntity>

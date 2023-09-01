@@ -227,7 +227,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
 
     'get OTP dari DB'
     String OTP = CustomKeywords.'connection.DataVerif.getOTP'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 
-            12).replace('"', '').toUpperCase())
+            rowExcel('email')).replace('"', '').toUpperCase())
 
 	println(OTP)
 	
@@ -246,7 +246,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
         if (countResend > 0) {
             for (int i = 0; i < countResend; i++) {
                 'tunggu button resend otp'
-                WebUI.delay(115)
+                WebUI.delay(315)
 
                 'klik pada button kirim ulang otp'
                 WebUI.click(findTestObject('DaftarAkun/button_KirimKodeLagi'))
@@ -278,7 +278,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
         if (countResend > 0) {
             for (int i = 0; i < countResend; i++) {
                 'tunggu button resend otp'
-                WebUI.delay(115)
+                WebUI.delay(315)
 
                 'klik pada button kirim ulang otp'
                 WebUI.click(findTestObject('DaftarAkun/button_KirimKodeLagi'))
@@ -418,38 +418,39 @@ def checkSaldoOTP() {
 	WebUI.switchToWindowIndex(1)
 	
 	'navigate to url esign'
-	WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 5))
-
-	'maximize window'
-	WebUI.maximizeWindow()
-
-   'set value userLogin'
-	GlobalVariable.userLogin = findTestData(excelPathAPIGenerateInvLink).getValue(2, 57).toUpperCase()
-
-	'input email'
-	WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathAPIGenerateInvLink).getValue(2, 57))
-
-	'input password'
-	WebUI.setText(findTestObject('Login/input_Password'), findTestData(excelPathAPIGenerateInvLink).getValue(2,
-			58))
-
-	'click button login'
-	WebUI.click(findTestObject('Login/button_Login'), FailureHandling.CONTINUE_ON_FAILURE)
-
-	'input perusahaan'
-	WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excelPathAPIGenerateInvLink).getValue(2,
-			59))
-
-	WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
-
-	'input peran'
-	WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excelPathAPIGenerateInvLink).getValue(2,
-			60))
-
-	WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
+	WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 2))
 	
-	'click button pilih peran'
-	WebUI.click(findTestObject('Login/button_pilihPeran'), FailureHandling.STOP_ON_FAILURE)
+	'maximized window'
+	WebUI.maximizeWindow()
+	
+	'store user login'	
+	GlobalVariable.userLogin = findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')).toUpperCase()
+	
+	'input email'
+	WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')))
+	
+	'input password'
+	WebUI.setText(findTestObject('Login/input_Password'), findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Password Login')))
+	
+	'click button login'
+	WebUI.click(findTestObject('Login/button_Login'))
+	
+	if(WebUI.verifyElementPresent(findTestObject('Login/input_Perusahaan'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {	
+		'input perusahaan'
+		WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Perusahaan Login')))
+		
+		'enter untuk input perusahaan'
+		WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
+		
+		'input peran'
+		WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Peran Login')))
+		
+		'enter untuk input peran'
+		WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
+		
+		'click button pilih peran'
+		WebUI.click(findTestObject('Login/button_pilihPeran'))
+	}
 
 	'click menu saldo'
 	WebUI.click(findTestObject('BuatUndangan/checkSaldo/menu_Saldo'))

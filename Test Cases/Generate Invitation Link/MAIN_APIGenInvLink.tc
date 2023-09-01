@@ -11,11 +11,24 @@
       <value></value>
       <variableId>be2278b7-84c5-4522-bed0-c862f077cab3</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>caba5656-64ba-4404-ba90-4b4d04fd4cc0</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>'Registrasi/Generate_Inv_Link'</defaultValue>
       <description></description>
       <id>be2278b7-84c5-4522-bed0-c862f077cab3</id>
       <masked>false</masked>
-      <name>API_Excel_Path</name>
+      <name>excelPathGenerateLink</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Generate Inv Link'</defaultValue>
+      <description></description>
+      <id>caba5656-64ba-4404-ba90-4b4d04fd4cc0</id>
+      <masked>false</masked>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>

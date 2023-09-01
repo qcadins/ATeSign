@@ -11,11 +11,24 @@
       <value></value>
       <variableId>1af0fa09-6995-4cdc-8c21-b4f308390aae</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>a1bc50df-d1f1-4049-a5e5-83b771c5721f</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>'APIFullService/API_GenInvLink'</defaultValue>
       <description></description>
       <id>1af0fa09-6995-4cdc-8c21-b4f308390aae</id>
       <masked>false</masked>
       <name>excelPathAPIGenerateInvLink</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Generate Invitation Link'</defaultValue>
+      <description></description>
+      <id>a1bc50df-d1f1-4049-a5e5-83b771c5721f</id>
+      <masked>false</masked>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>
