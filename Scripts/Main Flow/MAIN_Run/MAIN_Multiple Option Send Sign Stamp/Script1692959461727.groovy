@@ -106,7 +106,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     } else if ((opsiSigning[i]) == 'Embed Sign') {
                         indexReadDataExcelEmbed = inisializeArray(isUsedEmbed, indexReadDataExcelEmbed)
 
-						GlobalVariable.indexUsed =  indexReadDataExcelWebview
+						GlobalVariable.indexUsed =  indexReadDataExcelEmbed
 						
                         WebUI.callTestCase(findTestCase('Main Flow/Webview Embed Sign'), [('excelPathFESignDocument') : excelPathMain
                                 , ('sheet') : sheet, ('indexUsed') : indexReadDataExcelEmbed, ('emailSigner') : emailSigner[i], ('opsiSigning') : opsiSigning[i]], FailureHandling.CONTINUE_ON_FAILURE)
@@ -115,8 +115,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     } else if ((opsiSigning[i]) == 'Signer Login Sign') {
                         indexReadDataExcelInboxSigner = inisializeArray(isUsedInboxSigner, indexReadDataExcelInboxSigner)
 
+						GlobalVariable.indexUsed =  indexReadDataExcelInboxSigner
+						
                         WebUI.callTestCase(findTestCase('Main Flow/SignerLogin Sign'), [('excelPathFESignDocument') : excelPathMain
-                                , ('sheet') : sheet, ('indexUsed') : indexReadDataExcelInboxSigner, ('emailSigner') : emailSigner[
+                                , ('sheet') : sheet, ('emailSigner') : emailSigner[
                                 i], ('opsiSigning') : opsiSigning[i]], FailureHandling.CONTINUE_ON_FAILURE)
 
                         isUsedInboxSigner = true

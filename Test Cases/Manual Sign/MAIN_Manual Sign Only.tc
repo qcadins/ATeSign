@@ -11,11 +11,24 @@
       <value></value>
       <variableId>e5c47f19-ee20-40c8-94d3-5fd90e42bedf</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>d87f3359-5a8f-46dc-9d74-bac0f4bbca70</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>'ManualSign/ManualSign'</defaultValue>
       <description></description>
       <id>e5c47f19-ee20-40c8-94d3-5fd90e42bedf</id>
       <masked>false</masked>
       <name>excelPathManualSign</name>
+   </variable>
+   <variable>
+      <defaultValue>'Manual Sign'</defaultValue>
+      <description></description>
+      <id>d87f3359-5a8f-46dc-9d74-bac0f4bbca70</id>
+      <masked>false</masked>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>

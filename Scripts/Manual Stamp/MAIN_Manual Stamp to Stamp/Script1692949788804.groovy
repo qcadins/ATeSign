@@ -26,38 +26,42 @@ semicolon = ';'
 
 splitIndex = -1
 
-sheet = 'Manual Stamp to Stamp'
-
-'panggil fungsi login'
-//WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathManualStamptoStamp], 
-//    FailureHandling.CONTINUE_ON_FAILURE)
-
-'memanggil test case login untuk admin wom dengan Admin Client. Khusus login menuju ADMIN@ADINS.CO.ID'
-WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualStamptoStamp, ('sheet') : 'Manual Stamp to Stamp'], FailureHandling.CONTINUE_ON_FAILURE)
 'looping berdasarkan jumlah kolom'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathManualStamptoStamp).columnNumbers; (GlobalVariable.NumofColm)++) {
-    if (findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
+    if (findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
-    } else if (findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted') || 
-    findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Warning')) {
+    } else if (findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
         'declare flag failed'
         GlobalVariable.FlagFailed = 0
+		
+		'get tenant dari excel percase'
+		GlobalVariable.Tenant = findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
+		
+		'get psre dari excel percase'
+		GlobalVariable.Psre = findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
+		
+		if(findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) !=
+			findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))) {
+			'panggil fungsi login'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathManualStamptoStamp], 
+			    FailureHandling.CONTINUE_ON_FAILURE)
+		}
 
         'Inisialisasi array dan variable'
         indexEmail = 0
 
         'Inisialisasi variable yang dibutuhkan'
-        totalMeterai = findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 15)
+        totalMeterai = findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Jumlah Meterai'))
 
-        pindahkanSignBox = findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 16).split(semicolon, 
+        pindahkanSignBox = findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Pindahkan SignBox')).split(semicolon, 
             splitIndex)
 
-        lokasiSignBox = findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 17).split('\\n', splitIndex)
+        lokasiSignBox = findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Lokasi Pemindahan signbox')).split('\\n', splitIndex)
 
-        lockSignBox = findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 18).split(semicolon, 
+        lockSignBox = findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Lock Sign Box')).split(semicolon, 
             splitIndex)
 
-        catatanStamping = findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 19).split(semicolon, 
+        catatanStamping = findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Catatan Stamping')).split(semicolon, 
             splitIndex)
 
         saldoBefore = loginAdminGetSaldo(conneSign, 'No', sheet)
@@ -88,7 +92,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
         'Jika kolomnya berada pada kedua'
         if (GlobalVariable.NumofColm == 2) {
-           // inputCancel(conneSign)
+            inputCancel(conneSign)
         }
         
         'Pengecekan apakah masuk page Manual Stamp'
@@ -100,9 +104,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             if (WebUI.verifyElementHasAttribute(findTestObject('ManualStamp/button_Selanjutnya'), 'disabled', GlobalVariable.TimeOut, 
                 FailureHandling.OPTIONAL)) {
                 'write to excel bahwa save gagal'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Stamp to Stamp', GlobalVariable.NumofColm, 
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, (findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
-                        2) + ';') + GlobalVariable.ReasonFailedSaveGagal)
+                        rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedSaveGagal)
 
                 continue
             } else {
@@ -131,22 +135,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         'check ui dan excel pada nomor dokumen'
                         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualStamp/input_documentNo'), 
                                     'value'), findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
-                                    8), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada informasi nomor dokumen ')
+                                    rowExcel('$Nomor Dokumen')), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada informasi nomor dokumen ')
 
                         'check ui dan excel pada nama dokumen'
                         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualStamp/input_documentName'), 
                                     'value'), findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
-                                    9), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada informasi nama dokumen ')
+                                    rowExcel('$Nama Dokumen')), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada informasi nama dokumen ')
 
                         'check ui dan excel pada tipe dokumen'
                         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualStamp/lbl_docType'), 
                                     'value'), findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
-                                    11), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada informasi tipe dokumen ')
+                                    rowExcel('$Tipe Dokumen')), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada informasi tipe dokumen ')
 
                         'check ui dan excel pada tipe dokumen peruri'
                         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualStamp/lbl_docTypePeruri'), 
                                     'value'), findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
-                                    12), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada informasi tipe dokumen peruri ')
+                                    rowExcel('$Tipe Dokumen Peruri')), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada informasi tipe dokumen peruri ')
 
                         'Klik button tanda tangan'
                         WebUI.click(findTestObject('ManualStamp/btn_meterai'))
@@ -195,8 +199,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         checkVerifyEqualOrMatch(WebUI.verifyElementNotPresent(findTestObject('ManualSign/signBox'), GlobalVariable.TimeOut, 
                                 FailureHandling.CONTINUE_ON_FAILURE), ' pada deletenya box Sign ')
 
-						int countCatatanStamping = 0
-						
                         'looping berdasarkan total tanda tangan'
                         for (int j = 1; j <= Integer.parseInt(totalMeterai); j++) {
                             'Klik button tanda tangan'
@@ -231,7 +233,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                     WebUI.click(modifyobjectLockSignBox)
 
                                     WebUI.setText(findTestObject('ManualStamp/input_isiCatatanStamping'), catatanStamping[
-                                        (countCatatanStamping++)])
+                                        (j - 1)])
 
                                     WebUI.click(findTestObject('ManualStamp/button_SimpanCatatanStamping'))
                                 }
@@ -247,12 +249,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         
                         if (GlobalVariable.FlagFailed == 0) {
                             'write to excel success'
-                            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Manual Stamp to Stamp', 
+                            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
                                 0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 
                             if (GlobalVariable.checkStoreDB == 'Yes') {
                                 result = CustomKeywords.'connection.ManualStamp.getManualStamp'(conneSign, findTestData(
-                                        excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 8), GlobalVariable.Tenant)
+                                        excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')), GlobalVariable.Tenant)
 
                                 index = 0
 
@@ -260,26 +262,26 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                                 'verify ref number'
                                 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
-                                            8), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+                                            rowExcel('$Nomor Dokumen')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
                                 'verify document name'
                                 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
-                                            9), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+                                            rowExcel('$Nama Dokumen')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
                                 'verify tanggal dokumen'
                                 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
-                                            10), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+                                            rowExcel('$Tanggal Dokumen')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
                                 'verify tipe pembayaran'
                                 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
-                                            11), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+                                            rowExcel('$Tipe Dokumen')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
                                 'verify tipe pembayaran'
                                 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
-                                            12), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+                                            rowExcel('$Tipe Dokumen Peruri')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
                                 totalDocument = findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
-                                    13).split('\\n', -1)
+                                    rowExcel('$Dokumen')).split('\\n', -1)
 
                                 'verify total dokumen'
                                 arrayMatch.add(WebUI.verifyMatch(totalDocument.size().toString(), result[index++], false, 
@@ -297,9 +299,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                 'jika data db tidak sesuai dengan excel'
                                 if (arrayMatch.contains(false)) {
                                     'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-                                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Stamp to Stamp', 
+                                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, 
                                         GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (findTestData(excelPathManualStamptoStamp).getValue(
-                                            GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
+                                            GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
                                 }
                             }
                             
@@ -311,7 +313,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                 'write to excel status failed dan reason'
                                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                                     GlobalVariable.StatusFailed, ((findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
-                                        2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + ' terhadap total saldo dimana saldo awal dan saldo setelah meterai sama ')
+                                        rowExcel('Reason Failed')).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + ' terhadap total saldo dimana saldo awal dan saldo setelah meterai sama ')
 
                                 GlobalVariable.FlagFailed = 1
                             } else {
@@ -323,8 +325,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             }
         }
     }
-} //        'Call test Case untuk login sebagai admin wom admin client'
-//        WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualStamptoStamp, ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
+} 
 
 def checkErrorLog() {
     'Jika error lognya muncul'
@@ -332,18 +333,16 @@ def checkErrorLog() {
         'ambil teks errormessage'
         errormessage = WebUI.getAttribute(findTestObject('ManualSign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
 
-		if (errormessage.toString() != null) {
-			if (!(errormessage.contains('Permintaan pembubuhan e-Materai berhasil dibuat.'))) {
-				'Tulis di excel itu adalah error'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Stamp to Stamp', GlobalVariable.NumofColm, 
-					GlobalVariable.StatusFailed, (((findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
-						2).replace('-', '') + ';') + '<') + errormessage) + '>')
+        if (!(errormessage.contains('Permintaan pembubuhan e-Materai berhasil dibuat.'))) {
+            'Tulis di excel itu adalah error'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                GlobalVariable.StatusFailed, (((findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
+                    rowExcel('Reason Failed')).replace('-', '') + ';') + '<') + errormessage) + '>')
 
-				GlobalVariable.FlagFailed = 1
+            GlobalVariable.FlagFailed = 1
 
-				return true
-			}
-		}
+            return true
+        }
     }
     
     return false
@@ -393,9 +392,9 @@ def inputCancel(Connection conneSign) {
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Stamp to Stamp', GlobalVariable.NumofColm, 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
             GlobalVariable.StatusFailed, ((findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
-                2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + reason)
+                rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + reason)
 
         GlobalVariable.FlagFailed = 1
     }
@@ -442,26 +441,26 @@ def checkDDL(TestObject objectDDL, ArrayList listDB, String reason) {
 def inputForm() {
     'Input teks di nama template dokumen'
     WebUI.setText(findTestObject('ManualStamp/input_documentNo'), findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
-            8))
+            rowExcel('$Nomor Dokumen')))
 
     'Input teks kode template dokumen'
     WebUI.setText(findTestObject('ManualStamp/input_documentName'), findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
-            9))
+            rowExcel('$Nama Dokumen')))
 
     'Input AKtif pada input Status'
     WebUI.setText(findTestObject('ManualStamp/input_documentDate'), findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
-            10))
+            rowExcel('$Tanggal Dokumen')))
 
     'Input AKtif pada input Status'
     WebUI.setText(findTestObject('ManualStamp/input_docType'), findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
-            11))
+            rowExcel('$Tipe Dokumen')))
 
     'Klik enter'
     WebUI.sendKeys(findTestObject('ManualStamp/input_docType'), Keys.chord(Keys.ENTER))
 
     'Input AKtif pada input Status'
     WebUI.setText(findTestObject('ManualStamp/input_docTypePeruri'), findTestData(excelPathManualStamptoStamp).getValue(
-            GlobalVariable.NumofColm, 12))
+            GlobalVariable.NumofColm, rowExcel('$Tipe Dokumen Peruri')))
 
     'Klik enter'
     WebUI.sendKeys(findTestObject('ManualStamp/input_docTypePeruri'), Keys.chord(Keys.ENTER))
@@ -469,7 +468,7 @@ def inputForm() {
     'Code untuk mengambil file berdasarkan direktori masing-masing sekaligus ambil value dari excel'
     String userDir = System.getProperty('user.dir')
 
-    String filePath = userDir + findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 13)
+    String filePath = userDir + findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Dokumen'))
 
     'Upload file berdasarkan filePath yang telah dirancang'
     WebUI.uploadFile(findTestObject('ManualStamp/input_documentExample'), filePath, FailureHandling.CONTINUE_ON_FAILURE)
@@ -499,9 +498,11 @@ def zoomSetting(int percentage) {
 }
 
 def inputEMeteraiMonitoring(Connection conneSign) {
+
 	int flagBreak = 0
+			
     if (WebUI.verifyElementPresent(findTestObject('Object Repository/e-Meterai Monitoring/button_Set Ulang'), GlobalVariable.TimeOut)) {
-        totalMeterai = findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 15)
+        totalMeterai = findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Jumlah Meterai'))
 
 
         for (int i = 1; i <= 20; i++) {
@@ -510,7 +511,7 @@ def inputEMeteraiMonitoring(Connection conneSign) {
 			}
 			
             ArrayList inputEMeterai = CustomKeywords.'connection.ManualStamp.getInputeMeteraiMonitoring'(conneSign, findTestData(
-                    excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 8), GlobalVariable.Tenant)
+                    excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')), GlobalVariable.Tenant)
 
             indexInput = 0
 
@@ -598,14 +599,14 @@ def inputEMeteraiMonitoring(Connection conneSign) {
                         'Tulis di excel itu adalah error'
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('e-Meterai Monitoring', GlobalVariable.NumofColm, 
                             GlobalVariable.StatusWarning, (((findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
-                                2).replace('-', '') + ';') + '<') + errormessage) + '>')
+                                rowExcel('Reason Failed')).replace('-', '') + ';') + '<') + errormessage) + '>')
 
                         GlobalVariable.FlagFailed = 1
                     }
                     
                     'get stampduty data dari db'
                     result = CustomKeywords.'connection.eMeteraiMonitoring.geteMeteraiMonitoring'(conneSign, findTestData(
-                            excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 8))
+                            excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))
 
                     'verify no dokumen'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_NomorDokumen')), 
@@ -657,7 +658,7 @@ def inputEMeteraiMonitoring(Connection conneSign) {
 					
 					if ((inputEMeterai[6]) == 'Failed') {
 						if (isRetryStamping == false) {
-							doRetry = findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 21)
+							doRetry = findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Using Retry Stamping Feature'))
 							
 							if (doRetry == 'Yes') {
 								WebUI.click(findTestObject('ManualStamp/btn_RetryStamping'))
@@ -683,7 +684,7 @@ def inputEMeteraiMonitoring(Connection conneSign) {
 							errorMessageUI = WebUI.getText(findTestObject('ManualStamp/text_ErrorMessage'))
 							
 							'get reason gailed error message untuk stamping'
-							errorMessageDB = CustomKeywords.'connection.Meterai.getErrorMessage'(conneSign, findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 8))
+							errorMessageDB = CustomKeywords.'connection.Meterai.getErrorMessage'(conneSign, findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))
 							
 							if (WebUI.verifyMatch(errorMessageUI.toString().toUpperCase(), errorMessageDB.toString().toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE)) {
 								'write to excel bahwa save gagal'
@@ -707,7 +708,225 @@ def inputEMeteraiMonitoring(Connection conneSign) {
                     'write to excel bahwa save gagal'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Stamp to Stamp', GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, (((((findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
-                            2) + ';') + GlobalVariable.ReasonFailedProsesStamping) + ' yaitu status meterai adalah ') + 
+                            rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedProsesStamping) + ' yaitu status meterai adalah ') + 
+                        (inputEMeterai[6])) + ' pada nomor dokumen tersebut selama ') + (i * 15))
+                } else {
+                    WebUI.delay(15)
+                }
+            }
+        }
+    }
+
+	int flagBreak = 0
+			
+    if (WebUI.verifyElementPresent(findTestObject('Object Repository/e-Meterai Monitoring/button_Set Ulang'), GlobalVariable.TimeOut)) {
+        totalMeterai = findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Jumlah Meterai'))
+
+
+        for (int i = 1; i <= 20; i++) {
+			if (flagBreak == 1) {
+				break
+			}
+			
+            ArrayList inputEMeterai = CustomKeywords.'connection.ManualStamp.getInputeMeteraiMonitoring'(conneSign, findTestData(
+                    excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')), GlobalVariable.Tenant)
+
+            indexInput = 0
+
+            index = 0
+
+            if (((inputEMeterai[6]) == 'Failed') || ((inputEMeterai[6]) == 'Success')) {
+                if ((inputEMeterai[6]) == 'Failed') {
+                    Integer.parseInt(totalMeterai) == 1
+                }
+
+                for (int j = 1; j <= Integer.parseInt(totalMeterai); j++) {
+                    'Klik set ulang setiap data biar reset'
+                    WebUI.click(findTestObject('Object Repository/e-Meterai Monitoring/button_Set Ulang'))
+
+                    'set text no kontrak'
+                    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Nomor Dokumen'), inputEMeterai[
+                        indexInput++])
+
+                    'set text status meterai'
+                    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_TipeDokumenPeruri'), inputEMeterai[
+                        indexInput++])
+
+                    'enter untuk set status meterai'
+                    WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_TipeDokumenPeruri'), Keys.chord(
+                            Keys.ENTER))
+
+                    'set text status meterai'
+                    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Tipe Dokumen'), inputEMeterai[
+                        indexInput++])
+
+                    'enter untuk set status meterai'
+                    WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_Tipe Dokumen'), Keys.chord(
+                            Keys.ENTER))
+
+                    'set text status meterai'
+                    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_PengaturanDokumen'), inputEMeterai[
+                        indexInput++])
+
+                    'enter untuk set status meterai'
+                    WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_PengaturanDokumen'), Keys.chord(
+                            Keys.ENTER))
+
+                    'set text status meterai'
+                    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Tanggal Dokumen Mulai'), 
+                        inputEMeterai[indexInput++])
+
+                    'set text status meterai'
+                    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_TanggalDokumenSampai'), inputEMeterai[
+                        indexInput++])
+
+                    'set text status meterai'
+                    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/button_prosesStamping'), inputEMeterai[
+                        indexInput++])
+
+                    'enter untuk set status meterai'
+                    WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/button_prosesStamping'), Keys.chord(
+                            Keys.ENTER))
+
+                    'set text status meterai'
+                    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Nomor Seri'), inputEMeterai[
+                        indexInput++])
+
+                    'set text status meterai'
+                    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Cabang'), inputEMeterai[indexInput++])
+
+                    'enter untuk set status meterai'
+                    WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_Cabang'), Keys.chord(Keys.ENTER))
+
+                    'set text status meterai'
+                    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_JenisPajak'), inputEMeterai[
+                        indexInput++])
+
+                    'enter untuk set status meterai'
+                    WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_JenisPajak'), Keys.chord(
+                            Keys.ENTER))
+
+                    'click button cari'
+                    WebUI.click(findTestObject('e-Meterai Monitoring/button_Cari'))
+
+                    'Jika error lognya muncul'
+                    if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+                        'ambil teks errormessage'
+                        errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
+
+                        'Tulis di excel itu adalah error'
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('e-Meterai Monitoring', GlobalVariable.NumofColm, 
+                            GlobalVariable.StatusWarning, (((findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
+                                rowExcel('Reason Failed')).replace('-', '') + ';') + '<') + errormessage) + '>')
+
+                        GlobalVariable.FlagFailed = 1
+                    }
+                    
+                    'get stampduty data dari db'
+                    result = CustomKeywords.'connection.eMeteraiMonitoring.geteMeteraiMonitoring'(conneSign, findTestData(
+                            excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))
+
+                    'verify no dokumen'
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_NomorDokumen')), 
+                            result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Nomor Dokumen ')
+
+                    'verify tanggal dokumen'
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_TanggalDokumen')), 
+                            result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Dokumen ')
+
+                    'verify cabang'
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_Cabang')), 
+                            result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Cabang ')
+
+                    'verify nama dokume'
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_NamaDokumen')), 
+                            result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama Dokumen ')
+
+                    'verify tipe dokumen peruri'
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_TipeDokumenPeruri')), 
+                            result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Tipe Dokumen Peruri ')
+
+                    'verify tipe dokumen'
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_TipeDokumen')), 
+                            result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Tipe Dokumen ')
+
+                    'verify nominal dokumen'
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_NominalDokumen')).replace(
+                                ',', ''), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Nominal Dokumen ')
+
+                    'verify pengaturan dokumen'
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_PengaturanDokumen')), 
+                            result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Pengaturan Dokumen ')
+
+                    'verify hasil stamping'
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_HasilStamping')), 
+                            result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Hasil Stamping ')
+
+                    'verify nomor seri'
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_Nomor Seri')), 
+                            result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Nomor Seri ')
+
+                    'verify proses meterai'
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_Proses Materai')), 
+                            result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Proses Materai ')
+
+                    'verify jenis pajak'
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_JenisPajak')), 
+                            result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Jenis Pajak ')
+					
+					if ((inputEMeterai[6]) == 'Failed') {
+						if (isRetryStamping == false) {
+							doRetry = findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Using Retry Stamping Feature'))
+							
+							if (doRetry == 'Yes') {
+								WebUI.click(findTestObject('ManualStamp/btn_RetryStamping'))
+	
+								WebUI.click(findTestObject('ManualStamp/btn_CancelRetryStamping'))
+	
+								WebUI.click(findTestObject('ManualStamp/btn_RetryStamping'))
+	
+								WebUI.click(findTestObject('ManualStamp/btn_YesRetryStamping'))
+	
+								isRetryStamping = true
+								
+								if (WebUI.verifyElementPresent(findTestObject('ManualStamp/text_retryStamping'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+									WebUI.click(findTestObject('ManualStamp/button_OKRetryStamping'))
+								}
+								
+								break
+							}
+						}
+						 else {
+							WebUI.click(findTestObject('ManualStamp/btn_ShowErrorMessage'))
+							
+							errorMessageUI = WebUI.getText(findTestObject('ManualStamp/text_ErrorMessage'))
+							
+							'get reason gailed error message untuk stamping'
+							errorMessageDB = CustomKeywords.'connection.Meterai.getErrorMessage'(conneSign, findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))
+							
+							if (WebUI.verifyMatch(errorMessageUI.toString().toUpperCase(), errorMessageDB.toString().toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE)) {
+								'write to excel bahwa save gagal'
+								CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Stamp to Stamp', GlobalVariable.NumofColm,
+									GlobalVariable.StatusFailed, findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 2) + ';' + GlobalVariable.ReasonFailedProsesStamping + ' dengan alasan ' + errorMessageUI.toString())
+								
+								WebUI.click(findTestObject('e-Meterai Monitoring/button_X'))
+								
+								 flagBreak = 1
+								
+								break
+							}
+						}
+					}
+                
+					}
+            } else {
+                if (i == 20) {
+                    WebUI.delay(15)
+
+                    'write to excel bahwa save gagal'
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Stamp to Stamp', GlobalVariable.NumofColm, 
+                        GlobalVariable.StatusFailed, (((((findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
+                            rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedProsesStamping) + ' yaitu status meterai adalah ') + 
                         (inputEMeterai[6])) + ' pada nomor dokumen tersebut selama ') + (i * 15))
                 } else {
                     WebUI.delay(15)
@@ -764,10 +983,10 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
     def currentDate = new Date().format('yyyy-MM-dd')
 
     documentType = CustomKeywords.'connection.APIFullService.getDocumentType'(conneSign, findTestData(excelPathManualStamptoStamp).getValue(
-            GlobalVariable.NumofColm, 8))
+            GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))
 
     documentName = CustomKeywords.'connection.DataVerif.getDocumentName'(conneSign, findTestData(excelPathManualStamptoStamp).getValue(
-            GlobalVariable.NumofColm, 8))
+            GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))
 
     'klik ddl untuk tenant memilih mengenai Vida'
     WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)
@@ -798,7 +1017,7 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
 
     'Input referal number'
     WebUI.setText(findTestObject('Saldo/input_refnumber'), findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
-            8))
+            rowExcel('$Nomor Dokumen')))
 
     'Input documentTemplateName'
     WebUI.setText(findTestObject('Saldo/input_namadokumen'), documentName, FailureHandling.CONTINUE_ON_FAILURE)
@@ -817,7 +1036,7 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
 
     'ambil inquiry di db'
     ArrayList inquiryDB = CustomKeywords.'connection.ManualStamp.gettrxSaldoForMeterai'(conneSign, findTestData(excelPathManualStamptoStamp).getValue(
-            GlobalVariable.NumofColm, 8))
+            GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))
 
     index = 0
 
@@ -835,7 +1054,7 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
                 'Jika bukan untuk 2 kolom itu, maka check ke db'
                 checkVerifyEqualOrMatch(WebUI.verifyMatch('-' + WebUI.getText(modifyperrowpercolumn), inquiryDB[index], 
                         false, FailureHandling.CONTINUE_ON_FAILURE), 'pada Kuantitas di Mutasi Saldo dengan nomor kontrak ' + 
-                    findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 11).replace('"', ''))
+                    findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Tipe Dokumen')).replace('"', ''))
 
                 index++
             } else {
@@ -844,9 +1063,9 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
 
                 'Jika saldonya belum masuk dengan flag, maka signnya gagal.'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                    (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedSignGagal) + 
+                    (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedSignGagal) + 
                     ' terlihat pada Kuantitas di Mutasi Saldo dengan nomor kontrak ') + findTestData(excelPathManualStamptoStamp).getValue(
-                        GlobalVariable.NumofColm, 11).replace('"', ''))
+                        GlobalVariable.NumofColm, rowExcel('$Tipe Dokumen')).replace('"', ''))
 
                 index++
             }
@@ -856,10 +1075,13 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
             'check table'
             checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyperrowpercolumn), inquiryDB[index], false, FailureHandling.CONTINUE_ON_FAILURE), 
                 'pada Mutasi Saldo dengan nomor Kontrak ' + findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
-                    11).replace('"', ''))
+                    rowExcel('$Tipe Dokumen')).replace('"', ''))
 
             index++
         }
     }
 }
 
+def rowExcel(String cellValue) {
+	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+}

@@ -31,11 +31,11 @@
       <name>excelPathManualStamptoStamp</name>
    </variable>
    <variable>
-      <defaultValue>''</defaultValue>
+      <defaultValue>'Manual Stamp to Stamp'</defaultValue>
       <description></description>
       <id>3eb80b35-564e-4c4e-8b03-12309ca63fef</id>
       <masked>false</masked>
-      <name>linkDocumentMonitoring</name>
+      <name>sheet</name>
    </variable>
    <variable>
       <defaultValue>false</defaultValue>
