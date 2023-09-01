@@ -8,7 +8,7 @@ import org.openqa.selenium.Keys as Keys
 import java.sql.Connection as Connection
 
 'setting untuk membuat lokasi default folder download'
-HashMap<String, ArrayList> chromePrefs = new HashMap<String, ArrayList>()
+HashMap<String, String> chromePrefs = new HashMap<String, String>()
 
 chromePrefs.put('download.default_directory', System.getProperty('user.dir') + '\\Download')
 
@@ -24,50 +24,23 @@ WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 2))
 WebUI.maximizeWindow()
 
 if (email == '') {
-    'input email'
-    WebUI.setText(findTestObject('Login/input_Email'), findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Username')))
+    if (linkUrl != '') {
+        runWithEmbed(linkUrl)
+    } else {
+        'input email'
+        WebUI.setText(findTestObject('Login/input_Email'), findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel(
+                    'Username')))
 
-    'store GV user login'
-    GlobalVariable.userLogin = findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Username'))
+        'store GV user login'
+        GlobalVariable.userLogin = findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Username'))
 
-    'input password'
-    WebUI.setText(findTestObject('Login/input_Password'), findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel(
-                'Password')))
+        'input password'
+        WebUI.setText(findTestObject('Login/input_Password'), findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel(
+                    'Password')))
 
-    'click button login'
-    WebUI.click(findTestObject('Login/button_Login'), FailureHandling.STOP_ON_FAILURE)
+        'click button login'
+        WebUI.click(findTestObject('Login/button_Login'), FailureHandling.STOP_ON_FAILURE)
 
-    'input perusahaan'
-    WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel(
-                'Perusahaan')))
-
-    'enter untuk input perusahaan'
-    WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
-
-    'input peran'
-    WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Role')))
-
-    'enter untuk input peran'
-    WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
-
-    'fokus pada tombol pilih peran'
-    WebUI.focus(findTestObject('Login/button_pilihPeran'))
-
-    'click button pilih peran'
-    WebUI.click(findTestObject('Login/button_pilihPeran'), FailureHandling.STOP_ON_FAILURE)
-} else {
-	if (checkBeforeSigning == 'Yes' || findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Option for Sign Document per Signer')) == 'Signer Login Sign') {
-    'input email'
-    WebUI.setText(findTestObject('Login/input_Email'), email)
-
-    'input password asumsi password = P@ssw0rd'
-    WebUI.setText(findTestObject('Login/input_Password'), findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel(
-                'Password Signer')))
-
-    'click button login'
-    WebUI.click(findTestObject('Login/button_Login'), FailureHandling.STOP_ON_FAILURE)
-
-    if (WebUI.verifyElementPresent(findTestObject('Login/input_Perusahaan'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
         'input perusahaan'
         WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel(
                     'Perusahaan')))
@@ -76,20 +49,55 @@ if (email == '') {
         WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
 
         'input peran'
-        WebUI.click(findTestObject('Login/input_Peran'))
-
-        WebUI.delay(2)
+        WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel(
+                    'Role')))
 
         'enter untuk input peran'
         WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
 
+        'fokus pada tombol pilih peran'
+        WebUI.focus(findTestObject('Login/button_pilihPeran'))
+
         'click button pilih peran'
         WebUI.click(findTestObject('Login/button_pilihPeran'), FailureHandling.STOP_ON_FAILURE)
     }
-	} else if (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Option for Sign Document per Signer')) == 'Webview Sign' ||
-		findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Option for Sign Document per Signer')) == 'Embed Sign'){
-		runWithEmbed(linkUrl)
-	}
+} else {
+    if ((checkBeforeSigning == 'Yes') || (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Option for Sign Document per Signer')) == 
+    'Signer Login Sign')) {
+        'input email'
+        WebUI.setText(findTestObject('Login/input_Email'), email)
+
+        'input password asumsi password = P@ssw0rd'
+        WebUI.setText(findTestObject('Login/input_Password'), findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel(
+                    'Password Signer')))
+
+        'click button login'
+        WebUI.click(findTestObject('Login/button_Login'), FailureHandling.STOP_ON_FAILURE)
+
+        if (WebUI.verifyElementPresent(findTestObject('Login/input_Perusahaan'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+            'input perusahaan'
+            WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excel).getValue(GlobalVariable.NumofColm, 
+                    rowExcel('Perusahaan')))
+
+            'enter untuk input perusahaan'
+            WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
+
+            'input peran'
+            WebUI.click(findTestObject('Login/input_Peran'))
+
+            WebUI.delay(2)
+
+            'enter untuk input peran'
+            WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
+
+            'click button pilih peran'
+            WebUI.click(findTestObject('Login/button_pilihPeran'), FailureHandling.STOP_ON_FAILURE)
+        }
+    } else if ((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Option for Sign Document per Signer')) == 
+    'Webview Sign') || (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Option for Sign Document per Signer')) == 
+    'Embed Sign')) {
+        runWithEmbed(linkUrl)
+    }
     
     'Jika error lognya muncul'
     if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL) && 
@@ -124,6 +132,14 @@ def rowExcel(String cellValue) {
 }
 
 def runWithEmbed(String linkUrl) {
+    if ((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Option for Sign Document per Signer')).split(';', 
+        -1)[GlobalVariable.indexUsed]) == 'Webview Sign') {
+        GlobalVariable.RunWithEmbed = 'No'
+    } else if ((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Option for Sign Document per Signer')).split(
+        ';', -1)[GlobalVariable.indexUsed]) == 'Embed Sign') {
+        GlobalVariable.RunWithEmbed = 'Yes'
+    }
+    
     'check if ingin menggunakan embed atau tidak'
     if (GlobalVariable.RunWithEmbed == 'Yes') {
         'navigate url ke daftar akun'

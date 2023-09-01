@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "keywordFileContentHash": "C0D82D5E4627AA6887D65BC4C888A308",
-=======
-  "keywordFileContentHash": "0FEAB8BC11CFF26C37AD4AC09433ADA4",
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+  "keywordFileContentHash": "503BFFCB67E03A6FFEC97EB4D267B920",
   "keywordClasses": [
     {
       "name": "connection.ManualStamp",
@@ -24,8 +20,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getDocTypePeruri",
@@ -43,8 +38,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getManualStamp",
@@ -88,8 +82,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getInputeMeteraiMonitoring",
@@ -133,8 +126,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getProsesMeterai",
@@ -178,8 +170,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "gettrxSaldoForMeterai",
@@ -210,11 +201,10 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         }
       ]
     }
   ],
-  "javadocParsed": true
+  "javadocParsed": false
 }

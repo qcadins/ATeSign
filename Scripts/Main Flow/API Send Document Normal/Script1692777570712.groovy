@@ -268,7 +268,7 @@ int splitnum = -1
                     '<' + messageFailed + '>')
 
 				'call test case error report'
-                 WebUI.callTestCase(findTestCase('Send_Document/ErrorReport'), [('API_Excel_Path') : API_Excel_Path], 
+                 WebUI.callTestCase(findTestCase('Send Document/ErrorReport'), [('API_Excel_Path') : API_Excel_Path], 
                  FailureHandling.CONTINUE_ON_FAILURE)
             }
         } else {

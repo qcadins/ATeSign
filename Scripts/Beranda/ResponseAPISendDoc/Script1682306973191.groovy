@@ -262,13 +262,13 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
             1, GlobalVariable.StatusSuccess)
 
         'Call Test case mengneai Kotak Masuk'
-        WebUI.callTestCase(findTestCase('Send_Document/KotakMasuk'), [('excelPathFESignDocument') : API_Excel_Path, ('jumlahsignertandatangan') : jumlahsignertandatangan
+        WebUI.callTestCase(findTestCase('Send Document/KotakMasuk'), [('excelPathFESignDocument') : API_Excel_Path, ('jumlahsignertandatangan') : jumlahsignertandatangan
                 , ('isDownloadDocument') : isDownloadDocument, ('isDeleteDownloadedDocument') : isDeleteDownloadedDocument
                 , ('isViewDocument') : isViewDocument, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
 
         if (GlobalVariable.checkStoreDB == 'Yes') {
             'call test case ResponseAPIStoreDB'
-            WebUI.callTestCase(findTestCase('Send_Document/ResponseAPIStoreDB'), [('API_Excel_Path') : API_Excel_Path], 
+            WebUI.callTestCase(findTestCase('Send Document/ResponseAPIStoreDB'), [('API_Excel_Path') : API_Excel_Path], 
                 FailureHandling.CONTINUE_ON_FAILURE)
         }
         
@@ -282,7 +282,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 
         if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 9).replace('"', '') == resultTenant) {
             'call test case error report'
-            WebUI.callTestCase(findTestCase('Send_Document/ErrorReport'), [('API_Excel_Path') : API_Excel_Path], FailureHandling.CONTINUE_ON_FAILURE)
+            WebUI.callTestCase(findTestCase('Send Document/ErrorReport'), [('API_Excel_Path') : API_Excel_Path], FailureHandling.CONTINUE_ON_FAILURE)
         }
     }
 } else {
@@ -294,7 +294,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 
     if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 9).replace('"', '') == resultTenant) {
         'call test case error report'
-        WebUI.callTestCase(findTestCase('Send_Document/ErrorReport'), [('API_Excel_Path') : API_Excel_Path], FailureHandling.CONTINUE_ON_FAILURE)
+        WebUI.callTestCase(findTestCase('Send Document/ErrorReport'), [('API_Excel_Path') : API_Excel_Path], FailureHandling.CONTINUE_ON_FAILURE)
     }
 }
 

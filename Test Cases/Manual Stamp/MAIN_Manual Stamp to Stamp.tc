@@ -17,6 +17,12 @@
       <value></value>
       <variableId>3eb80b35-564e-4c4e-8b03-12309ca63fef</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>b9903e6e-9efd-4ba2-a209-aee907215270</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>'ManualStamp/ManualStamptoStamp'</defaultValue>
       <description></description>
@@ -30,5 +36,12 @@
       <id>3eb80b35-564e-4c4e-8b03-12309ca63fef</id>
       <masked>false</masked>
       <name>linkDocumentMonitoring</name>
+   </variable>
+   <variable>
+      <defaultValue>false</defaultValue>
+      <description></description>
+      <id>b9903e6e-9efd-4ba2-a209-aee907215270</id>
+      <masked>false</masked>
+      <name>isRetryStamping</name>
    </variable>
 </TestCaseEntity>
