@@ -28,19 +28,24 @@ indexForCatatanStamp = 0
 
 int looping
 
-'panggil fungsi login'
-//WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : 'Manual Sign',
-//	('Path') : excelPathManualSign], FailureHandling.CONTINUE_ON_FAILURE)
-
-'memanggil test case login untuk admin wom dengan Admin Client'
-WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualSign, ('sheet') : 'Manual Sign'], FailureHandling.CONTINUE_ON_FAILURE)
-
 'looping berdasarkan jumlah kolom'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathManualSign).columnNumbers; (GlobalVariable.NumofColm)++) {
-    if (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
+    if (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
-    } else if (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted') || 
-    findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Warning')) {
+    } else if (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
+		
+		'get tenant dari excel percase'
+		GlobalVariable.Tenant = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
+		
+		'get psre dari excel percase'
+		GlobalVariable.Psre = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
+		
+		if(findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) != 
+			findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))) {
+			'panggil fungsi login'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathManualSign], FailureHandling.CONTINUE_ON_FAILURE)
+		}
+	
         'declare flag failed'
         GlobalVariable.FlagFailed = 0
 
@@ -53,25 +58,25 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         index = 8
 
         'Inisialisasi variable yang dibutuhkan'
-		phonePenandaTangan = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 19).split(semicolon, splitIndex)
+		phonePenandaTangan = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('$Phone')).split(semicolon, splitIndex)
 
-		emailPenandaTangan = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 20).split(semicolon, splitIndex)
+		emailPenandaTangan = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('Email')).split(semicolon, splitIndex)
 
-		editNamaAfterSearch = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 21).split(semicolon, splitIndex)
+		editNamaAfterSearch = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('Edit Nama After Search')).split(semicolon, splitIndex)
 
-		namaPenandaTangan = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 22).split(semicolon, splitIndex)
+		namaPenandaTangan = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('Nama')).split(semicolon, splitIndex)
 
-		tipeTandaTangan = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 23).split(semicolon, splitIndex)
+		tipeTandaTangan = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('$TipeTandaTangan')).split(semicolon, splitIndex)
 
-		totalTandaTangan = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 24).split(semicolon, splitIndex)
+		totalTandaTangan = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('jumlah signer lokasi per signer')).split(semicolon, splitIndex)
 
-		pindahkanSignBox = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 25).split(semicolon, splitIndex)
+		pindahkanSignBox = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('$Pindahkan SignBox')).split(semicolon, splitIndex)
 
-		lokasiSignBox = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 26).split('\\n', splitIndex)
+		lokasiSignBox = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('$Lokasi Pemindahan signbox')).split('\\n', splitIndex)
 
-		lockSignBox = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 27).split(semicolon, splitIndex)
+		lockSignBox = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('$Lock Sign Box')).split(semicolon, splitIndex)
 
-		catatanStamping = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 28).split(semicolon, splitIndex)
+		catatanStamping = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('Catatan Stamping')).split(semicolon, splitIndex)
 
 		'Klik tombol menu manual sign'
 		WebUI.click(findTestObject('ManualSign/ManualSign'))
@@ -87,7 +92,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             inputForm()
 
             'jika setting menggunakan e-meterai'
-            if (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 14) == 'Yes') {
+            if (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('$Membutuhkan e-Meterai')) == 'Yes') {
                 'index meningkat karena tambahan 2 kolom ketika menggunakan e-meterai'
                 index = 10
 
@@ -179,9 +184,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         error = WebUI.getText(findTestObject('ManualSign/errorLog_PenandaTangan'))
 
                         'write excel mengenai error log tersebut'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Sign', GlobalVariable.NumofColm, 
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                             GlobalVariable.StatusFailed, (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 
-                                2) + ';') + '<' + error + '>')
+                                rowExcel('Reason Failed')) + ';') + '<' + error + '>')
 
                         'diberikan delay 2 detik agar sudah ter write sebelum button cancel'
                         WebUI.delay(2)
@@ -235,9 +240,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 if (WebUI.verifyElementHasAttribute(findTestObject('ManualSign/button_Save'), 'disabled', GlobalVariable.TimeOut, 
                     FailureHandling.OPTIONAL)) {
                     'write to excel save gagal'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Sign', GlobalVariable.NumofColm, 
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 
-                            2) + ';') + GlobalVariable.ReasonFailedMandatory)
+                            rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedMandatory)
 
                     break
                 } else {
@@ -266,10 +271,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
 				if (emailPenandaTangan[i] != '') {
 					'query check informasi dari user tersebut'
-					queryCheckInformationUser = CustomKeywords.'connection.ManualSign.getInformationUser'(conneSign, emailPenandaTangan[indexEmail++].toString().toUpperCase(), findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 8))
+					queryCheckInformationUser = CustomKeywords.'connection.ManualSign.getInformationUser'(conneSign, emailPenandaTangan[indexEmail++].toString().toUpperCase(), findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('$PSrE')))
 				} else {
 					'query check informasi dari user tersebut'
-					queryCheckInformationUser = CustomKeywords.'connection.ManualSign.getInformationUser'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(phonePenandaTangan[indexEmail++]), findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 8))
+					queryCheckInformationUser = CustomKeywords.'connection.ManualSign.getInformationUser'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(phonePenandaTangan[indexEmail++]), findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('$PSrE')))
 				}
 
 				if (valueInformasi[2] == emailPenandaTangan[indexEmail - 1].toString().toUpperCase() || valueInformasi[1] == phonePenandaTangan[indexEmail - 1]) {
@@ -302,8 +307,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             if (WebUI.verifyElementHasAttribute(findTestObject('ManualSign/button_Next'), 'disabled', GlobalVariable.TimeOut, 
                 FailureHandling.CONTINUE_ON_FAILURE)) {
                 'write to excel bahwa save gagal'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Sign', GlobalVariable.NumofColm, 
-                    GlobalVariable.StatusFailed, (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 2) + 
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                    GlobalVariable.StatusFailed, (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
                     ';') + GlobalVariable.ReasonFailedSaveGagal)
 
                 continue
@@ -311,8 +316,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 				
 				if (WebUI.verifyElementPresent(modifyObjectLblDaftarPenandaTangan, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 					'write to excel bahwa save gagal'
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Sign', GlobalVariable.NumofColm,
-						GlobalVariable.StatusFailed, (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 2) +
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+						GlobalVariable.StatusFailed, (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) +
 						';') + '<' + 'Silahkan tambah penanda tangan terlebih dulu!' +'>')
 		
 				}
@@ -325,12 +330,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_documentNo'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
                 'check ui dan excel pada nomor dokumen'
                 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualSign/lbl_documentNo'), 
-                            'value'), findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 9), false, FailureHandling.CONTINUE_ON_FAILURE), 
+                            'value'), findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')), false, FailureHandling.CONTINUE_ON_FAILURE), 
                     ' pada informasi nomor dokumen ')
 
                 'check ui dan excel pada nama dokumen'
                 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualSign/input_documentName'), 
-                            'value'), findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 10), false, FailureHandling.CONTINUE_ON_FAILURE), 
+                            'value'), findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('$Nama Dokumen')), false, FailureHandling.CONTINUE_ON_FAILURE), 
                     ' pada informasi nama dokumen ')
 
                 'Klik button tanda tangan'
@@ -467,12 +472,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
             if (GlobalVariable.FlagFailed == 0) {
                 'write to excel success'
-                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Manual Sign', 0, 
+                CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, 
                     GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 
                 if (GlobalVariable.checkStoreDB == 'Yes') {
                     result = CustomKeywords.'connection.ManualSign.getManualSign'(conneSign, findTestData(excelPathManualSign).getValue(
-                            GlobalVariable.NumofColm, 9))
+                            GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))
 
                     index = 0
 
@@ -480,30 +485,30 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                     'verify vendor'
                     arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 
-                                8), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+                                rowExcel('$PSrE')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
                     'verify ref number'
                     arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 
-                                9), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+                                rowExcel('$Nomor Dokumen')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
                     'verify document name'
                     arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 
-                                10), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+                                rowExcel('$Nama Dokumen')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
                     'verify tanggal dokumen'
                     arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 
-                                11), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+                                rowExcel('$Tanggal Dokumen')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
                     'verify tipe pembayaran'
                     arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 
-                                12), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+                                rowExcel('$Jenis Pembayaran')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
                     automaticAfterStamping = '0'
 
-                    if (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 14) == 'Yes') {
-                        tipeDokumenPeruri = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 16)
+                    if (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('$Membutuhkan e-Meterai')) == 'Yes') {
+                        tipeDokumenPeruri = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('Tipe Dokumen Peruri'))
 
-                        if (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 17) == 'Ya') {
+                        if (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('$Stamp Meterai Otomatis')) == 'Ya') {
                             automaticAfterStamping = '1'
                         }
                     } else {
@@ -516,7 +521,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     'verify tipe dokumen peruri'
                     arrayMatch.add(WebUI.verifyMatch(tipeDokumenPeruri, result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                    totalDocument = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 13).split('\\n', 
+                    totalDocument = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('$Dokumen')).split('\\n', 
                         -1)
 
                     'verify total dokumen'
@@ -528,9 +533,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     'jika data db tidak sesuai dengan excel'
                     if (arrayMatch.contains(false)) {
                         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Sign', GlobalVariable.NumofColm, 
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                             GlobalVariable.StatusFailed, (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 
-                                2) + ';') + GlobalVariable.ReasonFailedStoredDB)
+                                rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
                     }
                 }
 				
@@ -551,7 +556,7 @@ def inputCancel(Connection conneSign) {
 
     'get data tipe-tipe pembayaran secara asc'
     ArrayList jenisPembayaranByVendorDB = CustomKeywords.'connection.ManualSign.getPaymentTypeBasedOnTenantAndVendor'(conneSign, 
-        GlobalVariable.Tenant, findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 8))
+        GlobalVariable.Tenant, findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('$PSrE')))
 
     'check ddl tipe pembayaran'
     checkDDL(findTestObject('ManualSign/input_jenisPembayaran'), jenisPembayaranByVendorDB, ' pada DDL jenis pembayaran ')
@@ -600,8 +605,8 @@ def inputCancel(Connection conneSign) {
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Sign', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            ((((findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            ((((findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) 
             ) + reason) )
 
         GlobalVariable.FlagFailed = 1
@@ -657,15 +662,15 @@ def checkErrorLog() {
 			
 			if (!(errormessage.contains('Permintaan tanda tangan berhasil dibuat.'))) {
 				'Tulis di excel itu adalah error'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Sign', GlobalVariable.NumofColm,
-					GlobalVariable.StatusFailed, (((findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 2).replace(
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+					GlobalVariable.StatusFailed, (((findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
 						'-', '') + ';') + '<') + errormessage) + '>')
 			}
 		} else {
 			
 			'Tulis di excel itu adalah error'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Sign', GlobalVariable.NumofColm,
-				GlobalVariable.StatusFailed, (((findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 2).replace(
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+				GlobalVariable.StatusFailed, (((findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
 					'-', '') + ';')) + 'Error tidak berhasil ditangkap'))
 		}
 		return true
@@ -677,26 +682,26 @@ def checkErrorLog() {
 def inputForm() {
     'Input teks di nama template dokumen'
     WebUI.setText(findTestObject('ManualSign/input_psre'), findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 
-            8))
+            rowExcel('$PSrE')))
 
     'Klik enter'
     WebUI.sendKeys(findTestObject('ManualSign/input_psre'), Keys.chord(Keys.ENTER))
 
     'Input teks kode template dokumen'
     WebUI.setText(findTestObject('ManualSign/input_referenceNo'), findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 
-            9))
+            rowExcel('$Nomor Dokumen')))
 
     'Input AKtif pada input Status'
     WebUI.setText(findTestObject('ManualSign/input_documentName'), findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 
-            10))
+            rowExcel('$Nama Dokumen')))
 
     'Input AKtif pada input Status'
     WebUI.setText(findTestObject('ManualSign/input_documentDate'), findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 
-            11))
+            rowExcel('$Tanggal Dokumen')))
 
     'Input AKtif pada input Status'
     WebUI.setText(findTestObject('ManualSign/input_jenisPembayaran'), findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 
-            12))
+            rowExcel('$Jenis Pembayaran')))
 
     'Klik enter'
     WebUI.sendKeys(findTestObject('ManualSign/input_jenisPembayaran'), Keys.chord(Keys.ENTER))
@@ -704,12 +709,12 @@ def inputForm() {
     'Code untuk mengambil file berdasarkan direktori masing-masing sekaligus ambil value dari excel'
     String userDir = System.getProperty('user.dir')
 
-    String filePath = userDir + findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 13)
+    String filePath = userDir + findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('$Dokumen'))
 
     'Upload file berdasarkan filePath yang telah dirancang'
     WebUI.uploadFile(findTestObject('ManualSign/input_documentExample'), filePath, FailureHandling.CONTINUE_ON_FAILURE)
 
-    if (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 14) == 'Yes') {
+    if (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('$Membutuhkan e-Meterai')) == 'Yes') {
         index = 10
 
         if (WebUI.verifyElementNotChecked(findTestObject('ManualSign/input_isE-Meterai'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
@@ -719,18 +724,18 @@ def inputForm() {
         
         'Input Aktif pada input Status'
         WebUI.setText(findTestObject('ManualSign/input_tipeDokumenPeruri'), findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 
-                16))
+                rowExcel('Tipe Dokumen Peruri')))
 
         'Klik enter'
         WebUI.sendKeys(findTestObject('ManualSign/input_tipeDokumenPeruri'), Keys.chord(Keys.ENTER))
 
         'Input AKtif pada input Status'
         WebUI.setText(findTestObject('ManualSign/input_isAutomatedStamp'), findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 
-                17))
+                rowExcel('$Stamp Meterai Otomatis')))
 
         'Klik enter'
         WebUI.sendKeys(findTestObject('ManualSign/input_isAutomatedStamp'), Keys.chord(Keys.ENTER))
-    } else if (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 14) == 'No') {
+    } else if (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('$Membutuhkan e-Meterai')) == 'No') {
         if (WebUI.verifyElementChecked(findTestObject('ManualSign/input_isE-Meterai'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
             'Input AKtif pada input Status'
             WebUI.click(findTestObject('ManualSign/btn_E-Meterai'))
@@ -738,3 +743,6 @@ def inputForm() {
     }
 }
 
+def rowExcel(String cellValue) {
+	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+}
