@@ -37,22 +37,30 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		'click menu priority PSrE'
 		WebUI.click(findTestObject('PengaturanPSrE/PSRe Priority/menu_PsrePriority'))
 		
+		'delay untuk menu Psre loading'
+		WebUI.delay(30)
+		
 		'declare array list'
 		ArrayList<String> resultDB = [], resultUI = [], seqPsreRole = []
 		
 		resultDB = CustomKeywords.'connection.PengaturanPSrE.getPsrePriority'(conneSign)
 		
 		'count PSrE'
-		variable = DriverFactory.webDriver.findElements(By.cssSelector('#cdk-drop-list-0 div'))
+		variable = DriverFactory.webDriver.findElements(By.cssSelector('#cdk-drop-list-0 div div'))
+		
+		println(variable.size())
 		
 		'looping jumlah psre pada ui untuk get urutan psre'
 		for(index = 1; index <= variable.size(); index++) {
 			'modify object psre box'
 			modifyObjectBox = WebUI.modifyObjectProperty(findTestObject('PengaturanPSrE/PSRe Priority/modifyObject'),
-				'xpath', 'equals', '//*[@id="cdk-drop-list-0"]/div['+ index +']', true)
+				'xpath', 'equals', '//*[@id="cdk-drop-list-0"]/div['+ index +']/div', true)
+			
+			'get text pisah nomor dan psre'
+			vendor = WebUI.getText(modifyObjectBox).split(' ',-1)
 			
 			'add psre kedalam arraylist'
-			resultUI.add(WebUI.getText(modifyObjectBox))
+			resultUI.add(vendor[1])
 		}
 		
 		'verify default vendor psre db = ui'
@@ -65,14 +73,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		for (seq = 1; seq <= variable.size(); seq++) {
 			'modify label tipe tanda tangan di kotak'
 			modifyObject = WebUI.modifyObjectProperty(findTestObject('PengaturanPSrE/PSRe Priority/modifyObject'),
-				'xpath', 'equals', '//*[@id="cdk-drop-list-0"]/div['+ seq +']', true)
+				'xpath', 'equals', '//*[@id="cdk-drop-list-0"]/div['+ seq +']/div', true)
+
+			'get text pisah nomor dan psre'
+			vendor = WebUI.getText(modifyObject).split(' ',-1)
 			
-			index = seqPsreRole.indexOf(WebUI.getText(modifyObject)) + 1
+			index = seqPsreRole.indexOf(vendor[1]) + 1
 			
 			if (seq != index) {
 				'modify label tipe tanda tangan di kotak'
 				modifyObjectNew = WebUI.modifyObjectProperty(findTestObject('PengaturanPSrE/PSRe Priority/modifyObject'),
-					'xpath', 'equals', '//*[@id="cdk-drop-list-0"]/div['+ index +']', true)
+					'xpath', 'equals', '//*[@id="cdk-drop-list-0"]/div['+ index +']/div', true)
 				
 				'pindahin ke urutan sesuai excel'
 				WebUI.dragAndDropToObject(modifyObject, modifyObjectNew)
@@ -90,6 +101,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		'delay untuk loading simpan'
 		WebUI.delay(3)
 	
+		'check if muncul button konfirmasi'
+		if(WebUI.verifyElementPresent(findTestObject('PengaturanPSrE/PSRe Priority/button_Konfirmasi'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)){
+			'click button button konfirmasi'
+			WebUI.click(findTestObject('PengaturanPSrE/PSRe Priority/button_Konfirmasi'))
+		}
+		
 		'check if muncul popup'
 		if(WebUI.verifyElementPresent(findTestObject('PengaturanPSrE/label_PopUP'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)){
 			if(WebUI.getText(findTestObject('PengaturanPSrE/label_PopUP')).equalsIgnoreCase('Success')){

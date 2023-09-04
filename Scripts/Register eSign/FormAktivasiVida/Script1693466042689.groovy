@@ -11,6 +11,16 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 ArrayList<String> listOTP = []
 
+int delayExpiredOTP = 60
+
+'check ada value maka Setting OTP Active Duration'
+if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() > 0) {
+	'Setting OTP Active Duration'
+	CustomKeywords.'connection.APIFullService.settingAllowRegenerateLink'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')))
+	
+	delayExpiredOTP = delayExpiredOTP * Integer.parseInt(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')))
+}
+
 'check email sesuai dengan inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/FormAktivasi/input_Email'), 'value', 
             FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
@@ -169,16 +179,11 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
             }
         }
         
-        'click button proses otp'
-        WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_ProsesOTP'))
-
-        'check if aktivasi berhasil dengan otp yang benar'
-        if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/popUp_AktivasiBerhasil'), GlobalVariable.TimeOut, 
-            FailureHandling.OPTIONAL) && (GlobalVariable.FlagFailed == 0)) {
-            'write to excel success'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, SheetName, 0, GlobalVariable.NumofColm - 
-                1, GlobalVariable.StatusSuccess)
-        }
+		'check if ingin testing expired otp'
+		if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() > 0) {
+			'delay untuk input expired otp'
+			WebUI.delay(delayExpiredOTP + 10)
+		}
     } else {
         'input otp'
         WebUI.setText(findTestObject('BuatUndangan/FormAktivasi/input_OTP'), findTestData(excelPathBuatUndangan).getValue(
@@ -245,36 +250,41 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/alertTe
                         GlobalVariable.NumofColm, rowExcel('Manual OTP')))
             }
         }
-        
-        'click button proses otp'
-        WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_ProsesOTP'))
+    }
+	
+	'click button proses otp'
+	WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_ProsesOTP'))
 
-        'check if aktivasi berhasil dengan otp yang Salah'
-        if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/popUp_AktivasiBerhasil'), GlobalVariable.TimeOut, 
-            FailureHandling.OPTIONAL)) {
-            'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, 
-                GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
-                ';') + GlobalVariable.ReasonFailedOTPError)
+	'check if aktivasi berhasil dengan otp yang benar'
+	if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/popUp_AktivasiBerhasil'), GlobalVariable.TimeOut,
+		FailureHandling.OPTIONAL) && (GlobalVariable.FlagFailed == 0)) {
+		'write to excel success'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, SheetName, 0, GlobalVariable.NumofColm -
+			1, GlobalVariable.StatusSuccess)
+	} else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/popUp_AktivasiBerhasil'), GlobalVariable.TimeOut, 
+        FailureHandling.OPTIONAL)) {
+        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, 
+            GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
+            ';') + GlobalVariable.ReasonFailedOTPError)
 
-            GlobalVariable.FlagFailed = 1
-        } else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'), GlobalVariable.TimeOut, 
-            FailureHandling.OPTIONAL)) {
-            reason = WebUI.getText(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'))
+        GlobalVariable.FlagFailed = 1
+    } else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'), GlobalVariable.TimeOut, 
+        FailureHandling.OPTIONAL)) {
+        reason = WebUI.getText(findTestObject('BuatUndangan/FormAktivasi/label_PopupMsg'))
 
-            'write to excel status failed dan reason'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, 
-                GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
-                    '-', '') + ';') + '<' + reason + '>')
+        'write to excel status failed dan reason'
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, 
+            GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+                '-', '') + ';') + '<' + reason + '>')
 
-            'click button tutup error'
-            WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_OK'))
+        'click button tutup error'
+        WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_OK'))
 
-            'click button X tutup popup otp'
-            WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_X'))
+        'click button X tutup popup otp'
+        WebUI.click(findTestObject('BuatUndangan/FormAktivasi/button_X'))
 
-            GlobalVariable.FlagFailed = 1
-        }
+        GlobalVariable.FlagFailed = 1
     }
 }
 

@@ -227,10 +227,7 @@ public loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 	'panggil fungsi login'
 	WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : 'isiSaldo',
 		('Path') : excelPathIsiSaldo], FailureHandling.CONTINUE_ON_FAILURE)
-	
-//	'call test case mengenai login admin'
-//	WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathIsiSaldo, ('sheet') : 'isiSaldo'], FailureHandling.STOP_ON_FAILURE)
-	
+
     'click ddl bahasa'
     WebUI.click(findTestObject('isiSaldo/SaldoAdmin/button_bahasa'))
 

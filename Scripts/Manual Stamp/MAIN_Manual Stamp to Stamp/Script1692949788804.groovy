@@ -689,7 +689,7 @@ def inputEMeteraiMonitoring(Connection conneSign) {
 							if (WebUI.verifyMatch(errorMessageUI.toString().toUpperCase(), errorMessageDB.toString().toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE)) {
 								'write to excel bahwa save gagal'
 								CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Stamp to Stamp', GlobalVariable.NumofColm,
-									GlobalVariable.StatusFailed, findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 2) + ';' + GlobalVariable.ReasonFailedProsesStamping + ' dengan alasan ' + errorMessageUI.toString())
+									GlobalVariable.StatusFailed, findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';' + GlobalVariable.ReasonFailedProsesStamping + ' dengan alasan ' + errorMessageUI.toString())
 								
 								WebUI.click(findTestObject('e-Meterai Monitoring/button_X'))
 								
@@ -907,7 +907,7 @@ def inputEMeteraiMonitoring(Connection conneSign) {
 							if (WebUI.verifyMatch(errorMessageUI.toString().toUpperCase(), errorMessageDB.toString().toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE)) {
 								'write to excel bahwa save gagal'
 								CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Stamp to Stamp', GlobalVariable.NumofColm,
-									GlobalVariable.StatusFailed, findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 2) + ';' + GlobalVariable.ReasonFailedProsesStamping + ' dengan alasan ' + errorMessageUI.toString())
+									GlobalVariable.StatusFailed, findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';' + GlobalVariable.ReasonFailedProsesStamping + ' dengan alasan ' + errorMessageUI.toString())
 								
 								WebUI.click(findTestObject('e-Meterai Monitoring/button_X'))
 								

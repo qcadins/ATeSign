@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>i_confirmNewPass_eyeIcon</name>
+   <tag></tag>
+   <elementGuidId>68f6bdf9-7338-4727-bffe-7b7f2aea99ea</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>CSS</key>
+         <value></value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>//form[@id='msxForm']/div/div[2]/app-question/app-password/fieldset/div/i[2]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>XPATH</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>i</value>
+      <webElementGuid>6c65b5c3-6379-420e-a71a-e9843775a78d</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>ng-reflect-ng-class</name>
+      <type>Main</type>
+      <value>[object Object]</value>
+      <webElementGuid>295b55b3-106d-4110-840c-bb666e38a582</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>ft-eye-off</value>
+      <webElementGuid>42e2af98-ca90-42cc-920f-3ec1f86c76ec</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>id(&quot;msxForm&quot;)/div[@class=&quot;row&quot;]/div[@class=&quot;col-12 ng-star-inserted&quot;]/app-question[1]/app-password[@class=&quot;ng-star-inserted&quot;]/fieldset[@class=&quot;form-group ng-untouched ng-pristine ng-invalid ng-star-inserted&quot;]/div[@class=&quot;input&quot;]/i[@class=&quot;ft-eye-off&quot;]</value>
+      <webElementGuid>3ce338e5-3ee9-4e00-91f9-9b9052ff3b92</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:idRelative</name>
+      <type>Main</type>
+      <value>//form[@id='msxForm']/div/div[2]/app-question/app-password/fieldset/div/i[2]</value>
+      <webElementGuid>34232614-23f9-44be-99b1-69369864624f</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//div[2]/app-question/app-password/fieldset/div/i[2]</value>
+      <webElementGuid>9de90e08-f36d-4497-9a8c-7bb3effca674</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>

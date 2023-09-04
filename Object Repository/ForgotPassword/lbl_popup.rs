@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>lbl_popup</name>
+   <tag></tag>
+   <elementGuidId>2cfa776e-f233-4731-bd8b-5cfbe72585ab</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;swal2-content&quot;]</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;swal2-content&quot;]</value>
+      <webElementGuid>54bebb40-4344-4666-9af9-99cc0e552923</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

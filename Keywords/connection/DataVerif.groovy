@@ -301,7 +301,7 @@ public class DataVerif {
 		}
 		data
 	}
-	
+
 	@Keyword
 	getMustLivenessFaceCompare(Connection conn, String tenant) {
 		stm = conn.createStatement()
@@ -316,7 +316,7 @@ public class DataVerif {
 		}
 		data
 	}
-	
+
 	@Keyword
 	getCountFaceCompDaily(Connection conn, String email) {
 		stm = conn.createStatement()
@@ -336,7 +336,7 @@ public class DataVerif {
 			data = 0
 		}
 	}
-	
+
 	@Keyword
 	getLimitLivenessDaily(Connection conn) {
 		stm = conn.createStatement()
