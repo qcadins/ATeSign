@@ -26,6 +26,8 @@ semicolon = ';'
 
 splitIndex = -1
 
+int firstRun = 0
+
 'looping berdasarkan jumlah kolom'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathManualStamptoStamp).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
@@ -40,11 +42,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		'get psre dari excel percase'
 		GlobalVariable.Psre = findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
 		
-		if(findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) !=
-			findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))) {
+		if((findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) !=
+			findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))) || firstRun == 0) {
 			'panggil fungsi login'
 			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathManualStamptoStamp], 
 			    FailureHandling.CONTINUE_ON_FAILURE)
+			
+			firstRun = 1
 		}
 
         'Inisialisasi array dan variable'

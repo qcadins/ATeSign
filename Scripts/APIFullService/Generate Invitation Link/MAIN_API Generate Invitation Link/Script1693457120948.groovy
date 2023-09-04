@@ -168,13 +168,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 						} else {
 			               'call function get API error message'
 						   getAPIErrorMessage(respon)
+						   
+						   continue
 			            }
 					} else {
 		               'call function get API error message'
 					   getAPIErrorMessage(respon)
+
+					   continue
 		            }
-					
-					continue
 				}
 				
 				'call test case daftar akun verif'

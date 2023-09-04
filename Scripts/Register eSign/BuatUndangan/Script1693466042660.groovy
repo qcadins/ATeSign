@@ -13,6 +13,12 @@ import org.openqa.selenium.Keys as Keys
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
+'get psre per case'
+GlobalVariable.Psre = findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
+
+'get tenant per case'
+GlobalVariable.Tenant = findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
+
 'declare variable array'
 ArrayList<String> saldoBefore, saldoAfter
 
@@ -26,12 +32,6 @@ GlobalVariable.FlagFailed = 0
 
 'call test case login inveditor'
 WebUI.callTestCase(findTestCase('Login/Login_Inveditor'), [('Path') : excelPathBuatUndangan, ('SheetName') : SheetName], FailureHandling.CONTINUE_ON_FAILURE)
-
-'get psre per case'
-GlobalVariable.Psre = findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
-
-'get tenant per case'
-GlobalVariable.Tenant = findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
 
 'check ada value maka setting email service tenant'
 if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Services')).length() > 
