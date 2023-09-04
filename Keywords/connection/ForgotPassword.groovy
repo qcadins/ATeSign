@@ -14,13 +14,13 @@ import org.openqa.selenium.support.ui.Select
 import groovy.sql.Sql as Sql
 
 public class ForgotPassword {
-	
+
 	String data
 	int columnCount
 	Statement stm
 	ResultSet resultSet
 	ResultSetMetaData metadata
-	
+
 	@Keyword
 	getResetCode(Connection conn, String email) {
 		stm = conn.createStatement()
@@ -34,11 +34,11 @@ public class ForgotPassword {
 
 		data
 	}
-	
+
 	@Keyword
 	getResetCodeLimit(Connection conn) {
 		String data
-		
+
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("SELECT gs_value FROm am_generalsetting WHERE gs_code = 'OTP_RESET_PWD_DAILY'")
@@ -50,14 +50,14 @@ public class ForgotPassword {
 
 		Integer.parseInt(data)
 	}
-	
+
 	@Keyword
 	getOTPActiveDuration(Connection conn, String email) {
-		int data
-		
+		data
+
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT otp_active_duration FROm ms_useroftenant mot LEFT JOIN am_msuser amu ON amu.id_ms_user = mot.id_ms_user LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mot.id_ms_tenant WHERE amu.login_id = '" + email + "'")
+		resultSet = stm.executeQuery("SELECT mt.otp_active_duration FROM am_msuser amu LEFT JOIN ms_useroftenant mot ON mot.id_ms_user = amu.id_ms_user LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mot.id_ms_tenant LEFT JOIN tr_document_h tdh ON tdh.id_ms_tenant = mt.id_ms_tenant WHERE amu.login_id = '" + email + "' ORDER BY id_document_h DESC LIMIT 1")
 
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
@@ -68,13 +68,13 @@ public class ForgotPassword {
 			data = 0
 		}
 	}
-	
+
 	@Keyword
 	getResetNum(Connection conn, String email) {
 		int data
-		
+
 		stm = conn.createStatement()
-		
+
 		resultSet = stm.executeQuery("SELECT reset_code_request_num FROM am_msuser where login_id = '" +  email  + "'")
 
 		while (resultSet.next()){
@@ -83,5 +83,13 @@ public class ForgotPassword {
 		}
 
 		data
+	}
+	
+	@Keyword
+	updateResetRequestNum(Connection conn, String email) {
+
+		stm = conn.createStatement()
+
+		int updateCount = stm.executeUpdate("UPDATE am_msuser SET reset_code_request_num = 0 WHERE login_id = '" + email + "';")
 	}
 }
