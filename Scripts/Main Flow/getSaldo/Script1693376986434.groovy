@@ -21,7 +21,7 @@ import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 
 String totalSaldo
 
-def HashMap<String, String> result = new HashMap<>()
+HashMap<String, String> result = new HashMap<String, String>()
 
 'return total saldo awal'
 String totalSaldoOTP
@@ -29,9 +29,12 @@ String totalSaldoOTP
 vendorSigning = vendor
 
 if (WebUI.verifyElementNotPresent(findTestObject('Saldo/ddl_Vendor'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-	'Call test Case untuk login sebagai admin wom admin client'
-	WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excelPathFESignDocument, ('sheet') : sheet],
-		FailureHandling.CONTINUE_ON_FAILURE)
+    if (WebUI.verifyElementPresent(findTestObject('Saldo/menu_Saldo'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+        WebUI.click(findTestObject('Saldo/menu_Saldo'))
+    } else {
+        'Call test Case untuk login sebagai admin wom admin client'
+        WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excel, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
+    }
 }
 
 if (vendor.equalsIgnoreCase('Privy')) {
@@ -53,8 +56,8 @@ for (int c = 1; c <= variableDivSaldo.size(); c++) {
         (c + 1)) + ']/div/div/div/div/div[1]', true)
 
     'verifikasi label saldonya '
-    if (WebUI.verifyElementText(modifyObjectFindSaldoSign, findTestData(excel).getValue(GlobalVariable.NumofColm, 
-            rowExcel('TipeOTP')), FailureHandling.OPTIONAL)) {
+    if (WebUI.verifyElementText(modifyObjectFindSaldoSign, findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel(
+                'TipeOTP')), FailureHandling.OPTIONAL)) {
         'modify object mengenai ambil total jumlah saldo'
         modifyObjecttotalSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_countsaldo'), 'xpath', 'equals', 
             ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + (c + 1)) + ']/div/div/div/div/div[2]', 
@@ -75,24 +78,25 @@ variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > a
 
 'looping berdasarkan total div yang ada di saldo'
 for (int c = 1; c <= variableDivSaldo.size(); c++) {
-	'modify object mengenai find tipe saldo'
-	modifyObjectFindSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_saldo'), 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' +
-		(c + 1)) + ']/div/div/div/div/div[1]', true)
+    'modify object mengenai find tipe saldo'
+    modifyObjectFindSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_saldo'), 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + 
+        (c + 1)) + ']/div/div/div/div/div[1]', true)
 
-	'verifikasi label saldonya '
-	if (WebUI.verifyElementText(modifyObjectFindSaldoSign, findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel(
-				'Tipe')), FailureHandling.OPTIONAL)) {
-		'modify object mengenai ambil total jumlah saldo'
-		modifyObjecttotalSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_countsaldo'), 'xpath', 'equals',
-			('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + (c + 1)) + ']/div/div/div/div/div[2]',
-			true)
+    'verifikasi label saldonya '
+    if (WebUI.verifyElementText(modifyObjectFindSaldoSign, findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel(
+                'Tipe')), FailureHandling.OPTIONAL)) {
+        'modify object mengenai ambil total jumlah saldo'
+        modifyObjecttotalSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_countsaldo'), 'xpath', 'equals', 
+            ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + (c + 1)) + ']/div/div/div/div/div[2]', 
+            true)
 
-		'mengambil total saldo yang pertama'
-		totalSaldo = WebUI.getText(modifyObjecttotalSaldoSign)
+        'mengambil total saldo yang pertama'
+        totalSaldo = WebUI.getText(modifyObjecttotalSaldoSign)
 
-		break
-	}
+        break
+    }
 }
+
 result.put('saldoSign', totalSaldo)
 
 result.put('saldoOTP', totalSaldoOTP)

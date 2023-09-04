@@ -156,8 +156,7 @@ if ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel
 saldoAfter = loginAdminGetSaldo(conneSign, 'Yes', sheet)
 
 'mengambil value db proses ttd'
-prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, nomorKontrakDocument.replace(
-		'"', ''))
+prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, refNumber)
 
 if (prosesMaterai == 53) {
     if (saldoBefore == saldoAfter) {
@@ -166,8 +165,8 @@ if (prosesMaterai == 53) {
             ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
             ' terhadap total saldo dimana saldo awal dan saldo setelah meterai sama ')
     } else {
-    verifySaldoUsed(conneSign, sheet, refNumber)
-}
+        verifySaldoUsed(conneSign, sheet, refNumber)
+    }
 } else if (prosesMaterai == 51) {
     if (saldoBefore != saldoAfter) {
         'write to excel status failed dan reason'
@@ -176,9 +175,14 @@ if (prosesMaterai == 53) {
             ' terhadap total saldo dimana saldo awal dan saldo setelah meterai tidak sama ')
     }
 }
+
 def loginAdminGetSaldo(Connection conneSign, String start, String sheet) {
     String totalSaldo
 
+    if (findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Option for Stamp Document :')) == 'Start Stamping') {
+        start = 'Yes'
+    }
+    
     if (start == 'Yes') {
         'Call test Case untuk login sebagai admin wom admin client'
         WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excelPathStamping, ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)

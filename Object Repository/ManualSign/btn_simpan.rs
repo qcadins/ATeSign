@@ -3,7 +3,7 @@
    <description></description>
    <name>btn_simpan</name>
    <tag></tag>
-   <elementGuidId>bc125666-7d03-4ce8-92be-06473d2795ee</elementGuidId>
+   <elementGuidId>cc8c5816-e7c2-41b3-9554-af10480d7c0c</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
@@ -18,6 +18,6 @@
       <name>class</name>
       <type>Main</type>
       <value>btn btn-info</value>
-      <webElementGuid>5ec11ad5-86df-49d9-b07c-ab22dcfed1c0</webElementGuid>
+      <webElementGuid>e0f3117d-c5ae-409e-b88d-c3715efabb80</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

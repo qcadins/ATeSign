@@ -325,7 +325,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
     }
     
     'click button simpan'
-    WebUI.click(findTestObject('Object Repository/ManualSign/btn_simpan'))
+    WebUI.click(findTestObject('Object Repository/ManualSign/btn_proses'))
 
     WebUI.delay(10)
 

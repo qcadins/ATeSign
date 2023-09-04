@@ -982,13 +982,13 @@ def signingProcessStoreDB(Connection conneSign, String emailSigner, int jumlahSi
         ArrayList arrayMatch = new ArrayList()
 
         'verify request status. 3 berarti done request. Terpaksa hardcode karena tidak ada masternya untuk 3.'
-        arrayMatch.add(WebUI.verifyMatch('3', signingDB[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+        arrayMatch.add(WebUI.verifyMatch('3', signingDB[arrayIndex++], false, FailureHandling.OPTIONAL))
 
         'verify sign date. Jika ada, maka teksnya Sudah TTD. Sign Date sudah dijoin ke email masing-masing, sehingga pengecekan apakah sudah sign atau belum ditandai disini'
-        arrayMatch.add(WebUI.verifyMatch('Sudah TTD', signingDB[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+        arrayMatch.add(WebUI.verifyMatch('Sudah TTD', signingDB[arrayIndex++], false, FailureHandling.OPTIONAL))
 
         'verify total signed. Total signed harusnya seusai dengan variable jumlah signed'
-        arrayMatch.add(WebUI.verifyEqual(jumlahSignerTandaTangan, Integer.parseInt(signingDB[arrayIndex++]), FailureHandling.CONTINUE_ON_FAILURE))
+        arrayMatch.add(WebUI.verifyEqual(jumlahSignerTandaTangan, Integer.parseInt(signingDB[arrayIndex++]), FailureHandling.OPTIONAL))
 
         'Jika arraymatchnya ada false'
         if (arrayMatch.contains(false)) {

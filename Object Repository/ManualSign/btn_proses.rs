@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>lbl_daftarpenandatangan</name>
+   <name>btn_proses</name>
    <tag></tag>
-   <elementGuidId>1ccf31b0-de95-4b4a-a11b-14cc6b2d9d10</elementGuidId>
+   <elementGuidId>bc125666-7d03-4ce8-92be-06473d2795ee</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;msxForm&quot;]/div[9]/div[3]/table/tr/td/small</value>
+         <value>//*[@class = 'btn btn-info ng-star-inserted']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>class</name>
       <type>Main</type>
-      <value>//*[@id=&quot;msxForm&quot;]/div[9]/div[3]/table/tr/td/small</value>
-      <webElementGuid>c53de64a-caf8-4747-af78-5806235c4026</webElementGuid>
+      <value>btn btn-info ng-star-inserted</value>
+      <webElementGuid>4fa2c144-8181-4ffa-9dfe-b980e30b561b</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
