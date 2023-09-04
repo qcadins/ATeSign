@@ -9,12 +9,6 @@
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>9bf00f79-24f2-4b98-9d54-2b0a1249abf8</variableId>
-   </variableLinks>
-   <variableLinks>
-      <testDataLinkId></testDataLinkId>
-      <type>DEFAULT</type>
-      <value></value>
       <variableId>bd88f7d9-0fb7-4375-a14f-9dbf5419e6ae</variableId>
    </variableLinks>
    <variableLinks>
@@ -29,13 +23,6 @@
       <value></value>
       <variableId>b0bd63ca-c8f0-402b-a9db-888076d2a2e5</variableId>
    </variableLinks>
-   <variable>
-      <defaultValue>''</defaultValue>
-      <description></description>
-      <id>9bf00f79-24f2-4b98-9d54-2b0a1249abf8</id>
-      <masked>false</masked>
-      <name>indexUsed</name>
-   </variable>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>

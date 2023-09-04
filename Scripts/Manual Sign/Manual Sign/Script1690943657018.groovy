@@ -26,11 +26,8 @@ indexForCatatanStamp = 0
 int looping
 
 'panggil fungsi login'
-//WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
-//	('Path') : excelPathManualSigntoSign], FailureHandling.CONTINUE_ON_FAILURE)
-
-'memanggil test case login untuk admin wom dengan Admin Client'
-WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualSigntoSign, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
+WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
+	('Path') : excelPathManualSigntoSign], FailureHandling.CONTINUE_ON_FAILURE)
 
 'declare flag failed'
 GlobalVariable.FlagFailed = 0
@@ -67,7 +64,7 @@ catatanStamping = findTestData(excelPathManualSigntoSign).getValue(GlobalVariabl
 'Klik tombol menu manual sign'
 WebUI.click(findTestObject('ManualSign/ManualSign'))
 
-WebUI.delay(10)
+WebUI.delay(1)
 
 'Pengecekan apakah masuk page manual sign'
 if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), GlobalVariable.TimeOut)) {
@@ -371,7 +368,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
     }
     
     'click button simpan'
-    WebUI.click(findTestObject('Object Repository/ManualSign/btn_simpan'))
+    WebUI.click(findTestObject('Object Repository/ManualSign/btn_proses'))
 
     WebUI.delay(25)
 

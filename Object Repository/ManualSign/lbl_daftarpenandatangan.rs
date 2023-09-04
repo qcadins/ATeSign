@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;msxForm&quot;]/div[8]/div[3]/table/tr/td/small</value>
+         <value>//*[@id=&quot;msxForm&quot;]/div[9]/div[3]/table/tr/td/small</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@id=&quot;msxForm&quot;]/div[8]/div[3]/table/tr/td/small</value>
-      <webElementGuid>b4cf13ce-1438-41cb-93a2-1ce6e78baf2d</webElementGuid>
+      <value>//*[@id=&quot;msxForm&quot;]/div[9]/div[3]/table/tr/td/small</value>
+      <webElementGuid>c53de64a-caf8-4747-af78-5806235c4026</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

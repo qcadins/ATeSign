@@ -102,8 +102,6 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
             WebUI.maximizeWindow()
         }
     }
-    
-    WebUI.delay(7)
 
     'inisialisasi emailSigner menjadi array list'
     ArrayList emailSigner = []
@@ -673,17 +671,17 @@ def inputDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan,
     WebUI.setText(findTestObject('DocumentMonitoring/input_Status'), inputDocumentMonitoring[arrayIndex++])
 
     'Enter'
-    WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Status'), Keys.chord(Keys.ENTER))
+    WebUI.sendKeys(findTestObject('DocumentMonitoring/input_StampStatus'), Keys.chord(Keys.ENTER))
 
     if (linkDocumentMonitoring == '') {
         'Set text mengenai wilayah'
-        WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndex++])
+        WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndex++], FailureHandling.OPTIONAL)
 
         'Enter'
         WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER))
 
         'Set text mengenai input cabang'
-        WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndex++])
+        WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndex++], FailureHandling.OPTIONAL)
 
         'Enter'
         WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER))

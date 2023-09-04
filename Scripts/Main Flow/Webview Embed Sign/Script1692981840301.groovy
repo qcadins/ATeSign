@@ -334,7 +334,7 @@ for (o = 0; o < documentId.size(); o++) {
 				WebUI.delay(2)
                 'Verifikasi antara no telp yang dinput dengan yang sebelumnya'
                 checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('KotakMasuk/Sign/lbl_phoneNo'), 
-                            'value'), noTelpSigner, false), ' pada nomor telepon signer ')
+                            'value'), noTelpSigner, false, FailureHandling.CONTINUE_ON_FAILURE), ' pada nomor telepon signer ')
 
                 'OTP yang pertama dimasukkan kedalam 1 var'
                 OTP = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, emailSigner)
