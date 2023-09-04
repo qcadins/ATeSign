@@ -7,17 +7,33 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;login&quot;]/div/div[2]/div/form/button</value>
+         <value>//*[@type = 'submit' and @class = 'login-button']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>//*[@id=&quot;login&quot;]/div/div[2]/div/form/button</value>
-      <webElementGuid>00ea03df-cd38-49ac-8e1a-0496549cbf41</webElementGuid>
+      <webElementGuid>7b709add-f890-480e-aada-87ce0f2b7e51</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>type</name>
+      <type>Main</type>
+      <value>submit</value>
+      <webElementGuid>8d390ef7-9fd5-4f97-8e6b-4a9151b9f8f7</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>login-button</value>
+      <webElementGuid>52f1a35d-0c9c-4f18-bace-b07cfb66ebac</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

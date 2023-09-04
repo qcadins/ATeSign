@@ -18,7 +18,7 @@ if (GlobalVariable.useLocalHost == 'Yes') {
     WebUI.navigateToUrl(GlobalVariable.Link.replace('https://gdkwebsvr:8080', GlobalVariable.urlLocalHost))
 } else if (GlobalVariable.useLocalHost == 'No') {
     'navigate url ke daftar akun'
-    WebUI.navigateToUrl(GlobalVariable.Link)
+    WebUI.navigateToUrl(GlobalVariable.Link.replace('https','http'))
 }
 
 'connect DB eSign'

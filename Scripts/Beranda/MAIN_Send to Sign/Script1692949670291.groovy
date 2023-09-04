@@ -34,10 +34,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
-        'Call API Send doc'
-        WebUI.callTestCase(findTestCase('Beranda/ResponseAPISendDoc'), [('API_Excel_Path') : excelPathFESignDocument, ('sheet') : sheet], 
-            FailureHandling.CONTINUE_ON_FAILURE)
+//        'Call API Send doc'
+//        WebUI.callTestCase(findTestCase('Beranda/ResponseAPISendDoc'), [('API_Excel_Path') : excelPathFESignDocument, ('sheet') : sheet], 
+//            FailureHandling.CONTINUE_ON_FAILURE)
 
+		GlobalVariable.Tenant = 'WOMF'
+		
         'Jika tidak ada dokumen id di excel'
         if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('docid')) == '') {
             'loop selanjutnya'
@@ -132,6 +134,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'refresh buat reset nav bar selanjutnya'
             WebUI.refresh()
 
+			WebUI.delay(GlobalVariable.TimeOut)
+			
             'Jika bukan di page 1, verifikasi menggunakan button Lastest. Get row lastest'
             variableLastest = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager li'))
 
@@ -346,6 +350,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 							documentTemplateNamePerDoc[(documentTemplateNamePerDoc.size() - (i + 1))], false), '')
 				}
 			}
+			
+			WebUI.delay(GlobalVariable.TimeOut)
 			
 			'Scroll ke btn Proses'
 			WebUI.scrollToElement(findTestObject('KotakMasuk/Sign/btn_Proses'), GlobalVariable.TimeOut)
@@ -601,38 +607,39 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 					'Klik lanjut after konfirmasi'
 					WebUI.click(findTestObject('KotakMasuk/Sign/btn_LanjutAfterKonfirmasi'), FailureHandling.OPTIONAL)
 						
+					'delay untuk camera on'
+					WebUI.delay(10)
+					
 					'looping hingga count sampai batas maksimal harian'
 					for (int p = 0; p <= maxFaceCompDB; p++) {
-						
-						'delay untuk camera on'
-						WebUI.delay(2)
 						
 						'klik untuk ambil foto'
 						WebUI.click(findTestObject('KotakMasuk/Sign/btn_ProsesBiom'))
 						
-						WebUI.delay(4)
-						
 						'jika error muncul'
-						if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+						if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), 60, FailureHandling.OPTIONAL)) {
+							
+							'ambil message error'
+							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+								GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+									2).replace('-', '') + ';') + '<' + WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup')) + '>')
 							
 							'klik pada tombol OK'
 							WebUI.click(findTestObject('KotakMasuk/Sign/button_OK'))
 							
 							GlobalVariable.FlagFailed = 1
 							
-							'ambil message error'
-							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-								GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
-									2).replace('-', '') + ';') + '<' + WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup')) + '>')
-						}
-						
-						'ambil terbaru count dari DB'
-						countLivenessFaceComp = CustomKeywords.'connection.DataVerif.getCountFaceCompDaily'(conneSign, emailSigner[o-1])
-						
-						'jika count di DB dan limit sesuai'
-						if (countLivenessFaceComp == maxFaceCompDB) {
+							'ambil terbaru count dari DB'
+							countLivenessFaceComp = CustomKeywords.'connection.DataVerif.getCountFaceCompDaily'(conneSign, emailSigner[o-1])
 							
-							'berhentikan loop'
+							'jika count di DB dan limit sesuai'
+							if (countLivenessFaceComp == maxFaceCompDB) {
+								
+								'berhentikan loop'
+								break
+							}
+						} else {
+							
 							break
 						}
 					}
@@ -940,6 +947,9 @@ def checkVerifyEqualorMatch(Boolean isMatch, String reason) {
 }
 
 def checkKonfirmasiTTD() {
+	'delay'
+	WebUI.delay(GlobalVariable.TimeOut)
+	
     'Klik tanda tangan'
     WebUI.click(findTestObject('KotakMasuk/Sign/btn_TTDSemua'))
 
