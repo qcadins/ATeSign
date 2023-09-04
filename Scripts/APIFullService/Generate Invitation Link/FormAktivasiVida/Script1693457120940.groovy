@@ -18,7 +18,7 @@ int delayExpiredOTP = 60
 'check ada value maka Setting OTP Active Duration'
 if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() > 0) {
 	'Setting OTP Active Duration'
-	CustomKeywords.'connection.APIFullService.settingAllowRegenerateLink'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')))
+	CustomKeywords.'connection.APIFullService.settingOTPActiveDuration'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')))
 	
 	delayExpiredOTP = delayExpiredOTP * Integer.parseInt(findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')))
 }
