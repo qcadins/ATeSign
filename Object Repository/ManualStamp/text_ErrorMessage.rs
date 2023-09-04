@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'modal-body']/p</value>
+         <value>/html/body/ngb-modal-window/div/div/app-stampduty-error/div/div/p</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -18,14 +18,14 @@
       <name>class</name>
       <type>Main</type>
       <value>modal-body</value>
-      <webElementGuid>c882b07a-0f58-48f7-b127-d732285dfc9a</webElementGuid>
+      <webElementGuid>a22e1d5b-ea87-4d06-94e6-0b06033e6a7a</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@class = 'modal-body']/p</value>
-      <webElementGuid>936a0a58-ca66-4aea-8f98-5b4f29eaaf4b</webElementGuid>
+      <value>/html/body/ngb-modal-window/div/div/app-stampduty-error/div/div/p</value>
+      <webElementGuid>c8604f7a-950c-42e0-8e2f-e9a36712286e</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

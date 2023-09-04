@@ -38,7 +38,7 @@
       <name>otpBefore</name>
    </variable>
    <variable>
-      <defaultValue>'\'API Generate Invitation Link\''</defaultValue>
+      <defaultValue>'API Generate Invitation Link'</defaultValue>
       <description></description>
       <id>44dfb168-5d96-4cec-a8d7-e9db79405e59</id>
       <masked>false</masked>

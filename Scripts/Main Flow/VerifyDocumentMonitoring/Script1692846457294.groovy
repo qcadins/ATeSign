@@ -67,7 +67,7 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
     } else {
         'check if ingin menggunakan embed atau tidakk'
         if (GlobalVariable.RunWithEmbed == 'Yes') {
-            settingHO = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 83)
+            settingHO = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('isHO')).split(';', -1)[GlobalVariable.indexUsed]
 
             'navigate url ke daftar akun'
             WebUI.openBrowser(GlobalVariable.embedUrl)

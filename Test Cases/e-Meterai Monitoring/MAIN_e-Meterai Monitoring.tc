@@ -11,11 +11,24 @@
       <value></value>
       <variableId>7cd7eb69-fbfc-4d43-a1bc-7a8581a53b53</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>b516135d-a22f-4f92-92e8-da3ff4730c6d</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>'e-Meterai Monitoring/e-Meterai Monitoring'</defaultValue>
       <description></description>
       <id>7cd7eb69-fbfc-4d43-a1bc-7a8581a53b53</id>
       <masked>false</masked>
       <name>excelPathemeteraiMonitoring</name>
+   </variable>
+   <variable>
+      <defaultValue>'e-Meterai Monitoring'</defaultValue>
+      <description></description>
+      <id>b516135d-a22f-4f92-92e8-da3ff4730c6d</id>
+      <masked>false</masked>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>

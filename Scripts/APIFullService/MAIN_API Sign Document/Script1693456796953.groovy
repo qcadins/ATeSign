@@ -479,7 +479,7 @@ def loginAdminGetSaldo(Connection conneSign) {
     }
     
     'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
-    WebUI.callTestCase(findTestCase('DocumentMonitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathAPISignDocument
+    WebUI.callTestCase(findTestCase('Document Monitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathAPISignDocument
             , ('sheet') : sheet, ('linkDocumentMonitoring') : 'Not Used', ('nomorKontrak') : noKontrak], FailureHandling.CONTINUE_ON_FAILURE)
 
     'return total saldo awal'
