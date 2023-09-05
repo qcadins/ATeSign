@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value></value>
+         <value>//*[@class != 'btn btn-info']</value>
       </entry>
       <entry>
          <key>XPATH</key>
@@ -16,4 +16,12 @@
    </selectorCollection>
    <selectorMethod>XPATH</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>not equal</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>btn btn-info</value>
+      <webElementGuid>b99ae203-5813-4af5-a9d0-d748c00f734c</webElementGuid>
+   </webElementProperties>
 </WebElementEntity>

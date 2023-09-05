@@ -21,17 +21,22 @@ semicolon = ';'
 
 splitIndex = -1
 
-int checked = 0
+int checked = 0, firstRun = 0
 
 'looping berdasarkan jumlah kolom'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathPengaturanDokumen).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
-    } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted') ||
-		findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Warning')) {
+    } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 		
-		'panggil fungsi login'
-		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathPengaturanDokumen], FailureHandling.CONTINUE_ON_FAILURE)
+		'check if email login case selanjutnya masih sama dengan sebelumnya'
+		if(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) !=
+			findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')) || firstRun == 0) {
+			'panggil fungsi login'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathPengaturanDokumen], FailureHandling.CONTINUE_ON_FAILURE)
+			
+			firstRun = 1
+		}
 		
 		'get Tenant per case dari excel'
 		GlobalVariable.Tenant = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
@@ -949,7 +954,9 @@ def sortingSequenceSign() {
 			modifyObject = WebUI.modifyObjectProperty(findTestObject('TandaTanganDokumen/modifyObject'),
 				'xpath', 'equals', '//*[@id="cdk-drop-list-0"]/div['+ seq +']', true)
 			
-			index = seqSignRole.indexOf(WebUI.getText(modifyObject)) + 1
+			roleUI = WebUI.getText(modifyObject).split('\\.\\s', -1)
+			
+			index = seqSignRole.indexOf(roleUI[1]) + 1
 			
 			if (seq != index) {
 				'modify label tipe tanda tangan di kotak'

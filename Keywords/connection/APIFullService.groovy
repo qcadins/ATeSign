@@ -986,7 +986,7 @@ public class APIFullService {
 
 		updateVariable = stm.executeUpdate("UPDATE ms_tenant SET register_as_dukcapil_check = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
 	}
-	
+
 	@Keyword
 	settingOTPActiveDuration(Connection conn, String value) {
 		stm = conn.createStatement()

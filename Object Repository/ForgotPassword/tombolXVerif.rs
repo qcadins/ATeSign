@@ -11,10 +11,14 @@
       </entry>
       <entry>
          <key>XPATH</key>
-         <value>(.//*[normalize-space(text()) and normalize-space(.)='`'])[2]/following::span[1]</value>
+         <value>/html/body/ngb-modal-window/div/div/app-verification-email/form/div/button[1]/span</value>
+      </entry>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/ngb-modal-window/div/div/app-verification-email/form/div/button[1]/span[count(. | //*[(text() = '×' or . = '×')]) = count(//*[(text() = '×' or . = '×')])]</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>true</useRalativeImagePath>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -22,7 +26,7 @@
       <name>tag</name>
       <type>Main</type>
       <value>span</value>
-      <webElementGuid>595ee43b-7397-4c8c-915b-c6abd0f76278</webElementGuid>
+      <webElementGuid>9462dbe0-dd81-4875-8550-d7e8709a6929</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -30,7 +34,7 @@
       <name>aria-hidden</name>
       <type>Main</type>
       <value>true</value>
-      <webElementGuid>4a7a1803-fa94-4fd6-bfdc-44a4bb4c7ad9</webElementGuid>
+      <webElementGuid>5b2d7804-6917-4a23-958d-cb0f3e4f08e4</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -38,15 +42,15 @@
       <name>text</name>
       <type>Main</type>
       <value>×</value>
-      <webElementGuid>8c6cd955-8017-4907-ae71-128904dbbc3f</webElementGuid>
+      <webElementGuid>8862ddf4-43e7-4af9-aa80-2c8fdcae0ddc</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>false</isSelected>
+      <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html[1]/body[@class=&quot;auth-page blank-page pace-done modal-open&quot;]/ngb-modal-window[@class=&quot;d-block modal fade show&quot;]/div[@class=&quot;modal-dialog&quot;]/div[@class=&quot;modal-content&quot;]/app-verification-email[1]/form[@class=&quot;ng-untouched ng-pristine ng-invalid&quot;]/div[@class=&quot;modal-body&quot;]/button[@class=&quot;close&quot;]/span[1]</value>
-      <webElementGuid>84453d9e-f750-426e-b8e3-ae2b08be17c2</webElementGuid>
+      <value>/html/body/ngb-modal-window/div/div/app-verification-email/form/div/button[1]/span</value>
+      <webElementGuid>b6323f7f-f9f4-4c95-b397-1f30e11d8761</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -54,7 +58,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='`'])[2]/following::span[1]</value>
-      <webElementGuid>b0d3f3bb-5193-41a5-aa98-07a4660827e9</webElementGuid>
+      <webElementGuid>4dc73f4b-3d27-4c2d-8666-263e51241296</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -62,7 +66,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Alt'])[2]/following::span[1]</value>
-      <webElementGuid>f20dfb9a-a89f-4780-9c62-a0fd140f7376</webElementGuid>
+      <webElementGuid>a3445649-563d-4d16-a3fb-e5dfaaedec23</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -70,7 +74,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Tunggu 265 detik'])[1]/preceding::span[1]</value>
-      <webElementGuid>53580e51-bf76-4bc6-a7a6-c16ab23aacb0</webElementGuid>
+      <webElementGuid>4a001866-2bd7-4f61-bc8d-1d67e9e11783</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -78,7 +82,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Verifikasi'])[1]/preceding::span[1]</value>
-      <webElementGuid>e52d3478-7bdb-42ea-9eea-6a721c6a340f</webElementGuid>
+      <webElementGuid>e8864d2b-ba6a-4762-aa11-969f12a5980e</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -86,7 +90,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='×']/parent::*</value>
-      <webElementGuid>5cf3d165-799c-41d4-b9e7-669e122dab76</webElementGuid>
+      <webElementGuid>2676f427-d9a7-4c76-bd1b-f89a5f90fe3b</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -94,7 +98,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//button/span</value>
-      <webElementGuid>9fe87e94-48c7-47db-b7ee-fe9380c91c49</webElementGuid>
+      <webElementGuid>4993cd8e-b6f8-4350-aeb9-b80c5c31c215</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -102,6 +106,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//span[(text() = '×' or . = '×')]</value>
-      <webElementGuid>7db0d333-846a-475b-92ae-9532f1589d19</webElementGuid>
+      <webElementGuid>b8318857-7a67-4b26-89a9-4d83accd2286</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>
