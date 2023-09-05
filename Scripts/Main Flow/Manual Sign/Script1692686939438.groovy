@@ -78,7 +78,6 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
     'jika setting menggunakan e-meterai'
     if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Membutuhkan e-Meterai (Send Manual)')) == 'Yes') {
         'index meningkat karena tambahan 2 kolom ketika menggunakan e-meterai'
-		'belum change ke sequencial'
         index = 11
 
         'modify label daftar penanda tangan dengan naiknya index'
@@ -124,14 +123,14 @@ if (emailPenandaTangan[i] != '') {
 						WebUI.setText(findTestObject('ManualSign/input_phonePenandaTangan'), phonePenandaTangan[i])
 						
 						'klik search penanda tangan'
-						WebUI.click(findTestObject('ManualSign/button_searchPenandaTanganViaPhone'))
+						WebUI.click(findTestObject('ManualSign/button_searchPenandaTanganWithEmailService'))
 					} else {
 						'klik search penanda tangan'
-						WebUI.click(findTestObject('ManualSign/button_searchPenandaTanganViaEmail'))
+						WebUI.click(findTestObject('ManualSign/button_searchPenandaTanganWithoutEmailService'))
 						}
 					} else {
 						'klik search penanda tangan'
-						WebUI.click(findTestObject('ManualSign/button_searchPenandaTanganViaPhone'))
+						WebUI.click(findTestObject('ManualSign/button_searchPenandaTanganWithEmailService'))
 					}
 					
             'diberikan delay 2 detik dengan loading search'

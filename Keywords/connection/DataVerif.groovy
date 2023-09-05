@@ -351,4 +351,24 @@ public class DataVerif {
 		}
 		data
 	}
+
+	@Keyword
+	getEmailService(Connection conn, String tenantCode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select email_service from ms_tenant where tenant_code = '"+tenantCode+"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+
+		if (data != null) {
+			Integer.parseInt(data)
+		} else {
+			data = 0
+		}
+	}
 }

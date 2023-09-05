@@ -11,7 +11,7 @@
       </entry>
       <entry>
          <key>XPATH</key>
-         <value>(//input[@type='text'])[4]</value>
+         <value>//*[@id=&quot;paymentSignTypeCode&quot;]/div/span</value>
       </entry>
       <entry>
          <key>CSS</key>
@@ -26,7 +26,7 @@
       <name>tag</name>
       <type>Main</type>
       <value>input</value>
-      <webElementGuid>4ef5b0a0-1629-4def-8aa4-3222a5ff0048</webElementGuid>
+      <webElementGuid>714fb8ed-1046-4023-81b1-f7d44d2798ef</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -34,7 +34,7 @@
       <name>role</name>
       <type>Main</type>
       <value>combobox</value>
-      <webElementGuid>e615a82c-a35d-4440-9410-f5672a6ed1a9</webElementGuid>
+      <webElementGuid>030bd4a9-8bb0-41ac-a8f9-ee9952dd9561</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -42,7 +42,7 @@
       <name>type</name>
       <type>Main</type>
       <value>text</value>
-      <webElementGuid>9a02e84f-40b8-4c55-8e9d-98bd86f43457</webElementGuid>
+      <webElementGuid>f9280084-4db0-421d-9726-6fb4277bb2fb</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -50,7 +50,7 @@
       <name>autocorrect</name>
       <type>Main</type>
       <value>off</value>
-      <webElementGuid>123b7e9b-b3e6-425b-9f1c-057928858cfe</webElementGuid>
+      <webElementGuid>f52586a1-3ca4-4fb2-a3d4-79f5a4987e85</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -58,7 +58,7 @@
       <name>autocapitalize</name>
       <type>Main</type>
       <value>off</value>
-      <webElementGuid>5912387b-2d72-4493-885e-858088ad5eb5</webElementGuid>
+      <webElementGuid>072dcf91-6b9c-4d81-bcc7-42276b795deb</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -66,7 +66,7 @@
       <name>autocomplete</name>
       <type>Main</type>
       <value>a01d63e3c949</value>
-      <webElementGuid>cfbe3acf-1189-4961-8101-b417a7e86094</webElementGuid>
+      <webElementGuid>a180cc2b-ce4e-4d71-a20d-714514e28b81</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -74,7 +74,7 @@
       <name>aria-expanded</name>
       <type>Main</type>
       <value>false</value>
-      <webElementGuid>ba8fbdcc-fa18-40c4-90db-4c11b109e3e4</webElementGuid>
+      <webElementGuid>38631839-de26-4fb7-ab26-a9fcefb3976e</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -82,7 +82,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>//*[@id=&quot;paymentSignTypeCode&quot;]/div/div/div[3]/input</value>
-      <webElementGuid>eca4cce8-14b3-417e-bbdb-2d8241e274fe</webElementGuid>
+      <webElementGuid>eedcb995-965d-4223-9990-16ebe8a238d3</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -90,7 +90,7 @@
       <name>xpath:attributes</name>
       <type>Main</type>
       <value>(//input[@type='text'])[4]</value>
-      <webElementGuid>8ff33ade-0f60-4ffc-99d5-15a81e8827c6</webElementGuid>
+      <webElementGuid>a96710c6-f8ce-429a-aa5d-c848e6fdd0f2</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -98,7 +98,7 @@
       <name>xpath:idRelative</name>
       <type>Main</type>
       <value>//ng-select[@id='paymentSignTypeCode']/div/div/div[3]/input</value>
-      <webElementGuid>a7df75cc-00e8-4862-86b2-e63bc8bdc470</webElementGuid>
+      <webElementGuid>281f7e6f-9ffa-411f-b66a-452c62623e30</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -106,7 +106,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div[3]/input</value>
-      <webElementGuid>75899a99-9fcf-4919-a533-71b5522a25c9</webElementGuid>
+      <webElementGuid>f60c73d2-aa75-448e-9a2b-5845f51c5db0</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -114,6 +114,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//input[@type = 'text']</value>
-      <webElementGuid>e3671509-4908-445e-9060-c02cccfeb378</webElementGuid>
+      <webElementGuid>72e66402-bae0-42ea-9388-b7d191dcb469</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

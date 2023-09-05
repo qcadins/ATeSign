@@ -21,17 +21,23 @@ semicolon = ';'
 
 splitIndex = -1
 
-int checked = 0
+int checked = 0, firstRun = 0
 
 'looping berdasarkan jumlah kolom'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathPengaturanDokumen).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
-    } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted') ||
-		findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Warning')) {
+    } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 		
-		'panggil fungsi login'
-		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathPengaturanDokumen], FailureHandling.CONTINUE_ON_FAILURE)
+		'check if email login case selanjutnya masih sama dengan sebelumnya'
+		if(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) !=
+			findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')) || firstRun == 0) {
+			'call test case login per case'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathPengaturanDokumen, ('Email') : 'Email Login', ('Password') : 'Password Login'
+				, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
+			
+			firstRun = 1
+		}
 		
 		'get Tenant per case dari excel'
 		GlobalVariable.Tenant = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
@@ -949,6 +955,11 @@ def sortingSequenceSign() {
 			modifyObject = WebUI.modifyObjectProperty(findTestObject('TandaTanganDokumen/modifyObject'),
 				'xpath', 'equals', '//*[@id="cdk-drop-list-0"]/div['+ seq +']', true)
 			
+//			update ESIGNHUB 3.4.0
+//			roleUI = WebUI.getText(modifyObject).split('\\.\\s', -1)
+//			
+//			index = seqSignRole.indexOf(roleUI[1]) + 1
+			
 			index = seqSignRole.indexOf(WebUI.getText(modifyObject)) + 1
 			
 			if (seq != index) {
@@ -994,7 +1005,7 @@ def inputForm(Connection conneSign, int checked) {
 		ArrayList<String> tipePembayaranDB = CustomKeywords.'connection.PengaturanDokumen.getLovTipePembayaran'(conneSign)
 	
 		'check ddl tipe pembayaran'
-		checkDDL(findTestObject('TandaTanganDokumen/input_tipePembayaran'), tipePembayaranDB, ' pada tipe pembayaran Ttd ')
+		checkDDL(findTestObject('TandaTanganDokumen/input_tipePembayaran'), tipePembayaranDB, ' pada tipe pembayaran Ttd ')	
 	}
 	
 	'Input value tipe pembayaran'
@@ -1003,6 +1014,9 @@ def inputForm(Connection conneSign, int checked) {
 
 	'Input enter'
 	WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_tipePembayaran'), Keys.chord(Keys.ENTER))
+	
+	'click label judul'
+	WebUI.click(findTestObject('TandaTanganDokumen/label_Judul'))
 
 	if(GlobalVariable.NumofColm == 2 && checked == 0) {		
 		'get data tipe-tipe pembayaran secara asc'
@@ -1020,7 +1034,9 @@ def inputForm(Connection conneSign, int checked) {
 
 	'Input enter'
 	WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_Psre'), Keys.chord(Keys.ENTER))
-	WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_Psre'), Keys.chord(Keys.ENTER))
+	
+	'click label judul'
+	WebUI.click(findTestObject('TandaTanganDokumen/label_Judul'))
 	
 	'Input value sequential sign'
 	WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/select_SequentialSigning'), findTestData(excelPathPengaturanDokumen).getValue(
@@ -1028,6 +1044,9 @@ def inputForm(Connection conneSign, int checked) {
 
 	'Input enter'
 	WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_SequentialSigning'), Keys.chord(Keys.ENTER))
+	
+	'click label judul'
+	WebUI.click(findTestObject('TandaTanganDokumen/label_Judul'))
 
 	'Input value status'
 	WebUI.setText(findTestObject('TandaTanganDokumen/input_Status'), findTestData(excelPathPengaturanDokumen).getValue(
@@ -1035,6 +1054,9 @@ def inputForm(Connection conneSign, int checked) {
 
 	'Input enter'
 	WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
+	
+	'click label judul'
+	WebUI.click(findTestObject('TandaTanganDokumen/label_Judul'))
 
 	'Jika panjang dokumen lebih besar dari 0'
 	if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('$Dokumen')).length() > 0) {

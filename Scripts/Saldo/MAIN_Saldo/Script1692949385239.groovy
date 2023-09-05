@@ -28,6 +28,8 @@ currentDate = LocalDate.now()
 
 firstDateOfMonth = currentDate.withDayOfMonth(1)
 
+int firstRun = 0
+
 'looping saldo'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
 	if (findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
@@ -37,10 +39,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		GlobalVariable.FlagFailed = 0
 
 		if(findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) != 
-			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))) {
-			'call testcase login admin'
-			WebUI.callTestCase(findTestCase('Login/Login_PerCase'), [('SheetName') : sheet, ('Path') : excelPathSaldo], 
-					FailureHandling.CONTINUE_ON_FAILURE)
+			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')) || firstRun == 0) {
+			'call test case login per case'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathSaldo, ('Email') : 'Email Login', ('Password') : 'Password Login'
+				, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
+			
+			firstRun = 1
 		}
 	
         if (GlobalVariable.NumofColm == 2) {

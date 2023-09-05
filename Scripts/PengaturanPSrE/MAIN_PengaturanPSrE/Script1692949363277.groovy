@@ -16,11 +16,7 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-'call test case login percase'
-WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPath], FailureHandling.STOP_ON_FAILURE)
-
-'click menu pengaturan PSrE'
-WebUI.click(findTestObject('PengaturanPSrE/menu_PengaturanPSrE'))
+int firstRun = 0
 
 'looping berdasarkan jumlah kolom'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPath).columnNumbers; (GlobalVariable.NumofColm)++) {
@@ -29,6 +25,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
     } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
         GlobalVariable.FlagFailed = 0
 
+		'check if email login case selanjutnya masih sama dengan sebelumnya'
+		if (findTestData(excelPath).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) != 
+			findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')) || firstRun == 0) {
+			'call test case login per case'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPath, ('Email') : 'Email Login', ('Password') : 'Password Login'
+				, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
+			
+			firstRun = 1
+		}
+		
+		'click menu pengaturan PSrE'
+		WebUI.click(findTestObject('PengaturanPSrE/menu_PengaturanPSrE'))
+		
         if (GlobalVariable.NumofColm == 2) {
             'call function check paging'
             verifyPaging()

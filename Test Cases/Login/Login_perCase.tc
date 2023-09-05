@@ -17,6 +17,30 @@
       <value></value>
       <variableId>b34259ea-88cd-43d2-a9e8-27cd056db686</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>b21e4dff-7be4-4eac-9a2e-c365a17dca47</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>f4efc2cc-1ffe-4297-abcb-02eaf0e60046</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>1fb89b2c-3077-4ce4-8474-ddf3273a9319</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>8082dcab-40e3-432b-afd3-8b0e3f9444bb</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -30,5 +54,33 @@
       <id>b34259ea-88cd-43d2-a9e8-27cd056db686</id>
       <masked>false</masked>
       <name>Path</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>b21e4dff-7be4-4eac-9a2e-c365a17dca47</id>
+      <masked>false</masked>
+      <name>Email</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>f4efc2cc-1ffe-4297-abcb-02eaf0e60046</id>
+      <masked>false</masked>
+      <name>Password</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>1fb89b2c-3077-4ce4-8474-ddf3273a9319</id>
+      <masked>false</masked>
+      <name>Perusahaan</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>8082dcab-40e3-432b-afd3-8b0e3f9444bb</id>
+      <masked>false</masked>
+      <name>Peran</name>
    </variable>
 </TestCaseEntity>

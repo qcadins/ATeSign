@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>IsiSaldoStoreDB</name>
+   <name>MAIN_Manual Sign Only - Copy</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>48bbeec8-3655-499d-b621-ae9b78737bf9</testCaseGuid>
+   <testCaseGuid>0ad4ac54-ef61-4a53-9456-d98dae3249f6</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>c0ca098c-0371-44cb-9316-75cc91ad8405</variableId>
+      <variableId>57eb0127-35c5-407d-9bd0-4cfdc9812e44</variableId>
    </variableLinks>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>c1539aa7-3502-4057-8bb5-5b08e635df0e</variableId>
+      <variableId>23e211dc-9c79-43bc-88a0-58fc8cf3431a</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'Saldo/isiSaldo'</defaultValue>
+      <defaultValue>'ManualSign/ManualSign'</defaultValue>
       <description></description>
-      <id>c0ca098c-0371-44cb-9316-75cc91ad8405</id>
+      <id>57eb0127-35c5-407d-9bd0-4cfdc9812e44</id>
       <masked>false</masked>
-      <name>excelPathIsiSaldo</name>
+      <name>excelPathManualSign</name>
    </variable>
    <variable>
-      <defaultValue>'isiSaldo'</defaultValue>
+      <defaultValue>'Manual Sign'</defaultValue>
       <description></description>
-      <id>c1539aa7-3502-4057-8bb5-5b08e635df0e</id>
+      <id>23e211dc-9c79-43bc-88a0-58fc8cf3431a</id>
       <masked>false</masked>
       <name>sheet</name>
    </variable>

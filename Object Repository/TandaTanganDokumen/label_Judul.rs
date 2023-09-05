@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>btn_simpan</name>
+   <name>label_Judul</name>
    <tag></tag>
-   <elementGuidId>cc8c5816-e7c2-41b3-9554-af10480d7c0c</elementGuidId>
+   <elementGuidId>40b1025e-6f7f-469b-8efd-bc38dd87ea1c</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[contains(@class, 'btn btn-info')]</value>
+         <value>//*[@class = 'content-header']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>
-      <matchCondition>contains</matchCondition>
+      <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>btn btn-info</value>
-      <webElementGuid>0d44616d-a2eb-4d71-b5e7-a49fc43a6cf8</webElementGuid>
+      <value>content-header</value>
+      <webElementGuid>dee0e8a1-7be3-48ab-9a01-bf659947a202</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

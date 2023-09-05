@@ -27,32 +27,32 @@ WebUI.delay(GlobalVariable.TimeOut)
 WebUI.maximizeWindow()
 
 'store user login'	
-GlobalVariable.userLogin = findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')).toUpperCase()
+GlobalVariable.userLogin = findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel(Email)).toUpperCase()
 
 'input email'
-WebUI.setText(findTestObject('Login/input_Email'), findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')))
+WebUI.setText(findTestObject('Login/input_Email'), findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel(Email)))
 
 'input password'
-WebUI.setText(findTestObject('Login/input_Password'), findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel('Password Login')))
+WebUI.setText(findTestObject('Login/input_Password'), findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel(Password)))
 
-'enter untuk input perusahaan'
-WebUI.sendKeys(findTestObject('Login/input_Password'), Keys.chord(Keys.ENTER))
-
-//'click button login'
-//WebUI.click(findTestObject('Login/button_Login'))
+'click button login'
+WebUI.click(findTestObject('Login/button_Login'))
 
 if(WebUI.verifyElementPresent(findTestObject('Login/input_Perusahaan'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {	
 	'input perusahaan'
-	WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel('Perusahaan Login')))
+	WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel(Perusahaan)))
 	
 	'enter untuk input perusahaan'
 	WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
 	
 	'input peran'
-	WebUI.setText(findTestObject('Login/input_Peran'), findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel('Peran Login')))
+	WebUI.setText(findTestObject('Login/input_Peran'), findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel(Peran)))
 	
 	'enter untuk input peran'
 	WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
+	
+	'focus untuk pilih peran'
+	WebUI.focus(findTestObject('Login/button_pilihPeran'))
 	
 	'click button pilih peran'
 	WebUI.click(findTestObject('Login/button_pilihPeran'))

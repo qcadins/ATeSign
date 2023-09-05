@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>menu_isiSaldo</name>
+   <name>btn_E-MeteraiDuplicate</name>
    <tag></tag>
-   <elementGuidId>62ca3511-2c01-4b83-a129-82c819f95cc5</elementGuidId>
+   <elementGuidId>ee324985-51e0-4ccf-a357-5f7998f2cf2d</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@href = '/topup']</value>
+         <value>//*[@id=&quot;msxForm&quot;]/div[7]/div/div/label</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,17 +15,17 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>href</name>
+      <name>xpath</name>
       <type>Main</type>
-      <value>/topup</value>
-      <webElementGuid>3f395f62-a5cc-4518-80cc-dbc21aeafbf5</webElementGuid>
+      <value>//*[@id=&quot;msxForm&quot;]/div[7]/div/div/label</value>
+      <webElementGuid>630f147c-9323-4093-8330-911834939309</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>class</name>
+      <name>for</name>
       <type>Main</type>
-      <value>nav-container ng-tns-c133-1</value>
-      <webElementGuid>e628dbd1-9328-48be-808e-a8f978e53204</webElementGuid>
+      <value>isMeterei</value>
+      <webElementGuid>6a9d5038-c955-4743-a8fa-1e4e89c375e9</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

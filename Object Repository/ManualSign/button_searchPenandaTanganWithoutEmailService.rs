@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>button_searchPenandaTanganViaEmail</name>
+   <name>button_searchPenandaTanganWithoutEmailService</name>
    <tag></tag>
    <elementGuidId>29dfd6c5-f1ca-4d7c-9cff-6bc3f58233ec</elementGuidId>
    <selectorCollection>

@@ -22,6 +22,8 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'get colm excel'
 int countColmExcel = findTestData(excelPathemeteraiMonitoring).columnNumbers
 
+int firstRun = 0
+
 'looping e meterai monitoring'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
@@ -36,9 +38,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		GlobalVariable.Psre = findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
 		
 		if(findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) !=
-			findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))) {
-			'panggil fungsi login'
-			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathemeteraiMonitoring], FailureHandling.CONTINUE_ON_FAILURE)
+			findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')) || firstRun == 0) {
+			'call test case login per case'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathemeteraiMonitoring, ('Email') : 'Email Login', ('Password') : 'Password Login'
+				, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
+			
+			firstRun = 1
 		}
 		
 		'click menu meterai'

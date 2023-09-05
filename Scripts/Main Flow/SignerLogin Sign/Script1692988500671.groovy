@@ -100,6 +100,8 @@ for (o = 0; o < documentId.size(); o++) {
 
     'jika btn lastest dapat diclick'
     if (WebUI.verifyElementClickable(modifyObjectBtnLastest, FailureHandling.OPTIONAL)) {
+		WebUI.focus(modifyObjectBtnLastest)
+		
         'Klik button Lastest'
         WebUI.click(modifyObjectBtnLastest, FailureHandling.CONTINUE_ON_FAILURE)
     }
