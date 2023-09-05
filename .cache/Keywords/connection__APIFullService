@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "98E13D903E2DDB9A34B670F9006358CC",
+  "keywordFileContentHash": "AAEE5F87C3C84BC6B3130DCE99971CD0",
   "keywordClasses": [
     {
       "name": "connection.APIFullService",
@@ -2078,12 +2078,8 @@
                 "errorOnParsing": false
               }
             }
-<<<<<<< HEAD
           ],
           "javadoc": ""
-=======
-]
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
         },
         {
           "name": "settingOTPActiveDuration",
