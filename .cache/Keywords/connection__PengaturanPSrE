@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "CB0716987D1F9ABC56A7B8F52D2F98C0",
+  "keywordFileContentHash": "C562C00F6463CEE0F5F48C64A4FB209A",
   "keywordClasses": [
     {
       "name": "connection.PengaturanPSrE",
@@ -33,7 +33,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getTotalPSrE",
@@ -51,7 +52,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getDDLVendorPaymentType",
@@ -69,7 +71,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getPsrePriority",
@@ -87,10 +90,11 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         }
       ]
     }
   ],
-  "javadocParsed": false
+  "javadocParsed": true
 }
