@@ -1011,7 +1011,9 @@ def inputForm(Connection conneSign, int checked) {
 
 	'Input enter'
 	WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_tipePembayaran'), Keys.chord(Keys.ENTER))
-	WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_tipePembayaran'), Keys.chord(Keys.ENTER))
+	
+	'click label judul'
+	WebUI.click(findTestObject('TandaTanganDokumen/label_Judul'))
 
 	if(GlobalVariable.NumofColm == 2 && checked == 0) {		
 		'get data tipe-tipe pembayaran secara asc'
@@ -1029,7 +1031,9 @@ def inputForm(Connection conneSign, int checked) {
 
 	'Input enter'
 	WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_Psre'), Keys.chord(Keys.ENTER))
-	WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_Psre'), Keys.chord(Keys.ENTER))
+	
+	'click label judul'
+	WebUI.click(findTestObject('TandaTanganDokumen/label_Judul'))
 	
 	'Input value sequential sign'
 	WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/select_SequentialSigning'), findTestData(excelPathPengaturanDokumen).getValue(
@@ -1037,7 +1041,9 @@ def inputForm(Connection conneSign, int checked) {
 
 	'Input enter'
 	WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_SequentialSigning'), Keys.chord(Keys.ENTER))
-	WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_SequentialSigning'), Keys.chord(Keys.ENTER))
+	
+	'click label judul'
+	WebUI.click(findTestObject('TandaTanganDokumen/label_Judul'))
 
 	'Input value status'
 	WebUI.setText(findTestObject('TandaTanganDokumen/input_Status'), findTestData(excelPathPengaturanDokumen).getValue(
@@ -1045,7 +1051,9 @@ def inputForm(Connection conneSign, int checked) {
 
 	'Input enter'
 	WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
-	WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
+	
+	'click label judul'
+	WebUI.click(findTestObject('TandaTanganDokumen/label_Judul'))
 
 	'Jika panjang dokumen lebih besar dari 0'
 	if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('$Dokumen')).length() > 0) {
