@@ -63,7 +63,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         //index = 9
 
 		'keperluan sit 3.3.0'
-		index = 8
+		index = 7
 		
         'Inisialisasi variable yang dibutuhkan'
         emailPenandaTangan = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).split(
@@ -113,7 +113,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 //index = 11
 
 				'keperluan sit'
-				index = 10
+				index = 9
 				
                 'modify label daftar penanda tangan dengan naiknya index'
                 modifyObjectLblDaftarPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/lbl_daftarpenandatangan'), 
@@ -125,8 +125,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             } else {
 				'modify menuju index normal'
 				//index = 9
+				
 				'keperluan sit'
-				index = 8
+				index = 7
 
                 'modify label daftar penanda tangan dengan naiknya index'
                 modifyObjectLblDaftarPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/lbl_daftarpenandatangan'), 
@@ -275,8 +276,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                     'split informasi signer berdasarkan delimiter'
                     valueInformasi = valueInformasi.split(', ', -1)
-
-					println valueInformasi
+					
                     'query check informasi dari user tersebut'
                     queryCheckInformationUser = CustomKeywords.'connection.ManualSign.getInformationUser'(conneSign, (emailPenandaTangan[
                         indexEmail++]).toString().toUpperCase(), findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 
@@ -726,8 +726,8 @@ def inputForm() {
  //   WebUI.setText(findTestObject('ManualSign/input_isSequence'), findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 
   //          rowExcel('$isSequence')))
 
-    'Klik enter'
-    WebUI.sendKeys(findTestObject('ManualSign/input_isSequence'), Keys.chord(Keys.ENTER))
+   // 'Klik enter'
+   // WebUI.sendKeys(findTestObject('ManualSign/input_isSequence'), Keys.chord(Keys.ENTER))
 
     'Code untuk mengambil file berdasarkan direktori masing-masing sekaligus ambil value dari excel'
     String userDir = System.getProperty('user.dir')
@@ -740,7 +740,7 @@ def inputForm() {
     if (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('$Membutuhkan e-Meterai')) == 'Yes') {
         if (WebUI.verifyElementNotChecked(findTestObject('ManualSign/input_isE-Meterai'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
             'Input AKtif pada input Status'
-            WebUI.click(findTestObject('ManualSign/btn_E-Meterai'))
+            WebUI.click(findTestObject('ManualSign/btn_E-MeteraiDuplicate'))
         }
         
         'Input Aktif pada input Status'

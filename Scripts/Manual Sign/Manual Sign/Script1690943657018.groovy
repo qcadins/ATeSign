@@ -38,31 +38,31 @@ indexEmail = 0
 index = 9
 
 'Inisialisasi variable yang dibutuhkan'
-emailPenandaTangan = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).split(semicolon, 
+emailPenandaTangan = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).split(semicolon, 
     splitIndex)
 
-editNamaAfterSearch = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('Edit Nama After Search')).split(
+editNamaAfterSearch = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Edit Nama After Search')).split(
     semicolon, splitIndex)
 
-namaPenandaTangan = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('Nama')).split(semicolon, 
+namaPenandaTangan = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Nama')).split(semicolon, 
     splitIndex)
 
-tipeTandaTangan = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('$TipeTandaTangan')).split(
+tipeTandaTangan = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$TipeTandaTangan')).split(
     semicolon, splitIndex)
 
-totalTandaTangan = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('jumlah signer lokasi per signer')).split(
+totalTandaTangan = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('jumlah signer lokasi per signer')).split(
     semicolon, splitIndex)
 
-pindahkanSignBox = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('$Pindahkan SignBox')).split(
+pindahkanSignBox = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Pindahkan SignBox')).split(
     semicolon, splitIndex)
 
-lokasiSignBox = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('$Lokasi Pemindahan signbox')).split(
+lokasiSignBox = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Lokasi Pemindahan signbox')).split(
     '\\n', splitIndex)
 
-lockSignBox = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('$Lock Sign Box')).split(semicolon, 
+lockSignBox = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Lock Sign Box')).split(semicolon, 
     splitIndex)
 
-catatanStamping = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('Catatan Stamping')).split(
+catatanStamping = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Catatan Stamping')).split(
     semicolon, splitIndex)
 
 'Klik tombol menu manual sign'
@@ -89,11 +89,17 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
         modifyObjectbuttonTambahPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/button_tambahTandaTangan'), 
             'xpath', 'equals', ('//*[@id="msxForm"]/div[' + index) + ']/div[2]/a', true)
     } else {
-        'Memasukkan object kepada variable'
-        modifyObjectLblDaftarPenandaTangan = findTestObject('ManualSign/lbl_daftarpenandatangan')
+		'modify menuju index normal'
+				//index = 9
 
-        'Memasukkan object kepada variable'
-        modifyObjectbuttonTambahPenandaTangan = findTestObject('ManualSign/button_tambahTandaTangan')
+                'modify label daftar penanda tangan dengan naiknya index'
+                modifyObjectLblDaftarPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/lbl_daftarpenandatangan'), 
+                    'xpath', 'equals', ('//*[@id="msxForm"]/div[' + index) + ']/div[3]/table/tr/td/small', true)
+
+                'modify button tambah penanda tangan dengan naiknya index'
+                modifyObjectbuttonTambahPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/button_tambahTandaTangan'), 
+                    'xpath', 'equals', ('//*[@id="msxForm"]/div[' + index) + ']/div[2]/a', true)
+
     }
     
     emailService = CustomKeywords.'connection.DataVerif.getEmailService'(conneSign, GlobalVariable.Tenant)
@@ -107,10 +113,6 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
     'diberikan delay 3 detik dengan loading'
     WebUI.delay(1)
 
-    if (checkErrorLog() == true) {
-        continue
-    }
-    
     if (emailService.toString() == '1') {
         if (WebUI.verifyElementNotPresent(findTestObject('ManualSign/input_phonePenandaTangan'), GlobalVariable.TimeOut, 
             FailureHandling.OPTIONAL)) {
@@ -145,10 +147,10 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 
             if (emailService.toString() == '1') {
                 'klik search penanda tangan'
-                WebUI.click(findTestObject('ManualSign/button_searchPenandaTanganWithEmailService'))
+                WebUI.click(findTestObject('ManualSign/button_searchPenandaTanganWithoutEmailService'))
             } else {
                 'klik search penanda tangan'
-                WebUI.click(findTestObject('ManualSign/button_searchPenandaTanganWithoutEmailService'))
+                WebUI.click(findTestObject('ManualSign/button_searchPenandaTanganWithEmailService'))
             }
             
             'diberikan delay 1 detik dengan loading search'
@@ -231,7 +233,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
             'query check informasi dari user tersebut'
             queryCheckInformationUser = CustomKeywords.'connection.ManualSign.getInformationUser'(conneSign, (emailPenandaTangan[
                 indexEmail++]).toString().toUpperCase(), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
-                    8))
+                    rowExcel('$Email')))
 
             if ((valueInformasi[2]) == (emailPenandaTangan[(indexEmail - 1)])) {
                 'check ui dan query mengenai nama signer'
@@ -439,7 +441,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
             arrayMatch.add(WebUI.verifyMatch('1', result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
             'verify is sequence'
-            arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel(
+            arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel(
                             '$isSequence')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
             'jika data db tidak sesuai dengan excel'

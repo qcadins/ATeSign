@@ -7,17 +7,17 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'btn btn-info ng-star-inserted']</value>
+         <value>//*[contains(@class, 'btn btn-info')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
+      <matchCondition>contains</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>btn btn-info ng-star-inserted</value>
-      <webElementGuid>4fa2c144-8181-4ffa-9dfe-b980e30b561b</webElementGuid>
+      <value>btn btn-info</value>
+      <webElementGuid>d70c1860-b262-4c5d-80b2-a35ae8d4258c</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
