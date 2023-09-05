@@ -89,11 +89,17 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
         modifyObjectbuttonTambahPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/button_tambahTandaTangan'), 
             'xpath', 'equals', ('//*[@id="msxForm"]/div[' + index) + ']/div[2]/a', true)
     } else {
-        'Memasukkan object kepada variable'
-        modifyObjectLblDaftarPenandaTangan = findTestObject('ManualSign/lbl_daftarpenandatangan')
+		'modify menuju index normal'
+				//index = 9
 
-        'Memasukkan object kepada variable'
-        modifyObjectbuttonTambahPenandaTangan = findTestObject('ManualSign/button_tambahTandaTangan')
+                'modify label daftar penanda tangan dengan naiknya index'
+                modifyObjectLblDaftarPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/lbl_daftarpenandatangan'), 
+                    'xpath', 'equals', ('//*[@id="msxForm"]/div[' + index) + ']/div[3]/table/tr/td/small', true)
+
+                'modify button tambah penanda tangan dengan naiknya index'
+                modifyObjectbuttonTambahPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/button_tambahTandaTangan'), 
+                    'xpath', 'equals', ('//*[@id="msxForm"]/div[' + index) + ']/div[2]/a', true)
+
     }
     
     emailService = CustomKeywords.'connection.DataVerif.getEmailService'(conneSign, GlobalVariable.Tenant)
@@ -141,10 +147,10 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 
             if (emailService.toString() == '1') {
                 'klik search penanda tangan'
-                WebUI.click(findTestObject('ManualSign/button_searchPenandaTanganWithEmailService'))
+                WebUI.click(findTestObject('ManualSign/button_searchPenandaTanganWithoutEmailService'))
             } else {
                 'klik search penanda tangan'
-                WebUI.click(findTestObject('ManualSign/button_searchPenandaTanganWithoutEmailService'))
+                WebUI.click(findTestObject('ManualSign/button_searchPenandaTanganWithEmailService'))
             }
             
             'diberikan delay 1 detik dengan loading search'
@@ -227,7 +233,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
             'query check informasi dari user tersebut'
             queryCheckInformationUser = CustomKeywords.'connection.ManualSign.getInformationUser'(conneSign, (emailPenandaTangan[
                 indexEmail++]).toString().toUpperCase(), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
-                    8))
+                    rowExcel('$Email')))
 
             if ((valueInformasi[2]) == (emailPenandaTangan[(indexEmail - 1)])) {
                 'check ui dan query mengenai nama signer'
