@@ -39,37 +39,25 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		'get Psre code dari excel per case'
 		GlobalVariable.Psre = findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
 		
+		'scroll to menu psre prior'
+		WebUI.scrollToElement(findTestObject('PengaturanPSrE/PSRe Priority/menu_PsrePriority'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)
+		
 		'click menu priority PSrE'
 		WebUI.click(findTestObject('PengaturanPSrE/PSRe Priority/menu_PsrePriority'))
 		
 		'delay untuk menu Psre loading'
-		WebUI.delay(30)
+		WebUI.delay(15)
 		
 		'declare array list'
 		ArrayList<String> resultDB = [], resultUI = [], seqPsreRole = []
 		
 		resultDB = CustomKeywords.'connection.PengaturanPSrE.getPsrePriority'(conneSign)
 		
-		'count PSrE'
-		variable = DriverFactory.webDriver.findElements(By.cssSelector('#cdk-drop-list-0 div div'))
+		'call function get FE priority'
+		getFEPriority(resultUI)
 		
-		println(variable.size())
-		
-		'looping jumlah psre pada ui untuk get urutan psre'
-		for(index = 1; index <= variable.size(); index++) {
-			'modify object psre box'
-			modifyObjectBox = WebUI.modifyObjectProperty(findTestObject('PengaturanPSrE/PSRe Priority/modifyObject'),
-				'xpath', 'equals', '//*[@id="cdk-drop-list-0"]/div['+ index +']/div', true)
-			
-			'get text pisah nomor dan psre'
-			vendor = WebUI.getText(modifyObjectBox).split(' ',-1)
-			
-			'add psre kedalam arraylist'
-			resultUI.add(vendor[1])
-		}
-		
-		'verify default vendor psre db = ui'
-		checkVerifyEqualorMatch(WebUI.verifyMatch(resultDB.toString(), resultUI.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' urutan psre tidak sesuai dengan default vendor DB')
+		'verify default vendor psre db = ui before edit'
+		checkVerifyEqualorMatch(WebUI.verifyMatch(resultDB.toString(), resultUI.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' urutan psre tidak sesuai dengan default vendor DB before edit')
 		
 		'get urutan seq psre dari excel'
 		seqPsreRole = findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, rowExcel('Urutan Psre')).split('\\n',-1)
@@ -118,8 +106,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 				if(GlobalVariable.checkStoreDB == 'Yes') {
 					resultDB = CustomKeywords.'connection.PengaturanPSrE.getPsrePriority'(conneSign)
 					
-					'verify default vendor psre db = Excel'
-					checkVerifyEqualorMatch(WebUI.verifyMatch(resultDB.toString(), seqPsreRole.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' urutan psre tidak sesuai dengan yang baru di edit')
+					'clear arraylist'
+					resultUI.clear()
+					
+					'call function get FE priority'
+					getFEPriority(resultUI)
+					
+					'verify default vendor psre db = ui before edit'
+					checkVerifyEqualorMatch(WebUI.verifyMatch(resultDB.toString(), resultUI.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' urutan psre tidak sesuai dengan default vendor DB after edit')
 				}
 				
 				if(GlobalVariable.FlagFailed == 0) {
@@ -150,6 +144,26 @@ def checkVerifyEqualorMatch(Boolean isMatch, String reason) {
 		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 			GlobalVariable.StatusFailed, (findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) +
 			';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
+	}
+}
+
+def getFEPriority(ArrayList<String> resultUI) {
+	'count PSrE'
+	variable = DriverFactory.webDriver.findElements(By.cssSelector('#cdk-drop-list-0 div div'))
+	
+	println(variable.size())
+	
+	'looping jumlah psre pada ui untuk get urutan psre'
+	for(index = 1; index <= variable.size(); index++) {
+		'modify object psre box'
+		modifyObjectBox = WebUI.modifyObjectProperty(findTestObject('PengaturanPSrE/PSRe Priority/modifyObject'),
+			'xpath', 'equals', '//*[@id="cdk-drop-list-0"]/div['+ index +']/div', true)
+		
+		'get text pisah nomor dan psre'
+		vendor = WebUI.getText(modifyObjectBox).split(' ',-1)
+		
+		'add psre kedalam arraylist'
+		resultUI.add(vendor[1])
 	}
 }
 

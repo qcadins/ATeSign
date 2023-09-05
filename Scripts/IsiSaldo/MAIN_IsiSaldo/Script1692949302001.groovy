@@ -266,49 +266,41 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
             break
         }
     }
-    
-//    'input tipe saldo'
-//    WebUI.setText(findTestObject('isiSaldo/SaldoAdmin/input_TipeSaldo'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
-//            rowExcel('$Tipe Saldo')))
-//
-//    'enter untuk input tipe saldo'
-//    WebUI.sendKeys(findTestObject('isiSaldo/SaldoAdmin/input_TipeSaldo'), Keys.chord(Keys.ENTER))
-//
-//    'input tipe transaksi'
-//    WebUI.setText(findTestObject('isiSaldo/SaldoAdmin/input_TipeTransaksi'), 'Topup ' + findTestData(excelPathIsiSaldo).getValue(
-//            GlobalVariable.NumofColm, rowExcel('$Tipe Saldo')))
-//
-//    'enter untuk input tipe saldo'
-//    WebUI.sendKeys(findTestObject('isiSaldo/SaldoAdmin/input_TipeTransaksi'), Keys.chord(Keys.ENTER))
-//
-//    'click button cari'
-//    WebUI.click(findTestObject('isiSaldo/SaldoAdmin/button_Cari'))
-//
-//    'get row'
-//    variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
-//
-//    'modify object button last page'
-//    modifyObjectButtonLastPage = WebUI.modifyObjectProperty(findTestObject('isiSaldo/SaldoAdmin/modifyObject'), 'xpath', 
-//        'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' + 
-//        variable.size()) + ']', true)
-//
-//    if (WebUI.getAttribute(modifyObjectButtonLastPage, 'class', FailureHandling.OPTIONAL) != 'disabled') {
-//        'click button last page'
-//        WebUI.click(findTestObject('isiSaldo/SaldoAdmin/button_LastPage'))
-//    }
-//    
-//    'get row'
-//    variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
-//
-//    'modify object balance'
-//    modifyObjectBalance = WebUI.modifyObjectProperty(findTestObject('isiSaldo/SaldoAdmin/modifyObject'), 'xpath', 'equals', 
-//        ('/html/body/app-root/app-full-layout/div/div[2]/ div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-//        variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[10]/div', true)
-//
-//    'get trx saldo'
-//    saldo.add(WebUI.getText(modifyObjectBalance).replace(',', ''))
-
+	
     if (countCheckSaldo == 1) {
+		'input tipe saldo'
+		WebUI.setText(findTestObject('isiSaldo/SaldoAdmin/input_TipeSaldo'), findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm,
+				rowExcel('$Tipe Saldo')))
+	
+		'enter untuk input tipe saldo'
+		WebUI.sendKeys(findTestObject('isiSaldo/SaldoAdmin/input_TipeSaldo'), Keys.chord(Keys.ENTER))
+	
+		'input tipe transaksi'
+		WebUI.setText(findTestObject('isiSaldo/SaldoAdmin/input_TipeTransaksi'), 'Topup ' + findTestData(excelPathIsiSaldo).getValue(
+				GlobalVariable.NumofColm, rowExcel('$Tipe Saldo')))
+	
+		'enter untuk input tipe saldo'
+		WebUI.sendKeys(findTestObject('isiSaldo/SaldoAdmin/input_TipeTransaksi'), Keys.chord(Keys.ENTER))
+	
+		'click button cari'
+		WebUI.click(findTestObject('isiSaldo/SaldoAdmin/button_Cari'))
+	
+		'get row'
+		variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
+	
+		'modify object button last page'
+		modifyObjectButtonLastPage = WebUI.modifyObjectProperty(findTestObject('isiSaldo/SaldoAdmin/modifyObject'), 'xpath',
+			'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' +
+			variable.size()) + ']', true)
+	
+		if (WebUI.getAttribute(modifyObjectButtonLastPage, 'class', FailureHandling.OPTIONAL) != 'disabled') {
+			'click button last page'
+			WebUI.click(findTestObject('isiSaldo/SaldoAdmin/button_LastPage'))
+		}
+		
+		'get row'
+		variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
+	
         'modify object no transaksi'
         modifyObjectNoTransaksi = WebUI.modifyObjectProperty(findTestObject('isiSaldo/SaldoAdmin/modifyObject'), 'xpath', 
             'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
