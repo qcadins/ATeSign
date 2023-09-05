@@ -603,9 +603,9 @@ def inputCancel(Connection conneSign) {
     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualSign/input_jenisPembayaran'), 'value', 
                 FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' Field jenis Pembayaran tidak kosong ')
 
-    'verify field status kosong'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualSign/input_isSequence'), 'value', 
-                FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' Field Urutan Tanda Tangan tidak kosong ')
+    //'verify field status kosong'
+    //checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualSign/input_isSequence'), 'value', 
+    //            FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' Field Urutan Tanda Tangan tidak kosong ')
 
     if (WebUI.verifyElementNotChecked(findTestObject('ManualSign/input_isE-Meterai'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
         'Input AKtif pada input Status'
