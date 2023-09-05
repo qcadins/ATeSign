@@ -324,6 +324,8 @@ def verifConfirmation(Connection conneSign) {
 	'jika perlu tunggu hingga code expired'
 	if (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration (Empty/0/1/>1)')).length() > 0) {
 		
+		//isi update disini
+		
 		'ambil durasi aktif OTP dari DB'
 		int OTPActiveDuration = CustomKeywords.'connection.ForgotPassword.getOTPActiveDuration'(conneSign,
 			findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('$EmailForPassChange')))

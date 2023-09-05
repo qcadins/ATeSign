@@ -21,7 +21,7 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 def currentDate = new Date().format('yyyy-MM-dd')
 
 'Inisialisasi flag break untuk sequential'
-int flagBreak = 0
+int flagBreak = 0, isLocalhost = 0
 
 'Inisialisasi array untuk Listotp, arraylist arraymatch'
 ArrayList listOTP = [], arrayMatch = []
@@ -68,7 +68,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 				
 		'ambil nama vendor dari DB'		
 		String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 11).replace('"',''))
-
+		
         'Mengambil tenantCode dari excel berdasarkan input body API'
         String tenantCode = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 9).replace('"', '')
 
