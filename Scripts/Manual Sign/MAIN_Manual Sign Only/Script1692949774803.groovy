@@ -450,7 +450,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                             WebUI.delay(2)
 
-                            checkVerifyEqualOrMatch(WebUI.verifyMatch(catatanStamping[(indexForCatatanStamp - 1)], WebUI.getText(
+                            checkVerifyEqualOrMatch(WebUI.verifyMatch('', WebUI.getText(
                                         findTestObject('ManualSign/input_isiCatatanStamping')), false, FailureHandling.CONTINUE_ON_FAILURE), 
                                 ' pada catatan meterai ')
 
