@@ -33,11 +33,8 @@ WebUI.setText(findTestObject('Login/input_Email'), findTestData(Path).getValue(G
 'input password'
 WebUI.setText(findTestObject('Login/input_Password'), findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel('Password Login')))
 
-'enter untuk input perusahaan'
-WebUI.sendKeys(findTestObject('Login/input_Password'), Keys.chord(Keys.ENTER))
-
-//'click button login'
-//WebUI.click(findTestObject('Login/button_Login'))
+'click button login'
+WebUI.click(findTestObject('Login/button_Login'))
 
 if(WebUI.verifyElementPresent(findTestObject('Login/input_Perusahaan'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {	
 	'input perusahaan'
@@ -51,6 +48,9 @@ if(WebUI.verifyElementPresent(findTestObject('Login/input_Perusahaan'), GlobalVa
 	
 	'enter untuk input peran'
 	WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
+	
+	'focus untuk pilih peran'
+	WebUI.focus(findTestObject('Login/button_pilihPeran'))
 	
 	'click button pilih peran'
 	WebUI.click(findTestObject('Login/button_pilihPeran'))

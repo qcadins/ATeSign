@@ -89,7 +89,7 @@ public class ManualSign {
 	getManualSign(Connection conn, String refNumber) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select msv.vendor_name, tdh.ref_Number, tdd.document_name, TO_CHAR(tdd.request_date, 'yyyy-mm-dd'), msl.description ,tdh.automatic_stamping_after_sign, case when mpdt.doc_name != '' or mpdt.doc_name != null then mpdt.doc_name else '' end, tdh.total_document, tdh.is_manual_upload from tr_document_h tdh left join tr_document_d tdd on tdd.id_Document_h = tdh.id_document_h left join ms_lov msl on tdd.lov_payment_sign_type = msl.id_lov left join ms_peruri_doc_type mpdt on tdd.id_peruri_doc_type = mpdt.id_peruri_doc_type left join ms_vendor msv on tdd.id_ms_vendor = msv.id_ms_vendor where tdh.ref_number = '"+refNumber+"'")
+		resultSet = stm.executeQuery("select msv.vendor_name, tdh.ref_Number, tdd.document_name, TO_CHAR(tdd.request_date, 'yyyy-mm-dd'), msl.description ,tdh.automatic_stamping_after_sign, case when mpdt.doc_name != '' or mpdt.doc_name != null then mpdt.doc_name else '' end, tdh.total_document, tdh.is_manual_upload, CASE WHEN tdd.is_sequence != '0' or tdd.is_sequence != null or tdd.is_sequence IS NOT NULL THEN 'Ya' else 'Tidak' end from tr_document_h tdh left join tr_document_d tdd on tdd.id_Document_h = tdh.id_document_h left join ms_lov msl on tdd.lov_payment_sign_type = msl.id_lov left join ms_peruri_doc_type mpdt on tdd.id_peruri_doc_type = mpdt.id_peruri_doc_type left join ms_vendor msv on tdd.id_ms_vendor = msv.id_ms_vendor where tdh.ref_number = '"+refNumber+"'")
 
 		metadata = resultSet.metaData
 

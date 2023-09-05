@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>button_searchPenandaTanganViaPhone</name>
+   <name>button_searchPenandaTanganWithEmailService</name>
    <tag></tag>
    <elementGuidId>5705135a-82e1-4748-8cc9-b9b971abb376</elementGuidId>
    <selectorCollection>
@@ -10,12 +10,12 @@
          <value>//div/div/span/i</value>
       </entry>
       <entry>
-         <key>BASIC</key>
-         <value>/html/body/ngb-modal-window/div/div/app-add-signer/form/div[2]/div[1]/div[2]/div/div/span/i</value>
-      </entry>
-      <entry>
          <key>CSS</key>
          <value>i.ft-search</value>
+      </entry>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/ngb-modal-window/div/div/app-add-signer/form/div[2]/div[1]/div[2]/div/div/span/i</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
