@@ -93,7 +93,7 @@ public class PengaturanDokumen {
 	getDDLVendor(Connection conn) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT vendor_name FROM ms_vendor mv JOIN ms_vendoroftenant mvt ON mv.id_ms_vendor = mvt.id_ms_vendor JOIN ms_tenant mt ON mt.id_ms_tenant = mvt.id_ms_tenant where mv.is_active = '1' and mv.is_operating = '1' and tenant_code = '" +  GlobalVariable.Tenant  + "'")
+		resultSet = stm.executeQuery("SELECT vendor_name FROM ms_vendor mv JOIN ms_vendoroftenant mvt ON mv.id_ms_vendor = mvt.id_ms_vendor JOIN ms_tenant mt ON mt.id_ms_tenant = mvt.id_ms_tenant join ms_lov ml on ml.id_lov = mv.lov_vendor_type where mv.is_active = '1' and ml.description = 'PSRE' and tenant_code = '" +  GlobalVariable.Tenant  + "'  ORDER BY mv.vendor_name ASC")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

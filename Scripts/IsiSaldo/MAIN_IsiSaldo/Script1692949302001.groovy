@@ -10,11 +10,6 @@ import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.By as By
 import org.openqa.selenium.Keys as Keys
 
-'get row'
-variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-header > div > div.datatable-row-center.ng-star-inserted datatable-header-cell'))
-
-println(variable.size())
-
 GlobalVariable.FlagFailed = 0
 
 'get data file path'
@@ -28,46 +23,37 @@ int countColmExcel = findTestData(excelPathIsiSaldo).columnNumbers
 
 int countCheckSaldo = 0
 
-int firstRun = 0
-
 'declare variable array'
-ArrayList<String> saldoBefore
-
-ArrayList<String> saldoAfter
+ArrayList<String> saldoBefore, saldoAfter
 
 'looping isi saldo'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
-        //		if(GlobalVariable.NumofColm == 2) {
-        //			'call function input cancel'
-        //			inputCancel()
-        //		}
     } else if (findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
         'counter check saldo'
         countCheckSaldo = 0
 
+		'get tenant code per case'
+		GlobalVariable.Tenant = findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
+
+		'get psre code per case'
+		GlobalVariable.Psre = findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
+		
         'call function login admin get saldo'
         saldoBefore = loginAdminGetSaldo(countCheckSaldo, conneSign)
 
         'counter after check saldo'
         countCheckSaldo = 1
 
-        'get tenant code per case'
-        GlobalVariable.Tenant = findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
+		//		if(GlobalVariable.NumofColm == 2) {
+		//			'call function input cancel'
+		//			inputCancel()
+		//		}
 
-        'get psre code per case'
-        GlobalVariable.Psre = findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
-
-        'call test case login admin esign'
-        if ((findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) != findTestData(
-            excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))) || (firstRun == 0)) {
-            'call testcase login admin'
-            WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathIsiSaldo], 
-                FailureHandling.CONTINUE_ON_FAILURE)
-
-            firstRun = 1
-        }
+        'call test case login per case'
+		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathIsiSaldo, ('Email') : 'Email Login - Admin Esign', ('Password') : 'Password Login - Admin Esign'
+			, ('Perusahaan') : 'Perusahaan Login - Admin Esign', ('Peran') : 'Peran Login - Admin Esign'], FailureHandling.STOP_ON_FAILURE)
         
         'check if button menu visible atau tidak'
         if (WebUI.verifyElementNotVisible(findTestObject('isiSaldo/menu_isiSaldo'), FailureHandling.OPTIONAL)) {

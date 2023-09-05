@@ -9,14 +9,14 @@ import org.openqa.selenium.Keys as Keys
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-int delayExpiredOTP = 60
+int delayExpiredOTP
 
 'check ada value maka Setting OTP Active Duration'
 if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() > 0) {
 	'Setting OTP Active Duration'
 	CustomKeywords.'connection.APIFullService.settingOTPActiveDuration'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')))
 	
-	delayExpiredOTP = delayExpiredOTP * Integer.parseInt(findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')))
+	delayExpiredOTP = 60 * Integer.parseInt(findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')))
 }
 
 'check email sesuai dengan inputan'
