@@ -276,8 +276,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                     'split informasi signer berdasarkan delimiter'
                     valueInformasi = valueInformasi.split(', ', -1)
-
-					println valueInformasi
+					
                     'query check informasi dari user tersebut'
                     queryCheckInformationUser = CustomKeywords.'connection.ManualSign.getInformationUser'(conneSign, (emailPenandaTangan[
                         indexEmail++]).toString().toUpperCase(), findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 
@@ -727,8 +726,8 @@ def inputForm() {
  //   WebUI.setText(findTestObject('ManualSign/input_isSequence'), findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 
   //          rowExcel('$isSequence')))
 
-    'Klik enter'
-    WebUI.sendKeys(findTestObject('ManualSign/input_isSequence'), Keys.chord(Keys.ENTER))
+   // 'Klik enter'
+   // WebUI.sendKeys(findTestObject('ManualSign/input_isSequence'), Keys.chord(Keys.ENTER))
 
     'Code untuk mengambil file berdasarkan direktori masing-masing sekaligus ambil value dari excel'
     String userDir = System.getProperty('user.dir')
