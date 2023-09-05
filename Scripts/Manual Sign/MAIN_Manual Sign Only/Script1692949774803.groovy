@@ -59,9 +59,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
         indexEmail = 0
 
-        'inisiasi index menjadi 9 untuk modify object ketika tidak pada e-meterai'
-        index = 9
+        //'inisiasi index menjadi 9 untuk modify object ketika tidak pada e-meterai'
+        //index = 9
 
+		'keperluan sit 3.3.0'
+		index = 8
+		
         'Inisialisasi variable yang dibutuhkan'
         emailPenandaTangan = findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).split(
             semicolon, splitIndex)
@@ -107,8 +110,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             if (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('$Membutuhkan e-Meterai')) == 
             'Yes') {
                 'index meningkat karena tambahan 2 kolom ketika menggunakan e-meterai'
-                index = 11
+                //index = 11
 
+				'keperluan sit'
+				index = 10
+				
                 'modify label daftar penanda tangan dengan naiknya index'
                 modifyObjectLblDaftarPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/lbl_daftarpenandatangan'), 
                     'xpath', 'equals', ('//*[@id="msxForm"]/div[' + index) + ']/div[3]/table/tr/td/small', true)
@@ -117,11 +123,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 modifyObjectbuttonTambahPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/button_tambahTandaTangan'), 
                     'xpath', 'equals', ('//*[@id="msxForm"]/div[' + index) + ']/div[2]/a', true)
             } else {
-                'Memasukkan object kepada variable'
-                modifyObjectLblDaftarPenandaTangan = findTestObject('ManualSign/lbl_daftarpenandatangan')
+				'modify menuju index normal'
+				//index = 9
+				
+				'keperluan sit'
+				index = 8
 
-                'Memasukkan object kepada variable'
-                modifyObjectbuttonTambahPenandaTangan = findTestObject('ManualSign/button_tambahTandaTangan')
+                'modify label daftar penanda tangan dengan naiknya index'
+                modifyObjectLblDaftarPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/lbl_daftarpenandatangan'), 
+                    'xpath', 'equals', ('//*[@id="msxForm"]/div[' + index) + ']/div[3]/table/tr/td/small', true)
+
+                'modify button tambah penanda tangan dengan naiknya index'
+                modifyObjectbuttonTambahPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/button_tambahTandaTangan'), 
+                    'xpath', 'equals', ('//*[@id="msxForm"]/div[' + index) + ']/div[2]/a', true)
             }
             
             emailService = CustomKeywords.'connection.DataVerif.getEmailService'(conneSign, GlobalVariable.Tenant)
@@ -457,7 +471,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             WebUI.delay(3)
 
 			'susun urutan tanda tangan'
-			sortingSequenceSign()
+		//	sortingSequenceSign()
 			
             if (checkErrorLog() == true) {
                 continue
@@ -527,8 +541,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     arrayMatch.add(WebUI.verifyMatch('1', result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
                     'verify is sequence'
-                    arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 
-                                rowExcel('$isSequence')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+                  //  arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 
+                  //              rowExcel('$isSequence')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
                     'jika data db tidak sesuai dengan excel'
                     if (arrayMatch.contains(false)) {
@@ -711,8 +725,8 @@ def inputForm() {
     WebUI.sendKeys(findTestObject('ManualSign/input_jenisPembayaran'), Keys.chord(Keys.ENTER))
 
     'Input AKtif pada input Status'
-    WebUI.setText(findTestObject('ManualSign/input_isSequence'), findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 
-            rowExcel('$isSequence')))
+ //   WebUI.setText(findTestObject('ManualSign/input_isSequence'), findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, 
+  //          rowExcel('$isSequence')))
 
     'Klik enter'
     WebUI.sendKeys(findTestObject('ManualSign/input_isSequence'), Keys.chord(Keys.ENTER))
