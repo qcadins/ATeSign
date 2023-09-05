@@ -70,6 +70,8 @@ WebUI.click(findTestObject('ManualSign/ManualSign'))
 
 WebUI.delay(1)
 
+WebUI.focus(findTestObject('ManualSign/lbl_ManualSign'))
+
 'Pengecekan apakah masuk page manual sign'
 if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), GlobalVariable.TimeOut)) {
     'Input form yang ada pada page'
@@ -90,7 +92,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
             'xpath', 'equals', ('//*[@id="msxForm"]/div[' + index) + ']/div[2]/a', true)
     } else {
 		'modify menuju index normal'
-				//index = 9
+				index = 9
 
                 'modify label daftar penanda tangan dengan naiknya index'
                 modifyObjectLblDaftarPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/lbl_daftarpenandatangan'), 
@@ -233,7 +235,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
             'query check informasi dari user tersebut'
             queryCheckInformationUser = CustomKeywords.'connection.ManualSign.getInformationUser'(conneSign, (emailPenandaTangan[
                 indexEmail++]).toString().toUpperCase(), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
-                    rowExcel('$Email')))
+                    rowExcel('$PSrE')))
 
             if ((valueInformasi[2]) == (emailPenandaTangan[(indexEmail - 1)])) {
                 'check ui dan query mengenai nama signer'
@@ -384,7 +386,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 
         if (GlobalVariable.checkStoreDB == 'Yes') {
             result = CustomKeywords.'connection.ManualSign.getManualSign'(conneSign, findTestData(excelPathManualSigntoSign).getValue(
-                    GlobalVariable.NumofColm, 9))
+                    GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))
 
             index = 0
 

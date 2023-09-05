@@ -93,7 +93,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
             'mengambil saldo before'
             saldoSignBefore = checkSaldoSign(conneSign, findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
-                    9))
+                    rowExcel('$Nomor Dokumen')))
 
             'mengambil saldo otp before'
             otpBefore = checkSaldoOtp()
