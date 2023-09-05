@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'nav-container ng-tns-c133-1']/ul/li[1]/a/span</value>
+         <value>//*[@href = '/topup']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,10 +15,10 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>href</name>
       <type>Main</type>
-      <value>//*[@class = 'nav-container ng-tns-c133-1']/ul/li[1]/a/span</value>
-      <webElementGuid>5a13f342-811b-4787-b603-9d9a049c52b7</webElementGuid>
+      <value>/topup</value>
+      <webElementGuid>3f395f62-a5cc-4518-80cc-dbc21aeafbf5</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -26,6 +26,6 @@
       <name>class</name>
       <type>Main</type>
       <value>nav-container ng-tns-c133-1</value>
-      <webElementGuid>9b06e3b5-daa3-492d-b043-a5b8b420f29f</webElementGuid>
+      <webElementGuid>e628dbd1-9328-48be-808e-a8f978e53204</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

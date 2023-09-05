@@ -955,9 +955,12 @@ def sortingSequenceSign() {
 			modifyObject = WebUI.modifyObjectProperty(findTestObject('TandaTanganDokumen/modifyObject'),
 				'xpath', 'equals', '//*[@id="cdk-drop-list-0"]/div['+ seq +']', true)
 			
-			roleUI = WebUI.getText(modifyObject).split('\\.\\s', -1)
+//			update ESIGNHUB 3.4.0
+//			roleUI = WebUI.getText(modifyObject).split('\\.\\s', -1)
+//			
+//			index = seqSignRole.indexOf(roleUI[1]) + 1
 			
-			index = seqSignRole.indexOf(roleUI[1]) + 1
+			index = seqSignRole.indexOf(WebUI.getText(modifyObject)) + 1
 			
 			if (seq != index) {
 				'modify label tipe tanda tangan di kotak'

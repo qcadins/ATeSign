@@ -11,11 +11,24 @@
       <value></value>
       <variableId>c0ca098c-0371-44cb-9316-75cc91ad8405</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>c1539aa7-3502-4057-8bb5-5b08e635df0e</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>'Saldo/isiSaldo'</defaultValue>
       <description></description>
       <id>c0ca098c-0371-44cb-9316-75cc91ad8405</id>
       <masked>false</masked>
       <name>excelPathIsiSaldo</name>
+   </variable>
+   <variable>
+      <defaultValue>'isiSaldo'</defaultValue>
+      <description></description>
+      <id>c1539aa7-3502-4057-8bb5-5b08e635df0e</id>
+      <masked>false</masked>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>
