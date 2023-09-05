@@ -7,17 +7,17 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'btn btn-info']</value>
+         <value>//*[contains(@class, 'btn btn-info')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
+      <matchCondition>contains</matchCondition>
       <name>class</name>
       <type>Main</type>
       <value>btn btn-info</value>
-      <webElementGuid>e0f3117d-c5ae-409e-b88d-c3715efabb80</webElementGuid>
+      <webElementGuid>0d44616d-a2eb-4d71-b5e7-a49fc43a6cf8</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
