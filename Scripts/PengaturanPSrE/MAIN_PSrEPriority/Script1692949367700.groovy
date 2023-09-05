@@ -14,18 +14,23 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-'panggil fungsi login'
-WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathPriorityPsre], FailureHandling.STOP_ON_FAILURE)
+int firstRun = 0
 
 'looping berdasarkan jumlah kolom'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathPriorityPsre).columnNumbers; (GlobalVariable.NumofColm)++) {
 	if (findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
 		break
-	} else if (findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted') ||
-		findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('WARNING')) {
+	} else if (findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')){			
+		GlobalVariable.FlagFailed = 0
 		
-		if(findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {			
-			GlobalVariable.FlagFailed = 0
+		'check if email login case selanjutnya masih sama dengan sebelumnya'
+		if (findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) !=
+			findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')) || firstRun == 0) {
+			'call test case login per case'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathPriorityPsre, ('Email') : 'Email Login', ('Password') : 'Password Login'
+				, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
+			
+			firstRun = 1
 		}
 		
 		'get tenant code dari excel per case'

@@ -31,7 +31,6 @@ WebUI.callTestCase(findTestCase('Login/Login_AdmCredit'), [:], FailureHandling.C
 'click menu user management'
 WebUI.click(findTestObject('User Management/menu_User Management'))
 
-
 'looping User Management'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 1).length() == 0) {

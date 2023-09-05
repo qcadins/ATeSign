@@ -32,8 +32,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		'check if email login case selanjutnya masih sama dengan sebelumnya'
 		if(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) !=
 			findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')) || firstRun == 0) {
-			'panggil fungsi login'
-			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathPengaturanDokumen], FailureHandling.CONTINUE_ON_FAILURE)
+			'call test case login per case'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathPengaturanDokumen, ('Email') : 'Email Login', ('Password') : 'Password Login'
+				, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
 			
 			firstRun = 1
 		}
@@ -1001,7 +1002,7 @@ def inputForm(Connection conneSign, int checked) {
 		ArrayList<String> tipePembayaranDB = CustomKeywords.'connection.PengaturanDokumen.getLovTipePembayaran'(conneSign)
 	
 		'check ddl tipe pembayaran'
-		checkDDL(findTestObject('TandaTanganDokumen/input_tipePembayaran'), tipePembayaranDB, ' pada tipe pembayaran Ttd ')
+		checkDDL(findTestObject('TandaTanganDokumen/input_tipePembayaran'), tipePembayaranDB, ' pada tipe pembayaran Ttd ')	
 	}
 	
 	'Input value tipe pembayaran'
@@ -1009,6 +1010,7 @@ def inputForm(Connection conneSign, int checked) {
 			GlobalVariable.NumofColm, rowExcel('$Tipe Pembayaran TTD')))
 
 	'Input enter'
+	WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_tipePembayaran'), Keys.chord(Keys.ENTER))
 	WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_tipePembayaran'), Keys.chord(Keys.ENTER))
 
 	if(GlobalVariable.NumofColm == 2 && checked == 0) {		
@@ -1035,12 +1037,14 @@ def inputForm(Connection conneSign, int checked) {
 
 	'Input enter'
 	WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_SequentialSigning'), Keys.chord(Keys.ENTER))
+	WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_SequentialSigning'), Keys.chord(Keys.ENTER))
 
 	'Input value status'
 	WebUI.setText(findTestObject('TandaTanganDokumen/input_Status'), findTestData(excelPathPengaturanDokumen).getValue(
 			GlobalVariable.NumofColm, rowExcel('Status Active')))
 
 	'Input enter'
+	WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
 	WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
 
 	'Jika panjang dokumen lebih besar dari 0'
