@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>btn_E-MeteraiDuplicate</name>
+   <tag></tag>
+   <elementGuidId>ee324985-51e0-4ccf-a357-5f7998f2cf2d</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;msxForm&quot;]/div[8]/div/div/label</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;msxForm&quot;]/div[8]/div/div/label</value>
+      <webElementGuid>7c3a697d-e231-4d71-8aa0-fca16ebbd626</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>for</name>
+      <type>Main</type>
+      <value>isMeterei</value>
+      <webElementGuid>e225eef1-a94e-4338-a046-4287b8a3a562</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>
