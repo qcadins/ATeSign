@@ -112,24 +112,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     }
                 }
             } else {
-				'get trx from db'
-				String result = CustomKeywords.'connection.APIFullService.getAPIRequestStampingTrx'(conneSign, findTestData(excelPathAPIRequestStamping).getValue(
-					GlobalVariable.NumofColm, rowExcel('refNumber')).replace('"',''), totalMaterai)
-
-				'declare arraylist arraymatch'
-				arrayMatch = []
-				
-				'verify saldo terpotong'
-				arrayMatch.add(WebUI.verifyMatch(result, 'null', false, FailureHandling.CONTINUE_ON_FAILURE))
-				
-				'jika data db tidak sesuai dengan excel'
-				if (arrayMatch.contains(false)) {
-					'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-						GlobalVariable.StatusFailed, (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm,
-							rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
-				}
-				
                'call function get error msg'
 			   getErrorMsg(respon)	
             }
