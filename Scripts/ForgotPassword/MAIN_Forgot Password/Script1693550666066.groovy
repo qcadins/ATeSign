@@ -160,6 +160,24 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			WebUI.setText(findTestObject('ForgotPassword/input_resetCode'),
 				findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('FalseCode')))
 			
+			'klik pada button verifikasi'
+			WebUI.click(findTestObject('ForgotPassword/button_Verifikasi'))
+			
+			'check apakah muncul error'
+			if(WebUI.verifyElementPresent(findTestObject('ForgotPassword/lbl_popup'),
+				GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+			
+				'set penanda error menjadi 1'
+				GlobalVariable.FlagFailed = 1
+				
+				'ambil error dan get text dari error tersebut'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+					GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) +
+						';') + '<' + WebUI.getText(findTestObject('ForgotPassword/lbl_popup')) + '>')
+				
+				'klik pada tombol OK'
+				WebUI.click(findTestObject('ForgotPassword/button_OK'))
+			}
 		}
 		
 		resendFunction(conneSign, countResend, resetCodefromDB)
@@ -291,12 +309,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				'write to excel success'
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0,
 					GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-			} else {
-				
-				'tulis adanya error pada sistem web'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-					GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +
-						GlobalVariable.ReasonFailedMandatory)
 			}
 		} else {
 			
@@ -328,13 +340,14 @@ def verifConfirmation(Connection conneSign) {
 			
 			'hitung durasi aktif otp'
 			int OTPDuration = (OTPActiveDuration * 60) + 10
-			
-			println OTPDuration
 		
 			'buat delay hingga melebihi waktu OTP Active Duration'
 			WebUI.delay(OTPDuration)
 			
 		} else {
+			
+			'set penanda error menjadi 1'
+			GlobalVariable.FlagFailed = 1
 			
 			'ambil error dan get text dari error tersebut'
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
@@ -349,6 +362,9 @@ def verifConfirmation(Connection conneSign) {
 	'check apakah muncul error'
 	if(WebUI.verifyElementPresent(findTestObject('ForgotPassword/lbl_popup'),
 		GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+	
+		'set penanda error menjadi 1'
+		GlobalVariable.FlagFailed = 1
 		
 		'ambil error dan get text dari error tersebut'
 		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
