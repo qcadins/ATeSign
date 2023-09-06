@@ -28,7 +28,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 	if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
 		break
 	} else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
-		CustomKeywords.
 		'ambil tenant dan vendor code yang akan digunakan document'
 		ArrayList tenantVendor = CustomKeywords.'connection.DataVerif.getTenantandVendorCode'(conneSign, findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('$documentid')).replace('"','').replace('[','').replace(']',''))
 		

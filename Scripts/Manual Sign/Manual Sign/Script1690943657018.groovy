@@ -23,8 +23,9 @@ splitIndex = -1
 
 indexForCatatanStamp = 0
 
-'panggil fungsi login'
-WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathManualSigntoSign], FailureHandling.CONTINUE_ON_FAILURE)
+'call test case login per case'
+WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathManualSigntoSign, ('Email') : 'Email Login', ('Password') : 'Password Login'
+, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
 
 'declare flag failed'
 GlobalVariable.FlagFailed = 0
@@ -377,6 +378,9 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 
     WebUI.delay(1)
 
+	'susun urutan tanda tangan'
+	sortingSequenceSign()
+	
     checkErrorLog()
 
     if (GlobalVariable.FlagFailed == 0) {
@@ -546,6 +550,13 @@ def inputForm() {
     'Klik enter'
     WebUI.sendKeys(findTestObject('ManualSign/input_jenisPembayaran'), Keys.chord(Keys.ENTER))
 
+	'Input AKtif pada input Status'
+	WebUI.setText(findTestObject('ManualSign/input_isSequence'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
+			rowExcel('$isSequence')))
+
+	'Klik enter'
+	WebUI.sendKeys(findTestObject('ManualSign/input_isSequence'), Keys.chord(Keys.ENTER))
+	
     'Code untuk mengambil file berdasarkan direktori masing-masing sekaligus ambil value dari excel'
     String userDir = System.getProperty('user.dir')
 
@@ -587,3 +598,45 @@ def rowExcel(String cellValue) {
     return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
+def sortingSequenceSign() {
+	'check if Sequential signing iya'
+	if(findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$isSequence')).equalsIgnoreCase('Ya')) {
+		'get urutan seq sign dari excel'
+		ArrayList<String> seqSignRole = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Urutan Signing')).toString().toUpperCase().split(';',-1)
+		
+		'count box'
+		variable = DriverFactory.webDriver.findElements(By.cssSelector('#cdk-drop-list-0 div'))
+		
+		'looping seq sign'
+		for (int seq = 1; seq <= variable.size(); seq++) {
+			'modify label tipe tanda tangan di kotak'
+			modifyObject = WebUI.modifyObjectProperty(findTestObject('TandaTanganDokumen/modifyObject'),
+				'xpath', 'equals', '//*[@id="cdk-drop-list-0"]/div['+ seq +']', true)
+			
+			'get text pisah nomor dan psre'
+			signer = WebUI.getText(modifyObject).split(' ',-1)
+			
+			index = seqSignRole.indexOf(signer[1]) + 1
+
+			if (seq != index) {
+				'modify label tipe tanda tangan di kotak'
+				modifyObjectNew = WebUI.modifyObjectProperty(findTestObject('TandaTanganDokumen/modifyObject'),
+					'xpath', 'equals', '//*[@id="cdk-drop-list-0"]/div['+ index +']', true)
+				
+				'pindahin ke urutan sesuai excel'
+				WebUI.dragAndDropToObject(modifyObject, modifyObjectNew)
+				
+				'untuk proses pemindahan'
+				WebUI.delay(2)
+				
+				seq--
+			}
+		}
+		
+		'click button simpan'
+		WebUI.click(findTestObject('Object Repository/ManualSign/btn_simpan'))
+		
+		'delay untuk loading simpan'
+		WebUI.delay(3)
+	}
+}

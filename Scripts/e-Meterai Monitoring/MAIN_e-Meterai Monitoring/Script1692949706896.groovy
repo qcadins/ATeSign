@@ -226,7 +226,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     }
                 }
             }
-        }
+        } else {
+			if (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Action')) == 'Retry Stamping From Upload') {
+			}
+		}
         
         if (GlobalVariable.FlagFailed == 0) {
             'write to excel success'
