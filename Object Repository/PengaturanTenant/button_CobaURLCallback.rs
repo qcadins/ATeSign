@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>button_Coba</name>
+   <name>button_CobaURLCallback</name>
    <tag></tag>
-   <elementGuidId>aac6f98a-001e-42f1-94e6-2fdcbc3c0509</elementGuidId>
+   <elementGuidId>c62970ce-23dc-4050-9ea1-27059f420543</elementGuidId>
    <selectorCollection>
       <entry>
          <key>CSS</key>
+         <value></value>
       </entry>
       <entry>
          <key>XPATH</key>
-         <value>(.//*[normalize-space(text()) and normalize-space(.)='Tambah'])[1]/following::button[1]</value>
-      </entry>
-      <entry>
-         <key>BASIC</key>
-         <value>//*[@class = 'btn btn-secondary col-3 input-group-addon' and (text() = 'Coba' or . = 'Coba')]</value>
+         <value>(.//*[normalize-space(text()) and normalize-space(.)='Whatsapp'])[1]/following::button[1]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>XPATH</selectorMethod>
@@ -25,15 +22,15 @@
       <name>tag</name>
       <type>Main</type>
       <value>button</value>
-      <webElementGuid>f3696f17-a1da-4ca7-8383-5d7828423bc6</webElementGuid>
+      <webElementGuid>b08e3bcd-ea9b-48f7-84cd-90011ae31532</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
       <value>btn btn-secondary col-3 input-group-addon</value>
-      <webElementGuid>637a2f4b-700e-4154-b954-86bdbff629dd</webElementGuid>
+      <webElementGuid>5440ed25-e49b-4619-a345-518976c7ed85</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -41,31 +38,31 @@
       <name>text</name>
       <type>Main</type>
       <value>Coba</value>
-      <webElementGuid>af0d6461-f12a-499c-8c59-7c4ecb155286</webElementGuid>
+      <webElementGuid>4d79ace8-dd66-47d0-9807-ed50c6129c1c</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
-      <matchCondition>contains</matchCondition>
+      <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/div[24]/button</value>
-      <webElementGuid>9173dc9a-4517-4c81-a5ba-6e875aac793d</webElementGuid>
+      <value>/html[1]/body[@class=&quot;vertical-layout navbar-static pace-done menu-expanded menu-open vertical-menu page-scrolled navbar-scrolled&quot;]/app-root[1]/app-full-layout[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;wrapper&quot;]/div[@class=&quot;main-panel&quot;]/div[@class=&quot;main-content&quot;]/div[@class=&quot;content-wrapper&quot;]/app-tenant-settings[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;row match-height&quot;]/div[@class=&quot;col-6&quot;]/div[@class=&quot;card&quot;]/div[@class=&quot;card-content&quot;]/div[@class=&quot;card-body&quot;]/form[@class=&quot;ng-dirty ng-valid ng-touched&quot;]/div[@class=&quot;row input-group mb-1&quot;]/button[@class=&quot;btn btn-secondary col-3 input-group-addon&quot;]</value>
+      <webElementGuid>f314396d-c5db-4485-bc4e-04ae10df58d8</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:neighbor</name>
       <type>Main</type>
-      <value>(.//*[normalize-space(text()) and normalize-space(.)='Tambah'])[1]/following::button[1]</value>
-      <webElementGuid>0d96352d-e642-484c-a293-ab0e7bd7b075</webElementGuid>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Whatsapp'])[1]/following::button[1]</value>
+      <webElementGuid>331fb2ae-85b8-4690-be45-1a1a970c6272</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:neighbor</name>
       <type>Main</type>
-      <value>(.//*[normalize-space(text()) and normalize-space(.)='Hapus'])[2]/following::button[2]</value>
-      <webElementGuid>a62af88a-ad47-4a6a-b126-1aa4c9bd417b</webElementGuid>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='SMS'])[1]/following::button[1]</value>
+      <webElementGuid>ee4a56c9-bd67-4bcc-b667-9ccf8f7e11a6</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -73,7 +70,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Batal'])[1]/preceding::button[1]</value>
-      <webElementGuid>2410d4f3-9133-4c58-be88-627bd8ccd9da</webElementGuid>
+      <webElementGuid>6c612ceb-67b4-4717-9b09-36af0a9d0cba</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -81,23 +78,15 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Simpan'])[1]/preceding::button[2]</value>
-      <webElementGuid>e1a77248-2740-425e-9f3c-ae098efbd563</webElementGuid>
-   </webElementXpaths>
-   <webElementXpaths>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>xpath:neighbor</name>
-      <type>Main</type>
-      <value>//*/text()[normalize-space(.)='Coba']/parent::*</value>
-      <webElementGuid>99a1734d-f1c2-459c-9838-7f2c722b248d</webElementGuid>
+      <webElementGuid>fd6c7ee9-3788-4193-ac92-b2ad2a68c483</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:position</name>
       <type>Main</type>
-      <value>//div[24]/button</value>
-      <webElementGuid>faa37d2f-ee47-43e1-a8ec-bad399efb0d0</webElementGuid>
+      <value>//div[33]/button</value>
+      <webElementGuid>001e7e93-2692-4894-8b94-d6b5737659d2</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -105,6 +94,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//button[(text() = 'Coba' or . = 'Coba')]</value>
-      <webElementGuid>f40852f3-ac0d-42b3-a942-f097e3b45e3c</webElementGuid>
+      <webElementGuid>8f0a7156-e2af-498a-a777-d39e0a649dc9</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

@@ -15,7 +15,7 @@ chromePrefs.put('download.default_directory', System.getProperty('user.dir') + '
 
 RunConfiguration.setWebDriverPreferencesProperty('prefs', chromePrefs)
 
-if (isLocalhost == 0) {
+if (isLocalhost == 0 || isLocalhost == null) {
 	
 	'open browser'
 	WebUI.openBrowser('')
