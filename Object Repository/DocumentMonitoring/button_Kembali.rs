@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>paging_Page</name>
+   <name>button_Kembali</name>
    <tag></tag>
-   <elementGuidId>6a8ed9bd-16d2-4d1a-8544-5ca81ca7db23</elementGuidId>
+   <elementGuidId>7dc47245-90a1-4fcb-b5c1-b53c38d88a5d</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'pages active ng-star-inserted']</value>
+         <value>//*[@class = 'btn btn-secondary']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>pages active ng-star-inserted</value>
-      <webElementGuid>f615d325-308b-4249-ab8f-128eef6b69a7</webElementGuid>
+      <value>btn btn-secondary</value>
+      <webElementGuid>37a06f0d-94dd-4b22-a28d-7e2691688b5f</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
