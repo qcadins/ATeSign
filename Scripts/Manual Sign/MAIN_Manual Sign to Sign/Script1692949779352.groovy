@@ -430,7 +430,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 					}
 					
 					'panggil fungsi penyelesaian dengan OTP'
-					if (verifOTPMethod(conneSign, emailSigner, listOTP, o, noTelpSigner) == false) {
+					if (verifOTPMethod(conneSign, emailSigner, listOTP, o, noTelpSigner, otpAfter) == false) {
 						
 						'jika ada error continue testcase'
 						continue
@@ -593,7 +593,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 				if (verifMethod == 'OTP') {
 					
 					'panggil fungsi penyelesaian dengan OTP'
-					if (verifOTPMethod(conneSign, emailSigner, listOTP, o, noTelpSigner) == false) {
+					if (verifOTPMethod(conneSign, emailSigner, listOTP, o, noTelpSigner, otpAfter) == false) {
 						
 						'jika ada error continue testcase'
 						continue
@@ -1018,7 +1018,7 @@ def checkVerifyEqualorMatch(Boolean isMatch, String reason) {
 
 }
 
-def verifOTPMethod(Connection conneSign, ArrayList emailSigner, ArrayList listOTP, int o, String noTelpSigner) {
+def verifOTPMethod(Connection conneSign, ArrayList emailSigner, ArrayList listOTP, int o, String noTelpSigner, ArrayList otpAfter) {
 	'Klik verifikasi by OTP'
 	WebUI.click(findTestObject('KotakMasuk/Sign/btn_verifOTP'))
 

@@ -99,7 +99,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
 			'panggil fungsi login'
 			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
-				('Path') : excelPathFESignDocument], FailureHandling.CONTINUE_ON_FAILURE)
+				('Path') : excelPathFESignDocument, ('Email') : 'Email Login', ('Password') : 'Password Login',
+				 ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.CONTINUE_ON_FAILURE)
 			
 //            'Call test Case untuk login sebagai admin wom admin client'
 //            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
@@ -434,7 +435,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 					}
 					
 					'panggil fungsi penyelesaian dengan OTP'
-					if (verifOTPMethod(conneSign, emailSigner, listOTP, o, noTelpSigner) == false) {
+					if (verifOTPMethod(conneSign, emailSigner, listOTP, o, noTelpSigner, otpAfter) == false) {
 						
 						'jika ada error continue testcase'
 						continue
@@ -597,7 +598,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 					if (verifMethod == 'OTP') {
 						
 						'panggil fungsi penyelesaian dengan OTP'
-						if (verifOTPMethod(conneSign, emailSigner, listOTP, o, noTelpSigner) == false) {
+						if (verifOTPMethod(conneSign, emailSigner, listOTP, o, noTelpSigner, otpAfter) == false) {
 							
 							'jika ada error continue testcase'
 							continue
@@ -919,7 +920,7 @@ if (arrayMatch.contains(false)) {
         (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedStoredDB + ' untuk Masukan Store DB')
 }
 
-def verifOTPMethod(Connection conneSign, ArrayList emailSigner, ArrayList listOTP, int o, String noTelpSigner) {
+def verifOTPMethod(Connection conneSign, ArrayList emailSigner, ArrayList listOTP, int o, String noTelpSigner, ArrayList otpAfter) {
 	'Klik verifikasi by OTP'
 	WebUI.click(findTestObject('KotakMasuk/Sign/btn_verifOTP'))
 

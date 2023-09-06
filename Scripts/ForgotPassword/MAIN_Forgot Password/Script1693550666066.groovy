@@ -37,8 +37,7 @@ sheet = 'Forgot Password'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
 	if (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
 		break
-	} else if (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted') ||
-		findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Warning')) {
+	} else if (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 		
 		'set penanda error menjadi 0'
 		GlobalVariable.FlagFailed = 0
@@ -155,26 +154,38 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			WebUI.setText(findTestObject('ForgotPassword/input_resetCode'),
 				resetCodefromDB[0])
 			
-			resendFunction(conneSign, countResend, resetCodefromDB)
-			
-			'panggil fungsi konfirmasi verif'
-			if(verifConfirmation(conneSign) == true) {
-				
-				continue
-			}
 		} else {
 			
 			'input code yang salah dari DB'
 			WebUI.setText(findTestObject('ForgotPassword/input_resetCode'),
 				findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('FalseCode')))
 			
-			resendFunction(conneSign, countResend, resetCodefromDB)
+			'klik pada button verifikasi'
+			WebUI.click(findTestObject('ForgotPassword/button_Verifikasi'))
 			
-			'panggil fungsi konfirmasi verif'
-			if(verifConfirmation(conneSign) == true) {
+			'check apakah muncul error'
+			if(WebUI.verifyElementPresent(findTestObject('ForgotPassword/lbl_popup'),
+				GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+			
+				'set penanda error menjadi 1'
+				GlobalVariable.FlagFailed = 1
 				
-				continue
+				'ambil error dan get text dari error tersebut'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+					GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) +
+						';') + '<' + WebUI.getText(findTestObject('ForgotPassword/lbl_popup')) + '>')
+				
+				'klik pada tombol OK'
+				WebUI.click(findTestObject('ForgotPassword/button_OK'))
 			}
+		}
+		
+		resendFunction(conneSign, countResend, resetCodefromDB)
+		
+		'panggil fungsi konfirmasi verif'
+		if(verifConfirmation(conneSign) == true) {
+			
+			continue
 		}
 		
 		'input password baru'
@@ -298,12 +309,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				'write to excel success'
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0,
 					GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-			} else {
-				
-				'tulis adanya error pada sistem web'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-					GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +
-						GlobalVariable.ReasonFailedMandatory)
 			}
 		} else {
 			
@@ -335,13 +340,14 @@ def verifConfirmation(Connection conneSign) {
 			
 			'hitung durasi aktif otp'
 			int OTPDuration = (OTPActiveDuration * 60) + 10
-			
-			println OTPDuration
 		
 			'buat delay hingga melebihi waktu OTP Active Duration'
 			WebUI.delay(OTPDuration)
 			
 		} else {
+			
+			'set penanda error menjadi 1'
+			GlobalVariable.FlagFailed = 1
 			
 			'ambil error dan get text dari error tersebut'
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
@@ -356,6 +362,9 @@ def verifConfirmation(Connection conneSign) {
 	'check apakah muncul error'
 	if(WebUI.verifyElementPresent(findTestObject('ForgotPassword/lbl_popup'),
 		GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+	
+		'set penanda error menjadi 1'
+		GlobalVariable.FlagFailed = 1
 		
 		'ambil error dan get text dari error tersebut'
 		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
@@ -428,9 +437,5 @@ def checkVerifyEqualorMatch(Boolean isMatch, String reason) {
 		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 			((findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) +
 			reason)
-		
-		return false
 	}
-	
-	return true
 }
