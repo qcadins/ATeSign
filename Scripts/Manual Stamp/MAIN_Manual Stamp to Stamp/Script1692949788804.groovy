@@ -502,7 +502,7 @@ def zoomSetting(int percentage) {
 }
 
 def inputEMeteraiMonitoring(Connection conneSign) {
-
+	'input flagBreak'
 	int flagBreak = 0
 			
     if (WebUI.verifyElementPresent(findTestObject('Object Repository/e-Meterai Monitoring/button_Set Ulang'), GlobalVariable.TimeOut)) {
