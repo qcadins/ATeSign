@@ -101,7 +101,7 @@ public class WriteExcel {
 		{
 			row = sheet.getRow(i)
 			try{
-				if(row.getCell(0).getStringCellValue().equals(cellValue)){
+				if(row.getCell(0).getStringCellValue().equalsIgnoreCase(cellValue)){
 					row_num = i
 					break
 				}
@@ -113,7 +113,5 @@ public class WriteExcel {
 		}
 
 		return row_num+1
-
-
 	}
 }
