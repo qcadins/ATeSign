@@ -7,17 +7,25 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[contains(@class, 'sidebar-content main-menu-content')]/div[1]/ul/li[5]</value>
+         <value>//*[(text() = 'e-Meterai Monitoring' or . = 'e-Meterai Monitoring')]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>//*[contains(@class, 'sidebar-content main-menu-content')]/div[1]/ul/li[5]</value>
-      <webElementGuid>7f7e4220-2d79-4abc-8097-2d643b953ab4</webElementGuid>
+      <webElementGuid>16e38ae6-315d-4bdb-9f03-b83f8787dede</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>e-Meterai Monitoring</value>
+      <webElementGuid>c43b3052-2abb-40bb-ade6-df9e1899b2c4</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
