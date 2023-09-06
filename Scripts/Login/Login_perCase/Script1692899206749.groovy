@@ -21,6 +21,8 @@ WebUI.openBrowser('')
 'navigate to url esign'
 WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 2))
 
+WebUI.delay(GlobalVariable.TimeOut)
+
 'maximized window'
 WebUI.maximizeWindow()
 

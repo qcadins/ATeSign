@@ -33,7 +33,7 @@ for (int y = 0; y < docId.size(); y++) {
     'looping berdasarkan email Signer dari dokumen tersebut. '
     for (int t = 0; t < emailSigner.size(); t++) {
         'call Test Case untuk login sebagai user berdasarkan doc id'
-        WebUI.callTestCase(findTestCase('Login/Login_1docManySigner'), [('email') : emailSigner[t]], FailureHandling.STOP_ON_FAILURE)
+        WebUI.callTestCase(findTestCase('Login/Login_1docManySigner'), [('email') : emailSigner[t], , ('mustFaceComp') : mustFaceCompDB], FailureHandling.STOP_ON_FAILURE)
 		
 		WebUI.delay(10)
 		
