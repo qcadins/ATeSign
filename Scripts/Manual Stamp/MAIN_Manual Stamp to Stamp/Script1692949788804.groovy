@@ -721,7 +721,7 @@ def inputEMeteraiMonitoring(Connection conneSign) {
         }
     }
 
-	int flagBreak = 0
+	flagBreak = 0
 			
     if (WebUI.verifyElementPresent(findTestObject('Object Repository/e-Meterai Monitoring/button_Set Ulang'), GlobalVariable.TimeOut)) {
         totalMeterai = findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Jumlah Meterai'))
