@@ -37,8 +37,7 @@ sheet = 'Forgot Password'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
 	if (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
 		break
-	} else if (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted') ||
-		findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Warning')) {
+	} else if (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 		
 		'set penanda error menjadi 0'
 		GlobalVariable.FlagFailed = 0
@@ -155,26 +154,20 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			WebUI.setText(findTestObject('ForgotPassword/input_resetCode'),
 				resetCodefromDB[0])
 			
-			resendFunction(conneSign, countResend, resetCodefromDB)
-			
-			'panggil fungsi konfirmasi verif'
-			if(verifConfirmation(conneSign) == true) {
-				
-				continue
-			}
 		} else {
 			
 			'input code yang salah dari DB'
 			WebUI.setText(findTestObject('ForgotPassword/input_resetCode'),
 				findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('FalseCode')))
 			
-			resendFunction(conneSign, countResend, resetCodefromDB)
+		}
+		
+		resendFunction(conneSign, countResend, resetCodefromDB)
+		
+		'panggil fungsi konfirmasi verif'
+		if(verifConfirmation(conneSign) == true) {
 			
-			'panggil fungsi konfirmasi verif'
-			if(verifConfirmation(conneSign) == true) {
-				
-				continue
-			}
+			continue
 		}
 		
 		'input password baru'
@@ -428,9 +421,5 @@ def checkVerifyEqualorMatch(Boolean isMatch, String reason) {
 		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 			((findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) +
 			reason)
-		
-		return false
 	}
-	
-	return true
 }
