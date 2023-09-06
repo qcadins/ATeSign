@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>paging_Page</name>
+   <name>label_Judul</name>
    <tag></tag>
-   <elementGuidId>6a8ed9bd-16d2-4d1a-8544-5ca81ca7db23</elementGuidId>
+   <elementGuidId>3709a08a-0328-421a-bc3e-3debd67b145f</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'pages active ng-star-inserted']</value>
+         <value>//*[@class = 'content-header']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>pages active ng-star-inserted</value>
-      <webElementGuid>f615d325-308b-4249-ab8f-128eef6b69a7</webElementGuid>
+      <value>content-header</value>
+      <webElementGuid>1c253181-220c-4526-ba0a-096e0a0dcdcc</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

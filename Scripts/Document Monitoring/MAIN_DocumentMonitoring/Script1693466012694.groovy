@@ -100,6 +100,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'enter untuk set cabang'
         WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER))
 
+        'click untuk menutup ddl'
+        WebUI.click(findTestObject('DocumentMonitoring/label_Judul'))
+		
         'click button cari'
         WebUI.click(findTestObject('DocumentMonitoring/button_Cari'))
 		
@@ -123,6 +126,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				'check if no kontrak sama dengan inputan excel'
 				checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('DocumentMonitoring/label_NoKontrakView')), 'No Kontrak ' + findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 
                         rowExcel('No Kontrak')), false, FailureHandling.CONTINUE_ON_FAILURE), ' dokuemn yang di view berbeda')
+				
+				'click button Kembali'
+				WebUI.click(findTestObject('DocumentMonitoring/button_Kembali'))
 			} else if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/button_View'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 				checkVerifyEqualOrMatch(false, ' button view tidak berfungsi')
 			}
@@ -493,34 +499,40 @@ def checkPaging() {
 
 	WebUI.delay(3)
 	
-    'click next page'
-    WebUI.click(findTestObject('DocumentMonitoring/button_NextPage'))
-
-    'verify paging di page 2'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DocumentMonitoring/paging_Page'), 'ng-reflect-page', 
-                FailureHandling.CONTINUE_ON_FAILURE), '2', false, FailureHandling.CONTINUE_ON_FAILURE))
-
-    'click prev page'
-    WebUI.click(findTestObject('DocumentMonitoring/button_PrevPage'))
-
-    'verify paging di page 1'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DocumentMonitoring/paging_Page'), 'ng-reflect-page', 
-                FailureHandling.CONTINUE_ON_FAILURE), '1', false, FailureHandling.CONTINUE_ON_FAILURE))
-
-    'click last page'
-    WebUI.click(findTestObject('DocumentMonitoring/button_LastPage'))
-
-    'verify paging di last page'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DocumentMonitoring/paging_Page'), 'ng-reflect-page', 
-                FailureHandling.CONTINUE_ON_FAILURE), WebUI.getAttribute(findTestObject('DocumentMonitoring/page_Active'), 
-                'aria-label', FailureHandling.CONTINUE_ON_FAILURE).replace('page ', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
-
-    'click first page'
-    WebUI.click(findTestObject('DocumentMonitoring/button_FirstPage'))
-
-    'verify paging di page 1'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DocumentMonitoring/paging_Page'), 'ng-reflect-page', 
-                FailureHandling.CONTINUE_ON_FAILURE), '1', false, FailureHandling.CONTINUE_ON_FAILURE))
+	'check if ada paging'
+	if(WebUI.verifyElementVisible(findTestObject('DocumentMonitoring/button_NextPage'), FailureHandling.OPTIONAL)) {
+		
+		'click next page'
+		WebUI.click(findTestObject('DocumentMonitoring/button_NextPage'))
+		
+		'verify paging di page 2'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DocumentMonitoring/paging_Page'), 'aria-label',
+					FailureHandling.CONTINUE_ON_FAILURE), 'page 2', false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+		'click prev page'
+		WebUI.click(findTestObject('DocumentMonitoring/button_PrevPage'))
+	
+		'verify paging di page 1'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DocumentMonitoring/paging_Page'), 'aria-label',
+					FailureHandling.CONTINUE_ON_FAILURE), 'page 1', false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+		'get total page'
+		variable = DriverFactory.webDriver.findElements(By.cssSelector('#listDokumen > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
+		
+		'click last page'
+		WebUI.click(findTestObject('DocumentMonitoring/button_LastPage'))
+	
+		'verify paging di page terakhir'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DocumentMonitoring/paging_Page'), 'aria-label',
+					FailureHandling.CONTINUE_ON_FAILURE), 'page ' + (variable.size() - 4).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+		'click first page'
+		WebUI.click(findTestObject('DocumentMonitoring/button_FirstPage'))
+	
+		'verify paging di page 1'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DocumentMonitoring/paging_Page'), 'aria-label',
+					FailureHandling.CONTINUE_ON_FAILURE), 'page 1', false, FailureHandling.CONTINUE_ON_FAILURE))
+	}
 }
 
 def checkVerifyPaging(Boolean isMatch) {
