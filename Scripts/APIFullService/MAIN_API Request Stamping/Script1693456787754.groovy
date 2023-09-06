@@ -22,10 +22,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     } else if (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 		
 		'setting menggunakan base url yang benar atau salah'
-		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPIGetTotalUnsignedDocuments, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
+		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPIRequestStamping, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 		
 		'get psre dari excel per case'
-		GlobalVariable.Psre = findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
+		GlobalVariable.Psre = findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
 		
 		'check if tidak mau menggunakan tenant code yang benar'
 		if (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code')) == 'No') {
