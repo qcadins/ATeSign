@@ -90,6 +90,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		
 		flaggingOTP = CustomKeywords.'connection.DataVerif.getParameterFlagPassOTP'(conneSign, findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('$documentid')).replace('"','').replace('[','').replace(']',''))
 		
+		if (refNumber.toString() == 'null') {
+			refNumber = ''
+			
+			vendor = ''
+		}
+		
 		if (vendor.equalsIgnoreCase('Privy')) {
 			'request OTP dengan HIT API'
 
@@ -122,8 +128,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			respon_OTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing', [('callerId') : findTestData(
 							excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('phoneNo') : findTestData(
 							excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('phoneNo')), ('email') : findTestData(excelPathAPISignDocument).getValue(
-							GlobalVariable.NumofColm, rowExcel('email')), ('refnumber') : ('"' + CustomKeywords.'connection.APIFullService.getRefNumber'(
-							conneSign, documentId[0])) + '"']))
+							GlobalVariable.NumofColm, rowExcel('email')), ('refnumber') : '"' + refNumber + '"']))
 
 			'Jika status HIT API 200 OK'
 			if (WS.verifyResponseStatusCode(respon_OTP, 200, FailureHandling.OPTIONAL) == true) {
