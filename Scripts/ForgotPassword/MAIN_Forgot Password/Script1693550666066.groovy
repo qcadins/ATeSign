@@ -166,9 +166,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			'check apakah muncul error'
 			if(WebUI.verifyElementPresent(findTestObject('ForgotPassword/lbl_popup'),
 				GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-			
-				'set penanda error menjadi 1'
-				GlobalVariable.FlagFailed = 1
 				
 				'ambil error dan get text dari error tersebut'
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
@@ -309,6 +306,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				'write to excel success'
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0,
 					GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+				
+				'hilangkan failed reason'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 1,
+					GlobalVariable.NumofColm - 1, '')
 			}
 		} else {
 			
@@ -346,9 +347,6 @@ def verifConfirmation(Connection conneSign) {
 			
 		} else {
 			
-			'set penanda error menjadi 1'
-			GlobalVariable.FlagFailed = 1
-			
 			'ambil error dan get text dari error tersebut'
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 				GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) +
@@ -362,9 +360,6 @@ def verifConfirmation(Connection conneSign) {
 	'check apakah muncul error'
 	if(WebUI.verifyElementPresent(findTestObject('ForgotPassword/lbl_popup'),
 		GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-	
-		'set penanda error menjadi 1'
-		GlobalVariable.FlagFailed = 1
 		
 		'ambil error dan get text dari error tersebut'
 		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
