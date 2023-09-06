@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>lbl_messageDeliveryReport</name>
+   <tag></tag>
+   <elementGuidId>41be29b9-107b-4a17-940c-3eb34df869cf</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value></value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>content-header</value>
+      <webElementGuid>97a72b32-f1ea-45e3-ae63-d3dd21538c40</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>
