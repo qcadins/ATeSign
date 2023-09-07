@@ -275,7 +275,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
             1, GlobalVariable.NumofColm - 1, GlobalVariable.Response.toString().replace('[', '').replace(']', ''))
 
         'write to excel success'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Status'), GlobalVariable.NumofColm - 
             1, GlobalVariable.StatusSuccess)
 
         if (GlobalVariable.checkStoreDB == 'Yes') {
@@ -286,26 +286,24 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         
         'jika status codenya bukan 0, yang berarti antara salah verifikasi data dan error'
     } else {
-        messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL).toString()
-
-        'write to excel status failed dan reason'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            (((findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + semicolon) + '<') + 
-            messageFailed) + '>')
-
-        'call test case error report'
-        WebUI.callTestCase(findTestCase('Send Document/ErrorReport'), [('API_Excel_Path') : API_Excel_Path], FailureHandling.CONTINUE_ON_FAILURE)
+       getErrorMessageAPI(respon)
     }
 } else {
-    messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL).toString()
-
-    'write to excel status failed dan reason'
-    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-        (((findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + semicolon) + '<') + messageFailed) + 
-        '>')
+	getErrorMessageAPI(respon)	
 }
 
 def rowExcel(String cellValue) {
     return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, 'Main', cellValue)
 }
 
+def getErrorMessageAPI(def respon) {
+	'mengambil status code berdasarkan response HIT API'
+	message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL).toString()
+
+	'Write To Excel GlobalVariable.StatusFailed and errormessage'
+	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+		GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';' + '<') + 
+            message + '>')
+
+	GlobalVariable.FlagFailed = 1
+}

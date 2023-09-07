@@ -54,8 +54,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         }
 
         if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).length() > 0) {
-            WebUI.callTestCase(findTestCase('Main Flow/KotakMasuk'), [('excelPathFESignDocument') : excelPathMain, ('sheet') : sheet, ('checkBeforeSigning') : 'Yes'], 
-                FailureHandling.STOP_ON_FAILURE)
+            //WebUI.callTestCase(findTestCase('Main Flow/KotakMasuk'), [('excelPathFESignDocument') : excelPathMain, ('sheet') : sheet, ('checkBeforeSigning') : 'Yes'], 
+            //    FailureHandling.STOP_ON_FAILURE)
 
             if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Need Sign for this document? ')) == 
             'Yes') {

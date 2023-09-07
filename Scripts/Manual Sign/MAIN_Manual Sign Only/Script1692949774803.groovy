@@ -28,8 +28,6 @@ indexForCatatanStamp = 0
 
 int firstRun = 0
 
-sheet = 'Manual Sign'
-
 'looping berdasarkan jumlah kolom'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathManualSign).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
