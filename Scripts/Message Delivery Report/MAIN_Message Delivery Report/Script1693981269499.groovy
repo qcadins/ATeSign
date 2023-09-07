@@ -126,6 +126,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			ArrayList<String> result = CustomKeywords.'connection.messageDeliveryReport.getFilterMessageDeliveryReport'(
 				conneSign, GlobalVariable.Tenant, storeHashMapForVerify())
 			
+			println result
+			WebUI.delay(10)
 			'array index'
 			arrayIndex = 0
             for (i = 1; i <= getRow.size(); i++) {
@@ -433,25 +435,28 @@ def storeHashMapForVerify() {
     result.put('Report Time End', findTestData(excelPathMessageDeliveryReport).getValue(GlobalVariable.NumofColm, rowExcel(
                 'Report Time End')))
 
-    result.put('Status Delivery', findTestData(excelPathMessageDeliveryReport).getValue(GlobalVariable.NumofColm, rowExcel(
-                'Status Delivery')))
-
-    if (findTestData(excelPathMessageDeliveryReport).getValue(GlobalVariable.NumofColm, rowExcel('Recipient')).toString().equalsIgnoreCase('Not Started')) {
+    if (findTestData(excelPathMessageDeliveryReport).getValue(GlobalVariable.NumofColm, rowExcel('Status Delivery')).toString().equalsIgnoreCase('Not Started')) {
+        code = "0"
+	} else if (findTestData(excelPathMessageDeliveryReport).getValue(GlobalVariable.NumofColm, rowExcel('Status Delivery')).toString().equalsIgnoreCase('Waiting')) {
         code = "1"
-	} else if (findTestData(excelPathMessageDeliveryReport).getValue(GlobalVariable.NumofColm, rowExcel('Recipient')).toString().equalsIgnoreCase('Waiting')) {
+    } else if (findTestData(excelPathMessageDeliveryReport).getValue(GlobalVariable.NumofColm, rowExcel('Status Delivery')).toString().equalsIgnoreCase('Failed')) {
         code = "2"
-    } else if (findTestData(excelPathMessageDeliveryReport).getValue(GlobalVariable.NumofColm, rowExcel('Recipient')).toString().equalsIgnoreCase('Failed')) {
+    } else if (findTestData(excelPathMessageDeliveryReport).getValue(GlobalVariable.NumofColm, rowExcel('Status Delivery')).toString().equalsIgnoreCase('Delivered')) {
         code = "3"
-    } else if (findTestData(excelPathMessageDeliveryReport).getValue(GlobalVariable.NumofColm, rowExcel('Recipient')).toString().equalsIgnoreCase('Delivered')) {
+    } else if (findTestData(excelPathMessageDeliveryReport).getValue(GlobalVariable.NumofColm, rowExcel('Status Delivery')).toString().equalsIgnoreCase('Read')) {
         code = "4"
-    } else if (findTestData(excelPathMessageDeliveryReport).getValue(GlobalVariable.NumofColm, rowExcel('Recipient')).toString().equalsIgnoreCase('Read')) {
-        code = "5"
     } else {
         code = ""
     }
     
-    result.put('Recipient', code)
+    result.put('Status Delivery', code.replace('"', ''))
 
+	result.put('Recipient', findTestData(excelPathMessageDeliveryReport).getValue(GlobalVariable.NumofColm, rowExcel(
+		'Recipient')))
+	
+	println result.get("Recipient")
+	
+	println result.get("Status Delivery")
     return result
 }
 
