@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/*[@class = 'datatable-scroll ng-star-inserted']/datatable-row-wrapper[1]/datatable-body-row/div[2]/datatable-body-cell[1]/div/p</value>
+         <value>//*[@class = 'datatable-scroll ng-star-inserted']/datatable-row-wrapper[1]/datatable-body-row/div[2]/datatable-body-cell[1]/div/p</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>/*[@class = 'datatable-scroll ng-star-inserted']/datatable-row-wrapper[1]/datatable-body-row/div[2]/datatable-body-cell[1]/div/p</value>
-      <webElementGuid>cba87007-1a1f-4f7b-b716-1f5aa234ce2e</webElementGuid>
+      <value>//*[@class = 'datatable-scroll ng-star-inserted']/datatable-row-wrapper[1]/datatable-body-row/div[2]/datatable-body-cell[1]/div/p</value>
+      <webElementGuid>6dce5fe0-8621-48c7-9b69-04ae991d1050</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

@@ -15,7 +15,8 @@ public class messageDeliveryReport {
 	ResultSetMetaData metadata
 	ResultSet resultSet
 	ArrayList<String> listdata = []
-
+	HashMap<String, String> commandSql
+	
 	@Keyword
 	getTotalMessageDeliveryReport(Connection conn, String tenantCode) {
 		stm = conn.createStatement()
@@ -68,13 +69,27 @@ public class messageDeliveryReport {
 	}
 
 	@Keyword
-	getDDLMessageMediawa(Connection conn) {
+	getFilterMessageDeliveryReport(Connection conn, String tenantCode, HashMap<String, String> value) {
 		stm = conn.createStatement()
-		String aa = '--'
-		resultSet = stm.executeQuery(
-				"select msv.description from ms_lov msv " +
-				aa + "WHERE msv.lov_group = 'MESSAGE_MEDIA'"
-				)
+
+		for (String key : value.keySet()) {
+			String values = value.get(key)
+			if (values == '') {
+				commandSql.put(key,'--')
+			}
+		}
+		if (commandSql.get("Report Time Start").length() <= 0 || commandSql.get("Report Time End").length() <= 0) {
+		commandSql.put('defaultSetting', '--')
+		}
+		
+		resultSet = stm.executeQuery("SELECT mv.vendor_name,mdr.report_time,mdr.recipient_detail,mdr.trx_no,ml.description,CASE WHEN mdr.delivery_status = '0' THEN 'Not Started' WHEN mdr.delivery_status = '1' THEN 'Waiting' WHEN mdr.delivery_status = '2' THEN 'Failed' WHEN mdr.delivery_status = '3' THEN 'Delivered' WHEN mdr.delivery_status = '4' THEN 'Read' ELSE '' END FROM tr_message_delivery_report mdr JOIN ms_vendor mv ON (mdr.id_ms_vendor = mv.id_ms_vendor) JOIN ms_lov ml ON (mdr.lov_message_media = ml.id_lov) JOIN ms_tenant mt ON (mdr.id_ms_tenant = mt.id_ms_tenant) WHERE mt.tenant_code = '"+tenantCode+"'" + 
+    commandSql.get("defaultSetting") + "and mdr.report_time >= date_trunc('MONTH', now()) and mdr.report_time <= now()" +
+     commandSql.get("Vendor") + "and mv.vendor_name = '"+value.get("Vendor")+"'" + 
+    commandSql.get("Message Media") + "and ml.description = '"+value.get("Message Media")+"'" +
+   commandSql.get("Report Time Start") + "and mdr.report_time >= '"+value.get("Report Time Start")+"' and mdr.report_time <= '"+value.get("Report Time End")+"'" +
+    commandSql.get("Status Delivery") + "and mdr.delivery_status = '"+value.get("Status Delivery")+"'" + 
+    commandSql.get("Recipient") + "and recipient_detail = '"+value.get("Recipient")+"'" + 
+   " ORDER BY mdr.report_time DESC")
 
 		metadata = resultSet.metaData
 
