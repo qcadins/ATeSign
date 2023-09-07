@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>paging_Page</name>
+   <name>input_recipient</name>
    <tag></tag>
-   <elementGuidId>9a8ef5d4-b41c-4729-be64-a292355fcac5</elementGuidId>
+   <elementGuidId>429ddef2-fb29-4bd2-aa46-79a44f0e1663</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'pages active ng-star-inserted']</value>
+         <value>//*[@id = 'recipient']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>class</name>
+      <name>id</name>
       <type>Main</type>
-      <value>pages active ng-star-inserted</value>
-      <webElementGuid>e86e492e-5a06-4197-8249-46d8bf515d7c</webElementGuid>
+      <value>recipient</value>
+      <webElementGuid>f87f505f-f353-4ba3-84aa-1317b9433c4a</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

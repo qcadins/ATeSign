@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>paging_Page</name>
+   <name>button_NextPage</name>
    <tag></tag>
-   <elementGuidId>9a8ef5d4-b41c-4729-be64-a292355fcac5</elementGuidId>
+   <elementGuidId>2ee902d3-6b58-4db9-9558-9ce1ffe606be</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'pages active ng-star-inserted']</value>
+         <value>//*[@class = 'datatable-icon-right']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>pages active ng-star-inserted</value>
-      <webElementGuid>e86e492e-5a06-4197-8249-46d8bf515d7c</webElementGuid>
+      <value>datatable-icon-right</value>
+      <webElementGuid>c795136a-2966-402e-b565-b16bcf7a28d7</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

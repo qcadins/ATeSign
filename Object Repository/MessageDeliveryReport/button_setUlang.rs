@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>paging_Page</name>
+   <name>button_setUlang</name>
    <tag></tag>
-   <elementGuidId>9a8ef5d4-b41c-4729-be64-a292355fcac5</elementGuidId>
+   <elementGuidId>2134c791-5df1-4a62-8d84-95bf3cdecf7d</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'pages active ng-star-inserted']</value>
+         <value>//*[@class = 'btn btn-secondary mr-2']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>pages active ng-star-inserted</value>
-      <webElementGuid>e86e492e-5a06-4197-8249-46d8bf515d7c</webElementGuid>
+      <value>btn btn-secondary mr-2</value>
+      <webElementGuid>034c79e2-c972-4f90-bda6-46c79646e758</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

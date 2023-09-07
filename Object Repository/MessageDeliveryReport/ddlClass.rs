@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>paging_Page</name>
+   <name>ddlClass</name>
    <tag></tag>
-   <elementGuidId>9a8ef5d4-b41c-4729-be64-a292355fcac5</elementGuidId>
+   <elementGuidId>0b39e13b-bdde-4f82-bef7-ab7701d2f4d3</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'pages active ng-star-inserted']</value>
+         <value>//*[@class = 'ng-dropdown-panel ng-star-inserted ng-select-bottom']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>pages active ng-star-inserted</value>
-      <webElementGuid>e86e492e-5a06-4197-8249-46d8bf515d7c</webElementGuid>
+      <value>ng-dropdown-panel ng-star-inserted ng-select-bottom</value>
+      <webElementGuid>cd19a22b-f581-4da8-a839-5234be241046</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

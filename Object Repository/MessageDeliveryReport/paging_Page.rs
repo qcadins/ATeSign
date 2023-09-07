@@ -3,11 +3,11 @@
    <description></description>
    <name>paging_Page</name>
    <tag></tag>
-   <elementGuidId>9a8ef5d4-b41c-4729-be64-a292355fcac5</elementGuidId>
+   <elementGuidId>cef871d3-93fb-4f1b-a4e6-836bbf25bf1d</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'pages active ng-star-inserted']</value>
+         <value>//*[@class = 'datatable-pager ng-star-inserted']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>pages active ng-star-inserted</value>
-      <webElementGuid>e86e492e-5a06-4197-8249-46d8bf515d7c</webElementGuid>
+      <value>datatable-pager ng-star-inserted</value>
+      <webElementGuid>2d142906-dfa8-47a1-92d4-f575de6820bf</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
