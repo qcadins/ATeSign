@@ -671,7 +671,7 @@ def inputDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan,
     WebUI.setText(findTestObject('DocumentMonitoring/input_Status'), inputDocumentMonitoring[arrayIndex++])
 
     'Enter'
-    WebUI.sendKeys(findTestObject('DocumentMonitoring/input_StampStatus'), Keys.chord(Keys.ENTER))
+    WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Status'), Keys.chord(Keys.ENTER))
 
     if (linkDocumentMonitoring == '') {
         'Set text mengenai wilayah'

@@ -76,7 +76,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         if (documentTemplateCode.toString().replace('"', '') != responseDocTemplateCode.toString()) {
             'write to excel status failed dan reason failed h'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                GlobalVariable.StatusFailed, ((findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 2).replace(
+                GlobalVariable.StatusFailed, ((findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
                     '-', '') + semicolon) + GlobalVariable.ReasonFailedSaveGagal) + ' pada perbedaan document template code ')
         }
         
@@ -118,7 +118,7 @@ def getErrorMessageAPI(def respon) {
 
     'Write To Excel GlobalVariable.StatusFailed and errormessage'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-        GlobalVariable.StatusFailed, ('<' + message) + '>')
+        GlobalVariable.StatusFailed, (';<' + message) + '>')
 
     GlobalVariable.FlagFailed = 1
 }
