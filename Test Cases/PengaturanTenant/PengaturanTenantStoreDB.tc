@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>PengaturanTenantStoreDB</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>d9d88605-0229-4434-8b31-8450dee76537</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>aeb73f11-e663-451d-bb3c-0e752b7acf1a</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>aeb73f11-e663-451d-bb3c-0e752b7acf1a</id>
+      <masked>false</masked>
+      <name>excelPathFEPengaturanTenant</name>
+   </variable>
+</TestCaseEntity>
