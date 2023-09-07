@@ -424,34 +424,36 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
 
     'verify total Meterai'
     if (Integer.parseInt(totaleMeteraiMonitoringUI[0]) > 10) {
+		WebUI.focus(findTestObject('e-Meterai Monitoring/button_NextPage'))
         'click next page'
         WebUI.click(findTestObject('e-Meterai Monitoring/button_NextPage'))
 
+		WebUI.delay(5)
         'verify paging di page 2'
-        checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('e-Meterai Monitoring/paging_Page'), 'ng-reflect-page', 
-                    FailureHandling.CONTINUE_ON_FAILURE), '2', false, FailureHandling.CONTINUE_ON_FAILURE))
+        checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('e-Meterai Monitoring/paging_Page'), 'aria-label', 
+                    FailureHandling.CONTINUE_ON_FAILURE), 'page 2', false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'click prev page'
         WebUI.click(findTestObject('e-Meterai Monitoring/button_PrevPage'))
 
         'verify paging di page 1'
-        checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('e-Meterai Monitoring/paging_Page'), 'ng-reflect-page', 
-                    FailureHandling.CONTINUE_ON_FAILURE), '1', false, FailureHandling.CONTINUE_ON_FAILURE))
+        checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('e-Meterai Monitoring/paging_Page'), 'aria-label', 
+                    FailureHandling.CONTINUE_ON_FAILURE), 'page 1', false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'click last page'
         WebUI.click(findTestObject('e-Meterai Monitoring/button_LastPage'))
 
         'verify paging di last page'
-        checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('e-Meterai Monitoring/paging_Page'), 'ng-reflect-page', 
+        checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('e-Meterai Monitoring/paging_Page'), 'aria-label', 
                     FailureHandling.CONTINUE_ON_FAILURE), WebUI.getAttribute(findTestObject('e-Meterai Monitoring/page_Active'), 
-                    'aria-label', FailureHandling.CONTINUE_ON_FAILURE).replace('page ', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
+                    'aria-label', FailureHandling.CONTINUE_ON_FAILURE), false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'click first page'
         WebUI.click(findTestObject('e-Meterai Monitoring/button_FirstPage'))
 
         'verify paging di page 1'
-        checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('e-Meterai Monitoring/paging_Page'), 'ng-reflect-page', 
-                    FailureHandling.CONTINUE_ON_FAILURE), '1', false, FailureHandling.CONTINUE_ON_FAILURE))
+        checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('e-Meterai Monitoring/paging_Page'), 'aria-label', 
+                    FailureHandling.CONTINUE_ON_FAILURE), 'page 1', false, FailureHandling.CONTINUE_ON_FAILURE))
     }
 }
 

@@ -68,9 +68,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'ganti fokus robot ke tab baru'
         WebUI.switchToWindowIndex(currentTab)
 
-        'click menu MessageDeliveryReport'
-        WebUI.click(findTestObject('MessageDeliveryReport/menu_MessageDeliveryReport'))
-
+		'focus ke menu'
+		WebUI.click(findTestObject('MessageDeliveryReport/menu_MessageDeliveryReport'))
+		
         'click menu MessageDeliveryReport'
         WebUI.click(findTestObject('MessageDeliveryReport/menu_MessageDeliveryReport'))
 
@@ -123,79 +123,44 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'Jika bukan di page 1, verifikasi menggunakan button Lastest. Get row lastest'
             getColumn = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-list-message-delivery-report > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller > datatable-row-wrapper:nth-child(1) > datatable-body-row datatable-body-cell'))
 
+			ArrayList<String> result = CustomKeywords.'connection.messageDeliveryReport.getFilterMessageDeliveryReport'(
+				conneSign, GlobalVariable.Tenant, storeHashMapForVerify())
+			
+			'array index'
+			arrayIndex = 0
             for (i = 1; i <= getRow.size(); i++) {
+				if (getRow.size() == 0) {
+					'Failed alasan save gagal tidak bisa diklik.'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+						((findTestData(excelPathMessageDeliveryReport).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') +
+						GlobalVariable.ReasonFailedNoneUI + ' pada menu Message Delivery Report '))
+					break
+				}
                 for (j = 1; j <= getColumn.size(); j++) {
+					if (j == 2) {
+						'modify object lbl tanggal permintaan'
+						modifyObject = WebUI.modifyObjectProperty(findTestObject('Object Repository/MessageDeliveryReport/modifyObject'),
+							'xpath', 'equals', ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-list-message-delivery-report/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+							i) + ']/datatable-body-row/div[2]/datatable-body-cell[') + j) + ']/div/span', true)
+					} else {
                     'modify object lbl tanggal permintaan'
                     modifyObject = WebUI.modifyObjectProperty(findTestObject('Object Repository/MessageDeliveryReport/modifyObject'), 
                         'xpath', 'equals', ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-list-message-delivery-report/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
                         i) + ']/datatable-body-row/div[2]/datatable-body-cell[') + j) + ']/div/p', true)
+					}
+					 'verify trx no ui = db'
+					 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObject), 
+						 result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' terhadap kolom ke ' + j)
 
-                    ArrayList<String> result = CustomKeywords.'connection.messageDeliveryReport.getFilterMessageDeliveryReport'(
-                        conneSign, GlobalVariable.Tenant, storeHashMapForVerify())
-					
-					println result
                 }
             }
         }
-        
-        arrayIndex = 0
-
-        'verify trx no ui = db'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Saldo/label_TableTrxNo')), 
-                result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Trx No')
-
-        'verify tgl trx ui = db'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Saldo/label_TableTglTrx')), 
-                result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Tgl Trx')
-
-        'verify tipe trx ui = db'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Saldo/label_TableTipeTrx')), 
-                result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Tipe Trx')
-
-        'verify trx oleh ui = db'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Saldo/label_TableTrxOleh')), 
-                result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Trx Oleh')
-
-        'verify no kontrak ui = db'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Saldo/label_TableNoKontrak')), 
-                result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' No Kontrak')
-
-        'verify tipe dok ui = db'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Saldo/label_TableTipeDok')), 
-                result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Tipe Dok')
-
-        'verify nama dok ui = db'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Saldo/label_TableNamaDok')), 
-                result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama Dok')
-
-        'verify notes ui = db'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Saldo/label_TableNotes')), 
-                result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Note')
-
-        'verify qty ui = db'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Saldo/label_TableQty')), 
-                result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Qty')
-
-        'verify Total Data ui = db'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Saldo/Label_TotalSaldo')), 
-                (result.size() / 9).toString() + ' total', false, FailureHandling.CONTINUE_ON_FAILURE), ' Total Data Tidak Match')
-
-        if (findTestData(excelPathMessageDeliveryReport).getValue(GlobalVariable.NumofColm, rowExcel('Download File')) == 
-        'Yes') {
-            'klik pada tombol unduh excel'
-            WebUI.click(findTestObject('Object Repository/Saldo/button_UnduhExcel'))
-
-            WebUI.delay(10)
-
-            'pengecekan file yang sudah didownload'
-            boolean isDownloaded = CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathMessageDeliveryReport).getValue(
-                    GlobalVariable.NumofColm, rowExcel('Delete Downloaded File ?')))
-
-            println(isDownloaded)
-
-            'jika file tidak terdeteksi telah terdownload'
-            checkVerifyEqualOrMatch(WebUI.verifyEqual(isDownloaded, true, FailureHandling.CONTINUE_ON_FAILURE), GlobalVariable.ReasonFailedDownload)
-        }
+		
+		if (GlobalVariable.FlagFailed == 0) {
+			'write to excel success'
+			CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
+				1, GlobalVariable.StatusSuccess)
+		}
     }
 }
 
