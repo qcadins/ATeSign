@@ -30,15 +30,15 @@ if (isLocalhost == 0 || isLocalhost == null) {
 	'bukan dan arahkan ke gdk esign'
 	WebUI.openBrowser(findTestData('Login/Login').getValue(1, 2))
 	
-	'navigate to url esign'
-	WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 2))
+//	'navigate to url esign'
+//	WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 2))
+//	
+//	'maximized window'
+//	WebUI.maximizeWindow()
 	
-	'maximized window'
-	WebUI.maximizeWindow()
+	WebUI.delay(20)
 	
-	//WebUI.delay(20)
-	
-	//WebUI.navigateToUrl(GlobalVariable.urlLocalHost + '/login')
+	WebUI.navigateToUrl(GlobalVariable.urlLocalHost + '/login')
 }
 
 'input email'
