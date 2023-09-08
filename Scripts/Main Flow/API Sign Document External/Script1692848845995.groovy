@@ -59,9 +59,6 @@ for (o = 0; o < documentId.size(); o++) {
     HashMap<String, String> saldoBefore = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathAPISignDocument
             , ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
 
-	println saldoBefore
-	WebUI.delay(100)
-
     ArrayList<String> saldoAfter = []
 
     if (vendor.toUpperCase() != 'PRIVY') {
@@ -87,17 +84,9 @@ for (o = 0; o < documentId.size(); o++) {
     GlobalVariable.FlagFailed = 0
 
     'Inisialisasi otp, photo, ipaddress, dan total signed sebelumnya yang dikosongkan'
-    String otp
+    String otp, photo, ipaddress
 
-    String photo
-
-    String ipaddress
-
-    ArrayList<String> totalSignedBefore = []
-
-    ArrayList<String> totalSignedAfter = []
-
-    ArrayList<String> flaggingOTP = []
+    ArrayList<String> totalSignedBefore = [], totalSignedAfter = [], flaggingOTP = []
 
     'Split dokumen id agar mendapat dokumenid 1 per 1 dengan case bulk'
     documentId = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(
@@ -830,9 +819,8 @@ def verifySaldoSigned(Connection conneSign, String documentId) {
 
                             'Jika saldonya belum masuk dengan flag, maka signnya gagal.'
                             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                                GlobalVariable.StatusFailed, (((((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
-                                    2) + ';') + GlobalVariable.ReasonFailedSignGagal) + ' terlihat pada Kuantitas di Mutasi Saldo dengan nomor kontrak ') + 
-                                '<') + noKontrak) + '>')
+                                GlobalVariable.StatusFailed, ';' + GlobalVariable.ReasonFailedSignGagal + ' terlihat pada Kuantitas di Mutasi Saldo dengan nomor kontrak ' + 
+                                '<' + noKontrak + '>')
                         }
                     } else if (u == variableSaldoColumn.size()) {
                         'Jika di kolom ke 10, atau di FE table saldo, check saldo dari table dengan saldo yang sekarang. Takeout dari dev karena no issue dan sudah sepakat'
@@ -851,7 +839,7 @@ def verifySaldoSigned(Connection conneSign, String documentId) {
             if (d == 6) {
                 'Jika masih tidak ada'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                    (((((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + 
+                    (((((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + 
                     ';') + GlobalVariable.ReasonFailedNoneUI) + ' dengan nomor kontrak ') + '<') + noKontrak) + '>')
             }
             
