@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>button_KembaliBiom</name>
+   <tag></tag>
+   <elementGuidId>0bc33cd3-a0b7-41e4-81d5-ae8497490f53</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>CSS</key>
+         <value>button.btn.btn-light</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>(.//*[normalize-space(text()) and normalize-space(.)='Email'])[1]/following::button[1]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>XPATH</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>button</value>
+      <webElementGuid>b90e8aef-7ee2-471b-a717-94b9c64abca1</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>btn btn-light</value>
+      <webElementGuid>5fc0ffb3-ff58-4485-8fa6-a00d705c657e</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>Kembali</value>
+      <webElementGuid>08dc9447-2117-47cf-bb4a-7f0159203ac5</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html[1]/body[@class=&quot;vertical-layout menu-hide navbar-static pace-done modal-open&quot;]/ngb-modal-window[@class=&quot;d-block modal fade show&quot;]/div[@class=&quot;modal-dialog modal-l&quot;]/div[@class=&quot;modal-content&quot;]/app-camera-liveness[1]/div[@class=&quot;modal-footer justify-content-center text-center&quot;]/button[@class=&quot;btn btn-light&quot;]</value>
+      <webElementGuid>3b37a1b3-112e-4f7a-983c-b9f7d96a5d7f</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Email'])[1]/following::button[1]</value>
+      <webElementGuid>6a79b669-0156-4d52-9cc6-156950bdf6fa</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Verifikasi Wajah'])[1]/following::button[2]</value>
+      <webElementGuid>bdb9e4cb-c2c6-4458-9d79-127a13188115</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Proses'])[2]/preceding::button[1]</value>
+      <webElementGuid>cf435974-5806-45e2-8ec2-f230c2b1d16a</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>//*/text()[normalize-space(.)='Kembali']/parent::*</value>
+      <webElementGuid>fcb850f5-47f7-49bb-85ff-176bd75e22cf</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//div[3]/button</value>
+      <webElementGuid>89366e6e-7cf1-49f3-a36a-df1aeb3b0e4c</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//button[(text() = 'Kembali' or . = 'Kembali')]</value>
+      <webElementGuid>f37b9c5c-9515-4ea6-94af-96dc40931e44</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>
