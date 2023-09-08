@@ -10,13 +10,14 @@ import internal.GlobalVariable as GlobalVariable
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
 'Pembuatan pengisian variable di sendRequest per jumlah documentId.'
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_Excel_Path).columnNumbers; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 3; GlobalVariable.NumofColm <= findTestData(API_Excel_Path).columnNumbers; (GlobalVariable.NumofColm)++) {
 
 	'setting menggunakan base url yang benar atau salah'
-	CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPIDownload, GlobalVariable.NumofColm, 28)
+	//CustomKeywords.'connection.APIFullService.settingBaseUrl'(API_Excel_Path, GlobalVariable.NumofColm, 28)
 	
     'declare arraylist untuk list, listdocid, listemail'
-    ArrayList<String> list, listDocId, listEmail
+    ArrayList<String> list = []
+	ArrayList listDocId = [], listEmail = []
 
     'list dengan array 0 harus kosong'
     (listDocId[0]) = ''
