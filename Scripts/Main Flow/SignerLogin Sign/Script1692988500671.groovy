@@ -647,9 +647,7 @@ for (o = 0; o < documentId.size(); o++) {
                                 'Jika bukan untuk 2 kolom itu, maka check ke db'
                                 checkVerifyEqualorMatch(WebUI.verifyMatch('-' + WebUI.getText(modifyperrowpercolumn), inquiryDB[
                                         index++], false, FailureHandling.CONTINUE_ON_FAILURE), 'pada Kuantitas di Mutasi Saldo dengan nomor kontrak ' + 
-                                    (noKontrakPerDoc[i])) //   checkVerifyEqualorMatch(WebUI.verifyEqual(Integer.parseInt(WebUI.getText(modifyperrowpercolumn)),
-                                //           Integer.parseInt(saldoSignBefore) - saldoUsedperDoc, FailureHandling.CONTINUE_ON_FAILURE),
-                                //       ' pada Saldo di Mutasi Saldo dengan nomor kontrak ' + (noKontrakPerDoc[i]))
+                                    (noKontrakPerDoc[i]))
                             } else {
                                 'Jika bukan -1, atau masih 0. Maka ttdnya dibilang error'
                                 GlobalVariable.FlagFailed = 1
@@ -700,83 +698,6 @@ for (o = 0; o < documentId.size(); o++) {
 
 def rowExcel(String cellValue) {
     return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, 'Main', cellValue)
-}
-
-def checkSaldoSign(String vendor) {
-    String totalSaldo
-
-    'klik ddl untuk tenant memilih mengenai Vida'
-    WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), vendor, false)
-
-    'get total div di Saldo'
-    variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
-
-    'looping berdasarkan total div yang ada di saldo'
-    for (int c = 1; c <= variableDivSaldo.size(); c++) {
-        'modify object mengenai find tipe saldo'
-        modifyObjectFindSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_saldo'), 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + 
-            (c + 1)) + ']/div/div/div/div/div[1]', true)
-
-        'verifikasi label saldonya '
-        if (WebUI.verifyElementText(modifyObjectFindSaldoSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
-                rowExcel('Tipe')), FailureHandling.OPTIONAL)) {
-            'modify object mengenai ambil total jumlah saldo'
-            modifyObjecttotalSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_countsaldo'), 'xpath', 'equals', 
-                ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + (c + 1)) + ']/div/div/div/div/div[2]', 
-                true)
-
-            'mengambil total saldo yang pertama'
-            totalSaldo = WebUI.getText(modifyObjecttotalSaldoSign)
-
-            break
-        }
-    }
-    
-    'return total saldo awal'
-    return totalSaldo
-    
-    'tutup browsernya'
-    WebUI.closeBrowser()
-}
-
-def checkSaldoOtp(String vendor) {
-    String totalSaldo
-
-    if (vendor.equalsIgnoreCase('Privy')) {
-        vendor = 'PRIVY'
-    } else {
-        vendor = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('vendorOTP'))
-    }
-    
-    'klik ddl untuk tenant memilih mengenai Vida'
-    WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), vendor, false)
-
-    'get total div di Saldo'
-    variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
-
-    'looping berdasarkan total div yang ada di saldo'
-    for (int c = 1; c <= variableDivSaldo.size(); c++) {
-        'modify object mengenai find tipe saldo'
-        modifyObjectFindSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_saldo'), 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + 
-            (c + 1)) + ']/div/div/div/div/div[1]', true)
-
-        'verifikasi label saldonya '
-        if (WebUI.verifyElementText(modifyObjectFindSaldoSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
-                rowExcel('TipeOTP')), FailureHandling.OPTIONAL)) {
-            'modify object mengenai ambil total jumlah saldo'
-            modifyObjecttotalSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_countsaldo'), 'xpath', 'equals', 
-                ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + (c + 1)) + ']/div/div/div/div/div[2]', 
-                true)
-
-            'mengambil total saldo yang pertama'
-            totalSaldo = WebUI.getText(modifyObjecttotalSaldoSign)
-
-            break
-        }
-    }
-    
-    'return total saldo awal'
-    return totalSaldo
 }
 
 def checkVerifyEqualorMatch(Boolean isMatch, String reason) {
