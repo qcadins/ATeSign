@@ -48,7 +48,7 @@ for (int i = 1; i <= documentIds.size(); i++) {
 if (arrayMatch.contains(false)) {
     'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(GlobalVariable.Response, GlobalVariable.NumofColm, 
-        GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
+        GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
 	
 	GlobalVariable.FlagFailed = 1
 }

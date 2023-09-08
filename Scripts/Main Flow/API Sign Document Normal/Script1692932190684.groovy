@@ -122,7 +122,7 @@ if (WS.verifyResponseStatusCode(respon_login, 200, FailureHandling.OPTIONAL) == 
 						'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
 						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 							GlobalVariable.StatusFailed, ((findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,
-								2) + ';') + GlobalVariable.ReasonFailedSignGagal) + ' dalam jeda waktu 200 detik ')
+								rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedSignGagal) + ' dalam jeda waktu 200 detik ')
 	
 						GlobalVariable.FlagFailed = 1
 					} else {
@@ -140,7 +140,7 @@ if (WS.verifyResponseStatusCode(respon_login, 200, FailureHandling.OPTIONAL) == 
 } else {
     'write to excel status failed dan reason : failed hit api'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-        GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + 
+        GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + 
         ';') + GlobalVariable.ReasonFailedHitAPI)
 
     'close browser'
@@ -329,7 +329,7 @@ def verifySaldoSigned(Connection conneSign, String documentId) {
 							'Jika saldonya belum masuk dengan flag, maka signnya gagal.'
 							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 								GlobalVariable.StatusFailed, (((((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm,
-									2) + ';') + GlobalVariable.ReasonFailedSignGagal) + ' terlihat pada Kuantitas di Mutasi Saldo dengan nomor kontrak ') +
+									rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedSignGagal) + ' terlihat pada Kuantitas di Mutasi Saldo dengan nomor kontrak ') +
 								'<') + noKontrak) + '>')
 						}
 					} else if (u == variableSaldoColumn.size()) {
@@ -349,7 +349,7 @@ def verifySaldoSigned(Connection conneSign, String documentId) {
 			if (d == 6) {
 				'Jika masih tidak ada'
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-					(((((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') +
+					(((((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') +
 					';') + GlobalVariable.ReasonFailedNoneUI) + ' dengan nomor kontrak ') + '<') + noKontrak) + '>')
 			}
 			

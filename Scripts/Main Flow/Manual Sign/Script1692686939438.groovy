@@ -395,7 +395,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 
     if (GlobalVariable.FlagFailed == 0) {
         'write to excel success'
-        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Status'), GlobalVariable.NumofColm - 
+        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Status') - 1, GlobalVariable.NumofColm - 
             1, GlobalVariable.StatusSuccess)
 
         if (GlobalVariable.checkStoreDB == 'Yes') {

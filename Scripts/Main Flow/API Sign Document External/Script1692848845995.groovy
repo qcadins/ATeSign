@@ -61,26 +61,6 @@ for (o = 0; o < documentId.size(); o++) {
 
     ArrayList<String> saldoAfter = []
 
-    if (vendor.toUpperCase() != 'PRIVY') {
-        vendor = 'ESIGN/ADINS'
-
-        if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Wrong OTP (Sign External)')) != 
-        '') {
-            isSplit = CustomKeywords.'connection.APIFullService.getSplitLivenessFaceCompareBill'(conneSign)
-
-            if (isSplit == '1') {
-                paymentType = ['Liveness', 'Face Compare']
-            } else {
-                paymentType = ['Liveness Face Compare']
-            }
-        } else {
-            paymentType = ['OTP']
-        }
-    } else {
-        paymentType = ['OTP']
-    }
-    
-
     GlobalVariable.FlagFailed = 0
 
     'Inisialisasi otp, photo, ipaddress, dan total signed sebelumnya yang dikosongkan'
@@ -120,7 +100,6 @@ for (o = 0; o < documentId.size(); o++) {
 
     if (vendor.equalsIgnoreCase('Privy')) {
         'request OTP dengan HIT API'
-
         'Constraint : Dokumen yang dipasang selalu dengan referal number di dokumen pertama.'
         respon_OTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing', [('callerId') : findTestData(
                         excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('callerId (Sign External)')).split(
@@ -179,7 +158,7 @@ for (o = 0; o < documentId.size(); o++) {
         } else {
             'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.HITAPI Gagal'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedOTPError)
+                (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedOTPError)
         }
     } else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use correct OTP From Database (Sign External)')) == 
     'No') {
@@ -304,7 +283,7 @@ for (o = 0; o < documentId.size(); o++) {
                                         'Write To Excel GlobalVariable.StatusFailed dengan alasan bahwa saldo transaksi '
                                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                                             GlobalVariable.StatusFailed, ((((findTestData(excelPathAPISignDocument).getValue(
-                                                GlobalVariable.NumofColm, 2) + ';') + ' Transaksi dengan nomor ') + ('<' + 
+                                                GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + ' Transaksi dengan nomor ') + ('<' + 
                                             (trxNo[i]))) + '> digunakan untuk ') + checkTypeofUsedSaldo)
                                     }
                                 }
@@ -318,7 +297,7 @@ for (o = 0; o < documentId.size(); o++) {
                                 'Write To Excel GlobalVariable.StatusFailed dengan alasan bahwa saldo transaksi '
                                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                                     GlobalVariable.StatusFailed, ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
-                                        2) + ';') + GlobalVariable.ReasonFailedNoneUI) + ' terhadap pemotongan saldo ')
+                                        rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedNoneUI) + ' terhadap pemotongan saldo ')
                             } else {
                                 if (trxNo != null) {
                                     verifySaldoUsedForLiveness(conneSign, trxNo)
@@ -332,7 +311,7 @@ for (o = 0; o < documentId.size(); o++) {
                             'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
                             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                                 GlobalVariable.StatusFailed, ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
-                                    2) + ';') + GlobalVariable.ReasonFailedSignGagal) + ' dalam jeda waktu 200 detik ')
+                                    rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedSignGagal) + ' dalam jeda waktu 200 detik ')
 
                             GlobalVariable.FlagFailed = 1
                         } else {
@@ -437,7 +416,7 @@ def responseAPIStoreDB(Connection conneSign, String ipaddress, String[] document
     if (arrayMatch.contains(false)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
+            (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
     }
 }
 
@@ -681,7 +660,7 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
+            ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
             reason)
 
         GlobalVariable.FlagFailed = 1
@@ -694,7 +673,7 @@ def getErrorMessageAPI(def respon) {
 
     'Write To Excel GlobalVariable.StatusFailed and errormessage'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-        ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 2) + ';') + ('<' + message)) + '>')
+        ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + ('<' + message)) + '>')
 
     GlobalVariable.FlagFailed = 1
 }

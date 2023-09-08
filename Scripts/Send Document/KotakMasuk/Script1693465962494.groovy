@@ -33,7 +33,7 @@ for (int y = 0; y < docId.size(); y++) {
     'looping berdasarkan email Signer dari dokumen tersebut. '
     for (int t = 0; t < emailSigner.size(); t++) {
         'call Test Case untuk login sebagai user berdasarkan doc id'
-        WebUI.callTestCase(findTestCase('Login/Login_1docManySigner'), [('email') : emailSigner[t], , ('mustFaceComp') : mustFaceCompDB], FailureHandling.STOP_ON_FAILURE)
+        WebUI.callTestCase(findTestCase('Login/Login_1docManySigner'), [('email') : emailSigner[t]], FailureHandling.STOP_ON_FAILURE)
 		
 		WebUI.delay(10)
 		
@@ -50,13 +50,14 @@ for (int y = 0; y < docId.size(); y++) {
 		
 		'query untuk input pencarian dokumen'
 		ArrayList inputPencarianDokumen = CustomKeywords.'connection.SendSign.getDataPencarianDokumen'(conneSign, emailSigner[t], docId[y])  
-		
-		String roleInput = CustomKeywords.'connection.SendSign.getRoleLogin'(conneSign, emailSigner[t], GlobalVariable.Tenant)
-		
+
 		'inisialisasi arrayindex'
 		arrayIndex = 0
-
-	if (roleInput == 'MF') {
+		
+		WebUI.focus(findTestObject('PencarianDokumen/input_NamaPelanggan'), FailureHandling.OPTIONAL)
+		if (WebUI.verifyElementPresent(findTestObject('PencarianDokumen/input_NamaPelanggan'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+			GlobalVariable.roleLogin = 'BM MF'
+	
 		'input nama pelanggan'
 		WebUI.setText(findTestObject('PencarianDokumen/input_NamaPelanggan'), inputPencarianDokumen[arrayIndex++])
 
@@ -80,6 +81,8 @@ for (int y = 0; y < docId.size(); y++) {
 
 		'click enter untuk input select ddl'
 		WebUI.sendKeys(findTestObject('PencarianDokumen/select_TipeDokumen'), Keys.chord(Keys.ENTER))
+	}  else {
+		GlobalVariable.roleLogin = 'Customer'
 	}
         'input status'
         WebUI.setText(findTestObject('PencarianDokumen/select_Status'), CustomKeywords.'connection.SendSign.getSignStatus'(
@@ -166,7 +169,7 @@ for (int y = 0; y < docId.size(); y++) {
                             conneSign, docId[y]), false, FailureHandling.CONTINUE_ON_FAILURE))
             } else if (i == 4) {
 				'Jika login sebagai MF'
-				if (roleInput != 'CUST') {
+				if (GlobalVariable.roleLogin != 'Customer') {
 					'Diverifikasi dengan UI didepan'
 					arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectPencarianDokumen), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 					
@@ -227,7 +230,7 @@ for (int y = 0; y < docId.size(); y++) {
             'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
             variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell['+ indexRow++ +']/div', true)
 
-		if (roleInput != 'CUST') {
+		if (GlobalVariable.roleLogin != 'Customer') {
 			'modify object text nama customer'
 			modifyObjectTextNamaCustomer = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_Berandaname'), 'xpath',
 				'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
@@ -273,7 +276,7 @@ for (int y = 0; y < docId.size(); y++) {
         arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectTextDocumentTemplateName), result[arrayIndex++], false, 
                 FailureHandling.CONTINUE_ON_FAILURE))
 		
-		if (roleInput != 'CUST') {
+		if (GlobalVariable.roleLogin != 'Customer') {
 			'verifikasi nama customer'
 			arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectTextNamaCustomer), result[arrayIndex++], false,
 				FailureHandling.CONTINUE_ON_FAILURE))
@@ -413,9 +416,13 @@ for (int y = 0; y < docId.size(); y++) {
         }
     }
     
+	String isManualSign = ''
+	if (excelPathFESignDocument.toString().contains('ManualSign')) {
+		isManualSign = 'Yes'
+	}
 	'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
 	WebUI.callTestCase(findTestCase('Document Monitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument
-	 , ('sheet') : sheet, ('isManualSign') : 'Yes'], FailureHandling.CONTINUE_ON_FAILURE)
+	 , ('sheet') : sheet, ('isManualSign') : isManualSign], FailureHandling.CONTINUE_ON_FAILURE)
 
 
     'jika data db tidak sesuai dengan excel'

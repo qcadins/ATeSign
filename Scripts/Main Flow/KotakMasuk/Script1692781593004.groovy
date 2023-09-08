@@ -100,7 +100,7 @@ for (int y = 0; y < docId.size(); y++) {
             'Write excel tidak ada di UI pada menu Pencarian Dokumen.'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                 GlobalVariable.StatusFailed, ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
-                    2) + ';') + GlobalVariable.ReasonFailedNoneUI) + ' pada menu Pencarian Dokumen')
+                    rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedNoneUI) + ' pada menu Pencarian Dokumen')
         }
         
         'Agar dapat ke Lastest pada Pencarian Dokumen, diambil selector'
@@ -307,7 +307,7 @@ for (int y = 0; y < docId.size(); y++) {
         if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
             'Tulis di excel itu adalah error'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + 
+                GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
                 ';') + '<' + WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label') + '>')
         }
         
@@ -389,7 +389,7 @@ for (int y = 0; y < docId.size(); y++) {
 
 					'Tulis di excel itu adalah error'
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-						(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<' + errormessage + '>')
+						(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + '<' + errormessage + '>')
 		}
 		
             'Pemberian waktu 3 detik karena loading terus menerus'
@@ -414,7 +414,7 @@ for (int y = 0; y < docId.size(); y++) {
                 WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_backViewDokumen'))
             } else {
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                    ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedProcessNotDone) + 
+                    ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedProcessNotDone) + 
                     ' untuk proses View dokumen tanda tangan. ')
             }
         }
@@ -429,7 +429,7 @@ for (int y = 0; y < docId.size(); y++) {
     if (arrayMatch.contains(false)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedNoneUI)
+            (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedNoneUI)
     }}
 
 def rowExcel(String cellValue) {

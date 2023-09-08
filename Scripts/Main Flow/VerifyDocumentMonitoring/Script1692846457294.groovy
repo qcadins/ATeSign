@@ -90,7 +90,7 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
             if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
                 'Tulis di excel itu adalah error'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                    (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + ';') + '<') + WebUI.getAttribute(
+                    (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + '<') + WebUI.getAttribute(
                         findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label')) + '>')
 
                 break
@@ -189,7 +189,7 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
         } else {
             'Jika tidak ada, maka datanya tidak ada di UI.'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + 
+                ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + 
                 GlobalVariable.ReasonFailedNoneUI) + ' pada Page Document Monitoring.')
 
             GlobalVariable.FlagFailed = 1
@@ -268,7 +268,7 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
         } else {
             'Jika tidak ada, maka datanya tidak ada di UI.'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + 
+                ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + 
                 GlobalVariable.ReasonFailedNoneUI) + ' pada Page Document Monitoring.')
 
             GlobalVariable.FlagFailed = 1
@@ -281,7 +281,7 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
 
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedStoredDB) + 
+            ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + GlobalVariable.ReasonFailedStoredDB) + 
             ' pada menu Document Monitoring ')
     }
     
@@ -311,7 +311,7 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
 
                 'Tulis di excel itu adalah error'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                    (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + 
+                    (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + 
                     '<') + errormessage) + '>')
             }
             
@@ -338,8 +338,8 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
 
                         'Write To Excel GlobalVariable.StatusFailed and errormessage'
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                            GlobalVariable.StatusFailed, (GlobalVariable.ReasonFailedProsesStamping + ' dengan alasan ') + 
-                            errorMessageDB.toString())
+                            GlobalVariable.StatusFailed, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';' + GlobalVariable.ReasonFailedProsesStamping + ' dengan alasan ') + 
+                            errorMessageDB.toString()
 
                         GlobalVariable.FlagFailed = 1
 
@@ -364,7 +364,7 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                             'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
                             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                                 GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
-                                    2) + ';') + GlobalVariable.ReasonFailedStoredDB)
+                                    rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
 
                             GlobalVariable.FlagFailed = 1
                         }
@@ -379,7 +379,7 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                             'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
                             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                                 GlobalVariable.StatusFailed, ((((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
-                                    2) + ';') + GlobalVariable.ReasonFailedProsesStamping) + ' dengan jeda waktu ') + (i * 
+                                    rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedProsesStamping) + ' dengan jeda waktu ') + (i * 
                                 12)) + ' detik ')
 
                             GlobalVariable.FlagFailed = 1
@@ -458,7 +458,7 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
         } else {
             'Jika tidak ada, maka datanya tidak ada di UI.'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + 
+                ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + 
                 GlobalVariable.ReasonFailedNoneUI) + ' pada Page Document Monitoring.')
 
             GlobalVariable.FlagFailed = 1
@@ -475,16 +475,16 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
             if (saldoBefore == saldoAfter) {
                 'write to excel status failed dan reason'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                    ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + 
+                    ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + 
                     GlobalVariable.ReasonFailedVerifyEqualOrMatch) + ' terhadap total saldo dimana saldo awal dan saldo setelah meterai sama ')
             } else {
-                verifySaldoUsed(conneSign, sheet)
+                verifySaldoUsed(conneSign, sheet, nomorKontrak)
             }
         } else {
             if (saldoBefore != saldoAfter) {
                 'write to excel status failed dan reason'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                    ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + 
+                    ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + 
                     GlobalVariable.ReasonFailedVerifyEqualOrMatch) + ' terhadap total saldo dimana saldo awal dan saldo setelah meterai tidak sama ')
             }
         }
@@ -529,15 +529,13 @@ def loginAdminGetSaldo(Connection conneSign, String start, String sheet) {
     return totalSaldo
 }
 
-def verifySaldoUsed(Connection conneSign, String sheet) {
+def verifySaldoUsed(Connection conneSign, String sheet, String nomorKontrak) {
     'get current date'
     def currentDate = new Date().format('yyyy-MM-dd')
 
-    documentType = CustomKeywords.'connection.APIFullService.getDocumentType'(conneSign, findTestData(excelPathStamping).getValue(
-            GlobalVariable.NumofColm, 11).replace('"', ''))
+    documentType = CustomKeywords.'connection.APIFullService.getDocumentType'(conneSign, nomorKontrak)
 
-    documentName = CustomKeywords.'connection.DataVerif.getDocumentName'(conneSign, findTestData(excelPathStamping).getValue(
-            GlobalVariable.NumofColm, 11).replace('"', ''))
+    documentName = CustomKeywords.'connection.DataVerif.getDocumentName'(conneSign, nomorKontrak)
 
     'klik ddl untuk tenant memilih mengenai Vida'
     WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)
@@ -567,8 +565,7 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
     WebUI.sendKeys(findTestObject('Saldo/input_tipedokumen'), Keys.chord(Keys.ENTER))
 
     'Input referal number'
-    WebUI.setText(findTestObject('Saldo/input_refnumber'), findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 
-            11).replace('"', ''))
+    WebUI.setText(findTestObject('Saldo/input_refnumber'),nomorKontrak)
 
     'Input documentTemplateName'
     WebUI.setText(findTestObject('Saldo/input_namadokumen'), documentName, FailureHandling.CONTINUE_ON_FAILURE)
@@ -586,8 +583,7 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
     variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper '))
 
     'ambil inquiry di db'
-    ArrayList inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldoForMeterai'(conneSign, findTestData(excelPathStamping).getValue(
-            GlobalVariable.NumofColm, 11).replace('"', ''))
+    ArrayList inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldoForMeterai'(conneSign,nomorKontrak)
 
     index = 0
 
@@ -606,7 +602,7 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
                     'Jika bukan untuk 2 kolom itu, maka check ke db'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch('-' + WebUI.getText(modifyperrowpercolumn), inquiryDB[index], 
                             false, FailureHandling.CONTINUE_ON_FAILURE), 'pada Kuantitas di Mutasi Saldo dengan nomor kontrak ' + 
-                        findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 11).replace('"', ''))
+                        nomorKontrak)
 
                     index++
                 } else {
@@ -615,9 +611,8 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
 
                     'Jika saldonya belum masuk dengan flag, maka signnya gagal.'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                        GlobalVariable.StatusFailed, (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
-                            2) + ';') + GlobalVariable.ReasonFailedSignGagal) + ' terlihat pada Kuantitas di Mutasi Saldo dengan nomor kontrak ') + 
-                        findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 11).replace('"', ''))
+                        GlobalVariable.StatusFailed, ((GlobalVariable.ReasonFailedSignGagal) + ' terlihat pada Kuantitas di Mutasi Saldo dengan nomor kontrak ') + 
+                        nomorKontrak)
 
                     index++
                 }
@@ -626,8 +621,7 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
             } else {
                 'check table'
                 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyperrowpercolumn), inquiryDB[index], false, 
-                        FailureHandling.CONTINUE_ON_FAILURE), 'pada Mutasi Saldo dengan nomor Kontrak ' + findTestData(excelPathStamping).getValue(
-                        GlobalVariable.NumofColm, 11).replace('"', ''))
+                        FailureHandling.CONTINUE_ON_FAILURE), 'pada Mutasi Saldo dengan nomor Kontrak ' + nomorKontrak)
 
                 index++
             }
