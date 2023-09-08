@@ -125,9 +125,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
 			ArrayList<String> result = CustomKeywords.'connection.messageDeliveryReport.getFilterMessageDeliveryReport'(
 				conneSign, GlobalVariable.Tenant, storeHashMapForVerify())
-			
-			println result
-			WebUI.delay(10)
+
 			'array index'
 			arrayIndex = 0
             for (i = 1; i <= getRow.size(); i++) {
