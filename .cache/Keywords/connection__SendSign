@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "F2112FE09C48AADA860092BD36D687AD",
+  "keywordFileContentHash": "02339AB2164D738B3DA85F36CF68596E",
   "keywordClasses": [
     {
       "name": "connection.SendSign",
@@ -849,38 +849,6 @@
             },
             {
               "name": "documentId",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.lang.String",
-                "unresolvedClassName": "String",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            }
-          ],
-          "javadoc": ""
-        },
-        {
-          "name": "getIsSplitLivenessFaceCompActive",
-          "parameters": [
-            {
-              "name": "conn",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.sql.Connection",
-                "unresolvedClassName": "Connection",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            },
-            {
-              "name": "tenantcode",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
