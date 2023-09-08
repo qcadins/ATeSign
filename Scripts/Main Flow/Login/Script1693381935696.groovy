@@ -108,7 +108,7 @@ if (email == '') {
         if (errormessage != null) {
             'Tulis di excel itu adalah error'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusWarning, 
-                (((findTestData(excel).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<') + errormessage) + 
+                (((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + '<') + errormessage) + 
                 '>')
 
             GlobalVariable.FlagFailed = 1
@@ -121,7 +121,7 @@ if (email == '') {
         if (errormessage != null) {
             'write to excel reason warning'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 1, GlobalVariable.NumofColm - 
-                1, (((findTestData(excel).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<') + errormessage) + 
+                1, (((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + '<') + errormessage) + 
                 '>')
         }
     }

@@ -379,7 +379,7 @@ public class SendSign {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select case when amm2.full_name is null then '' else amm2.full_name end, tdh.ref_number, msl.description from tr_document_d_sign tdds left join am_msuser amm on tdds.id_ms_user = amm.id_ms_user left join tr_document_d tdd on tdds.id_document_d = tdd.id_document_d left join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h left join ms_lov msl_signertype on tdds.lov_signer_type = msl_signertype.id_lov left join ms_lov msl on tdh.lov_doc_type = msl.id_lov left join am_msuser amm2 on tdh.id_msuser_customer = amm2.id_ms_user where amm.login_id = '"+emailSigner+"' and tdd.document_id = '"+documentId+"' limit 1")
-		
+
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -413,6 +413,21 @@ public class SendSign {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select case when tdh.is_manual_upload is null or tdh.is_manual_upload = '0' then 'No' else 'Yes' end from tr_document_h tdh  left join tr_document_d tdd on tdd.id_document_h = tdh.id_document_h where tdd.document_id = '"+documentId+"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+	
+	@Keyword
+	getSignDocEmbedStoreDB(Connection conn, String documentId) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select TO_CHAR(sign_date, 'yyyy-MM-dd') from tr_document_d_sign tdds JOIN tr_document_d tdd ON tdds.id_document_d = tdd.id_document_d where document_id = '"+documentId+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

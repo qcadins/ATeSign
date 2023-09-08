@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_APISignDocument Only</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>13031bdb-ea43-4781-80b2-057c1a1e5cc7</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>d59838b5-48e4-4a96-93ff-12b132ace89b</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Registrasi/SignDocument'</defaultValue>
+      <description></description>
+      <id>d59838b5-48e4-4a96-93ff-12b132ace89b</id>
+      <masked>false</masked>
+      <name>API_Excel_Path</name>
+   </variable>
+</TestCaseEntity>

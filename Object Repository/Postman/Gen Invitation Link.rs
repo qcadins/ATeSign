@@ -28,7 +28,7 @@
       <matchCondition>equals</matchCondition>
       <name>x-api-key</name>
       <type>Main</type>
-      <value>ASDFGH@ADIRA</value>
+      <value>${apikey}@${tenant}</value>
       <webElementGuid>126edc16-faca-4106-8b50-0c1f188b934d</webElementGuid>
    </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
@@ -50,6 +50,20 @@
       <id>cec17119-f3c0-4ada-89fd-02bb9e45c85e</id>
       <masked>false</masked>
       <name>base_url</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.api_key</defaultValue>
+      <description></description>
+      <id>bfc1f33b-d683-4644-8f0c-a7f77c4eb7cf</id>
+      <masked>false</masked>
+      <name>apikey</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.Tenant</defaultValue>
+      <description></description>
+      <id>20672a21-2ae9-4513-9abb-41d64c550bbb</id>
+      <masked>false</masked>
+      <name>tenant</name>
    </variables>
    <verificationScript>import static org.assertj.core.api.Assertions.*
 

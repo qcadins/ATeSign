@@ -45,7 +45,7 @@ if (isLocalhost == 0 || isLocalhost == null) {
 WebUI.setText(findTestObject('Login/input_Email'), email)
 
 'input password asumsi password = P@ssw0rd'
-WebUI.setText(findTestObject('Login/input_Password'), 'P@ssw0rd')
+WebUI.setText(findTestObject('Login/input_Password'), 'AdIns2022!')
 
 'click button login'
 WebUI.click(findTestObject('Login/button_Login'), FailureHandling.STOP_ON_FAILURE)
