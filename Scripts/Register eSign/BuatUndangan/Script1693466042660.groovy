@@ -30,8 +30,8 @@ countCheckSaldo = 1
 
 GlobalVariable.FlagFailed = 0
 
-'call test case login per case'
-	WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathBuatUndangan, ('Email') : 'Inveditor Login', ('Password') : 'Inveditor Password Login'
+	'call test case login per case'
+	WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : SheetName, ('Path') : excelPathBuatUndangan, ('Email') : 'Inveditor Login', ('Password') : 'Inveditor Password Login'
 		, ('Perusahaan') : 'Inveditor Perusahaan Login', ('Peran') : 'Inveditor Peran Login'], FailureHandling.STOP_ON_FAILURE)
 
 'check ada value maka setting email service tenant'
@@ -292,7 +292,7 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
     ArrayList<String> saldo = []
 
     'call test case login per case'
-	WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathBuatUndangan, ('Email') : 'Email Login', ('Password') : 'Password Login'
+	WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : SheetName, ('Path') : excelPathBuatUndangan, ('Email') : 'Email Login', ('Password') : 'Password Login'
 		, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
 
     'check if button menu visible atau tidak'
