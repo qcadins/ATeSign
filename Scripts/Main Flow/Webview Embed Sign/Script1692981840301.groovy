@@ -646,9 +646,7 @@ for (o = 0; o < documentId.size(); o++) {
                                 checkVerifyEqualorMatch(WebUI.verifyMatch('-' + WebUI.getText(modifyperrowpercolumn), inquiryDB[
                                         index++], false, FailureHandling.CONTINUE_ON_FAILURE), 'pada Kuantitas di Mutasi Saldo dengan nomor kontrak ' + 
                                     (noKontrakPerDoc[i]))
-                            } //   checkVerifyEqualorMatch(WebUI.verifyEqual(Integer.parseInt(WebUI.getText(modifyperrowpercolumn)),
-                            //           Integer.parseInt(saldoSignBefore) - saldoUsedperDoc, FailureHandling.CONTINUE_ON_FAILURE),
-                            //       ' pada Saldo di Mutasi Saldo dengan nomor kontrak ' + (noKontrakPerDoc[i]))
+                            }
                             else {
                                 'Jika bukan -1, atau masih 0. Maka ttdnya dibilang error'
                                 GlobalVariable.FlagFailed = 1
@@ -753,11 +751,8 @@ def checkVerifyEqualorMatch(Boolean isMatch, String reason) {
 		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 			((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) +
 			reason)
-
-		return false
 	}
-	
-	return true
+
 }
 
 def checkPopup() {

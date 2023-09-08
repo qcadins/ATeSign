@@ -33,27 +33,27 @@ for (o = 0; o < documentId.size(); o++) {
             '"', '').replace('[', '').replace(']', ''))
 
     'setting vendor otp dimatikan/diaktifkan'
-    if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Enable User Vendor OTP? (Sign External)')).split(';', -1)[GlobalVariable.indexUsed].length() > 
+    if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Enable User Vendor OTP? (Sign External)')).length() > 
     0) {
         'update setting vendor otp ke table di DB'
         CustomKeywords.'connection.UpdateData.updateVendorOTP'(conneSign, tenantVendor[1], findTestData(excelPathAPISignDocument).getValue(
-                GlobalVariable.NumofColm, rowExcel('Enable User Vendor OTP? (Sign External)')).split(';', -1)[GlobalVariable.indexUsed])
+                GlobalVariable.NumofColm, rowExcel('Enable User Vendor OTP? (Sign External)')))
     }
     
     'setting tenant otp dimatikan/diaktifkan'
-    if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Enable Need OTP for signing? (Sign External)')).split(';', -1)[GlobalVariable.indexUsed].length() > 
+    if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Enable Need OTP for signing? (Sign External)')).length() > 
     0) {
         'update setting otp ke table di DB'
         CustomKeywords.'connection.UpdateData.updateTenantOTPReq'(conneSign, tenantVendor[0], findTestData(excelPathAPISignDocument).getValue(
-                GlobalVariable.NumofColm, rowExcel('Enable Need OTP for signing? (Sign External)')).split(';', -1)[GlobalVariable.indexUsed])
+                GlobalVariable.NumofColm, rowExcel('Enable Need OTP for signing? (Sign External)')))
     }
     
     'setting tenant password dimatikan/diaktifkan'
-    if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Enable Need Password for signing? (Sign External)')).split(';', -1)[GlobalVariable.indexUsed].length() > 
+    if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Enable Need Password for signing? (Sign External)')).length() > 
     0) {
         'update setting pass tenant ke table di DB'
         CustomKeywords.'connection.UpdateData.updateTenantPassReq'(conneSign, tenantVendor[0], findTestData(excelPathAPISignDocument).getValue(
-                GlobalVariable.NumofColm, rowExcel('Enable Need Password for signing? (Sign External)')).split(';', -1)[GlobalVariable.indexUsed])
+                GlobalVariable.NumofColm, rowExcel('Enable Need Password for signing? (Sign External)')))
     }
     
     HashMap<String, String> saldoBefore = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathAPISignDocument
@@ -352,12 +352,11 @@ for (o = 0; o < documentId.size(); o++) {
                         }
                     }
                 }
-            } //   checkVerifyEqualorMatch(WebUI.verifyEqual(Integer.parseInt(WebUI.getText(modifyperrowpercolumn)),
+            }
             else {
                 getErrorMessageAPI(respon)
             }
-            //           Integer.parseInt(saldoSignBefore) - saldoUsedperDoc, FailureHandling.CONTINUE_ON_FAILURE),
-            //       ' pada Saldo di Mutasi Saldo dengan nomor kontrak ' + (noKontrakPerDoc[i]))
+
         } else {
             getErrorMessageAPI(respon)
         }
