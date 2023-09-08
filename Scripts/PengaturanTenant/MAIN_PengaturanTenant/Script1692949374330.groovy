@@ -21,6 +21,8 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'sheet untuk dicetak'
 sheet = 'PengaturanTenant'
 
+int firstRun = 0
+
 'looping berdasarkan Number of column'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathFEPengaturanTenant).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
@@ -28,19 +30,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
     } else if (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 		 GlobalVariable.FlagFailed = 0
 		 
-		 if (GlobalVariable.NumofColm == 2) {
-//			'Call test Case untuk login sebagai admin wom admin client'
-//			WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFEPengaturanTenant, ('sheet') : sheet],
-//				FailureHandling.STOP_ON_FAILURE)
+		 if(findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) !=
+			 findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')) || firstRun == 0) {
+			 'panggil fungsi login'
+			 WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
+				  ('Path') : excelPathFEPengaturanTenant, ('Email') : 'Email Login', ('Password') : 'Password Login'
+				 , ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
 			 
-			'panggil fungsi login'
-			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
-				 ('Path') : excelPathFEPengaturanTenant, ('Email') : '$Username / Email', ('Password') : '$Password',
-				 ('Perusahaan') : '$perusahaan', ('Peran') : '$peran'], FailureHandling.CONTINUE_ON_FAILURE)
-        }
+			 firstRun = 1
+		 }
 
 		'declare result Db setelah edit, result Db untuk sebelum edit, arraylist untuk balance, declare array split dari result di db, array tipe saldo sebelumnya, array saldo dari tipe saldo sebelumnya, dan arrayMatch'
-        ArrayList resultDbNew = [], resultDbPrevious = [], balance = [], arrSplitResultDb = [], arrTipeSaldoBefore = [], arrSaldoTipeSaldoBefore = [], arrayMatch = []
+        ArrayList resultDbPrevious = [], arrSplitResultDb = [], arrTipeSaldoBefore = [], arrSaldoTipeSaldoBefore = []
 
         'declare variable inisialisasi for'
         int i, j
@@ -69,7 +70,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
         'Mengambil hasil db untuk sebelum diedit untuk mendapatkan total emailnya ada berapa'
         resultDbPrevious = CustomKeywords.'connection.PengaturanTenant.getPengaturanTenant'(conneSign, findTestData(excelPathFEPengaturanTenant).getValue(
-                GlobalVariable.NumofColm, rowExcel('$Username / Email')).toUpperCase())
+                GlobalVariable.NumofColm, rowExcel('Email Login')).toUpperCase())
 
         'diskip 2 karena sekaligus pengecekan after. 2 yang diskip mengenai diupdate oleh siapa dan tanggal updatenya'
         arrayIndex = (arrayIndex + 2)
@@ -78,7 +79,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         countEmailBefore = (resultDbPrevious[arrayIndex++]).split(',', -1)
 
         'looping untuk check email'
-        for (index = 24; index < (24 + countEmailBefore.size()); index++) {
+        for (index = 25; index < (25 + countEmailBefore.size()); index++) {
             'modify object untuk input email'
             modifyObjectInputEmail = WebUI.modifyObjectProperty(findTestObject('PengaturanTenant/input_PenerimaEmailReminderSaldo'), 
                 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/div[' + 
@@ -92,8 +93,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			
 			'verifikasi email'
             checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getAttribute(modifyObjectInputEmail, 'ng-reflect-model'), countEmailBefore[
-            (index - 24)], false, FailureHandling.OPTIONAL), ((' dengan alasan tidak cocok antara ' + WebUI.getAttribute(
-            modifyObjectInputEmail, 'ng-reflect-model')) + ' dan ') + (countEmailBefore[(index - 24)]))
+            (index - 25)], false, FailureHandling.OPTIONAL), ((' dengan alasan tidak cocok antara ' + WebUI.getAttribute(
+            modifyObjectInputEmail, 'ng-reflect-model')) + ' dan ') + (countEmailBefore[(index - 25)]))
         }
         
         'verifikasi label ref number'
@@ -218,7 +219,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         arrayEmailInput = findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('Email Reminder Saldo')).split(',', -1)
 
         'looping untuk hapus email reminder yang tidak ada di excel'
-        for (index = 24; index <= (24 + countEmailBefore.size()); index++) {
+        for (index = 25; index <= (25 + countEmailBefore.size()); index++) {
             'modify object untuk input email'
             modifyObjectInputEmail = WebUI.modifyObjectProperty(findTestObject('PengaturanTenant/input_PenerimaEmailReminderSaldo'), 
                 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/div[' + 
@@ -253,7 +254,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         'looping untuk input email reminder yang tidak ada di ui'
         for (indexexcel = 1; indexexcel <= arrayEmailInput.size(); indexexcel++) {
             'looping untuk delete email reminder'
-            for (index = 24; index <= (24 + countEmailBefore.size()); index++) {
+            for (index = 25; index <= (25 + countEmailBefore.size()); index++) {
                 'modify object untuk delete email'
                 modifyObjectInputEmail = WebUI.modifyObjectProperty(findTestObject('PengaturanTenant/input_PenerimaEmailReminderSaldo'), 
                     'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/div[' + 
@@ -312,7 +313,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			'value untuk dibanding dengan DB'
 			use_wa = '0'
 			
-		} else {
+		} else if (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('Metode Pengiriman Notifikasi'))
+			== 'Whatsapp') {
 			
 			'klik pada radio button WhatsApp'
 			WebUI.click(findTestObject('PengaturanTenant/Radiobtn_useNotifWA'))
@@ -371,94 +373,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		}
 		
 		WebUI.delay(GlobalVariable.TimeOut)
-        
-        'Mengambil value excel setelah diedit pengaturan tenant'
-        resultDbNew = CustomKeywords.'connection.PengaturanTenant.getPengaturanTenant'(conneSign, findTestData(excelPathFEPengaturanTenant).getValue(
-                GlobalVariable.NumofColm, rowExcel('$Username / Email')).toUpperCase())
-
-        'declare arrayIndex menjadi 0'
-        arrayIndex = 0
-
-        'verify login'
-        arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('$Username / Email')).toUpperCase(),
-			resultDbNew[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-        'verify waktu edit'
-        arrayMatch.add(WebUI.verifyMatch(currentDate, resultDbNew[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-        'membuat emailDb menjadi sorted berdasarkan asc'
-        emailDb = (resultDbNew[arrayIndex++]).split(',').collect( { it.trim() } ).sort().join(',')
-
-        'membuat email Excel menjadi sorted berdasarkan asc'
-        emailExcel = findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('Email Reminder Saldo')).split(',').collect( { it.trim() } ).sort().join(',')
-
-        'verifikasi email'
-        arrayMatch.add(WebUI.verifyMatch(emailExcel, emailDb, false, FailureHandling.CONTINUE_ON_FAILURE))
-
-        'verify Label Ref Number'
-        arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('$Label Ref Number')), 
-                resultDbNew[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-        'verify URL upload'
-        arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('URL Upload')), 
-                resultDbNew[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-        'Mengambil value treshold balance di db dan dipecah'
-        balance = (resultDbNew[arrayIndex]).replace('{', '').replace('}', '').replace('"', '').split(',', -1)
-
-        'looping berdasarkan jumlah tipe saldo'
-        for (j = 0; j < tipeSaldo.size(); j++) {
-            'looping berdasarkan jumlah array balance'
-            for (i = 0; i < balance.size(); i++) {
-                'split menggunakan : ke variable balances'
-                balances = (balance[i]).split(':', -1)
-
-                'Jika balances yang ke 0, yaitu Tipe Saldo sama dengan tipe Saldo excel'
-                if ((balances[0]) == ((tipeSaldo[j]).toUpperCase())) {
-                    'verify tipe saldo'
-                    arrayMatch.add(WebUI.verifyMatch(balances[0], tipeSaldo[j], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-                    'verify saldo tipe saldo'
-                    arrayMatch.add(WebUI.verifyEqual(balances[1], saldoTipeSaldo[j], FailureHandling.CONTINUE_ON_FAILURE))
-                }
-            }
-        }
-        
-        'menambah arrayIndex'
-        arrayIndex++
-
-        'verify stamping otomatis'
-        arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('isStampingOtomatis')), 
-                resultDbNew[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-        'verify aktivasi callback url'
-        arrayMatch.add(WebUI.verifyMatch(activationCallBackUrl, resultDbNew[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-		'verify radio_button'
-		arrayMatch.add(WebUI.verifyMatch(use_wa, resultDbNew[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 		
-		'verify callback url'
-		arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('URL Callback')),
-				resultDbNew[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-		
-		'verify url redirect aktivasi'
-		arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('Url Redirect Aktivasi')),
-				resultDbNew[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-		
-		'verify url redirect tanda tangan'
-		arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('Url Redirect Tanda tangan')),
-				resultDbNew[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-		
-        'Jika storedbnya ada false'
-        if (arrayMatch.contains(false)) {
-            'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + 
-                GlobalVariable.ReasonFailedStoredDB)
+		if(GlobalVariable.checkStoreDB.equals('Yes')) {
 			
-			GlobalVariable.FlagFailed = 1
-        }
-		
+			'panggil fungsi check store DB'
+			WebUI.callTestCase(findTestCase('PengaturanTenant/PengaturanTenantStoreDB'), [('sheet') : sheet,
+				 ('excelPathFEPengaturanTenant') : excelPathFEPengaturanTenant, ('conneSign') : conneSign, ('currentDate') : currentDate
+				, ('tipeSaldo') : tipeSaldo, ('saldoTipeSaldo') : saldoTipeSaldo, ('activationCallBackUrl') : activationCallBackUrl,
+					('use_wa') : use_wa], FailureHandling.CONTINUE_ON_FAILURE)
+		}
+        
 		if (GlobalVariable.FlagFailed == 0) {
 			'write to excel success'
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
