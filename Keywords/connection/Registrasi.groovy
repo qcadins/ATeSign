@@ -79,7 +79,7 @@ public class Registrasi {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getRegisterPrivyStoreDB(Connection conn, String email) {
 		stm = conn.createStatement()

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebServiceRequestEntity>
    <description></description>
-   <name>Gen Invitation Link</name>
+   <name>Sign Doc Embed</name>
    <tag></tag>
-   <elementGuidId>54a08ce5-a590-48a4-856d-2170d60719ce</elementGuidId>
+   <elementGuidId>e998270c-3245-4df6-9628-a128181b0588</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: ${callerId}\n    },\n    \&quot;tenantCode\&quot;: ${tenantCode},\n    \&quot;users\&quot;: [\n\t\t\t${users}\n    ]\n}\n&quot;,
+  &quot;text&quot;: &quot;{\n  \&quot;audit\&quot;: {\n    \&quot;callerId\&quot;: ${callerId}\n  },\n    \&quot;email\&quot;: ${email},\n  \t\&quot;documentId\&quot;: ${docId},\n\t\&quot;msg\&quot; : ${msg}\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -21,21 +21,21 @@
       <name>Content-Type</name>
       <type>Main</type>
       <value>application/json</value>
-      <webElementGuid>ac1b274d-beff-4b36-9003-c6f0d9319c76</webElementGuid>
+      <webElementGuid>a84aec47-7bb1-440b-b672-3541290b409a</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>x-api-key</name>
+      <name>Accept</name>
       <type>Main</type>
-      <value>${apikey}@${tenant}</value>
-      <webElementGuid>126edc16-faca-4106-8b50-0c1f188b934d</webElementGuid>
+      <value>application/json</value>
+      <webElementGuid>803e1dc9-43a5-49f6-b3fd-959717edc531</webElementGuid>
    </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>POST</restRequestMethod>
-   <restUrl>${base_url}/services/user/generateInvitationLink</restUrl>
+   <restUrl>${base_url}/services/document/signDocumentEmbed</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>
@@ -47,23 +47,9 @@
    <variables>
       <defaultValue>GlobalVariable.base_url</defaultValue>
       <description></description>
-      <id>cec17119-f3c0-4ada-89fd-02bb9e45c85e</id>
+      <id>33c77607-bb77-4cdd-ad12-e8e3f464268c</id>
       <masked>false</masked>
       <name>base_url</name>
-   </variables>
-   <variables>
-      <defaultValue>GlobalVariable.api_key</defaultValue>
-      <description></description>
-      <id>bfc1f33b-d683-4644-8f0c-a7f77c4eb7cf</id>
-      <masked>false</masked>
-      <name>apikey</name>
-   </variables>
-   <variables>
-      <defaultValue>GlobalVariable.Tenant</defaultValue>
-      <description></description>
-      <id>20672a21-2ae9-4513-9abb-41d64c550bbb</id>
-      <masked>false</masked>
-      <name>tenant</name>
    </variables>
    <verificationScript>import static org.assertj.core.api.Assertions.*
 
