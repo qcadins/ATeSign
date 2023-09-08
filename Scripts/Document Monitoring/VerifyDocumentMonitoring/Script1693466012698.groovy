@@ -27,6 +27,10 @@ if (nomorKontrak == '') {
     } else if (isManualSign == 'Yes') {
         'Mengambil documen id dari excel'
         nomorKontrak = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 9)
+		
+		if (nomorKontrak.contains('"')) {
+			nomorKontrak = nomorKontrak.replace('"', '')
+		}
     }
 }
 
@@ -629,7 +633,7 @@ def inputDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan,
 	inputDocumentMonitoring = CustomKeywords.'connection.DocumentMonitoring.getInputDocumentMonitoring'(conneSign, nomorKontrakPerPilihan)
 
 	'Set text mengenai teks customer'
-	WebUI.setText(findTestObject('DocumentMonitoring/input_NamaPelanggan'), inputDocumentMonitoring[arrayIndex++])
+	WebUI.setText(findTestObject('DocumentMonitoring/input_NamaPelanggan'), inputDocumentMonitoring[arrayIndex++], FailureHandling.OPTIONAL)
 
 	'Set text mengneai input nomor kontrak'
 	WebUI.setText(findTestObject('DocumentMonitoring/input_NoKontrak'), nomorKontrakPerPilihan)
@@ -662,16 +666,16 @@ def inputDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan,
 
 	if (linkDocumentMonitoring == '') {
 		'Set text mengenai wilayah'
-		WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndex++])
+		WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndex++], FailureHandling.OPTIONAL)
 
 		'Enter'
-		WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER))
+		WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER), FailureHandling.OPTIONAL)
 
 		'Set text mengenai input cabang'
-		WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndex++])
+		WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndex++], FailureHandling.OPTIONAL)
 
 		'Enter'
-		WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER))
+		WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER), FailureHandling.OPTIONAL)
 	}
 	
 	if (WebUI.verifyMatch(settingHO.toString(), '1', true, FailureHandling.OPTIONAL) == true) {
