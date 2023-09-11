@@ -202,38 +202,42 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					
 					index++
 
-                    'jika kolom edit kosong'
-                    if ((findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 14) == '') && (findTestData(
-                        excelPathUserManagement).getValue(GlobalVariable.NumofColm, 15) == '')) {
-                        'set peran yaitu select role'
-                        WebUI.setText(findTestObject('Object Repository/User Management/input_PeranEdit'), 'Select Role')
+					'jika kolom edit kosong'
+					if ((findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 14) == '')) {
+						'set peran yaitu select role'
+						WebUI.setText(findTestObject('Object Repository/User Management/input_PeranEdit'), 'Select Role')
 
-                        'enter peran'
-                        WebUI.sendKeys(findTestObject('Object Repository/User Management/input_PeranEdit'), Keys.chord(Keys.ENTER))
+						'enter peran'
+						WebUI.sendKeys(findTestObject('Object Repository/User Management/input_PeranEdit'), Keys.chord(Keys.ENTER))
 
+					} else {
+						'set peran sesuai excel'
+						WebUI.setText(findTestObject('Object Repository/User Management/input_PeranEdit'), findTestData(
+								excelPathUserManagement).getValue(GlobalVariable.NumofColm, 14))
+
+						'enter peran'
+						WebUI.sendKeys(findTestObject('Object Repository/User Management/input_PeranEdit'), Keys.chord(Keys.ENTER))
+					}
+					
+					'jika kolom edit kosong'
+					if ((findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 15) == '')) {
                         'set cabang yaitu select office'
                         WebUI.setText(findTestObject('Object Repository/User Management/input_CabangEdit'), 'Select Office')
 
                         'enter peran'
                         WebUI.sendKeys(findTestObject('Object Repository/User Management/input_CabangEdit'), Keys.chord(
                                 Keys.ENTER))
-                    } else {
-                        'set peran sesuai excel'
-                        WebUI.setText(findTestObject('Object Repository/User Management/input_PeranEdit'), findTestData(
-                                excelPathUserManagement).getValue(GlobalVariable.NumofColm, 14))
+					}
+					else {
+						'set cabang sesuai excel'
+						WebUI.setText(findTestObject('Object Repository/User Management/input_CabangEdit'), findTestData(
+								excelPathUserManagement).getValue(GlobalVariable.NumofColm, 15))
 
-                        'enter peran'
-                        WebUI.sendKeys(findTestObject('Object Repository/User Management/input_PeranEdit'), Keys.chord(Keys.ENTER))
+						'enter cabang'
+						WebUI.sendKeys(findTestObject('Object Repository/User Management/input_CabangEdit'), Keys.chord(
+								Keys.ENTER))
+					}
 
-                        'set cabang sesuai excel'
-                        WebUI.setText(findTestObject('Object Repository/User Management/input_CabangEdit'), findTestData(
-                                excelPathUserManagement).getValue(GlobalVariable.NumofColm, 15))
-
-                        'enter cabang'
-                        WebUI.sendKeys(findTestObject('Object Repository/User Management/input_CabangEdit'), Keys.chord(
-                                Keys.ENTER))
-                    }
-					
 					if (checkPagingConfirmation (' pada menu Edit ') == true) {
 						continue
 					}
