@@ -68,7 +68,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 GlobalVariable.NumofColm, rowExcel('docId'))).split(';', -1)
 				
 		'list data saldo yang perlu diambil'
-		ArrayList saldoList = ['OTP', 'Liveness', 'Face Compare', 'Liveness Face Compare']
+		ArrayList saldoList = ['Liveness', 'Face Compare', 'Liveness Face Compare', 'OTP']
 				
 		'ambil kondisi default face compare'
 		String mustFaceCompDB = CustomKeywords.'connection.DataVerif.getMustLivenessFaceCompare'(conneSign, GlobalVariable.Tenant)
@@ -105,7 +105,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     rowExcel('$Nomor Dokumen')))
 
             'ambil saldo before'
-			HashMap<String, String> saldoBefore = checkSaldo(saldoList)
+			HashMap<String, String> saldoBefore = checkSaldo(saldoList, vendor)
 
 			'ambil saldo stamp duty postpaid jika dibutuhkan'
 			if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Stamp Meterai Otomatis')) == 'Ya') {
@@ -753,7 +753,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			'beri maks 30 sec mengenai perubahan total sign'
 			for (int b = 1; b <= 3; b++) {
 				'ambil saldo after'
-				HashMap<String, String> saldoAfter = checkSaldo(saldoList)
+				HashMap<String, String> saldoAfter = checkSaldo(saldoList, vendor)
 
 				'ambil saldo after'
 				saldoSignAfter = checkSaldoSign(conneSign, vendor)
@@ -1457,7 +1457,7 @@ def checkSaldoStampDutyPostpaid() {
 	return totalSaldo
 }
 
-def checkSaldo(ArrayList rowName) {
+def checkSaldo(ArrayList rowName, String vendor) {
 	
 	HashMap<String, String> result = new HashMap<>()
 	
@@ -1483,8 +1483,16 @@ def checkSaldo(ArrayList rowName) {
 			WebUI.click(findTestObject('buttonX_sideMenu'))
 		}
 	
-		'klik ddl untuk tenant memilih mengenai Vida'
-		WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)
+		'cek apakah vendor merupakan privy'
+		if (vendor.equalsIgnoreCase('Privy') && rowName[b].equals('OTP')) {
+		
+			'klik ddl untuk tenant memilih mengenai privy'
+			WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), vendor.toUpperCase(), false)
+		} else {
+			
+			'klik ddl untuk tenant memilih mengenai esign/adins'
+			WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)
+		}
 	
 		'get total div di Saldo'
 		variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div > div'))

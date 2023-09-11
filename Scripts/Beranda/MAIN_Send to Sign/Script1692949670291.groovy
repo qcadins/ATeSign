@@ -64,7 +64,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 GlobalVariable.NumofColm, rowExcel('docid'))).split(';', -1)
 				
 		'list data saldo yang perlu diambil'
-		ArrayList saldoList = ['OTP', 'Liveness', 'Face Compare', 'Liveness Face Compare']
+		ArrayList saldoList = ['Liveness', 'Face Compare', 'Liveness Face Compare', 'OTP']
 		
 		'ambil kondisi default face compare'
 		String mustFaceCompDB = CustomKeywords.'connection.DataVerif.getMustLivenessFaceCompare'(conneSign, GlobalVariable.Tenant)
@@ -112,7 +112,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             saldoSignBefore = checkSaldoSign(conneSign, vendor)
 
 			'ambil saldo before'
-			HashMap<String, String> saldoBefore = checkSaldo(saldoList)
+			HashMap<String, String> saldoBefore = checkSaldo(saldoList, vendor)
 
             'tutup browsernya'
             WebUI.closeBrowser()
@@ -753,7 +753,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			'beri maks 30 sec mengenai perubahan total sign'
 			for (int b = 1; b <= 3; b++) {
 				'ambil saldo after'
-				HashMap<String, String> saldoAfter = checkSaldo(saldoList)
+				HashMap<String, String> saldoAfter = checkSaldo(saldoList, vendor)
 
 				'ambil saldo after'
 				saldoSignAfter = checkSaldoSign(conneSign, vendor)
@@ -1354,7 +1354,7 @@ def checkSaldoSign(Connection conneSign, String vendor) {
     WebUI.closeBrowser()
 }
 
-def checkSaldo(ArrayList rowName) {
+def checkSaldo(ArrayList rowName, String vendor) {
 	
 	HashMap<String, String> result = new HashMap<>()
     
@@ -1380,19 +1380,22 @@ def checkSaldo(ArrayList rowName) {
 			WebUI.click(findTestObject('buttonX_sideMenu'))
 		}
 	
-		'klik ddl untuk tenant memilih mengenai Vida'
-		WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)
+		'cek apakah vendor merupakan privy'
+		if (vendor.equalsIgnoreCase('Privy') && rowName[b].equals('OTP')) {
+		
+			'klik ddl untuk tenant memilih mengenai Vida'
+			WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), vendor.toUpperCase(), false)	
+		} else {
+			
+			'klik ddl untuk tenant memilih mengenai Vida'
+			WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)
+		}
 	
 		'get total div di Saldo'
 		variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div > div'))
 		
 		'looping berdasarkan total div yang ada di saldo'
-		for (int c = 1; c <= variableDivSaldo.size(); c++) {
-			
-			'jika elemen diluar yang ada di web'
-			if (c + 1 == 10) {
-				break
-			}
+		for (int c = 2; c <= variableDivSaldo.size(); c++) {
 			
 			'modify object mengenai find tipe saldo'
 			modifyObjectFindSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_saldo'), 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' +
