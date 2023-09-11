@@ -1,26 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebServiceRequestEntity>
    <description></description>
-   <name>Login</name>
+   <name>Confirm Sign Document</name>
    <tag></tag>
-   <elementGuidId>20aa4544-69ef-49ad-b58a-4b0b467e91b2</elementGuidId>
+   <elementGuidId>9fc1b1d7-c947-40d9-9b7c-22f3f9060d35</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
-   <authorizationRequest>
-      <authorizationInfo>
-         <entry>
-            <key>bearerToken</key>
-            <value>sadsd</value>
-         </entry>
-      </authorizationInfo>
-      <authorizationType>Bearer</authorizationType>
-   </authorizationRequest>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;client_id\u003dfrontend\u0026grant_type\u003dpassword\u0026username\u003d${username}\u0026password\u003d${password}&quot;,
-  &quot;contentType&quot;: &quot;text/plain&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: ${callerId}\n    },\n    \&quot;email\&quot;: ${email},\n    \&quot;browser\&quot;: ${browser},\n    \&quot;documentId\&quot;: [\n        ${documentId}\n    ]\n}&quot;,
+  &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
    <httpBodyType>text</httpBodyType>
@@ -29,46 +20,30 @@
       <matchCondition>equals</matchCondition>
       <name>Content-Type</name>
       <type>Main</type>
-      <value>text/plain</value>
-      <webElementGuid>b05d1743-2242-4c94-ac28-27d7671a1a6a</webElementGuid>
+      <value>application/json</value>
+      <webElementGuid>b9a28014-de45-451e-9498-5f9953899850</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Connection</name>
-      <type>Main</type>
-      <value>keep-alive</value>
-      <webElementGuid>c217d3b6-6d0d-4400-b9cd-d714fa5ce22f</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>Accept</name>
       <type>Main</type>
-      <value>*/*</value>
-      <webElementGuid>fdf73134-ab13-4ab8-9a69-02908407dfcb</webElementGuid>
+      <value>application/json</value>
+      <webElementGuid>88447f1c-5653-468f-a90f-55b461145214</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>Accept-Encoding</name>
+      <name>Authorization</name>
       <type>Main</type>
-      <value>gzip</value>
-      <webElementGuid>cf12e7bd-fe49-4085-bba0-883cf8039458</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Content-Type</name>
-      <type>Main</type>
-      <value></value>
-      <webElementGuid>3b2f0021-8032-4a78-bc35-528ab20806ab</webElementGuid>
+      <value>Bearer ${token}</value>
+      <webElementGuid>a34d6a95-8c08-408b-a745-84ab3a3552b0</webElementGuid>
    </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>POST</restRequestMethod>
-   <restUrl>${base_url}/oauth/token</restUrl>
+   <restUrl>${base_url}/services/document/s/signConfirmDokumen</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>
@@ -80,13 +55,18 @@
    <variables>
       <defaultValue>GlobalVariable.base_url</defaultValue>
       <description></description>
-      <id>85a60297-d1f7-4811-bf13-a44a63b4f50a</id>
+      <id>fe90f714-52f6-4312-a5c6-f68de19536b3</id>
       <masked>false</masked>
       <name>base_url</name>
    </variables>
+   <variables>
+      <defaultValue>GlobalVariable.token</defaultValue>
+      <description></description>
+      <id>2f16d240-f751-469e-9f21-031314abbd75</id>
+      <masked>false</masked>
+      <name>token</name>
+   </variables>
    <verificationScript>import static org.assertj.core.api.Assertions.*
-
-import java.nio.file.WatchService
 
 import com.kms.katalon.core.testobject.RequestObject
 import com.kms.katalon.core.testobject.ResponseObject

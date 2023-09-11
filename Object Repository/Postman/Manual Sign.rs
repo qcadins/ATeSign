@@ -1,74 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebServiceRequestEntity>
    <description></description>
-   <name>Login</name>
+   <name>Manual Sign</name>
    <tag></tag>
-   <elementGuidId>20aa4544-69ef-49ad-b58a-4b0b467e91b2</elementGuidId>
+   <elementGuidId>81c43622-605a-4db1-ab44-265e4e72a089</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
-   <authorizationRequest>
-      <authorizationInfo>
-         <entry>
-            <key>bearerToken</key>
-            <value>sadsd</value>
-         </entry>
-      </authorizationInfo>
-      <authorizationType>Bearer</authorizationType>
-   </authorizationRequest>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;client_id\u003dfrontend\u0026grant_type\u003dpassword\u0026username\u003d${username}\u0026password\u003d${password}&quot;,
-  &quot;contentType&quot;: &quot;text/plain&quot;,
+  &quot;text&quot;: &quot;${request}&quot;,
+  &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
    <httpBodyType>text</httpBodyType>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>Content-Type</name>
+      <name>Authorization</name>
       <type>Main</type>
-      <value>text/plain</value>
-      <webElementGuid>b05d1743-2242-4c94-ac28-27d7671a1a6a</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Connection</name>
-      <type>Main</type>
-      <value>keep-alive</value>
-      <webElementGuid>c217d3b6-6d0d-4400-b9cd-d714fa5ce22f</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Accept</name>
-      <type>Main</type>
-      <value>*/*</value>
-      <webElementGuid>fdf73134-ab13-4ab8-9a69-02908407dfcb</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Accept-Encoding</name>
-      <type>Main</type>
-      <value>gzip</value>
-      <webElementGuid>cf12e7bd-fe49-4085-bba0-883cf8039458</webElementGuid>
+      <value>Bearer ${token}</value>
+      <webElementGuid>03c71469-1b4b-4821-9dca-f010d8d42893</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>Content-Type</name>
       <type>Main</type>
-      <value></value>
-      <webElementGuid>3b2f0021-8032-4a78-bc35-528ab20806ab</webElementGuid>
+      <value>application/json</value>
+      <webElementGuid>090de986-aa9a-497e-84d1-1346ea68e6d8</webElementGuid>
    </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>POST</restRequestMethod>
-   <restUrl>${base_url}/oauth/token</restUrl>
+   <restUrl>${base_url}/services/document/s/insertManualSign</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>
@@ -80,13 +47,18 @@
    <variables>
       <defaultValue>GlobalVariable.base_url</defaultValue>
       <description></description>
-      <id>85a60297-d1f7-4811-bf13-a44a63b4f50a</id>
+      <id>d1241436-9d1e-48b2-a71b-d7030302877e</id>
       <masked>false</masked>
       <name>base_url</name>
    </variables>
+   <variables>
+      <defaultValue>GlobalVariable.token</defaultValue>
+      <description></description>
+      <id>ff274c55-022d-480f-afe8-159a327148c2</id>
+      <masked>false</masked>
+      <name>token</name>
+   </variables>
    <verificationScript>import static org.assertj.core.api.Assertions.*
-
-import java.nio.file.WatchService
 
 import com.kms.katalon.core.testobject.RequestObject
 import com.kms.katalon.core.testobject.ResponseObject
