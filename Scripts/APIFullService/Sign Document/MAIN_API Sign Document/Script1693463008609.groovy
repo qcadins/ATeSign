@@ -757,43 +757,40 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
 				'ambil saldo after'
 				saldoSignAfter = checkSaldoSign(conneSign, vendor)
-
-				'cek apa pernah menggunakan biometrik'
-				if (useBiom == 0) {
+				
+				'Jika count saldo sign/ttd diatas (after) sama dengan yang dulu/pertama (before) dikurang jumlah dokumen yang ditandatangani'
+				if (WebUI.verifyEqual(Integer.parseInt(saldoSignBefore) - saldoUsed, Integer.parseInt(saldoSignAfter),
+					FailureHandling.OPTIONAL)) {
 					
-					'Jika count saldo otp after dengan yang before dikurangi 1 ditambah dengan '
-					if(WebUI.verifyEqual(Integer.parseInt(saldoBefore.get('OTP')) - (countResend), Integer.parseInt(saldoAfter.get('OTP')), FailureHandling.OPTIONAL)) {
-						'Jika count saldo sign/ttd diatas (after) sama dengan yang dulu/pertama (before) dikurang jumlah dokumen yang ditandatangani'
-						if (WebUI.verifyEqual(Integer.parseInt(saldoSignBefore) - saldoUsed, Integer.parseInt(saldoSignAfter),
-							FailureHandling.OPTIONAL)) {
+					'cek apa pernah menggunakan biometrik'
+					if (useBiom == 0) {
+						
+						'Jika count saldo otp after dengan yang before dikurangi 1 ditambah dengan '
+						if(WebUI.verifyEqual(Integer.parseInt(saldoBefore.get('OTP')) - (countResend), Integer.parseInt(saldoAfter.get('OTP')), FailureHandling.OPTIONAL)) {
+							
 							break
 						}
-					}
-
-				} else if (useBiom == 1){
-					
-					'cek saldo liveness facecompare dipisah atau tidak'
-					String isSplitLivenessFc = CustomKeywords.'connection.SendSign.getIsSplitLivenessFaceCompActive'(conneSign, GlobalVariable.Tenant)
-					
-					'jika saldo liveness digabung dengan facecompare'
-					if (isSplitLivenessFc == '0') {
+	
+					} else if (useBiom == 1){
 						
-						'cek apakah saldo liveness facecompare masih sama'
-						if(WebUI.verifyEqual(Integer.parseInt(saldoBefore.get('Liveness Face Compare')) - 1, Integer.parseInt(saldoAfter.get('Liveness Face Compare')), FailureHandling.OPTIONAL)) {
-							'Jika count saldo sign/ttd diatas (after) sama dengan yang dulu/pertama (before) dikurang jumlah dokumen yang ditandatangani'
-							if (WebUI.verifyEqual(Integer.parseInt(saldoSignBefore) - saldoUsed, Integer.parseInt(saldoSignAfter),
-								FailureHandling.OPTIONAL)) {
+						'cek saldo liveness facecompare dipisah atau tidak'
+						String isSplitLivenessFc = CustomKeywords.'connection.APIFullService.getSplitLivenessFaceCompareBill'(conneSign)
+						
+						'jika saldo liveness digabung dengan facecompare'
+						if (isSplitLivenessFc == '0') {
+							
+							'cek apakah saldo liveness facecompare masih sama'
+							if(WebUI.verifyEqual(Integer.parseInt(saldoBefore.get('Liveness Face Compare')) - 1, Integer.parseInt(saldoAfter.get('Liveness Face Compare')), FailureHandling.OPTIONAL)) {
+								
 								break
 							}
 						}
-					} else if (isSplitLivenessFc == '1') {
-						
-						'cek apakah saldo liveness dan facecompare sama'
-						if(WebUI.verifyEqual(Integer.parseInt(saldoBefore.get('Liveness')) - (countSaldoSplitLiveFCused), Integer.parseInt(saldoAfter.get('Liveness')), FailureHandling.OPTIONAL) &&
-							WebUI.verifyEqual(Integer.parseInt(saldoBefore.get('Face Compare')) - (countSaldoSplitLiveFCused), Integer.parseInt(saldoAfter.get('Face Compare')), FailureHandling.OPTIONAL)) {
-							'Jika count saldo sign/ttd diatas (after) sama dengan yang dulu/pertama (before) dikurang jumlah dokumen yang ditandatangani'
-							if (WebUI.verifyEqual(Integer.parseInt(saldoSignBefore) - saldoUsed, Integer.parseInt(saldoSignAfter),
-								FailureHandling.OPTIONAL)) {
+						else if (isSplitLivenessFc == '1') {
+							
+							'cek apakah saldo liveness dan facecompare sama'
+							if(WebUI.verifyEqual(Integer.parseInt(saldoBefore.get('Liveness')) - (countSaldoSplitLiveFCused), Integer.parseInt(saldoAfter.get('Liveness')), FailureHandling.OPTIONAL) &&
+								WebUI.verifyEqual(Integer.parseInt(saldoBefore.get('Face Compare')) - (countSaldoSplitLiveFCused), Integer.parseInt(saldoAfter.get('Face Compare')), FailureHandling.OPTIONAL)) {
+								
 								break
 							}
 						}
@@ -1166,7 +1163,7 @@ def verifBiomMethod(int maxFaceCompDB, int countLivenessFaceComp, Connection con
 			
 		} else {
 			
-			return
+			break
 		}
 	}
 }
