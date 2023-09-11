@@ -31,7 +31,7 @@ firstDateOfMonth = currentDate.withDayOfMonth(1)
 
 int firstRun = 0
 
-'looping message delivery report'
+'looping saldo'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathMessageDeliveryReport).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 
     0) {
@@ -48,7 +48,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'get psre dari excel percase'
         GlobalVariable.Psre = findTestData(excelPathMessageDeliveryReport).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
 
-		'check untuk login'
         if ((findTestData(excelPathMessageDeliveryReport).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) != 
         findTestData(excelPathMessageDeliveryReport).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))) || (firstRun == 
         0)) {
@@ -94,27 +93,23 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'call function check paging'
             checkPaging(currentDate, firstDateOfMonth, conneSign)
 
-            'get ddl vendor'
+            'get ddl tipe Saldo'
             ArrayList<String> resultVendor = CustomKeywords.'connection.messageDeliveryReport.getDDLVendor'(conneSign, GlobalVariable.Tenant)
 
-			'check dll vendor'
             checkDDL(findTestObject('MessageDeliveryReport/input_vendor'), resultVendor, 'DDL Vendor')
 
-            'get ddl message media'
+            'get ddl tipe Saldo'
             ArrayList<String> resultMessageMedia = CustomKeywords.'connection.messageDeliveryReport.getDDLMessageMedia'(
                 conneSign)
 
-			'check ddl message media'
             checkDDL(findTestObject('MessageDeliveryReport/input_messageMedia'), resultMessageMedia, 'DDL Message Media')
         }
         
-		'input message delivery reportnya'
         inputMessageDeliveryReport()
 
         'Input enter'
         WebUI.click(findTestObject('MessageDeliveryReport/button_search'))
 
-		'check error log'
         if (checkErrorLog() == true) {
             continue
         }
@@ -122,46 +117,40 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'jika hasil pencarian tidak memberikan hasil'
         if (WebUI.verifyElementPresent(findTestObject('Object Repository/MessageDeliveryReport/label_TableVendor'), GlobalVariable.TimeOut, 
             FailureHandling.OPTIONAL)) {
-            'Get row yang ada'
+            'Jika bukan di page 1, verifikasi menggunakan button Lastest. Get row lastest'
             getRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-list-message-delivery-report > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
 
-            'get column yang ada'
+            'Jika bukan di page 1, verifikasi menggunakan button Lastest. Get row lastest'
             getColumn = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-list-message-delivery-report > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller > datatable-row-wrapper:nth-child(1) > datatable-body-row datatable-body-cell'))
 
-			'db hasil pencarian'
 			ArrayList<String> result = CustomKeywords.'connection.messageDeliveryReport.getFilterMessageDeliveryReport'(
 				conneSign, GlobalVariable.Tenant, storeHashMapForVerify())
-
-			'jika rownya tidak ada'
-			if (getRow.size() == 0) {
-				'Failed alasan save gagal tidak bisa diklik.'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-					((findTestData(excelPathMessageDeliveryReport).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') +
-					GlobalVariable.ReasonFailedNoneUI + ' pada menu Message Delivery Report '))
-				break
-			}
 			
+			println result
+			WebUI.delay(10)
 			'array index'
 			arrayIndex = 0
-			'looping per row'
             for (i = 1; i <= getRow.size(); i++) {
-				'looping per kolom'
+				if (getRow.size() == 0) {
+					'Failed alasan save gagal tidak bisa diklik.'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+						((findTestData(excelPathMessageDeliveryReport).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') +
+						GlobalVariable.ReasonFailedNoneUI + ' pada menu Message Delivery Report '))
+					break
+				}
                 for (j = 1; j <= getColumn.size(); j++) {
-					'jika column yang kedua'
 					if (j == 2) {
-						'modify object dengan change span di akhir'
+						'modify object lbl tanggal permintaan'
 						modifyObject = WebUI.modifyObjectProperty(findTestObject('Object Repository/MessageDeliveryReport/modifyObject'),
 							'xpath', 'equals', ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-list-message-delivery-report/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
 							i) + ']/datatable-body-row/div[2]/datatable-body-cell[') + j) + ']/div/span', true)
-					} 
-					else {
-                    'modify object kolom'
+					} else {
+                    'modify object lbl tanggal permintaan'
                     modifyObject = WebUI.modifyObjectProperty(findTestObject('Object Repository/MessageDeliveryReport/modifyObject'), 
                         'xpath', 'equals', ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-list-message-delivery-report/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
                         i) + ']/datatable-body-row/div[2]/datatable-body-cell[') + j) + ']/div/p', true)
 					}
-					
-					 'verify tabel dengan db'
+					 'verify trx no ui = db'
 					 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObject), 
 						 result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' terhadap kolom ke ' + j)
 
@@ -169,10 +158,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             }
         }
 		
-		'jika tidak ada failed'
 		if (GlobalVariable.FlagFailed == 0) {
 			'write to excel success'
-			CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Status') - 1, GlobalVariable.NumofColm -
+			CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
 				1, GlobalVariable.StatusSuccess)
 		}
     }
@@ -200,7 +188,7 @@ def inputMessageDeliveryReport() {
     WebUI.setText(findTestObject('MessageDeliveryReport/input_reportTimeStart'), findTestData(excelPathMessageDeliveryReport).getValue(
             GlobalVariable.NumofColm, rowExcel('Report Time Start')))
 
-    'Input report time end'
+    'Input date sekarang'
     WebUI.setText(findTestObject('MessageDeliveryReport/input_reportTimeEnd'), findTestData(excelPathMessageDeliveryReport).getValue(
             GlobalVariable.NumofColm, rowExcel('Report Time End')))
 
@@ -256,7 +244,7 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
     'Input enter'
     WebUI.sendKeys(findTestObject('MessageDeliveryReport/input_vendor'), Keys.chord(Keys.ENTER))
 
-    'click ddl message media'
+    'click ddl tipe transaksi'
     WebUI.click(findTestObject('MessageDeliveryReport/input_messageMedia'))
 
     'verify field ke reset'
@@ -266,7 +254,7 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
     'Input enter'
     WebUI.sendKeys(findTestObject('MessageDeliveryReport/input_messageMedia'), Keys.chord(Keys.ENTER))
 
-    'click ddl delivery status'
+    'click ddl tipe dokumen'
     WebUI.click(findTestObject('MessageDeliveryReport/input_deliveryStatus'))
 
     'verify field ke reset'
@@ -276,7 +264,7 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
     'Input enter'
     WebUI.sendKeys(findTestObject('MessageDeliveryReport/input_deliveryStatus'), Keys.chord(Keys.ENTER))
 
-    'klik search'
+    'Input enter'
     WebUI.click(findTestObject('MessageDeliveryReport/button_search'))
 
     'ambil total trx berdasarkan filter yang telah disiapkan pada ui'
@@ -285,7 +273,7 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
     'ambil total trx berdasarkan filter yang telah disiapkan pada db'
     totalTrxDB = CustomKeywords.'connection.messageDeliveryReport.getTotalMessageDeliveryReport'(conneSign, GlobalVariable.Tenant)
 
-    'verify total trx pada message delivery report'
+    'verify total Saldo'
     checkVerifyPaging(WebUI.verifyMatch(totalTrxUI[0], totalTrxDB, false, FailureHandling.CONTINUE_ON_FAILURE), ' total transaksi ui dan db tidak match')
 
     if (Integer.parseInt(totalTrxUI[0]) > 10) {
@@ -423,7 +411,7 @@ def checkErrorLog() {
         } else {
             'Tulis di excel itu adalah error'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (findTestData(excelPathMessageDeliveryReport).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + 
+                (findTestData(excelPathMessageDeliveryReport).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + 
                 'Error tidak berhasil ditangkap')
         }
     }
@@ -465,7 +453,10 @@ def storeHashMapForVerify() {
 
 	result.put('Recipient', findTestData(excelPathMessageDeliveryReport).getValue(GlobalVariable.NumofColm, rowExcel(
 		'Recipient')))
-
+	
+	println result.get("Recipient")
+	
+	println result.get("Status Delivery")
     return result
 }
 
