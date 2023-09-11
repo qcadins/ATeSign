@@ -18,7 +18,7 @@
       <variableId>f1461578-1911-4a64-9ba4-3e532eafff5e</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'Registrasi/SendDocument'</defaultValue>
+      <defaultValue>'Registrasi/InsertManualSign'</defaultValue>
       <description></description>
       <id>ae023c3c-496f-4e08-a686-785768354e1f</id>
       <masked>false</masked>

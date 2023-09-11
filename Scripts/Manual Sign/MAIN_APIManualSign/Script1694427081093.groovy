@@ -299,4 +299,3 @@ def getErrorMessageAPI(def respon) {
 
     GlobalVariable.FlagFailed = 1
 }
-
