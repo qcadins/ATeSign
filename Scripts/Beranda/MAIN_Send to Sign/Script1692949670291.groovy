@@ -24,8 +24,8 @@ def currentDate = new Date().format('yyyy-MM-dd')
 'Inisialisasi array untuk Listotp, arraylist arraymatch'
 ArrayList listOTP = [], arrayMatch = []
 
-'inisialisasi count resend'
-int countResend
+'inisialisasi count resend dan saldo terpakai'
+int countResend, countSaldoSplitLiveFCused
 
 'declare arrayindex'
 arrayIndex = 0
@@ -773,7 +773,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 				} else if (useBiom == 1){
 					
 					'cek saldo liveness facecompare dipisah atau tidak'
-					String isSplitLivenessFc = CustomKeywords.'connection.SendSign.getIsSplitLivenessFaceCompActive'(conneSign, GlobalVariable.Tenant)
+					String isSplitLivenessFc = CustomKeywords.'connection.APIFullService.getSplitLivenessFaceCompareBill'(conneSign)
 					
 					'jika saldo liveness digabung dengan facecompare'
 					if (isSplitLivenessFc == '0') {
@@ -790,8 +790,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 					else if (isSplitLivenessFc == '1') {
 						
 						'cek apakah saldo liveness dan facecompare sama'
-						if(WebUI.verifyEqual(Integer.parseInt(saldoBefore.get('Liveness')) - 1, Integer.parseInt(saldoAfter.get('Liveness')), FailureHandling.OPTIONAL) &&
-							WebUI.verifyEqual(Integer.parseInt(saldoBefore.get('Face Compare')) - 1, Integer.parseInt(saldoAfter.get('Face Compare')), FailureHandling.OPTIONAL)) {
+						if(WebUI.verifyEqual(Integer.parseInt(saldoBefore.get('Liveness')) - (countSaldoSplitLiveFCused), Integer.parseInt(saldoAfter.get('Liveness')), FailureHandling.OPTIONAL) &&
+							WebUI.verifyEqual(Integer.parseInt(saldoBefore.get('Face Compare')) - (countSaldoSplitLiveFCused), Integer.parseInt(saldoAfter.get('Face Compare')), FailureHandling.OPTIONAL)) {
 							'Jika count saldo sign/ttd diatas (after) sama dengan yang dulu/pertama (before) dikurang jumlah dokumen yang ditandatangani'
 							if (WebUI.verifyEqual(Integer.parseInt(saldoSignBefore) - saldoUsed, Integer.parseInt(saldoSignAfter),
 								FailureHandling.OPTIONAL)) {
@@ -1118,6 +1118,8 @@ def verifBiomMethod(int maxFaceCompDB, int countLivenessFaceComp, Connection con
 			
 			if(messageError.equalsIgnoreCase('Percobaan verifikasi wajah sudah melewati batas harian')) {
 				
+				countSaldoSplitLiveFCused++
+				
 				'klik tombol OK'
 				WebUI.click(findTestObject('Object Repository/KotakMasuk/Sign/button_OK'))
 				
@@ -1129,6 +1131,24 @@ def verifBiomMethod(int maxFaceCompDB, int countLivenessFaceComp, Connection con
 					
 					return false
 				}
+			} else if (messageError.equalsIgnoreCase('Verifikasi user gagal. Foto Diri tidak sesuai.') ||
+				messageError.equalsIgnoreCase('Lebih dari satu wajah terdeteksi. Pastikan hanya satu wajah yang terlihat')) {
+				
+				countSaldoSplitLiveFCused++
+				
+				'ambil message error'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+					GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+						2).replace('-', '') + ';') + '<' + messageError + '>')
+				
+				'klik pada tombol OK'
+				WebUI.click(findTestObject('KotakMasuk/Sign/button_OK'))
+				
+				GlobalVariable.FlagFailed = 1
+				
+				'ambil terbaru count dari DB'
+				countLivenessFaceComp = CustomKeywords.'connection.DataVerif.getCountFaceCompDaily'(conneSign, emailSigner[o-1])
+				
 			} else {
 					
 				'ambil message error'

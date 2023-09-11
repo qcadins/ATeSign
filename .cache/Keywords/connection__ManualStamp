@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "B6EACB4C915276B1ED62477D131DA654",
+  "keywordFileContentHash": "18CF10795D1BBAC5449CC032E9E32E91",
   "keywordClasses": [
     {
       "name": "connection.ManualStamp",
@@ -20,7 +20,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getDocTypePeruri",
@@ -38,7 +39,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getManualStamp",
@@ -82,7 +84,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getInputeMeteraiMonitoring",
@@ -126,7 +129,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getProsesMeterai",
@@ -170,7 +174,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "gettrxSaldoForMeterai",
@@ -201,10 +206,11 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         }
       ]
     }
   ],
-  "javadocParsed": false
+  "javadocParsed": true
 }
