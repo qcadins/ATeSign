@@ -20,7 +20,7 @@ public class Registrasi {
 	settingEmailServiceTenant(Connection conn, String value) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("UPDATE ms_tenant SET email_service = "+ value +" WHERE tenant_code = '"+ GlobalVariable.Tenant +"'")
+		int resultSet = stm.executeUpdate("UPDATE ms_tenant SET email_service = '"+ value +"' WHERE tenant_code = '"+ GlobalVariable.Tenant +"'")
 	}
 
 	@Keyword

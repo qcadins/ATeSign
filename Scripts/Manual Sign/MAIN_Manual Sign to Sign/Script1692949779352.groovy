@@ -2,6 +2,7 @@ import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
@@ -1197,10 +1198,14 @@ def verifBiomMethod(int maxFaceCompDB, int countLivenessFaceComp, Connection con
 	
 	'Klik lanjut after konfirmasi'
 	WebUI.click(findTestObject('KotakMasuk/Sign/btn_LanjutAfterKonfirmasi'), FailureHandling.OPTIONAL)
-		
-	'delay untuk camera on'
-	WebUI.delay(10)
 	
+	'jika localhost aktif'
+	if (isLocalhost == 1) {
+	
+		'tap allow camera'
+		MobileBuiltInKeywords.tapAndHoldAtPosition(895, 1364, 3)
+	}
+		
 	'looping hingga count sampai batas maksimal harian'
 	while(countLivenessFaceComp != (maxFaceCompDB + 1)) {
 		
@@ -1383,7 +1388,7 @@ def checkSaldoSign(Connection conneSign, String refNumber) {
     WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), vendor, false)
 
     'get total div di Saldo'
-    variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
+    variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div > div'))
 
     'looping berdasarkan total div yang ada di saldo'
     for (int c = 1; c <= variableDivSaldo.size(); c++) {
@@ -1425,7 +1430,7 @@ def checkSaldoStampDutyPostpaid() {
 	WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)
 
 	'get total div di Saldo'
-	variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
+	variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div > div'))
 
 	'looping berdasarkan total div yang ada di saldo'
 	for (int c = 1; c <= variableDivSaldo.size(); c++) {
@@ -1494,28 +1499,25 @@ def checkSaldo(ArrayList rowName, String vendor) {
 		variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div > div'))
 		
 		'looping berdasarkan total div yang ada di saldo'
-		for (int c = 1; c <= variableDivSaldo.size(); c++) {
-			
-			'jika elemen diluar yang ada di web'
-			if (c + 1 == 10) {
-				break
-			}
+		for (int c = 2; c <= variableDivSaldo.size(); c++) {
 			
 			'modify object mengenai find tipe saldo'
 			modifyObjectFindSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_saldo'), 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' +
-				(c + 1)) + ']/div/div/div/div/div[1]', true)
+				(c)) + ']/div/div/div/div/div[1]', true)
 	
 			'verifikasi label saldonya '
 			if (WebUI.verifyElementText(modifyObjectFindSaldoSign, rowName[b], FailureHandling.OPTIONAL)) {
 				'modify object mengenai ambil total jumlah saldo'
 				modifyObjecttotalSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_countsaldo'), 'xpath', 'equals',
-					('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + (c + 1)) + ']/div/div/div/div/div[2]',
+					('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + (c)) + ']/div/div/div/div/div[2]',
 					true)
 	
 				'mengambil total saldo yang dipilih'
 				totalSaldo = WebUI.getText(modifyObjecttotalSaldoSign)
 				
 				result.put(rowName[b], totalSaldo)
+				
+				break
 			}
 		}
 	}

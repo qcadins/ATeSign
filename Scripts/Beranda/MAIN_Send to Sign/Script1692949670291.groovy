@@ -3,6 +3,7 @@ import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
+import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
@@ -1096,9 +1097,13 @@ def verifBiomMethod(int maxFaceCompDB, int countLivenessFaceComp, Connection con
 	
 	'Klik lanjut after konfirmasi'
 	WebUI.click(findTestObject('KotakMasuk/Sign/btn_LanjutAfterKonfirmasi'), FailureHandling.OPTIONAL)
-		
-	'delay untuk camera on'
-	WebUI.delay(10)
+	
+	'jika localhost aktif'
+	if (isLocalhost == 1) {
+	
+		'tap allow camera'
+		MobileBuiltInKeywords.tapAndHoldAtPosition(895, 1364, 3)
+	}
 	
 	'looping hingga count sampai batas maksimal harian'
 	while(countLivenessFaceComp != (maxFaceCompDB + 1)) {
@@ -1395,19 +1400,21 @@ def checkSaldo(ArrayList rowName, String vendor) {
 			
 			'modify object mengenai find tipe saldo'
 			modifyObjectFindSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_saldo'), 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' +
-				(c + 1)) + ']/div/div/div/div/div[1]', true)
+				(c)) + ']/div/div/div/div/div[1]', true)
 	
 			'verifikasi label saldonya '
 			if (WebUI.verifyElementText(modifyObjectFindSaldoSign, rowName[b], FailureHandling.OPTIONAL)) {
 				'modify object mengenai ambil total jumlah saldo'
 				modifyObjecttotalSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_countsaldo'), 'xpath', 'equals',
-					('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + (c + 1)) + ']/div/div/div/div/div[2]',
+					('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + (c)) + ']/div/div/div/div/div[2]',
 					true)
 	
 				'mengambil total saldo yang dipilih'
 				totalSaldo = WebUI.getText(modifyObjecttotalSaldoSign)
 				
 				result.put(rowName[b], totalSaldo)
+				
+				break
 			}
 		}
 	}
