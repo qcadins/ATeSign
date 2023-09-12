@@ -2,6 +2,7 @@ import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
@@ -68,7 +69,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 GlobalVariable.NumofColm, rowExcel('docId'))).split(';', -1)
 				
 		'list data saldo yang perlu diambil'
-		ArrayList saldoList = ['OTP', 'Liveness', 'Face Compare', 'Liveness Face Compare']
+		ArrayList saldoList = ['Liveness', 'Face Compare', 'Liveness Face Compare', 'OTP']
 				
 		'ambil kondisi default face compare'
 		String mustFaceCompDB = CustomKeywords.'connection.DataVerif.getMustLivenessFaceCompare'(conneSign, GlobalVariable.Tenant)
@@ -105,7 +106,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     rowExcel('$Nomor Dokumen')))
 
             'ambil saldo before'
-			HashMap<String, String> saldoBefore = checkSaldo(saldoList)
+			HashMap<String, String> saldoBefore = checkSaldo(saldoList, vendor)
 
 			'ambil saldo stamp duty postpaid jika dibutuhkan'
 			if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Stamp Meterai Otomatis')) == 'Ya') {
@@ -753,48 +754,44 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			'beri maks 30 sec mengenai perubahan total sign'
 			for (int b = 1; b <= 3; b++) {
 				'ambil saldo after'
-				HashMap<String, String> saldoAfter = checkSaldo(saldoList)
+				HashMap<String, String> saldoAfter = checkSaldo(saldoList, vendor)
 
 				'ambil saldo after'
 				saldoSignAfter = checkSaldoSign(conneSign, vendor)
-
-				'cek apa pernah menggunakan biometrik'
-				if (useBiom == 0) {
+				
+				'Jika count saldo sign/ttd diatas (after) sama dengan yang dulu/pertama (before) dikurang jumlah dokumen yang ditandatangani'
+				if (WebUI.verifyEqual(Integer.parseInt(saldoSignBefore) - saldoUsed, Integer.parseInt(saldoSignAfter),
+					FailureHandling.OPTIONAL)) {
 					
-					'Jika count saldo otp after dengan yang before dikurangi 1 ditambah dengan '
-					if(WebUI.verifyEqual(Integer.parseInt(saldoBefore.get('OTP')) - (countResend), Integer.parseInt(saldoAfter.get('OTP')), FailureHandling.OPTIONAL)) {
-						'Jika count saldo sign/ttd diatas (after) sama dengan yang dulu/pertama (before) dikurang jumlah dokumen yang ditandatangani'
-						if (WebUI.verifyEqual(Integer.parseInt(saldoSignBefore) - saldoUsed, Integer.parseInt(saldoSignAfter),
-							FailureHandling.OPTIONAL)) {
+					'cek apa pernah menggunakan biometrik'
+					if (useBiom == 0) {
+						
+						'Jika count saldo otp after dengan yang before dikurangi 1 ditambah dengan '
+						if(WebUI.verifyEqual(Integer.parseInt(saldoBefore.get('OTP')) - (countResend), Integer.parseInt(saldoAfter.get('OTP')), FailureHandling.OPTIONAL)) {
+							
 							break
 						}
-					}
-
-				} else if (useBiom == 1){
-					
-					'cek saldo liveness facecompare dipisah atau tidak'
-					String isSplitLivenessFc = CustomKeywords.'connection.APIFullService.getSplitLivenessFaceCompareBill'(conneSign)
-					
-					'jika saldo liveness digabung dengan facecompare'
-					if (isSplitLivenessFc == '0') {
+	
+					} else if (useBiom == 1){
 						
-						'cek apakah saldo liveness facecompare masih sama'
-						if(WebUI.verifyEqual(Integer.parseInt(saldoBefore.get('Liveness Face Compare')) - 1, Integer.parseInt(saldoAfter.get('Liveness Face Compare')), FailureHandling.OPTIONAL)) {
-							'Jika count saldo sign/ttd diatas (after) sama dengan yang dulu/pertama (before) dikurang jumlah dokumen yang ditandatangani'
-							if (WebUI.verifyEqual(Integer.parseInt(saldoSignBefore) - saldoUsed, Integer.parseInt(saldoSignAfter),
-								FailureHandling.OPTIONAL)) {
+						'cek saldo liveness facecompare dipisah atau tidak'
+						String isSplitLivenessFc = CustomKeywords.'connection.APIFullService.getSplitLivenessFaceCompareBill'(conneSign)
+						
+						'jika saldo liveness digabung dengan facecompare'
+						if (isSplitLivenessFc == '0') {
+							
+							'cek apakah saldo liveness facecompare masih sama'
+							if(WebUI.verifyEqual(Integer.parseInt(saldoBefore.get('Liveness Face Compare')) - 1, Integer.parseInt(saldoAfter.get('Liveness Face Compare')), FailureHandling.OPTIONAL)) {
+								
 								break
 							}
 						}
-					}
-					else if (isSplitLivenessFc == '1') {
-						
-						'cek apakah saldo liveness dan facecompare sama'
-						if(WebUI.verifyEqual(Integer.parseInt(saldoBefore.get('Liveness')) - (countSaldoSplitLiveFCused), Integer.parseInt(saldoAfter.get('Liveness')), FailureHandling.OPTIONAL) &&
-							WebUI.verifyEqual(Integer.parseInt(saldoBefore.get('Face Compare')) - (countSaldoSplitLiveFCused), Integer.parseInt(saldoAfter.get('Face Compare')), FailureHandling.OPTIONAL)) {
-							'Jika count saldo sign/ttd diatas (after) sama dengan yang dulu/pertama (before) dikurang jumlah dokumen yang ditandatangani'
-							if (WebUI.verifyEqual(Integer.parseInt(saldoSignBefore) - saldoUsed, Integer.parseInt(saldoSignAfter),
-								FailureHandling.OPTIONAL)) {
+						else if (isSplitLivenessFc == '1') {
+							
+							'cek apakah saldo liveness dan facecompare sama'
+							if(WebUI.verifyEqual(Integer.parseInt(saldoBefore.get('Liveness')) - (countSaldoSplitLiveFCused), Integer.parseInt(saldoAfter.get('Liveness')), FailureHandling.OPTIONAL) &&
+								WebUI.verifyEqual(Integer.parseInt(saldoBefore.get('Face Compare')) - (countSaldoSplitLiveFCused), Integer.parseInt(saldoAfter.get('Face Compare')), FailureHandling.OPTIONAL)) {
+								
 								break
 							}
 						}
@@ -1201,10 +1198,14 @@ def verifBiomMethod(int maxFaceCompDB, int countLivenessFaceComp, Connection con
 	
 	'Klik lanjut after konfirmasi'
 	WebUI.click(findTestObject('KotakMasuk/Sign/btn_LanjutAfterKonfirmasi'), FailureHandling.OPTIONAL)
-		
-	'delay untuk camera on'
-	WebUI.delay(10)
 	
+	'jika localhost aktif'
+	if (isLocalhost == 1) {
+	
+		'tap allow camera'
+		MobileBuiltInKeywords.tapAndHoldAtPosition(895, 1364, 3)
+	}
+		
 	'looping hingga count sampai batas maksimal harian'
 	while(countLivenessFaceComp != (maxFaceCompDB + 1)) {
 		
@@ -1268,7 +1269,7 @@ def verifBiomMethod(int maxFaceCompDB, int countLivenessFaceComp, Connection con
 			
 		} else {
 			
-			return
+			break
 		}
 	}
 }
@@ -1387,7 +1388,7 @@ def checkSaldoSign(Connection conneSign, String refNumber) {
     WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), vendor, false)
 
     'get total div di Saldo'
-    variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
+    variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div > div'))
 
     'looping berdasarkan total div yang ada di saldo'
     for (int c = 1; c <= variableDivSaldo.size(); c++) {
@@ -1429,7 +1430,7 @@ def checkSaldoStampDutyPostpaid() {
 	WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)
 
 	'get total div di Saldo'
-	variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
+	variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div > div'))
 
 	'looping berdasarkan total div yang ada di saldo'
 	for (int c = 1; c <= variableDivSaldo.size(); c++) {
@@ -1457,7 +1458,7 @@ def checkSaldoStampDutyPostpaid() {
 	return totalSaldo
 }
 
-def checkSaldo(ArrayList rowName) {
+def checkSaldo(ArrayList rowName, String vendor) {
 	
 	HashMap<String, String> result = new HashMap<>()
 	
@@ -1483,35 +1484,40 @@ def checkSaldo(ArrayList rowName) {
 			WebUI.click(findTestObject('buttonX_sideMenu'))
 		}
 	
-		'klik ddl untuk tenant memilih mengenai Vida'
-		WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)
+		'cek apakah vendor merupakan privy'
+		if (vendor.equalsIgnoreCase('Privy') && rowName[b].equals('OTP')) {
+		
+			'klik ddl untuk tenant memilih mengenai privy'
+			WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), vendor.toUpperCase(), false)
+		} else {
+			
+			'klik ddl untuk tenant memilih mengenai esign/adins'
+			WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)
+		}
 	
 		'get total div di Saldo'
 		variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div > div'))
 		
 		'looping berdasarkan total div yang ada di saldo'
-		for (int c = 1; c <= variableDivSaldo.size(); c++) {
-			
-			'jika elemen diluar yang ada di web'
-			if (c + 1 == 10) {
-				break
-			}
+		for (int c = 2; c <= variableDivSaldo.size(); c++) {
 			
 			'modify object mengenai find tipe saldo'
 			modifyObjectFindSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_saldo'), 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' +
-				(c + 1)) + ']/div/div/div/div/div[1]', true)
+				(c)) + ']/div/div/div/div/div[1]', true)
 	
 			'verifikasi label saldonya '
 			if (WebUI.verifyElementText(modifyObjectFindSaldoSign, rowName[b], FailureHandling.OPTIONAL)) {
 				'modify object mengenai ambil total jumlah saldo'
 				modifyObjecttotalSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_countsaldo'), 'xpath', 'equals',
-					('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + (c + 1)) + ']/div/div/div/div/div[2]',
+					('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + (c)) + ']/div/div/div/div/div[2]',
 					true)
 	
 				'mengambil total saldo yang dipilih'
 				totalSaldo = WebUI.getText(modifyObjecttotalSaldoSign)
 				
 				result.put(rowName[b], totalSaldo)
+				
+				break
 			}
 		}
 	}

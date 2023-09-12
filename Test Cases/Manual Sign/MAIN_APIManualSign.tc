@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_APIManualSign</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>819a707b-beb2-49ea-8b31-93fd3c52a7f9</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>ae023c3c-496f-4e08-a686-785768354e1f</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>f1461578-1911-4a64-9ba4-3e532eafff5e</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Registrasi/InsertManualSign'</defaultValue>
+      <description></description>
+      <id>ae023c3c-496f-4e08-a686-785768354e1f</id>
+      <masked>false</masked>
+      <name>API_Excel_Path</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Manual Sign'</defaultValue>
+      <description></description>
+      <id>f1461578-1911-4a64-9ba4-3e532eafff5e</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>

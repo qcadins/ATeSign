@@ -21,11 +21,11 @@
     },
     {
       &quot;name&quot;: &quot;username&quot;,
-      &quot;value&quot;: &quot;fendy.tio@ad-ins.com&quot;
+      &quot;value&quot;: &quot;${email}&quot;
     },
     {
       &quot;name&quot;: &quot;password&quot;,
-      &quot;value&quot;: &quot;P@ssw0rd&quot;
+      &quot;value&quot;: &quot;${password}&quot;
     }
   ]
 }</httpBodyContent>

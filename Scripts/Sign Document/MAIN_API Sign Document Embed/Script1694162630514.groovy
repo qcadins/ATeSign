@@ -99,7 +99,7 @@ def getErrorMessageAPI(def respon) {
 
     'Write To Excel GlobalVariable.StatusFailed and errormessage'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-        ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
+        ((findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
         ('<' + message)) + '>')
 
     GlobalVariable.FlagFailed = 1

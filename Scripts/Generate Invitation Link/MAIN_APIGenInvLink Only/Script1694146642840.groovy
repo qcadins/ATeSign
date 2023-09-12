@@ -40,7 +40,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         0) {
             'setting email service tenant'
             CustomKeywords.'connection.Registrasi.settingEmailServiceTenant'(conneSign, findTestData(excelPathGenerateLink).getValue(
-                    GlobalVariable.NumofColm, rowExcel('Setting Email Servicel')))
+                    GlobalVariable.NumofColm, rowExcel('Setting Email Service')))
         }
         
         'check ada value maka setting allow regenerate link'
@@ -175,4 +175,3 @@ def getAPIErrorMessage(def respon) {
 def rowExcel(String cellValue) {
     return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
-
