@@ -75,7 +75,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         ';') + ' total signer pada Send Document dengan signer yang terdaftar tidak sesuai ')
                 }
                 
-                for (int i = 0; i <= emailSigner.size(); i++) {
+                for (int i = 0; i < emailSigner.size(); i++) {
                     if ((opsiSigning[i]) == 'API Sign Document External') {
                         indexReadDataExcelAPIExternal = inisializeArray(isUsedAPIExternal, indexReadDataExcelAPIExternal)
 

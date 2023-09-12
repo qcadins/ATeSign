@@ -65,10 +65,10 @@ for (o = 0; o < documentId.size(); o++) {
 		FailureHandling.CONTINUE_ON_FAILURE)
 	
     'mengambil saldo before'
-    saldoSignBefore = resultSaldoBefore.get('saldoSign')
+    saldoSignBefore = resultSaldoBefore.get('TTD')
 
     'mengambil saldo otp before'
-    saldoOtpBefore = resultSaldoBefore.get('saldoOTP')
+    saldoOtpBefore = resultSaldoBefore.get('OTP')
 
     'tutup browsernya'
     WebUI.closeBrowser()
@@ -563,10 +563,10 @@ for (o = 0; o < documentId.size(); o++) {
 			FailureHandling.CONTINUE_ON_FAILURE)
 
 		'mengambil saldo before'
-		saldoSignAfter = resultSaldoAfter.get('saldoSign')
+		saldoSignAfter = resultSaldoAfter.get('TTD')
 
 		'mengambil saldo otp before'
-		saldoOtpAfter = resultSaldoAfter.get('saldoOTP')
+		saldoOtpAfter = resultSaldoAfter.get('OTP')
 
         'Jika count saldo otp after dengan yang before dikurangi 1 ditambah dengan '
         if (WebUI.verifyEqual(Integer.parseInt(saldoOtpBefore) - countResend, Integer.parseInt(saldoOtpAfter), FailureHandling.OPTIONAL)) {

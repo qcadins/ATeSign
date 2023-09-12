@@ -19,8 +19,18 @@ String valueRefNum, nomorKontrakDocument
 documentId = findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ', -1)
 
 String refNumber = CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, documentId[0])
+ 
+'ambil nama vendor dari DB'
+String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, refNumber)
 
-saldoBefore = loginAdminGetSaldo(conneSign, 'No', sheet)
+'ambil tenant dan vendor code yang akan digunakan document'
+ArrayList<String> tenantVendor = CustomKeywords.'connection.DataVerif.getTenantandVendorCode'(conneSign, documentIdInput.replace(
+		'"', '').replace('[', '').replace(']', ''))
+
+HashMap<String, String> getSaldo = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathStamping
+, ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
+
+saldoBefore = getSaldo.get("Meterai")
 
 int prosesMaterai
 
@@ -151,7 +161,10 @@ if ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel
         FailureHandling.CONTINUE_ON_FAILURE)
 }
 
-saldoAfter = loginAdminGetSaldo(conneSign, 'Yes', sheet)
+HashMap<String, String> getSaldo = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathStamping
+, ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
+
+saldoAfter = getSaldo.get("Meterai")
 
 'mengambil value db proses ttd'
 prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, refNumber)
@@ -172,51 +185,6 @@ if (prosesMaterai == 53) {
             ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
             ' terhadap total saldo dimana saldo awal dan saldo setelah meterai tidak sama ')
     }
-}
-
-def loginAdminGetSaldo(Connection conneSign, String start, String sheet) {
-    String totalSaldo
-
-    if (findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Option for Stamp Document :')) == 'Start Stamping') {
-        start = 'Yes'
-    }
-    
-    if (start == 'Yes') {
-        'Call test Case untuk login sebagai admin wom admin client'
-        WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excelPathStamping, ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
-
-        'klik button saldo'
-        WebUI.click(findTestObject('isiSaldo/SaldoAdmin/menu_Saldo'))
-    }
-    
-    'klik ddl untuk tenant memilih mengenai Vida'
-    WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)
-
-    'get total div di Saldo'
-    variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
-
-    'looping berdasarkan total div yang ada di saldo'
-    for (int c = 1; c <= variableDivSaldo.size(); c++) {
-        'modify object mengenai find tipe saldo'
-        modifyObjectFindSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_saldo'), 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + 
-            (c + 1)) + ']/div/div/div/div/div[1]', true)
-
-        'verifikasi label saldonya '
-        if (WebUI.verifyElementText(modifyObjectFindSaldoSign, 'Meterai', FailureHandling.OPTIONAL)) {
-            'modify object mengenai ambil total jumlah saldo'
-            modifyObjecttotalSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_countsaldo'), 'xpath', 'equals', 
-                ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + (c + 1)) + ']/div/div/div/div/div[2]', 
-                true)
-
-            'mengambil total saldo yang pertama'
-            totalSaldo = WebUI.getText(modifyObjecttotalSaldoSign)
-
-            break
-        }
-    }
-    
-    'return total saldo awal'
-    return totalSaldo
 }
 
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {

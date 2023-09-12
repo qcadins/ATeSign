@@ -803,16 +803,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 'ambil saldo after'
                 saldoSignAfter = checkSaldoSign(conneSign, vendor)
 				
+				'Jika count saldo sign/ttd diatas (after) sama dengan yang dulu/pertama (before) dikurang jumlah dokumen yang ditandatangani'
+				if (WebUI.verifyEqual(Integer.parseInt(saldoSignBefore) - saldoUsed, Integer.parseInt(saldoSignAfter),
+					FailureHandling.OPTIONAL)) {
+				}
 				'cek apa pernah menggunakan biometrik'
-				if (useBiom == 0) {
+				if (useBiom == 0 || vendor.equalsIgnoreCase('Privy')) {
 					
 					'Jika count saldo otp after dengan yang before dikurangi 1 ditambah dengan '
 					if(WebUI.verifyEqual(Integer.parseInt(saldoBefore.get('OTP')) - (countResend), Integer.parseInt(saldoAfter.get('OTP')), FailureHandling.OPTIONAL)) {
-						'Jika count saldo sign/ttd diatas (after) sama dengan yang dulu/pertama (before) dikurang jumlah dokumen yang ditandatangani'
-						if (WebUI.verifyEqual(Integer.parseInt(saldoSignBefore) - saldoUsed, Integer.parseInt(saldoSignAfter),
-							FailureHandling.OPTIONAL)) {
-							break
-						}
+
 					}
 
 				} else if (useBiom == 1){
@@ -1248,8 +1248,7 @@ def verifBiomMethod(int maxFaceCompDB, int countLivenessFaceComp, Connection con
 			}
 			
 		} else {
-			
-			return
+			return 
 		}
 	}
 }
