@@ -98,10 +98,7 @@ for (o = 0; o < documentId.size(); o++) {
     
     flaggingOTP = CustomKeywords.'connection.DataVerif.getParameterFlagPassOTP'(conneSign, (documentId[0]).toString())
 
-	println vendor
-	println findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use correct OTP From Database (Sign External)')).split(
-        ';', -1)[GlobalVariable.indexUsed]
-    if (vendor.equalsIgnoreCase('Privy')) {
+	   if (vendor.equalsIgnoreCase('Privy')) {
         'request OTP dengan HIT API'
 
         'Constraint : Dokumen yang dipasang selalu dengan referal number di dokumen pertama.'
@@ -171,7 +168,7 @@ for (o = 0; o < documentId.size(); o++) {
             ';', -1)[GlobalVariable.indexUsed])
     }
     
-    if (otp.replace('"', '').length() > 0) {
+    if (otp.replace('"', '').length() >= 0) {
         'check if mau menggunakan base64 untuk photo yang salah atau benar'
         if ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use Base64 SelfPhoto (Sign External)')).split(
             ';', -1)[GlobalVariable.indexUsed]) == 'Yes') {
