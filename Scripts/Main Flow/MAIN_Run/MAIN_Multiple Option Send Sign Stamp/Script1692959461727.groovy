@@ -31,6 +31,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		'inisialisasi signerInput sebagai array list'
         ArrayList signerInput
 
+		ArrayList emailSigner
+		
         if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 'API Send Document External') {
             WebUI.callTestCase(findTestCase('Main Flow/API Send Document External'), [('excelPathAPISendDoc') : excelPathMain
                     , ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
@@ -54,18 +56,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         }
 
         if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).length() > 0) {
-            WebUI.callTestCase(findTestCase('Main Flow/KotakMasuk'), [('excelPathFESignDocument') : excelPathMain, ('sheet') : sheet, ('checkBeforeSigning') : 'Yes'], 
+		 if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 'Sign Only') {
+			 WebUI.callTestCase(findTestCase('Main Flow/KotakMasuk'), [('excelPathFESignDocument') : excelPathMain, ('sheet') : sheet, ('checkBeforeSigning') : 'Yes'], 
                 FailureHandling.STOP_ON_FAILURE)
-
+		 }
+		 GlobalVariable.base_url = findTestData('Login/Setting').getValue(7,2)
+		 
             if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Need Sign for this document? ')) == 
             'Yes') {
                 ArrayList opsiSigning = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Sign Document per Signer')).split(
                     ';', -1)
 
                 documentId = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('documentid'))
-
+				if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 'Sign Only') {
+					
                 'Mengambil email signer berdasarkan documentId'
-                ArrayList emailSigner = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, documentId).split(
+                emailSigner = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, documentId).split(
                     ';', -1)
 
                 if (WebUI.verifyNotEqual(signerInput.size(), emailSigner.size(), FailureHandling.OPTIONAL)) {
@@ -74,6 +80,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         GlobalVariable.StatusFailed, (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
                         ';') + ' total signer pada Send Document dengan signer yang terdaftar tidak sesuai ')
                 }
+				} else {
+					emailSigner = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('email Signer (Sign Only)')).split(';', -1)
+				}
                 
                 for (int i = 0; i < emailSigner.size(); i++) {
                     if ((opsiSigning[i]) == 'API Sign Document External') {
@@ -112,7 +121,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                 , ('sheet') : sheet, ('indexUsed') : indexReadDataExcelEmbed, ('emailSigner') : emailSigner[i], ('opsiSigning') : opsiSigning[i]], FailureHandling.CONTINUE_ON_FAILURE)
 
                         isUsedEmbed = true
-                    } else if ((opsiSigning[i]) == 'Signer Login Sign') {
+                    } else if ((opsiSigning[i]) == 'Sign Via Inbox') {
                         indexReadDataExcelInboxSigner = inisializeArray(isUsedInboxSigner, indexReadDataExcelInboxSigner)
 
 						GlobalVariable.indexUsed =  indexReadDataExcelInboxSigner
@@ -148,9 +157,11 @@ def rowExcel(String cellValue) {
 }
 
 def resetValue() {
-    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('documentid') - 
-        1, GlobalVariable.NumofColm - 1, '')
-
+	
+	if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 'Sign Only') {
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('documentid') - 
+			1, GlobalVariable.NumofColm - 1, '')
+	}
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('trxNo') - 1, 
         GlobalVariable.NumofColm - 1, '')
 
