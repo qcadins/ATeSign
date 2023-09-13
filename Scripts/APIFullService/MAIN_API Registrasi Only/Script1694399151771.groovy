@@ -132,9 +132,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             trxNo[0], trxNo[1])
 
                         ArrayList<String> resultDataUser = CustomKeywords.'connection.Registrasi.buatUndanganStoreDB'(conneSign, 
-                            findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace('"', ''))
-
-                        println(resultDataUser)
+                            findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace('"', ''),
+							findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('tlp')).replace('"', ''))
 
                         'verify is_active'
                         arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), '1', false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -174,9 +173,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathAPIRegistrasi).getValue(
                                     GlobalVariable.NumofColm, rowExcel('jenisKelamin')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                        'verify email'
-                        arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathAPIRegistrasi).getValue(
-                                    GlobalVariable.NumofColm, rowExcel('email')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+						'jika email kosong pada testdata, tidak lakukan pengecekan email';
+						if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace('"', '').equalsIgnoreCase('')) {
+							
+							arrayIndex++
+						} else {
+							
+							'verify email'
+							arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathAPIRegistrasi).getValue(
+									GlobalVariable.NumofColm, rowExcel('email')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+						}
 
                         'verify provinsi'
                         arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathAPIRegistrasi).getValue(
