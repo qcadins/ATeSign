@@ -307,10 +307,12 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
 
 		'check if aktivasi berhasil dengan OTP yang benar'
 		if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/popUp_AktivasiBerhasil'), GlobalVariable.TimeOut,
-			FailureHandling.OPTIONAL) && (GlobalVariable.FlagFailed == 0)) {
-			'write to excel success'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
-				0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+			FailureHandling.OPTIONAL)) {
+			if (GlobalVariable.FlagFailed == 0) {
+				'write to excel success'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
+					0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+			}
 		} else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/popUp_AktivasiBerhasil'), GlobalVariable.TimeOut,
 			FailureHandling.OPTIONAL)) {
 			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
