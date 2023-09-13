@@ -43,10 +43,10 @@ public class Registrasi {
 	}
 
 	@Keyword
-	buatUndanganStoreDB(Connection conn, String email) {
+	buatUndanganStoreDB(Connection conn, String email, String notelp) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT full_name, place_of_birth, To_char(date_of_birth, 'MM/dd/yyyy'), gender, email, provinsi, kota, kecamatan, kelurahan, zip_code FROM am_user_personal_data aupd JOIN am_msuser amu ON aupd.id_ms_user = amu.id_ms_user WHERE EMAIL = '" +  email  + "'")
+		resultSet = stm.executeQuery("SELECT full_name, place_of_birth, To_char(date_of_birth, 'MM/dd/yyyy'), gender, email, provinsi, kota, kecamatan, kelurahan, zip_code FROM am_user_personal_data aupd JOIN am_msuser amu ON aupd.id_ms_user = amu.id_ms_user WHERE login_id = '" + email + "' OR amu.hashed_phone = encode(sha256('" + notelp + "'), 'hex')")
 
 		metadata = resultSet.metaData
 

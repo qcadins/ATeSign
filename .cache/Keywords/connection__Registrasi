@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "0F7A3FB664DD4D1A2346E353BD54C933",
+  "keywordFileContentHash": "779F3436F2ACEC141CA44E11FD84CCB8",
   "keywordClasses": [
     {
       "name": "connection.Registrasi",
@@ -33,8 +33,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getGenInvLink",
@@ -104,8 +103,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "buatUndanganStoreDB",
@@ -135,9 +133,21 @@
                 "genericsTypes": [],
                 "errorOnParsing": false
               }
+            },
+            {
+              "name": "notelp",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getBuatUndanganDataPerusahaanStoreDB",
@@ -168,8 +178,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getRegisterPrivyStoreDB",
@@ -200,11 +209,10 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         }
       ]
     }
   ],
-  "javadocParsed": true
+  "javadocParsed": false
 }
