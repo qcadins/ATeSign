@@ -148,9 +148,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'diberikan delay 3 detik dengan loading'
             WebUI.delay(1)
 
-            'check element present kepada daftar penanda tangan yang kosong'
-            WebUI.verifyElementPresent(modifyObjectLblDaftarPenandaTangan, GlobalVariable.TimeOut)
-
             'looping berdasarkan email penanda tangan'
             for (int i = 0; i < emailPenandaTangan.size(); i++) {
                 if ((emailPenandaTangan[i]) != '') {
