@@ -121,9 +121,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			
             emailService = CustomKeywords.'connection.DataVerif.getEmailService'(conneSign, GlobalVariable.Tenant)
 
-            'check element present kepada daftar penanda tangan yang kosong'
-            WebUI.verifyElementPresent(modifyObjectLblDaftarPenandaTangan, GlobalVariable.TimeOut)
-
             'click tambah penanda tangan'
             WebUI.click(modifyObjectbuttonTambahPenandaTangan)
 

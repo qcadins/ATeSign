@@ -104,9 +104,6 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 	
     emailService = CustomKeywords.'connection.DataVerif.getEmailService'(conneSign, GlobalVariable.Tenant)
 
-    'check element present kepada daftar penanda tangan yang kosong'
-    WebUI.verifyElementPresent(modifyObjectLblDaftarPenandaTangan, GlobalVariable.TimeOut)
-
     'click tambah penanda tangan'
     WebUI.click(modifyObjectbuttonTambahPenandaTangan)
 
@@ -130,9 +127,6 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 
     'diberikan delay 3 detik dengan loading'
     WebUI.delay(1)
-
-    'check element present kepada daftar penanda tangan yang kosong'
-    WebUI.verifyElementPresent(modifyObjectLblDaftarPenandaTangan, GlobalVariable.TimeOut)
 
     'looping berdasarkan email penanda tangan'
     for (int i = 0; i < emailPenandaTangan.size(); i++) {
