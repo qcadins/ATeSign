@@ -712,10 +712,8 @@ def checkVerifyEqualorMatch(Boolean isMatch, String reason) {
             ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
             reason)
 
-        return false
     }
-    
-    return true
+
 }
 
 def checkPopup() {

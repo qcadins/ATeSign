@@ -18,6 +18,8 @@ String valueRefNum, nomorKontrakDocument
 
 documentId = findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ', -1)
 
+GlobalVariable.base_url = findTestData('Login/Setting').getValue(7,2)
+
 String refNumber = CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, documentId[0])
  
 'ambil nama vendor dari DB'
@@ -139,7 +141,7 @@ if ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel
                     1, GlobalVariable.StatusSuccess)
 
                 'Call verify meterai'
-                WebUI.callTestCase(findTestCase('Meterai/verifyMeterai'), [('excelPathMeterai') : excelPathStamping, ('sheet') : sheet
+                WebUI.callTestCase(findTestCase('Main Flow/verifyMeterai'), [('excelPathMeterai') : excelPathStamping, ('sheet') : sheet
                         , ('noKontrak') : nomorKontrakDocument.replace('"', ''), ('linkDocumentMonitoring') : linkDocumentMonitoring], 
                     FailureHandling.CONTINUE_ON_FAILURE)
             }
@@ -260,6 +262,7 @@ def verifySaldoUsed(Connection conneSign, String sheet, String refNumber) {
                 'equals', ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
                 p) + ']/datatable-body-row/div[2]/datatable-body-cell[') + u) + ']/div', true)
 
+			WebUI.scrollToElement(modifyperrowpercolumn, GlobalVariable.TimeOut)
             'Jika u di lokasi qty atau kolom ke 9'
             if (u == 9) {
                 'Jika yang qtynya 1 dan databasenya juga, berhasil'

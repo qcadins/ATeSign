@@ -19,9 +19,9 @@ sheet = 'Main'
 
 'looping untuk sending document'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathMain).columnNumbers; (GlobalVariable.NumofColm)++) {
-    if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
+    if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
-    } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+    } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
         'reset value di excel mengenai output previous run'
 		resetValue()
 
@@ -32,6 +32,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         ArrayList signerInput
 
 		ArrayList emailSigner
+		
+		GlobalVariable.base_url = findTestData('Login/Setting').getValue(7,2)
 		
         if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 'API Send Document External') {
             WebUI.callTestCase(findTestCase('Main Flow/API Send Document External'), [('excelPathAPISendDoc') : excelPathMain
@@ -60,7 +62,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			 WebUI.callTestCase(findTestCase('Main Flow/KotakMasuk'), [('excelPathFESignDocument') : excelPathMain, ('sheet') : sheet, ('checkBeforeSigning') : 'Yes'], 
                 FailureHandling.STOP_ON_FAILURE)
 		 }
-		 GlobalVariable.base_url = findTestData('Login/Setting').getValue(7,2)
 		 
             if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Need Sign for this document? ')) == 
             'Yes') {
@@ -162,6 +163,7 @@ def resetValue() {
 		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('documentid') - 
 			1, GlobalVariable.NumofColm - 1, '')
 	}
+	
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('trxNo') - 1, 
         GlobalVariable.NumofColm - 1, '')
 

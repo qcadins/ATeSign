@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "D44DAC06A1B4FE0A0AE59BFA36E57A12",
+  "keywordFileContentHash": "5D94D665834C4229211E827D508DB985",
   "keywordClasses": [
     {
       "name": "connection.Meterai",
@@ -20,8 +20,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getStampdutyData",
@@ -52,8 +51,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getStampdutyTrxData",
@@ -84,8 +82,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getMeterai",
@@ -116,8 +113,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getTotalMateraiAndTotalStamping",
@@ -148,8 +144,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getProsesMaterai",
@@ -180,8 +175,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getInputMeterai",
@@ -212,8 +206,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getValueMeterai",
@@ -244,8 +237,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getValueDetailMeterai",
@@ -276,8 +268,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getErrorMessage",
@@ -308,11 +299,10 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         }
       ]
     }
   ],
-  "javadocParsed": true
+  "javadocParsed": false
 }

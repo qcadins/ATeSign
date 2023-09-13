@@ -8,6 +8,7 @@ import internal.GlobalVariable as GlobalVariable
 import java.sql.Connection as Connection
 import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import org.openqa.selenium.By as By
+import org.openqa.selenium.Keys as Keys
 
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
@@ -22,12 +23,12 @@ String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conn
 
 GlobalVariable.Tenant = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))
 
-'declare variable array'
-String saldoBefore , saldoAfter
-
 ArrayList totalSignedBefore = [], totalSignedAfter = []
 
-saldoBefore = loginAdminGetSaldo(conneSign, vendor, refNumber)
+HashMap<String, String> saldoBefore = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : API_Excel_Path
+	, ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
+
+ttdBefore = saldoBefore.get('TTD')
 
 emailSigner = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$email (Sign Normal)')).split(';', -1)
 
@@ -104,11 +105,13 @@ if (WS.verifyResponseStatusCode(respon_login, 200, FailureHandling.OPTIONAL) == 
 								FailureHandling.CONTINUE_ON_FAILURE)
 						}
 
-					'check saldo'
-					saldoAfter = loginAdminGetSaldo(conneSign, vendor, refNumber)
+						HashMap<String, String> saldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : API_Excel_Path
+							, ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
+						
+						ttdAfter = saldoAfter.get('TTD')
 				
 					'check saldo before dan aftar'
-					if (saldoBefore == saldoAfter) {
+					if (ttdBefore == ttdAfter) {
 						'Write To Excel GlobalVariable.StatusFailed dengan alasan bahwa saldo transaksi '
 						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 							GlobalVariable.StatusFailed, ((findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,
@@ -173,44 +176,6 @@ def encryptLink(Connection conneSign, String documentId, String emailSigner, Str
 
 	return encryptMsg
 }
-
-def loginAdminGetSaldo(Connection conneSign, String vendor, String noKontrak) {
-	'klik button saldo'
-	WebUI.click(findTestObject('isiSaldo/SaldoAdmin/menu_Saldo'), FailureHandling.CONTINUE_ON_FAILURE)
-	
-	String totalSaldo
-	
-	'klik ddl untuk tenant memilih mengenai Vida'
-	WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), vendor, false)
-
-	'get total div di Saldo'
-	variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
-
-	'looping berdasarkan total div yang ada di saldo'
-	for (int c = 1; c <= variableDivSaldo.size(); c++) {
-		'modify object mengenai find tipe saldo'
-		modifyObjectFindSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_saldo'), 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' +
-			(c + 1)) + ']/div/div/div/div/div[1]', true)
-
-		'verifikasi label saldonya '
-		if (WebUI.verifyElementText(modifyObjectFindSaldoSign, findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,
-				rowExcel('Tipe')), FailureHandling.OPTIONAL)) {
-			'modify object mengenai ambil total jumlah saldo'
-			modifyObjecttotalSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_countsaldo'), 'xpath', 'equals',
-				('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + (c + 1)) + ']/div/div/div/div/div[2]',
-				true)
-
-			'mengambil total saldo yang pertama'
-			totalSaldo = WebUI.getText(modifyObjecttotalSaldoSign)
-
-			break
-		}
-	}
-	
-	'return total saldo awal'
-	return totalSaldo
-}
-
 
 def verifySaldoSigned(Connection conneSign, String documentId) {
 	'get current date'
