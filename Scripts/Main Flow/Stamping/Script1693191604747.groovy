@@ -23,10 +23,6 @@ String refNumber = CustomKeywords.'connection.APIFullService.getRefNumber'(conne
 'ambil nama vendor dari DB'
 String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, refNumber)
 
-'ambil tenant dan vendor code yang akan digunakan document'
-ArrayList<String> tenantVendor = CustomKeywords.'connection.DataVerif.getTenantandVendorCode'(conneSign, documentIdInput.replace(
-		'"', '').replace('[', '').replace(']', ''))
-
 HashMap<String, String> getSaldo = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathStamping
 , ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
 
@@ -161,7 +157,7 @@ if ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel
         FailureHandling.CONTINUE_ON_FAILURE)
 }
 
-HashMap<String, String> getSaldo = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathStamping
+getSaldo = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathStamping
 , ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
 
 saldoAfter = getSaldo.get("Meterai")
