@@ -17,7 +17,8 @@ arrayindex = 0
 if(GlobalVariable.Psre == 'VIDA') {	
 	'get data buat undangan dari DB'
 	ArrayList<String> resultDataDiri = CustomKeywords.'connection.Registrasi.buatUndanganStoreDB'(conneSign, findTestData(excelPathBuatUndangan).getValue(
-	        GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase())
+	        GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase(), findTestData(excelPathBuatUndangan).getValue(
+	        GlobalVariable.NumofColm, rowExcel('$No Handphone')))
 	
 	'get data perusahaan buat undangan dari DB'
 	ArrayList<String> resultDataPerusahaan = CustomKeywords.'connection.Registrasi.getBuatUndanganDataPerusahaanStoreDB'(conneSign, 

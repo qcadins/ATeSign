@@ -20,7 +20,7 @@ public class DataVerif {
 	getOTP(Connection conn, String email) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT otp_code FROM tr_invitation_link WHERE receiver_detail = '" +  email  + "'")
+		resultSet = stm.executeQuery("SELECT otp_code FROM tr_invitation_link WHERE receiver_detail = '" +  email  + "' LIMIT 1")
 
 		metadata = resultSet.metaData
 
