@@ -21,7 +21,7 @@ documentId = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.Numo
     splitnum)
 
 for (o = 0; o < documentId.size(); o++) {
-    documentIdInput = '["' + documentId[o] + '"]'
+    documentIdInput = (('["' + (documentId[o])) + '"]')
 
     String refNumber = CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, documentId[o])
 
@@ -29,7 +29,7 @@ for (o = 0; o < documentId.size(); o++) {
     String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, refNumber)
 
     'ambil tenant dan vendor code yang akan digunakan document'
-    ArrayList<String> tenantVendor = CustomKeywords.'connection.DataVerif.getTenantandVendorCode'(conneSign, documentIdInput.replace(
+    ArrayList tenantVendor = CustomKeywords.'connection.DataVerif.getTenantandVendorCode'(conneSign, documentIdInput.replace(
             '"', '').replace('[', '').replace(']', ''))
 
     'setting vendor otp dimatikan/diaktifkan'
@@ -59,14 +59,14 @@ for (o = 0; o < documentId.size(); o++) {
     HashMap<String, String> saldoBefore = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathAPISignDocument
             , ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
 
-    ArrayList<String> saldoAfter = []
+    ArrayList paymentTypeUsed = getPaymentTypeUsed(conneSign, vendor)
 
     GlobalVariable.FlagFailed = 0
 
     'Inisialisasi otp, photo, ipaddress, dan total signed sebelumnya yang dikosongkan'
     String otp, photo, ipaddress
 
-    ArrayList<String> totalSignedBefore = [], totalSignedAfter = [], flaggingOTP = []
+    ArrayList totalSignedBefore = [],totalSignedAfter = [], flaggingOTP = []
 
     'Split dokumen id agar mendapat dokumenid 1 per 1 dengan case bulk'
     documentId = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(
@@ -95,19 +95,20 @@ for (o = 0; o < documentId.size(); o++) {
         GlobalVariable.api_key = (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Wrong API Key (Sign External)')).split(
             ';', -1)[GlobalVariable.indexUsed])
     }
-
+    
     flaggingOTP = CustomKeywords.'connection.DataVerif.getParameterFlagPassOTP'(conneSign, (documentId[0]).toString())
 
-    if (vendor.equalsIgnoreCase('Privy')) {
+	   if (vendor.equalsIgnoreCase('Privy')) {
         'request OTP dengan HIT API'
+
         'Constraint : Dokumen yang dipasang selalu dengan referal number di dokumen pertama.'
         respon_OTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing', [('callerId') : findTestData(
                         excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('callerId (Sign External)')).split(
                         ';', -1)[GlobalVariable.indexUsed], ('phoneNo') : findTestData(excelPathAPISignDocument).getValue(
                         GlobalVariable.NumofColm, rowExcel('phoneNo (Sign External)')).split(';', -1)[GlobalVariable.indexUsed]
                     , ('email') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(
-                        ';', -1)[GlobalVariable.indexUsed], ('refnumber') : ('"' + CustomKeywords.'connection.APIFullService.getRefNumber'(
-                        conneSign, documentId[0])) + '"']))
+                        ';', -1)[GlobalVariable.indexUsed], ('refnumber') : '"' + CustomKeywords.'connection.APIFullService.getRefNumber'(
+                        conneSign, documentId[0]) + '"']))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(respon_OTP, 200, FailureHandling.OPTIONAL) == true) {
@@ -123,8 +124,8 @@ for (o = 0; o < documentId.size(); o++) {
                     ';', -1)[GlobalVariable.indexUsed])
             }
         }
-    } else if ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use correct OTP From Database (Sign External)')).split(
-        ';', -1)[GlobalVariable.indexUsed]) == 'Yes') {
+    } else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use correct OTP From Database (Sign External)')).split(
+        ';', -1)[GlobalVariable.indexUsed] == 'Yes') {
         'check if mau menggunakan OTP yang salah atau benar'
 
         'request OTP dengan HIT API'
@@ -146,28 +147,28 @@ for (o = 0; o < documentId.size(); o++) {
             'jika codenya 0'
             if (code_otp == 0) {
                 'Dikasih delay 1 detik dikarenakan loading untuk mendapatkan OTP.'
-                WebUI.delay(1)
+                WebUI.delay(3)
 
                 'Mengambil otp dari database'
-                otp = (('"' + CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, (findTestData(excelPathAPISignDocument).getValue(
-                        GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(';', -1)[GlobalVariable.indexUsed]).replace(
-                        '"', ''))) + '"')
+                otp = '"' + CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, (findTestData(excelPathAPISignDocument).getValue(
+                        GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(';', -1)[GlobalVariable.indexUsed]).replace('"', '')) + '"'
             } else {
                 getErrorMessageAPI(respon_OTP)
             }
         } else {
             'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.HITAPI Gagal'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedOTPError)
+                (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
+                ';') + GlobalVariable.ReasonFailedOTPError)
         }
-    } else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use correct OTP From Database (Sign External)')) == 
-    'No') {
+    } else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use correct OTP From Database (Sign External)')).split(
+        ';', -1)[GlobalVariable.indexUsed] == 'No') {
         'get otp dari excel'
         otp = (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Wrong OTP (Sign External)')).split(
             ';', -1)[GlobalVariable.indexUsed])
     }
     
-    if (otp.replace('"', '').length() > 0) {
+    if (otp.replace('"', '').length() >= 0) {
         'check if mau menggunakan base64 untuk photo yang salah atau benar'
         if ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use Base64 SelfPhoto (Sign External)')).split(
             ';', -1)[GlobalVariable.indexUsed]) == 'Yes') {
@@ -195,7 +196,7 @@ for (o = 0; o < documentId.size(); o++) {
         
         'looping berdasarkan ukuran dari dokumen id'
         for (int z = 0; z < documentId.size(); z++) {
-            'Memasukkan input dari total signed'
+            'Memasukkan input dari total signed'	
             (totalSignedBefore[z]) = CustomKeywords.'connection.APIFullService.getTotalSigned'(conneSign, (documentId[z]).toString())
         }
         
@@ -283,27 +284,37 @@ for (o = 0; o < documentId.size(); o++) {
                                         'Write To Excel GlobalVariable.StatusFailed dengan alasan bahwa saldo transaksi '
                                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                                             GlobalVariable.StatusFailed, ((((findTestData(excelPathAPISignDocument).getValue(
-                                                GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + ' Transaksi dengan nomor ') + ('<' + 
-                                            (trxNo[i]))) + '> digunakan untuk ') + checkTypeofUsedSaldo)
+                                                GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + ' Transaksi dengan nomor ') + 
+                                            ('<' + (trxNo[i]))) + '> digunakan untuk ') + checkTypeofUsedSaldo)
                                     }
                                 }
                             }
                             
-                            'check saldo'
-                            saldoAfter = loginAdminGetSaldo(conneSign)
+                            'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
+                            WebUI.callTestCase(findTestCase('Main Flow/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathAPISignDocument
+                                    , ('sheet') : sheet, ('linkDocumentMonitoring') : 'Not Used', ('nomorKontrak') : refNumber], 
+                                FailureHandling.CONTINUE_ON_FAILURE)
 
-                            'check saldo before dan aftar'
-                            if (saldoBefore == saldoAfter) {
-                                'Write To Excel GlobalVariable.StatusFailed dengan alasan bahwa saldo transaksi '
-                                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                                    GlobalVariable.StatusFailed, ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
-                                        rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedNoneUI) + ' terhadap pemotongan saldo ')
-                            } else {
-                                if (trxNo != null) {
-                                    verifySaldoUsedForLiveness(conneSign, trxNo)
+                            HashMap<String, String> saldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), 
+                                [('excel') : excelPathAPISignDocument, ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
+
+                            'looping payment type used'
+                            for (l = 0; l < paymentTypeUsed.size(); l++) {
+                                'looping untuk mendapatkan key dari hashmap'
+                                for (String key : saldoBefore.keySet()) {
+                                    String values = saldoBefore.get(key)
+
+                                    if (key == (paymentTypeUsed[l])) {
+                                        checkVerifyEqualOrMatch(WebUI.verifyEqual(Integer.parseInt(saldoBefore.get(key)) - 
+                                                1, Integer.parseInt(saldoAfter.getAt(key))), ' terhadap pemotongan saldo ' + key)
+
+                                        if (trxNo != null) {
+                                            verifySaldoUsedForLiveness(conneSign, trxNo)
+                                        }
+                                        
+                                        verifySaldoSigned(conneSign, documentId[0])
+                                    }
                                 }
-                                
-                                verifySaldoSigned(conneSign, documentId[0])
                             }
                             
                             break
@@ -320,11 +331,9 @@ for (o = 0; o < documentId.size(); o++) {
                         }
                     }
                 }
-            }
-            else {
+            } else {
                 getErrorMessageAPI(respon)
             }
-
         } else {
             getErrorMessageAPI(respon)
         }
@@ -344,7 +353,7 @@ def responseAPIStoreDB(Connection conneSign, String ipaddress, String[] document
     currentDate = new Date().format('yyyy-MM-dd')
 
     'declare arraylist arraymatch'
-    ArrayList<String> arrayMatch = []
+    ArrayList arrayMatch = []
 
     'loop berdasarkan dokumen id'
     for (int i = 0; i < documentId.size(); i++) {
@@ -416,113 +425,9 @@ def responseAPIStoreDB(Connection conneSign, String ipaddress, String[] document
     if (arrayMatch.contains(false)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
+            (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
+            GlobalVariable.ReasonFailedStoredDB)
     }
-}
-
-def loginAdminGetSaldo(Connection conneSign) {
-    ArrayList<String> totalSaldo = []
-
-    docid = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(',' - 
-        1)
-
-    noKontrak = ''
-
-    for (int i = 1; i <= docid.size(); i++) {
-        if (noKontrak != '') {
-            noKontrak = (noKontrak + ';')
-        }
-        
-        noKontrak = (noKontrak + CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, docid[(i - 1)]))
-    }
-    
-    'klik button saldo'
-    WebUI.click(findTestObject('isiSaldo/SaldoAdmin/menu_Saldo'))
-
-    'ambil nama vendor dari DB'
-    String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, noKontrak)
-
-    'klik ddl untuk tenant memilih mengenai Vida'
-    WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), vendor, false)
-
-    'get total div di Saldo'
-    variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
-
-    'looping berdasarkan total div yang ada di saldo'
-    for (int c = 1; c <= variableDivSaldo.size(); c++) {
-        'modify object mengenai find tipe saldo'
-        modifyObjectFindSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_saldo'), 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + 
-            (c + 1)) + ']/div/div/div/div/div[1]', true)
-
-        'verifikasi label saldonya '
-        if (WebUI.verifyElementText(modifyObjectFindSaldoSign, findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
-                rowExcel('Tipe')), FailureHandling.OPTIONAL)) {
-            'modify object mengenai ambil total jumlah saldo'
-            modifyObjecttotalSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_countsaldo'), 'xpath', 'equals', 
-                ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + (c + 1)) + ']/div/div/div/div/div[2]', 
-                true)
-
-            'mengambil total saldo yang pertama'
-            totalSaldo.add(WebUI.getText(modifyObjecttotalSaldoSign))
-
-            break
-        }
-    }
-    
-    if (vendor.toUpperCase() != 'PRIVY') {
-        vendor = 'ESIGN/ADINS'
-
-        if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Wrong OTP (Sign External)')) != 
-        '') {
-            isSplit = CustomKeywords.'connection.APIFullService.getSplitLivenessFaceCompareBill'(conneSign)
-
-            if (isSplit == '1') {
-                paymentType = ['Liveness', 'Face Compare']
-            } else {
-                paymentType = ['Liveness Face Compare']
-            }
-        } else {
-            paymentType = ['OTP']
-        }
-    } else {
-        paymentType = ['OTP']
-    }
-    
-    'klik ddl untuk tenant memilih mengenai Vida'
-    WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), vendor, false)
-
-    'get total div di Saldo'
-    variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
-
-    for (int i = 0; i < paymentType.size(); i++) {
-        'looping berdasarkan total div yang ada di saldo'
-        for (int c = 1; c <= variableDivSaldo.size(); c++) {
-            'modify object mengenai find tipe saldo'
-            modifyObjectFindSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_saldo'), 'xpath', 'equals', 
-                ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + (c + 1)) + ']/div/div/div/div/div[1]', 
-                true)
-
-            'verifikasi label saldonya '
-            if (WebUI.verifyElementText(modifyObjectFindSaldoSign, paymentType[i], FailureHandling.OPTIONAL)) {
-                'modify object mengenai ambil total jumlah saldo'
-                modifyObjecttotalSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_countsaldo'), 'xpath', 
-                    'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + 
-                    (c + 1)) + ']/div/div/div/div/div[2]', true)
-
-                'mengambil total saldo yang pertama'
-                totalSaldo.add(WebUI.getText(modifyObjecttotalSaldoSign))
-
-                break
-            }
-        }
-    }
-    
-    'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
-    WebUI.callTestCase(findTestCase('Main Flow/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathAPISignDocument
-            , ('sheet') : sheet, ('linkDocumentMonitoring') : 'Not Used', ('nomorKontrak') : noKontrak], FailureHandling.CONTINUE_ON_FAILURE)
-
-    'return total saldo awal'
-    return totalSaldo
 }
 
 def verifySaldoUsedForLiveness(Connection conneSign, String trxNo) {
@@ -619,7 +524,7 @@ def verifySaldoUsedForLiveness(Connection conneSign, String trxNo) {
             variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[10]/div', true)
 
         'get trx dari db'
-        ArrayList<String> result = CustomKeywords.'connection.DataVerif.getSaldoTrx'(conneSign, (findTestData(excelPathAPISignDocument).getValue(
+        ArrayList result = CustomKeywords.'connection.DataVerif.getSaldoTrx'(conneSign, (findTestData(excelPathAPISignDocument).getValue(
                 GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(';', -1)[GlobalVariable.indexUsed]).replace(
                 '"', ''), (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('callerId (Sign External)')).split(
                 ';', -1)[GlobalVariable.indexUsed]).replace('"', ''), checkTypeofUsedSaldo)
@@ -660,8 +565,8 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
-            reason)
+            ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
+            GlobalVariable.ReasonFailedVerifyEqualOrMatch) + reason)
 
         GlobalVariable.FlagFailed = 1
     }
@@ -673,7 +578,8 @@ def getErrorMessageAPI(def respon) {
 
     'Write To Excel GlobalVariable.StatusFailed and errormessage'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-        ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + ('<' + message)) + '>')
+        ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
+        ('<' + message)) + '>')
 
     GlobalVariable.FlagFailed = 1
 }
@@ -765,7 +671,7 @@ def verifySaldoSigned(Connection conneSign, String documentId) {
             variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
 
             'ambil inquiry di db'
-            ArrayList<String> inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldo'(conneSign, noKontrak, saldoUsedperDoc.toString())
+            ArrayList inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldo'(conneSign, noKontrak, saldoUsedperDoc.toString())
 
             index = 0
 
@@ -798,8 +704,8 @@ def verifySaldoSigned(Connection conneSign, String documentId) {
 
                             'Jika saldonya belum masuk dengan flag, maka signnya gagal.'
                             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                                GlobalVariable.StatusFailed, ';' + GlobalVariable.ReasonFailedSignGagal + ' terlihat pada Kuantitas di Mutasi Saldo dengan nomor kontrak ' + 
-                                '<' + noKontrak + '>')
+                                GlobalVariable.StatusFailed, ((((';' + GlobalVariable.ReasonFailedSignGagal) + ' terlihat pada Kuantitas di Mutasi Saldo dengan nomor kontrak ') + 
+                                '<') + noKontrak) + '>')
                         }
                     } else if (u == variableSaldoColumn.size()) {
                         'Jika di kolom ke 10, atau di FE table saldo, check saldo dari table dengan saldo yang sekarang. Takeout dari dev karena no issue dan sudah sepakat'
@@ -818,8 +724,9 @@ def verifySaldoSigned(Connection conneSign, String documentId) {
             if (d == 6) {
                 'Jika masih tidak ada'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                    (((((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + 
-                    ';') + GlobalVariable.ReasonFailedNoneUI) + ' dengan nomor kontrak ') + '<') + noKontrak) + '>')
+                    (((((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+                        '-', '') + ';') + GlobalVariable.ReasonFailedNoneUI) + ' dengan nomor kontrak ') + '<') + noKontrak) + 
+                    '>')
             }
             
             'delay 10 detik'
@@ -829,5 +736,30 @@ def verifySaldoSigned(Connection conneSign, String documentId) {
             WebUI.click(findTestObject('Saldo/btn_cari'))
         }
     }
+}
+
+def getPaymentTypeUsed(Connection conneSign, String vendor) {
+    ArrayList paymentType = []
+
+    if (vendor.toUpperCase() != 'PRIVY') {
+        vendor = 'ESIGN/ADINS'
+
+        if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use correct OTP From Database (Sign External)')).split(';', -1)[GlobalVariable.indexUsed] != 
+        'Yes') {
+            isSplit = CustomKeywords.'connection.APIFullService.getSplitLivenessFaceCompareBill'(conneSign)
+
+            if (isSplit == '1') {
+                paymentType = ['Liveness', 'Face Compare']
+            } else {
+                paymentType = ['Liveness Face Compare']
+            }
+        } else {
+            paymentType = ['OTP']
+        }
+    } else {
+        paymentType = ['OTP']
+    }
+    
+    return paymentType
 }
 

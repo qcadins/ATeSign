@@ -29,7 +29,7 @@
       <matchCondition>equals</matchCondition>
       <name>Content-Type</name>
       <type>Main</type>
-      <value>text/plain</value>
+      <value>application/x-www-form-urlencoded</value>
       <webElementGuid>b05d1743-2242-4c94-ac28-27d7671a1a6a</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>

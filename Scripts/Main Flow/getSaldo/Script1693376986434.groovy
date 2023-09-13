@@ -27,14 +27,31 @@ String totalSaldo
 
 HashMap<String, String> result = new HashMap<String, String>()
 
+ArrayList saldoList
 'return total saldo awal'
-String totalSaldoOTP, totalSaldoLiveness = '', totalSaldoLivenessFaceCompare = '', totalSaldoFaceCompare = ''
+String totalSaldoOTP
 
 vendorSigning = vendor
 
+String vendorVerifikasi
+
 if (WebUI.verifyElementNotPresent(findTestObject('Saldo/ddl_Vendor'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
     if (WebUI.verifyElementPresent(findTestObject('Saldo/menu_Saldo'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-        WebUI.click(findTestObject('Saldo/menu_Saldo'))
+		'cek apakah elemen menu ditutup'
+		if (WebUI.verifyElementVisible(findTestObject('button_HamburberSideMenu'), FailureHandling.OPTIONAL)) {
+			'klik pada button hamburber'
+			WebUI.click(findTestObject('button_HamburberSideMenu'))
+		}
+	
+		'klik button saldo'
+		WebUI.click(findTestObject('Saldo/menu_Saldo'))
+		
+		'cek apakah tombol x terlihat'
+		if (WebUI.verifyElementVisible(findTestObject('buttonX_sideMenu'), FailureHandling.OPTIONAL)) {
+			'klik pada button X'
+			WebUI.click(findTestObject('buttonX_sideMenu'))
+		}
+
     } else {
         'Call test Case untuk login sebagai admin wom admin client'
         WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excel, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
@@ -42,61 +59,40 @@ if (WebUI.verifyElementNotPresent(findTestObject('Saldo/ddl_Vendor'), GlobalVari
 }
 
 if (vendor.equalsIgnoreCase('Privy')) {
-    vendor = 'PRIVY'
+    vendorSigning = 'PRIVY'
+	vendorVerifikasi = 'PRIVY'
+	
+	'list data saldo yang perlu diambil'
+	saldoList = ['OTP']
 } else {
-    vendor = findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('vendorOTP'))
-
-    paymentType = [findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('TipeOTP'))]
-
-    if ((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Option for Sign Document per Signer')).split(';', 
-        -1)[GlobalVariable.indexUsed]) == 'API Sign Document External') {
-        if (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Wrong OTP (Sign External)')) != 
-        '') {
-            isSplit = CustomKeywords.'connection.APIFullService.getSplitLivenessFaceCompareBill'(conneSign)
-
-            if (isSplit == '1') {
-                paymentType = ['Liveness', 'Face Compare']
-            } else {
-                paymentType = ['Liveness Face Compare']
-            }
-        } else {
-            paymentType = ['OTP']
-        }
-    }
+	vendorVerifikasi = 'ESIGN/ADINS'
+	
+	'list data saldo yang perlu diambil'
+	saldoList = ['Liveness', 'Face Compare', 'Liveness Face Compare','OTP','Meterai']
+	
 }
 
 'klik ddl untuk tenant memilih mengenai Vida'
-WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), vendor, false)
+WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), vendorVerifikasi, false)
 
 'get total div di Saldo'
-variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
+variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div > div'))
 
-for (int i = 0; i < paymentType.size(); i++) {
+for (int i = 0 ; i < saldoList.size(); i++) {
     'looping berdasarkan total div yang ada di saldo'
-    for (int c = 1; c <= variableDivSaldo.size(); c++) {
+    for (int c = 2; c <= variableDivSaldo.size(); c++) {
         'modify object mengenai find tipe saldo'
         modifyObjectFindSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_saldo'), 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + 
-            (c + 1)) + ']/div/div/div/div/div[1]', true)
+            (c)) + ']/div/div/div/div/div[1]', true)
 
         'verifikasi label saldonya '
-        if (WebUI.verifyElementText(modifyObjectFindSaldoSign, paymentType[i], FailureHandling.OPTIONAL)) {
+        if (WebUI.verifyElementText(modifyObjectFindSaldoSign, saldoList[i], FailureHandling.OPTIONAL)) {
             'modify object mengenai ambil total jumlah saldo'
             modifyObjecttotalSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_countsaldo'), 'xpath', 'equals', 
-                ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + (c + 1)) + ']/div/div/div/div/div[2]', 
+                ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + (c)) + ']/div/div/div/div/div[2]', 
                 true)
 
-			if (paymentType[i] == 'OTP') {
-            'mengambil total saldo yang pertama'
-				totalSaldoOTP = WebUI.getText(modifyObjecttotalSaldoSign)
-			} else if (paymentType[i] == 'Liveness') {
-				totalSaldoLiveness = WebUI.getText(modifyObjecttotalSaldoSign)
-			} else if (paymentType[i] == 'Face Compare') {
-				totalSaldoFaceCompare = WebUI.getText(modifyObjecttotalSaldoSign)
-			} else if (paymentType[i] == 'Liveness Face Compare') {
-				totalSaldoLivenessFaceCompare = WebUI.getText(modifyObjecttotalSaldoSign)
-			}
-			
-            break
+			result.put(saldoList[i], WebUI.getText(modifyObjecttotalSaldoSign))
         }
     }
 }
@@ -105,38 +101,26 @@ for (int i = 0; i < paymentType.size(); i++) {
 WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), vendorSigning, false)
 
 'get total div di Saldo'
-variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
+variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div > div'))
 
 'looping berdasarkan total div yang ada di saldo'
-for (int c = 1; c <= variableDivSaldo.size(); c++) {
+for (int c = 2; c <= variableDivSaldo.size(); c++) {
     'modify object mengenai find tipe saldo'
     modifyObjectFindSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_saldo'), 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + 
-        (c + 1)) + ']/div/div/div/div/div[1]', true)
+        (c)) + ']/div/div/div/div/div[1]', true)
 
     'verifikasi label saldonya '
     if (WebUI.verifyElementText(modifyObjectFindSaldoSign, findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel(
                 'Tipe')), FailureHandling.OPTIONAL)) {
         'modify object mengenai ambil total jumlah saldo'
         modifyObjecttotalSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_countsaldo'), 'xpath', 'equals', 
-            ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + (c + 1)) + ']/div/div/div/div/div[2]', 
+            '/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + c + ']/div/div/div/div/div[2]', 
             true)
 
-        'mengambil total saldo yang pertama'
-        totalSaldo = WebUI.getText(modifyObjecttotalSaldoSign)
-
+		result.put(findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Tipe')).toString(), WebUI.getText(modifyObjecttotalSaldoSign))
         break
     }
 }
-
-result.put('saldoSign', totalSaldo)
-
-result.put('saldoOTP', totalSaldoOTP)
-
-result.put('saldoLiveness', totalSaldoLiveness)
-
-result.put('saldoFaceCompare', totalSaldoFaceCompare)
-
-result.put('saldoLivenessFaceCompare', totalSaldoLivenessFaceCompare)
 
 return result
 
