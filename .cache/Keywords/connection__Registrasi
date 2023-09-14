@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "779F3436F2ACEC141CA44E11FD84CCB8",
+  "keywordFileContentHash": "35924CCBC2695892E7D1AAF4D3320B9D",
   "keywordClasses": [
     {
       "name": "connection.Registrasi",
@@ -33,7 +33,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getGenInvLink",
@@ -103,7 +104,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "buatUndanganStoreDB",
@@ -147,7 +149,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getBuatUndanganDataPerusahaanStoreDB",
@@ -178,7 +181,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getRegisterPrivyStoreDB",
@@ -209,10 +213,11 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         }
       ]
     }
   ],
-  "javadocParsed": false
+  "javadocParsed": true
 }
