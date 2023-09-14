@@ -114,12 +114,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
 			'ambil saldo before'
 			HashMap<String, String> saldoBefore = checkSaldo(saldoList, vendor)
+			
+			WebUI.delay(10)
 
             'tutup browsernya'
             WebUI.closeBrowser()
 
 			'ubah flag untuk buka localhost jika syarat if terpenuhi'
-//			&& verifMethod.equalsIgnoreCase('Biometric')
 			if (!vendor.equalsIgnoreCase('Privy') && mustFaceCompDB == '1') {
 				
 				'ubah keperluan untuk pakai Localhost'
@@ -450,7 +451,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 						if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Force Change Method if other Method Unavailable')) == 'Yes') {
 							
 							'panggil fungsi verif menggunakan biometrik'
-							if(verifBiomMethod(maxFaceCompDB, countLivenessFaceComp, conneSign, emailSigner, listOTP, o, noTelpSigner, otpAfter) == false) {
+							if(verifBiomMethod(isLocalhost, maxFaceCompDB, countLivenessFaceComp, conneSign, emailSigner, listOTP, o, noTelpSigner, otpAfter) == false) {
 								
 								'jika ada error break testcase'
 								break
@@ -506,7 +507,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 							inputDataforVerif()
 							
 							'panggil fungsi verif menggunakan biometrik'
-							if(verifBiomMethod(maxFaceCompDB, countLivenessFaceComp, conneSign, emailSigner, listOTP, o, noTelpSigner, otpAfter) == false) {
+							if(verifBiomMethod(isLocalhost, maxFaceCompDB, countLivenessFaceComp, conneSign, emailSigner, listOTP, o, noTelpSigner, otpAfter) == false) {
 								
 								'jika ada error break testcase'
 								break
@@ -526,7 +527,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 						GlobalVariable.TimeOut, FailureHandling.OPTIONAL), 'Tombol OTP muncul pada Vendor selain Privy yang mewajibkan FaceCompare')
 					
 					'panggil fungsi verif menggunakan biometrik'
-					if(verifBiomMethod(maxFaceCompDB, countLivenessFaceComp, conneSign, emailSigner, listOTP, o, noTelpSigner, otpAfter) == false) {
+					if(verifBiomMethod(isLocalhost, maxFaceCompDB, countLivenessFaceComp, conneSign, emailSigner, listOTP, o, noTelpSigner, otpAfter) == false) {
 						
 						'cek apakah ingin coba metode lain'
 						if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Force Change Method if other Method Failed?')) == 'Yes') {
@@ -566,7 +567,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 								inputDataforVerif()
 								
 								'panggil fungsi verif menggunakan biometrik'
-								if(verifBiomMethod(maxFaceCompDB, countLivenessFaceComp, conneSign, emailSigner, listOTP, o, noTelpSigner, otpAfter) == false) {
+								if(verifBiomMethod(isLocalhost, maxFaceCompDB, countLivenessFaceComp, conneSign, emailSigner, listOTP, o, noTelpSigner, otpAfter) == false) {
 									
 									'jika ada error break testcase'
 									break
@@ -582,7 +583,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 					} else {
 						
 						'panggil fungsi verif menggunakan biometrik'
-						if(verifBiomMethod(maxFaceCompDB, countLivenessFaceComp, conneSign, emailSigner, listOTP, o, noTelpSigner, otpAfter) == false) {
+						if(verifBiomMethod(isLocalhost, maxFaceCompDB, countLivenessFaceComp, conneSign, emailSigner, listOTP, o, noTelpSigner, otpAfter) == false) {
 							
 							'cek apakah ingin coba metode lain'
 							if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Force Change Method if other Method Failed?')) == 'Yes') {
@@ -741,10 +742,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
 				('Path') : excelPathFESignDocument, ('Email') : 'Email Login', ('Password') : 'Password Login',
 				 ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.CONTINUE_ON_FAILURE)
-			
-//            'Call test Case untuk login sebagai admin wom admin client'
-//            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
-//                FailureHandling.CONTINUE_ON_FAILURE)
 
             'Split dokumen template name dan nomor kontrak per dokumen berdasarkan delimiter ;'
             documentTemplateNamePerDoc = documentTemplateName.split(';', -1)
@@ -803,7 +800,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
 				WebUI.refresh()
 			}
-            
+			
             'looping berdasarkan total dokumen dari dokumen template code'
             for (int i = 0; i < noKontrakPerDoc.size(); i++) {
                 'Input filter di Mutasi Saldo'
@@ -1083,7 +1080,7 @@ def verifOTPMethodDetail(Connection conneSign, ArrayList emailSigner, ArrayList 
 	}
 }
 
-def verifBiomMethod(int maxFaceCompDB, int countLivenessFaceComp, Connection conneSign, ArrayList emailSigner, ArrayList listOTP, int o, String noTelpSigner, ArrayList otpAfter) {
+def verifBiomMethod(int isLocalhost, int maxFaceCompDB, int countLivenessFaceComp, Connection conneSign, ArrayList emailSigner, ArrayList listOTP, int o, String noTelpSigner, ArrayList otpAfter) {
 	useBiom = 1
 	
 	'Klik biometric object'
@@ -1135,36 +1132,21 @@ def verifBiomMethod(int maxFaceCompDB, int countLivenessFaceComp, Connection con
 			} else if (messageError.equalsIgnoreCase('Verifikasi user gagal. Foto Diri tidak sesuai.') ||
 				messageError.equalsIgnoreCase('Lebih dari satu wajah terdeteksi. Pastikan hanya satu wajah yang terlihat')) {
 				
-				countSaldoSplitLiveFCused++
-				
-				'ambil message error'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-					GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
-						2).replace('-', '') + ';') + '<' + messageError + '>')
-				
-				'klik pada tombol OK'
-				WebUI.click(findTestObject('KotakMasuk/Sign/button_OK'))
-				
-				GlobalVariable.FlagFailed = 1
-				
-				'ambil terbaru count dari DB'
-				countLivenessFaceComp = CustomKeywords.'connection.DataVerif.getCountFaceCompDaily'(conneSign, emailSigner[o-1])
-				
-			} else {
-					
-				'ambil message error'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-					GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
-						2).replace('-', '') + ';') + '<' + messageError + '>')
-				
-				'klik pada tombol OK'
-				WebUI.click(findTestObject('KotakMasuk/Sign/button_OK'))
-				
-				GlobalVariable.FlagFailed = 1
-				
-				'ambil terbaru count dari DB'
-				countLivenessFaceComp = CustomKeywords.'connection.DataVerif.getCountFaceCompDaily'(conneSign, emailSigner[o-1])
-			}
+				countSaldoSplitLiveFCused++			
+			} 
+			
+			'ambil message error'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+				GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+					2).replace('-', '') + ';') + '<' + messageError + '>')
+			
+			'klik pada tombol OK'
+			WebUI.click(findTestObject('KotakMasuk/Sign/button_OK'))
+			
+			GlobalVariable.FlagFailed = 1
+			
+			'ambil terbaru count dari DB'
+			countLivenessFaceComp = CustomKeywords.'connection.DataVerif.getCountFaceCompDaily'(conneSign, emailSigner[o-1])
 			
 		} else {
 			
@@ -1413,8 +1395,6 @@ def checkSaldo(ArrayList rowName, String vendor) {
 				totalSaldo = WebUI.getText(modifyObjecttotalSaldoSign)
 				
 				result.put(rowName[b], totalSaldo)
-				
-				break
 			}
 		}
 	}
