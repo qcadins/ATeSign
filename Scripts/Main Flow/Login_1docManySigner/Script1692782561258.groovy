@@ -44,7 +44,7 @@ WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
 'input peran'
 WebUI.click(findTestObject('Login/input_Peran'))
 
-WebUI.delay(2)
+WebUI.delay(1)
 
 'enter untuk input peran'
 WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))

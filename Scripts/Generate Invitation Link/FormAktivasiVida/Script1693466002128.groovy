@@ -12,11 +12,11 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 int delayExpiredOTP
 
 'check ada value maka Setting OTP Active Duration'
-if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() > 0) {
+if (findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() > 0) {
 	'Setting OTP Active Duration'
-	CustomKeywords.'connection.APIFullService.settingOTPActiveDuration'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')))
+	CustomKeywords.'connection.APIFullService.settingOTPActiveDuration'(conneSign, findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')))
 	
-	delayExpiredOTP = 60 * Integer.parseInt(findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')))
+	delayExpiredOTP = 60 * Integer.parseInt(findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')))
 }
 
 'check email sesuai dengan inputan'
@@ -230,7 +230,7 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
 			}
 			
 			'check if ingin testing expired otp'
-			f (Integer.parseInt(findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration'))) > 0 && inputed == 0) {
+			if (Integer.parseInt(findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration'))) > 0 && inputed == 0) {
 				'delay untuk input expired otp'
 				WebUI.delay(delayExpiredOTP + 10)
 			}
@@ -307,10 +307,12 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
 
 		'check if aktivasi berhasil dengan OTP yang benar'
 		if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/popUp_AktivasiBerhasil'), GlobalVariable.TimeOut,
-			FailureHandling.OPTIONAL) && (GlobalVariable.FlagFailed == 0)) {
-			'write to excel success'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
-				0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+			FailureHandling.OPTIONAL)) {
+			if (GlobalVariable.FlagFailed == 0) {
+				'write to excel success'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
+					0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+			}
 		} else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/popUp_AktivasiBerhasil'), GlobalVariable.TimeOut,
 			FailureHandling.OPTIONAL)) {
 			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'

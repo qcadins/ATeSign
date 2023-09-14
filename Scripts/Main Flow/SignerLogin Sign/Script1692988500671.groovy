@@ -47,7 +47,7 @@ for (o = 0; o < documentId.size(); o++) {
     String aesKey = CustomKeywords.'connection.APIFullService.getAesKeyBasedOnTenant'(conneSign, tenantCode)
 
     'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
-    int jumlahSignerTandaTangan = CustomKeywords.'connection.APIFullService.getTotalSigned'(conneSign, refNumber)
+    int jumlahSignerTandaTangan = CustomKeywords.'connection.APIFullService.getTotalSigned'(conneSign, documentId[o])
 
     'saldoUsedDocPertama hanya untuk dokumen pertama'
     int saldoUsedDocPertama = 0
@@ -512,9 +512,9 @@ for (o = 0; o < documentId.size(); o++) {
                     saldoUsed = (saldoUsed + 1)
                 }
             }
-            
-            'Jumlah signer tanda tangan akan ditambah dengan total saldo yang telah digunakan'
-            jumlahSignerTandaTangan = (jumlahSignerTandaTangan + saldoUsed)
+			
+			'Jumlah signer tanda tangan akan ditambah dengan total saldo yang telah digunakan'
+			jumlahSignerTandaTangan = (jumlahSignerTandaTangan + saldoUsed)
 
             'Looping maksimal 100 detik untuk signing proses. Perlu lama dikarenakan walaupun requestnya done(3), tapi dari VIDAnya tidak secepat itu.'
             for (y = 1; y <= 10; y++) {
@@ -522,7 +522,7 @@ for (o = 0; o < documentId.size(); o++) {
                 WebUI.delay(20)
 
                 'Jika signing process db untuk signing false, maka'
-                if (signingProcessStoreDB(conneSign, emailSigner, saldoUsedDocPertama, documentId[o]) == false) {
+                if (signingProcessStoreDB(conneSign, emailSigner, jumlahSignerTandaTangan, documentId[o]) == false) {
                     'Jika looping waktu delaynya yang terakhir, maka'
                     if (y == 10) {
                         'Failed dengan alasan prosesnya belum selesai'
@@ -639,7 +639,9 @@ for (o = 0; o < documentId.size(); o++) {
                         modifyperrowpercolumn = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/lbl_notrxsaldo'), 
                             'xpath', 'equals', ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
                             j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + u) + ']/div', true)
-
+						
+						WebUI.scrollToElement(modifyperrowpercolumn, GlobalVariable.TimeOut)
+						
                         'Jika u di lokasi qty atau kolom ke 9'
                         if (u == 9) {
                             'Jika yang qtynya 1 dan databasenya juga, berhasil'
@@ -710,10 +712,8 @@ def checkVerifyEqualorMatch(Boolean isMatch, String reason) {
             ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
             reason)
 
-        return false
     }
-    
-    return true
+
 }
 
 def checkPopup() {

@@ -7,18 +7,18 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@type = 'button']</value>
+         <value>//*[@id=&quot;searchForm&quot;]/div[2]/div/button[2]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>false</isSelected>
+      <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>//*[@id=&quot;searchForm&quot;]/div[2]/div/button[2]</value>
-      <webElementGuid>018eb757-8b36-4ed6-b5da-063022450e7c</webElementGuid>
+      <webElementGuid>d6c6eccd-8000-4d76-813f-3cf1d472add6</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -26,14 +26,14 @@
       <name>class</name>
       <type>Main</type>
       <value>btn btn-secondary mr-2</value>
-      <webElementGuid>0af9e6d6-82df-4865-97ca-9e582abd2027</webElementGuid>
+      <webElementGuid>0aa27970-8f7d-41de-93a8-d93cc3ca8da1</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>type</name>
       <type>Main</type>
       <value>button</value>
-      <webElementGuid>b1c87535-3b85-4616-a0f8-ab1a0379ecd4</webElementGuid>
+      <webElementGuid>69045df9-f4b2-4a3a-bc32-5b914a02ef22</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

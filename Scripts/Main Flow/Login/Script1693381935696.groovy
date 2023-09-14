@@ -120,7 +120,7 @@ if (email == '') {
 
         if (errormessage != null) {
             'write to excel reason warning'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 1, GlobalVariable.NumofColm - 
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Status'), GlobalVariable.NumofColm - 
                 1, (((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + '<') + errormessage) + 
                 '>')
         }

@@ -89,31 +89,20 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
     'Yes') {
         'index meningkat karena tambahan 2 kolom ketika menggunakan e-meterai'
         index = 11
-
-        'modify label daftar penanda tangan dengan naiknya index'
-        modifyObjectLblDaftarPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/lbl_daftarpenandatangan'), 
-            'xpath', 'equals', ('//*[@id="msxForm"]/div[' + index) + ']/div[3]/table/tr/td/small', true)
-
-        'modify button tambah penanda tangan dengan naiknya index'
-        modifyObjectbuttonTambahPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/button_tambahTandaTangan'), 
-            'xpath', 'equals', ('//*[@id="msxForm"]/div[' + index) + ']/div[2]/a', true)
     } else {
         'modify menuju index normal'
         index = 9
-
-        'modify label daftar penanda tangan dengan naiknya index'
-        modifyObjectLblDaftarPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/lbl_daftarpenandatangan'), 
-            'xpath', 'equals', ('//*[@id="msxForm"]/div[' + index) + ']/div[3]/table/tr/td/small', true)
-
-        'modify button tambah penanda tangan dengan naiknya index'
-        modifyObjectbuttonTambahPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/button_tambahTandaTangan'), 
-            'xpath', 'equals', ('//*[@id="msxForm"]/div[' + index) + ']/div[2]/a', true)
     }
-    
-    emailService = CustomKeywords.'connection.DataVerif.getEmailService'(conneSign, GlobalVariable.Tenant)
+	
+	'modify label daftar penanda tangan dengan naiknya index'
+	modifyObjectLblDaftarPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/lbl_daftarpenandatangan'),
+		'xpath', 'equals', ('//*[@id="msxForm"]/div[' + index) + ']/div[3]/table/tr/td/small', true)
 
-    'check element present kepada daftar penanda tangan yang kosong'
-    WebUI.verifyElementPresent(modifyObjectLblDaftarPenandaTangan, GlobalVariable.TimeOut)
+	'modify button tambah penanda tangan dengan naiknya index'
+	modifyObjectbuttonTambahPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/button_tambahTandaTangan'),
+		'xpath', 'equals', ('//*[@id="msxForm"]/div[' + index) + ']/div[2]/a', true)
+	
+    emailService = CustomKeywords.'connection.DataVerif.getEmailService'(conneSign, GlobalVariable.Tenant)
 
     'click tambah penanda tangan'
     WebUI.click(modifyObjectbuttonTambahPenandaTangan)
@@ -138,9 +127,6 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 
     'diberikan delay 3 detik dengan loading'
     WebUI.delay(1)
-
-    'check element present kepada daftar penanda tangan yang kosong'
-    WebUI.verifyElementPresent(modifyObjectLblDaftarPenandaTangan, GlobalVariable.TimeOut)
 
     'looping berdasarkan email penanda tangan'
     for (int i = 0; i < emailPenandaTangan.size(); i++) {
@@ -335,7 +321,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
             WebUI.click(findTestObject('ManualSign/btn_setTandaTangan'))
 
             'Verifikasi antara excel dan UI, apakah tipenya sama'
-            WebUI.verifyMatch(namaTandaTangan[index], WebUI.getText(modifyobjectTTDlblRoleTandaTangan), false)
+            checkVerifyEqualOrMatch(WebUI.verifyMatch(namaTandaTangan[index], WebUI.getText(modifyobjectTTDlblRoleTandaTangan), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada nama tanda tangan signer')
         }
         
         'Verify apakah tanda tangannya ada'

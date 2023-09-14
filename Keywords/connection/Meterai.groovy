@@ -160,7 +160,7 @@ public class Meterai {
 	getValueDetailMeterai(Connection conn, String stampdutyno) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select tbm.trx_no, tbm.ref_no, CASE WHEN tdd.id_ms_doc_template IS NULL THEN tdd.document_name ELSE mdt.doc_template_name END, amu.full_name, ml.description, to_char(tbm.trx_date, 'dd-Mon-yyyy HH24:MI') from tr_balance_mutation tbm join tr_document_d tdd on tdd.id_document_d = tbm.id_document_d join ms_lov ml on ml.id_lov = tbm.lov_trx_type join tr_stamp_duty tsd on tsd.id_stamp_duty = tbm.id_stamp_duty left join ms_doc_template mdt on mdt.id_doc_template = tdd.id_ms_doc_template join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h left join am_msuser amu on amu.id_ms_user = tdh.id_msuser_customer where tbm.notes = '" + stampdutyno + "'")
+		resultSet = stm.executeQuery("select tbm.trx_no, tbm.ref_no, CASE WHEN tdd.id_ms_doc_template IS NULL THEN tdd.document_name ELSE mdt.doc_template_name END, CASE WHEN amu.full_name != '' OR amu.full_name != null then amu.full_name ELSE 'SYSTEM' END, ml.description, to_char(tbm.trx_date, 'dd-Mon-yyyy HH24:MI') from tr_balance_mutation tbm join tr_document_d tdd on tdd.id_document_d = tbm.id_document_d join ms_lov ml on ml.id_lov = tbm.lov_trx_type join tr_stamp_duty tsd on tsd.id_stamp_duty = tbm.id_stamp_duty left join ms_doc_template mdt on mdt.id_doc_template = tdd.id_ms_doc_template join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h left join am_msuser amu on amu.id_ms_user = tdh.id_msuser_customer where tbm.notes = '" + stampdutyno + "'")
 
 		metadata = resultSet.metaData
 

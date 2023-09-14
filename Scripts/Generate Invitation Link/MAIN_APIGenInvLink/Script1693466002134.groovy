@@ -24,6 +24,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         break
     } else if (findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 		
+		'get psre from excel percase'
+		GlobalVariable.Psre = findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
+		
+		'get Tenant from excel percase'
+		GlobalVariable.Tenant = findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
+	
 		'setting menggunakan base url yang benar atau salah'
 		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathGenerateLink, GlobalVariable.NumofColm, rowExcel('Use Correct base Url'))
 		
@@ -31,7 +37,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		WebUI.callTestCase(findTestCase('Login/Login_Inveditor'), [('Path') : excelPathGenerateLink, ('SheetName') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
 		
 		'check ada value maka setting email service tenant'
-		if (findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Servicel')).length() > 0) {
+		if (findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')).length() > 0) {
 			'setting email service tenant'
 			CustomKeywords.'connection.Registrasi.settingEmailServiceTenant'(conneSign, findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Servicel')))
 		}
@@ -42,6 +48,23 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			CustomKeywords.'connection.APIFullService.settingAllowRegenerateLink'(conneSign, findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Allow Regenarate Link')))
 		}
 
+		'check if tidak mau menggunakan tenant code yang benar'
+		if (findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code')) == 'No') {
+			'set tenant kosong'
+			GlobalVariable.Tenant = findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Tenant Code'))
+		} else if (findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code')) == 'Yes') {
+			GlobalVariable.Tenant = findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
+		}
+		
+		'check if mau menggunakan api_key yang salah atau benar'
+		if (findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct API Key')) == 'Yes') {
+			'get api key dari db'
+			GlobalVariable.api_key = CustomKeywords.'connection.APIFullService.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
+		} else if (findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct API Key')) == 'No') {
+			'get api key salah dari excel'
+			GlobalVariable.api_key = findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Wrong API Key'))
+		}
+		
         'Pembuatan pengisian variable di sendRequest per column berdasarkan data excel.'
         ArrayList<String> listInvitation = []
 

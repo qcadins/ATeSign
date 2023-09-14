@@ -42,7 +42,7 @@ for (o = 0; o < documentId.size(); o++) {
     String tenantCode = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))
 
     'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
-    int jumlahSignerTandaTangan = CustomKeywords.'connection.APIFullService.getTotalSigned'(conneSign, refNumber)
+    int jumlahSignerTandaTangan = CustomKeywords.'connection.APIFullService.getTotalSigned'(conneSign, documentId[o])
 
     'saldoUsedDocPertama hanya untuk dokumen pertama'
     int saldoUsedDocPertama = 0, saldoUsed = 0
@@ -473,6 +473,32 @@ for (o = 0; o < documentId.size(); o++) {
                 WebUI.click(findTestObject('/KotakMasuk/Sign/button_OK'))
             }
             
+			'Mensplit nomor kontrak yang telah disatukan'
+			noKontrakPerDoc = noKontrak.split(';', -1)
+
+			'looping untuk mendapatkan total saldo yang digunakan per nomor kontrak'
+			for (y = 0; y < noKontrakPerDoc.size(); y++) {
+				'Mengambil value dari db mengenai tipe pembayran'
+				paymentType = CustomKeywords.'connection.APIFullService.getPaymentType'(conneSign, noKontrakPerDoc[y])
+
+				if (y == 0) {
+					saldoUsedDocPertama = (saldoUsedDocPertama + CustomKeywords.'connection.APIFullService.getSaldoUsedBasedonPaymentType'(
+						conneSign, noKontrakPerDoc[y], emailSigner))
+				}
+				
+				'Jika tipe pembayarannya per sign'
+				if (paymentType == 'Per Sign') {
+					'Saldo usednya akan ditambah dengan value db penggunaan saldo'
+					saldoUsed = (saldoUsed + CustomKeywords.'connection.APIFullService.getSaldoUsedBasedonPaymentType'(conneSign,
+						noKontrakPerDoc[y], emailSigner))
+				} else {
+					saldoUsed = (saldoUsed + 1)
+				}
+			}
+			
+			'Jumlah signer tanda tangan akan ditambah dengan total saldo yang telah digunakan'
+			jumlahSignerTandaTangan = (jumlahSignerTandaTangan + saldoUsed)
+			
             'Jika masukan ratingnya tidak kosong'
             if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('$Rating')).split(';', -1)[GlobalVariable.indexUsed] != '') {
                 'StoreDB mengenai masukan'
@@ -485,39 +511,13 @@ for (o = 0; o < documentId.size(); o++) {
                     1, GlobalVariable.StatusSuccess)
             }
             
-            'Mensplit nomor kontrak yang telah disatukan'
-            noKontrakPerDoc = noKontrak.split(';', -1)
-
-            'looping untuk mendapatkan total saldo yang digunakan per nomor kontrak'
-            for (y = 0; y < noKontrakPerDoc.size(); y++) {
-                'Mengambil value dari db mengenai tipe pembayran'
-                paymentType = CustomKeywords.'connection.APIFullService.getPaymentType'(conneSign, noKontrakPerDoc[y])
-
-                if (y == 0) {
-                    saldoUsedDocPertama = (saldoUsedDocPertama + CustomKeywords.'connection.APIFullService.getSaldoUsedBasedonPaymentType'(
-                        conneSign, noKontrakPerDoc[y], emailSigner))
-                }
-                
-                'Jika tipe pembayarannya per sign'
-                if (paymentType == 'Per Sign') {
-                    'Saldo usednya akan ditambah dengan value db penggunaan saldo'
-                    saldoUsed = (saldoUsed + CustomKeywords.'connection.APIFullService.getSaldoUsedBasedonPaymentType'(conneSign, 
-                        noKontrakPerDoc[y], emailSigner))
-                } else {
-                    saldoUsed = (saldoUsed + 1)
-                }
-            }
-            
-            'Jumlah signer tanda tangan akan ditambah dengan total saldo yang telah digunakan'
-            jumlahSignerTandaTangan = (jumlahSignerTandaTangan + saldoUsed)
-
             'Looping maksimal 100 detik untuk signing proses. Perlu lama dikarenakan walaupun requestnya done(3), tapi dari VIDAnya tidak secepat itu.'
             for (y = 1; y <= 10; y++) {
                 'Kita berikan delay per 20 detik karena proses signingnya masih dalam status In Progress (1), dan ketika selesai, status tanda tangan akan kembali menjadi 0'
                 WebUI.delay(20)
 
                 'Jika signing process db untuk signing false, maka'
-                if (signingProcessStoreDB(conneSign, emailSigner, saldoUsedDocPertama, documentId[o]) == false) {
+                if (signingProcessStoreDB(conneSign, emailSigner, jumlahSignerTandaTangan, documentId[o]) == false) {
                     'Jika looping waktu delaynya yang terakhir, maka'
                     if (y == 10) {
                         'Failed dengan alasan prosesnya belum selesai'
@@ -862,6 +862,7 @@ def checkPopupWarning() {
 		'Klik OK untuk popupnya'
 		WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
 		
+		GlobalVariable.FlagFailed = 1
 		return true
 	}
 	

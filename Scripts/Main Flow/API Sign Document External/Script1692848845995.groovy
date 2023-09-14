@@ -59,6 +59,8 @@ for (o = 0; o < documentId.size(); o++) {
     HashMap<String, String> saldoBefore = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathAPISignDocument
             , ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
 
+	saldoTtdBefore = saldoBefore.get(findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Tipe')).toString())
+	
     ArrayList paymentTypeUsed = getPaymentTypeUsed(conneSign, vendor)
 
     GlobalVariable.FlagFailed = 0
@@ -316,7 +318,11 @@ for (o = 0; o < documentId.size(); o++) {
                                     }
                                 }
                             }
-                            
+							saldoTtdAfter = saldoAfter.get(findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Tipe')).toString())
+							
+							checkVerifyEqualOrMatch(WebUI.verifyEqual(Integer.parseInt(saldoTtdAfter) -
+								1, saldoTtdAfter), ' terhadap pemotongan saldo TTD')
+
                             break
                         } else if (v == 20) {
                             'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
