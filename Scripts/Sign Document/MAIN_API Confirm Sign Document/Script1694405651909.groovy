@@ -82,7 +82,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                                 'Write To Excel GlobalVariable.StatusFailed and melebihi batas waktu delay'
                                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                                     GlobalVariable.StatusFailed, ((findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 
-                                        rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB) + 'Job Sogn tidak jalan selama delay 100 detik')
+                                        rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB) + ' Job Sign tidak jalan selama delay 100 detik')
 
                                 GlobalVariable.FlagFailed = 1
                             } else {
@@ -149,4 +149,3 @@ def encryptLink(Connection conneSign, String documentId, String emailSigner, Str
 
     return encryptMsg
 }
-
