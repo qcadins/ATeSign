@@ -115,15 +115,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			'ambil saldo before'
 			HashMap<String, String> saldoBefore = checkSaldo(saldoList, vendor)
 			
-			println saldoBefore
-			
 			WebUI.delay(10)
 
             'tutup browsernya'
             WebUI.closeBrowser()
 
 			'ubah flag untuk buka localhost jika syarat if terpenuhi'
-//			&& verifMethod.equalsIgnoreCase('Biometric')
 			if (!vendor.equalsIgnoreCase('Privy') && mustFaceCompDB == '1') {
 				
 				'ubah keperluan untuk pakai Localhost'
@@ -745,10 +742,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
 				('Path') : excelPathFESignDocument, ('Email') : 'Email Login', ('Password') : 'Password Login',
 				 ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.CONTINUE_ON_FAILURE)
-			
-//            'Call test Case untuk login sebagai admin wom admin client'
-//            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
-//                FailureHandling.CONTINUE_ON_FAILURE)
 
             'Split dokumen template name dan nomor kontrak per dokumen berdasarkan delimiter ;'
             documentTemplateNamePerDoc = documentTemplateName.split(';', -1)
@@ -759,11 +752,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			for (int b = 1; b <= 3; b++) {
 				'ambil saldo after'
 				HashMap<String, String> saldoAfter = checkSaldo(saldoList, vendor)
-				
-				println saldoBefore
-				println saldoAfter
-				
-				WebUI.delay(5)
 
 				'ambil saldo after'
 				saldoSignAfter = checkSaldoSign(conneSign, vendor)
@@ -1144,36 +1132,21 @@ def verifBiomMethod(int isLocalhost, int maxFaceCompDB, int countLivenessFaceCom
 			} else if (messageError.equalsIgnoreCase('Verifikasi user gagal. Foto Diri tidak sesuai.') ||
 				messageError.equalsIgnoreCase('Lebih dari satu wajah terdeteksi. Pastikan hanya satu wajah yang terlihat')) {
 				
-				countSaldoSplitLiveFCused++
-				
-				'ambil message error'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-					GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
-						2).replace('-', '') + ';') + '<' + messageError + '>')
-				
-				'klik pada tombol OK'
-				WebUI.click(findTestObject('KotakMasuk/Sign/button_OK'))
-				
-				GlobalVariable.FlagFailed = 1
-				
-				'ambil terbaru count dari DB'
-				countLivenessFaceComp = CustomKeywords.'connection.DataVerif.getCountFaceCompDaily'(conneSign, emailSigner[o-1])
-				
-			} else {
-					
-				'ambil message error'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-					GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
-						2).replace('-', '') + ';') + '<' + messageError + '>')
-				
-				'klik pada tombol OK'
-				WebUI.click(findTestObject('KotakMasuk/Sign/button_OK'))
-				
-				GlobalVariable.FlagFailed = 1
-				
-				'ambil terbaru count dari DB'
-				countLivenessFaceComp = CustomKeywords.'connection.DataVerif.getCountFaceCompDaily'(conneSign, emailSigner[o-1])
-			}
+				countSaldoSplitLiveFCused++			
+			} 
+			
+			'ambil message error'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+				GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+					2).replace('-', '') + ';') + '<' + messageError + '>')
+			
+			'klik pada tombol OK'
+			WebUI.click(findTestObject('KotakMasuk/Sign/button_OK'))
+			
+			GlobalVariable.FlagFailed = 1
+			
+			'ambil terbaru count dari DB'
+			countLivenessFaceComp = CustomKeywords.'connection.DataVerif.getCountFaceCompDaily'(conneSign, emailSigner[o-1])
 			
 		} else {
 			
