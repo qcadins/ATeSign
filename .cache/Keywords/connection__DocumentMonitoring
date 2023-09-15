@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "885D77D06E19541805299F9ADB381D04",
+  "keywordFileContentHash": "99D9021392E02ED6E7A0B0F8941947C8",
   "keywordClasses": [
     {
       "name": "connection.DocumentMonitoring",
@@ -211,6 +211,38 @@
         },
         {
           "name": "getManualUpload",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "refNumber",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getCancelDocStatus",
           "parameters": [
             {
               "name": "conn",
