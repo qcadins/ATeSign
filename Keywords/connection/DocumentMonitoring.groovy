@@ -136,4 +136,19 @@ public class DocumentMonitoring {
 		}
 		data
 	}
+	
+	@Keyword
+	getCancelDocStatus(Connection conn, String refNumber) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT is_active FROM tr_document_h WHERE ref_number = '" + refNumber + "'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
 }
