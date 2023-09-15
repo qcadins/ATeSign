@@ -296,6 +296,14 @@ for (o = 0; o < documentId.size(); o++) {
             if (WebUI.verifyElementClickable(findTestObject('KotakMasuk/Sign/btn_LanjutAfterKonfirmasi'), FailureHandling.OPTIONAL)) {
                 'Klik lanjut after konfirmasi'
                 WebUI.click(findTestObject('KotakMasuk/Sign/btn_LanjutAfterKonfirmasi'), FailureHandling.OPTIONAL)
+				
+				'check ada value maka Setting OTP Active Duration'
+				if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() > 0) {
+					'Setting OTP Active Duration'
+					CustomKeywords.'connection.APIFullService.settingOTPActiveDuration'(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')))
+					
+					delayExpiredOTP = 60 * Integer.parseInt(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')))
+				}
             } else {
                 'Jika btn lanjut setelah konfirmasi untuk mengarah ke otp tidak dapat diklik'
 
@@ -350,11 +358,34 @@ for (o = 0; o < documentId.size(); o++) {
                     'value OTP dari db'
                     WebUI.setText(findTestObject('KotakMasuk/Sign/input_OTP'), OTP)
                 } else {
+					if (vendor.equalsIgnoreCase('Privy')) {
+						'check if ingin testing expired otp'
+						if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() > 0) {
+							'delay untuk input expired otp'
+							delayExpiredOTP = delayExpiredOTP + 30
+							
+							WebUI.delay(delayExpiredOTP)
+						} else {
+						'untuk input manual otp'
+						WebUI.delay(60)
+						}
+					}
+					
                     'value OTP dari excel'
                     WebUI.setText(findTestObject('KotakMasuk/Sign/input_OTP'), findTestData(excelPathFESignDocument).getValue(
-                            GlobalVariable.NumofColm, rowExcel('Manual OTP')).split(';', -1)[GlobalVariable.indexUsed])
+                    GlobalVariable.NumofColm, rowExcel('Manual OTP')).split(';', -1)[GlobalVariable.indexUsed])
                 }
                 
+				if (!vendor.equalsIgnoreCase('Privy')) {
+					'check if ingin testing expired otp'
+						if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() > 0) {
+						'delay untuk input expired otp'
+						delayExpiredOTP = delayExpiredOTP + 30
+						
+						WebUI.delay(delayExpiredOTP)
+					}
+				}
+				
                 'klik verifikasi OTP'
                 WebUI.click(findTestObject('KotakMasuk/Sign/btn_ProsesOTP'))
 
@@ -373,9 +404,10 @@ for (o = 0; o < documentId.size(); o++) {
 
                     'Looping dari 1 hingga total count resend OTP'
                     for ( w = 1; w <= countResend; w++) {
-                        'taruh waktu delay'
-                        WebUI.delay(298)
-
+						if (delayExpiredOTP <= 298) {
+							'taruh waktu delay'
+							WebUI.delay(298 - delayExpiredOTP)
+						}
                         'Klik resend otp'
                         WebUI.click(findTestObject('KotakMasuk/Sign/btn_ResendOTP'))
 
@@ -761,15 +793,11 @@ def checkPopup() {
 		'label popup diambil'
 		lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
 
-		if (!(lblpopup.contains('Kode OTP salah'))) {
-			'Tulis di excel sebagai failed dan error.'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-				(((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') +
-				'<') + lblpopup) + '>')
+		'Tulis di excel sebagai failed dan error.'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+			(((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') +
+			'<') + lblpopup) + '>')
 
-			return true
-		}
-		
 		'Klik OK untuk popupnya'
 		WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
 	}
@@ -926,7 +954,7 @@ def checkBeforeChoosingOTPOrBiometric(String emailSigner, Connection conneSign, 
 	'cek jika vendor yang dipakai adalah privy'
 	if (vendor.equalsIgnoreCase('Privy')) {
 		'pastikan tombol verifikasi biometrik tidak muncul'
-		if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/btn_verifBiom'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/btn_verifBiom'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 			GlobalVariable.FlagFailed = 1
 
 			'jika muncul, tulis error ke excel'

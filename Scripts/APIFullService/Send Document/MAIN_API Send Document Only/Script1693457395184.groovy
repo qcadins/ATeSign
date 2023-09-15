@@ -111,17 +111,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
             emails = (email[i]).split(semicolon, splitnum)
 
-            'Splitting dari dokumen pertama per signer mengenai stamping'
-            pageStamps = (pageStamp[i]).split(semicolon, splitnum)
-
-            llxStamps = (llxStamp[i]).split(semicolon, splitnum)
-
-            llyStamps = (llyStamp[i]).split(semicolon, splitnum)
-
-            urxStamps = (urxStamp[i]).split(semicolon, splitnum)
-
-            uryStamps = (uryStamp[i]).split(semicolon, splitnum)
-
             'inisialisasi bodyAPI untuk menyusun body'
             String bodyAPI = new String()
 
@@ -187,6 +176,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                     'looping menuju jumlah lokasi pageSign di 1 signer'
                     for (int l = 0; l < pageSigns.size(); l++) {
+						if (!(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 32).length() == 0)) {
                         'split seq number per documentnya'
                         seqNos = (seqNo[i]).split(semicolon, splitnum)
 
@@ -201,7 +191,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                 seqNoBodyAPI.add('')
                             }
                         }
-                        
+						} else {
+							seqNoBodyAPI.add('')
+						}
                         'Jika loopingan pertama'
                         if (l == 0) {
                             'Jika dari loopingan pertama, pageSignnya hanya ada 1 dan yang terakhir'
@@ -377,15 +369,26 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 GlobalVariable.NumofColm, 26).length() == 0)) && (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 
                 27).length() == 0)) && (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 28).length() == 
             0))) {
+		
+			'Splitting dari dokumen pertama per signer mengenai stamping'
+			pageStamps = (pageStamp[i]).split(semicolon, splitnum)
+
+			llxStamps = (llxStamp[i]).split(semicolon, splitnum)
+
+			llyStamps = (llyStamp[i]).split(semicolon, splitnum)
+
+			urxStamps = (urxStamp[i]).split(semicolon, splitnum)
+
+			uryStamps = (uryStamp[i]).split(semicolon, splitnum)
                 'looping berdasarkan pagestamp per dokumen'
                 for (int b = 0; b < pageStamps.size(); b++) {
 
                     'Jika dia loopingan yang pertama'
                     if (b == 0) {
-
                         if (b == (pageStamps.size() - 1)) {
 							if (((pageStamps[b]) != '') || ((llxStamps[b]) != '""')) {
-
+								'Isi bodyAPI'
+								bodyAPI = (bodyAPI + ',"stampLocations": [')
                             if ((pageStamps[b]) == '') {
                                 'Input body mengenai koordinat'
                                 bodyAPI = (((((((((bodyAPI + '{"llx" : ') + (llxStamps[b])) + ', "lly" : ') + (llyStamps[

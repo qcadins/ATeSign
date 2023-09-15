@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>Sent Otp Signing Embed</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>efcf1858-1e05-485c-b4ef-6f2ebd8a0644</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>5c6277bc-4590-49b6-bb8e-cb9635d630ec</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>957ce3b4-62e3-464c-9d6d-63fd1630e7c3</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Sent Otp Signing/Sent Otp Signing'</defaultValue>
+      <description></description>
+      <id>5c6277bc-4590-49b6-bb8e-cb9635d630ec</id>
+      <masked>false</masked>
+      <name>API_Excel_Path</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Sent Otp Signing Embed'</defaultValue>
+      <description></description>
+      <id>957ce3b4-62e3-464c-9d6d-63fd1630e7c3</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>
