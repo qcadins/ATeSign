@@ -10,7 +10,7 @@
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n\n    \&quot;msg\&quot;: \&quot;Pvkay+O8L4Wg/1CNGMLhW/S+yC6Ea0VnV5HuBhiqZ58OLQ34hshCPd3NbGINegR45hOdKC3Q8vWlMS0VGQnS1Q\u003d\u003d\&quot;,\n\n    \&quot;tenantCode\&quot;: \&quot;WOMF\&quot;,\n\n    \&quot;vendorCode\&quot;: \&quot;VIDA\&quot;,\n\n    \&quot;phoneNo\&quot;: \&quot;0089654990285\&quot;,\n\n    \&quot;audit\&quot;: {\n\n        \&quot;callerId\&quot;: \&quot;ANDY-CHECK\&quot;\n\n    }\n\n}&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;msg\&quot;: ${msg},\n    \&quot;tenantCode\&quot;: ${tenantCode},\n    \&quot;vendorCode\&quot;: ${vendorCode},\n    \&quot;phoneNo\&quot;: ${phoneNo},\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: ${callerId}\n    }\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -31,14 +31,6 @@
       <value>application/json</value>
       <webElementGuid>ede9ed15-2035-407d-b5ac-d62615e017bc</webElementGuid>
    </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Cookie</name>
-      <type>Main</type>
-      <value>idjs=C09022BF63CF2BDECCAC9AC0C04F8EB0</value>
-      <webElementGuid>a7edb4d8-054e-4c98-b47c-25005d7fce70</webElementGuid>
-   </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
@@ -52,5 +44,18 @@
    <soapServiceFunction></soapServiceFunction>
    <socketTimeout>-1</socketTimeout>
    <useServiceInfoFromWsdl>true</useServiceInfoFromWsdl>
+   <verificationScript>import static org.assertj.core.api.Assertions.*
+
+import com.kms.katalon.core.testobject.RequestObject
+import com.kms.katalon.core.testobject.ResponseObject
+import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
+import com.kms.katalon.core.webservice.verification.WSResponseManager
+
+import groovy.json.JsonSlurper
+import internal.GlobalVariable as GlobalVariable
+
+RequestObject request = WSResponseManager.getInstance().getCurrentRequest()
+
+ResponseObject response = WSResponseManager.getInstance().getCurrentResponse()</verificationScript>
    <wsdlAddress></wsdlAddress>
 </WebServiceRequestEntity>

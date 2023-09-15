@@ -10,7 +10,7 @@
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n\n \n\n    \&quot;msg\&quot;: \&quot;Pvkay+O8L4Wg/1CNGMLhWwd6zTnUmyJhSCBNZh5Y63fxT7sOQxTm2rB3eZYTe52fJoIeygMYaeQaUttJvPq/Aw\u003d\u003d\&quot;,\n\n \n\n    \&quot;tenantCode\&quot;: \&quot;WOMF\&quot;,\n\n \n\n    \&quot;phoneNo\&quot;: \&quot;081233444034\&quot;,\n\n \n\n    \&quot;otpCode\&quot;: \&quot;\&quot;,\n\n \n\n    \&quot;audit\&quot;: {\n\n \n\n        \&quot;callerId\&quot;: \&quot;ANDY-CHECK\&quot;\n\n \n\n    }\n\n \n\n}&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;msg\&quot;: ${msg},\n    \&quot;tenantCode\&quot;: ${tenantCode},\n    \&quot;phoneNo\&quot;: ${phoneNo},\n    \&quot;otpCode\&quot;: ${otpCode},\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: ${callerId}\n    }\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -31,14 +31,6 @@
       <value>application/json</value>
       <webElementGuid>688e769e-e5d5-421f-8849-809f832a88db</webElementGuid>
    </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Cookie</name>
-      <type>Main</type>
-      <value>idjs=C09022BF63CF2BDECCAC9AC0C04F8EB0; idjs=DC6A16535DC32F0B79F5C9FF892FDA01</value>
-      <webElementGuid>04de75a9-2d29-4c33-855a-8eea5a8f12fd</webElementGuid>
-   </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
@@ -52,5 +44,18 @@
    <soapServiceFunction></soapServiceFunction>
    <socketTimeout>-1</socketTimeout>
    <useServiceInfoFromWsdl>true</useServiceInfoFromWsdl>
+   <verificationScript>import static org.assertj.core.api.Assertions.*
+
+import com.kms.katalon.core.testobject.RequestObject
+import com.kms.katalon.core.testobject.ResponseObject
+import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
+import com.kms.katalon.core.webservice.verification.WSResponseManager
+
+import groovy.json.JsonSlurper
+import internal.GlobalVariable as GlobalVariable
+
+RequestObject request = WSResponseManager.getInstance().getCurrentRequest()
+
+ResponseObject response = WSResponseManager.getInstance().getCurrentResponse()</verificationScript>
    <wsdlAddress></wsdlAddress>
 </WebServiceRequestEntity>
