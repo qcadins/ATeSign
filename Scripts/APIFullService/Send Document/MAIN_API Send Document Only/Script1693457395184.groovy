@@ -176,6 +176,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                     'looping menuju jumlah lokasi pageSign di 1 signer'
                     for (int l = 0; l < pageSigns.size(); l++) {
+						if (!(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 32).length() == 0)) {
                         'split seq number per documentnya'
                         seqNos = (seqNo[i]).split(semicolon, splitnum)
 
@@ -190,7 +191,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                 seqNoBodyAPI.add('')
                             }
                         }
-                        
+						} else {
+							seqNoBodyAPI.add('')
+						}
                         'Jika loopingan pertama'
                         if (l == 0) {
                             'Jika dari loopingan pertama, pageSignnya hanya ada 1 dan yang terakhir'
