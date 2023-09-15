@@ -10,7 +10,7 @@
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n  \&quot;audit\&quot;: {\n    \&quot;callerId\&quot;: \&quot;USER@AD-INS.COM\&quot;\n  },\n  \&quot;msg\&quot;: \&quot;Pvkay%2BO8L4Wg%2F1CNGMLhW21BjlToc9IcZxoHcrGf%2FmhV5oIPoHLlnfz2Jaz2nXwb7EX9MP8I6y3%2BzvnBTP263w%3D%3D\&quot;,\n  \&quot;tenantCode\&quot;: \&quot;WOMF\&quot;,\n  \&quot;ipAddress\&quot;: \&quot;172.89.10.10\&quot;,\n  \&quot;browser\&quot;: \&quot;mozila\&quot;,\n  \&quot;documentIds\&quot;: [\n      \&quot;hjFr3mS%2F9azmW4PKicNC%2FUXuiGpqdTtlRRUumHVr6c9t3Wpyzy09aABVEBuotRYJ\&quot;\n  ]\n}&quot;,
+  &quot;text&quot;: &quot;{\n  \&quot;audit\&quot;: {\n    \&quot;callerId\&quot;: ${callerId}\n  },\n  \&quot;msg\&quot;: ${msg},\n  \&quot;tenantCode\&quot;: ${tenantCode},\n  \&quot;ipAddress\&quot;: ${ipAddress},\n  \&quot;browser\&quot;: ${browser},\n  \&quot;documentIds\&quot;: [\n      ${documentId}\n  ]\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -27,7 +27,7 @@
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>POST</restRequestMethod>
-   <restUrl>${base_url}//services/embed/document/signConfirmDocument</restUrl>
+   <restUrl>${base_url}/services/embed/document/signConfirmDocument</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>
