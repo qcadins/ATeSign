@@ -114,8 +114,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
 			'ambil saldo before'
 			HashMap<String, String> saldoBefore = checkSaldo(saldoList, vendor)
-			
-			WebUI.delay(10)
 
             'tutup browsernya'
             WebUI.closeBrowser()

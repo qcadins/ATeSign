@@ -128,10 +128,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
 				('Path') : excelPathFESignDocument, ('Email') : 'Email Login', ('Password') : 'Password Login',
 				 ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.CONTINUE_ON_FAILURE)
-			
-//            'Call test Case untuk login sebagai admin wom admin client'
-//            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
-//                FailureHandling.CONTINUE_ON_FAILURE)
 
             'mengambil saldo before'
             saldoSignBefore = checkSaldoSign(conneSign, vendor)
@@ -785,7 +781,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
 			'panggil fungsi login'
 			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
-				('Path') : excelPathFESignDocument], FailureHandling.CONTINUE_ON_FAILURE)
+				('Path') : excelPathFESignDocument, ('Email') : 'Email Login', ('Password') : 'Password Login',
+				 ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.CONTINUE_ON_FAILURE)
 
             'Split dokumen template name dan nomor kontrak per dokumen berdasarkan delimiter ;'
             documentTemplateNamePerDoc = documentTemplateName.split(';', -1)
@@ -1214,35 +1211,20 @@ def verifBiomMethod(int maxFaceCompDB, int countLivenessFaceComp, Connection con
 				messageError.equalsIgnoreCase('Lebih dari satu wajah terdeteksi. Pastikan hanya satu wajah yang terlihat')) {
 				
 				countSaldoSplitLiveFCused++
-				
-				'ambil message error'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-					GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
-						2).replace('-', '') + ';') + '<' + messageError + '>')
-				
-				'klik pada tombol OK'
-				WebUI.click(findTestObject('KotakMasuk/Sign/button_OK'))
-				
-				GlobalVariable.FlagFailed = 1
-				
-				'ambil terbaru count dari DB'
-				countLivenessFaceComp = CustomKeywords.'connection.DataVerif.getCountFaceCompDaily'(conneSign, emailSigner[o-1])
-				
-			} else {
-					
-				'ambil message error'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-					GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
-						2).replace('-', '') + ';') + '<' + messageError + '>')
-				
-				'klik pada tombol OK'
-				WebUI.click(findTestObject('KotakMasuk/Sign/button_OK'))
-				
-				GlobalVariable.FlagFailed = 1
-				
-				'ambil terbaru count dari DB'
-				countLivenessFaceComp = CustomKeywords.'connection.DataVerif.getCountFaceCompDaily'(conneSign, emailSigner[o-1])
 			}
+			
+			'ambil message error'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+				GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+					2).replace('-', '') + ';') + '<' + messageError + '>')
+			
+			'klik pada tombol OK'
+			WebUI.click(findTestObject('KotakMasuk/Sign/button_OK'))
+			
+			GlobalVariable.FlagFailed = 1
+			
+			'ambil terbaru count dari DB'
+			countLivenessFaceComp = CustomKeywords.'connection.DataVerif.getCountFaceCompDaily'(conneSign, emailSigner[o-1])
 			
 		} else {
 			
@@ -1454,8 +1436,6 @@ def checkSaldo(ArrayList rowName, String vendor) {
 				totalSaldo = WebUI.getText(modifyObjecttotalSaldoSign)
 				
 				result.put(rowName[b], totalSaldo)
-				
-				break
 			}
 		}
 	}
