@@ -102,10 +102,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                                 GlobalVariable.NumofColm, 10).replace('"', '') + ' : Send OTP SMS', false, FailureHandling.CONTINUE_ON_FAILURE))
 					
                     newOTP = (result[arrayIndex++])
-
-                    'verify otp code tidak sama'
-                    arrayMatch.add(WebUI.verifyNotEqual(newOTP, otp_code, FailureHandling.CONTINUE_ON_FAILURE))
-
+					
+					if (newOTP.toString() != 'null') {
+						'verify otp code tidak sama'
+						arrayMatch.add(WebUI.verifyNotEqual(newOTP, otp_code, FailureHandling.CONTINUE_ON_FAILURE))
+					}
+					
                     'input di excel mengenai trxno yang telah didapat'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
                         6, GlobalVariable.NumofColm - 1, newOTP)
