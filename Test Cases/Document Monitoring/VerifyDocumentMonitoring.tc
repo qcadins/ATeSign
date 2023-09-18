@@ -35,6 +35,24 @@
       <value></value>
       <variableId>fe694309-b048-4c18-9584-3d915ef51785</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>3ac7a7bd-adfe-4cef-b768-59df90a818d5</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>1ce00bf2-4412-4608-b3ae-cf05cea61ccf</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>64eaf15e-78cd-4967-8105-194017dba505</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -69,5 +87,26 @@
       <id>fe694309-b048-4c18-9584-3d915ef51785</id>
       <masked>false</masked>
       <name>isManualSign</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>3ac7a7bd-adfe-4cef-b768-59df90a818d5</id>
+      <masked>false</masked>
+      <name>CancelDocsSend</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>1ce00bf2-4412-4608-b3ae-cf05cea61ccf</id>
+      <masked>false</masked>
+      <name>CancelDocsSign</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>64eaf15e-78cd-4967-8105-194017dba505</id>
+      <masked>false</masked>
+      <name>CancelDocsStamp</name>
    </variable>
 </TestCaseEntity>

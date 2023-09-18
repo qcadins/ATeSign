@@ -23,6 +23,12 @@
       <value></value>
       <variableId>3341e839-12f0-4571-ad23-4e065ac34336</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>985a5bcd-7584-4124-bded-85fd15b7775b</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -43,5 +49,12 @@
       <id>3341e839-12f0-4571-ad23-4e065ac34336</id>
       <masked>false</masked>
       <name>statusTtd</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>985a5bcd-7584-4124-bded-85fd15b7775b</id>
+      <masked>false</masked>
+      <name>CancelDocsSend</name>
    </variable>
 </TestCaseEntity>

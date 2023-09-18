@@ -17,6 +17,12 @@
       <value></value>
       <variableId>0679fc1b-1427-453e-9e7d-09fe52c314b7</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>0d31f235-6e5c-4e27-8b0d-985b454b8e7c</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -30,5 +36,12 @@
       <id>0679fc1b-1427-453e-9e7d-09fe52c314b7</id>
       <masked>false</masked>
       <name>noKontrak</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>0d31f235-6e5c-4e27-8b0d-985b454b8e7c</id>
+      <masked>false</masked>
+      <name>CancelDocsStamp</name>
    </variable>
 </TestCaseEntity>

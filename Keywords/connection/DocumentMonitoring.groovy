@@ -136,7 +136,7 @@ public class DocumentMonitoring {
 		}
 		data
 	}
-	
+
 	@Keyword
 	getCancelDocStatus(Connection conn, String refNumber) {
 		stm = conn.createStatement()

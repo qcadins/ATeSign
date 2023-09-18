@@ -23,6 +23,12 @@
       <value></value>
       <variableId>5c214055-c106-472b-9ffc-5ea06c4c2f0f</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>5dc4ce30-8ba0-40b9-95f3-4c037485748b</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -43,5 +49,12 @@
       <id>5c214055-c106-472b-9ffc-5ea06c4c2f0f</id>
       <masked>false</masked>
       <name>sheet</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>5dc4ce30-8ba0-40b9-95f3-4c037485748b</id>
+      <masked>false</masked>
+      <name>CancelDocsStamp</name>
    </variable>
 </TestCaseEntity>

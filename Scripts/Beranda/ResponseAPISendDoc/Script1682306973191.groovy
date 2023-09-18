@@ -264,7 +264,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         'Call Test case mengneai Kotak Masuk'
         WebUI.callTestCase(findTestCase('Send Document/KotakMasuk'), [('excelPathFESignDocument') : API_Excel_Path, ('jumlahsignertandatangan') : jumlahsignertandatangan
                 , ('isDownloadDocument') : isDownloadDocument, ('isDeleteDownloadedDocument') : isDeleteDownloadedDocument
-                , ('isViewDocument') : isViewDocument, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
+                , ('isViewDocument') : isViewDocument, ('sheet') : sheet, ('CancelDocsSend') : CancelDocsSend], FailureHandling.CONTINUE_ON_FAILURE)
 
         if (GlobalVariable.checkStoreDB == 'Yes') {
             'call test case ResponseAPIStoreDB'
