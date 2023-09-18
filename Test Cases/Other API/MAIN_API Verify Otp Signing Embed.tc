@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API Verify Otp Signing Embed</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>cc29f7a6-4fad-4027-a4b8-d13999bd24ff</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>47f122d8-b5a9-4cd6-94e1-9e155f97bd0c</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>e931b202-0708-4d6a-8f1c-c774d43369ab</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Verify Otp Signing/Verify Otp Signing'</defaultValue>
+      <description></description>
+      <id>47f122d8-b5a9-4cd6-94e1-9e155f97bd0c</id>
+      <masked>false</masked>
+      <name>API_Excel_Path</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Verify OTP Signing Embed'</defaultValue>
+      <description></description>
+      <id>e931b202-0708-4d6a-8f1c-c774d43369ab</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>

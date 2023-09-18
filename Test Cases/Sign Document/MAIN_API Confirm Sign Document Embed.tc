@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>Sent Otp Signing Embed</name>
+   <name>MAIN_API Confirm Sign Document Embed</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>efcf1858-1e05-485c-b4ef-6f2ebd8a0644</testCaseGuid>
+   <testCaseGuid>5ab60653-651f-442a-b2eb-e10df2899ca8</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>5c6277bc-4590-49b6-bb8e-cb9635d630ec</variableId>
+      <variableId>992ff901-2c3f-47fe-a454-5544b2f3d425</variableId>
    </variableLinks>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>957ce3b4-62e3-464c-9d6d-63fd1630e7c3</variableId>
+      <variableId>24a41225-852e-4317-b5c5-47658f9140ce</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'Sent Otp Signing/Sent Otp Signing'</defaultValue>
+      <defaultValue>'Registrasi/Confirm Sign Document Embed'</defaultValue>
       <description></description>
-      <id>5c6277bc-4590-49b6-bb8e-cb9635d630ec</id>
+      <id>992ff901-2c3f-47fe-a454-5544b2f3d425</id>
       <masked>false</masked>
       <name>API_Excel_Path</name>
    </variable>
    <variable>
-      <defaultValue>'API Sent Otp Signing Embed'</defaultValue>
+      <defaultValue>'API Confirm Sign Document Embed'</defaultValue>
       <description></description>
-      <id>957ce3b4-62e3-464c-9d6d-63fd1630e7c3</id>
+      <id>24a41225-852e-4317-b5c5-47658f9140ce</id>
       <masked>false</masked>
       <name>sheet</name>
    </variable>
