@@ -20,7 +20,7 @@ public class ManualSign {
 	getVendorofTenant(Connection conn, String tenantCode) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select msv.vendor_name from ms_vendoroftenant mvot left join ms_tenant mst on mvot.id_ms_tenant = mst.id_ms_tenant left join ms_vendor msv on mvot.id_ms_vendor = msv.id_ms_vendor where mst.tenant_code = '"+ tenantCode +"' and msv.is_operating = '1' and mvot.default_vendor > '0' order by mvot.id_ms_vendoroftenant asc")
+		resultSet = stm.executeQuery("select msv.vendor_name, mvot.id_ms_vendoroftenant from ms_vendoroftenant mvot left join ms_tenant mst on mvot.id_ms_tenant = mst.id_ms_tenant left join ms_vendor msv on mvot.id_ms_vendor = msv.id_ms_vendor where mst.tenant_code = '"+tenantCode+"' and msv.is_active = '1' and mvot.default_vendor > '0' order by mvot.default_vendor asc")		
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

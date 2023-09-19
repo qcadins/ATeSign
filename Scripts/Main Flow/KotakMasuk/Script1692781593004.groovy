@@ -41,10 +41,13 @@ for (int y = 0; y < docId.size(); y++) {
         'declare array proses Ttd pada Pencarian Dokumen. Digunakan untuk membandingkan dengan Kotak Masuk / Beranda. '
         ArrayList prosesTtdPencarianDokumen = []
 
+		openHamburgAndroid()
 		WebUI.focus(findTestObject('PencarianDokumen/menu_PencarianDokumen'))
 		
         'click menu pencarian dokumen'
         WebUI.click(findTestObject('PencarianDokumen/menu_PencarianDokumen'))
+		
+		closeHamburgAndroid()
 		
 		'query untuk input pencarian dokumen'
 		ArrayList inputPencarianDokumen = CustomKeywords.'connection.SendSign.getDataPencarianDokumen'(conneSign, emailSigner[t], docId[y])  
@@ -56,6 +59,7 @@ for (int y = 0; y < docId.size(); y++) {
 		WebUI.delay(2)
 
 		WebUI.focus(findTestObject('PencarianDokumen/input_NamaPelanggan'), FailureHandling.OPTIONAL)
+		
 	if (WebUI.verifyElementPresent(findTestObject('PencarianDokumen/input_NamaPelanggan'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 		GlobalVariable.roleLogin = 'BM MF'
 		
@@ -187,9 +191,13 @@ for (int y = 0; y < docId.size(); y++) {
             }
         }
         
+		openHamburgAndroid()
+		
         'Klik objek Beranda'
         WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_Beranda'))
 
+		closeHamburgAndroid()
+		
         'dekalarsi arrayindex menjadi 0'
         arrayIndex = 0
 
@@ -207,6 +215,8 @@ for (int y = 0; y < docId.size(); y++) {
             WebUI.click(modifyObjectBtnLastest, FailureHandling.OPTIONAL)
         }
         
+		WebUI.delay(GlobalVariable.TimeOut)
+		
         'get row pada beranda'
         variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
 
@@ -434,4 +444,22 @@ for (int y = 0; y < docId.size(); y++) {
 
 def rowExcel(String cellValue) {
 	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, 'Main', cellValue)
+}
+
+def openHamburgAndroid() {
+'cek apakah elemen menu ditutup'
+	if (WebUI.verifyElementVisible(findTestObject('button_HamburberSideMenu'), FailureHandling.OPTIONAL)) {
+		
+		'klik pada button hamburber'
+		WebUI.click(findTestObject('button_HamburberSideMenu'))
+	}
+}
+
+def closeHamburgAndroid() {
+	'cek apakah tombol x terlihat'
+	if (WebUI.verifyElementVisible(findTestObject('buttonX_sideMenu'), FailureHandling.OPTIONAL)) {
+		
+		'klik pada button X'
+		WebUI.click(findTestObject('buttonX_sideMenu'), FailureHandling.OPTIONAL)
+	}
 }

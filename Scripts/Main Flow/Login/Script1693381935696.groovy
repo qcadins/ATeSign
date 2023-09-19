@@ -6,6 +6,11 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 import java.sql.Connection as Connection
+import org.openqa.selenium.remote.DesiredCapabilities
+import org.openqa.selenium.WebDriver
+import io.appium.java_client.android.AndroidDriver
+import org.openqa.selenium.JavascriptExecutor
+import com.kms.katalon.core.webui.driver.DriverFactory
 
 'setting untuk membuat lokasi default folder download'
 HashMap<String, String> chromePrefs = new HashMap<String, String>()
@@ -14,11 +19,7 @@ chromePrefs.put('download.default_directory', System.getProperty('user.dir') + '
 
 RunConfiguration.setWebDriverPreferencesProperty('prefs', chromePrefs)
 
-'open browser'
-WebUI.openBrowser('')
-
-'navigate to url esign'
-WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 2))
+WebUI.openBrowser(findTestData('Login/Login').getValue(1, 2))
 
 'maximized window'
 WebUI.maximizeWindow()

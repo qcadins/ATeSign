@@ -48,12 +48,16 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
     }
     
     if (linkDocumentMonitoring == 'Not Used') {
+		openHamburgAndroid()
+		
         'Fokus ke document monitoring'
         WebUI.focus(findTestObject('DocumentMonitoring/DocumentMonitoring'))
 
         'Klik Button menu Document Monitoring'
         WebUI.click(findTestObject('DocumentMonitoring/DocumentMonitoring'))
 
+		closeHamburgAndroid()
+		
         linkDocumentMonitoring = ''
     } else if (linkDocumentMonitoring == '') {
         'Call test Case untuk login sebagai admin wom admin client'
@@ -495,8 +499,12 @@ def loginAdminGetSaldo(Connection conneSign, String start, String sheet) {
     String totalSaldo
 
     if (start == 'Yes') {
+		openHamburgAndroid()
+		
         'klik button saldo'
         WebUI.click(findTestObject('isiSaldo/SaldoAdmin/menu_Saldo'))
+		
+		closeHamburgAndroid()
     }
     
     'klik ddl untuk tenant memilih mengenai Vida'
@@ -703,3 +711,20 @@ def rowExcel(String cellValue) {
     return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, 'Main', cellValue)
 }
 
+def openHamburgAndroid() {
+	'cek apakah elemen menu ditutup'
+		if (WebUI.verifyElementVisible(findTestObject('button_HamburberSideMenu'), FailureHandling.OPTIONAL)) {
+			
+			'klik pada button hamburber'
+			WebUI.click(findTestObject('button_HamburberSideMenu'))
+		}
+	}
+	
+def closeHamburgAndroid() {
+		'cek apakah tombol x terlihat'
+		if (WebUI.verifyElementVisible(findTestObject('buttonX_sideMenu'), FailureHandling.OPTIONAL)) {
+			
+			'klik pada button X'
+			WebUI.click(findTestObject('buttonX_sideMenu'), FailureHandling.OPTIONAL)
+		}
+	}
