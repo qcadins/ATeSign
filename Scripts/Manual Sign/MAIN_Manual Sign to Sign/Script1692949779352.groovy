@@ -102,6 +102,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'Inisialisasi variable total document yang akan disign, count untuk resend, dan saldo yang akan digunakan'
             int totalDocSign, countResend, saldoUsed = 0
 
+			'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
+			WebUI.callTestCase(findTestCase('Document Monitoring/VerifyDocumentMonitoring'), [('excelPathManualSigntoSign') : excelPathManualSigntoSign
+					, ('sheet') : sheet, ('nomorKontrak') : noKontrak], FailureHandling.CONTINUE_ON_FAILURE)
+			
             'mengambil saldo before'
             saldoSignBefore = checkSaldoSign(conneSign, findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
                     rowExcel('$Nomor Dokumen')))

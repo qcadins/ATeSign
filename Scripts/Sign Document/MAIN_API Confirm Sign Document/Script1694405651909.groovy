@@ -134,18 +134,3 @@ def getErrorMessageAPI(def respon) {
 def rowExcel(String cellValue) {
     return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
-
-def encryptLink(Connection conneSign, String documentId, String emailSigner, String aesKey) {
-    officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, documentId)
-
-    'pembuatan message yang akan dienkrip'
-    msg = (((((('{"tenantCode":"' + findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))) + 
-    '","officeCode":"') + officeCode) + '","email":"') + emailSigner) + '"}')
-
-    'enkripsi msg'
-    encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(msg, aesKey)
-
-    println(msg)
-
-    return encryptMsg
-}
