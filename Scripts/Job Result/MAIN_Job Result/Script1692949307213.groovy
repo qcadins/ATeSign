@@ -18,52 +18,60 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'get colm excel'
 int countColmExcel = findTestData(excelPathJobResult).columnNumbers
 
-sheet = 'Job Result'
+sheet = sheet
+
+int firstRun = 0
 
 'looping Job Result'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
-    if (findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
+    if (findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
-    } else if (findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+    } else if (findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
         GlobalVariable.FlagFailed = 0
 
+		'check if email login case selanjutnya masih sama dengan sebelumnya'
+		if (findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) !=
+			findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')) || firstRun == 0) {
+			'call test case login per case'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathJobResult, ('Email') : 'Email Login', ('Password') : 'Password Login'
+				, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
+			
+			firstRun = 1
+		}
+
         if (GlobalVariable.NumofColm == 2) {
-            'call testcase login admin esign'
-            WebUI.callTestCase(findTestCase('Login/Login_AdminEsign'), [('excel') : excelPathJobResult, ('sheet') : sheet], 
-                FailureHandling.CONTINUE_ON_FAILURE)
-
-            'click menu job result'
-            WebUI.click(findTestObject('Job Result/menu_Hasil Job'))
-
             'call function check paging'
             checkPaging(conneSign)
         }
+		
+        'click menu job result'
+        WebUI.click(findTestObject('Job Result/menu_Hasil Job'))
         
         'set text date start'
         WebUI.setText(findTestObject('Job Result/input_requestDateStart'), findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 
-                9))
+                rowExcel('Permintaan Tanggal Mulai')))
 
         'set text date end'
         WebUI.setText(findTestObject('Job Result/input_requestDateEnd'), findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 
-                12))
+                rowExcel('Permintaan Tanggal Berakhir')))
 
         'set text nama job'
         WebUI.setText(findTestObject('Job Result/input_JobName'), findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 
-                10))
+                rowExcel('Nama Job')))
 
         'enter untuk nama job'
         WebUI.sendKeys(findTestObject('Job Result/input_JobName'), Keys.chord(Keys.ENTER))
 
         'set text process result'
         WebUI.setText(findTestObject('Job Result/input_ProcessResult'), findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 
-                13))
+                rowExcel('Hasil Proses')))
 
         'enter untuk process result'
         WebUI.sendKeys(findTestObject('Job Result/input_ProcessResult'), Keys.chord(Keys.ENTER))
 
         'set text diminta oleh'
         WebUI.setText(findTestObject('Job Result/input_DimintaOleh'), findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 
-                11))
+                rowExcel('Diminta Oleh')))
 
         'click button cari'
         WebUI.click(findTestObject('Job Result/button_Cari'))
@@ -75,7 +83,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'Jika value muncul'
         if (WebUI.verifyElementPresent(findTestObject('Job Result/lbl_value'), GlobalVariable.TimeOut)) {
 			'Jika aksi yang dipilih adalah View Request Param'
-            if (findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 7) == 'View Request Param') {
+            if (findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, rowExcel('Action')) == 'View Request Param') {
 				'get row'
 				row = DriverFactory.webDriver.findElements(By.cssSelector('#listJobResult > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-body-cell'))
 	
@@ -94,8 +102,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                     'get job result data dari db'
                     result = CustomKeywords.'connection.JobResult.jobResultViewReqParamDB'(conneSign, findTestData(excelPathJobResult).getValue(
-                            GlobalVariable.NumofColm, 9), findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 
-                            12))
+                            GlobalVariable.NumofColm, rowExcel('Permintaan Tanggal Mulai')), findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 
+                            rowExcel('Permintaan Tanggal Berakhir')))
 
 					index = 0
                     'looping row Modal'
@@ -115,7 +123,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					WebUI.click(findTestObject('KotakMasuk/btn_X'))
                 } else {
 					'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedNoneUI'
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Job Result', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 					((findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedNoneUI + ' pada View Request Param'))
 				}
             } 
@@ -133,7 +141,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         } else {
 			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedNoneUI'
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            ((findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedNoneUI + ' pada data tersebut '))
+            ((findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedNoneUI + ' pada data tersebut '))
         }
 	}
 }
@@ -143,7 +151,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         if (WebUI.verifyElementPresent(findTestObject('Job Result/lbl_value'), GlobalVariable.TimeOut)) {
             'get job result data dari db'
             result = CustomKeywords.'connection.JobResult.jobResultDB'(conneSign, findTestData(excelPathJobResult).getValue(
-                    GlobalVariable.NumofColm, 8), findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 11))
+                    GlobalVariable.NumofColm, 8), findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, rowExcel('Diminta Oleh')))
 
             index = 0
 
@@ -282,8 +290,8 @@ def checkPaging(Connection conneSign) {
 def checkVerifyPaging(Boolean isMatch, def reason) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Job Result', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            ((findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedPaging) + 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            ((findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedPaging) + 
             reason)
 
         GlobalVariable.FlagFailed = 1
@@ -293,8 +301,8 @@ def checkVerifyPaging(Boolean isMatch, def reason) {
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Job Result', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            ((findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            ((findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
             reason)
 
         GlobalVariable.FlagFailed = 1
@@ -315,3 +323,6 @@ def checkErrorLog() {
 	}
 }
 
+def rowExcel(String cellValue) {
+	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+}
