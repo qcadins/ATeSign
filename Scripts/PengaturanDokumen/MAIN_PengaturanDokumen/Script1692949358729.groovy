@@ -902,10 +902,11 @@ def checkDDL(TestObject objectDDL, ArrayList<String> listDB, String reason) {
 	println(listDB)
 	println(list)
 	
+	
 	'verify jumlah ddl ui = db'
 	checkVerifyEqualOrMatch(WebUI.verifyEqual(list.size(), listDB.size(), FailureHandling.CONTINUE_ON_FAILURE), ' Jumlah ' + reason)
 	
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(list.toString(), listDB.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Jumlah ' + reason)
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(list.sort().toString(), listDB.sort().toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Jumlah ' + reason)
 	
 	'Input enter untuk tutup ddl'
 	WebUI.sendKeys(objectDDL, Keys.chord(Keys.ENTER))

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API API Get Activation Link DIGI</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>a2a36fa9-abcb-4c44-ba46-9b812907d08b</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>04295a6e-0d3e-4319-9f5b-5fe9bb603f54</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>2cd20b61-e0e6-4c1a-98ee-cc7586f2cc96</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/Get Activation Link DIGI'</defaultValue>
+      <description></description>
+      <id>04295a6e-0d3e-4319-9f5b-5fe9bb603f54</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Get Activation Link DIGI'</defaultValue>
+      <description></description>
+      <id>2cd20b61-e0e6-4c1a-98ee-cc7586f2cc96</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>

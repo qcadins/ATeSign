@@ -26,7 +26,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathConfirmOTP, GlobalVariable.NumofColm, 16)
 		
         'call test case menuju Request OTP Privy'
-        WebUI.callTestCase(findTestCase('Other API/MAIN_API Request OTP'), [('excelPathRequestOTP') : excelPathConfirmOTP
+        WebUI.callTestCase(findTestCase('Other API/API Request OTP'), [('excelPathRequestOTP') : excelPathConfirmOTP
                 , ('sheet') : 'API Confirm OTP - Privy'], FailureHandling.CONTINUE_ON_FAILURE)
 
         'Jika request otpnya success'

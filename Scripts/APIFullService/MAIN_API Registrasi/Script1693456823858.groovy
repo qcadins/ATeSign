@@ -134,7 +134,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 println(trxNo)
 
                 if (GlobalVariable.checkStoreDB == 'Yes') {
-                    if (GlobalVariable.Psre != 'PRIVY') {
+                    if (GlobalVariable.Psre == 'VIDA' || GlobalVariable.Psre == 'DIGI') {
                         arrayIndex = 0
 
                         'get data from db'
@@ -151,8 +151,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                         println(resultDataUser)
 
-                        'verify is_active'
-                        arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), '1', false, FailureHandling.CONTINUE_ON_FAILURE))
+						if (GlobalVariable.Psre == 'VIDA') {
+							'verify is_active'
+							arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), '1', false, FailureHandling.CONTINUE_ON_FAILURE))							
+						} else if (GlobalVariable.Psre == 'DIGI') {
+							'verify is_active'
+							arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), '0', false, FailureHandling.CONTINUE_ON_FAILURE))							
+						}
 
                         'verify is_registered'
                         arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), '1', false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -212,7 +217,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         'verify kode pos'
                         arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathAPIRegistrasi).getValue(
                                     GlobalVariable.NumofColm, rowExcel('kodePos')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-                    } else {
+                    } else if (GlobalVariable.Psre == 'PRIVY') {
                         'looping untuk delay 100detik menunggu proses request status'
                         for (delay = 1; delay <= 5; delay++) {
                             resultDataUser = CustomKeywords.'connection.APIFullService.getAPIRegisterPrivyStoreDB'(conneSign, 
