@@ -476,10 +476,12 @@ for (o = 0; o < documentId.size(); o++) {
                         inputDataforVerif()
 
                         'panggil fungsi penyelesaian dengan OTP'
-                        if (countResend = verifOTPMethod(conneSign, emailSigner, listOTP, noTelpSigner, otpAfter, vendor) == false) {
+                        if (verifOTPMethod(conneSign, emailSigner, listOTP, noTelpSigner, otpAfter, vendor) == false) {
                             'jika ada error continue testcase'
                             continue
-                        }
+                        } else {
+							
+						}
                     } else {
                         'jika ada error break testcase'
                         break
