@@ -32,17 +32,24 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		aesKey = CustomKeywords.'connection.APIFullService.getAesKeyBasedOnTenant'(conneSign, GlobalVariable.Tenant)
 		
 		println(aesKey)
-		'get office code dari db'
-		officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('documentId')))
-		
-		'pembuatan message yang akan dienkrip'
-		msg = ((((('{"officeCode":"') + officeCode) + '","email":"') + findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('email'))) + '"}')
-		
-		'encrypt and decode officecode + email'
-		endcodedMsg = encryptEncodeValue(msg, aesKey)
-		
-		'encrypt and decode documentID'
-		endcodedDocumentId = encryptEncodeValue(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('documentId')), aesKey)
+
+		if (aesKey != null) {
+			'get office code dari db'
+			officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('documentId')))
+			
+			'pembuatan message yang akan dienkrip'
+			msg = ((((('{"officeCode":"') + officeCode) + '","email":"') + findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('email'))) + '"}')
+			
+			'encrypt and decode officecode + email'
+			endcodedMsg = encryptEncodeValue(msg, aesKey)
+			
+			'encrypt and decode documentID'
+			endcodedDocumentId = encryptEncodeValue(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('documentId')), aesKey)
+		} else {
+			endcodedMsg = ''
+			
+			endcodedDocumentId = ''
+		}
 		
         'HIT API Sign Document'
         responConfirmSignDoc = WS.sendRequest(findTestObject('Postman/Confirm Sign Document Embed', [('callerId') : findTestData(API_Excel_Path).getValue(
