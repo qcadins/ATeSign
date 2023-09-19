@@ -9,12 +9,9 @@ import org.openqa.selenium.Keys as Keys
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
-'panggil fungsi login'
-WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : 'ListUndangan',
-	('Path') : excelPathListUndangan], FailureHandling.CONTINUE_ON_FAILURE)
-
-//'call test case login admin'
-//WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathListUndangan, ('sheet') : 'ListUndangan'], FailureHandling.CONTINUE_ON_FAILURE)
+'call test case login per case'
+WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathListUndangan, ('Email') : 'Email Login', ('Password') : 'Password Login'
+	, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
 
 GlobalVariable.FlagFailed = 0
 
@@ -25,7 +22,7 @@ WebUI.click(findTestObject('ListUndangan/menu_ListUndangan'))
 checkPaging()
 
 'check if mau download list undangan'
-if (findTestData(excelPathListUndangan).getValue(GlobalVariable.NumofColm, 9).equalsIgnoreCase('Yes')) {
+if (findTestData(excelPathListUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Download File')).equalsIgnoreCase('Yes')) {
     'click button download'
     WebUI.click(findTestObject('ListUndangan/button_UnduhExcel'))
 
@@ -34,10 +31,10 @@ if (findTestData(excelPathListUndangan).getValue(GlobalVariable.NumofColm, 9).eq
 
     'check isfiled downloaded'
     if (CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathListUndangan).getValue(GlobalVariable.NumofColm, 
-            10)) == false) {
+            rowExcel('Keep Download file ?'))) == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedDownload'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('ListUndangan', GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(excelPathListUndangan).getValue(GlobalVariable.NumofColm, 2) + ';') + 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+            GlobalVariable.StatusFailed, (findTestData(excelPathListUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
             GlobalVariable.ReasonFailedDownload)
 
         GlobalVariable.FlagFailed = 1
@@ -46,7 +43,7 @@ if (findTestData(excelPathListUndangan).getValue(GlobalVariable.NumofColm, 9).eq
 
 if (GlobalVariable.FlagFailed == 0) {
     'write to excel success'
-    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'ListUndangan', 0, GlobalVariable.NumofColm - 
+    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
         1, GlobalVariable.StatusSuccess)
 }
 
@@ -165,11 +162,14 @@ def checkPaging() {
 def checkVerifyPaging(Boolean isMatch) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('ListUndangan', GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(excelPathListUndangan).getValue(GlobalVariable.NumofColm, 2) + 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+            GlobalVariable.StatusFailed, (findTestData(excelPathListUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
             ';') + GlobalVariable.ReasonFailedPaging)
 
         GlobalVariable.FlagFailed = 1
     }
 }
 
+def rowExcel(String cellValue) {
+	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+}
