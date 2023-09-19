@@ -2,6 +2,7 @@ import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
+import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
 
 import internal.GlobalVariable
 
@@ -15,14 +16,30 @@ chromePrefs.put('download.default_directory', System.getProperty('user.dir') + '
 
 RunConfiguration.setWebDriverPreferencesProperty('prefs', chromePrefs)
 
-'open browser'
-WebUI.openBrowser('')
-
-'navigate to url esign'
-WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 2))
-
-'maximized window'
-WebUI.maximizeWindow()
+if (GlobalVariable.RunWith == 'Mobile') {
+	
+	'ambil koordinat dari settings'
+	ArrayList coordinates = findTestData('Login/Login').getValue(13, 2).split(',')
+	
+	'open browser'
+	WebUI.openBrowser(findTestData('Login/Login').getValue(1, 2))
+	
+	'klik titik tiga'
+	Mobile.tapAtPosition(1000, 180, FailureHandling.OPTIONAL)
+	
+	'aktifkan view desktop sites'
+	Mobile.tapAtPosition(coordinates[0], coordinates[1], FailureHandling.OPTIONAL)
+	
+} else {
+	'open browser'
+	WebUI.openBrowser('')
+	
+	'navigate to url esign'
+	WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 2))
+	
+	'maximized window'
+	WebUI.maximizeWindow()
+}
 
 'input email'
 WebUI.setText(findTestObject('Login/input_Email'), email)
