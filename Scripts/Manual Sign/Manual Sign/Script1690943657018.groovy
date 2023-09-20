@@ -467,8 +467,8 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
             'Call Test case mengneai Kotak Masuk'
             WebUI.callTestCase(findTestCase('Send Document/KotakMasuk'), [('excelPathFESignDocument') : excelPathManualSigntoSign
                     , ('jumlahsignertandatangan') : jumlahsignertandatangan, ('isDownloadDocument') : isDownloadDocument
-                    , ('isDeleteDownloadedDocument') : isDeleteDownloadedDocument, ('isViewDocument') : isViewDocument, ('sheet') : sheet], 
-                FailureHandling.CONTINUE_ON_FAILURE)
+                    , ('isDeleteDownloadedDocument') : isDeleteDownloadedDocument, ('isViewDocument') : isViewDocument, ('sheet') : sheet,
+					('CancelDocsSend') : CancelDocsSend], FailureHandling.CONTINUE_ON_FAILURE)
         }
     }
 }

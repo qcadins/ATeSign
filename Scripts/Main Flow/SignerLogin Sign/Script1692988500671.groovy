@@ -550,7 +550,7 @@ for (o = 0; o < documentId.size(); o++) {
     
     'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
     WebUI.callTestCase(findTestCase('Main Flow/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument
-            , ('sheet') : sheet, ('nomorKontrak') : noKontrak], FailureHandling.CONTINUE_ON_FAILURE)
+            , ('sheet') : sheet, ('nomorKontrak') : noKontrak, ('CancelDocsSign') : CancelDocsSign], FailureHandling.CONTINUE_ON_FAILURE)
 
     'Call test Case untuk login sebagai admin wom admin client'
     WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
