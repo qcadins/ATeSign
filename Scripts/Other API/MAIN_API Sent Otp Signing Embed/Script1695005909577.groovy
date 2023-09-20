@@ -25,9 +25,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			
 		'Mengambil aes key based on tenant tersebut'
 		String aesKey = CustomKeywords.'connection.APIFullService.getAesKeyBasedOnTenant'(conneSign, findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('tenantCode')).replace('"',''))
-		'enkripsi msg'
-		encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('msg')), aesKey)
-
+		
+		if (aesKey != null) {
+			'enkripsi msg'
+			encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('msg')), aesKey)
+		}
+		else {
+			encryptMsg = ''
+		}
+		
 		println aesKey
 		println encryptMsg
 
@@ -48,7 +54,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				message = WS.getElementPropertyValue(respon, 'otpByEmail', FailureHandling.OPTIONAL)
 				
 				'write otpby email'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Response') - 1,
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('otpByEmail') - 1,
 					GlobalVariable.NumofColm - 1, message)
 				if (GlobalVariable.FlagFailed == 0) {
 					'write to excel success'

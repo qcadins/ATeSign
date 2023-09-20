@@ -158,7 +158,7 @@ linkDocumentMonitoring = 'Not Used'
 }
 
 'call testcase verify document monitoring'
-WebUI.callTestCase(findTestCase('Main Flow/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathMeterai, ('sheet') : sheet, ('nomorKontrak') : noKontrak, ('linkDocumentMonitoring') : linkDocumentMonitoring, ('CancelDocsStamp') : CancelDocsStamp], FailureHandling.CONTINUE_ON_FAILURE)
+WebUI.callTestCase(findTestCase('Main Flow/verifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathMeterai, ('sheet') : sheet, ('nomorKontrak') : noKontrak, ('linkDocumentMonitoring') : linkDocumentMonitoring, ('nomorKontrak') : noKontrak, ('CancelDocsStamp') : CancelDocsStamp], FailureHandling.CONTINUE_ON_FAILURE)
 
 if (GlobalVariable.FlagFailed == 0) {
 	'write to excel success'

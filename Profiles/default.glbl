@@ -40,8 +40,8 @@
       <name>embedUrl</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>
-      <description></description>
-      <initValue>[]</initValue>
+      <description>Pemakaian di Main Flow untuk storing saldo</description>
+      <initValue>[('VerifkasiBiometric') : 0, ('VerifikasiOTP') : 0]</initValue>
       <name>eSignData</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>

@@ -16,21 +16,22 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 String valueRefNum, nomorKontrakDocument
 
+'pasang flag error DMS'
+int flagErrorDMS = 0, prosesMaterai
+
 documentId = findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ', -1)
 
-GlobalVariable.base_url = findTestData('Login/Setting').getValue(7,2)
+GlobalVariable.base_url = findTestData('Login/Setting').getValue(7, 2)
 
 String refNumber = CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, documentId[0])
- 
+
 'ambil nama vendor dari DB'
 String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, refNumber)
 
 HashMap<String, String> getSaldo = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathStamping
-, ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
+        , ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
 
-saldoBefore = getSaldo.get("Meterai")
-
-int prosesMaterai
+saldoBefore = getSaldo.get('Meterai')
 
 if ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Option for Stamp Document :')) == 'API Stamping External') || 
 (findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Option for Stamp Document :')) == 'API Stamping Normal')) {
@@ -73,7 +74,7 @@ if ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel
                         '"', ''))
 
                 'jika proses materai gagal (51)'
-                if (prosesMaterai == 51) {
+                if ((prosesMaterai == 51) && (flagErrorDMS == 0)) {
                     'Kasih delay untuk mendapatkan update db untuk error stamping'
                     WebUI.delay(3)
 
@@ -84,12 +85,19 @@ if ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel
                     'Write To Excel GlobalVariable.StatusFailed and errormessage'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, (((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 
-                            rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedProsesStamping) + ' dengan alasan ') + errorMessageDB.toString())
+                            rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedProsesStamping) + ' dengan alasan ') + 
+                        errorMessageDB.toString())
 
                     GlobalVariable.FlagFailed = 1
 
-                    break
-                } else if (prosesMaterai == 53) {
+                    if (!(errorMessageDB.toString().contains('upload DMS'))) {
+                        break
+                    } else {
+                        flagErrorDMS = 1
+
+                        continue
+                    }
+                } else if ((prosesMaterai == 53) || (flagErrorDMS == 1)) {
                     'Jika proses meterai sukses (53), berikan delay 3 sec untuk update di db'
                     WebUI.delay(3)
 
@@ -126,8 +134,8 @@ if ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel
                         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                             GlobalVariable.StatusFailed, ((((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 
-                                rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedProsesStamping) + ' dengan jeda waktu ') + (i * 12)) + 
-                            ' detik ')
+                                rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedProsesStamping) + ' dengan jeda waktu ') + 
+                            (i * 12)) + ' detik ')
 
                         GlobalVariable.FlagFailed = 1
                     }
@@ -136,10 +144,16 @@ if ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel
             
             'Jika flag failed tidak 0'
             if (GlobalVariable.FlagFailed == 0) {
-                'write to excel success'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Status') - 1, GlobalVariable.NumofColm - 
-                    1, GlobalVariable.StatusSuccess)
-
+                if (flagErrorDMS == 1) {
+                    'write to excel Failed'
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel(
+                            'Status') - 1, GlobalVariable.NumofColm - 1, GlobalVariable.StatusFailed)
+                } else {
+                    'write to excel success'
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel(
+                            'Status') - 1, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+                }
+                
                 'Call verify meterai'
                 WebUI.callTestCase(findTestCase('Main Flow/verifyMeterai'), [('excelPathMeterai') : excelPathStamping, ('sheet') : sheet
                         , ('noKontrak') : nomorKontrakDocument.replace('"', ''), ('linkDocumentMonitoring') : linkDocumentMonitoring], ('CancelDocsStamp') : CancelDocsStamp,
@@ -160,10 +174,10 @@ if ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel
         FailureHandling.CONTINUE_ON_FAILURE)
 }
 
-getSaldo = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathStamping
-, ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
+getSaldo = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathStamping, ('sheet') : sheet, ('vendor') : vendor], 
+    FailureHandling.CONTINUE_ON_FAILURE)
 
-saldoAfter = getSaldo.get("Meterai")
+saldoAfter = getSaldo.get('Meterai')
 
 'mengambil value db proses ttd'
 prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, refNumber)
@@ -172,8 +186,8 @@ if (prosesMaterai == 53) {
     if (WebUI.verifyEqual(Integer.parseInt(saldoBefore), Integer.parseInt(saldoAfter), FailureHandling.CONTINUE_ON_FAILURE)) {
         'write to excel status failed dan reason'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
-            ' terhadap total saldo dimana saldo awal dan saldo setelah meterai sama ')
+            ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', 
+                '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + ' terhadap total saldo dimana saldo awal dan saldo setelah meterai sama ')
     } else {
         verifySaldoUsed(conneSign, sheet, refNumber)
     }
@@ -181,8 +195,8 @@ if (prosesMaterai == 53) {
     if (saldoBefore != saldoAfter) {
         'write to excel status failed dan reason'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
-            ' terhadap total saldo dimana saldo awal dan saldo setelah meterai tidak sama ')
+            ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', 
+                '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + ' terhadap total saldo dimana saldo awal dan saldo setelah meterai tidak sama ')
     }
 }
 
@@ -263,7 +277,8 @@ def verifySaldoUsed(Connection conneSign, String sheet, String refNumber) {
                 'equals', ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
                 p) + ']/datatable-body-row/div[2]/datatable-body-cell[') + u) + ']/div', true)
 
-			WebUI.scrollToElement(modifyperrowpercolumn, GlobalVariable.TimeOut)
+            WebUI.scrollToElement(modifyperrowpercolumn, GlobalVariable.TimeOut)
+
             'Jika u di lokasi qty atau kolom ke 9'
             if (u == 9) {
                 'Jika yang qtynya 1 dan databasenya juga, berhasil'
@@ -305,7 +320,8 @@ def getErrorMessageAPI(def respon) {
 
     'Write To Excel GlobalVariable.StatusFailed and errormessage'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-        (((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + '<') + message) + '>')
+        (((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + '<') + 
+        message) + '>')
 
     GlobalVariable.FlagFailed = 1
 }

@@ -113,7 +113,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 //index = 11
 
 				'keperluan sit'
-				index = 9
+				index = 10
 				
                 'modify label daftar penanda tangan dengan naiknya index'
                 modifyObjectLblDaftarPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/lbl_daftarpenandatangan'), 
@@ -678,15 +678,17 @@ def checkErrorLog() {
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                     (((findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
                         '-', '') + ';') + '<') + errormessage) + '>')
+				
+				return true
             }
         } else {
             'Tulis di excel itu adalah error'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                 (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
                     '-', '') + ';') + 'Error tidak berhasil ditangkap')
+			
+			return true
         }
-        
-        return true
     }
     
     return false
