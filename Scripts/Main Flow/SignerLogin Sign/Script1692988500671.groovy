@@ -142,9 +142,14 @@ for (o = 0; o < documentId.size(); o++) {
         'Total document sign hanya 1 (single)'
         totalDocSign = 1
     }
-
+	if (variableLastest.size() == 0) {
+		totalPage = 1
+	} else {
+		totalPage = variableLastest.size() - 4
+	}
+	
     'Looping berdasarkan page agar bergeser ke page sebelumnya'
-    for (k = 0; k < (variableLastest.size() - 4); k++) {
+    for (k = 1; k <= totalPage; k++) {
         'get row beranda'
         rowBeranda = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
 
@@ -219,7 +224,7 @@ for (o = 0; o < documentId.size(); o++) {
         }
         
         'Jika sudah dilooping terakhir mengenai pagenya dan tetap tidak menemukan'
-        if ((k == (variableLastest.size() - 4)) && (documentTemplateName == '')) {
+        if (k == totalPage && documentTemplateName == '') {
             'Input verifynya false dengan reason'
             checkVerifyEqualorMatch(false, ' dengan alasan tidak ditemukannya Nomor Kontrak yang diinginkan.')
 
