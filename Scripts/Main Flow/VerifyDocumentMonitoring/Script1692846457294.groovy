@@ -288,6 +288,21 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
             ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + GlobalVariable.ReasonFailedStoredDB) + 
             ' pada menu Document Monitoring ')
     }
+	
+	if (CancelDocsSend == 'Yes' || CancelDocsSign == 'Yes') {
+		
+		'panggil fungsi cancel docs sesudah send'
+		cancelDoc(conneSign, nomorKontrakPerPilihan[y].toString())
+		
+		'input kembali data sesudah selesai cancel doc'
+		inputDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, settingHO)
+		
+		'lakukan pengecekan ke di UI untuk memastikan cancel berhasil'
+		checkVerifyEqualorMatch(WebUI.verifyMatch('Tidak ada data untuk diperlihatkan', WebUI.getText(findTestObject('DocumentMonitoring/SearchResult'), FailureHandling.OPTIONAL),
+				false, FailureHandling.CONTINUE_ON_FAILURE), 'Data gagal terhapus di FE')
+		
+		return
+	}
     
     if (isStamping == 'Yes') {
         'click button start stamping'
@@ -394,6 +409,21 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
         }
         
         inputDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, settingHO)
+		
+		if (CancelDocsStamp == 'Yes') {
+			
+			'panggil fungsi cancel docs sesudah send'
+			cancelDoc(conneSign, nomorKontrakPerPilihan[y].toString())
+			
+			'input kembali data sesudah selesai cancel doc'
+			inputDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, settingHO)
+			
+			'lakukan pengecekan ke di UI untuk memastikan cancel berhasil'
+			checkVerifyEqualorMatch(WebUI.verifyMatch('Tidak ada data untuk diperlihatkan', WebUI.getText(findTestObject('DocumentMonitoring/SearchResult'), FailureHandling.OPTIONAL),
+					false, FailureHandling.CONTINUE_ON_FAILURE), 'Data tidak terhapus di FE')
+			
+			return
+		}
 
         modifyObjectvalues = findTestObject('DocumentMonitoring/lbl_Value')
 
@@ -721,10 +751,89 @@ def openHamburgAndroid() {
 	}
 	
 def closeHamburgAndroid() {
-		'cek apakah tombol x terlihat'
-		if (WebUI.verifyElementVisible(findTestObject('buttonX_sideMenu'), FailureHandling.OPTIONAL)) {
-			
-			'klik pada button X'
-			WebUI.click(findTestObject('buttonX_sideMenu'), FailureHandling.OPTIONAL)
-		}
+	'cek apakah tombol x terlihat'
+	if (WebUI.verifyElementVisible(findTestObject('buttonX_sideMenu'), FailureHandling.OPTIONAL)) {
+		
+		'klik pada button X'
+		WebUI.click(findTestObject('buttonX_sideMenu'), FailureHandling.OPTIONAL)
 	}
+}
+	
+def cancelDoc(Connection conneSign, String nomorKontrakPerPilihan) {
+	
+	'jika action yang dilakukan sebelumnya adalah view dokumen'
+	if (isStamping == 'Yes') {
+		
+		'set text no kontrak'
+		WebUI.setText(findTestObject('DocumentMonitoring/input_NoKontrak'), nomorKontrakPerPilihan)
+		
+		'click button cari'
+		WebUI.click(findTestObject('DocumentMonitoring/button_Cari'))
+	}
+	
+	'jika status text adalah complete'
+	if (WebUI.getText(findTestObject('DocumentMonitoring/lblTable_status'), FailureHandling.OPTIONAL).equalsIgnoreCase('Complete')) {
+		
+		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+			GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) +
+			';') + 'Cancel Document tidak bisa karena status Complete')
+
+		GlobalVariable.FlagFailed = 1
+		
+		return
+	}
+	
+	'klik pada tombol cancel doc'
+	WebUI.click(findTestObject('DocumentMonitoring/button_CancelDoc'))
+	
+	'klik pada tombol batalkan'
+	WebUI.click(findTestObject('DocumentMonitoring/button_TidakBatalkan'))
+	
+	'klik pada tombol cancel doc'
+	WebUI.click(findTestObject('DocumentMonitoring/button_CancelDoc'))
+	
+	'klik pada tombol proses'
+	WebUI.click(findTestObject('DocumentMonitoring/button_YaProses'))
+	
+	'ambil message yang muncul pada popup'
+	String popupMsg = WebUI.getText(findTestObject('DocumentMonitoring/PopUpMessage'), FailureHandling.OPTIONAL)
+	
+	'klik pada tombol OK'
+	WebUI.click(findTestObject('DocumentMonitoring/button_OKcancelDoc'))
+	
+	'jika message yang muncul adalah sukses'
+	if (popupMsg.equalsIgnoreCase('Dokumen berhasil dibatalkan')) {
+		
+		'lakukan pengecekan ke DB'
+		checkVerifyEqualorMatch(WebUI.verifyMatch('0', CustomKeywords.'connection.DocumentMonitoring.getCancelDocStatus'(
+			conneSign, nomorKontrakPerPilihan),
+				false, FailureHandling.CONTINUE_ON_FAILURE), 'Pengecekan ke DB Cancel Doc gagal')
+		
+		return true
+	} else {
+		
+		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+			GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) +
+			';') + '<' + popupMsg + '>')
+
+		GlobalVariable.FlagFailed = 1
+	}
+}
+
+def checkVerifyEqualorMatch(Boolean isMatch, String reason) {
+	if (isMatch == false) {
+		'Write to excel status failed and ReasonFailedVerifyEqualorMatch'
+		GlobalVariable.FlagFailed = 1
+
+		'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+			((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) +
+			reason)
+		
+		return false
+	}
+	
+	return true
+}

@@ -142,7 +142,7 @@ if ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel
 
                 'Call verify meterai'
                 WebUI.callTestCase(findTestCase('Main Flow/verifyMeterai'), [('excelPathMeterai') : excelPathStamping, ('sheet') : sheet
-                        , ('noKontrak') : nomorKontrakDocument.replace('"', ''), ('linkDocumentMonitoring') : linkDocumentMonitoring], 
+                        , ('noKontrak') : nomorKontrakDocument.replace('"', ''), ('linkDocumentMonitoring') : linkDocumentMonitoring], ('CancelDocsStamp') : CancelDocsStamp,
                     FailureHandling.CONTINUE_ON_FAILURE)
             }
         } else {
@@ -155,7 +155,8 @@ if ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel
 'Start Stamping') {
     'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
     WebUI.callTestCase(findTestCase('Main Flow/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathStamping
-            , ('sheet') : sheet, ('linkDocumentMonitoring') : 'Not Used', ('nomorKontrak') : refNumber, ('isStamping') : 'Yes'], 
+            , ('sheet') : sheet, ('linkDocumentMonitoring') : 'Not Used', ('nomorKontrak') : refNumber, ('isStamping') : 'Yes',
+			('CancelDocsStamp') : CancelDocsStamp], 
         FailureHandling.CONTINUE_ON_FAILURE)
 }
 
