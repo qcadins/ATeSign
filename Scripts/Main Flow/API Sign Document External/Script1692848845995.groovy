@@ -294,7 +294,7 @@ for (o = 0; o < documentId.size(); o++) {
                             
                             'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
                             WebUI.callTestCase(findTestCase('Main Flow/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathAPISignDocument
-                                    , ('sheet') : sheet, ('linkDocumentMonitoring') : 'Not Used', ('nomorKontrak') : refNumber], 
+                                    , ('sheet') : sheet, ('linkDocumentMonitoring') : 'Not Used', ('nomorKontrak') : refNumber, ('CancelDocsSign') : CancelDocsSign], 
                                 FailureHandling.CONTINUE_ON_FAILURE)
 
                             HashMap<String, String> saldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), 

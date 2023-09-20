@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DataFileEntity>
    <description></description>
-   <name>Get Activation Link DIGI</name>
+   <name>Get Activation Link</name>
    <tag></tag>
    <containsHeaders>false</containsHeaders>
    <csvSeperator></csvSeperator>
@@ -11,6 +11,6 @@
    <isInternalPath>true</isInternalPath>
    <query></query>
    <secureUserAccount>false</secureUserAccount>
-   <sheetName>API Get Activation Link DIGI</sheetName>
+   <sheetName>API Get Activation Link</sheetName>
    <usingGlobalDBSetting>false</usingGlobalDBSetting>
 </DataFileEntity>

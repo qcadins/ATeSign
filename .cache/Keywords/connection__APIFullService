@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "7E45C3E06FF304BA8C23666BCFC59D59",
+  "keywordFileContentHash": "946796F7101C1FA331A57B13D8926D8B",
   "keywordClasses": [
     {
       "name": "connection.APIFullService",
@@ -2099,6 +2099,51 @@
             },
             {
               "name": "value",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "settingEmailServiceUser",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "value",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "idKtp",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
