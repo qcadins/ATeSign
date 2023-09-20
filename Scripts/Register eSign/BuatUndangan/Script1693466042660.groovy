@@ -191,94 +191,89 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     'check ada value maka setting Link Is Active'
     if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting is_active Link')).length() > 
     0) {
-        'setting Link Is Active'
-        CustomKeywords.'connection.APIFullService.settingLinkIsActive'(conneSign, findTestData(excelPathBuatUndangan).getValue(
-                GlobalVariable.NumofColm, rowExcel('Setting is_active Link')), findTestData(excelPathBuatUndangan).getValue(
-                GlobalVariable.NumofColm, rowExcel('Email')))
-
-        inputBuatUndangan()
-
-        'click button save'
-        WebUI.click(findTestObject('BuatUndangan/button_Save'))
-
-        if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/button_YaProses'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-            'click button ya proses'
-            WebUI.click(findTestObject('BuatUndangan/button_YaProses'))
-        }
-        
-        if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-            'call function get error log'
-            getErrorLog()
-        } else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting is_active Link')) == 
-        '0') {
-            'write to excel failed'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
-                    '-', '') + ';') + ' Link tergenerate walupun sudah tidak active')
-			
-			GlobalVariable.FlagFailed = 1
-        } else {
-            'click tutup popup'
-            WebUI.click(findTestObject('BuatUndangan/button_TutupDapatLink'))
-        }
-		
-        if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).length() > 0) {
-        	'call test case inquiry invitation'
-        	WebUI.callTestCase(findTestCase('Register eSign/InquiryInvitation/InquiryInvitation'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'],
-        			FailureHandling.CONTINUE_ON_FAILURE)
-        }
-	  } else {
-	    if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).length() > 
-	    0) {
-	        'call test case inquiry invitation'
-	        WebUI.callTestCase(findTestCase('Register eSign/InquiryInvitation/InquiryInvitation'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
-	            FailureHandling.CONTINUE_ON_FAILURE)
-	    } else {
-	        'call test case verif Submit Data'
-	        WebUI.callTestCase(findTestCase('Register eSign/verifSubmitData'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
-	            FailureHandling.CONTINUE_ON_FAILURE)
-	    }
-	    
-	    'call test case daftar akun data verif'
-	    WebUI.callTestCase(findTestCase('Register eSign/DaftarAkunDataVerif'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'
-	            , ('saldoBefore') : saldoBefore[0]], FailureHandling.CONTINUE_ON_FAILURE)
-	
-	    if ((GlobalVariable.checkStoreDB == 'Yes')) {
-	        'delay nunggu data db'
-	        WebUI.delay(5)
-	
-	        'call test case BuatUndanganStore DB'
-	        WebUI.callTestCase(findTestCase('Register eSign/BuatUndanganStoreDB'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
-	            FailureHandling.CONTINUE_ON_FAILURE)
-	    }
-	    
-	    if (GlobalVariable.FlagFailed == 0) {
-	        'kurang saldo before dengan proses verifikasi'
-	        saldoBefore.set(1, (Integer.parseInt(saldoBefore[1]) - 1).toString())
-	
-	        if (GlobalVariable.Psre == 'VIDA') {
-	            'kurang saldo before dengan prose PNBP'
-	            saldoBefore.set(2, (Integer.parseInt(saldoBefore[2]) - 1).toString())
-	
-	            'kurang saldo before dengan jumlah counter send OTP'
-	            saldoBefore.set(0, (Integer.parseInt(saldoBefore[0]) - GlobalVariable.Counter).toString())
-	        } else {
-	            'kurang saldo before dengan jumlah counter send OTP'
-	            saldoBefore.set(0, (Integer.parseInt(saldoBefore[0]) - GlobalVariable.Counter).toString())
-	        }
-	        
-	        saldoAfter = loginAdminGetSaldo(countCheckSaldo, conneSign)
-	
-	        'verify saldoafter tidak sama dengan saldo before'
-	        checkVerifyEqualOrMatch(WebUI.verifyMatch(saldoAfter.toString(), saldoBefore.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), 
-	            ' Saldo')
-	
-	        'print untuk menunjukan saldobefore dan saldoafter'
-	        println('saldoBefore : ' + saldoBefore.toString())
-	
-	        println('saldoAfter : ' + saldoAfter.toString())
-	    }
-	  }
+    	'setting Link Is Active'
+    	CustomKeywords.'connection.APIFullService.settingLinkIsActive'(conneSign, findTestData(excelPathBuatUndangan).getValue(
+    			GlobalVariable.NumofColm, rowExcel('Setting is_active Link')), findTestData(excelPathBuatUndangan).getValue(
+    					GlobalVariable.NumofColm, rowExcel('Email')))
+    	
+    	inputBuatUndangan()
+    	
+    	'click button save'
+    	WebUI.click(findTestObject('BuatUndangan/button_Save'))
+    	
+    	if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/button_YaProses'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+    		'click button ya proses'
+    		WebUI.click(findTestObject('BuatUndangan/button_YaProses'))
+    	}
+    	
+    	if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+    		'call function get error log'
+    		getErrorLog()
+    	} else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting is_active Link')) == 
+    			'0') {
+    		'write to excel failed'
+    		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+    				(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+    						'-', '') + ';') + ' Link tergenerate walupun sudah tidak active')
+    		
+    		GlobalVariable.FlagFailed = 1
+    	} else {
+    		'click tutup popup'
+    		WebUI.click(findTestObject('BuatUndangan/button_TutupDapatLink'))
+    	}
+    }
+	  
+    if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).length() > 
+    0) {
+    	'call test case inquiry invitation'
+    	WebUI.callTestCase(findTestCase('Register eSign/InquiryInvitation/InquiryInvitation'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
+    			FailureHandling.CONTINUE_ON_FAILURE)
+    } else {
+    	'call test case verif Submit Data'
+    	WebUI.callTestCase(findTestCase('Register eSign/verifSubmitData'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
+    			FailureHandling.CONTINUE_ON_FAILURE)
+    }
+    
+    'call test case daftar akun data verif'
+    WebUI.callTestCase(findTestCase('Register eSign/DaftarAkunDataVerif'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'
+    	, ('saldoBefore') : saldoBefore[0]], FailureHandling.CONTINUE_ON_FAILURE)
+    
+    if ((GlobalVariable.checkStoreDB == 'Yes')) {
+    	'delay nunggu data db'
+    	WebUI.delay(5)
+    	
+    	'call test case BuatUndanganStore DB'
+    	WebUI.callTestCase(findTestCase('Register eSign/BuatUndanganStoreDB'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
+    			FailureHandling.CONTINUE_ON_FAILURE)
+    }
+    
+    if (GlobalVariable.FlagFailed == 0) {
+    	'kurang saldo before dengan proses verifikasi'
+    	saldoBefore.set(1, (Integer.parseInt(saldoBefore[1]) - 1).toString())
+    	
+    	if (GlobalVariable.Psre == 'VIDA') {
+    		'kurang saldo before dengan prose PNBP'
+    		saldoBefore.set(2, (Integer.parseInt(saldoBefore[2]) - 1).toString())
+    		
+    		'kurang saldo before dengan jumlah counter send OTP'
+    		saldoBefore.set(0, (Integer.parseInt(saldoBefore[0]) - GlobalVariable.Counter).toString())
+    	} else {
+    		'kurang saldo before dengan jumlah counter send OTP'
+    		saldoBefore.set(0, (Integer.parseInt(saldoBefore[0]) - GlobalVariable.Counter).toString())
+    	}
+    	
+    	saldoAfter = loginAdminGetSaldo(countCheckSaldo, conneSign)
+    			
+    			'verify saldoafter tidak sama dengan saldo before'
+    			checkVerifyEqualOrMatch(WebUI.verifyMatch(saldoAfter.toString(), saldoBefore.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), 
+    					' Saldo')
+    			
+    			'print untuk menunjukan saldobefore dan saldoafter'
+    			println('saldoBefore : ' + saldoBefore.toString())
+    			
+    			println('saldoAfter : ' + saldoAfter.toString())
+    }
+	  
 }
 
 if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Check Inquiry Setelah Register')).equalsIgnoreCase(

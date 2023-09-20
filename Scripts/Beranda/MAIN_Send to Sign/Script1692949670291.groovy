@@ -37,15 +37,15 @@ sheet = 'Send to Sign'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathFESignDocument).columnNumbers ; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
-    } else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+    }else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
         'Call API Send doc'
         WebUI.callTestCase(findTestCase('Beranda/ResponseAPISendDoc'), [('API_Excel_Path') : excelPathFESignDocument, ('sheet') : sheet,
 			('CancelDocsSend') : findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Send?'))], 
             FailureHandling.CONTINUE_ON_FAILURE)
-		
+
 		'jika ada proses cancel doc'
 		if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Send?')) == 'Yes') {
-			
+
 			'lanjutkan loop'
 			continue
 		}
