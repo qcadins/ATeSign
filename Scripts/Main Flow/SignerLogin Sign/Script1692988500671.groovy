@@ -117,8 +117,7 @@ for (o = 0; o < documentId.size(); o++) {
         'Total document sign hanya 1 (single)'
         totalDocSign = 1
     }
-	variableLastest.size() = Integer.parseInt(variableLastest.size())
-	
+
     'Looping berdasarkan page agar bergeser ke page sebelumnya'
     for (k = 0; k < (variableLastest.size() - 4); k++) {
         'get row beranda'
