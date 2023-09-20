@@ -21,6 +21,11 @@ def currentDate = new Date().format('yyyy-MM-dd')
 'Inisialisasi flag break untuk sequential'
 int flagBreak = 0, isLocalhost = 0, useBiom = 0, alreadyVerif = 0
 
+'reset value GV'
+GlobalVariable.eSignData.putAt('VerifikasiOTP', 0)
+
+GlobalVariable.eSignData.putAt('VerifikasiBiometric', 0)
+
 'Inisialisasi array untuk Listotp, arraylist arraymatch'
 ArrayList listOTP = [], arrayMatch = []
 
@@ -134,12 +139,8 @@ for (o = 0; o < documentId.size(); o++) {
         totalDocSign = 1
     }
     
-	if (variableLastest.size() == 0) {
-		variableLastest.size().toInteger() = 4
-	}
-	
     'Looping berdasarkan page agar bergeser ke page sebelumnya'
-    for (k = 1; k <= (variableLastest.size() - 4); k++) {
+    for (k = 0; k < (variableLastest.size() - 4); k++) {
         'get row beranda'
         rowBeranda = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-content-layout > div > div > div > div.content-wrapper.p-0 > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
 
@@ -605,13 +606,11 @@ for (o = 0; o < documentId.size(); o++) {
 		'Jika count saldo sign/ttd diatas (after) sama dengan yang dulu/pertama (before) dikurang jumlah dokumen yang ditandatangani'
 		if (WebUI.verifyEqual(Integer.parseInt(saldoSignBefore) - saldoUsed, Integer.parseInt(saldoSignAfter),
 			FailureHandling.OPTIONAL)) {
-			
-		println resultSaldoBefore
-		println resultSaldoAfter
-		println countResend
-		println countSaldoSplitLiveFCused
-		
-		WebUI.delay(20)
+
+		countResend = GlobalVariable.eSignData.getAt('VerifikasiOTP')
+
+		countSaldoSplitLiveFCused = GlobalVariable.eSignData.getAt('VerifikasiBiometric')
+
 			'cek apa pernah menggunakan biometrik'
 			if (useBiom == 0) {
 				'Jika count saldo otp after dengan yang before dikurangi 1 ditambah dengan '
