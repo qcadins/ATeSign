@@ -292,15 +292,16 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
 	if (CancelDocsSend == 'Yes' || CancelDocsSign == 'Yes') {
 		
 		'panggil fungsi cancel docs sesudah send'
-		cancelDoc(conneSign, nomorKontrakPerPilihan[y].toString())
-		
-		'input kembali data sesudah selesai cancel doc'
-		inputDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, settingHO)
-		
-		'lakukan pengecekan ke di UI untuk memastikan cancel berhasil'
-		checkVerifyEqualorMatch(WebUI.verifyMatch('Tidak ada data untuk diperlihatkan', WebUI.getText(findTestObject('DocumentMonitoring/SearchResult'), FailureHandling.OPTIONAL),
-				false, FailureHandling.CONTINUE_ON_FAILURE), 'Data gagal terhapus di FE')
-		
+		if (cancelDoc(conneSign, nomorKontrakPerPilihan[y].toString()) == true) {
+			
+			'input kembali data sesudah selesai cancel doc'
+			inputDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, settingHO)
+			
+			'lakukan pengecekan ke di UI untuk memastikan cancel berhasil'
+			checkVerifyEqualorMatch(WebUI.verifyMatch('Tidak ada data untuk diperlihatkan', WebUI.getText(findTestObject('DocumentMonitoring/SearchResult'), FailureHandling.OPTIONAL),
+					false, FailureHandling.CONTINUE_ON_FAILURE), 'Data gagal terhapus di FE')
+		}
+
 		return
 	}
     
@@ -413,14 +414,15 @@ for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
 		if (CancelDocsStamp == 'Yes') {
 			
 			'panggil fungsi cancel docs sesudah send'
-			cancelDoc(conneSign, nomorKontrakPerPilihan[y].toString())
-			
-			'input kembali data sesudah selesai cancel doc'
-			inputDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, settingHO)
-			
-			'lakukan pengecekan ke di UI untuk memastikan cancel berhasil'
-			checkVerifyEqualorMatch(WebUI.verifyMatch('Tidak ada data untuk diperlihatkan', WebUI.getText(findTestObject('DocumentMonitoring/SearchResult'), FailureHandling.OPTIONAL),
-					false, FailureHandling.CONTINUE_ON_FAILURE), 'Data tidak terhapus di FE')
+			if (cancelDoc(conneSign, nomorKontrakPerPilihan[y].toString()) == true) {
+				
+				'input kembali data sesudah selesai cancel doc'
+				inputDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, settingHO)
+				
+				'lakukan pengecekan ke di UI untuk memastikan cancel berhasil'
+				checkVerifyEqualorMatch(WebUI.verifyMatch('Tidak ada data untuk diperlihatkan', WebUI.getText(findTestObject('DocumentMonitoring/SearchResult'), FailureHandling.OPTIONAL),
+						false, FailureHandling.CONTINUE_ON_FAILURE), 'Data gagal terhapus di FE')
+			}
 			
 			return
 		}

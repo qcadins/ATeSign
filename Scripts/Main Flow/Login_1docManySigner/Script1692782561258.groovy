@@ -19,7 +19,7 @@ RunConfiguration.setWebDriverPreferencesProperty('prefs', chromePrefs)
 if (GlobalVariable.RunWith == 'Mobile') {
 	
 	'ambil koordinat dari settings'
-	ArrayList coordinates = findTestData('Login/Login').getValue(13, 2).split(',')
+	ArrayList coordinates = findTestData('Login/Setting').getValue(13, 2).split(',')
 	
 	'open browser'
 	WebUI.openBrowser(findTestData('Login/Login').getValue(1, 2))
@@ -28,7 +28,17 @@ if (GlobalVariable.RunWith == 'Mobile') {
 	Mobile.tapAtPosition(1000, 180, FailureHandling.OPTIONAL)
 	
 	'aktifkan view desktop sites'
-	Mobile.tapAtPosition(coordinates[0], coordinates[1], FailureHandling.OPTIONAL)
+	Mobile.tapAtPosition(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), FailureHandling.OPTIONAL)
+	
+	'jika pakai localhost aktif'
+	if(GlobalVariable.useLocalHost == 'Yes') {
+		
+		'delay'
+		WebUI.delay(15)
+		
+		'arahkan ke localhost'
+		WebUI.navigateToUrl(GlobalVariable.urlLocalHost + '/login')
+	}
 	
 } else {
 	'open browser'

@@ -75,7 +75,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 	FailureHandling.STOP_ON_FAILURE)
 			 
 			 'jika ada proses cancel doc'
-			 if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Stamp?')) == 'Yes') {
+			 if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Send?')) == 'Yes') {
 				 
 				 'lanjutkan loop'
 				 continue
@@ -114,8 +114,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 					emailSigner = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('email Signer (Sign Only)')).split(';', -1)
 				}
                 
+				String cancelDocsValue
+				
 				'looping berdasarkan email yang akan menandatangani'
                 for (int i = 0; i < emailSigner.size(); i++) {
+					
+					'integrasikan cancel docs jika signer sudah sesuai'
+					if (Integer.parseInt(findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after how many Signer?'))) - 1 == i) {
+						
+						'ubah value cancel docs menjadi yes'
+						cancelDocsValue = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Sign?'))
+					} else {
+						
+						'kosongkan canceldocsValue'
+						cancelDocsValue = ''
+					}
+					
 					'jika opsi signing untuk signer adalah api sign document external'
                     if ((opsiSigning[i]) == 'API Sign Document External') {
 						'setting index untuk penggunaan data. Cara bacanya adalah apakah opsi tersebut telah digunakan. Jika sudah digunakan, maka + 1, jika tidak, maka 0.'
@@ -126,7 +140,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 						
 						'call test case api sign document external'
                         WebUI.callTestCase(findTestCase('Main Flow/API Sign Document External'), [('excelPathAPISignDocument') : excelPathMain, ('sheet') : sheet,
-							('CancelDocsSign') : findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Sign?'))], FailureHandling.CONTINUE_ON_FAILURE)
+							('CancelDocsSign') : cancelDocsValue], FailureHandling.CONTINUE_ON_FAILURE)
 
 						'set boolean is used api external menjadi true'
                         isUsedAPIExternal = true
@@ -153,7 +167,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 						'call test case webview embed sign'
                         WebUI.callTestCase(findTestCase('Main Flow/Webview Embed Sign'), [('excelPathFESignDocument') : excelPathMain
                                 , ('sheet') : sheet, ('indexUsed') : indexReadDataExcelWebview, ('emailSigner') : emailSigner[
-                                i], ('opsiSigning') : opsiSigning[i]], FailureHandling.CONTINUE_ON_FAILURE)
+                                i], ('opsiSigning') : opsiSigning[i], ('CancelDocsSign') : cancelDocsValue], FailureHandling.CONTINUE_ON_FAILURE)
 
 						'set boolean true'
                         isUsedWebview = true
@@ -166,7 +180,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 						
 						'call test case webview embed sign'
                         WebUI.callTestCase(findTestCase('Main Flow/Webview Embed Sign'), [('excelPathFESignDocument') : excelPathMain
-                                , ('sheet') : sheet, ('indexUsed') : indexReadDataExcelEmbed, ('emailSigner') : emailSigner[i], ('opsiSigning') : opsiSigning[i]], FailureHandling.CONTINUE_ON_FAILURE)
+                                , ('sheet') : sheet, ('indexUsed') : indexReadDataExcelEmbed, ('emailSigner') : emailSigner[i], ('opsiSigning') : opsiSigning[i], ('CancelDocsSign') : cancelDocsValue], FailureHandling.CONTINUE_ON_FAILURE)
 
 						'set boolean true'
                         isUsedEmbed = true
@@ -180,12 +194,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 						'call test case signer login sign'
                         WebUI.callTestCase(findTestCase('Main Flow/SignerLogin Sign'), [('excelPathFESignDocument') : excelPathMain
                                 , ('sheet') : sheet, ('emailSigner') : emailSigner[
-                                i], ('opsiSigning') : opsiSigning[i], ('CancelDocsSign') : findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Sign?'))],
+                                i], ('opsiSigning') : opsiSigning[i], ('CancelDocsSign') : cancelDocsValue],
 								FailureHandling.CONTINUE_ON_FAILURE)
 
 						'set boolean true'
                         isUsedInboxSigner = true
                     }
+					
+					'jika ada proses cancel doc'
+					if (cancelDocsValue != '') {
+						
+						'lanjutkan loop'
+						continue
+					}
                 }
             }
 		}
@@ -195,6 +216,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 				WebUI.callTestCase(findTestCase('Main Flow/Stamping'), [('excelPathStamping') : excelPathMain
 				, ('sheet') : sheet, ('linkDocumentMonitoring') : '', ('CancelDocsStamp') : findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Stamp?'))], FailureHandling.CONTINUE_ON_FAILURE)
 
+				'jika ada proses cancel doc'
+				if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Stamp?')) == 'Yes') {
+					
+					'lanjutkan loop'
+					continue
+				}
 			}
         }
     }
