@@ -11,11 +11,24 @@
       <value></value>
       <variableId>f452ad6b-cb6b-43aa-9957-99d347ece7b7</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>adc281b5-ee40-4d57-aa83-cb8df581e5bd</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
       <id>f452ad6b-cb6b-43aa-9957-99d347ece7b7</id>
       <masked>false</masked>
       <name>excelPathManualSigntoSign</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>adc281b5-ee40-4d57-aa83-cb8df581e5bd</id>
+      <masked>false</masked>
+      <name>CancelDocsSend</name>
    </variable>
 </TestCaseEntity>

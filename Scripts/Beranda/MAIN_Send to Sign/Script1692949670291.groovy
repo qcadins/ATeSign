@@ -49,8 +49,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			'lanjutkan loop'
 			continue
 		}
-
-//		GlobalVariable.Tenant = 'WOMF'
 		
         'Jika tidak ada dokumen id di excel'
         if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('docid')) == '') {
@@ -1068,8 +1066,8 @@ def verifOTPMethodDetail(Connection conneSign, ArrayList emailSigner, ArrayList 
 			'Klik resend otp'
 			WebUI.click(findTestObject('KotakMasuk/Sign/btn_ResendOTP'))
 
-			'Memberikan delay 3 karena OTP after terlalu cepat'
-			WebUI.delay(3)
+			'Memberikan delay 5 karena OTP after terlalu cepat'
+			WebUI.delay(5)
 
 			'OTP yang kedua'
 			otpAfter = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, emailSigner[(o -
@@ -1116,10 +1114,13 @@ def verifBiomMethod(int isLocalhost, int maxFaceCompDB, int countLivenessFaceCom
 	WebUI.click(findTestObject('KotakMasuk/Sign/btn_LanjutAfterKonfirmasi'), FailureHandling.OPTIONAL)
 	
 	'jika localhost aktif'
-	if (isLocalhost == 1) {
-	
+	if (isLocalhost == 1 && GlobalVariable.RunWith == 'Mobile') {
+		
 		'tap allow camera'
-		MobileBuiltInKeywords.tapAndHoldAtPosition(895, 1364, 3)
+		MobileBuiltInKeywords.tapAndHoldAtPosition(878, 1404, 2)
+		
+		'delay'
+		WebUI.delay(GlobalVariable.TimeOut)
 	}
 	
 	'looping hingga count sampai batas maksimal harian'

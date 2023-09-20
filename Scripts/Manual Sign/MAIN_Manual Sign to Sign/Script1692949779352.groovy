@@ -46,7 +46,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		
 		'Call API Manual Sign'
         WebUI.callTestCase(findTestCase('Manual Sign/Manual Sign'), [('excelPathManualSigntoSign') : excelPathManualSigntoSign
-                , ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
+                , ('sheet') : sheet, ('CancelDocsSend') : findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Send?'))],
+			FailureHandling.CONTINUE_ON_FAILURE)
+		
+		'jika ada proses cancel doc'
+		if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Send?')) == 'Yes') {
+			
+			'lanjutkan loop'
+			continue
+		}
 
         'Jika tidak ada dokumen id di excel'
         if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('docId')) == '') {
@@ -739,9 +747,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             }
             
             'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
-            WebUI.callTestCase(findTestCase('Document Monitoring/VerifyDocumentMonitoring'), [('excelPathManualSigntoSign') : excelPathManualSigntoSign
-                    , ('sheet') : sheet, ('nomorKontrak') : noKontrak], FailureHandling.CONTINUE_ON_FAILURE)
+            WebUI.callTestCase(findTestCase('Document Monitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathManualSigntoSign
+                    , ('sheet') : sheet, ('nomorKontrak') : noKontrak, ('CancelDocsSign') : findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Sign?'))],
+						FailureHandling.CONTINUE_ON_FAILURE)
 
+			'jika ada proses cancel doc'
+			if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Sign?')) == 'Yes') {
+				
+				'lanjutkan loop'
+				continue
+			}
+			
 			'panggil fungsi login'
 			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
 				('Path') : excelPathManualSigntoSign, ('Email') : 'Email Login', ('Password') : 'Password Login',
