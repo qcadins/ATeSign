@@ -18,7 +18,7 @@ RunConfiguration.setWebDriverPreferencesProperty('prefs', chromePrefs)
 if (GlobalVariable.RunWith == 'Mobile') {
 	
 	'ambil koordinat dari settings'
-	ArrayList coordinates = findTestData('Login/Login').getValue(13, 2).split(',')
+	ArrayList coordinates = findTestData('Login/Setting').getValue(13, 2).split(',')
 	
 	'open browser'
 	WebUI.openBrowser(findTestData('Login/Login').getValue(1, 2))
@@ -27,7 +27,7 @@ if (GlobalVariable.RunWith == 'Mobile') {
 	Mobile.tapAtPosition(1000, 180, FailureHandling.OPTIONAL)
 	
 	'aktifkan view desktop sites'
-	Mobile.tapAtPosition(coordinates[0], coordinates[1], FailureHandling.OPTIONAL)
+	Mobile.tapAtPosition(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), FailureHandling.OPTIONAL)
 	
 } else {
 	'open browser'
@@ -159,14 +159,34 @@ def runWithEmbed(String linkUrl) {
     
     'check if ingin menggunakan embed atau tidak'
     if (GlobalVariable.RunWithEmbed == 'Yes') {
-        'navigate url ke daftar akun'
-        WebUI.openBrowser(GlobalVariable.embedUrl)
-
-        'Diberikan delay 3 sec'
-        WebUI.delay(3)
-
-        'Maximize windows'
-        WebUI.maximizeWindow()
+		
+		if (GlobalVariable.RunWith == 'Mobile') {
+			//belum work
+			'ambil koordinat dari settings'
+			ArrayList coordinates = findTestData('Login/Setting').getValue(13, 2).split(',')
+			
+			'open browser'
+			WebUI.openBrowser(GlobalVariable.embedUrl)
+			
+			'Diberikan delay 3 sec'
+			WebUI.delay(3)
+			
+			'klik titik tiga'
+			Mobile.tapAtPosition(1000, 180, FailureHandling.OPTIONAL)
+			
+			'aktifkan view desktop sites'
+			Mobile.tapAtPosition(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), FailureHandling.OPTIONAL)
+			
+		} else {
+			'navigate url ke daftar akun'
+			WebUI.openBrowser(GlobalVariable.embedUrl)
+	
+			'Diberikan delay 3 sec'
+			WebUI.delay(3)
+	
+			'Maximize windows'
+			WebUI.maximizeWindow()
+		}
 
         'Set text link Url'
         WebUI.setText(findTestObject('EmbedView/inputLinkEmbed'), linkUrl)
@@ -177,11 +197,36 @@ def runWithEmbed(String linkUrl) {
         'swith to iframe'
         WebUI.switchToFrame(findTestObject('EmbedView/iFrameEsign'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
     } else if (GlobalVariable.RunWithEmbed == 'No') {
-        'navigate url ke daftar akun'
-        WebUI.openBrowser(linkUrl)
-
-        'Maximize Windows'
-        WebUI.maximizeWindow()
+		
+		if (GlobalVariable.RunWith == 'Mobile') {
+			//belum work
+			'ambil koordinat dari settings'
+			ArrayList coordinates = findTestData('Login/Setting').getValue(13, 2).split(',')
+			
+			'buka web browser'
+			WebUI.openBrowser(findTestData('Login/Login').getValue(1, 2))
+			
+			'Diberikan delay 3 sec'
+			WebUI.delay(15)
+			
+			'klik titik tiga'
+			Mobile.tapAtPosition(1000, 180, FailureHandling.OPTIONAL)
+			
+			'aktifkan view desktop sites'
+			Mobile.tapAtPosition(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), FailureHandling.OPTIONAL)
+			
+			'open browser'
+			WebUI.navigateToUrl(linkUrl)
+			
+		} else {
+			
+			'navigate url ke daftar akun'
+			WebUI.openBrowser(linkUrl)
+	
+			'Maximize Windows'
+			WebUI.maximizeWindow()
+			
+		}
     }
 }
 

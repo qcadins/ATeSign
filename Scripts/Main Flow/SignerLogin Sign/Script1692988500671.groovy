@@ -90,8 +90,8 @@ for (o = 0; o < documentId.size(); o++) {
     'refresh buat reset nav bar selanjutnya'
     WebUI.refresh()
 
-    'Jika bukan di page 1, verifikasi menggunakan button Lastest. Get row lastest'
-    variableLastest = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager li'))
+    'Get row lastest'
+    variableLastest = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-content-layout > div > div > div > div.content-wrapper.p-0 > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
 
     'get row lastest'
     modifyObjectBtnLastest = WebUI.modifyObjectProperty(findTestObject('Object Repository/KotakMasuk/Sign/btn_Lastest'), 
@@ -117,9 +117,10 @@ for (o = 0; o < documentId.size(); o++) {
         'Total document sign hanya 1 (single)'
         totalDocSign = 1
     }
-    
+	variableLastest.size() = Integer.parseInt(variableLastest.size())
+	
     'Looping berdasarkan page agar bergeser ke page sebelumnya'
-    for (k = 1; k <= (variableLastest.size() - 4); k++) {
+    for (k = 0; k < (variableLastest.size() - 4); k++) {
         'get row beranda'
         rowBeranda = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
 

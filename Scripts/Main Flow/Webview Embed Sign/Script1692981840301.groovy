@@ -134,12 +134,8 @@ for (o = 0; o < documentId.size(); o++) {
         totalDocSign = 1
     }
     
-	if (variableLastest.size() == 0) {
-		variableLastest.size().toInteger() = 4
-	}
-	
     'Looping berdasarkan page agar bergeser ke page sebelumnya'
-    for (k = 1; k <= (variableLastest.size() - 4); k++) {
+    for (k = 0; k < (variableLastest.size() - 4); k++) {
         'get row beranda'
         rowBeranda = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-content-layout > div > div > div > div.content-wrapper.p-0 > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
 
@@ -583,7 +579,7 @@ for (o = 0; o < documentId.size(); o++) {
     
     'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
     WebUI.callTestCase(findTestCase('Main Flow/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument
-            , ('sheet') : sheet, ('linkDocumentMonitoring') : result.get('encryptDocumentMonitoring'), ('nomorKontrak') : noKontrak], 
+            , ('sheet') : sheet, ('linkDocumentMonitoring') : result.get('encryptDocumentMonitoring'), ('nomorKontrak') : noKontrak, ('CancelDocsSign') : CancelDocsSign], 
         FailureHandling.CONTINUE_ON_FAILURE)
 
     'Call test Case untuk login sebagai admin wom admin client'
