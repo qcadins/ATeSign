@@ -351,7 +351,7 @@ for (o = 0; o < documentId.size(); o++) {
                 'Yes') {
                     'panggil fungsi verif menggunakan biometrik'
                     if (verifBiomMethod(isLocalhost, maxFaceCompDB, countLivenessFaceComp, conneSign, emailSigner, listOTP, 
-                        noTelpSigner, otpAfter) == false) {
+                        noTelpSigner, otpAfter, vendor) == false) {
                         'jika ada error break testcase'
                         break
                     }
@@ -405,7 +405,7 @@ for (o = 0; o < documentId.size(); o++) {
 
                     'panggil fungsi verif menggunakan biometrik'
                     if (verifBiomMethod(isLocalhost, maxFaceCompDB, countLivenessFaceComp, conneSign, emailSigner, listOTP, 
-                        noTelpSigner, otpAfter) == false) {
+                        noTelpSigner, otpAfter, vendor) == false) {
                         'jika ada error break testcase'
                         break
                     }
@@ -421,7 +421,7 @@ for (o = 0; o < documentId.size(); o++) {
 
             'panggil fungsi verif menggunakan biometrik'
             if (verifBiomMethod(isLocalhost, maxFaceCompDB, countLivenessFaceComp, conneSign, emailSigner, listOTP, noTelpSigner, 
-                otpAfter) == false) {
+                otpAfter, vendor) == false) {
                 'cek apakah ingin coba metode lain'
                 if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Force Change Method if other Method Failed?')) == 
                 'Yes') {
@@ -455,7 +455,7 @@ for (o = 0; o < documentId.size(); o++) {
 
                         'panggil fungsi verif menggunakan biometrik'
                         if (verifBiomMethod(isLocalhost, maxFaceCompDB, countLivenessFaceComp, conneSign, emailSigner, listOTP, 
-                            noTelpSigner, otpAfter) == false) {
+                            noTelpSigner, otpAfter, vendor) == false) {
                             'jika ada error break testcase'
                             break
                         }
@@ -467,7 +467,7 @@ for (o = 0; o < documentId.size(); o++) {
             } else {
                 'panggil fungsi verif menggunakan biometrik'
                 if (verifBiomMethod(isLocalhost, maxFaceCompDB, countLivenessFaceComp, conneSign, emailSigner, listOTP, 
-                    noTelpSigner, otpAfter) == false) {
+                    noTelpSigner, otpAfter, vendor) == false) {
                     'cek apakah ingin coba metode lain'
                     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Force Change Method if other Method Failed?')) == 
                     'Yes') {

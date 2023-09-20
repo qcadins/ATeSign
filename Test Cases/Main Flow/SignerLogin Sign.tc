@@ -23,12 +23,6 @@
       <value></value>
       <variableId>b0bd63ca-c8f0-402b-a9db-888076d2a2e5</variableId>
    </variableLinks>
-   <variableLinks>
-      <testDataLinkId></testDataLinkId>
-      <type>DEFAULT</type>
-      <value></value>
-      <variableId>76a74d7a-2bad-45e9-bed9-bac3a2887416</variableId>
-   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -49,12 +43,5 @@
       <id>b0bd63ca-c8f0-402b-a9db-888076d2a2e5</id>
       <masked>false</masked>
       <name>opsiSigning</name>
-   </variable>
-   <variable>
-      <defaultValue>''</defaultValue>
-      <description></description>
-      <id>76a74d7a-2bad-45e9-bed9-bac3a2887416</id>
-      <masked>false</masked>
-      <name>CancelDocsSign</name>
    </variable>
 </TestCaseEntity>
