@@ -25,10 +25,10 @@
       <name>excelPathEditSignerData</name>
    </variable>
    <variable>
-      <defaultValue>'Login/Setting'</defaultValue>
+      <defaultValue>'Edit Signer Data'</defaultValue>
       <description></description>
       <id>957920ce-0249-4b63-af06-6759dd425001</id>
       <masked>false</masked>
-      <name>excelPathSetting</name>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>

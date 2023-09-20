@@ -2,6 +2,7 @@ import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
+import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
 
 import internal.GlobalVariable
 
@@ -29,6 +30,10 @@ if (isLocalhost == 0 || isLocalhost == null) {
 	
 	'bukan dan arahkan ke gdk esign'
 	WebUI.openBrowser(findTestData('Login/Login').getValue(1, 2))
+
+//	Mobile.tapAtPosition(1000, 180, FailureHandling.OPTIONAL)
+//	
+//	Mobile.tapAtPosition(720, 1605, FailureHandling.OPTIONAL)
 	
 //	'navigate to url esign'
 //	WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 2))

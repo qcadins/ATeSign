@@ -42,9 +42,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         break
     } else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
         'Call API Send doc'
-        WebUI.callTestCase(findTestCase('APIFullService/APIFullService - VIDA/Send to Sign/Response API Send Document'), 
+        WebUI.callTestCase(findTestCase('APIFullService/Send Document/API Send Document'), 
             [('excelPathAPISendDoc') : excelPathFESignDocument, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
-
+		
         'Jika tidak ada dokumen id di excel'
         if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 6) == '') {
             'loop selanjutnya'
@@ -121,9 +121,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
             'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
             WebUI.callTestCase(findTestCase('Document Monitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument
-                    , ('sheet') : sheet, ('linkDocumentMonitoring') : linkDocumentMonitoring, ('nomorKontrak') : noKontrak], 
-                FailureHandling.CONTINUE_ON_FAILURE)
+                    , ('sheet') : sheet, ('linkDocumentMonitoring') : linkDocumentMonitoring, ('nomorKontrak') : noKontrak,
+					('CancelDocsSend') : findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Send?'))], FailureHandling.CONTINUE_ON_FAILURE)
 
+			'jika ada proses cancel doc'
+			if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Send?')) == 'Yes') {
+				
+				'lanjutkan loop'
+				continue
+			}
+			
 			'panggil fungsi login'
 			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
 				('Path') : excelPathFESignDocument, ('Email') : 'Email Login', ('Password') : 'Password Login',
@@ -776,8 +783,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             
             'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
             WebUI.callTestCase(findTestCase('Document Monitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument
-                    , ('sheet') : sheet, ('linkDocumentMonitoring') : linkDocumentMonitoring, ('nomorKontrak') : noKontrak], 
-                FailureHandling.CONTINUE_ON_FAILURE)
+                    , ('sheet') : sheet, ('linkDocumentMonitoring') : linkDocumentMonitoring, ('nomorKontrak') : noKontrak,
+					('CancelDocsSign') : findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Sign?'))], 
+                	FailureHandling.CONTINUE_ON_FAILURE)
+			
+			'jika ada proses cancel doc'
+			if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Sign?')) == 'Yes') {
+				
+				'lanjutkan loop'
+				continue
+			}
 
 			'panggil fungsi login'
 			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
@@ -960,7 +975,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 90) == 'Yes') {
             'Call API Stamping'
             WebUI.callTestCase(findTestCase('Meterai/Flow Stamping'), [('excelPathStamping') : excelPathFESignDocument, ('sheet') : sheet
-                    , ('useAPI') : 'v3.1.0', ('linkDocumentMonitoring') : linkDocumentMonitoring], FailureHandling.CONTINUE_ON_FAILURE)
+                    , ('useAPI') : 'v3.1.0', ('linkDocumentMonitoring') : linkDocumentMonitoring,
+					('CancelDocsStamp') : findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Stamp?'))], FailureHandling.CONTINUE_ON_FAILURE)
+			
+			'jika ada proses cancel doc'
+			if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Stamp?')) == 'Yes') {
+				
+				'lanjutkan loop'
+				continue
+			}
         }
     }
 }

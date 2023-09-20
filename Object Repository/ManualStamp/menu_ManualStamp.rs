@@ -6,15 +6,15 @@
    <elementGuidId>ce9eca99-ef96-4579-bf3a-e25f0abd1fd4</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>CSS</key>
-      </entry>
-      <entry>
          <key>XPATH</key>
          <value>(.//*[normalize-space(text()) and normalize-space(.)='PSrE Priority'])[1]/following::a[1]</value>
       </entry>
       <entry>
          <key>BASIC</key>
          <value>//*[@href = '/master/documents/manual-stamp']</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -25,7 +25,7 @@
       <name>href</name>
       <type>Main</type>
       <value>/master/documents/manual-stamp</value>
-      <webElementGuid>83bce9bc-9803-466c-99b2-389066d38675</webElementGuid>
+      <webElementGuid>00d19342-6bf4-41e3-93b1-e609631c8664</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -33,7 +33,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='PSrE Priority'])[1]/following::a[1]</value>
-      <webElementGuid>427f0e40-8b8f-4e65-8a7b-8b43a4fb846b</webElementGuid>
+      <webElementGuid>d0032380-c016-410b-ad2e-46222dad93cf</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -41,7 +41,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Masukan'])[1]/following::a[2]</value>
-      <webElementGuid>5b1f958c-f2c7-4133-ad58-f9ab661d8db8</webElementGuid>
+      <webElementGuid>dcddf2d5-ec0e-4c33-af5d-f9b6e8a85853</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -49,7 +49,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Mutasi Saldo'])[1]/preceding::a[1]</value>
-      <webElementGuid>6cbe5ff2-e37c-4e32-b952-57320767f41d</webElementGuid>
+      <webElementGuid>6534992f-c887-4596-9888-fcc4439d26f8</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -57,7 +57,7 @@
       <name>xpath:href</name>
       <type>Main</type>
       <value>//a[contains(@href, '/master/documents/manual-stamp')]</value>
-      <webElementGuid>dbb7bff7-47d9-4b1e-b8ef-246ef5318730</webElementGuid>
+      <webElementGuid>7efb5af6-4c99-49d4-8fb1-82d4f39348cb</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -65,7 +65,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//li[13]/a</value>
-      <webElementGuid>a019df7d-4383-4cde-8c5a-096021daad7f</webElementGuid>
+      <webElementGuid>97e455c9-e046-4b40-a925-b372c713a8dd</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -73,6 +73,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//a[@href = '/master/documents/manual-stamp' and (text() = 'Manual Stamp' or . = 'Manual Stamp')]</value>
-      <webElementGuid>d793d275-09de-410c-906f-878e6e65282b</webElementGuid>
+      <webElementGuid>526779df-b4b2-4453-9e45-ef6c19c2dbc5</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

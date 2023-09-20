@@ -590,9 +590,12 @@ def checkPaging() {
 		'click last page'
 		WebUI.click(findTestObject('DocumentMonitoring/button_LastPage'))
 	
+		'get total data'
+		lastPage = Double.parseDouble(WebUI.getText(findTestObject('DocumentMonitoring/label_TotalData')).split(' ',-1)[0])/10
+		
 		'verify paging di page terakhir'
 		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DocumentMonitoring/paging_Page'), 'aria-label',
-					FailureHandling.CONTINUE_ON_FAILURE), 'page ' + (variable.size() - 4).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+					FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage+0.5).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
 	
 		'click first page'
 		WebUI.click(findTestObject('DocumentMonitoring/button_FirstPage'))

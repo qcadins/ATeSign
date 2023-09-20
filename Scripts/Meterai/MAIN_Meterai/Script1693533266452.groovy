@@ -22,79 +22,83 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'get colm excel'
 int countColmExcel = findTestData(excelPathMeterai).columnNumbers
 
+int firstRun = 0
+
 'looping meterai'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
-    if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
+    if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
-    } else if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+    } else if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
         GlobalVariable.FlagFailed = 0
 
-        if (GlobalVariable.NumofColm == 2) {
-			'panggil fungsi login'
-			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : 'Meterai',
-				('Path') : excelPathMeterai], FailureHandling.CONTINUE_ON_FAILURE)
+		'check if email login case selanjutnya masih sama dengan sebelumnya'
+		if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) !=
+			findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')) || firstRun == 0) {
+			'call test case login per case'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathMeterai, ('Email') : 'Email Login', ('Password') : 'Password Login'
+				, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
 			
-//            'call testcase login admin'
-//            WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathMeterai, ('sheet') : 'Meterai'], 
-//                FailureHandling.CONTINUE_ON_FAILURE)
-
-            'click menu meterai'
-            WebUI.click(findTestObject('Meterai/menu_Meterai'))
-
+			firstRun = 1
+		}
+		
+        if (GlobalVariable.NumofColm == 2) {          
             'call function check paging'
             checkPaging(currentDate, firstDateOfMonth, conneSign)
         }
         
+		'click menu meterai'
+		WebUI.click(findTestObject('Meterai/menu_Meterai'))
+
         'set text no kontrak'
         WebUI.setText(findTestObject('Meterai/input_NoKontrak'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-                9))
+                rowExcel('No Kontrak')))
 
         'set text status meterai'
         WebUI.setText(findTestObject('Meterai/input_StatusMeterai'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-                10))
+                rowExcel('Status Meterai')))
 
         'enter untuk set status meterai'
         WebUI.sendKeys(findTestObject('Meterai/input_StatusMeterai'), Keys.chord(Keys.ENTER))
 
         'set text lini bisnis'
         WebUI.setText(findTestObject('Meterai/input_LiniBisnis'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-                11))
+                rowExcel('Lini Bisnis')))
 
         'enter untuk set lini bisnis'
         WebUI.sendKeys(findTestObject('Meterai/input_LiniBisnis'), Keys.chord(Keys.ENTER))
 
         'set text tanggal wilayah'
         WebUI.setText(findTestObject('Meterai/input_Wilayah'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-                12))
+                rowExcel('Wilayah')))
 
         'enter untuk set wilayah'
         WebUI.sendKeys(findTestObject('Meterai/input_Wilayah'), Keys.chord(Keys.ENTER))
 
         'set text tanggal cabang'
         WebUI.setText(findTestObject('Meterai/input_Cabang'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-                13))
+                rowExcel('Cabang')))
 
         'enter untuk set cabang'
         WebUI.sendKeys(findTestObject('Meterai/input_Cabang'), Keys.chord(Keys.ENTER))
 
         'set text tanggal pakai dari'
         WebUI.setText(findTestObject('Meterai/input_TanggalPakaiDari'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-                14))
+                rowExcel('Tanggal Pakai Dari')))
 
         'set text tanggal pakai sampai'
         WebUI.setText(findTestObject('Meterai/input_TanggalPakaiSampai'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-                15))
+                rowExcel('Tanggal Pakai Sampai')))
 
         'set text no meterai'
         WebUI.setText(findTestObject('Meterai/input_NoMeterai'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-                16))
+                rowExcel('Nomor Meterai')))
 
         'click button cari'
         WebUI.click(findTestObject('Meterai/button_Cari'))
 
         'get stampduty data dari db'
         result = CustomKeywords.'connection.Meterai.getStampdutyData'(conneSign, findTestData(excelPathMeterai).getValue(
-                GlobalVariable.NumofColm, 16))
+                GlobalVariable.NumofColm, rowExcel('Nomor Meterai')))
 
         index = 0
 
@@ -136,7 +140,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
         'get stampduty trx data dari db'
         result = CustomKeywords.'connection.Meterai.getStampdutyTrxData'(conneSign, findTestData(excelPathMeterai).getValue(
-                GlobalVariable.NumofColm, 16))
+                GlobalVariable.NumofColm, rowExcel('Nomor Meterai')))
 
         index = 0
 
@@ -168,7 +172,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         WebUI.click(findTestObject('Meterai/button_X'))
 
         'check if mau download data meterai'
-        if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 18).equalsIgnoreCase('Yes')) {
+        if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, rowExcel('Download File')).equalsIgnoreCase('Yes')) {
             'click button download'
             WebUI.click(findTestObject('Meterai/button_UnduhExcel'))
 			
@@ -179,13 +183,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
 				'check isfiled downloaded'
 				if (CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathMeterai).getValue(
-						GlobalVariable.NumofColm, 19)) == true) {
+						GlobalVariable.NumofColm, rowExcel('Delete Downloaded File ?'))) == true) {
 					'Jika sukses downloadnya lebih dari 10 detik'
 					if (i > 2) {
 						'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedPerformance'
-						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Meterai', GlobalVariable.NumofColm,
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 							GlobalVariable.StatusWarning, ((((findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm,
-								2) + ';') + GlobalVariable.ReasonFailedPerformance) + ' sejumlah ') + (i * 5)) + ' detik ')
+								rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedPerformance) + ' sejumlah ') + (i * 5)) + ' detik ')
 
 						GlobalVariable.FlagFailed = 1
 					}
@@ -198,9 +202,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 						errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
 
 						'Tulis di excel itu adalah error'
-						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Meterai', GlobalVariable.NumofColm,
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 							GlobalVariable.StatusFailed, (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm,
-								2).replace('-', '') + ';') + '<' + errormessage + '>')
+								rowExcel('Reason Failed')).replace('-', '') + ';') + '<' + errormessage + '>')
 
 						GlobalVariable.FlagFailed = 1
 					}
@@ -208,9 +212,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					'Jika sudah loopingan terakhir'
 					if (i == 5) {
 						'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedDownload'
-						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Meterai', GlobalVariable.NumofColm,
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 							GlobalVariable.StatusFailed, (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm,
-								2) + ';') + GlobalVariable.ReasonFailedDownload)
+								rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedDownload)
 
 						GlobalVariable.FlagFailed = 1
 					}
@@ -220,7 +224,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         
         if (GlobalVariable.FlagFailed == 0) {
             'write to excel success'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Meterai', 0, GlobalVariable.NumofColm - 
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
                 1, GlobalVariable.StatusSuccess)
         }
     }
@@ -355,8 +359,8 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
 def checkVerifyPaging(Boolean isMatch) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Meterai', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedPaging)
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedPaging)
 
         GlobalVariable.FlagFailed = 1
     }
@@ -365,11 +369,14 @@ def checkVerifyPaging(Boolean isMatch) {
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Meterai', GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            ((findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            ((findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
             reason)
 
         GlobalVariable.FlagFailed = 1
     }
 }
 
+def rowExcel(String cellValue) {
+	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+}
