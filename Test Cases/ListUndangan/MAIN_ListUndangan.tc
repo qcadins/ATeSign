@@ -11,11 +11,24 @@
       <value></value>
       <variableId>b350fb13-7186-442d-8c99-4b4d3389abe6</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>658bef03-964c-4134-97de-ba0b8663468e</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>'ListUndangan/ListUndangan'</defaultValue>
       <description></description>
       <id>b350fb13-7186-442d-8c99-4b4d3389abe6</id>
       <masked>false</masked>
       <name>excelPathListUndangan</name>
+   </variable>
+   <variable>
+      <defaultValue>'ListUndangan'</defaultValue>
+      <description></description>
+      <id>658bef03-964c-4134-97de-ba0b8663468e</id>
+      <masked>false</masked>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>
