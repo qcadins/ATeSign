@@ -39,16 +39,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         break
     } else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
         'Call API Send doc'
-        WebUI.callTestCase(findTestCase('Beranda/ResponseAPISendDoc'), [('API_Excel_Path') : excelPathFESignDocument, ('sheet') : sheet,
-			('CancelDocsSend') : findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Send?'))], 
+        WebUI.callTestCase(findTestCase('Beranda/ResponseAPISendDoc'), [('API_Excel_Path') : excelPathFESignDocument, ('sheet') : sheet], 
             FailureHandling.CONTINUE_ON_FAILURE)
-		
-		'jika ada proses cancel doc'
-		if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Send?')) == 'Yes') {
-			
-			'lanjutkan loop'
-			continue
-		}
 
 //		GlobalVariable.Tenant = 'WOMF'
 		
@@ -739,18 +731,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     continue
                 }
             }
-			
+            
 			'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
 			WebUI.callTestCase(findTestCase('Document Monitoring/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument
-			 , ('sheet') : sheet, ("nomorKontrak") : noKontrak, ('CancelDocsSign') : findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Sign?'))], FailureHandling.CONTINUE_ON_FAILURE)
-			
-			'jika ada proses cancel doc'
-			if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Sign?')) == 'Yes') {
-				
-				'lanjutkan loop'
-				continue
-			}
-			
+			 , ('sheet') : sheet, ("nomorKontrak") : noKontrak], FailureHandling.CONTINUE_ON_FAILURE)
+
 			'panggil fungsi login'
 			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
 				('Path') : excelPathFESignDocument, ('Email') : 'Email Login', ('Password') : 'Password Login',
@@ -791,7 +776,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 						if (isSplitLivenessFc == '0') {
 							
 							'cek apakah saldo liveness facecompare masih sama'
-							if(WebUI.verifyEqual(Integer.parseInt(saldoBefore.get('Liveness Face Compare')) - 1, Integer.parseInt(saldoAfter.get('Liveness Face Compare')), FailureHandling.OPTIONAL)) {
+							if(WebUI.verifyEqual(Integer.parseInt(saldoBefore.get('Liveness Face Compare')) - countSaldoSplitLiveFCused, Integer.parseInt(saldoAfter.get('Liveness Face Compare')), FailureHandling.OPTIONAL)) {
 								
 								break
 							}
@@ -922,14 +907,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Do Stamp ?')) == 'Yes') {
 			'Call API Send doc'
 			WebUI.callTestCase(findTestCase('Meterai/Flow Stamping'), [('excelPathStamping') : excelPathFESignDocument
-			, ('sheet') : sheet, ('useAPI') : 'v3.0.0', ('linkDocumentMonitoring') : '', ('CancelDocsStamp') : findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Stamp?'))], FailureHandling.CONTINUE_ON_FAILURE)
-			
-			'jika ada proses cancel doc'
-			if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Stamp?')) == 'Yes') {
-				
-				'lanjutkan loop'
-				continue
-			}
+			, ('sheet') : sheet, ('useAPI') : 'v3.0.0', ('linkDocumentMonitoring') : ''], FailureHandling.CONTINUE_ON_FAILURE)
 		}
 	}
 }

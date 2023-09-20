@@ -63,15 +63,20 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             signerInput = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('jumlah signer lokasi per signer (Send Manual)')).split(
                 ';', -1)
         }
+		
 		'jika documentid nya tidak kosong'
         if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).length() > 0) {
 			'jika opsi tanda tangannya bukan sign only'
-		 if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 'Sign Only') {
+		 if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 'Sign Only'
+			 && findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 'Stamp Only') {
 			 'call test case kotak masuk dan verify document monitoring. Document monitoring terdapat didalam kotak masuk.'
 			 WebUI.callTestCase(findTestCase('Main Flow/KotakMasuk'), [('excelPathFESignDocument') : excelPathMain, ('sheet') : sheet, ('checkBeforeSigning') : 'Yes'], 
                 FailureHandling.STOP_ON_FAILURE)
 		 }
 		 
+		 'jika opsi tanda tangannya bukan stamp only'
+		if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 'Stamp Only') {
+
 		 'jika memerlukan tanda tangan pada dokumen ini'
             if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Need Sign for this document? ')) == 
             'Yes') {
@@ -173,7 +178,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     }
                 }
             }
-			
+		}
 			'jika set stamping'
 			if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Do Stamp for this document? ')) == 'Yes') {
 				'call test case stamping'
@@ -198,7 +203,8 @@ def rowExcel(String cellValue) {
 }
 
 def resetValue() {
-	if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 'Sign Only') {
+	if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 'Sign Only'
+		&& findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 'Stamp Only') {
 		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('documentid') - 
 			1, GlobalVariable.NumofColm - 1, '')
 	}

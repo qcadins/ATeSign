@@ -33,9 +33,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
     if (findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
     } else if (findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
-        'declare flag failed'
-        GlobalVariable.FlagFailed = 0
-		
 		'get tenant dari excel percase'
 		GlobalVariable.Tenant = findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
 		
@@ -370,7 +367,7 @@ def inputCancel(Connection conneSign) {
     'Klik button cancel'
     WebUI.click(findTestObject('ManualStamp/button_Batal'))
 
-    WebUI.delay(10)
+    WebUI.delay(2)
 
     'verify field kode template dokumen kosong'
     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualStamp/input_documentNo'), 'value', 

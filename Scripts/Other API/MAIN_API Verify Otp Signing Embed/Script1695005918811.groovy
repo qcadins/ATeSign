@@ -25,9 +25,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			
 		'Mengambil aes key based on tenant tersebut'
 		String aesKey = CustomKeywords.'connection.APIFullService.getAesKeyBasedOnTenant'(conneSign, findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('tenantCode')).replace('"',''))
-		'enkripsi msg'
-		encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('msg')), aesKey)
-
+		
+		if (aesKey != null) {
+			'enkripsi msg'
+			encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('msg')), aesKey)
+		} else {
+			encryptMsg = ''
+		}
 		println aesKey
 		println encryptMsg
 
