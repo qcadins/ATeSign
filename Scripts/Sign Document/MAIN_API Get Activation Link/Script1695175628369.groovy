@@ -23,40 +23,55 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         break
     } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 		
-		'get psre per case dari colm excel'
-		GlobalVariable.Psre = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
+		GlobalVariable.FlagFailed = 0
 		
-        'encrypt invitation code'
-        encryptMsg = encryptLink(conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('email')))
+		'setting menggunakan base url yang benar atau salah'
+		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
-        'HIT API Sign Document'
-        responGetActLinkDIGI = WS.sendRequest(findTestObject('Postman/Get Activation Link DIGI', [('callerID') : findTestData(
-                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('msg') : ('"' + encryptMsg) + 
-                    '"']))
+		'check ada value maka setting email service tenant'
+		if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')).length() > 0) {
+			'setting email service tenant'
+			CustomKeywords.'connection.APIFullService.settingEmailServiceUser'(conneSign, findTestData(excelPath).getValue(
+					GlobalVariable.NumofColm, rowExcel('Setting Email Service')), findTestData(excelPath).getValue(
+					GlobalVariable.NumofColm, rowExcel('idKTP')).replace('"',''))
+		}
+		
+		'check if tidak mau menggunakan tenant code yang benar'
+		if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'No') {
+			'set tenant kosong'
+			GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong tenant Code'))
+		} else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'Yes') {
+			'get tenant per case dari colm excel'
+			GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
+		}
+		
+        'check if mau menggunakan api_key yang salah atau benar'
+        if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct API Key')) == 'Yes') {
+            'get api key dari db'
+            GlobalVariable.api_key = CustomKeywords.'connection.APIFullService.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
+        } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct API Key')) == 'No') {
+            'get api key salah dari excel'
+            GlobalVariable.api_key = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong API Key'))
+        }
+		
+        'HIT API GetActLink Document'
+        responGetActLink = WS.sendRequest(findTestObject('Postman/Get Activation Link', [('callerId') : findTestData(
+                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('idKTP') : findTestData(
+                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('idKTP'))]))
 
         'Jika status HIT API 200 OK'
-        if (WS.verifyResponseStatusCode(responGetActLinkDIGI, 200, FailureHandling.OPTIONAL) == true) {
+        if (WS.verifyResponseStatusCode(responGetActLink, 200, FailureHandling.OPTIONAL) == true) {
             'get Status Code'
-            status_Code = WS.getElementPropertyValue(responGetActLinkDIGI, 'status.code')
+            status_Code = WS.getElementPropertyValue(responGetActLink, 'status.code')
 
             'Jika status codenya 0'
             if (status_Code == 0) {
                 'get url'
-                url = WS.getElementPropertyValue(responGetActLinkDIGI, 'url')
-
-                'get idNo'
-                idNo = WS.getElementPropertyValue(responGetActLinkDIGI, 'idNo')
-
-                'get fullName'
-                fullName = WS.getElementPropertyValue(responGetActLinkDIGI, 'fullName')
+                url = WS.getElementPropertyValue(responGetActLink, 'status.message')
 
                 'write to excel url'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 4, GlobalVariable.NumofColm - 
                     1, ('<' + url) + '>')
-
-                'write to excel idno dan fullname'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 5, GlobalVariable.NumofColm - 
-                    1, ((('<' + idNo) + ';') + fullName) + '>')
 
                 if (GlobalVariable.FlagFailed == 0) {
                     'write to excel success'
@@ -64,10 +79,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         1, GlobalVariable.StatusSuccess)
                 }
             } else {
-                getErrorMessageAPI(responGetActLinkDIGI)
+                getErrorMessageAPI(responGetActLink)
             }
         } else {
-            getErrorMessageAPI(responGetActLinkDIGI)
+            getErrorMessageAPI(responGetActLink)
         }
     }
 }
