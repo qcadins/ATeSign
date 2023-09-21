@@ -71,7 +71,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         int currentTab = WebUI.getWindowIndex()
 
         'setting zoom menuju 80 persen'
-        zoomSetting(80)
+        zoomSetting(60)
 
         'ganti fokus robot ke tab baru'
         WebUI.switchToWindowIndex(currentTab)
@@ -777,9 +777,6 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
 
     'input filter dari saldo'
     WebUI.setText(findTestObject('Saldo/input_tipesaldo'), 'Stamp Duty')
-
-    'enter'
-    WebUI.sendKeys(findTestObject('Saldo/input_tipeSaldo'), Keys.chord(Keys.ARROW_DOWN))
 
     'enter'
     WebUI.sendKeys(findTestObject('Saldo/input_tipeSaldo'), Keys.chord(Keys.ENTER))
