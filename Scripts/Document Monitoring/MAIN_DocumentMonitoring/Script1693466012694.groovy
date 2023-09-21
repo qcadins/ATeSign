@@ -593,9 +593,18 @@ def checkPaging() {
 		'get total data'
 		lastPage = Double.parseDouble(WebUI.getText(findTestObject('DocumentMonitoring/label_TotalData')).split(' ',-1)[0])/10
 		
+		'jika hasil perhitungan last page memiliki desimal'
+		if (lastPage.toString().contains('.0')) {
+			'tidak ada round up'
+			additionalRoundUp = 0
+		} else {
+			'round up dengan tambahan 0.5'
+			additionalRoundUp = 0.5
+		}
+		
 		'verify paging di page terakhir'
 		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DocumentMonitoring/paging_Page'), 'aria-label',
-					FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage+0.5).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+					FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage+additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
 	
 		'click first page'
 		WebUI.click(findTestObject('DocumentMonitoring/button_FirstPage'))
