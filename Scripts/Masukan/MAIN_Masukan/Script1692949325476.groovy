@@ -24,6 +24,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
         'click menu masukan'
         WebUI.click(findTestObject('Masukan/menu_Masukan'))
+		
+		if (findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
+			GlobalVariable.FlagFailed = 0
+		}
 
         'check if cell rating > 0'
         if (findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, rowExcel('$Rating')).length() > 0) {

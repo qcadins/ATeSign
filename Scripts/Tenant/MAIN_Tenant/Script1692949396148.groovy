@@ -50,6 +50,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		'click menu tenant'
 		WebUI.click(findTestObject('Tenant/menu_Tenant'))
 		
+		if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
+			GlobalVariable.FlagFailed = 0
+		}
+		
         'check if action new/services'
         if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('New')) {
             'click button Baru'
@@ -537,15 +541,24 @@ def checkPaging(Connection conneSign) {
     checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/button_Page1'), 'class', FailureHandling.CONTINUE_ON_FAILURE), 
             'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
 
-    'modify object last Page'
-    def modifyObjectLastPage = WebUI.modifyObjectProperty(findTestObject('Tenant/modifyObject'), 'xpath', 'equals', '//*[@class = "pager"]/li[' + (variable.size() - 2).toString() + ']', true)
-
     'click max page'
     WebUI.click(findTestObject('Tenant/button_MaxPage'))
-
-    'verify paging di page terakhir'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(modifyObjectLastPage, 'class', FailureHandling.CONTINUE_ON_FAILURE), 
-            'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	'get total data'
+	lastPage = Double.parseDouble(WebUI.getText(findTestObject('Tenant/label_TotalData')).split(' ',-1)[0])/10
+	
+	'jika hasil perhitungan last page memiliki desimal'
+	if (lastPage.toString().contains('.0')) {
+		'tidak ada round up'
+		additionalRoundUp = 0
+	} else {
+		'round up dengan tambahan 0.5'
+		additionalRoundUp = 0.5
+	}
+	
+	'verify paging di page terakhir'
+	checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/paging_Page'), 'aria-label',
+				FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage+additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'click min page'
     WebUI.click(findTestObject('Tenant/button_MinPage'))
