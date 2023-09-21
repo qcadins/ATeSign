@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'datatable-row-center datatable-row-group ng-star-inserted']/datatable-body-cell[13]/div/a[2]/em</value>
+         <value>//*[@title = 'Retry Stamping']/em</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,15 +17,23 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@class = 'datatable-row-center datatable-row-group ng-star-inserted']/datatable-body-cell[13]/div/a[2]/em</value>
-      <webElementGuid>588bf1a2-1fd1-49ab-9bfa-797a316ce28f</webElementGuid>
+      <value>//*[@title = 'Retry Stamping']/em</value>
+      <webElementGuid>ac231146-814c-42d4-b551-42aec6b47e85</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>datatable-row-center datatable-row-group ng-star-inserted</value>
-      <webElementGuid>6ca88e2d-bef3-427f-a4fa-f49eea99bfc0</webElementGuid>
+      <value>//*[@class = 'datatable-row-center datatable-row-group ng-star-inserted']/datatable-body-cell[13]/div/a[2]/em</value>
+      <webElementGuid>4265ff1a-85c2-48f6-a65f-aa87e2891b97</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>title</name>
+      <type>Main</type>
+      <value>Retry Stamping</value>
+      <webElementGuid>e8a8c283-9c01-4cc9-a6b7-ddb19321353c</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

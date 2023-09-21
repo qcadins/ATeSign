@@ -7,17 +7,27 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'ng-option-label ng-star-inserted']</value>
+         <value>//*[@class = 'ng-option ng-star-inserted ng-option-marked']/span
+</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>ng-option-label ng-star-inserted</value>
-      <webElementGuid>31b8350e-af56-4ffe-9fb1-a3c6f88b687f</webElementGuid>
+      <value>ng-option ng-star-inserted ng-option-marked</value>
+      <webElementGuid>eb3bab0c-1d7a-4c35-88d4-8541331665b4</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@class = 'ng-option ng-star-inserted ng-option-marked']/span
+</value>
+      <webElementGuid>ce45cdd3-bba9-4b7f-b4b3-0faac2484971</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

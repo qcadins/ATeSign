@@ -164,7 +164,7 @@ def inputSaldo() {
 	
    'input filter dari saldo'
 	WebUI.setText(findTestObject('Saldo/input_tipesaldo'), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('$Tipe Saldo')))
-
+	
 	'Input enter'
 	WebUI.sendKeys(findTestObject('Saldo/input_tipesaldo'), Keys.chord(Keys.ENTER))
 

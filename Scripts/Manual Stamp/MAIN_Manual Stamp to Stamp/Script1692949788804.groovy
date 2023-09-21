@@ -778,6 +778,11 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
     'input filter dari saldo'
     WebUI.setText(findTestObject('Saldo/input_tipesaldo'), 'Stamp Duty')
 
+	if (WebUI.verifyElementText(findTestObject('ManualStamp/selected_DDL_Saldo'), 'Stamp Duty')) {
+	} else {
+		'Input page down'
+		WebUI.sendKeys(findTestObject('Saldo/input_tipesaldo'), Keys.chord(Keys.PAGE_DOWN))
+	}
     'enter'
     WebUI.sendKeys(findTestObject('Saldo/input_tipeSaldo'), Keys.chord(Keys.ENTER))
 

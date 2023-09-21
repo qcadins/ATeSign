@@ -160,7 +160,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                                     break
                                 } else if ((progressStampingAfter[0]) == 'Success') {
                                     'Jika sukses, maka verify match progress lama dengan yang baru. Apakah sama'
-                                    if (WebUI.verifyMatch(progressStamping, progressStampingAfter, false, FailureHandling.CONTINUE_ON_FAILURE) == 
+                                    if (WebUI.verifyMatch(progressStamping[0], progressStampingAfter[0], false, FailureHandling.CONTINUE_ON_FAILURE) == 
                                     true) {
                                         'Tulis di excel sebagai failed dan error.'
                                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
@@ -177,50 +177,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
 		
 			inputPagingAndVerify(conneSign)
-			if (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Need View Document ?')) == 'Yes') {
-				
-				WebUI.verifyElementPresent(findTestObject('e-Meterai Monitoring/btn_ViewDocument'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
-				
-				WebUI.click(findTestObject('e-Meterai Monitoring/btn_ViewDocument'))
-	
-				'Jika error lognya muncul'
-				if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-					'ambil teks errormessage'
-					errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
-	
-						'Tulis di excel itu adalah error'
-						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-							(findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<' + errormessage + '>')
-			}
-			
-				'Pemberian waktu 2 detik karena loading terus menerus'
-				WebUI.delay(2)
-	
-				'verifikasi label dokumen'
-				if (WebUI.verifyElementPresent(findTestObject('Object Repository/KotakMasuk/lbl_viewDokumen'), GlobalVariable.TimeOut,
-					FailureHandling.CONTINUE_ON_FAILURE)) {
-					'Mengambil label pada view Dokoumen'
-					labelViewDoc = WebUI.getText(findTestObject('Object Repository/KotakMasuk/lbl_viewDokumen'))
-	
-					'Jika pada label terdapat teks No Kontrak'
-					if (labelViewDoc.contains('No Kontrak')) {
-						'Direplace dengan kosong agar mendapatkan nomor kontrak'
-						labelViewDoc = labelViewDoc.replace('No Kontrak', '')
-					}
-					
-					'Diverifikasi dengan UI didepan'
-					checkVerifyEqualOrMatch(WebUI.verifyMatch(findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Nomor Dokumen')), ' ' + labelViewDoc, false, FailureHandling.CONTINUE_ON_FAILURE), 
-						' pada nomor kontrak UI yaitu ' + labelViewDoc)
-
-					'Klik kembali'
-					WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_backViewDokumen'))
-				} else {
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-						((findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedProcessNotDone) +
-						' untuk proses View dokumen tanda tangan. ')
-				}
-			}
-        
 			'check if mau download data meterai'
 			if (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Need Download Document ?')).equalsIgnoreCase('Yes')) {
 					'Klik download file'
@@ -273,6 +229,51 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				}
 			}
 			
+			
+			if (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Need View Document ?')) == 'Yes') {
+				
+				WebUI.verifyElementPresent(findTestObject('e-Meterai Monitoring/btn_ViewDocument'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
+				
+				WebUI.click(findTestObject('e-Meterai Monitoring/btn_ViewDocument'))
+	
+				'Jika error lognya muncul'
+				if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+					'ambil teks errormessage'
+					errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
+	
+						'Tulis di excel itu adalah error'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+							(findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<' + errormessage + '>')
+			}
+			
+				'Pemberian waktu 2 detik karena loading terus menerus'
+				WebUI.delay(2)
+	
+				'verifikasi label dokumen'
+				if (WebUI.verifyElementPresent(findTestObject('Object Repository/KotakMasuk/lbl_viewDokumen'), GlobalVariable.TimeOut,
+					FailureHandling.CONTINUE_ON_FAILURE)) {
+					'Mengambil label pada view Dokoumen'
+					labelViewDoc = WebUI.getText(findTestObject('Object Repository/KotakMasuk/lbl_viewDokumen'))
+	
+					'Jika pada label terdapat teks No Kontrak'
+					if (labelViewDoc.contains('No Kontrak')) {
+						'Direplace dengan kosong agar mendapatkan nomor kontrak'
+						labelViewDoc = labelViewDoc.replace('No Kontrak', '')
+					}
+					
+					'Diverifikasi dengan UI didepan'
+					checkVerifyEqualOrMatch(WebUI.verifyMatch(findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Nomor Dokumen')), ' ' + labelViewDoc, false, FailureHandling.CONTINUE_ON_FAILURE),
+						' pada nomor kontrak UI yaitu ' + labelViewDoc)
+
+					'Klik kembali'
+					WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_backViewDokumen'))
+				} else {
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+						((findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedProcessNotDone) +
+						' untuk proses View dokumen tanda tangan. ')
+				}
+			}
+		
         if (GlobalVariable.FlagFailed == 0) {
             'write to excel success'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 

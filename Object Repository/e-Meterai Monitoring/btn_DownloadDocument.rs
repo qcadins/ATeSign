@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@title = 'Lihat Dokumen']/em</value>
+         <value>//*[@title = 'Download']/em</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,15 +17,15 @@
       <matchCondition>equals</matchCondition>
       <name>title</name>
       <type>Main</type>
-      <value>Lihat Dokumen</value>
-      <webElementGuid>a5ed3252-7ef3-4ffb-b901-5dc4d5dd3765</webElementGuid>
+      <value>Download</value>
+      <webElementGuid>898977d1-cefb-403d-9a38-97edee553e53</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@title = 'Lihat Dokumen']/em</value>
-      <webElementGuid>68497999-2886-4ff0-9c69-b86dccf1dc92</webElementGuid>
+      <value>//*[@title = 'Download']/em</value>
+      <webElementGuid>8f5fb72a-7f59-4b6c-86dc-1f5e1cd802ce</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
