@@ -27,7 +27,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     if (findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
     } else if (findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
-        GlobalVariable.FlagFailed = 0
 
 		'check if email login case selanjutnya masih sama dengan sebelumnya'
 		if (findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) !=
@@ -39,14 +38,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			firstRun = 1
 		}
 
+		if (findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
+			GlobalVariable.FlagFailed = 0
+		}
+		
+		'click menu job result'
+		WebUI.click(findTestObject('Job Result/menu_Hasil Job'), FailureHandling.OPTIONAL)
+		
         if (GlobalVariable.NumofColm == 2) {
             'call function check paging'
             checkPaging(conneSign)
         }
 		
-        'click menu job result'
-        WebUI.click(findTestObject('Job Result/menu_Hasil Job'))
-        
         'set text date start'
         WebUI.setText(findTestObject('Job Result/input_requestDateStart'), findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 
                 rowExcel('Permintaan Tanggal Mulai')))
@@ -285,6 +288,53 @@ def checkPaging(Connection conneSign) {
     'verify total job result'
     checkVerifyPaging(WebUI.verifyMatch(totalJobResultUI[0], totalJobResultDB, false, FailureHandling.CONTINUE_ON_FAILURE), 
         ' pada total Hasil Job ')
+	
+	'verify total Meterai'
+	if (Integer.parseInt(totalJobResultUI[0]) > 10) { 
+		'click next page'
+		WebUI.click(findTestObject('Job Result/button_NextPage'))
+		
+		'verify paging di page 2'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Job Result/paging_Page'), 'aria-label',
+		FailureHandling.CONTINUE_ON_FAILURE), 'page 2', false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+		'click prev page'
+		WebUI.click(findTestObject('Job Result/button_PrevPage'))
+		
+		'verify paging di page 1'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Job Result/paging_Page'), 'aria-label',
+		FailureHandling.CONTINUE_ON_FAILURE), 'page 1', false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+		'get total page'
+		variable = DriverFactory.webDriver.findElements(By.cssSelector('#listDokumen > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
+		
+		'click last page'
+		WebUI.click(findTestObject('Job Result/button_LastPage'))
+		
+		'get total data'
+		lastPage = Double.parseDouble(WebUI.getText(findTestObject('Job Result/label_TotalJobResult')).split(' ',-1)[0])/10
+		
+		'jika hasil perhitungan last page memiliki desimal'
+		if (lastPage.toString().contains('.0')) {
+			'tidak ada round up'
+			additionalRoundUp = 0
+		} else {
+			'round up dengan tambahan 0.5'
+			additionalRoundUp = 0.5
+		}
+	
+		'verify paging di page terakhir'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Job Result/paging_Page'), 'aria-label',
+		FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage+additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+		'click first page'
+		WebUI.click(findTestObject('Job Result/button_FirstPage'))
+	
+		'verify paging di page 1'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Job Result/paging_Page'), 'aria-label',
+		FailureHandling.CONTINUE_ON_FAILURE), 'page 1', false, FailureHandling.CONTINUE_ON_FAILURE))
+
+	}
 }
 
 def checkVerifyPaging(Boolean isMatch, def reason) {
@@ -325,4 +375,15 @@ def checkErrorLog() {
 
 def rowExcel(String cellValue) {
 	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+}
+
+def checkVerifyPaging(Boolean isMatch) {
+	if (isMatch == false) {
+		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+			GlobalVariable.StatusFailed, (findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) +
+			';') + GlobalVariable.ReasonFailedPaging)
+
+		GlobalVariable.FlagFailed = 1
+	}
 }

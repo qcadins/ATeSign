@@ -153,7 +153,7 @@ def encodeValue(String value, Connection conneSign) {
 	
 	'encrypt invitation code'
 	String encryptCode = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(invCode, aesKey)
-
+	
 	try {
 		return URLEncoder.encode(encryptCode, StandardCharsets.UTF_8.toString());
 	} catch (UnsupportedEncodingException ex) {

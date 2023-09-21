@@ -13,7 +13,9 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathListUndangan, ('Email') : 'Email Login', ('Password') : 'Password Login'
 	, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
 
-GlobalVariable.FlagFailed = 0
+if (findTestData(excelPathListUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
+	GlobalVariable.FlagFailed = 0
+}
 
 'click menu list undangan'
 WebUI.click(findTestObject('ListUndangan/menu_ListUndangan'))
@@ -129,34 +131,49 @@ def checkPaging() {
     'click button cari'
     WebUI.click(findTestObject('ListUndangan/button_Cari'))
 
-    'click next page'
-    WebUI.click(findTestObject('ListUndangan/button_NextPage'))
+	'check if ada paging'
+	if(WebUI.verifyElementVisible(findTestObject('DocumentMonitoring/button_NextPage'), FailureHandling.OPTIONAL)) {
+		'click next page'
+		WebUI.click(findTestObject('ListUndangan/button_NextPage'))
+		
+		'verify paging di page 2'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ListUndangan/paging_Page'), 'aria-label',
+		FailureHandling.CONTINUE_ON_FAILURE), 'page 2', false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+		'click prev page'
+		WebUI.click(findTestObject('ListUndangan/button_PrevPage'))
+	
+		'verify paging di page 1'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ListUndangan/paging_Page'), 'aria-label',
+		FailureHandling.CONTINUE_ON_FAILURE), 'page 1', false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+		'click last page'
+		WebUI.click(findTestObject('ListUndangan/button_LastPage'))
+	
+		'get total data'
+		lastPage = Double.parseDouble(WebUI.getText(findTestObject('ListUndangan/label_TotalData')).split(' ',-1)[0])/10
+		
+		'jika hasil perhitungan last page memiliki desimal'
+		if (lastPage.toString().contains('.0')) {
+			'tidak ada round up'
+			additionalRoundUp = 0
+		} else {
+			'round up dengan tambahan 0.5'
+			additionalRoundUp = 0.5
+		}
+		
+		'verify paging di page terakhir'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ListUndangan/paging_Page'), 'aria-label',
+		FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage+additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
-    'verify paging di page 2'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ListUndangan/paging_Page'), 'ng-reflect-page', 
-                FailureHandling.CONTINUE_ON_FAILURE), '2', false, FailureHandling.CONTINUE_ON_FAILURE))
+		'click first page'
+		WebUI.click(findTestObject('ListUndangan/button_FirstPage'))
 
-    'click prev page'
-    WebUI.click(findTestObject('ListUndangan/button_PrevPage'))
+		'verify paging di page 1'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ListUndangan/paging_Page'), 'aria-label',
+		FailureHandling.CONTINUE_ON_FAILURE), 'page 1', false, FailureHandling.CONTINUE_ON_FAILURE))
+	}
 
-    'verify paging di page 1'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ListUndangan/paging_Page'), 'ng-reflect-page', 
-                FailureHandling.CONTINUE_ON_FAILURE), '1', false, FailureHandling.CONTINUE_ON_FAILURE))
-
-    'click last page'
-    WebUI.click(findTestObject('ListUndangan/button_LastPage'))
-
-    'verify paging di last page'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ListUndangan/paging_Page'), 'ng-reflect-page', 
-                FailureHandling.CONTINUE_ON_FAILURE), WebUI.getAttribute(findTestObject('ListUndangan/page_Active'), 'aria-label', 
-                FailureHandling.CONTINUE_ON_FAILURE).replace('page ', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
-
-    'click first page'
-    WebUI.click(findTestObject('ListUndangan/button_FirstPage'))
-
-    'verify paging di page 1'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ListUndangan/paging_Page'), 'ng-reflect-page', 
-                FailureHandling.CONTINUE_ON_FAILURE), '1', false, FailureHandling.CONTINUE_ON_FAILURE))
 }
 
 def checkVerifyPaging(Boolean isMatch) {

@@ -28,10 +28,15 @@ ArrayList<String> saldoBefore, saldoAfter
 
 'looping isi saldo'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
-    if (findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
+    if (findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
-    } else if (findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
-        'counter check saldo'
+    } else if (findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
+		'Status'
+		if (findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
+			GlobalVariable.FlagFailed = 0
+		}
+		
+		'counter check saldo'
         countCheckSaldo = 0
 
 		'get tenant code per case'

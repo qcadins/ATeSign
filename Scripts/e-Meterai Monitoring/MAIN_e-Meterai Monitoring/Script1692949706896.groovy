@@ -49,6 +49,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		'click menu meterai'
 		WebUI.click(findTestObject('e-Meterai Monitoring/menu_emeteraiMonitoring'))
 		
+		if (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
+			GlobalVariable.FlagFailed = 0
+		}
+		
         if (GlobalVariable.NumofColm == 2) {
             'call function check paging'
             checkPaging(currentDate, firstDateOfMonth, conneSign)
@@ -60,6 +64,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         progressStamping = CustomKeywords.'connection.eMeteraiMonitoring.getProseseMeteraiMonitoring'(conneSign, findTestData(
                 excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Nomor Dokumen')))
 
+		println(findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Action')))
+		
         'Jika stampingnya failed'
         if ((progressStamping[0]) == 'Failed') {
             'Jika aksinya View Error message'
@@ -415,7 +421,7 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
     'click button cari'
     WebUI.click(findTestObject('Meterai/button_Cari'))
 
-    WebUI.delay(10)
+    WebUI.delay(2)
 
     'set text tanggal pengiriman ke'
     totaleMeteraiMonitoringUI = WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/Label_Totale-Meterai')).split(
@@ -425,11 +431,12 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
 
     'verify total Meterai'
     if (Integer.parseInt(totaleMeteraiMonitoringUI[0]) > 10) {
+		
 		WebUI.focus(findTestObject('e-Meterai Monitoring/button_NextPage'))
+		
         'click next page'
         WebUI.click(findTestObject('e-Meterai Monitoring/button_NextPage'))
 
-		WebUI.delay(5)
         'verify paging di page 2'
         checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('e-Meterai Monitoring/paging_Page'), 'aria-label', 
                     FailureHandling.CONTINUE_ON_FAILURE), 'page 2', false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -444,12 +451,23 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
         'click last page'
         WebUI.click(findTestObject('e-Meterai Monitoring/button_LastPage'))
 
+		'get total data'
+		lastPage = Double.parseDouble(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/Label_Totale-Meterai')).split(' ',-1)[0])/10
+		
+		'jika hasil perhitungan last page memiliki desimal'
+		if (lastPage.toString().contains('.0')) {
+			'tidak ada round up'
+			additionalRoundUp = 0
+		} else {
+			'round up dengan tambahan 0.5'
+			additionalRoundUp = 0.5
+		}
+		
         'verify paging di last page'
         checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('e-Meterai Monitoring/paging_Page'), 'aria-label', 
-                    FailureHandling.CONTINUE_ON_FAILURE), WebUI.getAttribute(findTestObject('e-Meterai Monitoring/page_Active'), 
-                    'aria-label', FailureHandling.CONTINUE_ON_FAILURE), false, FailureHandling.CONTINUE_ON_FAILURE))
-
-        'click first page'
+			FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage+additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+        
+		'click first page'
         WebUI.click(findTestObject('e-Meterai Monitoring/button_FirstPage'))
 
         'verify paging di page 1'
