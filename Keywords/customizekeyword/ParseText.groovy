@@ -13,6 +13,9 @@ public class ParseText {
 		SecretKeySpec skeySpec = new SecretKeySpec(aesKey.getBytes('UTF-8'), 'AES')
 		Cipher cipher = Cipher.getInstance('AES/ECB/PKCS5Padding')
 		cipher.init(Cipher.ENCRYPT_MODE, skeySpec)
+		if (value == null) {
+			value = ''
+		}
 		byte[] encrypted = cipher.doFinal(value.bytes)
 		return Base64.encodeBase64String(encrypted)
 	}
