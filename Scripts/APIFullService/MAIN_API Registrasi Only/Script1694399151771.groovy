@@ -120,7 +120,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 println(trxNo)
 
                 if (GlobalVariable.checkStoreDB == 'Yes') {
-                    if (GlobalVariable.Psre != 'PRIVY') {
+                    if (GlobalVariable.Psre == 'VIDA' || GlobalVariable.Psre == 'DIGI') {
                         arrayIndex = 0
 
                         'get data from db'
@@ -135,8 +135,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace('"', ''),
 							findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('tlp')).replace('"', ''))
 
-                        'verify is_active'
-                        arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), '1', false, FailureHandling.CONTINUE_ON_FAILURE))
+                        println(resultDataUser)
+
+						if (GlobalVariable.Psre == 'VIDA') {
+							'verify is_active'
+							arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), '1', false, FailureHandling.CONTINUE_ON_FAILURE))							
+						} else if (GlobalVariable.Psre == 'DIGI') {
+							'verify is_active'
+							arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), '0', false, FailureHandling.CONTINUE_ON_FAILURE))							
+						}
 
                         'verify is_registered'
                         arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), '1', false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -173,16 +180,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathAPIRegistrasi).getValue(
                                     GlobalVariable.NumofColm, rowExcel('jenisKelamin')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
-						'jika email kosong pada testdata, tidak lakukan pengecekan email';
-						if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace('"', '').equalsIgnoreCase('')) {
-							
-							arrayIndex++
-						} else {
-							
-							'verify email'
-							arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathAPIRegistrasi).getValue(
-									GlobalVariable.NumofColm, rowExcel('email')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-						}
+                        'verify email'
+                        arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathAPIRegistrasi).getValue(
+                                    GlobalVariable.NumofColm, rowExcel('email')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
                         'verify provinsi'
                         arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathAPIRegistrasi).getValue(
@@ -203,7 +203,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         'verify kode pos'
                         arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathAPIRegistrasi).getValue(
                                     GlobalVariable.NumofColm, rowExcel('kodePos')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-                    } else {
+                    } else if (GlobalVariable.Psre == 'PRIVY') {
                         'looping untuk delay 100detik menunggu proses request status'
                         for (delay = 1; delay <= 5; delay++) {
                             resultDataUser = CustomKeywords.'connection.APIFullService.getAPIRegisterPrivyStoreDB'(conneSign, 
@@ -215,7 +215,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             arrayIndex = 0
 
                             'verify request status = 1'
-                            arrayMatch.add(WebUI.verifyMatch(resultDataUser[arrayIndex++], '1', false, FailureHandling.OPTIONAL))
+                            arrayMatch.add(WebUI.verifyMatch(resultDataUser[arrayIndex++], '0', false, FailureHandling.OPTIONAL))
 
                             'verify is external = 1'
                             arrayMatch.add(WebUI.verifyMatch(resultDataUser[arrayIndex++], '1', false, FailureHandling.OPTIONAL))
@@ -283,7 +283,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         'verify saldo privy PNBP'
                         checkVerifyEqualOrMatch(WebUI.verifyMatch((resultTrx[arrayIndex++]).toString(), 'null', false, FailureHandling.CONTINUE_ON_FAILURE), 
                             ' Gagal Verifikasi Saldo Terpotong - Privy')
-                    }
+                    } else if (GlobalVariable.Psre == 'DIGI') {
+						'verify saldo DIGI text Verification'
+						checkVerifyEqualOrMatch(WebUI.verifyMatch((resultTrx[arrayIndex++]).toString(), '-1', false, FailureHandling.CONTINUE_ON_FAILURE),
+								' Gagal Verifikasi Saldo Terpotong - DIGI')
+					}
                     
                     'jika data db tidak sesuai dengan excel'
                     if (arrayMatch.contains(false)) {

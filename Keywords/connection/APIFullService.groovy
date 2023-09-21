@@ -993,11 +993,11 @@ public class APIFullService {
 
 		updateVariable = stm.executeUpdate("UPDATE ms_tenant SET otp_active_duration = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
 	}
-	
+
 	@Keyword
 	settingEmailServiceUser(Connection conn, String value, String idKtp) {
 		stm = conn.createStatement()
 
-		updateVariable = stm.executeUpdate("UPDATE ms_vendor_registered_user SET email_service = '"+ value +"' WHERE id_ms_user IN (SELECT mvr.id_ms_user FROM ms_vendor_registered_user mvr JOIN am_msuser am ON mvr.id_ms_user = am.id_ms_user WHERE am.hashed_id_no = encode(sha256('"+ idKtp +"'), 'hex'))")	
+		updateVariable = stm.executeUpdate("UPDATE ms_vendor_registered_user SET email_service = '"+ value +"' WHERE id_ms_user IN (SELECT mvr.id_ms_user FROM ms_vendor_registered_user mvr JOIN am_msuser am ON mvr.id_ms_user = am.id_ms_user WHERE am.hashed_id_no = encode(sha256('"+ idKtp +"'), 'hex'))")
 	}
 }

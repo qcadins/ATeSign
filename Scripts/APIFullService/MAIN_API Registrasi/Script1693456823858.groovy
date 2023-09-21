@@ -90,10 +90,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             idPhoto = findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('idPhoto'))
         }
         
-        if (GlobalVariable.Psre == 'VIDA') {
+        if (GlobalVariable.Psre == 'VIDA' || GlobalVariable.Psre == 'DIGI') {
             countCheckSaldo = 0
-
-            WebUI.openBrowser('')
 
             saldoBefore = loginAdminGetSaldo(countCheckSaldo, conneSign)
 
@@ -266,7 +264,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
                     }
                     
-                    if (GlobalVariable.Psre == 'VIDA') {
+                    if (GlobalVariable.Psre == 'VIDA' || GlobalVariable.Psre == 'DIGI') {
                         'kurang saldo before dengan proses verifikasi'
                         saldoBefore.set(0, (Integer.parseInt(saldoBefore[0]) - 1).toString())
 
@@ -301,14 +299,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                     arrayIndex = 0
 
-                    'verify saldo privy Verification'
+                    'verify saldo Verification'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(resultTrx[arrayIndex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE), 
-                        ' Gagal Verifikasi Saldo Terpotong - Privy')
+                        ' Gagal Verifikasi Saldo Terpotong')
 
-                    if (GlobalVariable.Psre == 'VIDA') {
-                        'verify saldo privy PNBP'
-                        checkVerifyEqualOrMatch(WebUI.verifyMatch((resultTrx[arrayIndex++]).toString(), '-1', false, FailureHandling.CONTINUE_ON_FAILURE), 
-                            ' Gagal Verifikasi Saldo Terpotong - Privy')
+                    if (GlobalVariable.Psre == 'VIDA' || GlobalVariable.Psre == 'DIGI') {
+						'verify saldo VIDA PNBP / DIGI TEXT VERIFICATION'
+						checkVerifyEqualOrMatch(WebUI.verifyMatch((resultTrx[arrayIndex++]).toString(), '-1', false, FailureHandling.CONTINUE_ON_FAILURE), 
+								' Gagal Verifikasi Saldo Terpotong - VIDA / DIGI')							
 
                         'kurang saldo before dengan proses verifikasi'
                         saldoBefore.set(0, (Integer.parseInt(saldoBefore[0]) - 1).toString())
@@ -374,7 +372,7 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
     WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_English'))
 
     'select vendor'
-    WebUI.selectOptionByLabel(findTestObject('BuatUndangan/checkSaldo/select_Vendor'), '(?i)' + GlobalVariable.Psre, true)
+    WebUI.selectOptionByValue(findTestObject('BuatUndangan/checkSaldo/select_Vendor'), '(?i)' + GlobalVariable.Psre, true)
 
     'get row'
     variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
@@ -387,7 +385,8 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 
         'check if box info = tipe saldo di excel'
         if (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('Verification') || (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase(
-            'PNBP') && (GlobalVariable.Psre == 'VIDA'))) {
+            'PNBP') && (GlobalVariable.Psre == 'VIDA')) || (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase(
+            'Text Verification') && (GlobalVariable.Psre == 'DIGI'))) {
             'modify object qty'
             modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 
                 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) + 
@@ -397,7 +396,7 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
             saldo.add(WebUI.getText(modifyObjectQty).replace(',', ''))
 
             'if saldo sudah terisi 2 verification dan pnbp'
-            if ((saldo.size() == 2) && (GlobalVariable.Psre == 'VIDA')) {
+            if ((saldo.size() == 2) && (GlobalVariable.Psre == 'VIDA' || GlobalVariable.Psre == 'DIGI')) {
                 break
             } else if ((saldo.size() == 1) && (GlobalVariable.Psre == 'PRIVY')) {
                 break
@@ -415,6 +414,11 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
             'call function input filter saldo'
             inputFilterSaldo('PNBP', conneSign)
         }
+		
+		if ((GlobalVariable.FlagFailed == 0) && (GlobalVariable.Psre == 'DIGI')) {
+			'call function input filter saldo'
+			inputFilterSaldo('Text Verification', conneSign)
+		}
     }
     
     return saldo
