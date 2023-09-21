@@ -132,6 +132,11 @@ if (WS.verifyResponseStatusCode(respon_login, 200, FailureHandling.OPTIONAL) == 
 						'Delay 10 detik.'
 						WebUI.delay(10)
 					}
+					
+					'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
+					WebUI.callTestCase(findTestCase('Main Flow/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : API_Excel_Path
+							, ('sheet') : sheet, ('linkDocumentMonitoring') : 'Not Used', ('nomorKontrak') : refNumber, ('CancelDocsSign') : CancelDocsSign],
+						FailureHandling.CONTINUE_ON_FAILURE)
 				}
 			}
         } else {
