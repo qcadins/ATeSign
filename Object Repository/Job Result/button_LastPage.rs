@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>selected_DDL</name>
+   <name>button_LastPage</name>
    <tag></tag>
-   <elementGuidId>f8b9a10e-c755-44ae-96ab-6253c888475a</elementGuidId>
+   <elementGuidId>ca27a803-7f92-454e-94a6-f840d37910cf</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'ng-option-label ng-star-inserted']</value>
+         <value>//*[@class = 'datatable-icon-skip']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>ng-option-label ng-star-inserted</value>
-      <webElementGuid>7c703ed1-6015-4f6e-9625-58459e120174</webElementGuid>
+      <value>datatable-icon-skip</value>
+      <webElementGuid>4dfbd10c-2457-4f86-8179-efee9d5b5881</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
