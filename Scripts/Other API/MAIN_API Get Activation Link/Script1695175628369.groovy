@@ -72,11 +72,37 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'write to excel url'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 4, GlobalVariable.NumofColm - 
                     1, ('<' + url) + '>')
-
-                if (GlobalVariable.FlagFailed == 0) {
-                    'write to excel success'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
-                        1, GlobalVariable.StatusSuccess)
+				
+				'declare arraylist arraymatch'
+				arrayMatch = []
+				if (GlobalVariable.checkStoreDB == 'Yes') {
+					ArrayList<String> result = CustomKeywords.'connection.APIFullService.checkAPIGetActLinkStoreDB'(conneSign,
+							findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('idKTP')).replace('"', ''))
+					
+					if (GlobalVariable.Psre == 'VIDA' || GlobalVariable.Psre == 'PRIVY') {
+						'verify is_active'
+						arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), '1', false, FailureHandling.CONTINUE_ON_FAILURE))
+					} else if (GlobalVariable.Psre == 'DIGI' || GlobalVariable.Psre == 'TKNAJ') {
+						'verify is_active'
+						arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), '0', false, FailureHandling.CONTINUE_ON_FAILURE))
+					}
+					
+					'verify is_registered'
+					arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), '1', false, FailureHandling.CONTINUE_ON_FAILURE))
+				} 
+				
+                'jika data db tidak sesuai dengan excel'
+                if (arrayMatch.contains(false)) {
+                	'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+                	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                			GlobalVariable.StatusFailed, (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, 
+                					rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
+                	
+                	GlobalVariable.FlagFailed = 1
+                } else if (GlobalVariable.FlagFailed == 0) {
+                	'write to excel success'
+                	CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
+                			1, GlobalVariable.StatusSuccess)
                 }
             } else {
                 getErrorMessageAPI(responGetActLink)

@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "9E2344F117630B9ED50DEB7B2C81FA26",
+  "keywordFileContentHash": "75D300DFBEC8FF429D257B8CB712F3BC",
   "keywordClasses": [
     {
       "name": "connection.APIFullService",
@@ -2144,6 +2144,38 @@
             },
             {
               "name": "idKtp",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "checkAPIGetActLinkStoreDB",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "idno",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

@@ -1000,4 +1000,23 @@ public class APIFullService {
 
 		updateVariable = stm.executeUpdate("UPDATE ms_vendor_registered_user SET email_service = '"+ value +"' WHERE id_ms_user IN (SELECT mvr.id_ms_user FROM ms_vendor_registered_user mvr JOIN am_msuser am ON mvr.id_ms_user = am.id_ms_user WHERE am.hashed_id_no = encode(sha256('"+ idKtp +"'), 'hex'))")
 	}
+	
+	@Keyword
+	checkAPIGetActLinkStoreDB(Connection conn, String idno) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select mvru.is_active, mvru.is_registered from ms_vendor_registered_user mvru JOIN ms_vendor mv ON mv.id_ms_vendor = mvru.id_ms_vendor JOIN am_msuser am ON am.id_ms_user = mvru.id_ms_user where vendor_code = '" +  GlobalVariable.Psre  + "' AND am.hashed_id_no = encode(sha256('" +  idno  + "'), 'hex')")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
 }
