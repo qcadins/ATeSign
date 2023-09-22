@@ -11,11 +11,24 @@
       <value></value>
       <variableId>735622f7-17cf-4bf5-8dc0-ead84395e64e</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>4404df2b-005c-4114-ac56-86fb8c53c820</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>'PencarianDokumen/PencarianDokumen'</defaultValue>
       <description></description>
       <id>735622f7-17cf-4bf5-8dc0-ead84395e64e</id>
       <masked>false</masked>
       <name>excelPathPencarianDokumen</name>
+   </variable>
+   <variable>
+      <defaultValue>'PencarianDokumen'</defaultValue>
+      <description></description>
+      <id>4404df2b-005c-4114-ac56-86fb8c53c820</id>
+      <masked>false</masked>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>

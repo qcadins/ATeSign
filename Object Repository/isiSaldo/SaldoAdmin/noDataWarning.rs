@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>button_ViewSigner</name>
+   <name>noDataWarning</name>
    <tag></tag>
-   <elementGuidId>9cac65ac-42ac-47ff-a672-1fa047bbb12d</elementGuidId>
+   <elementGuidId>b957123a-3bc3-4c0d-9d79-1b206fae3369</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@title = 'Penanda Tangan']/em</value>
+         <value>//*[@class = 'empty-row ng-star-inserted']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>class</name>
       <type>Main</type>
-      <value>//*[@title = 'Penanda Tangan']/em</value>
-      <webElementGuid>574eb9b0-9359-40dc-91fa-2ac27610afa9</webElementGuid>
+      <value>empty-row ng-star-inserted</value>
+      <webElementGuid>5732dbb1-6cc1-4788-971d-e6f4f2e50955</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

@@ -972,7 +972,7 @@ def sortingSequenceSign() {
 //			
 //			index = seqSignRole.indexOf(roleUI[1]) + 1
 			
-			index = seqSignRole.indexOf(WebUI.getText(modifyObject)) + 1
+			index = seqSignRole.indexOf(WebUI.getText(modifyObject).replace(seq.toString() + '.  ', '')) + 1
 			
 			if (seq != index) {
 				'modify label tipe tanda tangan di kotak'

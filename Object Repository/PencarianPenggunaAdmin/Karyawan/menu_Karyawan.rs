@@ -7,17 +7,25 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[contains(@class, 'sidebar-content main-menu-content')]/div[1]/ul/li[8]/ul/li[1]/a/span</value>
+         <value>//*[@href = '/users/inquiry/employee']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>//*[contains(@class, 'sidebar-content main-menu-content')]/div[1]/ul/li[8]/ul/li[1]/a/span</value>
-      <webElementGuid>6ea77219-5e7d-4a72-b39f-88829405343f</webElementGuid>
+      <webElementGuid>1503f467-2c40-440b-aeea-39d12f2168fa</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>href</name>
+      <type>Main</type>
+      <value>/users/inquiry/employee</value>
+      <webElementGuid>ed80b5a9-fe05-4702-aec5-0ccb6754a80c</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
