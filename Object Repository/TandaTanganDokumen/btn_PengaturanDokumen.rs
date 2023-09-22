@@ -6,6 +6,10 @@
    <elementGuidId>55bdf755-d718-44de-a639-ad4c707b0f62</elementGuidId>
    <selectorCollection>
       <entry>
+         <key>BASIC</key>
+         <value>//*[(text() = 'Pengaturan Dokumen' or . = 'Pengaturan Dokumen')]</value>
+      </entry>
+      <entry>
          <key>XPATH</key>
          <value>(.//*[normalize-space(text()) and normalize-space(.)='Keluar'])[1]/following::span[1]</value>
       </entry>
@@ -22,7 +26,7 @@
       <name>tag</name>
       <type>Main</type>
       <value>span</value>
-      <webElementGuid>429cf179-f4fe-403d-a326-98faf3a842cb</webElementGuid>
+      <webElementGuid>5d3ea573-44eb-4764-bf5c-421264dedc8a</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -30,7 +34,7 @@
       <name>class</name>
       <type>Main</type>
       <value>menu-title ng-tns-c133-1</value>
-      <webElementGuid>bc3f1b5b-1728-43bc-a2d3-7c744ea4cf82</webElementGuid>
+      <webElementGuid>d421a1d7-9a86-4221-b127-7393f2bad47f</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -38,7 +42,7 @@
       <name>text</name>
       <type>Main</type>
       <value>Pengaturan Dokumen</value>
-      <webElementGuid>fa76207a-75bf-4001-8e08-50da5e06b218</webElementGuid>
+      <webElementGuid>5a1048e6-ce53-4ed5-8b0e-5db16a85c9c6</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -46,7 +50,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html[1]/body[@class=&quot;vertical-layout navbar-static pace-done menu-expanded menu-open vertical-menu&quot;]/app-root[1]/app-full-layout[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;wrapper&quot;]/div[@class=&quot;app-sidebar main-menu menu-fixed menu-native-scroll expanded ng-star-inserted&quot;]/app-sidebar[@class=&quot;ng-tns-c133-1&quot;]/div[@class=&quot;sidebar-content main-menu-content ng-tns-c133-1 ps&quot;]/div[@class=&quot;nav-container ng-tns-c133-1&quot;]/ul[@class=&quot;navigation ng-tns-c133-1&quot;]/li[@class=&quot;ng-tns-c133-1 ng-star-inserted active&quot;]/a[@class=&quot;ng-tns-c133-1 ng-star-inserted&quot;]/span[@class=&quot;menu-title ng-tns-c133-1&quot;]</value>
-      <webElementGuid>69d566a3-04b5-4cba-bef1-cf209a52369f</webElementGuid>
+      <webElementGuid>e39f216f-948e-4e74-91b4-ba354eb1e8e0</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -54,7 +58,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Keluar'])[1]/following::span[1]</value>
-      <webElementGuid>aa3f58db-03d8-4d14-9df4-a257ae9c8166</webElementGuid>
+      <webElementGuid>e39ab465-9d74-4012-8549-89df27c9d426</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -62,7 +66,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Ubah Kode Akses'])[1]/following::span[2]</value>
-      <webElementGuid>8e928c29-8fa0-4d76-b758-8fe8c6d583c4</webElementGuid>
+      <webElementGuid>5ff6d306-1065-42fa-a5e7-8620aab50038</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -70,7 +74,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Pengaturan Dokumen'])[2]/preceding::span[1]</value>
-      <webElementGuid>a137e305-8659-4873-9f9e-06c86735fdd9</webElementGuid>
+      <webElementGuid>7cd6fa46-f7da-4e64-ad94-202d54330d12</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -78,7 +82,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Baru'])[1]/preceding::span[1]</value>
-      <webElementGuid>d7625b0e-689a-443f-a48e-df571c4b4069</webElementGuid>
+      <webElementGuid>e9d3b8bb-ec84-4bb1-9593-9427a7c12d3a</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -86,7 +90,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='Pengaturan Dokumen']/parent::*</value>
-      <webElementGuid>c7f598a1-6ac4-44d2-a75c-447bb17a21b7</webElementGuid>
+      <webElementGuid>4d5abd34-061f-42ef-b9de-782771727b63</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -94,7 +98,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//app-sidebar/div[2]/div/ul/li/a/span</value>
-      <webElementGuid>ccfff0e8-f4c3-42a5-a562-00ea64160dcc</webElementGuid>
+      <webElementGuid>1c9ae5b3-e303-418e-8eb0-1757e2fa4644</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -102,6 +106,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//span[(text() = 'Pengaturan Dokumen' or . = 'Pengaturan Dokumen')]</value>
-      <webElementGuid>fbf413fb-d9d1-44c5-a26f-8d4de0effb70</webElementGuid>
+      <webElementGuid>3198b1c1-3e36-470a-9e1a-686f9cd6cf17</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

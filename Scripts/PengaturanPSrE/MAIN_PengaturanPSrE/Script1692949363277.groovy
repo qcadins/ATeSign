@@ -23,8 +23,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
     if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
     } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
-        GlobalVariable.FlagFailed = 0
-
 		'check if email login case selanjutnya masih sama dengan sebelumnya'
 		if (findTestData(excelPath).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) != 
 			findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')) || firstRun == 0) {
@@ -37,6 +35,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		
 		'click menu pengaturan PSrE'
 		WebUI.click(findTestObject('PengaturanPSrE/menu_PengaturanPSrE'))
+		
+		if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
+			GlobalVariable.FlagFailed = 0
+		}
 		
         if (GlobalVariable.NumofColm == 2) {
             'call function check paging'

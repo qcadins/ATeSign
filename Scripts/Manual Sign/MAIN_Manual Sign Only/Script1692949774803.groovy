@@ -49,8 +49,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             firstRun = 1
         }
         
-        'declare flag failed'
-        GlobalVariable.FlagFailed = 0
+		if (findTestData(excelPathManualSign).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
+			GlobalVariable.FlagFailed = 0
+		}
 
         'Inisialisasi array dan variable'
         ArrayList namaTandaTangan = [], notelpTandaTangan = []

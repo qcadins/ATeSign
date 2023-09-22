@@ -29,7 +29,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'check if tidak mau menggunakan tenant code yang benar'
         if (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 16) == 'No') {
             'set tenant kosong'
-            GlobalVariable.Tenant = findTes	tData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 17)
+            GlobalVariable.Tenant = findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 17)
         } else if (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 16) == 'Yes') {
             GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
         }

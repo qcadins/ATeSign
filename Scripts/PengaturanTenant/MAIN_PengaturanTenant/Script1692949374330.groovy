@@ -28,7 +28,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
     if (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
     } else if (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
-		 GlobalVariable.FlagFailed = 0
 		 
 		 if(findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) !=
 			 findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')) || firstRun == 0) {
@@ -56,6 +55,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		
         'Klik menu pengaturan tenant'
         WebUI.click(findTestObject('PengaturanTenant/menu_PengaturanTenant'))
+		
+		if (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
+			GlobalVariable.FlagFailed = 0
+		}
 
         'Delay 5 karena batas Saldonya loading lumayan lama.'
         WebUI.delay(5)

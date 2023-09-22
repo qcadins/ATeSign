@@ -41,6 +41,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			firstRun = 1
 		}
 		
+		if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
+			GlobalVariable.FlagFailed = 0
+		}
+		
         if (GlobalVariable.NumofColm == 2) {          
             'call function check paging'
             checkPaging(currentDate, firstDateOfMonth, conneSign)
@@ -338,14 +342,28 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
 	    'verify paging di page 1'
 	    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE), 
 	            '1', false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+		'get total page'
+		variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-stamp-duty > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
+		
+		'click last page'
+		WebUI.click(findTestObject('Meterai/button_LastPage'))
 	
-	    'click last page'
-	    WebUI.click(findTestObject('Meterai/button_LastPage'))
-	
-	    'verify paging di last page'
-	    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE), 
-	            WebUI.getAttribute(findTestObject('Meterai/page_Active'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE).replace(
-	                'page ', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
+		'get total data'
+		lastPage = Double.parseDouble(WebUI.getText(findTestObject('Meterai/label_TotalData')).split(' ',-1)[0])/10
+		
+		'jika hasil perhitungan last page memiliki desimal'
+		if (lastPage.toString().contains('.0')) {
+			'tidak ada round up'
+			additionalRoundUp = 0
+		} else {
+			'round up dengan tambahan 0.5'
+			additionalRoundUp = 0.5
+		}
+		
+		'verify paging di page terakhir'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/paging_Page'), 'aria-label',
+					FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage+additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
 	
 	    'click first page'
 	    WebUI.click(findTestObject('Meterai/button_FirstPage'))

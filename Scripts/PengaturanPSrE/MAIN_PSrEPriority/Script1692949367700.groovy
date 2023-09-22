@@ -21,7 +21,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 	if (findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
 		break
 	} else if (findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')){			
-		GlobalVariable.FlagFailed = 0
 		
 		'check if email login case selanjutnya masih sama dengan sebelumnya'
 		if (findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) !=
@@ -44,6 +43,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		
 		'click menu priority PSrE'
 		WebUI.click(findTestObject('PengaturanPSrE/PSRe Priority/menu_PsrePriority'))
+		
+		if (findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
+			GlobalVariable.FlagFailed = 0
+		}
 		
 		'delay untuk menu Psre loading'
 		WebUI.delay(15)

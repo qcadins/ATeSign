@@ -27,8 +27,9 @@ indexForCatatanStamp = 0
 WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathManualSigntoSign, ('Email') : 'Email Login', ('Password') : 'Password Login'
 , ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
 
-'declare flag failed'
-GlobalVariable.FlagFailed = 0
+if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
+	GlobalVariable.FlagFailed = 0
+}
 
 'Inisialisasi array dan variable'
 ArrayList namaTandaTangan = [], notelpTandaTangan = []

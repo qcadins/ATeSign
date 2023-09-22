@@ -36,15 +36,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			
 			firstRun = 1
 		}
-
+		
+		'click menu Edit Signer Data'
+		WebUI.click(findTestObject('Edit Signer Data/menu_Edit Signer Data'))
+		
         'Jika kolom kedua'
         if (GlobalVariable.NumofColm == 2) {
             'call function check paging'
             checkPaging(conneSign)
         }
-        
-        'click menu Edit Signer Data'
-        WebUI.click(findTestObject('Edit Signer Data/menu_Edit Signer Data'))
+
         
         'check if search dengan email/NIK'
         if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Use input ?')).equalsIgnoreCase('Email')) {
@@ -305,10 +306,20 @@ def checkPaging(Connection conneSign) {
         'click last page'
         WebUI.click(findTestObject('Edit Signer Data/button_LastPage'))
 
+		'get total data'
+		lastPage = Double.parseDouble(WebUI.getText(findTestObject('Edit Signer Data/label_TotalEditSignerData')).split(' ',-1)[0])/10
+		
+		'jika hasil perhitungan last page memiliki desimal'
+		if (lastPage.toString().contains('.0')) {
+			'tidak ada round up'
+			additionalRoundUp = 0
+		} else {
+			'round up dengan tambahan 0.5'
+			additionalRoundUp = 0.5
+		}
         'verify paging di last page'
-        checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Edit Signer Data/paging_Page'), 'ng-reflect-page', 
-                    FailureHandling.CONTINUE_ON_FAILURE), WebUI.getAttribute(findTestObject('Edit Signer Data/page_Active'), 
-                    'aria-label', FailureHandling.CONTINUE_ON_FAILURE).replace('page ', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
+        checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Edit Signer Data/paging_Page'), 'aria-label', 
+					FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage+additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'click first page'
         WebUI.click(findTestObject('Edit Signer Data/button_FirstPage'))

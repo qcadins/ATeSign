@@ -91,6 +91,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         'ganti fokus robot ke tab baru'
         WebUI.switchToWindowIndex(currentTab)
 
+		if (findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
+			GlobalVariable.FlagFailed = 0
+		}
+		
         'Jika kolomnya berada pada kedua'
         if (GlobalVariable.NumofColm == 2) {
             inputCancel(conneSign)

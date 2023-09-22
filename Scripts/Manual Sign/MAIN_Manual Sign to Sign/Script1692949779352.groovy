@@ -51,7 +51,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		
 		'jika ada proses cancel doc'
 		if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Send?')) == 'Yes') {
-			
 			'lanjutkan loop'
 			continue
 		}
@@ -100,7 +99,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
         'looping email signer'
         for (int o = 1; o <= emailSigner.size(); o++) {
-			
 			'dapatkan count untuk limit harian facecompare akun tersebut'
 			int countLivenessFaceComp = CustomKeywords.'connection.DataVerif.getCountFaceCompDaily'(conneSign, emailSigner[o-1])
 			

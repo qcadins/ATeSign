@@ -225,4 +225,33 @@ def checkPaging() {
 	
 	'verify page 1 active'
 	checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/label_Page'), 'ng-reflect-page'), '1', false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	'get total page'
+	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-error-report > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
+	
+	'click max page'
+	WebUI.click(findTestObject('ErrorReport/button_MaxPage'))
+
+	'get total data'
+	lastPage = Double.parseDouble(WebUI.getText(findTestObject('ErrorReport/label_TotalData')).split(' ',-1)[0])/10
+	
+	'jika hasil perhitungan last page memiliki desimal'
+	if (lastPage.toString().contains('.0')) {
+		'tidak ada round up'
+		additionalRoundUp = 0
+	} else {
+		'round up dengan tambahan 0.5'
+		additionalRoundUp = 0.5
+	}
+	
+	'verify paging di page terakhir'
+	checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/paging_Page'), 'aria-label',
+				FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage+additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+	'click min page'
+	WebUI.click(findTestObject('ErrorReport/button_MinPage'))
+
+	 'verify page 1 active'
+	checkVerifyPaging(WebUI.getAttribute(findTestObject('ErrorReport/page_1'), 'class', FailureHandling.CONTINUE_ON_FAILURE).contains('active'))
+
 }

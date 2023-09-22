@@ -32,6 +32,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     if (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+		
+		if (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+			GlobalVariable.FlagFailed = 0
+		}
+		
         'input nama pelanggan'
         WebUI.setText(findTestObject('PencarianDokumen/input_NamaPelanggan'), findTestData(excelPathPencarianDokumen).getValue(
                 GlobalVariable.NumofColm, 9))
@@ -317,20 +322,27 @@ public checkPaging(Connection conneSign) {
     checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/button_Page1'), 'class', FailureHandling.CONTINUE_ON_FAILURE), 
             'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
 
-    'get total page'
-    def variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
-
-    'modify object last Page'
-    def modifyObjectLastPage = WebUI.modifyObjectProperty(findTestObject('PencarianDokumen/modifyObject'), 'xpath', 'equals', 
-        ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-inquiry/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' + 
-        (variable.size() - 2).toString()) + ']', true)
-
-    'click max page'
+	'get total page'
+	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
+	
+	'click max page'
     WebUI.click(findTestObject('PencarianDokumen/button_MaxPage'))
 
-    'verify paging di page terakhir'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(modifyObjectLastPage, 'class', FailureHandling.CONTINUE_ON_FAILURE), 
-            'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
+	'get total data'
+	lastPage = Double.parseDouble(WebUI.getText(findTestObject('PencarianDokumen/label_TotalData')).split(' ',-1)[0])/10
+	
+	'jika hasil perhitungan last page memiliki desimal'
+	if (lastPage.toString().contains('.0')) {
+		'tidak ada round up'
+		additionalRoundUp = 0
+	} else {
+		'round up dengan tambahan 0.5'
+		additionalRoundUp = 0.5
+	}
+	
+	'verify paging di page terakhir'
+	checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/paging_Page'), 'aria-label',
+				FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage+additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'click min page'
     WebUI.click(findTestObject('PencarianDokumen/button_MinPage'))

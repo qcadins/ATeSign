@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>selected_DDL</name>
+   <name>paging_Page</name>
    <tag></tag>
-   <elementGuidId>f8b9a10e-c755-44ae-96ab-6253c888475a</elementGuidId>
+   <elementGuidId>debe4c81-7ed2-4784-84e7-9cf4ba73244b</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'ng-option-label ng-star-inserted']</value>
+         <value>//*[@class = 'datatable-pager ng-star-inserted']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>ng-option-label ng-star-inserted</value>
-      <webElementGuid>7c703ed1-6015-4f6e-9625-58459e120174</webElementGuid>
+      <value>datatable-pager ng-star-inserted</value>
+      <webElementGuid>25f8587b-4748-4c77-bfe6-999e059e46b5</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

@@ -569,7 +569,6 @@ def checkPaging() {
 	
 	'check if ada paging'
 	if(WebUI.verifyElementVisible(findTestObject('DocumentMonitoring/button_NextPage'), FailureHandling.OPTIONAL)) {
-		
 		'click next page'
 		WebUI.click(findTestObject('DocumentMonitoring/button_NextPage'))
 		
@@ -601,7 +600,7 @@ def checkPaging() {
 			'round up dengan tambahan 0.5'
 			additionalRoundUp = 0.5
 		}
-		
+
 		'verify paging di page terakhir'
 		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DocumentMonitoring/paging_Page'), 'aria-label',
 					FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage+additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))

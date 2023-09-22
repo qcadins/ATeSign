@@ -35,8 +35,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 	if (findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
 		break
 	} else if (findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
-		'set penanda error menjadi 0'
-		GlobalVariable.FlagFailed = 0
 
 		if(findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) != 
 			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')) || firstRun == 0) {
@@ -47,6 +45,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			firstRun = 1
 		}
 	
+		if (findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
+			GlobalVariable.FlagFailed = 0
+		}
+		
         if (GlobalVariable.NumofColm == 2) {
             'click menu saldo'
             WebUI.click(findTestObject('saldo/menu_saldo'))
@@ -277,14 +279,28 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
 		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Saldo/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE),
 				'1', false, FailureHandling.CONTINUE_ON_FAILURE), ' button page sebelumnya tidak berfungsi')
 	
+		'get total page'
+		variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
+		
 		'click last page'
 		WebUI.click(findTestObject('Saldo/button_LastPage'))
 	
-		'verify paging di last page'
-		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Saldo/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE),
-				WebUI.getAttribute(findTestObject('Saldo/page_Active'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE).replace(
-					'page ', ''), false, FailureHandling.CONTINUE_ON_FAILURE), ' button page terakhir tidak berfungsi')
-	
+		'get total data'
+		lastPage = Double.parseDouble(WebUI.getText(findTestObject('Saldo/label_TotalData')).split(' ',-1)[0])/10
+		
+		'jika hasil perhitungan last page memiliki desimal'
+		if (lastPage.toString().contains('.0')) {
+			'tidak ada round up'
+			additionalRoundUp = 0
+		} else {
+			'round up dengan tambahan 0.5'
+			additionalRoundUp = 0.5
+		}
+		
+		'verify paging di page terakhir'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Saldo/paging_Page'), 'aria-label',
+					FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage+additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE), 'last page')
+
 		'click first page'
 		WebUI.click(findTestObject('Saldo/button_FirstPage'))
 	

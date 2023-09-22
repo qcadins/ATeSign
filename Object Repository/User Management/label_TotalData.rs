@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>selected_DDL</name>
+   <name>label_TotalData</name>
    <tag></tag>
-   <elementGuidId>f8b9a10e-c755-44ae-96ab-6253c888475a</elementGuidId>
+   <elementGuidId>fd81a5ec-be10-403e-b1d3-92649e730bed</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'ng-option-label ng-star-inserted']</value>
+         <value>//*[@class = '/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/div']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>ng-option-label ng-star-inserted</value>
-      <webElementGuid>7c703ed1-6015-4f6e-9625-58459e120174</webElementGuid>
+      <value>page-count ng-star-inserted</value>
+      <webElementGuid>8638b732-b9e0-418e-babe-bee1d2736d01</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

@@ -267,16 +267,24 @@ def checkPaging() {
 	'get total page'
 	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-error-report > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
 	
-	'modify object last Page'
-	modifyObjectLastPage = WebUI.modifyObjectProperty(findTestObject('ErrorReport/modifyObject'), 'xpath', 'equals',
-		('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-error-report/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' +
-		(variable.size() - 2)) + ']', true)
-
 	'click max page'
 	WebUI.click(findTestObject('ErrorReport/button_MaxPage'))
 
+	'get total data'
+	lastPage = Double.parseDouble(WebUI.getText(findTestObject('ErrorReport/label_TotalData')).split(' ',-1)[0])/10
+	
+	'jika hasil perhitungan last page memiliki desimal'
+	if (lastPage.toString().contains('.0')) {
+		'tidak ada round up'
+		additionalRoundUp = 0
+	} else {
+		'round up dengan tambahan 0.5'
+		additionalRoundUp = 0.5
+	}
+	
 	'verify paging di page terakhir'
-	checkVerifyPaging(WebUI.getAttribute(modifyObjectLastPage, 'class', FailureHandling.CONTINUE_ON_FAILURE).contains('active'), ' last page')
+	checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/paging_Page'), 'aria-label',
+				FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage+additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE), 'last page')
 
 	'click min page'
 	WebUI.click(findTestObject('ErrorReport/button_MinPage'))
