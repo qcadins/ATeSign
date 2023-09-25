@@ -1000,7 +1000,7 @@ public class APIFullService {
 
 		updateVariable = stm.executeUpdate("UPDATE ms_vendor_registered_user SET email_service = '"+ value +"' WHERE id_ms_user IN (SELECT mvr.id_ms_user FROM ms_vendor_registered_user mvr JOIN am_msuser am ON mvr.id_ms_user = am.id_ms_user WHERE am.hashed_id_no = encode(sha256('"+ idKtp +"'), 'hex'))")
 	}
-	
+
 	@Keyword
 	checkAPIGetActLinkStoreDB(Connection conn, String idno) {
 		stm = conn.createStatement()

@@ -58,13 +58,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			GlobalVariable.FlagFailed = 0
 		}
 		
-		if (GlobalVariable.NumofColm == 2) {
-			'call function chceck paging'
-			checkPaging()
-			
-			'call function input cancel'
-			inputCancel(conneSign, checked)
-		}
+//		if (GlobalVariable.NumofColm == 2) {
+//			'call function chceck paging'
+//			checkPaging()
+//			
+//			'call function input cancel'
+//			inputCancel(conneSign, checked)
+//		}
 		
 		'Pembuatan variable mengenai jumlah delete, jumlah lock, dan indexlock untuk loop kedepannya'
         RoleTandaTangan = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('$RoleTandaTangan')).split(semicolon, splitIndex)
@@ -312,14 +312,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 				
 				'Jika error lognya muncul'
 				if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+					
 					'ambil teks errormessage'
 					errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
 					
-					'Tulis di excel itu adalah error'
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-					(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + '<' + errormessage + '>')
-					
-					GlobalVariable.FlagFailed = 1
+					'jika error message tidak menandakan tidak berhasil'
+					if(!errormessage.contains('berhasil di update.')) {
+						
+						'Tulis di excel itu adalah error'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+						(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + '<' + errormessage + '>')
+						
+						GlobalVariable.FlagFailed = 1
+					}
 				}
 
                 if (isMandatoryComplete > 0) {
@@ -731,7 +736,7 @@ def checkPaging() {
 		WebUI.click(findTestObject('TandaTanganDokumen/button_MaxPage'))
 	
 		'get total data'
-		lastPage = Double.parseDouble(WebUI.getText(findTestObject('TandaTanganDokumen/label_TotalData')).split(' ',-1)[0])/10
+		lastPage = Double.parseDouble(WebUI.getText(findTestObject('TandaTanganDokumen/label_TotalData')).split(' ',-1)[0])/25
 		
 		'jika hasil perhitungan last page memiliki desimal'
 		if (lastPage.toString().contains('.0')) {
@@ -743,8 +748,8 @@ def checkPaging() {
 		}
 		
 		'verify paging di page terakhir'
-		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('TandaTanganDokumen/paging_Page'), 'aria-label',
-					FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage+additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('TandaTanganDokumen/paging_Page'), 'ng-reflect-page',
+					FailureHandling.CONTINUE_ON_FAILURE), Math.round(lastPage+additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
 	
 	    'click min page'
 	    WebUI.click(findTestObject('TandaTanganDokumen/button_MinPage'))
@@ -972,7 +977,7 @@ def sortingSequenceSign() {
 //			
 //			index = seqSignRole.indexOf(roleUI[1]) + 1
 			
-			index = seqSignRole.indexOf(WebUI.getText(modifyObject).replace(seq.toString() + '.  ', '')) + 1
+			index = seqSignRole.indexOf(WebUI.getText(modifyObject).replace(seq.toString() + '. ', '')) + 1
 			
 			if (seq != index) {
 				'modify label tipe tanda tangan di kotak'

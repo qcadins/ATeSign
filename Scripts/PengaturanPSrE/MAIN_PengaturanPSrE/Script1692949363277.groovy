@@ -55,7 +55,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     ' total', false, FailureHandling.CONTINUE_ON_FAILURE), ' pada Total data PSrE')
 
             'call function verif and input'
-            verifinputEdit(conneSign)
+			if (verifinputEdit(conneSign) == false) {
+				
+				'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+					(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed'))) + 'Hasil pencarian tidak muncul di UI')
+				
+				continue
+			}
 
             'get data Vendor Payment Type'
             ArrayList<String> resultDDLVendorPayment = CustomKeywords.'connection.PengaturanPSrE.getDDLVendorPaymentType'(
@@ -79,7 +86,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         }
         
         'call function verif and input'
-        verifinputEdit(conneSign)
+		if (verifinputEdit(conneSign) == false) {
+			
+			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+				(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed'))) + 'Hasil pencarian tidak muncul di UI')
+			
+			GlobalVariable.FlagFailed = 1
+			
+			continue
+		}
 
         'declare isMmandatory Complete'
         int isMandatoryComplete = Integer.parseInt(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Is Mandatory Complete')))
@@ -104,18 +120,27 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'click button OK'
             WebUI.click(findTestObject('PengaturanPSrE/button_OK'))
 
-            'write to excel success'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
-                1, GlobalVariable.StatusSuccess)
-
             'call function after edit verify'
-            verifAfterEdit()
-
-            'check if store DB Yes'
-            if (GlobalVariable.checkStoreDB == 'Yes') {
-                'call function pengaturan PSrE store DB'
-                pengaturanPSrEStoreDB(conneSign)
-            }
+            if (verifAfterEdit() == false) {
+				
+				'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+					(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed'))) + 'Hasil pencarian tidak muncul di UI')
+			} else {
+				
+				if (GlobalVariable.FlagFailed == 0) {
+					
+					'write to excel success'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
+						1, GlobalVariable.StatusSuccess)
+				}
+				
+				'check if store DB Yes'
+				if (GlobalVariable.checkStoreDB == 'Yes') {
+					'call function pengaturan PSrE store DB'
+					pengaturanPSrEStoreDB(conneSign)
+				}
+			}
         } else {
             'write to excel Failed'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
@@ -152,6 +177,12 @@ def verifAfterEdit() {
 
     'click button cari'
     WebUI.click(findTestObject('PengaturanPSrE/button_Cari'))
+	
+	'jika tidak muncul hasil pencarian'
+	if(WebUI.verifyElementPresent(findTestObject('PengaturanPSrE/noDataWarning'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		
+		return false
+	}
 
     'verify nama vendor after edit'
     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('PengaturanPSrE/label_NamaVendor')).toUpperCase(), 
@@ -196,6 +227,12 @@ def verifinputEdit(Connection conneSign) {
 
     'click button cari'
     WebUI.click(findTestObject('PengaturanPSrE/button_Cari'))
+	
+	'jika tidak muncul hasil pencarian'
+	if(WebUI.verifyElementPresent(findTestObject('PengaturanPSrE/noDataWarning'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		
+		return false
+	}
 
     'click button edit'
     WebUI.click(findTestObject('PengaturanPSrE/button_Edit'))

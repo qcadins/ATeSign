@@ -346,8 +346,8 @@ public checkPaging(Connection conneSign) {
 	}
 	
 	'verify paging di page terakhir'
-	checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/paging_Page'), 'aria-label',
-				FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage+additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+	checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/paging_Page'), 'ng-reflect-page',
+				FailureHandling.CONTINUE_ON_FAILURE), Math.round(lastPage+additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'click min page'
     WebUI.click(findTestObject('PencarianDokumen/button_MinPage'))

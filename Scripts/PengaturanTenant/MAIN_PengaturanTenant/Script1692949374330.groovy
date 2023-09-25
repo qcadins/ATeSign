@@ -87,7 +87,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             modifyObjectInputEmail = WebUI.modifyObjectProperty(findTestObject('PengaturanTenant/input_PenerimaEmailReminderSaldo'), 
                 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/div[' + 
                 index) + ']/div/input', true)
-
+			
 			'Scroll ke email tersebut'
             WebUI.scrollToElement(modifyObjectInputEmail, GlobalVariable.TimeOut)
 			
@@ -293,19 +293,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             }
         }
         
-        'Jika Unchange url Activation CallBacknya No'
-        if (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('Unchange urlActivationCallback')) == 'No') {
-            'activation Callback Url dari excel'
-            activationCallBackUrl = findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('urlActivationCallback'))
-
-            'Input activation Call Back Url'
-			setTextEmptyValidation(findTestObject('PengaturanTenant/input_Tambah_activationCallbackUrl'), 'urlActivationCallback')
-        } else {
-            'Jika Unchange url Activation CallBacknya Yes, maka mengambil value dari UI'
-            activationCallBackUrl = WebUI.getAttribute(findTestObject('PengaturanTenant/input_Tambah_activationCallbackUrl'), 
-                'value')
-        }
-		
+//        'Jika Unchange url Activation CallBacknya No'
+//        if (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('Unchange urlActivationCallback')) == 'No') {
+//            'activation Callback Url dari excel'
+//            activationCallBackUrl = findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('urlActivationCallback'))
+//
+//            'Input activation Call Back Url'
+//			setTextEmptyValidation(findTestObject('PengaturanTenant/input_Tambah_activationCallbackUrl'), 'urlActivationCallback')
+//        } else {
+//            'Jika Unchange url Activation CallBacknya Yes, maka mengambil value dari UI'
+//            activationCallBackUrl = WebUI.getAttribute(findTestObject('PengaturanTenant/input_Tambah_activationCallbackUrl'), 
+//                'value')
+//        }
+//		
 		'input pilihan untuk kirim notifikasi tanpa email'
 		if (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('Metode Pengiriman Notifikasi'))
 			== 'SMS') {
