@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>button_KirimOTPLagi</name>
+   <tag></tag>
+   <elementGuidId>317e48f7-4942-4fb6-bb0b-cfcc5799da40</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;btnotp&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;btnotp&quot;]</value>
+      <webElementGuid>1fc1934a-22c6-495f-8668-188b19180151</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

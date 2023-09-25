@@ -25,10 +25,10 @@
       <name>excelPathAPICheckSigning</name>
    </variable>
    <variable>
-      <defaultValue>'Login/Setting'</defaultValue>
+      <defaultValue>'API Check Signing Status'</defaultValue>
       <description></description>
       <id>069fc894-8d00-4bf2-8779-b99ed107c823</id>
       <masked>false</masked>
-      <name>excelPathSetting</name>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>

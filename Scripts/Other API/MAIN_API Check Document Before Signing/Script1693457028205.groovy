@@ -35,7 +35,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 	    'Jika status HIT API 200 OK'
 	    if (WS.verifyResponseStatusCode(responLogin, 200, FailureHandling.OPTIONAL) == true) {
 			
-			if(findTestData(excelPathCheckDocBeforeSigning).getValue(GlobalVariable.NumofColm, rowExcel('Use True Token?')).equalsIgnoreCase('Yes')) {
+			if(findTestData(excelPathCheckDocBeforeSigning).getValue(GlobalVariable.NumofColm, rowExcel('Use True Token')).equalsIgnoreCase('Yes')) {
 				'Parsing token menjadi GlobalVariable'
 				GlobalVariable.token = WS.getElementPropertyValue(responLogin, 'access_token')			
 			} else if(findTestData(excelPathCheckDocBeforeSigning).getValue(GlobalVariable.NumofColm, rowExcel('Use True Token')).equalsIgnoreCase('No')) {

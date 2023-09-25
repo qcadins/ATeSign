@@ -86,30 +86,40 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 						GlobalVariable.ReasonFailedProsesStamping + ' dengan alasan ' + errorMessageDB.toString())
 
 						GlobalVariable.FlagFailed = 1
-
 					}
-					
-                    'get trx from db'
-                    String result = CustomKeywords.'connection.APIFullService.getAPIRequestStampingTrx'(conneSign, findTestData(excelPathAPIRequestStamping).getValue(
-                        GlobalVariable.NumofColm, rowExcel('refNumber')).replace('"',''), totalMaterai)
 
-                    'declare arraylist arraymatch'
-                    arrayMatch = []
-					
-                    'verify saldo terpotong'
-                    arrayMatch.add(WebUI.verifyMatch(result, '-'+totalMaterai, false, FailureHandling.CONTINUE_ON_FAILURE))
+					'looping untuk cek saldo'
+					for (meteraiTrx = 1; meteraiTrx <= 20; meteraiTrx++) {
+						'declare arraylist arraymatch'
+						arrayMatch = []
+						
+						'get trx from db'
+						String result = CustomKeywords.'connection.APIFullService.getAPIRequestStampingTrx'(conneSign, findTestData(excelPathAPIRequestStamping).getValue(
+								GlobalVariable.NumofColm, rowExcel('refNumber')).replace('"',''), totalMaterai)
+						
+						'verify saldo terpotong'
+						arrayMatch.add(WebUI.verifyMatch(result, '-'+totalMaterai, false, FailureHandling.OPTIONAL))
+						
+						'jika data db tidak sesuai dengan excel'
+	                    if (arrayMatch.contains(false)) {
+							if(meteraiTrx == 20) {
+								'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+								CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+									GlobalVariable.StatusFailed, (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, 
+										rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB + ' Pemotongan Saldo tidak sesuai jumlah stamping')								
+							}
+							
+							WebUI.delay(10)
+	                    } else {
+	                        'write to excel success'
+	                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
+	                            0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+							
+							break
+	                    }
+					}
 
-                    'jika data db tidak sesuai dengan excel'
-                    if (arrayMatch.contains(false)) {
-                        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                            GlobalVariable.StatusFailed, (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, 
-                                rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
-                    } else {
-                        'write to excel success'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
-                            0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-                    }
+                    
                 }
             } else {
                'call function get error msg'

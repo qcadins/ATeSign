@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>button_ProsesOTP</name>
+   <tag></tag>
+   <elementGuidId>8738b53d-d7ef-48cc-8e87-b9947d867391</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;prosesOTP&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;prosesOTP&quot;]</value>
+      <webElementGuid>e7f2b2d0-d958-4913-b3c5-6918a7f40f99</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>
