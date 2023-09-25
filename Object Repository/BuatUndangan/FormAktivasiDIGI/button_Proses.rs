@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>button_Proses</name>
+   <tag></tag>
+   <elementGuidId>f2913cf7-d67e-4e2d-b285-be8b76b3b494</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;prosesaktivasi&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;prosesaktivasi&quot;]</value>
+      <webElementGuid>f2ca227e-c39b-4c64-b307-e4b32e8bc26f</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>
