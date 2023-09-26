@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[(text() = 'Cancel' or . = 'Cancel')]</value>
+         <value>//*[@class = 'btn btn-light mr-2']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -18,14 +18,22 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/div[24]/div/button[1]</value>
-      <webElementGuid>a06dbdee-1223-4acf-93d6-b81c0eca9931</webElementGuid>
+      <webElementGuid>078bdfec-71d3-4b9f-9e36-3bc2fb68bfae</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>text</name>
       <type>Main</type>
       <value>Cancel</value>
-      <webElementGuid>63f693bc-d2c3-4f2c-987b-f0cf73790311</webElementGuid>
+      <webElementGuid>066939af-28b7-4d4d-ae9d-a9e9a45597c8</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>btn btn-light mr-2</value>
+      <webElementGuid>1351b717-6e72-4357-a7b2-40e5b04bf56a</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

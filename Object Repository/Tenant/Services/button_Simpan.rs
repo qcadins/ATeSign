@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[(text() = 'Save' or . = 'Save')]</value>
+         <value>//*[@class = 'btn btn-info']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -18,14 +18,22 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-service-balance/div[2]/div/div/div/div/div/div/button[2]</value>
-      <webElementGuid>fe31ba4b-2f13-4676-9495-c33bf8be04c0</webElementGuid>
+      <webElementGuid>f8720f46-a16c-4516-ab01-d21dd51ce754</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>text</name>
       <type>Main</type>
       <value>Save</value>
-      <webElementGuid>77169092-0ac7-4292-a9b9-7913edec4739</webElementGuid>
+      <webElementGuid>fad058b6-909c-4b3f-8ea2-9265361245ad</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>btn btn-info</value>
+      <webElementGuid>0501f2ae-e776-4987-ba16-b28a6798bb3d</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
