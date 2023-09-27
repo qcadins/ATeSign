@@ -24,15 +24,7 @@ ArrayList<String> saldoBefore, saldoAfter
 
 int countCheckSaldo = 0
 
-saldoBefore = loginAdminGetSaldo(countCheckSaldo, conneSign)
-
-countCheckSaldo = 1
-
 GlobalVariable.FlagFailed = 0
-
-	'call test case login per case'
-	WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : SheetName, ('Path') : excelPathBuatUndangan, ('Email') : 'Inveditor Login', ('Password') : 'Inveditor Password Login'
-		, ('Perusahaan') : 'Inveditor Perusahaan Login', ('Peran') : 'Inveditor Peran Login'], FailureHandling.STOP_ON_FAILURE)
 
 'check ada value maka setting email service tenant'
 if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Services')).length() > 
@@ -88,9 +80,13 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     WebUI.click(findTestObject('BuatUndangan/button_YaBatalUndangan'))
 
     GlobalVariable.FlagFailed = 1 
+	
+	GlobalVariable.LoginAgain = 1
 } else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
     'call function get error log'
     getErrorLog()
+	
+	GlobalVariable.LoginAgain = 1
 } else if (WebUI.getAttribute(findTestObject('BuatUndangan/PopUp/input_Link'), 'value', FailureHandling.OPTIONAL) == 'undefined') {
     GlobalVariable.ErrorType = 'ERROR'
 
@@ -107,11 +103,15 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     'call test case error report'
     WebUI.callTestCase(findTestCase('Register eSign/ErrorReport'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
         FailureHandling.CONTINUE_ON_FAILURE)
+	
+	GlobalVariable.LoginAgain = 1
 } else if (isMandatoryComplete > 0) {
     'write to excel status failed dan reason'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
         (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', 
             '') + ';') + GlobalVariable.ReasonFailedMandatory)
+	
+	GlobalVariable.LoginAgain = 1
 } else {
     'get link'
     GlobalVariable.Link = WebUI.getAttribute(findTestObject('BuatUndangan/PopUp/input_Link'), 'value')
@@ -234,11 +234,25 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     			FailureHandling.CONTINUE_ON_FAILURE)
     }
     
+	'get saldo before'
+	saldoBefore = loginAdminGetSaldo(countCheckSaldo, conneSign)
+	
+	countCheckSaldo = 1
+	
     'call test case daftar akun data verif'
     WebUI.callTestCase(findTestCase('Register eSign/DaftarAkunDataVerif'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'
     	, ('saldoBefore') : saldoBefore[0]], FailureHandling.CONTINUE_ON_FAILURE)
     
-    if ((GlobalVariable.checkStoreDB == 'Yes')) {
+	'looping untuk mengeck apakah case selanjutnya ingin melanjutkan input pada form registrasi'
+	while (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Continue Register & Activation')).equalsIgnoreCase('Continue')) {
+		GlobalVariable.NumofColm++
+		
+		'call test case daftar akun data verif'
+	    WebUI.callTestCase(findTestCase('Register eSign/DaftarAkunDataVerif'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'
+	    	, ('saldoBefore') : saldoBefore[0]], FailureHandling.CONTINUE_ON_FAILURE)
+	}
+	
+    if (GlobalVariable.checkStoreDB == 'Yes' && (GlobalVariable.FlagFailed == 0 || findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Warning'))) {
     	'delay nunggu data db'
     	WebUI.delay(5)
     	
@@ -273,7 +287,8 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     			
     			println('saldoAfter : ' + saldoAfter.toString())
     }
-	  
+	
+	GlobalVariable.LoginAgain = 0
 }
 
 if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Check Inquiry Setelah Register')).equalsIgnoreCase(
@@ -286,9 +301,40 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowEx
 def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
     ArrayList<String> saldo = []
 
-    'call test case login per case'
-	WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : SheetName, ('Path') : excelPathBuatUndangan, ('Email') : 'Email Login', ('Password') : 'Password Login'
-		, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
+    'navigate to url esign'
+    WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 5))
+
+    'maximize window'
+    WebUI.maximizeWindow()
+
+    'store user login'	
+	GlobalVariable.userLogin = findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')).toUpperCase()
+	
+	'input email'
+	WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')))
+	
+	'input password'
+	WebUI.setText(findTestObject('Login/input_Password'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Password Login')))
+	
+	'click button login'
+	WebUI.click(findTestObject('Login/button_Login'))
+	
+	if(WebUI.verifyElementPresent(findTestObject('Login/input_Perusahaan'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {	
+		'input perusahaan'
+		WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Perusahaan Login')))
+		
+		'enter untuk input perusahaan'
+		WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
+		
+		'input peran'
+		WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Peran Login')))
+		
+		'enter untuk input peran'
+		WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
+		
+		'click button pilih peran'
+		WebUI.click(findTestObject('Login/button_pilihPeran'))
+	}
 
     'check if button menu visible atau tidak'
     if (WebUI.verifyElementNotVisible(findTestObject('BuatUndangan/checkSaldo/menu_Saldo'), FailureHandling.OPTIONAL)) {
@@ -383,8 +429,14 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
         verifyListUndangan()
     }
     
-    'close browser'
-    WebUI.closeBrowser()
+//    'swicth tab ke new tab'
+//    WebUI.switchToWindowIndex(0)
+//
+//    'close tab saldo'
+//    WebUI.closeWindowIndex(1)
+//
+//    'swicth tab ke new tab'
+//    WebUI.switchToWindowIndex(0)
 
     return saldo
 }

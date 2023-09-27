@@ -185,6 +185,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				WebUI.callTestCase(findTestCase('APIFullService/Generate Invitation Link/DaftarAkunDataVerif'), [('excelPathGenerateLink') : 'APIFullService/API_GenInvLink', ('otpBefore') : saldoBefore[0]], 
 						FailureHandling.CONTINUE_ON_FAILURE)
 					
+				'looping untuk mengeck apakah case selanjutnya ingin melanjutkan input pada form registrasi'
+				while (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Continue Register & Activation')).equalsIgnoreCase('Continue')) {
+					GlobalVariable.NumofColm++
+					
+					'call test case daftar akun verif'
+					WebUI.callTestCase(findTestCase('APIFullService/Generate Invitation Link/DaftarAkunDataVerif'), [('excelPathGenerateLink') : 'APIFullService/API_GenInvLink', ('otpBefore') : saldoBefore[0]], 
+						FailureHandling.CONTINUE_ON_FAILURE)
+				}
+				
 				if (GlobalVariable.FlagFailed == 0) {
 					'kurang saldo before dengan proses verifikasi'
 				    saldoBefore.set(1, (Integer.parseInt(saldoBefore[1]) - 1).toString())

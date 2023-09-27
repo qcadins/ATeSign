@@ -249,7 +249,8 @@ public checkPaging() {
 	WebUI.click(findTestObject('ErrorReport/button_MinPage'))
 
 	 'verify page 1 active'
-    checkVerifyPaging(WebUI.getAttribute(findTestObject('ErrorReport/page_1'), 'class', FailureHandling.CONTINUE_ON_FAILURE).contains('active'), ' first page')
+    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ErrorReport/paging_Page'), 'aria-label',
+				FailureHandling.CONTINUE_ON_FAILURE), 'page 1', false, FailureHandling.CONTINUE_ON_FAILURE), 'first page')
 }
 
 def rowExcel(String cellValue) {
