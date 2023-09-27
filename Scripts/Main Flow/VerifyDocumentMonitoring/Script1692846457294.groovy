@@ -193,9 +193,7 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                         totalStampingAndTotalMaterai = WebUI.getText(modifyObjectvalues).split('/', -1)
 
                         'looping berdasarkan total split dan diverif berdasarkan db.'
-                        for (k = 0; k < totalStampingAndTotalMaterai.size(); k++) {
-							println resultStamping
-							WebUI.delay(40)
+                        for (k = 0; k < totalStampingAndTotalMaterai.size(); k++) {s
                             'Verifikasi UI dengan db'
                             arrayMatch.add(WebUI.verifyEqual(totalStampingAndTotalMaterai[k], resultStamping[arrayIndexStamping++], 
                                     FailureHandling.CONTINUE_ON_FAILURE))

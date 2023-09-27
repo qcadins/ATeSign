@@ -9,7 +9,6 @@ import internal.GlobalVariable
 import com.kms.katalon.core.configuration.RunConfiguration as RunConfiguration
 import org.openqa.selenium.Keys as Keys
 
-GlobalVariable.NumofColm = 52
 'setting untuk membuat lokasi default folder download'
 HashMap<String, ArrayList> chromePrefs = new HashMap<String, ArrayList>()
 
@@ -55,23 +54,18 @@ if (GlobalVariable.RunWith == 'Mobile') {
 'input email'
 WebUI.setText(findTestObject('Login/input_Email'), email)
 
-//'input password asumsi password = P@ssw0rd'
-//WebUI.setText(findTestObject('Login/input_Password'), findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Password Signer')))
-
 'input password asumsi password = P@ssw0rd'
-WebUI.setText(findTestObject('Login/input_Password'), 'P@ssw0rd')
+WebUI.setText(findTestObject('Login/input_Password'), findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Password Signer')))
 
 'click button login'
 WebUI.click(findTestObject('Login/button_Login'), FailureHandling.STOP_ON_FAILURE)
 
 
 if (WebUI.verifyElementPresent(findTestObject('Login/input_Perusahaan'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-//'input perusahaan'
-//WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Perusahaan')))
 
-WebUI.setText(findTestObject('Login/input_Perusahaan'), 'Toyota Astra Financial Service')
-	
-	
+	'input perusahaan'
+WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Perusahaan')))
+
 'enter untuk input perusahaan'
 WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
 

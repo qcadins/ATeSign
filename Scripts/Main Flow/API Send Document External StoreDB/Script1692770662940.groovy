@@ -176,8 +176,6 @@ for (int i = 0; i < docid.size(); i++) {
 	if (WebUI.verifyMatch(psreCodeDB, result[arrayindex], false, FailureHandling.CONTINUE_ON_FAILURE)) {
 		arrayMatch.add(true)
 		
-		arrayindex++
-		
 		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('PsRE Document') - 1,
 			GlobalVariable.NumofColm - 1, psreCodeDB)
 	}

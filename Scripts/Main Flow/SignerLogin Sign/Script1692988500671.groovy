@@ -255,6 +255,11 @@ for (o = 0; o < documentId.size(); o++) {
             '<') + documentTemplateNamePerDoc.size()) + '> pada User ') + '<') + emailSigner) + '>')
     }
     
+	if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document')) == 'DIGI') {
+	} else {
+		WebUI.callTestCase(findTestCase('Main Flow/Signing Digisign'), null)
+	}
+	
     'Looping berdasarkan total document sign'
     for (c = 0; c < documentTemplateNamePerDoc.size(); c++) {
         'modify object btn Nama Dokumen '
@@ -351,7 +356,7 @@ for (o = 0; o < documentId.size(); o++) {
 				'Yes') {
 					'panggil fungsi verif menggunakan biometrik'
 					if (verifBiomMethod(isLocalhost, maxFaceCompDB, countLivenessFaceComp, conneSign, emailSigner, listOTP,
-						noTelpSigner, otpAfter) == false) {
+						noTelpSigner, otpAfter, vendor) == false) {
 						'jika ada error break testcase'
 						break
 					}
@@ -405,7 +410,7 @@ for (o = 0; o < documentId.size(); o++) {
 
 					'panggil fungsi verif menggunakan biometrik'
 					if (verifBiomMethod(isLocalhost, maxFaceCompDB, countLivenessFaceComp, conneSign, emailSigner, listOTP,
-						noTelpSigner, otpAfter) == false) {
+						noTelpSigner, otpAfter, vendor) == false) {
 						'jika ada error break testcase'
 						break
 					}
@@ -421,7 +426,7 @@ for (o = 0; o < documentId.size(); o++) {
 
 			'panggil fungsi verif menggunakan biometrik'
 			if (verifBiomMethod(isLocalhost, maxFaceCompDB, countLivenessFaceComp, conneSign, emailSigner, listOTP, noTelpSigner,
-				otpAfter) == false) {
+				otpAfter, vendor) == false) {
 				'cek apakah ingin coba metode lain'
 				if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Force Change Method if other Method Failed?')) ==
 				'Yes') {
@@ -455,7 +460,7 @@ for (o = 0; o < documentId.size(); o++) {
 
 						'panggil fungsi verif menggunakan biometrik'
 						if (verifBiomMethod(isLocalhost, maxFaceCompDB, countLivenessFaceComp, conneSign, emailSigner, listOTP,
-							noTelpSigner, otpAfter) == false) {
+							noTelpSigner, otpAfter, vendor) == false) {
 							'jika ada error break testcase'
 							break
 						}
@@ -467,7 +472,7 @@ for (o = 0; o < documentId.size(); o++) {
 			} else {
 				'panggil fungsi verif menggunakan biometrik'
 				if (verifBiomMethod(isLocalhost, maxFaceCompDB, countLivenessFaceComp, conneSign, emailSigner, listOTP,
-					noTelpSigner, otpAfter) == false) {
+					noTelpSigner, otpAfter, vendor) == false) {
 					'cek apakah ingin coba metode lain'
 					if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Force Change Method if other Method Failed?')) ==
 					'Yes') {
@@ -488,7 +493,7 @@ for (o = 0; o < documentId.size(); o++) {
 				}
 			}
 		}
-		
+    }
         'Jika label verifikasi mengenai popup berhasil dan meminta masukan ada'
         if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_VerifikasiOTPBerhasildanMasukan'), GlobalVariable.TimeOut, 
             FailureHandling.CONTINUE_ON_FAILURE)) {
@@ -581,7 +586,6 @@ for (o = 0; o < documentId.size(); o++) {
 
             continue
         }
-    }
     
     'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
     WebUI.callTestCase(findTestCase('Main Flow/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument

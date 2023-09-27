@@ -492,6 +492,7 @@ for (o = 0; o < documentId.size(); o++) {
                 }
             }
         }
+    }
         
         'Jika label verifikasi mengenai popup berhasil dan meminta masukan ada'
         if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_VerifikasiOTPBerhasildanMasukan'), GlobalVariable.TimeOut, 
@@ -584,7 +585,6 @@ for (o = 0; o < documentId.size(); o++) {
 
             continue
         }
-    }
     
     'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
     WebUI.callTestCase(findTestCase('Main Flow/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument

@@ -211,7 +211,6 @@ for (int o = 0; o < documentFile.size(); o++) {
 			for (loopingSignerEmailActive = 0; loopingSignerEmailActive < idKtps.size(); loopingSignerEmailActive++) {
 				SHA256IdNo = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'( idKtps[loopingSignerEmailActive].replace('"', ''))
 				
-				println SHA256IdNo
 				'setting email service tenant'
 				CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(API_Excel_Path).getValue(
                     GlobalVariable.NumofColm, rowExcel('Setting Email Service (Send Normal)')),SHA256IdNo)
@@ -295,7 +294,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 		
         if (GlobalVariable.checkStoreDB == 'Yes') {
             'call test case ResponseAPIStoreDB'
-            WebUI.callTestCase(findTestCase('Main Flow/API Send Document Normal StoreDB'), [('API_Excel_Path') : API_Excel_Path], 
+            WebUI.callTestCase(findTestCase('Main Flow/API Send Document Normal StoreDB'), [('API_Excel_Path') : API_Excel_Path, ('sheet') : sheet], 
                 FailureHandling.CONTINUE_ON_FAILURE)
         }
         
