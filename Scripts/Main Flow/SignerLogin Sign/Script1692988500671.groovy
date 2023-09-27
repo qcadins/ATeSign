@@ -78,11 +78,7 @@ for (o = 0; o < documentId.size(); o++) {
     String otpAfter
 
     'Inisialisasi variable total document yang akan disign, count untuk resend, dan saldo yang akan digunakan'
-    int totalDocSign
-
-    int countResend = 0
-
-    int countSaldoSplitLiveFCused = 0
+    int totalDocSign, countResend = 0, countSaldoSplitLiveFCused = 0
 
     'Call test Case untuk login sebagai admin wom admin client'
     WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
@@ -104,8 +100,6 @@ for (o = 0; o < documentId.size(); o++) {
     'call Test Case untuk login sebagai user berdasarkan doc id'
     WebUI.callTestCase(findTestCase('Main Flow/Login_1docManySigner'), [('email') : emailSigner, ('excel') : excelPathFESignDocument], FailureHandling.CONTINUE_ON_FAILURE)
 
-    String roleInput = CustomKeywords.'connection.SendSign.getRoleLogin'(conneSign, emailSigner, GlobalVariable.Tenant)
-
     if (checkPopup() == true) {
         break
     }
@@ -116,15 +110,15 @@ for (o = 0; o < documentId.size(); o++) {
     WebUI.refresh()
 
     'Get row lastest'
-    variableLastest = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-content-layout > div > div > div > div.content-wrapper.p-0 > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
-
-    'get row lastest'
+    variableLastest = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
+    
+	'get row lastest'
     modifyObjectBtnLastest = WebUI.modifyObjectProperty(findTestObject('Object Repository/KotakMasuk/Sign/btn_Lastest'), 
         'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' + 
         variableLastest.size()) + ']/a/i', true)
 
     'jika btn lastest dapat diclick'
-    if (WebUI.verifyElementClickable(modifyObjectBtnLastest, FailureHandling.OPTIONAL)) {
+    if (WebUI.verifyElementVisible(modifyObjectBtnLastest, FailureHandling.OPTIONAL)) {
 		WebUI.focus(modifyObjectBtnLastest)
 		
         'Klik button Lastest'
@@ -158,7 +152,7 @@ for (o = 0; o < documentId.size(); o++) {
             'deklarasi arrayIndex untuk pemakaian'
             arrayIndex = 0
 
-			HashMap<String, TestObject> resultObject = modifyObject(j, roleInput)
+			HashMap<String, TestObject> resultObject = modifyObject(j)
 
             'Jika datanya match dengan db, mengenai referal number'
             if (WebUI.verifyMatch(WebUI.getText(resultObject.get('modifyObjectTextRefNumber')), sendToSign[arrayIndex++], false, FailureHandling.OPTIONAL) == 
@@ -568,9 +562,13 @@ for (o = 0; o < documentId.size(); o++) {
                 } else {
                     'Jika hasil store dbnya true, maka'
                     break
+					flagBreak = 1
                 }
             }
             
+			if (flagBreak == 1) {
+				break
+			}
             'Browser ditutup'
             WebUI.closeBrowser()
         } else {
@@ -847,7 +845,7 @@ def inputFilterTrx(Connection conneSign, String currentDate, String noKontrak, S
 
     'Input tipe transaksi'
     WebUI.setText(findTestObject('Saldo/input_tipetransaksi'), findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
-            rowExcel('TipeTransaksi')))
+    rowExcel('TipeTransaksi')))
 
     'Input enter'
     WebUI.sendKeys(findTestObject('Saldo/input_tipetransaksi'), Keys.chord(Keys.ENTER))
@@ -907,7 +905,7 @@ def checkBulkSigning() {
     }
 }
 
-def modifyObject (int j, String roleInput) {
+def modifyObject (int j) {
 	'index row distart dari 2 karena yang 1 adalah button ttd'
 	indexRow = 2
 
@@ -928,7 +926,7 @@ def modifyObject (int j, String roleInput) {
 		'xpath', 'equals', ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
 		j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + indexRow++) + ']/div/p', true)
 
-	if (roleInput != 'Customer') {
+	if (GlobalVariable.roleLogin != 'Customer') {
 		'modify object text nama customer'
 		modifyObjectTextNamaPelanggan = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_Berandaname'),
 			'xpath', 'equals', ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
@@ -1076,6 +1074,14 @@ def signingProcessStoreDB(Connection conneSign, String emailSigner, int jumlahSi
 	for (t = 1; t <= signingDB.size(); t++) {
 		ArrayList<String> arrayMatch = new ArrayList<String>()
 
+		if (signingDB[arrayIndex] == '2') {
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+			((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+			'-', '') + ';') + GlobalVariable.ReasonFailedProcessFailed))
+			
+			return true
+		}
+		
 		'verify request status. 3 berarti done request. Terpaksa hardcode karena tidak ada masternya untuk 3.'
 		arrayMatch.add(WebUI.verifyMatch('3', signingDB[arrayIndex++], false, FailureHandling.OPTIONAL))
 

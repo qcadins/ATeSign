@@ -18,10 +18,10 @@ public class SendSign {
 	String emailWhere, selectData
 
 	@Keyword
-	settingEmailServiceVendorRegisteredUser(Connection conn, String value, String email) {
+	settingEmailServiceVendorRegisteredUser(Connection conn, String value, String idNo) {
 		stm = conn.createStatement()
 
-		updateVariable = stm.executeUpdate("UPDATE ms_vendor_registered_user SET email_service = " + value + " WHERE signer_registered_email = '" + email + "'")
+		updateVariable = stm.executeUpdate("UPDATE ms_vendor_registered_user SET email_service = '"+value+"' WHERE EXISTS (SELECT * FROM AM_MSUSER AMM WHERE amm.hashed_id_no = '"+idNo+"')")
 	}
 
 	@Keyword
@@ -80,6 +80,22 @@ public class SendSign {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("SELECT COUNT(tdsr.id_ms_user) FROM tr_document_h tdh JOIN tr_document_signing_request tdsr ON tdh.id_document_h = tdsr.id_document_h WHERE tdh.ref_number = '" + refNumber + "'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		Integer.parseInt(data)
+	}
+
+	@Keyword
+	getTotalSignerTtd(Connection conn, String documentId) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT COUNT (DISTINCT amm.login_id) FROM tr_document_d_sign tdds LEFT JOIN tr_document_d tdd on tdd.id_document_d = tdds.id_document_d LEFT JOIN tr_Document_h tdh on tdd.id_document_h = tdh.id_document_h LEFT JOIN am_msuser amm on tdds.id_ms_user = amm.id_ms_user WHERE tdd.document_id = '"+documentId+"'")
+
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -233,11 +249,12 @@ public class SendSign {
 		listdata
 	}
 
+
 	@Keyword
-	getKotakMasukSendDoc(Connection conn, String documentid) {
+	getKotakMasukSendDoc(Connection conn, String refNumber, String emailSigner) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select tdh.ref_number, msl.description as doctype,case when mdt.doc_template_name is null then tdd.document_name else mdt.doc_template_name end,  case when amm2.full_name != '' or amm2.full_name != null then amm2.full_name else '' end, TO_CHAR(tdd.request_date, 'DD-Mon-YYYY HH24:MI') as timee, case when tdd.completed_date is null then '-' else TO_CHAR(tdd.completed_date, 'DD-Mon-YYYY HH24:MI') end , msl_sign.description as description  from tr_document_d tdd join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h left join ms_lov msl on tdh.lov_doc_type = msl.id_lov left join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d left join ms_lov ms on tdds.lov_signer_type = ms.id_lov join am_msuser amm on tdds.id_ms_user = amm.id_ms_user join ms_lov msl_sign on tdd.lov_sign_status = msl_sign.id_lov left join am_msuser amm2 on tdh.id_msuser_customer = amm2.id_ms_user  where document_id = '"+documentid+"' ORDER BY tdds.id_document_d_sign asc limit 1")
+		resultSet = stm.executeQuery("select tdh.ref_number, msl.description as doctype,case when mdt.doc_template_name is null then tdd.document_name else mdt.doc_template_name end,  case when amm2.full_name != '' or amm2.full_name != null then amm2.full_name else '' end, TO_CHAR(tdd.request_date, 'DD-Mon-YYYY HH24:MI') as timee, case when tdd.completed_date is null then '-' else TO_CHAR(tdd.completed_date, 'DD-Mon-YYYY HH24:MI') end , msl_sign.description as description  from tr_document_d tdd join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h left join ms_lov msl on tdh.lov_doc_type = msl.id_lov left join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d left join ms_lov ms on tdds.lov_signer_type = ms.id_lov join am_msuser amm on tdds.id_ms_user = amm.id_ms_user join ms_lov msl_sign on tdd.lov_sign_status = msl_sign.id_lov left join am_msuser amm2 on tdh.id_msuser_customer = amm2.id_ms_user   where tdh.ref_number = '"+refNumber+"' and amm.login_id = '"+emailSigner+"' GROUP BY tdds.id_document_d, tdh.ref_number, msl.description, mdt.doc_template_name, tdd.document_name, amm2.full_name, tdd.request_date , tdd.completed_date, msl_sign.description ORDER BY tdds.id_document_d desc")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -252,10 +269,10 @@ public class SendSign {
 	}
 
 	@Keyword
-	getSignStatus(Connection conn, String documentid) {
+	getSignStatus(Connection conn, String refNumber) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select msl.description from tr_document_d tdd join ms_lov msl on tdd.lov_sign_status = msl.id_lov where document_id = '" + documentid + "'")
+		resultSet = stm.executeQuery("select msl.description from tr_document_d tdd LEFT JOIN tr_document_h tdh on tdd.id_Document_h = tdh.id_document_h join ms_lov msl on tdd.lov_sign_status = msl.id_lov where tdh.ref_number = '" + refNumber + "' GROUP BY tdd.id_document_d, msl.description ORDER BY tdd.id_document_d desc")
 
 		metadata = resultSet.metaData
 
@@ -268,10 +285,11 @@ public class SendSign {
 	}
 
 	@Keyword
-	getTotalStampingandTotalMaterai(Connection conn, String refNumber) {
+	getTotalStampingandTotalMaterai(Connection conn, String refNumber, String emailSigner) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select tdd.total_stamping, tdd.total_materai from tr_document_d tdd join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h where tdh.ref_number = '" + refNumber + "'")
+		resultSet = stm.executeQuery("select tdd.total_stamping, tdd.total_materai from tr_document_d tdd LEFT join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h LEFT JOIN tr_document_d_sign tdds on tdd.id_document_d = tdds.id_document_d LEFT JOIN am_msuser amm on tdds.id_ms_user = amm.id_ms_user where tdh.ref_number = '"+refNumber+"' AND amm.login_id = '"+emailSigner+"' GROUP BY tdds.id_document_d, tdd.total_stamping, tdd.total_materai ORDER BY tdds.id_document_d desc")
+
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -374,12 +392,12 @@ public class SendSign {
 		listdata
 	}
 
+
 	@Keyword
-	getDataPencarianDokumen(Connection conn, String emailSigner, String documentId) {
+	getDataPencarianDokumen(Connection conn, String emailSigner, String refNumber) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select case when amm2.full_name is null then '' else amm2.full_name end, tdh.ref_number, msl.description from tr_document_d_sign tdds left join am_msuser amm on tdds.id_ms_user = amm.id_ms_user left join tr_document_d tdd on tdds.id_document_d = tdd.id_document_d left join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h left join ms_lov msl_signertype on tdds.lov_signer_type = msl_signertype.id_lov left join ms_lov msl on tdh.lov_doc_type = msl.id_lov left join am_msuser amm2 on tdh.id_msuser_customer = amm2.id_ms_user where amm.login_id = '"+emailSigner+"' and tdd.document_id = '"+documentId+"' limit 1")
-
+		resultSet = stm.executeQuery("select case when amm2.full_name is null then '' else amm2.full_name end, tdh.ref_number, msl.description from tr_document_d_sign tdds left join am_msuser amm on tdds.id_ms_user = amm.id_ms_user left join tr_document_d tdd on tdds.id_document_d = tdd.id_document_d left join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h left join ms_lov msl_signertype on tdds.lov_signer_type = msl_signertype.id_lov left join ms_lov msl on tdh.lov_doc_type = msl.id_lov left join am_msuser amm2 on tdh.id_msuser_customer = amm2.id_ms_user  where amm.login_id = '"+emailSigner+"' and tdh.ref_number = '"+refNumber+"' GROUP BY tdds.id_document_d, amm2.full_name, tdh.ref_number, msl.description ORDER BY tdds.id_document_d desc")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -436,5 +454,20 @@ public class SendSign {
 			data = resultSet.getObject(1)
 		}
 		data
+	}
+
+	@Keyword
+	getTotalDocumentBasedOnEmail(Connection conn, String refNumber, String emailSigner) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select count(distinct(tdd.id_document_d)) from tr_document_d tdd left join tr_document_h tdh on tdd.id_Document_h = tdh.id_document_h left join tr_document_d_sign tdds on tdd.id_document_d = tdds.id_document_d left join am_msuser amm on amm.id_ms_user = tdds.id_ms_user where tdh.ref_number = '"+refNumber+"' AND amm.login_id = '"+emailSigner+"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		Integer.parseInt(data)
 	}
 }

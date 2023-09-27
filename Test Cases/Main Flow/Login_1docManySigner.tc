@@ -18,14 +18,14 @@
       <variableId>85b8ddcb-cf3c-4880-a2a6-f909e40cec63</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>''</defaultValue>
+      <defaultValue>'USERCJEA@GMAIL.COM'</defaultValue>
       <description></description>
       <id>cbfc1b23-0333-4063-aeb7-6d0c043c08f1</id>
       <masked>false</masked>
       <name>email</name>
    </variable>
    <variable>
-      <defaultValue>''</defaultValue>
+      <defaultValue>'Main/Main'</defaultValue>
       <description></description>
       <id>85b8ddcb-cf3c-4880-a2a6-f909e40cec63</id>
       <masked>false</masked>

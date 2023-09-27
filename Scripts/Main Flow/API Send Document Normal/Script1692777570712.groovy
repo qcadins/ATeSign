@@ -19,6 +19,9 @@ enter = '\\n'
 
 int splitnum = -1
 
+'setting menggunakan base url yang benar atau salah'
+CustomKeywords.'connection.APIFullService.settingBaseUrl'(API_Excel_Path, GlobalVariable.NumofColm, rowExcel('Use Correct base Url (Send Normal)'))
+
 'Inisialisasi ref No berdasarkan delimiter ;'
 refNo = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo (Send Normal)'))
 
@@ -116,9 +119,9 @@ email = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel
 
 npwp = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('npwp (Send Normal)')).split(enter, splitnum)
 
-idPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('idPhoto (Send Normal)'))
+idPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('idPhoto (Send Normal)')).split(enter, splitnum)
 
-signerSelfPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('signerSelfPhoto (Send Normal)'))
+signerSelfPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('signerSelfPhoto (Send Normal)')).split(enter, splitnum)
 
 String stringRefno = new String()
 
@@ -160,7 +163,11 @@ for (int o = 0; o < documentFile.size(); o++) {
     emails = (email[o]).split(semicolon, splitnum)
 
     npwps = (npwp[o]).split(semicolon, splitnum)
+	
+	idPhotos = (idPhoto[o]).split(semicolon, splitnum)
 
+	signerSelfPhotos = (signerSelfPhoto[o]).split(semicolon, splitnum)
+	
     String listSigner
 
     listSigner = ''
@@ -175,24 +182,24 @@ for (int o = 0; o < documentFile.size(); o++) {
                 (jenisKelamins[i])) + ',"kecamatan": ') + (kecamatans[i])) + ',"kelurahan": ') + (kelurahans[i])) + ',"kodePos": ') + 
                 (kodePoss[i])) + ',"kota": ') + (kotas[i])) + ',"nama": ') + (namas[i])) + ',"tlp": ') + (tlps[i])) + ',"tglLahir": ') + 
                 (tglLahirs[i])) + ',"provinsi": ') + (provinsis[i])) + ',"idKtp": ') + (idKtps[i])) + ',"tmpLahir": ') + 
-                (tmpLahirs[i])) + ',"email": ') + (emails[i])) + ',"npwp": ') + (npwps[i])) + ',"idPhoto": ') + idPhoto) + 
-                ',"signerSelfPhoto": ') + signerSelfPhoto) + '}')
+                (tmpLahirs[i])) + ',"email": ') + (emails[i])) + ',"npwp": ') + (npwps[i])) + ',"idPhoto": ') + idPhotos[i]) + 
+                ',"signerSelfPhoto": ') + signerSelfPhotos[i]) + '}')
         } else if (i == (signActions.size() - 1)) {
             list.add(((((((((((((((((((((((((((((((((((((('{"signAction": ' + (signActions[i])) + ',"signerType": ') + (signerTypes[
                 i])) + ',"signSequence":') + (signSequences[i])) + ',"alamat": ') + (alamats[(i - 1)])) + ',"jenisKelamin": ') + 
                 (jenisKelamins[i])) + ',"kecamatan": ') + (kecamatans[i])) + ',"kelurahan": ') + (kelurahans[i])) + ',"kodePos": ') + 
                 (kodePoss[i])) + ',"kota": ') + (kotas[i])) + ',"nama": ') + (namas[i])) + ',"tlp": ') + (tlps[i])) + ',"tglLahir": ') + 
                 (tglLahirs[i])) + ',"provinsi": ') + (provinsis[i])) + ',"idKtp": ') + (idKtps[i])) + ',"tmpLahir": ') + 
-                (tmpLahirs[i])) + ',"email": ') + (emails[i])) + ',"npwp": ') + (npwps[i])) + ',"idPhoto": ') + idPhoto) + 
-                ',"signerSelfPhoto": ') + signerSelfPhoto) + '}')
+                (tmpLahirs[i])) + ',"email": ') + (emails[i])) + ',"npwp": ') + (npwps[i])) + ',"idPhoto": ') + idPhotos[i]) + 
+                ',"signerSelfPhoto": ') + signerSelfPhotos[i]) + '}')
         } else {
             list.add(((((((((((((((((((((((((((((((((((((('{"signAction": ' + (signActions[i])) + ',"signerType": ') + (signerTypes[
                 i])) + ',"signSequence":') + (signSequences[i])) + ',"alamat": ') + (alamats[i])) + ',"jenisKelamin": ') + 
                 (jenisKelamins[i])) + ',"kecamatan": ') + (kecamatans[i])) + ',"kelurahan": ') + (kelurahans[i])) + ',"kodePos": ') + 
                 (kodePoss[i])) + ',"kota": ') + (kotas[i])) + ',"nama": ') + (namas[i])) + ',"tlp": ') + (tlps[i])) + ',"tglLahir": ') + 
                 (tglLahirs[i])) + ',"provinsi": ') + (provinsis[i])) + ',"idKtp": ') + (idKtps[i])) + ',"tmpLahir": ') + 
-                (tmpLahirs[i])) + ',"email": ') + (emails[i])) + ',"npwp": ') + (npwps[i])) + ',"idPhoto": ') + idPhoto) + 
-                ',"signerSelfPhoto": ') + signerSelfPhoto) + '},')
+                (tmpLahirs[i])) + ',"email": ') + (emails[i])) + ',"npwp": ') + (npwps[i])) + ',"idPhoto": ') + idPhotos[i]) + 
+                ',"signerSelfPhoto": ') + signerSelfPhotos[i]) + '},')
         }
         
         'Memasukkan seluruh BodyAPI ke listSigner'
@@ -201,10 +208,14 @@ for (int o = 0; o < documentFile.size(); o++) {
         'check ada value maka setting email service tenant'
         if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service (Send Normal)')).length() > 
         0) {
-            'setting email service tenant'
-            CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(API_Excel_Path).getValue(
-                    GlobalVariable.NumofColm, rowExcel('Setting Email Service (Send Normal)')), (email[(i - 1)]).replace(
-                    '"', ''))
+			for (loopingSignerEmailActive = 0; loopingSignerEmailActive < idKtps.size(); loopingSignerEmailActive++) {
+				SHA256IdNo = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'( idKtps[loopingSignerEmailActive].replace('"', ''))
+				
+				println SHA256IdNo
+				'setting email service tenant'
+				CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(API_Excel_Path).getValue(
+                    GlobalVariable.NumofColm, rowExcel('Setting Email Service (Send Normal)')),SHA256IdNo)
+			}
         }
     }
     
@@ -275,7 +286,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
             1, GlobalVariable.NumofColm - 1, GlobalVariable.Response.toString().replace('[', '').replace(']', ''))
 
         'write to excel success'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Status'), GlobalVariable.NumofColm - 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Status') - 1, GlobalVariable.NumofColm - 
             1, GlobalVariable.StatusSuccess)
 
 		'write to excel success'
