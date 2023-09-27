@@ -318,8 +318,8 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                 'DocumentMonitoring/SearchResult'), FailureHandling.OPTIONAL), false, FailureHandling.CONTINUE_ON_FAILURE), 
                 'Data gagal terhapus di FE')
         }
-        	
-        break 
+        
+        break
     }
     
     if (isStamping == 'Yes') {
