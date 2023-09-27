@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "1B8B0B23ED96EA5BDD031906E18FFA2A",
+  "keywordFileContentHash": "5CB8F93C23AA60F2D2AE707688FED854",
   "keywordClasses": [
     {
       "name": "connection.DocumentMonitoring",
@@ -54,6 +54,19 @@
             },
             {
               "name": "refNumber",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "tenantCode",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

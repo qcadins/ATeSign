@@ -238,7 +238,7 @@ public class DataVerif {
 	getDocId(Connection conn, String refNumber, String tenantCode) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select tdd.document_id from tr_document_h tdh join tr_document_d tdd on tdh.id_document_h = tdd.id_document_h join ms_tenant mst on tdh.id_ms_tenant = mst.id_ms_tenant join ms_vendor msv on tdd.id_ms_vendor = msv.id_ms_vendor where tdh.ref_number = '"+refNumber+"' and mst.tenant_code = '"+tenantCode+"' order by tdh.dtm_crt desc limit 1")
+		resultSet = stm.executeQuery("select tdd.document_id from tr_document_h tdh join tr_document_d tdd on tdh.id_document_h = tdd.id_document_h join ms_tenant mst on tdh.id_ms_tenant = mst.id_ms_tenant join ms_vendor msv on tdd.id_ms_vendor = msv.id_ms_vendor where tdh.ref_number = '"+refNumber+"' and mst.tenant_code = '"+tenantCode+"' order by tdh.dtm_crt desc")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -247,6 +247,24 @@ public class DataVerif {
 			data = resultSet.getObject(1)
 		}
 		data
+	}
+
+	@Keyword
+	getDocIdBasedOnLoginSigner(Connection conn, String refNumber, String tenantCode, String emailSigner) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select tdd.document_id from tr_document_h tdh LEFT join tr_document_d tdd on tdh.id_document_h = tdd.id_document_h LEFT join ms_tenant mst on tdh.id_ms_tenant = mst.id_ms_tenant LEFT join tr_document_d_sign tdds on tdd.id_Document_d = tdds.id_document_d left join am_msuser amm on tdds.id_ms_user = amm.id_ms_user where tdh.ref_number = '"+refNumber+"' and mst.tenant_code = '"+tenantCode+"' AND amm.login_id = '"+emailSigner+"' GROUP BY tdds.id_document_d, tdd.document_id order by tdd.document_id desc")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
 	}
 
 	@Keyword
