@@ -9,26 +9,36 @@ import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
-'call testcase login admin'
-WebUI.callTestCase(findTestCase('Login/Login_Inveditor'), [('Path') : excelPathPencarianPengguna, ('SheetName') : sheet], 
-    FailureHandling.CONTINUE_ON_FAILURE)
-
-'click menu PencarianPengguna'
-WebUI.click(findTestObject('PencarianPengguna/menu_PencarianPengguna'))
-
-'call function check paging'
-checkPaging()
-
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get colm excel'
 int countColmExcel = findTestData(excelPathPencarianPengguna).columnNumbers
 
+int firstRun = 0
+
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
     } else if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
+		
+		if(findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, rowExcel('Status')) != 
+			findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, rowExcel('Status')) || firstRun == 0) {
+			'call test case login per case'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathPencarianPengguna, ('Email') : 'Inveditor Login', ('Password') : 'Inveditor Password Login'
+				, ('Perusahaan') : 'Inveditor Perusahaan Login', ('Peran') : 'Inveditor Peran Login'], FailureHandling.STOP_ON_FAILURE)
+			
+			firstRun = 1
+		}
+		
+		'click menu PencarianPengguna'
+		WebUI.click(findTestObject('PencarianPengguna/menu_PencarianPengguna'))
+		
+		if(GlobalVariable.NumofColm == 2) {
+			'call function check paging'
+			checkPaging()			
+		}
+		
         if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, rowExcel('Input with')).equalsIgnoreCase('Email')) {
             'set text search box dengan email'
             WebUI.setText(findTestObject('PencarianPengguna/input_SearchBox'), findTestData(excelPathPencarianPengguna).getValue(

@@ -19,32 +19,40 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 'get colm excel'
 int countColmExcel = findTestData(excelPathUserManagement).columnNumbers
 
-int isCheckDDL = 0
-
-sheet = 'User Management'
-
-GlobalVariable.Tenant = findTestData(excelPathSetting).getValue(6, 2)
-
-'call testcase login admin credit'
-WebUI.callTestCase(findTestCase('Login/Login_AdmCredit'), [:], FailureHandling.CONTINUE_ON_FAILURE)
-
-'click menu user management'
-WebUI.click(findTestObject('User Management/menu_User Management'))
+int isCheckDDL = 0, firstRun = 0
 
 'looping User Management'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
-    if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
+    if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
-    } else if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+    } else if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 		
-		if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+		'get tenant per case dari excel'
+		GlobalVariable.Tenant = findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
+		
+		'get psre per case dari excel'
+		GlobalVariable.Psre = findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
+		
+		if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 			GlobalVariable.FlagFailed = 0
 		}
 
+		if(findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Status')) != 
+			findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Status')) || firstRun == 0) {
+			'call test case login per case'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathUserManagement, ('Email') : 'Email Login', ('Password') : 'Password Login'
+				, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
+			
+			firstRun = 1
+		}
+		
+		'click menu user management'
+		WebUI.click(findTestObject('User Management/menu_User Management'))
+		
         'Jika kolom kedua'
         if (GlobalVariable.NumofColm == 2) {
 			'get db tenant code dari user yang telah login'
-			tenantCode = CustomKeywords.'connection.DataVerif.getTenantCode'(conneSign, findTestData('Login/Login').getValue(2, 6).toUpperCase())
+			tenantCode = CustomKeywords.'connection.DataVerif.getTenantCode'(conneSign, findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')).toUpperCase())
 			
             'call function check paging'
             checkPaging(conneSign)
@@ -59,7 +67,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         'jika aksinya adalah new'
-        if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('New')) {
+        if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('New')) {
             'Klik button baru'
             WebUI.click(findTestObject('User Management/btn_Baru'))
 
@@ -68,26 +76,26 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 GlobalVariable.TimeOut)) {
                 'Set text nama lengkap'
                 WebUI.setText(findTestObject('Object Repository/User Management/input_NamaLengkapNew'), findTestData(excelPathUserManagement).getValue(
-                        GlobalVariable.NumofColm, 8))
+                        GlobalVariable.NumofColm, rowExcel('$Nama Lengkap')))
 
                 'Set text email'
                 WebUI.setText(findTestObject('Object Repository/User Management/input_EmailNew'), findTestData(excelPathUserManagement).getValue(
-                        GlobalVariable.NumofColm, 9))
+                        GlobalVariable.NumofColm, rowExcel('$Email')))
 
                 'Set text peran'
                 WebUI.setText(findTestObject('Object Repository/User Management/input_PeranNew'), findTestData(excelPathUserManagement).getValue(
-                        GlobalVariable.NumofColm, 10))
+                        GlobalVariable.NumofColm, rowExcel('$Peran')))
 
                 'Enter peran'
                 WebUI.sendKeys(findTestObject('Object Repository/User Management/input_PeranNew'), Keys.chord(Keys.ENTER))
 
                 'Set text kode akses'
                 WebUI.setText(findTestObject('Object Repository/User Management/input_KodeAksesNew'), findTestData(excelPathUserManagement).getValue(
-                        GlobalVariable.NumofColm, 11))
+                        GlobalVariable.NumofColm, rowExcel('$Kode Akses')))
 
                 'Input cabang'
                 WebUI.setText(findTestObject('Object Repository/User Management/input_CabangNew'), findTestData(excelPathUserManagement).getValue(
-                        GlobalVariable.NumofColm, 12))
+                        GlobalVariable.NumofColm, rowExcel('$Cabang')))
 
                 'Enter cabang'
                 WebUI.sendKeys(findTestObject('Object Repository/User Management/input_CabangNew'), Keys.chord(Keys.ENTER))
@@ -96,7 +104,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     continue
                 }
             }
-        } else if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Setting')) {
+        } else if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('Setting')) {
             searchData()	
 
             'Verify element value'
@@ -127,7 +135,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		
 					if (isCheckDDL == 0) {
 					'get db tenant code dari user yang telah login'
-					tenantCode = CustomKeywords.'connection.DataVerif.getTenantCode'(conneSign, findTestData('Login/Login').getValue(2, 6).toUpperCase())
+					tenantCode = CustomKeywords.'connection.DataVerif.getTenantCode'(conneSign, findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')).toUpperCase())
 			
 					listDBPeran = CustomKeywords.'connection.UserManagement.getddlRoleUserManagement'(conneSign, tenantCode)
 					
@@ -143,7 +151,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					
 					'db result Edit'
                     resultEdit = CustomKeywords.'connection.UserManagement.getUserManagementonEdit'(conneSign, findTestData(
-                            excelPathUserManagement).getValue(GlobalVariable.NumofColm, 17).toUpperCase(), GlobalVariable.Tenant)
+                            excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Email Search')).toUpperCase(), GlobalVariable.Tenant)
 
                     index = 0
 
@@ -206,7 +214,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					index++
 
 					'jika kolom edit kosong'
-					if ((findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 14) == '')) {
+					if ((findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('$Peran Edit')) == '')) {
 						'set peran yaitu select role'
 						WebUI.setText(findTestObject('Object Repository/User Management/input_PeranEdit'), 'Select Role')
 
@@ -216,14 +224,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					} else {
 						'set peran sesuai excel'
 						WebUI.setText(findTestObject('Object Repository/User Management/input_PeranEdit'), findTestData(
-								excelPathUserManagement).getValue(GlobalVariable.NumofColm, 14))
+								excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('$Peran Edit')))
 
 						'enter peran'
 						WebUI.sendKeys(findTestObject('Object Repository/User Management/input_PeranEdit'), Keys.chord(Keys.ENTER))
 					}
 					
 					'jika kolom edit kosong'
-					if ((findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 15) == '')) {
+					if ((findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('$Cabang Edit')) == '')) {
                         'set cabang yaitu select office'
                         WebUI.setText(findTestObject('Object Repository/User Management/input_CabangEdit'), 'Select Office')
 
@@ -234,7 +242,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					else {
 						'set cabang sesuai excel'
 						WebUI.setText(findTestObject('Object Repository/User Management/input_CabangEdit'), findTestData(
-								excelPathUserManagement).getValue(GlobalVariable.NumofColm, 15))
+								excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('$Cabang Edit')))
 
 						'enter cabang'
 						WebUI.sendKeys(findTestObject('Object Repository/User Management/input_CabangEdit'), Keys.chord(
@@ -248,7 +256,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             } else {
 				'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('User Management', GlobalVariable.NumofColm,
-					GlobalVariable.StatusFailed, ((findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 2) +
+					GlobalVariable.StatusFailed, ((findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) +
 					';') + GlobalVariable.ReasonFailedNoneUI))
 				
 				GlobalVariable.FlagFailed = 1
@@ -268,7 +276,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 //            index = 0
 //
 //            'result db'
-//            result = CustomKeywords.'connection.UserManagement.getUserManagement'(conneSign, findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 17), GlobalVariable.Tenant)
+//            result = CustomKeywords.'connection.UserManagement.getUserManagement'(conneSign, findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Email Search')), GlobalVariable.Tenant)
 //
 //            'looping berdasarkan kolom'
 //            for (i = 1; i <= colValue.size(); i++) {
@@ -300,7 +308,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 //                    }
 //                } else if (i == 5) {
 //                    'Jika kolom kelima, yaitu aksi'
-//                    if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Setting')) {
+//                    if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('Setting')) {
 //                        'modify object lbl value untuk button setting'
 //                        modifyObjectLblValue = WebUI.modifyObjectProperty(findTestObject('Object Repository/User Management/lbl_Value'), 
 //                            'xpath', 'equals', '/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-list-user-management/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[1]/datatable-body-row/div[2]/datatable-body-cell[5]/div/a/em', 
@@ -313,7 +321,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 //
 //                        'db result Edit'
 //                        resultEdit = CustomKeywords.'connection.UserManagement.getUserManagementonEdit'(conneSign, findTestData(
-//                                excelPathUserManagement).getValue(GlobalVariable.NumofColm, 17), GlobalVariable.Tenant)
+//                                excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Email Search')), GlobalVariable.Tenant)
 //
 //                        indexEdit = 0
 //
@@ -399,7 +407,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 }
 
 def checkPagingConfirmation(String reason) {
-	if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6) == 'Setting') {
+	if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Action')) == 'Setting') {
 		modifyObjectBtnSave = WebUI.modifyObjectProperty(findTestObject('Object Repository/User Management/button_Lanjut'),
 			'class', 'equals', 'btn btn-info mr-5', true)
 	} else {
@@ -414,7 +422,7 @@ def checkPagingConfirmation(String reason) {
 
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedSaveGagal'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            ((findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedSaveGagal) + 
+            ((findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedSaveGagal) + 
             reason)
 
         return true
@@ -440,7 +448,7 @@ def checkPagingConfirmation(String reason) {
 			if (!(lblpopup.contains('Success'))) {
 				'Tulis di excel sebagai failed dan error.'
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('User Management', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-					(findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<' + lblpopup + '>')
+					(findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + '<' + lblpopup + '>')
 			} else {
 				'write to excel success'
 				CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'User Management', 0,
@@ -457,15 +465,15 @@ def checkPagingConfirmation(String reason) {
 }
 
 def searchDataAfterAction(Connection conneSign) {
-	if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6) == 'Setting') {
-		peranAfter = findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 14)
+	if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Action')) == 'Setting') {
+		peranAfter = findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('$Peran Edit'))
 	} else {
-		peranAfter = findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 18)
+		peranAfter = findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Peran Search'))
 	}
 	
 	'set text email'
 	WebUI.setText(findTestObject('Object Repository/User Management/input_Email'), findTestData(excelPathUserManagement).getValue(
-			GlobalVariable.NumofColm, 17))
+			GlobalVariable.NumofColm, rowExcel('Email Search')))
 	
 	'set text peran'
 	WebUI.setText(findTestObject('Object Repository/User Management/input_Peran'), peranAfter)
@@ -479,18 +487,18 @@ def searchDataAfterAction(Connection conneSign) {
 	'Get Role Name'
 	rolename = CustomKeywords.'connection.UserManagement.convertRoleCodetoName'(conneSign, WebUI.getText(findTestObject('Object Repository/User Management/label_Role')))
 	
-	if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6) == 'Setting') {
+	if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Action')) == 'Setting') {
 		'verify email after setting'
 		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/User Management/label_Email')).toUpperCase(), findTestData(excelPathUserManagement).getValue(
-				GlobalVariable.NumofColm, 17).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Email tidak sama')		
+				GlobalVariable.NumofColm, rowExcel('Email Search')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Email tidak sama')		
 	} else {
 		'verify username after add'
 		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/User Management/label_UserName')).toUpperCase(), findTestData(excelPathUserManagement).getValue(
-				GlobalVariable.NumofColm, 8).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' username tidak sama')
+				GlobalVariable.NumofColm, rowExcel('$Nama Lengkap')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' username tidak sama')
 		
 		'verify email after add'
 		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/User Management/label_Email')).toUpperCase(), findTestData(excelPathUserManagement).getValue(
-				GlobalVariable.NumofColm, 9).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Email tidak sama')		
+				GlobalVariable.NumofColm, rowExcel('$Email')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Email tidak sama')		
 	}
 	
 	'verify Role after add / setting'
@@ -499,10 +507,10 @@ def searchDataAfterAction(Connection conneSign) {
 
 def searchData() {
     WebUI.setText(findTestObject('Object Repository/User Management/input_Email'), findTestData(excelPathUserManagement).getValue(
-    GlobalVariable.NumofColm, 17))
+    GlobalVariable.NumofColm, rowExcel('Email Search')))
 
     WebUI.setText(findTestObject('Object Repository/User Management/input_Peran'), findTestData(excelPathUserManagement).getValue(
-    GlobalVariable.NumofColm, 18))
+    GlobalVariable.NumofColm, rowExcel('Peran Search')))
 
     'enter untuk set status meterai'
     WebUI.sendKeys(findTestObject('Object Repository/User Management/input_Peran'), Keys.chord(Keys.ENTER))
@@ -519,7 +527,7 @@ def checkErrorLog() {
 
         'Tulis di excel itu adalah error'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<' + errormessage + '>')
+            (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + '<' + errormessage + '>')
 
         return true
     }
@@ -643,7 +651,7 @@ def checkVerifyPaging(Boolean isMatch) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('User Management', GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 2) + 
+            GlobalVariable.StatusFailed, (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
             ';') + GlobalVariable.ReasonFailedPaging)
 
         GlobalVariable.FlagFailed = 1
@@ -654,7 +662,7 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('User Management', GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, ((findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 2) + 
+            GlobalVariable.StatusFailed, ((findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
             ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + reason)
 
         GlobalVariable.FlagFailed = 1
@@ -670,26 +678,26 @@ def inputCancel() {
 	
 	'Set text nama lengkap'
 	WebUI.setText(findTestObject('Object Repository/User Management/input_NamaLengkapNew'), findTestData(excelPathUserManagement).getValue(
-			GlobalVariable.NumofColm, 8))
+			GlobalVariable.NumofColm, rowExcel('$Nama Lengkap')))
 
 	'Set text email'
 	WebUI.setText(findTestObject('Object Repository/User Management/input_EmailNew'), findTestData(excelPathUserManagement).getValue(
-			GlobalVariable.NumofColm, 9))
+			GlobalVariable.NumofColm, rowExcel('$Email')))
 
 	'Set text peran'
 	WebUI.setText(findTestObject('Object Repository/User Management/input_PeranNew'), findTestData(excelPathUserManagement).getValue(
-			GlobalVariable.NumofColm, 10))
+			GlobalVariable.NumofColm, rowExcel('$Peran')))
 
 	'Enter peran'
 	WebUI.sendKeys(findTestObject('Object Repository/User Management/input_PeranNew'), Keys.chord(Keys.ENTER))
 
 	'Set text kode akses'
 	WebUI.setText(findTestObject('Object Repository/User Management/input_KodeAksesNew'), findTestData(excelPathUserManagement).getValue(
-			GlobalVariable.NumofColm, 11))
+			GlobalVariable.NumofColm, rowExcel('$Kode Akses')))
 
 	'Input cabang'
 	WebUI.setText(findTestObject('Object Repository/User Management/input_CabangNew'), findTestData(excelPathUserManagement).getValue(
-			GlobalVariable.NumofColm, 12))
+			GlobalVariable.NumofColm, rowExcel('$Cabang')))
 
 	'Enter cabang'
 	WebUI.sendKeys(findTestObject('Object Repository/User Management/input_CabangNew'), Keys.chord(Keys.ENTER))
@@ -734,4 +742,8 @@ def inputCancel() {
 	
 	'Klik button batal'
 	WebUI.click(findTestObject('User Management/button_Batal'))
+}
+
+def rowExcel(String cellValue) {
+	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }

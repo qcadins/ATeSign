@@ -18,7 +18,7 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 sheet = 'Main'
 
 'looping untuk menjalankan Main'
-for (GlobalVariable.NumofColm = 35; GlobalVariable.NumofColm <= findTestData(excelPathMain).columnNumbers; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathMain).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
     } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
@@ -185,6 +185,7 @@ for (GlobalVariable.NumofColm = 35; GlobalVariable.NumofColm <= findTestData(exc
                             'set boolean true'
                             isUsedEmbed = true
                         } else if ((opsiSigning[i]) == 'Sign Via Inbox') {
+
                             'jika opsi signing untuk signer adalah sign via inbox setting index untuk penggunaan data. Cara bacanya adalah apakah opsi tersebut telah digunakan. Jika sudah digunakan, maka + 1, jika tidak, maka 0.'
                             indexReadDataExcelInboxSigner = inisializeArray(isUsedInboxSigner, indexReadDataExcelInboxSigner)
 

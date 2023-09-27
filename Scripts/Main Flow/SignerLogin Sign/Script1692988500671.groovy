@@ -19,7 +19,9 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 def currentDate = new Date().format('yyyy-MM-dd')
 
 'Inisialisasi flag break untuk sequential'
-int flagBreak = 0, isLocalhost = 0, useBiom = 0, alreadyVerif = 0
+int flagBreak = 0, isLocalhost = 0, alreadyVerif = 0
+
+useBiom = 0
 
 'reset value GV'
 GlobalVariable.eSignData.putAt('VerifikasiOTP', 0)
@@ -1337,10 +1339,14 @@ def verifBiomMethod(int isLocalhost, int maxFaceCompDB, int countLivenessFaceCom
 	'Klik lanjut after konfirmasi'
 	WebUI.click(findTestObject('KotakMasuk/Sign/btn_LanjutAfterKonfirmasi'), FailureHandling.OPTIONAL)
 
+	WebUI.delay(GlobalVariable.TimeOut)
+	
 	'jika localhost aktif'
-	if (isLocalhost == 1) {
+	if (GlobalVariable.RunWith == 'Mobile') {
 		'tap allow camera'
 		Mobile.tapAtPosition(882, 1407, FailureHandling.OPTIONAL)
+		
+		WebUI.delay(5)
 	}
 	
 	'looping hingga count sampai batas maksimal harian'

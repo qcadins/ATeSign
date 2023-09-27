@@ -41,6 +41,12 @@
       <value></value>
       <variableId>0063d3a2-e0b6-43ec-821c-0f3048239320</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>514a1338-9333-4b5e-b996-88dd76142c1f</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -82,5 +88,12 @@
       <id>0063d3a2-e0b6-43ec-821c-0f3048239320</id>
       <masked>false</masked>
       <name>CancelDocsSign</name>
+   </variable>
+   <variable>
+      <defaultValue>0</defaultValue>
+      <description></description>
+      <id>514a1338-9333-4b5e-b996-88dd76142c1f</id>
+      <masked>false</masked>
+      <name>useBiom</name>
    </variable>
 </TestCaseEntity>

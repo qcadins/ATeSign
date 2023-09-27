@@ -6,8 +6,9 @@ import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
-'call login inveditor test case'
-WebUI.callTestCase(findTestCase('Login/Login_Inveditor'), [:], FailureHandling.STOP_ON_FAILURE)
+'call test case login per case'
+WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : SheetName, ('Path') : excelPathBuatUndangan, ('Email') : 'Inveditor Login', ('Password') : 'Inveditor Password Login'
+	, ('Perusahaan') : 'Inveditor Perusahaan Login', ('Peran') : 'Inveditor Peran Login'], FailureHandling.STOP_ON_FAILURE)
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')

@@ -33,8 +33,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		'setting menggunakan base url yang benar atau salah'
 		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathGenerateLink, GlobalVariable.NumofColm, rowExcel('Use Correct base Url'))
 		
-        'call test case login inveditor'
-		WebUI.callTestCase(findTestCase('Login/Login_Inveditor'), [('Path') : excelPathGenerateLink, ('SheetName') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
+		'call test case login per case'
+		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathGenerateLink, ('Email') : 'Inveditor Login', ('Password') : 'Inveditor Password Login'
+			, ('Perusahaan') : 'Inveditor Perusahaan Login', ('Peran') : 'Inveditor Peran Login'], FailureHandling.STOP_ON_FAILURE)
 		
 		'check ada value maka setting email service tenant'
 		if (findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')).length() > 0) {
