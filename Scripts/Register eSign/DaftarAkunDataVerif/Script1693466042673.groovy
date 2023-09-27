@@ -257,7 +257,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
 	                '-', '') + ';') + '<') + reason) + '>')
 	
 	        GlobalVariable.FlagFailed = 1
-	    } else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasi/input_KataSandi'), GlobalVariable.TimeOut, 
+	    } else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasiEsign/input_KataSandi'), GlobalVariable.TimeOut, 
 	        FailureHandling.OPTIONAL)) {
 	        'call testcase form aktivasi vida'
 	        WebUI.callTestCase(findTestCase('Register eSign/FormAktivasiVida'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 

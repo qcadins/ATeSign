@@ -10,7 +10,7 @@ public class ParseDate {
 		Locale locale = Locale.US
 		Date parsedDate
 		String sentDate, sDate
-		//parse Date from MM/dd/yyyy > yyyy-MM-dd
+		
 		SimpleDateFormat sdf = new SimpleDateFormat(format1, locale)
 
 		parsedDate = null

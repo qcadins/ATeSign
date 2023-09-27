@@ -485,7 +485,7 @@ public class APIFullService {
 	getAPICheckSigningStoreDB(Connection conn, String value) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select document_id, login_id, CASE WHEN ml.description = 'Employee' THEN '1' WHEN ml.description = 'Customer' THEN '2' WHEN ml.description = 'Spouse' THEN '3' WHEN ml.description = 'Guarantor' THEN '4' END, CASE WHEN LENGTH(TO_CHAR(MAX(tdds.sign_date), 'yyyy-MM-dd HH24:MI:SS')) > 0 THEN '1' ELSE '0' END, TO_CHAR(MAX(tdds.sign_date), 'yyyy-MM-dd HH24:MI:SS') from tr_document_h tdh JOIN tr_document_d tdd ON tdd.id_document_h = tdh.id_document_h LEFT JOIN tr_document_d_sign tdds ON tdds.id_document_d = tdd.id_document_d JOIN am_msuser amu ON amu.id_ms_user = tdds.id_ms_user JOIN ms_lov ml ON ml.id_lov = tdds.lov_signer_type where ref_number = '"+ value +"' GROUP BY document_id, login_id, ml.description")
+		resultSet = stm.executeQuery("select document_id, login_id, CASE WHEN ml.description = 'Employee' THEN '1' WHEN ml.description = 'Customer' THEN '2' WHEN ml.description = 'Spouse' THEN '3' WHEN ml.description = 'Guarantor' THEN '4' END, CASE WHEN LENGTH(TO_CHAR(MAX(tdds.sign_date), 'yyyy-MM-dd HH24:MI:SS')) > 0 THEN '1' ELSE '0' END, CASE WHEN TO_CHAR(MAX(tdds.sign_date), 'yyyy-MM-dd HH24:MI:SS') IS NULL THEN '' ELSE TO_CHAR(MAX(tdds.sign_date), 'yyyy-MM-dd HH24:MI:SS') END from tr_document_h tdh JOIN tr_document_d tdd ON tdd.id_document_h = tdh.id_document_h LEFT JOIN tr_document_d_sign tdds ON tdds.id_document_d = tdd.id_document_d JOIN am_msuser amu ON amu.id_ms_user = tdds.id_ms_user JOIN ms_lov ml ON ml.id_lov = tdds.lov_signer_type where ref_number = '"+ value +"' GROUP BY document_id, login_id, ml.description")
 
 		metadata = resultSet.metaData
 
@@ -999,5 +999,24 @@ public class APIFullService {
 		stm = conn.createStatement()
 
 		updateVariable = stm.executeUpdate("UPDATE ms_vendor_registered_user SET email_service = '"+ value +"' WHERE id_ms_user IN (SELECT mvr.id_ms_user FROM ms_vendor_registered_user mvr JOIN am_msuser am ON mvr.id_ms_user = am.id_ms_user WHERE am.hashed_id_no = encode(sha256('"+ idKtp +"'), 'hex'))")
+	}
+
+	@Keyword
+	checkAPIGetActLinkStoreDB(Connection conn, String idno) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select mvru.is_active, mvru.is_registered from ms_vendor_registered_user mvru JOIN ms_vendor mv ON mv.id_ms_vendor = mvru.id_ms_vendor JOIN am_msuser am ON am.id_ms_user = mvru.id_ms_user where vendor_code = '" +  GlobalVariable.Psre  + "' AND am.hashed_id_no = encode(sha256('" +  idno  + "'), 'hex')")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
 	}
 }

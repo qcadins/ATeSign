@@ -25,10 +25,10 @@
       <name>excelPathAPICheckStamping</name>
    </variable>
    <variable>
-      <defaultValue>'Login/Setting'</defaultValue>
+      <defaultValue>'API Check Stamping Status'</defaultValue>
       <description></description>
       <id>57399241-bb02-4751-b23c-2b41e7a04607</id>
       <masked>false</masked>
-      <name>excelPathSetting</name>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>

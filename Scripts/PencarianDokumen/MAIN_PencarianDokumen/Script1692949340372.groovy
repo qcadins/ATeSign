@@ -12,8 +12,9 @@ import org.openqa.selenium.Keys as Keys
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
-'call test case login andy'
-WebUI.callTestCase(findTestCase('Login/Login_Andy'), [:], FailureHandling.STOP_ON_FAILURE)
+'call test case login per case'
+WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathPencarianDokumen, ('Email') : 'Email Login', ('Password') : 'Password Login'
+	, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
 
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
@@ -29,48 +30,52 @@ int countColmExcel = findTestData(excelPathPencarianDokumen).columnNumbers
 
 'looping pencarian dokumen'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
-    if (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
+    if (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
-    } else if (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+    } else if (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 		
-		if (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+		if (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 			GlobalVariable.FlagFailed = 0
 		}
 		
-        'input nama pelanggan'
-        WebUI.setText(findTestObject('PencarianDokumen/input_NamaPelanggan'), findTestData(excelPathPencarianDokumen).getValue(
-                GlobalVariable.NumofColm, 9))
-
-        'input no kontrak'
-        WebUI.setText(findTestObject('PencarianDokumen/input_NomorKontrak'), findTestData(excelPathPencarianDokumen).getValue(
-                GlobalVariable.NumofColm, 10))
-
-        'input TanggalPermintaanDari'
-        WebUI.setText(findTestObject('PencarianDokumen/input_TanggalPermintaanDari'), findTestData(excelPathPencarianDokumen).getValue(
-                GlobalVariable.NumofColm, 11))
-
-        'input TanggalPermintaanSampai'
-        WebUI.setText(findTestObject('PencarianDokumen/input_TanggalPermintaanSampai'), findTestData(excelPathPencarianDokumen).getValue(
-                GlobalVariable.NumofColm, 12))
-
-        'input TanggalSelesaiDari'
-        WebUI.setText(findTestObject('PencarianDokumen/input_TanggalSelesaiDari'), findTestData(excelPathPencarianDokumen).getValue(
-                GlobalVariable.NumofColm, 13))
-
-        'input TanggalSelesaiSampai'
-        WebUI.setText(findTestObject('PencarianDokumen/input_TanggalSelesaiSampai'), findTestData(excelPathPencarianDokumen).getValue(
-                GlobalVariable.NumofColm, 14))
-
-        'input tipeDokumen'
-        WebUI.setText(findTestObject('PencarianDokumen/select_TipeDokumen'), findTestData(excelPathPencarianDokumen).getValue(
-                GlobalVariable.NumofColm, 15))
-
-        'click enter untuk input select ddl'
-        WebUI.sendKeys(findTestObject('PencarianDokumen/select_TipeDokumen'), Keys.chord(Keys.ENTER))
+		'cek apakah field nama pelanggan muncul'
+		if (WebUI.verifyElementPresent(findTestObject('PencarianDokumen/input_NamaPelanggan'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+			
+			'input nama pelanggan'
+			WebUI.setText(findTestObject('PencarianDokumen/input_NamaPelanggan'), findTestData(excelPathPencarianDokumen).getValue(
+					GlobalVariable.NumofColm, rowExcel('$Nama Pelanggan')))
+			
+			'input no kontrak'
+			WebUI.setText(findTestObject('PencarianDokumen/input_NomorKontrak'), findTestData(excelPathPencarianDokumen).getValue(
+					GlobalVariable.NumofColm, rowExcel('$Nomor Kontrak')))
+	
+			'input TanggalPermintaanDari'
+			WebUI.setText(findTestObject('PencarianDokumen/input_TanggalPermintaanDari'), findTestData(excelPathPencarianDokumen).getValue(
+					GlobalVariable.NumofColm, rowExcel('Tanggal Permintaan Dari')))
+	
+			'input TanggalPermintaanSampai'
+			WebUI.setText(findTestObject('PencarianDokumen/input_TanggalPermintaanSampai'), findTestData(excelPathPencarianDokumen).getValue(
+					GlobalVariable.NumofColm, rowExcel('Tanggal Permintaan Sampai')))
+	
+			'input TanggalSelesaiDari'
+			WebUI.setText(findTestObject('PencarianDokumen/input_TanggalSelesaiDari'), findTestData(excelPathPencarianDokumen).getValue(
+					GlobalVariable.NumofColm, rowExcel('Tanggal Selesai Dari')))
+	
+			'input TanggalSelesaiSampai'
+			WebUI.setText(findTestObject('PencarianDokumen/input_TanggalSelesaiSampai'), findTestData(excelPathPencarianDokumen).getValue(
+					GlobalVariable.NumofColm, rowExcel('Tanggal Selesai Sampai')))
+	
+			'input tipeDokumen'
+			WebUI.setText(findTestObject('PencarianDokumen/select_TipeDokumen'), findTestData(excelPathPencarianDokumen).getValue(
+					GlobalVariable.NumofColm, rowExcel('Tipe Dokumen')))
+	
+			'click enter untuk input select ddl'
+			WebUI.sendKeys(findTestObject('PencarianDokumen/select_TipeDokumen'), Keys.chord(Keys.ENTER))
+		}
 
         'input status'
         WebUI.setText(findTestObject('PencarianDokumen/select_Status'), findTestData(excelPathPencarianDokumen).getValue(
-                GlobalVariable.NumofColm, 16))
+                GlobalVariable.NumofColm, rowExcel('StatusDoc')))
 
         'click enter untuk input select ddl'
         WebUI.sendKeys(findTestObject('PencarianDokumen/select_Status'), Keys.chord(Keys.ENTER))
@@ -84,23 +89,23 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
 			
 			'Tulis di excel itu adalah error'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PencarianDokumen', GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-				(findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<' + errormessage + '>')
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+				(findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + '<' + errormessage + '>')
 			
 			continue
 		}
-        if (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 7) == 'View Dokumen') {
+        if (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Pencarian Dokumen Action')) == 'View Dokumen') {
             'click button view dokumen'
             WebUI.click(findTestObject('PencarianDokumen/button_ViewDokumen'))
 
             'verify no kontrak'
             checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('PencarianDokumen/label_noKontrak')).replace(
-                        'No Kontrak ', ''), findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 10), 
+                        'No Kontrak ', ''), findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Kontrak')), 
                     false, FailureHandling.CONTINUE_ON_FAILURE), ' No Kontrak')
 
             'click button kembali'
             WebUI.click(findTestObject('PencarianDokumen/button_Kembali'))
-        } else if (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 7) == 'Download') {
+        } else if (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Pencarian Dokumen Action')) == 'Download') {
             'click button Download'
             WebUI.click(findTestObject('PencarianDokumen/button_Download'))
 
@@ -109,27 +114,27 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
             'check if file downloaded'
             if (WebUI.verifyEqual(CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathPencarianDokumen).getValue(
-                        GlobalVariable.NumofColm, 18)), true, FailureHandling.CONTINUE_ON_FAILURE)) {
+                        GlobalVariable.NumofColm, rowExcel('$Delete File'))), true, FailureHandling.CONTINUE_ON_FAILURE)) {
                 if (GlobalVariable.FlagFailed == 0) {
                     'write to excel success'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PencarianDokumen', 
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
                         0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
                 }
             } else {
                 'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedDownload'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PencarianDokumen', GlobalVariable.NumofColm, 
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 
-                        2) + ';') + GlobalVariable.ReasonFailedDownload)
+                        rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedDownload)
 
                 GlobalVariable.FlagFailed = 1
             }
-        } else if (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 7) == 'View Signer') {
+        } else if (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Pencarian Dokumen Action')) == 'View Signer') {
             'click button view Signer'
             WebUI.click(findTestObject('PencarianDokumen/button_ViewSigner'))
 
             'get data signer'
             ArrayList<String> resultDataSigner = CustomKeywords.'connection.PencarianDokumen.getSignerInfo'(conneSign, findTestData(
-                    excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 10), GlobalVariable.Psre)
+                    excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Kontrak')), GlobalVariable.Psre)
 
             'get row'
             variable = DriverFactory.webDriver.findElements(By.cssSelector('body > ngb-modal-window > div > div > app-signer > div.modal-body > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
@@ -200,16 +205,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         
         'declare isMmandatory Complete'
         int isMandatoryComplete = Integer.parseInt(findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 
-                5))
+                rowExcel('Is Mandatory Complete')))
 
         if ((GlobalVariable.FlagFailed == 0) && (isMandatoryComplete == 0)) {
             'write to excel success'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'PencarianDokumen', 0, 
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, 
                 GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
         } else {
             'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedMandatory'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PencarianDokumen', GlobalVariable.NumofColm, 
-                GlobalVariable.StatusFailed, (findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 2) + ';') + 
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                GlobalVariable.StatusFailed, (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
                 GlobalVariable.ReasonFailedMandatory)
         }
     }
@@ -341,8 +346,8 @@ public checkPaging(Connection conneSign) {
 	}
 	
 	'verify paging di page terakhir'
-	checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/paging_Page'), 'aria-label',
-				FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage+additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+	checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/paging_Page'), 'ng-reflect-page',
+				FailureHandling.CONTINUE_ON_FAILURE), Math.round(lastPage+additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'click min page'
     WebUI.click(findTestObject('PencarianDokumen/button_MinPage'))
@@ -355,8 +360,8 @@ public checkPaging(Connection conneSign) {
 public checkVerifyPaging(Boolean isMatch) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PencarianDokumen', GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 2) + 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+            GlobalVariable.StatusFailed, (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
             ';') + GlobalVariable.ReasonFailedPaging)
 
         GlobalVariable.FlagFailed = 1
@@ -366,11 +371,14 @@ public checkVerifyPaging(Boolean isMatch) {
 public checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('PencarianDokumen', GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, 2) + 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+            GlobalVariable.StatusFailed, (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
             ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
 
         GlobalVariable.FlagFailed = 1
     }
 }
 
+def rowExcel(String cellValue) {
+	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+}

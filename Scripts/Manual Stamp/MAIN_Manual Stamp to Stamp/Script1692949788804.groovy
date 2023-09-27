@@ -105,14 +105,28 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'Input form yang ada pada page'
             inputForm()
 
-            'check save ada attribute disabled'
-            if (WebUI.verifyElementHasAttribute(findTestObject('ManualStamp/button_Selanjutnya'), 'disabled', GlobalVariable.TimeOut, 
+			if (checkErrorLog() == true) {
+				continue
+			}
+
+			if (Integer.parseInt(findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Is Mandatory Complete'))) > 0) {
+				'write to excel bahwa save gagal'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+					GlobalVariable.StatusFailed, (findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm,
+						rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedMandatory)
+				
+				GlobalVariable.FlagFailed = 1
+				
+				continue
+			} else if (WebUI.verifyElementHasAttribute(findTestObject('ManualStamp/button_Selanjutnya'), 'disabled', GlobalVariable.TimeOut, 
                 FailureHandling.OPTIONAL)) {
                 'write to excel bahwa save gagal'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                     GlobalVariable.StatusFailed, (findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
                         rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedSaveGagal)
-
+				
+				GlobalVariable.FlagFailed = 1
+				
                 continue
             } else {
                 'klik button selanjutnya'
@@ -253,9 +267,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         }
                         
                         if (GlobalVariable.FlagFailed == 0 || findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Warning')) {
-                            'write to excel success'
-                            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
-                                0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+                            if (GlobalVariable.FlagFailed == 0) {
+                            	'write to excel success'
+                            	CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
+                            			0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+                            }
 
                             if (GlobalVariable.checkStoreDB == 'Yes') {
                                 result = CustomKeywords.'connection.ManualStamp.getManualStamp'(conneSign, findTestData(
@@ -477,6 +493,9 @@ def inputForm() {
 
     'Upload file berdasarkan filePath yang telah dirancang'
     WebUI.uploadFile(findTestObject('ManualStamp/input_documentExample'), filePath, FailureHandling.CONTINUE_ON_FAILURE)
+	
+	'untuk handle ddl yang tidak tertutup'
+	WebUI.click(findTestObject('ManualStamp/label_Judul'))
 }
 
 def zoomSetting(int percentage) {
@@ -782,11 +801,14 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
     'input filter dari saldo'
     WebUI.setText(findTestObject('Saldo/input_tipesaldo'), 'Stamp Duty')
 
-	if (WebUI.verifyElementText(findTestObject('ManualStamp/selected_DDL_Saldo'), 'Stamp Duty')) {
-	} else {
+	if (!WebUI.verifyElementText(findTestObject('ManualStamp/selected_DDL_Saldo'), 'Stamp Duty', FailureHandling.OPTIONAL)) {
+		
+		WebUI.mouseOver(findTestObject('ManualStamp/selected_DDL_Saldo'))
+		
 		'Input page down'
-		WebUI.sendKeys(findTestObject('Saldo/input_tipesaldo'), Keys.chord(Keys.PAGE_DOWN))
+		WebUI.sendKeys(findTestObject('ManualStamp/input_tipeSaldo'), Keys.chord(Keys.ARROW_DOWN))
 	}
+	
     'enter'
     WebUI.sendKeys(findTestObject('Saldo/input_tipeSaldo'), Keys.chord(Keys.ENTER))
 

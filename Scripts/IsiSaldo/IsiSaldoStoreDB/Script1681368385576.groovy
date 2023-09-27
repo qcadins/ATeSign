@@ -21,7 +21,7 @@ ArrayList<String> arrayMatch = []
 'declare arrayindex'
 arrayindex = 0
 
-WebUI.delay(30)
+WebUI.delay(5)
 
 'verify tenant'
 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, rowExcel('$Tenant')).toUpperCase(), (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))

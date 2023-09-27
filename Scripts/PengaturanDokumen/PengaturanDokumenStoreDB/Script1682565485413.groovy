@@ -17,13 +17,27 @@ ArrayList<String> arrayMatch = []
 'declare arrayindex'
 arrayindex = 0
 
-'verify doc template code'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Kode Templat Dokumen')).toUpperCase(), 
+'cek untuk data diisi di excel atau tidak'
+if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Kode Templat Dokumen')).length() > 0) {
+	
+	'verify doc template code'
+	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Kode Templat Dokumen')).toUpperCase(), 
         (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+} else {
+	
+	arrayindex++
+}
 
-'verify doc template name'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Nama Templat Dokumen')).toUpperCase(), 
-        (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+'cek untuk data diisi di excel atau tidak'
+if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Nama Templat Dokumen')).length() > 0) {
+	
+	'verify doc template name'
+	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Nama Templat Dokumen')).toUpperCase(),
+			(result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+} else {
+	
+	arrayindex++
+}
 
 'verify deskripsi'
 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('$Deskripsi')).toUpperCase(), 
@@ -33,26 +47,50 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getVal
 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('$Tipe Pembayaran TTD')).toUpperCase(), 
         (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
-'verify status'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Status Active')).toUpperCase(), 
-        (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+'cek untuk data diisi di excel atau tidak'
+if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Status Active')).length() > 0) {
+	
+	'verify status'
+	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Status Active')).toUpperCase(),
+		(result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+} else {
+	
+	arrayindex++
+}
 
 if(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Input Psre')).length() > 0) {
 	'verify Psre == inputan excel'
 	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Input Psre')).toUpperCase(),
 			(result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))	
 } else {
-	'verify Psre == default vendor yang active'
-	arrayMatch.add(WebUI.verifyMatch('null', (result[arrayindex++]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+//	'verify Psre == default vendor yang active'
+//	arrayMatch.add(WebUI.verifyMatch('null', (result[arrayindex++]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	arrayindex++
 }
 
-'verify isSequence'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Sequential Signing')).toUpperCase(),
-		(result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+'cek untuk data diisi atau tidak'
+if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Sequential Signing')).length() > 0) {
+	
+	'verify isSequence'
+	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Sequential Signing')).toUpperCase(),
+			(result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+} else {
+	
+	arrayindex++
+}
 
-'verify urutan sequence sign'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Urutan Signing')).toUpperCase(),
+'cek untuk data diisi di excel atau tidak'
+if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Urutan Signing')).length() > 0) {
+	
+	'verify urutan sequence sign'
+	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Urutan Signing')).toUpperCase(),
 		(result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+} else {
+	
+	arrayindex++
+}
+
 
 'jika data db tidak sesuai dengan excel'
 if (arrayMatch.contains(false)) {

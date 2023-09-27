@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'card-content']/div/form/div[24]/div/input</value>
+         <value>//*[@class = 'card-content']/div/form/div[26]/div/input</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@class = 'card-content']/div/form/div[24]/div/input</value>
-      <webElementGuid>adc43ab8-7452-45d2-bf38-9a69e3cdb61f</webElementGuid>
+      <value>//*[@class = 'card-content']/div/form/div[26]/div/input</value>
+      <webElementGuid>df4a8e89-02b6-4809-a3d0-7204f3c471c0</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

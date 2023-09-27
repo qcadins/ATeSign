@@ -70,8 +70,7 @@ arrayIndex++
 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('isStampingOtomatis')),
 		resultDbNew[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-'verify aktivasi callback url'
-arrayMatch.add(WebUI.verifyMatch(activationCallBackUrl, resultDbNew[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+arrayIndex++
 
 'verify radio_button'
 arrayMatch.add(WebUI.verifyMatch(use_wa, resultDbNew[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))

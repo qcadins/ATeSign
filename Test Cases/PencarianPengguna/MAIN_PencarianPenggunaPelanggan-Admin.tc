@@ -11,11 +11,24 @@
       <value></value>
       <variableId>42136a90-efcc-4d22-abf8-f94e253c0c74</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>647a7860-7398-42e5-acf0-f8eeb0003a9e</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>'PencarianPengguna/PencarianPengguna-Pelanggan'</defaultValue>
       <description></description>
       <id>42136a90-efcc-4d22-abf8-f94e253c0c74</id>
       <masked>false</masked>
       <name>excelPathPencarianPengguna</name>
+   </variable>
+   <variable>
+      <defaultValue>'PencarianPengguna-Pelanggan'</defaultValue>
+      <description></description>
+      <id>647a7860-7398-42e5-acf0-f8eeb0003a9e</id>
+      <masked>false</masked>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>

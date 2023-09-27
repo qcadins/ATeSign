@@ -152,7 +152,7 @@ for (GlobalVariable.NumofColm = 15; GlobalVariable.NumofColm <= findTestData(exc
 						
 						'call test case api sign document normal'
                         WebUI.callTestCase(findTestCase('Main Flow/API Sign Document Normal'), [('API_Excel_Path') : excelPathMain
-                                , ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
+                                , ('sheet') : sheet, ('CancelDocsSign') : cancelDocsValue], FailureHandling.CONTINUE_ON_FAILURE)
 
 						'set boolean menjadi true'
                         isUsedAPINormal = true

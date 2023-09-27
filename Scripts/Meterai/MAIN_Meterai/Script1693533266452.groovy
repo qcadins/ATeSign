@@ -362,8 +362,8 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
 		}
 		
 		'verify paging di page terakhir'
-		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/paging_Page'), 'aria-label',
-					FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage+additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/paging_Page'), 'ng-reflect-page',
+					FailureHandling.CONTINUE_ON_FAILURE), Math.round(lastPage+additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
 	
 	    'click first page'
 	    WebUI.click(findTestObject('Meterai/button_FirstPage'))

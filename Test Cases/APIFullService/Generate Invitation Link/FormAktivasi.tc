@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>FormAktivasiVida</name>
+   <name>FormAktivasi</name>
    <tag></tag>
    <comment></comment>
    <testCaseGuid>8d7f7a15-0f84-4a10-a486-5ba46624db89</testCaseGuid>
