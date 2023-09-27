@@ -185,6 +185,10 @@ for (GlobalVariable.NumofColm = 35; GlobalVariable.NumofColm <= findTestData(exc
                             'set boolean true'
                             isUsedEmbed = true
                         } else if ((opsiSigning[i]) == 'Sign Via Inbox') {
+							
+							println GlobalVariable.NumofColm
+							WebUI.delay(10)
+							
                             'jika opsi signing untuk signer adalah sign via inbox setting index untuk penggunaan data. Cara bacanya adalah apakah opsi tersebut telah digunakan. Jika sudah digunakan, maka + 1, jika tidak, maka 0.'
                             indexReadDataExcelInboxSigner = inisializeArray(isUsedInboxSigner, indexReadDataExcelInboxSigner)
 
@@ -210,7 +214,7 @@ for (GlobalVariable.NumofColm = 35; GlobalVariable.NumofColm <= findTestData(exc
             }
             
             'jika set stamping'
-            if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Do Stamp for this document? ')) == 
+            if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Do Stamp for this document?')) == 
             'Yes') {
                 'call test case stamping'
                 WebUI.callTestCase(findTestCase('Main Flow/Stamping'), [('excelPathStamping') : excelPathMain, ('sheet') : sheet

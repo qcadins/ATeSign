@@ -10,6 +10,7 @@ import org.openqa.selenium.By as By
 import java.sql.Connection as Connection
 import com.kms.katalon.core.testobject.TestObject as TestObject
 import com.kms.katalon.core.configuration.RunConfiguration as RunConfiguration
+import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
 
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
@@ -299,6 +300,8 @@ for (o = 0; o < documentId.size(); o++) {
         }
     }
     
+	WebUI.delay(5)
+	
     'Scroll ke btn Proses'
     WebUI.scrollToElement(findTestObject('KotakMasuk/Sign/btn_Proses'), GlobalVariable.TimeOut)
 
@@ -1334,7 +1337,7 @@ def verifBiomMethod(int isLocalhost, int maxFaceCompDB, int countLivenessFaceCom
 	'jika localhost aktif'
 	if (isLocalhost == 1) {
 		'tap allow camera'
-		MobileBuiltInKeywords.tapAndHoldAtPosition(895, 1364, 3)
+		Mobile.tapAtPosition(882, 1407, FailureHandling.OPTIONAL)
 	}
 	
 	'looping hingga count sampai batas maksimal harian'

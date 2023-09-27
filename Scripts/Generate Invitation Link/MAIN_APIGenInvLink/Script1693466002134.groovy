@@ -203,6 +203,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'call test case daftar akun'
                     WebUI.callTestCase(findTestCase('Generate Invitation Link/DaftarAkunDataVerif'), [('excelPathGenerateLink') : 'Registrasi/Generate_Inv_Link'], 
                         FailureHandling.STOP_ON_FAILURE)
+					
+					'looping untuk mengeck apakah case selanjutnya ingin melanjutkan input pada form registrasi'
+					while (findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Continue Register & Activation')).equalsIgnoreCase('Continue')) {
+						GlobalVariable.NumofColm++
+						
+						'call test case daftar akun'
+	                    WebUI.callTestCase(findTestCase('Generate Invitation Link/DaftarAkunDataVerif'), [('excelPathGenerateLink') : 'Registrasi/Generate_Inv_Link'], 
+	                        FailureHandling.STOP_ON_FAILURE)
+					}
                 } else {
                     'write to excel status failed dan reason : '
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 

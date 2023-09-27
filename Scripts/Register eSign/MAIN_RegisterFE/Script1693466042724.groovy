@@ -10,6 +10,8 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 'get colm excel'
 int countColmExcel = findTestData(excelPathBuatUndangan).columnNumbers
 
+int firstRun = 0
+
 'looping buat undangan'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
@@ -20,9 +22,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			GlobalVariable.FlagFailed = 0
 		}
 		
+		if((findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Inveditor Login')) !=
+			findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Inveditor Login'))) || firstRun == 0
+			|| GlobalVariable.LoginAgain == 0){
+			'call test case login per case'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : SheetName, ('Path') : excelPathBuatUndangan, ('Email') : 'Inveditor Login', ('Password') : 'Inveditor Password Login'
+				, ('Perusahaan') : 'Inveditor Perusahaan Login', ('Peran') : 'Inveditor Peran Login'], FailureHandling.STOP_ON_FAILURE)
+			
+			firstRun = 1
+		}
+		
         'call test case buat undangan'
-        WebUI.callTestCase(findTestCase('Register eSign/BuatUndangan'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
-            FailureHandling.CONTINUE_ON_FAILURE)
+        WebUI.callTestCase(findTestCase('Register eSign/BuatUndangan'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan']
+			, FailureHandling.CONTINUE_ON_FAILURE)
     }
 }
 

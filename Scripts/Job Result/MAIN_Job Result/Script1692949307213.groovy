@@ -1,7 +1,10 @@
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import java.sql.Connection as Connection
+import java.sql.Connection
+import java.time.LocalDate
+import java.time.YearMonth
+
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
@@ -214,6 +217,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         */
 
 def checkPaging(Connection conneSign) {
+	
+	'get dates'
+	currentDate = LocalDate.now()
+	
+	firstDate = YearMonth.now().atDay(1)
+	
     'set text tanggal awal'
     WebUI.setText(findTestObject('Job Result/input_requestDateStart'), '2023-04-01')
 
@@ -244,11 +253,11 @@ def checkPaging(Connection conneSign) {
 
     'verify field ke reset'
     checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Job Result/input_requestDateStart'), 'value', 
-                FailureHandling.CONTINUE_ON_FAILURE), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' pada input permintaan tanggal mulai')
+                FailureHandling.CONTINUE_ON_FAILURE), firstDate.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada input permintaan tanggal mulai')
 
     'verify field ke reset'
     checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Job Result/input_requestDateEnd'), 'value', FailureHandling.CONTINUE_ON_FAILURE), 
-            '', false, FailureHandling.CONTINUE_ON_FAILURE), ' pada input permintaan tanggal berakhir ')
+            currentDate.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada input permintaan tanggal berakhir ')
 
     'click ddl process result'
     WebUI.click(findTestObject('Job Result/input_ProcessResult'))
