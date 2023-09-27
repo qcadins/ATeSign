@@ -172,9 +172,19 @@ for (int i = 0; i < docid.size(); i++) {
     'get data psre code'
     psreCodeDB = CustomKeywords.'connection.APIFullService.getVendorCodeUsingDocId'(conneSign, docid[i])
 
-    'verify psre Code'
-    arrayMatch.add(WebUI.verifyMatch(psreCodeDB, result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
+    'Jika verify psre Code sesuai'
+	if (WebUI.verifyMatch(psreCodeDB, result[arrayindex], false, FailureHandling.CONTINUE_ON_FAILURE)) {
+		arrayMatch.add(true)
+		
+		arrayindex++
+		
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('PsRE Document') - 1,
+			GlobalVariable.NumofColm - 1, psreCodeDB)
+	}
+	else {
+		arrayMatch.add(false)
+	}
+   
     'verify tenant code'
     arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$tenantCode (Send External)')).replace(
                 '"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))

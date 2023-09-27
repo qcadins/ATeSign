@@ -335,6 +335,15 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
 	        'call testcase form aktivasi vida'
 	        WebUI.callTestCase(findTestCase('APIFullService/Generate Invitation Link/FormAktivasi'), [('excelPathAPIGenerateInvLink') : 'APIFullService/API_GenInvLink'], 
 				FailureHandling.CONTINUE_ON_FAILURE)
+			
+			'looping untuk mengeck apakah case selanjutnya ingin melanjutkan input pada form aktivasi'
+			while (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Continue Register & Activation')).equalsIgnoreCase('Continue')) {
+				GlobalVariable.NumofColm++
+				
+				'call testcase form aktivasi vida'
+		        WebUI.callTestCase(findTestCase('APIFullService/Generate Invitation Link/FormAktivasi'), [('excelPathAPIGenerateInvLink') : 'APIFullService/API_GenInvLink'], 
+					FailureHandling.CONTINUE_ON_FAILURE)
+			}
 	    } else if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_PopupMsg'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 	        reason = WebUI.getText(findTestObject('DaftarAkun/label_PopupMsg'))
 	

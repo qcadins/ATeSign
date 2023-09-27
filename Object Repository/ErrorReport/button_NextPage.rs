@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@aria-label = 'go to next page']</value>
+         <value>//*[@class = 'datatable-icon-right']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -18,14 +18,14 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-error-report/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[8]/a</value>
-      <webElementGuid>e421253a-642d-497e-92bb-2ee0653cf904</webElementGuid>
+      <webElementGuid>3b427d76-6246-4dc8-a2c5-65253539160d</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>aria-label</name>
+      <name>class</name>
       <type>Main</type>
-      <value>go to next page</value>
-      <webElementGuid>5711bd36-f906-4327-a940-fac4fd14aecd</webElementGuid>
+      <value>datatable-icon-right</value>
+      <webElementGuid>d0dec000-9313-4525-8235-210c6322eef3</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

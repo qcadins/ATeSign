@@ -193,6 +193,19 @@ for (int i = 0; i < docid.size(); i++) {
 	
 	'get data psre code'
 	String psreCodeDB = CustomKeywords.'connection.SendSign.getVendorCodeUsingDocId'(conneSign, docid[i])
+	
+	'Jika verify psre Code sesuai'
+	if (WebUI.verifyMatch(psreCodeDB, result[arrayindex], false, FailureHandling.CONTINUE_ON_FAILURE)) {
+		arrayMatch.add(true)
+		
+		arrayindex++
+		
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('PsRE Document') - 1,
+			GlobalVariable.NumofColm - 1, psreCodeDB)
+	}
+	else {
+		arrayMatch.add(false)
+	}
 
 	'verify psre Code'
 	arrayMatch.add(WebUI.verifyMatch(psreCodeDB, result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))

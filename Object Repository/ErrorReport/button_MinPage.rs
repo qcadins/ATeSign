@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'datatable-icon-left']</value>
+         <value>//*[@class = 'datatable-icon-prev']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -18,14 +18,14 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-error-report/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[9]/a</value>
-      <webElementGuid>a95cdf96-0ba9-4d83-936d-ad17c74e93c4</webElementGuid>
+      <webElementGuid>d90d0bec-83ef-47e7-b8d2-cf56cb016e13</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>datatable-icon-left</value>
-      <webElementGuid>ed93ec4f-bf2d-4e6e-a1c3-06daf7eb8541</webElementGuid>
+      <value>datatable-icon-prev</value>
+      <webElementGuid>9186b72b-24d6-4ddc-a9e3-69acd243cd15</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
