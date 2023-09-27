@@ -89,7 +89,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			WebUI.closeBrowser()
 
 			'call Test Case untuk login sebagai user berdasarkan doc id'
-			WebUI.callTestCase(findTestCase('Login/Login_1docManySigner'), [('email') : emailSigner[(o - 1)]], FailureHandling.CONTINUE_ON_FAILURE)
+			WebUI.callTestCase(findTestCase('null'), [('email') : emailSigner[(o - 1)]], FailureHandling.CONTINUE_ON_FAILURE)
 
 			String roleInput = CustomKeywords.'connection.SendSign.getRoleLogin'(conneSign, emailSigner[o - 1], GlobalVariable.Tenant)
 			
@@ -663,7 +663,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			 , ('sheet') : sheet, ("nomorKontrak") : noKontrak], FailureHandling.CONTINUE_ON_FAILURE)
 
 			'Call test Case untuk login sebagai admin wom admin client'
-			WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathManualSigntoSign, ('sheet') : sheet],
+			WebUI.callTestCase(findTestCase('InactiveTC/Login_Admin'), [('excel') : excelPathManualSigntoSign, ('sheet') : sheet],
 				FailureHandling.CONTINUE_ON_FAILURE)
 
 			'Split dokumen template name dan nomor kontrak per dokumen berdasarkan delimiter ;'
@@ -802,7 +802,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 61) == 'Yes') {
 			if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 62) == 'API Stamping') {
 			'Call API Send doc'
-			WebUI.callTestCase(findTestCase('Meterai/Flow Stamping'), [('excelPathStamping') : excelPathManualSigntoSign
+			WebUI.callTestCase(findTestCase('InactiveTC/Flow Stamping'), [('excelPathStamping') : excelPathManualSigntoSign
 			, ('sheet') : sheet, ('useAPI') : 'v3.0.0', ('linkDocumentMonitoring') : ''], FailureHandling.CONTINUE_ON_FAILURE)
 			}
 			else if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 62) == 'Front End Document Monitoring') {

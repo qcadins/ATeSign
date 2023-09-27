@@ -25,10 +25,10 @@
       <name>excelPathUserManagement</name>
    </variable>
    <variable>
-      <defaultValue>'Login/Setting'</defaultValue>
+      <defaultValue>'User Management'</defaultValue>
       <description></description>
       <id>f0224da5-dde5-4802-b55b-214d3f91c9ec</id>
       <masked>false</masked>
-      <name>excelPathSetting</name>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>
