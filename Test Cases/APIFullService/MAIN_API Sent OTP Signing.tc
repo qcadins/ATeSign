@@ -15,12 +15,6 @@
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>9a09403f-a01e-45de-9ba9-6e8e123af2e8</variableId>
-   </variableLinks>
-   <variableLinks>
-      <testDataLinkId></testDataLinkId>
-      <type>DEFAULT</type>
-      <value></value>
       <variableId>29bba4d0-7846-40de-98c8-f17e41319494</variableId>
    </variableLinks>
    <variable>
@@ -31,14 +25,7 @@
       <name>excelPathAPISentOTPSigning</name>
    </variable>
    <variable>
-      <defaultValue>'Login/Setting'</defaultValue>
-      <description></description>
-      <id>9a09403f-a01e-45de-9ba9-6e8e123af2e8</id>
-      <masked>false</masked>
-      <name>excelPathSetting</name>
-   </variable>
-   <variable>
-      <defaultValue>''</defaultValue>
+      <defaultValue>'API Sent OTP Signing'</defaultValue>
       <description></description>
       <id>29bba4d0-7846-40de-98c8-f17e41319494</id>
       <masked>false</masked>

@@ -6,8 +6,6 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import internal.GlobalVariable as GlobalVariable
 import java.sql.Connection as Connection
 	
-sheet = 'API Sent OTP Signing'
-	
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - Full API Services.xlsx')
 	
