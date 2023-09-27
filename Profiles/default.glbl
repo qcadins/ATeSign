@@ -131,6 +131,11 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
+      <initValue>'Job Process Sign Gagal'</initValue>
+      <name>ReasonFailedProcessFailed</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
       <initValue>'Job Process Sign Belum Selesai'</initValue>
       <name>ReasonFailedProcessNotDone</name>
    </GlobalVariableEntity>

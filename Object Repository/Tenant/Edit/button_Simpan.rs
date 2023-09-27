@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[(text() = 'Save' or . = 'Save')]</value>
+         <value>//*[(text() = 'Simpan' or . = 'Simpan') and @class = 'btn btn-info']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -18,14 +18,22 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/div[23]/div/button[2]</value>
-      <webElementGuid>0ef56851-5299-461c-a74c-b1a59955249f</webElementGuid>
+      <webElementGuid>cf0c0d81-a1b4-47a9-9448-df0fd34ac222</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>text</name>
       <type>Main</type>
-      <value>Save</value>
-      <webElementGuid>e48c1726-4686-4620-9820-48bd0d78f4e9</webElementGuid>
+      <value>Simpan</value>
+      <webElementGuid>3d6de774-5f72-493e-ac56-b6e5733f386e</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>btn btn-info</value>
+      <webElementGuid>0a1fa836-04bb-45f9-be05-59df36bb124e</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

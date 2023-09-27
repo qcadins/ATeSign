@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>button_TambahEmail</name>
+   <name>peranTerpilih</name>
    <tag></tag>
-   <elementGuidId>99a7f7f7-3c76-4417-9745-d5fa3c039018</elementGuidId>
+   <elementGuidId>26a5c2d1-0ac0-4f4d-9e89-552fcf2edcbb</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'btn btn-info' and (text() = 'Tambah' or . = 'Tambah')]</value>
+         <value>//*[@class = 'ng-option ng-option-selected ng-option-marked ng-star-inserted']/span</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>btn btn-info</value>
-      <webElementGuid>7829b553-f312-46e3-a229-4e5037d9efda</webElementGuid>
+      <value>ng-option ng-option-selected ng-option-marked ng-star-inserted</value>
+      <webElementGuid>015934a2-6b35-4cde-89e5-a9cf23ad55c0</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>text</name>
+      <name>xpath</name>
       <type>Main</type>
-      <value>Tambah</value>
-      <webElementGuid>b5352b58-9693-4992-8033-9e5026754740</webElementGuid>
+      <value>//*[@class = 'ng-option ng-option-selected ng-option-marked ng-star-inserted']/span</value>
+      <webElementGuid>9b82be3c-7154-43c3-8d1c-2d0df967f650</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
