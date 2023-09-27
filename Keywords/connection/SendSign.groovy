@@ -415,7 +415,7 @@ public class SendSign {
 	getRoleLogin(Connection conn, String emailSigner, String tenantCode) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select amr.role_code from ms_useroftenant muot join ms_tenant mst on muot.id_ms_tenant = mst.id_ms_tenant join am_memberofrole amor on muot.id_ms_user = amor.id_ms_user join am_msuser amm on muot.id_ms_user = amm.id_ms_user join am_msrole amr on amor.id_ms_role = amr.id_ms_role where amm.login_id = '"+emailSigner+"' and mst.tenant_code = '"+tenantCode+"' limit 1")
+		resultSet = stm.executeQuery("select amr.role_name from ms_useroftenant muot join ms_tenant mst on muot.id_ms_tenant = mst.id_ms_tenant join am_memberofrole amor on muot.id_ms_user = amor.id_ms_user join am_msuser amm on muot.id_ms_user = amm.id_ms_user join am_msrole amr on amor.id_ms_role = amr.id_ms_role where amm.login_id = '"+emailSigner+"' and mst.tenant_code = '"+tenantCode+"' limit 1")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

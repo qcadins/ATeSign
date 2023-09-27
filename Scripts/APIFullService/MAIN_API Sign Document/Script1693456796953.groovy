@@ -399,12 +399,9 @@ def loginAdminGetSaldo(Connection conneSign) {
         noKontrak = (noKontrak + CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, docid[(i - 1)]))
     }
     
-	'panggil fungsi login'
-	WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
-		('Path') : excelPathAPISignDocument], FailureHandling.STOP_ON_FAILURE)
-	
-//    'Call test Case untuk login sebagai admin wom admin client'
-//    WebUI.callTestCase(findTestCase('Login/Login_Admin'), [('excel') : excelPathAPISignDocument, ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
+	'call test case login per case'
+	WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathAPISignDocument, ('Email') : 'Email Login', ('Password') : 'Password Login'
+		, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
 
     'klik button saldo'
     WebUI.click(findTestObject('isiSaldo/SaldoAdmin/menu_Saldo'))

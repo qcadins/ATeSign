@@ -8,6 +8,9 @@ import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 import java.sql.Connection as Connection
 
+'connect DB eSign'
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
+
 'setting untuk membuat lokasi default folder download'
 HashMap<String, String> chromePrefs = new HashMap<String, String>()
 
@@ -80,7 +83,7 @@ if (email == '') {
     }
 } else {
     if ((checkBeforeSigning == 'Yes') || (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Option for Sign Document per Signer')) == 
-    'Signer Login Sign')) {
+    'Sign Via Inbox')) {
         'input email'
         WebUI.setText(findTestObject('Login/input_Email'), email)
 
@@ -103,13 +106,17 @@ if (email == '') {
             WebUI.click(findTestObject('Login/input_Peran'))
 
             WebUI.delay(2)
-
+			
+			GlobalVariable.roleLogin = WebUI.getText(findTestObject('peranTerpilih'))
+			
             'enter untuk input peran'
             WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
 
             'click button pilih peran'
             WebUI.click(findTestObject('Login/button_pilihPeran'), FailureHandling.STOP_ON_FAILURE)
-        }
+        } else {
+			GlobalVariable.roleLogin = CustomKeywords.'connection.SendSign.getRoleLogin'(conneSign, email, GlobalVariable.Tenant)
+		}
     } else if ((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Option for Sign Document per Signer')) == 
     'Webview Sign') || (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Option for Sign Document per Signer')) == 
     'Embed Sign')) {

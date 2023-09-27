@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>button_prosesTtd</name>
+   <tag></tag>
+   <elementGuidId>454d878e-1bd9-4853-9b81-55ac90df9c74</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;prosesSign&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;prosesSign&quot;]</value>
+      <webElementGuid>dfcdfa18-0e76-4027-9bae-cfc5aab6e4ab</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

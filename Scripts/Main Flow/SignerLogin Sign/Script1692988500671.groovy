@@ -96,12 +96,13 @@ for (o = 0; o < documentId.size(); o++) {
     WebUI.closeBrowser()
 
 	'ubah flag untuk buka localhost jika syarat if terpenuhi'
-	if (!(vendor.equalsIgnoreCase('Privy')) && (mustFaceCompDB == '1')) {
+	if (!(vendor.equalsIgnoreCase('Privy')) && !(vendor.equalsIgnoreCase('Digisign')) && (mustFaceCompDB == '1')) {
 		'ubah keperluan untuk pakai Localhost'
 		isLocalhost = 1
 	}
+	
     'call Test Case untuk login sebagai user berdasarkan doc id'
-    WebUI.callTestCase(findTestCase('Main Flow/Login_1docManySigner'), [('email') : emailSigner, ('excel') : excelPathFESignDocument], FailureHandling.CONTINUE_ON_FAILURE)
+    WebUI.callTestCase(findTestCase('Main Flow/Login'), [('email') : emailSigner, ('excel') : excelPathFESignDocument], FailureHandling.CONTINUE_ON_FAILURE)
 
     if (checkPopup() == true) {
         break
@@ -258,11 +259,7 @@ for (o = 0; o < documentId.size(); o++) {
             '<') + documentTemplateNamePerDoc.size()) + '> pada User ') + '<') + emailSigner) + '>')
     }
     
-	if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document')) == 'DIGI') {
-	} else {
-		WebUI.callTestCase(findTestCase('Main Flow/Signing Digisign'), null)
-	}
-	
+	if (!(vendor.equalsIgnoreCase('Digisign'))) {
     'Looping berdasarkan total document sign'
     for (c = 0; c < documentTemplateNamePerDoc.size(); c++) {
         'modify object btn Nama Dokumen '
@@ -499,6 +496,12 @@ for (o = 0; o < documentId.size(); o++) {
 			}
 		}
     }
+	} else {
+		    'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
+			WebUI.callTestCase(findTestCase('Main Flow/Signing Digisign'), [('excelPathFESignDocument') : excelPathFESignDocument
+            , ('sheet') : sheet, ('nomorKontrak') : noKontrak], FailureHandling.CONTINUE_ON_FAILURE)
+
+	}
         'Jika label verifikasi mengenai popup berhasil dan meminta masukan ada'
         if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_VerifikasiOTPBerhasildanMasukan'), GlobalVariable.TimeOut, 
             FailureHandling.CONTINUE_ON_FAILURE)) {
