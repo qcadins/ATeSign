@@ -319,7 +319,7 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                 'Data gagal terhapus di FE')
         }
         
-        return 
+        break
     }
     
     if (isStamping == 'Yes') {
