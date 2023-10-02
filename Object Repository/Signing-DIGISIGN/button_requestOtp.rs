@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>pdf_document</name>
+   <name>button_requestOtp</name>
    <tag></tag>
-   <elementGuidId>56842e49-c9e9-4e1b-863f-f246a1c1cb44</elementGuidId>
+   <elementGuidId>9d582203-028a-49e7-85fa-a704f93a406f</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;pdf-main-container&quot;]</value>
+         <value>//*[@id=&quot;reqOtp&quot;]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@id=&quot;pdf-main-container&quot;]</value>
-      <webElementGuid>bfd2c342-52c8-4156-8856-7d34517b6d66</webElementGuid>
+      <value>//*[@id=&quot;reqOtp&quot;]</value>
+      <webElementGuid>272db499-a2f7-4f03-8b49-b71db9368946</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

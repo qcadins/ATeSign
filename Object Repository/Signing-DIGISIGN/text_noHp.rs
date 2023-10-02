@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>pdf_document</name>
+   <name>text_noHp</name>
    <tag></tag>
-   <elementGuidId>56842e49-c9e9-4e1b-863f-f246a1c1cb44</elementGuidId>
+   <elementGuidId>48a3dcdc-c9b7-4f3b-808a-cf2ef88a8162</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;pdf-main-container&quot;]</value>
+         <value>//*[@id = 'inputHp']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>id</name>
       <type>Main</type>
-      <value>//*[@id=&quot;pdf-main-container&quot;]</value>
-      <webElementGuid>bfd2c342-52c8-4156-8856-7d34517b6d66</webElementGuid>
+      <value>inputHp</value>
+      <webElementGuid>84b4c179-0eb3-46f6-955a-555c0adaa344</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

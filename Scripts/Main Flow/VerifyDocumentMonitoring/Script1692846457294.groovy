@@ -119,10 +119,7 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
         'split email signer dan dimasukkan kepada ArrayList'
         emailSigner = emailSignerString.split(';', -1)
     }
-    
-	println emailSigner
-	WebUI.delay(20)
-	
+
     'declare arraylist arraymatch'
     ArrayList arrayMatch = []
 
@@ -171,18 +168,21 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                     if (i == 7) {
                         'Split teks proses TTD'
                         totalSignandtotalSigned = WebUI.getText(modifyObjectvalues).split(' / ', -1)
-
-                        int jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgress'(conneSign, 
+						
+						if (vendor.equalsIgnoreCase('Digisign')) {
+							jumlahSignerTelahTandaTangan = CustomKeywords.'connection.APIFullService.getUserAlreadySigned'(conneSign, nomorKontrakPerPilihan[y])
+						} else {
+                         jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgress'(conneSign, 
                             nomorKontrakPerPilihan[y])
-
+						}
+						
                         'Verif hasil split, dimana proses awal hingga akhir. Awal dibandingkan dengan jumlahsignertandatangan, sedangkan akhir dibandingkan dengan total signer dari email'
                         arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[0], jumlahSignerTelahTandaTangan, FailureHandling.CONTINUE_ON_FAILURE))
 
                         if ((sizeRowofLabelValue.size() > 1) && (nomorKontrakPerPilihan.size() == 1)) {
 							documentId = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ', -1)
 							jumlahSignerHarusTandaTangan = CustomKeywords.'connection.SendSign.getTotalSignerTtd'(conneSign, documentId[(j - 1)])
-							
-							arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[1], jumlahSignerHarusTandaTangan, FailureHandling.CONTINUE_ON_FAILURE))
+								arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[1], jumlahSignerHarusTandaTangan, FailureHandling.CONTINUE_ON_FAILURE))
 							
                         } else {
                             arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[1], emailSigner.size(), FailureHandling.CONTINUE_ON_FAILURE))
@@ -193,7 +193,7 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                         totalStampingAndTotalMaterai = WebUI.getText(modifyObjectvalues).split('/', -1)
 
                         'looping berdasarkan total split dan diverif berdasarkan db.'
-                        for (k = 0; k < totalStampingAndTotalMaterai.size(); k++) {s
+                        for (k = 0; k < totalStampingAndTotalMaterai.size(); k++) {
                             'Verifikasi UI dengan db'
                             arrayMatch.add(WebUI.verifyEqual(totalStampingAndTotalMaterai[k], resultStamping[arrayIndexStamping++], 
                                     FailureHandling.CONTINUE_ON_FAILURE))

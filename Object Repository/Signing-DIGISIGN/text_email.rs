@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>pdf_document</name>
+   <name>text_email</name>
    <tag></tag>
-   <elementGuidId>56842e49-c9e9-4e1b-863f-f246a1c1cb44</elementGuidId>
+   <elementGuidId>a3ba8c3e-fe1c-4a8f-81a4-9aab3b68860a</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;pdf-main-container&quot;]</value>
+         <value>//*[@id = 'inputUser']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>id</name>
       <type>Main</type>
-      <value>//*[@id=&quot;pdf-main-container&quot;]</value>
-      <webElementGuid>bfd2c342-52c8-4156-8856-7d34517b6d66</webElementGuid>
+      <value>inputUser</value>
+      <webElementGuid>07f23322-0e06-4d49-be16-de61b6588a55</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

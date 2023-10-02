@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>pdf_document</name>
+   <name>button_setuju</name>
    <tag></tag>
-   <elementGuidId>56842e49-c9e9-4e1b-863f-f246a1c1cb44</elementGuidId>
+   <elementGuidId>c4501433-0a02-4cae-a6e4-2379f7293cf9</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;pdf-main-container&quot;]</value>
+         <value>//*[@id=&quot;setuju&quot;]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@id=&quot;pdf-main-container&quot;]</value>
-      <webElementGuid>bfd2c342-52c8-4156-8856-7d34517b6d66</webElementGuid>
+      <value>//*[@id=&quot;setuju&quot;]</value>
+      <webElementGuid>5021091a-097f-460a-97ea-84d6361fd596</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
