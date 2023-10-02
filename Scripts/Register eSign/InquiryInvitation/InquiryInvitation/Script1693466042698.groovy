@@ -202,7 +202,7 @@ if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryInv
 	        WebUI.verifyElementPresent(findTestObject('InquiryInvitation/tr_Name'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
 	    } else {
 	        'get reason'
-	        ReasonFailed = WebUI.getAttribute(findTestObject('BuatUndangan/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
+	        ReasonFailed = WebUI.getAttribute(findTestObject('RegisterEsign/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 	
 	        'write to excel status failed dan reason'
 	        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, 
@@ -230,7 +230,7 @@ if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryInv
 	
 	        if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 	            'get reason'
-	            ReasonFailed = WebUI.getAttribute(findTestObject('BuatUndangan/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
+	            ReasonFailed = WebUI.getAttribute(findTestObject('RegisterEsign/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 	
 	            if (!(ReasonFailed.contains('Undangan terkirim ke'))) {
 	                'write to excel status failed dan ReasonFailed'
@@ -264,7 +264,7 @@ if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryInv
 	        }
 	    } else if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 	        'get reason'
-	        ReasonFailed = WebUI.getAttribute(findTestObject('BuatUndangan/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
+	        ReasonFailed = WebUI.getAttribute(findTestObject('RegisterEsign/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 	
 	        'write to excel status failed dan reason'
 	        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, 
@@ -286,7 +286,7 @@ if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryInv
 	
 	        if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 	            'get reason'
-	            ReasonFailed = WebUI.getAttribute(findTestObject('BuatUndangan/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
+	            ReasonFailed = WebUI.getAttribute(findTestObject('RegisterEsign/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 	
 	            if (!(ReasonFailed.contains('Berhasil'))) {
 	                'write to excel status failed dan ReasonFailed'
@@ -321,7 +321,7 @@ if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryInv
 	        }
 	    } else if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 	        'get reason'
-	        ReasonFailed = WebUI.getAttribute(findTestObject('BuatUndangan/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
+	        ReasonFailed = WebUI.getAttribute(findTestObject('RegisterEsign/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 	
 	        'write to excel status failed dan reason'
 	        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, 
@@ -339,7 +339,7 @@ if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryInv
 			WebUI.click(findTestObject('InquiryInvitation/button_YaProses'))
 			if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 				'get reason'
-				ReasonFailed = WebUI.getAttribute(findTestObject('BuatUndangan/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
+				ReasonFailed = WebUI.getAttribute(findTestObject('RegisterEsign/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 		
 				'write to excel status failed dan reason'
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm,

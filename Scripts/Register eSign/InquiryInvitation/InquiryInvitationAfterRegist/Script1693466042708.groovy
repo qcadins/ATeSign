@@ -107,7 +107,7 @@ if (editAfterRegister == 1) {
     WebUI.click(findTestObject('InquiryInvitation/button_Simpan'))
 
     'get reason'
-    ReasonFailed = WebUI.getAttribute(findTestObject('BuatUndangan/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
+    ReasonFailed = WebUI.getAttribute(findTestObject('RegisterEsign/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 
     if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/button_OkSuccess'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL) && 
     (ReasonFailed == 'Link undangan sudah tidak aktif.')) {

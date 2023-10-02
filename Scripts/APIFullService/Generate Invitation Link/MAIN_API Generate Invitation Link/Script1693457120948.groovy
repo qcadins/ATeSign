@@ -246,36 +246,36 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 		, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
 
 	'check if button menu visible atau tidak'
-	if(WebUI.verifyElementNotVisible(findTestObject('BuatUndangan/checkSaldo/menu_Saldo'), FailureHandling.OPTIONAL)) {
+	if(WebUI.verifyElementNotVisible(findTestObject('RegisterEsign/checkSaldo/menu_Saldo'), FailureHandling.OPTIONAL)) {
 		'click menu saldo'
 		WebUI.click(findTestObject('button_HamburberSideMenu'))
 	}
 	
 	'click menu saldo'
-	WebUI.click(findTestObject('BuatUndangan/checkSaldo/menu_Saldo'))
+	WebUI.click(findTestObject('RegisterEsign/checkSaldo/menu_Saldo'))
 
 	'click ddl bahasa'
-	WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_bahasa'))
+	WebUI.click(findTestObject('RegisterEsign/checkSaldo/button_bahasa'))
 
 	'click english'
-	WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_English'))
+	WebUI.click(findTestObject('RegisterEsign/checkSaldo/button_English'))
 	
 	'select vendor'
-	WebUI.selectOptionByLabel(findTestObject('BuatUndangan/checkSaldo/select_Vendor'), '(?i)' + 'ESIGN/ADINS', true)
+	WebUI.selectOptionByLabel(findTestObject('RegisterEsign/checkSaldo/select_Vendor'), '(?i)' + 'ESIGN/ADINS', true)
 
 	'get row'
 	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
 
 	for (index = 2; index <= variable.size(); index++) {
 		'modify object box info'
-		modifyObjectBoxInfo = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
+		modifyObjectBoxInfo = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath',
 			'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) +
 			']/div/div/div/div/div[1]/h3', true)
 
 		'check if box info = tipe saldo di excel'
 		if (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('OTP')) {
 			'modify object qty'
-			modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
+			modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath',
 				'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) +
 				']/div/div/div/div/div[2]/h3', true)
 
@@ -295,21 +295,21 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 	}
 
 	'select vendor'
-	WebUI.selectOptionByLabel(findTestObject('BuatUndangan/checkSaldo/select_Vendor'), '(?i)' + GlobalVariable.Psre, true)
+	WebUI.selectOptionByLabel(findTestObject('RegisterEsign/checkSaldo/select_Vendor'), '(?i)' + GlobalVariable.Psre, true)
 
 	'get row'
 	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
 
 	for (index = 2; index <= variable.size(); index++) {
 		'modify object box info'
-		modifyObjectBoxInfo = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
+		modifyObjectBoxInfo = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath',
 			'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) +
 			']/div/div/div/div/div[1]/h3', true)
 
 		'check if box info = tipe saldo di excel'
 		if (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('Verification') || (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('PNBP') && GlobalVariable.Psre == 'VIDA')) {
 			'modify object qty'
-			modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
+			modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath',
 				'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) +
 				']/div/div/div/div/div[2]/h3', true)
 
@@ -355,65 +355,65 @@ def inputFilterSaldo(String tipeSaldo, Connection conneSign) {
 	currentDate = new Date().format('yyyy-MM-dd')
 	
 	'input tipe saldo'
-	WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), tipeSaldo)
+	WebUI.setText(findTestObject('RegisterEsign/checkSaldo/input_TipeSaldo'), tipeSaldo)
 
 	'enter untuk input tipe saldo'
-	WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), Keys.chord(Keys.ENTER))
+	WebUI.sendKeys(findTestObject('RegisterEsign/checkSaldo/input_TipeSaldo'), Keys.chord(Keys.ENTER))
 
 	'input tanggal Transaksi'
-	WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TanggalTransaksi'), currentDate)
+	WebUI.setText(findTestObject('RegisterEsign/checkSaldo/input_TanggalTransaksi'), currentDate)
 
 	'click button cari'
-	WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_Cari'))
+	WebUI.click(findTestObject('RegisterEsign/checkSaldo/button_Cari'))
 
 	'get row'
 	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
 
 	'modify object button last page'
-	modifyObjectButtonLastPage = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
+	modifyObjectButtonLastPage = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath',
 		'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' +
 		variable.size()) + ']', true)
 
 	if (WebUI.getAttribute(modifyObjectButtonLastPage, 'class', FailureHandling.OPTIONAL) != 'disabled') {
 		'click button last page'
-		WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_LastPage'))
+		WebUI.click(findTestObject('RegisterEsign/checkSaldo/button_LastPage'))
 	}
 	
 	'get row'
 	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
 
 	'modify object no transaksi'
-	modifyObjectNoTransaksi = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
+	modifyObjectNoTransaksi = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath',
 		'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
 		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[1]/div', true)
 
 	'modify object tanggal transaksi'
-	modifyObjectTanggalTransaksi = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'),
+	modifyObjectTanggalTransaksi = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'),
 		'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
 		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[2]/div', true)
 
 	'modify object tipe transaksi'
-	modifyObjectTipeTransaksi = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
+	modifyObjectTipeTransaksi = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath',
 		'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
 		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[3]/div', true)
 
 	'modify object user'
-	modifyObjectUser = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 'equals',
+	modifyObjectUser = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 'equals',
 		('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
 		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[4]/div', true)
 
 	'modify object no kontrak'
-	modifyObjectNoKontrak = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
+	modifyObjectNoKontrak = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath',
 		'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
 		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[5]/div', true)
 
 	'modify object Catatan'
-	modifyObjectCatatan = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath',
+	modifyObjectCatatan = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath',
 		'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
 		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[8]/div', true)
 
 	'modify object qty'
-	modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 'equals',
+	modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 'equals',
 		('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
 		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[9]/div', true)
 

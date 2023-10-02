@@ -20,85 +20,85 @@ if (findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowEx
 }
 
 'check email sesuai dengan inputan'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/FormAktivasiEsign/input_Email'), 'value', 
+checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/FormAktivasiEsign/input_Email'), 'value', 
             FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 
             rowExcel('email')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Email')
 
 'check nama lengkap sesuai dengan inputan'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/FormAktivasiEsign/input_NamaLengkap'), 
+checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/FormAktivasiEsign/input_NamaLengkap'), 
             'value', FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 
             rowExcel('nama')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama Lengkap')
 
 'input kata sandi untuk verify button set ulang'
-WebUI.setText(findTestObject('BuatUndangan/FormAktivasiEsign/input_KataSandi'), '@Abcd1234')
+WebUI.setText(findTestObject('RegisterEsign/FormAktivasiEsign/input_KataSandi'), '@Abcd1234')
 
 'input ulang kata sandi untuk verify button set ulang'
-WebUI.setText(findTestObject('BuatUndangan/FormAktivasiEsign/input_UlangKataSandi'), '@Abcd1234')
+WebUI.setText(findTestObject('RegisterEsign/FormAktivasiEsign/input_UlangKataSandi'), '@Abcd1234')
 
 'click button set ulang untuk reset field kata sandi dan ulang kata sandi (2x karena klik 1x hanya menghilangkan warning saja)'
-WebUI.click(findTestObject('BuatUndangan/FormAktivasiEsign/button_SetUlang'))
+WebUI.click(findTestObject('RegisterEsign/FormAktivasiEsign/button_SetUlang'))
 
-WebUI.click(findTestObject('BuatUndangan/FormAktivasiEsign/button_SetUlang'))
+WebUI.click(findTestObject('RegisterEsign/FormAktivasiEsign/button_SetUlang'))
 
 'verify kata sandi sudah kosong'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/FormAktivasiEsign/input_KataSandi'), 
+checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/FormAktivasiEsign/input_KataSandi'), 
             'value'), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' Kata Sandi Tidak Kereset')
 
 'verify ulang kata sandi sudah kosong'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/FormAktivasiEsign/input_UlangKataSandi'), 
+checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/FormAktivasiEsign/input_UlangKataSandi'), 
             'value'), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' Ulang Kata Sandi Tidak Kereset')
 
 'input kata sandi untuk verify button set ulang'
-WebUI.setText(findTestObject('BuatUndangan/FormAktivasiEsign/input_KataSandi'), '@Abcd1234')
+WebUI.setText(findTestObject('RegisterEsign/FormAktivasiEsign/input_KataSandi'), '@Abcd1234')
 
 'input ulang kata sandi untuk verify button set ulang'
-WebUI.setText(findTestObject('BuatUndangan/FormAktivasiEsign/input_UlangKataSandi'), '@Abcd1234')
+WebUI.setText(findTestObject('RegisterEsign/FormAktivasiEsign/input_UlangKataSandi'), '@Abcd1234')
 
 'click button set ulang untuk reset field kata sandi dan ulang kata sandi (2x karena klik 1x hanya menghilangkan warning saja)'
-WebUI.click(findTestObject('BuatUndangan/FormAktivasiEsign/button_SetUlang'))
+WebUI.click(findTestObject('RegisterEsign/FormAktivasiEsign/button_SetUlang'))
 
-WebUI.click(findTestObject('BuatUndangan/FormAktivasiEsign/button_SetUlang'))
+WebUI.click(findTestObject('RegisterEsign/FormAktivasiEsign/button_SetUlang'))
 
 'verify kata sandi sudah kosong'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/FormAktivasiEsign/input_KataSandi'), 
+checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/FormAktivasiEsign/input_KataSandi'), 
             'value'), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' Kata Sandi')
 
 'verify ulang kata sandi sudah kosong'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/FormAktivasiEsign/input_UlangKataSandi'), 
+checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/FormAktivasiEsign/input_UlangKataSandi'), 
             'value'), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' Ulang Kata Sandi')
 
 'input kata sandi'
-WebUI.setText(findTestObject('BuatUndangan/FormAktivasiEsign/input_KataSandi'), findTestData(excelPathGenerateLink).getValue(
+WebUI.setText(findTestObject('RegisterEsign/FormAktivasiEsign/input_KataSandi'), findTestData(excelPathGenerateLink).getValue(
         GlobalVariable.NumofColm, rowExcel('Password')))
 
 'click button mata kata sandi'
-WebUI.click(findTestObject('BuatUndangan/FormAktivasiEsign/button_MataKataSandi'))
+WebUI.click(findTestObject('RegisterEsign/FormAktivasiEsign/button_MataKataSandi'))
 
 'get text kata sandi'
-KataSandi = WebUI.getAttribute(findTestObject('BuatUndangan/FormAktivasiEsign/input_KataSandi'), 'value')
+KataSandi = WebUI.getAttribute(findTestObject('RegisterEsign/FormAktivasiEsign/input_KataSandi'), 'value')
 
 'check kata sandi sesuai inputan excel'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(KataSandi, findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 
             rowExcel('Password')), false, FailureHandling.CONTINUE_ON_FAILURE), ' Kata Sandi')
 
 'input ulang kata sandi'
-WebUI.setText(findTestObject('BuatUndangan/FormAktivasiEsign/input_UlangKataSandi'), findTestData(excelPathGenerateLink).getValue(
+WebUI.setText(findTestObject('RegisterEsign/FormAktivasiEsign/input_UlangKataSandi'), findTestData(excelPathGenerateLink).getValue(
         GlobalVariable.NumofColm, rowExcel('Retype Password')))
 
 'click button mata ulang kata sandi'
-WebUI.click(findTestObject('BuatUndangan/FormAktivasiEsign/button_MataUlangKataSandi'))
+WebUI.click(findTestObject('RegisterEsign/FormAktivasiEsign/button_MataUlangKataSandi'))
 
 'get text ulang kata sandi'
-UlangKataSandi = WebUI.getAttribute(findTestObject('BuatUndangan/FormAktivasiEsign/input_UlangKataSandi'), 'value')
+UlangKataSandi = WebUI.getAttribute(findTestObject('RegisterEsign/FormAktivasiEsign/input_UlangKataSandi'), 'value')
 
 'check ulang kata sandi sesuai inputan excel'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(UlangKataSandi, findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 
             rowExcel('Retype Password')), false, FailureHandling.CONTINUE_ON_FAILURE), ' Ulang Kata Sandi')
 
 'verify warning password'
-if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasiEsign/alertText'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/FormAktivasiEsign/alertText'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
     'get text reason'
-    reason = WebUI.getText(findTestObject('BuatUndangan/FormAktivasiEsign/alertText'))
+    reason = WebUI.getText(findTestObject('RegisterEsign/FormAktivasiEsign/alertText'))
 
     'write to excel status failed dan reason'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
@@ -106,7 +106,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasiEsign/al
             '-', '') + ';') + '<' + reason + '>')
 
     GlobalVariable.FlagFailed = 1
-} else if (WebUI.verifyElementClickable(findTestObject('BuatUndangan/FormAktivasiEsign/button_Proses'), FailureHandling.OPTIONAL)) {
+} else if (WebUI.verifyElementClickable(findTestObject('RegisterEsign/FormAktivasiEsign/button_Proses'), FailureHandling.OPTIONAL)) {
 	'flag untuk count inputed'
 	int inputed = 0
 	
@@ -125,12 +125,12 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
 	ArrayList<String> listOTP = []
 	
 	'click button proses'
-	WebUI.click(findTestObject('BuatUndangan/FormAktivasiEsign/button_Proses'))
+	WebUI.click(findTestObject('RegisterEsign/FormAktivasiEsign/button_Proses'))
 
 	'verify popup message maximal resend OTP'
-	if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasiEsign/label_PopupMsg'), GlobalVariable.TimeOut,
+	if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/FormAktivasiEsign/label_PopupMsg'), GlobalVariable.TimeOut,
 		FailureHandling.OPTIONAL)) {
-		reason = WebUI.getText(findTestObject('BuatUndangan/FormAktivasiEsign/label_PopupMsg'))
+		reason = WebUI.getText(findTestObject('RegisterEsign/FormAktivasiEsign/label_PopupMsg'))
 
 		'write to excel status failed dan reason'
 		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
@@ -138,7 +138,7 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
 				rowExcel('Reason Failed')).replace('-', '') + ';') + '<' + reason + '> Form Aktivasi Vida')
 
 		'click button tutup error'
-		WebUI.click(findTestObject('BuatUndangan/FormAktivasiEsign/button_OK'))
+		WebUI.click(findTestObject('RegisterEsign/FormAktivasiEsign/button_OK'))
 
 		GlobalVariable.FlagFailed = 1
 	} else {
@@ -163,7 +163,7 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
 			WebUI.delay(5)
 			
 			'input OTP'
-			WebUI.setText(findTestObject('BuatUndangan/FormAktivasiEsign/input_OTP'), OTP)
+			WebUI.setText(findTestObject('RegisterEsign/FormAktivasiEsign/input_OTP'), OTP)
 	
 			'get count untuk resend OTP dari excel'
 			countResend = Integer.parseInt(findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Resend OTP - Aktivasi')))
@@ -178,12 +178,12 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
 					WebUI.delay(315)
 	
 					'klik pada button kirim ulang otp'
-					WebUI.click(findTestObject('BuatUndangan/FormAktivasiEsign/kirimKodeLagi'))
+					WebUI.click(findTestObject('RegisterEsign/FormAktivasiEsign/kirimKodeLagi'))
 	
 					'verify popup message maximal resend OTP'
-					if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasiEsign/label_PopupMsg'), GlobalVariable.TimeOut,
+					if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/FormAktivasiEsign/label_PopupMsg'), GlobalVariable.TimeOut,
 						FailureHandling.OPTIONAL)) {
-						reason = WebUI.getText(findTestObject('BuatUndangan/FormAktivasiEsign/label_PopupMsg'))
+						reason = WebUI.getText(findTestObject('RegisterEsign/FormAktivasiEsign/label_PopupMsg'))
 	
 						'write to excel status failed dan reason'
 						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
@@ -191,7 +191,7 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
 								rowExcel('Reason Failed')).replace('-', '') + ';') + '<' + reason + '>')
 	
 						'click button tutup error'
-						WebUI.click(findTestObject('BuatUndangan/FormAktivasiEsign/button_OK'))
+						WebUI.click(findTestObject('RegisterEsign/FormAktivasiEsign/button_OK'))
 	
 						GlobalVariable.FlagFailed = 1
 	
@@ -225,7 +225,7 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
 					WebUI.sendKeys(findTestObject('DaftarAkun/input_OTP'), Keys.chord(Keys.CONTROL, 'A'))
 	
 					'input OTP'
-					WebUI.setText(findTestObject('BuatUndangan/FormAktivasiEsign/input_OTP'), OTP)
+					WebUI.setText(findTestObject('RegisterEsign/FormAktivasiEsign/input_OTP'), OTP)
 				}
 			}
 			
@@ -236,7 +236,7 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
 			}
 		} else {
 			'input OTP'
-			WebUI.setText(findTestObject('BuatUndangan/FormAktivasiEsign/input_OTP'), findTestData(excelPathGenerateLink).getValue(
+			WebUI.setText(findTestObject('RegisterEsign/FormAktivasiEsign/input_OTP'), findTestData(excelPathGenerateLink).getValue(
 					GlobalVariable.NumofColm, rowExcel('Wrong OTP - Aktivasi')))
 	
 			'get count untuk resend OTP dari excel'
@@ -252,12 +252,12 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
 					WebUI.delay(315)
 	
 					'klik pada button kirim ulang otp'
-					WebUI.click(findTestObject('BuatUndangan/FormAktivasiEsign/kirimKodeLagi'))
+					WebUI.click(findTestObject('RegisterEsign/FormAktivasiEsign/kirimKodeLagi'))
 	
 					'verify popup message maximal resend OTP'
-					if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasiEsign/label_PopupMsg'), GlobalVariable.TimeOut,
+					if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/FormAktivasiEsign/label_PopupMsg'), GlobalVariable.TimeOut,
 						FailureHandling.OPTIONAL)) {
-						reason = WebUI.getText(findTestObject('BuatUndangan/FormAktivasiEsign/label_PopupMsg'))
+						reason = WebUI.getText(findTestObject('RegisterEsign/FormAktivasiEsign/label_PopupMsg'))
 	
 						'write to excel status failed dan reason'
 						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
@@ -265,7 +265,7 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
 								rowExcel('Reason Failed')).replace('-', '') + ';') + '<' + reason + '>')
 	
 						'click button tutup error'
-						WebUI.click(findTestObject('BuatUndangan/FormAktivasiEsign/button_OK'))
+						WebUI.click(findTestObject('RegisterEsign/FormAktivasiEsign/button_OK'))
 	
 						GlobalVariable.FlagFailed = 1
 	
@@ -296,24 +296,24 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
 					checkVerifyEqualOrMatch(WebUI.verifyNotMatch(listOTP[i], listOTP[(i + 1)], false, FailureHandling.CONTINUE_ON_FAILURE), ' OTP')
 	
 					'input OTP'
-					WebUI.setText(findTestObject('BuatUndangan/FormAktivasiEsign/input_OTP'), findTestData(excelPathGenerateLink).getValue(
+					WebUI.setText(findTestObject('RegisterEsign/FormAktivasiEsign/input_OTP'), findTestData(excelPathGenerateLink).getValue(
 							GlobalVariable.NumofColm, rowExcel('Wrong OTP - Aktivasi')))
 				}
 			}
 		}
 		
 		'click button proses OTP'
-		WebUI.click(findTestObject('BuatUndangan/FormAktivasiEsign/button_ProsesOTP'))
+		WebUI.click(findTestObject('RegisterEsign/FormAktivasiEsign/button_ProsesOTP'))
 
 		'check if aktivasi berhasil dengan OTP yang benar'
-		if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasiEsign/popUp_AktivasiBerhasil'), GlobalVariable.TimeOut,
+		if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/FormAktivasiEsign/popUp_AktivasiBerhasil'), GlobalVariable.TimeOut,
 			FailureHandling.OPTIONAL)) {
 			if (GlobalVariable.FlagFailed == 0) {
 				'write to excel success'
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
 					0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 			}
-		} else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasiEsign/popUp_AktivasiBerhasil'), GlobalVariable.TimeOut,
+		} else if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/FormAktivasiEsign/popUp_AktivasiBerhasil'), GlobalVariable.TimeOut,
 			FailureHandling.OPTIONAL)) {
 			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
@@ -323,9 +323,9 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
 			GlobalVariable.FlagFailed = 1
 			
 			inputed = 1
-		} else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/FormAktivasiEsign/label_PopupMsg'), GlobalVariable.TimeOut,
+		} else if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/FormAktivasiEsign/label_PopupMsg'), GlobalVariable.TimeOut,
 			FailureHandling.OPTIONAL)) {
-			reason = WebUI.getText(findTestObject('BuatUndangan/FormAktivasiEsign/label_PopupMsg'))
+			reason = WebUI.getText(findTestObject('RegisterEsign/FormAktivasiEsign/label_PopupMsg'))
 
 			'write to excel status failed dan reason'
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
@@ -333,10 +333,10 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
 					'-', '') + ';') + '<' + reason + '>')
 
 			'click button tutup error'
-			WebUI.click(findTestObject('BuatUndangan/FormAktivasiEsign/button_OK'))
+			WebUI.click(findTestObject('RegisterEsign/FormAktivasiEsign/button_OK'))
 
 			'click button X tutup popup OTP'
-			WebUI.click(findTestObject('BuatUndangan/FormAktivasiEsign/button_X'))
+			WebUI.click(findTestObject('RegisterEsign/FormAktivasiEsign/button_X'))
 
 			GlobalVariable.FlagFailed = 1
 			

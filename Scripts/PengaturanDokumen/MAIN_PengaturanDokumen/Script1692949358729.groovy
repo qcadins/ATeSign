@@ -58,13 +58,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			GlobalVariable.FlagFailed = 0
 		}
 		
-//		if (GlobalVariable.NumofColm == 2) {
-//			'call function chceck paging'
-//			checkPaging()
-//			
-//			'call function input cancel'
-//			inputCancel(conneSign, checked)
-//		}
+		if (GlobalVariable.NumofColm == 2) {
+			'call function chceck paging'
+			checkPaging()
+			
+			'call function input cancel'
+			inputCancel(conneSign, checked)
+		}
 		
 		'Pembuatan variable mengenai jumlah delete, jumlah lock, dan indexlock untuk loop kedepannya'
         RoleTandaTangan = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('$RoleTandaTangan')).split(semicolon, splitIndex)
@@ -139,7 +139,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                     if (WebUI.verifyElementPresent(findTestObject('Object Repository/TandaTanganDokumen/errorlog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
                         'get reason'
-                        ReasonFailed = WebUI.getAttribute(findTestObject('BuatUndangan/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
+                        ReasonFailed = WebUI.getAttribute(findTestObject('RegisterEsign/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 
                         'write to excel status failed dan reason'
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
