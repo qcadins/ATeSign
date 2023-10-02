@@ -55,12 +55,21 @@ for (o = 0; o < documentId.size(); o++) {
         CustomKeywords.'connection.UpdateData.updateTenantPassReq'(conneSign, tenantVendor[0], findTestData(excelPathAPISignDocument).getValue(
                 GlobalVariable.NumofColm, rowExcel('Enable Need Password for signing? (Sign External)')))
     }
-    
+	
+	if  (vendor.equalsIgnoreCase('Digisign')) {
+		signTypeUsed = 'Dokumen'
+	}
+	else {
+		signTypeUsed = 'TTD'
+	}
+	
     HashMap<String, String> saldoBefore = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathAPISignDocument
             , ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
 
-	saldoTtdBefore = saldoBefore.get(findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Tipe')).toString())
-	
+	println saldoBefore
+	WebUI.delay(20)
+	saldoTtdBefore = saldoBefore.get(signTypeUsed)
+
     ArrayList paymentTypeUsed = getPaymentTypeUsed(conneSign, vendor)
 
     GlobalVariable.FlagFailed = 0
@@ -100,7 +109,7 @@ for (o = 0; o < documentId.size(); o++) {
     
     flaggingOTP = CustomKeywords.'connection.DataVerif.getParameterFlagPassOTP'(conneSign, (documentId[0]).toString())
 
-	   if (vendor.equalsIgnoreCase('Privy')) {
+	   if (vendor.equalsIgnoreCase('Privy') || vendor.equalsIgnoreCase('Digisign')) {
         'request OTP dengan HIT API'
 
         'Constraint : Dokumen yang dipasang selalu dengan referal number di dokumen pertama.'
@@ -299,13 +308,15 @@ for (o = 0; o < documentId.size(); o++) {
 
                             HashMap<String, String> saldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), 
                                 [('excel') : excelPathAPISignDocument, ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
-
+							
+							println saldoAfter
+							WebUI.delay(20)
                             'looping payment type used'
                             for (l = 0; l < paymentTypeUsed.size(); l++) {
                                 'looping untuk mendapatkan key dari hashmap'
                                 for (String key : saldoBefore.keySet()) {
                                     String values = saldoBefore.get(key)
-
+	
                                     if (key == (paymentTypeUsed[l])) {
                                         checkVerifyEqualOrMatch(WebUI.verifyEqual(Integer.parseInt(saldoBefore.get(key)) - 
                                                 1, Integer.parseInt(saldoAfter.getAt(key))), ' terhadap pemotongan saldo ' + key)
@@ -313,15 +324,20 @@ for (o = 0; o < documentId.size(); o++) {
                                         if (trxNo != null) {
                                             verifySaldoUsedForLiveness(conneSign, trxNo)
                                         }
-                                        
-                                        verifySaldoSigned(conneSign, documentId[0])
                                     }
                                 }
                             }
-							saldoTtdAfter = saldoAfter.get(findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Tipe')).toString())
-							
-							checkVerifyEqualOrMatch(WebUI.verifyEqual(Integer.parseInt(saldoTtdAfter) -
-								1, saldoTtdAfter), ' terhadap pemotongan saldo TTD')
+
+								'looping untuk mendapatkan key dari hashmap'
+								for (String key : saldoBefore.keySet()) {
+									String values = saldoBefore.get(key)
+
+									if (key == (signTypeUsed)) {
+										checkVerifyEqualOrMatch(WebUI.verifyEqual(Integer.parseInt(saldoBefore.get(key)) -
+												1, Integer.parseInt(saldoAfter.getAt(key))), ' terhadap pemotongan saldo ' + key)
+										verifySaldoSigned(conneSign, documentId[0])
+									}
+								}							
 
                             break
                         } else if (v == 20) {

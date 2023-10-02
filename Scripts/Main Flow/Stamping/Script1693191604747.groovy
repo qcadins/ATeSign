@@ -102,7 +102,7 @@ if ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel
                     WebUI.delay(3)
 
                     'Mengambil value total stamping dan total meterai'
-                    ArrayList totalMateraiAndTotalStamping = CustomKeywords.'connection.Meterai.getTotalMateraiAndTotalStamping'(
+                    totalMateraiAndTotalStamping = CustomKeywords.'connection.Meterai.getTotalMateraiAndTotalStamping'(
                         conneSign, nomorKontrakDocument.replace('"', ''))
 
                     'declare arraylist arraymatch'
@@ -154,10 +154,15 @@ if ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel
                             'Status') - 1, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
                 }
                 
-                'Call verify meterai'
-                WebUI.callTestCase(findTestCase('Main Flow/verifyMeterai'), [('excelPathMeterai') : excelPathStamping, ('sheet') : sheet
-                        , ('noKontrak') : nomorKontrakDocument.replace('"', ''), ('linkDocumentMonitoring') : linkDocumentMonitoring], ('CancelDocsStamp') : CancelDocsStamp,
-                    FailureHandling.CONTINUE_ON_FAILURE)
+				'Mengambil value total stamping dan total meterai'
+				totalMateraiAndTotalStamping = CustomKeywords.'connection.Meterai.getTotalMateraiAndTotalStamping'(
+					conneSign, nomorKontrakDocument.replace('"', ''))
+				
+				if (totalMateraiAndTotalStamping[0] != '0') {
+					'Call verify meterai'
+					WebUI.callTestCase(findTestCase('Main Flow/verifyMeterai'), [('excelPathMeterai') : excelPathStamping, ('sheet') : sheet
+                        , ('noKontrak') : nomorKontrakDocument.replace('"', ''), ('linkDocumentMonitoring') : linkDocumentMonitoring, ('CancelDocsStamp') : CancelDocsStamp], FailureHandling.CONTINUE_ON_FAILURE)
+				}
             }
         } else {
             getErrorMessageAPI(respon)

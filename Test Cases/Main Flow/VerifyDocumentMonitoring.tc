@@ -47,6 +47,12 @@
       <value></value>
       <variableId>2445a2a3-5ce3-4444-96aa-6150580dcaaf</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>982fe220-687d-453f-aedc-2b74dfeceb9c</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -95,5 +101,12 @@
       <id>2445a2a3-5ce3-4444-96aa-6150580dcaaf</id>
       <masked>false</masked>
       <name>CancelDocsStamp</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>982fe220-687d-453f-aedc-2b74dfeceb9c</id>
+      <masked>false</masked>
+      <name>vendor</name>
    </variable>
 </TestCaseEntity>

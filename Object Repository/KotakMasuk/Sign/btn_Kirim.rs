@@ -13,8 +13,12 @@
          <key>CSS</key>
          <value>button.btn.btn-primary.btn-block.ng-star-inserted</value>
       </entry>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@class = 'btn btn-primary btn-block ng-star-inserted']</value>
+      </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>true</useRalativeImagePath>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -22,39 +26,39 @@
       <name>tag</name>
       <type>Main</type>
       <value>button</value>
-      <webElementGuid>306f99d2-3859-4d48-9d0f-64e6ecf1bb8d</webElementGuid>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>type</name>
-      <type>Main</type>
-      <value>submit</value>
-      <webElementGuid>77598ccf-37b6-4638-92c8-1bd2ebef9ffa</webElementGuid>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>title</name>
-      <type>Main</type>
-      <value>Fill stars to submit!</value>
-      <webElementGuid>1c807905-f3bc-4ed4-91eb-17bc67b57d46</webElementGuid>
+      <webElementGuid>34305f21-c9ea-4d73-bb93-d38356cbb7ad</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>class</name>
+      <name>type</name>
       <type>Main</type>
-      <value>btn btn-primary btn-block ng-star-inserted</value>
-      <webElementGuid>2374e70d-4627-4f45-b5f6-2ba1dbd7d4f9</webElementGuid>
+      <value>submit</value>
+      <webElementGuid>b9707781-2fad-4fee-b6c6-1bf6031b2050</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>title</name>
+      <type>Main</type>
+      <value>Fill stars to submit!</value>
+      <webElementGuid>4f3cbe61-5c6d-488c-99c9-97e1454f0f21</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>btn btn-primary btn-block ng-star-inserted</value>
+      <webElementGuid>c4d01bad-1f3e-4bac-b789-f6014b2259cd</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
       <name>text</name>
       <type>Main</type>
       <value>Kirim</value>
-      <webElementGuid>ae52eb61-1d9c-4740-acaa-3d861210a2df</webElementGuid>
+      <webElementGuid>9af3d2f3-5b90-41d0-949b-a21571a6977f</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -62,7 +66,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html[1]/body[@class=&quot;vertical-layout menu-hide navbar-static  modal-open  pace-done&quot;]/ngb-modal-window[@class=&quot;d-block modal fade show&quot;]/div[@class=&quot;modal-dialog modal-lg&quot;]/div[@class=&quot;modal-content&quot;]/app-progress-signing[1]/div[@class=&quot;modal-body&quot;]/div[@class=&quot;row text-left&quot;]/div[@class=&quot;col-12&quot;]/div[@class=&quot;card&quot;]/div[@class=&quot;card-rate&quot;]/form[@class=&quot;ng-pristine ng-valid ng-touched&quot;]/div[@class=&quot;modal-body&quot;]/div[@class=&quot;row my-4 px-2&quot;]/div[@class=&quot;col-12 text-center&quot;]/button[@class=&quot;btn btn-primary btn-block ng-star-inserted&quot;]</value>
-      <webElementGuid>6826f3ae-022d-44ff-b209-b4cef3c0fe8d</webElementGuid>
+      <webElementGuid>9d38abd4-ea3d-4f58-84ba-8b300e3d95ad</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -70,7 +74,7 @@
       <name>xpath:attributes</name>
       <type>Main</type>
       <value>//button[@type='submit']</value>
-      <webElementGuid>cd4273d0-60a7-41dc-94c7-1f4e42721435</webElementGuid>
+      <webElementGuid>cf12ee98-98fe-46b7-98eb-a0ccbae0afc8</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -78,7 +82,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='( )'])[5]/following::button[1]</value>
-      <webElementGuid>2b9e6add-81d5-443f-a150-648de6f8c4f7</webElementGuid>
+      <webElementGuid>03977a1c-6c4e-47b4-bd7f-f4173d6955fe</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -86,7 +90,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='( )'])[4]/following::button[1]</value>
-      <webElementGuid>868d65f6-f15c-44a4-96e8-15d658f18480</webElementGuid>
+      <webElementGuid>92340b96-3e72-46df-bb5f-240df7615868</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -94,7 +98,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='Kirim']/parent::*</value>
-      <webElementGuid>f215956e-bc27-4645-a77c-13972ba3ebfd</webElementGuid>
+      <webElementGuid>2aecf004-0f0d-446c-8eb8-91e5fca69d67</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -102,7 +106,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div[4]/div/button</value>
-      <webElementGuid>6456d7b7-9cba-4090-aa35-5c314cb59513</webElementGuid>
+      <webElementGuid>b2c66506-0c4e-48f1-be51-b1a065f47245</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -110,6 +114,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//button[@type = 'submit' and @title = 'Fill stars to submit!' and (text() = 'Kirim' or . = 'Kirim')]</value>
-      <webElementGuid>858c750b-cb81-4af4-b281-1f9c383f30f2</webElementGuid>
+      <webElementGuid>ad5d43cc-3d8e-4b44-8f72-649ed1ba9e9c</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

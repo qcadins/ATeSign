@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>pdf_document</name>
+   <name>button_melanjutkan</name>
    <tag></tag>
-   <elementGuidId>56842e49-c9e9-4e1b-863f-f246a1c1cb44</elementGuidId>
+   <elementGuidId>ced0c8c5-4e4b-4069-97e1-664d244b505c</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;pdf-main-container&quot;]</value>
+         <value>//*[@id=&quot;footerAlertR&quot;]/button</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@id=&quot;pdf-main-container&quot;]</value>
-      <webElementGuid>bfd2c342-52c8-4156-8856-7d34517b6d66</webElementGuid>
+      <value>//*[@id=&quot;footerAlertR&quot;]/button</value>
+      <webElementGuid>51e70778-3745-4a41-9f63-23a42ab0d3eb</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

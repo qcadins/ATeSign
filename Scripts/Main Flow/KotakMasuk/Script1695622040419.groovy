@@ -181,6 +181,8 @@ for (int t = 0; t < resultHashMap.keySet().size(); t++) {
                 (variablePencarianDokumenRow.size() - c)) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div', 
                 true)
 
+			WebUI.scrollToElement(modifyObjectPencarianDokumen, GlobalVariable.TimeOut)
+			
             if (i == (6 + tambahanColumn)) {
                 'Jika kolom dicheck pada Proses TTD, mengambil text mengenai proses tanda tangan dan displit menjadi 2, yang pertama menjadi jumlah signer yang sudah tanda tangan. Yang kedua menjadi total signer'
                 prosesTtdPencarianDokumen = WebUI.getText(modifyObjectPencarianDokumen).split('/', -1)
@@ -290,7 +292,7 @@ for (int t = 0; t < resultHashMap.keySet().size(); t++) {
         modifyObjectTextRefNum = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_refnum'), 'xpath', 'equals', 
             ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
             (variable.size() - c)) + ']/datatable-body-row/div[2]/datatable-body-cell[') + indexRow++) + ']/div', true)
-
+		
         'Mengambil teks refnum'
         labelRefNum = WebUI.getText(modifyObjectTextRefNum)
 
@@ -348,6 +350,9 @@ for (int t = 0; t < resultHashMap.keySet().size(); t++) {
             (variable.size() - c)) + ']/datatable-body-row/div[2]/datatable-body-cell[') + indexRow) + ']/div/a[3]/em', 
             true)
 
+		
+		WebUI.scrollToElement(modifyObjectTextRefNum, GlobalVariable.TimeOut)
+		
         'verifikasi ref number dengan database'
         arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectTextRefNum), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 

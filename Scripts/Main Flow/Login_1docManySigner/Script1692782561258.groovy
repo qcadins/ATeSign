@@ -73,7 +73,7 @@ WebUI.click(findTestObject('Login/input_Peran'))
 
 WebUI.delay(1)
 
-GlobalVariable.roleLogin = WebUI.getText(findTestObject('peranTerpilih'))
+GlobalVariable.roleLogin = WebUI.getText(findTestObject('Login/peranTerpilih'))
 
 'enter untuk input peran'
 WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))

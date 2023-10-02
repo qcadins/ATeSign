@@ -17,6 +17,18 @@
       <value></value>
       <variableId>0506163f-a2c6-4fcf-a14d-d1a1f31d6796</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>4fd23015-4e41-4f00-bf0a-44725a0b8e5b</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>8c815869-c8e3-4171-b688-bdabe9a4b4f3</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -30,5 +42,19 @@
       <id>0506163f-a2c6-4fcf-a14d-d1a1f31d6796</id>
       <masked>false</masked>
       <name>sheet</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>4fd23015-4e41-4f00-bf0a-44725a0b8e5b</id>
+      <masked>false</masked>
+      <name>emailSigner</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>8c815869-c8e3-4171-b688-bdabe9a4b4f3</id>
+      <masked>false</masked>
+      <name>documentId</name>
    </variable>
 </TestCaseEntity>

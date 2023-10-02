@@ -107,7 +107,7 @@ if (email == '') {
 
             WebUI.delay(2)
 			
-			GlobalVariable.roleLogin = WebUI.getText(findTestObject('peranTerpilih'))
+			GlobalVariable.roleLogin = WebUI.getText(findTestObject('Login/peranTerpilih'))
 			
             'enter untuk input peran'
             WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
@@ -116,6 +116,9 @@ if (email == '') {
             WebUI.click(findTestObject('Login/button_pilihPeran'), FailureHandling.STOP_ON_FAILURE)
         } else {
 			GlobalVariable.roleLogin = CustomKeywords.'connection.SendSign.getRoleLogin'(conneSign, email, GlobalVariable.Tenant)
+			println email
+			println GlobalVariable.Tenant
+			println GlobalVariable.roleLogin
 		}
     } else if ((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Option for Sign Document per Signer')) == 
     'Webview Sign') || (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Option for Sign Document per Signer')) == 

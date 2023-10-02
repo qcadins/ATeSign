@@ -80,7 +80,7 @@ for (o = 0; o < documentId.size(); o++) {
 
     String noTelpSigner = ''
 
-    String otpAfter
+    String otpAfter, signType
 
     'Inisialisasi variable total document yang akan disign, count untuk resend, dan saldo yang akan digunakan'
     int totalDocSign
@@ -89,16 +89,19 @@ for (o = 0; o < documentId.size(); o++) {
 
     int countSaldoSplitLiveFCused = 0
 
-    'Call test Case untuk login sebagai admin wom admin client'
-    WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
-
     HashMap<String, String> resultSaldoBefore = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathFESignDocument
             , ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
 
-    'mengambil saldo before'
-    saldoSignBefore = resultSaldoBefore.get('TTD')
-
-    'tutup browsernya'
+	if (vendor.equalsIgnoreCase('Digisign')) {
+		signType = 'Dokumen'
+	} else {
+		signType = 'TTD'
+	}
+	
+	'mengambil saldo before'
+	saldoSignBefore = resultSaldoBefore.get(signType)
+    
+	'tutup browsernya'
     WebUI.closeBrowser()
 
     'ubah flag untuk buka localhost jika syarat if terpenuhi'
@@ -258,6 +261,7 @@ for (o = 0; o < documentId.size(); o++) {
             '<') + emailSigner) + '>')
     }
     
+	if (!(vendor.equalsIgnoreCase('Digisign'))) {
     'Looping berdasarkan total document sign'
     for (c = 0; c < documentTemplateNamePerDoc.size(); c++) {
         'modify object btn Nama Dokumen '
@@ -587,7 +591,14 @@ for (o = 0; o < documentId.size(); o++) {
 
         continue
     }
-    
+	} else {
+		'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
+		WebUI.callTestCase(findTestCase('Main Flow/Signing Digisign'), [('excelPathFESignDocument') : excelPathFESignDocument
+		, ('sheet') : sheet, ('nomorKontrak') : noKontrak, ('documentId') : documentId[o], ('emailSigner') : emailSigner], FailureHandling.CONTINUE_ON_FAILURE)
+		
+		saldoUsed = saldoUsed + 1
+
+}
     'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
     WebUI.callTestCase(findTestCase('Main Flow/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument
             , ('sheet') : sheet, ('linkDocumentMonitoring') : result.get('encryptDocumentMonitoring'), ('nomorKontrak') : noKontrak, ('CancelDocsSign') : CancelDocsSign], 
@@ -607,7 +618,7 @@ for (o = 0; o < documentId.size(); o++) {
                 , ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
 
         'mengambil saldo before'
-        saldoSignAfter = resultSaldoAfter.get('TTD')
+        saldoSignAfter = resultSaldoAfter.get(signType)
 
 		'Jika count saldo sign/ttd diatas (after) sama dengan yang dulu/pertama (before) dikurang jumlah dokumen yang ditandatangani'
 		if (WebUI.verifyEqual(Integer.parseInt(saldoSignBefore) - saldoUsed, Integer.parseInt(saldoSignAfter),
@@ -660,7 +671,7 @@ for (o = 0; o < documentId.size(); o++) {
     'looping berdasarkan total dokumen dari dokumen template code'
     for (i = 0; i < noKontrakPerDoc.size(); i++) {
         'Input filter di Mutasi Saldo'
-        inputFilterTrx(conneSign, currentDate, noKontrakPerDoc[i], documentTemplateNamePerDoc[i])
+        inputFilterTrx(conneSign, currentDate, noKontrakPerDoc[i], documentTemplateNamePerDoc[i], signType)
 
         'Mengambil value dari db mengenai tipe pembayran'
         paymentType = CustomKeywords.'connection.APIFullService.getPaymentType'(conneSign, noKontrakPerDoc[i])
@@ -679,7 +690,7 @@ for (o = 0; o < documentId.size(); o++) {
                     i])
             }
         } else {
-            saldoUsedperDoc = o
+            saldoUsedperDoc = 1
         }
         
         'delay dari 10 sampe 60 detik'
@@ -690,6 +701,12 @@ for (o = 0; o < documentId.size(); o++) {
             'get row di saldo'
             variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
 
+			if (signType == 'Dokumen') {
+				signType = 'Document'
+			} else if (signType == 'TTD') {
+				signType = 'Sign'
+			}
+			
             'check total row dengan yang tertandatangan'
             checkVerifyEqualorMatch(WebUI.verifyMatch(variableSaldoRow.size().toString(), saldoUsedperDoc.toString(), false, 
                     FailureHandling.CONTINUE_ON_FAILURE), ' pada jumlah tertanda tangan dengan row transaksi ')
@@ -698,7 +715,7 @@ for (o = 0; o < documentId.size(); o++) {
             if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_notrxsaldo'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
                 'ambil inquiry di db'
                 ArrayList inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldo'(conneSign, noKontrakPerDoc[
-                    i], saldoUsedperDoc.toString())
+                    i], saldoUsedperDoc.toString(), 'Use ' + signType)
 
                 index = 0
 
@@ -879,19 +896,23 @@ def checkErrorLog() {
     return false
 }
 
-def inputFilterTrx(Connection conneSign, String currentDate, String noKontrak, String documentTemplateName) {
+def inputFilterTrx(Connection conneSign, String currentDate, String noKontrak, String documentTemplateName, String signType) {
     documentType = CustomKeywords.'connection.APIFullService.getDocumentType'(conneSign, noKontrak)
 
+	if (signType == 'Dokumen') {
+		signType = 'Document'
+	} else if (signType == 'TTD'){
+		signType = 'Sign'
+	}
+	
     'input filter dari saldo'
-    WebUI.setText(findTestObject('Saldo/input_tipesaldo'), findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
-            rowExcel('TipeSaldo')))
+    WebUI.setText(findTestObject('Saldo/input_tipesaldo'), signType)
 
     'Input enter'
     WebUI.sendKeys(findTestObject('Saldo/input_tipesaldo'), Keys.chord(Keys.ENTER))
 
     'Input tipe transaksi'
-    WebUI.setText(findTestObject('Saldo/input_tipetransaksi'), findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
-            rowExcel('TipeTransaksi')))
+    WebUI.setText(findTestObject('Saldo/input_tipetransaksi'), 'Use ' + signType)
 
     'Input enter'
     WebUI.sendKeys(findTestObject('Saldo/input_tipetransaksi'), Keys.chord(Keys.ENTER))

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>text_popupSuccess</name>
+   <tag></tag>
+   <elementGuidId>df5d8cfd-da4f-45d0-b663-b9f1d34cae0e</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;alertKonfirmasi&quot;]/div/div/div/h4</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>id</name>
+      <type>Main</type>
+      <value>modal-title</value>
+      <webElementGuid>f454d1dd-c4a5-4816-8bac-d3a2e0ac02ad</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;alertKonfirmasi&quot;]/div/div/div/h4</value>
+      <webElementGuid>5c2e48ca-a6e2-48cd-b09d-b3b7da140b02</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>
