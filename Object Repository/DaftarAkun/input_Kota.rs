@@ -9,8 +9,12 @@
          <key>BASIC</key>
          <value>//*[@id=&quot;city&quot;]</value>
       </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[11]/ng-select/div/div/div[2]/span[2] | //*[@id=&quot;city&quot;]</value>
+      </entry>
    </selectorCollection>
-   <selectorMethod>BASIC</selectorMethod>
+   <selectorMethod>XPATH</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -18,6 +22,6 @@
       <name>xpath</name>
       <type>Main</type>
       <value>//*[@id=&quot;city&quot;]</value>
-      <webElementGuid>6845758b-4db5-42e3-9a10-01f10ece5eaa</webElementGuid>
+      <webElementGuid>d4db12f5-f5b6-4b33-9029-812095a186fb</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

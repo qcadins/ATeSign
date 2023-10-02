@@ -9,16 +9,21 @@
          <key>BASIC</key>
          <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[10]/input</value>
       </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[10]/ng-select/div/div/div[2]/span[2] | //*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[10]/input
+</value>
+      </entry>
    </selectorCollection>
-   <selectorMethod>BASIC</selectorMethod>
+   <selectorMethod>XPATH</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
+      <matchCondition>contains</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[10]/input</value>
-      <webElementGuid>a86c1ffa-b1c3-45ef-921c-a68ceb29c2fd</webElementGuid>
+      <webElementGuid>78458428-3916-4052-a331-6160e8fcb047</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -26,6 +31,14 @@
       <name>formcontrolname</name>
       <type>Main</type>
       <value>province</value>
-      <webElementGuid>96e24d19-1e6e-4c78-a54a-0b9280e57467</webElementGuid>
+      <webElementGuid>5a2f747e-31f3-4011-9e21-2fec4a5f7120</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>aaa</value>
+      <webElementGuid>64146e83-5b1c-46d6-ac86-235bca765f8d</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

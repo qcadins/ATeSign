@@ -524,7 +524,9 @@ def zoomSetting(int percentage) {
 def inputEMeteraiMonitoring(Connection conneSign) {
 	'input flagBreak'
 	int flagBreak = 0
-			
+	
+	boolean isRetryStamping
+	
     if (WebUI.verifyElementPresent(findTestObject('Object Repository/e-Meterai Monitoring/button_Set Ulang'), GlobalVariable.TimeOut)) {
         totalMeterai = findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Jumlah Meterai'))
 
@@ -544,6 +546,8 @@ def inputEMeteraiMonitoring(Connection conneSign) {
             if (((inputEMeterai[6]) == 'Failed') || ((inputEMeterai[6]) == 'Success')) {
                 if ((inputEMeterai[6]) == 'Failed') {
                     Integer.parseInt(totalMeterai) == 1
+					
+					isRetryStamping = false
                 }
 
                 for (int j = 1; j <= Integer.parseInt(totalMeterai); j++) {
@@ -554,61 +558,61 @@ def inputEMeteraiMonitoring(Connection conneSign) {
                     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Nomor Dokumen'), inputEMeterai[
                         indexInput++])
 
-                    'set text status meterai'
+                    'set text TipeDokumenPeruri'
                     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_TipeDokumenPeruri'), inputEMeterai[
                         indexInput++])
 
-                    'enter untuk set status meterai'
+                    'enter untuk set TipeDokumenPeruri'
                     WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_TipeDokumenPeruri'), Keys.chord(
                             Keys.ENTER))
 
-                    'set text status meterai'
+                    'set text Tipe Dokumen'
                     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Tipe Dokumen'), inputEMeterai[
                         indexInput++])
 
-                    'enter untuk set status meterai'
+                    'enter untuk set Tipe Dokumen'
                     WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_Tipe Dokumen'), Keys.chord(
                             Keys.ENTER))
 
-                    'set text status meterai'
+                    'set text PengaturanDokumen'
                     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_PengaturanDokumen'), inputEMeterai[
                         indexInput++])
 
-                    'enter untuk set status meterai'
+                    'enter untuk set PengaturanDokumen'
                     WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_PengaturanDokumen'), Keys.chord(
                             Keys.ENTER))
 
-                    'set text status meterai'
+                    'set text Tanggal Dokumen Mulai'
                     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Tanggal Dokumen Mulai'), 
                         inputEMeterai[indexInput++])
 
-                    'set text status meterai'
+                    'set text TanggalDokumenSampai'
                     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_TanggalDokumenSampai'), inputEMeterai[
                         indexInput++])
 
-                    'set text status meterai'
+                    'set text prosesStamping'
                     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/button_prosesStamping'), inputEMeterai[
                         indexInput++])
 
-                    'enter untuk set status meterai'
+                    'enter untuk set prosesStamping'
                     WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/button_prosesStamping'), Keys.chord(
                             Keys.ENTER))
 
-                    'set text status meterai'
+                    'set text Nomor Seri'
                     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Nomor Seri'), inputEMeterai[
                         indexInput++])
 
-                    'set text status meterai'
+                    'set text Cabang'
                     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Cabang'), inputEMeterai[indexInput++])
 
-                    'enter untuk set status meterai'
+                    'enter untuk set Cabang'
                     WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_Cabang'), Keys.chord(Keys.ENTER))
 
-                    'set text status meterai'
+                    'set text JenisPajak'
                     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_JenisPajak'), inputEMeterai[
                         indexInput++])
 
-                    'enter untuk set status meterai'
+                    'enter untuk set JenisPajak'
                     WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_JenisPajak'), Keys.chord(
                             Keys.ENTER))
 
@@ -682,7 +686,7 @@ def inputEMeteraiMonitoring(Connection conneSign) {
 					
 					if ((inputEMeterai[6]) == 'Failed') {
 						if (isRetryStamping == false) {
-							doRetry = findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Using Retry Stamping Feature'))
+							doRetry = findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Using Retry Stamping Feature'))
 							
 							if (doRetry == 'Yes') {
 								WebUI.click(findTestObject('ManualStamp/btn_RetryStamping'))
@@ -701,6 +705,8 @@ def inputEMeteraiMonitoring(Connection conneSign) {
 								
 								break
 							}
+							
+							flagBreak = 1
 						} else {
 							WebUI.click(findTestObject('ManualStamp/btn_ShowErrorMessage'))
 							
@@ -716,7 +722,7 @@ def inputEMeteraiMonitoring(Connection conneSign) {
 								
 								WebUI.click(findTestObject('e-Meterai Monitoring/button_X'))
 								
-								 flagBreak = 1
+								flagBreak = 1
 								
 								break
 							}

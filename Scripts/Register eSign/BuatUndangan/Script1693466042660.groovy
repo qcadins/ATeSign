@@ -49,11 +49,11 @@ inputCancel()
 inputBuatUndangan()
 
 'click button save'
-WebUI.click(findTestObject('BuatUndangan/button_Save'))
+WebUI.click(findTestObject('RegisterEsign/button_Save'))
 
-if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/button_YaProses'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/button_YaProses'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
     'click button ya proses'
-    WebUI.click(findTestObject('BuatUndangan/button_YaProses'))
+    WebUI.click(findTestObject('RegisterEsign/button_YaProses'))
 }
 
 'declare isMmandatory Complete'
@@ -61,9 +61,9 @@ int isMandatoryComplete = Integer.parseInt(findTestData(excelPathBuatUndangan).g
             'Is Mandatory Complete')))
 
 'cek if muncul popup'
-if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationError'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/label_ValidationError'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
     'get reason'
-    ReasonFailed = WebUI.getText(findTestObject('BuatUndangan/label_ReasonError'))
+    ReasonFailed = WebUI.getText(findTestObject('RegisterEsign/label_ReasonError'))
 
     'write to excel status failed dan reason'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
@@ -71,23 +71,23 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
             '') + ';') + '<') + ReasonFailed) + '>')
 
     'click button tutup error'
-    WebUI.click(findTestObject('BuatUndangan/button_TutupError'))
+    WebUI.click(findTestObject('RegisterEsign/button_TutupError'))
 
     'click button cancel'
-    WebUI.click(findTestObject('BuatUndangan/button_Cancel'))
+    WebUI.click(findTestObject('RegisterEsign/button_Cancel'))
 
     'click button ya batal undangan'
-    WebUI.click(findTestObject('BuatUndangan/button_YaBatalUndangan'))
+    WebUI.click(findTestObject('RegisterEsign/button_YaBatalUndangan'))
 
     GlobalVariable.FlagFailed = 1 
 	
 	GlobalVariable.LoginAgain = 1
-} else if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+} else if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
     'call function get error log'
     getErrorLog()
 	
 	GlobalVariable.LoginAgain = 1
-} else if (WebUI.getAttribute(findTestObject('BuatUndangan/PopUp/input_Link'), 'value', FailureHandling.OPTIONAL) == 'undefined') {
+} else if (WebUI.getAttribute(findTestObject('RegisterEsign/PopUp/input_Link'), 'value', FailureHandling.OPTIONAL) == 'undefined') {
     GlobalVariable.ErrorType = 'ERROR'
 
     'write to excel status failed dan reason'
@@ -96,7 +96,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
             '') + ';') + GlobalVariable.ErrorType)
 
     'click tutup popup'
-    WebUI.click(findTestObject('BuatUndangan/button_TutupDapatLink'))
+    WebUI.click(findTestObject('RegisterEsign/button_TutupDapatLink'))
 
     GlobalVariable.FlagFailed = 1
 
@@ -114,7 +114,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
 	GlobalVariable.LoginAgain = 1
 } else {
     'get link'
-    GlobalVariable.Link = WebUI.getAttribute(findTestObject('BuatUndangan/PopUp/input_Link'), 'value')
+    GlobalVariable.Link = WebUI.getAttribute(findTestObject('RegisterEsign/PopUp/input_Link'), 'value')
 
     'write to excel Link buat undangan'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, SheetName, rowExcel('Link Invitation') - 
@@ -180,7 +180,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     }
     
     'click tutup popup'
-    WebUI.click(findTestObject('BuatUndangan/button_TutupDapatLink'))
+    WebUI.click(findTestObject('RegisterEsign/button_TutupDapatLink'))
 
 	if(GlobalVariable.FlagFailed == 0) {
 		'write to excel success'
@@ -199,14 +199,14 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     	inputBuatUndangan()
     	
     	'click button save'
-    	WebUI.click(findTestObject('BuatUndangan/button_Save'))
+    	WebUI.click(findTestObject('RegisterEsign/button_Save'))
     	
-    	if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/button_YaProses'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+    	if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/button_YaProses'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
     		'click button ya proses'
-    		WebUI.click(findTestObject('BuatUndangan/button_YaProses'))
+    		WebUI.click(findTestObject('RegisterEsign/button_YaProses'))
     	}
     	
-    	if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+    	if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
     		'call function get error log'
     		getErrorLog()
     	} else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting is_active Link')) == 
@@ -219,7 +219,7 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
     		GlobalVariable.FlagFailed = 1
     	} else {
     		'click tutup popup'
-    		WebUI.click(findTestObject('BuatUndangan/button_TutupDapatLink'))
+    		WebUI.click(findTestObject('RegisterEsign/button_TutupDapatLink'))
     	}
     }
 	  
@@ -252,7 +252,8 @@ if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/label_ValidationErro
 	    	, ('saldoBefore') : saldoBefore[0]], FailureHandling.CONTINUE_ON_FAILURE)
 	}
 	
-    if (GlobalVariable.checkStoreDB == 'Yes' && (GlobalVariable.FlagFailed == 0 || findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Warning'))) {
+    if (GlobalVariable.checkStoreDB == 'Yes' && (GlobalVariable.FlagFailed == 0 || findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Warning'))
+		 && (GlobalVariable.FlagFailed == 0 || findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted'))) {
     	'delay nunggu data db'
     	WebUI.delay(5)
     	
@@ -302,7 +303,7 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
     ArrayList<String> saldo = []
 
     'navigate to url esign'
-    WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 5))
+    WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 2))
 
     'maximize window'
     WebUI.maximizeWindow()
@@ -337,36 +338,36 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 	}
 
     'check if button menu visible atau tidak'
-    if (WebUI.verifyElementNotVisible(findTestObject('BuatUndangan/checkSaldo/menu_Saldo'), FailureHandling.OPTIONAL)) {
+    if (WebUI.verifyElementNotVisible(findTestObject('RegisterEsign/checkSaldo/menu_Saldo'), FailureHandling.OPTIONAL)) {
         'click menu saldo'
         WebUI.click(findTestObject('button_HamburberSideMenu'))
     }
     
     'click menu saldo'
-    WebUI.click(findTestObject('BuatUndangan/checkSaldo/menu_Saldo'))
+    WebUI.click(findTestObject('RegisterEsign/checkSaldo/menu_Saldo'))
 
     'click ddl bahasa'
-    WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_bahasa'))
+    WebUI.click(findTestObject('RegisterEsign/checkSaldo/button_bahasa'))
 
     'click english'
-    WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_English'))
+    WebUI.click(findTestObject('RegisterEsign/checkSaldo/button_English'))
 
     'select vendor'
-    WebUI.selectOptionByLabel(findTestObject('BuatUndangan/checkSaldo/select_Vendor'), '(?i)' + 'ESIGN/ADINS', true)
+    WebUI.selectOptionByLabel(findTestObject('RegisterEsign/checkSaldo/select_Vendor'), '(?i)' + 'ESIGN/ADINS', true)
 
     'get row'
     variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
 
     for (index = 2; index <= variable.size(); index++) {
         'modify object box info'
-        modifyObjectBoxInfo = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 
+        modifyObjectBoxInfo = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 
             'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) + 
             ']/div/div/div/div/div[1]/h3', true)
 
         'check if box info = tipe saldo di excel'
         if (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('OTP')) {
             'modify object qty'
-            modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 
+            modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 
                 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) + 
                 ']/div/div/div/div/div[2]/h3', true)
 
@@ -383,14 +384,14 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
     }
     
     'select vendor'
-    WebUI.selectOptionByLabel(findTestObject('BuatUndangan/checkSaldo/select_Vendor'), '(?i)' + GlobalVariable.Psre, true)
+    WebUI.selectOptionByLabel(findTestObject('RegisterEsign/checkSaldo/select_Vendor'), '(?i)' + GlobalVariable.Psre, true)
 
     'get row'
     variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
 
     for (index = 2; index <= variable.size(); index++) {
         'modify object box info'
-        modifyObjectBoxInfo = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 
+        modifyObjectBoxInfo = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 
             'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) + 
             ']/div/div/div/div/div[1]/h3', true)
 
@@ -398,7 +399,7 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
         if (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('Verification') || (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase(
             'PNBP') && (GlobalVariable.Psre == 'VIDA'))) {
             'modify object qty'
-            modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 
+            modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 
                 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) + 
                 ']/div/div/div/div/div[2]/h3', true)
 
@@ -528,81 +529,81 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 
 def inputBuatUndangan() {
     'click menu buat undangan'
-    WebUI.click(findTestObject('BuatUndangan/menu_BuatUndangan'))
+    WebUI.click(findTestObject('RegisterEsign/menu_BuatUndangan'))
 
     'input NIK'
-    WebUI.setText(findTestObject('BuatUndangan/input_NIK'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+    WebUI.setText(findTestObject('RegisterEsign/input_NIK'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
             rowExcel('$NIK')))
 
     'input nama lengkap'
-    WebUI.setText(findTestObject('BuatUndangan/input_NamaLengkap'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+    WebUI.setText(findTestObject('RegisterEsign/input_NamaLengkap'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
             rowExcel('$Nama')))
 
     'input tempat lahir'
-    WebUI.setText(findTestObject('BuatUndangan/input_TempatLahir'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+    WebUI.setText(findTestObject('RegisterEsign/input_TempatLahir'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
             rowExcel('Tempat Lahir')))
 
     'input tanggal lahir'
-    WebUI.setText(findTestObject('BuatUndangan/input_TanggalLahir'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+    WebUI.setText(findTestObject('RegisterEsign/input_TanggalLahir'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
             rowExcel('Tanggal Lahir')))
 
     'cek if pria(M) / wanita(F)'
     if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Jenis Kelamin')).equalsIgnoreCase(
         'M')) {
         'click radio pria'
-        WebUI.click(findTestObject('BuatUndangan/radio_Pria'))
+        WebUI.click(findTestObject('RegisterEsign/radio_Pria'))
     } else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Jenis Kelamin')).equalsIgnoreCase(
         'F')) {
         'click radio wanita'
-        WebUI.click(findTestObject('BuatUndangan/radio_Wanita'))
+        WebUI.click(findTestObject('RegisterEsign/radio_Wanita'))
     }
     
     'input no handphone'
-    WebUI.setText(findTestObject('BuatUndangan/input_noHandphone'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+    WebUI.setText(findTestObject('RegisterEsign/input_noHandphone'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
             rowExcel('$No Handphone')))
 
     'input email'
-    WebUI.setText(findTestObject('BuatUndangan/input_Email'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+    WebUI.setText(findTestObject('RegisterEsign/input_Email'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
             rowExcel('Email')))
 
     'input alamat lengkap'
-    WebUI.setText(findTestObject('BuatUndangan/input_AlamatLengkap'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+    WebUI.setText(findTestObject('RegisterEsign/input_AlamatLengkap'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
             rowExcel('Alamat')))
 
     'input provinsi'
-    WebUI.setText(findTestObject('BuatUndangan/input_Provinsi'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+    WebUI.setText(findTestObject('RegisterEsign/input_Provinsi'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
             rowExcel('Provinsi')))
 
     'input kota'
-    WebUI.setText(findTestObject('BuatUndangan/input_Kota'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+    WebUI.setText(findTestObject('RegisterEsign/input_Kota'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
             rowExcel('Kota')))
 
     'input kecamatan'
-    WebUI.setText(findTestObject('BuatUndangan/input_Kecamatan'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+    WebUI.setText(findTestObject('RegisterEsign/input_Kecamatan'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
             rowExcel('Kecamatan')))
 
     'input kelurahan'
-    WebUI.setText(findTestObject('BuatUndangan/input_Kelurahan'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+    WebUI.setText(findTestObject('RegisterEsign/input_Kelurahan'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
             rowExcel('Kelurahan')))
 
     'input kode pos'
-    WebUI.setText(findTestObject('BuatUndangan/input_KodePos'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+    WebUI.setText(findTestObject('RegisterEsign/input_KodePos'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
             rowExcel('Kode Pos')))
 
     'input wilayah'
-    WebUI.setText(findTestObject('BuatUndangan/input_Wilayah'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+    WebUI.setText(findTestObject('RegisterEsign/input_Wilayah'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
             rowExcel('Wilayah')))
 
     'input office'
-    WebUI.setText(findTestObject('BuatUndangan/input_Office'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+    WebUI.setText(findTestObject('RegisterEsign/input_Office'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
             rowExcel('Office')))
 
     'input lini bisnis'
-    WebUI.setText(findTestObject('BuatUndangan/input_LiniBisnis'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+    WebUI.setText(findTestObject('RegisterEsign/input_LiniBisnis'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
             rowExcel('Lini Bisnis')))
 
     'input task no'
-    WebUI.setText(findTestObject('BuatUndangan/input_TaskNo'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+    WebUI.setText(findTestObject('RegisterEsign/input_TaskNo'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
             rowExcel('Task No')))
 }
 
@@ -612,88 +613,88 @@ def inputCancel() {
         inputBuatUndangan()
 
         'click button cancel'
-        WebUI.click(findTestObject('BuatUndangan/button_Cancel'))
+        WebUI.click(findTestObject('RegisterEsign/button_Cancel'))
 
         'click button ya batal undangan'
-        WebUI.click(findTestObject('BuatUndangan/button_YaBatalUndangan'))
+        WebUI.click(findTestObject('RegisterEsign/button_YaBatalUndangan'))
 
         'check if sudah ter cancel dan pindah page ke home'
-        if (WebUI.verifyElementPresent(findTestObject('BuatUndangan/input_Kecamatan'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+        if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/input_Kecamatan'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
             checkVerifyEqualOrMatch(false, 'FAILED TO CANCEL')
         }
         
         'click menu buat undangan'
-        WebUI.click(findTestObject('BuatUndangan/menu_BuatUndangan'))
+        WebUI.click(findTestObject('RegisterEsign/menu_BuatUndangan'))
 
         'verify field NIK kosong'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_NIK'), 'value', 
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/input_NIK'), 'value', 
                     FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field NIK tidak kosong')
 
         'verify field Nama Lengkap kosong'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_NamaLengkap'), 'value', 
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/input_NamaLengkap'), 'value', 
                     FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field Nama Lengkap tidak kosong')
 
         'verify field tempat lahir kosong'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_TempatLahir'), 'value', 
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/input_TempatLahir'), 'value', 
                     FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field Tempat Lahir tidak kosong')
 
         'verify field tanggal lahir kosong'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_TanggalLahir'), 
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/input_TanggalLahir'), 
                     'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field tanggal Lahir tidak kosong')
 
         'verify field no handphone kosong'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_noHandphone'), 'value', 
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/input_noHandphone'), 'value', 
                     FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field no Handphone tidak kosong')
 
         'verify field email kosong'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_Email'), 'value', 
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/input_Email'), 'value', 
                     FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field Email tidak kosong')
 
         'verify field alamat Lengkap kosong'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_AlamatLengkap'), 
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/input_AlamatLengkap'), 
                     'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field alamat lengkap tidak kosong')
 
         'verify field Provinsi kosong'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_Provinsi'), 'value', 
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/input_Provinsi'), 'value', 
                     FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field Provinsi tidak kosong')
 
         'verify field Kota kosong'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_Kota'), 'value', 
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/input_Kota'), 'value', 
                     FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field Kota tidak kosong')
 
         'verify field kecamatan kosong'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_Kecamatan'), 'value', 
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/input_Kecamatan'), 'value', 
                     FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field Kecamatan tidak kosong')
 
         'verify field kelurahan kosong'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_Kelurahan'), 'value', 
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/input_Kelurahan'), 'value', 
                     FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field kelurahan tidak kosong')
 
         'verify field kode pos kosong'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_KodePos'), 'value', 
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/input_KodePos'), 'value', 
                     FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field kode pos tidak kosong')
 
         'verify field wilayah kosong'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_Wilayah'), 'value', 
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/input_Wilayah'), 'value', 
                     FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field wilayah tidak kosong')
 
         'verify field office kosong'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_Office'), 'value', 
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/input_Office'), 'value', 
                     FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field office tidak kosong')
 
         'verify field lini bisnis kosong'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_LiniBisnis'), 'value', 
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/input_LiniBisnis'), 'value', 
                     FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field Lini Bisnis tidak kosong')
 
         'verify field task no kosong'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('BuatUndangan/input_TaskNo'), 'value', 
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/input_TaskNo'), 'value', 
                     FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field task no tidak kosong')
 
         'click button cancel'
-        WebUI.click(findTestObject('BuatUndangan/button_Cancel'))
+        WebUI.click(findTestObject('RegisterEsign/button_Cancel'))
 
         'click button ya batal undangan'
-        WebUI.click(findTestObject('BuatUndangan/button_YaBatalUndangan'))
+        WebUI.click(findTestObject('RegisterEsign/button_YaBatalUndangan'))
     }
 }
 
@@ -702,65 +703,65 @@ def inputFilterSaldo(String tipeSaldo, Connection conneSign) {
     currentDate = new Date().format('yyyy-MM-dd')
 
     'input tipe saldo'
-    WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), tipeSaldo)
+    WebUI.setText(findTestObject('RegisterEsign/checkSaldo/input_TipeSaldo'), tipeSaldo)
 
     'enter untuk input tipe saldo'
-    WebUI.sendKeys(findTestObject('BuatUndangan/checkSaldo/input_TipeSaldo'), Keys.chord(Keys.ENTER))
+    WebUI.sendKeys(findTestObject('RegisterEsign/checkSaldo/input_TipeSaldo'), Keys.chord(Keys.ENTER))
 
     'input tanggal Transaksi'
-    WebUI.setText(findTestObject('BuatUndangan/checkSaldo/input_TanggalTransaksi'), currentDate)
+    WebUI.setText(findTestObject('RegisterEsign/checkSaldo/input_TanggalTransaksi'), currentDate)
 
     'click button cari'
-    WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_Cari'))
+    WebUI.click(findTestObject('RegisterEsign/checkSaldo/button_Cari'))
 
     'get row'
     variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
 
     'modify object button last page'
-    modifyObjectButtonLastPage = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 
+    modifyObjectButtonLastPage = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 
         'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' + 
         variable.size()) + ']', true)
 
     if (WebUI.getAttribute(modifyObjectButtonLastPage, 'class', FailureHandling.OPTIONAL) != 'disabled') {
         'click button last page'
-        WebUI.click(findTestObject('BuatUndangan/checkSaldo/button_LastPage'))
+        WebUI.click(findTestObject('RegisterEsign/checkSaldo/button_LastPage'))
     }
     
     'get row'
     variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
 
     'modify object no transaksi'
-    modifyObjectNoTransaksi = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 
+    modifyObjectNoTransaksi = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 
         'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
         variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[1]/div', true)
 
     'modify object tanggal transaksi'
-    modifyObjectTanggalTransaksi = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 
+    modifyObjectTanggalTransaksi = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 
         'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
         variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[2]/div', true)
 
     'modify object tipe transaksi'
-    modifyObjectTipeTransaksi = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 
+    modifyObjectTipeTransaksi = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 
         'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
         variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[3]/div', true)
 
     'modify object user'
-    modifyObjectUser = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 'equals', 
+    modifyObjectUser = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 'equals', 
         ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
         variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[4]/div', true)
 
     'modify object no kontrak'
-    modifyObjectNoKontrak = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 
+    modifyObjectNoKontrak = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 
         'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
         variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[5]/div', true)
 
     'modify object Catatan'
-    modifyObjectCatatan = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 'equals', 
+    modifyObjectCatatan = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 'equals', 
         ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
         variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[8]/div', true)
 
     'modify object qty'
-    modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('BuatUndangan/checkSaldo/modifyObject'), 'xpath', 'equals', 
+    modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 'equals', 
         ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
         variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[9]/div', true)
 
@@ -798,7 +799,7 @@ def inputFilterSaldo(String tipeSaldo, Connection conneSign) {
 
 def getErrorLog() {
     'get reason'
-    ReasonFailed = WebUI.getAttribute(findTestObject('BuatUndangan/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
+    ReasonFailed = WebUI.getAttribute(findTestObject('RegisterEsign/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 
     'write to excel status failed dan reason'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
