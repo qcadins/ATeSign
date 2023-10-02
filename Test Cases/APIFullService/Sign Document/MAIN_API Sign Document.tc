@@ -15,12 +15,6 @@
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>33964838-e0e8-424b-919a-79120ee3156a</variableId>
-   </variableLinks>
-   <variableLinks>
-      <testDataLinkId></testDataLinkId>
-      <type>DEFAULT</type>
-      <value></value>
       <variableId>86161216-41e2-4fe3-90af-c6c95e5c8ac6</variableId>
    </variableLinks>
    <variable>
@@ -29,13 +23,6 @@
       <id>a9728773-15b1-46ce-a662-937bda065ff3</id>
       <masked>false</masked>
       <name>excelPathAPISignDocument</name>
-   </variable>
-   <variable>
-      <defaultValue>'Login/Setting'</defaultValue>
-      <description></description>
-      <id>33964838-e0e8-424b-919a-79120ee3156a</id>
-      <masked>false</masked>
-      <name>excelPathSetting</name>
    </variable>
    <variable>
       <defaultValue>'API Sign Document'</defaultValue>
