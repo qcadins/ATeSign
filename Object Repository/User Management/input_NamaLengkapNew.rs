@@ -6,12 +6,16 @@
    <elementGuidId>07b2caef-bfc3-41a0-a338-cd5110fdaa78</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>XPATH</key>
-         <value>//input[@id='fullName']</value>
+         <key>BASIC</key>
+         <value>//input[@id = 'fullName']</value>
       </entry>
       <entry>
          <key>CSS</key>
          <value>#fullName</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>//input[@id='fullName']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -22,15 +26,15 @@
       <name>tag</name>
       <type>Main</type>
       <value>input</value>
-      <webElementGuid>92c697f6-7605-4723-bf0c-31a10f3501f7</webElementGuid>
+      <webElementGuid>210ba7d9-8ab2-4d5e-9d0f-651bebfcc102</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>ng-reflect-name</name>
+      <name>id</name>
       <type>Main</type>
       <value>fullName</value>
-      <webElementGuid>28c5355a-76aa-494a-88d8-1c262f2faf84</webElementGuid>
+      <webElementGuid>7cb7434e-8011-4e10-8e6d-e4331bb512ba</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -38,7 +42,7 @@
       <name>xpath:attributes</name>
       <type>Main</type>
       <value>//input[@id='fullName']</value>
-      <webElementGuid>c1530e18-c9a0-477d-8657-153da3f85594</webElementGuid>
+      <webElementGuid>b624ea05-fbc8-4be3-88bd-81d4fa4d27ea</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -46,7 +50,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//input</value>
-      <webElementGuid>50953bcf-d8b1-4219-a7cf-274aa4a9a4db</webElementGuid>
+      <webElementGuid>115a3e8b-bab6-46c7-a2d3-b88027e22e05</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -54,6 +58,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//input[@type = 'text' and @id = 'fullName' and @placeholder = 'Tulis nama panjang']</value>
-      <webElementGuid>007ac014-7ce1-46de-88ed-08042a8ad729</webElementGuid>
+      <webElementGuid>47203c8b-7f45-43c4-9a6a-e4977bbf936e</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

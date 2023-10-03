@@ -6,12 +6,15 @@
    <elementGuidId>135640f4-0a2c-403c-9942-09547e568cd5</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>XPATH</key>
-         <value>(.//*[normalize-space(text()) and normalize-space(.)='Pelanggan'])[1]/following::span[1]</value>
+         <key>BASIC</key>
+         <value>//*[@href = '/user-management']</value>
       </entry>
       <entry>
          <key>CSS</key>
-         <value></value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>(.//*[normalize-space(text()) and normalize-space(.)='Pelanggan'])[1]/following::span[1]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -19,10 +22,10 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>href</name>
       <type>Main</type>
-      <value>/html/body/app-root/app-full-layout/div/div[1]/app-sidebar/div[2]/div[1]/ul/li[4]/a/span</value>
-      <webElementGuid>d04e9d41-c4df-4935-812d-940013dc55ca</webElementGuid>
+      <value>/user-management</value>
+      <webElementGuid>7f6e5f5b-2283-4f68-b3ab-e5167565a4c0</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -30,7 +33,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Pelanggan'])[1]/following::span[1]</value>
-      <webElementGuid>be15f1ea-f36f-4ad6-ae40-e888cb339072</webElementGuid>
+      <webElementGuid>40157485-cafd-4b11-8158-acd36a322350</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -38,7 +41,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Karyawan'])[1]/following::span[2]</value>
-      <webElementGuid>e464384b-4a99-456f-b063-d7e08dada176</webElementGuid>
+      <webElementGuid>745591ef-e95b-4e25-ae96-5896a60d2842</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -46,7 +49,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Edit Data Signer'])[1]/preceding::span[1]</value>
-      <webElementGuid>ecca14ac-cb33-487c-a5b6-3276e8971ded</webElementGuid>
+      <webElementGuid>b35737ba-89b7-4c05-bf78-a87948aa2338</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -54,7 +57,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Pencarian Link Undangan'])[1]/preceding::span[2]</value>
-      <webElementGuid>5ffc5f93-9a3f-407f-b2e7-9e91f8f34e46</webElementGuid>
+      <webElementGuid>9d6a0525-055b-4afa-99c0-7cbdea33b2d4</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -62,7 +65,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='User Management']/parent::*</value>
-      <webElementGuid>21f78add-afc1-40e2-b897-0977769f21b0</webElementGuid>
+      <webElementGuid>c257ab33-61e0-4b32-9019-cb6aed19d007</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -70,7 +73,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//li[4]/a/span</value>
-      <webElementGuid>d39b3b4f-90b4-4b57-95d7-bdd544822fc8</webElementGuid>
+      <webElementGuid>e11f65ab-b5e4-4454-89c1-b601e1b3f288</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -78,6 +81,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//span[(text() = 'User Management' or . = 'User Management')]</value>
-      <webElementGuid>3768ef34-1aee-404e-958f-370d0d453915</webElementGuid>
+      <webElementGuid>8f20f0e2-154b-43a0-b230-70899670cc28</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

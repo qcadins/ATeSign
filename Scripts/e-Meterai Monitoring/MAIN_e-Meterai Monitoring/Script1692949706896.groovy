@@ -262,9 +262,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					labelViewDoc = WebUI.getText(findTestObject('Object Repository/KotakMasuk/lbl_viewDokumen'))
 	
 					'Jika pada label terdapat teks No Kontrak'
-					if (labelViewDoc.contains('No Kontrak')) {
+					if (labelViewDoc.contains('No Kontrak ')) {
 						'Direplace dengan kosong agar mendapatkan nomor kontrak'
-						labelViewDoc = labelViewDoc.replace('No Kontrak', '')
+						labelViewDoc = labelViewDoc.replace('No Kontrak ', '')
 					}
 					
 					'Diverifikasi dengan UI didepan'

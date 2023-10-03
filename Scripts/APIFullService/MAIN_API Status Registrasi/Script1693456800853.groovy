@@ -21,11 +21,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         break
     } else if (findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 		
-		'get tenant dari excel per case'
-		GlobalVariable.Tenant = findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
-		
 		'setting menggunakan base url yang benar atau salah'
 		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPICheckRegistrasi, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
+		
+		'check if mau menggunakan tenant yang salah atau benar'
+		if (findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code')) == 'Yes') {
+			'get tenant dari excel per case'
+			GlobalVariable.Tenant = findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
+		} else if (findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code')) == 'No') {
+			'get Tenant salah dari excel'
+			GlobalVariable.Tenant = findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Tenant Code'))
+		}
 		
         'check if mau menggunakan api_key yang salah atau benar'
         if (findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct API Key')) == 'Yes') {

@@ -6,12 +6,16 @@
    <elementGuidId>50bee3dd-b785-4249-93dc-7f06d856357f</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>XPATH</key>
-         <value>//input[@id='password']</value>
+         <key>BASIC</key>
+         <value>//input[@id = 'password']</value>
       </entry>
       <entry>
          <key>CSS</key>
          <value>#password</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>//input[@id='password']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -19,18 +23,18 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>ng-reflect-name</name>
+      <name>tag</name>
       <type>Main</type>
-      <value>password</value>
-      <webElementGuid>8240a081-d472-4984-957c-51d5f390ca16</webElementGuid>
+      <value>input</value>
+      <webElementGuid>c9b2b633-50f5-4347-8c70-7b0fe8230b3b</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>id</name>
       <type>Main</type>
-      <value>id(&quot;password&quot;)</value>
-      <webElementGuid>46264048-9718-4f74-86e7-9f89ebc4ef7c</webElementGuid>
+      <value>password</value>
+      <webElementGuid>49f29e9b-ea3d-4159-989a-15ef1c91b3fa</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -38,7 +42,7 @@
       <name>xpath:attributes</name>
       <type>Main</type>
       <value>//input[@id='password']</value>
-      <webElementGuid>34a656b6-93ba-4a87-810f-2bedd48032c7</webElementGuid>
+      <webElementGuid>d1747df8-eae6-457a-8be3-45c003773cbe</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -46,7 +50,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div[4]/div/app-text/fieldset/div/input</value>
-      <webElementGuid>4393f1d0-9e64-4013-8060-fdf3b1027a7c</webElementGuid>
+      <webElementGuid>e5778f9b-7ac9-4a47-b3cb-347cb8c5bd87</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -54,6 +58,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//input[@type = 'text' and @id = 'password' and @placeholder = 'Tulis kode akses Anda']</value>
-      <webElementGuid>0f77054a-ab47-44a4-9fbf-92cb174dcc61</webElementGuid>
+      <webElementGuid>d9d9bd12-d712-4cca-a6a9-3f93ca4db4f0</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

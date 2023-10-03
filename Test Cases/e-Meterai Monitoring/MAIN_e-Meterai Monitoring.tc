@@ -5,18 +5,6 @@
    <tag></tag>
    <comment></comment>
    <testCaseGuid>1210f05d-c3d5-4f2e-a7e2-847ed5e0ed87</testCaseGuid>
-   <variableLinks>
-      <testDataLinkId></testDataLinkId>
-      <type>DEFAULT</type>
-      <value></value>
-      <variableId>7cd7eb69-fbfc-4d43-a1bc-7a8581a53b53</variableId>
-   </variableLinks>
-   <variableLinks>
-      <testDataLinkId></testDataLinkId>
-      <type>DEFAULT</type>
-      <value></value>
-      <variableId>b516135d-a22f-4f92-92e8-da3ff4730c6d</variableId>
-   </variableLinks>
    <variable>
       <defaultValue>'e-Meterai Monitoring/e-Meterai Monitoring'</defaultValue>
       <description></description>
