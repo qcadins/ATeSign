@@ -57,60 +57,34 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     , ('Email') : 'Email Login', ('Password') : 'Password Login', ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], 
                 FailureHandling.CONTINUE_ON_FAILURE)
 
+			'apakah cek paging diperlukan di awal run'
+			if(GlobalVariable.checkPaging.equals('Yes')) {
+				
+				'call function check paging'
+				checkPaging(currentDate, firstDateOfMonth, conneSign)
+	
+				'get ddl vendor'
+				ArrayList<String> resultVendor = CustomKeywords.'connection.messageDeliveryReport.getDDLVendor'(conneSign, GlobalVariable.Tenant)
+	
+				'check dll vendor'
+				checkDDL(findTestObject('MessageDeliveryReport/input_vendor'), resultVendor, 'DDL Vendor')
+	
+				'get ddl message media'
+				ArrayList<String> resultMessageMedia = CustomKeywords.'connection.messageDeliveryReport.getDDLMessageMedia'(
+					conneSign)
+	
+				'check ddl message media'
+				checkDDL(findTestObject('MessageDeliveryReport/input_messageMedia'), resultMessageMedia, 'DDL Message Media')
+			}
+			
             firstRun = 1
         }
         
-        'ambil index tab yang sedang dibuka di chrome'
-        int currentTab = WebUI.getWindowIndex()
-
-        'setting zoom menuju 70 persen'
-        zoomSetting(70)
-
-        'ganti fokus robot ke tab baru'
-        WebUI.switchToWindowIndex(currentTab)
-
-		'focus ke menu'
-		WebUI.click(findTestObject('MessageDeliveryReport/menu_MessageDeliveryReport'))
-		
-        'click menu MessageDeliveryReport'
-        WebUI.click(findTestObject('MessageDeliveryReport/menu_MessageDeliveryReport'))
-
-        'ambil index tab yang sedang dibuka di chrome'
-        currentTab = WebUI.getWindowIndex()
-
-        'setting zoom menuju 80 persen'
-        zoomSetting(100)
-
-        'ganti fokus robot ke tab baru'
-        WebUI.switchToWindowIndex(currentTab)
-
-        'click ddl bahasa'
-        WebUI.click(findTestObject('Login/button_bahasa'))
-
-        'click english'
-        WebUI.click(findTestObject('Login/button_English'))
+        settingzoom()
 		
 		if (findTestData(excelPathMessageDeliveryReport).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 			GlobalVariable.FlagFailed = 0
 		}
-
-        if (GlobalVariable.NumofColm == 2) {
-            'call function check paging'
-            checkPaging(currentDate, firstDateOfMonth, conneSign)
-
-            'get ddl vendor'
-            ArrayList<String> resultVendor = CustomKeywords.'connection.messageDeliveryReport.getDDLVendor'(conneSign, GlobalVariable.Tenant)
-
-			'check dll vendor'
-            checkDDL(findTestObject('MessageDeliveryReport/input_vendor'), resultVendor, 'DDL Vendor')
-
-            'get ddl message media'
-            ArrayList<String> resultMessageMedia = CustomKeywords.'connection.messageDeliveryReport.getDDLMessageMedia'(
-                conneSign)
-
-			'check ddl message media'
-            checkDDL(findTestObject('MessageDeliveryReport/input_messageMedia'), resultMessageMedia, 'DDL Message Media')
-        }
         
 		'input message delivery reportnya'
         inputMessageDeliveryReport()
@@ -221,6 +195,8 @@ def inputMessageDeliveryReport() {
 }
 
 def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection conneSign) {
+	settingzoom()
+	
     inputMessageDeliveryReport()
 
     'Klik set ulang'
@@ -392,6 +368,38 @@ def checkDDL(TestObject objectDDL, ArrayList<String> listDB, String reason) {
 
     'Input enter untuk tutup ddl'
     WebUI.sendKeys(objectDDL, Keys.chord(Keys.ENTER))
+}
+
+def settingzoom() {
+	'ambil index tab yang sedang dibuka di chrome'
+	int currentTab = WebUI.getWindowIndex()
+
+	'setting zoom menuju 70 persen'
+	zoomSetting(70)
+
+	'ganti fokus robot ke tab baru'
+	WebUI.switchToWindowIndex(currentTab)
+
+	'focus ke menu'
+	WebUI.click(findTestObject('MessageDeliveryReport/menu_MessageDeliveryReport'))
+	
+	'click menu MessageDeliveryReport'
+	WebUI.click(findTestObject('MessageDeliveryReport/menu_MessageDeliveryReport'))
+
+	'ambil index tab yang sedang dibuka di chrome'
+	currentTab = WebUI.getWindowIndex()
+
+	'setting zoom menuju 100 persen'
+	zoomSetting(100)
+
+	'ganti fokus robot ke tab baru'
+	WebUI.switchToWindowIndex(currentTab)
+
+	'click ddl bahasa'
+	WebUI.click(findTestObject('Login/button_bahasa'))
+
+	'click english'
+	WebUI.click(findTestObject('Login/button_English'))
 }
 
 def rowExcel(String cellValue) {

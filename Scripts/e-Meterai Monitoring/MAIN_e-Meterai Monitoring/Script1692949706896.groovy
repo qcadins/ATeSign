@@ -43,6 +43,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathemeteraiMonitoring, ('Email') : 'Email Login', ('Password') : 'Password Login'
 				, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
 			
+			'apakah cek paging diperlukan di awal run'
+			if(GlobalVariable.checkPaging.equals('Yes')) {
+				 'call function check paging'
+				 checkPaging(currentDate, firstDateOfMonth, conneSign)
+			}
+			
 			firstRun = 1
 		}
 		
@@ -52,19 +58,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		if (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 			GlobalVariable.FlagFailed = 0
 		}
-		
-        if (GlobalVariable.NumofColm == 2) {
-            'call function check paging'
-            checkPaging(currentDate, firstDateOfMonth, conneSign)
-        }
         
         inputPagingAndVerify(conneSign)
 
         'ambil value db mengenai progress stamping'
         progressStamping = CustomKeywords.'connection.eMeteraiMonitoring.getProseseMeteraiMonitoring'(conneSign, findTestData(
                 excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Nomor Dokumen')))
-
-		println(findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Action')))
 		
         'Jika stampingnya failed'
         if ((progressStamping[0]) == 'Failed') {
@@ -290,7 +289,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
 def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection conneSign) {
     totaleMeteraiMonitoringDB = CustomKeywords.'connection.eMeteraiMonitoring.getTotaleMeteraiMonitoring'(conneSign, GlobalVariable.Tenant)
-
+	'click menu meterai'
+	WebUI.click(findTestObject('e-Meterai Monitoring/menu_emeteraiMonitoring'))
+	
     'set text no kontrak'
     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Nomor Dokumen'), '20230616133400')
 

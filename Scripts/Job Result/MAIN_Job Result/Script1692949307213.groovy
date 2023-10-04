@@ -38,6 +38,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathJobResult, ('Email') : 'Email Login', ('Password') : 'Password Login'
 				, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
 			
+			'apakah cek paging diperlukan di awal run'
+			if(GlobalVariable.checkPaging.equals('Yes')) {
+				'call function check paging'
+				checkPaging(conneSign)
+			}
 			firstRun = 1
 		}
 
@@ -47,11 +52,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		
 		'click menu job result'
 		WebUI.click(findTestObject('Job Result/menu_Hasil Job'), FailureHandling.OPTIONAL)
-		
-        if (GlobalVariable.NumofColm == 2) {
-            'call function check paging'
-            checkPaging(conneSign)
-        }
 		
         'set text date start'
         WebUI.setText(findTestObject('Job Result/input_requestDateStart'), findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 
@@ -217,6 +217,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         */
 
 def checkPaging(Connection conneSign) {
+	
+	'click menu job result'
+	WebUI.click(findTestObject('Job Result/menu_Hasil Job'), FailureHandling.OPTIONAL)
 	
 	'get dates'
 	currentDate = LocalDate.now()

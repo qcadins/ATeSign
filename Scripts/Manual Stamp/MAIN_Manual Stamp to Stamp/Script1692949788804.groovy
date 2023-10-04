@@ -48,6 +48,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     , ('Email') : 'Email Login', ('Password') : 'Password Login', ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], 
                 FailureHandling.STOP_ON_FAILURE)
 
+			'apakah cek paging diperlukan di awal run'
+			if(GlobalVariable.checkPaging.equals('Yes')) {
+				inputCancel(conneSign)
+			}
             firstRun = 1
         }
         
@@ -71,38 +75,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
         saldoBefore = loginAdminGetSaldo(conneSign, 'No', sheet)
 
-        'ambil index tab yang sedang dibuka di chrome'
-        int currentTab = WebUI.getWindowIndex()
-
-        'setting zoom menuju 80 persen'
-        zoomSetting(60)
-
-        'ganti fokus robot ke tab baru'
-        WebUI.switchToWindowIndex(currentTab)
-
-        'Klik tombol menu Manual Stamp'
-        WebUI.click(findTestObject('ManualStamp/menu_ManualStamp'))
-
-        'Klik tombol menu Manual Stamp'
-        WebUI.click(findTestObject('ManualStamp/menu_ManualStamp'))
-
-        'ambil index tab yang sedang dibuka di chrome'
-        currentTab = WebUI.getWindowIndex()
-
-        'setting zoom menuju 80 persen'
-        zoomSetting(100)
-
-        'ganti fokus robot ke tab baru'
-        WebUI.switchToWindowIndex(currentTab)
+        settingzoom()
 
         if (findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase(
             'Unexecuted')) {
             GlobalVariable.FlagFailed = 0
-        }
-        
-        'Jika kolomnya berada pada kedua'
-        if (GlobalVariable.NumofColm == 2) {
-            inputCancel(conneSign)
         }
         
         'Pengecekan apakah masuk page Manual Stamp'
@@ -379,6 +356,8 @@ def checkErrorLog() {
 }
 
 def inputCancel(Connection conneSign) {
+	settingzoom()
+	
     inputForm()
 
     'get data tipe-tipe pembayaran secara asc'
@@ -916,6 +895,32 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
             index++
         }
     }
+}
+
+def settingzoom() {
+	'ambil index tab yang sedang dibuka di chrome'
+	int currentTab = WebUI.getWindowIndex()
+
+	'setting zoom menuju 80 persen'
+	zoomSetting(60)
+
+	'ganti fokus robot ke tab baru'
+	WebUI.switchToWindowIndex(currentTab)
+
+	'Klik tombol menu Manual Stamp'
+	WebUI.click(findTestObject('ManualStamp/menu_ManualStamp'))
+
+	'Klik tombol menu Manual Stamp'
+	WebUI.click(findTestObject('ManualStamp/menu_ManualStamp'))
+
+	'ambil index tab yang sedang dibuka di chrome'
+	currentTab = WebUI.getWindowIndex()
+
+	'setting zoom menuju 80 persen'
+	zoomSetting(100)
+
+	'ganti fokus robot ke tab baru'
+	WebUI.switchToWindowIndex(currentTab)
 }
 
 def rowExcel(String cellValue) {

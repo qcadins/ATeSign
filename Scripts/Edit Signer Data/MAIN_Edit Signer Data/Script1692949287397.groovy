@@ -34,18 +34,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathEditSignerData, ('Email') : 'Email Login', ('Password') : 'Password Login'
 				, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
 			
+			'apakah cek paging diperlukan di awal run'
+			if(GlobalVariable.checkPaging.equals('Yes')) {
+				'call function check paging'
+				checkPaging(conneSign)
+			}
 			firstRun = 1
 		}
 		
 		'click menu Edit Signer Data'
 		WebUI.click(findTestObject('Edit Signer Data/menu_Edit Signer Data'))
-		
-        'Jika kolom kedua'
-        if (GlobalVariable.NumofColm == 2) {
-            'call function check paging'
-            checkPaging(conneSign)
-        }
-
         
         'check if search dengan email/NIK'
         if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Use input ?')).equalsIgnoreCase('Email')) {
@@ -261,7 +259,10 @@ def verifyPage(String email) {
     }
 }
 
-def checkPaging(Connection conneSign) {
+def checkPaging (Connection conneSign) {
+	'click menu Edit Signer Data'
+	WebUI.click(findTestObject('Edit Signer Data/menu_Edit Signer Data'))
+	
     targetEmailCheck = 'ANDY@AD-INS.COM'
 
     WebUI.setText(findTestObject('Object Repository/Edit Signer Data/input_loginid'), targetEmailCheck)
