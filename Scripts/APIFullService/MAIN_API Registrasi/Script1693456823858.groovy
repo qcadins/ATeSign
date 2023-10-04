@@ -192,9 +192,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathAPIRegistrasi).getValue(
                                     GlobalVariable.NumofColm, rowExcel('jenisKelamin')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                        'verify email'
-                        arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathAPIRegistrasi).getValue(
-                                    GlobalVariable.NumofColm, rowExcel('email')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+						if(findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('email')) != '""') {
+							'verify email'
+							arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathAPIRegistrasi).getValue(
+									GlobalVariable.NumofColm, rowExcel('email')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))							
+						} else {
+							arrayIndex++
+						}
 
                         'verify provinsi'
                         arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathAPIRegistrasi).getValue(
@@ -304,9 +308,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         ' Gagal Verifikasi Saldo Terpotong')
 
                     if (GlobalVariable.Psre == 'VIDA' || GlobalVariable.Psre == 'DIGI') {
-						'verify saldo VIDA PNBP / DIGI TEXT VERIFICATION'
-						checkVerifyEqualOrMatch(WebUI.verifyMatch((resultTrx[arrayIndex++]).toString(), '-1', false, FailureHandling.CONTINUE_ON_FAILURE), 
-								' Gagal Verifikasi Saldo Terpotong - VIDA / DIGI')							
+						
+						if(message.equalsIgnoreCase('Verifikasi Gagal. Nama, Tanggal Lahir, atau Foto Diri tidak sesuai. Harap cek kembali Nama dan Tanggal Lahir Anda serta mengambil ulang Foto Diri.')) {
+							'verify saldo VIDA PNBP / DIGI TEXT VERIFICATION'
+							checkVerifyEqualOrMatch(WebUI.verifyMatch((resultTrx[arrayIndex++]).toString(), '-1', false, FailureHandling.CONTINUE_ON_FAILURE), 
+									' Gagal Verifikasi Saldo Terpotong - VIDA / DIGI')														
+						} else {
+							'verify saldo VIDA PNBP / DIGI TEXT VERIFICATION'
+							checkVerifyEqualOrMatch(WebUI.verifyMatch((resultTrx[arrayIndex++]).toString(), 'null', false, FailureHandling.CONTINUE_ON_FAILURE),
+									' Gagal Verifikasi Saldo Terpotong - VIDA / DIGI')
+						}
 
                         'kurang saldo before dengan proses verifikasi'
                         saldoBefore.set(0, (Integer.parseInt(saldoBefore[0]) - 1).toString())

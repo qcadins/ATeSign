@@ -6,16 +6,16 @@
    <elementGuidId>1bf0e24e-40bd-4bf2-aa8a-b5a351b18cbd</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>XPATH</key>
-         <value>//input[@id='loginId']</value>
+         <key>BASIC</key>
+         <value>//input[@id = 'loginId']</value>
       </entry>
       <entry>
          <key>CSS</key>
          <value>#loginId</value>
       </entry>
       <entry>
-         <key>BASIC</key>
-         <value>id(&quot;loginId&quot;)</value>
+         <key>XPATH</key>
+         <value>//input[@id='loginId']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -26,15 +26,15 @@
       <name>tag</name>
       <type>Main</type>
       <value>input</value>
-      <webElementGuid>a37b8e63-4d99-4afb-869f-54b13874bcb4</webElementGuid>
+      <webElementGuid>7961dce1-f107-4eb0-9102-a2f8acfb16e0</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>id</name>
       <type>Main</type>
-      <value>id(&quot;loginId&quot;)</value>
-      <webElementGuid>e95e02c5-87ec-42cb-8f6f-a4385ab757e3</webElementGuid>
+      <value>loginId</value>
+      <webElementGuid>9cd9cbc8-ca57-4903-8822-44f65f69934c</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -42,7 +42,7 @@
       <name>xpath:attributes</name>
       <type>Main</type>
       <value>//input[@id='loginId']</value>
-      <webElementGuid>ee26b468-ce91-4eaf-acbc-7a812a2e7b18</webElementGuid>
+      <webElementGuid>b6a7399c-8b29-42c8-a37b-791a4672b5a8</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -50,7 +50,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div[2]/div/app-text/fieldset/div/input</value>
-      <webElementGuid>c9df557a-10ee-438a-bd05-1ac1f0cc3e75</webElementGuid>
+      <webElementGuid>baf53b7e-d356-47a2-a6d4-85fa9dd3a5bf</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -58,6 +58,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//input[@type = 'text' and @id = 'loginId' and @placeholder = 'Tulis email Anda']</value>
-      <webElementGuid>75b25761-5161-4ad3-ba84-fd30e94be9c8</webElementGuid>
+      <webElementGuid>eb9c3bb1-aadd-4684-88b3-06ffa5908f62</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

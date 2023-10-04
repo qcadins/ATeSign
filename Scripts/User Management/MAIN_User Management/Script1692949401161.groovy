@@ -417,6 +417,10 @@ def checkPagingConfirmation(String reason) {
     'Jika button lanjut disabled'
     if (WebUI.verifyElementHasAttribute(modifyObjectBtnSave, 'disabled', GlobalVariable.TimeOut, 
         FailureHandling.OPTIONAL)) {
+	
+		'Klik label judul'
+		WebUI.click(findTestObject('User Management/label_Judul'))
+	
         'Klik batal'
         WebUI.click(findTestObject('User Management/button_Batal'))
 
@@ -432,6 +436,10 @@ def checkPagingConfirmation(String reason) {
 
         'Jika check error log ada'
         if (checkErrorLog() == true) {
+			
+			'Klik label judul'
+			WebUI.click(findTestObject('User Management/label_Judul'))
+			
             'Klik batal'
             WebUI.click(findTestObject('User Management/button_Batal'))
 
@@ -540,7 +548,7 @@ def checkPaging(Connection conneSign) {
     WebUI.setText(findTestObject('Object Repository/User Management/input_Email'), 'userciie@ad-ins.com')
 
     'set text status meterai'
-    WebUI.setText(findTestObject('Object Repository/User Management/input_Peran'), 'Customer')
+    WebUI.setText(findTestObject('Object Repository/User Management/input_Peran'), 'Admin')
 
     'enter untuk set status meterai'
     WebUI.sendKeys(findTestObject('Object Repository/User Management/input_Peran'), Keys.chord(Keys.ENTER))
@@ -702,6 +710,9 @@ def inputCancel() {
 	'Enter cabang'
 	WebUI.sendKeys(findTestObject('Object Repository/User Management/input_CabangNew'), Keys.chord(Keys.ENTER))
 	
+	'Klik label judul'
+	WebUI.click(findTestObject('User Management/label_Judul'))
+	
 	'Klik button batal'
 	WebUI.click(findTestObject('User Management/button_Batal'))
 
@@ -739,6 +750,9 @@ def inputCancel() {
 	
 	'Enter cabang'
 	WebUI.sendKeys(findTestObject('Object Repository/User Management/input_CabangNew'), Keys.chord(Keys.ENTER))
+	
+	'Klik label judul'
+	WebUI.click(findTestObject('User Management/label_Judul'))
 	
 	'Klik button batal'
 	WebUI.click(findTestObject('User Management/button_Batal'))
