@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_Kota_TknAja</name>
+   <tag></tag>
+   <elementGuidId>8b57034d-2523-4c35-83e5-9f21c4e6f668</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[11]/ng-select/div/div/div[2]/span[2]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[11]/ng-select/div/div/div[2]/span[2]</value>
+      <webElementGuid>6752ccc7-4d81-4cdf-b0c5-c55988967d9b</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>
