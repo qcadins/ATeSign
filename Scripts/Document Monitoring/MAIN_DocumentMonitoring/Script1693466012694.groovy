@@ -33,6 +33,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathDocumentMonitoring, ('Email') : 'Email Login', ('Password') : 'Password Login'
 				, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
 			
+			'apakah cek paging diperlukan di awal run'
+			if(GlobalVariable.checkPaging.equals('Yes')) {
+				'call function check paging'
+				checkPaging()
+			}
 			firstRun = 1
 		}
 		
@@ -41,11 +46,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		
 		if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 			GlobalVariable.FlagFailed = 0
-		}
-
-		if(GlobalVariable.NumofColm == 2) {
-			'call function check paging'
-			checkPaging()
 		}
 		
         'set text nama Pelanggan'
@@ -462,6 +462,9 @@ def cancelDoc(Connection conneSign) {
 }
 
 def checkPaging() {
+	'click menu DocumentMonitoring'
+	WebUI.click(findTestObject('DocumentMonitoring/DocumentMonitoring'))
+	
     'set text nama Pelanggan'
     WebUI.setText(findTestObject('DocumentMonitoring/input_NamaPelanggan'), 'nama pelanggan')
 

@@ -383,12 +383,20 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
         inputFilterSaldo('OTP', conneSign)
     }
     
-    'select vendor'
-    WebUI.selectOptionByLabel(findTestObject('RegisterEsign/checkSaldo/select_Vendor'), '(?i)' + GlobalVariable.Psre, true)
-
+	'cek apakah vendor merupakan Tekenaja'
+	if (GlobalVariable.Psre == 'TKNAJ') {
+		
+		'select vendor'
+		WebUI.selectOptionByLabel(findTestObject('RegisterEsign/checkSaldo/select_Vendor'), '(?i)' + 'TEKENAJA', true)
+	} else {
+		
+		'select vendor'
+		WebUI.selectOptionByLabel(findTestObject('RegisterEsign/checkSaldo/select_Vendor'), '(?i)' + GlobalVariable.Psre, true)
+	}
+    
     'get row'
-    variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
-
+    variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div > div'))
+	
     for (index = 2; index <= variable.size(); index++) {
         'modify object box info'
         modifyObjectBoxInfo = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 

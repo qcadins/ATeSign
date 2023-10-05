@@ -20,8 +20,20 @@ if (findTestData(excelPathListUndangan).getValue(GlobalVariable.NumofColm, rowEx
 'click menu list undangan'
 WebUI.click(findTestObject('ListUndangan/menu_ListUndangan'))
 
-'call function check paging'
-checkPaging()
+'apakah cek paging diperlukan'
+if(GlobalVariable.checkPaging.equals('Yes')) {
+	'call function check paging'
+	checkPaging()
+}
+
+'set text tanggal pengiriman dari'
+WebUI.setText(findTestObject('ListUndangan/input_TanggalPengirimanDari'), '2023-03-01')
+
+'set text tanggal pengiriman ke'
+WebUI.setText(findTestObject('ListUndangan/input_TanggalPengirimanKe'), '2023-03-31')
+
+'click button cari'
+WebUI.click(findTestObject('ListUndangan/button_Cari'))
 
 'check if mau download list undangan'
 if (findTestData(excelPathListUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Download File')).equalsIgnoreCase('Yes')) {
@@ -93,11 +105,11 @@ def checkPaging() {
 
     'verify field ke reset'
     checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ListUndangan/input_TanggalPengirimanDari'), 'value', 
-                FailureHandling.CONTINUE_ON_FAILURE), '2023-05-01', false, FailureHandling.CONTINUE_ON_FAILURE))
+                FailureHandling.CONTINUE_ON_FAILURE), '2023-10-01', false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify field ke reset'
     checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ListUndangan/input_TanggalPengirimanKe'), 'value', 
-                FailureHandling.CONTINUE_ON_FAILURE), '2023-05-17', false, FailureHandling.CONTINUE_ON_FAILURE))
+                FailureHandling.CONTINUE_ON_FAILURE), '2023-10-04', false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'click ddl status meterai'
     WebUI.click(findTestObject('ListUndangan/input_StatusUndangan'))
@@ -109,27 +121,16 @@ def checkPaging() {
     WebUI.click(findTestObject('ListUndangan/input_PengirimanMelalui'))
 
     'verify field ke reset'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ListUndangan/selected_DDL'), 'value', FailureHandling.CONTINUE_ON_FAILURE), 
-            '', false, FailureHandling.CONTINUE_ON_FAILURE))
+    checkVerifyPaging(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/selected_DDL')), 'All', false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'click ddl status meterai'
     WebUI.click(findTestObject('ListUndangan/input_StatusRegistrasi'))
 
     'verify field ke reset'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ListUndangan/selected_DDL'), 'value', FailureHandling.CONTINUE_ON_FAILURE), 
-            '', false, FailureHandling.CONTINUE_ON_FAILURE))
+    checkVerifyPaging(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/selected_DDL')), 'All', false, FailureHandling.CONTINUE_ON_FAILURE)) 
 
     'click object lain untuk close ddl'
     WebUI.click(findTestObject('ListUndangan/input_TanggalPengirimanDari'))
-
-    'set text tanggal pengiriman dari'
-    WebUI.setText(findTestObject('ListUndangan/input_TanggalPengirimanDari'), '2023-03-01')
-
-    'set text tanggal pengiriman ke'
-    WebUI.setText(findTestObject('ListUndangan/input_TanggalPengirimanKe'), '2023-03-31')
-
-    'click button cari'
-    WebUI.click(findTestObject('ListUndangan/button_Cari'))
 
 	'check if ada paging'
 	if(WebUI.verifyElementVisible(findTestObject('DocumentMonitoring/button_NextPage'), FailureHandling.OPTIONAL)) {

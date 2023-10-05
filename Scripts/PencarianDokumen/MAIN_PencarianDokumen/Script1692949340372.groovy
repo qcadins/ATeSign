@@ -12,27 +12,47 @@ import org.openqa.selenium.Keys as Keys
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
-'call test case login per case'
-WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathPencarianDokumen, ('Email') : 'Email Login', ('Password') : 'Password Login'
-	, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
-
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-'click menu pencarian dokumen'
-WebUI.click(findTestObject('PencarianDokumen/menu_PencarianDokumen'))
-
-'call function check paging'
-//checkPaging(conneSign)
-
 'get colm excel'
 int countColmExcel = findTestData(excelPathPencarianDokumen).columnNumbers
+
+int firstRun = 0
 
 'looping pencarian dokumen'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
     } else if (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
+		
+		'check if email login case selanjutnya masih sama dengan sebelumnya'
+		if (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm - 1, rowExcel('Username')) !=
+			findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Username')) || firstRun == 0) {
+			'call test case login per case'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathPencarianDokumen, ('Email') : 'Username', ('Password') : 'Password'
+				, ('Perusahaan') : 'Perusahaan', ('Peran') : 'Role'], FailureHandling.STOP_ON_FAILURE)
+			
+			'click menu pencarian dokumen'
+			WebUI.click(findTestObject('PencarianDokumen/menu_PencarianDokumen'))
+			
+			'apakah cek paging diperlukan di awal run'
+			if(GlobalVariable.checkPaging.equals('Yes')) {
+				'call function check paging'
+				checkPaging(conneSign)
+			}
+			
+			firstRun = 1
+		}
+		
+		'set tenant aktif'
+		GlobalVariable.Tenant = findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))
+		
+		'set vendor aktif'
+		GlobalVariable.Psre = findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Vendor'))
+		
+		'set userlogin aktif'
+		GlobalVariable.userLogin = findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Username'))
 		
 		if (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 			GlobalVariable.FlagFailed = 0
@@ -221,29 +241,34 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 }
 
 public checkPaging(Connection conneSign) {
-    'input nama pelanggan'
-    WebUI.setText(findTestObject('PencarianDokumen/input_NamaPelanggan'), 'nama pelanggan')
-
-    'input no kontrak'
-    WebUI.setText(findTestObject('PencarianDokumen/input_NomorKontrak'), '1234567890')
-
-    'input TanggalPermintaanDari'
-    WebUI.setText(findTestObject('PencarianDokumen/input_TanggalPermintaanDari'), '2023-04-01')
-
-    'input TanggalPermintaanSampai'
-    WebUI.setText(findTestObject('PencarianDokumen/input_TanggalPermintaanSampai'), '2023-04-10')
-
-    'input TanggalSelesaiDari'
-    WebUI.setText(findTestObject('PencarianDokumen/input_TanggalSelesaiDari'), '2023-04-01')
-
-    'input TanggalSelesaiSampai'
-    WebUI.setText(findTestObject('PencarianDokumen/input_TanggalSelesaiSampai'), '2023-04-10')
-
-    'input tipeDokumen'
-    WebUI.setText(findTestObject('PencarianDokumen/select_TipeDokumen'), 'Dokumen Umum')
-
-    'click enter untuk input select ddl'
-    WebUI.sendKeys(findTestObject('PencarianDokumen/select_TipeDokumen'), Keys.chord(Keys.ENTER))
+	
+	'cek apakah field nama pelanggan muncul'
+	if (WebUI.verifyElementPresent(findTestObject('PencarianDokumen/input_NamaPelanggan'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		
+		'input nama pelanggan'
+		WebUI.setText(findTestObject('PencarianDokumen/input_NamaPelanggan'), 'nama pelanggan')
+		
+		'input no kontrak'
+		WebUI.setText(findTestObject('PencarianDokumen/input_NomorKontrak'), '1234567890')
+	
+		'input TanggalPermintaanDari'
+		WebUI.setText(findTestObject('PencarianDokumen/input_TanggalPermintaanDari'), '2023-04-01')
+	
+		'input TanggalPermintaanSampai'
+		WebUI.setText(findTestObject('PencarianDokumen/input_TanggalPermintaanSampai'), '2023-04-10')
+	
+		'input TanggalSelesaiDari'
+		WebUI.setText(findTestObject('PencarianDokumen/input_TanggalSelesaiDari'), '2023-04-01')
+	
+		'input TanggalSelesaiSampai'
+		WebUI.setText(findTestObject('PencarianDokumen/input_TanggalSelesaiSampai'), '2023-04-10')
+	
+		'input tipeDokumen'
+		WebUI.setText(findTestObject('PencarianDokumen/select_TipeDokumen'), 'Dokumen Umum')
+	
+		'click enter untuk input select ddl'
+		WebUI.sendKeys(findTestObject('PencarianDokumen/select_TipeDokumen'), Keys.chord(Keys.ENTER))
+	}
 
     'input status'
     WebUI.setText(findTestObject('PencarianDokumen/select_Status'), 'Need Sign')
@@ -254,33 +279,37 @@ public checkPaging(Connection conneSign) {
     'click button set ulang'
     WebUI.click(findTestObject('PencarianDokumen/button_SetUlang'))
 
-    'verify field ke reset'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/input_NamaPelanggan'), 'value', 
-                FailureHandling.CONTINUE_ON_FAILURE), '', false, FailureHandling.CONTINUE_ON_FAILURE))
-
-    'verify field ke reset'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/input_NomorKontrak'), 'value', 
-                FailureHandling.CONTINUE_ON_FAILURE), '', false, FailureHandling.CONTINUE_ON_FAILURE))
-
-    'verify field ke reset'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/input_TanggalPermintaanDari'), 
-                'value', FailureHandling.CONTINUE_ON_FAILURE), '', false, FailureHandling.CONTINUE_ON_FAILURE))
-
-    'verify field ke reset'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/input_TanggalPermintaanSampai'), 
-                'value', FailureHandling.CONTINUE_ON_FAILURE), '', false, FailureHandling.CONTINUE_ON_FAILURE))
-
-    'verify field ke reset'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/input_TanggalSelesaiDari'), 
-                'value', FailureHandling.CONTINUE_ON_FAILURE), '', false, FailureHandling.CONTINUE_ON_FAILURE))
-
-    'verify field ke reset'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/input_TanggalSelesaiSampai'), 
-                'value', FailureHandling.CONTINUE_ON_FAILURE), '', false, FailureHandling.CONTINUE_ON_FAILURE))
-
-    'verify field ke reset'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/select_TipeDokumen'), 'value', 
-                FailureHandling.CONTINUE_ON_FAILURE), '', false, FailureHandling.CONTINUE_ON_FAILURE))
+	'cek apakah field nama pelanggan muncul'
+	if (WebUI.verifyElementPresent(findTestObject('PencarianDokumen/input_NamaPelanggan'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		
+		'verify field ke reset'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/input_NamaPelanggan'), 'value',
+					FailureHandling.CONTINUE_ON_FAILURE), '', false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+		'verify field ke reset'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/input_NomorKontrak'), 'value',
+					FailureHandling.CONTINUE_ON_FAILURE), '', false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+		'verify field ke reset'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/input_TanggalPermintaanDari'),
+					'value', FailureHandling.CONTINUE_ON_FAILURE), '', false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+		'verify field ke reset'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/input_TanggalPermintaanSampai'),
+					'value', FailureHandling.CONTINUE_ON_FAILURE), '', false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+		'verify field ke reset'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/input_TanggalSelesaiDari'),
+					'value', FailureHandling.CONTINUE_ON_FAILURE), '', false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+		'verify field ke reset'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/input_TanggalSelesaiSampai'),
+					'value', FailureHandling.CONTINUE_ON_FAILURE), '', false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+		'verify field ke reset'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/select_TipeDokumen'), 'value',
+					FailureHandling.CONTINUE_ON_FAILURE), '', false, FailureHandling.CONTINUE_ON_FAILURE))
+	}
 
     'verify field ke reset'
     checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/select_Status'), 'value', FailureHandling.CONTINUE_ON_FAILURE), 
@@ -299,62 +328,66 @@ public checkPaging(Connection conneSign) {
     'verify total data pencarian dokumen'
     checkVerifyPaging(WebUI.verifyEqual(resultTotalData, Integer.parseInt(Total[0]), FailureHandling.CONTINUE_ON_FAILURE))
 
-    'click page 2'
-    WebUI.click(findTestObject('PencarianDokumen/button_Page2'))
-
-    'verify paging di page 2'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/button_Page2'), 'class', FailureHandling.CONTINUE_ON_FAILURE), 
-            'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
-
-    'click page 1'
-    WebUI.click(findTestObject('PencarianDokumen/button_Page1'))
-
-    'verify paging di page 1'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/button_Page1'), 'class', FailureHandling.CONTINUE_ON_FAILURE), 
-            'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
-
-    'click next page'
-    WebUI.click(findTestObject('PencarianDokumen/button_NextPage'))
-
-    'verify paging di page 2'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/button_Page2'), 'class', FailureHandling.CONTINUE_ON_FAILURE), 
-            'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
-
-    'click prev page'
-    WebUI.click(findTestObject('PencarianDokumen/button_PrevPage'))
-
-    'verify paging di page 1'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/button_Page1'), 'class', FailureHandling.CONTINUE_ON_FAILURE), 
-            'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
-
-	'get total page'
-	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
+	'cek apakah possible adanya halaman kedua'
+	if (Integer.parseInt(Total[0]) > 10) {
+		
+		'click page 2'
+		WebUI.click(findTestObject('PencarianDokumen/button_Page2'))
 	
-	'click max page'
-    WebUI.click(findTestObject('PencarianDokumen/button_MaxPage'))
-
-	'get total data'
-	lastPage = Double.parseDouble(WebUI.getText(findTestObject('PencarianDokumen/label_TotalData')).split(' ',-1)[0])/10
+		'verify paging di page 2'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/button_Page2'), 'class', FailureHandling.CONTINUE_ON_FAILURE),
+				'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
 	
-	'jika hasil perhitungan last page memiliki desimal'
-	if (lastPage.toString().contains('.0')) {
-		'tidak ada round up'
-		additionalRoundUp = 0
-	} else {
-		'round up dengan tambahan 0.5'
-		additionalRoundUp = 0.5
+		'click page 1'
+		WebUI.click(findTestObject('PencarianDokumen/button_Page1'))
+	
+		'verify paging di page 1'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/button_Page1'), 'class', FailureHandling.CONTINUE_ON_FAILURE),
+				'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+		'click next page'
+		WebUI.click(findTestObject('PencarianDokumen/button_NextPage'))
+	
+		'verify paging di page 2'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/button_Page2'), 'class', FailureHandling.CONTINUE_ON_FAILURE),
+				'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+		'click prev page'
+		WebUI.click(findTestObject('PencarianDokumen/button_PrevPage'))
+	
+		'verify paging di page 1'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/button_Page1'), 'class', FailureHandling.CONTINUE_ON_FAILURE),
+				'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+		'get total page'
+		variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
+		
+		'click max page'
+		WebUI.click(findTestObject('PencarianDokumen/button_MaxPage'))
+	
+		'get total data'
+		lastPage = Double.parseDouble(WebUI.getText(findTestObject('PencarianDokumen/label_TotalData')).split(' ',-1)[0])/10
+		
+		'jika hasil perhitungan last page memiliki desimal'
+		if (lastPage.toString().contains('.0')) {
+			'tidak ada round up'
+			additionalRoundUp = 0
+		} else {
+			'round up dengan tambahan 0.5'
+			additionalRoundUp = 0.5
+		}
+		
+		'verify paging di page terakhir'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/paging_Page'), 'ng-reflect-page',
+					FailureHandling.CONTINUE_ON_FAILURE), Math.round(lastPage+additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+		'click min page'
+		WebUI.click(findTestObject('PencarianDokumen/button_MinPage'))
+	
+		'verify paging di page 1'
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/button_Page1'), 'class', FailureHandling.CONTINUE_ON_FAILURE),
+				'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
 	}
-	
-	'verify paging di page terakhir'
-	checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/paging_Page'), 'ng-reflect-page',
-				FailureHandling.CONTINUE_ON_FAILURE), Math.round(lastPage+additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
-
-    'click min page'
-    WebUI.click(findTestObject('PencarianDokumen/button_MinPage'))
-
-    'verify paging di page 1'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianDokumen/button_Page1'), 'class', FailureHandling.CONTINUE_ON_FAILURE), 
-            'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
 }
 
 public checkVerifyPaging(Boolean isMatch) {

@@ -62,20 +62,39 @@ checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Daf
         findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Alamat')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), 
     ' Alamat')
 
-'verify provinsi sesuai inputan'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Provinsi'), 'value').toUpperCase(), 
-        findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Provinsi')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), 
-    ' Provinsi')
-
-'verify kota sesuai inputan'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Kota'), 'value').toUpperCase(), 
-        findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Kota')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), 
-    ' Kota')
-
-'verify Kecamatan sesuai inputan'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Kecamatan'), 'value').toUpperCase(), 
-        findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Kecamatan')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), 
-    ' Kecamatan')
+if (GlobalVariable.Psre == 'TKNAJ') {
+	
+	'verify provinsi sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('DaftarAkun/input_Provinsi_TknAja')).toUpperCase(),
+			findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Provinsi')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE),
+		' Provinsi')
+	
+	'verify kota sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('DaftarAkun/input_Kota_TknAja')).toUpperCase(),
+			findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Kota')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE),
+		' Kota')
+	
+	'verify Kecamatan sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('DaftarAkun/input_Kecamatan_TknAja')).toUpperCase(),
+			findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Kecamatan')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE),
+		' Kecamatan')
+} else {
+	
+	'verify provinsi sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Provinsi'), 'value').toUpperCase(),
+			findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Provinsi')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE),
+		' Provinsi')
+	
+	'verify kota sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Kota'), 'value').toUpperCase(),
+			findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Kota')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE),
+		' Kota')
+	
+	'verify Kecamatan sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Kecamatan'), 'value').toUpperCase(),
+			findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Kecamatan')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE),
+		' Kecamatan')
+}
 
 'verify Kelurahan sesuai inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Kelurahan'), 'value').toUpperCase(), 

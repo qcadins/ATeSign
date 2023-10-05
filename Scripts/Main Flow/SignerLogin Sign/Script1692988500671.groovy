@@ -723,7 +723,7 @@ for (o = 0; o < documentId.size(); o++) {
                         false, FailureHandling.CONTINUE_ON_FAILURE), ' pada jumlah tertanda tangan dengan row transaksi ')
 
                 'looping mengenai rownya'
-                for (int j = 1; j <= variableSaldoRow.size(); j++) {
+                for (int j = variableSaldoRow.size(); j >= 1; j--) {
                     'looping mengenai columnnya'
                     for (int u = 1; u <= variableSaldoColumn.size(); u++) {
                         'modify per row dan column. column menggunakan u dan row menggunakan documenttemplatename'

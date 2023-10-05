@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_Provinsi_TknAja</name>
+   <tag></tag>
+   <elementGuidId>5403a3e9-7369-486d-a711-0c86d8dce7a1</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[10]/ng-select/div/div/div[2]/span[2]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[10]/ng-select/div/div/div[2]/span[2]</value>
+      <webElementGuid>8090eb4a-32b5-43ef-a6d3-425aaee1815e</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

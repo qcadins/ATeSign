@@ -38,17 +38,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathMeterai, ('Email') : 'Email Login', ('Password') : 'Password Login'
 				, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
 			
+			'apakah cek paging diperlukan di awal run'
+			if(GlobalVariable.checkPaging.equals('Yes')) {
+				'call function check paging'
+				checkPaging(currentDate, firstDateOfMonth, conneSign)
+			}
+			
 			firstRun = 1
 		}
 		
 		if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 			GlobalVariable.FlagFailed = 0
 		}
-		
-        if (GlobalVariable.NumofColm == 2) {          
-            'call function check paging'
-            checkPaging(currentDate, firstDateOfMonth, conneSign)
-        }
         
 		'click menu meterai'
 		WebUI.click(findTestObject('Meterai/menu_Meterai'))

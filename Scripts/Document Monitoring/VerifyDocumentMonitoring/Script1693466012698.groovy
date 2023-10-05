@@ -104,7 +104,7 @@ for (int o = 1; o <= 1; o++) {
 		ArrayList emailSigner = []
 		
         'Mengambil email berdasarkan documentId'
-        String emailSignerString = CustomKeywords.'connection.DocumentMonitoring.getEmailSigneronRefNumber'(conneSign, nomorKontrakPerPilihan[y])
+        String emailSignerString = CustomKeywords.'connection.DocumentMonitoring.getEmailSigneronRefNumber'(conneSign, nomorKontrakPerPilihan[y], GlobalVariable.Tenant)
 		
 		'jika email signer string tidak null, maka'
 		if (emailSignerString != null) {
