@@ -2,8 +2,8 @@ import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
+import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import internal.GlobalVariable as GlobalVariable
 import java.sql.Connection as Connection
 import java.net.InetAddress as InetAddress
@@ -55,8 +55,8 @@ for (o = 0; o < documentId.size(); o++) {
         CustomKeywords.'connection.UpdateData.updateTenantPassReq'(conneSign, tenantVendor[0], findTestData(excelPathAPISignDocument).getValue(
                 GlobalVariable.NumofColm, rowExcel('Enable Need Password for signing? (Sign External)')))
     }
-	
-	if  (vendor.equalsIgnoreCase('Digisign')) {
+
+	if (vendor.equalsIgnoreCase('Digisign')) {
 		signTypeUsed = 'Dokumen'
 	}
 	else {
@@ -66,8 +66,6 @@ for (o = 0; o < documentId.size(); o++) {
     HashMap<String, String> saldoBefore = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathAPISignDocument
             , ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
 
-	println saldoBefore
-	WebUI.delay(20)
 	saldoTtdBefore = saldoBefore.get(signTypeUsed)
 
     ArrayList paymentTypeUsed = getPaymentTypeUsed(conneSign, vendor)
@@ -215,9 +213,8 @@ for (o = 0; o < documentId.size(); o++) {
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Sign Document', [('callerId') : findTestData(excelPathAPISignDocument).getValue(
                         GlobalVariable.NumofColm, rowExcel('callerId (Sign External)')).split(';', -1)[GlobalVariable.indexUsed]
                     , ('documentId') : documentIdInput, ('email') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
-                        rowExcel('email (Sign External)')).split(';', -1)[GlobalVariable.indexUsed], ('password') : ('"' + 
-                    findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Password Signer'))) + 
-                    '"', ('ipAddress') : ipaddress, ('browserInfo') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
+                        rowExcel('email (Sign External)')).split(';', -1)[GlobalVariable.indexUsed], ('password') : '"' + findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Password Signer')) + '"'
+                    , ('ipAddress') : ipaddress, ('browserInfo') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
                         rowExcel('browserInfo (Sign External)')).split(';', -1)[GlobalVariable.indexUsed], ('otp') : otp
                     , ('selfPhoto') : photo]))
 
@@ -275,12 +272,12 @@ for (o = 0; o < documentId.size(); o++) {
                             'check Db'
                             if (GlobalVariable.checkStoreDB == 'Yes') {
                                 'Panggil function responseAPIStoreDB dengan parameter totalSigned, ipaddress, dan array dari documentId'
-                                responseAPIStoreDB(conneSign, ipaddress, documentId, trxNo)
+                                responseAPIStoreDB(conneSign, ipaddress, documentId, trxNo.toString())
                             }
                             
                             if (trxNo != null) {
                                 'ambil trx no untuk displit'
-                                trxNo = trxNo.split(', ', -1)
+                                trxNo = trxNo.replace('[','').replace(']','').split(', ', -1)
 
                                 'Diberikan delay dengan pembuatan trx no di db sebesar 5 detik'
                                 WebUI.delay(5)
@@ -309,8 +306,6 @@ for (o = 0; o < documentId.size(); o++) {
                             HashMap<String, String> saldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), 
                                 [('excel') : excelPathAPISignDocument, ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
 							
-							println saldoAfter
-							WebUI.delay(20)
                             'looping payment type used'
                             for (l = 0; l < paymentTypeUsed.size(); l++) {
                                 'looping untuk mendapatkan key dari hashmap'
@@ -327,15 +322,32 @@ for (o = 0; o < documentId.size(); o++) {
                                     }
                                 }
                             }
+							
+							int saldoUsed = 0
+							'looping untuk mendapatkan total saldo yang digunakan per nomor kontrak'
+							for (i = 0; i < documentId.size(); i++) {
+								nomorKontrak = CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, documentId[o])
+								'Mengambil value dari db mengenai tipe pembayran'
+								paymentType = CustomKeywords.'connection.APIFullService.getPaymentType'(conneSign, nomorKontrak)
 
+								'Jika tipe pembayarannya per sign'
+								if (paymentType == 'Per Sign') {
+									'Saldo usednya akan ditambah dengan value db penggunaan saldo'
+									saldoUsed = (saldoUsed + CustomKeywords.'connection.APIFullService.getSaldoUsedBasedonPaymentType'(conneSign,
+										nomorKontrak, findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
+                        rowExcel('email (Sign External)')).split(';', -1)[GlobalVariable.indexUsed].replace('"', '')))
+								} else {
+									saldoUsed = (saldoUsed + 1)
+								}
+							}
 								'looping untuk mendapatkan key dari hashmap'
 								for (String key : saldoBefore.keySet()) {
 									String values = saldoBefore.get(key)
 
 									if (key == (signTypeUsed)) {
 										checkVerifyEqualOrMatch(WebUI.verifyEqual(Integer.parseInt(saldoBefore.get(key)) -
-												1, Integer.parseInt(saldoAfter.getAt(key))), ' terhadap pemotongan saldo ' + key)
-										verifySaldoSigned(conneSign, documentId[0])
+												saldoUsed, Integer.parseInt(saldoAfter.getAt(key))), ' terhadap pemotongan saldo ' + key)
+										verifySaldoSigned(conneSign, documentId[0], signTypeUsed)
 									}
 								}							
 
@@ -396,7 +408,7 @@ def responseAPIStoreDB(Connection conneSign, String ipaddress, String[] document
         checkLivenessCompare = 0
 
         'Jika trxNonya tidak kosong dan checkLivenessComparenya 0'
-        if (((trxNo != '') && (trxNo != null)) && (checkLivenessCompare == 0)) {
+        if (((trxNo != 'null') && (trxNo != null)) && (checkLivenessCompare == 0)) {
             'verify trx no. Jika sesuai, maka'
             if (WebUI.verifyEqual(result[arrayIndex++], trxNo, FailureHandling.CONTINUE_ON_FAILURE)) {
                 'Ditambah 1'
@@ -610,7 +622,7 @@ def rowExcel(String cellValue) {
     return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, 'Main', cellValue)
 }
 
-def verifySaldoSigned(Connection conneSign, String documentId) {
+def verifySaldoSigned(Connection conneSign, String documentId, String signTypeUsed) {
     'get current date'
     def currentDate = new Date().format('yyyy-MM-dd')
 
@@ -621,6 +633,12 @@ def verifySaldoSigned(Connection conneSign, String documentId) {
 
     String documentTemplateName = CustomKeywords.'connection.DataVerif.getDocumentName'(conneSign, noKontrak)
 
+	if (signTypeUsed == 'TTD') {
+		signTypeUsed = 'Sign'
+	}
+	else {
+		signTypeUsed = 'Document'
+	}
     'ambil nama vendor dari DB'
     String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, noKontrak)
 
@@ -630,15 +648,13 @@ def verifySaldoSigned(Connection conneSign, String documentId) {
     documentType = CustomKeywords.'connection.APIFullService.getDocumentType'(conneSign, noKontrak)
 
     'input filter dari saldo'
-    WebUI.setText(findTestObject('Saldo/input_tipesaldo'), findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
-            rowExcel('TipeSaldo')))
+    WebUI.setText(findTestObject('Saldo/input_tipesaldo'), signTypeUsed)
 
     'Input enter'
     WebUI.sendKeys(findTestObject('Saldo/input_tipesaldo'), Keys.chord(Keys.ENTER))
 
     'Input tipe transaksi'
-    WebUI.setText(findTestObject('Saldo/input_tipetransaksi'), findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
-            rowExcel('TipeTransaksi')))
+    WebUI.setText(findTestObject('Saldo/input_tipetransaksi'), 'Use ' + signTypeUsed)
 
     'Input enter'
     WebUI.sendKeys(findTestObject('Saldo/input_tipetransaksi'), Keys.chord(Keys.ENTER))
@@ -693,7 +709,7 @@ def verifySaldoSigned(Connection conneSign, String documentId) {
             variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
 
             'ambil inquiry di db'
-            ArrayList inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldo'(conneSign, noKontrak, saldoUsedperDoc.toString())
+            ArrayList inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldo'(conneSign, noKontrak, saldoUsedperDoc.toString(), 'Use ' + signTypeUsed)
 
             index = 0
 

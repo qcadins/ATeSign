@@ -114,7 +114,10 @@ for (int i = 0; i < docid.size(); i++) {
 	
 	'get data API Send Document dari DB (hanya 1 signer)'
 	ArrayList result = CustomKeywords.'connection.SendSign.getSendDoc'(conneSign, docid[i])
-
+	
+	println result
+	println docid[i]
+	WebUI.delay(30)
 	'Mengambil email berdasarkan documentId'
 	ArrayList emailSigner = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, docid[i]).split(';', -1)
 

@@ -628,15 +628,17 @@ for (o = 0; o < documentId.size(); o++) {
 
 		countSaldoSplitLiveFCused = GlobalVariable.eSignData.getAt('VerifikasiBiometric')
 
+		flagBreak = 0
 			'cek apa pernah menggunakan biometrik'
 			if (useBiom == 0) {
 				'Jika count saldo otp after dengan yang before dikurangi 1 ditambah dengan '
 				if(WebUI.verifyEqual(Integer.parseInt(resultSaldoBefore.get('OTP')) - (countResend), Integer.parseInt(resultSaldoAfter.get('OTP')), FailureHandling.OPTIONAL)) {
 					
-					break
+					flagBreak = 1
 				}
 
-			} else if (useBiom == 1){
+			} 
+			 if (countSaldoSplitLiveFCused > 0){
 				
 				'cek saldo liveness facecompare dipisah atau tidak'
 				String isSplitLivenessFc = CustomKeywords.'connection.APIFullService.getSplitLivenessFaceCompareBill'(conneSign)
@@ -647,7 +649,7 @@ for (o = 0; o < documentId.size(); o++) {
 					'cek apakah saldo liveness facecompare masih sama'
 					if(WebUI.verifyEqual(Integer.parseInt(resultSaldoBefore.get('Liveness Face Compare')) - countSaldoSplitLiveFCused, Integer.parseInt(resultSaldoAfter.get('Liveness Face Compare')), FailureHandling.OPTIONAL)) {
 						
-						break
+						flagBreak = 1
 					}
 				}
 				else if (isSplitLivenessFc == '1') {
@@ -655,7 +657,7 @@ for (o = 0; o < documentId.size(); o++) {
 					'cek apakah saldo liveness dan facecompare sama'
 					if(WebUI.verifyEqual(Integer.parseInt(resultSaldoBefore.get('Liveness')) - (countSaldoSplitLiveFCused), Integer.parseInt(resultSaldoAfter.get('Liveness')), FailureHandling.OPTIONAL) &&
 						WebUI.verifyEqual(Integer.parseInt(resultSaldoBefore.get('Face Compare')) - (countSaldoSplitLiveFCused), Integer.parseInt(resultSaldoAfter.get('Face Compare')), FailureHandling.OPTIONAL)) {
-						break
+						flagBreak = 1
 					}
 				}
 			}
@@ -665,6 +667,10 @@ for (o = 0; o < documentId.size(); o++) {
             WebUI.delay(10)
 
             WebUI.refresh()
+			
+			if (flagBreak == 1) {
+				break
+			}
         
     }
     
@@ -790,10 +796,13 @@ def rowExcel(String cellValue) {
 }
 
 def encryptLink(Connection conneSign, String documentId, String emailSigner, String aesKey) {
+	'get current date'
+	def currentDateTimeStamp = new Date().format('yyyy-MM-dd HH:mm:ss')
+	
     officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, documentId)
 
     'pembuatan message yang akan dienkrip'
-    msg = (((('{"officeCode" : ' + officeCode) + ', "email" : "') + emailSigner) + '"}')
+    msg = (((('{"officeCode" : ' + officeCode) + ', "email" : "') + emailSigner) + '","timestamp" : "'+currentDateTimeStamp+'"}')
 
     'enkripsi msg'
     encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(msg, aesKey)

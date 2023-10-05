@@ -25,6 +25,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         'reset value di excel mengenai output previous run. Jika menggunakan opsi Sign Only, maka document id tidak akan didelete'
         resetValue()
 
+		inisializeValue()
+		
         'pasang gv tenant agar tidak berubah'
         GlobalVariable.Tenant = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))
 
@@ -262,5 +264,19 @@ def resetValue() {
 
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Result Count Failed') - 
         1, GlobalVariable.NumofColm - 1, '')
+}
+
+def inisializeValue() {
+	isUsedAPIExternal = false
+	isUsedAPINormal = false
+	isUsedWebview = false
+	isUsedEmbed = false
+	isUsedInboxSigner = false
+	
+	indexReadDataExcelAPIExternal = 0 
+	indexReadDataExcelAPINormal = 0
+	indexReadDataExcelWebview = 0
+	indexReadDataExcelEmbed = 0
+	indexReadDataExcelInboxSigner = 0
 }
 

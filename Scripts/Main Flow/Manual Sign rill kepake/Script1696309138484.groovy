@@ -23,47 +23,61 @@ splitIndex = -1
 
 indexForCatatanStamp = 0
 
-int looping
-
 'memanggil test case login untuk admin wom dengan Admin Client'
 WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excelPathManualSigntoSign, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
+
+'get tenant dari excel percase'
+GlobalVariable.Tenant = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))
+
+'get psre dari excel percase'
+GlobalVariable.Psre = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Vendor'))
 
 'declare flag failed'
 GlobalVariable.FlagFailed = 0
 
 'Inisialisasi array dan variable'
-ArrayList namaTandaTangan = [],  notelpTandaTangan = []
+ArrayList<String> namaTandaTangan = [], notelpTandaTangan = []
 
 indexEmail = 0
 
 'inisiasi index menjadi 8 untuk modify object ketika tidak pada e-meterai'
-index = 8
+index = 9
 
 'Inisialisasi variable yang dibutuhkan'
-phonePenandaTangan = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Phone (Send Manual)')).split(semicolon, splitIndex)
+emailPenandaTangan = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Email (Send Manual)')).split(
+    semicolon, splitIndex)
 
-emailPenandaTangan = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Email (Send Manual)')).split(semicolon, splitIndex)
+editNamaAfterSearch = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Edit Nama After Search (Send Manual)')).split(
+    semicolon, splitIndex)
 
-editNamaAfterSearch = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Edit Nama After Search (Send Manual)')).split(semicolon, splitIndex)
+namaPenandaTangan = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Nama (Send Manual)')).split(
+    semicolon, splitIndex)
 
-namaPenandaTangan = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Nama (Send Manual)')).split(semicolon, splitIndex)
+tipeTandaTangan = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$TipeTandaTangan (Send Manual)')).split(
+    semicolon, splitIndex)
 
-tipeTandaTangan = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$TipeTandaTangan (Send Manual)')).split(semicolon, splitIndex)
+totalTandaTangan = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('jumlah signer lokasi per signer (Send Manual)')).split(
+    semicolon, splitIndex)
 
-totalTandaTangan = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('jumlah signer lokasi per signer (Send Manual)')).split(semicolon, splitIndex)
+pindahkanSignBox = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Pindahkan SignBox (Send Manual)')).split(
+    semicolon, splitIndex)
 
-pindahkanSignBox = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Pindahkan SignBox (Send Manual)')).split(semicolon, splitIndex)
+lokasiSignBox = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Lokasi Pemindahan signbox (Send Manual)')).split(
+    '\\n', splitIndex)
 
-lokasiSignBox = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Lokasi Pemindahan signbox (Send Manual)')).split('\\n', splitIndex)
+lockSignBox = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Lock Sign Box (Send Manual)')).split(
+    semicolon, splitIndex)
 
-lockSignBox = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Lock Sign Box (Send Manual)')).split(semicolon, splitIndex)
-
-catatanStamping = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Catatan Stamping (Send Manual)')).split(semicolon, splitIndex)
+catatanStamping = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Catatan Stamping (Send Manual)')).split(
+    semicolon, splitIndex)
 
 'Klik tombol menu manual sign'
 WebUI.click(findTestObject('ManualSign/ManualSign'))
 
-WebUI.delay(10)
+'diberikan delay untuk mencari object bahwa sudah dimenu manual sign'
+WebUI.delay(2)
+
+WebUI.focus(findTestObject('ManualSign/lbl_ManualSign'))
 
 'Pengecekan apakah masuk page manual sign'
 if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), GlobalVariable.TimeOut)) {
@@ -71,71 +85,75 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
     inputForm()
 
     'jika setting menggunakan e-meterai'
-    if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Membutuhkan e-Meterai (Send Manual)')) == 'Yes') {
+    if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Membutuhkan e-Meterai (Send Manual)')) == 
+    'Yes') {
         'index meningkat karena tambahan 2 kolom ketika menggunakan e-meterai'
-        index = 10
-
-        'modify label daftar penanda tangan dengan naiknya index'
-        modifyObjectLblDaftarPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/lbl_daftarpenandatangan'), 
-            'xpath', 'equals', ('//*[@id="msxForm"]/div[' + index) + ']/div[3]/table/tr/td/small', true)
-
-        'modify button tambah penanda tangan dengan naiknya index'
-        modifyObjectbuttonTambahPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/button_tambahTandaTangan'), 
-            'xpath', 'equals', ('//*[@id="msxForm"]/div[' + index) + ']/div[2]/a', true)
+        index = 11
     } else {
-        'Memasukkan object kepada variable'
-        modifyObjectLblDaftarPenandaTangan = findTestObject('ManualSign/lbl_daftarpenandatangan')
+        'modify menuju index normal'
+        index = 9
+    }
+	
+	'modify label daftar penanda tangan dengan naiknya index'
+	modifyObjectLblDaftarPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/lbl_daftarpenandatangan'),
+		'xpath', 'equals', ('//*[@id="msxForm"]/div[' + index) + ']/div[3]/table/tr/td/small', true)
 
-        'Memasukkan object kepada variable'
-        modifyObjectbuttonTambahPenandaTangan = findTestObject('ManualSign/button_tambahTandaTangan')
+	'modify button tambah penanda tangan dengan naiknya index'
+	modifyObjectbuttonTambahPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/button_tambahTandaTangan'),
+		'xpath', 'equals', ('//*[@id="msxForm"]/div[' + index) + ']/div[2]/a', true)
+	
+    emailService = CustomKeywords.'connection.DataVerif.getEmailService'(conneSign, GlobalVariable.Tenant)
+
+    'click tambah penanda tangan'
+    WebUI.click(modifyObjectbuttonTambahPenandaTangan)
+
+    'diberikan delay 3 detik dengan loading'
+    WebUI.delay(1)
+
+    checkErrorLog()
+
+    if (emailService.toString() == '1') {
+        if (WebUI.verifyElementNotPresent(findTestObject('ManualSign/input_phonePenandaTangan'), GlobalVariable.TimeOut, 
+            FailureHandling.OPTIONAL)) {
+            'write excel mengenai error log tersebut'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed') + 
+                    ';') + 'Field phone tidak muncul saat setting email service aktif pada tenant ') + GlobalVariable.Tenant)
+        }
     }
     
-    'check element present kepada daftar penanda tangan yang kosong'
-    WebUI.verifyElementPresent(modifyObjectLblDaftarPenandaTangan, GlobalVariable.TimeOut)
+    'klik button x untuk keluar dari tambahan penanda tangan'
+    WebUI.click(findTestObject('ManualSign/button_x'))
 
-	if (phonePenandaTangan.toString() == '[]') {
-		looping = emailPenandaTangan.size()
-	}
-	else {
-		looping = phonePenandaTangan.size()
-	}
-	
+    'diberikan delay 3 detik dengan loading'
+    WebUI.delay(1)
+
     'looping berdasarkan email penanda tangan'
-    for (int i = 0; i < looping; i++) {
-        'jika email atau nama penanda tangan tidak kosong'
-		if (((emailPenandaTangan[i]) != '' || phonePenandaTangan[i] != '')) {
-			'klik tambah penanda tangan'
-			WebUI.click(modifyObjectbuttonTambahPenandaTangan)
-		} else if (((emailPenandaTangan[i]) == '' || phonePenandaTangan[i] == '')) {
-			'jika nama dan email penanda tangan kosong'
-			break
-		}
+    for (int i = 0; i < emailPenandaTangan.size(); i++) {
+        if ((emailPenandaTangan[i]) != '') {
+            'klik tambah penanda tangan'
+            WebUI.click(modifyObjectbuttonTambahPenandaTangan)
+        } else if ((emailPenandaTangan[i]) == '') {
+            'jika nama dan email penanda tangan kosong'
+            continue
+        }
         
         'jika label tambah penanda tangan muncul'
         if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_TambahPenandaTangan'), GlobalVariable.TimeOut) == 
         true) {
-					if (emailPenandaTangan[i] != '') {
-						'set text pada email penanda tangan'
-						WebUI.setText(findTestObject('ManualSign/input_emailPenandaTangan'), emailPenandaTangan[i])
-					}
-					
-					if (WebUI.verifyElementPresent(findTestObject('ManualSign/input_phonePenandaTangan'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-						if (phonePenandaTangan[i] != '') {
-						'set text pada email penanda tangan'
-						WebUI.setText(findTestObject('ManualSign/input_phonePenandaTangan'), phonePenandaTangan[i])
-						
-						'klik search penanda tangan'
-						WebUI.click(findTestObject('ManualSign/button_searchPenandaTanganWithEmailService'))
-					} else {
-						'klik search penanda tangan'
-						WebUI.click(findTestObject('ManualSign/button_searchPenandaTanganWithoutEmailService'))
-						}
-					} else {
-						'klik search penanda tangan'
-						WebUI.click(findTestObject('ManualSign/button_searchPenandaTanganWithEmailService'))
-					}
-            'diberikan delay 10 detik dengan loading search'
-            WebUI.delay(10)
+            'set text pada email penanda tangan'
+            WebUI.setText(findTestObject('ManualSign/input_emailPenandaTangan'), emailPenandaTangan[i])
+
+            if (emailService.toString() == '1') {
+                'klik search penanda tangan'
+                WebUI.click(findTestObject('ManualSign/button_searchPenandaTanganWithoutEmailService'))
+            } else {
+                'klik search penanda tangan'
+                WebUI.click(findTestObject('ManualSign/button_searchPenandaTanganWithEmailService'))
+            }
+            
+            'diberikan delay 1 detik dengan loading search'
+            WebUI.delay(1)
 
             'jika muncul error log penanda tangan'
             if (WebUI.verifyElementPresent(findTestObject('ManualSign/errorLog_PenandaTangan'), GlobalVariable.TimeOut, 
@@ -145,8 +163,8 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 
                 'write excel mengenai error log tersebut'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                    (((findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 2) + ';') + '<') + error) + 
-                    '>')
+                    (((findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
+                    ';') + '<') + error) + '>')
 
                 'diberikan delay 2 detik agar sudah ter write sebelum button cancel'
                 WebUI.delay(2)
@@ -156,34 +174,22 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 
                 'delay 2 detik agar cancelnya benar-benar diclick'
                 WebUI.delay(2)
+				
+				continue
             }
             
-					if (emailPenandaTangan[i] != '') {
-						'verifikasi signer ketika sudah submit signer'
-						String verifikasiSigner = CustomKeywords.'connection.ManualSign.getVerificationSigner'(conneSign, emailPenandaTangan[i].toString().toUpperCase())
-						
-						'check data mengenai email penanda tangan'
-						checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualSign/input_emailPenandaTangan'),
-						'value'), emailPenandaTangan[i].toString().toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada email Penanda Tangan ')
-						
-						'check data nama dari UI dengan db'
-						checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualSign/input_namaPenandaTangan'),
-									'value'), verifikasiSigner, false, FailureHandling.CONTINUE_ON_FAILURE), ' pada nama Penanda Tangan ')
-						
-					} else if (phonePenandaTangan[i] != '') {
-						'verifikasi signer ketika sudah submit signer'
-						String verifikasiSigner = CustomKeywords.'connection.ManualSign.getVerificationSigner'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(phonePenandaTangan[i]))
-						
-						'check data mengenai email penanda tangan'
-						checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualSign/input_phonePenandaTangan'),
-						'value'), phonePenandaTangan[i], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada phone Penanda Tangan ')
-	 
-						'check data nama dari UI dengan db'
-						checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualSign/input_namaPenandaTangan'),
-									'value'), verifikasiSigner, false, FailureHandling.CONTINUE_ON_FAILURE), ' pada nama Penanda Tangan ')
-						
-					}
-					
+            'verifikasi signer ketika sudah submit signer'
+            String verifikasiSigner = CustomKeywords.'connection.ManualSign.getVerificationSigner'(conneSign, emailPenandaTangan[
+                i])
+
+            'check data mengenai email penanda tangan'
+            checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualSign/input_emailPenandaTangan'), 
+                        'value'), emailPenandaTangan[i], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada email Penanda Tangan ')
+
+            'check data nama dari UI dengan db'
+            checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualSign/input_namaPenandaTangan'), 
+                        'value'), verifikasiSigner, false, FailureHandling.CONTINUE_ON_FAILURE), ' pada nama Penanda Tangan ')
+
             if ((editNamaAfterSearch[i]) == 'Yes') {
                 'set text pada email penanda tangan'
                 WebUI.setText(findTestObject('ManualSign/input_namaPenandaTangan'), namaPenandaTangan[i])
@@ -198,7 +204,8 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
             FailureHandling.OPTIONAL)) {
             'write to excel save gagal'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedMandatory)
+                (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
+                ';') + GlobalVariable.ReasonFailedMandatory)
 
             break
         } else {
@@ -206,7 +213,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
             WebUI.click(findTestObject('ManualSign/button_Save'))
         }
         
-        for (int p = 0; p < looping; p++) {
+        for (int p = 0; p < emailPenandaTangan.size(); p++) {
             'Inisialisasi array dan index yang dibutuhkan'
             arrayIndex = 0
 
@@ -216,7 +223,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 
             'gmofidy modifyObjectInformasiPenandaTangan'
             modifyObjectInformasiPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/modifyObject'), 'xpath', 
-                'equals', ((('//*[@id="msxForm"]/div[' + index) + ']/div[3]/table/tr[') + p + 1) + ']/td/p', true)
+                'equals', ((('//*[@id="msxForm"]/div[' + index) + ']/div[3]/table/tr[') + (p + 1)) + ']/td/p', true)
 
             'mengambil informasi signer '
             valueInformasi = WebUI.getText(modifyObjectInformasiPenandaTangan).replace('\n', ', ')
@@ -224,26 +231,23 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
             'split informasi signer berdasarkan delimiter'
             valueInformasi = valueInformasi.split(', ', -1)
 
-			if (emailPenandaTangan[i] != '') {
-				'query check informasi dari user tersebut'
-				queryCheckInformationUser = CustomKeywords.'connection.ManualSign.getInformationUser'(conneSign, emailPenandaTangan[indexEmail++].toString().toUpperCase(), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$PSrE (Send Manual)')))
-			} else {
-				'query check informasi dari user tersebut'
-				queryCheckInformationUser = CustomKeywords.'connection.ManualSign.getInformationUser'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(phonePenandaTangan[indexEmail++]), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$PSrE (Send Manual)')))
-			}
+            'query check informasi dari user tersebut'
+            queryCheckInformationUser = CustomKeywords.'connection.ManualSign.getInformationUser'(conneSign, emailPenandaTangan[
+                indexEmail++], findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$PSrE (Send Manual)')))
 
-   				if (valueInformasi[2] == emailPenandaTangan[indexEmail - 1] || valueInformasi[1] == phonePenandaTangan[indexEmail - 1]) {
-					'check ui dan query mengenai nama signer'
-					checkVerifyEqualOrMatch(WebUI.verifyMatch(valueInformasi[arrayIndexValue++], queryCheckInformationUser[arrayIndex++], 
-                    false, FailureHandling.CONTINUE_ON_FAILURE), ' pada informasi nama penanda tangan ')
+            if ((valueInformasi[2]) == (emailPenandaTangan[(indexEmail - 1)])) {
+                'check ui dan query mengenai nama signer'
+                checkVerifyEqualOrMatch(WebUI.verifyMatch(valueInformasi[arrayIndexValue++], queryCheckInformationUser[arrayIndex++], 
+                        false, FailureHandling.CONTINUE_ON_FAILURE), ' pada informasi nama penanda tangan ')
 
-					'check ui dan query mengenai nomor telepon signer'
-					checkVerifyEqualOrMatch(WebUI.verifyMatch(CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(valueInformasi[
-                        arrayIndexValue++]), queryCheckInformationUser[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), 
-					' pada informasi nomor telepon penanda tangan ')
+                'check ui dan query mengenai nomor telepon signer'
+                checkVerifyEqualOrMatch(WebUI.verifyMatch(CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(valueInformasi[
+                            arrayIndexValue++]), queryCheckInformationUser[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), 
+                    ' pada informasi nomor telepon penanda tangan ')
 
-					'check ui dan query mengenai email signer'
-					checkVerifyEqualOrMatch(WebUI.verifyMatch(valueInformasi[arrayIndexValue++], queryCheckInformationUser[arrayIndex++].toString().toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada informasi email penanda tangan ')
+                'check ui dan query mengenai email signer'
+                checkVerifyEqualOrMatch(WebUI.verifyMatch(valueInformasi[arrayIndexValue++], queryCheckInformationUser[arrayIndex++], 
+                        false, FailureHandling.CONTINUE_ON_FAILURE), ' pada informasi email penanda tangan ')
 
                 'add nama tanda tangan yang sukses dan nomor telepon'
                 namaTandaTangan.add(valueInformasi[0])
@@ -252,8 +256,8 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 
                 break
             } else {
-				indexEmail--
-			}
+                indexEmail--
+            }
         }
     }
     
@@ -261,13 +265,14 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
     if (WebUI.verifyElementHasAttribute(findTestObject('ManualSign/button_Next'), 'disabled', GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
         'write to excel bahwa save gagal'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedSaveGagal)
+            (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
+            GlobalVariable.ReasonFailedSaveGagal)
     } else {
         if (WebUI.verifyElementPresent(modifyObjectLblDaftarPenandaTangan, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
             'write to excel bahwa save gagal'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (((findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 2) + ';') + '<') + 'Silahkan tambah penanda tangan terlebih dulu!') + 
-                '>')
+                (((findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
+                ';') + '<') + 'Silahkan tambah penanda tangan terlebih dulu!') + '>')
         } else {
             WebUI.click(findTestObject('ManualSign/button_Next'))
         }
@@ -289,6 +294,11 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
         
         WebUI.delay(3)
 
+        'modify label tipe tanda tangan di kotak'
+        modifyobjectTTDlblRoleTandaTangan = WebUI.modifyObjectProperty(findTestObject('Object Repository/ManualSign/modifyObject'), 
+            'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' + 
+            j) + ']/div/div/small', true)
+
         if ((tipeTandaTangan[(j - 1)]).equalsIgnoreCase('TTD')) {
             'Verify label tanda tangannya muncul atau tidak'
             WebUI.verifyElementPresent(findTestObject('TandaTanganDokumen/lbl_TipeTandaTangan'), GlobalVariable.TimeOut, 
@@ -308,17 +318,12 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
                 (notelpTandaTangan[index]), false)
 
             countValue++
-			
-			'Klik set tanda tangan'
-			WebUI.click(findTestObject('ManualSign/btn_setTandaTangan'))
-			
-			'modify label tipe tanda tangan di kotak'
-			modifyobjectTTDlblRoleTandaTangan = WebUI.modifyObjectProperty(findTestObject('Object Repository/ManualSign/modifyObject'),
-				'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' +
-				j) + ']/div/div/small', true)
-	
-			'Verifikasi antara excel dan UI, apakah tipenya sama'
-			WebUI.verifyMatch(namaTandaTangan[index], WebUI.getText(modifyobjectTTDlblRoleTandaTangan), false)
+
+            'Klik set tanda tangan'
+            WebUI.click(findTestObject('ManualSign/btn_setTandaTangan'))
+
+            'Verifikasi antara excel dan UI, apakah tipenya sama'
+            checkVerifyEqualOrMatch(WebUI.verifyMatch(namaTandaTangan[index], WebUI.getText(modifyobjectTTDlblRoleTandaTangan), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada nama tanda tangan signer')
         }
         
         'Verify apakah tanda tangannya ada'
@@ -369,14 +374,21 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
     'click button simpan'
     WebUI.click(findTestObject('Object Repository/ManualSign/btn_proses'))
 
-    WebUI.delay(20)
+    WebUI.delay(3)
+
+    'susun urutan tanda tangan'
+    sortingSequenceSign()
 
     checkErrorLog()
 
     if (GlobalVariable.FlagFailed == 0) {
         'write to excel success'
-        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
+        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Status') - 1, GlobalVariable.NumofColm - 
             1, GlobalVariable.StatusSuccess)
+		
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('PsRE Document') - 1,
+				GlobalVariable.NumofColm - 1, findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$PSrE (Send Manual)')))
+
 
         if (GlobalVariable.checkStoreDB == 'Yes') {
             result = CustomKeywords.'connection.ManualSign.getManualSign'(conneSign, findTestData(excelPathManualSigntoSign).getValue(
@@ -384,7 +396,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 
             index = 0
 
-            ArrayList arrayMatch = []
+            ArrayList<String> arrayMatch = []
 
             'verify vendor'
             arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
@@ -408,10 +420,13 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 
             automaticAfterStamping = '0'
 
-            if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Membutuhkan e-Meterai (Send Manual)')) == 'Yes') {
-                tipeDokumenPeruri = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Tipe Dokumen Peruri (Send Manual)'))
+            if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Membutuhkan e-Meterai (Send Manual)')) == 
+            'Yes') {
+                tipeDokumenPeruri = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel(
+                        'Tipe Dokumen Peruri (Send Manual)'))
 
-                if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Stamp Meterai Otomatis (Send Manual)')) == 'Ya') {
+                if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Stamp Meterai Otomatis (Send Manual)')) == 
+                'Ya') {
                     automaticAfterStamping = '1'
                 }
             } else {
@@ -424,8 +439,8 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
             'verify tipe dokumen peruri'
             arrayMatch.add(WebUI.verifyMatch(tipeDokumenPeruri, result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-            totalDocument = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Dokumen (Send Manual)')).split('\\n', 
-                -1)
+            totalDocument = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Dokumen (Send Manual)')).split(
+                '\\n', -1)
 
             'verify total dokumen'
             arrayMatch.add(WebUI.verifyMatch(totalDocument.size().toString(), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -437,15 +452,16 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
             if (arrayMatch.contains(false)) {
                 'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                    (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedStoredDB)
+                    (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
+                    ';') + GlobalVariable.ReasonFailedStoredDB)
             }
             
             String docId = CustomKeywords.'connection.DataVerif.getDocId'(conneSign, findTestData(excelPathManualSigntoSign).getValue(
                     GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen (Send Manual)')), GlobalVariable.Tenant)
 
             'Write to excel mengenai Document ID'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('documentid') - 1, GlobalVariable.NumofColm - 
-                1, docId)
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('documentid') - 
+                1, GlobalVariable.NumofColm - 1, docId)
         }
     }
 }
@@ -454,7 +470,7 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            ((findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
+            ((findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
             reason)
 
         GlobalVariable.FlagFailed = 1
@@ -470,7 +486,7 @@ def checkErrorLog() {
         if (!(errormessage.contains('Permintaan tanda tangan berhasil dibuat.'))) {
             'Tulis di excel itu adalah error'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (((findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + 
+                (((findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + 
                 '<') + errormessage) + '>')
 
             GlobalVariable.FlagFailed = 1
@@ -509,6 +525,13 @@ def inputForm() {
     'Klik enter'
     WebUI.sendKeys(findTestObject('ManualSign/input_jenisPembayaran'), Keys.chord(Keys.ENTER))
 
+    'Input AKtif pada input Status'
+    WebUI.setText(findTestObject('ManualSign/input_isSequence'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
+            rowExcel('$isSequence (Send Manual)')))
+
+    'Klik enter'
+    WebUI.sendKeys(findTestObject('ManualSign/input_isSequence'), Keys.chord(Keys.ENTER))
+
     'Code untuk mengambil file berdasarkan direktori masing-masing sekaligus ambil value dari excel'
     String userDir = System.getProperty('user.dir')
 
@@ -517,9 +540,8 @@ def inputForm() {
     'Upload file berdasarkan filePath yang telah dirancang'
     WebUI.uploadFile(findTestObject('ManualSign/input_documentExample'), filePath, FailureHandling.CONTINUE_ON_FAILURE)
 
-    if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Membutuhkan e-Meterai (Send Manual)')) == 'Yes') {
-        index = 10
-
+    if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Membutuhkan e-Meterai (Send Manual)')) == 
+    'Yes') {
         if (WebUI.verifyElementNotChecked(findTestObject('ManualSign/input_isE-Meterai'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
             'Input AKtif pada input Status'
             WebUI.click(findTestObject('ManualSign/btn_E-Meterai'))
@@ -538,7 +560,8 @@ def inputForm() {
 
         'Klik enter'
         WebUI.sendKeys(findTestObject('ManualSign/input_isAutomatedStamp'), Keys.chord(Keys.ENTER))
-    } else if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Membutuhkan e-Meterai (Send Manual)')) == 'No') {
+    } else if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Membutuhkan e-Meterai (Send Manual)')) == 
+    'No') {
         if (WebUI.verifyElementChecked(findTestObject('ManualSign/input_isE-Meterai'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
             'Input AKtif pada input Status'
             WebUI.click(findTestObject('ManualSign/btn_E-Meterai'))
@@ -547,5 +570,51 @@ def inputForm() {
 }
 
 def rowExcel(String cellValue) {
-	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, 'Main', cellValue)
+    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, 'Main', cellValue)
 }
+
+def sortingSequenceSign() {
+    'check if Sequential signing iya'
+    if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$isSequence (Send Manual)')).equalsIgnoreCase(
+        'Ya')) {
+        'get urutan seq sign dari excel'
+        ArrayList<String> seqSignRole = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel(
+                'Urutan Signing (Send Manual)')).toString().toUpperCase().split(';', -1)
+
+        'count box'
+        variable = DriverFactory.webDriver.findElements(By.cssSelector('#cdk-drop-list-0 div'))
+
+        'looping seq sign'
+        for (int seq = 1; seq <= variable.size(); seq++) {
+            'modify label tipe tanda tangan di kotak'
+            modifyObject = WebUI.modifyObjectProperty(findTestObject('TandaTanganDokumen/modifyObject'), 'xpath', 'equals', 
+                ('//*[@id="cdk-drop-list-0"]/div[' + seq) + ']', true)
+
+            'get text pisah nomor dan psre'
+            signer = WebUI.getText(modifyObject).split(' ', -1)
+
+            index = (seqSignRole.indexOf(signer[1]) + 1)
+
+            if (seq != index) {
+                'modify label tipe tanda tangan di kotak'
+                modifyObjectNew = WebUI.modifyObjectProperty(findTestObject('TandaTanganDokumen/modifyObject'), 'xpath', 
+                    'equals', ('//*[@id="cdk-drop-list-0"]/div[' + index) + ']', true)
+
+                'pindahin ke urutan sesuai excel'
+                WebUI.dragAndDropToObject(modifyObject, modifyObjectNew)
+
+                'untuk proses pemindahan'
+                WebUI.delay(2)
+
+                seq--
+            }
+        }
+        
+        'click button simpan'
+        WebUI.click(findTestObject('Object Repository/ManualSign/btn_simpan'))
+
+        'delay untuk loading simpan'
+        WebUI.delay(3)
+    }
+}
+
