@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>Manual Sign</name>
+   <name>Manual Sign rill kepake</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>69862b97-40d5-42f0-830c-a2736cf49b87</testCaseGuid>
+   <testCaseGuid>8894286f-97f0-4950-b470-259b4543b5c1</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>1138e4d9-5d3b-4255-9041-cd13324af9cf</variableId>
+      <variableId>91ac1b76-0ee9-49f7-875e-2e9136fc6125</variableId>
    </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
-      <id>1138e4d9-5d3b-4255-9041-cd13324af9cf</id>
+      <id>91ac1b76-0ee9-49f7-875e-2e9136fc6125</id>
       <masked>false</masked>
       <name>excelPathManualSigntoSign</name>
    </variable>

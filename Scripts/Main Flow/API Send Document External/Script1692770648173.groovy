@@ -19,6 +19,9 @@ enter = '\\n'
 
 int splitnum = -1
 
+'setting menggunakan base url yang benar atau salah'
+CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPISendDoc, GlobalVariable.NumofColm, rowExcel('Use Correct base Url (Send External)'))
+
 'Deklarasi variable mengenai signLoc untuk store db'
 String signlocStoreDB = new String()
 

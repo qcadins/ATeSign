@@ -172,9 +172,10 @@ for (int o = 0; o < documentFile.size(); o++) {
 
     listSigner = ''
 
+	'Pembuatan pengisian variable di sendRequest per jumlah signer.'
+	ArrayList<String> list = []
+	
     for (int i = 0; i < signActions.size(); i++) {
-        'Pembuatan pengisian variable di sendRequest per jumlah signer.'
-        ArrayList<String> list = []
 
         if ((i == 0) && (i == (signActions.size() - 1))) {
             list.add(((((((((((((((((((((((((((((((((((((('{"signAction": ' + (signActions[i])) + ',"signerType": ') + (signerTypes[
@@ -201,9 +202,9 @@ for (int o = 0; o < documentFile.size(); o++) {
                 (tmpLahirs[i])) + ',"email": ') + (emails[i])) + ',"npwp": ') + (npwps[i])) + ',"idPhoto": ') + idPhotos[i]) + 
                 ',"signerSelfPhoto": ') + signerSelfPhotos[i]) + '},')
         }
-        
+
         'Memasukkan seluruh BodyAPI ke listSigner'
-        listSigner = (listSigner + (list[(i - 1)]))
+        listSigner = (listSigner + (list[(i)]))
 
         'check ada value maka setting email service tenant'
         if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service (Send Normal)')).length() > 
@@ -240,6 +241,7 @@ for (int o = 0; o < documentFile.size(); o++) {
         listSigner) + '],') + bodyAPI) + ', "psreCode" : ') + (psreCode[o])) + ', "successURL": ') + (successURL[o])) + 
         ', "uploadURL": ') + (uploadURL[o])) + '},')
     }
+
 }
 
 'Jika flag tenant no'

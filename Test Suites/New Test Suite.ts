@@ -12,7 +12,7 @@
    <rerunImmediately>false</rerunImmediately>
    <testSuiteGuid>753b66a0-507c-485e-ac95-1d8ff6a0cedd</testSuiteGuid>
    <testCaseLink>
-      <guid>55298eb9-fe25-4785-8a74-06a054125b07</guid>
+      <guid>3fb35fc5-3a44-48a6-b6ae-ecb4e57341ca</guid>
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
       <testCaseId>Test Cases/Main Flow/MAIN_Run/MAIN_Multiple Option Send Sign Stamp</testCaseId>
@@ -88,6 +88,25 @@
          <type>DEFAULT</type>
          <value></value>
          <variableId>a94c6bad-8b17-4258-a6a0-d4f15e453351</variableId>
+      </variableLink>
+   </testCaseLink>
+   <testCaseLink>
+      <guid>34675dd6-e50f-4653-ae19-649baaf0e669</guid>
+      <isReuseDriver>false</isReuseDriver>
+      <isRun>true</isRun>
+      <testCaseId>Test Cases/Document Monitoring/MAIN_DocumentMonitoring</testCaseId>
+      <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
+      <variableLink>
+         <testDataLinkId></testDataLinkId>
+         <type>DEFAULT</type>
+         <value></value>
+         <variableId>3668bcda-421d-4038-9106-300b7922b214</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId></testDataLinkId>
+         <type>DEFAULT</type>
+         <value></value>
+         <variableId>30de0820-4fdc-4a43-9fd6-bc8712901acd</variableId>
       </variableLink>
    </testCaseLink>
 </TestSuiteEntity>

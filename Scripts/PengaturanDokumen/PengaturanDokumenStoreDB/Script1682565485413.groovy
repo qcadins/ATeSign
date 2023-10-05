@@ -76,21 +76,20 @@ if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
 	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Sequential Signing')).toUpperCase(),
 			(result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 } else {
-	
+		
 	arrayindex++
 }
 
 'cek untuk data diisi di excel atau tidak'
 if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Urutan Signing')).length() > 0) {
 	
+	String getUrutanSigning = CustomKeywords.'connection.PengaturanDokumen.getUrutanSigning'(conneSign, findTestData(excelPathPengaturanDokumen).getValue(
+        GlobalVariable.NumofColm, rowExcel('Kode Templat Dokumen')))
+	
 	'verify urutan sequence sign'
 	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Urutan Signing')).toUpperCase(),
-		(result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-} else {
-	
-	arrayindex++
+		(getUrutanSigning).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 }
-
 
 'jika data db tidak sesuai dengan excel'
 if (arrayMatch.contains(false)) {

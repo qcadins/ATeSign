@@ -68,11 +68,7 @@ for (int t = 0; t < resultHashMap.keySet().size(); t++) {
     'diberikan delay untuk mendapatkan input nama pelanggan'
     WebUI.delay(2)
 
-    WebUI.focus(findTestObject('PencarianDokumen/input_NamaPelanggan'), FailureHandling.OPTIONAL)
-
-    if (WebUI.verifyElementPresent(findTestObject('PencarianDokumen/input_NamaPelanggan'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-        GlobalVariable.roleLogin = 'BM MF'
-
+    if (GlobalVariable.roleLogin == 'BM MF') {
         //WebUI.setText(findTestObject('PencarianDokumen/input_NamaPelanggan'), inputPencarianDokumen[arrayIndex++])
         'input nama pelanggan'
         arrayIndex++
@@ -97,8 +93,6 @@ for (int t = 0; t < resultHashMap.keySet().size(); t++) {
 
         'click enter untuk input select ddl'
         WebUI.sendKeys(findTestObject('PencarianDokumen/select_TipeDokumen'), Keys.chord(Keys.ENTER))
-    } else {
-        GlobalVariable.roleLogin = 'Customer'
     }
     
     'input status'
