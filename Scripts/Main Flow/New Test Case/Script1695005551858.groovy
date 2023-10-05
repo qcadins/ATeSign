@@ -24,3 +24,12 @@ import java.sql.Connection as Connection
 def currentDate = new Date().format('yyyy-MM-dd HH:mm:ss')
 
 println currentDate
+
+if (currentDate.contains('2023')) {
+	println 'aa'
+}
+
+
+if ('2023'.contains(currentDate)) {
+	println 'aaa'
+}

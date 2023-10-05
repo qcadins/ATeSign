@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "FCCD5A4EECC0D067001F9322D63C5714",
+  "keywordFileContentHash": "4F14E5BE9B0E74742EE06BF00939D903",
   "keywordClasses": [
     {
       "name": "connection.APIFullService",
@@ -2266,6 +2266,38 @@
             },
             {
               "name": "refnumber",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getTrxNoAPISign",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "documentId",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

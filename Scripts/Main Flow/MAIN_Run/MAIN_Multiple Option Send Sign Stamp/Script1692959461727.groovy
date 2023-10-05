@@ -56,7 +56,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
         'Manual Sign') {
             'jika send document menggunakan manual sign, maka call test case manual sign'
-            WebUI.callTestCase(findTestCase('Main Flow/Manual Sign_SIT'), [('excelPathManualSigntoSign') : excelPathMain, ('sheet') : sheet], 
+            WebUI.callTestCase(findTestCase('Main Flow/Manual Sign'), [('excelPathManualSigntoSign') : excelPathMain, ('sheet') : sheet], 
                 FailureHandling.CONTINUE_ON_FAILURE)
 
             'ambil total signer input dari manual sign'

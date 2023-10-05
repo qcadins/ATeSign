@@ -28,6 +28,10 @@ for (o = 0; o < documentId.size(); o++) {
     'ambil nama vendor dari DB'
     String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, refNumber)
 
+	if (vendor == null) {
+		vendor = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Vendor'))
+	}
+	
     'ambil tenant dan vendor code yang akan digunakan document'
     ArrayList tenantVendor = CustomKeywords.'connection.DataVerif.getTenantandVendorCode'(conneSign, documentIdInput.replace(
             '"', '').replace('[', '').replace(']', ''))
@@ -231,7 +235,7 @@ for (o = 0; o < documentId.size(); o++) {
                 'Input excel'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('trxNos') - 
                     1, GlobalVariable.NumofColm - 1, (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
-                        rowExcel('trxNos')) + ';') + trxNo.toString().replace('[', '').replace(']', ''))
+                        rowExcel('trxNos'))) + trxNo.toString().replace('[', '').replace(']', ''))
             }
             
             'jika codenya 0'
@@ -292,8 +296,8 @@ for (o = 0; o < documentId.size(); o++) {
                                         'Write To Excel GlobalVariable.StatusFailed dengan alasan bahwa saldo transaksi '
                                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                                             GlobalVariable.StatusFailed, ((((findTestData(excelPathAPISignDocument).getValue(
-                                                GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + ' Transaksi dengan nomor ') + 
-                                            ('<' + (trxNo[i]))) + '> digunakan untuk ') + checkTypeofUsedSaldo)
+                                                GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + '<' + ' Transaksi dengan nomor ') + 
+                                            ( + (trxNo[i]))) + 'digunakan untuk ') + checkTypeofUsedSaldo + '>')
                                     }
                                 }
                             }
@@ -401,27 +405,7 @@ def responseAPIStoreDB(Connection conneSign, String ipaddress, String[] document
 
         'verify qty dalam transaksi. Jika done = 1'
         arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
-
-        'Check liveness compare adalah 0 dikarenakan trxNo yang didapat adalah transaksi untuk liveness compare.'
-
-        'Ini perlu dideklarasi dikarenakan jika 2 dokumen, trxNo tetap 1, sehingga perlu diflag apakah dia sudah check trxnya atau belum'
-        checkLivenessCompare = 0
-
-        'Jika trxNonya tidak kosong dan checkLivenessComparenya 0'
-        if (((trxNo != 'null') && (trxNo != null)) && (checkLivenessCompare == 0)) {
-            'verify trx no. Jika sesuai, maka'
-            if (WebUI.verifyEqual(result[arrayIndex++], trxNo, FailureHandling.CONTINUE_ON_FAILURE)) {
-                'Ditambah 1'
-                checkLivenessCompare++
-
-                'arrayMatchnya diinput true'
-                arrayMatch.add(true)
-            }
-        } else {
-            'Tambah dari arrayIndex'
-            arrayIndex++
-        }
-        
+  
         'verify request status. 3 = done'
         arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], '3', false, FailureHandling.CONTINUE_ON_FAILURE))
 
@@ -453,6 +437,27 @@ def responseAPIStoreDB(Connection conneSign, String ipaddress, String[] document
 
         'verify tenant'
         arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], GlobalVariable.Tenant, false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+		'Jika trxNonya tidak kosong'
+		if (trxNo != 'null') {
+			trxNo = trxNo.split(', ', -1)
+			
+			'Array result. Value dari db'
+			trxList = CustomKeywords.'connection.APIFullService.getTrxNoAPISign'(conneSign, (documentId[i]).toString())
+			for (loopingTrxNo = 0; loopingTrxNo < trxNo.size(); loopingTrxNo++) {
+				if (trxList.contains(trxNo[loopingTrxNo])) {
+					continue
+				}
+				
+				if (loopingTrxNo == trxNo.size() - 1 && i == documentId.size() - 1) {
+					'Write To Excel GlobalVariable.StatusFailed dengan alasan bahwa saldo transaksi '
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+						GlobalVariable.StatusFailed, (((findTestData(excelPathAPISignDocument).getValue(
+							GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +'<' + ' Transaksi dengan nomor ') +
+						( + (trxNo[loopingTrxNo]))) + ' tidak termasuk sebagai transaksi pada dokumen ini' + '>')
+				}
+			}
+		}
     }
     
     'jika data db tidak sesuai dengan excel'
