@@ -49,7 +49,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		}
 		
 		'delay untuk menu Psre loading'
-		WebUI.delay(15)
+		WebUI.delay(5)
+		
+		'click menu priority PSrE'
+		WebUI.click(findTestObject('PengaturanPSrE/PSRe Priority/menu_PsrePriority'))
 		
 		'declare array list'
 		ArrayList<String> resultDB = [], resultUI = [], seqPsreRole = []
@@ -161,7 +164,7 @@ def getFEPriority(ArrayList<String> resultUI) {
 		'modify object psre box'
 		modifyObjectBox = WebUI.modifyObjectProperty(findTestObject('PengaturanPSrE/PSRe Priority/modifyObject'),
 			'xpath', 'equals', '//*[@id="cdk-drop-list-0"]/div['+ index +']/div', true)
-		
+
 		'get text pisah nomor dan psre'
 		vendor = WebUI.getText(modifyObjectBox).split(' ',-1)
 		
