@@ -48,10 +48,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     , ('Email') : 'Email Login', ('Password') : 'Password Login', ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], 
                 FailureHandling.STOP_ON_FAILURE)
 
-			'apakah cek paging diperlukan di awal run'
-			if(GlobalVariable.checkPaging.equals('Yes')) {
-				inputCancel(conneSign)
-			}
+            'apakah cek paging diperlukan di awal run'
+            if (GlobalVariable.checkPaging.equals('Yes')) {
+                inputCancel(conneSign)
+            }
+            
             firstRun = 1
         }
         
@@ -264,7 +265,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                                 index = 0
 
-                                ArrayList arrayMatch = []
+                                ArrayList<String> arrayMatch = []
 
                                 'verify ref number'
                                 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
@@ -356,18 +357,18 @@ def checkErrorLog() {
 }
 
 def inputCancel(Connection conneSign) {
-	settingzoom()
-	
+    settingzoom()
+
     inputForm()
 
     'get data tipe-tipe pembayaran secara asc'
-    ArrayList docTypeDB = CustomKeywords.'connection.ManualStamp.getDocType'(conneSign)
+    ArrayList<String> docTypeDB = CustomKeywords.'connection.ManualStamp.getDocType'(conneSign)
 
     'check ddl tipe pembayaran'
     checkDDL(findTestObject('ManualStamp/input_docType'), docTypeDB, ' pada DDL tipe dokumen ')
 
     'get data tipe-tipe pembayaran secara asc'
-    ArrayList docTypePeruriDB = CustomKeywords.'connection.ManualStamp.getDocTypePeruri'(conneSign)
+    ArrayList<String> docTypePeruriDB = CustomKeywords.'connection.ManualStamp.getDocTypePeruri'(conneSign)
 
     'check ddl tipe pembayaran'
     checkDDL(findTestObject('ManualStamp/input_docTypePeruri'), docTypePeruriDB, ' pada DDL tipe dokumen peruri ')
@@ -409,9 +410,9 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     }
 }
 
-def checkDDL(TestObject objectDDL, ArrayList listDB, String reason) {
+def checkDDL(TestObject objectDDL, ArrayList<String> listDB, String reason) {
     'declare array untuk menampung ddl'
-    ArrayList list = []
+    ArrayList<String> list = []
 
     'click untuk memunculkan ddl'
     WebUI.click(objectDDL)
@@ -525,12 +526,13 @@ def inputEMeteraiMonitoring(Connection conneSign) {
                 break
             }
             
-            ArrayList inputEMeterai = CustomKeywords.'connection.ManualStamp.getInputeMeteraiMonitoring'(conneSign, findTestData(
-                    excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')), GlobalVariable.Tenant)
+            ArrayList<String> inputEMeterai = CustomKeywords.'connection.ManualStamp.getInputeMeteraiMonitoring'(conneSign, 
+                findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')), 
+                GlobalVariable.Tenant)
 
             indexInput = 0
-
-            index = 0
+			
+			index = 0
 
             if (((inputEMeterai[6]) == 'Failed') || ((inputEMeterai[6]) == 'Success')) {
                 if ((inputEMeterai[6]) == 'Failed') {
@@ -622,9 +624,13 @@ def inputEMeteraiMonitoring(Connection conneSign) {
                     }
                     
                     'get stampduty data dari db'
-                    result = CustomKeywords.'connection.eMeteraiMonitoring.geteMeteraiMonitoring'(conneSign, findTestData(
-                            excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))
+                    ArrayList<String> result = CustomKeywords.'connection.eMeteraiMonitoring.geteMeteraiMonitoring'(conneSign, 
+                        findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))
 
+					println(result)
+					
+					println(index)
+					
                     'verify no dokumen'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_NomorDokumen')), 
                             result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Nomor Dokumen ')
@@ -721,23 +727,22 @@ def inputEMeteraiMonitoring(Connection conneSign) {
                                     break
                                 }
                             }
-                        } else if ((inputEMeterai[6]) == 'Success') {
-                            flagBreak = 1
                         }
-                    } else {
-                        if (i == 20) {
-                            WebUI.delay(15)
-
-                            'write to excel bahwa save gagal'
-                            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Stamp to Stamp', 
-                                GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (((((findTestData(excelPathManualStamptoStamp).getValue(
-                                    GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedProsesStamping) + 
-                                ' yaitu status meterai adalah ') + (inputEMeterai[6])) + ' pada nomor dokumen tersebut selama ') + 
-                                (i * 15))
-                        } else {
-                            WebUI.delay(15)
-                        }
+                    } else if ((inputEMeterai[6]) == 'Success') {
+                        flagBreak = 1
                     }
+                }
+            } else {
+                if (i == 20) {
+                    WebUI.delay(15)
+
+                    'write to excel bahwa save gagal'
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('Manual Stamp to Stamp', GlobalVariable.NumofColm, 
+                        GlobalVariable.StatusFailed, (((((findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
+                            rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedProsesStamping) + ' yaitu status meterai adalah ') + 
+                        (inputEMeterai[6])) + ' pada nomor dokumen tersebut selama ') + (i * 15))
+                } else {
+                    WebUI.delay(15)
                 }
             }
         }
@@ -842,85 +847,88 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
     WebUI.click(findTestObject('Saldo/btn_cari'))
 
     'get column di saldo'
-    variableSaldoColumn = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller > datatable-row-wrapper > datatable-body-row datatable-body-cell'))
+    variableSaldoColumn = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-header > div > div.datatable-row-center.ng-star-inserted datatable-header-cell'))
 
     'get row di saldo'
     variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper '))
 
     'ambil inquiry di db'
-    ArrayList inquiryDB = CustomKeywords.'connection.ManualStamp.gettrxSaldoForMeterai'(conneSign, findTestData(excelPathManualStamptoStamp).getValue(
-            GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))
+    ArrayList<String> inquiryDB = CustomKeywords.'connection.ManualStamp.gettrxSaldoForMeterai'(conneSign, findTestData(
+            excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))
 
     index = 0
 
-    'looping mengenai columnnya'
-    for (int u = 1; u <= (variableSaldoColumn.size() / variableSaldoRow.size()); u++) {
-        'modify per row dan column. column menggunakan u dan row menggunakan documenttemplatename'
-        modifyperrowpercolumn = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/lbl_notrxsaldo'), 'xpath', 'equals', 
-            ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-            variableSaldoRow.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[') + u) + ']/div', true)
+    'looping mengenai rownnya'
+    for (row = 1; row <= variableSaldoRow.size(); row++) {
+        'looping mengenai columnnya'
+        for (colm = 1; colm <= variableSaldoColumn.size(); colm++) {
+            'modify per row dan column. column menggunakan u dan row menggunakan documenttemplatename'
+            modifyperrowpercolumn = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/lbl_notrxsaldo'), 'xpath', 
+                'equals', ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
+                row) + ']/datatable-body-row/div[2]/datatable-body-cell[') + colm) + ']/div', true)
 
-        'Jika u di lokasi qty atau kolom ke 9'
-        if (u == 9) {
-            'Jika yang qtynya 1 dan databasenya juga, berhasil'
-            if ((WebUI.getText(modifyperrowpercolumn) == '1') || ((inquiryDB[index]) == '-1')) {
-                'Jika bukan untuk 2 kolom itu, maka check ke db'
-                checkVerifyEqualOrMatch(WebUI.verifyMatch('-' + WebUI.getText(modifyperrowpercolumn), inquiryDB[index], 
-                        false, FailureHandling.CONTINUE_ON_FAILURE), 'pada Kuantitas di Mutasi Saldo dengan nomor kontrak ' + 
-                    findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Tipe Dokumen')).replace(
-                        '"', ''))
+            'Jika u di lokasi qty atau kolom ke 9'
+            if (colm == 9) {
+                'Jika yang qtynya 1 dan databasenya juga, berhasil'
+                if ((WebUI.getText(modifyperrowpercolumn) == '1') || ((inquiryDB[index]) == '-1')) {
+                    'Jika bukan untuk 2 kolom itu, maka check ke db'
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch('-' + WebUI.getText(modifyperrowpercolumn), inquiryDB[index], 
+                            false, FailureHandling.CONTINUE_ON_FAILURE), 'pada Kuantitas di Mutasi Saldo dengan nomor kontrak ' + 
+                        findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Tipe Dokumen')).replace(
+                            '"', ''))
 
-                index++
+                    index++
+                } else {
+                    'Jika bukan -1, atau masih 0. Maka ttdnya dibilang error'
+                    GlobalVariable.FlagFailed = 1
+
+                    'Jika saldonya belum masuk dengan flag, maka signnya gagal.'
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                        GlobalVariable.StatusFailed, (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
+                            rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedSignGagal) + ' terlihat pada Kuantitas di Mutasi Saldo dengan nomor kontrak ') + 
+                        findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Tipe Dokumen')).replace(
+                            '"', ''))
+
+                    index++
+                }
+            } else if (colm == 10) {
+                'Jika di kolom ke 10, atau di FE table saldo'
             } else {
-                'Jika bukan -1, atau masih 0. Maka ttdnya dibilang error'
-                GlobalVariable.FlagFailed = 1
-
-                'Jika saldonya belum masuk dengan flag, maka signnya gagal.'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                    (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
-                    ';') + GlobalVariable.ReasonFailedSignGagal) + ' terlihat pada Kuantitas di Mutasi Saldo dengan nomor kontrak ') + 
-                    findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Tipe Dokumen')).replace(
-                        '"', ''))
+                'check table'
+                checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyperrowpercolumn), inquiryDB[index], false, 
+                        FailureHandling.CONTINUE_ON_FAILURE), 'pada Mutasi Saldo dengan nomor Kontrak ' + findTestData(excelPathManualStamptoStamp).getValue(
+                        GlobalVariable.NumofColm, rowExcel('$Tipe Dokumen')).replace('"', ''))
 
                 index++
             }
-        } else if (u == (variableSaldoColumn.size() / variableSaldoRow.size())) {
-            'Jika di kolom ke 10, atau di FE table saldo'
-        } else {
-            'check table'
-            checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyperrowpercolumn), inquiryDB[index], false, FailureHandling.CONTINUE_ON_FAILURE), 
-                'pada Mutasi Saldo dengan nomor Kontrak ' + findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
-                    rowExcel('$Tipe Dokumen')).replace('"', ''))
-
-            index++
         }
     }
 }
 
 def settingzoom() {
-	'ambil index tab yang sedang dibuka di chrome'
-	int currentTab = WebUI.getWindowIndex()
+    'ambil index tab yang sedang dibuka di chrome'
+    int currentTab = WebUI.getWindowIndex()
 
-	'setting zoom menuju 80 persen'
-	zoomSetting(60)
+    'setting zoom menuju 80 persen'
+    zoomSetting(60)
 
-	'ganti fokus robot ke tab baru'
-	WebUI.switchToWindowIndex(currentTab)
+    'ganti fokus robot ke tab baru'
+    WebUI.switchToWindowIndex(currentTab)
 
-	'Klik tombol menu Manual Stamp'
-	WebUI.click(findTestObject('ManualStamp/menu_ManualStamp'))
+    'Klik tombol menu Manual Stamp'
+    WebUI.click(findTestObject('ManualStamp/menu_ManualStamp'))
 
-	'Klik tombol menu Manual Stamp'
-	WebUI.click(findTestObject('ManualStamp/menu_ManualStamp'))
+    'Klik tombol menu Manual Stamp'
+    WebUI.click(findTestObject('ManualStamp/menu_ManualStamp'))
 
-	'ambil index tab yang sedang dibuka di chrome'
-	currentTab = WebUI.getWindowIndex()
+    'ambil index tab yang sedang dibuka di chrome'
+    currentTab = WebUI.getWindowIndex()
 
-	'setting zoom menuju 80 persen'
-	zoomSetting(100)
+    'setting zoom menuju 80 persen'
+    zoomSetting(100)
 
-	'ganti fokus robot ke tab baru'
-	WebUI.switchToWindowIndex(currentTab)
+    'ganti fokus robot ke tab baru'
+    WebUI.switchToWindowIndex(currentTab)
 }
 
 def rowExcel(String cellValue) {
