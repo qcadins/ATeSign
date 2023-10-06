@@ -12,16 +12,22 @@
    <rerunImmediately>false</rerunImmediately>
    <testSuiteGuid>7d5e8bdc-6855-4bc7-8658-fede081c9e80</testSuiteGuid>
    <testCaseLink>
-      <guid>65d8b1ab-ab63-4e7d-a3a2-cb757224f50c</guid>
+      <guid>41bb5dc4-75dd-4565-8fd9-07fd99b526bb</guid>
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
-      <testCaseId>Test Cases/ForgotPassword/MAIN_Forgot Password</testCaseId>
+      <testCaseId>Test Cases/Document Monitoring/MAIN_DocumentMonitoring</testCaseId>
       <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
       <variableLink>
          <testDataLinkId></testDataLinkId>
          <type>DEFAULT</type>
          <value></value>
-         <variableId>9143d26e-867f-4d1e-a1d9-39db0b7a6bdd</variableId>
+         <variableId>3668bcda-421d-4038-9106-300b7922b214</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId></testDataLinkId>
+         <type>DEFAULT</type>
+         <value></value>
+         <variableId>30de0820-4fdc-4a43-9fd6-bc8712901acd</variableId>
       </variableLink>
    </testCaseLink>
 </TestSuiteEntity>
