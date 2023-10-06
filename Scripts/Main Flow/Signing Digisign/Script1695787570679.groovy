@@ -21,7 +21,7 @@ WebUI.switchToFrame(findTestObject('Signing-DIGISIGN/iFrame'), GlobalVariable.Ti
 if (WebUI.getText(findTestObject('Signing-DIGISIGN/text_documentId')).contains(documentId)) {
     checkVerifyEqualorMatch(true, '')
 } else {
-    checkVerifyEqualorMatch(true, 'document id tidak sesuai dengan yang diinput dimana document id yang muncul adalah ' + 
+    checkVerifyEqualorMatch(false, 'document id tidak sesuai dengan yang diinput dimana document id yang muncul adalah ' + 
         WebUI.getText(findTestObject('Signing-DIGISIGN/text_documentId')))
 }
 
@@ -69,7 +69,7 @@ if (WebUI.verifyElementVisible(findTestObject('Signing-DIGISIGN/text_popupGagal'
 
         WebUI.delay(60)
 
-        if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Menyetujui(Yes/No)'))) {
+        if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Menyetujui(Yes/No)')).split(';', -1)[GlobalVariable.indexUsed] == 'Yes') {
             WebUI.click(findTestObject('Signing-DIGISIGN/button_menyetujui'))
         }
         
@@ -98,7 +98,7 @@ if (WebUI.verifyElementVisible(findTestObject('Signing-DIGISIGN/text_popupGagal'
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, 'Main', cellValue)
+    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
 def checkVerifyEqualorMatch(Boolean isMatch, String reason) {
