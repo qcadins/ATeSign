@@ -88,8 +88,7 @@ if (email == '') {
         WebUI.setText(findTestObject('Login/input_Email'), email)
 
         'input password asumsi password = P@ssw0rd'
-        WebUI.setText(findTestObject('Login/input_Password'), findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel(
-                    'Password Signer')))
+        WebUI.setText(findTestObject('Login/input_Password'), findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Password Signer')))
 
         'click button login'
         WebUI.click(findTestObject('Login/button_Login'), FailureHandling.STOP_ON_FAILURE)
