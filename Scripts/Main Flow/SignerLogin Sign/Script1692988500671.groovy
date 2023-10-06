@@ -104,7 +104,7 @@ for (o = 0; o < documentId.size(); o++) {
 	}
 	
     'call Test Case untuk login sebagai user berdasarkan doc id'
-    WebUI.callTestCase(findTestCase('Main Flow/Login'), [('email') : emailSigner, ('excel') : excelPathFESignDocument], FailureHandling.CONTINUE_ON_FAILURE)
+    WebUI.callTestCase(findTestCase('Main Flow/Login'), [('sheet') : sheet, ('email') : emailSigner, ('excel') : excelPathFESignDocument], FailureHandling.CONTINUE_ON_FAILURE)
 
     if (checkPopup() == true) {
         break
@@ -790,7 +790,7 @@ for (o = 0; o < documentId.size(); o++) {
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, 'Main', cellValue)
+    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
 def checkVerifyEqualorMatch(Boolean isMatch, String reason) {

@@ -148,6 +148,7 @@ for (o = 0; o < documentId.size(); o++) {
 	} else {
 		totalPage = variableLastest.size() - 4
 	}
+	
     'Looping berdasarkan page agar bergeser ke page sebelumnya'
     for (k = 1; k <= totalPage; k++) {
         'get row beranda'
@@ -178,7 +179,7 @@ for (o = 0; o < documentId.size(); o++) {
 
                 'Klik checkbox tanda tangan'
                 WebUI.click(resultObject.get('modifyObjectCheckboxTtd'))
-
+            
                 'Jika total Document Signnya lebih besar dari 1, datanya continue'
                 if (totalDocSign > 1) {
                     continue
@@ -191,24 +192,18 @@ for (o = 0; o < documentId.size(); o++) {
             'Jika bulk sign'
             if ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Bulk Signing ? (Yes/No)')).split(
                 ';', -1)[GlobalVariable.indexUsed]) == 'Yes') {
-                'Jika loopingan sudah cukup untuk total doc sign'
-                if (j == (rowBeranda.size() - totalDocSign)) {
-                    break
-                } else {
-                    'Jika document Template Namenya masih kosong'
-                    if (documentTemplateName == '') {
-                        'Input document Template Name dan nomor kontrak dari UI'
-                        documentTemplateName = WebUI.getText(resultObject.get('modifyObjectTextDocumentTemplateName'))
 
-                        noKontrak = WebUI.getText(resultObject.get('modifyObjectTextRefNumber'))
-                    } else {
+                'Jika loopingan sudah cukup untuk total doc sign'
+					if (documentTemplateName.split(';', -1).size() == totalDocSign) {
+						break
+					} else 
+				if (documentTemplateName != '') {
                         'Input document Template Name dan nomor kontrak dari UI ditambah dengan delimiter ;'
                         documentTemplateName = ((WebUI.getText(resultObject.get('modifyObjectTextDocumentTemplateName')) + 
                         ';') + documentTemplateName)
 
                         noKontrak = ((WebUI.getText(resultObject.get('modifyObjectTextRefNumber')) + ';') + noKontrak)
-                    }
-                    
+
                     'Klik checkbox tanda tangan'
                     WebUI.click(resultObject.get('modifyObjectCheckboxTtd'))
                 }
@@ -308,7 +303,7 @@ for (o = 0; o < documentId.size(); o++) {
     'Klik button proses'
     WebUI.click(findTestObject('KotakMasuk/Sign/btn_Proses'))
 
-    WebUI.delay(2)
+    WebUI.delay(3)
 
     'mereset array index'
     arrayIndex = 0
@@ -333,10 +328,9 @@ for (o = 0; o < documentId.size(); o++) {
             'cek apakah button biom tidak muncul'
             if (!(WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/btn_verifBiom'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL))) {
                 'cek apakah mau ganti method'
-                if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Force Change Method if other Method Unavailable').split(
-                        ';', -1)[GlobalVariable.indexUsed]) == 'Yes') {
+                if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Force Change Method if other Method Unavailable')).split(';', -1)[GlobalVariable.indexUsed] == 'Yes') {
                     'panggil fungsi penyelesaian dengan OTP'
-                    if (verifOTPMethod(conneSign, emailSigner, listOTP, o, noTelpSigner, otpAfter) == false) {
+                    if (verifOTPMethod(conneSign, emailSigner, listOTP, noTelpSigner, otpAfter, vendor) == false) {
                         'jika ada error continue testcase'
                         continue
                     }
@@ -357,7 +351,7 @@ for (o = 0; o < documentId.size(); o++) {
             'cek apakah button otp tidak muncul'
             if (!(WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/btn_verifOTP'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL))) {
                 'cek apakah mau ganti method'
-                if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Force Change Method if other Method Unavailable')) == 
+                if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Force Change Method if other Method Unavailable')).split(';', -1)[GlobalVariable.indexUsed] == 
                 'Yes') {
                     'panggil fungsi verif menggunakan biometrik'
                     if (verifBiomMethod(isLocalhost, maxFaceCompDB, countLivenessFaceComp, conneSign, emailSigner, listOTP, 
@@ -406,7 +400,7 @@ for (o = 0; o < documentId.size(); o++) {
             'panggil fungsi penyelesaian dengan OTP'
             if (verifOTPMethod(conneSign, emailSigner, listOTP, noTelpSigner, otpAfter, vendor) == false) {
                 'cek apakah ingin coba metode lain'
-                if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Force Change Method if other Method Failed?')) == 
+                if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Force Change Method if other Method Failed?')).split(';', -1)[GlobalVariable.indexUsed] == 
                 'Yes') {
                     'klik tombol untuk kembali ke laman proses'
                     WebUI.click(findTestObject('KotakMasuk/Sign/button_BackOTP'))
@@ -433,7 +427,7 @@ for (o = 0; o < documentId.size(); o++) {
             if (verifBiomMethod(isLocalhost, maxFaceCompDB, countLivenessFaceComp, conneSign, emailSigner, listOTP, noTelpSigner, 
                 otpAfter, vendor) == false) {
                 'cek apakah ingin coba metode lain'
-                if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Force Change Method if other Method Failed?')) == 
+                if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Force Change Method if other Method Failed?')).split(';', -1)[GlobalVariable.indexUsed] == 
                 'Yes') {
                     'klik tombol untuk kembali ke laman proses'
                     WebUI.click(findTestObject('KotakMasuk/Sign/button_KembaliBiom'))
@@ -456,7 +450,7 @@ for (o = 0; o < documentId.size(); o++) {
                 'panggil fungsi penyelesaian dengan OTP'
                 if (verifOTPMethod(conneSign, emailSigner, listOTP, noTelpSigner, otpAfter, vendor) == false) {
                     'cek apakah ingin coba metode lain'
-                    if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Force Change Method if other Method Failed?')) == 
+                    if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Force Change Method if other Method Failed?')).split(';', -1)[GlobalVariable.indexUsed] == 
                     'Yes') {
                         'klik tombol untuk kembali ke laman proses'
                         WebUI.click(findTestObject('KotakMasuk/Sign/button_BackOTP'))
@@ -479,7 +473,7 @@ for (o = 0; o < documentId.size(); o++) {
                 if (verifBiomMethod(isLocalhost, maxFaceCompDB, countLivenessFaceComp, conneSign, emailSigner, listOTP, 
                     noTelpSigner, otpAfter, vendor) == false) {
                     'cek apakah ingin coba metode lain'
-                    if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Force Change Method if other Method Failed?')) == 
+                    if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Force Change Method if other Method Failed?')).split(';', -1)[GlobalVariable.indexUsed] == 
                     'Yes') {
                         'klik tombol untuk kembali ke laman proses'
                         WebUI.click(findTestObject('KotakMasuk/Sign/button_KembaliBiom'))
@@ -546,7 +540,7 @@ for (o = 0; o < documentId.size(); o++) {
         }
         
         'Jumlah signer tanda tangan akan ditambah dengan total saldo yang telah digunakan'
-        jumlahSignerTandaTangan = (jumlahSignerTandaTangan + saldoUsed)
+        jumlahSignerTandaTangan = (jumlahSignerTandaTangan + saldoUsedDocPertama)
 
         'Jika masukan ratingnya tidak kosong'
         if ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('$Rating')).split(';', 
@@ -792,7 +786,7 @@ for (o = 0; o < documentId.size(); o++) {
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, 'Main', cellValue)
+    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
 def encryptLink(Connection conneSign, String documentId, String emailSigner, String aesKey) {

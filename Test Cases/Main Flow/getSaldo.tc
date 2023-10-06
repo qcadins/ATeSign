@@ -17,6 +17,12 @@
       <value></value>
       <variableId>3c8e62ba-9407-417a-828b-0e4221e4425b</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>2bd9080e-ac13-4e1f-b83c-e2116d44e25a</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -30,5 +36,12 @@
       <id>3c8e62ba-9407-417a-828b-0e4221e4425b</id>
       <masked>false</masked>
       <name>excel</name>
+   </variable>
+   <variable>
+      <defaultValue>'Main'</defaultValue>
+      <description></description>
+      <id>2bd9080e-ac13-4e1f-b83c-e2116d44e25a</id>
+      <masked>false</masked>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>

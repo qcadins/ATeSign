@@ -88,8 +88,7 @@ if (email == '') {
         WebUI.setText(findTestObject('Login/input_Email'), email)
 
         'input password asumsi password = P@ssw0rd'
-        WebUI.setText(findTestObject('Login/input_Password'), findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel(
-                    'Password Signer')))
+        WebUI.setText(findTestObject('Login/input_Password'), findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Password Signer')))
 
         'click button login'
         WebUI.click(findTestObject('Login/button_Login'), FailureHandling.STOP_ON_FAILURE)
@@ -153,7 +152,7 @@ if (email == '') {
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, 'Main', cellValue)
+    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
 def runWithEmbed(String linkUrl) {
@@ -204,6 +203,20 @@ def runWithEmbed(String linkUrl) {
 
         'swith to iframe'
         WebUI.switchToFrame(findTestObject('EmbedView/iFrameEsign'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
+		
+		'Jika error lognya muncul'
+		if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+			'ambil teks errormessage'
+			'ambil teks errormessage'
+			errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
+	
+			'Tulis di excel itu adalah error'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+				(((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+					'-', '') + ';') + '<') + errormessage) + '>')
+
+		}
+		
     } else if (GlobalVariable.RunWithEmbed == 'No') {
 		
 		if (GlobalVariable.RunWith == 'Mobile') {
