@@ -12,22 +12,16 @@
    <rerunImmediately>false</rerunImmediately>
    <testSuiteGuid>7d5e8bdc-6855-4bc7-8658-fede081c9e80</testSuiteGuid>
    <testCaseLink>
-      <guid>41bb5dc4-75dd-4565-8fd9-07fd99b526bb</guid>
+      <guid>34a56be7-959a-48f4-b659-512f035c73b5</guid>
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
-      <testCaseId>Test Cases/Document Monitoring/MAIN_DocumentMonitoring</testCaseId>
+      <testCaseId>Test Cases/PengaturanTenant/MAIN_PengaturanTenant</testCaseId>
       <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
       <variableLink>
          <testDataLinkId></testDataLinkId>
          <type>DEFAULT</type>
          <value></value>
-         <variableId>3668bcda-421d-4038-9106-300b7922b214</variableId>
-      </variableLink>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>30de0820-4fdc-4a43-9fd6-bc8712901acd</variableId>
+         <variableId>661c092d-fbfe-4ff0-a20d-2fdc32d2ae3c</variableId>
       </variableLink>
    </testCaseLink>
 </TestSuiteEntity>
