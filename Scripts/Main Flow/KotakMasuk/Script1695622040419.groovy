@@ -37,7 +37,7 @@ resultHashMap = loopingMultiDoc(docId, conneSign, refNumber,resultHashMap)
 for (int t = 0; t < resultHashMap.keySet().size(); t++) {
     'call Test Case untuk login sebagai user berdasarkan doc id'
     WebUI.callTestCase(findTestCase('Main Flow/Login'), [('email') : resultHashMap.keySet()[t], ('excel') : excelPathFESignDocument
-            , ('checkBeforeSigning') : checkBeforeSigning], FailureHandling.STOP_ON_FAILURE)
+            , ('checkBeforeSigning') : checkBeforeSigning, ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
 
     'get data kotak masuk send document secara asc, dimana customer no 1'
     ArrayList result = CustomKeywords.'connection.SendSign.getKotakMasukSendDoc'(conneSign, refNumber, resultHashMap.keySet()[
