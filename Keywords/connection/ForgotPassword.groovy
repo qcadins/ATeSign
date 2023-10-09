@@ -37,7 +37,6 @@ public class ForgotPassword {
 
 	@Keyword
 	getResetCodeLimit(Connection conn) {
-		String data
 
 		stm = conn.createStatement()
 
@@ -53,7 +52,6 @@ public class ForgotPassword {
 
 	@Keyword
 	getOTPActiveDuration(Connection conn, String email) {
-		data
 
 		stm = conn.createStatement()
 
@@ -86,10 +84,34 @@ public class ForgotPassword {
 	}
 
 	@Keyword
+	getTenantCode(Connection conn, String email) {
+		data
+
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT mt.tenant_code FROM am_msuser amu LEFT JOIN ms_useroftenant mot ON mot.id_ms_user = amu.id_ms_user LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mot.id_ms_tenant LEFT JOIN tr_document_h tdh ON tdh.id_ms_tenant = mt.id_ms_tenant WHERE amu.login_id = '" + email + "' ORDER BY id_document_h DESC LIMIT 1")
+
+		while (resultSet.next()){
+
+			data = resultSet.getObject(1);
+		}
+
+		data
+	}
+
+	@Keyword
 	updateResetRequestNum(Connection conn, String email) {
 
 		stm = conn.createStatement()
 
 		int updateCount = stm.executeUpdate("UPDATE am_msuser SET reset_code_request_num = 0 WHERE login_id = '" + email + "';")
+	}
+
+	@Keyword
+	updateOTPActiveDuration(Connection conn, String tenantcode, int otpduration) {
+
+		stm = conn.createStatement()
+
+		int updateCount = stm.executeUpdate("UPDATE ms_tenant SET otp_active_duration = " + otpduration + " WHERE tenant_code = '" + tenantcode + "';")
 	}
 }

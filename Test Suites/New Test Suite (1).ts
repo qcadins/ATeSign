@@ -12,16 +12,16 @@
    <rerunImmediately>false</rerunImmediately>
    <testSuiteGuid>7d5e8bdc-6855-4bc7-8658-fede081c9e80</testSuiteGuid>
    <testCaseLink>
-      <guid>34a56be7-959a-48f4-b659-512f035c73b5</guid>
+      <guid>642961fa-9cea-4056-befe-559679dda734</guid>
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
-      <testCaseId>Test Cases/PengaturanTenant/MAIN_PengaturanTenant</testCaseId>
+      <testCaseId>Test Cases/ForgotPassword/MAIN_Forgot Password</testCaseId>
       <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
       <variableLink>
          <testDataLinkId></testDataLinkId>
          <type>DEFAULT</type>
          <value></value>
-         <variableId>661c092d-fbfe-4ff0-a20d-2fdc32d2ae3c</variableId>
+         <variableId>9143d26e-867f-4d1e-a1d9-39db0b7a6bdd</variableId>
       </variableLink>
    </testCaseLink>
 </TestSuiteEntity>

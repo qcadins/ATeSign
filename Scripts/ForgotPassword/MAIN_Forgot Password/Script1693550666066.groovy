@@ -225,8 +225,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		WebUI.click(findTestObject('ForgotPassword/button_YaKonfirm'))
 		
 		'check apakah muncul error'
-		if (WebUI.verifyElementPresent(findTestObject('ForgotPassword/lbl_popup'),
-			GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		if (WebUI.verifyElementPresent(findTestObject('ForgotPassword/errorLog'),GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+				
+			'ambil error dan get text dari error tersebut'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+				GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) +
+					';') + '<' + WebUI.getText(findTestObject('ForgotPassword/errorLog')) + '>')
+			
+			'navigate to url esign'
+			WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 2))
+			
+			continue
+			
+		} else if (WebUI.verifyElementPresent(findTestObject('ForgotPassword/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 		
 			if (WebUI.getText(findTestObject('ForgotPassword/lbl_popup'),
 			FailureHandling.OPTIONAL) != 'Your access code has been successfully changed') {
@@ -244,18 +255,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				
 				continue
 			}
-			
-		} else if (WebUI.verifyElementPresent(findTestObject('ForgotPassword/errorLog'),GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-				
-			'ambil error dan get text dari error tersebut'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-				GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) +
-					';') + '<' + WebUI.getText(findTestObject('ForgotPassword/errorLog')) + '>')
-			
-			'navigate to url esign'
-			WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 2))
-			
-			continue
 		}
 		
 		'klik pada tombol OK'
@@ -328,10 +327,15 @@ def verifConfirmation(Connection conneSign) {
 	
 	boolean shouldContinue = false
 		
+	String tenantcode = CustomKeywords.'connection.ForgotPassword.getTenantCode'(conneSign,
+		findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('$EmailForPassChange')))
+	
 	'jika perlu tunggu hingga code expired'
 	if (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration (Empty/0/1/>1)')).length() > 0) {
 		
-		//isi update disini
+		'ubah durasi aktif di DB'
+		CustomKeywords.'connection.ForgotPassword.updateOTPActiveDuration'(conneSign, tenantcode,
+			Integer.parseInt(findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration (Empty/0/1/>1)'))))
 		
 		'ambil durasi aktif OTP dari DB'
 		int OTPActiveDuration = CustomKeywords.'connection.ForgotPassword.getOTPActiveDuration'(conneSign,
