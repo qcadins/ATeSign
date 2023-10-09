@@ -23,12 +23,63 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
     if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
     } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
+		
 		'check if email login case selanjutnya masih sama dengan sebelumnya'
 		if (findTestData(excelPath).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) != 
 			findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')) || firstRun == 0) {
 			'call test case login per case'
 			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPath, ('Email') : 'Email Login', ('Password') : 'Password Login'
 				, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
+			
+			'apakah cek paging diperlukan di awal run'
+			if(GlobalVariable.checkPaging.equals('Yes')) {
+				
+				'click menu pengaturan PSrE'
+				WebUI.click(findTestObject('PengaturanPSrE/menu_PengaturanPSrE'))
+				
+				'call function check paging'
+				verifyPaging()
+	
+				'click button cari'
+				WebUI.click(findTestObject('PengaturanPSrE/button_Cari'))
+	
+				'get total PSrE dari DB'
+				String resultTotalPSrE = CustomKeywords.'connection.PengaturanPSrE.getTotalPSrE'(conneSign)
+	
+				'verify total PSrE'
+				checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('PengaturanPSrE/label_TotalPSrE')), resultTotalPSrE +
+						' total', false, FailureHandling.CONTINUE_ON_FAILURE), ' pada Total data PSrE')
+	
+				'call function verif and input'
+				if (verifinputEdit(conneSign) == false) {
+					
+					'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+						(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed'))) + 'Hasil pencarian tidak muncul di UI')
+					
+					continue
+				}
+	
+				'get data Vendor Payment Type'
+				ArrayList<String> resultDDLVendorPayment = CustomKeywords.'connection.PengaturanPSrE.getDDLVendorPaymentType'(
+					conneSign)
+	
+				'check ddl Vendor Payment Type'
+				checkDDL(findTestObject('PengaturanPSrE/input_VendorPaymentType'), resultDDLVendorPayment, ' pada DDL Vendor Payment Type')
+	
+				'click button cancel'
+				WebUI.click(findTestObject('PengaturanPSrE/button_Cancel'))
+	
+				'verif after cancel'
+				if (WebUI.verifyElementPresent(findTestObject('PengaturanPSrE/input_VendorPaymentType'), GlobalVariable.TimeOut,
+					FailureHandling.OPTIONAL)) {
+					'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+						(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Gagal Cancel')
+	
+					GlobalVariable.FlagFailed = 1
+				}
+			}
 			
 			firstRun = 1
 		}
@@ -39,51 +90,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 			GlobalVariable.FlagFailed = 0
 		}
-		
-        if (GlobalVariable.NumofColm == 2) {
-            'call function check paging'
-            verifyPaging()
-
-            'click button cari'
-            WebUI.click(findTestObject('PengaturanPSrE/button_Cari'))
-
-            'get total PSrE dari DB'
-            String resultTotalPSrE = CustomKeywords.'connection.PengaturanPSrE.getTotalPSrE'(conneSign)
-
-            'verify total PSrE'
-            checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('PengaturanPSrE/label_TotalPSrE')), resultTotalPSrE + 
-                    ' total', false, FailureHandling.CONTINUE_ON_FAILURE), ' pada Total data PSrE')
-
-            'call function verif and input'
-			if (verifinputEdit(conneSign) == false) {
-				
-				'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-					(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed'))) + 'Hasil pencarian tidak muncul di UI')
-				
-				continue
-			}
-
-            'get data Vendor Payment Type'
-            ArrayList<String> resultDDLVendorPayment = CustomKeywords.'connection.PengaturanPSrE.getDDLVendorPaymentType'(
-                conneSign)
-
-            'check ddl Vendor Payment Type'
-            checkDDL(findTestObject('PengaturanPSrE/input_VendorPaymentType'), resultDDLVendorPayment, ' pada DDL Vendor Payment Type')
-
-            'click button cancel'
-            WebUI.click(findTestObject('PengaturanPSrE/button_Cancel'))
-
-            'verif after cancel'
-            if (WebUI.verifyElementPresent(findTestObject('PengaturanPSrE/input_VendorPaymentType'), GlobalVariable.TimeOut, 
-                FailureHandling.OPTIONAL)) {
-                'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                    (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Gagal Cancel')
-
-                GlobalVariable.FlagFailed = 1
-            }
-        }
         
         'call function verif and input'
 		if (verifinputEdit(conneSign) == false) {
@@ -420,10 +426,6 @@ def checkDDL(TestObject objectDDL, ArrayList<String> listDB, String reason) {
     
     'verify ddl ui = db'
     checkVerifyEqualOrMatch(listDB.containsAll(list), reason)
-
-    println(listDB)
-
-    println(list)
 
     'verify jumlah ddl ui = db'
     checkVerifyEqualOrMatch(WebUI.verifyEqual(list.size(), listDB.size(), FailureHandling.CONTINUE_ON_FAILURE), ' Jumlah ' + 
