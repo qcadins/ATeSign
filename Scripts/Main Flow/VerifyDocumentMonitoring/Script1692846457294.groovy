@@ -15,7 +15,7 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'get current date'
 currentDate = new Date().format('yyyy-MM-dd')
 
-ArrayList nomorKontrakPerPilihan = []
+ArrayList<String> nomorKontrakPerPilihan = []
 
 String settingHO = ''
 
@@ -109,19 +109,20 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
     }
     
     'inisialisasi emailSigner menjadi array list'
-    ArrayList emailSigner = []
+    ArrayList<String> emailSigner = []
 
     'Mengambil email berdasarkan documentId'
-    String emailSignerString = CustomKeywords.'connection.DocumentMonitoring.getEmailSigneronRefNumber'(conneSign, nomorKontrakPerPilihan[y], GlobalVariable.Tenant)
+    String emailSignerString = CustomKeywords.'connection.DocumentMonitoring.getEmailSigneronRefNumber'(conneSign, nomorKontrakPerPilihan[
+        y], GlobalVariable.Tenant)
 
     'jika email signer string tidak null, maka'
     if (emailSignerString != null) {
         'split email signer dan dimasukkan kepada ArrayList'
         emailSigner = emailSignerString.split(';', -1)
     }
-
+    
     'declare arraylist arraymatch'
-    ArrayList arrayMatch = []
+    ArrayList<String> arrayMatch = []
 
     inputDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, settingHO)
 
@@ -168,27 +169,32 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                     if (i == 7) {
                         'Split teks proses TTD'
                         totalSignandtotalSigned = WebUI.getText(modifyObjectvalues).split(' / ', -1)
-						
-						if (vendor.equalsIgnoreCase('Digisign')) {
-							jumlahSignerTelahTandaTangan = CustomKeywords.'connection.APIFullService.getUserAlreadySigned'(conneSign, nomorKontrakPerPilihan[y])
-						} else {
-                         jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgress'(conneSign, 
-                            nomorKontrakPerPilihan[y])
-						}
-						
+
+                        if (vendor.equalsIgnoreCase('Digisign')) {
+                            jumlahSignerTelahTandaTangan = CustomKeywords.'connection.APIFullService.getUserAlreadySigned'(
+                                conneSign, nomorKontrakPerPilihan[y])
+                        } else {
+                            jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgress'(conneSign, 
+                                nomorKontrakPerPilihan[y])
+                        }
+                        
                         'Verif hasil split, dimana proses awal hingga akhir. Awal dibandingkan dengan jumlahsignertandatangan, sedangkan akhir dibandingkan dengan total signer dari email'
                         arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[0], jumlahSignerTelahTandaTangan, FailureHandling.CONTINUE_ON_FAILURE))
 
                         if ((sizeRowofLabelValue.size() > 1) && (nomorKontrakPerPilihan.size() == 1)) {
-							documentId = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ', -1)
-							jumlahSignerHarusTandaTangan = CustomKeywords.'connection.SendSign.getTotalSignerTtd'(conneSign, documentId[(j - 1)])
-								arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[1], jumlahSignerHarusTandaTangan, FailureHandling.CONTINUE_ON_FAILURE))
-							
+                            documentId = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel(
+                                    'documentid')).split(', ', -1)
+
+                            jumlahSignerHarusTandaTangan = CustomKeywords.'connection.SendSign.getTotalSignerTtd'(conneSign, 
+                                documentId[(j - 1)])
+
+                            arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[1], jumlahSignerHarusTandaTangan, FailureHandling.CONTINUE_ON_FAILURE))
                         } else {
                             arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[1], emailSigner.size(), FailureHandling.CONTINUE_ON_FAILURE))
                         }
                     } else if (i == 8) {
                         'Jika berada di column ke 8'
+
                         'Split teks total Stamping'
                         totalStampingAndTotalMaterai = WebUI.getText(modifyObjectvalues).split('/', -1)
 
@@ -206,6 +212,8 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                     }
                 }
             }
+			
+			actionDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y])
         } else {
             'Jika tidak ada, maka datanya tidak ada di UI.'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
@@ -313,7 +321,7 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
 
             'lakukan pengecekan ke di UI untuk memastikan cancel berhasil'
             checkVerifyEqualorMatch(WebUI.verifyMatch('Tidak ada data untuk diperlihatkan', WebUI.getText(findTestObject(
-                'DocumentMonitoring/SearchResult'), FailureHandling.OPTIONAL), false, FailureHandling.CONTINUE_ON_FAILURE), 
+                            'DocumentMonitoring/SearchResult'), FailureHandling.OPTIONAL), false, FailureHandling.CONTINUE_ON_FAILURE), 
                 'Data gagal terhapus di FE')
         }
         
@@ -385,7 +393,7 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                         WebUI.delay(3)
 
                         'Mengambil value total stamping dan total meterai'
-                        ArrayList totalMateraiAndTotalStamping = CustomKeywords.'connection.Meterai.getTotalMateraiAndTotalStamping'(
+                        ArrayList<String> totalMateraiAndTotalStamping = CustomKeywords.'connection.Meterai.getTotalMateraiAndTotalStamping'(
                             conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 10))
 
                         'declare arraylist arraymatch'
@@ -426,7 +434,7 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
         }
         
         inputDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, settingHO)
-        
+
         modifyObjectvalues = findTestObject('DocumentMonitoring/lbl_Value')
 
         'Mengambil row size dari value'
@@ -525,21 +533,21 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
             }
         }
     }
-	
-	if (CancelDocsStamp == 'Yes') {
-		'panggil fungsi cancel docs sesudah send'
-		if (cancelDoc(conneSign, (nomorKontrakPerPilihan[y]).toString()) == true) {
-			'input kembali data sesudah selesai cancel doc'
-			inputDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, settingHO)
+    
+    if (CancelDocsStamp == 'Yes') {
+        'panggil fungsi cancel docs sesudah send'
+        if (cancelDoc(conneSign, (nomorKontrakPerPilihan[y]).toString()) == true) {
+            'input kembali data sesudah selesai cancel doc'
+            inputDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, settingHO)
 
-			'lakukan pengecekan ke di UI untuk memastikan cancel berhasil'
-			checkVerifyEqualorMatch(WebUI.verifyMatch('Tidak ada data untuk diperlihatkan', WebUI.getText(findTestObject(
-							'DocumentMonitoring/SearchResult'), FailureHandling.OPTIONAL), false, FailureHandling.CONTINUE_ON_FAILURE),
-				'Data gagal terhapus di FE')
-		}
-		
-		break
-	}
+            'lakukan pengecekan ke di UI untuk memastikan cancel berhasil'
+            checkVerifyEqualorMatch(WebUI.verifyMatch('Tidak ada data untuk diperlihatkan', WebUI.getText(findTestObject(
+                            'DocumentMonitoring/SearchResult'), FailureHandling.OPTIONAL), false, FailureHandling.CONTINUE_ON_FAILURE), 
+                'Data gagal terhapus di FE')
+        }
+        
+        break
+    }
 }
 
 def loginAdminGetSaldo(Connection conneSign, String start, String sheet) {
@@ -638,7 +646,7 @@ def verifySaldoUsed(Connection conneSign, String sheet, String nomorKontrak) {
     variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper '))
 
     'ambil inquiry di db'
-    ArrayList inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldoForMeterai'(conneSign, nomorKontrak)
+    ArrayList<String> inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldoForMeterai'(conneSign, nomorKontrak)
 
     index = 0
 
@@ -845,3 +853,123 @@ def checkVerifyEqualorMatch(Boolean isMatch, String reason) {
     return true
 }
 
+def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
+    if (isMatch == false) {
+        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
+            GlobalVariable.ReasonFailedVerifyEqualOrMatch) + reason)
+
+        GlobalVariable.FlagFailed = 1
+    }
+}
+
+def actionDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan) {
+	'click button view signer'
+	WebUI.click(findTestObject('DocumentMonitoring/button_Signer'))
+	
+	'get row popup'
+	variableRowPopup = DriverFactory.webDriver.findElements(By.cssSelector('body > ngb-modal-window > div > div > app-signer > div.modal-body > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
+
+	'get column popup'
+	variableColPopup = DriverFactory.webDriver.findElements(By.cssSelector('body > ngb-modal-window > div > div > app-signer > div.modal-body > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller > datatable-row-wrapper:nth-child(1) > datatable-body-row datatable-body-cell'))
+
+	ArrayList arrayMatch = []
+	'loop untuk row popup'
+	for (int i = 1; i <= variableRowPopup.size(); i++) {
+		'Input email signer based on sequentialnya'
+		emailSignerBasedOnSequence = CustomKeywords.'connection.APIFullService.getEmailBasedOnSequence'(conneSign, nomorKontrakPerPilihan).split(';', -1)
+
+		'get data kotak masuk send document secara asc, dimana customer no 1'
+		ArrayList resultSigner = CustomKeywords.'connection.SendSign.getSignerKotakMasukSendDoc'(conneSign, nomorKontrakPerPilihan, emailSignerBasedOnSequence[(i - 1)])
+
+		'declare array index menjadi 0 per result'
+		arrayIndexSigner = 0
+
+		'loop untuk column popup'
+		for (int m = 1; m <= variableColPopup.size(); m++) {
+			'modify object text nama, email, signer Type, sudah aktivasi Untuk yang terakhir belum bisa, dikarenakan masih gak ada data (-) Dikarenakan modifynya bukan p di lastnya, melainkan span'
+			modifyObjectTextPopup = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_tipepopup'), 'xpath',
+				'equals', ((('/html/body/ngb-modal-window/div/div/app-signer/div[2]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+				i) + ']/datatable-body-row/div[2]/datatable-body-cell[') + m) + ']/div', true)
+
+			'signer nama,email,signerType,sudahAktivasi popup'
+			arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectTextPopup), resultSigner[arrayIndexSigner++],
+					false, FailureHandling.CONTINUE_ON_FAILURE))
+		}
+	}
+
+	if (arrayMatch.contains(false)) {
+		'Write To Excel GlobalVariable.StatusFailed and errorLog'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+			GlobalVariable.StatusFailed, (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+				rowExcel('Reason Failed')) + ';')) + ' Kesalahan view Signer pada Document Monitoring'))
+	}
+	
+	'focus klik x'
+	WebUI.focus(findTestObject('KotakMasuk/btn_X'))
+
+	'Klik x terlebih dahulu pada popup'
+	WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_X'))
+	
+	if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Need View Document ?')) ==
+	'Yes') {
+		'click button view dokumen'
+		WebUI.click(findTestObject('DocumentMonitoring/button_View'))
+
+		'check if error alert present'
+		if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+			'get reason dari error log'
+			errorLog = WebUI.getAttribute(findTestObject('DocumentMonitoring/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
+
+			'Write To Excel GlobalVariable.StatusFailed and errorLog'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+				GlobalVariable.StatusFailed, (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+					rowExcel('Reason Failed')) + ';') + '<') + errorLog) + '>')
+
+			GlobalVariable.FlagFailed = 1
+		} else if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/label_NoKontrakView'), GlobalVariable.TimeOut,
+			FailureHandling.OPTIONAL)) {
+			'check if no kontrak sama dengan inputan excel'
+			checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('DocumentMonitoring/label_NoKontrakView')),
+					'No Kontrak ' + (nomorKontrakPerPilihan), false, FailureHandling.CONTINUE_ON_FAILURE), ' dokumen yang di view berbeda')
+
+			'click button Kembali'
+			WebUI.click(findTestObject('DocumentMonitoring/button_Kembali'))
+		} else if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/button_View'), GlobalVariable.TimeOut,
+			FailureHandling.OPTIONAL)) {
+			checkVerifyEqualOrMatch(false, ' button view tidak berfungsi')
+		}
+	}
+	
+	if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Need Download Document ?')) ==
+	'Yes') {
+		'click button download'
+		WebUI.click(findTestObject('DocumentMonitoring/button_Download'))
+
+		'check if error alert present'
+		if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+			'get reason dari error log'
+			errorLog = WebUI.getAttribute(findTestObject('DocumentMonitoring/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
+
+			'Write To Excel GlobalVariable.StatusFailed and errorLog'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+				GlobalVariable.StatusFailed, (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+					rowExcel('Reason Failed')) + ';') + '<') + errorLog) + '>')
+
+			GlobalVariable.FlagFailed = 1
+		}
+		
+		'check isfiled downloaded'
+		if (CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathFESignDocument).getValue(
+				GlobalVariable.NumofColm, rowExcel('Delete Downloaded Document'))) == false) {
+			
+			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedDownload'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+				GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+					rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedDownload)
+
+			GlobalVariable.FlagFailed = 1
+		}
+	}
+}

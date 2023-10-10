@@ -20,6 +20,7 @@ public class WriteExcel {
 		file.close()
 		FileOutputStream outFile = new FileOutputStream(new File(filePath))
 		workbook.write(outFile)
+		outFile.flush()
 		outFile.close()
 	}
 
@@ -36,6 +37,7 @@ public class WriteExcel {
 		file.close()
 		FileOutputStream outFile = new FileOutputStream(new File(filePath))
 		workbook.write(outFile)
+		outFile.flush()
 		outFile.close()
 	}
 
@@ -52,6 +54,7 @@ public class WriteExcel {
 		file.close()
 		FileOutputStream outFile = new FileOutputStream(new File(filePath))
 		workbook.write(outFile)
+		outFile.flush()
 		outFile.close()
 	}
 
@@ -75,6 +78,7 @@ public class WriteExcel {
 		file.close()
 		FileOutputStream outFile = new FileOutputStream(new File(filePath))
 		workbook.write(outFile)
+		outFile.flush()
 		outFile.close()
 	}
 
@@ -111,7 +115,7 @@ public class WriteExcel {
 			}
 
 		}
-
+		file.close()
 		return row_num+1
 	}
 }

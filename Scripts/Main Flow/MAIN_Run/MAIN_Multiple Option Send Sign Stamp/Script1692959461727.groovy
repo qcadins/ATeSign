@@ -31,9 +31,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         GlobalVariable.Tenant = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))
 
         'inisialisasi signerInput dan email signer sebagai array list'
-        ArrayList signerInput
-
-        ArrayList emailSigner
+        ArrayList signerInput, emailSigner
 
         'Pemilihan opsi send document. Jika send document API Send External'
         if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 'API Send Document External') {
@@ -160,7 +158,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             isUsedAPINormal = true
                         } else if ((opsiSigning[i]) == 'Webview Sign') {
                             'jika opsi signing untuk signer adalah webview sign setting index untuk penggunaan data. Cara bacanya adalah apakah opsi tersebut telah digunakan. Jika sudah digunakan, maka + 1, jika tidak, maka 0.'
-                            indexReadDataExcelWebview = inisializeArray(isUsedWebview, indexReadDataExcelWebview)
+                            indexReadDataExcelWebview = inisializeArray(isUsedUI, indexReadDataExcelUI)
 
                             'diberikan kepada gv indexused'
                             GlobalVariable.indexUsed = indexReadDataExcelWebview
@@ -171,10 +169,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                     i], ('opsiSigning') : opsiSigning[i], ('CancelDocsSign') : cancelDocsValue], FailureHandling.CONTINUE_ON_FAILURE)
 
                             'set boolean true'
-                            isUsedWebview = true
+                            isUsedUI = true
                         } else if ((opsiSigning[i]) == 'Embed Sign') {
                             'jika opsi signing untuk signer adalah embed sign setting index untuk penggunaan data. Cara bacanya adalah apakah opsi tersebut telah digunakan. Jika sudah digunakan, maka + 1, jika tidak, maka 0.'
-                            indexReadDataExcelEmbed = inisializeArray(isUsedEmbed, indexReadDataExcelEmbed)
+                            indexReadDataExcelEmbed = inisializeArray(isUsedUI, indexReadDataExcelUI)
 
                             'diberikan kepada gv indexused'
                             GlobalVariable.indexUsed = indexReadDataExcelEmbed
@@ -185,11 +183,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                     i], ('opsiSigning') : opsiSigning[i], ('CancelDocsSign') : cancelDocsValue], FailureHandling.CONTINUE_ON_FAILURE)
 
                             'set boolean true'
-                            isUsedEmbed = true
+                            isUsedUI = true
                         } else if ((opsiSigning[i]) == 'Sign Via Inbox') {
 
                             'jika opsi signing untuk signer adalah sign via inbox setting index untuk penggunaan data. Cara bacanya adalah apakah opsi tersebut telah digunakan. Jika sudah digunakan, maka + 1, jika tidak, maka 0.'
-                            indexReadDataExcelInboxSigner = inisializeArray(isUsedInboxSigner, indexReadDataExcelInboxSigner)
+                            indexReadDataExcelInboxSigner = inisializeArray(isUsedUI, indexReadDataExcelUI)
 
                             'diberikan kepada gv indexused'
                             GlobalVariable.indexUsed = indexReadDataExcelInboxSigner
@@ -200,7 +198,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                     i], ('CancelDocsSign') : cancelDocsValue], FailureHandling.CONTINUE_ON_FAILURE)
 
                             'set boolean true'
-                            isUsedInboxSigner = true
+                            isUsedUI = true
                         }
                         
                         'jika ada proses cancel doc'
@@ -235,7 +233,7 @@ def inisializeArray(boolean isUsed, int indexReadDataExcel) {
     if (isUsed == false) {
         return indexReadDataExcel
     } else {
-        return indexReadDataExcel + 1
+        return (indexReadDataExcel + 1)
     }
 }
 
@@ -269,14 +267,13 @@ def resetValue() {
 def inisializeValue() {
 	isUsedAPIExternal = false
 	isUsedAPINormal = false
-	isUsedWebview = false
-	isUsedEmbed = false
-	isUsedInboxSigner = false
+	isUsedUI = false
 	
 	indexReadDataExcelAPIExternal = 0 
 	indexReadDataExcelAPINormal = 0
-	indexReadDataExcelWebview = 0
-	indexReadDataExcelEmbed = 0
 	indexReadDataExcelInboxSigner = 0
+	indexReadDataExcelEmbed = 0 
+	indexReadDataExcelWebview = 0
+	indexReadDataExcelUI = 0
 }
 

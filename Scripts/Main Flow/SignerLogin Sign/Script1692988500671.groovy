@@ -49,7 +49,7 @@ for (o = 0; o < documentId.size(); o++) {
     int maxFaceCompDB = Integer.parseInt(CustomKeywords.'connection.DataVerif.getLimitLivenessDaily'(conneSign))
 
     'ambil metode verifikasi dari excel'
-    String verifMethod = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('CaraVerifikasi(Biometric/OTP)'))
+    verifMethod = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('CaraVerifikasi(Biometric/OTP)')).split(';',-1)
 
     'ambil nama vendor dari DB'
     String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, refNumber)
@@ -216,6 +216,14 @@ for (o = 0; o < documentId.size(); o++) {
             }
         }
         
+		'Jika sudah dilooping terakhir mengenai pagenya dan tetap tidak menemukan'
+		if (k == totalPage && documentTemplateName == '') {
+			'Input verifynya false dengan reason'
+			checkVerifyEqualorMatch(false, ' dengan alasan tidak ditemukannya Nomor Kontrak yang diinginkan.')
+
+			continue
+		}
+		
         'Jika masih tidak ditemukan datanya, maka'
         if (documentTemplateName == '') {
             'Klik previous'
@@ -225,13 +233,6 @@ for (o = 0; o < documentId.size(); o++) {
             break
         }
         
-        'Jika sudah dilooping terakhir mengenai pagenya dan tetap tidak menemukan'
-        if (k == totalPage && documentTemplateName == '') {
-            'Input verifynya false dengan reason'
-            checkVerifyEqualorMatch(false, ' dengan alasan tidak ditemukannya Nomor Kontrak yang diinginkan.')
-
-            continue
-        }
     }
     
     'Klik button Tanda tangan bulk'
@@ -328,7 +329,7 @@ for (o = 0; o < documentId.size(); o++) {
 		noTelpSigner = checkBeforeChoosingOTPOrBiometric(emailSigner, conneSign, vendor)
 		
 		'jika metode verifikasi tidak muncul'
-		if (verifMethod.equalsIgnoreCase('Biometric')) {
+		if (verifMethod[GlobalVariable.indexUsed].equalsIgnoreCase('Biometric')) {
 			'cek apakah button biom tidak muncul'
 			if (!(WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/btn_verifBiom'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL))) {
 				'cek apakah mau ganti method'
@@ -347,12 +348,12 @@ for (o = 0; o < documentId.size(); o++) {
 					'jika muncul, tulis error ke excel'
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 						GlobalVariable.StatusFailed, (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
-							rowExcel('Reason Failed')).replace('-', '') + ';') + 'Verifikasi ') + verifMethod) + ' tidak tersedia')
+							rowExcel('Reason Failed')).replace('-', '') + ';') + 'Verifikasi ') + verifMethod[GlobalVariable.indexUsed]) + ' tidak tersedia')
 
 					continue
 				}
 			}
-		} else if (verifMethod.equalsIgnoreCase('OTP')) {
+		} else if (verifMethod[GlobalVariable.indexUsed].equalsIgnoreCase('OTP')) {
 			'cek apakah button otp tidak muncul'
 			if (!(WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/btn_verifOTP'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL))) {
 				'cek apakah mau ganti method'
@@ -393,7 +394,7 @@ for (o = 0; o < documentId.size(); o++) {
 			}
 			
 			'jika tidak sesuai kondisi'
-			if (vendor.equalsIgnoreCase('Privy') && verifMethod.equalsIgnoreCase('Biometric')) {
+			if (vendor.equalsIgnoreCase('Privy') && verifMethod[GlobalVariable.indexUsed].equalsIgnoreCase('Biometric')) {
 				'jika muncul, tulis error ke excel'
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 					(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
@@ -405,7 +406,7 @@ for (o = 0; o < documentId.size(); o++) {
 			'panggil fungsi penyelesaian dengan OTP'
 			if (verifOTPMethod(conneSign, emailSigner, listOTP, noTelpSigner, otpAfter, vendor) == false) {
 				'cek apakah ingin coba metode lain'
-				if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Force Change Method if other Method Failed?')) ==
+				if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Force Change Method if other Method Failed?')).split(';',-1)[GlobalVariable.indexUsed] ==
 				'Yes') {
 					'klik tombol untuk kembali ke laman proses'
 					WebUI.click(findTestObject('KotakMasuk/Sign/button_BackOTP'))
@@ -451,7 +452,7 @@ for (o = 0; o < documentId.size(); o++) {
 			}
 		} else if (alreadyVerif == 0) {
 			'Jika cara verifikasinya menggunakan OTP'
-			if (verifMethod == 'OTP') {
+			if (verifMethod[GlobalVariable.indexUsed] == 'OTP') {
 				'panggil fungsi penyelesaian dengan OTP'
 				if (verifOTPMethod(conneSign, emailSigner, listOTP, noTelpSigner, otpAfter, vendor) == false) {
 					'cek apakah ingin coba metode lain'
@@ -473,7 +474,7 @@ for (o = 0; o < documentId.size(); o++) {
 						continue
 					}
 				}
-			} else {
+			} else if (verifMethod[GlobalVariable.indexUsed] == 'Biometric') {
 				'panggil fungsi verif menggunakan biometrik'
 				if (verifBiomMethod(isLocalhost, maxFaceCompDB, countLivenessFaceComp, conneSign, emailSigner, listOTP,
 					noTelpSigner, otpAfter, vendor) == false) {
@@ -1194,10 +1195,10 @@ def verifOTPMethod(Connection conneSign, String emailSigner, ArrayList listOTP, 
 		return false
 	}
 	
-	WebUI.delay(1)
+	WebUI.delay(2)
 
 	'Jika tidak muncul untuk element selanjutnya'
-	if (WebUI.verifyElementNotPresent(modifyObjectlabelRequestOTP, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+	if (WebUI.verifyElementNotPresent(modifyObjectlabelRequestOTP, GlobalVariable.TimeOut, FailureHandling.OPTIONAL) == true) {
 		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 			((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
 				'-', '') + ';') + GlobalVariable.ReasonFailedSaveGagal) + ' dengan alasan tidak muncul page input OTP')
@@ -1220,8 +1221,8 @@ def verifOTPMethod(Connection conneSign, String emailSigner, ArrayList listOTP, 
 
 def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList listOTP, String noTelpSigner, String otpAfter, String vendor) {
 	'check ada value maka Setting OTP Active Duration'
-	if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() >
-	0) {
+    if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() > 
+    0) {
 		'Setting OTP Active Duration'
 		CustomKeywords.'connection.APIFullService.settingOTPActiveDuration'(conneSign, findTestData(excelPathFESignDocument).getValue(
 				GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')))
@@ -1246,8 +1247,7 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
 	'add otp ke list'
 	listOTP.add(OTP)
 
-	if ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Correct OTP (Yes/No)')).split(
-		';', -1)[GlobalVariable.indexUsed]) == 'Yes') {
+	if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Correct OTP (Yes/No)')).split(';', -1)[GlobalVariable.indexUsed] == 'Yes') {
 		'value OTP dari db'
 		WebUI.setText(findTestObject('KotakMasuk/Sign/input_OTP'), OTP)
 	} else {
@@ -1284,8 +1284,8 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
 	'klik verifikasi OTP'
 	WebUI.click(findTestObject('KotakMasuk/Sign/btn_ProsesOTP'))
 
-	'Kasih delay 1 detik karena proses OTP akan trigger popup, namun loading. Tidak instan'
-	WebUI.delay(1)
+	'Kasih delay 2 detik karena proses OTP akan trigger popup, namun loading. Tidak instan'
+	WebUI.delay(2)
 
 	'check pop up'
 	if (checkPopup() == true) {
@@ -1293,8 +1293,8 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
 	}
 	
 	'Resend OTP'
-	if ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Resend OTP (Yes/No)')).split(
-		';', -1)[GlobalVariable.indexUsed]) == 'Yes') {
+	if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Resend OTP (Yes/No)')).split(
+		';', -1)[GlobalVariable.indexUsed] == 'Yes') {
 		'Ambil data dari excel mengenai countResend'
 		countResend = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('CountResendOTP')).toInteger()
 
@@ -1344,6 +1344,8 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
 def verifBiomMethod(int isLocalhost, int maxFaceCompDB, int countLivenessFaceComp, Connection conneSign, String emailSigner, ArrayList listOTP, String noTelpSigner, String otpAfter, String vendor) {
 	useBiom = 1
 
+	countSaldoSplitLiveFCused = 0
+	
 	'Klik biometric object'
 	WebUI.click(findTestObject('KotakMasuk/Sign/btn_verifBiom'))
 

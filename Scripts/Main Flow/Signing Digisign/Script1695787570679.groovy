@@ -16,30 +16,43 @@ import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
+'change frame ke digisign'
 WebUI.switchToFrame(findTestObject('Signing-DIGISIGN/iFrame'), GlobalVariable.TimeOut)
 
+'jika document id pada page signing digisign sama dengan documentId yang diberikan'
 if (WebUI.getText(findTestObject('Signing-DIGISIGN/text_documentId')).contains(documentId)) {
+	'checknya true'
     checkVerifyEqualorMatch(true, '')
 } else {
+	'checknya false dan alasannya adalah document id tidak sesuai'
     checkVerifyEqualorMatch(false, 'document id tidak sesuai dengan yang diinput dimana document id yang muncul adalah ' + 
         WebUI.getText(findTestObject('Signing-DIGISIGN/text_documentId')))
 }
 
+'Jika button signnya ada'
 if (WebUI.verifyElementPresent(findTestObject('Signing-DIGISIGN/button_sign'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-    WebUI.delay(3)
+    'beri delay 3 detik'
+	WebUI.delay(3)
 
+	'ambil value total click sign location berdasarkan jumlah signer pada nomor kontrak tersebut'
     totalClickedSignLocation = CustomKeywords.'connection.APIFullService.getCountTtdLocation'(conneSign, nomorKontrak, emailSigner.toUpperCase())
 
+	'looping sign location hingga total click sign locationnya habis'
     for (loopingSignLocation = 0; loopingSignLocation < totalClickedSignLocation; loopingSignLocation++) {
-        'modify per row dan column. column menggunakan u dan row menggunakan documenttemplatename'
+        'modify button sign dimana per button sign akan di click'
         buttonSign = WebUI.modifyObjectProperty(findTestObject('Signing-DIGISIGN/button_sign'), 'xpath', 'equals', ('//*[@id = \'sgnClick-' + 
             loopingSignLocation) + '\']', true)
 
+		'scroll menuju button sign tersebut'
 		WebUI.scrollToElement(buttonSign, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)
 		
+		'pencet arrow up agar bisa diclick'
 		WebUI.sendKeys(buttonSign, Keys.chord(Keys.ARROW_UP))
+		
         for (p = 1; p <= 5; p++) {
+			'jika button tersebut bisible'
             if (WebUI.verifyElementVisible(buttonSign, FailureHandling.OPTIONAL)) {
+				'click button sign'
                 WebUI.click(buttonSign, FailureHandling.OPTIONAL)
 				break
             }
@@ -47,44 +60,69 @@ if (WebUI.verifyElementPresent(findTestObject('Signing-DIGISIGN/button_sign'), G
     }
 }
 
+'scroll menuju proses ttd'
 WebUI.scrollToElement(findTestObject('Signing-DIGISIGN/button_prosesTtd'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)
 
+'click proses ttd'
 WebUI.click(findTestObject('Signing-DIGISIGN/button_prosesTtd'))
 
+'beri delay 2 detik untuk loading proses ttd'
 WebUI.delay(2)
 
+'jika popup gagalnya muncul'
 if (WebUI.verifyElementVisible(findTestObject('Signing-DIGISIGN/text_popupGagal'), FailureHandling.OPTIONAL)) {
-    WebUI.click(findTestObject('Signing-DIGISIGN/button_closePopupGagal')) //WebUI.setText(findTestObject('Signing-DIGISIGN/input_Otp'), 'otp')
+	
+	'reason failed sesuai dengan text pop up gagal'
+	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+		((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+			'-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + WebUI.getText(findTestObject('Signing-DIGISIGN/text_popupGagal')))
+	
+	'click button close popup gagal'
+    WebUI.click(findTestObject('Signing-DIGISIGN/button_closePopupGagal')) 
+	//WebUI.setText(findTestObject('Signing-DIGISIGN/input_Otp'), 'otp')
     //WebUI.setText(findTestObject('Signing-DIGISIGN/input_Password'), 'password')
 } else {
+	'jika popup success muncul'
     if (WebUI.verifyElementVisible(findTestObject('Signing-DIGISIGN/text_popupSuccess'), FailureHandling.OPTIONAL)) {
-        checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Signing-DIGISIGN/text_email'), 'value').toUpperCase(), 
+        'check email signer'
+		checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Signing-DIGISIGN/text_email'), 'value').toUpperCase(), 
                 emailSigner.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada Email Signer')
 
+		'check nomor telepon signer'
         checkVerifyEqualorMatch(WebUI.verifyMatch(CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(WebUI.getAttribute(
                         findTestObject('Signing-DIGISIGN/text_noHp'), 'value')), CustomKeywords.'connection.APIFullService.getHashedNo'(
                     conneSign, emailSigner.toUpperCase()), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada Nomor telepon Signer')
 
+		'click request otp untuk digisign'
         WebUI.click(findTestObject('Signing-DIGISIGN/button_requestOtp'))
 
+		'delay 60 detik untuk input otp dari sms dan password'
         WebUI.delay(60)
 
+		'jika menyetujui yes'
         if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Menyetujui(Yes/No)')).split(';', -1)[GlobalVariable.indexUsed] == 'Yes') {
-            WebUI.click(findTestObject('Signing-DIGISIGN/button_menyetujui'))
+            'click button menyetujui'
+			WebUI.click(findTestObject('Signing-DIGISIGN/button_menyetujui'))
         }
         
+		'jika setuju tidak ada disabled'
         if (!(WebUI.verifyElementHasAttribute(findTestObject('Sigining-DIGISIGN/button_setuju'), 'disabled', GlobalVariable.TimeOut, 
             FailureHandling.OPTIONAL))) {
+			'click button setuju'
             WebUI.click(findTestObject('Signing-DIGISIGN/button_setuju'))
         }
         
+		'berikan delay 7 detik untuk loading proses tanda tangan'
         WebUI.delay(7)
 
+		'jika pop up after proses visible'
         if (WebUI.verifyElementVisible(findTestObject('Signing-DIGISIGN/text_popupAfterProcess'), FailureHandling.CONTINUE_ON_FAILURE)) {
-            WebUI.click(findTestObject('Signing-DIGISIGN/button_melanjutkan'))
+            'klik button melanjutkan'
+			WebUI.click(findTestObject('Signing-DIGISIGN/button_melanjutkan'))
 
             inputMasukanAndWriteResultSign()
 
+			'beri delay 2 detik'
             WebUI.delay(2)
 
             'Jika masukan ratingnya tidak kosong'
