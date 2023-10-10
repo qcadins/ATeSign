@@ -123,9 +123,7 @@ idPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExc
 
 signerSelfPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('signerSelfPhoto (Send Normal)')).split(enter, splitnum)
 
-String stringRefno = new String()
-
-String bodyAPI = new String()
+String stringRefno, bodyAPI
 
 'Looping berdasarkan total dari dokumen file ukuran'
 for (int o = 0; o < documentFile.size(); o++) {
@@ -210,7 +208,7 @@ for (int o = 0; o < documentFile.size(); o++) {
         if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service (Send Normal)')).length() > 
         0) {
 			for (loopingSignerEmailActive = 0; loopingSignerEmailActive < idKtps.size(); loopingSignerEmailActive++) {
-				SHA256IdNo = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'( idKtps[loopingSignerEmailActive].replace('"', ''))
+				SHA256IdNo = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(idKtps[loopingSignerEmailActive].replace('"', ''))
 				
 				'setting email service tenant'
 				CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(API_Excel_Path).getValue(
@@ -289,10 +287,6 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         'write to excel success'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Status') - 1, GlobalVariable.NumofColm - 
             1, GlobalVariable.StatusSuccess)
-
-		'write to excel success'
-		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Status') - 1, GlobalVariable.NumofColm -
-			1, GlobalVariable.StatusSuccess)
 		
         if (GlobalVariable.checkStoreDB == 'Yes') {
             'call test case ResponseAPIStoreDB'

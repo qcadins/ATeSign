@@ -912,6 +912,37 @@ def actionDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan
 	'Klik x terlebih dahulu pada popup'
 	WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_X'))
 	
+	if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Need Download Document ?')) ==
+		'Yes') {
+			'click button download'
+			WebUI.click(findTestObject('DocumentMonitoring/button_Download'))
+	
+			'check if error alert present'
+			if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+				'get reason dari error log'
+				errorLog = WebUI.getAttribute(findTestObject('DocumentMonitoring/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
+	
+				'Write To Excel GlobalVariable.StatusFailed and errorLog'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+					GlobalVariable.StatusFailed, (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+						rowExcel('Reason Failed')) + ';') + '<') + errorLog) + '>')
+	
+				GlobalVariable.FlagFailed = 1
+			}
+			
+			'check isfiled downloaded'
+			if (CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathFESignDocument).getValue(
+					GlobalVariable.NumofColm, rowExcel('Delete Downloaded Document'))) == false) {
+				
+				'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedDownload'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+					GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+						rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedDownload)
+	
+				GlobalVariable.FlagFailed = 1
+			}
+		}
+		
 	if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Need View Document ?')) ==
 	'Yes') {
 		'click button view dokumen'
@@ -939,37 +970,6 @@ def actionDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan
 		} else if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/button_View'), GlobalVariable.TimeOut,
 			FailureHandling.OPTIONAL)) {
 			checkVerifyEqualOrMatch(false, ' button view tidak berfungsi')
-		}
-	}
-	
-	if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Need Download Document ?')) ==
-	'Yes') {
-		'click button download'
-		WebUI.click(findTestObject('DocumentMonitoring/button_Download'))
-
-		'check if error alert present'
-		if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-			'get reason dari error log'
-			errorLog = WebUI.getAttribute(findTestObject('DocumentMonitoring/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
-
-			'Write To Excel GlobalVariable.StatusFailed and errorLog'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-				GlobalVariable.StatusFailed, (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
-					rowExcel('Reason Failed')) + ';') + '<') + errorLog) + '>')
-
-			GlobalVariable.FlagFailed = 1
-		}
-		
-		'check isfiled downloaded'
-		if (CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathFESignDocument).getValue(
-				GlobalVariable.NumofColm, rowExcel('Delete Downloaded Document'))) == false) {
-			
-			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedDownload'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-				GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
-					rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedDownload)
-
-			GlobalVariable.FlagFailed = 1
 		}
 	}
 }

@@ -599,7 +599,8 @@ for (o = 0; o < documentId.size(); o++) {
 		, ('sheet') : sheet, ('nomorKontrak') : noKontrak, ('documentId') : documentId[o], ('emailSigner') : emailSigner], FailureHandling.CONTINUE_ON_FAILURE)
 		
 		saldoUsed = saldoUsed + 1
-
+		
+		GlobalVariable.eSignData.putAt('VerifikasiOTP', 1)
 }
     'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
     WebUI.callTestCase(findTestCase('Main Flow/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathFESignDocument
@@ -658,6 +659,12 @@ for (o = 0; o < documentId.size(); o++) {
 						flagBreak = 1
 					}
 				}
+			}
+		} else {
+			if (b == 3) {
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
+                rowExcel('Reason Failed') + ';') + 'Saldo ')
 			}
 		}
 		

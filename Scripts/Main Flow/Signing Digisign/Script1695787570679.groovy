@@ -47,7 +47,7 @@ if (WebUI.verifyElementPresent(findTestObject('Signing-DIGISIGN/button_sign'), G
 		WebUI.scrollToElement(buttonSign, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)
 		
 		'pencet arrow up agar bisa diclick'
-		WebUI.sendKeys(buttonSign, Keys.chord(Keys.ARROW_UP))
+		WebUI.sendKeys(buttonSign, Keys.chord(Keys.PAGE_UP))
 		
         for (p = 1; p <= 5; p++) {
 			'jika button tersebut bisible'

@@ -23,7 +23,7 @@ int splitnum = -1
 CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPISendDoc, GlobalVariable.NumofColm, rowExcel('Use Correct base Url (Send External)'))
 
 'Deklarasi variable mengenai signLoc untuk store db'
-String signlocStoreDB = new String()
+String signlocStoreDB
 
 getDataExcel(semicolon, splitnum, delimiter, enter)
 
@@ -71,6 +71,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         'mengambil documentid, trxno dan response doc template code dari hasil response API'
         documentId = WS.getElementPropertyValue(respon, 'documents.documentId', FailureHandling.OPTIONAL)
 
+		'value trxno akan ada jika melakukan sign action autosign(at)'
         trxno = WS.getElementPropertyValue(respon, 'documents.trxNos', FailureHandling.OPTIONAL)
 
         responseDocTemplateCode = WS.getElementPropertyValue(respon, 'documents.docTemplateCode', FailureHandling.OPTIONAL)
@@ -244,7 +245,7 @@ def setBodyAPI(String stringRefno, String signlocStoreDB) {
 	
 				urySign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('ury (Send signExternal)')).split(enter, splitnum)
 	
-				'split mengenai sequence Number'
+				'split mengenai sequence Number per document'
 				seqNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('SeqNo (Send External)')).split(enter, splitnum)
 	
 				'Split mengenai signLocation dimana berdasarkan dokumen dan berdasarkan signer'
@@ -272,7 +273,7 @@ def setBodyAPI(String stringRefno, String signlocStoreDB) {
 				'looping menuju jumlah lokasi pageSign di 1 signer'
 				for (int l = 0; l < pageSigns.size(); l++) {
 					if (!(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('SeqNo (Send External)')).length() == 0)) {
-					'split seq number per documentnya'
+					'split seq number per signer'
 					seqNos = (seqNo[i]).split(semicolon, splitnum)
 	
 					'looping mengenai total sequence number'
