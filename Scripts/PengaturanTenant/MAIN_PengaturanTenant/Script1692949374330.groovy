@@ -293,19 +293,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             }
         }
         
-//        'Jika Unchange url Activation CallBacknya No'
-//        if (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('Unchange urlActivationCallback')) == 'No') {
-//            'activation Callback Url dari excel'
-//            activationCallBackUrl = findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('urlActivationCallback'))
-//
-//            'Input activation Call Back Url'
-//			setTextEmptyValidation(findTestObject('PengaturanTenant/input_Tambah_activationCallbackUrl'), 'urlActivationCallback')
-//        } else {
-//            'Jika Unchange url Activation CallBacknya Yes, maka mengambil value dari UI'
-//            activationCallBackUrl = WebUI.getAttribute(findTestObject('PengaturanTenant/input_Tambah_activationCallbackUrl'), 
-//                'value')
-//        }
-//		
 		'input pilihan untuk kirim notifikasi tanpa email'
 		if (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('Metode Pengiriman Notifikasi'))
 			== 'SMS') {
@@ -353,26 +340,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 				(findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedSaveGagal)
 		}
 		
-		'Klik button Coba'
-		WebUI.click(findTestObject('PengaturanTenant/button_Coba'))
-
-		'check Popup'
-		checkPopup()
-
-		'Check error log'
-		if (checkerrorLog() == true) {
-			continue
-		}
-		
-		'Klik button Coba'
-		WebUI.click(findTestObject('PengaturanTenant/button_CobaURLCallback'))
-
-		'check Popup'
-		checkPopup()
-
-		'Check error log'
-		if (checkerrorLog() == true) {
-			continue
+		if (findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('Click Coba Callback?')).equalsIgnoreCase('Yes')) {
+			
+			'Klik button Coba'
+			WebUI.click(findTestObject('PengaturanTenant/button_CobaURLCallback'))
+			
+			'check Popup'
+			checkPopup()
+	
+			'Check error log'
+			if (checkerrorLog() == true) {
+				continue
+			}
 		}
 		
 		WebUI.delay(GlobalVariable.TimeOut)

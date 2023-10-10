@@ -28,16 +28,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathPencarianPengguna, ('Email') : 'Inveditor Login', ('Password') : 'Inveditor Password Login'
 				, ('Perusahaan') : 'Inveditor Perusahaan Login', ('Peran') : 'Inveditor Peran Login'], FailureHandling.STOP_ON_FAILURE)
 			
+			'apakah cek paging diperlukan di awal run'
+			if(GlobalVariable.checkPaging.equals('Yes')) {
+				'call function check paging'
+				checkPaging()
+			}
+			
 			firstRun = 1
 		}
 		
 		'click menu PencarianPengguna'
 		WebUI.click(findTestObject('PencarianPengguna/menu_PencarianPengguna'))
-		
-		if(GlobalVariable.NumofColm == 2) {
-			'call function check paging'
-			checkPaging()			
-		}
 		
         if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, rowExcel('Input with')).equalsIgnoreCase('Email')) {
             'set text search box dengan email'
@@ -215,6 +216,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 }
 
 def checkPaging() {
+	'click menu PencarianPengguna'
+	WebUI.click(findTestObject('PencarianPengguna/menu_PencarianPengguna'))
+	
     'input search box'
     WebUI.setText(findTestObject('PencarianPengguna/input_SearchBox'), findTestData(excelPathPencarianPengguna).getValue(
             GlobalVariable.NumofColm, rowExcel('Email')))

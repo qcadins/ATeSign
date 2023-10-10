@@ -42,50 +42,51 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathSaldo, ('Email') : 'Email Login', ('Password') : 'Password Login'
 				, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
 			
+			'apakah cek paging diperlukan di awal run'
+			if(GlobalVariable.checkPaging.equals('Yes')) {
+				
+				'click menu saldo'
+				WebUI.click(findTestObject('saldo/menu_saldo'))
+	
+				'click ddl bahasa'
+				WebUI.click(findTestObject('Login/button_bahasa'))
+				
+				'click english'
+				WebUI.click(findTestObject('Login/button_English'))
+				
+				'call function check paging'
+				checkPaging(currentDate, firstDateOfMonth, conneSign)
+				
+				'get ddl tenant'
+				ArrayList<String> resultVendor = CustomKeywords.'connection.Saldo.getDDLVendor'(conneSign, CustomKeywords.'connection.Saldo.getTenantName'(conneSign))
+		
+				'verify vendor DDL'
+				WebUI.verifyOptionsPresent(findTestObject('Saldo/ddl_Vendor'), resultVendor, FailureHandling.CONTINUE_ON_FAILURE)
+				
+				'get ddl tipe Saldo'
+				ArrayList<String> resultTipeSaldo = CustomKeywords.'connection.Saldo.getDDLTipeSaldo'(conneSign)
+				
+				'call function check ddl untuk Tipe Saldo'
+				checkDDL(findTestObject('Saldo/input_tipesaldo'), resultTipeSaldo, 'DDL Tipe Saldo')
+				
+				'get ddl tipe trx'
+				ArrayList<String> resultTipeTrx = CustomKeywords.'connection.Saldo.getDDLTipeTrx'(conneSign)
+				
+				'call function check ddl untuk Tipe Trx'
+				checkDDL(findTestObject('Saldo/input_tipetransaksi'), resultTipeTrx, 'DDL Tipe Trx')
+				
+				'get ddl tipe dokumen'
+				ArrayList<String> resultTipeDokumen = CustomKeywords.'connection.Saldo.getDDLTipeDokumen'(conneSign)
+				
+				'call function check ddl untuk Tipe Dokumen'
+				checkDDL(findTestObject('Saldo/input_tipedokumen'), resultTipeDokumen, 'DDL Tipe Dokumen')
+			}		
 			firstRun = 1
 		}
 	
 		if (findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 			GlobalVariable.FlagFailed = 0
 		}
-		
-        if (GlobalVariable.NumofColm == 2) {
-            'click menu saldo'
-            WebUI.click(findTestObject('saldo/menu_saldo'))
-
-			'click ddl bahasa'
-			WebUI.click(findTestObject('Login/button_bahasa'))
-			
-			'click english'
-			WebUI.click(findTestObject('Login/button_English'))
-			
-            'call function check paging'
-            checkPaging(currentDate, firstDateOfMonth, conneSign)
-			
-			'get ddl tenant'
-			ArrayList<String> resultVendor = CustomKeywords.'connection.Saldo.getDDLVendor'(conneSign, CustomKeywords.'connection.Saldo.getTenantName'(conneSign))
-	
-			'verify vendor DDL'
-			WebUI.verifyOptionsPresent(findTestObject('Saldo/ddl_Vendor'), resultVendor, FailureHandling.CONTINUE_ON_FAILURE)
-			
-			'get ddl tipe Saldo'
-			ArrayList<String> resultTipeSaldo = CustomKeywords.'connection.Saldo.getDDLTipeSaldo'(conneSign)
-			
-			'call function check ddl untuk Tipe Saldo'
-			checkDDL(findTestObject('Saldo/input_tipesaldo'), resultTipeSaldo, 'DDL Tipe Saldo')
-			
-			'get ddl tipe trx'
-			ArrayList<String> resultTipeTrx = CustomKeywords.'connection.Saldo.getDDLTipeTrx'(conneSign)
-			
-			'call function check ddl untuk Tipe Trx'
-			checkDDL(findTestObject('Saldo/input_tipetransaksi'), resultTipeTrx, 'DDL Tipe Trx')
-			
-			'get ddl tipe dokumen'
-			ArrayList<String> resultTipeDokumen = CustomKeywords.'connection.Saldo.getDDLTipeDokumen'(conneSign)
-			
-			'call function check ddl untuk Tipe Dokumen'
-			checkDDL(findTestObject('Saldo/input_tipedokumen'), resultTipeDokumen, 'DDL Tipe Dokumen')
-        }
 		
 		inputSaldo()
 		

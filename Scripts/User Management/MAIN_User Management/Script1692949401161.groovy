@@ -37,34 +37,34 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			GlobalVariable.FlagFailed = 0
 		}
 
-		if(findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Status')) != 
-			findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Status')) || firstRun == 0) {
+		if(findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) != 
+			findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')) || firstRun == 0) {
 			'call test case login per case'
 			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathUserManagement, ('Email') : 'Email Login', ('Password') : 'Password Login'
 				, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
 			
+			'apakah cek paging diperlukan di awal run'
+			if(GlobalVariable.checkPaging.equals('Yes')) {
+				
+				'get db tenant code dari user yang telah login'
+				tenantCode = CustomKeywords.'connection.DataVerif.getTenantCode'(conneSign, findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')).toUpperCase())
+				
+				'call function check paging'
+				checkPaging(conneSign)
+				
+				'call function inputcancel'
+				inputCancel()
+				
+				listDB = CustomKeywords.'connection.UserManagement.getddlRoleUserManagement'(conneSign, tenantCode)
+				
+				'call function check ddl untuk Peran pada Setting'
+				checkDDL(findTestObject('Object Repository/User Management/input_Peran'), listDB)
+			}
 			firstRun = 1
 		}
 		
 		'click menu user management'
 		WebUI.click(findTestObject('User Management/menu_User Management'))
-		
-        'Jika kolom kedua'
-        if (GlobalVariable.NumofColm == 2) {
-			'get db tenant code dari user yang telah login'
-			tenantCode = CustomKeywords.'connection.DataVerif.getTenantCode'(conneSign, findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')).toUpperCase())
-			
-            'call function check paging'
-            checkPaging(conneSign)
-			
-			'call function inputcancel'
-			inputCancel()
-			
-			listDB = CustomKeywords.'connection.UserManagement.getddlRoleUserManagement'(conneSign, tenantCode)
-			
-			'call function check ddl untuk Peran pada Setting'
-			checkDDL(findTestObject('Object Repository/User Management/input_Peran'), listDB)
-        }
         
         'jika aksinya adalah new'
         if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('New')) {
@@ -542,6 +542,9 @@ def checkErrorLog() {
 }
 
 def checkPaging(Connection conneSign) {
+	'click menu user management'
+	WebUI.click(findTestObject('User Management/menu_User Management'))
+	
     totalUserManagementDB = CustomKeywords.'connection.UserManagement.getTotalUserManagement'(conneSign)
 
     'set text no kontrak'

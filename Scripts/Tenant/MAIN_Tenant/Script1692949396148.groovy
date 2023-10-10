@@ -33,19 +33,21 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathTenant, ('Email') : 'Email Login', ('Password') : 'Password Login'
 				, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
 			
+			'apakah cek paging diperlukan di awal run'
+			if(GlobalVariable.checkPaging.equals('Yes')) {
+				
+				'call function check paging'
+				checkPaging(conneSign)
+				
+				'call function cancel'
+				inputCancel()
+			}
+			
 			firstRun = 1
 		}
 		
 		'click menu tenant'
 		WebUI.click(findTestObject('Tenant/menu_Tenant'))
-		
-		if (GlobalVariable.NumofColm == 2) {
-			'call function check paging'
-			checkPaging(conneSign)
-			
-			'call function cancel'
-			inputCancel()
-		}
 		
 		'declare isMmandatory Complete'
 		int isMandatoryComplete = Integer.parseInt(findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 5))
@@ -499,6 +501,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 }
 
 def checkPaging(Connection conneSign) {
+	'click menu tenant'
+	WebUI.click(findTestObject('Tenant/menu_Tenant'))
+	
     'input nama tenant'
     WebUI.setText(findTestObject('Tenant/input_NamaTenant'), 'nama tenant')
 

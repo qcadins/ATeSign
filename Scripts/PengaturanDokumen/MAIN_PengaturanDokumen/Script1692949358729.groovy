@@ -38,6 +38,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathPengaturanDokumen, ('Email') : 'Email Login', ('Password') : 'Password Login'
 				, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
 			
+			'click menu pengaturan dokumen'
+			WebUI.click(findTestObject('TandaTanganDokumen/btn_PengaturanDokumen'))
+			
+			'apakah cek paging diperlukan di awal run'
+			if(GlobalVariable.checkPaging.equals('Yes')) {
+				'call function check paging'
+				checkPaging()
+				
+				'call function input cancel'
+				inputCancel(conneSign, checked)
+			}
+			
 			firstRun = 1
 		}
 		
@@ -56,14 +68,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		
 		if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 			GlobalVariable.FlagFailed = 0
-		}
-		
-		if (GlobalVariable.NumofColm == 2) {
-			'call function chceck paging'
-			checkPaging()
-			
-			'call function input cancel'
-			inputCancel(conneSign, checked)
 		}
 		
 		'Pembuatan variable mengenai jumlah delete, jumlah lock, dan indexlock untuk loop kedepannya'

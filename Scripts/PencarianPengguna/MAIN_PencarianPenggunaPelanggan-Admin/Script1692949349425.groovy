@@ -24,7 +24,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		String value
 		
 		'jika pengguna belum login'
-		if (checkLogin == 0) {
+		if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) !=
+			findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')) || checkLogin == 0) {
 			'panggil fungsi login'
 			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
 				('Path') : excelPathPencarianPengguna, ('Email') : 'Email Login', ('Password') : 'Password Login',
