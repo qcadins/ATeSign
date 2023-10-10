@@ -125,7 +125,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             } else if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/label_NoKontrakView'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 				'check if no kontrak sama dengan inputan excel'
 				checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('DocumentMonitoring/label_NoKontrakView')), 'No Kontrak ' + findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 
-                        rowExcel('No Kontrak')), false, FailureHandling.CONTINUE_ON_FAILURE), ' dokuemn yang di view berbeda')
+                        rowExcel('No Kontrak')), false, FailureHandling.CONTINUE_ON_FAILURE), ' dokumen yang di view berbeda')
 				
 				'click button Kembali'
 				WebUI.click(findTestObject('DocumentMonitoring/button_Kembali'))
