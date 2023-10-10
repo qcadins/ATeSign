@@ -224,7 +224,7 @@ def setBodyAPI(String stringRefno, String signlocStoreDB) {
 	
 		'inisialisasi body untuk seq no sebagai array'
 		ArrayList seqNoBodyAPI = []
-	
+
 		'looping berdasarkan jumlah dari signAction di dokumen pertama'
 		for (int t = 0; t < signActions.size(); t++) {
 			'Jika semua data mengenai Sign Location seperti page, llx, lly, urx, ury tidak kosong'
@@ -458,9 +458,9 @@ def setBodyAPI(String stringRefno, String signlocStoreDB) {
 		bodyAPI = ''
 	
 		bodyAPI = setBodyForStampingLocation(pageStamp[i], llxStamp[i], llyStamp[i], urxStamp[i], uryStamp[i], bodyAPI)
-
+		
 		'jika dokumennya di akhir'
-		if (i == (documentFile.size() - 1)) {
+		if (i == documentFile.size() - 1) {
 			'input body API berdasarkan bodyAPI diatasnya'
 			bodyAPI = (bodyAPI + '}')
 		} else {
@@ -470,7 +470,7 @@ def setBodyAPI(String stringRefno, String signlocStoreDB) {
 		
 		'input body API kedalam stringRefno'
 		stringRefno = (stringRefno + bodyAPI)
-		
+	}
 		ArrayList returning = []
 		
 		returning.add(stringRefno)
@@ -478,7 +478,7 @@ def setBodyAPI(String stringRefno, String signlocStoreDB) {
 		returning.add(signlocStoreDB)
 		
 		return returning
-	}
+
 }
 
 def setBodyForStampingLocation(String pageStamp, String llxStamp, String llyStamp, String urxStamp, String uryStamp, String bodyAPI) {
