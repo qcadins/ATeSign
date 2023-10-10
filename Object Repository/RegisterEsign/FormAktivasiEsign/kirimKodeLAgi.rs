@@ -7,33 +7,33 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>/html/body/ngb-modal-window/div/div/app-modal-request-otp/form/div/div[5]/div/a</value>
+         <value>//*[(text() = 'Kirim kode lagi' or . = 'Kirim kode lagi') and @class = 'reset-button']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>/html/body/ngb-modal-window/div/div/app-modal-request-otp/form/div/div[5]/div/a</value>
-      <webElementGuid>b6f52fcc-03ef-4a1f-b3d0-d44ca8e9e430</webElementGuid>
+      <webElementGuid>4d99f93e-ec59-49ff-adc7-4dd6eacefdce</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>false</isSelected>
+      <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>text</name>
       <type>Main</type>
       <value>Kirim kode lagi</value>
-      <webElementGuid>1faf09cb-e78f-42d1-83c4-a141f3fd3a51</webElementGuid>
+      <webElementGuid>847d9826-8d5c-40d6-bce0-48cc937a5367</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>false</isSelected>
+      <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
       <value>reset-button</value>
-      <webElementGuid>bab32543-1432-409f-a27c-646e99c1c892</webElementGuid>
+      <webElementGuid>f5fa4e6f-bc07-4e4e-a972-7d01070f92b9</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

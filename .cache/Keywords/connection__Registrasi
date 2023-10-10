@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "35924CCBC2695892E7D1AAF4D3320B9D",
+  "keywordFileContentHash": "04A1F832AE5A51B9FDE330D6C1A1C5AA",
   "keywordClasses": [
     {
       "name": "connection.Registrasi",
@@ -201,7 +201,7 @@
               }
             },
             {
-              "name": "email",
+              "name": "NIK",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

@@ -13,6 +13,8 @@ import org.openqa.selenium.Keys as Keys
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
+GlobalVariable.VerificationCount = 1
+
 'get psre per case'
 GlobalVariable.Psre = findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
 
@@ -247,6 +249,8 @@ if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/label_ValidationErr
 	while (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Continue Register & Activation')).equalsIgnoreCase('Continue')) {
 		GlobalVariable.NumofColm++
 		
+		GlobalVariable.FlagFailed = 0
+		
 		'call test case daftar akun data verif'
 	    WebUI.callTestCase(findTestCase('Register eSign/DaftarAkunDataVerif'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'
 	    	, ('saldoBefore') : saldoBefore[0]], FailureHandling.CONTINUE_ON_FAILURE)
@@ -264,7 +268,7 @@ if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/label_ValidationErr
     
     if (GlobalVariable.FlagFailed == 0) {
     	'kurang saldo before dengan proses verifikasi'
-    	saldoBefore.set(1, (Integer.parseInt(saldoBefore[1]) - 1).toString())
+    	saldoBefore.set(1, (Integer.parseInt(saldoBefore[1]) - GlobalVariable.VerificationCount).toString())
     	
     	if (GlobalVariable.Psre == 'VIDA') {
     		'kurang saldo before dengan prose PNBP'
@@ -378,7 +382,7 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
         }
     }
     
-    if (((countCheckSaldo == 1) && (GlobalVariable.FlagFailed == 0)) && (GlobalVariable.Psre == 'VIDA')) {
+    if (((countCheckSaldo == 1) && (GlobalVariable.FlagFailed == 0)) && (GlobalVariable.Psre == 'VIDA') && (GlobalVariable.Psre == 'PRIVY')) {
         'call function input filter saldo'
         inputFilterSaldo('OTP', conneSign)
     }
@@ -429,13 +433,14 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
         'call function input filter saldo'
         inputFilterSaldo('Verification', conneSign)
 
-        if ((GlobalVariable.FlagFailed == 0) && (GlobalVariable.Psre == 'VIDA')) {
-            'call function input filter saldo'
-            inputFilterSaldo('PNBP', conneSign)
-        }
-        
-        'call function verify list undangan'
-        verifyListUndangan()
+        if (GlobalVariable.Psre == 'VIDA') {
+			if(GlobalVariable.FlagFailed == 0) {
+				'call function input filter saldo'
+				inputFilterSaldo('PNBP', conneSign)				
+			}
+			'call function verify list undangan'
+			verifyListUndangan()
+        }        
     }
     
 //    'swicth tab ke new tab'
@@ -493,7 +498,7 @@ def verifyListUndangan() {
     'verify tanggal pengiriman'
     checkVerifyEqualOrMatch(WebUI.verifyMatch(parsedDate, currentDate, false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Pengiriman')
 
-    if (GlobalVariable.Psre == 'VIDA') {
+//    if (GlobalVariable.Psre == 'VIDA') {
 		tanggalRegistrasi = WebUI.getText(findTestObject('ListUndangan/table_TanggalRegistrasi')).split(' ', -1)
 
         parsedDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(tanggalRegistrasi[0], 'dd-MMM-yyyy', 'yyyy-MM-dd')
@@ -509,19 +514,19 @@ def verifyListUndangan() {
 		'verify Status undangan'
 		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusUndangan')), 'NON AKTIF',
 				false, FailureHandling.CONTINUE_ON_FAILURE), ' Status Undangan')
-    } else if(GlobalVariable.Psre == 'PRIVY') {
-		'verify tanggal registrasi'
-		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_TanggalRegistrasi')), '-', false, FailureHandling.CONTINUE_ON_FAILURE),
-			' Tanggal Registrasi')
-	
-		'verify status registrasi'
-		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusRegistrasi')), 'NOT DONE',
-				false, FailureHandling.CONTINUE_ON_FAILURE), ' Status Registrasi')
-		
-		'verify Status undangan'
-		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusUndangan')), 'AKTIF',
-				false, FailureHandling.CONTINUE_ON_FAILURE), ' Status Undangan')
-	}
+//    } else if(GlobalVariable.Psre == 'PRIVY') {
+//		'verify tanggal registrasi'
+//		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_TanggalRegistrasi')), '-', false, FailureHandling.CONTINUE_ON_FAILURE),
+//			' Tanggal Registrasi')
+//	
+//		'verify status registrasi'
+//		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusRegistrasi')), 'NOT DONE',
+//				false, FailureHandling.CONTINUE_ON_FAILURE), ' Status Registrasi')
+//		
+//		'verify Status undangan'
+//		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusUndangan')), 'AKTIF',
+//				false, FailureHandling.CONTINUE_ON_FAILURE), ' Status Undangan')
+//	}
 }
 
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {

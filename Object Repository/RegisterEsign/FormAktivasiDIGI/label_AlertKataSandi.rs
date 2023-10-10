@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>label_AlertKataSandi</name>
+   <tag></tag>
+   <elementGuidId>badd1108-e835-42f7-aea5-87a9a4c32cf2</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;formAktivasi&quot;]/div[3]/div/div/div/span/font</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;formAktivasi&quot;]/div[3]/div/div/div/span/font</value>
+      <webElementGuid>be2ed13d-45ef-4c2d-96f2-2c9f207824dd</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

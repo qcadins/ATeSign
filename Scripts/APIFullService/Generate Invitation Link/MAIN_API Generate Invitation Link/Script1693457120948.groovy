@@ -29,6 +29,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         break
     } else if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 		
+		GlobalVariable.VerificationCount = 1
+		
 		'setting psre per case'
 		GlobalVariable.Psre = findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
 		
@@ -189,14 +191,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				while (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Continue Register & Activation')).equalsIgnoreCase('Continue')) {
 					GlobalVariable.NumofColm++
 					
+					GlobalVariable.FlagFailed = 0
+					
 					'call test case daftar akun verif'
 					WebUI.callTestCase(findTestCase('APIFullService/Generate Invitation Link/DaftarAkunDataVerif'), [('excelPathGenerateLink') : 'APIFullService/API_GenInvLink', ('otpBefore') : saldoBefore[0]], 
 						FailureHandling.CONTINUE_ON_FAILURE)
 				}
 				
+				if ((GlobalVariable.checkStoreDB == 'Yes') && (GlobalVariable.FlagFailed == 0)) {
+					'call test case NewUserStoreDB setelah registrasi dan aktivasi'
+					WebUI.callTestCase(findTestCase('APIFullService/Generate Invitation Link/NewUserStoreDB'), [('excelPathGenInvLink') : 'APIFullService/API_GenInvLink'],
+						FailureHandling.CONTINUE_ON_FAILURE)
+				}
+				
 				if (GlobalVariable.FlagFailed == 0) {
 					'kurang saldo before dengan proses verifikasi'
-				    saldoBefore.set(1, (Integer.parseInt(saldoBefore[1]) - 1).toString())
+				    saldoBefore.set(1, (Integer.parseInt(saldoBefore[1]) - GlobalVariable.VerificationCount).toString())
 				
 					if (GlobalVariable.Psre == 'VIDA') {
 						'kurang saldo before dengan prose PNBP'
@@ -286,12 +296,9 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 		}
 	}
 
-	if ((countCheckSaldo == 1) && (GlobalVariable.FlagFailed == 0) && GlobalVariable.Psre == 'VIDA') {
+	if ((countCheckSaldo == 1) && (GlobalVariable.FlagFailed == 0 || findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Warning')) && GlobalVariable.Psre == 'VIDA') {
 		'call function input filter saldo'
 		inputFilterSaldo('OTP', conneSign)
-		
-//		'call function verify list undangan'
-//		verifyListUndangan()
 	}
 
 	'select vendor'
@@ -335,6 +342,9 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 			'call function input filter saldo'
 			inputFilterSaldo('PNBP', conneSign)
 		}
+		
+		//		'call function verify list undangan'
+		//		verifyListUndangan()
 	}
 	return saldo
 }

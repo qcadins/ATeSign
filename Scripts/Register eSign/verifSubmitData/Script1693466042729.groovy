@@ -53,7 +53,7 @@ def verifyListUndangan() {
 	currentDate = new Date().format('yyyy-MM-dd')
 	
 	'navigate to url esign'
-	WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 5))
+	WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 2))
 
 	'maximize window'
 	WebUI.maximizeWindow()

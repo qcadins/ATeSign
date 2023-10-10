@@ -81,10 +81,10 @@ public class Registrasi {
 	}
 
 	@Keyword
-	getRegisterPrivyStoreDB(Connection conn, String email) {
+	getRegisterPrivyStoreDB(Connection conn, String NIK) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT request_status, is_external FROM tr_balance_mutation tbm JOIN tr_job_check_register_status tjc ON tbm.id_balance_mutation = tjc.id_balance_mutation WHERE tjc.usr_crt = '" + email + "'")
+		resultSet = stm.executeQuery("SELECT request_status, is_external FROM tr_balance_mutation tbm JOIN tr_job_check_register_status tjc ON tbm.id_balance_mutation = tjc.id_balance_mutation WHERE tjc.hashed_id_no = encode(sha256('"+ NIK +"'), 'hex')")
 
 		metadata = resultSet.metaData
 

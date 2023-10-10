@@ -9,6 +9,10 @@ import org.openqa.selenium.Keys as Keys
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
+'setting reset OTP pada DB 0'
+CustomKeywords.'connection.DataVerif.settingResetOTPNol'(conneSign, findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 
+            rowExcel('email')).replace('"', '').toUpperCase())
+
 int delayExpiredOTP
 
 'check ada value maka Setting OTP Active Duration'

@@ -9,6 +9,10 @@
          <key>BASIC</key>
          <value>//*[@role = 'alertdialog']</value>
       </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>ng-tns-c95-12 ng-star-inserted ng-trigger ng-trigger-flyInOut ngx-toastr toast-error</value>
+      </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
@@ -18,7 +22,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/div/div[2]</value>
-      <webElementGuid>b2df19a3-37e8-4905-9e23-409ff7110a91</webElementGuid>
+      <webElementGuid>2b5125a6-2d79-4ca5-8db7-62091e71515c</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -26,6 +30,6 @@
       <name>role</name>
       <type>Main</type>
       <value>alertdialog</value>
-      <webElementGuid>68b91383-3b07-43c1-b421-36b828568d2a</webElementGuid>
+      <webElementGuid>ded06659-1db8-480e-a36c-52cedad44b52</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

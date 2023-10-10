@@ -259,4 +259,9 @@
       <initValue>0</initValue>
       <name>LoginAgain</name>
    </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>1</initValue>
+      <name>VerificationCount</name>
+   </GlobalVariableEntity>
 </GlobalVariableEntities>

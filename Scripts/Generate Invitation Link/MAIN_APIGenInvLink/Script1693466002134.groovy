@@ -209,6 +209,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					while (findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Continue Register & Activation')).equalsIgnoreCase('Continue')) {
 						GlobalVariable.NumofColm++
 						
+						GlobalVariable.FlagFailed = 0
+						
 						'call test case daftar akun'
 	                    WebUI.callTestCase(findTestCase('Generate Invitation Link/DaftarAkunDataVerif'), [('excelPathGenerateLink') : 'Registrasi/Generate_Inv_Link'], 
 	                        FailureHandling.STOP_ON_FAILURE)

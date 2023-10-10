@@ -10,7 +10,7 @@ import internal.GlobalVariable
 public class DataVerif {
 
 	String data
-	int columnCount, i
+	int columnCount, i, updateVariable
 	Statement stm
 	ResultSetMetaData metadata
 	ResultSet resultSet
@@ -388,5 +388,12 @@ public class DataVerif {
 		} else {
 			data = 0
 		}
+	}
+
+	@Keyword
+	settingResetOTPNol(Connection conn, String value) {
+		stm = conn.createStatement()
+
+		updateVariable = stm.executeUpdate("UPDATE am_msuser SET reset_code_request_num = 0 WHERE login_id = '"+ value +"'")
 	}
 }

@@ -11,6 +11,10 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 int delayExpiredOTP
 
+'setting reset OTP pada DB 0'
+CustomKeywords.'connection.DataVerif.settingResetOTPNol'(conneSign, findTestData(excelPathBuatUndangan).getValue(
+		GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase())
+
 'check ada value maka Setting OTP Active Duration'
 if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() > 0) {
 	'Setting OTP Active Duration'

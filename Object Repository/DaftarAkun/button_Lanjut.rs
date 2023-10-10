@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>intut_UlangKataSandi</name>
+   <name>button_Lanjut</name>
    <tag></tag>
-   <elementGuidId>0875be77-54be-4e07-b75f-eabee660e881</elementGuidId>
+   <elementGuidId>9b7b27fe-0da6-4a4f-bcab-5ec2fb1c269a</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;password2&quot;]</value>
+         <value>//*[@class = 'btn btn-primary ng-star-inserted']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>class</name>
       <type>Main</type>
-      <value>//*[@id=&quot;password2&quot;]</value>
-      <webElementGuid>7726b1e9-811d-4418-b5e4-0cec4514c849</webElementGuid>
+      <value>btn btn-primary ng-star-inserted</value>
+      <webElementGuid>7fbfbc35-28a6-49fc-b80e-af7fbbe48c02</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

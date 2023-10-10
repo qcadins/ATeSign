@@ -31,13 +31,13 @@ checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Daf
 
 'verify Nama Lengkap sesuai inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_NamaLengkap'), 'value').toUpperCase(), 
-        findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), 
-    ' Nama Lengkap')
+        findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).toUpperCase(), false, 
+        FailureHandling.CONTINUE_ON_FAILURE), ' Nama Lengkap')
 
 'verify tempat lahir sesuai inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_TempatLahir'), 'value').toUpperCase(), 
-        findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Tempat Lahir')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), 
-    ' Tempat Lahir')
+        findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Tempat Lahir')).toUpperCase(), 
+        false, FailureHandling.CONTINUE_ON_FAILURE), ' Tempat Lahir')
 
 'parse Date from MM/dd/yyyy > yyyy-MM-dd'
 sDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
@@ -49,62 +49,60 @@ checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Daf
 
 'verify No Handphone sesuai inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_NoHandphone'), 'value').toUpperCase(), 
-        findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('$No Handphone')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), 
-    ' No Handphone')
+        findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('$No Handphone')).toUpperCase(), 
+        false, FailureHandling.CONTINUE_ON_FAILURE), ' No Handphone')
 
 'verify Email sesuai inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Email'), 'value').toUpperCase(), 
-        findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), 
-    ' Email')
+        findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase(), false, 
+        FailureHandling.CONTINUE_ON_FAILURE), ' Email')
 
 'verify alamat sesuai inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_AlamatLengkap'), 'value').toUpperCase(), 
-        findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Alamat')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), 
-    ' Alamat')
+        findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Alamat')).toUpperCase(), false, 
+        FailureHandling.CONTINUE_ON_FAILURE), ' Alamat')
 
 if (GlobalVariable.Psre == 'TKNAJ') {
-	
-	'verify provinsi sesuai inputan'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('DaftarAkun/input_Provinsi_TknAja')).toUpperCase(),
-			findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Provinsi')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE),
-		' Provinsi')
-	
-	'verify kota sesuai inputan'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('DaftarAkun/input_Kota_TknAja')).toUpperCase(),
-			findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Kota')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE),
-		' Kota')
-	
-	'verify Kecamatan sesuai inputan'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('DaftarAkun/input_Kecamatan_TknAja')).toUpperCase(),
-			findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Kecamatan')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE),
-		' Kecamatan')
+    'verify provinsi sesuai inputan'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('DaftarAkun/input_Provinsi_TknAja')).toUpperCase(), 
+            findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Provinsi')).toUpperCase(), 
+            false, FailureHandling.CONTINUE_ON_FAILURE), ' Provinsi')
+
+    'verify kota sesuai inputan'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('DaftarAkun/input_Kota_TknAja')).toUpperCase(), 
+            findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Kota')).toUpperCase(), false, 
+            FailureHandling.CONTINUE_ON_FAILURE), ' Kota')
+
+    'verify Kecamatan sesuai inputan'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('DaftarAkun/input_Kecamatan_TknAja')).toUpperCase(), 
+            findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Kecamatan')).toUpperCase(), 
+            false, FailureHandling.CONTINUE_ON_FAILURE), ' Kecamatan')
 } else {
-	
-	'verify provinsi sesuai inputan'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Provinsi'), 'value').toUpperCase(),
-			findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Provinsi')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE),
-		' Provinsi')
-	
-	'verify kota sesuai inputan'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Kota'), 'value').toUpperCase(),
-			findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Kota')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE),
-		' Kota')
-	
-	'verify Kecamatan sesuai inputan'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Kecamatan'), 'value').toUpperCase(),
-			findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Kecamatan')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE),
-		' Kecamatan')
+    'verify provinsi sesuai inputan'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Provinsi'), 'value').toUpperCase(), 
+            findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Provinsi')).toUpperCase(), 
+            false, FailureHandling.CONTINUE_ON_FAILURE), ' Provinsi')
+
+    'verify kota sesuai inputan'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Kota'), 'value').toUpperCase(), 
+            findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Kota')).toUpperCase(), false, 
+            FailureHandling.CONTINUE_ON_FAILURE), ' Kota')
+
+    'verify Kecamatan sesuai inputan'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Kecamatan'), 'value').toUpperCase(), 
+            findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Kecamatan')).toUpperCase(), 
+            false, FailureHandling.CONTINUE_ON_FAILURE), ' Kecamatan')
 }
 
 'verify Kelurahan sesuai inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Kelurahan'), 'value').toUpperCase(), 
-        findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Kelurahan')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), 
-    ' Kelurahan')
+        findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Kelurahan')).toUpperCase(), false, 
+        FailureHandling.CONTINUE_ON_FAILURE), ' Kelurahan')
 
 'verify KodePos sesuai inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_KodePos'), 'value').toUpperCase(), 
-        findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Kode Pos')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), 
-    ' Kode Pos')
+        findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Kode Pos')).toUpperCase(), false, 
+        FailureHandling.CONTINUE_ON_FAILURE), ' Kode Pos')
 
 if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Foto Selfie')) == 'Yes') {
     'click ambil foto sendiri'
@@ -133,7 +131,8 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowEx
 
         'click ambil apply'
         WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Apply'))
-    } else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Path Foto KTP')).length() > 0) {
+    } else if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Path Foto KTP')).length() > 
+    0) {
         'get file path'
         String filePath = userDir + findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Path Foto KTP'))
 
@@ -147,17 +146,18 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowEx
 }
 
 'cek centang syarat dan ketentuan'
-if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Syarat dan Ketentuan Daftar Akun')).equalsIgnoreCase('Yes')) {
+if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Syarat dan Ketentuan Daftar Akun')).equalsIgnoreCase(
+    'Yes')) {
     'click checkbox syarat'
     WebUI.click(findTestObject('DaftarAkun/checkbox_SyaratdanKetentuan'))
 
-	if(GlobalVariable.Psre == 'VIDA') {		
-	    'click checkbox setuju'
-	    WebUI.click(findTestObject('DaftarAkun/checkbox_Setuju'))
-	
-	    'click checkbox setuju'
-	    WebUI.click(findTestObject('DaftarAkun/checkbox_SetujuVIDA'))
-	}
+    if (GlobalVariable.Psre == 'VIDA') {
+        'click checkbox setuju'
+        WebUI.click(findTestObject('DaftarAkun/checkbox_Setuju'))
+
+        'click checkbox setuju'
+        WebUI.click(findTestObject('DaftarAkun/checkbox_SetujuVIDA'))
+    }
 }
 
 'click daftar akun'
@@ -170,8 +170,8 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
 
     'write to excel status failed dan reason'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-        (((findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + '<') + ReasonFailed) + 
-        '>')
+        (((findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', 
+            '') + ';') + '<') + ReasonFailed) + '>')
 
     'click button tutup error'
     WebUI.click(findTestObject('DaftarAkun/button_TutupError'))
@@ -180,9 +180,9 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
 } else {
     ArrayList<String> listOTP = []
 
-	'delay untuk menunggu otp'
-	WebUI.delay(5)
-	
+    'delay untuk menunggu otp'
+    WebUI.delay(5)
+
     'get otp dari DB'
     String otp = CustomKeywords.'connection.DataVerif.getOTP'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
             rowExcel('Email')).toUpperCase())
@@ -190,7 +190,8 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     'add otp ke list'
     listOTP.add(otp)
 
-    if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Autofill OTP')).equalsIgnoreCase('Yes')) {
+    if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Autofill OTP')).equalsIgnoreCase(
+        'Yes')) {
         'input otp'
         WebUI.setText(findTestObject('DaftarAkun/input_OTP'), otp)
 
@@ -261,79 +262,92 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     'click verifikasi'
     WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Verifikasi'))
 
-	if(GlobalVariable.Psre == 'VIDA') {		
-	    'get reason error log'
-	    reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).toString()
+    'get reason error log'
+    reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).toString()
+
+    if ((GlobalVariable.Psre == 'PRIVY') && WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_SuccessPrivy'), 
+        GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+        'looping untuk delay 100detik menunggu proses request status'
+        for (delay = 1; delay <= 5; delay++) {
+            'get data status request dari tr_job_check_register_status DB'
+            ArrayList<String> result = CustomKeywords.'connection.Registrasi.getRegisterPrivyStoreDB'(conneSign, findTestData(
+                    excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('$NIK')).toUpperCase())
+
+            if ((result[0]) != '3') {
+                'jika sudah delay ke 5 maka dianggap failed'
+                if (delay == 5) {
+                    'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, 
+                        GlobalVariable.StatusFailed, ((findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+                            2) + ';') + GlobalVariable.ReasonFailedStoredDB) + ' Karena Job Tidak Jalan')
+                } else {
+                	'delay 20detik'
+                	WebUI.delay(20)                
+                }
+            } else {
+                'refresh page'
+                WebUI.refresh()
+
+                break
+            }
+        }
+    }
 	
-		'check saldo OTP'
-		checkSaldoOTP()
-		
-	    'cek if berhasil pindah page'
-	    if ((reason.contains('gagal') || reason.contains('Saldo')) || reason.contains('Invalid')) {
-	        'write to excel status failed dan reason'
-	        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, 
-	            GlobalVariable.StatusFailed, (((findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
-	                '-', '') + ';') + '<') + reason) + '>')
-	
-	        GlobalVariable.FlagFailed = 1
-	    } else if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/FormAktivasiEsign/input_KataSandi'), GlobalVariable.TimeOut, 
-	        FailureHandling.OPTIONAL)) {
-	        'call testcase form aktivasi vida'
-	        WebUI.callTestCase(findTestCase('Register eSign/FormAktivasiVida'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
-	            FailureHandling.CONTINUE_ON_FAILURE)
-			
-			'looping untuk mengeck apakah case selanjutnya ingin melanjutkan input pada form aktivasi'
-			while (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Continue Register & Activation')).equalsIgnoreCase('Continue')) {
-				GlobalVariable.NumofColm++
-				
-				'call testcase form aktivasi vida'
-				WebUI.callTestCase(findTestCase('Register eSign/FormAktivasiVida'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'],
-						FailureHandling.CONTINUE_ON_FAILURE)
-			} 			
-	    } else if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_PopupMsg'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-	        reason = WebUI.getText(findTestObject('DaftarAkun/label_PopupMsg'))
-	
-	        'write to excel status failed dan reason'
-	        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, 
-	            GlobalVariable.StatusFailed, (((findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
-	                '-', '') + ';') + '<') + reason) + '>')
-	
-	        'click button tutup error'
-	        WebUI.click(findTestObject('DaftarAkun/button_OK'))
-	
-	        'click button X tutup popup otp'
-	        WebUI.click(findTestObject('DaftarAkun/button_X'))
-	
-	        GlobalVariable.FlagFailed = 1
-	    }
-	} else if(GlobalVariable.Psre == 'PRIVY') {
-		if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_SuccessPrivy'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-			'get message dari ui'
-			reason = WebUI.getText(findTestObject('DaftarAkun/label_SuccessPrivy'))
-		
-			'check if registrasi berhasil dan write ke excel'
-			if (reason.equalsIgnoreCase('Proses verifikasi anda sedang diproses. Harap menunggu proses verifikasi selesai.') && GlobalVariable.FlagFailed == 0) {
-				'write to excel success'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, SheetName,
-					0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-			} else {
-				'write to excel status failed dan reason'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm,
-					GlobalVariable.StatusFailed, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
-						'-', '') + ';') + '<' + reason + '>')
-			}
-			
-			'check saldo OTP'
-			checkSaldoOTP()
-		}
-	}
+	'check saldo OTP'
+	checkSaldoOTP()
+    
+    'cek if berhasil pindah page'
+    if ((reason.contains('gagal') || reason.contains('Saldo')) || reason.contains('Invalid')) {
+        'write to excel status failed dan reason'
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            (((findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+                '-', '') + ';') + '<') + reason) + '>')
+
+        GlobalVariable.FlagFailed = 1
+
+        if (reason.contains('gagal')) {
+            (GlobalVariable.VerificationCount)++
+        }
+    } else if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/FormAktivasiEsign/input_KataSandi'), GlobalVariable.TimeOut, 
+        FailureHandling.OPTIONAL)) {
+        'call testcase form aktivasi vida'
+        WebUI.callTestCase(findTestCase('Register eSign/FormAktivasiVida'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
+            FailureHandling.CONTINUE_ON_FAILURE)
+
+        'looping untuk mengeck apakah case selanjutnya ingin melanjutkan input pada form aktivasi'
+        while (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Continue Register & Activation')).equalsIgnoreCase(
+            'Continue')) {
+            (GlobalVariable.NumofColm)++
+
+            GlobalVariable.FlagFailed = 0
+
+            'call testcase form aktivasi vida'
+            WebUI.callTestCase(findTestCase('Register eSign/FormAktivasiVida'), [('excelPathBuatUndangan') : 'Registrasi/BuatUndangan'], 
+                FailureHandling.CONTINUE_ON_FAILURE)
+        }
+    } else if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_PopupMsg'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+        reason = WebUI.getText(findTestObject('DaftarAkun/label_PopupMsg'))
+
+        'write to excel status failed dan reason'
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            (((findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+                '-', '') + ';') + '<') + reason) + '>')
+
+        'click button tutup error'
+        WebUI.click(findTestObject('DaftarAkun/button_OK'))
+
+        'click button X tutup popup otp'
+        WebUI.click(findTestObject('DaftarAkun/button_X'))
+
+        GlobalVariable.FlagFailed = 1
+    }
 }
 
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, ((findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            ((findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
             GlobalVariable.ReasonFailedVerifyEqualOrMatch) + reason)
 
         GlobalVariable.FlagFailed = 1
@@ -353,49 +367,53 @@ def checkSaldoOTP() {
     'maximize window'
     WebUI.maximizeWindow()
 
-    'store user login'	
-	GlobalVariable.userLogin = findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')).toUpperCase()
-	
-	'input email'
-	WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')))
-	
-	'store GV user login'
-	GlobalVariable.userLogin = findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))
-	
-	'input password'
-	WebUI.setText(findTestObject('Login/input_Password'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Password Login')))
-	
-	'click button login'
-	WebUI.click(findTestObject('Login/button_Login'))
-	
-	if(WebUI.verifyElementPresent(findTestObject('Login/input_Perusahaan'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {	
-		'input perusahaan'
-		WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Perusahaan Login')))
-		
-		'enter untuk input perusahaan'
-		WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
-		
-		'input peran'
-		WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Peran Login')))
-		
-		'enter untuk input peran'
-		WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
-		
-		'click button pilih peran'
-		WebUI.click(findTestObject('Login/button_pilihPeran'))
-	}
-	
-	'Jika error lognya muncul'
-	if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-		'ambil teks errormessage'
-		errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
-		
-		'Tulis di excel itu adalah error'
-		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm,
-			GlobalVariable.StatusWarning, (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
-			'-', '') + ';') + '<' + errormessage + '>')
-	}
+    'store user login'
+    GlobalVariable.userLogin = findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')).toUpperCase()
 
+    'input email'
+    WebUI.setText(findTestObject('Login/input_Email'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+            rowExcel('Email Login')))
+
+    'store GV user login'
+    GlobalVariable.userLogin = findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))
+
+    'input password'
+    WebUI.setText(findTestObject('Login/input_Password'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+            rowExcel('Password Login')))
+
+    'click button login'
+    WebUI.click(findTestObject('Login/button_Login'))
+
+    if (WebUI.verifyElementPresent(findTestObject('Login/input_Perusahaan'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+        'input perusahaan'
+        WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+                rowExcel('Perusahaan Login')))
+
+        'enter untuk input perusahaan'
+        WebUI.sendKeys(findTestObject('Login/input_Perusahaan'), Keys.chord(Keys.ENTER))
+
+        'input peran'
+        WebUI.setText(findTestObject('Login/input_Peran'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+                rowExcel('Peran Login')))
+
+        'enter untuk input peran'
+        WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
+
+        'click button pilih peran'
+        WebUI.click(findTestObject('Login/button_pilihPeran'))
+    }
+    
+    'Jika error lognya muncul'
+    if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+        'ambil teks errormessage'
+        errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
+
+        'Tulis di excel itu adalah error'
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, GlobalVariable.StatusWarning, 
+            (((findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+                '-', '') + ';') + '<') + errormessage) + '>')
+    }
+    
     'click menu saldo'
     WebUI.click(findTestObject('RegisterEsign/checkSaldo/menu_Saldo'))
 
@@ -470,7 +488,8 @@ def checkSaldoOTP() {
 
     'verify user name ui = excel'
     checkVerifyEqualOrMatch(WebUI.verifyNotMatch(WebUI.getText(modifyObjectUser), findTestData(excelPathBuatUndangan).getValue(
-                GlobalVariable.NumofColm, rowExcel('$Nama')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' User')
+                GlobalVariable.NumofColm, rowExcel('$Nama')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), 
+        ' User')
 
     'swicth tab ke new tab'
     WebUI.switchToWindowIndex(0)
@@ -483,5 +502,6 @@ def checkSaldoOTP() {
 }
 
 def rowExcel(String cellValue) {
-	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, SheetName, cellValue)
+    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, SheetName, cellValue)
 }
+
