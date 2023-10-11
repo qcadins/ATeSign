@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>label_Berhasil</name>
+   <tag></tag>
+   <elementGuidId>796d4157-3708-4f00-be1d-f7c8e615ce2e</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;formSukses&quot;]/h2</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;formSukses&quot;]/h2</value>
+      <webElementGuid>6494a440-1165-40f8-a29a-4ab93b58a01b</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>
