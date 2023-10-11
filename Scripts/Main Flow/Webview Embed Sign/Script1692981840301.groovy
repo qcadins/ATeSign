@@ -409,7 +409,7 @@ for (o = 0; o < documentId.size(); o++) {
                     continue
                 }
             }
-        } else if (((mustFaceCompDB == '1') && (countLivenessFaceComp < maxFaceCompDB)) && (alreadyVerif == 0) && (verifMethod[GlobalVariable.indexUsed].equalsIgnoreCase('Biometric'))) {
+        } else if (((mustFaceCompDB == '1') && (countLivenessFaceComp < maxFaceCompDB)) && (alreadyVerif == 0)) {
             'pastikan button otp tidak ada'
             checkVerifyEqualorMatch(WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/btn_verifOTP'), GlobalVariable.TimeOut, 
                     FailureHandling.OPTIONAL), 'Tombol OTP muncul pada Vendor selain Privy yang mewajibkan FaceCompare')
