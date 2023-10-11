@@ -23,13 +23,14 @@ import java.sql.Connection as Connection
 'get current date'
 def currentDate = new Date().format('yyyy-MM-dd HH:mm:ss')
 
-println currentDate
-
-if (currentDate.contains('2023')) {
-	println 'aa'
+def bodySignLocationCoordinate(String llxSigns, String llySigns, String urxSigns, String urySigns) {
+	return '{"llx" : ' + llxSigns + ', "lly" : ' + llySigns +', "urx" : ' + urxSigns + ', "ury" : ' + urySigns + '}'
 }
 
+def bodySignLocationPage(String pageSigns) {
+	return '{"page" : ' + pageSigns + '}'
+}
 
-if ('2023'.contains(currentDate)) {
-	println 'aaa'
+def bodySignLocationCoordinatePage(String llxSigns, String llySigns, String urxSigns, String urySigns, String pageSigns) {
+	return  '"page" : ' + pageSigns + ', "llx" : ' + llxSigns + ', "lly" : ' + llySigns + ', "urx" : ' + urxSigns + ', "ury" : ' + urySigns + '}'
 }

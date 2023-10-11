@@ -663,8 +663,9 @@ for (o = 0; o < documentId.size(); o++) {
 		} else {
 			if (b == 3) {
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
-                rowExcel('Reason Failed') + ';') + 'Saldo ')
+                GlobalVariable.StatusFailed, (((((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
+                rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedSignGagal) + ' terlihat pada Kuantitas di Mutasi Saldo dengan nomor kontrak ') + 
+                                    '<') + (noKontrakPerDoc[i])) + '>')
 			}
 		}
 		
@@ -1312,9 +1313,9 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
 
 			'Klik resend otp'
 			WebUI.click(findTestObject('KotakMasuk/Sign/btn_ResendOTP'))
-
+			for (loopingTimer = 1; loopingTimer <= 5; loopingTimer++) {
 			'Memberikan delay 3 karena OTP after terlalu cepat'
-			WebUI.delay(5)
+			WebUI.delay(loopingTimer *  2)
 
 			'OTP yang kedua'
 			otpAfter = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, emailSigner)
@@ -1324,11 +1325,13 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
 
 			'dicheck OTP pertama dan kedua dan seterusnya'
 			if (WebUI.verifyMatch(listOTP[(w - 1)], listOTP[w], false, FailureHandling.CONTINUE_ON_FAILURE)) {
+				if (loopingTimer == 5) {
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 					(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
-						'-', '') + ';') + 'OTP Before dan After sama setelah 5 detik')
+						'-', '') + ';') + 'OTP Before dan After sama setelah ' + loopingTimer * 2 +' detik')
+				}
 			}
-			
+			}
 			'Jika looping telah diterakhir, baru set text'
 			if (w == countResend) {
 				'value OTP dari db'
@@ -1416,6 +1419,10 @@ def verifBiomMethod(int isLocalhost, int maxFaceCompDB, int countLivenessFaceCom
 
 			GlobalVariable.FlagFailed = 1
 
+			if (messageError.equalsIgnoreCase('Image resolution too small')) {
+				break
+			}
+			
 			'ambil terbaru count dari DB'
 			countLivenessFaceComp = CustomKeywords.'connection.DataVerif.getCountFaceCompDaily'(conneSign, emailSigner)
 		} else {
