@@ -81,10 +81,6 @@ for (o = 0; o < documentId.size(); o++) {
 
     ArrayList totalSignedBefore = [],totalSignedAfter = [], flaggingOTP = []
 
-    'Split dokumen id agar mendapat dokumenid 1 per 1 dengan case bulk'
-    documentId = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(
-        ',', splitnum)
-
     'Jika flag tenant no'
     if ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code (Sign External)')).split(
         ';', -1)[GlobalVariable.indexUsed]) == 'No') {
