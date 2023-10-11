@@ -23,14 +23,11 @@ import java.sql.Connection as Connection
 'get current date'
 def currentDate = new Date().format('yyyy-MM-dd HH:mm:ss')
 
-def bodySignLocationCoordinate(String llxSigns, String llySigns, String urxSigns, String urySigns) {
-	return '{"llx" : ' + llxSigns + ', "lly" : ' + llySigns +', "urx" : ' + urxSigns + ', "ury" : ' + urySigns + '}'
-}
-
-def bodySignLocationPage(String pageSigns) {
-	return '{"page" : ' + pageSigns + '}'
-}
-
-def bodySignLocationCoordinatePage(String llxSigns, String llySigns, String urxSigns, String urySigns, String pageSigns) {
-	return  '"page" : ' + pageSigns + ', "llx" : ' + llxSigns + ', "lly" : ' + llySigns + ', "urx" : ' + urxSigns + ', "ury" : ' + urySigns + '}'
+int b
+for (i = 1; i <= 5; i++) {
+	
+	if (i == 3) {
+	b = 2
+	}
+	println b
 }

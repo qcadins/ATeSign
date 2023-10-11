@@ -35,6 +35,24 @@
       <value></value>
       <variableId>0bccdfca-b31b-482c-8dba-49e7988f4e0f</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>ffb18404-5be7-4b14-a795-304504c74e26</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>12e16076-1b63-47b2-b85d-ad19c4ed289a</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>9ba5a237-3596-4a79-ae12-4accda1bfbfb</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -69,5 +87,26 @@
       <id>0bccdfca-b31b-482c-8dba-49e7988f4e0f</id>
       <masked>false</masked>
       <name>CancelDocsSend</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>ffb18404-5be7-4b14-a795-304504c74e26</id>
+      <masked>false</masked>
+      <name>isDownloadDocument</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>12e16076-1b63-47b2-b85d-ad19c4ed289a</id>
+      <masked>false</masked>
+      <name>isDeleteDownloadedDocument</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>9ba5a237-3596-4a79-ae12-4accda1bfbfb</id>
+      <masked>false</masked>
+      <name>isViewDocument</name>
    </variable>
 </TestCaseEntity>

@@ -257,18 +257,30 @@ for (int t = 0; t < resultHashMap.keySet().size(); t++) {
 	'looping berdasarkan jumlah dokumen'
 	resultHashMap = loopingMultiDoc(docId,conneSign, refNumber,resultHashMap)
 	
+	'variable count total document sebelum dilakukannya view document'
+	int countTotalDocumentBeforeView, countClickedButtonPrevious = 0
+	
     for (c = 0; c < resultHashMap.get(resultHashMap.keySet()[t]); c++) {
-        'get row pada beranda'
-        variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
+        if (isViewDocument != 'Yes') {
+			'get row pada beranda'
+			variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
+        } else {
+			'Klik button Lastest'
+			WebUI.click(modifyObjectBtnLastest, FailureHandling.OPTIONAL)
+		}
 
         if (c >= variable.size()) {
             'Agar dapat ke Lastest, modifikasi button Lastest pada paging'
             modifyObjectBtnPrevious = WebUI.modifyObjectProperty(findTestObject('Object Repository/KotakMasuk/Sign/btn_Lastest'), 
                 'xpath', 'equals', '/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[2]/a/i', 
                 true)
-
-            WebUI.click(modifyObjectBtnPrevious)
-
+			
+			countClickedButtonPrevious++
+			
+			for (loopingClickPrevious = 0; loopingClickPrevious < countClickedButtonPrevious; loopingClickPrevious++) {
+				WebUI.click(modifyObjectBtnPrevious)
+			}
+			
             'get row pada beranda'
             variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
 
@@ -433,12 +445,12 @@ for (int t = 0; t < resultHashMap.keySet().size(); t++) {
         'Klik x terlebih dahulu pada popup'
         WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_X'))
 
-        String isDownloadDocument = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Need Download Document ?'))
+        isDownloadDocument = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Need Download Document ?'))
 
-        String isDeleteDownloadedDocument = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel(
+        isDeleteDownloadedDocument = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel(
                 'Delete Downloaded Document'))
 
-        String isViewDocument = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Need View Document ?'))
+        isViewDocument = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Need View Document ?'))
 
         'Jika document ingin didownload, maka'
         if (isDownloadDocument == 'Yes') {
@@ -454,6 +466,9 @@ for (int t = 0; t < resultHashMap.keySet().size(); t++) {
         
         'Jika is View Document yes, maka '
         if (isViewDocument == 'Yes') {
+			'ambil count total document sebelum diview'
+			countTotalDocumentBeforeView = variable.size()
+			
             'Klik View Document'
             WebUI.click(modifyObjectBtnViewDoc)
 
@@ -485,7 +500,7 @@ for (int t = 0; t < resultHashMap.keySet().size(); t++) {
                 
                 'Diverifikasi dengan UI didepan'
                 arrayMatch.add(WebUI.verifyMatch(labelRefNum, labelViewDoc, false, FailureHandling.CONTINUE_ON_FAILURE))
-
+				
                 'Klik kembali'
                 WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_backViewDokumen'))
 				
