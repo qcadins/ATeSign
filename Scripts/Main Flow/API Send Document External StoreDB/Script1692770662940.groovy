@@ -151,7 +151,7 @@ for (int i = 0; i < docid.size(); i++) {
                     'Jika looping i lebih kecil dari sequence number'
                     if (i < seqNoExcel.size()) {
                         'verify sequence number'
-                        arrayMatch.add(WebUI.verifyMatch(seqNoExcel[r], resultStoreEmailandType[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+                        arrayMatch.add(WebUI.verifyMatch(seqNoExcel[r].replace('"',''), resultStoreEmailandType[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
                     }
                 }
             } else {
