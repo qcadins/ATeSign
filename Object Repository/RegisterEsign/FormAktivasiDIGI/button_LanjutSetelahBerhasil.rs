@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>button_LanjutSetelahBerhasil</name>
+   <tag></tag>
+   <elementGuidId>c6417d54-a1fa-4b56-a32b-74b80056cf65</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;formSukses-button&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>onclick</name>
+      <type>Main</type>
+      <value>redirectFunction($link_red)</value>
+      <webElementGuid>772b9bf6-e324-4173-b943-086d4e445240</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;formSukses-button&quot;]</value>
+      <webElementGuid>3a3e33db-543a-4288-83c6-5183ab6d3baa</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>
