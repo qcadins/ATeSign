@@ -123,7 +123,7 @@ idPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExc
 
 signerSelfPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('signerSelfPhoto (Send Normal)')).split(enter, splitnum)
 
-String stringRefno, bodyAPI
+String stringRefno = '', bodyAPI = ''
 
 'Looping berdasarkan total dari dokumen file ukuran'
 for (int o = 0; o < documentFile.size(); o++) {
@@ -225,21 +225,20 @@ for (int o = 0; o < documentFile.size(); o++) {
     }
     
     if (o == (documentFile.size() - 1)) {
-        stringRefno = (((((((((((((((((((((((((((((stringRefno + '{"referenceNo" : ') + refNo) + ', "documentTemplateCode": ') + 
-        (documentTemplateCode[o])) + ', "officeCode": ') + (officeCode[o])) + ', "officeName": ') + (officeName[o])) + ', "regionCode": ') + 
-        (regionCode[o])) + ', "regionName": ') + (regionName[o])) + ', "businessLineCode": ') + (businessLineCode[o])) + 
-        ', "businessLineName": ') + (businessLineName[o])) + ', "isSequence": ') + (isSequence[o])) + ', "signer":[') + 
-        listSigner) + '],') + bodyAPI) + ', "psreCode" : ') + (psreCode[o])) + ', "successURL": ') + (successURL[o])) + 
-        ', "uploadURL": ') + (uploadURL[o])) + '}')
+        stringRefno = stringRefno + '{"referenceNo" : ' + refNo + ', "documentTemplateCode": ' + 
+        documentTemplateCode[o] + ', "officeCode": ' + officeCode[o] + ', "officeName": ' + officeName[o] + ', "regionCode": ' + 
+        regionCode[o] + ', "regionName": ' + regionName[o] + ', "businessLineCode": ' + businessLineCode[o] + 
+        ', "businessLineName": ' + businessLineName[o] + ', "isSequence": ' + isSequence[o] + ', "signer":[' + 
+        listSigner + '],' + bodyAPI + ', "psreCode" : ' + psreCode[o] + ', "successURL": ' + successURL[o] + 
+        ', "uploadURL": ' + uploadURL[o] + '}'
     } else {
-        stringRefno = (((((((((((((((((((((((((((((stringRefno + '{"referenceNo" : ') + refNo) + ', "documentTemplateCode": ') + 
-        (documentTemplateCode[o])) + ', "officeCode": ') + (officeCode[o])) + ', "officeName": ') + (officeName[o])) + ', "regionCode": ') + 
-        (regionCode[o])) + ', "regionName": ') + (regionName[o])) + ', "businessLineCode": ') + (businessLineCode[o])) + 
-        ', "businessLineName": ') + (businessLineName[o])) + ', "isSequence": ') + (isSequence[o])) + ', "signer":[') + 
-        listSigner) + '],') + bodyAPI) + ', "psreCode" : ') + (psreCode[o])) + ', "successURL": ') + (successURL[o])) + 
-        ', "uploadURL": ') + (uploadURL[o])) + '},')
+        stringRefno = stringRefno + '{"referenceNo" : ' + refNo + ', "documentTemplateCode": ' + 
+        documentTemplateCode[o] + ', "officeCode": ' + officeCode[o] + ', "officeName": ' + officeName[o] + ', "regionCode": ' + 
+        regionCode[o] + ', "regionName": ' + regionName[o] + ', "businessLineCode": ' + businessLineCode[o] + 
+        ', "businessLineName": ' + businessLineName[o] + ', "isSequence": ' + isSequence[o] + ', "signer":[' + 
+        listSigner + '],' + bodyAPI + ', "psreCode" : ' + psreCode[o] + ', "successURL": ' + successURL[o] + 
+        ', "uploadURL": ' + uploadURL[o] + '},'
     }
-
 }
 
 'Jika flag tenant no'
