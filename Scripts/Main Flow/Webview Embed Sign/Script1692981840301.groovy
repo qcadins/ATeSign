@@ -1424,7 +1424,7 @@ def verifBiomMethod(int isLocalhost, int maxFaceCompDB, int countLivenessFaceCom
     WebUI.click(findTestObject('KotakMasuk/Sign/btn_LanjutAfterKonfirmasi'), FailureHandling.OPTIONAL)
 
     'jika localhost aktif'
-    if (isLocalhost == 1) {
+    if (isLocalhost == 1 && GlobalVariable.RunWith == 'Mobile') {
         'tap allow camera'
         MobileBuiltInKeywords.tapAndHoldAtPosition(895, 1364, 3)
     }
