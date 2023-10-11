@@ -550,15 +550,15 @@ def setBodyForStampingLocation(String pageStamp, String llxStamp, String llyStam
 
 
 def bodyLocationCoordinate(String llxSigns, String llySigns, String urxSigns, String urySigns) {
-	return '{"llx" : ' + llxSigns + ', "lly" : ' + llySigns +', "urx" : ' + urxSigns + ', "ury" : ' + urySigns + '}'
+	return '{"llx":' + llxSigns + ',"lly":' + llySigns +',"urx":' + urxSigns + ',"ury":' + urySigns +'}'
 }
 
 def bodyLocationPage(String pageSigns) {
-	return '{"page" : ' + pageSigns + '}'
+	return '{"page":' + pageSigns + '}'
 }
 
 def bodyLocationCoordinatePage(String llxSigns, String llySigns, String urxSigns, String urySigns, String pageSigns) {
-	return  '{"page" : ' + pageSigns + ', "llx" : ' + llxSigns + ', "lly" : ' + llySigns + ', "urx" : ' + urxSigns + ', "ury" : ' + urySigns + '}'
+	return  '{"page":' + pageSigns + ',"llx":' + llxSigns + ',"lly":' + llySigns + ',"urx":' + urxSigns + ', "ury":' + urySigns + '}'
 }
 
 def bodySigner(String signActions, String signerTypes, String tlps, String idKtps, String emails, String bodyAPI) {
