@@ -98,4 +98,11 @@ public class Registrasi {
 		}
 		listdata
 	}
+	
+	@Keyword
+	settingSendCertNotifbySMS(Connection conn, String value) {
+		stm = conn.createStatement()
+
+		int resultSet = stm.executeUpdate("UPDATE ms_tenant SET send_cert_notif_by_sms = '"+ value +"' WHERE tenant_code = '"+ GlobalVariable.Tenant +"'")
+	}
 }

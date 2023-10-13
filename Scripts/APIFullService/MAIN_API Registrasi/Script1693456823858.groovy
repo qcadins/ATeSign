@@ -46,11 +46,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         'check ada value maka setting email service tenant'
-        if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')).length() > 0) {
+        if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Services')).length() > 0) {
             'setting email service tenant'
             CustomKeywords.'connection.APIFullService.settingEmailServiceTenant'(conneSign, findTestData(excelPathAPIRegistrasi).getValue(
-                    GlobalVariable.NumofColm, rowExcel('Setting Email Service')))
+                    GlobalVariable.NumofColm, rowExcel('Setting Email Services')))
         }
+		
+		'check ada value maka Setting Email Certif Notif'
+		if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')).length() > 0) {
+			'Setting Email Certif Notif'
+			CustomKeywords.'connection.Registrasi.settingSendCertNotifbySMS'(conneSign, findTestData(excelPathAPIRegistrasi).getValue(
+					GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')))
+		}
         
         'check ada value maka setting register as dukcapil check'
         if (findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Setting as Dukcapil Check')).length() > 0) {
@@ -282,6 +289,21 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         'verify saldo before dan after'
                         checkVerifyEqualOrMatch(WebUI.verifyMatch(saldoBefore.toString(), saldoAfter.toString(), false, 
                                 FailureHandling.CONTINUE_ON_FAILURE), ' Saldo Gagal Potong')
+						
+						if (((findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')) == '0' &&
+							(findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Services')) == '1')) || (
+							(findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Services')) == '0'))) &&
+							findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase().contains('OUTLOOK.COM') &&
+								GlobalVariable.Psre == 'VIDA') {
+							'call keyword get email'
+							String emailCert = CustomKeywords.'customizekeyword.GetEmail.getEmailContent'(findTestData(excelPathAPIRegistrasi).getValue(
+												GlobalVariable.NumofColm, rowExcel('email')).replace('"',''), findTestData(excelPathAPIRegistrasi).getValue(
+												GlobalVariable.NumofColm, rowExcel('Password')).replace('"',''))
+							
+							'verify email cert'
+							checkVerifyEqualOrMatch(WebUI.verifyMatch(emailCert, 'Penerbitan Sertifikat Elektronik',
+									false, FailureHandling.CONTINUE_ON_FAILURE), ' email cert tidak terkirim')
+						}
                     }
                 }
             } else {

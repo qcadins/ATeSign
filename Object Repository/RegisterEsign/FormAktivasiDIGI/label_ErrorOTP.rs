@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>label_ErrorOTP</name>
+   <tag></tag>
+   <elementGuidId>b7253853-2db0-4882-9424-4d375dad0f3e</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;e_handphone&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;e_handphone&quot;]</value>
+      <webElementGuid>42356ed1-0a68-42dc-a1ee-49db61b4f88b</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

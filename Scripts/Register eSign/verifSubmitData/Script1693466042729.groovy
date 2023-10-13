@@ -120,23 +120,23 @@ def verifyListUndangan() {
 				excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email')), false, FailureHandling.CONTINUE_ON_FAILURE), ' Penerima Undangan')
 	
 	tanggalPengiriman = WebUI.getText(findTestObject('ListUndangan/table_TanggalPengiriman')).split(' ', -1)
-	
-	parsedDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(tanggalPengiriman[0], 'dd-MMM-yyyy', 'yyyy-MM-dd')
-	
-	'verify tanggal pengiriman'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(parsedDate, currentDate, false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Pengiriman')
-	
+
+    parsedDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(tanggalPengiriman[0], 'dd-MMM-yyyy', 'yyyy-MM-dd')
+
+    'verify tanggal pengiriman'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(parsedDate, currentDate, false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Pengiriman')
+
 	'verify tanggal registrasi'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_TanggalRegistrasi')), '-', false,
-			FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Registrasi')
-	
-	'verify status registrasi'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusRegistrasi')), 'NOT DONE',
-			false, FailureHandling.CONTINUE_ON_FAILURE), ' Status Registrasi')
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_TanggalRegistrasi')), '-', false, FailureHandling.CONTINUE_ON_FAILURE),
+		' Tanggal Registrasi')
+	  
+    'verify status registrasi'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusRegistrasi')), 'NOT DONE', 
+            false, FailureHandling.CONTINUE_ON_FAILURE), ' Status Registrasi')
 	
 	'verify Status undangan'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusUndangan')), 'AKTIF', false,
-			FailureHandling.CONTINUE_ON_FAILURE), ' Status Undangan')
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusUndangan')), 'AKTIF',
+			false, FailureHandling.CONTINUE_ON_FAILURE), ' Status Undangan')
 }
 
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
