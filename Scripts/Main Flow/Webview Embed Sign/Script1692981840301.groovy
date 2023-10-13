@@ -1457,7 +1457,7 @@ def verifBiomMethod(int isLocalhost, int maxFaceCompDB, int countLivenessFaceCom
                 countSaldoSplitLiveFCused++
             }
             
-            GlobalVariable.eSignData.putAt('VerifkasiBiometric', countSaldoSplitLiveFCused)
+            GlobalVariable.eSignData.putAt('VerifikasiBiometric', countSaldoSplitLiveFCused)
 			
             'ambil message error'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
