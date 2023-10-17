@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>MAIN_API Sent OTP Signing</name>
+   <name>MAIN_API Sent OTP Signing External</name>
    <tag></tag>
    <comment></comment>
    <testCaseGuid>cd123424-4d03-4796-a47c-67da5ce82c5d</testCaseGuid>

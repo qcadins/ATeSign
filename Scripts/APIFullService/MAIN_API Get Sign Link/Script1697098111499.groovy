@@ -75,14 +75,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
 			'Jika status codenya 0'
 			if (status_Code == 0) {
-				'get vendor Code'
+				'get sign link'
 				GlobalVariable.Response = WS.getElementPropertyValue(respon_signdoc, 'signLink')
 
 				'write to excel success'
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
 					rowExcel('Status') -1, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 
-				'write to excel success'
+				'tulis di excel hasil link yang bisa digunakan untuk sign'
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
 					rowExcel('Sign Link') - 1, GlobalVariable.NumofColm - 1, GlobalVariable.Response)
 			} else {
