@@ -17,14 +17,17 @@ import com.kms.katalon.core.testobject.TestObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
+import com.sun.mail.pop3.POP3Store
 
+import javax.mail.*
 import javax.mail.BodyPart as BodyPart
 import javax.mail.Folder as Folder
 import javax.mail.Message
 import javax.mail.MessagingException
 import javax.mail.NoSuchProviderException
 import javax.mail.Session as Session
-import javax.mail.Store as Store
+import javax.mail.Store
+import javax.mail.internet.InternetAddress
 import javax.mail.internet.MimeMultipart as MimeMultipart
 import org.jsoup.Jsoup as Jsoup
 import org.jsoup.nodes.Document as Document
@@ -73,11 +76,11 @@ public class GetEmail {
 		Message message = messages[(lastEmailSequence - 1)]
 
 		String emailSubject = message.getSubject()
-		
+
 		System.out.println('Email Number ' + lastEmailSequence)
 
 		System.out.println('Subject: ' + emailSubject)
-		
+
 		System.out.println('Subject: ' + message.getContent().toString())
 
 		System.out.println('From: ' + (message.getFrom()[0]))
@@ -97,24 +100,38 @@ public class GetEmail {
 				BodyPart bodyPart = mimeMultipart.getBodyPart(i)
 
 				String contentType = bodyPart.getContentType()
-
+				Document doc
+				
 				// Hanya ambil bagian teks dari bagian yang berisi teks
 				if (contentType.startsWith('text/plain') || contentType.startsWith('text/html')) {
 					String partText = ((bodyPart.getContent()) as String)
 
 					// Gunakan jsoup untuk menghilangkan elemen HTML
-					Document doc = Jsoup.parse(partText)
+					doc = Jsoup.parse(partText)
 
 					textWithoutHtml = doc.text()
 
-					//bodyText.append(textWithoutHtml);
-					System.out.println(textWithoutHtml)
+					println(textWithoutHtml)
+				} else {
+					InputStream is = bodyPart.getInputStream();
+					BufferedReader br = new BufferedReader(new InputStreamReader(is));
+					String line;
+					while ((line = br.readLine()) != null) {
+						bodyText.append(line);
+					}
+					
+					// Gunakan jsoup untuk menghilangkan elemen HTML
+					doc = Jsoup.parse(bodyText.toString())
+							
+					textWithoutHtml = findText(doc.text())
+				   
+					println(textWithoutHtml)
 				}
 			}
 
 			String otpCode = findOtpCode(textWithoutHtml.toString())
 
-			System.out.println('OTP Code: ' + otpCode)
+			println('OTP Code: ' + otpCode)
 		}
 
 		emailFolder.close(false)
@@ -134,5 +151,23 @@ public class GetEmail {
 		}
 
 		return ''
+	}
+	
+	def findText(String text) {
+		Pattern pattern = Pattern.compile("Yth(.+?)Tim eSignHub");
+
+        Matcher matcher = pattern.matcher(text);
+
+        if (matcher.find()) {
+            // Extract the matched text
+            String extractedText = matcher.group(1).trim();
+			String cleanedText = extractedText.replaceAll("[\\n]+", " ");
+            return extractedText
+        } else {
+            System.out.println("Match not found.");
+			
+            return ''
+        }
+
 	}
 }

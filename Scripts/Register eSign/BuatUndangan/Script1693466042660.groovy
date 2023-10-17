@@ -300,7 +300,8 @@ if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/label_ValidationErr
 		
 		println('saldoAfter : ' + saldoAfter.toString())
 		
-		if (((findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')) == '0' && 
+		if ((((findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')) == '0' || 
+			findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')) == 'null') && 
 			(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Services')) == '1')) || (
 			(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Services')) == '0'))) &&
 			findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase().contains('OUTLOOK.COM') &&
