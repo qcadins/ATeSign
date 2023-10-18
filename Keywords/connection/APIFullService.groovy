@@ -1064,4 +1064,34 @@ public class APIFullService {
 		}
 		data
 	}
+
+	@Keyword
+	getDefaultVendor(Connection conn, String tenantCode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select vendor_code from ms_vendoroftenant mvo join ms_tenant mt on mvo.id_ms_tenant = mt.id_ms_tenant join ms_vendor mv on mvo.id_ms_vendor = mv.id_ms_vendor where tenant_code = '"+ tenantCode +"' order by default_vendor ASC limit 1")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+
+	@Keyword
+	getRegisteredVendor(Connection conn, String email) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select vendor_code from ms_vendor_registered_user mvr join ms_vendor mv on mv.id_ms_vendor = mvr.id_ms_vendor where signer_registered_email = '"+ email.toUpperCase() +"' order by id_ms_vendor_registered_user desc limit 1")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
 }
