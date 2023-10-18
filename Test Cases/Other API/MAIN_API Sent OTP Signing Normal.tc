@@ -18,7 +18,7 @@
       <variableId>f0ab38f2-d3a4-4def-9a67-ba02e4e5b94b</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'APIFullService/API_SentOTPSigning'</defaultValue>
+      <defaultValue>'API/Sent OTP Signing Normal'</defaultValue>
       <description></description>
       <id>b98e3682-39a3-4885-a120-1ed2e2248547</id>
       <masked>false</masked>
