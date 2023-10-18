@@ -101,7 +101,7 @@ public class GetEmail {
 
 				String contentType = bodyPart.getContentType()
 				Document doc
-				
+
 				// Hanya ambil bagian teks dari bagian yang berisi teks
 				if (contentType.startsWith('text/plain') || contentType.startsWith('text/html')) {
 					String partText = ((bodyPart.getContent()) as String)
@@ -119,12 +119,12 @@ public class GetEmail {
 					while ((line = br.readLine()) != null) {
 						bodyText.append(line);
 					}
-					
+
 					// Gunakan jsoup untuk menghilangkan elemen HTML
 					doc = Jsoup.parse(bodyText.toString())
-							
+
 					textWithoutHtml = findText(doc.text())
-				   
+
 					println(textWithoutHtml)
 				}
 			}
@@ -152,22 +152,22 @@ public class GetEmail {
 
 		return ''
 	}
-	
+
 	def findText(String text) {
 		Pattern pattern = Pattern.compile("Yth(.+?)Tim eSignHub");
 
-        Matcher matcher = pattern.matcher(text);
+		Matcher matcher = pattern.matcher(text);
 
-        if (matcher.find()) {
-            // Extract the matched text
-            String extractedText = matcher.group(1).trim();
+		if (matcher.find()) {
+			// Extract the matched text
+			String extractedText = matcher.group(1).trim();
 			String cleanedText = extractedText.replaceAll("[\\n]+", " ");
-            return extractedText
-        } else {
-            System.out.println("Match not found.");
-			
-            return ''
-        }
+			return extractedText
+		} else {
+			System.out.println("Match not found.");
+
+			return ''
+		}
 
 	}
 }
