@@ -295,6 +295,38 @@ public class APIFullService {
 		}
 		data
 	}
+	
+	@Keyword
+	getPrivySignLocation(Connection conn, String docid) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select STRING_AGG(tdds.privy_sign_location,';') from tr_document_d tdd join tr_document_d_stampduty tdds on tdd.id_document_d = tdds.id_document_d_stampduty where tdd.document_id = '" + docid + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+	
+	@Keyword
+	getTemplateDocPrivySignLoc(Connection conn, String docid) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT STRING_AGG(mds.privy_sign_location,';') FROM ms_doc_template_sign_loc mds LEFT JOIN ms_doc_template mdt ON mdt.id_doc_template = mds.id_doc_template LEFT JOIN tr_document_d tdd ON tdd.id_ms_doc_template = mds.id_doc_template LEFT JOIN ms_lov mlo ON mlo.id_lov = mds.lov_sign_type WHERE document_id = '" + docid + "' AND description = 'Stamp Duty(materai)' ")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
 
 	@Keyword
 	getSendDocForEmailAndSignerType(Connection conn, String documentid,String emailSigner) {
