@@ -277,7 +277,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 						'verify psre default =  respon'
 						arrayMatch.add(WebUI.verifyMatch(resultDefaultVvendor.toUpperCase(), psreCode.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 					} else {
-						if(GlobalVariable.Psre == 'VIDA' || GlobalVariable.Psre == 'DIGI') {
+						if(GlobalVariable.Psre == 'VIDA' || GlobalVariable.Psre == 'DIGI' || GlobalVariable.Psre == 'TKNAJ') {
 							'verify psre registered db = excel'
 							arrayMatch.add(WebUI.verifyMatch((resultVendorRegistered).toUpperCase(), findTestData(excelPathAPIRegistrasi).getValue(
 									GlobalVariable.NumofColm, rowExcel('psreInput')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))

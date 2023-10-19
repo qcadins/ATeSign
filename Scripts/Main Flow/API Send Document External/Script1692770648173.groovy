@@ -74,8 +74,12 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 		'value trxno akan ada jika melakukan sign action autosign(at)'
         trxno = WS.getElementPropertyValue(respon, 'documents.trxNos', FailureHandling.OPTIONAL)
 
+		'get respons doc template code'
         responseDocTemplateCode = WS.getElementPropertyValue(respon, 'documents.docTemplateCode', FailureHandling.OPTIONAL)
-
+		
+		'get respons psre Code'
+		responsePsreCode = WS.getElementPropertyValue(respon, 'documents.psreCode', FailureHandling.OPTIONAL)
+		
         'Jika doc template code di excel tidak sesuai dengan response doc template code'
         if (documentTemplateCode.toString().replace('"', '') != responseDocTemplateCode.toString()) {
             'write to excel status failed dan reason failed h'
@@ -99,7 +103,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         if (GlobalVariable.checkStoreDB == 'Yes') {
             'call test case storedb'
             WebUI.callTestCase(findTestCase('Main Flow/API Send Document External StoreDB'), [('excelPathAPISendDoc') : excelPathAPISendDoc
-                    , ('sheet') : sheet, ('signlocStoreDB') : signlocStoreDB], FailureHandling.CONTINUE_ON_FAILURE)
+                    , ('sheet') : sheet, ('signlocStoreDB') : signlocStoreDB, ('responsePsreCode') : responsePsreCode], FailureHandling.CONTINUE_ON_FAILURE)
         }
     } else {
         getErrorMessageAPI(respon)
