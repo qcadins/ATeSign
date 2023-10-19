@@ -487,6 +487,19 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
             'verify manual upload'
             arrayMatch.add(WebUI.verifyMatch('1', result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
+			String docId = CustomKeywords.'connection.DataVerif.getDocId'(conneSign, findTestData(excelPathManualSigntoSign).getValue(
+				GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen (Send Manual)')), GlobalVariable.Tenant)
+			
+			if ((GlobalVariable.Psre == 'PRIVY') && (tipeTandaTangan.contains('Meterai'))) {
+				'pastikan privy sign loc tidak null'
+				arrayMatch.add(WebUI.verifyNotMatch('null',
+						CustomKeywords.'connection.APIFullService.getPrivySignLocation'(conneSign, docId), false, FailureHandling.CONTINUE_ON_FAILURE))
+				
+				'pastikan privy sign loc tidak kosong'
+				arrayMatch.add(WebUI.verifyNotMatch('',
+						CustomKeywords.'connection.APIFullService.getPrivySignLocation'(conneSign, docId), false, FailureHandling.CONTINUE_ON_FAILURE))
+			}
+			
             'jika data db tidak sesuai dengan excel'
             if (arrayMatch.contains(false)) {
                 'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
@@ -494,10 +507,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
                     (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
                     ';') + GlobalVariable.ReasonFailedStoredDB)
             }
-            
-            String docId = CustomKeywords.'connection.DataVerif.getDocId'(conneSign, findTestData(excelPathManualSigntoSign).getValue(
-                    GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen (Send Manual)')), GlobalVariable.Tenant)
-
+			
             'Write to excel mengenai Document ID'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('documentid') - 
                 1, GlobalVariable.NumofColm - 1, docId)

@@ -417,7 +417,7 @@ def setBodyAPI(String stringRefno, String signlocStoreDB) {
 		
 		'Deklarasi bodyAPI kembali'
 		bodyAPI = new String()
-	
+		
 		'Jika dokumennya menggunakan base64'
 		if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 Document (Send External)')) == 'Yes') {
 			'input bodyAPI dengan Base64'

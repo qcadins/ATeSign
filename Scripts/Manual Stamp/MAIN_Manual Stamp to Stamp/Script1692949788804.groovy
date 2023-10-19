@@ -263,6 +263,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                         excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')), 
                                     GlobalVariable.Tenant)
 
+								String docId = CustomKeywords.'connection.DataVerif.getDocId'(conneSign, findTestData(excelPathManualStamptoStamp).getValue(
+										GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')), GlobalVariable.Tenant)
+								
                                 index = 0
 
                                 ArrayList<String> arrayMatch = []
@@ -303,6 +306,25 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                 'verify manual upload'
                                 arrayMatch.add(WebUI.verifyMatch(totalMeterai, result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
+								'pengecekan khusus privy sign location'
+								if (GlobalVariable.Psre == 'PRIVY') {
+									'Jika documentTemplateCode di dokumen pertama adalah kosong'
+									if (CustomKeywords.'connection.APIFullService.getPrivySignLocation'(conneSign, docId) != '') {
+									   
+										'ambil data privy sign location based on document_template'
+										arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getPrivySignLocation'(conneSign, docId),
+												CustomKeywords.'connection.APIFullService.getTemplateDocPrivySignLoc'(conneSign, docId), false, FailureHandling.CONTINUE_ON_FAILURE))
+									} else {
+										'pastikan privy sign loc tidak null'
+										arrayMatch.add(WebUI.verifyNotMatch('null',
+												CustomKeywords.'connection.APIFullService.getPrivySignLocation'(conneSign, docId), false, FailureHandling.CONTINUE_ON_FAILURE))
+										
+										'pastikan privy sign loc tidak kosong'
+										arrayMatch.add(WebUI.verifyNotMatch('',
+												CustomKeywords.'connection.APIFullService.getPrivySignLocation'(conneSign, docId), false, FailureHandling.CONTINUE_ON_FAILURE))
+									}
+								}
+								
                                 'jika data db tidak sesuai dengan excel'
                                 if (arrayMatch.contains(false)) {
                                     'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
