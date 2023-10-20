@@ -666,6 +666,7 @@
           "javadoc": ""
         },
         {
+<<<<<<< HEAD
           "name": "getPrivyStampLocation",
           "parameters": [
             {
@@ -730,6 +731,8 @@
           "javadoc": ""
         },
         {
+=======
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
           "name": "getSendDocForEmailAndSignerType",
           "parameters": [
             {
@@ -1185,6 +1188,38 @@
           "javadoc": ""
         },
         {
+          "name": "getPaymentTypeMULTIDOC",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "docId",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
           "name": "getSaldoUsedBasedonPaymentType",
           "parameters": [
             {
@@ -1201,7 +1236,52 @@
               }
             },
             {
-              "name": "refnumber",
+              "name": "refNumber",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "emailSigner",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getSaldoUsedBasedonPaymentTypeMULTIDOC",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "documentId",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -2377,7 +2457,7 @@
           "javadoc": ""
         },
         {
-          "name": "getDefaultVendor",
+          "name": "getTotalSign",
           "parameters": [
             {
               "name": "conn",
@@ -2393,39 +2473,7 @@
               }
             },
             {
-              "name": "tenantCode",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.lang.String",
-                "unresolvedClassName": "String",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            }
-          ],
-          "javadoc": ""
-        },
-        {
-          "name": "getRegisteredVendor",
-          "parameters": [
-            {
-              "name": "conn",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.sql.Connection",
-                "unresolvedClassName": "Connection",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            },
-            {
-              "name": "email",
+              "name": "documentId",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

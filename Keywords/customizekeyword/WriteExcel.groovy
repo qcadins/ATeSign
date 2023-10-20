@@ -96,7 +96,6 @@ public class WriteExcel {
 	@Keyword
 	public int getExcelRow(String filePath, String sheetName, String cellValue) {
 		FileInputStream file = new FileInputStream (new File(filePath)) //initiate excel repository
-
 		XSSFWorkbook workbook = new XSSFWorkbook(file);
 		XSSFSheet sheet = workbook.getSheet(sheetName); //getSheet -> sheet num n (start from index 0)
 		XSSFRow row = null;
@@ -109,9 +108,9 @@ public class WriteExcel {
 					row_num = i
 					break
 				}
+
 			}
 			catch(Exception e){
-
 			}
 
 		}

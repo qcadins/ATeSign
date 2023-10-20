@@ -23,11 +23,8 @@ import java.sql.Connection as Connection
 'get current date'
 def currentDate = new Date().format('yyyy-MM-dd HH:mm:ss')
 
-int b
-for (i = 1; i <= 5; i++) {
-	
-	if (i == 3) {
-	b = 2
-	}
+int b = 0
+for (i = 5; i >= b; i--) {
 	println b
+	println i
 }
