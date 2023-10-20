@@ -288,6 +288,8 @@ for (o = 0; o < documentId.size(); o++) {
         }
     }
     
+	WebUI.delay(1)
+	
     'Scroll ke btn Proses'
     WebUI.scrollToElement(findTestObject('KotakMasuk/Sign/btn_Proses'), GlobalVariable.TimeOut)
 
