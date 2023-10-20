@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "10C97013DAF68ECC3B041D746DACFEB5",
+  "keywordFileContentHash": "07810829A7ABA1004CA2A288EB82599F",
   "keywordClasses": [
     {
       "name": "connection.APIFullService",
@@ -666,7 +666,7 @@
           "javadoc": ""
         },
         {
-          "name": "getPrivySignLocation",
+          "name": "getPrivyStampLocation",
           "parameters": [
             {
               "name": "conn",
@@ -698,7 +698,7 @@
           "javadoc": ""
         },
         {
-          "name": "getTemplateDocPrivySignLoc",
+          "name": "getTemplateDocPrivyStampLoc",
           "parameters": [
             {
               "name": "conn",
