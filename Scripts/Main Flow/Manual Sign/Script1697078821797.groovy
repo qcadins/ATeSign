@@ -41,7 +41,7 @@ ArrayList<String> namaTandaTangan = [], notelpTandaTangan = []
 indexEmail = 0
 
 'inisiasi index menjadi 8 untuk modify object ketika tidak pada e-meterai'
-index = 8
+index = 9
 
 'Inisialisasi variable yang dibutuhkan'
 emailPenandaTangan = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Email (Send Manual)')).split(
@@ -88,10 +88,10 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
     if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Membutuhkan e-Meterai (Send Manual)')) == 
     'Yes') {
         'index meningkat karena tambahan 2 kolom ketika menggunakan e-meterai'
-        index = 10
+        index = 11
     } else {
         'modify menuju index normal'
-        index = 8
+        index = 9
     }
 	
 	'modify label daftar penanda tangan dengan naiknya index'
@@ -163,9 +163,9 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 
                 'write excel mengenai error log tersebut'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                    (((findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + 
+                    (((findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
                     ';') + '<') + error) + '>')
-				
+
                 'diberikan delay 2 detik agar sudah ter write sebelum button cancel'
                 WebUI.delay(2)
 
@@ -267,7 +267,6 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
             (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
             GlobalVariable.ReasonFailedSaveGagal)
-		 
     } else {
         if (WebUI.verifyElementPresent(modifyObjectLblDaftarPenandaTangan, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
             'write to excel bahwa save gagal'
@@ -279,44 +278,6 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
         }
     }
     
-	
-	'check element present pada next tanda tangan'
-	if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_documentNo'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-		'check ui dan excel pada nomor dokumen'
-		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualSign/lbl_documentNo'),
-					'value'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen (Send Manual)')),
-				false, FailureHandling.CONTINUE_ON_FAILURE), ' pada informasi nomor dokumen ')
-
-		'check ui dan excel pada nama dokumen'
-		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualSign/input_documentName'),
-					'value'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Nama Dokumen (Send Manual)')),
-				false, FailureHandling.CONTINUE_ON_FAILURE), ' pada informasi nama dokumen ')
-
-		'Klik button tanda tangan'
-		WebUI.click(findTestObject('Object Repository/ManualSign/btn_ttd'))
-
-		'diberikan delay 5 detik untuk loading'
-		WebUI.delay(5)
-
-		'Klik set tanda tangan'
-		WebUI.click(findTestObject('ManualSign/btn_setTandaTangan'))
-
-		'click button lock signbox'
-		WebUI.click(findTestObject('ManualSign/btn_LockSignBox'))
-
-		isLocked = WebUI.getAttribute(findTestObject('ManualSign/btn_LockSignBox'), 'class', FailureHandling.STOP_ON_FAILURE)
-
-		'verify sign box is locked'
-		checkVerifyEqualOrMatch(WebUI.verifyMatch(isLocked, 'fa fa-2x fa-lock', false, FailureHandling.CONTINUE_ON_FAILURE),
-			' pada sign locked ')
-
-		'Klik button Delete'
-		WebUI.click(findTestObject('ManualSign/btn_DeleteSignBox'))
-
-		'verify sign box is deleted'
-		checkVerifyEqualOrMatch(WebUI.verifyElementNotPresent(findTestObject('ManualSign/signBox'), GlobalVariable.TimeOut,
-				FailureHandling.CONTINUE_ON_FAILURE), ' pada deletenya box Sign ')
-
     index = 0
 
     countValue = 0
@@ -416,7 +377,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
     WebUI.delay(3)
 
     'susun urutan tanda tangan'
-    //sortingSequenceSign()
+    sortingSequenceSign()
 
     checkErrorLog()
 
@@ -504,7 +465,6 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
         }
     }
 }
-}
 
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if (isMatch == false) {
@@ -565,12 +525,12 @@ def inputForm() {
     'Klik enter'
     WebUI.sendKeys(findTestObject('ManualSign/input_jenisPembayaran'), Keys.chord(Keys.ENTER))
 
-//    'Input AKtif pada input Status'
-//    WebUI.setText(findTestObject('ManualSign/input_isSequence'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
-//            rowExcel('$isSequence (Send Manual)')))
-//
-//    'Klik enter'
-//    WebUI.sendKeys(findTestObject('ManualSign/input_isSequence'), Keys.chord(Keys.ENTER))
+    'Input AKtif pada input Status'
+    WebUI.setText(findTestObject('ManualSign/input_isSequence'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
+            rowExcel('$isSequence (Send Manual)')))
+
+    'Klik enter'
+    WebUI.sendKeys(findTestObject('ManualSign/input_isSequence'), Keys.chord(Keys.ENTER))
 
     'Code untuk mengambil file berdasarkan direktori masing-masing sekaligus ambil value dari excel'
     String userDir = System.getProperty('user.dir')

@@ -211,6 +211,11 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
+      <initValue>[:]</initValue>
+      <name>storeVar</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
       <initValue>findTestData('Login/Setting').getValue(6, 2)</initValue>
       <name>Tenant</name>
    </GlobalVariableEntity>

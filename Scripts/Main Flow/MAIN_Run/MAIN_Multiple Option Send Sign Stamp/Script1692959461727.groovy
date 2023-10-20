@@ -18,20 +18,30 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 sheet = 'Main'
 
 'looping untuk menjalankan Main'
-for (GlobalVariable.NumofColm = 19; GlobalVariable.NumofColm <= findTestData(excelPathMain).columnNumbers; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathMain).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
     } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
         'reset value di excel mengenai output previous run. Jika menggunakan opsi Sign Only, maka document id tidak akan didelete'
         resetValue()
 
-		inisializeValue()
-		
+        inisializeValue()
+
         'pasang gv tenant agar tidak berubah'
         GlobalVariable.Tenant = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))
 
         'inisialisasi signerInput dan email signer sebagai array list'
-        ArrayList signerInput, emailSigner
+        ArrayList emailSignerPerDoc
+
+        ArrayList signers = []
+
+        ArrayList documentId = []
+
+        ArrayList signersPerDoc = []
+
+        LinkedHashMap emailSigner = new LinkedHashMap()
+
+        LinkedHashMap signerInput = new LinkedHashMap()
 
         'Pemilihan opsi send document. Jika send document API Send External'
         if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 'API Send Document External') {
@@ -39,29 +49,33 @@ for (GlobalVariable.NumofColm = 19; GlobalVariable.NumofColm <= findTestData(exc
             WebUI.callTestCase(findTestCase('Main Flow/API Send Document External'), [('excelPathAPISendDoc') : excelPathMain
                     , ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
 
-            'ambil total signer input dari send doc external'
-            signerInput = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('$signerType (Send External)')).split(
-                ';', -1)
+            documentId = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ', 
+                -1)
+
+			signerInput = checkingDocAndEmailFromInput(documentId, '$email (Send External)', signerInput)
+
         } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
         'API Send Document Normal') {
             'jika send document menggunakan api send normal, maka call test case send doc normal'
             WebUI.callTestCase(findTestCase('Main Flow/API Send Document Normal'), [('API_Excel_Path') : excelPathMain, ('sheet') : sheet], 
                 FailureHandling.CONTINUE_ON_FAILURE)
 
-            'ambil total signer input dari send doc normal'
-            signerInput = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('$signerType (Send Normal)')).split(
-                ';', -1)
+            documentId = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ', 
+                -1)
+
+			signerInput = checkingDocAndEmailFromInput(documentId, '$email (Send Normal)', signerInput)
+
         } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
         'Manual Sign') {
             'jika send document menggunakan manual sign, maka call test case manual sign'
             WebUI.callTestCase(findTestCase('Main Flow/Manual Sign'), [('excelPathManualSigntoSign') : excelPathMain, ('sheet') : sheet], 
                 FailureHandling.CONTINUE_ON_FAILURE)
 
-            'ambil total signer input dari manual sign'
-            signerInput = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('jumlah signer lokasi per signer (Send Manual)')).split(
-                ';', -1)
+            documentId = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ', 
+                -1)
+
+			signerInput = checkingDocAndEmailFromInput(documentId, 'jumlah signer lokasi per signer (Send Manual)',signerInput)
         }
-        
         'jika documentid nya tidak kosong'
         if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).length() > 0) {
             'jika opsi tanda tangannya bukan sign only'
@@ -69,9 +83,9 @@ for (GlobalVariable.NumofColm = 19; GlobalVariable.NumofColm <= findTestData(exc
             'Sign Only') && (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 
             'Stamp Only')) {
                 'call test case kotak masuk dan verify document monitoring. Document monitoring terdapat didalam kotak masuk.'
-                WebUI.callTestCase(findTestCase('Main Flow/KotakMasuk'), [('excelPathFESignDocument') : excelPathMain, ('sheet') : sheet
-                        , ('checkBeforeSigning') : 'Yes', ('CancelDocsSend') : findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, 
-                            rowExcel('Cancel Docs after Send?'))], FailureHandling.CONTINUE_ON_FAILURE)
+        //        WebUI.callTestCase(findTestCase('Main Flow/KotakMasuk'), [('excelPathFESignDocument') : excelPathMain, ('sheet') : sheet
+       //                 , ('checkBeforeSigning') : 'Yes', ('CancelDocsSend') : findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, 
+        //                    rowExcel('Cancel Docs after Send?'))], FailureHandling.CONTINUE_ON_FAILURE)
 
                 'jika ada proses cancel doc'
                 if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Send?')) == 
@@ -85,21 +99,25 @@ for (GlobalVariable.NumofColm = 19; GlobalVariable.NumofColm <= findTestData(exc
             if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 
             'Stamp Only') {
                 'jika memerlukan tanda tangan pada dokumen ini'
-                if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Need Sign for this document? ')) == 
+                if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Need Sign for this document?')) == 
                 'Yes') {
                     'ambil opsi signing'
                     ArrayList opsiSigning = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Sign Document per Signer')).split(
                         ';', -1)
 
-                    'membuat variable documentId berdasarkan value excel documentId'
-                    documentId = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('documentid'))
-
                     'jika opsi tanda tangannya bukan sign only'
                     if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 
                     'Sign Only') {
-                        'Mengambil email signer berdasarkan documentId'
-                        emailSigner = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, documentId).split(';', 
-                            -1)
+                        for (i = documentId.size() - 1; i >= 0; i--) {
+                            emailSignerPerDoc = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, documentId[
+                                i]).split(';', -1)
+
+                            emailSignerPerDoc = emailSignerPerDoc.collect({ 
+                                    it.trim()
+                                })
+
+                            emailSigner.put(documentId[i], emailSignerPerDoc)
+                        }
 
                         'pengecekan jika total signer dari inputan dan dari db tidak sama'
                         if (WebUI.verifyNotEqual(signerInput.size(), emailSigner.size(), FailureHandling.OPTIONAL)) {
@@ -117,20 +135,26 @@ for (GlobalVariable.NumofColm = 19; GlobalVariable.NumofColm <= findTestData(exc
                     String cancelDocsValue = ''
 
                     'looping berdasarkan email yang akan menandatangani'
-                    for (int i = 0; i < emailSigner.size(); i++) {
+                    for (int i = 0; i < emailSigner.keySet().size(); i++) {
+						for (y = 0; y < emailSigner.get(emailSigner.keySet()[i]).size(); y++) {
+
+							
                         if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Sign?')) == 
                         'Yes') {
                             'integrasikan cancel docs jika signer sudah sesuai'
                             if ((Integer.parseInt(findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel(
-                                        'Cancel Docs after how many Signer?'))) - 1) == i) {
+                                        'Cancel Docs after how many Signer?'))) - 1) == y) {
                                 'ubah value cancel docs menjadi yes'
                                 cancelDocsValue = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel(
                                         'Cancel Docs after Sign?'))
                             }
                         }
-                        
+
+						GlobalVariable.storeVar = [:]
+						GlobalVariable.storeVar.putAt(emailSigner.keySet()[i], emailSigner.get(emailSigner.keySet()[i])[y])
+
                         'jika opsi signing untuk signer adalah api sign document external'
-                        if ((opsiSigning[i]) == 'API Sign Document External') {
+                        if ((opsiSigning[y]) == 'API Sign Document External') {
                             'setting index untuk penggunaan data. Cara bacanya adalah apakah opsi tersebut telah digunakan. Jika sudah digunakan, maka + 1, jika tidak, maka 0.'
                             indexReadDataExcelAPIExternal = inisializeArray(isUsedAPIExternal, indexReadDataExcelAPIExternal)
 
@@ -143,7 +167,7 @@ for (GlobalVariable.NumofColm = 19; GlobalVariable.NumofColm <= findTestData(exc
 
                             'set boolean is used api external menjadi true'
                             isUsedAPIExternal = true
-                        } else if ((opsiSigning[i]) == 'API Sign Document Normal') {
+                        } else if ((opsiSigning[y]) == 'API Sign Document Normal') {
                             'jika opsi signing untuk signer adalah api sign document normal setting index untuk penggunaan data. Cara bacanya adalah apakah opsi tersebut telah digunakan. Jika sudah digunakan, maka + 1, jika tidak, maka 0.'
                             indexReadDataExcelAPINormal = inisializeArray(isUsedAPINormal, indexReadDataExcelAPINormal)
 
@@ -156,7 +180,7 @@ for (GlobalVariable.NumofColm = 19; GlobalVariable.NumofColm <= findTestData(exc
 
                             'set boolean menjadi true'
                             isUsedAPINormal = true
-                        } else if ((opsiSigning[i]) == 'Webview Sign') {
+                        } else if ((opsiSigning[y]) == 'Webview Sign') {
                             'jika opsi signing untuk signer adalah webview sign setting index untuk penggunaan data. Cara bacanya adalah apakah opsi tersebut telah digunakan. Jika sudah digunakan, maka + 1, jika tidak, maka 0.'
                             indexReadDataExcelWebview = inisializeArray(isUsedUI, indexReadDataExcelUI)
 
@@ -165,12 +189,11 @@ for (GlobalVariable.NumofColm = 19; GlobalVariable.NumofColm <= findTestData(exc
 
                             'call test case webview embed sign'
                             WebUI.callTestCase(findTestCase('Main Flow/Webview Embed Sign'), [('excelPathFESignDocument') : excelPathMain
-                                    , ('sheet') : sheet, ('indexUsed') : indexReadDataExcelWebview, ('emailSigner') : emailSigner[
-                                    i], ('opsiSigning') : opsiSigning[i], ('CancelDocsSign') : cancelDocsValue], FailureHandling.CONTINUE_ON_FAILURE)
+                                    , ('sheet') : sheet, ('indexUsed') : indexReadDataExcelWebview,('opsiSigning') : opsiSigning[i], ('CancelDocsSign') : cancelDocsValue], FailureHandling.CONTINUE_ON_FAILURE)
 
                             'set boolean true'
                             isUsedUI = true
-                        } else if ((opsiSigning[i]) == 'Embed Sign') {
+                        } else if ((opsiSigning[y]) == 'Embed Sign') {
                             'jika opsi signing untuk signer adalah embed sign setting index untuk penggunaan data. Cara bacanya adalah apakah opsi tersebut telah digunakan. Jika sudah digunakan, maka + 1, jika tidak, maka 0.'
                             indexReadDataExcelEmbed = inisializeArray(isUsedUI, indexReadDataExcelUI)
 
@@ -179,13 +202,11 @@ for (GlobalVariable.NumofColm = 19; GlobalVariable.NumofColm <= findTestData(exc
 
                             'call test case webview embed sign'
                             WebUI.callTestCase(findTestCase('Main Flow/Webview Embed Sign'), [('excelPathFESignDocument') : excelPathMain
-                                    , ('sheet') : sheet, ('indexUsed') : indexReadDataExcelEmbed, ('emailSigner') : emailSigner[
-                                    i], ('opsiSigning') : opsiSigning[i], ('CancelDocsSign') : cancelDocsValue], FailureHandling.CONTINUE_ON_FAILURE)
+                                    , ('sheet') : sheet, ('indexUsed') : indexReadDataExcelEmbed, ('opsiSigning') : opsiSigning[i], ('CancelDocsSign') : cancelDocsValue], FailureHandling.CONTINUE_ON_FAILURE)
 
                             'set boolean true'
                             isUsedUI = true
-                        } else if ((opsiSigning[i]) == 'Sign Via Inbox') {
-
+                        } else if ((opsiSigning[y]) == 'Sign Via Inbox') {
                             'jika opsi signing untuk signer adalah sign via inbox setting index untuk penggunaan data. Cara bacanya adalah apakah opsi tersebut telah digunakan. Jika sudah digunakan, maka + 1, jika tidak, maka 0.'
                             indexReadDataExcelInboxSigner = inisializeArray(isUsedUI, indexReadDataExcelUI)
 
@@ -194,8 +215,7 @@ for (GlobalVariable.NumofColm = 19; GlobalVariable.NumofColm <= findTestData(exc
 
                             'call test case signer login sign'
                             WebUI.callTestCase(findTestCase('Main Flow/SignerLogin Sign'), [('excelPathFESignDocument') : excelPathMain
-                                    , ('sheet') : sheet, ('emailSigner') : emailSigner[i], ('opsiSigning') : opsiSigning[
-                                    i], ('CancelDocsSign') : cancelDocsValue], FailureHandling.CONTINUE_ON_FAILURE)
+                                    , ('sheet') : sheet, ('opsiSigning') : opsiSigning[i], ('CancelDocsSign') : cancelDocsValue], FailureHandling.CONTINUE_ON_FAILURE)
 
                             'set boolean true'
                             isUsedUI = true
@@ -207,6 +227,7 @@ for (GlobalVariable.NumofColm = 19; GlobalVariable.NumofColm <= findTestData(exc
                             continue
                         }
                     }
+                }
                 }
             }
             
@@ -233,7 +254,7 @@ def inisializeArray(boolean isUsed, int indexReadDataExcel) {
     if (isUsed == false) {
         return indexReadDataExcel
     } else {
-        return (indexReadDataExcel + 1)
+        return indexReadDataExcel + 1
     }
 }
 
@@ -250,9 +271,9 @@ def resetValue() {
     
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('trxNo') - 1, 
         GlobalVariable.NumofColm - 1, '')
-	
-	CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('PsRE Document') - 1,
-		GlobalVariable.NumofColm - 1, '')
+
+    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('PsRE Document') - 
+        1, GlobalVariable.NumofColm - 1, '')
 
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('trxNos') - 1, 
         GlobalVariable.NumofColm - 1, '')
@@ -265,15 +286,35 @@ def resetValue() {
 }
 
 def inisializeValue() {
-	isUsedAPIExternal = false
-	isUsedAPINormal = false
-	isUsedUI = false
-	
-	indexReadDataExcelAPIExternal = 0 
-	indexReadDataExcelAPINormal = 0
-	indexReadDataExcelInboxSigner = 0
-	indexReadDataExcelEmbed = 0 
-	indexReadDataExcelWebview = 0
-	indexReadDataExcelUI = 0
+    isUsedAPIExternal = false
+
+    isUsedAPINormal = false
+
+    isUsedUI = false
+
+    indexReadDataExcelAPIExternal = 0
+
+    indexReadDataExcelAPINormal = 0
+
+    indexReadDataExcelInboxSigner = 0
+
+    indexReadDataExcelEmbed = 0
+
+    indexReadDataExcelWebview = 0
+
+    indexReadDataExcelUI = 0
 }
 
+def checkingDocAndEmailFromInput(ArrayList documentId, String rowEmail, LinkedHashMap signerInput) {
+for (loopingDocument = documentId.size() -1; loopingDocument >= 0; loopingDocument--) {
+	signers = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel(rowEmail)).split(
+		'\n', -1)
+
+	signersPerDoc = (signers[loopingDocument]).split(';', -1).collect({
+			it.trim()
+		})
+
+	signerInput.put(documentId[loopingDocument], signersPerDoc)
+}
+return signerInput
+}
