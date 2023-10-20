@@ -291,6 +291,9 @@ for (t = 0; t < resultHashMap.keySet().size(); t++) {
 			
             c = 0
         }
+		
+		'get row pada beranda'
+		variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
         
         'index row distart dari 2 karena yang 1 adalah button ttd'
         indexRow = 2
@@ -299,6 +302,11 @@ for (t = 0; t < resultHashMap.keySet().size(); t++) {
         modifyObjectTextRefNum = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_refnum'), 'xpath', 'equals', 
             ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
             (variable.size() - c)) + ']/datatable-body-row/div[2]/datatable-body-cell[') + indexRow++) + ']/div', true)
+		
+		println indexRow
+		println variable.size()
+		println c
+		WebUI.delay(10)
 		
         'Mengambil teks refnum'
         labelRefNum = WebUI.getText(modifyObjectTextRefNum)
@@ -504,6 +512,7 @@ for (t = 0; t < resultHashMap.keySet().size(); t++) {
 				
                 'Klik kembali'
                 WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_backViewDokumen'))
+
             } else {
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                     ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 

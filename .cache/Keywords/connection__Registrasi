@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "04A1F832AE5A51B9FDE330D6C1A1C5AA",
+  "keywordFileContentHash": "AF5A12275B7C946089BEE03B95E14B5A",
   "keywordClasses": [
     {
       "name": "connection.Registrasi",
@@ -202,6 +202,38 @@
             },
             {
               "name": "NIK",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "settingSendCertNotifbySMS",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "value",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>API Send Document External StoreDB</name>
+   <name>MAIN_API Get Sign Link</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>f38b28c1-76fd-4f46-8aca-e86b359baf01</testCaseGuid>
+   <testCaseGuid>fd936235-4ee4-4397-8163-0efe1b49881e</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>f1a5724a-13a7-43a4-9b3d-30c22d2c51e2</variableId>
+      <variableId>1bafdf58-a10e-4334-a122-1ee0639e4533</variableId>
    </variableLinks>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>3bc263fb-5213-4c41-8d72-0bc411526e54</variableId>
+      <variableId>2da7f196-613d-4aac-a03a-ed5ec3226b23</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>''</defaultValue>
+      <defaultValue>'APIFullService/API_GetSignLink'</defaultValue>
       <description></description>
-      <id>f1a5724a-13a7-43a4-9b3d-30c22d2c51e2</id>
+      <id>1bafdf58-a10e-4334-a122-1ee0639e4533</id>
       <masked>false</masked>
-      <name>signlocStoreDB</name>
+      <name>excelPathAPIGetSignLink</name>
    </variable>
    <variable>
-      <defaultValue>[]</defaultValue>
+      <defaultValue>'API Get Sign Link'</defaultValue>
       <description></description>
-      <id>3bc263fb-5213-4c41-8d72-0bc411526e54</id>
+      <id>2da7f196-613d-4aac-a03a-ed5ec3226b23</id>
       <masked>false</masked>
-      <name>responsePsreCode</name>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>

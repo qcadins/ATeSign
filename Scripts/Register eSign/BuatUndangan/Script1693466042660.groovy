@@ -36,6 +36,14 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowEx
             GlobalVariable.NumofColm, rowExcel('Setting Email Services')))
 }
 
+'check ada value maka setting email certif notif'
+if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')).length() >
+0) {
+	'setting email email certif notif'
+	CustomKeywords.'connection.Registrasi.settingSendCertNotifbySMS'(conneSign, findTestData(excelPathBuatUndangan).getValue(
+			GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')))
+}
+
 'check ada value maka setting allow regenerate link'
 if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting Allow Regenarate Link')).length() > 
 0) {
@@ -283,14 +291,30 @@ if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/label_ValidationErr
     	
     	saldoAfter = loginAdminGetSaldo(countCheckSaldo, conneSign)
     			
-    			'verify saldoafter tidak sama dengan saldo before'
-    			checkVerifyEqualOrMatch(WebUI.verifyMatch(saldoAfter.toString(), saldoBefore.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), 
-    					' Saldo')
-    			
-    			'print untuk menunjukan saldobefore dan saldoafter'
-    			println('saldoBefore : ' + saldoBefore.toString())
-    			
-    			println('saldoAfter : ' + saldoAfter.toString())
+		'verify saldoafter tidak sama dengan saldo before'
+		checkVerifyEqualOrMatch(WebUI.verifyMatch(saldoAfter.toString(), saldoBefore.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), 
+				' Saldo')
+		
+		'print untuk menunjukan saldobefore dan saldoafter'
+		println('saldoBefore : ' + saldoBefore.toString())
+		
+		println('saldoAfter : ' + saldoAfter.toString())
+		
+		if ((((findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')) == '0' || 
+			findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')) == 'null') && 
+			(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Services')) == '1')) || (
+			(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Services')) == '0'))) &&
+			findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase().contains('OUTLOOK.COM') &&
+			GlobalVariable.Psre == 'VIDA') {
+			'call keyword get email'
+			String emailCert = CustomKeywords.'customizekeyword.GetEmail.getEmailContent'(findTestData(excelPathBuatUndangan).getValue(
+								GlobalVariable.NumofColm, rowExcel('Email')), findTestData(excelPathBuatUndangan).getValue(
+								GlobalVariable.NumofColm, rowExcel('Password')))
+			
+			'verify email cert'
+			checkVerifyEqualOrMatch(WebUI.verifyMatch(emailCert, 'Penerbitan Sertifikat Elektronik',
+					false, FailureHandling.CONTINUE_ON_FAILURE), ' email cert tidak terkirim')
+		}
     }
 	
 	GlobalVariable.LoginAgain = 0
@@ -498,7 +522,7 @@ def verifyListUndangan() {
     'verify tanggal pengiriman'
     checkVerifyEqualOrMatch(WebUI.verifyMatch(parsedDate, currentDate, false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Pengiriman')
 
-//    if (GlobalVariable.Psre == 'VIDA') {
+    if (GlobalVariable.Psre == 'VIDA') {
 		tanggalRegistrasi = WebUI.getText(findTestObject('ListUndangan/table_TanggalRegistrasi')).split(' ', -1)
 
         parsedDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(tanggalRegistrasi[0], 'dd-MMM-yyyy', 'yyyy-MM-dd')
@@ -514,19 +538,19 @@ def verifyListUndangan() {
 		'verify Status undangan'
 		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusUndangan')), 'NON AKTIF',
 				false, FailureHandling.CONTINUE_ON_FAILURE), ' Status Undangan')
-//    } else if(GlobalVariable.Psre == 'PRIVY') {
-//		'verify tanggal registrasi'
-//		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_TanggalRegistrasi')), '-', false, FailureHandling.CONTINUE_ON_FAILURE),
-//			' Tanggal Registrasi')
-//	
-//		'verify status registrasi'
-//		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusRegistrasi')), 'NOT DONE',
-//				false, FailureHandling.CONTINUE_ON_FAILURE), ' Status Registrasi')
-//		
-//		'verify Status undangan'
-//		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusUndangan')), 'AKTIF',
-//				false, FailureHandling.CONTINUE_ON_FAILURE), ' Status Undangan')
-//	}
+    } else if(GlobalVariable.Psre == 'PRIVY') {
+		'verify tanggal registrasi'
+		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_TanggalRegistrasi')), '-', false, FailureHandling.CONTINUE_ON_FAILURE),
+			' Tanggal Registrasi')
+	
+		'verify status registrasi'
+		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusRegistrasi')), 'NOT DONE',
+				false, FailureHandling.CONTINUE_ON_FAILURE), ' Status Registrasi')
+		
+		'verify Status undangan'
+		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_StatusUndangan')), 'AKTIF',
+				false, FailureHandling.CONTINUE_ON_FAILURE), ' Status Undangan')
+	}
 }
 
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {

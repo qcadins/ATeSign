@@ -39,4 +39,10 @@ public class UpdateData {
 
 		int updateCount = stm.executeUpdate("UPDATE ms_tenant SET need_otp_for_signing = '" + number + "' WHERE tenant_code = '" + tenant + "';")
 	}
+	@Keyword
+	settingLivenessFaceCompare(Connection conn, String value) {
+		Statement stm = conn.createStatement()
+
+		int updateCount = stm.executeUpdate("UPDATE ms_tenant SET use_liveness_facecompare_first = '" + value + "' WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
+	}
 }

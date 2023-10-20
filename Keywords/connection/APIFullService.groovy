@@ -140,7 +140,6 @@ public class APIFullService {
 	@Keyword
 	settingEmailServiceTenant(Connection conn, String value) {
 		stm = conn.createStatement()
-
 		updateVariable = stm.executeUpdate("UPDATE ms_tenant SET email_service = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
 	}
 
@@ -285,6 +284,38 @@ public class APIFullService {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select STRING_AGG(tdds.sign_location,';') from tr_document_d tdd join tr_document_d_sign tdds on tdd.id_document_d = tdds.id_document_d where tdd.document_id = '" + docid + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+
+	@Keyword
+	getPrivyStampLocation(Connection conn, String docid) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select STRING_AGG(sdt.privy_sign_location,';') from tr_document_d_stampduty sdt join tr_document_d d ON d.id_document_d = sdt.id_document_d join tr_document_h h ON h.id_document_h = d.id_document_h where d.document_id = '" + docid + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+
+	@Keyword
+	getTemplateDocPrivyStampLoc(Connection conn, String docid) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT STRING_AGG(mds.privy_sign_location,';') FROM ms_doc_template_sign_loc mds LEFT JOIN ms_doc_template mdt ON mdt.id_doc_template = mds.id_doc_template LEFT JOIN tr_document_d tdd ON tdd.id_ms_doc_template = mds.id_doc_template LEFT JOIN ms_lov mlo ON mlo.id_lov = mds.lov_sign_type WHERE document_id = '" + docid + "' AND description = 'Stamp Duty (materai)'")
 
 		metadata = resultSet.metaData
 
@@ -856,7 +887,6 @@ public class APIFullService {
 			}
 		}
 
-		println(listdata)
 		ArrayList<String> resultList = []
 
 		'hardcode untuk direct langsung ke colm is_sequence'
@@ -1122,5 +1152,34 @@ public class APIFullService {
 			data = 0
 		}
 		Integer.parseInt(data)
+
+	@Keyword
+	getDefaultVendor(Connection conn, String tenantCode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select vendor_code from ms_vendoroftenant mvo join ms_tenant mt on mvo.id_ms_tenant = mt.id_ms_tenant join ms_vendor mv on mvo.id_ms_vendor = mv.id_ms_vendor where tenant_code = '"+ tenantCode +"' order by default_vendor ASC limit 1")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+
+	@Keyword
+	getRegisteredVendor(Connection conn, String email) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select vendor_code from ms_vendor_registered_user mvr join ms_vendor mv on mv.id_ms_vendor = mvr.id_ms_vendor where signer_registered_email = '"+ email.toUpperCase() +"' order by id_ms_vendor_registered_user desc limit 1")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
 	}
 }

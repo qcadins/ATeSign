@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>FormAktivasi - Copy</name>
+   <name>MAIN_API Sent OTP Signing External</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>55238661-8111-42af-9752-8876cede0229</testCaseGuid>
+   <testCaseGuid>cd123424-4d03-4796-a47c-67da5ce82c5d</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>1350b4e4-7d55-4059-9b63-70d2f4ac4c65</variableId>
+      <variableId>4abe51c1-f4be-43f2-bce5-10b35328294f</variableId>
    </variableLinks>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>78afb087-7fae-442a-b943-6352bb857f72</variableId>
+      <variableId>29bba4d0-7846-40de-98c8-f17e41319494</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'APIFullService/API_GenInvLink'</defaultValue>
+      <defaultValue>'APIFullService/API_SentOTPSigning'</defaultValue>
       <description></description>
-      <id>1350b4e4-7d55-4059-9b63-70d2f4ac4c65</id>
+      <id>4abe51c1-f4be-43f2-bce5-10b35328294f</id>
       <masked>false</masked>
-      <name>excelPathAPIGenerateInvLink</name>
+      <name>excelPathAPISentOTPSigning</name>
    </variable>
    <variable>
-      <defaultValue>'API Generate Invitation Link'</defaultValue>
+      <defaultValue>'API Sent OTP Signing'</defaultValue>
       <description></description>
-      <id>78afb087-7fae-442a-b943-6352bb857f72</id>
+      <id>29bba4d0-7846-40de-98c8-f17e41319494</id>
       <masked>false</masked>
       <name>sheet</name>
    </variable>

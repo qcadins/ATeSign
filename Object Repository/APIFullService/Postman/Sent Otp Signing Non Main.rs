@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebServiceRequestEntity>
    <description></description>
-   <name>Register</name>
+   <name>Sent Otp Signing Non Main</name>
    <tag></tag>
-   <elementGuidId>bfd654fc-5a9a-4e08-b532-2c35aa9a77ef</elementGuidId>
+   <elementGuidId>45aacad3-94f4-4c12-9dc2-7f6f25ca6ce0</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: ${callerId}\n    },\n    \&quot;psreCode\&quot;: ${psreCode},\n\t\&quot;nama\&quot;: ${nama},\n    \&quot;email\&quot;: ${email},\n    \&quot;tmpLahir\&quot;: ${tmpLahir},\n    \&quot;tglLahir\&quot;: ${tglLahir},\n    \&quot;jenisKelamin\&quot;: ${jenisKelamin},\n    \&quot;tlp\&quot;: ${tlp},\n    \&quot;idKtp\&quot;: ${idKtp},\n    \&quot;alamat\&quot;: ${alamat},\n    \&quot;kecamatan\&quot;: ${kecamatan},\n    \&quot;kelurahan\&quot;: ${kelurahan},\n    \&quot;kota\&quot;: ${kota},\n    \&quot;provinsi\&quot;: ${provinsi},\n    \&quot;kodePos\&quot;: ${kodePos},\n    \&quot;selfPhoto\&quot;: ${selfPhoto},\n    \&quot;idPhoto\&quot;: ${idPhoto},\n    \&quot;password\&quot;: ${password}\n}\n&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: ${callerId}\n    },\n    \&quot;phoneNo\&quot;: ${phoneNo},\n    \&quot;email\&quot;: ${email},\n    \&quot;refNumber\&quot;: ${refnumber},\n\t\&quot;documentId\&quot;: [\n      ${listDocumentId}\n    ]\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -21,7 +21,7 @@
       <name>Content-Type</name>
       <type>Main</type>
       <value>application/json</value>
-      <webElementGuid>1c4926d0-8447-40d1-92bc-507c53f76002</webElementGuid>
+      <webElementGuid>804c129d-8f9d-49e8-a1b7-128110f4800b</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -29,7 +29,7 @@
       <name>Accept</name>
       <type>Main</type>
       <value>application/json</value>
-      <webElementGuid>06968266-469c-4ca8-8e18-9f62db0e7498</webElementGuid>
+      <webElementGuid>e0454883-444b-4e3d-9d7a-ff666a6613df</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -37,13 +37,13 @@
       <name>x-api-key</name>
       <type>Main</type>
       <value>${api_key}@${tenant_code}</value>
-      <webElementGuid>8f0317fc-1f29-4909-a70e-1bb3e033f247</webElementGuid>
+      <webElementGuid>cafc526f-9a10-4173-b196-2198e258c5c2</webElementGuid>
    </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>POST</restRequestMethod>
-   <restUrl>${base_url}/services/external/user/register</restUrl>
+   <restUrl>${base_url}/services/external/user/sentOtpSigning</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>
@@ -55,21 +55,21 @@
    <variables>
       <defaultValue>GlobalVariable.base_url</defaultValue>
       <description></description>
-      <id>45248845-b2a3-42ff-a1a5-f1c525d2f959</id>
+      <id>d4384837-a583-43cc-a5bc-ab5f7ca09692</id>
       <masked>false</masked>
       <name>base_url</name>
    </variables>
    <variables>
       <defaultValue>GlobalVariable.api_key</defaultValue>
       <description></description>
-      <id>06bec374-a825-4f7c-a2d7-16124b8d7847</id>
+      <id>47ee248a-3bf8-4415-ad6a-dc28d8f03dfe</id>
       <masked>false</masked>
       <name>api_key</name>
    </variables>
    <variables>
       <defaultValue>GlobalVariable.Tenant</defaultValue>
       <description></description>
-      <id>dfe4c694-3be4-44ab-92f8-d8d9e5da661a</id>
+      <id>60a8935d-3b31-4b32-9666-1a786ac047d9</id>
       <masked>false</masked>
       <name>tenant_code</name>
    </variables>

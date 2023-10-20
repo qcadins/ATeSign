@@ -101,6 +101,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 'jika memerlukan tanda tangan pada dokumen ini'
                 if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Need Sign for this document?')) == 
                 'Yes') {
+					'setting must liveness dimatikan/diaktifkan'
+					if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must LivenessFaceCompare')).length() >
+					0) {
+						'update setting vendor otp ke table di DB'
+						CustomKeywords.'connection.UpdateData.settingLivenessFaceCompare'(conneSign, findTestData(excelPathMain).getValue(
+								GlobalVariable.NumofColm, rowExcel('Setting Must LivenessFaceCompare')))
+					}
+				
                     'ambil opsi signing'
                     ArrayList opsiSigning = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Sign Document per Signer')).split(
                         ';', -1)

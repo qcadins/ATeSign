@@ -43,6 +43,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			CustomKeywords.'connection.Registrasi.settingEmailServiceTenant'(conneSign, findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Servicel')))
 		}
 		
+		'check ada value maka setting email certif notif'
+		if (findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')).length() > 0) {
+			'setting email email certif notif'
+			CustomKeywords.'connection.Registrasi.settingSendCertNotifbySMS'(conneSign, findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')))
+		}
+		
 		'check ada value maka setting allow regenerate link'
 		if (findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Allow Regenarate Link')).length() > 0) {
 			'setting allow regenerate link'
@@ -215,6 +221,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 	                    WebUI.callTestCase(findTestCase('Generate Invitation Link/DaftarAkunDataVerif'), [('excelPathGenerateLink') : 'Registrasi/Generate_Inv_Link'], 
 	                        FailureHandling.STOP_ON_FAILURE)
 					}
+					
+					if ((((findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')) == '0' || 
+								findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')) == 'null') && 
+								(findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Services')) == '1')) || (
+								(findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Services')) == '0'))) &&
+								findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase().contains('OUTLOOK.COM') &&
+								GlobalVariable.Psre == 'VIDA') {
+						'call keyword get email'
+						String emailCert = CustomKeywords.'customizekeyword.GetEmail.getEmailContent'(findTestData(excelPathGenerateLink).getValue(
+											GlobalVariable.NumofColm, rowExcel('email')).replace('"',''), findTestData(excelPathGenerateLink).getValue(
+											GlobalVariable.NumofColm, rowExcel('Password')))
+						
+						'verify email cert'
+						checkVerifyEqualOrMatch(WebUI.verifyMatch(emailCert, 'Penerbitan Sertifikat Elektronik',
+								false, FailureHandling.CONTINUE_ON_FAILURE), ' email cert tidak terkirim')
+					}
                 } else {
                     'write to excel status failed dan reason : '
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
@@ -235,6 +257,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'close browser'
         WebUI.closeBrowser()
     }
+}
+
+def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
+	if (isMatch == false) {
+		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+			GlobalVariable.StatusFailed, (findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +
+			GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
+
+		GlobalVariable.FlagFailed = 1
+	}
 }
 
 def getAPIErrorMessage(def respon) {

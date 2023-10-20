@@ -313,90 +313,106 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     'click verifikasi'
     WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Verifikasi'))
 
-    'get reason error log'
-    reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).toString()
+    if (GlobalVariable.Psre == 'VIDA') {
+        'get reason error log'
+        reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).toString()
 
-    if ((GlobalVariable.Psre == 'PRIVY') && WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_SuccessPrivy'), 
-        GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-        'looping untuk delay 100detik menunggu proses request status'
-        for (delay = 1; delay <= 5; delay++) {
-            'get data status request dari tr_job_check_register_status DB'
-            ArrayList<String> result = CustomKeywords.'connection.Registrasi.getRegisterPrivyStoreDB'(conneSign, findTestData(
-                    excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('idKtp')).replace('"',''))
+        'check saldo OTP'
+        checkSaldoOTP()
 
-            if ((result[0]) != '3') {
-                'jika sudah delay ke 5 maka dianggap failed'
-                if (delay == 5) {
-                    'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                        GlobalVariable.StatusFailed, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 
-                            rowExcel('Reason Failed')) + ';' + 'Failed Karena Job Tidak Jalan')
-                } else {
-                    'delay 20detik'
-                    WebUI.delay(20)
-                }
-            } else {
-                'refresh page'
-                WebUI.refresh()
+        'cek if berhasil pindah page'
+        if ((reason.contains('gagal') || reason.contains('Saldo')) || reason.contains('Invalid')) {
+            'write to excel status failed dan reason'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                (((findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+                    '-', '') + ';') + '<') + reason) + '> Daftar Akun Esign')
 
-                break
+            GlobalVariable.FlagFailed = 1
+
+            'if gagal verifikasi wajah maka cek saldo verifikasi berkurang 1'
+            if (reason.contains('gagal')) {
+                'call function checkTrxMutation'
+                checkTrxMutation(conneSign)
+
+                (GlobalVariable.VerificationCount)++
             }
-        }
-    }
-    
-    'check saldo OTP'
-    checkSaldoOTP()
-
-    'cek if berhasil pindah page'
-    if ((reason.contains('gagal') || reason.contains('Saldo')) || reason.contains('Invalid')) {
-        'write to excel status failed dan reason'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            (((findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
-                '-', '') + ';') + '<') + reason) + '> Daftar Akun Esign')
-
-        GlobalVariable.FlagFailed = 1
-
-        'if gagal verifikasi wajah maka cek saldo verifikasi berkurang 1'
-        if (reason.contains('gagal')) {
-            'call function checkTrxMutation'
+        } else if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/FormAktivasiEsign/input_KataSandi'), GlobalVariable.TimeOut, 
+            FailureHandling.OPTIONAL)) {
             checkTrxMutation(conneSign)
 
-            (GlobalVariable.VerificationCount)++
+            if (GlobalVariable.Psre == 'DIGI') {
+                'call testcase form aktivasi DIGI'
+                WebUI.callTestCase(findTestCase('APIFullService/Generate Invitation Link/FormAktivasiDIGI'), [('excelPathAPIGenerateInvLink') : 'APIFullService/API_GenInvLink'], 
+                    FailureHandling.CONTINUE_ON_FAILURE)
+
+                'looping untuk mengeck apakah case selanjutnya ingin melanjutkan input pada form aktivasi'
+                while (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Continue Register & Activation')).equalsIgnoreCase(
+                    'Continue')) {
+                    (GlobalVariable.NumofColm)++
+
+                    GlobalVariable.FlagFailed = 0
+
+                    'call testcase form aktivasi DIGI'
+                    WebUI.callTestCase(findTestCase('APIFullService/Generate Invitation Link/FormAktivasiDIGI'), [('excelPathAPIGenerateInvLink') : 'APIFullService/API_GenInvLink'], 
+                        FailureHandling.CONTINUE_ON_FAILURE)
+                }
+            } else {
+                'call testcase form aktivasi vida'
+                WebUI.callTestCase(findTestCase('APIFullService/Generate Invitation Link/FormAktivasiEsign'), [('excelPathAPIGenerateInvLink') : 'APIFullService/API_GenInvLink'], 
+                    FailureHandling.CONTINUE_ON_FAILURE)
+
+                'looping untuk mengeck apakah case selanjutnya ingin melanjutkan input pada form aktivasi'
+                while (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Continue Register & Activation')).equalsIgnoreCase(
+                    'Continue')) {
+                    (GlobalVariable.NumofColm)++
+
+                    GlobalVariable.FlagFailed = 0
+
+                    'call testcase form aktivasi vida'
+                    WebUI.callTestCase(findTestCase('APIFullService/Generate Invitation Link/FormAktivasiEsign'), [('excelPathAPIGenerateInvLink') : 'APIFullService/API_GenInvLink'], 
+                        FailureHandling.CONTINUE_ON_FAILURE)
+                }
+            }
+        } else if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_PopupMsg'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+            reason = WebUI.getText(findTestObject('DaftarAkun/label_PopupMsg'))
+
+            'write to excel status failed dan reason'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                (((findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+                    '-', '') + ';') + '<') + reason) + '>')
+
+            'click button tutup error'
+            WebUI.click(findTestObject('DaftarAkun/button_OK'))
+
+            'click button X tutup popup otp'
+            WebUI.click(findTestObject('DaftarAkun/button_X'))
+
+            GlobalVariable.FlagFailed = 1
         }
-    } else if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/FormAktivasiEsign/input_KataSandi'), GlobalVariable.TimeOut, 
-        FailureHandling.OPTIONAL)) {
-        checkTrxMutation(conneSign)
+    } else if (GlobalVariable.Psre == 'PRIVY') {
+        if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_SuccessPrivy'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+            'get message dari ui'
+            reason = WebUI.getText(findTestObject('DaftarAkun/label_SuccessPrivy'))
 
-        'call testcase form aktivasi vida'
-        WebUI.callTestCase(findTestCase('APIFullService/Generate Invitation Link/FormAktivasi'), [('excelPathAPIGenerateInvLink') : 'APIFullService/API_GenInvLink'], 
-            FailureHandling.CONTINUE_ON_FAILURE)
+            'check if registrasi berhasil dan write ke excel'
+            if (reason.equalsIgnoreCase('Proses verifikasi anda sedang diproses. Harap menunggu proses verifikasi selesai.') && 
+            (GlobalVariable.FlagFailed == 0)) {
+                'write to excel success'
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
+                    1, GlobalVariable.StatusSuccess)
+            } else {
+                'write to excel status failed dan reason'
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                    (((findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+                        '-', '') + ';') + '<') + reason) + '>')
+            }
+            
+            'check saldo OTP'
+            checkSaldoOTP()
 
-        'looping untuk mengeck apakah case selanjutnya ingin melanjutkan input pada form aktivasi'
-        while (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Continue Register & Activation')).equalsIgnoreCase(
-            'Continue')) {
-            (GlobalVariable.NumofColm)++
-
-            GlobalVariable.FlagFailed = 0
-
-            'call testcase form aktivasi vida'
-            WebUI.callTestCase(findTestCase('APIFullService/Generate Invitation Link/FormAktivasi'), [('excelPathAPIGenerateInvLink') : 'APIFullService/API_GenInvLink'], 
-                FailureHandling.CONTINUE_ON_FAILURE)
+            'call function check mutation trx'
+            checkTrxMutation(conneSign)
         }
-    } else if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_PopupMsg'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-        reason = WebUI.getText(findTestObject('DaftarAkun/label_PopupMsg'))
-
-        'write to excel status failed dan reason'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            (((findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
-                '-', '') + ';') + '<') + reason) + '>')
-
-        'click button tutup error'
-        WebUI.click(findTestObject('DaftarAkun/button_OK'))
-
-        'click button X tutup popup otp'
-        WebUI.click(findTestObject('DaftarAkun/button_X'))
-
-        GlobalVariable.FlagFailed = 1
     }
 }
 

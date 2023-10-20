@@ -54,6 +54,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			CustomKeywords.'connection.APIFullService.settingEmailServiceTenant'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')))
 		}
 		
+		'check ada value maka setting email certif notif'
+		if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')).length() > 0) {
+			'setting email email certif notif'
+			CustomKeywords.'connection.Registrasi.settingSendCertNotifbySMS'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')))
+		}
+		
 		'check ada value maka setting allow regenerate link'
 		if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Allow Regenarate Link')).length() > 0) {
 			'setting allow regenerate link'
@@ -184,7 +190,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				}
 				
 				'call test case daftar akun verif'
-				WebUI.callTestCase(findTestCase('APIFullService/Generate Invitation Link/DaftarAkunDataVerif'), [('excelPathGenerateLink') : 'APIFullService/API_GenInvLink', ('otpBefore') : saldoBefore[0]], 
+				WebUI.callTestCase(findTestCase('APIFullService/Generate Invitation Link/DaftarAkunDataVerif'), [('excelPathAPIGenerateInvLink') : 'APIFullService/API_GenInvLink', ('otpBefore') : saldoBefore[0]], 
 						FailureHandling.CONTINUE_ON_FAILURE)
 					
 				'looping untuk mengeck apakah case selanjutnya ingin melanjutkan input pada form registrasi'
@@ -194,7 +200,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					GlobalVariable.FlagFailed = 0
 					
 					'call test case daftar akun verif'
-					WebUI.callTestCase(findTestCase('APIFullService/Generate Invitation Link/DaftarAkunDataVerif'), [('excelPathGenerateLink') : 'APIFullService/API_GenInvLink', ('otpBefore') : saldoBefore[0]], 
+					WebUI.callTestCase(findTestCase('APIFullService/Generate Invitation Link/DaftarAkunDataVerif'), [('excelPathAPIGenerateInvLink') : 'APIFullService/API_GenInvLink', ('otpBefore') : saldoBefore[0]], 
 						FailureHandling.CONTINUE_ON_FAILURE)
 				}
 				
@@ -227,6 +233,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					'print untuk menunjukan saldobefore dan saldoafter'
 					println('saldoBefore : ' + saldoBefore.toString())
 					println('saldoAfter : ' + saldoAfter.toString())
+					
+					if ((((findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')) == '0' || 
+								findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')) == 'null') && 
+								(findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Services')) == '1')) || (
+								(findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Services')) == '0'))) &&
+								findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase().contains('OUTLOOK.COM') &&
+								GlobalVariable.Psre == 'VIDA') {
+						'call keyword get email'
+						String emailCert = CustomKeywords.'customizekeyword.GetEmail.getEmailContent'(findTestData(excelPathAPIGenerateInvLink).getValue(
+											GlobalVariable.NumofColm, rowExcel('email')).replace('"',''), findTestData(excelPathAPIGenerateInvLink).getValue(
+											GlobalVariable.NumofColm, rowExcel('Password')))
+						
+						'verify email cert'
+						checkVerifyEqualOrMatch(WebUI.verifyMatch(emailCert, 'Penerbitan Sertifikat Elektronik',
+								false, FailureHandling.CONTINUE_ON_FAILURE), ' email cert tidak terkirim')
+					}
 				}
             } else {
                'call function get API error message'
@@ -274,9 +296,9 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 	WebUI.selectOptionByLabel(findTestObject('RegisterEsign/checkSaldo/select_Vendor'), '(?i)' + 'ESIGN/ADINS', true)
 
 	'get row'
-	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
+	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div h3'))
 
-	for (index = 2; index <= variable.size(); index++) {
+	for (index = 2; index <= (variable.size()/2); index++) {
 		'modify object box info'
 		modifyObjectBoxInfo = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath',
 			'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) +
@@ -302,19 +324,20 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 	}
 
 	'select vendor'
-	WebUI.selectOptionByLabel(findTestObject('RegisterEsign/checkSaldo/select_Vendor'), '(?i)' + GlobalVariable.Psre, true)
+	WebUI.selectOptionByValue(findTestObject('RegisterEsign/checkSaldo/select_Vendor'), '(?i)' + GlobalVariable.Psre, true)
 
 	'get row'
 	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
 
-	for (index = 2; index <= variable.size(); index++) {
+	for (index = 2; index <= (variable.size()/2); index++) {
 		'modify object box info'
 		modifyObjectBoxInfo = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath',
 			'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) +
 			']/div/div/div/div/div[1]/h3', true)
 
 		'check if box info = tipe saldo di excel'
-		if (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('Verification') || (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('PNBP') && GlobalVariable.Psre == 'VIDA')) {
+		if (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('Verification') || (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('PNBP') && GlobalVariable.Psre == 'VIDA')
+			 || (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('Text Verification') && GlobalVariable.Psre == 'DIGI')) {
 			'modify object qty'
 			modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath',
 				'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) +
@@ -324,7 +347,7 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 			saldo.add(WebUI.getText(modifyObjectQty).replace(',', ''))
 
 			'if saldo sudah terisi 2 verification dan pnbp'
-			if(saldo.size() == 3 && GlobalVariable.Psre == 'VIDA') {
+			if(saldo.size() == 3 && (GlobalVariable.Psre == 'VIDA' || GlobalVariable.Psre == 'DIGI')) {
 				break
 			} else if(saldo.size() == 2 && GlobalVariable.Psre == 'PRIVY') {
 				break
@@ -341,6 +364,11 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 		if(GlobalVariable.FlagFailed == 0 && GlobalVariable.Psre == 'VIDA') {
 			'call function input filter saldo'
 			inputFilterSaldo('PNBP', conneSign)
+		}
+		
+		if(GlobalVariable.FlagFailed == 0 && GlobalVariable.Psre == 'DIGI') {
+			'call function input filter saldo'
+			inputFilterSaldo('Text Verification', conneSign)
 		}
 		
 		//		'call function verify list undangan'
