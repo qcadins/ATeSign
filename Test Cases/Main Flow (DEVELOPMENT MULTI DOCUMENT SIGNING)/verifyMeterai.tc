@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>verifyMeterai</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>4fd7d8e5-c520-4a3e-b9af-6fe014601714</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>93f71fec-58e7-48cc-b6bf-3e8ca5f3223a</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>89b07bdd-7f5e-4344-a1bd-7eed2b4f3f5b</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>7ef79145-1ae5-4253-80e7-1816da603858</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>93f71fec-58e7-48cc-b6bf-3e8ca5f3223a</id>
+      <masked>false</masked>
+      <name>excelPathMeterai</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>89b07bdd-7f5e-4344-a1bd-7eed2b4f3f5b</id>
+      <masked>false</masked>
+      <name>noKontrak</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>7ef79145-1ae5-4253-80e7-1816da603858</id>
+      <masked>false</masked>
+      <name>CancelDocsStamp</name>
+   </variable>
+</TestCaseEntity>

@@ -140,7 +140,6 @@ public class APIFullService {
 	@Keyword
 	settingEmailServiceTenant(Connection conn, String value) {
 		stm = conn.createStatement()
-
 		updateVariable = stm.executeUpdate("UPDATE ms_tenant SET email_service = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
 	}
 
@@ -297,7 +296,7 @@ public class APIFullService {
 	}
 
 	@Keyword
-	getPrivySignLocation(Connection conn, String docid) {
+	getPrivyStampLocation(Connection conn, String docid) {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select STRING_AGG(sdt.privy_sign_location,';') from tr_document_d_stampduty sdt join tr_document_d d ON d.id_document_d = sdt.id_document_d join tr_document_h h ON h.id_document_h = d.id_document_h where d.document_id = '" + docid + "'")
@@ -313,7 +312,7 @@ public class APIFullService {
 	}
 
 	@Keyword
-	getTemplateDocPrivySignLoc(Connection conn, String docid) {
+	getTemplateDocPrivyStampLoc(Connection conn, String docid) {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("SELECT STRING_AGG(mds.privy_sign_location,';') FROM ms_doc_template_sign_loc mds LEFT JOIN ms_doc_template mdt ON mdt.id_doc_template = mds.id_doc_template LEFT JOIN tr_document_d tdd ON tdd.id_ms_doc_template = mds.id_doc_template LEFT JOIN ms_lov mlo ON mlo.id_lov = mds.lov_sign_type WHERE document_id = '" + docid + "' AND description = 'Stamp Duty (materai)'")
@@ -457,6 +456,8 @@ public class APIFullService {
 		} else {
 			data = 0
 		}
+
+		Integer.parseInt(data)
 	}
 
 	@Keyword
@@ -568,13 +569,48 @@ public class APIFullService {
 		data
 	}
 
+
 	@Keyword
-	getSaldoUsedBasedonPaymentType(Connection conn, String refnumber, String emailSigner) {
+	getPaymentTypeMULTIDOC(Connection conn, String docId){
 		String data
 
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select CASE WHEN msl_tdd.description = 'Per Document' then '1' WHEN msl_tdd.description = 'Per Sign' then count(tdds.sign_location) end from tr_document_d_sign tdds join tr_document_d tdd on tdds.id_document_d = tdd.id_document_d left join ms_lov msl on tdds.lov_signer_type = msl.id_lov join ms_lov msl_tdd on tdd.lov_payment_sign_type = msl_tdd.id_lov join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join am_msuser amm on tdds.id_ms_user = amm.id_ms_user where tdh.ref_number = '"+refnumber+"' and amm.login_id = '"+emailSigner+"' GROUP BY msl.description, msl_tdd.description")
+		resultSet = stm.executeQuery("select msl.description from tr_document_d tdd join ms_lov msl on tdd.lov_payment_sign_type = msl.id_lov join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h where tdd.document_id = '"+docId+"'")
+		metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+
+	@Keyword
+	getSaldoUsedBasedonPaymentType(Connection conn, String refNumber, String emailSigner) {
+		String data
+
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select CASE WHEN msl_tdd.description = 'Per Document' then '1' WHEN msl_tdd.description = 'Per Sign' then count(tdds.sign_location) end from tr_document_d_sign tdds join tr_document_d tdd on tdds.id_document_d = tdd.id_document_d left join ms_lov msl on tdds.lov_signer_type = msl.id_lov join ms_lov msl_tdd on tdd.lov_payment_sign_type = msl_tdd.id_lov join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join am_msuser amm on tdds.id_ms_user = amm.id_ms_user where tdh.ref_number = '"+refNumber+"' and amm.login_id = '"+emailSigner+"' GROUP BY msl.description, msl_tdd.description")
+		metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		Integer.parseInt(data)
+	}
+
+	@Keyword
+	getSaldoUsedBasedonPaymentTypeMULTIDOC(Connection conn, String documentId, String emailSigner) {
+		String data
+
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select CASE WHEN msl_tdd.description = 'Per Document' then '1' WHEN msl_tdd.description = 'Per Sign' then count(tdds.sign_location) end from tr_document_d_sign tdds join tr_document_d tdd on tdds.id_document_d = tdd.id_document_d left join ms_lov msl on tdds.lov_signer_type = msl.id_lov join ms_lov msl_tdd on tdd.lov_payment_sign_type = msl_tdd.id_lov join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join am_msuser amm on tdds.id_ms_user = amm.id_ms_user where tdd.document_id = '"+documentId+"' and amm.login_id = '"+emailSigner+"' GROUP BY msl.description, msl_tdd.description")
 		metadata = resultSet.getMetaData()
 
 		columnCount = metadata.getColumnCount()
@@ -619,7 +655,7 @@ public class APIFullService {
 	gettrxSaldo(Connection conn, String refnumber, String limit, String tipeTransaksi) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select tbm.trx_no, TO_CHAR(tbm.dtm_crt,'YYYY-MM-DD HH24:MI:SS'), ml.description ,amm.full_name, case when amm_two.full_name != '' or amm_two.full_name != null then tdh.ref_number||'('||amm_two.full_name||')' else tdh.ref_number end ,ml_doc_h.code,case when mdt.doc_template_name != null or mdt.doc_template_name != '' then mdt.doc_template_name else tdd.document_name end, tbm.notes, tbm.qty from tr_balance_mutation as tbm join ms_lov as ml on tbm.lov_trx_type = ml.id_lov join am_msuser as amm on tbm.id_ms_user = amm.id_ms_user join tr_document_h as tdh on tbm.id_document_h = tdh.id_document_h join ms_lov as ml_doc_h on tdh.lov_doc_type = ml_doc_h.id_lov join tr_document_d as tdd on tbm.id_document_d = tdd.id_document_d left join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template left join am_msuser as amm_two on tdh.id_msuser_customer = amm_two.id_ms_user where tdh.ref_number = '" + refnumber + "' AND ml.description = '"+tipeTransaksi+"' order by tbm.trx_no asc limit " + limit + " ")
+		resultSet = stm.executeQuery("select tbm.trx_no, TO_CHAR(tbm.dtm_crt,'YYYY-MM-DD HH24:MI:SS'), ml.description ,amm.full_name, case when amm_two.full_name != '' or amm_two.full_name != null then tdh.ref_number||'('||amm_two.full_name||')' else tdh.ref_number end ,ml_doc_h.code,case when mdt.doc_template_name != null or mdt.doc_template_name != '' then mdt.doc_template_name else tdd.document_name end, tbm.notes, tbm.qty from tr_balance_mutation as tbm join ms_lov as ml on tbm.lov_trx_type = ml.id_lov join am_msuser as amm on tbm.id_ms_user = amm.id_ms_user join tr_document_h as tdh on tbm.id_document_h = tdh.id_document_h join ms_lov as ml_doc_h on tdh.lov_doc_type = ml_doc_h.id_lov join tr_document_d as tdd on tbm.id_document_d = tdd.id_document_d left join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template left join am_msuser as amm_two on tdh.id_msuser_customer = amm_two.id_ms_user where tdh.ref_number = '" + refnumber + "' AND ml.description = '"+tipeTransaksi+"' order by tbm.trx_no asc")
 
 		metadata = resultSet.metaData
 
@@ -851,7 +887,6 @@ public class APIFullService {
 			}
 		}
 
-		println(listdata)
 		ArrayList<String> resultList = []
 
 		'hardcode untuk direct langsung ke colm is_sequence'
@@ -1098,10 +1133,11 @@ public class APIFullService {
 	}
 
 	@Keyword
-	getDefaultVendor(Connection conn, String tenantCode) {
+	getTotalSign(Connection conn, String documentId) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select vendor_code from ms_vendoroftenant mvo join ms_tenant mt on mvo.id_ms_tenant = mt.id_ms_tenant join ms_vendor mv on mvo.id_ms_vendor = mv.id_ms_vendor where tenant_code = '"+ tenantCode +"' order by default_vendor ASC limit 1")
+		resultSet = stm.executeQuery("select total_sign from tr_document_d where document_id = '" + documentId + "'")
+
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -1109,21 +1145,42 @@ public class APIFullService {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		data
-	}
 
-	@Keyword
-	getRegisteredVendor(Connection conn, String email) {
-		stm = conn.createStatement()
-
-		resultSet = stm.executeQuery("select vendor_code from ms_vendor_registered_user mvr join ms_vendor mv on mv.id_ms_vendor = mvr.id_ms_vendor where signer_registered_email = '"+ email.toUpperCase() +"' order by id_ms_vendor_registered_user desc limit 1")
-		metadata = resultSet.metaData
-
-		columnCount = metadata.getColumnCount()
-
-		while (resultSet.next()) {
-			data = resultSet.getObject(1)
+		if (data != null) {
+			Integer.parseInt(data)
+		} else {
+			data = 0
 		}
-		data
+		Integer.parseInt(data)
 	}
-}
+		@Keyword
+		getDefaultVendor(Connection conn, String tenantCode) {
+			stm = conn.createStatement()
+
+			resultSet = stm.executeQuery("select vendor_code from ms_vendoroftenant mvo join ms_tenant mt on mvo.id_ms_tenant = mt.id_ms_tenant join ms_vendor mv on mvo.id_ms_vendor = mv.id_ms_vendor where tenant_code = '"+ tenantCode +"' order by default_vendor ASC limit 1")
+			metadata = resultSet.metaData
+
+			columnCount = metadata.getColumnCount()
+
+			while (resultSet.next()) {
+				data = resultSet.getObject(1)
+			}
+			data
+		}
+
+		@Keyword
+		getRegisteredVendor(Connection conn, String email) {
+			stm = conn.createStatement()
+
+			resultSet = stm.executeQuery("select vendor_code from ms_vendor_registered_user mvr join ms_vendor mv on mv.id_ms_vendor = mvr.id_ms_vendor where signer_registered_email = '"+ email.toUpperCase() +"' order by id_ms_vendor_registered_user desc limit 1")
+			metadata = resultSet.metaData
+
+			columnCount = metadata.getColumnCount()
+
+			while (resultSet.next()) {
+				data = resultSet.getObject(1)
+			}
+			data
+		}
+	}
+

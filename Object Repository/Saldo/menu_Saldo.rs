@@ -6,12 +6,16 @@
    <elementGuidId>f2b1ee35-f3c3-40f2-9342-06d9050e299c</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>XPATH</key>
-         <value>(.//*[normalize-space(text()) and normalize-space(.)='Keluar'])[1]/following::span[1]</value>
-      </entry>
-      <entry>
          <key>CSS</key>
          <value>span.menu-title.ng-tns-c133-2</value>
+      </entry>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@href = '/balance']</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>(.//*[normalize-space(text()) and normalize-space(.)='Keluar'])[1]/following::span[1]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -19,34 +23,18 @@
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>tag</name>
-      <type>Main</type>
-      <value>span</value>
-      <webElementGuid>8d24b1ea-0611-4e4d-9a16-c2c83e8ccf55</webElementGuid>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
       <value>menu-title ng-tns-c133-2</value>
-      <webElementGuid>b9a21d0e-be2c-4708-b9ae-9ebdc1404a52</webElementGuid>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>text</name>
-      <type>Main</type>
-      <value>Saldo</value>
-      <webElementGuid>11214809-c654-4053-bbac-ede3d31494d1</webElementGuid>
+      <webElementGuid>b2302b39-7e03-4926-9b19-a1dceecbfe8a</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>href</name>
       <type>Main</type>
-      <value>//*[contains(@class, 'sidebar-content main-menu-content')]/div[1]/ul/li[1]/a/span</value>
-      <webElementGuid>c3aba600-a159-49ce-ade1-0c04e3c0f03f</webElementGuid>
+      <value>/balance</value>
+      <webElementGuid>7c4fa5aa-245b-4573-8db9-dc5a53b62df6</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -54,7 +42,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Keluar'])[1]/following::span[1]</value>
-      <webElementGuid>46a45706-05f6-4dec-b79f-80002e183a19</webElementGuid>
+      <webElementGuid>9d153975-f710-4f10-be91-dd30da031af1</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -62,7 +50,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Ubah Kode Akses'])[1]/following::span[2]</value>
-      <webElementGuid>b9f222e6-3cce-492a-a7d1-947dd5600bf4</webElementGuid>
+      <webElementGuid>453a9dee-4d2b-4a37-8784-fb4b749ba7b1</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -70,7 +58,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Meterai'])[1]/preceding::span[1]</value>
-      <webElementGuid>84e3cd3c-2742-4759-8413-25fa261f9037</webElementGuid>
+      <webElementGuid>c2cd9965-f6fd-4671-be2d-474d18b46fb7</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -78,7 +66,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Pengaturan Tenant'])[1]/preceding::span[2]</value>
-      <webElementGuid>8ed49c76-d70f-408c-8557-e0d6adfcd3af</webElementGuid>
+      <webElementGuid>8db8d031-9e03-4a99-ba21-cb1e4a6349b4</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -86,7 +74,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='Saldo']/parent::*</value>
-      <webElementGuid>5b7d48ac-07bf-42a5-b3ca-ab389182a027</webElementGuid>
+      <webElementGuid>dc61c651-16bb-4bb2-bbec-10f1d0a4329c</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -94,7 +82,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//app-sidebar/div[2]/div/ul/li/a/span</value>
-      <webElementGuid>de78512b-665e-4161-a7e0-993f0cfae5ce</webElementGuid>
+      <webElementGuid>61054948-e1ca-4cea-af6d-aca3df696812</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -102,6 +90,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//span[(text() = 'Saldo' or . = 'Saldo')]</value>
-      <webElementGuid>53f12607-7047-4005-85bb-3414c26ead6e</webElementGuid>
+      <webElementGuid>8675c62a-98ca-48a9-bbb4-ef2684e3e1fd</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

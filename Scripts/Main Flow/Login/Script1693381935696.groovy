@@ -34,10 +34,7 @@ if (GlobalVariable.RunWith == 'Mobile') {
 	
 } else {
 	'open browser'
-	WebUI.openBrowser('')
-	
-	'navigate to url esign'
-	WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 2))
+	WebUI.openBrowser(findTestData('Login/Login').getValue(1, 2))
 	
 	'maximized window'
 	WebUI.maximizeWindow()
@@ -111,11 +108,13 @@ if (email == '') {
             'enter untuk input peran'
             WebUI.sendKeys(findTestObject('Login/input_Peran'), Keys.chord(Keys.ENTER))
 
+			'click button pilih peran'
+			WebUI.focus(findTestObject('Login/button_pilihPeran'), FailureHandling.STOP_ON_FAILURE)
+			
             'click button pilih peran'
             WebUI.click(findTestObject('Login/button_pilihPeran'), FailureHandling.STOP_ON_FAILURE)
         } else {
 			GlobalVariable.roleLogin = CustomKeywords.'connection.SendSign.getRoleLogin'(conneSign, email, GlobalVariable.Tenant)
-
 		}
     } else if ((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Option for Sign Document per Signer')) == 
     'Webview Sign') || (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Option for Sign Document per Signer')) == 

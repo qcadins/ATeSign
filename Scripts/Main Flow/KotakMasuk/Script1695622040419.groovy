@@ -34,7 +34,7 @@ String refNumber = CustomKeywords.'connection.APIFullService.getRefNumber'(conne
 resultHashMap = loopingMultiDoc(docId, conneSign, refNumber,resultHashMap) 
 
 'looping berdasarkan email Signer dari dokumen tersebut. '
-for (int t = 0; t < resultHashMap.keySet().size(); t++) {
+for (t = 0; t < resultHashMap.keySet().size(); t++) {
     'call Test Case untuk login sebagai user berdasarkan doc id'
     WebUI.callTestCase(findTestCase('Main Flow/Login'), [('email') : resultHashMap.keySet()[t], ('excel') : excelPathFESignDocument
             , ('checkBeforeSigning') : checkBeforeSigning, ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
@@ -47,11 +47,9 @@ for (int t = 0; t < resultHashMap.keySet().size(); t++) {
         GlobalVariable.Tenant, resultHashMap.keySet()[t])
 
     'declare array proses Ttd pada Pencarian Dokumen. Digunakan untuk membandingkan dengan Kotak Masuk / Beranda. '
-    ArrayList prosesTtdPencarianDokumen = []
+    ArrayList prosesTtdPencarianDokumen = [], totalMateraiPencarianDokumen = []
 
     openHamburgAndroid()
-
-    WebUI.focus(findTestObject('PencarianDokumen/menu_PencarianDokumen'))
 
     'click menu pencarian dokumen'
     WebUI.click(findTestObject('PencarianDokumen/menu_PencarianDokumen'))
@@ -138,7 +136,8 @@ for (int t = 0; t < resultHashMap.keySet().size(); t++) {
     'Jika kolom dicheck pada Total Meterai, keyword untuk mengecek total stamping dan total materai berdasarkan document id'
     resultStamping = CustomKeywords.'connection.SendSign.getTotalStampingandTotalMaterai'(conneSign, result[0], resultHashMap.keySet()[
         t])
-
+	
+	loopingPerDocument = 0
     for (c = 0; c < resultHashMap.get(resultHashMap.keySet()[t]); c++) {
         'ambil row lastest pencarian dokumen'
         variablePencarianDokumenRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
@@ -179,7 +178,7 @@ for (int t = 0; t < resultHashMap.keySet().size(); t++) {
 			
             if (i == (6 + tambahanColumn)) {
                 'Jika kolom dicheck pada Proses TTD, mengambil text mengenai proses tanda tangan dan displit menjadi 2, yang pertama menjadi jumlah signer yang sudah tanda tangan. Yang kedua menjadi total signer'
-                prosesTtdPencarianDokumen = WebUI.getText(modifyObjectPencarianDokumen).split('/', -1)
+                prosesTtdPencarianDokumen.add(WebUI.getText(modifyObjectPencarianDokumen).split('/', -1))
 
                 jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgress'(conneSign, result[
                     0])
@@ -188,21 +187,21 @@ for (int t = 0; t < resultHashMap.keySet().size(); t++) {
                     c])
 
                 'Pengecekan proses sign'
-                arrayMatch.add(WebUI.verifyEqual(jumlahSignerTelahTandaTangan, (prosesTtdPencarianDokumen[0]).replace(' ', 
+                arrayMatch.add(WebUI.verifyEqual(jumlahSignerTelahTandaTangan, prosesTtdPencarianDokumen[loopingPerDocument][0].replace(' ', 
                             ''), FailureHandling.CONTINUE_ON_FAILURE))
 
                 'Pengecekan total proses tanda tangan'
-                arrayMatch.add(WebUI.verifyEqual(jumlahSignerHarusTandaTangan, (prosesTtdPencarianDokumen[1]).replace(' ', 
+                arrayMatch.add(WebUI.verifyEqual(jumlahSignerHarusTandaTangan, prosesTtdPencarianDokumen[loopingPerDocument][1].replace(' ', 
                             ''), FailureHandling.CONTINUE_ON_FAILURE))
             } else if (i == (7 + tambahanColumn)) {
                 'Mengambil teks dari UI dan displit berdasarkan proses stamping dan total materai'
-                totalMateraiPencarianDokumen = WebUI.getText(modifyObjectPencarianDokumen).split('/', -1)
+                totalMateraiPencarianDokumen.add(WebUI.getText(modifyObjectPencarianDokumen).split('/', -1))
 
                 'Pengecekan proses stamping'
-                arrayMatch.add(WebUI.verifyEqual(totalMateraiPencarianDokumen[0], resultStamping[indexArrayMeterai++], FailureHandling.CONTINUE_ON_FAILURE))
+                arrayMatch.add(WebUI.verifyEqual(totalMateraiPencarianDokumen[loopingPerDocument][0], resultStamping[indexArrayMeterai++], FailureHandling.CONTINUE_ON_FAILURE))
 
                 'Pengecekan total materai'
-                arrayMatch.add(WebUI.verifyEqual(totalMateraiPencarianDokumen[1], resultStamping[indexArrayMeterai++], FailureHandling.CONTINUE_ON_FAILURE))
+                arrayMatch.add(WebUI.verifyEqual(totalMateraiPencarianDokumen[loopingPerDocument][1], resultStamping[indexArrayMeterai++], FailureHandling.CONTINUE_ON_FAILURE))
             } else if (i == (variablePencarianDokumenColumn.size() / variablePencarianDokumenRow.size())) {
                 'Untuk ke sembilan tidak dibuat pengecekan dikarenakan itu adalah aksi. AKsi tidak dapat dicheck'
             } else if (i == 4) {
@@ -226,8 +225,9 @@ for (int t = 0; t < resultHashMap.keySet().size(); t++) {
                         FailureHandling.CONTINUE_ON_FAILURE))
             }
         }
+		loopingPerDocument++
     }
-    
+
     openHamburgAndroid()
 
     'Klik objek Beranda'
@@ -259,9 +259,10 @@ for (int t = 0; t < resultHashMap.keySet().size(); t++) {
 	
 	'variable count total document sebelum dilakukannya view document'
 	int countTotalDocumentBeforeView, countClickedButtonPrevious = 0
-	
+
+	loopingPerDocument = 0
     for (c = 0; c < resultHashMap.get(resultHashMap.keySet()[t]); c++) {
-        if (isViewDocument != 'Yes') {
+        if (isViewDocument != 'Yes' || c == 0) {
 			'get row pada beranda'
 			variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
         } else {
@@ -402,7 +403,7 @@ for (int t = 0; t < resultHashMap.keySet().size(); t++) {
         ArrayList prosesTtd = WebUI.getText(modifyObjectTextProsesTtd).split('/', -1)
 
         'verifikasi total signer beranda dan pencarian dokumen'
-        arrayMatch.add(WebUI.verifyMatch(prosesTtd.toString(), prosesTtdPencarianDokumen.toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+        arrayMatch.add(WebUI.verifyMatch(prosesTtd.toString(), prosesTtdPencarianDokumen[loopingPerDocument].toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'Jika error lognya muncul'
         if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
@@ -518,6 +519,7 @@ for (int t = 0; t < resultHashMap.keySet().size(); t++) {
                     ';') + GlobalVariable.ReasonFailedProcessNotDone) + ' untuk proses View dokumen tanda tangan. ')
             }
         }
+		loopingPerDocument++
     }
 }
 
@@ -560,7 +562,7 @@ def loopingMultiDoc(ArrayList docId, Connection conneSign, String refNumber, Lin
 			';', -1)
 	
 		for (loopingEmailSigner = 0; loopingEmailSigner < emailSigner.size(); loopingEmailSigner++) {
-			count = CustomKeywords.'connection.SendSign.getTotalDocumentBasedOnEmail'(conneSign, refNumber, emailSigner[loopingEmailSigner])
+			count = CustomKeywords.'connection.SendSign.getTotalDocumentBasedOnSigner'(conneSign, refNumber, emailSigner[loopingEmailSigner])
 	
 			if (count > 0) {
 				if (resultHashMap.keySet().size() == 0) {

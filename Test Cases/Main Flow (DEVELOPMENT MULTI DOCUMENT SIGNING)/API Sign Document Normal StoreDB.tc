@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>Manual Sign rill kepake</name>
+   <name>API Sign Document Normal StoreDB</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>8894286f-97f0-4950-b470-259b4543b5c1</testCaseGuid>
+   <testCaseGuid>35a4f82d-dbc2-4571-b62a-0289b3e9143f</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>91ac1b76-0ee9-49f7-875e-2e9136fc6125</variableId>
+      <variableId>d6f326f3-5664-4bdc-988f-0d5493221ec6</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>''</defaultValue>
+      <defaultValue>'Registrasi/BulkSignDocument'</defaultValue>
       <description></description>
-      <id>91ac1b76-0ee9-49f7-875e-2e9136fc6125</id>
+      <id>d6f326f3-5664-4bdc-988f-0d5493221ec6</id>
       <masked>false</masked>
-      <name>excelPathManualSigntoSign</name>
+      <name>API_Excel_Path</name>
    </variable>
 </TestCaseEntity>
