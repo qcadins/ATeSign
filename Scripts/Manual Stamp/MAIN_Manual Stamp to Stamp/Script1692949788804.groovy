@@ -309,19 +309,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 								'pengecekan khusus privy sign location'
 								if (GlobalVariable.Psre == 'PRIVY') {
 									'Jika documentTemplateCode di dokumen pertama adalah kosong'
-									if (CustomKeywords.'connection.APIFullService.getPrivySignLocation'(conneSign, docId) != '') {
+									if (CustomKeywords.'connection.APIFullService.getPrivyStampLocation'(conneSign, docId) != '') {
 									   
 										'ambil data privy sign location based on document_template'
-										arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getPrivySignLocation'(conneSign, docId),
-												CustomKeywords.'connection.APIFullService.getTemplateDocPrivySignLoc'(conneSign, docId), false, FailureHandling.CONTINUE_ON_FAILURE))
+										arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getPrivyStampLocation'(conneSign, docId),
+												CustomKeywords.'connection.APIFullService.getTemplateDocPrivyStampLoc'(conneSign, docId), false, FailureHandling.CONTINUE_ON_FAILURE))
 									} else {
 										'pastikan privy sign loc tidak null'
 										arrayMatch.add(WebUI.verifyNotMatch('null',
-												CustomKeywords.'connection.APIFullService.getPrivySignLocation'(conneSign, docId), false, FailureHandling.CONTINUE_ON_FAILURE))
+												CustomKeywords.'connection.APIFullService.getPrivyStampLocation'(conneSign, docId), false, FailureHandling.CONTINUE_ON_FAILURE))
 										
 										'pastikan privy sign loc tidak kosong'
 										arrayMatch.add(WebUI.verifyNotMatch('',
-												CustomKeywords.'connection.APIFullService.getPrivySignLocation'(conneSign, docId), false, FailureHandling.CONTINUE_ON_FAILURE))
+												CustomKeywords.'connection.APIFullService.getPrivyStampLocation'(conneSign, docId), false, FailureHandling.CONTINUE_ON_FAILURE))
 									}
 								}
 								
