@@ -31,6 +31,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         break
     } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 		
+		'get Tenant per case dari excel'
+		GlobalVariable.Tenant = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
+		
+		'get Psre per case dari excel'
+		GlobalVariable.Psre = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
+		
 		'check if email login case selanjutnya masih sama dengan sebelumnya'
 		if(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) !=
 			findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')) || firstRun == 0) {
@@ -52,12 +58,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			
 			firstRun = 1
 		}
-		
-		'get Tenant per case dari excel'
-		GlobalVariable.Tenant = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
-		
-		'get Psre per case dari excel'
-		GlobalVariable.Psre = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
 		
 		'click menu pengaturan dokumen'
 		WebUI.click(findTestObject('TandaTanganDokumen/btn_PengaturanDokumen'))
@@ -1042,7 +1042,7 @@ def inputForm(Connection conneSign, int checked) {
 	if(GlobalVariable.NumofColm == 2 && checked == 0) {		
 		'get data tipe-tipe pembayaran secara asc'
 		ArrayList<String> resultVendorDDL = CustomKeywords.'connection.PengaturanDokumen.getDDLVendor'(conneSign)
-	
+
 		'check ddl psre'
 		checkDDL(findTestObject('Object Repository/TandaTanganDokumen/select_Psre'), resultVendorDDL, ' pada DDL Psre ')
 		

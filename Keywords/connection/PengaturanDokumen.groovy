@@ -122,7 +122,7 @@ public class PengaturanDokumen {
 		}
 		data
 	}
-	
+
 	@Keyword
 	getUrutanSigning(Connection conn, String docTempCode) {
 		stm = conn.createStatement()
