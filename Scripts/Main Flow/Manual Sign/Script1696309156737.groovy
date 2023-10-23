@@ -493,11 +493,11 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 			if ((GlobalVariable.Psre == 'PRIVY') && (tipeTandaTangan.contains('Meterai'))) {
 				'pastikan privy sign loc tidak null'
 				arrayMatch.add(WebUI.verifyNotMatch('null',
-						CustomKeywords.'connection.APIFullService.getPrivySignLocation'(conneSign, docId), false, FailureHandling.CONTINUE_ON_FAILURE))
+						CustomKeywords.'connection.APIFullService.getPrivyStampLocation'(conneSign, docId), false, FailureHandling.CONTINUE_ON_FAILURE))
 				
 				'pastikan privy sign loc tidak kosong'
 				arrayMatch.add(WebUI.verifyNotMatch('',
-						CustomKeywords.'connection.APIFullService.getPrivySignLocation'(conneSign, docId), false, FailureHandling.CONTINUE_ON_FAILURE))
+						CustomKeywords.'connection.APIFullService.getPrivyStampLocation'(conneSign, docId), false, FailureHandling.CONTINUE_ON_FAILURE))
 			}
 			
             'jika data db tidak sesuai dengan excel'

@@ -264,16 +264,16 @@ for (int i = 0; i < docid.size(); i++) {
 		if ((documentTemplateCode[i]).replace('"', '') != '') {
 		   
 			'ambil data privy sign location based on document_template'
-			arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getPrivySignLocation'(conneSign, docid[i]),
-					CustomKeywords.'connection.APIFullService.getTemplateDocPrivySignLoc'(conneSign, docid[i]), false, FailureHandling.CONTINUE_ON_FAILURE))
+			arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getPrivyStampLocation'(conneSign, docid[i]),
+					CustomKeywords.'connection.APIFullService.getTemplateDocPrivyStampLoc'(conneSign, docid[i]), false, FailureHandling.CONTINUE_ON_FAILURE))
 		} else {
 			'pastikan privy sign loc tidak null'
 			arrayMatch.add(WebUI.verifyNotMatch('null',
-					CustomKeywords.'connection.APIFullService.getPrivySignLocation'(conneSign, docid[i]), false, FailureHandling.CONTINUE_ON_FAILURE))
+					CustomKeywords.'connection.APIFullService.getPrivyStampLocation'(conneSign, docid[i]), false, FailureHandling.CONTINUE_ON_FAILURE))
 			
 			'pastikan privy sign loc tidak kosong'
 			arrayMatch.add(WebUI.verifyNotMatch('',
-					CustomKeywords.'connection.APIFullService.getPrivySignLocation'(conneSign, docid[i]), false, FailureHandling.CONTINUE_ON_FAILURE))
+					CustomKeywords.'connection.APIFullService.getPrivyStampLocation'(conneSign, docid[i]), false, FailureHandling.CONTINUE_ON_FAILURE))
 	
 		}
 	}
