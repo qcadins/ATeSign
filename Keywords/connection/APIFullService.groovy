@@ -1152,6 +1152,7 @@ public class APIFullService {
 			data = 0
 		}
 		Integer.parseInt(data)
+	}
 
 	@Keyword
 	getDefaultVendor(Connection conn, String tenantCode) {

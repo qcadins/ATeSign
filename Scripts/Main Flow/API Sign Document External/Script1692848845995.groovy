@@ -128,10 +128,6 @@ int saldoUsed = 0
             if (code_otp == 0) {
 				checkVerifyEqualOrMatch(WebUI.verifyMatch(psreCode.toString().toUpperCase(), vendor.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada psre response dengan vendor DB ')
 				
-				if (psreCode.toString().equalsIgnoreCase(vendor) == false) {
-					'check vendor db dan response'
-					checkVerifyEqualOrMatch(false, ' pada psre response dengan vendor DB ')
-				}
                 'Dikasih delay 50 detik dikarenakan loading untuk mendapatkan OTP Privy via SMS.'
                 WebUI.delay(50)
 
