@@ -221,44 +221,9 @@ for (int i = 0; i < docid.size(); i++) {
 
     'verify is Sequence'
     arrayMatch.add(WebUI.verifyMatch((isSequence[i]).replace('"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-    'Looping berdasarkan jumlah dari signAction'
-    for (int z = 0; z < signAction.size(); z++) {
-        'Jika signAction tersebut adalah AT'
-        if ((signAction[z]).replace('"', '') == 'at') {
-            'Mengambil emailSign dari excel dan displit kembali'
-            emailSign = (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$email (Send External)')).replace(
-                '"', '').split(semicolon, splitnum)[z])
-
-            'Mengambil trxno dari column tersebut'
-            trxno = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('trxNo'))
-
-            'get data result trx untuk signing'
-            resulttrxsigning = CustomKeywords.'connection.APIFullService.getTrxSendDocSigning'(conneSign, trxno)
-
-            'declare arrayindex'
-            arrayindex = 0
-
-            'verify trx no'
-            arrayMatch.add(WebUI.verifyMatch(trxno, resulttrxsigning[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-            'verify ref no di trx'
-            arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel(
-                            '$referenceNo (Send External)')).replace('"', ''), resulttrxsigning[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-            'verify date req di trx'
-            arrayMatch.add(WebUI.verifyMatch(currentDate, resulttrxsigning[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-            'verify trx qty = splitnum'
-            arrayMatch.add(WebUI.verifyMatch(resulttrxsigning[arrayindex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
-
-            'verify trx autosign'
-            arrayMatch.add(WebUI.verifyMatch(resulttrxsigning[arrayindex++], ('Auto Sign (' + emailSign) + ')', false, FailureHandling.CONTINUE_ON_FAILURE))
-        }
-    }
 	
-	if ((psreCodeDB == 'PRIVY') &&
-		(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('page (Send stampExternal)')) != '')) {
+	if (psreCodeDB == 'PRIVY') {
+		if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('page (Send stampExternal)')) != '') {
 		'Jika documentTemplateCode di dokumen pertama adalah kosong'
 		if ((documentTemplateCode[i]).replace('"', '') != '') {
 		   
@@ -273,7 +238,42 @@ for (int i = 0; i < docid.size(); i++) {
 			'pastikan privy sign loc tidak kosong'
 			arrayMatch.add(WebUI.verifyNotMatch('',
 					CustomKeywords.'connection.APIFullService.getPrivyStampLocation'(conneSign, docid[i]), false, FailureHandling.CONTINUE_ON_FAILURE))
+			}
+		}
+	} else {
+		'Looping berdasarkan jumlah dari signAction'
+		for (int z = 0; z < signAction.size(); z++) {
+			'Jika signAction tersebut adalah AT'
+			if ((signAction[z]).replace('"', '') == 'at') {
+				'Mengambil emailSign dari excel dan displit kembali'
+				emailSign = (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$email (Send External)')).replace(
+					'"', '').split(semicolon, splitnum)[z])
 	
+				'Mengambil trxno dari column tersebut'
+				trxno = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('trxNo'))
+	
+				'get data result trx untuk signing'
+				resulttrxsigning = CustomKeywords.'connection.APIFullService.getTrxSendDocSigning'(conneSign, trxno)
+	
+				'declare arrayindex'
+				arrayindex = 0
+	
+				'verify trx no'
+				arrayMatch.add(WebUI.verifyMatch(trxno, resulttrxsigning[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+				'verify ref no di trx'
+				arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel(
+								'$referenceNo (Send External)')).replace('"', ''), resulttrxsigning[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+				'verify date req di trx'
+				arrayMatch.add(WebUI.verifyMatch(currentDate, resulttrxsigning[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+				'verify trx qty = splitnum'
+				arrayMatch.add(WebUI.verifyMatch(resulttrxsigning[arrayindex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+				'verify trx autosign'
+				arrayMatch.add(WebUI.verifyMatch(resulttrxsigning[arrayindex++], ('Auto Sign (' + emailSign) + ')', false, FailureHandling.CONTINUE_ON_FAILURE))
+			}
 		}
 	}
 	
