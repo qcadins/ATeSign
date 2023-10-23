@@ -18,7 +18,6 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import com.sun.mail.pop3.POP3Store
-
 import javax.mail.*
 import javax.mail.BodyPart as BodyPart
 import javax.mail.Folder as Folder

@@ -107,7 +107,7 @@ for (int i = 0; i < docid.size(); i++) {
         arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getSignLocation'(conneSign, docid[i]), 
                 signlocStoreDB, false, FailureHandling.CONTINUE_ON_FAILURE))
     }
-    
+
     'get current date'
     currentDate = new Date().format('yyyy-MM-dd')
 
@@ -178,7 +178,6 @@ for (int i = 0; i < docid.size(); i++) {
 	if (WebUI.verifyMatch(psreCodeDB, psreCodeResult, false, FailureHandling.CONTINUE_ON_FAILURE) &&
 		WebUI.verifyMatch(psreCodeDB, responsePsreCode[i].toString(), false, FailureHandling.CONTINUE_ON_FAILURE)) {
 		arrayMatch.add(true)
-		responsePsreCode
 		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('PsRE Document') - 1,
 			GlobalVariable.NumofColm - 1, psreCodeDB)
 	}
@@ -264,16 +263,16 @@ for (int i = 0; i < docid.size(); i++) {
 		if ((documentTemplateCode[i]).replace('"', '') != '') {
 		   
 			'ambil data privy sign location based on document_template'
-			arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getPrivySignLocation'(conneSign, docid[i]),
-					CustomKeywords.'connection.APIFullService.getTemplateDocPrivySignLoc'(conneSign, docid[i]), false, FailureHandling.CONTINUE_ON_FAILURE))
+			arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getPrivyStampLocation'(conneSign, docid[i]),
+					CustomKeywords.'connection.APIFullService.getTemplateDocPrivyStampLoc'(conneSign, docid[i]), false, FailureHandling.CONTINUE_ON_FAILURE))
 		} else {
 			'pastikan privy sign loc tidak null'
 			arrayMatch.add(WebUI.verifyNotMatch('null',
-					CustomKeywords.'connection.APIFullService.getPrivySignLocation'(conneSign, docid[i]), false, FailureHandling.CONTINUE_ON_FAILURE))
+					CustomKeywords.'connection.APIFullService.getPrivyStampLocation'(conneSign, docid[i]), false, FailureHandling.CONTINUE_ON_FAILURE))
 			
 			'pastikan privy sign loc tidak kosong'
 			arrayMatch.add(WebUI.verifyNotMatch('',
-					CustomKeywords.'connection.APIFullService.getPrivySignLocation'(conneSign, docid[i]), false, FailureHandling.CONTINUE_ON_FAILURE))
+					CustomKeywords.'connection.APIFullService.getPrivyStampLocation'(conneSign, docid[i]), false, FailureHandling.CONTINUE_ON_FAILURE))
 	
 		}
 	}

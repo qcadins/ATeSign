@@ -146,7 +146,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     for (int i = 0; i < emailSigner.keySet().size(); i++) {
 						for (y = 0; y < emailSigner.get(emailSigner.keySet()[i]).size(); y++) {
 
-							
                         if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Sign?')) == 
                         'Yes') {
                             'integrasikan cancel docs jika signer sudah sesuai'
