@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "636DB8887A17453AE8B71A74851BAC0E",
+  "keywordFileContentHash": "42A0CB6795A00A623AA2EA66835022F9",
   "keywordClasses": [
     {
       "name": "connection.APIFullService",
@@ -713,6 +713,8 @@
           ]
         },
         {
+<<<<<<< HEAD
+=======
           "name": "getPrivyStampLocation",
           "parameters": [
             {
@@ -775,6 +777,7 @@
           ]
         },
         {
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
           "name": "getSendDocForEmailAndSignerType",
           "parameters": [
             {
@@ -2545,6 +2548,8 @@
             }
           ],
           "javadoc": ""
+<<<<<<< HEAD
+=======
 =======
           ]
         },
@@ -2609,6 +2614,7 @@
               }
             }
           ]
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 >>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
         }
       ]

@@ -55,9 +55,13 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathGenInvLink).getValue(Glob
 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathGenInvLink).getValue(GlobalVariable.NumofColm, rowExcel('provinsi')).replace('"', '').toUpperCase(), 
         result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-'verify email'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathGenInvLink).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace('"', '').toUpperCase(), 
-        result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+emailDB = result[arrayindex++]
+
+if(findTestData(excelPathGenInvLink).getValue(GlobalVariable.NumofColm, rowExcel('email')) != '""') {
+	'verify email'
+	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathGenInvLink).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace('"', '').toUpperCase(), 
+			emailDB, false, FailureHandling.CONTINUE_ON_FAILURE))	
+}
 
 'verify id no / ktp'
 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathGenInvLink).getValue(GlobalVariable.NumofColm, rowExcel('idKtp')).replace('"', ''), result[
