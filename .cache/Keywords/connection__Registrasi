@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "935C162BD9EAA017C2C193F97C34815A",
+  "keywordFileContentHash": "A5E0F45C22BD6655DA33E5F90F5F633F",
   "keywordClasses": [
     {
       "name": "connection.Registrasi",
@@ -169,7 +169,7 @@
               }
             },
             {
-              "name": "email",
+              "name": "value",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

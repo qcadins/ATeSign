@@ -11,9 +11,16 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 int delayExpiredOTP
 
-'setting reset OTP pada DB 0'
-CustomKeywords.'connection.DataVerif.settingResetOTPNol'(conneSign, findTestData(excelPathBuatUndangan).getValue(
-		GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase())
+'check if email kosong atau tidak'
+if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email')).length() > 0) {
+	'setting reset OTP pada DB 0'
+	CustomKeywords.'connection.DataVerif.settingResetOTPNol'(conneSign, findTestData(excelPathBuatUndangan).getValue(
+			GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase())
+} else {
+	'setting reset OTP pada DB 0'
+	CustomKeywords.'connection.DataVerif.settingResetOTPNol'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+			rowExcel('$No Handphone')).replace('"', '').toUpperCase())
+}
 
 'check ada value maka Setting OTP Active Duration'
 if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() > 0) {
@@ -23,10 +30,17 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowEx
 	delayExpiredOTP = 60 * Integer.parseInt(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')))
 }
 
+'check if email kosong atau tidak'
+if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email')).length() > 0) {
+	email = findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email'))
+} else {
+	'get name + email hosting'
+	email = findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')) + CustomKeywords.'connection.DataVerif.getEmailHosting'(conneSign)
+}
+
 'check email sesuai dengan inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/FormAktivasiEsign/input_Email'), 'value', 
-            FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-            rowExcel('Email')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Email')
+            FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), email.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Email')
 
 'check nama lengkap sesuai dengan inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/FormAktivasiEsign/input_NamaLengkap'), 
@@ -115,8 +129,7 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
 	WebUI.delay(5)
 
 	'get otp dari DB'
-	otp = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
-			rowExcel('Email')).toUpperCase())
+	otp = getOTP(conneSign)
 
 	'+1 count send otp'
 	(GlobalVariable.Counter)++
@@ -183,8 +196,7 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
 				WebUI.delay(3)
 
 				'get otp dari DB'
-				otp = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathBuatUndangan).getValue(
-						GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase())
+				otp = getOTP(conneSign)
 
 				'add otp ke list'
 				listOTP.add(otp)
@@ -257,8 +269,7 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
 				WebUI.delay(5)
 
 				'get otp dari DB'
-				otp = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathBuatUndangan).getValue(
-						GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase())
+				otp = getOTP(conneSign)
 
 				'add otp ke list'
 				listOTP.add(otp)
@@ -330,4 +341,20 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 
 def rowExcel(String cellValue) {
 	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, SheetName, cellValue)
+}
+
+def getOTP(Connection conneSign) {
+	'declare string OTP'
+	String OTP
+
+	'check if email kosong atau tidak'
+	if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email')).length() > 0) {
+		'get OTP dari DB'
+		OTP = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase())
+	} else {
+		'get OTP dari DB'
+		OTP = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('$No Handphone')).toUpperCase())
+	}
+	
+	return OTP
 }

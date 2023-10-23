@@ -17,10 +17,10 @@ public class DataVerif {
 	ArrayList<String> listdata = []
 
 	@Keyword
-	getOTP(Connection conn, String email) {
+	getOTP(Connection conn, String value) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT otp_code FROM tr_invitation_link til JOIN ms_vendor mv ON til.id_ms_vendor = mv.id_ms_vendor WHERE receiver_detail = '"+ email +"' AND vendor_code = '"+ GlobalVariable.Psre +"'")
+		resultSet = stm.executeQuery("SELECT otp_code FROM tr_invitation_link til JOIN ms_vendor mv ON til.id_ms_vendor = mv.id_ms_vendor WHERE receiver_detail = '"+ value +"' AND vendor_code = '"+ GlobalVariable.Psre +"'")
 
 		metadata = resultSet.metaData
 
@@ -85,10 +85,10 @@ public class DataVerif {
 	}
 
 	@Keyword
-	getOTPAktivasi(Connection conn, String email) {
+	getOTPAktivasi(Connection conn, String value) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT otp_code FROM am_msuser WHERE login_id = '" +  email  + "'")
+		resultSet = stm.executeQuery("SELECT otp_code FROM am_msuser WHERE login_id = '" +  value  + "' OR hashed_phone = encode(sha256('"+ value +"'), 'hex')")
 
 		metadata = resultSet.metaData
 
@@ -104,7 +104,7 @@ public class DataVerif {
 	getSaldoTrx(Connection conn, String email, String notelp, String desc) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT tbm.trx_no, to_char(trx_date, 'yyyy-MM-dd HH24:mi:SS'), description, CASE WHEN amu.full_name IS NULL THEN tbm.usr_crt ELSE amu.full_name END, notes, qty FROM tr_balance_mutation tbm JOIN ms_lov ml ON ml.id_lov = tbm.lov_trx_type LEFT JOIN am_msuser amu ON amu.id_ms_user = tbm.id_ms_user WHERE description = '"+ desc +"' AND (tbm.usr_crt = '"+ email +"' OR tbm.usr_crt = '"+ notelp +"') ORDER BY id_balance_mutation DESC LIMIT 1")
+		resultSet = stm.executeQuery("SELECT tbm.trx_no, to_char(trx_date, 'yyyy-MM-dd HH24:mi:SS'), description, CASE WHEN amu.full_name IS NULL THEN tbm.usr_crt ELSE amu.full_name END, notes, qty FROM tr_balance_mutation tbm JOIN ms_lov ml ON ml.id_lov = tbm.lov_trx_type LEFT JOIN am_msuser amu ON amu.id_ms_user = tbm.id_ms_user WHERE description = '"+ desc +"' AND (tbm.usr_crt = '"+ email.toUpperCase() +"' OR tbm.usr_crt = '"+ notelp +"') ORDER BY id_balance_mutation DESC LIMIT 1")
 
 		metadata = resultSet.metaData
 
@@ -394,6 +394,21 @@ public class DataVerif {
 	settingResetOTPNol(Connection conn, String value) {
 		stm = conn.createStatement()
 
-		updateVariable = stm.executeUpdate("UPDATE am_msuser SET reset_code_request_num = 0 WHERE login_id = '"+ value +"'")
+		updateVariable = stm.executeUpdate("UPDATE am_msuser SET reset_code_request_num = 0 WHERE login_id = '"+ value +"' OR hashed_phone = encode(sha256('"+ value +"'), 'hex')")
+	}
+	
+	@Keyword
+	getEmailHosting(Connection conn) {
+		stm = conn.createStatement()
+
+	resultSet = stm.executeQuery("select email_hosting_domain from ms_tenant mt join ms_email_hosting meh on mt.id_email_hosting = meh.id_email_hosting where tenant_code = '"+ GlobalVariable.Tenant +"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		'@'+data
 	}
 }
