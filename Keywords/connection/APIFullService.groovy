@@ -1153,7 +1153,6 @@ public class APIFullService {
 		}
 		Integer.parseInt(data)
 	}
-
 	@Keyword
 	getDefaultVendor(Connection conn, String tenantCode) {
 		stm = conn.createStatement()
