@@ -40,6 +40,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         'get psre dari excel percase'
         GlobalVariable.Psre = findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
 
+		'ubah vendor stamping jika diperlukan'
+		if (findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')).length() >
+			0 && findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')) != 'No') {
+			
+			'ambil idLov untuk diupdate secara otomatis ke DB'
+			int idLov = CustomKeywords.'connection.ManualStamp.getIdLovVendorStamping'(conneSign, findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')))
+			
+			'lakukan update vendor stamping yang akan dipakai'
+			CustomKeywords.'connection.UpdateData.updateVendorStamping'(conneSign, idLov)
+		}
+		
         if ((findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) != 
         findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))) || (firstRun == 
         0)) {
@@ -334,21 +345,23 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                 }
                             }
                             
-                            inputEMeteraiMonitoring(conneSign)
+                            prosesMeterai = inputEMeteraiMonitoring(conneSign)
 
                             saldoAfter = loginAdminGetSaldo(conneSign, 'No', sheet)
 
-                            if (saldoBefore == saldoAfter) {
-                                'write to excel status failed dan reason'
-                                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                                    GlobalVariable.StatusFailed, ((findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
-                                        rowExcel('Reason Failed')).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
-                                    ' terhadap total saldo dimana saldo awal dan saldo setelah meterai sama ')
-
-                                GlobalVariable.FlagFailed = 1
-                            } else {
-                                verifySaldoUsed(conneSign, sheet)
-                            }
+							if(prosesMeterai == 'Success') {								
+	                            if (saldoBefore == saldoAfter) {
+	                                'write to excel status failed dan reason'
+	                                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+	                                    GlobalVariable.StatusFailed, ((findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
+	                                        rowExcel('Reason Failed')).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
+	                                    ' terhadap total saldo dimana saldo awal dan saldo setelah meterai sama ')
+	
+	                                GlobalVariable.FlagFailed = 1
+	                            } else {
+	                                verifySaldoUsed(conneSign, sheet)
+	                            }
+							}
                         }
                     }
                 }
@@ -767,6 +780,7 @@ def inputEMeteraiMonitoring(Connection conneSign) {
                     WebUI.delay(15)
                 }
             }
+            return inputEMeterai[6]
         }
     }
 }
@@ -815,6 +829,9 @@ def loginAdminGetSaldo(Connection conneSign, String start, String sheet) {
 }
 
 def verifySaldoUsed(Connection conneSign, String sheet) {
+	'deklarasi array inquiryDB'
+	ArrayList inquiryDB = []
+	
     'get current date'
     def currentDate = new Date().format('yyyy-MM-dd')
 
@@ -873,10 +890,16 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
 
     'get row di saldo'
     variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper '))
-
-    'ambil inquiry di db'
-    ArrayList<String> inquiryDB = CustomKeywords.'connection.ManualStamp.gettrxSaldoForMeterai'(conneSign, findTestData(
+	
+	if (findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')) == 'PRIVY') {
+		'ambil inquiry di db'
+		inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldoForMeteraiPrivy'(conneSign, findTestData(
             excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))
+	} else {
+		'ambil inquiry di db'
+		inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldoForMeterai'(conneSign, findTestData(
+            excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))
+	}
 
     index = 0
 

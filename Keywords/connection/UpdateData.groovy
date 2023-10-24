@@ -45,4 +45,10 @@ public class UpdateData {
 
 		int updateCount = stm.executeUpdate("UPDATE ms_tenant SET use_liveness_facecompare_first = '" + value + "' WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
 	}
+	@Keyword
+	updateVendorStamping(Connection conn, int value) {
+		Statement stm = conn.createStatement()
+
+		int updateCount = stm.executeUpdate("UPDATE ms_tenant SET lov_vendor_stamping = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
+	}
 }

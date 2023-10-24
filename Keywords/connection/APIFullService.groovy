@@ -1153,6 +1153,7 @@ public class APIFullService {
 		}
 		Integer.parseInt(data)
 	}
+	
 	@Keyword
 	getDefaultVendor(Connection conn, String tenantCode) {
 		stm = conn.createStatement()
@@ -1220,5 +1221,24 @@ public class APIFullService {
 			data = resultSet.getObject(1)
 		}
 		data
+	}
+	
+	
+	@Keyword
+	gettrxSaldoForMeteraiPrivy(Connection conn, String refNumber) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT tbm.trx_no, TO_CHAR(tbm.dtm_crt,'YYYY-MM-DD HH24:MI:SS'), ml.description , case when amm.full_name != '' or amm.full_name != null then amm.full_name else tbm.usr_crt end, case when amm_two.full_name != '' or amm_two.full_name != null then tdh.ref_number||'('||amm_two.full_name||')' else tdh.ref_number end, ml_doc_h.code, case when mdt.doc_template_name != null then mdt.doc_template_name else tdd.document_name end, tbm.notes, tbm.qty FROM tr_balance_mutation tbm join tr_document_h tdh on tbm.id_document_h = tdh.id_document_h left join ms_lov as ml on tbm.lov_trx_type = ml.id_lov join tr_document_d tdd on tdd.id_document_h = tdh.id_document_h left join am_msuser as amm on tdh.id_msuser_customer = amm.id_ms_user join ms_lov as ml_doc_h on tdh.lov_doc_type = ml_doc_h.id_lov left join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template left join am_msuser as amm_two on tdh.id_msuser_customer = amm_two.id_ms_user WHERE ref_number = '" + refNumber + "' ORDER BY tbm.dtm_crt DESC LIMIT 1")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
 	}
 }

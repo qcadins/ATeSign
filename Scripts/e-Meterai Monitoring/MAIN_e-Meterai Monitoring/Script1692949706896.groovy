@@ -237,19 +237,21 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			
 			if (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Need View Document ?')) == 'Yes') {
 				
-				WebUI.verifyElementPresent(findTestObject('e-Meterai Monitoring/btn_ViewDocument'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
-				
-				WebUI.click(findTestObject('e-Meterai Monitoring/btn_ViewDocument'))
+				'check if button view document present'
+				if (WebUI.verifyElementPresent(findTestObject('e-Meterai Monitoring/btn_ViewDocument'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+					'click button view document'
+					WebUI.click(findTestObject('e-Meterai Monitoring/btn_ViewDocument'))
+				}
 	
 				'Jika error lognya muncul'
 				if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 					'ambil teks errormessage'
 					errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
 	
-						'Tulis di excel itu adalah error'
-						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-							(findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<' + errormessage + '>')
-			}
+					'Tulis di excel itu adalah error'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+						(findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + '<' + errormessage + '>')
+				}
 			
 				'Pemberian waktu 2 detik karena loading terus menerus'
 				WebUI.delay(2)
@@ -267,7 +269,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					}
 					
 					'Diverifikasi dengan UI didepan'
-					checkVerifyEqualOrMatch(WebUI.verifyMatch(findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Nomor Dokumen')), ' ' + labelViewDoc, false, FailureHandling.CONTINUE_ON_FAILURE),
+					checkVerifyEqualOrMatch(WebUI.verifyMatch(findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Nomor Dokumen')), labelViewDoc, false, FailureHandling.CONTINUE_ON_FAILURE),
 						' pada nomor kontrak UI yaitu ' + labelViewDoc)
 
 					'Klik kembali'
@@ -288,7 +290,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 }
 
 def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection conneSign) {
+	'get total emeterai dari db'
     totaleMeteraiMonitoringDB = CustomKeywords.'connection.eMeteraiMonitoring.getTotaleMeteraiMonitoring'(conneSign, GlobalVariable.Tenant)
+	
 	'click menu meterai'
 	WebUI.click(findTestObject('e-Meterai Monitoring/menu_emeteraiMonitoring'))
 	

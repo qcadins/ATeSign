@@ -178,6 +178,9 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
 
     GlobalVariable.FlagFailed = 1
 } else {
+	'check if email kosong atau tidak'
+	if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email')).length() > 0) {
+		
     ArrayList<String> listOTP = []
 
     'delay untuk menunggu otp'
@@ -261,6 +264,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     
     'click verifikasi'
     WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Verifikasi'))
+	}
 
     if (GlobalVariable.Psre == 'VIDA') {
         'get reason error log'

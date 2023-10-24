@@ -21,7 +21,7 @@
               }
             },
             {
-              "name": "email",
+              "name": "value",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -136,7 +136,7 @@
               }
             },
             {
-              "name": "email",
+              "name": "value",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -808,6 +808,25 @@
               "type": {
                 "fullClassName": "java.lang.String",
                 "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getEmailHosting",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
                 "isArray": false,
                 "isGnericsPlaceHolder": false,
                 "hasImmutableClassName": false,

@@ -201,11 +201,19 @@ if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/label_ValidationErr
     'check ada value maka setting Link Is Active'
     if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting is_active Link')).length() > 
     0) {
-    	'setting Link Is Active'
-    	CustomKeywords.'connection.APIFullService.settingLinkIsActive'(conneSign, findTestData(excelPathBuatUndangan).getValue(
-    			GlobalVariable.NumofColm, rowExcel('Setting is_active Link')), findTestData(excelPathBuatUndangan).getValue(
-    					GlobalVariable.NumofColm, rowExcel('Email')))
-    	
+		'check if email kosong atau tidak'
+		if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email')).length() > 0) {
+	    	'setting Link Is Active'
+	    	CustomKeywords.'connection.APIFullService.settingLinkIsActive'(conneSign, findTestData(excelPathBuatUndangan).getValue(
+	    			GlobalVariable.NumofColm, rowExcel('Setting is_active Link')), findTestData(excelPathBuatUndangan).getValue(
+	    					GlobalVariable.NumofColm, rowExcel('Email')))
+		} else {
+			'setting Link Is Active'
+			CustomKeywords.'connection.APIFullService.settingLinkIsActive'(conneSign, findTestData(excelPathBuatUndangan).getValue(
+					GlobalVariable.NumofColm, rowExcel('Setting is_active Link')), findTestData(excelPathBuatUndangan).getValue(
+							GlobalVariable.NumofColm, rowExcel('$No Handphone')))
+		}
+		
     	inputBuatUndangan()
     	
     	'click button save'
@@ -802,9 +810,17 @@ def inputFilterSaldo(String tipeSaldo, Connection conneSign) {
         ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
         variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[9]/div', true)
 
+	'check if email kosong atau tidak'
+	if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email')).length() > 0) {
+		'get email excel'
+		email = findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email'))
+	} else {
+		'get name + email hosting'
+		email = findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')) + CustomKeywords.'connection.DataVerif.getEmailHosting'(conneSign)
+	}
+	
     'get trx dari db'
-    ArrayList<String> result = CustomKeywords.'connection.DataVerif.getSaldoTrx'(conneSign, findTestData(excelPathBuatUndangan).getValue(
-            GlobalVariable.NumofColm, rowExcel('Email')), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+    ArrayList<String> result = CustomKeywords.'connection.DataVerif.getSaldoTrx'(conneSign, email, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
             rowExcel('$No Handphone')), 'Use ' + tipeSaldo)
 
     arrayIndex = 0

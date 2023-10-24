@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;msxForm&quot;]/div[8]/div/div/label</value>
+         <value>//*[@id=&quot;msxForm&quot;]/div[8]/div/div</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>

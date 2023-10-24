@@ -379,8 +379,8 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                     int prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, nomorKontrakPerPilihan[
                         y])
 
-                    'jika proses materai gagal (51)'
-                    if (prosesMaterai == 51) {
+                    'jika proses materai gagal (51)/(61)'
+                    if (((prosesMaterai == 51) || (prosesMaterai == 61))) {
                         'Kasih delay untuk mendapatkan update db untuk error stamping'
                         WebUI.delay(3)
 
@@ -397,7 +397,7 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                         GlobalVariable.FlagFailed = 1
 
                         break
-                    } else if (prosesMaterai == 53) {
+                    } else if (((prosesMaterai == 53) || (prosesMaterai == 63))) {
                         'Jika proses meterai sukses (53), berikan delay 3 sec untuk update di db'
                         WebUI.delay(3)
 
@@ -424,7 +424,7 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                         
                         break
                     } else {
-                        'Jika bukan 51 dan 51, maka diberikan delay 20 detik'
+                        'Jika bukan 51 dan 61, maka diberikan delay 20 detik'
                         WebUI.delay(10)
 
                         'Jika looping berada di akhir, tulis error failed proses stamping'
@@ -523,7 +523,7 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
         int prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, nomorKontrakPerPilihan[y])
 
         'jika proses meterai tidak Failed'
-        if (prosesMaterai != 51) {
+        if (((prosesMaterai != 51) || (prosesMaterai != 61))) {
             'jika saldo before sama dengan saldo after'
             if (saldoBefore == saldoAfter) {
                 'write to excel status failed dan reason'
@@ -531,7 +531,7 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                     ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
                         '-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + ' terhadap total saldo dimana saldo awal dan saldo setelah meterai sama ')
             } else {
-                verifySaldoUsed(conneSign, sheet, nomorKontrak)
+                verifySaldoUsed(conneSign, sheet, nomorKontrak, prosesMaterai)
             }
         } else {
             if (saldoBefore != saldoAfter) {
@@ -601,7 +601,10 @@ def loginAdminGetSaldo(Connection conneSign, String start, String sheet) {
     return totalSaldo
 }
 
-def verifySaldoUsed(Connection conneSign, String sheet, String nomorKontrak) {
+def verifySaldoUsed(Connection conneSign, String sheet, String nomorKontrak, int prosesMaterai) {
+	'deklarasi array inquiryDB'
+	ArrayList inquiryDB = []
+	
     'get current date'
     def currentDate = new Date().format('yyyy-MM-dd')
 
@@ -654,8 +657,13 @@ def verifySaldoUsed(Connection conneSign, String sheet, String nomorKontrak) {
     'get row di saldo'
     variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper '))
 
-    'ambil inquiry di db'
-    ArrayList<String> inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldoForMeterai'(conneSign, nomorKontrak)
+    if (prosesMaterai == 63) {
+		'ambil inquiry di db'
+		inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldoForMeteraiPrivy'(conneSign, nomorKontrak)
+	} else {
+		'ambil inquiry di db'
+		inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldoForMeterai'(conneSign, nomorKontrak)
+	}
 
     index = 0
 

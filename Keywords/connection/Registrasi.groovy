@@ -62,10 +62,10 @@ public class Registrasi {
 	}
 
 	@Keyword
-	getBuatUndanganDataPerusahaanStoreDB(Connection conn, String email) {
+	getBuatUndanganDataPerusahaanStoreDB(Connection conn, String value) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select region, office, business_line, task_no from tr_invitation_link where receiver_detail = '" +  email  + "'")
+		resultSet = stm.executeQuery("select region, office, business_line, task_no from tr_invitation_link where receiver_detail = '" +  value  + "'")
 
 		metadata = resultSet.metaData
 

@@ -33,6 +33,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			GlobalVariable.Tenant = findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Tenant Code'))
 		} else if (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code')) == 'Yes') {
 			GlobalVariable.Tenant = findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
+			
+			'ubah vendor stamping jika diperlukan '
+			if (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')).length() >
+				0 && findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')) != 'No') {
+				
+				'ambil idLov untuk diupdate secara otomatis ke DB'
+				int idLov = CustomKeywords.'connection.ManualStamp.getIdLovVendorStamping'(conneSign, findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')))
+				
+				'lakukan update vendor stamping yang akan dipakai'
+				CustomKeywords.'connection.UpdateData.updateVendorStamping'(conneSign, idLov)
+			}
 		}
 		
 		'check if mau menggunakan api_key yang salah atau benar'
@@ -73,7 +84,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         GlobalVariable.NumofColm, rowExcel('refNumber')).replace('"',''))
 
 					'jika proses materai gagal (51)'
-					if (prosesMaterai == 51) {
+					if ((prosesMaterai == 51) || (prosesMaterai == 61)) {
 						
 						'Diberikan delay 3 detik untuk update error message pada db'
 						WebUI.delay(3)
@@ -117,9 +128,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 							
 							break
 	                    }
-					}
-
-                    
+					}                 
                 }
             } else {
                'call function get error msg'

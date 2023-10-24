@@ -11,9 +11,16 @@ import org.openqa.selenium.Keys as Keys
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-'setting reset OTP pada DB 0'
-CustomKeywords.'connection.DataVerif.settingResetOTPNol'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 
-            rowExcel('email')).replace('"', '').toUpperCase())
+'check if email kosong atau tidak'
+if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('email')).length() > 2) {
+	'setting reset OTP pada DB 0'
+	CustomKeywords.'connection.DataVerif.settingResetOTPNol'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 
+			rowExcel('email')).replace('"', '').toUpperCase())	
+} else {
+	'setting reset OTP pada DB 0'
+	CustomKeywords.'connection.DataVerif.settingResetOTPNol'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm,
+			rowExcel('tlp')).replace('"', '').toUpperCase())
+}
 
 int delayExpiredOTP
 
@@ -25,10 +32,17 @@ if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm,
 	delayExpiredOTP = 60 * Integer.parseInt(findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')))
 }
 
+'check if email kosong atau tidak'
+if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('email')).length() > 2) {
+	email = findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace('"', '')	
+} else {
+	'get name + email hosting'
+	email = findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('nama')).replace('"', '') + CustomKeywords.'connection.DataVerif.getEmailHosting'(conneSign)
+}
+
 'check email sesuai dengan inputan'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/FormAktivasiEsign/input_Email'), 'value', 
-            FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 
-            rowExcel('email')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Email')
+checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/FormAktivasiEsign/input_Email'), 'value',
+		FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), email.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Email')
 
 'check nama lengkap sesuai dengan inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/FormAktivasiEsign/input_NamaLengkap'), 
@@ -157,9 +171,8 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
 		'delay untuk menunggu OTP'
 		WebUI.delay(5)
 	
-		'get OTP dari DB'
-		OTP = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm,
-				rowExcel('email')).replace('"', '').toUpperCase())
+		'call function get otp'
+		OTP = getOTP(conneSign)
 	
 		'+1 karena request otp'
 		GlobalVariable.Counter++
@@ -220,9 +233,8 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
 					'delay untuk menunggu OTP'
 					WebUI.delay(3)
 	
-					'get OTP dari DB'
-					OTP = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(
-							GlobalVariable.NumofColm, rowExcel('email')).replace('"', '').toUpperCase())
+					'call function get otp'
+					OTP = getOTP(conneSign)
 	
 					'+1 karena request otp'
 					GlobalVariable.Counter++
@@ -294,9 +306,8 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
 					'delay untuk menunggu OTP'
 					WebUI.delay(5)
 	
-					'get OTP dari DB'
-					OTP = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(
-							GlobalVariable.NumofColm, rowExcel('email')).replace('"', '').toUpperCase())
+					'call function get otp'
+					OTP = getOTP(conneSign)
 	
 					'+1 karena request otp'
 					GlobalVariable.Counter++
@@ -362,4 +373,22 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 
 def rowExcel(String cellValue) {
 	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+}
+
+def getOTP(Connection conneSign) {
+	'declare string OTP'
+	String OTP
+
+	'check if email kosong atau tidak'
+	if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('email')).length() > 2) {
+		'get OTP dari DB'
+		OTP = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm,
+				rowExcel('email')).replace('"', '').toUpperCase())
+	} else {
+		'get OTP dari DB'
+		OTP = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm,
+				rowExcel('tlp')).replace('"', '').toUpperCase())
+	}
+	
+	return OTP
 }

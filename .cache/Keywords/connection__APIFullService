@@ -2550,7 +2550,11 @@
           "javadoc": ""
         },
         {
+<<<<<<< HEAD
           "name": "getTotalAutosignOnDocument",
+=======
+          "name": "gettrxSaldoForMeteraiPrivy",
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
           "parameters": [
             {
               "name": "conn",
@@ -2566,7 +2570,11 @@
               }
             },
             {
+<<<<<<< HEAD
               "name": "documentId",
+=======
+              "name": "refNumber",
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -2580,6 +2588,7 @@
             }
           ],
           "javadoc": ""
+<<<<<<< HEAD
         },
         {
           "name": "getIfSignerAutosign",
@@ -2625,6 +2634,8 @@
             }
           ],
           "javadoc": ""
+=======
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
         }
       ]
     }

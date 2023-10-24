@@ -18,7 +18,7 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 sheet = 'Main'
 
 'looping untuk menjalankan Main'
-for (GlobalVariable.NumofColm = 34; GlobalVariable.NumofColm <= findTestData(excelPathMain).columnNumbers; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathMain).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
     } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
@@ -83,9 +83,9 @@ for (GlobalVariable.NumofColm = 34; GlobalVariable.NumofColm <= findTestData(exc
             'Sign Only') && (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 
             'Stamp Only')) {
                 'call test case kotak masuk dan verify document monitoring. Document monitoring terdapat didalam kotak masuk.'
-        //        WebUI.callTestCase(findTestCase('Main Flow/KotakMasuk'), [('excelPathFESignDocument') : excelPathMain, ('sheet') : sheet
-       //                 , ('checkBeforeSigning') : 'Yes', ('CancelDocsSend') : findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, 
-        //                    rowExcel('Cancel Docs after Send?'))], FailureHandling.CONTINUE_ON_FAILURE)
+                WebUI.callTestCase(findTestCase('Main Flow/KotakMasuk'), [('excelPathFESignDocument') : excelPathMain, ('sheet') : sheet
+                        , ('checkBeforeSigning') : 'Yes', ('CancelDocsSend') : findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, 
+                            rowExcel('Cancel Docs after Send?'))], FailureHandling.CONTINUE_ON_FAILURE)
 
                 'jika ada proses cancel doc'
                 if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Send?')) == 

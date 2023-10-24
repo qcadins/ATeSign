@@ -40,9 +40,14 @@ if(GlobalVariable.Psre == 'VIDA') {
 	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Jenis Kelamin')).toUpperCase(), 
 	        (resultDataDiri[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 	
-	'verify email'
-	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase(), 
-	        (resultDataDiri[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+	emailDB = resultDataDiri[arrayindex++].toUpperCase()
+	
+	'check if email kosong atau tidak'
+	if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email')).length() > 0) {
+		'verify email'
+		arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase(), 
+				emailDB, false, FailureHandling.CONTINUE_ON_FAILURE))		
+	}
 	
 	'verify provinsi'
 	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Provinsi')).toUpperCase(), 

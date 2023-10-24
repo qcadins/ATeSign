@@ -5,6 +5,18 @@
    <tag></tag>
    <comment></comment>
    <testCaseGuid>3dc690a1-c806-45b4-9d8e-ec7c31afb588</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>7d8f1839-362d-44ea-8990-9951ba361aeb</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>83612fd7-5547-4163-b43e-f5ebb4318b19</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>'APIFullService/API_RequestStamping'</defaultValue>
       <description></description>

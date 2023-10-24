@@ -15,15 +15,25 @@ ArrayList<String> arrayMatch = []
 arrayindex = 0
 
 if (GlobalVariable.Psre == 'VIDA') {
+	ArrayList<String> resultDataPerusahaan, resultDataDiri
+	
     'get data buat undangan dari DB'
-    ArrayList<String> resultDataDiri = CustomKeywords.'connection.Registrasi.buatUndanganStoreDB'(conneSign, findTestData(
+    resultDataDiri = CustomKeywords.'connection.Registrasi.buatUndanganStoreDB'(conneSign, findTestData(
             excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace('"', '').toUpperCase(), 
         findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('tlp')).replace('"', ''))
-
-    'get data perusahaan buat undangan dari DB'
-    ArrayList<String> resultDataPerusahaan = CustomKeywords.'connection.Registrasi.getBuatUndanganDataPerusahaanStoreDB'(
-        conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace(
-            '"', '').toUpperCase())
+	
+	'check if email kosong atau tidak'
+	if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('email')).length() > 2) {
+		'get data perusahaan buat undangan dari DB'
+		resultDataPerusahaan = CustomKeywords.'connection.Registrasi.getBuatUndanganDataPerusahaanStoreDB'(
+				conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace(
+						'"', '').toUpperCase())		
+	} else {
+		'get data perusahaan buat undangan dari DB'
+		resultDataPerusahaan = CustomKeywords.'connection.Registrasi.getBuatUndanganDataPerusahaanStoreDB'(
+				conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('tlp')).replace(
+						'"', '').toUpperCase())
+	}
 
     'verify nama'
     arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel(
@@ -44,10 +54,17 @@ if (GlobalVariable.Psre == 'VIDA') {
     arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel(
                     'jenisKelamin')).replace('"', '').toUpperCase(), (resultDataDiri[arrayindex++]).toUpperCase(), false, 
             FailureHandling.CONTINUE_ON_FAILURE))
-
-    'verify email'
-    arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel(
-                    'email')).replace('"', '').toUpperCase(), (resultDataDiri[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+	'check if email kosong atau tidak'
+	if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('email')).length() > 2) {
+		email = findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace('"', '')
+	} else {
+		'get name + email hosting'
+		email = findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('nama')).replace('"', '') + CustomKeywords.'connection.DataVerif.getEmailHosting'(conneSign)
+	}
+	
+	'verify email'
+	arrayMatch.add(WebUI.verifyMatch(email.toUpperCase(), resultDataDiri[arrayindex++].toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))		
 
     'verify provinsi'
     arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel(
