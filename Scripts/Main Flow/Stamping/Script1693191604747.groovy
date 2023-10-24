@@ -74,7 +74,7 @@ if ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel
                         '"', ''))
 
                 'jika proses materai gagal (51)'
-                if ((prosesMaterai == 51) && (flagErrorDMS == 0)) {
+                if (((prosesMaterai == 51) || (prosesMaterai == 61)) && (flagErrorDMS == 0)) {
                     'Kasih delay untuk mendapatkan update db untuk error stamping'
                     WebUI.delay(3)
 
@@ -97,7 +97,7 @@ if ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel
 
                         continue
                     }
-                } else if ((prosesMaterai == 53) || (flagErrorDMS == 1)) {
+                } else if (((prosesMaterai == 53) || (prosesMaterai == 63)) || (flagErrorDMS == 1)) {
                     'Jika proses meterai sukses (53), berikan delay 3 sec untuk update di db'
                     WebUI.delay(3)
 
@@ -126,7 +126,8 @@ if ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel
                     
                     break
                 } else {
-                    'Jika bukan 51 dan 53, maka diberikan delay 20 detik'
+					
+                    'Jika bukan 51/61 dan 53/63, maka diberikan delay 20 detik'
                     WebUI.delay(10)
 
                     'Jika looping berada di akhir, tulis error failed proses stamping'
@@ -158,7 +159,7 @@ if ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel
 				totalMateraiAndTotalStamping = CustomKeywords.'connection.Meterai.getTotalMateraiAndTotalStamping'(
 					conneSign, nomorKontrakDocument.replace('"', ''))
 				
-				if (totalMateraiAndTotalStamping[0] != '0') {
+				if (totalMateraiAndTotalStamping[0] != '0' && prosesMaterai != 63) {
 					'Call verify meterai'
 					WebUI.callTestCase(findTestCase('Main Flow/verifyMeterai'), [('excelPathMeterai') : excelPathStamping, ('sheet') : sheet
                         , ('noKontrak') : nomorKontrakDocument.replace('"', ''), ('linkDocumentMonitoring') : linkDocumentMonitoring, ('CancelDocsStamp') : CancelDocsStamp], FailureHandling.CONTINUE_ON_FAILURE)
@@ -187,16 +188,16 @@ saldoAfter = getSaldo.get('Meterai')
 'mengambil value db proses ttd'
 prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, refNumber)
 
-if (prosesMaterai == 53) {
+if (prosesMaterai == 53 || prosesMaterai == 63) {
     if (WebUI.verifyEqual(Integer.parseInt(saldoBefore), Integer.parseInt(saldoAfter), FailureHandling.CONTINUE_ON_FAILURE)) {
         'write to excel status failed dan reason'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
             ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', 
                 '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + ' terhadap total saldo dimana saldo awal dan saldo setelah meterai sama ')
     } else {
-        verifySaldoUsed(conneSign, sheet, refNumber)
+        verifySaldoUsed(conneSign, sheet, refNumber, prosesMaterai)
     }
-} else if (prosesMaterai == 51) {
+} else if (prosesMaterai == 51 || prosesMaterai == 61) {
     if (saldoBefore != saldoAfter) {
         'write to excel status failed dan reason'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
@@ -216,7 +217,10 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     }
 }
 
-def verifySaldoUsed(Connection conneSign, String sheet, String refNumber) {
+def verifySaldoUsed(Connection conneSign, String sheet, String refNumber, int prosesMaterai) {
+	'deklarasi array inquiryDB'
+	ArrayList inquiryDB = []
+	
     'get current date'
     def currentDate = new Date().format('yyyy-MM-dd')
 
@@ -269,8 +273,13 @@ def verifySaldoUsed(Connection conneSign, String sheet, String refNumber) {
     'get row di saldo'
     variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper '))
 
-    'ambil inquiry di db'
-    ArrayList inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldoForMeterai'(conneSign, refNumber)
+	if (prosesMaterai == 63) {
+		'ambil inquiry di db'
+		inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldoForMeteraiPrivy'(conneSign, refNumber)
+	} else {
+		'ambil inquiry di db'
+		inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldoForMeterai'(conneSign, refNumber)
+	}
 
     index = 0
 

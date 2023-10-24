@@ -135,9 +135,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                     rowExcel('Reason Failed')) + ';') + ' total signer pada Send Document dengan signer yang terdaftar tidak sesuai ')
                         }
                     } else {
-                        'jika menggunakan opsi sign only ,maka email signernya diinput'
-                        emailSigner = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('email Signer (Sign Only)')).split(
-                            ';', -1)
+						documentId = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ',
+							-1)
+						
+						emailSigner = checkingDocAndEmailFromInput(documentId, 'email Signer (Sign Only)', emailSigner)
+//                        'jika menggunakan opsi sign only ,maka email signernya diinput'
+//                        emailSigner = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('email Signer (Sign Only)')).split(
+//                            ';', -1)
                     }
                     
                     String cancelDocsValue = ''
@@ -241,6 +245,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'jika set stamping'
             if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Do Stamp for this document?')) == 
             'Yes') {
+				
+				'ubah vendor stamping jika diperlukan '
+				if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')).length() > 
+					0 && findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')) != 'No') {
+					
+					'ambil idLov untuk diupdate secara otomatis ke DB'
+					int idLov = CustomKeywords.'connection.ManualStamp.getIdLovVendorStamping'(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')))
+					
+					'lakukan update vendor stamping yang akan dipakai'
+					CustomKeywords.'connection.UpdateData.updateVendorStamping'(conneSign, idLov)
+				}
+				
                 'call test case stamping'
                 WebUI.callTestCase(findTestCase('Main Flow/Stamping'), [('excelPathStamping') : excelPathMain, ('sheet') : sheet
                         , ('linkDocumentMonitoring') : '', ('CancelDocsStamp') : findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, 

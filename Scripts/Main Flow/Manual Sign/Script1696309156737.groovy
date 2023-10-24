@@ -88,10 +88,10 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
     if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Membutuhkan e-Meterai (Send Manual)')) == 
     'Yes') {
         'index meningkat karena tambahan 2 kolom ketika menggunakan e-meterai'
-        index = 10
+        index = 11
     } else {
         'modify menuju index normal'
-        index = 8
+        index = 9
     }
 	
 	'modify label daftar penanda tangan dengan naiknya index'
