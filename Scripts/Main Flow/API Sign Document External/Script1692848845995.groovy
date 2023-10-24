@@ -23,6 +23,9 @@ documentIdInput = '["' + GlobalVariable.storeVar.keySet()[[0]]  + '"]'
 
 int saldoUsed = 0
 
+'setting menggunakan base url yang benar atau salah'
+CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPISignDocument, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url (Sign External)'))
+
     'ambil nama vendor dari DB'
     String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, refNumber)
 

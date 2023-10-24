@@ -17,8 +17,8 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@id=&quot;msxForm&quot;]/div[8]/div/div</value>
-      <webElementGuid>b1583ccb-7d94-4d49-9669-b35a7ffbcb3f</webElementGuid>
+      <value>//*[@id=&quot;msxForm&quot;]/div[8]/div/div/label</value>
+      <webElementGuid>569bfe41-1b07-47c0-9729-cc8f5baa67c1</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -26,6 +26,6 @@
       <name>for</name>
       <type>Main</type>
       <value>isMeterei</value>
-      <webElementGuid>185c3cfe-9330-42be-af0d-d46ef85bea4a</webElementGuid>
+      <webElementGuid>a7bef76b-b9c1-448a-8be4-d42aee02ff49</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

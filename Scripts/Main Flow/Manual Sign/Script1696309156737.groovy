@@ -41,7 +41,7 @@ ArrayList<String> namaTandaTangan = [], notelpTandaTangan = []
 indexEmail = 0
 
 'inisiasi index menjadi 8 untuk modify object ketika tidak pada e-meterai'
-index = 8
+index = 9
 
 'Inisialisasi variable yang dibutuhkan'
 emailPenandaTangan = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Email (Send Manual)')).split(
@@ -413,10 +413,10 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
     'click button simpan'
     WebUI.click(findTestObject('Object Repository/ManualSign/btn_proses'))
 
-    WebUI.delay(3)
+	checkErrorLog()
 
     'susun urutan tanda tangan'
-    //sortingSequenceSign()
+    sortingSequenceSign()
 
     checkErrorLog()
 
@@ -575,12 +575,12 @@ def inputForm() {
     'Klik enter'
     WebUI.sendKeys(findTestObject('ManualSign/input_jenisPembayaran'), Keys.chord(Keys.ENTER))
 
-//    'Input AKtif pada input Status'
-//    WebUI.setText(findTestObject('ManualSign/input_isSequence'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
-//            rowExcel('$isSequence (Send Manual)')))
-//
-//    'Klik enter'
-//    WebUI.sendKeys(findTestObject('ManualSign/input_isSequence'), Keys.chord(Keys.ENTER))
+    'Input AKtif pada input Status'
+    WebUI.setText(findTestObject('ManualSign/input_isSequence'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
+            rowExcel('$isSequence (Send Manual)')))
+
+    'Klik enter'
+    WebUI.sendKeys(findTestObject('ManualSign/input_isSequence'), Keys.chord(Keys.ENTER))
 
     'Code untuk mengambil file berdasarkan direktori masing-masing sekaligus ambil value dari excel'
     String userDir = System.getProperty('user.dir')

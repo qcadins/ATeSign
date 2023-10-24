@@ -27,7 +27,7 @@ int alreadyVerif = 0
 
 int saldoForCheckingDB = 0
 
-int jumlahHarusTandaTangan = 0, jumlahSignerTandaTangan = 0
+int jumlahHarusTandaTangan = 0, jumlahSignerTandaTangan = 0, countAutosign = 0
 useBiom = 0
 
 'reset value GV'
@@ -91,7 +91,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 
     String signType
 
-    boolean ifDocFirstChecked = false
+    boolean ifDocFirstChecked = false, checkingAutoSign = false
 
     'Inisialisasi variable total document yang akan disign, count untuk resend, dan saldo yang akan digunakan'
     int totalDocSign
@@ -180,7 +180,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
             arrayIndex = 0
 
             HashMap<String, String> resultObject = modifyObject(j)
-
+			
             if (ifDocFirstChecked == false) {
                 'Jika datanya match dengan db, mengenai referal number'
                 if (WebUI.verifyMatch(WebUI.getText(resultObject.get('modifyObjectTextRefNumber')), sendToSign[arrayIndex++], 
@@ -193,6 +193,18 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
                     checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(resultObject.get('modifyObjectTextTglPermintaan')), 
                             sendToSign[arrayIndex++], false, FailureHandling.OPTIONAL), ' pada tanggal permintaan ')
 
+					if (vendor.equalsIgnoreCase('Privy')) {
+						modifyObjectTextProsesTtd = resultObject.get('modifyObjectTextProsesTtd').split(' / ', -1)
+						
+						countAutosign = CustomKeywords.APIFullService.connection.APIFullService.getTotalAutosignOnDocument(conneSign, GlobalVariable.storeVar.keySet()[0])
+
+						if (countAutosign > 0) {
+							countAutosign++
+							if (modifyObjectTextProsesTtd[1] - countAutosign == modifyObjectTextProsesTtd[0]) {
+								checkingAutoSign = true
+							}
+						}
+					}
                     'Input document Template Name dan nomor kontrak dari UI'
                     documentTemplateName = WebUI.getText(resultObject.get('modifyObjectTextDocumentTemplateName'))
 
@@ -630,6 +642,10 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
                             flagBreak = 1
                         }
                     }
+					
+					if (checkingAutoSign == true) {
+						
+					}
             }
             
             if (flagBreak == 1) {
@@ -1030,10 +1046,15 @@ def modifyObject(int j) {
         ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
         j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + indexRow++) + ']/div/span', true)
 
+	'modify object lbl status ttd'
+	modifyObjectTextProsesMeterai = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/checkbox_ttd'), 'xpath', 'equals',
+		((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+		j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + indexRow++) + ']/div/span', true)
+	
     'modify object lbl status ttd'
     modifyObjectTextStatusTtd = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/checkbox_ttd'), 'xpath', 'equals', 
-        (((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-        j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + indexRow++) + 1) + ']/div/span', true)
+        ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
+        j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + indexRow++) + ']/div/span', true)
 
     'modify object btn TTD Dokumen di beranda'
     modifyObjectCheckboxTtd = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/checkbox_ttd'), 'xpath', 'equals', 
@@ -1057,6 +1078,8 @@ def modifyObject(int j) {
     result.put('modifyObjectTextStatusTtd', modifyObjectTextStatusTtd)
 
     result.put('modifyObjectTextProsesTtd', modifyObjectTextProsesTtd)
+	
+	result.put('modifyObjectTextProsesMeterai', modifyObjectTextProsesMeterai)
 
     return result
 }
