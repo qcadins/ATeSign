@@ -85,6 +85,30 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 				'tulis di excel hasil link yang bisa digunakan untuk sign'
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
 					rowExcel('Sign Link') - 1, GlobalVariable.NumofColm - 1, GlobalVariable.Response)
+				
+				'cek apakah user ingin melakukan process signing langsung'
+				if (findTestData(excelPathAPIGetSignLink).getValue(GlobalVariable.NumofColm, rowExcel('Continue with Signing Process?')) == 'Yes') {
+				
+					'open browser'
+					WebUI.openBrowser('')
+					
+					'navigate to url signlink'
+					WebUI.navigateToUrl(findTestData(excelPathAPIGetSignLink).getValue(GlobalVariable.NumofColm, rowExcel('Sign Link')))
+					
+					'maximized window'
+					WebUI.maximizeWindow()
+					
+					if (documentId.size() > 1) {
+						listDoc.replace('"','').replace(',','')
+					} else {
+						listDoc.replace('"','')
+					}
+					
+					'call test case signing digisign'
+					WebUI.callTestCase(findTestCase('Signing Digisign'), [('excelPathFESignDocument') : excelPathAPIGetSignLink
+						, ('sheet') : sheet, ('flowGetSignLink') : 'Yes', ('emailSigner') : findTestData(excelPathAPIGetSignLink).getValue(GlobalVariable.NumofColm, rowExcel('$loginId')),
+							('documentId') : documentId], FailureHandling.CONTINUE_ON_FAILURE)
+				}
 			} else {
 				'write to excel status failed dan reason : message Failed dari response'
 				messageFailed = WS.getElementPropertyValue(respon_signdoc, 'status.message', FailureHandling.OPTIONAL).toString()
