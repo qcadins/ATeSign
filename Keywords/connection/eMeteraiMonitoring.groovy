@@ -18,7 +18,7 @@ public class eMeteraiMonitoring {
 	@Keyword
 	getTotaleMeteraiMonitoring(Connection conn, String tenantCode) {
 		stm = conn.createStatement()
-		resultSet = stm.executeQuery("select count(dd.*) from tr_document_d dd join ms_peruri_doc_type pdt on dd.id_peruri_doc_type = pdt.id_peruri_doc_type join tr_document_h dh on dd.id_document_h = dh.id_document_h join ms_lov ml on dh.lov_doc_type = ml.id_lov join ms_tenant st on dd.id_ms_tenant = st.id_ms_tenant where st.tenant_code = '" + tenantCode + "' and dh.is_manual_upload = '1' and dd.request_date >= date_trunc('month', now()) and dd.request_date <= now()")
+		resultSet = stm.executeQuery("select count(*) from tr_document_d dd join tr_document_h dh on dd.id_document_h = dh.id_document_h join ms_lov ml on dh.lov_doc_type = ml.id_lov join ms_tenant mt on mt.id_ms_tenant = dh.id_ms_tenant join ms_office mo on mo.id_ms_office = dh.id_ms_office join ms_peruri_doc_type pdt on dd.id_peruri_doc_type = pdt.id_peruri_doc_type left join lateral ( Select bm.notes, st.stamp_duty_no, bm.trx_date from tr_balance_mutation bm join tr_stamp_duty st on st.id_stamp_duty = bm.id_stamp_duty join ms_lov lovBalType on lovBalType.id_lov = bm.lov_balance_type where lovBalType.code IN ('SDT', 'SDT_POSTPAID') and bm.id_document_d = dd.id_document_d ) bm ON TRUE where mt.tenant_code = '" + tenantCode + "' and dh.is_manual_upload = '1' and dd.request_date >= date_trunc('month', now()) and dd.request_date <= now()")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

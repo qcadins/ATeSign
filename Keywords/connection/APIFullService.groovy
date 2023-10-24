@@ -1153,6 +1153,7 @@ public class APIFullService {
 		}
 		Integer.parseInt(data)
 	}
+
 	@Keyword
 	getDefaultVendor(Connection conn, String tenantCode) {
 		stm = conn.createStatement()
@@ -1182,7 +1183,7 @@ public class APIFullService {
 		}
 		data
 	}
-	
+
 	@Keyword
 	gettrxSaldoForMeteraiPrivy(Connection conn, String refNumber) {
 		stm = conn.createStatement()

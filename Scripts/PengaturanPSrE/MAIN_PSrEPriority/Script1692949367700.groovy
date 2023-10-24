@@ -66,7 +66,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		checkVerifyEqualorMatch(WebUI.verifyMatch(resultDB.toString(), resultUI.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' urutan psre tidak sesuai dengan default vendor DB before edit')
 		
 		'get urutan seq psre dari excel'
-		seqPsreRole = findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, rowExcel('Urutan Psre')).split('\\n',-1)
+		seqPsreRole = findTestData(excelPathPriorityPsre).getValue(GlobalVariable.NumofColm, rowExcel('Urutan Psre')).toUpperCase().split('\\n',-1)
 		
 		'looping seq Psre'
 		for (seq = 1; seq <= variable.size(); seq++) {
@@ -77,7 +77,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 			'get text pisah nomor dan psre'
 			vendor = WebUI.getText(modifyObject).split(' ',-1)
 			
-			index = seqPsreRole.indexOf(vendor[1]) + 1
+			index = seqPsreRole.indexOf(vendor[1].toUpperCase()) + 1
+			
+			println(vendor)
+			println(seq)
+			println(index)
 			
 			if (seq != index) {
 				'modify label tipe tanda tangan di kotak'

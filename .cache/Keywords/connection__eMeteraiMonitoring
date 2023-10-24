@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "45AFECAA7296F584DA6537BFCC58EEB6",
+  "keywordFileContentHash": "857C99E2C69182D83281E8EA1042F801",
   "keywordClasses": [
     {
       "name": "connection.eMeteraiMonitoring",
@@ -33,8 +33,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "geteMeteraiMonitoring",
@@ -65,8 +64,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getErrorMessage",
@@ -97,8 +95,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getProseseMeteraiMonitoring",
@@ -129,11 +126,10 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         }
       ]
     }
   ],
-  "javadocParsed": true
+  "javadocParsed": false
 }

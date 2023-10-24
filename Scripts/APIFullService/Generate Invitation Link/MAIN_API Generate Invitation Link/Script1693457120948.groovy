@@ -23,6 +23,8 @@ int countColmExcel = findTestData(excelPathAPIGenerateInvLink).columnNumbers
 
 String selfPhoto, idPhoto
 
+int firstRun = 0
+
 'looping API Generate Invitation Link'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
@@ -44,9 +46,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		
 		int countCheckSaldo = 0
 		
-		saldoBefore = loginAdminGetSaldo(countCheckSaldo, conneSign)
+		saldoBefore = loginAdminGetSaldo(countCheckSaldo, conneSign, firstRun)
 		
 		countCheckSaldo = 1
+		
+		firstRun = 1
 		
 		GlobalVariable.FlagFailed = 0
 		
@@ -235,7 +239,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 						saldoBefore.set(0, (Integer.parseInt(saldoBefore[0]) - GlobalVariable.Counter).toString())
 					}
 					
-				    saldoAfter = loginAdminGetSaldo(countCheckSaldo, conneSign)
+				    saldoAfter = loginAdminGetSaldo(countCheckSaldo, conneSign, firstRun)
 				
 				    'verify saldoafter tidak sama dengan saldo before'
 				    checkVerifyEqualOrMatch(WebUI.verifyMatch(saldoAfter.toString(), saldoBefore.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Saldo')
@@ -246,8 +250,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					
 					if ((((findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')) == '0' || 
 								findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')) == 'null') && 
-								(findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Services')) == '1')) || (
-								(findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Services')) == '0'))) &&
+								(findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == '1')) || (
+								(findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == '0'))) &&
 								findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase().contains('OUTLOOK.COM') &&
 								GlobalVariable.Psre == 'VIDA') {
 						'call keyword get email'
@@ -280,12 +284,18 @@ def getAPIErrorMessage(def respon) {
 		GlobalVariable.StatusFailed, '<' + message + '>')
 }
 
-def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
+def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign, int firstRun) {
 	ArrayList<String> saldo = []
 	
-	'call test case login per case'
-	WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathAPIGenerateInvLink, ('Email') : 'Email Login', ('Password') : 'Password Login'
-		, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
+	'check if button menu visible atau tidak'
+	if(WebUI.verifyElementNotPresent(findTestObject('RegisterEsign/checkSaldo/menu_Saldo'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL) || 
+		(findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) != 
+        findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))) || (firstRun == 
+        0)) {
+		'call test case login per case'
+		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathAPIGenerateInvLink, ('Email') : 'Email Login', ('Password') : 'Password Login'
+			, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)		
+	}
 
 	'check if button menu visible atau tidak'
 	if(WebUI.verifyElementNotVisible(findTestObject('RegisterEsign/checkSaldo/menu_Saldo'), FailureHandling.OPTIONAL)) {
