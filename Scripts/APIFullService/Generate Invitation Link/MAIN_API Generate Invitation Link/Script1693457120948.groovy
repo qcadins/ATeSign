@@ -31,6 +31,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		
 		GlobalVariable.VerificationCount = 1
 		
+		GlobalVariable.Counter = 0
+		
 		'setting psre per case'
 		GlobalVariable.Psre = findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
 		
@@ -136,9 +138,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				
 				'check ada value maka setting Link Is Active'
 				if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('is_active Link')).length() > 0) {
-					'setting Link Is Active'
-					CustomKeywords.'connection.APIFullService.settingLinkIsActive'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('is_active Link')), 
-						findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace('"', ''))
+					
+					'check if email kosong atau tidak'
+					if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('email')).length() > 2) {
+						'setting Link Is Active'
+						CustomKeywords.'connection.APIFullService.settingLinkIsActive'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('is_active Link')), 
+							findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace('"', ''))
+					} else {
+						'setting Link Is Active'
+						CustomKeywords.'connection.APIFullService.settingLinkIsActive'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('is_active Link')),
+							findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('tlp')).replace('"', ''))
+					}
 					
 					'HIT API'
 					respon = WS.sendRequest(findTestObject('APIFullService/Postman/Generate Invitation Link', [('nama') : findTestData(
@@ -455,9 +465,17 @@ def inputFilterSaldo(String tipeSaldo, Connection conneSign) {
 		('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
 		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[9]/div', true)
 
+	'check if email kosong atau tidak'
+	if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('email')).length() > 2) {
+		'get email excel'
+		email = findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace('"', '')		
+	} else {
+		'get name + email hosting'
+		email = findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('nama')).replace('"', '') + CustomKeywords.'connection.DataVerif.getEmailHosting'(conneSign)
+	} 
+	
 	'get trx dari db'
-	ArrayList<String> result = CustomKeywords.'connection.DataVerif.getSaldoTrx'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(
-			GlobalVariable.NumofColm, rowExcel('email')).replace('"', ''), findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('tlp')).replace('"', ''),
+	ArrayList<String> result = CustomKeywords.'connection.DataVerif.getSaldoTrx'(conneSign, email, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('tlp')).replace('"', ''),
 		'Use ' + tipeSaldo)
 
 	arrayIndex = 0

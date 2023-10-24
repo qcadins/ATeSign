@@ -169,7 +169,7 @@
               }
             },
             {
-              "name": "email",
+              "name": "value",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

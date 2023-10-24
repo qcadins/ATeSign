@@ -225,103 +225,103 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
 
     GlobalVariable.FlagFailed = 1
 } else {
-    ArrayList<String> listOTP = []
+    'check if email kosong atau tidak'
+    if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('email')).length() > 2) {
+        ArrayList<String> listOTP = []
 
-    'delay untuk menunggu OTP'
-    WebUI.delay(5)
+        'delay untuk menunggu OTP'
+        WebUI.delay(5)
 
-    'get OTP dari DB'
-    String OTP = CustomKeywords.'connection.DataVerif.getOTP'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(
-            GlobalVariable.NumofColm, rowExcel('email')).replace('"', '').toUpperCase())
+        'function get OTP'
+        OTP = getOTP(conneSign)
 
-    println(OTP)
+        println(OTP)
 
-    'add OTP ke list'
-    listOTP.add(OTP)
+        'add OTP ke list'
+        listOTP.add(OTP)
 
-    if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Input Correct OTP')).equalsIgnoreCase(
-        'Yes')) {
-        'input OTP'
-        WebUI.setText(findTestObject('DaftarAkun/input_OTP'), OTP)
+        if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Input Correct OTP')).equalsIgnoreCase(
+            'Yes')) {
+            'input OTP'
+            WebUI.setText(findTestObject('DaftarAkun/input_OTP'), OTP)
 
-        countResend = Integer.parseInt(findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel(
-                    'Resend OTP')))
+            countResend = Integer.parseInt(findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 
+                    rowExcel('Resend OTP')))
 
-        if (countResend > 0) {
-            for (int i = 0; i < countResend; i++) {
-                'tunggu button resend otp'
-                WebUI.delay(315)
+            if (countResend > 0) {
+                for (int i = 0; i < countResend; i++) {
+                    'tunggu button resend otp'
+                    WebUI.delay(315)
 
-                'klik pada button kirim ulang otp'
-                WebUI.click(findTestObject('DaftarAkun/button_KirimKodeLagi'))
+                    'klik pada button kirim ulang otp'
+                    WebUI.click(findTestObject('DaftarAkun/button_KirimKodeLagi'))
 
-                'delay untuk menunggu OTP'
-                WebUI.delay(5)
+                    'delay untuk menunggu OTP'
+                    WebUI.delay(5)
 
-                'get OTP dari DB'
-                OTP = CustomKeywords.'connection.DataVerif.getOTP'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(
-                        GlobalVariable.NumofColm, rowExcel('email')).replace('"', '').toUpperCase())
+                    'function get OTP'
+                    OTP = getOTP(conneSign)
 
-                'add OTP ke list'
-                listOTP.add(OTP)
+                    'add OTP ke list'
+                    listOTP.add(OTP)
 
-                'check if OTP resend berhasil'
-                checkVerifyEqualOrMatch(WebUI.verifyNotMatch(listOTP[i], listOTP[(i + 1)], false, FailureHandling.CONTINUE_ON_FAILURE), 
-                    ' OTP')
+                    'check if OTP resend berhasil'
+                    checkVerifyEqualOrMatch(WebUI.verifyNotMatch(listOTP[i], listOTP[(i + 1)], false, FailureHandling.CONTINUE_ON_FAILURE), 
+                        ' OTP')
 
-                'input OTP'
-                WebUI.setText(findTestObject('DaftarAkun/input_OTP'), OTP)
+                    'input OTP'
+                    WebUI.setText(findTestObject('DaftarAkun/input_OTP'), OTP)
+                }
+            }
+        } else {
+            'input OTP'
+            WebUI.setText(findTestObject('DaftarAkun/input_OTP'), findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 
+                    rowExcel('Wrong OTP')))
+
+            countResend = Integer.parseInt(findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 
+                    rowExcel('Resend OTP')))
+
+            if (countResend > 0) {
+                for (int i = 0; i < countResend; i++) {
+                    'tunggu button resend otp'
+                    WebUI.delay(315)
+
+                    'klik pada button kirim ulang otp'
+                    WebUI.click(findTestObject('DaftarAkun/button_KirimKodeLagi'))
+
+                    'delay untuk menunggu OTP'
+                    WebUI.delay(5)
+
+                    'function get OTP'
+                    OTP = getOTP(conneSign)
+
+                    'add OTP ke list'
+                    listOTP.add(OTP)
+
+                    'check if OTP resend berhasil'
+                    checkVerifyEqualOrMatch(WebUI.verifyNotMatch(listOTP[i], listOTP[(i + 1)], false, FailureHandling.CONTINUE_ON_FAILURE), 
+                        ' OTP')
+
+                    'input OTP'
+                    WebUI.setText(findTestObject('DaftarAkun/input_OTP'), findTestData(excelPathAPIGenerateInvLink).getValue(
+                            GlobalVariable.NumofColm, rowExcel('Wrong OTP')))
+                }
             }
         }
-    } else {
-        'input OTP'
-        WebUI.setText(findTestObject('DaftarAkun/input_OTP'), findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 
-                rowExcel('Wrong OTP')))
-
-        countResend = Integer.parseInt(findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel(
-                    'Resend OTP')))
-
-        if (countResend > 0) {
-            for (int i = 0; i < countResend; i++) {
-                'tunggu button resend otp'
-                WebUI.delay(315)
-
-                'klik pada button kirim ulang otp'
-                WebUI.click(findTestObject('DaftarAkun/button_KirimKodeLagi'))
-
-                'delay untuk menunggu OTP'
-                WebUI.delay(5)
-
-                'get OTP dari DB'
-                OTP = CustomKeywords.'connection.DataVerif.getOTP'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(
-                        GlobalVariable.NumofColm, rowExcel('email')).replace('"', '').toUpperCase())
-
-                'add OTP ke list'
-                listOTP.add(OTP)
-
-                'check if OTP resend berhasil'
-                checkVerifyEqualOrMatch(WebUI.verifyNotMatch(listOTP[i], listOTP[(i + 1)], false, FailureHandling.CONTINUE_ON_FAILURE), 
-                    ' OTP')
-
-                'input OTP'
-                WebUI.setText(findTestObject('DaftarAkun/input_OTP'), findTestData(excelPathAPIGenerateInvLink).getValue(
-                        GlobalVariable.NumofColm, rowExcel('Wrong OTP')))
-            }
-        }
+        
+        'click verifikasi'
+        WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Verifikasi'))
     }
     
-    'click verifikasi'
-    WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Verifikasi'))
-
     if (GlobalVariable.Psre == 'VIDA') {
         'get reason error log'
-        reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).toString()
+        reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).toString().toLowerCase()
 
         'check saldo OTP'
         checkSaldoOTP()
 
         'cek if berhasil pindah page'
-        if ((reason.contains('gagal') || reason.contains('Saldo')) || reason.contains('Invalid')) {
+        if ((reason.contains('gagal') || reason.contains('saldo')) || reason.contains('invalid') || reason.contains('sudah mencapai batas harian maksimum')) {
             'write to excel status failed dan reason'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                 (((findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
@@ -599,5 +599,16 @@ def getTextorAttribute(TestObject object) {
     } 
     
     return text
+}
+
+def getOTP(Connection conneSign) {
+    'declare string OTP'
+    String OTP
+
+    'get OTP dari DB'
+    OTP = CustomKeywords.'connection.DataVerif.getOTP'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, 
+            rowExcel('email')).replace('"', '').toUpperCase())
+
+    return OTP
 }
 
