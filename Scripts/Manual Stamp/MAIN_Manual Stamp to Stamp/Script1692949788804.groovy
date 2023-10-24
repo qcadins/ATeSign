@@ -345,21 +345,23 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                 }
                             }
                             
-                            inputEMeteraiMonitoring(conneSign)
+                            prosesMeterai = inputEMeteraiMonitoring(conneSign)
 
                             saldoAfter = loginAdminGetSaldo(conneSign, 'No', sheet)
 
-                            if (saldoBefore == saldoAfter) {
-                                'write to excel status failed dan reason'
-                                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                                    GlobalVariable.StatusFailed, ((findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
-                                        rowExcel('Reason Failed')).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
-                                    ' terhadap total saldo dimana saldo awal dan saldo setelah meterai sama ')
-
-                                GlobalVariable.FlagFailed = 1
-                            } else {
-                                verifySaldoUsed(conneSign, sheet)
-                            }
+							if(prosesMeterai == 'Success') {								
+	                            if (saldoBefore == saldoAfter) {
+	                                'write to excel status failed dan reason'
+	                                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+	                                    GlobalVariable.StatusFailed, ((findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
+	                                        rowExcel('Reason Failed')).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
+	                                    ' terhadap total saldo dimana saldo awal dan saldo setelah meterai sama ')
+	
+	                                GlobalVariable.FlagFailed = 1
+	                            } else {
+	                                verifySaldoUsed(conneSign, sheet)
+	                            }
+							}
                         }
                     }
                 }
@@ -778,6 +780,7 @@ def inputEMeteraiMonitoring(Connection conneSign) {
                     WebUI.delay(15)
                 }
             }
+            return inputEMeterai[6]
         }
     }
 }
