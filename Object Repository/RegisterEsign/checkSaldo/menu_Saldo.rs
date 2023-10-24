@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[contains(@class, 'sidebar-content main-menu-content')]/div[1]/ul/li[1]/a/span</value>
+         <value>//*[@href = '/balance']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>href</name>
       <type>Main</type>
-      <value>//*[contains(@class, 'sidebar-content main-menu-content')]/div[1]/ul/li[1]/a/span</value>
-      <webElementGuid>b2d568d1-f846-4a35-8d2f-6958549bb0c7</webElementGuid>
+      <value>/balance</value>
+      <webElementGuid>055b706c-48d1-48d8-baab-62f4f995abd5</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
