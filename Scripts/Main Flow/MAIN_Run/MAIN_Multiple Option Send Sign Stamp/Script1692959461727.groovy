@@ -18,7 +18,7 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 sheet = 'Main'
 
 'looping untuk menjalankan Main'
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathMain).columnNumbers; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 34; GlobalVariable.NumofColm <= findTestData(excelPathMain).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
     } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
@@ -135,6 +135,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                     rowExcel('Reason Failed')) + ';') + ' total signer pada Send Document dengan signer yang terdaftar tidak sesuai ')
                         }
                     } else {
+						
+						signerInput = checkingDocAndEmailFromInput(documentId, 'email Signer (Sign Only)', signerInput)
                         'jika menggunakan opsi sign only ,maka email signernya diinput'
                         emailSigner = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('email Signer (Sign Only)')).split(
                             ';', -1)
@@ -145,7 +147,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     'looping berdasarkan email yang akan menandatangani'
                     for (int i = 0; i < emailSigner.keySet().size(); i++) {
 						for (y = 0; y < emailSigner.get(emailSigner.keySet()[i]).size(); y++) {
-
+							
                         if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Sign?')) == 
                         'Yes') {
                             'integrasikan cancel docs jika signer sudah sesuai'
@@ -156,7 +158,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                         'Cancel Docs after Sign?'))
                             }
                         }
-
+						
+						ifSignerAuto = CustomKeywords.'connection.APIFullService.getIfSignerAutosign'(conneSign,emailSigner.keySet()[i],emailSigner.get(emailSigner.keySet()[i])[y])
+						
+						if (ifSignerAuto == 'Autosign') {
+							continue
+						}
+						
 						GlobalVariable.storeVar = [:]
 						GlobalVariable.storeVar.putAt(emailSigner.keySet()[i], emailSigner.get(emailSigner.keySet()[i])[y])
 
@@ -317,6 +325,8 @@ for (loopingDocument = documentId.size() -1; loopingDocument >= 0; loopingDocume
 	signers = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel(rowEmail)).split(
 		'\n', -1)
 
+	signersPerDoc = (signers[loopingDocument]).split(';', -1)
+	
 	signersPerDoc = (signers[loopingDocument]).split(';', -1).collect({
 			it.trim()
 		})

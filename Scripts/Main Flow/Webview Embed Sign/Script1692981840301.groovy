@@ -64,9 +64,6 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
     'Mengambil tenantCode dari excel berdasarkan input body API'
     String tenantCode = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))
 
-    'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
-    int jumlahSignerTandaTangan = CustomKeywords.'connection.APIFullService.getTotalSigned'(conneSign, GlobalVariable.storeVar.keySet()[0])
-
     'dapatkan count untuk limit harian facecompare akun tersebut'
     int countLivenessFaceComp = CustomKeywords.'connection.DataVerif.getCountFaceCompDaily'(conneSign, GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0]))
 

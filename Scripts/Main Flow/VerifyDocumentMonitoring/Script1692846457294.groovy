@@ -708,10 +708,9 @@ def inputDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan,
     'Mengambil value db untuk input-input monitoring seperti nomor kontrak, cabang, dan wilayah'
     inputDocumentMonitoring = CustomKeywords.'connection.DocumentMonitoring.getInputDocumentMonitoring'(conneSign, nomorKontrakPerPilihan)
 
-//    'Set text mengenai teks customer'
-//    WebUI.setText(findTestObject('DocumentMonitoring/input_NamaPelanggan'), inputDocumentMonitoring[arrayIndex++], FailureHandling.OPTIONAL)
+    'Set text mengenai teks customer'
+    WebUI.setText(findTestObject('DocumentMonitoring/input_NamaPelanggan'), inputDocumentMonitoring[arrayIndex++], FailureHandling.OPTIONAL)
 
-	arrayIndex++
     'Set text mengneai input nomor kontrak'
     WebUI.setText(findTestObject('DocumentMonitoring/input_NoKontrak'), nomorKontrakPerPilihan)
 
@@ -728,45 +727,48 @@ def inputDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan,
     WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalSelesaiSampai'), inputDocumentMonitoring[(arrayIndex - 
         1)])
 
-//    'Set text mengenai tipe dokumen'
-//    WebUI.setText(findTestObject('DocumentMonitoring/input_TipeDok'), inputDocumentMonitoring[arrayIndex++])
-//
-//    'Enter'
-//    WebUI.sendKeys(findTestObject('DocumentMonitoring/input_TipeDok'), Keys.chord(Keys.ENTER))
-//
-//    'Set text mengenai status dokumen'
-//    WebUI.setText(findTestObject('DocumentMonitoring/input_Status'), inputDocumentMonitoring[arrayIndex++])
-//
-//    'Enter'
-//    WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Status'), Keys.chord(Keys.ENTER))
-//
-//    if (linkDocumentMonitoring == '') {
-//        'Set text mengenai wilayah'
-//        WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndex++], FailureHandling.OPTIONAL)
-//
-//        'Enter'
-//        WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER))
-//
-//        'Set text mengenai input cabang'
-//        WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndex++], FailureHandling.OPTIONAL)
-//
-//        'Enter'
-//        WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER))
-//    }
-//    
-//    if (WebUI.verifyMatch(settingHO.toString(), '1', true, FailureHandling.OPTIONAL) == true) {
-//        'Set text mengenai wilayah'
-//        WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndex++])
-//
-//        'Enter'
-//        WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER))
-//
-//        'Set text mengenai input cabang'
-//        WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndex++])
-//
-//        'Enter'
-//        WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER))
-//    }
+    'Set text mengenai tipe dokumen'
+    WebUI.setText(findTestObject('DocumentMonitoring/input_TipeDok'), inputDocumentMonitoring[arrayIndex++])
+
+    'Enter'
+    WebUI.sendKeys(findTestObject('DocumentMonitoring/input_TipeDok'), Keys.chord(Keys.ENTER))
+
+    'Set text mengenai status dokumen'
+    WebUI.setText(findTestObject('DocumentMonitoring/input_Status'), inputDocumentMonitoring[arrayIndex++])
+
+    'Enter'
+    WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Status'), Keys.chord(Keys.ENTER))
+
+    if (linkDocumentMonitoring == '') {
+        'Set text mengenai wilayah'
+        WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndex++], FailureHandling.OPTIONAL)
+
+        'Enter'
+        WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER))
+
+        'Set text mengenai input cabang'
+        WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndex++], FailureHandling.OPTIONAL)
+
+        'Enter'
+        WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER))
+    }
+    
+    if (WebUI.verifyMatch(settingHO.toString(), '1', true, FailureHandling.OPTIONAL) == true) {
+        'Set text mengenai wilayah'
+        WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndex++])
+
+        'Enter'
+        WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER))
+
+        'Set text mengenai input cabang'
+        WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndex++])
+
+        'Enter'
+        WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER))
+    }
+	
+	'Set text mengenai input cabang'
+	WebUI.setText(findTestObject('DocumentMonitoring/input_prosesMeterai'), inputDocumentMonitoring[arrayIndex++])
     
     'Klik enter Cari'
     WebUI.click(findTestObject('DocumentMonitoring/button_Cari'))
