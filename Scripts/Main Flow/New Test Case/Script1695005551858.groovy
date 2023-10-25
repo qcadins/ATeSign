@@ -20,26 +20,10 @@ import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import org.openqa.selenium.By as By
 import java.sql.Connection as Connection
 
-
-String aa = '"WIKY.HENDRA@AD-INS.COM";"FENDY.TIO@AD-INS.COM";"KEVIN.EDGAR@AD-INS.COM"'
-
-signersPerDoc = (aa).split(';', -1)
-println signersPerDoc
-signersPerDoc = (aa).split(';', -1).collect({
-		it.trim()
-	})
-
-println signersPerDoc
-
-println signersPerDoc.size()
-for (loopingperSigner = 0; loopingperSigner < 3; loopingperSigner++) {
-	println loopingperSigner
-	if (signersPerDoc[loopingperSigner] != '"WIKY.HENDRA@AD-INS.COM"') {
-		signersPerDoc.remove(loopingperSigner)
-		println signersPerDoc
-		WebUI.delay(3)
-	}
+for (int i = 0; i < 5; i++) {
+daa()
 }
 
-println signersPerDoc
-WebUI.delay(50)
+def daa() {
+	return break
+}

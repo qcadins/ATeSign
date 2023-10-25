@@ -38,7 +38,7 @@ GlobalVariable.eSignData.putAt('VerifikasiBiometric', 0)
 'Inisialisasi array untuk Listotp, arraylist arraymatch'
 ArrayList listOTP = []
 
-ArrayList arrayMatch = []
+ArrayList arrayMatch = [], loopingEmailSigner = []
 
 'declare arrayindex'
 arrayIndex = 0
@@ -196,7 +196,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 					if (vendor.equalsIgnoreCase('Privy')) {
 						modifyObjectTextProsesTtd = resultObject.get('modifyObjectTextProsesTtd').split(' / ', -1)
 						
-						countAutosign = CustomKeywords.APIFullService.connection.APIFullService.getTotalAutosignOnDocument(conneSign, GlobalVariable.storeVar.keySet()[0])
+						countAutosign = CustomKeywords.'connection.APIFullService.getTotalAutosignOnDocument'(conneSign, GlobalVariable.storeVar.keySet()[0])
 
 						if (countAutosign > 0) {
 							countAutosign++
@@ -585,7 +585,14 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 
             'looping untuk mendapatkan total saldo yang digunakan per nomor kontrak'
             for (i = 0; i < noKontrakPerDoc.size(); i++) {
-
+				
+					if (checkingAutoSign == true) {
+						loopingEmailSigner = CustomKeywords.'connection.APIFullService.getSignersAutosignOnDocument'(conneSign, GlobalVariable.storeVar.keySet()[0])
+					}	
+				
+				loopingEmailSigner.add(0,GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0]))
+				
+				for (looping = 0; looping < loopingEmailSigner.size(); looping++) {
                     'Looping maksimal 100 detik untuk signing proses. Perlu lama dikarenakan walaupun requestnya done(3), tapi dari VIDAnya tidak secepat itu.'
                     for (y = 1; y <= 10; y++) {
                         'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
@@ -597,8 +604,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
                         paymentType = CustomKeywords.'connection.APIFullService.getPaymentTypeMULTIDOC'(conneSign,GlobalVariable.storeVar.keySet()[0])
 
                         saldoForCheckingDB = CustomKeywords.'connection.APIFullService.getSaldoUsedBasedonPaymentTypeMULTIDOC'(
-                            conneSign, GlobalVariable.storeVar.keySet()[0], GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[
-                                0]))
+                            conneSign, GlobalVariable.storeVar.keySet()[0], loopingEmailSigner[looping])
 
                         if (i == 0) {
                             saldoUsedDocPertama = (saldoUsedDocPertama + saldoForCheckingDB)
@@ -626,8 +632,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
                         WebUI.delay(20)
 
                         'Jika signing process db untuk signing false, maka'
-                        if (signingProcessStoreDB(conneSign, GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[
-                                0]), saldoForCheckingDB, GlobalVariable.storeVar.keySet()[0]) == false) {
+                        if (signingProcessStoreDB(conneSign, loopingEmailSigner[looping], saldoForCheckingDB, GlobalVariable.storeVar.keySet()[0]) == false) {
                             'Jika looping waktu delaynya yang terakhir, maka'
                             if (y == 10) {
                                 'Failed dengan alasan prosesnya belum selesai'
@@ -642,10 +647,8 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
                             flagBreak = 1
                         }
                     }
+				}
 					
-					if (checkingAutoSign == true) {
-						
-					}
             }
             
             if (flagBreak == 1) {
