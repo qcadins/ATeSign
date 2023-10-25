@@ -320,7 +320,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 								'pengecekan khusus privy sign location'
 								if (GlobalVariable.Psre == 'PRIVY') {
 									'Jika documentTemplateCode di dokumen pertama adalah kosong'
-									if (CustomKeywords.'connection.APIFullService.getPrivyStampLocation'(conneSign, docId) != '') {
+									if (CustomKeywords.'connection.APIFullService.getTemplateDocPrivyStampLoc'(conneSign, docId) != '' &&
+										CustomKeywords.'connection.APIFullService.getTemplateDocPrivyStampLoc'(conneSign, docId) != null) {
 									   
 										'ambil data privy sign location based on document_template'
 										arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getPrivyStampLocation'(conneSign, docId),

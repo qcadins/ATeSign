@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "25B797E3022A0A3FE21CB2C6FDF9FEF8",
+  "keywordFileContentHash": "A9FD39E29F47A45A66FD8E8E0F77B17F",
   "keywordClasses": [
     {
       "name": "connection.APIFullService",
@@ -2550,11 +2550,7 @@
           "javadoc": ""
         },
         {
-<<<<<<< HEAD
           "name": "getTotalAutosignOnDocument",
-=======
-          "name": "gettrxSaldoForMeteraiPrivy",
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
           "parameters": [
             {
               "name": "conn",
@@ -2570,11 +2566,7 @@
               }
             },
             {
-<<<<<<< HEAD
               "name": "documentId",
-=======
-              "name": "refNumber",
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -2588,7 +2580,6 @@
             }
           ],
           "javadoc": ""
-<<<<<<< HEAD
         },
         {
           "name": "getIfSignerAutosign",
@@ -2634,8 +2625,38 @@
             }
           ],
           "javadoc": ""
-=======
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+        },
+        {
+          "name": "gettrxSaldoForMeteraiPrivy",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "refNumber",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
         }
       ]
     }
