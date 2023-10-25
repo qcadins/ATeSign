@@ -14,15 +14,23 @@ ArrayList<String> arrayMatch = []
 'declare arrayindex'
 arrayindex = 0
 
+String receiverDetail
+
 if(GlobalVariable.Psre == 'VIDA') {	
 	'get data buat undangan dari DB'
 	ArrayList<String> resultDataDiri = CustomKeywords.'connection.Registrasi.buatUndanganStoreDB'(conneSign, findTestData(excelPathBuatUndangan).getValue(
 	        GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase(), findTestData(excelPathBuatUndangan).getValue(
 	        GlobalVariable.NumofColm, rowExcel('$No Handphone')))
 	
+	if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email')).length() > 0) {
+		receiveDetail = findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email'))
+	} else {
+		receiverDetail = findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('$No Handphone'))
+	}
+	
 	'get data perusahaan buat undangan dari DB'
 	ArrayList<String> resultDataPerusahaan = CustomKeywords.'connection.Registrasi.getBuatUndanganDataPerusahaanStoreDB'(conneSign, 
-	    findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase())
+	    receiverDetail.toUpperCase())
 	
 	'verify nama'
 	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).toUpperCase(), 

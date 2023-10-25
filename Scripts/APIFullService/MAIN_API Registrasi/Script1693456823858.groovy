@@ -147,16 +147,26 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					String resultVendorRegistered = CustomKeywords.'connection.APIFullService.getRegisteredVendor'(conneSign,
 						findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace('"', ''))
 					
+					ArrayList<String> resultTrx = CustomKeywords.'connection.APIFullService.getAPIRegisterTrx'(conneSign,
+						trxNo[0], trxNo[1])
+					
+					'reset index kembali 0 untuk array selanjutnya'
+					arrayIndex = 0
+
+					'verify trx Verification qty = -1'
+					arrayMatch.add(WebUI.verifyMatch(resultTrx[arrayIndex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
+
                     if (GlobalVariable.Psre == 'VIDA' || GlobalVariable.Psre == 'DIGI') {
+						
+						'verify trx PNBP qty / text verification = -1'
+						arrayMatch.add(WebUI.verifyMatch(resultTrx[arrayIndex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
+						
                         arrayIndex = 0
 
                         'get data from db'
                         ArrayList<String> result = CustomKeywords.'connection.APIFullService.checkAPIRegisterActive'(conneSign, 
                             findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace('"', ''), 
                             findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('tlp')).replace('"', ''))
-
-                        ArrayList<String> resultTrx = CustomKeywords.'connection.APIFullService.getAPIRegisterTrx'(conneSign, 
-                            trxNo[0], trxNo[1])
 
                         ArrayList<String> resultDataUser = CustomKeywords.'connection.Registrasi.buatUndanganStoreDB'(conneSign, 
                             findTestData(excelPathAPIRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace('"', ''),
@@ -174,15 +184,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                         'verify is_registered'
                         arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]), '1', false, FailureHandling.CONTINUE_ON_FAILURE))
-
-                        'reset index kembali 0 untuk array selanjutnya'
-                        arrayIndex = 0
-
-                        'verify trx Verification qty = -1'
-                        arrayMatch.add(WebUI.verifyMatch(resultTrx[arrayIndex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
-
-                        'verify trx PNBP qty / text verification = -1'
-                        arrayMatch.add(WebUI.verifyMatch(resultTrx[arrayIndex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
 
                         'reset index kembali 0 untuk array selanjutnya'
                         arrayIndex = 0
