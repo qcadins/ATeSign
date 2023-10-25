@@ -20,11 +20,26 @@ import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import org.openqa.selenium.By as By
 import java.sql.Connection as Connection
 
-'get current date'
-def currentDate = new Date().format('yyyy-MM-dd HH:mm:ss')
 
-int b = 0
-for (i = 5; i >= b; i--) {
-	println b
-	println i
+String aa = '"WIKY.HENDRA@AD-INS.COM";"FENDY.TIO@AD-INS.COM";"KEVIN.EDGAR@AD-INS.COM"'
+
+signersPerDoc = (aa).split(';', -1)
+println signersPerDoc
+signersPerDoc = (aa).split(';', -1).collect({
+		it.trim()
+	})
+
+println signersPerDoc
+
+println signersPerDoc.size()
+for (loopingperSigner = 0; loopingperSigner < 3; loopingperSigner++) {
+	println loopingperSigner
+	if (signersPerDoc[loopingperSigner] != '"WIKY.HENDRA@AD-INS.COM"') {
+		signersPerDoc.remove(loopingperSigner)
+		println signersPerDoc
+		WebUI.delay(3)
+	}
 }
+
+println signersPerDoc
+WebUI.delay(50)

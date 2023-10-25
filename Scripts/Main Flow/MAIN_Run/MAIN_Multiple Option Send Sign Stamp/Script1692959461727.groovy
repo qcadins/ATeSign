@@ -83,9 +83,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'Sign Only') && (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 
             'Stamp Only')) {
                 'call test case kotak masuk dan verify document monitoring. Document monitoring terdapat didalam kotak masuk.'
-        //        WebUI.callTestCase(findTestCase('Main Flow/KotakMasuk'), [('excelPathFESignDocument') : excelPathMain, ('sheet') : sheet
-       //                 , ('checkBeforeSigning') : 'Yes', ('CancelDocsSend') : findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, 
-        //                    rowExcel('Cancel Docs after Send?'))], FailureHandling.CONTINUE_ON_FAILURE)
+                WebUI.callTestCase(findTestCase('Main Flow/KotakMasuk'), [('excelPathFESignDocument') : excelPathMain, ('sheet') : sheet
+                        , ('checkBeforeSigning') : 'Yes', ('CancelDocsSend') : findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, 
+                            rowExcel('Cancel Docs after Send?'))], FailureHandling.CONTINUE_ON_FAILURE)
 
                 'jika ada proses cancel doc'
                 if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Send?')) == 
@@ -135,13 +135,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                     rowExcel('Reason Failed')) + ';') + ' total signer pada Send Document dengan signer yang terdaftar tidak sesuai ')
                         }
                     } else {
-						documentId = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ',
-							-1)
 						
-						emailSigner = checkingDocAndEmailFromInput(documentId, 'email Signer (Sign Only)', emailSigner)
-//                        'jika menggunakan opsi sign only ,maka email signernya diinput'
-//                        emailSigner = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('email Signer (Sign Only)')).split(
-//                            ';', -1)
+						signerInput = checkingDocAndEmailFromInput(documentId, 'email Signer (Sign Only)', signerInput)
+                        'jika menggunakan opsi sign only ,maka email signernya diinput'
+                        emailSigner = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('email Signer (Sign Only)')).split(
+                            ';', -1)
                     }
                     
                     String cancelDocsValue = ''
@@ -149,7 +147,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     'looping berdasarkan email yang akan menandatangani'
                     for (int i = 0; i < emailSigner.keySet().size(); i++) {
 						for (y = 0; y < emailSigner.get(emailSigner.keySet()[i]).size(); y++) {
-
+							
                         if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Sign?')) == 
                         'Yes') {
                             'integrasikan cancel docs jika signer sudah sesuai'
@@ -160,7 +158,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                         'Cancel Docs after Sign?'))
                             }
                         }
-
+						
+						ifSignerAuto = CustomKeywords.'connection.APIFullService.getIfSignerAutosign'(conneSign,emailSigner.keySet()[i],emailSigner.get(emailSigner.keySet()[i])[y])
+						
+						if (ifSignerAuto == 'Autosign') {
+							continue
+						}
+						
 						GlobalVariable.storeVar = [:]
 						GlobalVariable.storeVar.putAt(emailSigner.keySet()[i], emailSigner.get(emailSigner.keySet()[i])[y])
 
@@ -245,18 +249,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'jika set stamping'
             if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Do Stamp for this document?')) == 
             'Yes') {
-				
-				'ubah vendor stamping jika diperlukan '
-				if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')).length() > 
-					0 && findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')) != 'No') {
-					
-					'ambil idLov untuk diupdate secara otomatis ke DB'
-					int idLov = CustomKeywords.'connection.ManualStamp.getIdLovVendorStamping'(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')))
-					
-					'lakukan update vendor stamping yang akan dipakai'
-					CustomKeywords.'connection.UpdateData.updateVendorStamping'(conneSign, idLov)
-				}
-				
                 'call test case stamping'
                 WebUI.callTestCase(findTestCase('Main Flow/Stamping'), [('excelPathStamping') : excelPathMain, ('sheet') : sheet
                         , ('linkDocumentMonitoring') : '', ('CancelDocsStamp') : findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, 
@@ -333,6 +325,8 @@ for (loopingDocument = documentId.size() -1; loopingDocument >= 0; loopingDocume
 	signers = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel(rowEmail)).split(
 		'\n', -1)
 
+	signersPerDoc = (signers[loopingDocument]).split(';', -1)
+	
 	signersPerDoc = (signers[loopingDocument]).split(';', -1).collect({
 			it.trim()
 		})

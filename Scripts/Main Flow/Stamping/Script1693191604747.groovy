@@ -14,6 +14,17 @@ import org.openqa.selenium.Keys as Keys
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
+'ubah vendor stamping jika diperlukan '
+if (findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')).length() >
+	0 && findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')) != 'No') {
+	
+	'ambil idLov untuk diupdate secara otomatis ke DB'
+	int idLov = CustomKeywords.'connection.ManualStamp.getIdLovVendorStamping'(conneSign, findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')))
+	
+	'lakukan update vendor stamping yang akan dipakai'
+	CustomKeywords.'connection.UpdateData.updateVendorStamping'(conneSign, idLov)
+}
+
 String valueRefNum, nomorKontrakDocument
 
 'pasang flag error DMS'

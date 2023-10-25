@@ -1185,6 +1185,46 @@ public class APIFullService {
 	}
 
 	@Keyword
+	getTotalAutosignOnDocument(Connection conn, String documentId) {
+		String data
+
+		stm = conn.createStatement()
+		resultSet = stm.executeQuery("SELECT tdsr.id_ms_user FROM tr_document_d tdd JOIN tr_document_signing_request tdsr ON tdd.id_document_d = tdsr.id_document_d LEFT JOIN tr_document_d_sign tdds on tdds.id_ms_user = tdsr.id_ms_user LEFT JOIN ms_lov msl on tdds.lov_autosign = msl.id_lov WHERE tdd.document_id = '"+documentId+"' AND msl.description = 'Autosign'")
+
+		metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+
+		if (data != null) {
+			Integer.parseInt(data)
+		} else {
+			data = 0
+		}
+		Integer.parseInt(data)
+	}
+
+	@Keyword
+	getIfSignerAutosign(Connection conn, String documentId, String emailSigner) {
+		String dataaa
+
+		stm = conn.createStatement()
+		resultSet = stm.executeQuery("select msl.description from tr_Document_d tdd left join tr_document_d_sign tdds on tdd.id_document_d = tdds.id_document_d left join am_msuser amm on amm.id_ms_user = tdds.id_ms_user left join ms_lov msl on  tdds.lov_autosign = msl.id_lov where tdd.document_id = '"+documentId+"' AND amm.login_id = '"+emailSigner+"'")
+		metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+
+
+	@Keyword
 	gettrxSaldoForMeteraiPrivy(Connection conn, String refNumber) {
 		stm = conn.createStatement()
 
