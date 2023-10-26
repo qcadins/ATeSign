@@ -231,7 +231,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 						'call keyword get email'
 						String emailCert = CustomKeywords.'customizekeyword.GetEmail.getEmailContent'(findTestData(excelPathGenerateLink).getValue(
 											GlobalVariable.NumofColm, rowExcel('email')).replace('"',''), findTestData(excelPathGenerateLink).getValue(
-											GlobalVariable.NumofColm, rowExcel('Password')))
+											GlobalVariable.NumofColm, rowExcel('Password')), 'Certif')
 						
 						'verify email cert'
 						checkVerifyEqualOrMatch(WebUI.verifyMatch(emailCert, 'Penerbitan Sertifikat Elektronik',

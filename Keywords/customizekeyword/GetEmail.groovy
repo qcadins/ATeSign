@@ -38,9 +38,11 @@ import internal.GlobalVariable
 public class GetEmail {
 
 	@Keyword
-	getEmailContent(String email, String inputPassword) {
+	getEmailContent(String email, String inputPassword, String value) {
 		String host = 'outlook.office365.com'
-
+		
+		String otpCode
+		
 		String username = email
 
 		String password = inputPassword
@@ -80,8 +82,6 @@ public class GetEmail {
 
 		System.out.println('Subject: ' + emailSubject)
 
-		System.out.println('Subject: ' + message.getContent().toString())
-
 		System.out.println('From: ' + (message.getFrom()[0]))
 
 		Object content = message.getContent()
@@ -93,7 +93,7 @@ public class GetEmail {
 			StringBuilder bodyText = new StringBuilder()
 
 			String textWithoutHtml
-
+			
 			// Loop melalui semua bagian dalam MimeMultipart
 			for (int i = 0; i < mimeMultipart.getCount(); i++) {
 				BodyPart bodyPart = mimeMultipart.getBodyPart(i)
@@ -111,7 +111,9 @@ public class GetEmail {
 					textWithoutHtml = doc.text()
 
 					println(textWithoutHtml)
-				} else {
+					
+					break
+				} else if(!(contentType.startsWith('text/plain') || contentType.startsWith('text/html'))) {
 					InputStream is = bodyPart.getInputStream();
 					BufferedReader br = new BufferedReader(new InputStreamReader(is));
 					String line;
@@ -123,13 +125,13 @@ public class GetEmail {
 					doc = Jsoup.parse(bodyText.toString())
 
 					textWithoutHtml = findText(doc.text())
-
-					println(textWithoutHtml)
+					
+					break
 				}
 			}
 
-			String otpCode = findOtpCode(textWithoutHtml.toString())
-
+			otpCode = findOtpCode(textWithoutHtml.toString())
+			
 			println('OTP Code: ' + otpCode)
 		}
 
@@ -137,7 +139,11 @@ public class GetEmail {
 
 		store.close() // Gunakan regular expression untuk mencari angka dalam teks
 
-		emailSubject
+		if (value == 'Certif') {
+			emailSubject
+		} else if (value == 'OTP') {
+			otpCode
+		}
 	}
 
 	def findOtpCode(String text) {
@@ -149,7 +155,7 @@ public class GetEmail {
 			return matcher.group()
 		}
 
-		return ''
+		return 'false'
 	}
 
 	def findText(String text) {
@@ -164,9 +170,8 @@ public class GetEmail {
 			return extractedText
 		} else {
 			System.out.println("Match not found.");
-
-			return ''
+			
+			return 'false'
 		}
-
 	}
 }
