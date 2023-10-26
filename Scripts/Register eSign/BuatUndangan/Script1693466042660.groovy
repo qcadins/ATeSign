@@ -324,7 +324,7 @@ if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/label_ValidationErr
 			'call keyword get email'
 			String emailCert = CustomKeywords.'customizekeyword.GetEmail.getEmailContent'(findTestData(excelPathBuatUndangan).getValue(
 								GlobalVariable.NumofColm, rowExcel('Email')), findTestData(excelPathBuatUndangan).getValue(
-								GlobalVariable.NumofColm, rowExcel('Password')))
+								GlobalVariable.NumofColm, rowExcel('Password')), 'Certif')
 			
 			'verify email cert'
 			checkVerifyEqualOrMatch(WebUI.verifyMatch(emailCert, 'Penerbitan Sertifikat Elektronik',
