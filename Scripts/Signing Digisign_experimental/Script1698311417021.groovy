@@ -16,60 +16,75 @@ import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-//if (flowGetSignLink != 'Yes' || flowGetSignLink == null || flowGetSignLink == '') {
-//	
-//	
-//}
-
-//'change frame ke digisign'
-//WebUI.switchToFrame(findTestObject('Signing-DIGISIGN/iFrame'), GlobalVariable.TimeOut)
-
-'jika document id pada page signing digisign sama dengan documentId yang diberikan'
-if (WebUI.getText(findTestObject('Signing-DIGISIGN/text_documentId')).contains(documentId)) {
-	'checknya true'
-	checkVerifyEqualorMatch(true, '')
-} else {
-	'checknya false dan alasannya adalah document id tidak sesuai'
-	checkVerifyEqualorMatch(false, 'document id tidak sesuai dengan yang diinput dimana document id yang muncul adalah ' +
-		WebUI.getText(findTestObject('Signing-DIGISIGN/text_documentId')))
+if (flowGetSignLink == '' || flowGetSignLink == null) {
+	'change frame ke digisign'
+	WebUI.switchToFrame(findTestObject('Signing-DIGISIGN/iFrame'), GlobalVariable.TimeOut)
 }
 
-'Jika button signnya ada'
-if (WebUI.verifyElementPresent(findTestObject('Signing-DIGISIGN/button_sign'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-	'beri delay 3 detik'
-	WebUI.delay(3)
+'jika nomor kontrak tidak kosong dan tidak null, masuk ke single sign doc, lainnya akan masuk bulk sign'
+if(nomorKontrak != '' && nomorKontrak != null) {
+	
+	'jika document id pada page signing digisign sama dengan documentId yang diberikan'
+	if (WebUI.getText(findTestObject('Signing-DIGISIGN/text_documentId')).contains(documentId[0])) {
+		'checknya true'
+		checkVerifyEqualorMatch(true, '')
+	} else {
+		'checknya false dan alasannya adalah document id tidak sesuai'
+		checkVerifyEqualorMatch(false, 'document id tidak sesuai dengan yang diinput dimana document id yang muncul adalah ' +
+			WebUI.getText(findTestObject('Signing-DIGISIGN/text_documentId')))
+	}
+	
+	'Jika button signnya ada'
+	if (WebUI.verifyElementPresent(findTestObject('Signing-DIGISIGN/button_sign'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		'beri delay 3 detik'
+		WebUI.delay(3)
+	
+		'ambil value total click sign location berdasarkan jumlah signer pada nomor kontrak tersebut'
+		totalClickedSignLocation = CustomKeywords.'connection.APIFullService.getCountTtdLocation'(conneSign, nomorKontrak, emailSigner.toUpperCase())
 
-	'ambil value total click sign location berdasarkan jumlah signer pada nomor kontrak tersebut'
-	totalClickedSignLocation = CustomKeywords.'connection.APIFullService.getCountTtdLocation'(conneSign, nomorKontrak, emailSigner.toUpperCase())
-
-	'looping sign location hingga total click sign locationnya habis'
-	for (loopingSignLocation = 0; loopingSignLocation < totalClickedSignLocation; loopingSignLocation++) {
-		'modify button sign dimana per button sign akan di click'
-		buttonSign = WebUI.modifyObjectProperty(findTestObject('Signing-DIGISIGN/button_sign'), 'xpath', 'equals', ('//*[@id = \'sgnClick-' +
-			loopingSignLocation) + '\']', true)
-
-		'scroll menuju button sign tersebut'
-		WebUI.scrollToElement(buttonSign, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)
-		
-		'pencet arrow up agar bisa diclick'
-		WebUI.sendKeys(buttonSign, Keys.chord(Keys.PAGE_UP))
-		
-		for (p = 1; p <= 5; p++) {
-			'jika button tersebut bisible'
-			if (WebUI.verifyElementVisible(buttonSign, FailureHandling.OPTIONAL)) {
-				'click button sign'
-				WebUI.click(buttonSign, FailureHandling.OPTIONAL)
-				break
+		'looping sign location hingga total click sign locationnya habis'
+		for (loopingSignLocation = 0; loopingSignLocation < totalClickedSignLocation; loopingSignLocation++) {
+			'modify button sign dimana per button sign akan di click'
+			buttonSign = WebUI.modifyObjectProperty(findTestObject('Signing-DIGISIGN/button_sign'), 'xpath', 'equals', ('//*[@id = \'sgnClick-' +
+				loopingSignLocation) + '\']', true)
+	
+			'scroll menuju button sign tersebut'
+			WebUI.scrollToElement(buttonSign, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)
+			
+			'pencet arrow up agar bisa diclick'
+			WebUI.sendKeys(buttonSign, Keys.chord(Keys.PAGE_UP))
+			
+			for (p = 1; p <= 5; p++) {
+				'jika button tersebut bisible'
+				if (WebUI.verifyElementVisible(buttonSign, FailureHandling.OPTIONAL)) {
+					'click button sign'
+					WebUI.click(buttonSign, FailureHandling.OPTIONAL)
+					break
+				}
 			}
 		}
 	}
+	
+	'scroll menuju proses ttd'
+	WebUI.scrollToElement(findTestObject('Signing-DIGISIGN/button_prosesTtd'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)
+	
+	'click proses ttd'
+	WebUI.click(findTestObject('Signing-DIGISIGN/button_prosesTtd'))
+} else {
+	'ambil dokumen id by size'
+	for (int i = 1; i <= documentId.size(); i++) {
+		'modifikasi ambil object docID'
+		modifyObjectdocId = WebUI.modifyObjectProperty(findTestObject('Object Repository/Signing-DIGISIGN/docIdBulkSign'), 'xpath', 'equals',
+			("//div[@id='pdf-main-container']/div/ul/li["+ i +"]/label"), true)
+		
+		'pastikan sesuai dengan inputan yang ada di excel'
+		checkVerifyEqualorMatch(WebUI.verifyMatch(documentId[i-1], WebUI.getText(modifyObjectdocId).replace('DOC_','').replace('.pdf',''),
+			false, FailureHandling.CONTINUE_ON_FAILURE), 'Document id ke - '+ i +' tidak sesuai')
+	}
+	
+	'klik pada proses bulksign'
+	WebUI.click(findTestObject('Object Repository/Signing-DIGISIGN/button_ProsesBulk'))
 }
-
-'scroll menuju proses ttd'
-WebUI.scrollToElement(findTestObject('Signing-DIGISIGN/button_prosesTtd'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)
-
-'click proses ttd'
-WebUI.click(findTestObject('Signing-DIGISIGN/button_prosesTtd'))
 
 'beri delay 2 detik untuk loading proses ttd'
 WebUI.delay(2)
@@ -83,9 +98,7 @@ if (WebUI.verifyElementVisible(findTestObject('Signing-DIGISIGN/text_popupGagal'
 			'-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + WebUI.getText(findTestObject('Signing-DIGISIGN/text_popupGagal')))
 	
 	'click button close popup gagal'
-    WebUI.click(findTestObject('Signing-DIGISIGN/button_closePopupGagal')) 
-	//WebUI.setText(findTestObject('Signing-DIGISIGN/input_Otp'), 'otp')
-    //WebUI.setText(findTestObject('Signing-DIGISIGN/input_Password'), 'password')
+    WebUI.click(findTestObject('Signing-DIGISIGN/button_closePopupGagal'))
 } else {
 	'jika popup success muncul'
     if (WebUI.verifyElementVisible(findTestObject('Signing-DIGISIGN/text_popupSuccess'), FailureHandling.OPTIONAL)) {
