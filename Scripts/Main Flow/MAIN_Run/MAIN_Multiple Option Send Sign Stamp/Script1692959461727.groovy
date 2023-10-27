@@ -140,6 +140,10 @@ for (GlobalVariable.NumofColm = 24; GlobalVariable.NumofColm <= findTestData(exc
 							-1)
 						
 						for (i = documentId.size() - 1; i >= 0; i--) {
+						documentId = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ',
+							-1)
+						
+						for (i = documentId.size() - 1; i >= 0; i--) {
 							emailSignerPerDoc =  findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('email Signer (Sign Only)')).split(
                             ';', -1)
 
@@ -149,6 +153,7 @@ for (GlobalVariable.NumofColm = 24; GlobalVariable.NumofColm <= findTestData(exc
 
 							emailSigner.put(documentId[i], emailSignerPerDoc)
 						}
+                    }
                     }
                     
                     String cancelDocsValue = ''

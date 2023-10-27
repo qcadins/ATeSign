@@ -672,9 +672,11 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
             continue
         }
     } else {
+		println GlobalVariable.storeVar.keySet()
+		
         'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
         WebUI.callTestCase(findTestCase('Main Flow/Signing Digisign'), [('excelPathFESignDocument') : excelPathFESignDocument
-                , ('sheet') : sheet, ('nomorKontrak') : noKontrak, ('documentId') : GlobalVariable.storeVar.keySet()[0], ('emailSigner') : GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0])], FailureHandling.CONTINUE_ON_FAILURE)
+                , ('sheet') : sheet, ('nomorKontrak') : noKontrak, ('documentId') : documentId, ('emailSigner') : GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0])], FailureHandling.CONTINUE_ON_FAILURE)
 
         saldoUsed = (saldoUsed + 1)
 

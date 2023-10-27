@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "B118402DC4CD044969D94569947BF784",
+  "keywordFileContentHash": "DB944444DB0A6E9BBE447A9010CDCBDC",
   "keywordClasses": [
     {
       "name": "connection.SendSign",
@@ -1055,11 +1055,40 @@
             }
           ],
           "javadoc": ""
-<<<<<<< HEAD
-=======
         },
         {
-<<<<<<< HEAD
+          "name": "settingSentOTPbyEmail",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "value",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
           "name": "getProyectionOfVendorForSend",
           "parameters": [
             {
@@ -1101,8 +1130,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+          ],
+          "javadoc": ""
         },
         {
           "name": "getProsesTtdProgressPrivy",
@@ -1122,25 +1151,6 @@
             },
             {
               "name": "documentId",
-=======
-          "name": "settingSentOTPbyEmail",
-          "parameters": [
-            {
-              "name": "conn",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.sql.Connection",
-                "unresolvedClassName": "Connection",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            },
-            {
-              "name": "value",
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
