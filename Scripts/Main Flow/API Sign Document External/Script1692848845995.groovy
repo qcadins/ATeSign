@@ -67,7 +67,7 @@ CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPISignDocume
 		signTypeUsed = 'TTD'
 	}
 	
-   HashMap<String, String> saldoBefore = WebUI.callTestCase(findTestCase('Main Flow (DEVELOPMENT MULTI DOCUMENT SIGNING)/getSaldo'), [('excel') : excelPathAPISignDocument
+   HashMap<String, String> saldoBefore = WebUI.callTestCase(findTestCase('Main Flow/getSaldo development'), [('excel') : excelPathAPISignDocument
             , ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
 
 	saldoTtdBefore = saldoBefore.get(signTypeUsed)
@@ -105,7 +105,7 @@ CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPISignDocume
             ';', -1)[GlobalVariable.indexUsed])
     }
     
-    flaggingOTP = CustomKeywords.'connection.DataVerif.getParameterFlagPassOTP'(conneSign, (documentId[GlobalVariable.storeVar.keySet()[[0]]]).toString())
+    flaggingOTP = CustomKeywords.'connection.DataVerif.getParameterFlagPassOTP'(conneSign, (GlobalVariable.storeVar.keySet()[[0]]).toString())
 
 	   if (vendor.equalsIgnoreCase('Privy') || vendor.equalsIgnoreCase('Digisign')) {
         'request OTP dengan HIT API'

@@ -9,13 +9,14 @@ import internal.GlobalVariable
 
 public class SendSign {
 
-	String data
+	String data, commandSql
 	int columnCount, i, countLengthforSHA256 = 64, updateVariable
 	Statement stm
 	ResultSetMetaData metadata
 	ResultSet resultSet
 	ArrayList<String> listdata = []
 	String emailWhere, selectData
+
 
 	@Keyword
 	settingEmailServiceVendorRegisteredUser(Connection conn, String value, String idNo) {
@@ -487,5 +488,45 @@ public class SendSign {
 			}
 		}
 		listdata
+	}
+
+	@Keyword
+	getProyectionOfVendorForSend(Connection conn, String documentTemplateCode, String tenantCode) {
+		stm = conn.createStatement()
+
+		if (documentTemplateCode.replace('"','') == '') {
+			commandSql = '--'
+		}
+		else {
+			commandSql = ''
+		}
+
+		resultSet = stm.executeQuery("select case when msv.vendor_code is not null then msv.vendor_code else msv1.vendor_code end from ms_doc_template mdt left join ms_tenant mst on mdt.id_ms_tenant = mst.id_ms_tenant left join ms_vendoroftenant mvot on mdt.id_ms_tenant = mvot.id_ms_tenant left join ms_vendor msv on mdt.id_ms_vendor = msv.id_ms_vendor left join ms_vendor msv1 on mvot.id_ms_vendor = msv1.id_ms_vendor WHERE mst.tenant_code = '"+tenantCode+"'" + '\n' +
+				commandSql + "AND mdt.doc_template_code = '"+documentTemplateCode+"'" + '\n' +
+				"order by mvot.default_vendor asc limit 1")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+	
+	@Keyword
+	getProsesTtdProgressPrivy(Connection conn, String documentId) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT count(tdsr.id_ms_user) FROM tr_document_d tdd left join tr_document_h tdh on tdh.id_document_h = tdd.id_document_h JOIN tr_document_signing_request tdsr ON tdh.id_document_h = tdsr.id_document_h WHERE tdd.document_id = '"+documentId+"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		Integer.parseInt(data)
 	}
 }

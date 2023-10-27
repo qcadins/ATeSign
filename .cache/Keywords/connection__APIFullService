@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "E8060637A5C2121D03879DDA9C68B7D0",
+  "keywordFileContentHash": "13A75D925B4E17483C5168D0853E0708",
   "keywordClasses": [
     {
       "name": "connection.APIFullService",
@@ -2507,12 +2507,7 @@
                 "errorOnParsing": false
               }
             }
-<<<<<<< HEAD
           ]
-=======
-          ],
-          "javadoc": ""
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
         },
         {
           "name": "getIfSignerAutosign",
@@ -2556,7 +2551,6 @@
                 "errorOnParsing": false
               }
             }
-<<<<<<< HEAD
           ]
         },
         {
@@ -2620,45 +2614,6 @@
               }
             }
           ]
-=======
-          ],
-          "javadoc": ""
-<<<<<<< HEAD
-        },
-        {
-          "name": "gettrxSaldoForMeteraiPrivy",
-          "parameters": [
-            {
-              "name": "conn",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.sql.Connection",
-                "unresolvedClassName": "Connection",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            },
-            {
-              "name": "refNumber",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.lang.String",
-                "unresolvedClassName": "String",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            }
-          ],
-          "javadoc": ""
-=======
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
         }
       ]
     }
