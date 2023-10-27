@@ -25,13 +25,9 @@ HashMap<String, String> resultSaldoBeforeLoop = new HashMap<String, String>()
 
 HashMap<String, String> resultSaldoBefore = new HashMap<String, String>()
 
-println GlobalVariable.base_url
-
 'setting menggunakan base url yang benar atau salah'
 CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPISendDoc, GlobalVariable.NumofColm, rowExcel('Use Correct base Url (Send External)'))
 
-println GlobalVariable.base_url
-WebUI.delay(20)
 'Deklarasi variable mengenai signLoc untuk store db'
 String signlocStoreDB
 
@@ -43,11 +39,10 @@ if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExce
 	for (loopingGetSaldoBefore = 0; loopingGetSaldoBefore < documentTemplateCode.size(); loopingGetSaldoBefore++) {
 		logicVendor = CustomKeywords.'connection.SendSign.getProyectionOfVendorForSend'(conneSign, documentTemplateCode[loopingGetSaldoBefore].replace('"',''), GlobalVariable.Tenant)
 
-		resultSaldoBeforeLoop = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathAPISendDoc
+		resultSaldoBeforeLoop = WebUI.callTestCase(findTestCase('Main Flow/getSaldo development'), [('excel') : excelPathAPISendDoc
 			, ('sheet') : sheet, ('vendor') : logicVendor, ('usageSaldo') : 'Send'], FailureHandling.CONTINUE_ON_FAILURE)
 		
 		resultSaldoBefore.putAll(resultSaldoBeforeLoop)
-
 	}
 }
 
@@ -144,6 +139,7 @@ def checkSaldoAutoSign(boolean useAutoSign, HashMap resultSaldoBefore) {
 		
 		HashMap<String, String> resultSaldoAfter = new HashMap<String, String>()
 		
+		if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document')) != '') {
 		resultSaldoAfterLoop = WebUI.callTestCase(findTestCase('Main Flow/getSaldo development'), [('excel') : excelPathAPISendDoc
 			, ('sheet') : sheet, ('vendor') : findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document')), ('usageSaldo') : 'Send'], FailureHandling.CONTINUE_ON_FAILURE)
 		
@@ -177,6 +173,7 @@ def checkSaldoAutoSign(boolean useAutoSign, HashMap resultSaldoBefore) {
 							GlobalVariable.StatusFailed,findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';' + ' Saldo pemotongan autosign tidak sesuai yang seharusnya ')
 				}
 		}
+	}
 	}
 }
 

@@ -1328,13 +1328,13 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
                 rowExcel('Setting OTP Active Duration'))))
     }
 	
-	'setting sent otp by email'
-	if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email')).length() >
-	0) {
-		'update setting sent otp by email'
-		CustomKeywords.'connection.SendSign.settingSentOTPbyEmail'(conneSign, findTestData(excelPathFESignDocument).getValue(
-				GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email')))
-	}
+//	'setting sent otp by email'
+//	if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email')).length() >
+//	0) {
+//		'update setting sent otp by email'
+//		CustomKeywords.'connection.SendSign.settingSentOTPbyEmail'(conneSign, findTestData(excelPathFESignDocument).getValue(
+//				GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email')))
+//	}
     
     'ubah pemakaian biom menjadi false'
     useBiom = 0
@@ -1346,18 +1346,18 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
 	email = GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0])
 	
 	if (vendor.equalsIgnoreCase('Privy')) {
-		if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email')) ==
-		'1' && email.contains('OUTLOOK.COM')) {
-			'call keyword get otp dari email'
-			OTP = (CustomKeywords.'customizekeyword.GetEmail.getEmailContent'(email, findTestData(excelPathFESignDocument).getValue(
-					GlobalVariable.NumofColm, rowExcel('Password Signer')), 'OTP'))
-		} else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email')) ==
-		'0' || !(email.contains('OUTLOOK.COM'))) {
-			'Dikasih delay 50 detik dikarenakan loading untuk mendapatkan OTP Privy via SMS.'
-			WebUI.delay(50)
-
-			OTP = (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Manual OTP')).split(';', -1)[GlobalVariable.indexUsed])
-		}
+//		if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email')) ==
+//		'1' && email.contains('OUTLOOK.COM')) {
+//			'call keyword get otp dari email'
+//			OTP = (CustomKeywords.'customizekeyword.GetEmail.getEmailContent'(email, findTestData(excelPathFESignDocument).getValue(
+//					GlobalVariable.NumofColm, rowExcel('Password Signer')), 'OTP'))
+//		} else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email')) ==
+//		'0' || !(email.contains('OUTLOOK.COM'))) {
+//			'Dikasih delay 50 detik dikarenakan loading untuk mendapatkan OTP Privy via SMS.'
+//			WebUI.delay(50)
+//
+//			OTP = (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Manual OTP')).split(';', -1)[GlobalVariable.indexUsed])
+//		}
 	} else {
 		'OTP yang pertama dimasukkan kedalam 1 var'
 		OTP = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, emailSigner)		

@@ -71,6 +71,11 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
+      <initValue>0</initValue>
+      <name>opsiSigning</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
       <initValue>findTestData('Login/Setting').getValue(5, 2)</initValue>
       <name>Psre</name>
    </GlobalVariableEntity>

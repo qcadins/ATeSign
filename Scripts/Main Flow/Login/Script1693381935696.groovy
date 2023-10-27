@@ -79,7 +79,9 @@ if (email == '') {
         WebUI.click(findTestObject('Login/button_pilihPeran'), FailureHandling.STOP_ON_FAILURE)
     }
 } else {
-    if ((checkBeforeSigning == 'Yes') || (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Option for Sign Document per Signer')).split(';', -1)[GlobalVariable.indexUsed] == 
+	println GlobalVariable.opsiSigning
+	println findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Option for Sign Document per Signer'))
+    if ((checkBeforeSigning == 'Yes') || (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Option for Sign Document per Signer')).split(';', -1)[GlobalVariable.opsiSigning] == 
     'Sign Via Inbox')) {
         'input email'
         WebUI.setText(findTestObject('Login/input_Email'), email)

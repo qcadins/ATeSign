@@ -18,7 +18,7 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 sheet = 'Main'
 
 'looping untuk menjalankan Main'
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathMain).columnNumbers; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 24; GlobalVariable.NumofColm <= findTestData(excelPathMain).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
     } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
@@ -83,9 +83,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'Sign Only') && (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 
             'Stamp Only')) {
                 'call test case kotak masuk dan verify document monitoring. Document monitoring terdapat didalam kotak masuk.'
-          //      WebUI.callTestCase(findTestCase('Main Flow/KotakMasuk'), [('excelPathFESignDocument') : excelPathMain, ('sheet') : sheet
-          //              , ('checkBeforeSigning') : 'Yes', ('CancelDocsSend') : findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, 
-           //                 rowExcel('Cancel Docs after Send?'))], FailureHandling.CONTINUE_ON_FAILURE)
+                WebUI.callTestCase(findTestCase('Main Flow/KotakMasuk'), [('excelPathFESignDocument') : excelPathMain, ('sheet') : sheet
+                        , ('checkBeforeSigning') : 'Yes', ('CancelDocsSend') : findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, 
+                            rowExcel('Cancel Docs after Send?'))], FailureHandling.CONTINUE_ON_FAILURE)
 
                 'jika ada proses cancel doc'
                 if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Send?')) == 
@@ -116,6 +116,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     'jika opsi tanda tangannya bukan sign only'
                     if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 
                     'Sign Only') {
+
                         for (i = documentId.size() - 1; i >= 0; i--) {
                             emailSignerPerDoc = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, documentId[
                                 i]).split(';', -1)
@@ -135,17 +136,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                     rowExcel('Reason Failed')) + ';') + ' total signer pada Send Document dengan signer yang terdaftar tidak sesuai ')
                         }
                     } else {
+						documentId = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ',
+							-1)
 						
-						signerInput = checkingDocAndEmailFromInput(documentId, 'email Signer (Sign Only)', signerInput)
-						
-                        'jika menggunakan opsi sign only ,maka email signernya diinput'
-                        emailSigner = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('email Signer (Sign Only)')).split(
+						for (i = documentId.size() - 1; i >= 0; i--) {
+							emailSignerPerDoc =  findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('email Signer (Sign Only)')).split(
                             ';', -1)
+
+							emailSignerPerDoc = emailSignerPerDoc.collect({
+									it.trim()
+								})
+
+							emailSigner.put(documentId[i], emailSignerPerDoc)
+						}
                     }
                     
                     String cancelDocsValue = ''
-					
-					
 
                     'looping berdasarkan email yang akan menandatangani'
                     for (int i = 0; i < emailSigner.keySet().size(); i++) {
@@ -173,7 +179,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
 
                         'jika opsi signing untuk signer adalah api sign document external'
-                        if (opsiSigning[indexOpsiSigning] == 'API Sign Document External') {
+                        if (opsiSigning[GlobalVariable.opsiSigning] == 'API Sign Document External') {
                             'setting index untuk penggunaan data. Cara bacanya adalah apakah opsi tersebut telah digunakan. Jika sudah digunakan, maka + 1, jika tidak, maka 0.'
                             indexReadDataExcelAPIExternal = inisializeArray(isUsedAPIExternal, indexReadDataExcelAPIExternal)
 
@@ -187,8 +193,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             'set boolean is used api external menjadi true'
                             isUsedAPIExternal = true
 							
-							indexOpsiSigning++
-                        } else if (opsiSigning[indexOpsiSigning] == 'API Sign Document Normal') {
+							GlobalVariable.opsiSigning++
+                        } else if (opsiSigning[GlobalVariable.opsiSigning] == 'API Sign Document Normal') {
                             'jika opsi signing untuk signer adalah api sign document normal setting index untuk penggunaan data. Cara bacanya adalah apakah opsi tersebut telah digunakan. Jika sudah digunakan, maka + 1, jika tidak, maka 0.'
                             indexReadDataExcelAPINormal = inisializeArray(isUsedAPINormal, indexReadDataExcelAPINormal)
 
@@ -202,8 +208,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             'set boolean menjadi true'
                             isUsedAPINormal = true
 							
-							indexOpsiSigning++
-                        } else if (opsiSigning[indexOpsiSigning] == 'Webview Sign') {
+							GlobalVariable.opsiSigning++
+                        } else if (opsiSigning[GlobalVariable.opsiSigning] == 'Webview Sign') {
                             'jika opsi signing untuk signer adalah webview sign setting index untuk penggunaan data. Cara bacanya adalah apakah opsi tersebut telah digunakan. Jika sudah digunakan, maka + 1, jika tidak, maka 0.'
                             indexReadDataExcelWebview = inisializeArray(isUsedUI, indexReadDataExcelUI)
 
@@ -217,8 +223,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             'set boolean true'
                             isUsedUI = true
 							
-							indexOpsiSigning++
-                        } else if (opsiSigning[indexOpsiSigning] == 'Embed Sign') {
+							GlobalVariable.opsiSigning++
+                        } else if (opsiSigning[GlobalVariable.opsiSigning] == 'Embed Sign') {
                             'jika opsi signing untuk signer adalah embed sign setting index untuk penggunaan data. Cara bacanya adalah apakah opsi tersebut telah digunakan. Jika sudah digunakan, maka + 1, jika tidak, maka 0.'
                             indexReadDataExcelEmbed = inisializeArray(isUsedUI, indexReadDataExcelUI)
 
@@ -232,8 +238,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             'set boolean true'
                             isUsedUI = true
 							
-							indexOpsiSigning++
-                        } else if (opsiSigning[indexOpsiSigning] == 'Sign Via Inbox') {
+							GlobalVariable.opsiSigning++
+                        } else if (opsiSigning[GlobalVariable.opsiSigning] == 'Sign Via Inbox') {
                             'jika opsi signing untuk signer adalah sign via inbox setting index untuk penggunaan data. Cara bacanya adalah apakah opsi tersebut telah digunakan. Jika sudah digunakan, maka + 1, jika tidak, maka 0.'
                             indexReadDataExcelInboxSigner = inisializeArray(isUsedUI, indexReadDataExcelUI)
 
@@ -247,7 +253,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             'set boolean true'
                             isUsedUI = true
 							
-							indexOpsiSigning++
+							GlobalVariable.opsiSigning++
                         }
                         
                         'jika ada proses cancel doc'

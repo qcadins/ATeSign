@@ -60,13 +60,13 @@ CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPISignDocume
                 GlobalVariable.NumofColm, rowExcel('Enable Need Password for signing? (Sign External)')))
     }
 
-'setting sent otp by email'
-if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Sign External)')).length() > 
-0) {
-    'update setting sent otp by email'
-    CustomKeywords.'connection.SendSign.settingSentOTPbyEmail'(conneSign, findTestData(excelPathAPISignDocument).getValue(
-            GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Sign External)')))
-}
+//'setting sent otp by email'
+//if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Sign External)')).length() > 
+//0) {
+//    'update setting sent otp by email'
+//    CustomKeywords.'connection.SendSign.settingSentOTPbyEmail'(conneSign, findTestData(excelPathAPISignDocument).getValue(
+//            GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Sign External)')))
+//}
 
 	if (vendor.equalsIgnoreCase('Digisign')) {
 		signTypeUsed = 'Dokumen'
@@ -259,7 +259,7 @@ if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, ro
 	
 				checkVerifyEqualOrMatch(WebUI.verifyMatch(psreCode.toString().toUpperCase(), vendor.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada psre response dengan vendor DB ')
 
-                    signCount = CustomKeywords.'connection.APIFullService.getTotalSigner'(conneSign, (documentId[GlobalVariable.storeVar.keySet()[[0]]]).toString(), 
+                    signCount = CustomKeywords.'connection.APIFullService.getTotalSigner'(conneSign, (GlobalVariable.storeVar.keySet()[[0]]).toString(), 
                         (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(
                             ';', -1)[GlobalVariable.indexUsed]).replace('"', ''))
 
@@ -402,7 +402,7 @@ def phototoBase64(String filePath) {
     return CustomKeywords.'customizekeyword.ConvertFile.base64File'(filePath)
 }
 
-def responseAPIStoreDB(Connection conneSign, String ipaddress, String[] documentId, String trxNo) {
+def responseAPIStoreDB(Connection conneSign, String ipaddress, String documentId, String trxNo) {
     'get current date'
     currentDate = new Date().format('yyyy-MM-dd')
 
@@ -414,7 +414,7 @@ def responseAPIStoreDB(Connection conneSign, String ipaddress, String[] document
         arrayIndex = 0
 
         'Array result. Value dari db'
-        result = CustomKeywords.'connection.APIFullService.getSign'(conneSign, (documentId[GlobalVariable.storeVar.keySet()[0]]).toString(), (findTestData(
+        result = CustomKeywords.'connection.APIFullService.getSign'(conneSign, (GlobalVariable.storeVar.keySet()[0]).toString(), (findTestData(
                 excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(';', 
                 -1)[GlobalVariable.indexUsed]).replace('"', ''))
 
@@ -426,7 +426,7 @@ def responseAPIStoreDB(Connection conneSign, String ipaddress, String[] document
 
         'verify ref number yang tertandatangan'
         arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, 
-                    (documentId[GlobalVariable.storeVar.keySet()[0]]).replace('"', '')), false, FailureHandling.CONTINUE_ON_FAILURE))
+                    (GlobalVariable.storeVar.keySet()[0]).replace('"', '')), false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'verify ip address'
         arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], ipaddress.replace('"', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
