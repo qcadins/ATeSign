@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[(text() = 'e-Meterai Monitoring' or . = 'e-Meterai Monitoring')]</value>
+         <value>//*[@href = '/emeterai-monitoring']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -18,14 +18,14 @@
       <name>xpath</name>
       <type>Main</type>
       <value>//*[contains(@class, 'sidebar-content main-menu-content')]/div[1]/ul/li[5]</value>
-      <webElementGuid>16e38ae6-315d-4bdb-9f03-b83f8787dede</webElementGuid>
+      <webElementGuid>5374e463-16f3-4c3d-a8e1-37afe1a5a833</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>text</name>
+      <name>href</name>
       <type>Main</type>
-      <value>e-Meterai Monitoring</value>
-      <webElementGuid>c43b3052-2abb-40bb-ade6-df9e1899b2c4</webElementGuid>
+      <value>/emeterai-monitoring</value>
+      <webElementGuid>65440534-30de-4d2b-af1f-593d238d7b86</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

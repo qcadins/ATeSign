@@ -140,10 +140,17 @@ if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/label_ValidationErr
         'Parsing token menjadi GlobalVariable'
         GlobalVariable.token = WS.getElementPropertyValue(responLogin, 'access_token')
 
+		String receiverDetail
+		
+		if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email')).length() > 0) {
+			receiveDetail = findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email'))
+		} else {
+			receiverDetail = findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('$No Handphone'))	
+		}
+		
         'HIT API get Invitation Link'
         responGetInvLink = WS.sendRequest(findTestObject('Postman/Get Inv Link', [('callerId') : '""', ('receiverDetail') : ('"' + 
-                    findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email'))) + '"', ('tenantCode') : ('"' + 
-                    GlobalVariable.Tenant) + '"', ('vendorCode') : ('"' + GlobalVariable.Psre) + '"']))
+                    receiverDetail) + '"', ('tenantCode') : ('"' + GlobalVariable.Tenant) + '"', ('vendorCode') : ('"' + GlobalVariable.Psre) + '"']))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(responGetInvLink, 200, FailureHandling.OPTIONAL) == true) {
@@ -317,7 +324,7 @@ if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/label_ValidationErr
 			'call keyword get email'
 			String emailCert = CustomKeywords.'customizekeyword.GetEmail.getEmailContent'(findTestData(excelPathBuatUndangan).getValue(
 								GlobalVariable.NumofColm, rowExcel('Email')), findTestData(excelPathBuatUndangan).getValue(
-								GlobalVariable.NumofColm, rowExcel('Password')))
+								GlobalVariable.NumofColm, rowExcel('Password')), 'Certif')
 			
 			'verify email cert'
 			checkVerifyEqualOrMatch(WebUI.verifyMatch(emailCert, 'Penerbitan Sertifikat Elektronik',
@@ -514,14 +521,26 @@ def verifyListUndangan() {
     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_Nama')), findTestData(excelPathBuatUndangan).getValue(
                 GlobalVariable.NumofColm, rowExcel('$Nama')), false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama')
 
-    'verify pengiriman melalui'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_PengirimanMelalui')), 'Email', 
-            false, FailureHandling.CONTINUE_ON_FAILURE), ' Pengiriman Melalui')
-
-    'verify penerima undangan'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_PenerimaUndangan')), findTestData(
-                excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email')), false, FailureHandling.CONTINUE_ON_FAILURE), 
-        ' Penerima Undangan')
+	'check if email kosong atau tidak'
+	if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email')).length() > 0) {
+		'verify pengiriman melalui'
+		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_PengirimanMelalui')), 'Email', 
+				false, FailureHandling.CONTINUE_ON_FAILURE), ' Pengiriman Melalui')	
+		
+		'verify penerima undangan'
+		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_PenerimaUndangan')), findTestData(
+					excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email')), false, FailureHandling.CONTINUE_ON_FAILURE),
+			' Penerima Undangan')
+	} else {
+		'verify pengiriman melalui'
+		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_PengirimanMelalui')), 'SMS',
+				false, FailureHandling.CONTINUE_ON_FAILURE), ' Pengiriman Melalui')
+		
+		'verify penerima undangan'
+		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_PenerimaUndangan')), findTestData(
+					excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('$No Handphone')), false, FailureHandling.CONTINUE_ON_FAILURE),
+			' Penerima Undangan')
+	}
 
     tanggalPengiriman = WebUI.getText(findTestObject('ListUndangan/table_TanggalPengiriman')).split(' ', -1)
 

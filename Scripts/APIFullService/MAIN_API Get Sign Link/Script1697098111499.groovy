@@ -89,6 +89,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 				'cek apakah user ingin melakukan process signing langsung'
 				if (findTestData(excelPathAPIGetSignLink).getValue(GlobalVariable.NumofColm, rowExcel('Continue with Signing Process?')) == 'Yes') {
 				
+					String refNum
+					
 					'open browser'
 					WebUI.openBrowser('')
 					
@@ -104,10 +106,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 						listDoc.replace('"','')
 					}
 					
+					'jika diketahui hanya ada satu dokumen'
+					if (documentId.size == 1) {
+						'ambil nomorkontrak untuk dikirim ke signing digisign'
+						refNum = CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, documentId[0])
+					} else {
+						'jika lebih dari 1 dokumen, auto bulksign'
+						refNum = ''
+					}
+					
 					'call test case signing digisign'
-					WebUI.callTestCase(findTestCase('Signing Digisign'), [('excelPathFESignDocument') : excelPathAPIGetSignLink
+					WebUI.callTestCase(findTestCase('Signing Digisign_experimental'), [('excelPathFESignDocument') : excelPathAPIGetSignLink
 						, ('sheet') : sheet, ('flowGetSignLink') : 'Yes', ('emailSigner') : findTestData(excelPathAPIGetSignLink).getValue(GlobalVariable.NumofColm, rowExcel('$loginId')),
-							('documentId') : documentId], FailureHandling.CONTINUE_ON_FAILURE)
+							('documentId') : documentId, ('nomorKontrak'): refNum], FailureHandling.CONTINUE_ON_FAILURE)
 				}
 			} else {
 				'write to excel status failed dan reason : message Failed dari response'
@@ -115,7 +126,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
 				'write to excel status failed dan reason'
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-					GlobalVariable.StatusFailed, (findTestData(excelPathAPIGetSignLink).getValue(GlobalVariable.NumofColm, 2).replace(
+					GlobalVariable.StatusFailed, (findTestData(excelPathAPIGetSignLink).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
 						'-', '') + ';') + '<' + messageFailed + '>')
 			}
 		} else {

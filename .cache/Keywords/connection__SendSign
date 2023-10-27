@@ -1029,6 +1029,7 @@
           ]
         },
         {
+<<<<<<< HEAD
           "name": "getProyectionOfVendorForSend",
           "parameters": [
             {
@@ -1090,6 +1091,25 @@
             },
             {
               "name": "documentId",
+=======
+          "name": "settingSentOTPbyEmail",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "value",
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

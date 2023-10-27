@@ -60,6 +60,14 @@ CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPISignDocume
                 GlobalVariable.NumofColm, rowExcel('Enable Need Password for signing? (Sign External)')))
     }
 
+'setting sent otp by email'
+if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Sign External)')).length() > 
+0) {
+    'update setting sent otp by email'
+    CustomKeywords.'connection.SendSign.settingSentOTPbyEmail'(conneSign, findTestData(excelPathAPISignDocument).getValue(
+            GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Sign External)')))
+}
+
 	if (vendor.equalsIgnoreCase('Digisign')) {
 		signTypeUsed = 'Dokumen'
 	}
@@ -67,7 +75,7 @@ CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPISignDocume
 		signTypeUsed = 'TTD'
 	}
 	
-   HashMap<String, String> saldoBefore = WebUI.callTestCase(findTestCase('Main Flow/getSaldo development'), [('excel') : excelPathAPISignDocument
+   HashMap<String, String> saldoBefore = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathAPISignDocument
             , ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
 
 	saldoTtdBefore = saldoBefore.get(signTypeUsed)

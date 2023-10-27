@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>docIdBulkSign</name>
+   <tag></tag>
+   <elementGuidId>411f31df-4ae8-4863-b4e1-3ff4d0438d94</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>id(&quot;pdf-main-container&quot;)/div[1]/ul[@class=&quot;list-group&quot;]/li[@class=&quot;list-group-item&quot;]/label[1]</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>li.list-group-item > label</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>//div[@id='pdf-main-container']/div/ul/li/label</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>true</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>tag</name>
+      <type>Main</type>
+      <value>label</value>
+      <webElementGuid>5051872b-5e7f-4c0b-a278-43432ca56b40</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>DOC_00155D0B-7502-A4F8-11EE-68E53134FDE1.pdf
+					    					    					  	</value>
+      <webElementGuid>7e70d7ea-32a7-4488-a321-2f292fff0dd4</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>id(&quot;pdf-main-container&quot;)/div[1]/ul[@class=&quot;list-group&quot;]/li[@class=&quot;list-group-item&quot;]/label[1]</value>
+      <webElementGuid>6dc5726f-b0de-4d65-b276-852d3de07fa5</webElementGuid>
+   </webElementProperties>
+   <webElementXpaths>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:idRelative</name>
+      <type>Main</type>
+      <value>//div[@id='pdf-main-container']/div/ul/li/label</value>
+      <webElementGuid>3cab5991-fb6f-4c79-aa01-22fb11224f03</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Setuju'])[1]/following::label[1]</value>
+      <webElementGuid>c93ea330-8c8f-4aa9-9901-fe05bac3d87b</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='DOC_00155D0B-7502-9A7E-11EE-68E98793C0A1.pdf'])[1]/preceding::label[1]</value>
+      <webElementGuid>0d69d991-5a0e-4068-aed0-7f0724e9fc2e</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Proses'])[2]/preceding::label[2]</value>
+      <webElementGuid>f9f6ca13-5489-4793-b529-d1816fc1db45</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:neighbor</name>
+      <type>Main</type>
+      <value>//*/text()[normalize-space(.)='DOC_00155D0B-7502-A4F8-11EE-68E53134FDE1.pdf']/parent::*</value>
+      <webElementGuid>adbfabba-e79d-4bce-a695-c18afb18393b</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:position</name>
+      <type>Main</type>
+      <value>//li/label</value>
+      <webElementGuid>676ef676-1d3d-4b33-ab29-ac25c7b1391b</webElementGuid>
+   </webElementXpaths>
+   <webElementXpaths>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath:customAttributes</name>
+      <type>Main</type>
+      <value>//label[(text() = 'DOC_00155D0B-7502-A4F8-11EE-68E53134FDE1.pdf
+					    					    					  	' or . = 'DOC_00155D0B-7502-A4F8-11EE-68E53134FDE1.pdf
+					    					    					  	')]</value>
+      <webElementGuid>4b4db1eb-3690-4ee5-9adf-fb964b4c33e4</webElementGuid>
+   </webElementXpaths>
+</WebElementEntity>

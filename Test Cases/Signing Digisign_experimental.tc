@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>Signing Digisign</name>
+   <name>Signing Digisign_experimental</name>
    <tag></tag>
    <comment></comment>
    <testCaseGuid>11293a57-04ed-4b5b-8292-f1391040fca1</testCaseGuid>
@@ -57,7 +57,7 @@
       <name>emailSigner</name>
    </variable>
    <variable>
-      <defaultValue>''</defaultValue>
+      <defaultValue>[]</defaultValue>
       <description></description>
       <id>58694fc4-7298-4821-89fb-f37dea0f10f3</id>
       <masked>false</masked>

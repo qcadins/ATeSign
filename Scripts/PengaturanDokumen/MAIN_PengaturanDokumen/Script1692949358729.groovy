@@ -91,7 +91,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             semicolon, splitIndex)
 
         'Klik tombol pengaturan dokumen'
-        if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('New')) {
+        if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('New')) {
             'Klik tombol tambah pengaturan dokumen'
             WebUI.click(findTestObject('TandaTanganDokumen/btn_Add'))
 
@@ -207,7 +207,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     GlobalVariable.FlagFailed = 1
                 }
             }
-        } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('View')) {
+        } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('View')) {
             'call function search pengaturan dokumen'
             searchPengaturanDokumen()
 
@@ -247,7 +247,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         1, GlobalVariable.StatusSuccess)
                 }
             }
-        } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Edit')) {
+        } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('Edit')) {
             'call function search pengaturan dokumen'
             searchPengaturanDokumen()
 
@@ -397,7 +397,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     checkPopUpBerhasil(isMandatoryComplete, semicolon)
                 }
             }
-        } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Setting')) {
+        } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('Setting')) {
             'call function search pengaturan dokumen'
             searchPengaturanDokumen()
 
@@ -659,8 +659,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         }
         
         'check if new or edit'
-        if ((findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('New') || findTestData(
-            excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('Edit')) && (GlobalVariable.FlagFailed == 
+        if ((findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('New') || findTestData(
+            excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('Edit')) && (GlobalVariable.FlagFailed == 
         0)) {
             'call fucntion after edit'
             verifyAfterAddorEdit(TipeTandaTangan)
@@ -772,7 +772,7 @@ def checkPaging() {
             0]) / 25)
 
         'jika hasil perhitungan last page memiliki desimal'
-        if (lastPage.toString().contains('.0')) {
+        if (lastPage.toString().endsWith('.0')) {
             'tidak ada round up'
             additionalRoundUp = 0
         } else {
@@ -1050,7 +1050,7 @@ def sortingSequenceSign() {
 }
 
 def inputForm(Connection conneSign, int checked) {
-    if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 7).equalsIgnoreCase('New')) {
+    if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('New')) {
         'Input text documentTemplateCode'
         WebUI.setText(findTestObject('TandaTanganDokumen/input_documentTemplateCode'), findTestData(excelPathPengaturanDokumen).getValue(
                 GlobalVariable.NumofColm, rowExcel('Kode Templat Dokumen')))
