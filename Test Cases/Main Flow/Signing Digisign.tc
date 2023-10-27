@@ -29,6 +29,12 @@
       <value></value>
       <variableId>8c815869-c8e3-4171-b688-bdabe9a4b4f3</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>7589a0db-4cc1-46ea-9691-9256fe9076bc</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -51,10 +57,17 @@
       <name>emailSigner</name>
    </variable>
    <variable>
-      <defaultValue>''</defaultValue>
+      <defaultValue>[]</defaultValue>
       <description></description>
       <id>8c815869-c8e3-4171-b688-bdabe9a4b4f3</id>
       <masked>false</masked>
       <name>documentId</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>7589a0db-4cc1-46ea-9691-9256fe9076bc</id>
+      <masked>false</masked>
+      <name>flowGetSignLink</name>
    </variable>
 </TestCaseEntity>

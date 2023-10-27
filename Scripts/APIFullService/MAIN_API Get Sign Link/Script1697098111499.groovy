@@ -99,7 +99,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 					
 					'maximized window'
 					WebUI.maximizeWindow()
-					
+
 					if (documentId.size() > 1) {
 						listDoc.replace('"','').replace(',','')
 					} else {
@@ -116,7 +116,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 					}
 					
 					'call test case signing digisign'
-					WebUI.callTestCase(findTestCase('Signing Digisign_experimental'), [('excelPathFESignDocument') : excelPathAPIGetSignLink
+					WebUI.callTestCase(findTestCase('Main Flow/Signing Digisign'), [('excelPathFESignDocument') : excelPathAPIGetSignLink
 						, ('sheet') : sheet, ('flowGetSignLink') : 'Yes', ('emailSigner') : findTestData(excelPathAPIGetSignLink).getValue(GlobalVariable.NumofColm, rowExcel('$loginId')),
 							('documentId') : documentId, ('nomorKontrak'): refNum], FailureHandling.CONTINUE_ON_FAILURE)
 				}

@@ -135,7 +135,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                     rowExcel('Reason Failed')) + ';') + ' total signer pada Send Document dengan signer yang terdaftar tidak sesuai ')
                         }
                     } else {
-						
 						signerInput = checkingDocAndEmailFromInput(documentId, 'email Signer (Sign Only)', signerInput)
 						
                         'jika menggunakan opsi sign only ,maka email signernya diinput'
@@ -144,8 +143,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     }
                     
                     String cancelDocsValue = ''
-					
-					
 
                     'looping berdasarkan email yang akan menandatangani'
                     for (int i = 0; i < emailSigner.keySet().size(); i++) {
