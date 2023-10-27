@@ -936,7 +936,7 @@ public class APIFullService {
 	@Keyword
 	settingBaseUrl(String excelPath, int colm, int row) {
 		if(findTestData(excelPath).getValue(colm, row) == 'No') {
-			GlobalVariable.base_url = 'http://gdkwebsvr:7021/'
+			GlobalVariable.base_url = findTestData('Login/Setting').getValue(7, 2) + ' BASE URL SALAH '
 		} else {
 			GlobalVariable.base_url = findTestData('Login/Setting').getValue(7, 2)
 		}
@@ -1240,7 +1240,7 @@ public class APIFullService {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getSignersAutosignOnDocument(Connection conn, String documentId) {
 		stm = conn.createStatement()
