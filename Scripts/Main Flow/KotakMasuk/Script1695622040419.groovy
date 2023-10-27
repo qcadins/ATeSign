@@ -33,6 +33,8 @@ String refNumber = CustomKeywords.'connection.APIFullService.getRefNumber'(conne
 'looping berdasarkan jumlah dokumen'
 resultHashMap = loopingMultiDoc(docId, conneSign, refNumber,resultHashMap) 
 
+println resultHashMap
+
 'looping berdasarkan email Signer dari dokumen tersebut. '
 for (t = 0; t < resultHashMap.keySet().size(); t++) {
     'call Test Case untuk login sebagai user berdasarkan doc id'
@@ -555,8 +557,18 @@ def loopingMultiDoc(ArrayList docId, Connection conneSign, String refNumber, Lin
 		'Mengambil email berdasarkan documentId'
 		ArrayList emailSigner = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, docId[loopingDocument]).split(
 			';', -1)
-	
+		
+		String vendor = CustomKeywords.'connection.SendSign.getVendorCodeUsingDocId'(conneSign, docId[loopingDocument])
 		for (loopingEmailSigner = 0; loopingEmailSigner < emailSigner.size(); loopingEmailSigner++) {
+			
+			if (vendor.equalsIgnoreCase('Privy')) {
+				ifSignerAuto = CustomKeywords.'connection.APIFullService.getIfSignerAutosign'(conneSign,docId[loopingDocument],emailSigner[loopingEmailSigner])
+
+				if (ifSignerAuto == 'Autosign') {
+					continue
+				}
+			}
+			
 			count = CustomKeywords.'connection.SendSign.getTotalDocumentBasedOnSigner'(conneSign, refNumber, emailSigner[loopingEmailSigner])
 	
 			if (count > 0) {

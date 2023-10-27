@@ -19,13 +19,37 @@ enter = '\\n'
 
 int splitnum = -1
 
+boolean useAutoSign = false
+
+HashMap<String, String> resultSaldoBeforeLoop = new HashMap<String, String>()
+
+HashMap<String, String> resultSaldoBefore = new HashMap<String, String>()
+
+println GlobalVariable.base_url
+
 'setting menggunakan base url yang benar atau salah'
 CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPISendDoc, GlobalVariable.NumofColm, rowExcel('Use Correct base Url (Send External)'))
 
+println GlobalVariable.base_url
+WebUI.delay(20)
 'Deklarasi variable mengenai signLoc untuk store db'
 String signlocStoreDB
 
 getDataExcel(semicolon, splitnum, delimiter, enter)
+
+if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$signAction (Send External)')).contains('at')) {
+	useAutoSign = true
+	
+	for (loopingGetSaldoBefore = 0; loopingGetSaldoBefore < documentTemplateCode.size(); loopingGetSaldoBefore++) {
+		logicVendor = CustomKeywords.'connection.SendSign.getProyectionOfVendorForSend'(conneSign, documentTemplateCode[loopingGetSaldoBefore].replace('"',''), GlobalVariable.Tenant)
+
+		resultSaldoBeforeLoop = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathAPISendDoc
+			, ('sheet') : sheet, ('vendor') : logicVendor, ('usageSaldo') : 'Send'], FailureHandling.CONTINUE_ON_FAILURE)
+		
+		resultSaldoBefore.putAll(resultSaldoBeforeLoop)
+
+	}
+}
 
 'Deklarasi variable string Ref no untuk full body API.'
 String stringRefno = new String()
@@ -112,9 +136,49 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
     getErrorMessageAPI(respon)
 }
 
-'Fungsi PDF to Base64'
+checkSaldoAutoSign(useAutoSign, resultSaldoBefore)
 
-'Fungsi storedb'
+def checkSaldoAutoSign(boolean useAutoSign, HashMap resultSaldoBefore) {
+	if (useAutoSign == true) {
+		HashMap<String, String> resultSaldoAfterLoop = new HashMap<String, String>()
+		
+		HashMap<String, String> resultSaldoAfter = new HashMap<String, String>()
+		
+		resultSaldoAfterLoop = WebUI.callTestCase(findTestCase('Main Flow/getSaldo development'), [('excel') : excelPathAPISendDoc
+			, ('sheet') : sheet, ('vendor') : findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document')), ('usageSaldo') : 'Send'], FailureHandling.CONTINUE_ON_FAILURE)
+		
+		resultSaldoAfter.putAll(resultSaldoAfterLoop)
+		
+		String countOfTrx = ''
+		
+		'ini adalah autosignnya success'
+		if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('trxNo')).replace(', ','').length() > 0) {
+				testingTrxNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('trxNo')).split(', ', -1)
+			
+			for (saldoPerDoc = 0; saldoPerDoc < testingTrxNo.size(); saldoPerDoc++) {
+				countOfTrx = testingTrxNo[saldoPerDoc].split(';', -1)
+				
+				if (resultSaldoAfter.get(
+					resultSaldoAfter.containsKey(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document'))) != 
+					resultSaldoBefore.get(resultSaldoBefore.containsKey(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document')) + countOfTrx.size())
+					))) {
+						    'Write To Excel GlobalVariable.StatusFailed and errormessage'
+							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+								GlobalVariable.StatusFailed,findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';' + ' Saldo pemotongan autosign tidak sesuai yang seharusnya ')
+					}
+			}
+		} else {
+			if (resultSaldoAfter.get(
+				resultSaldoAfter.containsKey(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document'))) !=
+				resultSaldoBefore.get(resultSaldoBefore.containsKey(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document')) + countOfTrx.size())
+				))) {
+						'Write To Excel GlobalVariable.StatusFailed and errormessage'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+							GlobalVariable.StatusFailed,findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';' + ' Saldo pemotongan autosign tidak sesuai yang seharusnya ')
+				}
+		}
+	}
+}
 
 def PDFtoBase64(String fileName) {
     return CustomKeywords.'customizekeyword.ConvertFile.base64File'(fileName)

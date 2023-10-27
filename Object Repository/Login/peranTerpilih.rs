@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'ng-option ng-option-selected ng-option-marked ng-star-inserted']/span</value>
+         <value>//*[@class = 'ng-option ng-option-marked ng-star-inserted']/span</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,15 +17,15 @@
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>ng-option ng-option-selected ng-option-marked ng-star-inserted</value>
-      <webElementGuid>015934a2-6b35-4cde-89e5-a9cf23ad55c0</webElementGuid>
+      <value>ng-option ng-option-marked ng-star-inserted</value>
+      <webElementGuid>c6de1307-be17-4ba6-aa14-aef42f8f705b</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@class = 'ng-option ng-option-selected ng-option-marked ng-star-inserted']/span</value>
-      <webElementGuid>9b82be3c-7154-43c3-8d1c-2d0df967f650</webElementGuid>
+      <value>//*[@class = 'ng-option ng-option-marked ng-star-inserted']/span</value>
+      <webElementGuid>7f83280d-6350-4e7e-9521-e985cb305778</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

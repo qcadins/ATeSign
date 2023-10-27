@@ -20,10 +20,10 @@ import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import org.openqa.selenium.By as By
 import java.sql.Connection as Connection
 
-for (int i = 0; i < 5; i++) {
-daa()
-}
+String a = '1,922'
 
-def daa() {
-	return break
-}
+a = a.replace(';', '')
+int aa = 1922
+
+println aa
+println a

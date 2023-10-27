@@ -68,7 +68,7 @@ int saldoUsed = 0
 		signTypeUsed = 'TTD'
 	}
 	
-   HashMap<String, String> saldoBefore = WebUI.callTestCase(findTestCase('Main Flow (DEVELOPMENT MULTI DOCUMENT SIGNING)/getSaldo'), [('excel') : excelPathAPISignDocument
+   HashMap<String, String> saldoBefore = WebUI.callTestCase(findTestCase('Main Flow/getSaldo development'), [('excel') : excelPathAPISignDocument
             , ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
 
 	saldoTtdBefore = saldoBefore.get(signTypeUsed)
@@ -299,7 +299,7 @@ int saldoUsed = 0
                                     , ('sheet') : sheet, ('nomorKontrak') : refNumber, ('CancelDocsSign') : CancelDocsSign, ('linkDocumentMonitoring') : 'Not Used'], 
                                 FailureHandling.CONTINUE_ON_FAILURE)
 
-                            HashMap<String, String> saldoAfter = WebUI.callTestCase(findTestCase('Main Flow (DEVELOPMENT MULTI DOCUMENT SIGNING)/getSaldo'), 
+                            HashMap<String, String> saldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo development'), 
                                 [('excel') : excelPathAPISignDocument, ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
 							
                             'looping payment type used'
@@ -378,7 +378,7 @@ def phototoBase64(String filePath) {
     return CustomKeywords.'customizekeyword.ConvertFile.base64File'(filePath)
 }
 
-def responseAPIStoreDB(Connection conneSign, String ipaddress, String[] documentId, String trxNo) {
+def responseAPIStoreDB(Connection conneSign, String ipaddress, String documentId, String trxNo) {
     'get current date'
     currentDate = new Date().format('yyyy-MM-dd')
 
@@ -390,7 +390,7 @@ def responseAPIStoreDB(Connection conneSign, String ipaddress, String[] document
         arrayIndex = 0
 
         'Array result. Value dari db'
-        result = CustomKeywords.'connection.APIFullService.getSign'(conneSign, (documentId[GlobalVariable.storeVar.keySet()[0]]).toString(), (findTestData(
+        result = CustomKeywords.'connection.APIFullService.getSign'(conneSign, (GlobalVariable.storeVar.keySet()[0]).toString(), (findTestData(
                 excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(';', 
                 -1)[GlobalVariable.indexUsed]).replace('"', ''))
 
@@ -402,7 +402,7 @@ def responseAPIStoreDB(Connection conneSign, String ipaddress, String[] document
 
         'verify ref number yang tertandatangan'
         arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, 
-                    (documentId[GlobalVariable.storeVar.keySet()[0]]).replace('"', '')), false, FailureHandling.CONTINUE_ON_FAILURE))
+                    (GlobalVariable.storeVar.keySet()[0]).replace('"', '')), false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'verify ip address'
         arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], ipaddress.replace('"', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -434,13 +434,13 @@ def responseAPIStoreDB(Connection conneSign, String ipaddress, String[] document
 			trxNo = trxNo.split(', ', -1)
 			
 			'Array result. Value dari db'
-			trxList = CustomKeywords.'connection.APIFullService.getTrxNoAPISign'(conneSign, (documentId[i]).toString())
+			trxList = CustomKeywords.'connection.APIFullService.getTrxNoAPISign'(conneSign, (GlobalVariable.storeVar.keySet()[0]).toString())
 			for (loopingTrxNo = 0; loopingTrxNo < trxNo.size(); loopingTrxNo++) {
 				if (trxList.contains(trxNo[loopingTrxNo])) {
 					continue
 				}
 				
-				if (loopingTrxNo == trxNo.size() - 1 && i == documentId.size() - 1) {
+				if (loopingTrxNo == trxNo.size() - 1) {
 					'Write To Excel GlobalVariable.StatusFailed dengan alasan bahwa saldo transaksi '
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 						GlobalVariable.StatusFailed, (((findTestData(excelPathAPISignDocument).getValue(

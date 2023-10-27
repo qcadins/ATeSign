@@ -175,7 +175,10 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                         if (vendor.equalsIgnoreCase('Digisign')) {
                             jumlahSignerTelahTandaTangan = CustomKeywords.'connection.APIFullService.getUserAlreadySigned'(
                                 conneSign, nomorKontrakPerPilihan[y])
-                        } else {
+                        } else if (vendor.equalsIgnoreCase('Privy')) {
+							jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgressPrivy'(conneSign,
+								documentId[j-1])
+							} else {
                             jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgress'(conneSign, 
                                 documentId[j-1])
                         }
@@ -269,7 +272,10 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
 						if (vendor.equalsIgnoreCase('Digisign')) {
 							jumlahSignerTelahTandaTangan = CustomKeywords.'connection.APIFullService.getUserAlreadySigned'(
 								conneSign, nomorKontrakPerPilihan[y])
-						} else {
+						} else if (vendor.equalsIgnoreCase('Privy')) {
+							jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgressPrivy'(conneSign,
+								documentId[j-1])
+							} else {
 							jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgress'(conneSign,
 								documentId[j-1])
 						}
@@ -482,9 +488,16 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                         'Split teks proses TTD'
                         totalSignandtotalSigned = WebUI.getText(modifyObjectvalues).split(' / ', -1)
 
-                        int jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgress'(conneSign, 
-                            nomorKontrakPerPilihan[y])
-
+						if (vendor.equalsIgnoreCase('Digisign')) {
+							jumlahSignerTelahTandaTangan = CustomKeywords.'connection.APIFullService.getUserAlreadySigned'(
+								conneSign, nomorKontrakPerPilihan[y])
+						} else if (vendor.equalsIgnoreCase('Privy')) {
+							jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgressPrivy'(conneSign,
+								documentId[j-1])
+							} else {
+							jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgress'(conneSign,
+								documentId[j-1])
+						}
                         'Verif hasil split, dimana proses awal hingga akhir. Awal dibandingkan dengan jumlahsignertandatangan, sedangkan akhir dibandingkan dengan total signer dari email'
                         arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[0], jumlahSignerTelahTandaTangan, FailureHandling.CONTINUE_ON_FAILURE))
 
