@@ -936,7 +936,7 @@ public class APIFullService {
 	@Keyword
 	settingBaseUrl(String excelPath, int colm, int row) {
 		if(findTestData(excelPath).getValue(colm, row) == 'No') {
-			GlobalVariable.base_url = findTestData('Login/Setting').getValue(7, 2) + ' BASE URL SALAH '
+			GlobalVariable.base_url = findTestData('Login/Setting').getValue(7, 2) + 'BASEURLSALAH'
 		} else {
 			GlobalVariable.base_url = findTestData('Login/Setting').getValue(7, 2)
 		}
