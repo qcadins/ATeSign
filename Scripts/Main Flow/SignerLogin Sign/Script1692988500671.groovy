@@ -76,9 +76,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
             GlobalVariable.storeVar.keySet()[0]))
 
     'saldoUsedDocPertama hanya untuk dokumen pertama'
-    int saldoUsedDocPertama = 0
-
-    int saldoUsed = 0
+    int saldoUsedDocPertama = 0, saldoUsed = 0
 
     'Inisialisasi variable yang dibutuhkan, Mengkosongkan nomor kontrak dan document Template Name'
     String noKontrak = ''
@@ -193,20 +191,19 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
                     checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(resultObject.get('modifyObjectTextTglPermintaan')), 
                             sendToSign[arrayIndex++], false, FailureHandling.OPTIONAL), ' pada tanggal permintaan ')
 
-                    countAutosign = CustomKeywords.'connection.APIFullService.getTotalAutosignOnDocument'(conneSign, GlobalVariable.storeVar.keySet()[0])
-					
-					if (vendor.equalsIgnoreCase('Privy')) {
-						if (countAutosign > 0) {
-							modifyObjectTextProsesTtd = WebUI.getText(resultObject.get('modifyObjectTextProsesTtd')).split(' / ', -1)
-					
-							countAutosign++
-							
-							if (modifyObjectTextProsesTtd[1] - countAutosign == modifyObjectTextProsesTtd[0]) {
-								checkingAutoSign = true
+					countAutosign = CustomKeywords.'connection.APIFullService.getTotalAutosignOnDocument'(conneSign, GlobalVariable.storeVar.keySet()[0])
+
+							if (vendor.equalsIgnoreCase('Privy')) {
+								if (countAutosign > 0) {
+									modifyObjectTextProsesTtd = WebUI.getText(resultObject.get('modifyObjectTextProsesTtd')).split(' / ', -1)
+						
+									countAutosign++
+
+									if (Integer.parseInt(modifyObjectTextProsesTtd[1]) - countAutosign == Integer.parseInt(modifyObjectTextProsesTtd[0])) {
+										checkingAutoSign = true
+									}
+								}
 							}
-						}
-					}
-					
                     'Input document Template Name dan nomor kontrak dari UI'
                     documentTemplateName = WebUI.getText(resultObject.get('modifyObjectTextDocumentTemplateName'))
 
@@ -588,9 +585,9 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
             'looping untuk mendapatkan total saldo yang digunakan per nomor kontrak'
             for (i = 0; i < noKontrakPerDoc.size(); i++) {
 				
-					if (checkingAutoSign == true) {
-						loopingEmailSigner = CustomKeywords.'connection.APIFullService.getSignersAutosignOnDocument'(conneSign, GlobalVariable.storeVar.keySet()[0])
-					}	
+				if (checkingAutoSign == true) {
+					loopingEmailSigner = CustomKeywords.'connection.APIFullService.getSignersAutosignOnDocument'(conneSign, GlobalVariable.storeVar.keySet()[0])
+				}	
 				
 				loopingEmailSigner.add(0,GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0]))
 				
@@ -621,21 +618,29 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
                                 saldoUsed = (saldoUsed + 1)
                             }
                         }
-                        
+
                         if ((jumlahSignerTandaTangan != 0) && (jumlahSignerTandaTangan != jumlahHarusTandaTangan)) {
                             saldoForCheckingDB = (saldoForCheckingDB + jumlahSignerTandaTangan)
                         } else if ((jumlahSignerTandaTangan != 0) && (jumlahSignerTandaTangan == jumlahHarusTandaTangan)) {
 							saldoForCheckingDB = jumlahSignerTandaTangan
 						}
-						
-                        jumlahSignerTandaTangan = (jumlahSignerTandaTangan + saldoUsed)
 
                         'Kita berikan delay per 20 detik karena proses signingnya masih dalam status In Progress (1), dan ketika selesai, status tanda tangan akan kembali menjadi 0'
                         WebUI.delay(20)
 
                         'Jika signing process db untuk signing false, maka'
                         if (signingProcessStoreDB(conneSign, loopingEmailSigner[looping], saldoForCheckingDB, GlobalVariable.storeVar.keySet()[0]) == false) {
-                            'Jika looping waktu delaynya yang terakhir, maka'
+                            if (GlobalVariable.ErrorType.size() > 0) {
+
+								saldoForCheckingDB = saldoForCheckingDB - jumlahSignerTandaTangan
+
+								saldoUsed = saldoUsed - saldoForCheckingDB
+
+								break
+							}
+
+							
+							'Jika looping waktu delaynya yang terakhir, maka'
                             if (y == 10) {
                                 'Failed dengan alasan prosesnya belum selesai'
                                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
@@ -645,8 +650,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
                         } else {
                             'Jika hasil store dbnya true, maka'
                             break
-                            
-                            flagBreak = 1
+
                         }
                     }
 				}
@@ -694,6 +698,15 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 
         saldoSignAfter = resultSaldoAfter.get(signType)
 
+		if (saldoSignBefore.contains(',') || saldoSignAfter.contains(',')) {
+			saldoSignBefore = saldoSignBefore.replace(',', '')
+			saldoSignAfter = saldoSignAfter.replace(',', '')
+		}
+		
+		println saldoSignBefore
+		println saldoUsed
+		println saldoSignAfter
+		WebUI.delay(30)
         'Jika count saldo sign/ttd diatas (after) sama dengan yang dulu/pertama (before) dikurang jumlah dokumen yang ditandatangani'
         if (WebUI.verifyEqual(Integer.parseInt(saldoSignBefore) - saldoUsed, Integer.parseInt(saldoSignAfter), FailureHandling.OPTIONAL)) {
             countResend = GlobalVariable.eSignData.getAt('VerifikasiOTP')
@@ -1049,7 +1062,7 @@ def modifyObject(int j) {
     'modify object lbl proses ttd'
     modifyObjectTextProsesTtd = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/checkbox_ttd'), 'xpath', 'equals', 
         ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-        j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + indexRow++) + ']/div/span', true)
+        j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + indexRow++) + ']/div/p', true)
 
 	'modify object lbl status ttd'
 	modifyObjectTextProsesMeterai = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/checkbox_ttd'), 'xpath', 'equals',
@@ -1117,7 +1130,7 @@ def checkBeforeChoosingOTPOrBiometric(String emailSigner, Connection conneSign, 
     'cek jika vendor yang dipakai adalah privy'
     if (vendor.equalsIgnoreCase('Privy')) {
         'pastikan tombol verifikasi biometrik tidak muncul'
-        if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/btn_verifBiom'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+        if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/btn_verifBiom'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
             GlobalVariable.FlagFailed = 1
 
             'jika muncul, tulis error ke excel'
@@ -1180,6 +1193,8 @@ def signingProcessStoreDB(Connection conneSign, String emailSigner, int jumlahSi
     'deklarasi arrayIndex untuk penggunakan selanjutnya'
     arrayIndex = 0
 
+	GlobalVariable.ErrorType = ''
+	
     'SigningDB mengambil value dari hasil query'
     signingDB = CustomKeywords.'connection.SendSign.getSigningStatusProcess'(conneSign, documentId, emailSigner)
 
@@ -1191,8 +1206,10 @@ def signingProcessStoreDB(Connection conneSign, String emailSigner, int jumlahSi
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                 (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
                     '-', '') + ';') + GlobalVariable.ReasonFailedProcessFailed)
-
-            return true
+			
+			GlobalVariable.ErrorType = signingDB[arrayIndex]
+			
+            return false
         }
         
         'verify request status. 3 berarti done request. Terpaksa hardcode karena tidak ada masternya untuk 3.'

@@ -396,12 +396,12 @@ public class DataVerif {
 
 		updateVariable = stm.executeUpdate("UPDATE am_msuser SET reset_code_request_num = 0 WHERE login_id = '"+ value +"' OR hashed_phone = encode(sha256('"+ value +"'), 'hex')")
 	}
-	
+
 	@Keyword
 	getEmailHosting(Connection conn) {
 		stm = conn.createStatement()
 
-	resultSet = stm.executeQuery("select email_hosting_domain from ms_tenant mt join ms_email_hosting meh on mt.id_email_hosting = meh.id_email_hosting where tenant_code = '"+ GlobalVariable.Tenant +"'")
+		resultSet = stm.executeQuery("select email_hosting_domain from ms_tenant mt join ms_email_hosting meh on mt.id_email_hosting = meh.id_email_hosting where tenant_code = '"+ GlobalVariable.Tenant +"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

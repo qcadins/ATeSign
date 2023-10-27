@@ -44,7 +44,6 @@ if (email == '') {
     if (linkUrl != '') {
         runWithEmbed(linkUrl)
     } else {
-		
         'input email'
         WebUI.setText(findTestObject('Login/input_Email'), findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel(
                     'Username')))

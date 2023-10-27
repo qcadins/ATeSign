@@ -23,6 +23,12 @@
       <value></value>
       <variableId>2bd9080e-ac13-4e1f-b83c-e2116d44e25a</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>0d1afb16-eba3-4e12-b132-307d85c24360</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -43,5 +49,12 @@
       <id>2bd9080e-ac13-4e1f-b83c-e2116d44e25a</id>
       <masked>false</masked>
       <name>sheet</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>0d1afb16-eba3-4e12-b132-307d85c24360</id>
+      <masked>false</masked>
+      <name>usageSaldo</name>
    </variable>
 </TestCaseEntity>
