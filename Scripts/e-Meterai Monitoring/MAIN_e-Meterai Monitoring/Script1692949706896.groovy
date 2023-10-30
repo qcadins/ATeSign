@@ -117,7 +117,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
 
                         'jika popup bukan retry stamping'
-                        if (!(lblpopup.contains('retry stamping'))) {
+                        if (!(lblpopup.contains('Retry stamping'))) {
                             'Tulis di excel sebagai failed dan error.'
                             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
 							GlobalVariable.StatusFailed, (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 
@@ -165,7 +165,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                                     break
                                 } else if ((progressStampingAfter[0]) == 'Success') {
                                     'Jika sukses, maka verify match progress lama dengan yang baru. Apakah sama'
-                                    if (WebUI.verifyMatch(progressStamping[0], progressStampingAfter[0], false, FailureHandling.CONTINUE_ON_FAILURE) == 
+                                    if (WebUI.verifyMatch(progressStamping[0], progressStampingAfter[0], false, FailureHandling.OPTIONAL) == 
                                     true) {
                                         'Tulis di excel sebagai failed dan error.'
                                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
