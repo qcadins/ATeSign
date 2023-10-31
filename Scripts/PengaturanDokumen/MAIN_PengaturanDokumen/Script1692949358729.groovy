@@ -53,10 +53,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'apakah cek paging diperlukan di awal run'
             if (GlobalVariable.checkPaging.equals('Yes')) {
                 'call function check paging'
-                checkPaging()
+               // checkPaging()
 
                 'call function input cancel'
-                inputCancel(conneSign, checked)
+              //  inputCancel(conneSign, checked)
             }
             
             firstRun = 1

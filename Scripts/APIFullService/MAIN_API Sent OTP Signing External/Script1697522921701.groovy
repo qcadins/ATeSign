@@ -43,6 +43,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'get api key salah dari excel'
             GlobalVariable.api_key = findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('Wrong API Key'))
         }
+		
+		'setting sent otp by email'
+		if (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Sign External)')).length() >
+		0) {
+		    'update setting sent otp by email'
+		    CustomKeywords.'connection.SendSign.settingSentOTPbyEmail'(conneSign, findTestData(excelPathAPISentOTPSigning).getValue(
+		            GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Sign External)')))
+		}
         
         'mengambil reset otp request numbernya awal berapa'
         reset_otp_request_num = CustomKeywords.'connection.APIFullService.getResetCodeRequestNum'(conneSign, findTestData(excelPathAPISentOTPSigning).getValue(
@@ -97,70 +105,76 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'jika codenya 0'
             if (code == 0) {
 				
-				'jika psre bukan privy, lakukan pengecekan store DB'
-				if (GlobalVariable.Psre != 'PRIVY') {
-					
-					'mengambil response trx nonya'
-					trxNo = WS.getElementPropertyValue(respon, 'trxNo', FailureHandling.OPTIONAL)
-	
-					'input di excel mengenai trxno yang telah didapat'
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
-						rowExcel('trxno')-1, GlobalVariable.NumofColm - 1, trxNo.toString())
-	
-					'check Db'
-					if (GlobalVariable.checkStoreDB == 'Yes') {
-						arrayIndex = 0
-	
-						'get data from db'
-						ArrayList<String> result = CustomKeywords.'connection.APIFullService.checkAPISentOTPSigning'(conneSign, findTestData(
-								excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('trxno')))
-	
-						'verify trxno'
-						arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], findTestData(excelPathAPISentOTPSigning).getValue(
-									GlobalVariable.NumofColm, rowExcel('trxno')), false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-						'verify email'
-						arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), findTestData(excelPathAPISentOTPSigning).getValue(
-									GlobalVariable.NumofColm, rowExcel('email')).replace('"', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-						'verify trx qty = -1'
-						arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-						'verify ref number'
-						arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], findTestData(excelPathAPISentOTPSigning).getValue(
-									GlobalVariable.NumofColm, rowExcel('refNumber')).replace('"', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-						'verify no telp'
-						arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], findTestData(excelPathAPISentOTPSigning).getValue(
-									GlobalVariable.NumofColm, rowExcel('phoneNo')).replace('"', '') + ' : Send OTP SMS', false, FailureHandling.CONTINUE_ON_FAILURE))
+				if(findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Sign External)')) == '0') {
+					'jika psre bukan privy, lakukan pengecekan store DB'
+					if (GlobalVariable.Psre != 'PRIVY') {
 						
-						newOTP = (result[arrayIndex++])
-						
-						if (newOTP.toString() != 'null') {
-							'verify otp code tidak sama'
-							arrayMatch.add(WebUI.verifyNotEqual(newOTP, otp_code, FailureHandling.CONTINUE_ON_FAILURE))
-						}
-						
+						'mengambil response trx nonya'
+						trxNo = WS.getElementPropertyValue(respon, 'trxNo', FailureHandling.OPTIONAL)
+		
 						'input di excel mengenai trxno yang telah didapat'
 						CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
-							rowExcel('OTP')-1, GlobalVariable.NumofColm - 1, newOTP)
-	
-						'verify reset otp request number '
-						arrayMatch.add(WebUI.verifyEqual(result[arrayIndex++], Integer.parseInt(reset_otp_request_num) + 1,
-								FailureHandling.CONTINUE_ON_FAILURE))
-	
-						'verify api key'
-						arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], GlobalVariable.api_key, false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-						'verify tenant'
-						arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], GlobalVariable.Tenant, false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-						'jika data db tidak sesuai dengan excel'
-						if (arrayMatch.contains(false)) {
-							'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-								GlobalVariable.StatusFailed, (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm,
-									rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
+							rowExcel('trxno')-1, GlobalVariable.NumofColm - 1, trxNo.toString())
+		
+						'check Db'
+						if (GlobalVariable.checkStoreDB == 'Yes') {
+							arrayIndex = 0
+		
+							'get data from db'
+							ArrayList<String> result = CustomKeywords.'connection.APIFullService.checkAPISentOTPSigning'(conneSign, findTestData(
+									excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('trxno')))
+		
+							'verify trxno'
+							arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], findTestData(excelPathAPISentOTPSigning).getValue(
+										GlobalVariable.NumofColm, rowExcel('trxno')), false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+							'verify email'
+							arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), findTestData(excelPathAPISentOTPSigning).getValue(
+										GlobalVariable.NumofColm, rowExcel('email')).replace('"', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+							'verify trx qty = -1'
+							arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+							'verify ref number'
+							arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], findTestData(excelPathAPISentOTPSigning).getValue(
+										GlobalVariable.NumofColm, rowExcel('refNumber')).replace('"', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+							'verify no telp'
+							arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], findTestData(excelPathAPISentOTPSigning).getValue(
+										GlobalVariable.NumofColm, rowExcel('phoneNo')).replace('"', '') + ' : Send OTP SMS', false, FailureHandling.CONTINUE_ON_FAILURE))
+							
+							newOTP = (result[arrayIndex++])
+							
+							if (newOTP.toString() != 'null') {
+								'verify otp code tidak sama'
+								arrayMatch.add(WebUI.verifyNotEqual(newOTP, otp_code, FailureHandling.CONTINUE_ON_FAILURE))
+							}
+							
+							'input di excel mengenai trxno yang telah didapat'
+							CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
+								rowExcel('OTP')-1, GlobalVariable.NumofColm - 1, newOTP)
+		
+							'verify reset otp request number '
+							arrayMatch.add(WebUI.verifyEqual(result[arrayIndex++], Integer.parseInt(reset_otp_request_num) + 1,
+									FailureHandling.CONTINUE_ON_FAILURE))
+		
+							'verify api key'
+							arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], GlobalVariable.api_key, false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+							'verify tenant'
+							arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], GlobalVariable.Tenant, false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+							'jika data db tidak sesuai dengan excel'
+							if (arrayMatch.contains(false)) {
+								'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+								CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+									GlobalVariable.StatusFailed, (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm,
+										rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
+							} else {
+								'write to excel success'
+								CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
+									0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+							}
 						} else {
 							'write to excel success'
 							CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
@@ -170,6 +184,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 						'write to excel success'
 						CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
 							0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+						
+						'input di excel mengenai trxno yang telah didapat'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
+							rowExcel('OTP')-1, GlobalVariable.NumofColm - 1, 'OTP tidak masuk ke DB(PRIVY)')
 					}
 				} else {
 					'write to excel success'
@@ -178,9 +196,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					
 					'input di excel mengenai trxno yang telah didapat'
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
-						rowExcel('OTP')-1, GlobalVariable.NumofColm - 1, 'OTP tidak masuk ke DB(PRIVY)')
+						rowExcel('OTP')-1, GlobalVariable.NumofColm - 1, 'OTP Dikirim by Email')
 				}
-                
             } else {
                 'mengambil status code berdasarkan response HIT API'
                 message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
