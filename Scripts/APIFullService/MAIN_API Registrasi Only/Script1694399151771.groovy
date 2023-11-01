@@ -55,7 +55,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         0) {
             'setting email service tenant'
             CustomKeywords.'connection.APIFullService.settingEmailServiceTenant'(conneSign, findTestData(excelPathAPIRegistrasi).getValue(
-                    GlobalVariable.NumofColm, rowExcel('Setting Email Service')))
+                    GlobalVariable.NumofColm, rowExcel('Setting Email Services')))
         }
         
         'check ada value maka setting register as dukcapil check'

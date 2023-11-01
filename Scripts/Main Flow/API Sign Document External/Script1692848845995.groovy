@@ -23,6 +23,13 @@ documentIdInput = '["' + GlobalVariable.storeVar.keySet()[[0]]  + '"]'
 
 int saldoUsed = 0
 
+GlobalVariable.FlagFailed = 0
+
+'Inisialisasi otp, photo, ipaddress, dan total signed sebelumnya yang dikosongkan'
+String otp, photo, ipaddress
+
+ArrayList totalSignedBefore = [],totalSignedAfter = [], flaggingOTP = []
+
 'setting menggunakan base url yang benar atau salah'
 CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPISignDocument, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url (Sign External)'))
 
@@ -36,29 +43,29 @@ CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPISignDocume
     'ambil tenant dan vendor code yang akan digunakan document'
     ArrayList tenantVendor = CustomKeywords.'connection.DataVerif.getTenantandVendorCode'(conneSign, GlobalVariable.storeVar.keySet()[0])
 
-    'setting vendor otp dimatikan/diaktifkan'
-    if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Enable User Vendor OTP? (Sign External)')).length() > 
-    0) {
-        'update setting vendor otp ke table di DB'
-        CustomKeywords.'connection.UpdateData.updateVendorOTP'(conneSign, tenantVendor[1], findTestData(excelPathAPISignDocument).getValue(
-                GlobalVariable.NumofColm, rowExcel('Enable User Vendor OTP? (Sign External)')))
-    }
-    
-    'setting tenant otp dimatikan/diaktifkan'
-    if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Enable Need OTP for signing? (Sign External)')).length() > 
-    0) {
-        'update setting otp ke table di DB'
-        CustomKeywords.'connection.UpdateData.updateTenantOTPReq'(conneSign, tenantVendor[0], findTestData(excelPathAPISignDocument).getValue(
-                GlobalVariable.NumofColm, rowExcel('Enable Need OTP for signing? (Sign External)')))
-    }
-    
-    'setting tenant password dimatikan/diaktifkan'
-    if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Enable Need Password for signing? (Sign External)')).length() > 
-    0) {
-        'update setting pass tenant ke table di DB'
-        CustomKeywords.'connection.UpdateData.updateTenantPassReq'(conneSign, tenantVendor[0], findTestData(excelPathAPISignDocument).getValue(
-                GlobalVariable.NumofColm, rowExcel('Enable Need Password for signing? (Sign External)')))
-    }
+'setting vendor otp dimatikan/diaktifkan'
+if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Enable User Vendor OTP? (Sign External)')).length() > 
+0) {
+    'update setting vendor otp ke table di DB'
+    CustomKeywords.'connection.UpdateData.updateVendorOTP'(conneSign, tenantVendor[1], findTestData(excelPathAPISignDocument).getValue(
+            GlobalVariable.NumofColm, rowExcel('Enable User Vendor OTP? (Sign External)')))
+}
+
+'setting tenant otp dimatikan/diaktifkan'
+if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Enable Need OTP for signing? (Sign External)')).length() > 
+0) {
+    'update setting otp ke table di DB'
+    CustomKeywords.'connection.UpdateData.updateTenantOTPReq'(conneSign, tenantVendor[0], findTestData(excelPathAPISignDocument).getValue(
+            GlobalVariable.NumofColm, rowExcel('Enable Need OTP for signing? (Sign External)')))
+}
+
+'setting tenant password dimatikan/diaktifkan'
+if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Enable Need Password for signing? (Sign External)')).length() > 
+0) {
+    'update setting pass tenant ke table di DB'
+    CustomKeywords.'connection.UpdateData.updateTenantPassReq'(conneSign, tenantVendor[0], findTestData(excelPathAPISignDocument).getValue(
+            GlobalVariable.NumofColm, rowExcel('Enable Need Password for signing? (Sign External)')))
+}
 
 'setting sent otp by email'
 if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Sign External)')).length() > 
@@ -81,13 +88,6 @@ if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, ro
 	saldoTtdBefore = saldoBefore.get(signTypeUsed)
 
     ArrayList paymentTypeUsed = getPaymentTypeUsed(conneSign, vendor)
-
-    GlobalVariable.FlagFailed = 0
-
-    'Inisialisasi otp, photo, ipaddress, dan total signed sebelumnya yang dikosongkan'
-    String otp, photo, ipaddress
-
-    ArrayList totalSignedBefore = [],totalSignedAfter = [], flaggingOTP = []
 
     'Jika flag tenant no'
     if ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code (Sign External)')).split(
@@ -116,78 +116,98 @@ if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, ro
     flaggingOTP = CustomKeywords.'connection.DataVerif.getParameterFlagPassOTP'(conneSign, (GlobalVariable.storeVar.keySet()[[0]]).toString())
 
 	   if (vendor.equalsIgnoreCase('Privy') || vendor.equalsIgnoreCase('Digisign')) {
-        'request OTP dengan HIT API'
+    'request OTP dengan HIT API'
 
-        'Constraint : Dokumen yang dipasang selalu dengan referal number di dokumen pertama.'
-        respon_OTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing', [('callerId') : findTestData(
-                        excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('callerId (Sign External)')).split(
-                        ';', -1)[GlobalVariable.indexUsed], ('phoneNo') : findTestData(excelPathAPISignDocument).getValue(
-                        GlobalVariable.NumofColm, rowExcel('phoneNo (Sign External)')).split(';', -1)[GlobalVariable.indexUsed]
-                    , ('email') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(
-                        ';', -1)[GlobalVariable.indexUsed], ('refnumber') : '"' + CustomKeywords.'connection.APIFullService.getRefNumber'(
-                        conneSign, GlobalVariable.storeVar.keySet()[[0]]) + '"']))
+    'Constraint : Dokumen yang dipasang selalu dengan referal number di dokumen pertama.'
+    respon_OTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing', [('callerId') : findTestData(
+                    excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('callerId (Sign External)')).split(
+                    ';', -1)[GlobalVariable.indexUsed], ('phoneNo') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
+                    rowExcel('phoneNo (Sign External)')).split(';', -1)[GlobalVariable.indexUsed], ('email') : findTestData(
+                    excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(
+                    ';', -1)[GlobalVariable.indexUsed], ('refnumber') : ('"' + CustomKeywords.'connection.APIFullService.getRefNumber'(
+                    conneSign, GlobalVariable.storeVar.keySet()[[0]])) + '"', ('listDocumentId') : documentIdInput.replace(
+                    '[', '').replace(']', '')]))
 
-        'Jika status HIT API 200 OK'
-        if (WS.verifyResponseStatusCode(respon_OTP, 200, FailureHandling.OPTIONAL) == true) {
-            'get status code'
-            code_otp = WS.getElementPropertyValue(respon_OTP, 'status.code', FailureHandling.OPTIONAL)
-			
-			'get psreCode'
-			psreCode = WS.getElementPropertyValue(respon_OTP, 'psreCode', FailureHandling.OPTIONAL)
+    'Jika status HIT API 200 OK'
+    if (WS.verifyResponseStatusCode(respon_OTP, 200, FailureHandling.OPTIONAL) == true) {
+        'get status code'
+        code_otp = WS.getElementPropertyValue(respon_OTP, 'status.code', FailureHandling.OPTIONAL)
 
-            'jika codenya 0'
-            if (code_otp == 0) {
-				checkVerifyEqualOrMatch(WebUI.verifyMatch(psreCode.toString().toUpperCase(), vendor.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada psre response dengan vendor DB ')
-				
+        'get psreCode'
+        psreCode = WS.getElementPropertyValue(respon_OTP, 'psreCode', FailureHandling.OPTIONAL)
+
+        'jika codenya 0'
+        if (code_otp == 0) {
+            'verify psre respon == psre db'
+            checkVerifyEqualOrMatch(WebUI.verifyMatch(psreCode.toString().toUpperCase(), vendor.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), 
+                ' pada psre response dengan vendor DB ')
+
+            email = (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(
+                ';', -1)[GlobalVariable.indexUsed]).replace('"', '')
+
+            if ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Sign External)')) == 
+            '1') && email.contains('OUTLOOK.COM')) {
+                'call keyword get otp dari email'
+                otp = (('"' + CustomKeywords.'customizekeyword.GetEmail.getEmailContent'(email, findTestData(excelPathAPISignDocument).getValue(
+                        GlobalVariable.NumofColm, rowExcel('Password Signer')), 'OTP')) + '"')
+            } else if ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Sign External)')) == 
+            '0') || !(email.contains('OUTLOOK.COM'))) {
                 'Dikasih delay 50 detik dikarenakan loading untuk mendapatkan OTP Privy via SMS.'
                 WebUI.delay(50)
 
                 otp = (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Wrong OTP (Sign External)')).split(
                     ';', -1)[GlobalVariable.indexUsed])
             }
+            
+            println(otp)
         }
-    } else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use correct OTP From Database (Sign External)')).split(
+    }
+	   } else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use correct OTP From Database (Sign External)')).split(
         ';', -1)[GlobalVariable.indexUsed] == 'Yes') {
-        'check if mau menggunakan OTP yang salah atau benar'
+    'check if mau menggunakan OTP yang salah atau benar'
 
-        'request OTP dengan HIT API'
+    'request OTP dengan HIT API'
 
-        'Constraint : Dokumen yang dipasang selalu dengan referal number di dokumen pertama.'
-        respon_OTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing', [('callerId') : findTestData(
-                        excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('callerId (Sign External)')).split(
-                        ';', -1)[GlobalVariable.indexUsed], ('phoneNo') : findTestData(excelPathAPISignDocument).getValue(
-                        GlobalVariable.NumofColm, rowExcel('phoneNo (Sign External)')).split(';', -1)[GlobalVariable.indexUsed]
-                    , ('email') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(
-                        ';', -1)[GlobalVariable.indexUsed], ('refnumber') : ('"' + CustomKeywords.'connection.APIFullService.getRefNumber'(
-                        conneSign,GlobalVariable.storeVar.keySet()[[0]])) + '"']))
+    'Constraint : Dokumen yang dipasang selalu dengan referal number di dokumen pertama.'
+    respon_OTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing', [('callerId') : findTestData(
+                    excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('callerId (Sign External)')).split(
+                    ';', -1)[GlobalVariable.indexUsed], ('phoneNo') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
+                    rowExcel('phoneNo (Sign External)')).split(';', -1)[GlobalVariable.indexUsed], ('email') : findTestData(
+                    excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(
+                    ';', -1)[GlobalVariable.indexUsed], ('refnumber') : ('"' + CustomKeywords.'connection.APIFullService.getRefNumber'(
+                    conneSign, GlobalVariable.storeVar.keySet()[[0]])) + '"', ('listDocumentId') : documentIdInput.replace(
+                    '[', '').replace(']', '')]))
 
-        'Jika status HIT API 200 OK'
-        if (WS.verifyResponseStatusCode(respon_OTP, 200, FailureHandling.OPTIONAL) == true) {
-            'get status code'
-            code_otp = WS.getElementPropertyValue(respon_OTP, 'status.code', FailureHandling.OPTIONAL)
-			
-			'get psreCode'
-			psreCode = WS.getElementPropertyValue(respon_OTP, 'psreCode', FailureHandling.OPTIONAL)
-            'jika codenya 0'
-            if (code_otp == 0) {
-				checkVerifyEqualOrMatch(WebUI.verifyMatch(psreCode.toString().toUpperCase(), vendor.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada psre response dengan vendor DB ')
-				
-                'Dikasih delay 1 detik dikarenakan loading untuk mendapatkan OTP.'
-                WebUI.delay(3)
+    'Jika status HIT API 200 OK'
+    if (WS.verifyResponseStatusCode(respon_OTP, 200, FailureHandling.OPTIONAL) == true) {
+        'get status code'
+        code_otp = WS.getElementPropertyValue(respon_OTP, 'status.code', FailureHandling.OPTIONAL)
 
-                'Mengambil otp dari database'
-                otp = '"' + CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, (findTestData(excelPathAPISignDocument).getValue(
-                        GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(';', -1)[GlobalVariable.indexUsed]).replace('"', '')) + '"'
-            } else {
-                getErrorMessageAPI(respon_OTP)
-            }
+        'get psreCode'
+        psreCode = WS.getElementPropertyValue(respon_OTP, 'psreCode', FailureHandling.OPTIONAL)
+
+        'jika codenya 0'
+        if (code_otp == 0) {
+            checkVerifyEqualOrMatch(WebUI.verifyMatch(psreCode.toString().toUpperCase(), vendor.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), 
+                ' pada psre response dengan vendor DB ')
+
+            'Dikasih delay 1 detik dikarenakan loading untuk mendapatkan OTP.'
+            WebUI.delay(3)
+
+            'Mengambil otp dari database'
+            otp = (('"' + CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, (findTestData(excelPathAPISignDocument).getValue(
+                    GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(';', -1)[GlobalVariable.indexUsed]).replace(
+                    '"', ''))) + '"')
         } else {
-            'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.HITAPI Gagal'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
-                ';') + GlobalVariable.ReasonFailedOTPError)
+            getErrorMessageAPI(respon_OTP)
         }
-    } else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use correct OTP From Database (Sign External)')).split(
+    } else {
+        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.HITAPI Gagal'
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
+            GlobalVariable.ReasonFailedOTPError)
+    }
+} else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use correct OTP From Database (Sign External)')).split(
         ';', -1)[GlobalVariable.indexUsed] == 'No') {
         'get otp dari excel'
         otp = (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Wrong OTP (Sign External)')).split(

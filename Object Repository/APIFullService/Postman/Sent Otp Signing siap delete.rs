@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebServiceRequestEntity>
    <description></description>
-   <name>Sent Otp Signing Non Main</name>
+   <name>Sent Otp Signing siap delete</name>
    <tag></tag>
-   <elementGuidId>45aacad3-94f4-4c12-9dc2-7f6f25ca6ce0</elementGuidId>
+   <elementGuidId>fef14f5b-7324-4904-aeba-a961e8a0610e</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <connectionTimeout>-1</connectionTimeout>

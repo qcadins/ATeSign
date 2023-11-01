@@ -112,7 +112,7 @@ int saldoUsed = 0
         'request OTP dengan HIT API'
 
         'Constraint : Dokumen yang dipasang selalu dengan referal number di dokumen pertama.'
-        respon_OTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing', [('callerId') : findTestData(
+        respon_OTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing siap delete', [('callerId') : findTestData(
                         excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('callerId (Sign External)')).split(
                         ';', -1)[GlobalVariable.indexUsed], ('phoneNo') : findTestData(excelPathAPISignDocument).getValue(
                         GlobalVariable.NumofColm, rowExcel('phoneNo (Sign External)')).split(';', -1)[GlobalVariable.indexUsed]
@@ -141,7 +141,7 @@ int saldoUsed = 0
         'request OTP dengan HIT API'
 
         'Constraint : Dokumen yang dipasang selalu dengan referal number di dokumen pertama.'
-        respon_OTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing', [('callerId') : findTestData(
+        respon_OTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing siap delete', [('callerId') : findTestData(
                         excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('callerId (Sign External)')).split(
                         ';', -1)[GlobalVariable.indexUsed], ('phoneNo') : findTestData(excelPathAPISignDocument).getValue(
                         GlobalVariable.NumofColm, rowExcel('phoneNo (Sign External)')).split(';', -1)[GlobalVariable.indexUsed]
