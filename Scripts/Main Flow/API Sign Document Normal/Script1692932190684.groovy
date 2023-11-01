@@ -26,7 +26,7 @@ GlobalVariable.Tenant = findTestData(API_Excel_Path).getValue(GlobalVariable.Num
 ArrayList totalSignedBefore = [], totalSignedAfter = []
 
 HashMap<String, String> saldoBefore = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : API_Excel_Path
-	, ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
+	, ('sheet') : sheet, ('vendor') : vendor, ('usageSaldo') : 'Sign'], FailureHandling.CONTINUE_ON_FAILURE)
 
 ttdBefore = saldoBefore.get('TTD')
 
@@ -106,7 +106,7 @@ if (WS.verifyResponseStatusCode(respon_login, 200, FailureHandling.OPTIONAL) == 
 						}
 
 						HashMap<String, String> saldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : API_Excel_Path
-							, ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
+							, ('sheet') : sheet, ('vendor') : vendor, ('usageSaldo') : 'Sign'], FailureHandling.CONTINUE_ON_FAILURE)
 						
 						ttdAfter = saldoAfter.get('TTD')
 				

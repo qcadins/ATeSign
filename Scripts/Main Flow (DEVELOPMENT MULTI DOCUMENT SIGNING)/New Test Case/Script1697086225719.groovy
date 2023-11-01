@@ -23,7 +23,9 @@ import java.sql.Connection as Connection
 'get current date'
 def currentDate = new Date().format('yyyy-MM-dd HH:mm:ss')
 
-ArrayList aaa = ['aaa','bbb','aaa','bbbb']
+HashMap aa = new HashMap ()
+aa.put('aaacc', 'AwAw')
+aa.put('bb','AzAZZZ')
 
-aaa = aaa.unique()
-println aaa
+println aa.keySet().size()
+println aa['bb']

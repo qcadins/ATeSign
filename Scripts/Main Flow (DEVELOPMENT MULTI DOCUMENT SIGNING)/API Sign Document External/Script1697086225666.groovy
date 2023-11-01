@@ -68,7 +68,7 @@ int saldoUsed = 0
 		signTypeUsed = 'TTD'
 	}
 	
-   HashMap<String, String> saldoBefore = WebUI.callTestCase(findTestCase('Main Flow/getSaldo development'), [('excel') : excelPathAPISignDocument
+   HashMap<String, String> saldoBefore = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathAPISignDocument
             , ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
 
 	saldoTtdBefore = saldoBefore.get(signTypeUsed)
@@ -299,7 +299,7 @@ int saldoUsed = 0
                                     , ('sheet') : sheet, ('nomorKontrak') : refNumber, ('CancelDocsSign') : CancelDocsSign, ('linkDocumentMonitoring') : 'Not Used'], 
                                 FailureHandling.CONTINUE_ON_FAILURE)
 
-                            HashMap<String, String> saldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo development'), 
+                            HashMap<String, String> saldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), 
                                 [('excel') : excelPathAPISignDocument, ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
 							
                             'looping payment type used'

@@ -247,6 +247,8 @@ for (int i = 0; i < docid.size(); i++) {
 		for (int z = 0; z < signAction.size(); z++) {
 			'Jika signAction tersebut adalah AT'
 			if ((signAction[z]).replace('"', '') == 'at') {
+				
+				
 				'Mengambil emailSign dari excel dan displit kembali'
 				emailSign = (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$email (Send External)')).replace(
 					'"', '').split(semicolon, splitnum)[z])

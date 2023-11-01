@@ -377,7 +377,7 @@ def checkErrorLog() {
         'ambil teks errormessage'
         errormessage = WebUI.getAttribute(findTestObject('ManualSign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
 
-        if (!(errormessage.contains('Permintaan pembubuhan e-Materai berhasil dibuat.'))) {
+        if (!(errormessage.contains('Permintaan pembubuhan e-Meterai berhasil dibuat.'))) {
             'Tulis di excel itu adalah error'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                 (((findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(

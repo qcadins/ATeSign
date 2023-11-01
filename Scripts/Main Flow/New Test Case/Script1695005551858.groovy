@@ -20,10 +20,16 @@ import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import org.openqa.selenium.By as By
 import java.sql.Connection as Connection
 
-String a = '1,922'
+'connect dengan db'
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-a = a.replace(';', '')
-int aa = 1922
 
-println aa
-println a
+'Input email signer based on sequentialnya'
+emailSignerBasedOnSequence = CustomKeywords.'connection.APIFullService.getEmailBasedOnSequence'(conneSign, '00155D0B-7502-A867-11EE-76F6CF328110').split(';', -1)
+
+println emailSignerBasedOnSequence
+
+'Input email signer based on sequentialnya'
+emailSignerBasedOnSequence = CustomKeywords.'connection.APIFullService.getEmailBasedOnSequence'(conneSign, 'PRIVY DOCUMENT ATSIGN 2').split(';', -1)
+
+println emailSignerBasedOnSequence

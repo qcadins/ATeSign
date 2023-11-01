@@ -10,11 +10,11 @@ import internal.GlobalVariable
 
 public class APIFullService {
 
-	String data
+	String data, helperQuery
 	int columnCount, i, countLengthforSHA256 = 64, updateVariable
 	Statement stm
 	ResultSetMetaData metadata
-	ResultSet resultSet
+	ResultSet resultSet, helperResult
 	ArrayList<String> listdata = []
 	String emailWhere, selectData
 
@@ -792,7 +792,7 @@ public class APIFullService {
 	gettrxSaldoForMeterai(Connection conn, String refNumber) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select tbm.trx_no,TO_CHAR(tbm.dtm_crt,'YYYY-MM-DD HH24:MI:SS'), ml.description , case when amm.full_name != '' or amm.full_name != null then amm.full_name else tbm.usr_crt end, case when amm_two.full_name != '' or amm_two.full_name != null then tdh.ref_number||'('||amm_two.full_name||')' else tdh.ref_number end, ml_doc_h.code,case when mdt.doc_template_name != null then mdt.doc_template_name else tdd.document_name end , tbm.notes, tbm.qty from tr_document_d_stampduty tddstamp join tr_document_d tdd on tddstamp.id_document_d = tdd.id_document_d join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h left join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template left join tr_stamp_duty tsd on tddstamp.id_stamp_duty = tsd.id_stamp_duty left join tr_balance_mutation tbm on tsd.id_stamp_duty = tbm.id_stamp_duty left join ms_business_line mbl on tdh.id_ms_business_line = mbl.id_ms_business_line left join ms_office mso on mso.id_ms_office = tdh.id_ms_office left join ms_lov as ml on tbm.lov_trx_type = ml.id_lov left join am_msuser as amm on tdh.id_msuser_customer = amm.id_ms_user left join ms_region msr on mso.id_ms_region = msr.id_ms_region join ms_lov as ml_doc_h on tdh.lov_doc_type = ml_doc_h.id_lov left join ms_lov msl on tsd.lov_stamp_duty_status = msl.id_lov left join am_msuser as amm_two on tdh.id_msuser_customer = amm_two.id_ms_user where tdh.ref_number = '"+refNumber+"' ORDER BY tbm.dtm_crt ")
+		resultSet = stm.executeQuery("select tbm.trx_no,TO_CHAR(tbm.dtm_crt,'YYYY-MM-DD HH24:MI:SS'), ml.description , case when amm.full_name != '' or amm.full_name != null then amm.full_name else tbm.usr_crt end, case when amm_two.full_name != '' or amm_two.full_name != null then tdh.ref_number||'('||amm_two.full_name||')' else tdh.ref_number end, ml_doc_h.code,case when mdt.doc_template_name IS NOT NULL OR mdt.doc_template_name != null then mdt.doc_template_name else tdd.document_name end , tbm.notes, tbm.qty from tr_document_d_stampduty tddstamp join tr_document_d tdd on tddstamp.id_document_d = tdd.id_document_d join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h left join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template left join tr_stamp_duty tsd on tddstamp.id_stamp_duty = tsd.id_stamp_duty left join tr_balance_mutation tbm on tsd.id_stamp_duty = tbm.id_stamp_duty left join ms_business_line mbl on tdh.id_ms_business_line = mbl.id_ms_business_line left join ms_office mso on mso.id_ms_office = tdh.id_ms_office left join ms_lov as ml on tbm.lov_trx_type = ml.id_lov left join am_msuser as amm on tdh.id_msuser_customer = amm.id_ms_user left join ms_region msr on mso.id_ms_region = msr.id_ms_region join ms_lov as ml_doc_h on tdh.lov_doc_type = ml_doc_h.id_lov left join ms_lov msl on tsd.lov_stamp_duty_status = msl.id_lov left join am_msuser as amm_two on tdh.id_msuser_customer = amm_two.id_ms_user where tdh.ref_number = '"+refNumber+"' ORDER BY tbm.dtm_crt ")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -921,8 +921,22 @@ public class APIFullService {
 	@Keyword
 	getEmailBasedOnSequence(Connection conn, String value) {
 		stm = conn.createStatement()
+		helperResult = stm.executeQuery("select tdd.is_sequence from tr_Document_d tdd left join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h WHERE tdd.document_id = '"+value+"' OR tdh.ref_number = '"+value+"'")
+		metadata = helperResult.metaData
 
-		resultSet = stm.executeQuery("SELECT STRING_AGG(login_id, ';' ORDER BY seq_no) AS aa FROM (SELECT DISTINCT tdds.id_ms_user,au.login_id, FIRST_VALUE(tdds.seq_no) OVER (PARTITION BY tdds.id_ms_user ORDER BY tdds.seq_no) AS seq_no FROM tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user WHERE tdd.document_id = '"+ value +"' OR tdh.ref_number = '"+ value +"') AS alls;")
+		columnCount = metadata.getColumnCount()
+
+		while (helperResult.next()) {
+			data = helperResult.getObject(1)
+		}
+
+		if (data == '1') {
+			helperQuery = 'tdds.seq_no'
+		} else if (data == '0') {
+			helperQuery = 'tdds.id_document_d_sign'
+		}
+
+		resultSet = stm.executeQuery("SELECT STRING_AGG(login_id, ';' ORDER BY seq_no) AS aa FROM (SELECT DISTINCT tdds.id_ms_user,au.login_id, FIRST_VALUE("+helperQuery+") OVER (PARTITION BY tdds.id_ms_user ORDER BY tdds.seq_no) AS seq_no FROM tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user WHERE tdd.document_id = '"+ value +"' OR tdh.ref_number = '"+ value +"') AS alls;")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

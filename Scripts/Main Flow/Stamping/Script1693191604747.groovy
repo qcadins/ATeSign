@@ -40,7 +40,7 @@ String refNumber = CustomKeywords.'connection.APIFullService.getRefNumber'(conne
 String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, refNumber)
 
 HashMap<String, String> getSaldo = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathStamping
-        , ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
+        , ('sheet') : sheet, ('vendor') : vendor, ('usageSaldo') : 'Stamp'], FailureHandling.CONTINUE_ON_FAILURE)
 
 saldoBefore = getSaldo.get('Meterai')
 
@@ -191,7 +191,7 @@ if ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel
         FailureHandling.CONTINUE_ON_FAILURE)
 }
 
-getSaldo = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathStamping, ('sheet') : sheet, ('vendor') : vendor], 
+getSaldo = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathStamping, ('sheet') : sheet, ('vendor') : vendor, ('usageSaldo') : 'Stamp'], 
     FailureHandling.CONTINUE_ON_FAILURE)
 
 saldoAfter = getSaldo.get('Meterai')
@@ -200,7 +200,7 @@ saldoAfter = getSaldo.get('Meterai')
 prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, refNumber)
 
 if (prosesMaterai == 53 || prosesMaterai == 63) {
-    if (WebUI.verifyEqual(Integer.parseInt(saldoBefore), Integer.parseInt(saldoAfter), FailureHandling.CONTINUE_ON_FAILURE)) {
+    if (WebUI.verifyEqual(Integer.parseInt(saldoBefore), Integer.parseInt(saldoAfter), FailureHandling.OPTIONAL)) {
         'write to excel status failed dan reason'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
             ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', 

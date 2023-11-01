@@ -45,11 +45,11 @@ for (j = 1; j <= (Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ','
     'enter untuk set status meterai'
     WebUI.sendKeys(findTestObject('Meterai/input_StatusMeterai'), Keys.chord(Keys.ENTER))
 
-    'set text lini bisnis'
-    WebUI.setText(findTestObject('Meterai/input_LiniBisnis'),inputBasedOnAPIStamping[indexInput++])
-
-    'enter untuk set lini bisnis'
-    WebUI.sendKeys(findTestObject('Meterai/input_LiniBisnis'), Keys.chord(Keys.ENTER))
+//    'set text lini bisnis'
+//    WebUI.setText(findTestObject('Meterai/input_LiniBisnis'),inputBasedOnAPIStamping[indexInput++])
+//
+//    'enter untuk set lini bisnis'
+//    WebUI.sendKeys(findTestObject('Meterai/input_LiniBisnis'), Keys.chord(Keys.ENTER))
 
     'set text tanggal wilayah'
     WebUI.setText(findTestObject('Meterai/input_Wilayah'), inputBasedOnAPIStamping[indexInput++])

@@ -714,8 +714,8 @@ def verifySaldoUsed(Connection conneSign, String sheet, String nomorKontrak, int
             } else {
                 'check table'
                 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyperrowpercolumn), inquiryDB[index], false, 
-                        FailureHandling.CONTINUE_ON_FAILURE), 'pada Mutasi Saldo dengan nomor Kontrak ' + nomorKontrak)
-
+                FailureHandling.CONTINUE_ON_FAILURE), 'pada Mutasi Saldo dengan nomor Kontrak ' + nomorKontrak)
+					
                 index++
             }
         }
@@ -788,9 +788,21 @@ def inputDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan,
         WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER))
     }
 	
+	if (linkDocumentMonitoring == '') {
+		'modify object test status tanda tangan di beranda'
+		modifyObjectProsesMeterai = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/input_prosesMeterai'),
+		'xpath', 'equals', ("//*[@id = 'stampingStatus']/div/div/div[3]/input"), true)
+	} else if (linkDocumentMonitoring.contains('embed/V2/inquiry?')) {
+		'modify object test status tanda tangan di beranda'
+		modifyObjectProsesMeterai = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/input_prosesMeterai'),
+		'xpath', 'equals', ("//*[@id='prosesMaterai']/div/div/div[3]/input"), true)
+	}
 	'Set text mengenai input cabang'
-	WebUI.setText(findTestObject('DocumentMonitoring/input_prosesMeterai'), inputDocumentMonitoring[arrayIndex++])
+	WebUI.setText(modifyObjectProsesMeterai, inputDocumentMonitoring[arrayIndex++])
     
+	'Enter'
+	WebUI.sendKeys(modifyObjectProsesMeterai, Keys.chord(Keys.ENTER))
+
     'Klik enter Cari'
     WebUI.click(findTestObject('DocumentMonitoring/button_Cari'))
 }

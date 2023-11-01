@@ -4,57 +4,57 @@
    <name>getSaldo</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>7eab1b40-d3eb-4a6e-9b4a-3a6f6cde1c7b</testCaseGuid>
+   <testCaseGuid>cde9b933-519d-4213-8d38-539cfb2ebd65</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>26d2ad54-de31-4507-988e-ee2fcd1e3b70</variableId>
+      <variableId>93e58bdc-227c-4bff-b1a6-041c9e26d0e7</variableId>
    </variableLinks>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>3c8e62ba-9407-417a-828b-0e4221e4425b</variableId>
+      <variableId>a0f91d4a-2422-4278-8a16-d2688dd3913e</variableId>
    </variableLinks>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>2bd9080e-ac13-4e1f-b83c-e2116d44e25a</variableId>
+      <variableId>4dfcb37c-6f01-4668-857c-54fa40d9e492</variableId>
    </variableLinks>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>0d1afb16-eba3-4e12-b132-307d85c24360</variableId>
+      <variableId>394a95fc-d899-44a7-8d02-2aba06f2c38f</variableId>
    </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
-      <id>26d2ad54-de31-4507-988e-ee2fcd1e3b70</id>
+      <id>93e58bdc-227c-4bff-b1a6-041c9e26d0e7</id>
       <masked>false</masked>
       <name>vendor</name>
    </variable>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
-      <id>3c8e62ba-9407-417a-828b-0e4221e4425b</id>
+      <id>a0f91d4a-2422-4278-8a16-d2688dd3913e</id>
       <masked>false</masked>
       <name>excel</name>
    </variable>
    <variable>
       <defaultValue>'Main'</defaultValue>
       <description></description>
-      <id>2bd9080e-ac13-4e1f-b83c-e2116d44e25a</id>
+      <id>4dfcb37c-6f01-4668-857c-54fa40d9e492</id>
       <masked>false</masked>
       <name>sheet</name>
    </variable>
    <variable>
-      <defaultValue>''</defaultValue>
+      <defaultValue>false</defaultValue>
       <description></description>
-      <id>0d1afb16-eba3-4e12-b132-307d85c24360</id>
+      <id>394a95fc-d899-44a7-8d02-2aba06f2c38f</id>
       <masked>false</masked>
-      <name>usageSaldo</name>
+      <name>forAutosign</name>
    </variable>
 </TestCaseEntity>

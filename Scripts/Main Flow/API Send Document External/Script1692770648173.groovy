@@ -6,6 +6,9 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import java.sql.Connection as Connection
+import org.openqa.selenium.Keys as Keys
+import org.openqa.selenium.By as By
+import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
@@ -39,7 +42,7 @@ if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExce
 	for (loopingGetSaldoBefore = 0; loopingGetSaldoBefore < documentTemplateCode.size(); loopingGetSaldoBefore++) {
 		logicVendor = CustomKeywords.'connection.SendSign.getProyectionOfVendorForSend'(conneSign, documentTemplateCode[loopingGetSaldoBefore].replace('"',''), GlobalVariable.Tenant)
 
-		resultSaldoBeforeLoop = WebUI.callTestCase(findTestCase('Main Flow/getSaldo development'), [('excel') : excelPathAPISendDoc
+		resultSaldoBeforeLoop = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathAPISendDoc
 			, ('sheet') : sheet, ('vendor') : logicVendor, ('usageSaldo') : 'Send'], FailureHandling.CONTINUE_ON_FAILURE)
 		
 		resultSaldoBefore.putAll(resultSaldoBeforeLoop)
@@ -98,7 +101,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 		
 		'get respons psre Code'
 		responsePsreCode = WS.getElementPropertyValue(respon, 'documents.psreCode', FailureHandling.OPTIONAL)
-		
+
         'Jika doc template code di excel tidak sesuai dengan response doc template code'
         if (documentTemplateCode.toString().replace('"', '') != responseDocTemplateCode.toString()) {
             'write to excel status failed dan reason failed h'
@@ -131,21 +134,21 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
     getErrorMessageAPI(respon)
 }
 
-checkSaldoAutoSign(useAutoSign, resultSaldoBefore)
+checkSaldoAutoSign(useAutoSign, resultSaldoBefore, conneSign)
 
-def checkSaldoAutoSign(boolean useAutoSign, HashMap resultSaldoBefore) {
+def checkSaldoAutoSign(boolean useAutoSign, HashMap resultSaldoBefore, Connection conneSign) {
 	if (useAutoSign == true) {
 		HashMap<String, String> resultSaldoAfterLoop = new HashMap<String, String>()
 		
 		HashMap<String, String> resultSaldoAfter = new HashMap<String, String>()
 		
 		if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document')) != '') {
-		resultSaldoAfterLoop = WebUI.callTestCase(findTestCase('Main Flow/getSaldo development'), [('excel') : excelPathAPISendDoc
+		resultSaldoAfterLoop = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathAPISendDoc
 			, ('sheet') : sheet, ('vendor') : findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document')), ('usageSaldo') : 'Send'], FailureHandling.CONTINUE_ON_FAILURE)
 		
 		resultSaldoAfter.putAll(resultSaldoAfterLoop)
 		
-		String countOfTrx = ''
+		ArrayList countOfTrx = []
 		
 		'ini adalah autosignnya success'
 		if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('trxNo')).replace(', ','').length() > 0) {
@@ -153,27 +156,25 @@ def checkSaldoAutoSign(boolean useAutoSign, HashMap resultSaldoBefore) {
 			
 			for (saldoPerDoc = 0; saldoPerDoc < testingTrxNo.size(); saldoPerDoc++) {
 				countOfTrx = testingTrxNo[saldoPerDoc].split(';', -1)
-				
-				if (resultSaldoAfter.get(
-					resultSaldoAfter.containsKey(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document'))) != 
-					resultSaldoBefore.get(resultSaldoBefore.containsKey(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document')) + countOfTrx.size())
-					))) {
-						    'Write To Excel GlobalVariable.StatusFailed and errormessage'
-							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-								GlobalVariable.StatusFailed,findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';' + ' Saldo pemotongan autosign tidak sesuai yang seharusnya ')
+
+				if (WebUI.verifyEqual(Integer.parseInt(resultSaldoAfter[findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document'))]) + countOfTrx.size(), 
+					Integer.parseInt(resultSaldoBefore[findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document'))]), FailureHandling.CONTINUE_ON_FAILURE) == false) {
+
+				'Write To Excel GlobalVariable.StatusFailed and errormessage'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+				GlobalVariable.StatusFailed,findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';' + ' Saldo pemotongan autosign tidak terpotong. ')
+				} else {
+					if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document')) == 'DIGI') {
+						tipeSaldo = 'Document'
+					} else {
+						tipeSaldo = 'Sign'
 					}
-			}
-		} else {
-			if (resultSaldoAfter.get(
-				resultSaldoAfter.containsKey(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document'))) !=
-				resultSaldoBefore.get(resultSaldoBefore.containsKey(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document')) + countOfTrx.size())
-				))) {
-						'Write To Excel GlobalVariable.StatusFailed and errormessage'
-						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-							GlobalVariable.StatusFailed,findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';' + ' Saldo pemotongan autosign tidak sesuai yang seharusnya ')
+					
+					inputFilterSaldo(tipeSaldo, conneSign, countOfTrx.size()) 
 				}
+			}
 		}
-	}
+		}
 	}
 }
 
@@ -628,4 +629,123 @@ def bodyLocationCoordinatePage(String llxSigns, String llySigns, String urxSigns
 
 def bodySigner(String signActions, String signerTypes, String tlps, String idKtps, String emails, String bodyAPI) {
 	return '{"signAction": ' + signActions + ',"signerType": ' + signerTypes + ',"tlp": ' + tlps + ',"idKtp": ' + idKtps + ',"email": ' + emails + bodyAPI + '}'
+}
+
+def inputFilterTrx(String documentType, String signType) {
+		'get current date'
+		currentDate = new Date().format('yyyy-MM-dd')
+		
+		'input filter dari saldo'
+		WebUI.setText(findTestObject('Saldo/input_tipesaldo'), signType)
+	
+		'Input enter'
+		WebUI.sendKeys(findTestObject('Saldo/input_tipesaldo'), Keys.chord(Keys.ENTER))
+	
+		'Input tipe transaksi'
+		WebUI.setText(findTestObject('Saldo/input_tipetransaksi'), 'Use ' + signType)
+	
+		'Input enter'
+		WebUI.sendKeys(findTestObject('Saldo/input_tipetransaksi'), Keys.chord(Keys.ENTER))
+	
+		'Input date sekarang'
+		WebUI.setText(findTestObject('Saldo/input_fromdate'), currentDate)
+	
+	   // 'Input tipe dokumen'
+		//WebUI.setText(findTestObject('Saldo/input_tipedokumen'), documentType)
+	
+	  //  'Input enter'
+		//WebUI.sendKeys(findTestObject('Saldo/input_tipedokumen'), Keys.chord(Keys.ENTER))
+	
+		'Input referal number'
+		WebUI.setText(findTestObject('Saldo/input_refnumber'), findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo (Send External)')).replace('"',''))
+	
+	  //  'Input documentTemplateName'
+	 //   WebUI.setText(findTestObject('Saldo/input_namadokumen'), documentTemplateName)
+	
+		'Input date sekarang'
+		WebUI.setText(findTestObject('Saldo/input_todate'), currentDate)
+	
+		'Klik cari'
+		WebUI.click(findTestObject('Saldo/btn_cari'))
+}
+def inputFilterSaldo(String tipeSaldo, Connection conneSign, int saldoDocAutosign) {
+	documentType = CustomKeywords.'connection.APIFullService.getDocumentType'(conneSign, findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo (Send External)')))
+	
+	inputFilterTrx(documentType, tipeSaldo)
+
+	'get row'
+	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
+
+	'modify object button last page'
+	modifyObjectButtonLastPage = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath',
+		'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' +
+		variable.size()) + ']', true)
+
+	if (WebUI.getAttribute(modifyObjectButtonLastPage, 'class', FailureHandling.OPTIONAL) != 'disabled') {
+		'click button last page'
+		WebUI.click(findTestObject('RegisterEsign/checkSaldo/button_LastPage'))
+	}
+	
+	'get column di saldo'
+	variableSaldoColumn = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-header > div > div.datatable-row-center.ng-star-inserted datatable-header-cell'))
+
+	'get row di saldo'
+	variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
+
+	'get trx dari db'
+	ArrayList result = CustomKeywords.'connection.APIFullService.gettrxSaldo'(conneSign, findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo (Send External)')).replace('"',''), saldoDocAutosign.toString(), 'Use ' + tipeSaldo)
+
+	index = 0
+	
+	'looping mengenai rownya'
+	for (int j = 1; j <= variableSaldoRow.size(); j++) {
+		'looping mengenai columnnya'
+		for (int u = 1; u <= variableSaldoColumn.size(); u++) {
+			'modify per row dan column. column menggunakan u dan row menggunakan documenttemplatename'
+			modifyperrowpercolumn = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/lbl_notrxsaldo'),
+				'xpath', 'equals', ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+				j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + u) + ']/div', true)
+
+			WebUI.scrollToElement(modifyperrowpercolumn, GlobalVariable.TimeOut)
+
+			'Jika u di lokasi qty atau kolom ke 9'
+			if (u == 9) {
+				'Jika yang qtynya 1 dan databasenya juga, berhasil'
+				if ((WebUI.getText(modifyperrowpercolumn) == '1') || ((result[(u - 1)]) == '-1')) {
+					'Jika bukan untuk 2 kolom itu, maka check ke db'
+					checkVerifyEqualOrMatch(WebUI.verifyMatch('-' + WebUI.getText(modifyperrowpercolumn), result[
+							index++], false, FailureHandling.CONTINUE_ON_FAILURE), 'pada Kuantitas di Mutasi Saldo dengan nomor kontrak ' +
+						(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo (Send External)')).replace('"','')))
+				} else {
+					'Jika bukan -1, atau masih 0. Maka ttdnya dibilang error'
+					GlobalVariable.FlagFailed = 1
+
+					'Jika saldonya belum masuk dengan flag, maka signnya gagal.'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+						GlobalVariable.StatusFailed, (((((findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm,
+							rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedSignGagal) + ' terlihat pada Kuantitas di Mutasi Saldo dengan nomor kontrak ') +
+						'<') + (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo (Send External)')).replace('"',''))) + '>')
+				}
+			} else if (u == variableSaldoColumn.size()) {
+				'Jika di kolom ke 10, atau di FE table saldo, check saldo dari table dengan saldo yang sekarang. Takeout dari dev karena no issue dan sudah sepakat'
+			} else {
+				'Jika bukan untuk 2 kolom itu, maka check ke db'
+				checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyperrowpercolumn), result[index++],
+						false, FailureHandling.CONTINUE_ON_FAILURE), ' pada Mutasi Saldo dengan nomor kontrak ' +
+					(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo (Send External)')).replace('"','')))
+			}
+		}
+	}
+
+}
+
+def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
+	if (isMatch == false) {
+		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+			GlobalVariable.StatusFailed, ((findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) +
+			';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + reason)
+
+		GlobalVariable.FlagFailed = 1
+	}
 }

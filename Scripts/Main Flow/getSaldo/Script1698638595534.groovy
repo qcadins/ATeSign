@@ -64,6 +64,8 @@ def funcLogin() {
 			'Call test Case untuk login sebagai admin wom admin client'
 			WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excel, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
 		}
+	} else {
+		WebUI.refresh()
 	}
 }
 
@@ -80,7 +82,9 @@ def funcSaldoSend(HashMap result) {
 		saldoList = ['TTD']
 	}
 	
-	funcFindSaldo(result, vendorVerifikasi, saldoList)
+	forAutosign = true
+	
+	funcFindSaldo(result, vendorVerifikasi, saldoList, forAutosign)
 
 	return result
 }
@@ -106,7 +110,7 @@ def funcSaldoSign(HashMap result) {
 		saldoList = ['OTP']
 	}
 	
-	funcFindSaldo(result, vendorVerifikasi, saldoList)
+	funcFindSaldo(result, vendorVerifikasi, saldoList, forAutosign)
 
 	vendorVerifikasi = vendor
 	
@@ -116,12 +120,12 @@ def funcSaldoSign(HashMap result) {
 		saldoList = ['TTD']
 	}
 	
-	funcFindSaldo(result, vendorVerifikasi, saldoList)
+	funcFindSaldo(result, vendorVerifikasi, saldoList, forAutosign)
 
 	return result
 }
 
-def funcSaldoStamp (HashMap result) {
+def funcSaldoStamp(HashMap result) {
 	String vendorVerifikasi
 	
 	ArrayList saldoList = []
@@ -129,12 +133,12 @@ def funcSaldoStamp (HashMap result) {
 	
 	saldoList = ['Meterai', 'Stamp Duty Postpaid']
 	
-	funcFindSaldo(result, vendorVerifikasi, saldoList)
+	funcFindSaldo(result, vendorVerifikasi, saldoList, forAutosign)
 
 	return result
 }
 
-def funcFindSaldo(HashMap result, String vendorVerifikasi, ArrayList saldoList) {
+def funcFindSaldo(HashMap result, String vendorVerifikasi, ArrayList saldoList, boolean forAutosign) {
 	'klik ddl untuk tenant memilih mengenai Vida'
 	WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), vendorVerifikasi, false)
 	
@@ -154,8 +158,12 @@ def funcFindSaldo(HashMap result, String vendorVerifikasi, ArrayList saldoList) 
 				modifyObjecttotalSaldoSign = WebUI.modifyObjectProperty(findTestObject('Saldo/lbl_countsaldo'), 'xpath', 'equals',
 					('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + c) + ']/div/div/div/div/div[2]',
 					true)
-	
-				result.put(saldoList[i] + ' ' + vendorVerifikasi, WebUI.getText(modifyObjecttotalSaldoSign))
+				
+				if (forAutosign == true) {
+					result.put(vendor, WebUI.getText(modifyObjecttotalSaldoSign))
+				} else {
+					result.put(saldoList[i], WebUI.getText(modifyObjecttotalSaldoSign))
+				}
 			}
 		}
 	}

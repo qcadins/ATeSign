@@ -80,7 +80,7 @@ public class SendSign {
 	getProsesTtdProgress(Connection conn, String documentId) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT COUNT(tdsr.id_ms_user) FROM tr_document_d tdd JOIN tr_document_signing_request tdsr ON tdd.id_document_d = tdsr.id_document_d WHERE tdd.document_id = '" + documentId + "'")
+		resultSet = stm.executeQuery("SELECT COUNT(tdds.id_ms_user) FROM tr_document_d tdd JOIN tr_document_d_sign tdds ON tdd.id_document_d = tdds.id_document_d LEFT JOIN tr_document_h tdh on tdd.id_document_h = tdh.id_Document_h WHERE (tdd.document_id = '" + documentId + "' OR tdh.ref_number = '"+documentId+"') AND sign_date IS NOT NULL")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -489,14 +489,14 @@ public class SendSign {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	settingSentOTPbyEmail(Connection conn, String value) {
 		stm = conn.createStatement()
 
 		updateVariable = stm.executeUpdate("UPDATE ms_tenant SET sent_otp_by_email = "+ value +" WHERE tenant_code = '"+ GlobalVariable.Tenant +"'")
-	}	
-	
+	}
+
 	@Keyword
 	getProyectionOfVendorForSend(Connection conn, String documentTemplateCode, String tenantCode) {
 		stm = conn.createStatement()
@@ -521,7 +521,7 @@ public class SendSign {
 		}
 		data
 	}
-	
+
 	@Keyword
 	getProsesTtdProgressPrivy(Connection conn, String documentId) {
 		stm = conn.createStatement()

@@ -311,7 +311,7 @@ for (t = 0; t < resultHashMap.keySet().size(); t++) {
         'modify object text document type'
         modifyObjectTextDocumentType = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_tipedokumen'), 'xpath', 
             'equals', ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-            (variable.size() - c)) + ']/datatable-body-row/div[2]/datatable-body-cell[') + indexRow++) + ']/div', true)
+            (variable.size() - c)) + ']/datatable-body-row/div[2]/datatable-body-cell[') + indexRow++) + ']/div/p', true)
 
         'modify object text document template name'
         modifyObjectTextDocumentTemplateName = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_namadokumentemplate'), 

@@ -60,13 +60,13 @@ CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPISignDocume
                 GlobalVariable.NumofColm, rowExcel('Enable Need Password for signing? (Sign External)')))
     }
 
-//'setting sent otp by email'
-//if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Sign External)')).length() > 
-//0) {
-//    'update setting sent otp by email'
-//    CustomKeywords.'connection.SendSign.settingSentOTPbyEmail'(conneSign, findTestData(excelPathAPISignDocument).getValue(
-//            GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Sign External)')))
-//}
+'setting sent otp by email'
+if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Sign External)')).length() > 
+0) {
+    'update setting sent otp by email'
+    CustomKeywords.'connection.SendSign.settingSentOTPbyEmail'(conneSign, findTestData(excelPathAPISignDocument).getValue(
+            GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Sign External)')))
+}
 
 	if (vendor.equalsIgnoreCase('Digisign')) {
 		signTypeUsed = 'Dokumen'
@@ -76,7 +76,7 @@ CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPISignDocume
 	}
 	
    HashMap<String, String> saldoBefore = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathAPISignDocument
-            , ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
+            , ('sheet') : sheet, ('vendor') : vendor, ('usageSaldo') : 'Sign'], FailureHandling.CONTINUE_ON_FAILURE)
 
 	saldoTtdBefore = saldoBefore.get(signTypeUsed)
 
@@ -319,12 +319,12 @@ CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPISignDocume
                             }
                             
                             'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
-                            WebUI.callTestCase(findTestCase('Main Flow (DEVELOPMENT MULTI DOCUMENT SIGNING)/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathAPISignDocument
+                            WebUI.callTestCase(findTestCase('Main Flow/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathAPISignDocument
                                     , ('sheet') : sheet, ('nomorKontrak') : refNumber, ('CancelDocsSign') : CancelDocsSign, ('linkDocumentMonitoring') : 'Not Used'], 
                                 FailureHandling.CONTINUE_ON_FAILURE)
 
                             HashMap<String, String> saldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), 
-                                [('excel') : excelPathAPISignDocument, ('sheet') : sheet, ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
+                                [('excel') : excelPathAPISignDocument, ('sheet') : sheet, ('vendor') : vendor, ('usageSaldo') : 'Sign'], FailureHandling.CONTINUE_ON_FAILURE)
 							
                             'looping payment type used'
                             for (l = 0; l < paymentTypeUsed.size(); l++) {
