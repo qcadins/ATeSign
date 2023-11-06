@@ -1,35 +1,19 @@
-name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on: [push]
+name: CI
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
 jobs:
-  katalon_test:
-    runs-on: windows-latest  # Use the latest Windows runner
-
+  build:
+    runs-on: windows-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Katalon
-        run: |
-          # Download and install Katalon Studio
-          Invoke-WebRequest -Uri https://download.katalon.com/7.8.0/Katalon_Studio_Windows_64.zip -OutFile katalon.zip
-          Expand-Archive -Path katalon.zip -DestinationPath katalon
-
-          # Move Katalon Studio to the Program Files directory
-          Move-Item -Path katalon -Destination "C:\Program Files\Katalon"
-
-          # Add Katalon to the system PATH
-          [Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";C:\Program Files\Katalon", [EnvironmentVariableTarget]::Machine)
-        shell: pwsh
-
-      - name: Run Katalon Tests
-        run: |
-          # Replace with the path to your Katalon project
-          $projectPath = "C:\path\to\your\project"
-
-          # Replace with your test suite path
-          $testSuitePath = "Test Suites\YourTestSuite"
-
-          # Run Katalon Studio with the specified project and test suite
-          & "C:\Program Files\Katalon\Katalon_Studio_Windows_64\katalon.exe" -noSplash -runMode=console -consoleLog -projectPath="$projectPath" -testSuitePath="$testSuitePath"
-        shell: pwsh
+    - name: Checkout
+      uses: actions/checkout@v2.1
+    - name: Katalon Studio Github Action
+      uses: katalon-studio/katalon-studio-github-action@v2
+      with:
+          version: '7.5.5'
+          projectPath: '${{ github.workspace }}'
+          args: '-noSplash -retry=0 -testSuiteCollectionPath="Test Suites/Simple Test Suite Collection" -apiKey= ${{ secrets.API_KEY }} --config -webui.autoUpdateDrivers=true'
