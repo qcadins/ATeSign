@@ -351,7 +351,7 @@ if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, ro
                             }
                             
                             'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
-                            WebUI.callTestCase(findTestCase('Main Flow/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathAPISignDocument
+                            WebUI.callTestCase(findTestCase('Main Flow/VerifyDocumentMonitoring'), [('excelPathAPISignDocument') : excelPathAPISignDocument
                                     , ('sheet') : sheet, ('nomorKontrak') : refNumber, ('CancelDocsSign') : CancelDocsSign, ('linkDocumentMonitoring') : 'Not Used'], 
                                 FailureHandling.CONTINUE_ON_FAILURE)
 
@@ -864,7 +864,7 @@ def checkAutoStamp(Connection conneSign, String noKontrak, HashMap<String, Strin
 	int flagErrorDMS = 0
 	
 	HashMap<String, String> resultSaldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'),
-		[('excel') : excelPathFESignDocument, ('sheet') : sheet, ('usageSaldo') : 'Stamp'],
+		[('excel') : excelPathAPISignDocument, ('sheet') : sheet, ('usageSaldo') : 'Stamp'],
 		FailureHandling.CONTINUE_ON_FAILURE)
 	
 	String saldoAfter = resultSaldoAfter.get('Meterai')
@@ -899,7 +899,7 @@ def checkAutoStamp(Connection conneSign, String noKontrak, HashMap<String, Strin
 	
 							'Write To Excel GlobalVariable.StatusFailed and errormessage'
 							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-								GlobalVariable.StatusFailed, (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+								GlobalVariable.StatusFailed, (((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm,
 									rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedProsesStamping) + ' dengan alasan ') +
 								errorMessageDB.toString())
 	
@@ -916,7 +916,7 @@ def checkAutoStamp(Connection conneSign, String noKontrak, HashMap<String, Strin
 							WebUI.delay(3)
 							
 							resultSaldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'),
-								[('excel') : excelPathFESignDocument, ('sheet') : sheet, ('usageSaldo') : 'Stamp'],
+								[('excel') : excelPathAPISignDocument, ('sheet') : sheet, ('usageSaldo') : 'Stamp'],
 								FailureHandling.CONTINUE_ON_FAILURE)
 							
 							saldoAfter = resultSaldoAfter.get('Meterai')
@@ -936,7 +936,7 @@ def checkAutoStamp(Connection conneSign, String noKontrak, HashMap<String, Strin
 							if (arrayMatch.contains(false)) {
 								'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
 								CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-									GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+									GlobalVariable.StatusFailed, (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm,
 										rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
 	
 								GlobalVariable.FlagFailed = 1
@@ -964,7 +964,7 @@ def checkAutoStamp(Connection conneSign, String noKontrak, HashMap<String, Strin
 							if (i == 12) {
 								'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
 								CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-									GlobalVariable.StatusFailed, ((((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+									GlobalVariable.StatusFailed, ((((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm,
 										rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedProsesStamping) + ' dengan jeda waktu ') +
 									(i * 12)) + ' detik ')
 	
@@ -991,16 +991,16 @@ def checkAutoStamp(Connection conneSign, String noKontrak, HashMap<String, Strin
 	
 						if (((totalMateraiAndTotalStamping[0]) != '0') && (prosesMaterai != 63)) {
 							'Call verify meterai'
-							WebUI.callTestCase(findTestCase('Main Flow/verifyMeterai'), [('excelPathMeterai') : excelPathFESignDocument
+							WebUI.callTestCase(findTestCase('Main Flow/verifyMeterai'), [('excelPathMeterai') : excelPathAPISignDocument
 									, ('sheet') : sheet, ('noKontrak') : noKontrakPerDoc[loopingPerKontrak], ('linkDocumentMonitoring') : ''
-									, ('CancelDocsStamp') : findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumOfColm,
+									, ('CancelDocsStamp') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm,
 										rowExcel('Cancel Docs after Stamp?'))], FailureHandling.CONTINUE_ON_FAILURE)
 						}
 					}
 				} else {
 					'Jika masih tidak ada'
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-						GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+						GlobalVariable.StatusFailed, (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm,
 							rowExcel('Reason Failed')).replace('-', '') + ';') + 'Autostamp gagal ')
 
 					if (saldoBefore.contains(',') || saldoAfter.contains(',')) {

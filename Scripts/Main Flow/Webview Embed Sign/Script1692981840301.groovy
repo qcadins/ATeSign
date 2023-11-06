@@ -1782,7 +1782,7 @@ def checkAutoStamp(Connection conneSign, String noKontrak, HashMap<String, Strin
 							'Call verify meterai'
 							WebUI.callTestCase(findTestCase('Main Flow/verifyMeterai'), [('excelPathMeterai') : excelPathFESignDocument
 									, ('sheet') : sheet, ('noKontrak') : noKontrakPerDoc[loopingPerKontrak], ('linkDocumentMonitoring') : ''
-									, ('CancelDocsStamp') : findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumOfColm,
+									, ('CancelDocsStamp') : findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
 										rowExcel('Cancel Docs after Stamp?'))], FailureHandling.CONTINUE_ON_FAILURE)
 						}
 					}

@@ -51,6 +51,8 @@ for (j = 1; j <= (Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ','
 //    'enter untuk set lini bisnis'
 //    WebUI.sendKeys(findTestObject('Meterai/input_LiniBisnis'), Keys.chord(Keys.ENTER))
 
+	indexInput++
+	
     'set text tanggal wilayah'
     WebUI.setText(findTestObject('Meterai/input_Wilayah'), inputBasedOnAPIStamping[indexInput++])
 
