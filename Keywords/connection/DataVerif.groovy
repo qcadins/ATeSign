@@ -411,4 +411,49 @@ public class DataVerif {
 		}
 		'@'+data
 	}
+
+	@Keyword
+	getEmailFromNIK(Connection conn, String hashIdNo) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select login_id from am_msuser where hashed_id_no = '"+hashIdNo+"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+
+	@Keyword
+	getEmailServiceFromUser(Connection conn, String hashPhone, String vendorName) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select msvr.email_service from ms_vendor_registered_user msvr LEFT JOIN am_msuser amm on amm.id_ms_user = msvr.id_ms_user LEFT JOIN ms_vendor msv on msv.id_ms_vendor = msvr.id_ms_vendor WHERE amm.hashed_phone = '"+hashPhone+"' and msv.vendor_name = '"+vendorName+"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+	
+	@Keyword
+	getEmailFromPhone(Connection conn, String hashPhone) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select login_id from am_msuser where hashed_phone = '"+hashPhone+"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
 }

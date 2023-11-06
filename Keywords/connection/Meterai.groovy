@@ -190,4 +190,19 @@ public class Meterai {
 		}
 		data
 	}
+
+	@Keyword
+	getAutomaticStamp(Connection conn, String refNumber) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select automatic_stamping_after_sign from tr_document_h where ref_number = '"+refNumber+"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
 }

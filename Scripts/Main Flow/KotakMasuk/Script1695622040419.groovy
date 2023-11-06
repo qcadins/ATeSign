@@ -33,8 +33,6 @@ String refNumber = CustomKeywords.'connection.APIFullService.getRefNumber'(conne
 'looping berdasarkan jumlah dokumen'
 resultHashMap = loopingMultiDoc(docId, conneSign, refNumber,resultHashMap) 
 
-println resultHashMap
-
 'looping berdasarkan email Signer dari dokumen tersebut. '
 for (t = 0; t < resultHashMap.keySet().size(); t++) {
     'call Test Case untuk login sebagai user berdasarkan doc id'

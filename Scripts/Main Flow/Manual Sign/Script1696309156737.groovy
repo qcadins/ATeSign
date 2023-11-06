@@ -603,7 +603,12 @@ def inputForm() {
 
         'Klik enter'
         WebUI.sendKeys(findTestObject('ManualSign/input_tipeDokumenPeruri'), Keys.chord(Keys.ENTER))
-
+		
+		if (findTestData(excelPathManualSigntoSign).getValue(
+			GlobalVariable.NumofColm, rowExcel('Tipe Dokumen Peruri (Send Manual)')) == '') {
+			'Klik enter'
+			WebUI.sendKeys(findTestObject('ManualSign/input_tipeDokumenPeruri'), Keys.chord(Keys.ENTER))
+		}
         'Input AKtif pada input Status'
         WebUI.setText(findTestObject('ManualSign/input_isAutomatedStamp'), findTestData(excelPathManualSigntoSign).getValue(
                 GlobalVariable.NumofColm, rowExcel('$Stamp Meterai Otomatis (Send Manual)')))
