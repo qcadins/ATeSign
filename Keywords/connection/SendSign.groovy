@@ -501,17 +501,7 @@ public class SendSign {
 	getProyectionOfVendorForSend(Connection conn, String documentTemplateCode, String tenantCode) {
 		stm = conn.createStatement()
 
-		if (documentTemplateCode.replace('"','') == '') {
-			commandSql = '--'
-		}
-		else {
-			commandSql = ''
-		}
-
-		resultSet = stm.executeQuery("select case when msv.vendor_code is not null then msv.vendor_code else msv1.vendor_code end from ms_doc_template mdt left join ms_tenant mst on mdt.id_ms_tenant = mst.id_ms_tenant left join ms_vendoroftenant mvot on mdt.id_ms_tenant = mvot.id_ms_tenant left join ms_vendor msv on mdt.id_ms_vendor = msv.id_ms_vendor left join ms_vendor msv1 on mvot.id_ms_vendor = msv1.id_ms_vendor WHERE mst.tenant_code = '"+tenantCode+"'" + '\n' +
-				commandSql + "AND mdt.doc_template_code = '"+documentTemplateCode+"'" + '\n' +
-				"order by mvot.default_vendor asc limit 1")
-
+		resultSet = stm.executeQuery("select msv.vendor_code from ms_doc_template mdt left join ms_tenant mst on mdt.id_ms_tenant = mst.id_ms_tenant join ms_vendor msv on mdt.id_ms_vendor = msv.id_ms_vendor WHERE mst.tenant_code = '"+tenantCode+"' AND mdt.doc_template_code = '"+documentTemplateCode+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -519,7 +509,20 @@ public class SendSign {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		data
+
+		if (data == null || data == 'null') {
+			resultSet = stm.executeQuery("select msv.vendor_code from ms_vendoroftenant mvot left join ms_tenant mst on mvot.id_ms_tenant = mst.id_ms_tenant join ms_vendor msv on mvot.id_ms_vendor = msv.id_ms_vendor WHERE mst.tenant_code = '"+tenantCode+"' ORDER BY mvot.default_vendor limit 1")
+			metadata = resultSet.metaData
+
+			columnCount = metadata.getColumnCount()
+
+			while (resultSet.next()) {
+				data = resultSet.getObject(1)
+			}
+			data
+		} else {
+			data
+		}
 	}
 
 	@Keyword

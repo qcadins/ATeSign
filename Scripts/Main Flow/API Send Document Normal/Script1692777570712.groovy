@@ -336,18 +336,14 @@ def checkSaldoAutoSign(boolean useAutoSign, HashMap resultSaldoBefore, Connectio
 			, ('sheet') : sheet, ('vendor') : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document')), ('usageSaldo') : 'Send'], FailureHandling.CONTINUE_ON_FAILURE)
 		
 		resultSaldoAfter.putAll(resultSaldoAfterLoop)
-		
-		ArrayList countOfTrx = []
+
 		
 		'ini adalah autosignnya success'
 		if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('trxNo')).replace(', ','').length() > 0) {
 				testingTrxNo = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('trxNo')).split(', ', -1)
-			
-			for (saldoPerDoc = 0; saldoPerDoc < testingTrxNo.size(); saldoPerDoc++) {
-				countOfTrx = testingTrxNo[saldoPerDoc].split(';', -1)
 
-				if (WebUI.verifyEqual(Integer.parseInt(resultSaldoAfter[findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document'))]) + countOfTrx.size(), 
-					Integer.parseInt(resultSaldoBefore[findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document'))]), FailureHandling.CONTINUE_ON_FAILURE) == false) {
+				if (WebUI.verifyEqual(Integer.parseInt(resultSaldoAfter[findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document'))]), 
+					Integer.parseInt(resultSaldoBefore[findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document'))]) - testingTrxNo.size(), FailureHandling.CONTINUE_ON_FAILURE) == false) {
 
 				'Write To Excel GlobalVariable.StatusFailed and errormessage'
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
@@ -359,9 +355,9 @@ def checkSaldoAutoSign(boolean useAutoSign, HashMap resultSaldoBefore, Connectio
 						tipeSaldo = 'Sign'
 					}
 					
-					inputFilterSaldo(tipeSaldo, conneSign, countOfTrx.size()) 
+					inputFilterSaldo(tipeSaldo, conneSign, testingTrxNo.size()) 
 				}
-			}
+			
 		}
 		}
 	}

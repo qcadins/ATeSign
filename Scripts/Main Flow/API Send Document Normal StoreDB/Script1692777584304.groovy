@@ -13,6 +13,8 @@ enter = '\\n'
 
 int splitnum = -1
 
+indexTrx = 0
+
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
@@ -62,8 +64,6 @@ successURL = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, row
 uploadURL = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('uploadURL (Send Normal)')).split(semicolon, splitnum)
 
 'split signer untuk doc1 dan signer untuk doc2'
-signAction = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$signAction (Send Normal)')).split(enter, splitnum)
-
 signerType = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$signerType (Send Normal)')).split(enter, splitnum)
 
 signSequence = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('signSequence (Send Normal)')).split(enter, splitnum)
@@ -219,39 +219,6 @@ for (int i = 0; i < docid.size(); i++) {
 	'verify total document'
 	arrayMatch.add(WebUI.verifyEqual(docid.size(),Integer.parseInt(result[arrayindex++]), FailureHandling.CONTINUE_ON_FAILURE))
 
-    'Looping berdasarkan jumlah dari signAction'
-    for (int z = 0; z < signAction.size(); z++) {
-        'Jika signAction tersebut adalah AT'
-        if ((signAction[z]).replace('"', '') == 'at') {
-            'Mengambil emailSign dari excel dan displit kembali'
-            emailSign = idKtp[i].split(semicolon, splitnum)[z]
-
-            'Mengambil trxno dari column tersebut'
-            trxno = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('trxNo'))
-
-            'get data result trx untuk signing'
-            resulttrxsigning = CustomKeywords.'connection.SendSign.getTrxSendDocSigning'(conneSign, trxno)
-
-            'declare arrayindex'
-            arrayindex = 0
-
-            'verify trx no'
-            arrayMatch.add(WebUI.verifyMatch(trxno, resulttrxsigning[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-            'verify ref no di trx'
-            arrayMatch.add(WebUI.verifyMatch(refNo, resulttrxsigning[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-            'verify date req di trx'
-            arrayMatch.add(WebUI.verifyMatch(currentDate, resulttrxsigning[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-            'verify trx qty = splitnum'
-            arrayMatch.add(WebUI.verifyMatch(resulttrxsigning[arrayindex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
-
-            'verify trx autosign'
-            arrayMatch.add(WebUI.verifyMatch(resulttrxsigning[arrayindex++], ('Auto Sign (' + emailSign) + ')', false, FailureHandling.CONTINUE_ON_FAILURE))
-        }
-    }
-	
 	if (psreCodeDB == 'PRIVY') {
 		'Jika documentTemplateCode di dokumen pertama adalah kosong'
 		if ((documentTemplateCode[i]).replace('"', '') != '') {
@@ -270,6 +237,52 @@ for (int i = 0; i < docid.size(); i++) {
 	
 		}
 	}
+	
+	signAction = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$signAction (Send Normal)')).split(enter, splitnum)
+	
+	signActions = (signAction[i]).split(semicolon, splitnum)
+    'Looping berdasarkan jumlah dari signAction'
+
+            for (loopPerSignActionPerSigner = 0; loopPerSignActionPerSigner < signActions.size(); loopPerSignActionPerSigner++) {
+        'Jika signAction tersebut adalah AT'
+        if ((signAction[loopPerSignActionPerSigner]).replace('"', '') == 'at') {
+			
+			'Mengambil trxno dari column tersebut'
+			trxno = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('trxNo')).split(', ', -1)
+
+             'Mengambil emailSign dari excel dan displit kembali'
+              emailSign = ((findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$email (Send Normal)')).replace(
+              '"', '').split(enter, splitnum)[i]).split(semicolon, splitnum)[loopPerSignActionPerSigner])
+
+			  if (emailSign == '') {
+				  'Mengambil emailSign dari excel dan displit kembali'
+				  ktpSign = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$idKtp (Send Normal)')).replace('"', '').split(enter, splitnum)[i].split(semicolon, splitnum)[loopPerSignActionPerSigner])
+			  
+				  emailSign = CustomKeywords.'connection.DataVerif.getEmailFromNIK'(conneSign, ktpSign)
+			  }
+			  
+            'get data result trx untuk signing'
+            resulttrxsigning = CustomKeywords.'connection.SendSign.getTrxSendDocSigning'(conneSign, trxno[indexTrx])
+
+            'declare arrayindex'
+            arrayindex = 0
+
+            'verify trx no'
+            arrayMatch.add(WebUI.verifyMatch(trxno[indexTrx++], resulttrxsigning[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+
+            'verify ref no di trx'
+            arrayMatch.add(WebUI.verifyMatch(refNo, resulttrxsigning[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+
+            'verify date req di trx'
+            arrayMatch.add(WebUI.verifyMatch(currentDate, resulttrxsigning[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+
+            'verify trx qty = splitnum'
+            arrayMatch.add(WebUI.verifyMatch(resulttrxsigning[arrayindex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
+
+            'verify trx autosign'
+            arrayMatch.add(WebUI.verifyMatch(resulttrxsigning[arrayindex++], ('Auto Sign (' + emailSign) + ')', false, FailureHandling.CONTINUE_ON_FAILURE))
+        }
+    }
 }
 
 'jika data db tidak sesuai dengan excel'

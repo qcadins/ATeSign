@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "5D94D665834C4229211E827D508DB985",
+  "keywordFileContentHash": "8E1E590EC8CDBBC522AC1284A35A2A8B",
   "keywordClasses": [
     {
       "name": "connection.Meterai",
@@ -281,6 +281,38 @@
         },
         {
           "name": "getErrorMessage",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "refNumber",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getAutomaticStamp",
           "parameters": [
             {
               "name": "conn",

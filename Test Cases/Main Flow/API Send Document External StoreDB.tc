@@ -17,6 +17,12 @@
       <value></value>
       <variableId>3bc263fb-5213-4c41-8d72-0bc411526e54</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>c2261eec-3929-4855-8aac-f441eb2fb245</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -30,5 +36,12 @@
       <id>3bc263fb-5213-4c41-8d72-0bc411526e54</id>
       <masked>false</masked>
       <name>responsePsreCode</name>
+   </variable>
+   <variable>
+      <defaultValue>[]</defaultValue>
+      <description></description>
+      <id>c2261eec-3929-4855-8aac-f441eb2fb245</id>
+      <masked>false</masked>
+      <name>signlocStoreDBSplit</name>
    </variable>
 </TestCaseEntity>
