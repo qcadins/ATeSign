@@ -23,13 +23,23 @@ import java.sql.Connection as Connection
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
+'connect dengan db'
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-'Input email signer based on sequentialnya'
-emailSignerBasedOnSequence = CustomKeywords.'connection.APIFullService.getEmailBasedOnSequence'(conneSign, '00155D0B-7502-A867-11EE-76F6CF328110').split(';', -1)
+'connect dengan db'
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-println emailSignerBasedOnSequence
+'connect dengan db'
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-'Input email signer based on sequentialnya'
-emailSignerBasedOnSequence = CustomKeywords.'connection.APIFullService.getEmailBasedOnSequence'(conneSign, 'PRIVY DOCUMENT ATSIGN 2').split(';', -1)
+aa() /*HashMap aa = new HashMap()
+	aa.put('te', 'bb')
+	WebUI.comment(aa.toString())
+    */
 
-println emailSignerBasedOnSequence
+def aa() {
+    a = 1
+
+    return a
+}
+

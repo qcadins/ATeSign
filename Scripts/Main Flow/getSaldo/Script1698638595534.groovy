@@ -76,7 +76,8 @@ def funcSaldoSend(HashMap result) {
 
 	vendorVerifikasi = vendor
 	
-	if (vendorVerifikasi.equalsIgnoreCase('Digisign')) {
+	if (vendorVerifikasi.equalsIgnoreCase('DIGI')) {
+		vendorVerifikasi = 'Digisign'
 		saldoList = ['Dokumen']
 	} else {
 		saldoList = ['TTD']
@@ -94,9 +95,9 @@ def funcSaldoSign(HashMap result) {
 	
 	ArrayList saldoList = []
 	
-	if (!vendor.equalsIgnoreCase('Privy') && !vendor.equalsIgnoreCase('Digisign')) {
+	if (!vendor.equalsIgnoreCase('Privy') && !vendor.equalsIgnoreCase('DIGI')) {
 		'list data saldo yang perlu diambil'
-		saldoList = ['Liveness', 'Face Compare', 'Liveness Face Compare', 'OTP']
+		saldoList = ['Liveness', 'Face Compare', 'Liveness Face Compare', 'OTP' , 'Meterai']
 		
 		vendorVerifikasi = 'ESIGN/ADINS'
 	} else if (vendor.equalsIgnoreCase('Privy')){
@@ -105,7 +106,7 @@ def funcSaldoSign(HashMap result) {
 		'list data saldo yang perlu diambil'
 		saldoList = ['OTP']
 	} else if (vendor.equalsIgnoreCase('Digisign')) {
-		vendorVerifikasi = vendor
+		vendorVerifikasi = 'Digisign'
 		
 		saldoList = ['OTP']
 	}
@@ -114,7 +115,8 @@ def funcSaldoSign(HashMap result) {
 
 	vendorVerifikasi = vendor
 	
-	if (vendorVerifikasi.equalsIgnoreCase('Digisign')) {
+	if (vendorVerifikasi.equalsIgnoreCase('DIGI')) {
+		vendorVerifikasi = 'Digisign'
 		saldoList = ['Dokumen']
 	} else {
 		saldoList = ['TTD']
@@ -131,7 +133,7 @@ def funcSaldoStamp(HashMap result) {
 	ArrayList saldoList = []
 	vendorVerifikasi = 'ESIGN/ADINS'
 	
-	saldoList = ['Meterai', 'Stamp Duty Postpaid']
+	saldoList = ['Meterai']
 	
 	funcFindSaldo(result, vendorVerifikasi, saldoList, forAutosign)
 

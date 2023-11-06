@@ -15,6 +15,8 @@ enter = '\\n'
 
 int splitnum = -1
 
+indexTrx = 0
+
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
@@ -23,10 +25,6 @@ arrayMatch = []
 
 'Mengambil documentid di excel dan displit'
 docid = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ', splitnum)
-
-'split signer untuk doc1 dan signer untuk doc2'
-signAction = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$signAction (Send External)')).split(
-    enter, splitnum)
 
 signerType = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$signerType (Send External)')).split(
     enter, splitnum)
@@ -91,23 +89,21 @@ for (int i = 0; i < docid.size(); i++) {
     pageSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('page (Send signExternal)')).split(
         enter, splitnum)
 
-    'Inisialisasi sequence number berdasarkan delimiter enter'
-    seqNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('SeqNo (Send External)')).split(
-        enter, splitnum)
-
     'get data API Send Document dari DB (hanya 1 signer)'
     result = CustomKeywords.'connection.APIFullService.getSendDocSigning'(conneSign, docid[i])
 
     'declare arrayindex'
     arrayindex = 0
 
+    signlocStoreDBSplit = signlocStoreDB.split('\\|', -1)
+
     'Jika documentTemplateCode di dokumen pertama adalah kosong'
     if ((documentTemplateCode[i]).replace('"', '') == '') {
         'Maka pengecekan signlocation yang diinput'
         arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getSignLocation'(conneSign, docid[i]), 
-                signlocStoreDB, false, FailureHandling.CONTINUE_ON_FAILURE))
+                signlocStoreDBSplit[i], false, FailureHandling.CONTINUE_ON_FAILURE))
     }
-
+    
     'get current date'
     currentDate = new Date().format('yyyy-MM-dd')
 
@@ -119,10 +115,7 @@ for (int i = 0; i < docid.size(); i++) {
 
     'Splitting email berdasarkan excel per dokumen'
     emailExcel = (email[i]).replace('"', '').split(semicolon, splitnum)
-
-    'Splitting sequence number berdasarkan excel per signer'
-    seqNoExcel = (seqNo[i]).split(semicolon, splitnum)
-
+    
     for (int r = 0; r < emailExcel.size(); r++) {
         if ((emailExcel[r]) == '') {
             'Splitting email berdasarkan excel per dokumen'
@@ -148,11 +141,31 @@ for (int i = 0; i < docid.size(); i++) {
             if ((documentTemplateCode[i]).replace('"', '') == '') {
                 'Jika is sequence nya bukan 0'
                 if ((isSequence[i]).replace('"', '') != '0') {
+					
+					if (!findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('SeqNo (Send External)')).length() == 0) {
+						'Inisialisasi sequence number berdasarkan delimiter enter'
+						seqNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('SeqNo (Send External)')).split(
+							enter, splitnum)
+						
+						'Splitting sequence number berdasarkan excel per signer'
+						seqNoExcel = (seqNo[i]).split(semicolon, splitnum)
+					}
+					
+					if (!findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('SeqNo (Send External)')).length() == 0) {
+						'Inisialisasi sequence number berdasarkan delimiter enter'
+						seqNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('SeqNo (Send External)')).split(
+							enter, splitnum)
+						
+						'Splitting sequence number berdasarkan excel per signer'
+						seqNoExcel = (seqNo[i]).split(semicolon, splitnum)
+
                     'Jika looping i lebih kecil dari sequence number'
                     if (i < seqNoExcel.size()) {
                         'verify sequence number'
-                        arrayMatch.add(WebUI.verifyMatch(seqNoExcel[r].replace('"',''), resultStoreEmailandType[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+                        arrayMatch.add(WebUI.verifyMatch((seqNoExcel[r]).replace('"', ''), resultStoreEmailandType[arrayindex++], 
+                                false, FailureHandling.CONTINUE_ON_FAILURE))
                     }
+					}
                 }
             } else {
                 'Get value db mengenai seq Number berdasarkan signer type dan doc template'
@@ -172,21 +185,19 @@ for (int i = 0; i < docid.size(); i++) {
     'get data psre code'
     psreCodeDB = CustomKeywords.'connection.APIFullService.getVendorCodeUsingDocId'(conneSign, docid[i])
 
-	psreCodeResult = result[arrayindex++]
-	
+    psreCodeResult = (result[arrayindex++])
+
     'Jika verify psre Code sesuai'
-	if (WebUI.verifyMatch(psreCodeDB, psreCodeResult, false, FailureHandling.CONTINUE_ON_FAILURE) &&
-		WebUI.verifyMatch(psreCodeDB, responsePsreCode[i].toString(), false, FailureHandling.CONTINUE_ON_FAILURE)) {
-		
-		arrayMatch.add(true)
-		
-		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('PsRE Document') - 1,
-			GlobalVariable.NumofColm - 1, psreCodeDB)
-	}
-	else {
-		arrayMatch.add(false)
-	}
-   
+    if (WebUI.verifyMatch(psreCodeDB, psreCodeResult, false, FailureHandling.CONTINUE_ON_FAILURE) && WebUI.verifyMatch(psreCodeDB, 
+        (responsePsreCode[i]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE)) {
+        arrayMatch.add(true)
+
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('PsRE Document') - 
+            1, GlobalVariable.NumofColm - 1, psreCodeDB)
+    } else {
+        arrayMatch.add(false)
+    }
+    
     'verify tenant code'
     arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$tenantCode (Send External)')).replace(
                 '"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -223,69 +234,86 @@ for (int i = 0; i < docid.size(); i++) {
 
     'verify is Sequence'
     arrayMatch.add(WebUI.verifyMatch((isSequence[i]).replace('"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+
+    if (psreCodeDB == 'PRIVY') {
+        if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('page (Send stampExternal)')) != 
+        '') {
+            'Jika documentTemplateCode di dokumen pertama adalah kosong'
+            if ((documentTemplateCode[i]).replace('"', '') != '') {
+                'ambil data privy sign location based on document_template'
+                arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getPrivyStampLocation'(conneSign, 
+                            docid[i]), CustomKeywords.'connection.APIFullService.getTemplateDocPrivyStampLoc'(conneSign, 
+                            docid[i]), false, FailureHandling.CONTINUE_ON_FAILURE))
+            } else {
+                'pastikan privy sign loc tidak null'
+                arrayMatch.add(WebUI.verifyNotMatch('null', CustomKeywords.'connection.APIFullService.getPrivyStampLocation'(
+                            conneSign, docid[i]), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                'pastikan privy sign loc tidak kosong'
+                arrayMatch.add(WebUI.verifyNotMatch('', CustomKeywords.'connection.APIFullService.getPrivyStampLocation'(
+                            conneSign, docid[i]), false, FailureHandling.CONTINUE_ON_FAILURE))
+            }
+        }
+    } 
 	
-	if (psreCodeDB == 'PRIVY') {
-		if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('page (Send stampExternal)')) != '') {
-		'Jika documentTemplateCode di dokumen pertama adalah kosong'
-		if ((documentTemplateCode[i]).replace('"', '') != '') {
-		   
-			'ambil data privy sign location based on document_template'
-			arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getPrivyStampLocation'(conneSign, docid[i]),
-					CustomKeywords.'connection.APIFullService.getTemplateDocPrivyStampLoc'(conneSign, docid[i]), false, FailureHandling.CONTINUE_ON_FAILURE))
-		} else {
-			'pastikan privy sign loc tidak null'
-			arrayMatch.add(WebUI.verifyNotMatch('null',
-					CustomKeywords.'connection.APIFullService.getPrivyStampLocation'(conneSign, docid[i]), false, FailureHandling.CONTINUE_ON_FAILURE))
-			
-			'pastikan privy sign loc tidak kosong'
-			arrayMatch.add(WebUI.verifyNotMatch('',
-					CustomKeywords.'connection.APIFullService.getPrivyStampLocation'(conneSign, docid[i]), false, FailureHandling.CONTINUE_ON_FAILURE))
-			}
-		}
-	} else {
-		'Looping berdasarkan jumlah dari signAction'
-		for (int z = 0; z < signAction.size(); z++) {
-			'Jika signAction tersebut adalah AT'
-			if ((signAction[z]).replace('"', '') == 'at') {
-				
-				
-				'Mengambil emailSign dari excel dan displit kembali'
-				emailSign = (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$email (Send External)')).replace(
-					'"', '').split(semicolon, splitnum)[z])
-	
-				'Mengambil trxno dari column tersebut'
-				trxno = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('trxNo'))
-	
-				'get data result trx untuk signing'
-				resulttrxsigning = CustomKeywords.'connection.APIFullService.getTrxSendDocSigning'(conneSign, trxno)
-	
-				'declare arrayindex'
-				arrayindex = 0
-	
-				'verify trx no'
-				arrayMatch.add(WebUI.verifyMatch(trxno, resulttrxsigning[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-				'verify ref no di trx'
-				arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel(
-								'$referenceNo (Send External)')).replace('"', ''), resulttrxsigning[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-				'verify date req di trx'
-				arrayMatch.add(WebUI.verifyMatch(currentDate, resulttrxsigning[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-				'verify trx qty = splitnum'
-				arrayMatch.add(WebUI.verifyMatch(resulttrxsigning[arrayindex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-				'verify trx autosign'
-				arrayMatch.add(WebUI.verifyMatch(resulttrxsigning[arrayindex++], ('Auto Sign (' + emailSign) + ')', false, FailureHandling.CONTINUE_ON_FAILURE))
-			}
-		}
-	}
-	
+        'split signer untuk doc1 dan signer untuk doc2'
+        signAction = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$signAction (Send External)')).split(
+            enter, splitnum)
+
+            signActions = (signAction[i]).split(semicolon, splitnum)
+
+            for (loopPerSignActionPerSigner = 0; loopPerSignActionPerSigner < signActions.size(); loopPerSignActionPerSigner++) {
+                'Jika signAction tersebut adalah AT'
+                if ((signActions[loopPerSignActionPerSigner]).replace('"', '') == 'at') {
+                    'Mengambil trxno dari column tersebut'
+                    trxno = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('trxNo')).split(
+                        ', ', -1)
+
+                    'Mengambil emailSign dari excel dan displit kembali'
+                    emailSign = ((findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$email (Send External)')).replace(
+                        '"', '').split(enter, splitnum)[i]).split(semicolon, splitnum)[loopPerSignActionPerSigner])
+
+					if (emailSign == '') {
+						'Mengambil emailSign dari excel dan displit kembali'
+						ktpSign = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$idKtp (Send External)')).replace('"', '').split(enter, splitnum)[i].split(semicolon, splitnum)[loopPerSignActionPerSigner])
+					
+						emailSign = CustomKeywords.'connection.DataVerif.getEmailFromNIK'(conneSign, ktpSign)
+					}
+
+                    'get data result trx untuk signing'
+                    resulttrxsigning = CustomKeywords.'connection.APIFullService.getTrxSendDocSigning'(conneSign, trxno[indexTrx])
+
+                    'declare arrayindex'
+                    arrayindex = 0
+
+                    'verify trx no'
+                    arrayMatch.add(WebUI.verifyMatch(trxno[indexTrx++], resulttrxsigning[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                    'verify ref no di trx'
+                    arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 
+                                rowExcel('$referenceNo (Send External)')).replace('"', ''), resulttrxsigning[arrayindex++], 
+                            false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                    'verify date req di trx'
+                    arrayMatch.add(WebUI.verifyMatch(currentDate, resulttrxsigning[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                    'verify trx qty = splitnum'
+                    arrayMatch.add(WebUI.verifyMatch(resulttrxsigning[arrayindex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                    'verify trx autosign'
+                    arrayMatch.add(WebUI.verifyMatch(resulttrxsigning[arrayindex++], ('Auto Sign (' + emailSign) + ')', 
+                            false, FailureHandling.CONTINUE_ON_FAILURE))
+                }
+            }
+        
+    
+    
     'jika data db tidak sesuai dengan excel'
     if (arrayMatch.contains(false)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + semicolon) + GlobalVariable.ReasonFailedStoredDB)
+            (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + semicolon) + 
+            GlobalVariable.ReasonFailedStoredDB)
     }
 }
 

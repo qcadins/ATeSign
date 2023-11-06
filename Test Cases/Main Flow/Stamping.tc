@@ -29,6 +29,12 @@
       <value></value>
       <variableId>c63e464e-1de2-43c7-8ffd-4c999f178b18</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>5fdbd0f0-c311-4ebb-a27b-a64b8e3d6968</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -56,5 +62,12 @@
       <id>c63e464e-1de2-43c7-8ffd-4c999f178b18</id>
       <masked>false</masked>
       <name>CancelDocsStamp</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>5fdbd0f0-c311-4ebb-a27b-a64b8e3d6968</id>
+      <masked>false</masked>
+      <name>saldoMeteraiBefore</name>
    </variable>
 </TestCaseEntity>

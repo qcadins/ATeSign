@@ -7,7 +7,11 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[(text() = 'Document Monitoring' or . = 'Document Monitoring')]</value>
+         <value>//*[@href = '/document-monitoring']</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value></value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -18,14 +22,14 @@
       <name>xpath</name>
       <type>Main</type>
       <value>//*[contains(@class, 'sidebar-content main-menu-content')]/div[1]/ul/li[5]</value>
-      <webElementGuid>788d966b-f52f-4da2-9286-79d9c9412e87</webElementGuid>
+      <webElementGuid>58db8eb5-2d18-4578-917e-bfe603c41a14</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>text</name>
+      <name>href</name>
       <type>Main</type>
-      <value>Document Monitoring</value>
-      <webElementGuid>f9d65a64-2309-49bb-84c8-f5815011c8a4</webElementGuid>
+      <value>/document-monitoring</value>
+      <webElementGuid>81243c3a-05b5-42b3-9451-8ee2cd2ce8ef</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

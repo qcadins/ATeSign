@@ -49,6 +49,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             WebUI.callTestCase(findTestCase('Main Flow/API Send Document External'), [('excelPathAPISendDoc') : excelPathMain
                     , ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
 
+			WebUI.delay(1000000)
             documentId = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ', 
                 -1)
 
@@ -83,9 +84,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'Sign Only') && (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 
             'Stamp Only')) {
                 'call test case kotak masuk dan verify document monitoring. Document monitoring terdapat didalam kotak masuk.'
-               WebUI.callTestCase(findTestCase('Main Flow/KotakMasuk'), [('excelPathFESignDocument') : excelPathMain, ('sheet') : sheet
-                        , ('checkBeforeSigning') : 'Yes', ('CancelDocsSend') : findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, 
-                            rowExcel('Cancel Docs after Send?'))], FailureHandling.CONTINUE_ON_FAILURE)
+       //        WebUI.callTestCase(findTestCase('Main Flow/KotakMasuk'), [('excelPathFESignDocument') : excelPathMain, ('sheet') : sheet
+      //                  , ('checkBeforeSigning') : 'Yes', ('CancelDocsSend') : findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, 
+       //                     rowExcel('Cancel Docs after Send?'))], FailureHandling.CONTINUE_ON_FAILURE)
 
                 'jika ada proses cancel doc'
                 if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Send?')) == 

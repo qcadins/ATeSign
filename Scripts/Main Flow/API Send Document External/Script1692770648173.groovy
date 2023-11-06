@@ -54,7 +54,7 @@ String stringRefno = new String()
 
 ArrayList split = []
 
-split = setBodyAPI(stringRefno, signlocStoreDB)
+split = setBodyAPI(stringRefno, signlocStoreDB, conneSign)
 
 stringRefno = split[0]
 
@@ -148,17 +148,13 @@ def checkSaldoAutoSign(boolean useAutoSign, HashMap resultSaldoBefore, Connectio
 		
 		resultSaldoAfter.putAll(resultSaldoAfterLoop)
 		
-		ArrayList countOfTrx = []
+		testingTrxNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('trxNo')).split(', ', -1)
 		
 		'ini adalah autosignnya success'
 		if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('trxNo')).replace(', ','').length() > 0) {
-				testingTrxNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('trxNo')).split(', ', -1)
-			
-			for (saldoPerDoc = 0; saldoPerDoc < testingTrxNo.size(); saldoPerDoc++) {
-				countOfTrx = testingTrxNo[saldoPerDoc].split(';', -1)
 
-				if (WebUI.verifyEqual(Integer.parseInt(resultSaldoAfter[findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document'))]) + countOfTrx.size(), 
-					Integer.parseInt(resultSaldoBefore[findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document'))]), FailureHandling.CONTINUE_ON_FAILURE) == false) {
+				if (WebUI.verifyEqual(Integer.parseInt(resultSaldoAfter[findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document'))]), 
+					Integer.parseInt(resultSaldoBefore[findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document'))]) - testingTrxNo.size(), FailureHandling.CONTINUE_ON_FAILURE) == false) {
 
 				'Write To Excel GlobalVariable.StatusFailed and errormessage'
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
@@ -170,9 +166,9 @@ def checkSaldoAutoSign(boolean useAutoSign, HashMap resultSaldoBefore, Connectio
 						tipeSaldo = 'Sign'
 					}
 					
-					inputFilterSaldo(tipeSaldo, conneSign, countOfTrx.size()) 
+					inputFilterSaldo(tipeSaldo, conneSign, testingTrxNo.size()) 
 				}
-			}
+			
 		}
 		}
 	}
@@ -256,12 +252,15 @@ def getDataExcel(String semicolon, int splitnum, String delimiter, String enter)
 	uryStamp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('ury (Send stampExternal)')).split(delimiter, splitnum)
 }
 
-def setBodyAPI(String stringRefno, String signlocStoreDB) {
+def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) {
 	'Looping berdasarkan total dari dokumen file ukuran'
 	for (int i = 0; i < documentFile.size(); i++) {
 		'signloc store db harus dikosongkan untuk loop dokumen selanjutnya.'
-		signlocStoreDB = ''
-	
+		if (signlocStoreDB != '' && signlocStoreDB != 'null' && signlocStoreDB != null) {
+			signlocStoreDB = signlocStoreDB + '|'
+		} else {
+			signlocStoreDB = ''
+		}
 		'Splitting kembali dari dokumen pertama per signer'
 		signActions = (signAction[i]).split(semicolon, splitnum)
 	
@@ -469,9 +468,13 @@ def setBodyAPI(String stringRefno, String signlocStoreDB) {
 			
 			'check ada value maka setting email service tenant'
 			if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service (Send External)')).length() > 0) {
+			for (loopingSignerEmailActive = 0; loopingSignerEmailActive < idKtps.size(); loopingSignerEmailActive++) {
+				SHA256IdNo = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(idKtps[loopingSignerEmailActive].replace('"', ''))
+				
 				'setting email service tenant'
-				CustomKeywords.'connection.APIFullService.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(excelPathAPISendDoc).getValue(
-						GlobalVariable.NumofColm, rowExcel('Setting Email Service (Send External)')), (emails[t]).replace('"', ''))
+				CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(excelPathAPISendDoc).getValue(
+                    GlobalVariable.NumofColm, rowExcel('Setting Email Service (Send External)')),SHA256IdNo)
+			}
 			}
 			
 			'Memasukkan bodyAPI ke stringRefno'
