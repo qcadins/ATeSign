@@ -1,10 +1,6 @@
-name: Katalon Test on Windows
-
-on:
-  push:
-    branches:
-      - main  # Adjust the branch name as needed
-
+name: GitHub Actions Demo
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: [push]
 jobs:
   katalon_test:
     runs-on: windows-latest  # Use the latest Windows runner
