@@ -1,0 +1,3 @@
+name: SQL Review
+uses: bytebase/sql-review-action@1.0.0
+            
