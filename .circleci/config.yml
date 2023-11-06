@@ -1,26 +1,83 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine.
-# See: https://circleci.com/docs/configuration-reference
+# This code is licensed from CircleCI to the user under the MIT license.
+# See here for details: https://circleci.com/developer/orbs/licensing
 version: 2.1
-
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/configuration-reference/#jobs
+description: >
+  Executing Katalon tests with your CircleCI CI/CD pipeline easily with the Katalon orb
+display:
+  home_url: https://docs.katalon.com/katalon-studio/docs/integration-circleci.html
+  source_url: https://github.com/katalon-studio/katalon-circleci-orb
+orbs:
+examples:
+  execute_sample_test:
+    description: Executing a test suite with the latest version of Katalon Studio
+    usage:
+      version: 2.1
+      orbs:
+        katalon-studio: katalon/katalon-studio@23.0.12 #replace 23.0.12 with the latest version of Katalon Orb
+      workflows:
+       build:
+        jobs:
+            - katalon-studio/run:
+                    version: "latest"
+                    command_arguments: "-browserType='Chrome' -retry=0 -statusDelay=15 -testSuitePath='Test Suites/TS_RegressionTest'"
+executors:
+      default:
+        description: Ubuntu based Docker Image for Katalon Studio
+        parameters:
+          version:
+            description : "Specifying the Katalon Studio version your tests will be executed with (Only version 7+ supported)"
+            type: string
+            default: "latest"
+        docker:
+          - image: katalonstudio/katalon:<<parameters.version>>
+commands:
+      execute:
+        description: Defining command arguments to execute your Katalon tests with API Key required
+        parameters:
+          command_arguments:
+            description: The defined command arguments used for executing your Katalon tests
+            type: string
+            default: ""
+          KATALON_API_KEY:
+            description: The name of the environment variable containing the API key used for authentication with Katalon Server
+            type: env_var_name
+        steps:
+          - run: 
+              name: Katalon Execute
+              command: katalon-execute.sh -apiKey=$<<parameters.KATALON_API_KEY>> <<parameters.command_arguments>> 
 jobs:
-  say-hello:
-    # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/configuration-reference/#executor-job
-    docker:
-      - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/configuration-reference/#steps
-    steps:
-      - checkout
-      - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
-
-# Orchestrate jobs using workflows
-# See: https://circleci.com/docs/configuration-reference/#workflows
+      run:
+          description: Executing your Katalon tests in the Katalon Studio's Docker Image with the provided command arguments 
+          executor: default
+          parameters:
+            version:
+              description: "Specifying the Katalon Studio version your tests will be executed with (Only version 7+ supported). By default, it's the latest version."
+              default: "latest"
+              type: string
+            KATALON_API_KEY:
+              description: The API KEY used for authentication with the Katalon Server. Learn how to get the API KEY via https://docs.katalon.com/katalon-analytics/docs/ka-api-key.html.
+              default: KATALON_API_KEY
+              type: env_var_name
+            command_arguments:
+              description: The command arguments used for executing the tests. See the supported Command Syntax via https://docs.katalon.com/katalon-studio/docs/console-mode-execution.html.
+              default: ""
+              type: string
+          steps:
+            - checkout
+            - execute:
+                KATALON_API_KEY: <<parameters.KATALON_API_KEY>>
+                command_arguments: <<parameters.command_arguments>>
+            - store_artifacts:
+                  path: report
+            - store_test_results:
+                  path: report
 workflows:
-  say-hello-workflow:
+  build:
     jobs:
-      - say-hello
+        - katalon-studio/run:
+            executor: katalon-studio/default
+            steps:
+              - checkkout
+              - katalon-studio/execute:
+                  version: "latest"
+                  command_arguments: '-browserType="Chrome" -retry=0 -statusDelay=15 -testSuitePath="Test Suites/TS_RegressionTest"'
