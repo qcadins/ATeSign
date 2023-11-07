@@ -15,10 +15,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Katalon Studio Action
-      uses: katalon-studio/katalon-action@v1
+    - name: Katalon Studio Github Action
+      uses: katalon-studio/katalon-studio-github-action@v2
       with:
-        args: '-noSplash -runMode=console -projectPath=".katalon/Katalon Studio Project.prj" -retry=0 -testSuitePath="Test Suites/TS_RegressionTest" -executionProfile="default" -browserType="Chrome (headless)"'
+          version: '8.5.5'
+          projectPath: '${{ github.workspace }}'
+          args: '-noSplash -retry=0 -testSuiteCollectionPath="Test Suites/Simple Test Suite Collection" -apiKey= ${{ secrets.API_KEY }} --config -webui.autoUpdateDrivers=true'
 
   code-scanning:
     needs: katalon-test
