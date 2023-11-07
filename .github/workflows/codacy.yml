@@ -41,11 +41,15 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install groovy
+          echo "Groovy installed successfully"
 
       - name: Install Dependencies
         run: |
+          echo "Configuring Grape..."
           echo "groovy.grape.report.downloads=true" > ~/.groovy/grapeConfig.xml
+          echo "Configured Grape"
           groovy -e "groovy.grape.Grape.grab(group:'commons-cli', module:'commons-cli', version:'1.4')"
+          echo "Dependencies installed"
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
