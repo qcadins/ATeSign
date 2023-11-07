@@ -59,19 +59,3 @@ jobs:
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
-
-      - name: Create and Upload ZIP
-        run: |
-          # Create a ZIP file from the CodeQL database
-          zip -r codeql_databases/javascript.zip /home/runner/work/_temp/codeql_databases
-
-          # Upload the ZIP file as an artifact
-          mv codeql_databases/javascript.zip $GITHUB_WORKSPACE/javascript.zip
-        env:
-          GITHUB_WORKSPACE: ${{ github.workspace }}
-      
-      - name: Upload ZIP as Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: codeql-database
-          path: $GITHUB_WORKSPACE/javascript.zip
