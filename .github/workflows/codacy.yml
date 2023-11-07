@@ -1,10 +1,10 @@
 name: Katalon Test and Code Scanning
 
 on:
-  push:
-    branches: [ main ]
+ push:
+    branches: [ "master" ]
   pull_request:
-    branches: [ main ]
+    branches: [ "master" ]
 
 jobs:
   katalon-test:
