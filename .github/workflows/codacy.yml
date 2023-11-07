@@ -46,6 +46,7 @@ jobs:
       - name: Install Dependencies
         run: |
           echo "Configuring Grape..."
+          mkdir -p ~/.groovy
           echo "groovy.grape.report.downloads=true" > ~/.groovy/grapeConfig.xml
           echo "Configured Grape"
           groovy -e "groovy.grape.Grape.grab(group:'commons-cli', module:'commons-cli', version:'1.4')"
