@@ -61,7 +61,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			if(GlobalVariable.checkPaging.equals('Yes')) {
 				
 				'call function check paging'
-				checkPaging(firstDateOfMonth, conneSign)
+				checkPaging(conneSign)
 	
 				'get ddl vendor'
 				ArrayList<String> resultVendor = CustomKeywords.'connection.messageDeliveryReport.getDDLVendor'(conneSign, GlobalVariable.Tenant)
@@ -194,7 +194,7 @@ def inputMessageDeliveryReport() {
             GlobalVariable.NumofColm, rowExcel('Recipient')))
 }
 
-def checkPaging(LocalDate firstDateOfMonth, Connection conneSign) {
+def checkPaging(Connection conneSign) {
 	settingzoom()
 	
     inputMessageDeliveryReport()
