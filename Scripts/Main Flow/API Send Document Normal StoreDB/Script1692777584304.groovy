@@ -251,7 +251,7 @@ for (int i = 0; i < docid.size(); i++) {
 			trxno = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('trxNo')).split(', ', -1)
 
              'Mengambil emailSign dari excel dan displit kembali'
-              emailSign = ((findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$email (Send Normal)')).replace(
+              emailSign = ((findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$email (Send Normal)')).replace(
               '"', '').split(enter, splitnum)[i]).split(semicolon, splitnum)[loopPerSignActionPerSigner])
 
 			  if (emailSign == '') {

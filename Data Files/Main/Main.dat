@@ -6,9 +6,15 @@
    <containsHeaders>false</containsHeaders>
    <csvSeperator></csvSeperator>
    <dataFileGUID>e919414b-4103-422f-bfc0-ef7e02ffaa77</dataFileGUID>
-   <dataSourceUrl>Excel/2. Esign.xlsx</dataSourceUrl>
+   <dataSourceUrl>Excel/2. Esign Main.xlsx</dataSourceUrl>
    <driver>ExcelFile</driver>
    <isInternalPath>true</isInternalPath>
+   <properties>
+      <entry>
+         <key>readAsString</key>
+         <value>true</value>
+      </entry>
+   </properties>
    <query></query>
    <secureUserAccount>false</secureUserAccount>
    <sheetName>Main</sheetName>

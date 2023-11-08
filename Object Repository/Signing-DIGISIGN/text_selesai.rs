@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>text_selesai</name>
+   <tag></tag>
+   <elementGuidId>bb7c8620-61d2-418f-a465-c1bf7726eb07</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;proModal&quot;]/div/div/div[1]/h3</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;proModal&quot;]/div/div/div[1]/h3</value>
+      <webElementGuid>23624064-f741-4af2-a70a-2588ba6e0d9c</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

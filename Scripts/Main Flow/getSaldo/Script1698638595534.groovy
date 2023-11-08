@@ -25,6 +25,10 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 HashMap<String, String> result = new HashMap<String, String>()
 
+if (vendor.toString().contains('digi') || vendor.toString().contains('DIGI')) {
+	vendor = 'DIGISIGN'
+}
+
 'return total saldo awal'
 String totalSaldoOTP, vendorVerifikasi, totalSaldo
 
@@ -76,8 +80,7 @@ def funcSaldoSend(HashMap result) {
 
 	vendorVerifikasi = vendor
 	
-	if (vendorVerifikasi.equalsIgnoreCase('DIGI')) {
-		vendorVerifikasi = 'Digisign'
+	if (vendorVerifikasi.equalsIgnoreCase('DIGISIGN')) {
 		saldoList = ['Dokumen']
 	} else {
 		saldoList = ['TTD']
@@ -95,7 +98,7 @@ def funcSaldoSign(HashMap result) {
 	
 	ArrayList saldoList = []
 	
-	if (!vendor.equalsIgnoreCase('Privy') && !vendor.equalsIgnoreCase('DIGI')) {
+	if (!vendor.equalsIgnoreCase('Privy') && !vendor.equalsIgnoreCase('DIGISIGN')) {
 		'list data saldo yang perlu diambil'
 		saldoList = ['Liveness', 'Face Compare', 'Liveness Face Compare', 'OTP' , 'Meterai']
 		
@@ -105,8 +108,8 @@ def funcSaldoSign(HashMap result) {
 		
 		'list data saldo yang perlu diambil'
 		saldoList = ['OTP']
-	} else if (vendor.equalsIgnoreCase('Digisign')) {
-		vendorVerifikasi = 'Digisign'
+	} else if (vendor.equalsIgnoreCase('DIGISIGN')) {
+		vendorVerifikasi = vendor
 		
 		saldoList = ['OTP']
 	}
@@ -115,8 +118,7 @@ def funcSaldoSign(HashMap result) {
 
 	vendorVerifikasi = vendor
 	
-	if (vendorVerifikasi.equalsIgnoreCase('DIGI')) {
-		vendorVerifikasi = 'Digisign'
+	if (vendorVerifikasi.equalsIgnoreCase('DIGISIGN')) {
 		saldoList = ['Dokumen']
 	} else {
 		saldoList = ['TTD']
@@ -162,9 +164,9 @@ def funcFindSaldo(HashMap result, String vendorVerifikasi, ArrayList saldoList, 
 					true)
 				
 				if (forAutosign == true) {
-					result.put(vendor, WebUI.getText(modifyObjecttotalSaldoSign))
+					result.put(vendor, WebUI.getText(modifyObjecttotalSaldoSign).replace(',', ''))
 				} else {
-					result.put(saldoList[i], WebUI.getText(modifyObjecttotalSaldoSign))
+					result.put(saldoList[i], WebUI.getText(modifyObjecttotalSaldoSign).replace(',',''))
 				}
 			}
 		}

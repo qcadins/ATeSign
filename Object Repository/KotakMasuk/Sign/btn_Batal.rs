@@ -6,16 +6,16 @@
    <elementGuidId>1bad74fc-e0ad-4fde-8231-e0a2c4c9e547</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>CSS</key>
-         <value>a.btn.btn-secondary.mr-2</value>
-      </entry>
-      <entry>
          <key>BASIC</key>
-         <value>//*[(text() = 'Batal' or . = 'Batal')]</value>
+         <value>//*[contains(@class, 'btn btn-secondary')]</value>
       </entry>
       <entry>
          <key>XPATH</key>
          <value>//a[contains(text(),'Batal')]</value>
+      </entry>
+      <entry>
+         <key>CSS</key>
+         <value>a.btn.btn-secondary.mr-2</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -26,23 +26,23 @@
       <name>tag</name>
       <type>Main</type>
       <value>a</value>
-      <webElementGuid>bd79b6bf-e0b0-40f3-9d37-b9b44ca97f9d</webElementGuid>
+      <webElementGuid>17ccf1c3-33b4-4140-a0af-c82d4f007147</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>contains</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>btn btn-secondary</value>
+      <webElementGuid>31f1cb86-d42e-4f80-b77b-d6e19a003284</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>class</name>
-      <type>Main</type>
-      <value>btn btn-secondary mr-2</value>
-      <webElementGuid>7fc70f7e-5276-4a95-92ca-67eb46327121</webElementGuid>
-   </webElementProperties>
-   <webElementProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
       <name>text</name>
       <type>Main</type>
       <value>Batal</value>
-      <webElementGuid>1abfead8-cc81-46fe-b16b-bbb212ea2db4</webElementGuid>
+      <webElementGuid>c6e8efd4-1747-44f8-a69c-ee3fd37ed1c8</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -50,7 +50,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html[1]/body[@class=&quot;vertical-layout menu-expanded menu-open vertical-menu navbar-static    pace-done&quot;]/app-root[1]/app-full-layout[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;wrapper&quot;]/div[@class=&quot;main-panel&quot;]/div[@class=&quot;main-content&quot;]/div[@class=&quot;content-wrapper&quot;]/app-bulk-sign[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;row ng-star-inserted&quot;]/div[@class=&quot;col-6 text-right&quot;]/a[@class=&quot;btn btn-secondary mr-2&quot;]</value>
-      <webElementGuid>79bb8486-9b05-402e-be90-7f580c9c8b97</webElementGuid>
+      <webElementGuid>f83b70e6-e406-4c94-935a-78047952c1be</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -58,7 +58,7 @@
       <name>xpath:link</name>
       <type>Main</type>
       <value>//a[contains(text(),'Batal')]</value>
-      <webElementGuid>40af2480-5029-44bc-b8bb-697a3ebaf79b</webElementGuid>
+      <webElementGuid>3efc30bb-53da-465e-a0d9-5d1c76512966</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -66,7 +66,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Tanda Tangan Dokumen Massal'])[1]/following::a[1]</value>
-      <webElementGuid>dfed1b03-b966-4538-bddb-559219ba4ef6</webElementGuid>
+      <webElementGuid>8df26ce5-4623-4826-acfd-5d79a187ba4e</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -74,7 +74,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Masukan'])[1]/following::a[1]</value>
-      <webElementGuid>ecbd528d-7fdc-4d16-ac1a-fb4d98b3af7b</webElementGuid>
+      <webElementGuid>1405d955-f1e3-4c17-ae7b-24ec766e326c</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -82,7 +82,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='TTD Semua'])[1]/preceding::a[1]</value>
-      <webElementGuid>a2c99343-bb42-4e12-92d6-7a344288435a</webElementGuid>
+      <webElementGuid>eaf6e9ca-4c75-4f50-80c6-4f5b0cec1edb</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -90,7 +90,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='TEST TEMPLATE FIT'])[1]/preceding::a[2]</value>
-      <webElementGuid>00b84c08-b39a-4e3b-9170-e39be49157ae</webElementGuid>
+      <webElementGuid>4fff89ec-77ad-4456-95fc-2ee98122b671</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -98,7 +98,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='Batal']/parent::*</value>
-      <webElementGuid>d8472a6c-2e32-4473-9f39-31f05d525e7e</webElementGuid>
+      <webElementGuid>5d823bef-5730-4633-812b-0b7964275c15</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -106,7 +106,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//div[2]/a</value>
-      <webElementGuid>8aaaee74-5578-4886-90d7-0f9a221d04e9</webElementGuid>
+      <webElementGuid>1229b841-afe4-46ff-adef-cec9e7ca0b00</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -114,6 +114,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//a[(text() = 'Batal' or . = 'Batal')]</value>
-      <webElementGuid>56fc7ab5-4621-4961-bf81-e836085d5e2f</webElementGuid>
+      <webElementGuid>fb25e9fa-a1ae-4b76-a8af-93be0e008e28</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

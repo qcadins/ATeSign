@@ -23,23 +23,9 @@ import java.sql.Connection as Connection
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-'connect dengan db'
-Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
+'ambil inquiry di db'
+ArrayList inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldo'(conneSign, 'MAINTENANCE DOC DIGIS 2', '10', 'Use Document')
 
-'connect dengan db'
-Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
+println inquiryDB[7]
 
-'connect dengan db'
-Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
-
-aa() /*HashMap aa = new HashMap()
-	aa.put('te', 'bb')
-	WebUI.comment(aa.toString())
-    */
-
-def aa() {
-    a = 1
-
-    return a
-}
-
+println inquiryDB

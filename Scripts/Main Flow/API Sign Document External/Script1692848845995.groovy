@@ -21,7 +21,7 @@ String refNumber = CustomKeywords.'connection.APIFullService.getRefNumber'(conne
 	
 documentIdInput = '["' + GlobalVariable.storeVar.keySet()[[0]]  + '"]'
 
-int saldoUsed = 0
+int saldoUsed = 0, delayExpiredOTP = 0
 
 GlobalVariable.FlagFailed = 0
 
@@ -164,6 +164,18 @@ if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, ro
     }
 	   } else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use correct OTP From Database (Sign External)')).split(
         ';', -1)[GlobalVariable.indexUsed] == 'Yes') {
+	
+	'check ada value maka Setting OTP Active Duration'
+	if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration (Sign External)')).length() >
+	0) {
+		'Setting OTP Active Duration'
+		CustomKeywords.'connection.APIFullService.settingOTPActiveDuration'(conneSign, findTestData(excelPathAPISignDocument).getValue(
+				GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration (Sign External)')))
+
+		delayExpiredOTP = (60 * Integer.parseInt(findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm,
+				rowExcel('Setting OTP Active Duration'))))
+	}
+	
     'check if mau menggunakan OTP yang salah atau benar'
 
     'request OTP dengan HIT API'
@@ -240,6 +252,15 @@ if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, ro
                 ';', -1)[GlobalVariable.indexUsed])
         }
         
+		'check if ingin testing expired otp'
+		if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration (Sign External)')).length() >
+		0) {
+			'delay untuk input expired otp'
+			delayExpiredOTP = (delayExpiredOTP + 10)
+
+			WebUI.delay(delayExpiredOTP)
+		}
+		
         'looping berdasarkan ukuran dari dokumen id'
             'Memasukkan input dari total signed'	
             (totalSignedBefore[0]) = CustomKeywords.'connection.APIFullService.getTotalSigned'(conneSign, (GlobalVariable.storeVar.keySet()[[0]]).toString())
@@ -859,28 +880,31 @@ def getPaymentTypeUsed(Connection conneSign, String vendor) {
 
 
 def checkAutoStamp(Connection conneSign, String noKontrak, HashMap<String, String> resultSaldoBefore) {
+	'split nomor kontrak'
 	noKontrakPerDoc = noKontrak.split(';', -1)
 
+	'inisialisasi flag error dms'
 	int flagErrorDMS = 0
 	
-	HashMap<String, String> resultSaldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'),
-		[('excel') : excelPathAPISignDocument, ('sheet') : sheet, ('usageSaldo') : 'Stamp'],
-		FailureHandling.CONTINUE_ON_FAILURE)
-	
-	String saldoAfter = resultSaldoAfter.get('Meterai')
+	'inisialisasi saldo after dan before'
+	String saldoAfter, saldoBefore = resultSaldoBefore.get('Meterai')
 
-	String saldoBefore = resultSaldoBefore.get('Meterai')
-
+	'looping'
 	for (loopingPerKontrak = 0; loopingPerKontrak < noKontrakPerDoc.size(); loopingPerKontrak++) {
+		'check autostamp'
 		automaticStamp = CustomKeywords.'connection.Meterai.getAutomaticStamp'(conneSign, noKontrakPerDoc[loopingPerKontrak])
 		
+		'jika autostamp'
 		if (automaticStamp == '1') {
+			'get sign status'
 			getSignStatus = CustomKeywords.'connection.SendSign.getSignStatus'(conneSign, noKontrakPerDoc[loopingPerKontrak])
 
+			'jika complete'
 			if (getSignStatus == 'Complete') {
 				'mengambil value db proses ttd'
 				prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, noKontrakPerDoc[loopingPerKontrak])
 
+				'jika prosesnya bukan 0 atau berjalan'
 				if (prosesMaterai != 0) {
 					
 					'looping dari 1 hingga 12'
@@ -942,16 +966,11 @@ def checkAutoStamp(Connection conneSign, String noKontrak, HashMap<String, Strin
 								GlobalVariable.FlagFailed = 1
 							} else {
 								GlobalVariable.FlagFailed = 0
-	
-								if (saldoBefore.contains(',') || saldoAfter.contains(',')) {
-									saldoAfter = saldoAfter.replace(',', '')
-	
-									saldoBefore = saldoBefore.replace(',', '')
-								}
 								
 								WebUI.comment(saldoBefore)
 								WebUI.comment(saldoAfter)
 
+								'check saldo before dan after'
 								checkVerifyEqualOrMatch(WebUI.verifyEqual(Integer.parseInt(saldoBefore) - Integer.parseInt(totalMateraiAndTotalStamping[1]), Integer.parseInt(saldoAfter), FailureHandling.CONTINUE_ON_FAILURE), ' pada pemotongan saldo Meterai Autostamp')
 							}
 							
@@ -1002,13 +1021,16 @@ def checkAutoStamp(Connection conneSign, String noKontrak, HashMap<String, Strin
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 						GlobalVariable.StatusFailed, (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm,
 							rowExcel('Reason Failed')).replace('-', '') + ';') + 'Autostamp gagal ')
-
-					if (saldoBefore.contains(',') || saldoAfter.contains(',')) {
-						saldoBefore = saldoBefore.replace(',', '')
-
-						saldoAfter = saldoAfter.replace(',', '')
-					}
+			
+					'get saldo after'
+					resultSaldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'),
+						[('excel') : excelPathAPISignDocument, ('sheet') : sheet, ('usageSaldo') : 'Stamp'],
+						FailureHandling.CONTINUE_ON_FAILURE)
 					
+					'get saldo after meterai'
+					saldoAfter = resultSaldoAfter.get('Meterai')
+					
+					'cehck saldo before dan after'
 					checkVerifyEqualOrMatch(WebUI.verifyEqual(Integer.parseInt(saldoBefore), Integer.parseInt(saldoAfter),
 							FailureHandling.CONTINUE_ON_FAILURE), ' pada pemotongan saldo Meterai Gagal Autostamp')
 				}

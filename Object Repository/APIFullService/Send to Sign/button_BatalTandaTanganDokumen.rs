@@ -6,12 +6,12 @@
    <elementGuidId>00db2f94-a00c-4a21-b6fa-3453386ad5a2</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>XPATH</key>
-         <value>//a[contains(text(),'Batal')]</value>
+         <key>BASIC</key>
+         <value>//*[contains(@class, 'btn btn-secondary')]</value>
       </entry>
       <entry>
-         <key>BASIC</key>
-         <value>//*[@class = 'btn btn-secondary mr-2']</value>
+         <key>XPATH</key>
+         <value>//a[contains(text(),'Batal')]</value>
       </entry>
       <entry>
          <key>CSS</key>
@@ -26,15 +26,15 @@
       <name>tag</name>
       <type>Main</type>
       <value>a</value>
-      <webElementGuid>022db240-3ad5-4a0b-8bba-ca1779d3d6be</webElementGuid>
+      <webElementGuid>fce34d7e-edb8-4a29-9f4d-892e84f2767f</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
+      <matchCondition>contains</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>btn btn-secondary mr-2</value>
-      <webElementGuid>dbd8d785-11ae-45fd-9edb-fb1087779287</webElementGuid>
+      <value>btn btn-secondary</value>
+      <webElementGuid>10bef2ea-9ad1-422c-a138-11ff52b70309</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -42,7 +42,7 @@
       <name>text</name>
       <type>Main</type>
       <value>Batal</value>
-      <webElementGuid>4cd45f53-fbd3-4c9f-9bec-a64fbc79ac24</webElementGuid>
+      <webElementGuid>cca81efd-e578-40b8-a862-e1563eda9178</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -50,7 +50,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html[1]/body[@class=&quot;auth-page blank-page      pace-done&quot;]/app-root[1]/app-content-layout[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;wrapper&quot;]/div[@class=&quot;main-panel&quot;]/div[@class=&quot;main-content&quot;]/div[@class=&quot;content-wrapper p-0&quot;]/app-bulk-sign[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;row ng-star-inserted&quot;]/div[@class=&quot;col-6 text-right&quot;]/a[@class=&quot;btn btn-secondary mr-2&quot;]</value>
-      <webElementGuid>dad99455-542d-46be-b8ba-cbdb9204f2c6</webElementGuid>
+      <webElementGuid>b1e4dcf4-b2fe-42e7-b6bc-03ba8325ca0b</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -58,7 +58,7 @@
       <name>xpath:link</name>
       <type>Main</type>
       <value>//a[contains(text(),'Batal')]</value>
-      <webElementGuid>0c761634-2380-487e-8d40-a33594fd494b</webElementGuid>
+      <webElementGuid>293d602b-058d-49a9-af9e-ee890ecb6c42</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -66,7 +66,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Tanda Tangan Dokumen Massal'])[1]/following::a[1]</value>
-      <webElementGuid>0a97c6e0-d484-40cc-87b8-b3c30f3453b1</webElementGuid>
+      <webElementGuid>13cb7623-4db0-4fc0-abce-cc13ce723a6e</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -74,7 +74,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='TTD Semua'])[1]/preceding::a[1]</value>
-      <webElementGuid>faad1658-037d-42d9-9b91-0163285bc8ef</webElementGuid>
+      <webElementGuid>28fb1e01-7c06-4166-8fac-8b06ebf26698</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -82,7 +82,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='DOKUMEN 1BM 1CUST'])[1]/preceding::a[2]</value>
-      <webElementGuid>a12c9597-888d-49e4-b425-8059a083a57d</webElementGuid>
+      <webElementGuid>9798ce37-4b5c-4175-89c7-15516a33866f</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -90,7 +90,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='Batal']/parent::*</value>
-      <webElementGuid>bcc11e63-5e6b-4fcc-872f-1f65d724e50a</webElementGuid>
+      <webElementGuid>f54b82df-1f5c-4351-95f8-becaeab30494</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -98,7 +98,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//a</value>
-      <webElementGuid>cbefb1e0-ca12-4416-9ced-6a4d27074d10</webElementGuid>
+      <webElementGuid>760a517b-3655-4fd6-98a9-16169036375d</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -106,6 +106,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//a[(text() = 'Batal' or . = 'Batal')]</value>
-      <webElementGuid>ca00b679-e85f-4524-9123-c57cccdfa5d0</webElementGuid>
+      <webElementGuid>b38b23e5-2aec-4e1e-ab36-36d92bb65675</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

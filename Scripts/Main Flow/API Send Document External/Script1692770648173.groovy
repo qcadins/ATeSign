@@ -24,9 +24,7 @@ int splitnum = -1
 
 boolean useAutoSign = false
 
-HashMap<String, String> resultSaldoBeforeLoop = new HashMap<String, String>()
-
-HashMap<String, String> resultSaldoBefore = new HashMap<String, String>()
+HashMap resultSaldoBeforeLoop = new HashMap(), resultSaldoBefore = new HashMap()
 
 'setting menggunakan base url yang benar atau salah'
 CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPISendDoc, GlobalVariable.NumofColm, rowExcel('Use Correct base Url (Send External)'))
