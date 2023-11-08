@@ -1,0 +1,61 @@
+name: Katalon Test and Code Scanning
+
+on:
+  push:
+    branches:
+      - "master"
+  pull_request:
+    branches:
+      - "master"
+
+jobs:
+  katalon-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Katalon Studio Github Action
+        uses: katalon-studio/katalon-studio-github-action@v2
+        with:
+          version: '8.5.5'
+          projectPath: '${{ github.workspace }}'
+          args: '-noSplash -retry=0 -testSuiteCollectionPath="Test Suites/Simple Test Suite Collection" -apiKey=${{ secrets.API_KEY }} --config -webui.autoUpdateDrivers=true'
+
+  code-scanning:
+    needs: katalon-test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v2
+        with:
+          java-version: '8'
+          distribution: 'adopt'
+
+      - name: Install Groovy
+        run: |
+          sudo apt-get update
+          sudo apt-get install groovy
+          echo "Groovy installed successfully"
+
+      - name: Install Dependencies
+        run: |
+          echo "Configuring Grape..."
+          mkdir -p ~/.groovy
+          echo "groovy.grape.report.downloads=true" > ~/.groovy/grapeConfig.xml
+          echo "Configured Grape"
+          groovy -e "groovy.grape.Grape.grab(group:'commons-cli', module:'commons-cli', version:'1.4')"
+          echo "Dependencies installed"
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: ${{ matrix.language }}
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
