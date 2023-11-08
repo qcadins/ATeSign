@@ -30,7 +30,7 @@ jobs:
 
       - name: Run Katalon Tests
         run: |
-          ./path/to/your/katalon.sh -noSplash -runMode=console -consoleLog -projectPath="${{ github.workspace }}/YourKatalonProject.prj" -testSuitePath="Test Suites/YourTestSuite" -apiKey=${{ secrets.KATALON_API_KEY }}
+          ./katalon.sh -noSplash -runMode=console -consoleLog -projectPath="${{ github.workspace }}/YourKatalonProject.prj" -testSuitePath="Test Suites/YourTestSuite" -apiKey=${{ secrets.KATALON_API_KEY }}
         working-directory: ${{ github.workspace }}
 
       - name: Run Codacy Analysis CLI
