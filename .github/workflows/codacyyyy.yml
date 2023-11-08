@@ -34,7 +34,7 @@ jobs:
         working-directory: ${{ github.workspace }}
 
       - name: Run Codacy Analysis CLI
-        uses: codacy/codacy-analysis-cli-action@main
+        uses: codacy/codacy-analysis-cli-action@master
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           verbose: true
