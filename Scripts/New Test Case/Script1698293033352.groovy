@@ -20,5 +20,5 @@ import org.openqa.selenium.Keys as Keys
 println(((CustomKeywords.'customizekeyword.GetEmail.getEmailContent'('USERCJFI@OUTLOOK.COM', 'P@ssw0rd123!', 'OTP'))
 	
 	int asdgg = 'asfasf'
-}
+}}
 
