@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>API Sign Document Normal StoreDB</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>429754ca-31ee-4a0c-8d7f-bfe09ce2c1c7</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>07d344df-adb7-4c3d-bbf6-5a97bbabcb5e</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Registrasi/BulkSignDocument'</defaultValue>
+      <description></description>
+      <id>07d344df-adb7-4c3d-bbf6-5a97bbabcb5e</id>
+      <masked>false</masked>
+      <name>API_Excel_Path</name>
+   </variable>
+</TestCaseEntity>

@@ -219,10 +219,10 @@ public class DataVerif {
 	}
 
 	@Keyword
-	getVendorNameForSaldo(Connection conn, String refNumber) {
+	getVendorNameForSaldo(Connection conn, String value) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select msv.vendor_name from ms_vendor msv left join tr_document_d tdd on tdd.id_ms_vendor = msv.id_ms_vendor left join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h where tdh.ref_number = '" + refNumber + "' limit 1")
+		resultSet = stm.executeQuery("select msv.vendor_name from ms_vendor msv left join tr_document_d tdd on tdd.id_ms_vendor = msv.id_ms_vendor left join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h where tdh.ref_number = '" + value + "' OR tdd.document_id = '"+value+"' limit 1")
 
 		metadata = resultSet.metaData
 
@@ -428,10 +428,10 @@ public class DataVerif {
 	}
 
 	@Keyword
-	getEmailServiceFromUser(Connection conn, String hashPhone, String vendorName) {
+	getEmailServiceFromUser(Connection conn, String hashPhone) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select msvr.email_service from ms_vendor_registered_user msvr LEFT JOIN am_msuser amm on amm.id_ms_user = msvr.id_ms_user LEFT JOIN ms_vendor msv on msv.id_ms_vendor = msvr.id_ms_vendor WHERE amm.hashed_phone = '"+hashPhone+"' and msv.vendor_name = '"+vendorName+"'")
+		resultSet = stm.executeQuery("select amm.email_service from am_msuser amm WHERE amm.hashed_phone = '"+hashPhone+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -441,7 +441,7 @@ public class DataVerif {
 		}
 		data
 	}
-	
+
 	@Keyword
 	getEmailFromPhone(Connection conn, String hashPhone) {
 		stm = conn.createStatement()

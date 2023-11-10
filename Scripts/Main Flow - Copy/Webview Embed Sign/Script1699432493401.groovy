@@ -690,7 +690,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
                 , ('sheet') : sheet, ('nomorKontrak') : noKontrak, ('documentId') : documentId, ('emailSigner') : GlobalVariable.storeVar.getAt(
                     GlobalVariable.storeVar.keySet()[0])], FailureHandling.CONTINUE_ON_FAILURE)
 
-        saldoUsed = (saldoUsed + 1)
+        saldoUsed = (saldoUsed + noKontrakPerDoc.size())
 
         GlobalVariable.eSignData.putAt('VerifikasiOTP', 1)
     }
@@ -705,6 +705,8 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 
     noKontrakPerDoc = noKontrak.split(';', -1)
 
+	GlobalVariable.eSignData.putAt('VerifikasiSign', saldoUsed)
+	
     'beri maks 30 sec mengenai perubahan total sign'
     for (b = 1; b <= 3; b++) {
         HashMap<String, String> resultSaldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathFESignDocument
@@ -1427,7 +1429,7 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
     useBiom = 0
 	
 	if (CustomKeywords.'connection.DataVerif.getEmailServiceFromUser'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
-		noTelpSigner)) == '0') {
+		noTelpSigner), vendor) == '0') {
 	noTelpSigner = CustomKeywords.'connection.DataVerif.getEmailFromPhone'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
 			noTelpSigner))
 		}
@@ -1644,8 +1646,6 @@ def checkAutoStamp(Connection conneSign, String noKontrak, HashMap<String, Strin
 	'inisialisasi flag error dms'
 	int flagErrorDMS = 0
 	
-	HashMap resultSaldoAfter = new HashMap()
-
 	'inisialisasi saldo after dan saldo before'
 	String saldoAfter, saldoBefore = resultSaldoBefore.get('Meterai')
 

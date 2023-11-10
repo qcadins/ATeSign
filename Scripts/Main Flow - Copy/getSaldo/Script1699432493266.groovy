@@ -98,15 +98,9 @@ def funcSaldoSign(HashMap result) {
 	
 	ArrayList saldoList = []
 	
-	saldoList = ['Meterai']
-	
-	vendorVerifikasi = 'ESIGN/ADINS'
-	
-	funcFindSaldo(result, vendorVerifikasi, saldoList, forAutosign)
-	
 	if (!vendor.equalsIgnoreCase('Privy') && !vendor.equalsIgnoreCase('DIGISIGN')) {
 		'list data saldo yang perlu diambil'
-		saldoList = ['Liveness', 'Face Compare', 'Liveness Face Compare', 'OTP']
+		saldoList = ['Liveness', 'Face Compare', 'Liveness Face Compare', 'OTP' , 'Meterai']
 		
 		vendorVerifikasi = 'ESIGN/ADINS'
 	} else if (vendor.equalsIgnoreCase('Privy')){

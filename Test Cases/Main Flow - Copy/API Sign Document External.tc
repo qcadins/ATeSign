@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>API Sign Document External</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>176b37f8-b4b6-402b-ab33-5bfb6b54acc4</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>2097dac4-18a4-4ff0-91e2-ef31406e4077</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>d4de8f0b-5c5d-4ef2-868b-c50eac106006</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>ba547920-7a46-46dd-8583-a6572c6748c7</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>2097dac4-18a4-4ff0-91e2-ef31406e4077</id>
+      <masked>false</masked>
+      <name>excelPathAPISignDocument</name>
+   </variable>
+   <variable>
+      <defaultValue>'Login/Setting'</defaultValue>
+      <description></description>
+      <id>d4de8f0b-5c5d-4ef2-868b-c50eac106006</id>
+      <masked>false</masked>
+      <name>excelPathSetting</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>ba547920-7a46-46dd-8583-a6572c6748c7</id>
+      <masked>false</masked>
+      <name>CancelDocsSign</name>
+   </variable>
+</TestCaseEntity>

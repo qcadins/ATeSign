@@ -147,8 +147,6 @@ if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, ro
 
             if ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Sign External)')) == 
             '1') && email.contains('OUTLOOK.COM')) {
-				WebUI.delay(20)
-				
                 'call keyword get otp dari email'
                 otp = (('"' + CustomKeywords.'customizekeyword.GetEmail.getEmailContent'(email, findTestData(excelPathAPISignDocument).getValue(
                         GlobalVariable.NumofColm, rowExcel('Password Signer')), 'OTP')) + '"')
@@ -175,7 +173,7 @@ if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, ro
 				GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration (Sign External)')))
 
 		delayExpiredOTP = (60 * Integer.parseInt(findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm,
-				rowExcel('Setting OTP Active Duration (Sign External)'))))
+				rowExcel('Setting OTP Active Duration'))))
 	}
 	
     'check if mau menggunakan OTP yang salah atau benar'
@@ -780,6 +778,10 @@ def verifySaldoSigned(Connection conneSign, String documentId, String signTypeUs
 
             index = 0
 
+            'check total row dengan yang tertandatangan'
+            checkVerifyEqualOrMatch(WebUI.verifyMatch(variableSaldoRow.size().toString(), saldoUsedperDoc.toString(), false, 
+                    FailureHandling.CONTINUE_ON_FAILURE), ' pada jumlah tertanda tangan dengan row transaksi ')
+
             'looping mengenai rownya'
             for (int j = 1; j <= variableSaldoRow.size(); j++) {
                 'looping mengenai columnnya'
@@ -871,8 +873,6 @@ def checkAutoStamp(Connection conneSign, String noKontrak, HashMap<String, Strin
 
 	'inisialisasi flag error dms'
 	int flagErrorDMS = 0
-	
-	HashMap resultSaldoAfter = new HashMap()
 	
 	'inisialisasi saldo after dan before'
 	String saldoAfter, saldoBefore = resultSaldoBefore.get('Meterai')

@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[(text() = 'Tanda Tangan Dokumen' or . = 'Tanda Tangan Dokumen')]</value>
+         <value>//*[@href = '/master/documents/manual-upload']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -18,14 +18,22 @@
       <name>xpath</name>
       <type>Main</type>
       <value>//*[contains(@class, 'sidebar-content main-menu-content')]/div[1]/ul/li[7]</value>
-      <webElementGuid>9e3fe07b-8eb1-4f26-91f7-d940dc3cf44e</webElementGuid>
+      <webElementGuid>de049f0c-0437-471c-9adb-9d090ac57653</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>text</name>
       <type>Main</type>
       <value>Tanda Tangan Dokumen</value>
-      <webElementGuid>1cc1676e-e06a-4e30-b4db-eb625dc7e54a</webElementGuid>
+      <webElementGuid>ce185fa6-bc53-4fa0-850a-97448d93e7d5</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>href</name>
+      <type>Main</type>
+      <value>/master/documents/manual-upload</value>
+      <webElementGuid>5618c5aa-1aa1-4e40-8a78-d2596a66d817</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

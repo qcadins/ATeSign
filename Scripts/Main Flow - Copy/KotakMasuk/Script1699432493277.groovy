@@ -511,7 +511,7 @@ for (t = 0; t < resultHashMap.keySet().size(); t++) {
             } else {
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                     ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
-                    ';') ) + 'Proses tidak selesai untuk proses View dokumen tanda tangan. ')
+                    ';') + GlobalVariable.ReasonFailedProcessNotDone) + ' untuk proses View dokumen tanda tangan. ')
             }
         }
 		loopingPerDocument++

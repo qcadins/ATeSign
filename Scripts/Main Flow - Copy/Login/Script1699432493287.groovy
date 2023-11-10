@@ -58,10 +58,6 @@ if (email == '') {
         'click button login'
         WebUI.click(findTestObject('Login/button_Login'), FailureHandling.STOP_ON_FAILURE)
 
-		WebUI.delay(1)
-		
-		WebUI.focus(findTestObject('Login/input_Perusahaan'))
-		
         'input perusahaan'
         WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel(
                     'Perusahaan')))

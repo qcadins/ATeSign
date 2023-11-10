@@ -1349,7 +1349,7 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
     useBiom = 0
 
     if (CustomKeywords.'connection.DataVerif.getEmailServiceFromUser'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
-            noTelpSigner), vendor) == '0') {
+            noTelpSigner)) == '0') {
         noTelpSigner = CustomKeywords.'connection.DataVerif.getEmailFromPhone'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
                 noTelpSigner))
     }
@@ -1525,7 +1525,7 @@ def verifBiomMethod(int isLocalhost, int maxFaceCompDB, int countLivenessFaceCom
                 countSaldoSplitLiveFCused++
             }
             
-            GlobalVariable.eSignData.putAt('VerifkasiBiometric', countSaldoSplitLiveFCused)
+            GlobalVariable.eSignData.putAt('VerifikasiBiometric', countSaldoSplitLiveFCused)
 
             'ambil message error'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
@@ -1571,6 +1571,8 @@ def checkAutoStamp(Connection conneSign, String noKontrak, HashMap<String, Strin
 
 	'inisialisasi flagerrordms'
 	int flagErrorDMS = 0
+	
+	HashMap resultSaldoAfter = new HashMap()
 	
 	'inisialisasi saldoafter dan saldobefore dengan resultsaldobefore'
 	String saldoAfter, saldoBefore = resultSaldoBefore.get('Meterai')

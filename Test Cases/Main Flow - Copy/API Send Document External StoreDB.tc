@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>API Send Document External StoreDB</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>8abe8ff2-15b6-40c5-a075-80d2d65afbbc</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>e8ffe962-0dfa-4c2c-8430-dadae9e56ef3</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>9a36cb74-f447-4d1b-8350-cc88974adc31</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>b1f97b98-8f54-4aaa-a185-fcfbb893a323</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>e8ffe962-0dfa-4c2c-8430-dadae9e56ef3</id>
+      <masked>false</masked>
+      <name>signlocStoreDB</name>
+   </variable>
+   <variable>
+      <defaultValue>[]</defaultValue>
+      <description></description>
+      <id>9a36cb74-f447-4d1b-8350-cc88974adc31</id>
+      <masked>false</masked>
+      <name>responsePsreCode</name>
+   </variable>
+   <variable>
+      <defaultValue>[]</defaultValue>
+      <description></description>
+      <id>b1f97b98-8f54-4aaa-a185-fcfbb893a323</id>
+      <masked>false</masked>
+      <name>signlocStoreDBSplit</name>
+   </variable>
+</TestCaseEntity>

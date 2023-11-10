@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>API Send Document Normal</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>d14e5712-dbf9-46e6-8075-a5b667049462</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>5fe832c0-7f27-454e-a4bb-28e600c7c86a</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>5fe832c0-7f27-454e-a4bb-28e600c7c86a</id>
+      <masked>false</masked>
+      <name>API_Excel_Path</name>
+   </variable>
+</TestCaseEntity>

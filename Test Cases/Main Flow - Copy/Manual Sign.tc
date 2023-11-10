@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>Manual Sign</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>29406ec2-fde0-4ee2-8861-17143ec2b127</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>f375e9b7-0c9f-418a-ba74-7300a888c08c</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>f375e9b7-0c9f-418a-ba74-7300a888c08c</id>
+      <masked>false</masked>
+      <name>excelPathManualSigntoSign</name>
+   </variable>
+</TestCaseEntity>
