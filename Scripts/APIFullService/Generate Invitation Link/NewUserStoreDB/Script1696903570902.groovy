@@ -127,10 +127,10 @@ if (GlobalVariable.Psre == 'VIDA') {
                 excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('idKTP')).replace('"','').toUpperCase())
 
         'verify request status 0 karena belum terverifikasi'
-        arrayMatch.add(WebUI.verifyMatch('0', result[arrayindex++], false, FailureHandling.OPTIONAL))
+        arrayMatch.add(WebUI.verifyMatch('2', result[arrayindex++], false, FailureHandling.OPTIONAL))
 
         'verify is external 0 karena melalui UI buatundangan'
-        arrayMatch.add(WebUI.verifyMatch('1', result[arrayindex++], false, FailureHandling.OPTIONAL))
+        arrayMatch.add(WebUI.verifyMatch('0', result[arrayindex++], false, FailureHandling.OPTIONAL))
 
         if (arrayMatch.contains(false)) {
             'jika sudah delay ke 5 maka dianggap failed'

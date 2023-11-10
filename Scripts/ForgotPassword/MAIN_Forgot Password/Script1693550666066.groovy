@@ -22,15 +22,6 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'get colm excel'
 int countColmExcel = findTestData(excelPathForgotPass).columnNumbers
 
-'open browser'
-WebUI.openBrowser('')
-
-'navigate to url esign'
-WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 2))
-
-'maximized window'
-WebUI.maximizeWindow()
-
 sheet = 'Forgot Password'
 
 'looping saldo'
@@ -42,7 +33,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		if (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 			GlobalVariable.FlagFailed = 0
 		}
+		
+		'call function open browser'
+		openBrowser()
 
+		String tenantcode = CustomKeywords.'connection.ForgotPassword.getTenantCode'(conneSign,
+			findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('$EmailForPassChange')))
+		
+		if (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration (Empty/0/1/>1)')).length() > 0) {
+			'ubah durasi aktif di DB'
+			CustomKeywords.'connection.ForgotPassword.updateOTPActiveDuration'(conneSign, tenantcode,
+				Integer.parseInt(findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration (Empty/0/1/>1)'))))
+		}
+		
 		'angka untuk menghitung data mandatory yang tidak terpenuhi'
 		int isMandatoryComplete = Integer.parseInt(findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Mandatory Complete')))
 		
@@ -326,20 +329,12 @@ WebUI.closeBrowser()
 def verifConfirmation(Connection conneSign) {
 	
 	boolean shouldContinue = false
-		
-	String tenantcode = CustomKeywords.'connection.ForgotPassword.getTenantCode'(conneSign,
-		findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('$EmailForPassChange')))
 	
 	'jika perlu tunggu hingga code expired'
 	if (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration (Empty/0/1/>1)')).length() > 0) {
 		
-		'ubah durasi aktif di DB'
-		CustomKeywords.'connection.ForgotPassword.updateOTPActiveDuration'(conneSign, tenantcode,
-			Integer.parseInt(findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration (Empty/0/1/>1)'))))
-		
-		'ambil durasi aktif OTP dari DB'
-		int OTPActiveDuration = CustomKeywords.'connection.ForgotPassword.getOTPActiveDuration'(conneSign,
-			findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('$EmailForPassChange')))
+		'ambil durasi aktif OTP dari update excel'
+		int OTPActiveDuration = Integer.parseInt(findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration (Empty/0/1/>1)')))
 		
 		'kondisi jika OTP tidak 0 dan null'
 		if (OTPActiveDuration != 0 && OTPActiveDuration != null) {
@@ -438,4 +433,15 @@ def checkVerifyEqualorMatch(Boolean isMatch, String reason) {
 			((findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) +
 			reason)
 	}
+}
+
+def openBrowser() {
+	'open browser'
+	WebUI.openBrowser('')
+	
+	'navigate to url esign'
+	WebUI.navigateToUrl(findTestData('Login/Login').getValue(1, 2))
+	
+	'maximized window'
+	WebUI.maximizeWindow()
 }
