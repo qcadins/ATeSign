@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "F25A3769E6E1580BB4F76FBDE651D5FC",
+  "keywordFileContentHash": "6FC454EF8071252CEA3A1E026FFF13FC",
   "keywordClasses": [
     {
       "name": "connection.DataVerif",
@@ -457,7 +457,7 @@
               }
             },
             {
-              "name": "refNumber",
+              "name": "value",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -887,19 +887,6 @@
             },
             {
               "name": "hashPhone",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.lang.String",
-                "unresolvedClassName": "String",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            },
-            {
-              "name": "vendorName",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

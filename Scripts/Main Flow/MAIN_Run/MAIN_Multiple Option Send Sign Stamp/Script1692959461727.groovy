@@ -18,7 +18,7 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 sheet = 'Main'
 
 'looping untuk menjalankan Main'
-for (GlobalVariable.NumofColm = 29; GlobalVariable.NumofColm <= findTestData(excelPathMain).columnNumbers; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 3; GlobalVariable.NumofColm <= findTestData(excelPathMain).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
     } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
@@ -45,6 +45,7 @@ for (GlobalVariable.NumofColm = 29; GlobalVariable.NumofColm <= findTestData(exc
                 -1)
 
 			signerInput = checkingDocAndEmailFromInput(documentId, '$email (Send External)', signerInput)
+			
 
         } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
         'API Send Document Normal') {

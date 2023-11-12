@@ -317,13 +317,12 @@ def verifySaldoUsed(Connection conneSign, String sheet, String refNumber, int pr
             'Jika u di lokasi qty atau kolom ke 9'
             if (u == 9) {
                 'Jika yang qtynya 1 dan databasenya juga, berhasil'
-                if ((WebUI.getText(modifyperrowpercolumn) == '1') || ((inquiryDB[index]) == '-1')) {
+                if ((WebUI.getText(modifyperrowpercolumn) == '1') || ((inquiryDB[index++]) == '-1')) {
                     'Jika bukan untuk 2 kolom itu, maka check ke db'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch('-' + WebUI.getText(modifyperrowpercolumn), inquiryDB[index], 
                             false, FailureHandling.CONTINUE_ON_FAILURE), 'pada Kuantitas di Mutasi Saldo dengan nomor kontrak ' + 
                         refNumber)
 
-                    index++
                 } else {
                     'Jika bukan -1, atau masih 0. Maka ttdnya dibilang error'
                     GlobalVariable.FlagFailed = 1
@@ -334,16 +333,14 @@ def verifySaldoUsed(Connection conneSign, String sheet, String refNumber, int pr
                             rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedSignGagal) + ' terlihat pada Kuantitas di Mutasi Saldo dengan nomor kontrak ') + 
                         refNumber)
 
-                    index++
                 }
             } else if (u == (variableSaldoColumn.size() / variableSaldoRow.size())) {
                 'Jika di kolom ke 10, atau di FE table saldo'
             } else {
                 'check table'
-                checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyperrowpercolumn), inquiryDB[index], false, 
+                checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyperrowpercolumn), inquiryDB[index++], false, 
                         FailureHandling.CONTINUE_ON_FAILURE), 'pada Mutasi Saldo dengan nomor Kontrak ' + refNumber)
 
-                index++
             }
         }
     }

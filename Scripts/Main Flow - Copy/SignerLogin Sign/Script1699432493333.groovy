@@ -705,7 +705,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 	GlobalVariable.eSignData.putAt('VerifikasiSign', saldoUsed)
 	
 	GlobalVariable.eSignData.putAt('NoKontrakProcessed', noKontrak)
-    
+	
     checkAutoStamp(conneSign, noKontrak, resultSaldoBefore)
 
     'check flagBreak untuk sequential'
@@ -1179,8 +1179,8 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
     'ubah pemakaian biom menjadi false'
     useBiom = 0
 
-    if (CustomKeywords.'connection.DataVerif.getEmailServiceFromUser'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
-            noTelpSigner)) == '0') {
+    if (CustomKeywords.'connection.DataVerif.getEmailServiceFromUser'(conneSign, CustomKeywords.'connection.DataVerif.getEmailServiceFromUser'(
+            conneSign, noTelpSigner)) == '0') {
         noTelpSigner = CustomKeywords.'connection.DataVerif.getEmailFromPhone'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
                 noTelpSigner))
     }
@@ -1356,7 +1356,7 @@ def verifBiomMethod(int isLocalhost, int maxFaceCompDB, int countLivenessFaceCom
                 countSaldoSplitLiveFCused++
             }
             
-            GlobalVariable.eSignData.putAt('VerifkasiBiometric', countSaldoSplitLiveFCused)
+            GlobalVariable.eSignData.putAt('VerifikasiBiometric', countSaldoSplitLiveFCused)
 
             'ambil message error'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
