@@ -50,22 +50,22 @@ public class ForgotPassword {
 		Integer.parseInt(data)
 	}
 
-	@Keyword
-	getOTPActiveDuration(Connection conn, String email) {
-
-		stm = conn.createStatement()
-
-		resultSet = stm.executeQuery("SELECT mt.otp_active_duration FROM am_msuser amu LEFT JOIN ms_useroftenant mot ON mot.id_ms_user = amu.id_ms_user LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mot.id_ms_tenant LEFT JOIN tr_document_h tdh ON tdh.id_ms_tenant = mt.id_ms_tenant WHERE amu.login_id = '" + email + "' ORDER BY id_document_h DESC LIMIT 1")
-
-		while (resultSet.next()) {
-			data = resultSet.getObject(1)
-		}
-		if (data != null) {
-			Integer.parseInt(data)
-		} else {
-			data = 0
-		}
-	}
+//	@Keyword
+//	getOTPActiveDuration(Connection conn, String email) {
+//
+//		stm = conn.createStatement()
+//
+//		resultSet = stm.executeQuery("SELECT mt.otp_active_duration FROM am_msuser amu LEFT JOIN ms_useroftenant mot ON mot.id_ms_user = amu.id_ms_user LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mot.id_ms_tenant LEFT JOIN tr_document_h tdh ON tdh.id_ms_tenant = mt.id_ms_tenant WHERE amu.login_id = '" + email + "' ORDER BY id_document_h DESC LIMIT 1")
+//
+//		while (resultSet.next()) {
+//			data = resultSet.getObject(1)
+//		}
+//		if (data != null) {
+//			Integer.parseInt(data)
+//		} else {
+//			data = 0
+//		}
+//	}
 
 	@Keyword
 	getResetNum(Connection conn, String email) {
