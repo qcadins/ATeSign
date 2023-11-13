@@ -952,16 +952,40 @@ def checkPopup() {
         'label popup diambil'
         lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
 
+		if (!(lblpopup.contains('Kode OTP salah')) && !(lblpopup.contains('Kode OTP Anda sudah kadaluarsa'))) {
         'Tulis di excel sebagai failed dan error.'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
             (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
                 '-', '') + ';') + '<') + lblpopup) + '>')
 
+			return true
+		}
+
         'Klik OK untuk popupnya'
         WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
-		
-		return true
+
     }
+}
+
+def checkPopupDoneness() {
+	'Jika popup muncul'
+	if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+	} else {
+		'label popup diambil'
+		lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
+
+		if (!(lblpopup.contains('Kode OTP salah')) && !(lblpopup.contains('Kode OTP Anda sudah kadaluarsa'))) {
+		'Tulis di excel sebagai failed dan error.'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+			(((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+				'-', '') + ';') + '<') + lblpopup) + '>')
+
+		}
+
+		'Klik OK untuk popupnya'
+		WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
+
+	}
 }
 
 def checkKonfirmasiTTD() {
@@ -1426,15 +1450,15 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
     'ubah pemakaian biom menjadi false'
     useBiom = 0
 	
-	if (CustomKeywords.'connection.DataVerif.getEmailServiceFromUser'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
-		noTelpSigner)) == '0') {
+    if (CustomKeywords.'connection.DataVerif.getEmailServiceFromUser'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
+            noTelpSigner)) == '0') {
 	noTelpSigner = CustomKeywords.'connection.DataVerif.getEmailFromPhone'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
 			noTelpSigner))
 		}
 
     'Verifikasi antara no telp yang dinput dengan yang sebelumnya'
     checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('KotakMasuk/Sign/lbl_phoneNo'), 'value'), 
-            noTelpSigner, false), '')
+            noTelpSigner, false, FailureHandling.CONTINUE_ON_FAILURE), ' kesalahan value email / no hp pada page Request OTP ')
 
 	email = GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0])
 	
@@ -1504,8 +1528,10 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
             'berikan waktu delay'
             WebUI.delay(298 - delayExpiredOTP)
 
+			WebUI.focus(findTestObject('KotakMasuk/Sign/btn_ResendOTP'))
+			
             'Klik resend otp'
-            WebUI.click(findTestObject('KotakMasuk/Sign/btn_ResendOTP'))
+            WebUI.click(findTestObject('KotakMasuk/Sign/btn_ResendOTP'), FailureHandling.CONTINUE_ON_FAILURE)
 
             for (loopingTimer = 1; loopingTimer <= 5; loopingTimer++) {
                 'Memberikan delay 10 karena OTP after terlalu cepat'
@@ -1524,8 +1550,12 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
                             GlobalVariable.StatusFailed, (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                                 rowExcel('Reason Failed')).replace('-', '') + ';') + 'OTP Before dan After sama setelah ') + 
                             (loopingTimer * 2)) + ' detik')
-                    }
-                }
+                    } else {
+						listOTP.remove(w)
+					}
+                } else {
+					break
+				}
             }
             
             'Jika looping telah diterakhir, baru set text'
@@ -1533,6 +1563,7 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
                 'value OTP dari db'
                 WebUI.setText(findTestObject('KotakMasuk/Sign/input_OTP'), otpAfter, FailureHandling.CONTINUE_ON_FAILURE)
 
+				WebUI.focus(findTestObject('KotakMasuk/Sign/btn_ProsesOTP'))
                 'klik verifikasi OTP'
                 WebUI.click(findTestObject('KotakMasuk/Sign/btn_ProsesOTP'))
             }
@@ -1542,6 +1573,10 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
         countResend = 0
     }
     
+	'check pop up'
+	if (checkPopupDoneness() == true) {
+		return false
+	}
     countResend++
 
     GlobalVariable.eSignData.putAt('VerifikasiOTP', countResend)

@@ -12,7 +12,7 @@ import org.openqa.selenium.JavascriptExecutor as JavascriptExecutor
 import org.openqa.selenium.WebDriver as WebDriver
 
 'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
+GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign Main 4.xlsx')
 
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
@@ -39,6 +39,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			'call test case login per case'
 			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathDownRep, ('Email') : 'Email Login', ('Password') : 'Password Login'
 				, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
+			
+			settingzoom()
 			
 			'apakah cek paging diperlukan di awal run'
 			if(GlobalVariable.checkPaging.equals('Yes')) {
@@ -125,7 +127,6 @@ def rowExcel(String cellValue) {
 }
 
 def checkPaging(Connection conneSign, int resultTotalData) {
-	settingzoom()
 
 	'get text total data dari ui'
 	Total = WebUI.getText(findTestObject('DownloadReport/label_TotalData')).split(' ')
