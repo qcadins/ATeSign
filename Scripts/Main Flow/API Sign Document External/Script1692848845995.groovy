@@ -162,6 +162,8 @@ if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, ro
             }
             
             println(otp)
+        }  else {
+            getErrorMessageAPI(respon_OTP)
         }
     }
 	   } else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use correct OTP From Database (Sign External)')).split(
