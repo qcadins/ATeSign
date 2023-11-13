@@ -187,6 +187,17 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
 			'delay untuk menunggu OTP'
 			WebUI.delay(5)
 			
+//			'check if must use wa first / use wa message'
+//			if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')).length() > 0 &&
+//				findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')).length() > 0) {
+//			
+//				'delay 30 detik untuk input otp ke excel dari WA'
+//				WebUI.delay(30)
+//					
+//				'get otp yang diinput dari excel'
+//				OTP = findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Wrong OTP - Aktivasi'))
+//			}
+			
 			'input OTP'
 			WebUI.setText(findTestObject('RegisterEsign/FormAktivasiEsign/input_OTP'), OTP)
 	
