@@ -245,8 +245,8 @@ for (int i = 0; i < docid.size(); i++) {
 
             for (loopPerSignActionPerSigner = 0; loopPerSignActionPerSigner < signActions.size(); loopPerSignActionPerSigner++) {
         'Jika signAction tersebut adalah AT'
-        if ((signAction[loopPerSignActionPerSigner]).replace('"', '') == 'at') {
-			
+        if ((signActions[loopPerSignActionPerSigner]).replace('"', '') == 'at') {
+			if (!responsePsreCode[i].toString().equalsIgnoreCase('Privy')) {
 			'Mengambil trxno dari column tersebut'
 			trxno = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('trxNo')).split(', ', -1)
 
@@ -283,6 +283,7 @@ for (int i = 0; i < docid.size(); i++) {
             arrayMatch.add(WebUI.verifyMatch(resulttrxsigning[arrayindex++], ('Auto Sign (' + emailSign) + ')', false, FailureHandling.CONTINUE_ON_FAILURE))
         }
     }
+            }
 }
 
 'jika data db tidak sesuai dengan excel'

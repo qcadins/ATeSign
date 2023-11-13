@@ -41,7 +41,7 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description>Pemakaian di Main Flow untuk storing saldo</description>
-      <initValue>[('VerifkasiBiometric') : 0, ('VerifikasiOTP') : 0, ('VerifikasiSign') : 0]</initValue>
+      <initValue>[('VerifikasiBiometric') : 0, ('VerifikasiOTP') : 0, ('VerifikasiSign') : 0]</initValue>
       <name>eSignData</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>

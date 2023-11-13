@@ -23,7 +23,7 @@ sheet = 'Main'
 def currentDate = new Date().format('yyyy-MM-dd')
 
 'looping untuk menjalankan Main'
-for (GlobalVariable.NumofColm = 29; GlobalVariable.NumofColm <= findTestData(excelPathMain).columnNumbers; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 3; GlobalVariable.NumofColm <= findTestData(excelPathMain).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
     } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
@@ -33,7 +33,7 @@ for (GlobalVariable.NumofColm = 29; GlobalVariable.NumofColm <= findTestData(exc
 
         inisializeValue()
 		
-		String vendor
+		String vendor, signType
 		
 		HashMap<String, String> resultSaldoBefore, resultSaldoAfter
 		
@@ -304,15 +304,11 @@ for (GlobalVariable.NumofColm = 29; GlobalVariable.NumofColm <= findTestData(exc
 			GlobalVariable.eSignData.putAt('CountVerifikasiOTP', GlobalVariable.eSignData.getAt('CountVerifikasiOTP') + GlobalVariable.eSignData.getAt('VerifikasiOTP'))
 			
 			'total saldo biometric'
-			GlobalVariable.eSignData.putAt('CountVerifikasiBiometric', GlobalVariable.eSignData.getAt('CountVerifikasiOTP') + GlobalVariable.eSignData.getAt('VerifikasiBiometric'))
+			GlobalVariable.eSignData.putAt('CountVerifikasiBiometric', GlobalVariable.eSignData.getAt('CountVerifikasiBiometric') + GlobalVariable.eSignData.getAt('VerifikasiBiometric'))
 
 			'total saldo sign'
 			GlobalVariable.eSignData.putAt('CountVerifikasiSign', GlobalVariable.eSignData.getAt('CountVerifikasiSign') + GlobalVariable.eSignData.getAt('VerifikasiSign'))
-			
-			
-			println GlobalVariable.eSignData
-			
-			WebUI.delay(50)
+
 			'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
 			WebUI.callTestCase(findTestCase('Main Flow/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathMain
 					, ('sheet') : sheet, ('nomorKontrak') : GlobalVariable.eSignData.getAt('NoKontrakProcessed'), ('vendor') : vendor],
@@ -328,17 +324,16 @@ for (GlobalVariable.NumofColm = 29; GlobalVariable.NumofColm <= findTestData(exc
 				}
 				
 				'Jika count saldo sign/ttd diatas (after) sama dengan yang dulu/pertama (before) dikurang jumlah dokumen yang ditandatangani'
-				if (WebUI.verifyEqual(resultSaldoBefore.get(signType) - GlobalVariable.eSignData.getAt('CountVerifikasiOTP'), Integer.parseInt(resultSaldoAfter.get(signType)), FailureHandling.OPTIONAL)) {
+				if (WebUI.verifyEqual(Integer.parseInt(resultSaldoBefore.get(signType)) - GlobalVariable.eSignData.getAt('CountVerifikasiSign'), Integer.parseInt(resultSaldoAfter.get(signType)), FailureHandling.OPTIONAL)) {
 
 					flagBreak = 0
-		
+					
 					'cek apa pernah menggunakan biometrik'
 						'Jika count saldo otp after dengan yang before dikurangi 1 ditambah dengan '
-						if (WebUI.verifyEqual(Integer.parseInt(resultSaldoBefore.get('OTP')) - GlobalVariable.eSignData.getAt('CountVerifikasiSign'), Integer.parseInt(resultSaldoAfter.get(
-									'OTP')), FailureHandling.OPTIONAL)) 
+						WebUI.verifyEqual(Integer.parseInt(resultSaldoBefore.get('OTP')) - GlobalVariable.eSignData.getAt('CountVerifikasiOTP'), Integer.parseInt(resultSaldoAfter.get(
+									'OTP')), FailureHandling.OPTIONAL) 
 					
-					
-					if (Integer.parseInt(GlobalVariable.eSignData.getAt('CountVerifikasiBiometric')) > 0) {
+					if (GlobalVariable.eSignData.getAt('CountVerifikasiBiometric') > 0) {
 						'cek saldo liveness facecompare dipisah atau tidak'
 						String isSplitLivenessFc = CustomKeywords.'connection.APIFullService.getSplitLivenessFaceCompareBill'(conneSign)
 		
@@ -357,14 +352,13 @@ for (GlobalVariable.NumofColm = 29; GlobalVariable.NumofColm <= findTestData(exc
 							}
 						}
 					}
+						
 				}
 				
 			'loopig berdasarkan total dokumen dari dokumen template code'
 			for (i = 0; i < GlobalVariable.eSignData.getAt('NoKontrakProcessed').split(';', -1).size(); i++) {
 				'ambil nama vendor dari DB'
 				vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, GlobalVariable.eSignData.getAt('NoKontrakProcessed').split(';',-1)[i])
-			
-				String signType
 				
 				if (vendor == 'DIGISIGN') {
 					signType = 'Document'
@@ -474,8 +468,8 @@ for (GlobalVariable.NumofColm = 29; GlobalVariable.NumofColm <= findTestData(exc
 		
 		String formattedElapsedTime = DurationFormatUtils.formatDurationHMS(watch.getTime())
 		
-		println("Elapsed Time: ${formattedElapsedTime}")
-		
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Objective') - 1,
+			GlobalVariable.NumofColm - 1, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Objective')) + '\n' + 'Elapsed Time: ' + formattedElapsedTime)
     }
 }
 
