@@ -501,7 +501,7 @@ public class SendSign {
 	getProyectionOfVendorForSend(Connection conn, String documentTemplateCode, String tenantCode) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select msv.vendor_code from ms_doc_template mdt left join ms_tenant mst on mdt.id_ms_tenant = mst.id_ms_tenant join ms_vendor msv on mdt.id_ms_vendor = msv.id_ms_vendor WHERE mst.tenant_code = '"+tenantCode+"' AND mdt.doc_template_code = '"+documentTemplateCode+"'")
+		resultSet = stm.executeQuery("select msv.vendor_name from ms_doc_template mdt left join ms_tenant mst on mdt.id_ms_tenant = mst.id_ms_tenant join ms_vendor msv on mdt.id_ms_vendor = msv.id_ms_vendor WHERE mst.tenant_code = '"+tenantCode+"' AND mdt.doc_template_code = '"+documentTemplateCode+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

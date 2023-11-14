@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "466E4DD51A230A123A60AA2ED51F455A",
+  "keywordFileContentHash": "C184DC7AAC0B05B3C069709D2225A46E",
   "keywordClasses": [
     {
       "name": "connection.DataVerif",
@@ -870,7 +870,7 @@
           "javadoc": ""
         },
         {
-          "name": "getEmailServiceFromUser",
+          "name": "getEmailServiceFromTenant",
           "parameters": [
             {
               "name": "conn",
@@ -886,7 +886,7 @@
               }
             },
             {
-              "name": "hashPhone",
+              "name": "tenantCode",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -919,6 +919,38 @@
             },
             {
               "name": "hashPhone",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getSentOtpByEmail",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "tenantCode",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

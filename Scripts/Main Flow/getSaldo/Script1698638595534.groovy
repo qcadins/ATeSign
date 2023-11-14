@@ -109,7 +109,7 @@ def funcSaldoSign(HashMap result) {
 		saldoList = ['Liveness', 'Face Compare', 'Liveness Face Compare', 'OTP']
 		
 		vendorVerifikasi = 'ESIGN/ADINS'
-	} else if (vendor.equalsIgnoreCase('Privy')){
+	} else if (vendor.equalsIgnoreCase('Privy')) {
 		vendorVerifikasi = vendor
 		
 		'list data saldo yang perlu diambil'
@@ -150,7 +150,7 @@ def funcSaldoStamp(HashMap result) {
 
 def funcFindSaldo(HashMap result, String vendorVerifikasi, ArrayList saldoList, boolean forAutosign) {
 	'klik ddl untuk tenant memilih mengenai Vida'
-	WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), vendorVerifikasi, false)
+	WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), '(?i)' + vendorVerifikasi, true)
 	
 	'get total div di Saldo'
 	variableDivSaldo = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div > div'))
