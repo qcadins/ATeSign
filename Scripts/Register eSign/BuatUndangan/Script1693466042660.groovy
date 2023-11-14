@@ -44,6 +44,18 @@ if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowEx
 			GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')))
 }
 
+'check ada value maka setting must use wa first'
+if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')).length() > 0) {
+	'setting must use wa first'
+	CustomKeywords.'connection.APIFullService.settingMustUseWAFirst'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')))
+}
+
+'check ada value maka setting use wa message'
+if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')).length() > 0) {
+	'setting use wa message'
+	CustomKeywords.'connection.APIFullService.settingUseWAMessage'(conneSign, findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')))
+}
+
 'check ada value maka setting allow regenerate link'
 if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting Allow Regenarate Link')).length() > 
 0) {
@@ -401,6 +413,15 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
     'get row'
     variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div div'))
 
+	if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')) == '1' &&
+		findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) == '1') {
+		'set tipe saldo yang digunakan WA'
+		useSaldo = 'WhatsApp Message'
+	} else {
+		'set tipe saldo a=yang digunakan OTP'
+		useSaldo = 'OTP'
+	}
+	
     for (index = 2; index <= variable.size(); index++) {
         'modify object box info'
         modifyObjectBoxInfo = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 
@@ -408,7 +429,7 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
             ']/div/div/div/div/div[1]/h3', true)
 
         'check if box info = tipe saldo di excel'
-        if (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('OTP')) {
+        if (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase(useSaldo)) {
             'modify object qty'
             modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 
                 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) + 
