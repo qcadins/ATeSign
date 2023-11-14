@@ -928,12 +928,10 @@ def checkPopupDoneness() {
 		'label popup diambil'
 		lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
 
-		if (!(lblpopup.contains('Kode OTP salah')) && !(lblpopup.contains('Kode OTP Anda sudah kadaluarsa'))) {
 			'Tulis di excel sebagai failed dan error.'
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 				(((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
 					'-', '') + ';') + '<') + lblpopup) + '>')
-		}
 		
 		'Klik OK untuk popupnya'
 		WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
@@ -1366,8 +1364,7 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
     'ubah pemakaian biom menjadi false'
     useBiom = 0
 
-    if (CustomKeywords.'connection.DataVerif.getEmailServiceFromUser'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
-            noTelpSigner)) == '0') {
+    if (CustomKeywords.'connection.DataVerif.getEmailServiceFromTenant'(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))) == '1') {
         noTelpSigner = CustomKeywords.'connection.DataVerif.getEmailFromPhone'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
                 noTelpSigner))
     }
@@ -1489,7 +1486,7 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
         'tidak ada resend, namun menggunakan send otp satu kali'
         countResend = 0
     }
-    
+
 	'check pop up'
 	if (checkPopupDoneness() == true) {
 		return false
