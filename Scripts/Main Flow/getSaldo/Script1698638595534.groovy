@@ -109,7 +109,7 @@ def funcSaldoSign(HashMap result) {
 		saldoList = ['Liveness', 'Face Compare', 'Liveness Face Compare', 'OTP']
 		
 		vendorVerifikasi = 'ESIGN/ADINS'
-	} else if (vendor.equalsIgnoreCase('Privy')){
+	} else if (vendor.equalsIgnoreCase('Privy')) {
 		vendorVerifikasi = vendor
 		
 		'list data saldo yang perlu diambil'
