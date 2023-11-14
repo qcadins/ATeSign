@@ -72,6 +72,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			CustomKeywords.'connection.APIFullService.settingAllowRegenerateLink'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Allow Regenarate Link')))
 		}
 		
+//		'check ada value maka setting must use wa first'
+//		if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')).length() > 0) {
+//			'setting must use wa first'
+//			CustomKeywords.'connection.APIFullService.settingMustUseWAFirst'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')))
+//		}
+//		
+//		'check ada value maka setting use wa message'
+//		if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')).length() > 0) {
+//			'setting use wa message'
+//			CustomKeywords.'connection.APIFullService.settingUseWAMessage'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')))
+//		}
+		
         'check if tidak mau menggunakan tenant code yang benar'
         if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'No') {
             'set tenant kosong'
@@ -153,56 +165,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 						CustomKeywords.'connection.APIFullService.settingLinkIsActive'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('is_active Link')),
 							findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('tlp')).replace('"', ''))
 					}
-					
-					'HIT API'
-					respon = WS.sendRequest(findTestObject('APIFullService/Postman/Generate Invitation Link', [('nama') : findTestData(
-									excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('nama')), ('email') : findTestData(excelPathAPIGenerateInvLink).getValue(
-									GlobalVariable.NumofColm, rowExcel('email')), ('tmpLahir') : findTestData(excelPathAPIGenerateInvLink).getValue(
-									GlobalVariable.NumofColm, rowExcel('tmpLahir')), ('tglLahir') : findTestData(excelPathAPIGenerateInvLink).getValue(
-									GlobalVariable.NumofColm, rowExcel('tglLahir')), ('jenisKelamin') : findTestData(excelPathAPIGenerateInvLink).getValue(
-									GlobalVariable.NumofColm, rowExcel('jenisKelamin')), ('tlp') : findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm,
-									rowExcel('tlp')), ('idKtp') : findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('idKtp'))
-								, ('alamat') : findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('alamat')), ('kecamatan') : findTestData(
-									excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('kecamatan')), ('kelurahan') : findTestData(
-									excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('kelurahan')), ('kota') : findTestData(excelPathAPIGenerateInvLink).getValue(
-									GlobalVariable.NumofColm, rowExcel('kota')), ('provinsi') : findTestData(excelPathAPIGenerateInvLink).getValue(
-									GlobalVariable.NumofColm, rowExcel('provinsi')), ('kodePos') : findTestData(excelPathAPIGenerateInvLink).getValue(
-									GlobalVariable.NumofColm, rowExcel('kodePos')), ('selfPhoto') : selfPhoto, ('idPhoto') : idPhoto, ('region') : findTestData(
-									excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('region')), ('type') : findTestData(excelPathAPIGenerateInvLink).getValue(
-									GlobalVariable.NumofColm, rowExcel('type')), ('office') : findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm,
-									rowExcel('office')), ('businessLine') : findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm,
-									rowExcel('businessLine')), ('taskNo') : findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('taskNo'))
-								, ('callerId') : findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('callerId'))]))
-					
-					'Jika status HIT API 200 OK'
-					if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
-						'get status code'
-						code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
-						
-						if (code == 0) {
-							'mengambil response'
-							GlobalVariable.Link = WS.getElementPropertyValue(respon, 'link', FailureHandling.OPTIONAL)
-							
-							if(findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('is_active Link')) == '0') {
-								'write to excel failed'
-								CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-									GlobalVariable.StatusFailed, (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
-										'-', '') + ';') + ' Link tergenerate walupun sudah tidak active')
-							}
-						} else {
-			               'call function get API error message'
-						   getAPIErrorMessage(respon)
-						   
-						   continue
-			            }
-					} else {
-		               'call function get API error message'
-					   getAPIErrorMessage(respon)
-
-					   continue
-		            }
 				}
 				
+				if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).length() >
+					0) {
+						'call test case inquiry invitation'
+						WebUI.callTestCase(findTestCase('APIFullService/Generate Invitation Link/InquiryInvitation'), [('excelPathAPIGenerateInvLink') : 'APIFullService/API_GenInvLink'],
+								FailureHandling.CONTINUE_ON_FAILURE)
+				}
+					
 				'call test case daftar akun verif'
 				WebUI.callTestCase(findTestCase('APIFullService/Generate Invitation Link/DaftarAkunDataVerif'), [('excelPathAPIGenerateInvLink') : 'APIFullService/API_GenInvLink', ('otpBefore') : saldoBefore[0]], 
 						FailureHandling.CONTINUE_ON_FAILURE)
@@ -494,8 +465,7 @@ def inputFilterSaldo(String tipeSaldo, Connection conneSign) {
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectNoTransaksi), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' No Trx ' + tipeSaldo)
 
 	'verify tgl trx ui = db'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectTanggalTransaksi), (result[arrayIndex++]).replace(
-				'.0', ''), false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Trx ' + tipeSaldo)
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectTanggalTransaksi), (result[arrayIndex++]), false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Trx ' + tipeSaldo)
 
 	'verify tipe trx ui = db'
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectTipeTransaksi), result[arrayIndex++], false,
@@ -508,7 +478,7 @@ def inputFilterSaldo(String tipeSaldo, Connection conneSign) {
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectCatatan), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Notes ' + tipeSaldo)
 
 	'verify qty trx ui = db'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectQty), (result[arrayIndex++]).replace('-', ''),
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectQty), (result[arrayIndex++]),
 			false, FailureHandling.CONTINUE_ON_FAILURE), ' Qty Trx ' + tipeSaldo)
 }
 

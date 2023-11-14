@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>InquiryInvitation</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>0dce58da-2f3e-4331-b38e-ff3aff424793</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>ef66e9b1-7f6a-48f0-a092-5015f4a196ef</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>2cd7ed51-e862-4912-9071-10f6926201f4</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'APIFullService/API_GenInvLink'</defaultValue>
+      <description></description>
+      <id>ef66e9b1-7f6a-48f0-a092-5015f4a196ef</id>
+      <masked>false</masked>
+      <name>excelPathAPIGenerateInvLink</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Generate Invitation Link'</defaultValue>
+      <description></description>
+      <id>2cd7ed51-e862-4912-9071-10f6926201f4</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>
