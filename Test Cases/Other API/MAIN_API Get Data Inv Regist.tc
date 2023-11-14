@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API Get Data Inv Regist</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>e183d046-a0f8-47e2-8c9a-519f87feeb38</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>d347eb80-4a6b-425a-a261-2cb5a4a8b9ab</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>4c107085-965f-44bd-9658-956ae1b9ba39</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/Get Data Inv Register'</defaultValue>
+      <description></description>
+      <id>d347eb80-4a6b-425a-a261-2cb5a4a8b9ab</id>
+      <masked>false</masked>
+      <name>excelPathGetInvData</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Get Data Inv Regist'</defaultValue>
+      <description></description>
+      <id>4c107085-965f-44bd-9658-956ae1b9ba39</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>
