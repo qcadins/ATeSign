@@ -11,9 +11,11 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 ArrayList<String> arrayMatch = []
 
 'get data store db'
-ArrayList<String> result = CustomKeywords.'connection.APIFullService.getGenInvLink'(conneSign, GlobalVariable.Tenant, findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 
-        rowExcel('tlp')).replace('"', ''), findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('idKtp')).replace('"', ''), findTestData(
-        excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace('"', '').toUpperCase())
+ArrayList<String> result = CustomKeywords.'connection.APIFullService.getGenInvLink'(conneSign, GlobalVariable.Tenant.replace('"', ''), findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 
+        rowExcel('tlp')).replace('"', ''), findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('idKtp')).replace('"', ''))
+
+//, findTestData(
+//	excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace('"', '').toUpperCase()
 
 'declare arrayindex'
 arrayindex = 0
@@ -55,9 +57,15 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathGenerateLink).getValue(Gl
 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('provinsi')).replace('"', '').toUpperCase(), 
         result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-'verify email'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace('"', '').toUpperCase(), 
-        result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+if (findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')).length() == 0 ||
+	findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == 0) {
+
+	'verify email'
+	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace('"', '').toUpperCase(),
+			result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+} else {
+	arrayindex++
+}
 
 'verify id no / ktp'
 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('idKtp')).replace('"', ''), result[
@@ -76,7 +84,7 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathGenerateLink).getValue(Gl
         arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'verify tenant code'
-arrayMatch.add(WebUI.verifyMatch(GlobalVariable.Tenant.toUpperCase(), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+arrayMatch.add(WebUI.verifyMatch(GlobalVariable.Tenant.toUpperCase().replace('"',''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'jika data db tidak sesuai dengan excel'
 if (arrayMatch.contains(false)) {
