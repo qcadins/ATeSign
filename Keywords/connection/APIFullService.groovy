@@ -1275,14 +1275,14 @@ public class APIFullService {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	settingMustUseWAFirst(Connection conn, String value) {
 		stm = conn.createStatement()
 
 		updateVariable = stm.executeUpdate("UPDATE ms_tenant SET must_use_wa_first = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
 	}
-	
+
 	@Keyword
 	settingUseWAMessage(Connection conn, String value) {
 		stm = conn.createStatement()
