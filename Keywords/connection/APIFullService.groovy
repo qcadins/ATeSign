@@ -1289,12 +1289,30 @@ public class APIFullService {
 
 		updateVariable = stm.executeUpdate("UPDATE ms_tenant SET use_wa_message = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
 	}
-	
+
 	@Keyword
 	getDataInvRegist(Connection conn, String tenant, String email) {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select tril.provinsi, tril.kota, tril.kecamatan, tril.email, tril.is_active, tril.invitation_by, tril.receiver_detail, TO_CHAR(tril.dtm_upd, 'DD-Mon-YYYY HH24:MI:SS') AS formatted_timestamp, mv.resend_activation_link, mv.vendor_name, mv.vendor_code, mv.edit_after_register, mvot.allow_regenerate_inv_link, tril.kelurahan, tril.zip_code, tril.full_name, tril.address, tril.gender, tril.phone, tril.place_of_birth, TO_CHAR(tril.date_of_birth, 'YYYY-Mon-DD') AS formatted_date, tril.id_no from tr_invitation_link as tril join ms_tenant as mst on tril.id_ms_tenant = mst.id_ms_tenant left join ms_vendor mv ON mv.id_ms_vendor = tril.id_ms_vendor left join ms_vendoroftenant mvot ON mvot.id_ms_vendor = tril.id_ms_vendor AND mvot.id_ms_tenant = tril.id_ms_tenant where tril.is_active = '1' and mst.tenant_code = '" + tenant + "' and tril.email = '" + email + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+	@Keyword
+	getInvRegisterData(Connection conn, String email) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select tril.provinsi, tril.kota, tril.kecamatan, tril.email, tril.kelurahan, tril.zip_code, tril.full_name, tril.address, tril.gender, tril.phone, tril.place_of_birth, tril.date_of_birth, tril.id_no, mst.tenant_code, mv.vendor_code, mv.vendor_name, mv.verif_phone from tr_invitation_link as tril join ms_tenant as mst on tril.id_ms_tenant = mst.id_ms_tenant left join ms_vendor mv ON mv.id_ms_vendor = tril.id_ms_vendor where tril.is_active = '1' and tril.email = '" + email + "'")
 
 		metadata = resultSet.metaData
 
