@@ -1308,4 +1308,43 @@ public class APIFullService {
 		}
 		listdata
 	}
+	@Keyword
+	getInvRegisterData(Connection conn, String email) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select tril.provinsi, tril.kota, tril.kecamatan, tril.email, tril.kelurahan, tril.zip_code, tril.full_name, tril.address, tril.gender, tril.phone, tril.place_of_birth, tril.date_of_birth, tril.id_no, mst.tenant_code, mv.vendor_code, mv.vendor_name, mv.verif_phone from tr_invitation_link as tril join ms_tenant as mst on tril.id_ms_tenant = mst.id_ms_tenant left join ms_vendor mv ON mv.id_ms_vendor = tril.id_ms_vendor where tril.is_active = '1' and tril.email = '" + email + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+	@Keyword
+	getCountInvCodeonDB(Connection conn, String decrypted) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT COUNT(invitation_code) FROM tr_invitation_link WHERE invitation_code = '" + decrypted + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+
+		if (data != null) {
+			Integer.parseInt(data)
+		} else {
+			data = 0
+		}
+		Integer.parseInt(data)
+	}
 }

@@ -53,4 +53,23 @@ public class PencarianPengguna {
 		}
 		listdata
 	}
+	
+	@Keyword
+	getUserDataAPI(Connection conn, String email) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT ampd.provinsi, ampd.kota, ampd.kecamatan, login_id, ampd.email, CASE WHEN mvru.is_registered = '0' THEN 'Belum Aktivasi - ' || msv.vendor_code ELSE 'Sudah Aktivasi - ' || msv.vendor_code END AS user_status, CASE WHEN LENGTH(mvru.vendor_user_autosign_key) > 0 THEN 'Active - ' || msv.vendor_name ELSE 'Inactive - ' || msv.vendor_name END AS autosign_status, TO_CHAR(mvru.cert_expired_date, 'DD-Mon-YYYY'), ampd.kelurahan, ampd.zip_code, amu.full_name, til.address, ampd.gender, til.phone, ampd.place_of_birth, ampd.date_of_birth, til.id_no, msv.vendor_code FROM am_user_personal_data ampd LEFT JOIN am_msuser amu ON amu.id_ms_user = ampd.id_ms_user LEFT JOIN ms_vendor_registered_user mvru ON mvru.id_ms_user = ampd.id_ms_user LEFT JOIN ms_vendor msv ON msv.id_ms_vendor = mvru.id_ms_vendor LEFT JOIN tr_invitation_link til ON til.receiver_detail = ampd.email WHERE ampd.email = '" + email + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
 }

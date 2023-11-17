@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API Invitation Register Data</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>4443a9a9-b2b7-418d-a24e-6955a29fe716</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>58229f02-289f-4947-b148-b34ff72c691d</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>2f405afc-a806-49dc-bd86-447ef0f5a56f</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/Invitation Register Data'</defaultValue>
+      <description></description>
+      <id>58229f02-289f-4947-b148-b34ff72c691d</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Invitation Register Data'</defaultValue>
+      <description></description>
+      <id>2f405afc-a806-49dc-bd86-447ef0f5a56f</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>

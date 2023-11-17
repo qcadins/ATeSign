@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API Check OTP Email Invitation</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>8479a44e-7f11-4e7a-b3b3-b9ca0dcc678b</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>7b4e5e25-ddf5-4b86-a2ff-290bfcbcc8cf</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>59f0ba62-ab70-455f-bfe2-92c097638b8d</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/Check OTP Email Invitation'</defaultValue>
+      <description></description>
+      <id>7b4e5e25-ddf5-4b86-a2ff-290bfcbcc8cf</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Check OTP Email Invitation'</defaultValue>
+      <description></description>
+      <id>59f0ba62-ab70-455f-bfe2-92c097638b8d</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>
