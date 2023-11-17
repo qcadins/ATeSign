@@ -439,11 +439,11 @@ public class DataVerif {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		
+
 		if (data == null) {
 			data = '0'
 		}
-		
+
 		data
 	}
 

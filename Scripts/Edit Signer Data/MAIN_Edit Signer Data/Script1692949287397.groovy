@@ -31,7 +31,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) !=
 			findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')) || firstRun == 0) {
 			'call test case login per case'
-			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathEditSignerData, ('Email') : 'Email Login', ('Password') : 'Password Login'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathEditSignerData, ('Email') : 'Email Login', ('Password') : 'Password Login'
 				, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
 			
 			'apakah cek paging diperlukan di awal run'

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>API Registrasi</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>d8c5a3dd-b2b4-417c-a787-df4d5ccd3494</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>8d31a08d-ae56-4446-8e86-8fc86201e1f1</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>868a9c67-3a08-4f31-b0c2-7a2b0fffd187</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>13935ffd-f2a2-4ea8-a54e-0de9a2317fb4</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Registrasi/MainRegister'</defaultValue>
+      <description></description>
+      <id>8d31a08d-ae56-4446-8e86-8fc86201e1f1</id>
+      <masked>false</masked>
+      <name>excelPathAPIRegistrasi</name>
+   </variable>
+   <variable>
+      <defaultValue>'MainRegister'</defaultValue>
+      <description></description>
+      <id>868a9c67-3a08-4f31-b0c2-7a2b0fffd187</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+   <variable>
+      <defaultValue>0</defaultValue>
+      <description></description>
+      <id>13935ffd-f2a2-4ea8-a54e-0de9a2317fb4</id>
+      <masked>false</masked>
+      <name>firstRun</name>
+   </variable>
+</TestCaseEntity>

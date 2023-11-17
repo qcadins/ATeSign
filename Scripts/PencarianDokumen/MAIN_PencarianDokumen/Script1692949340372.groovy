@@ -30,7 +30,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		if (findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm - 1, rowExcel('Username')) !=
 			findTestData(excelPathPencarianDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Username')) || firstRun == 0) {
 			'call test case login per case'
-			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathPencarianDokumen, ('Email') : 'Username', ('Password') : 'Password'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathPencarianDokumen, ('Email') : 'Username', ('Password') : 'Password'
 				, ('Perusahaan') : 'Perusahaan', ('Peran') : 'Role'], FailureHandling.STOP_ON_FAILURE)
 			
 			'click menu pencarian dokumen'

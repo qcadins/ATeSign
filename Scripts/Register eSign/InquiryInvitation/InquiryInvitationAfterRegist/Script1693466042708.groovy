@@ -7,7 +7,7 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
 'call test case login per case'
-WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : SheetName, ('Path') : excelPathBuatUndangan, ('Email') : 'Inveditor Login', ('Password') : 'Inveditor Password Login'
+WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : SheetName, ('Path') : excelPathBuatUndangan, ('Email') : 'Inveditor Login', ('Password') : 'Inveditor Password Login'
 	, ('Perusahaan') : 'Inveditor Perusahaan Login', ('Peran') : 'Inveditor Peran Login'], FailureHandling.STOP_ON_FAILURE)
 
 'get data file path'

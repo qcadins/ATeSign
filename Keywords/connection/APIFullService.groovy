@@ -1289,7 +1289,7 @@ public class APIFullService {
 
 		updateVariable = stm.executeUpdate("UPDATE ms_tenant SET use_wa_message = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
 	}
-	
+
 	@Keyword
 	getDataInvRegist(Connection conn, String tenant, String email) {
 		stm = conn.createStatement()

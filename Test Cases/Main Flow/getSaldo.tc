@@ -29,6 +29,12 @@
       <value></value>
       <variableId>394a95fc-d899-44a7-8d02-2aba06f2c38f</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>faa39a49-cf99-4ac9-964c-07bf3b8ee73a</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -56,5 +62,12 @@
       <id>394a95fc-d899-44a7-8d02-2aba06f2c38f</id>
       <masked>false</masked>
       <name>forAutosign</name>
+   </variable>
+   <variable>
+      <defaultValue>0</defaultValue>
+      <description></description>
+      <id>faa39a49-cf99-4ac9-964c-07bf3b8ee73a</id>
+      <masked>false</masked>
+      <name>countCheckSaldo</name>
    </variable>
 </TestCaseEntity>

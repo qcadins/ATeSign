@@ -32,7 +32,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		 if(findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) !=
 			 findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')) || firstRun == 0) {
 			 'panggil fungsi login'
-			 WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
+			 WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet,
 				  ('Path') : excelPathFEPengaturanTenant, ('Email') : 'Email Login', ('Password') : 'Password Login'
 				 , ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
 			 

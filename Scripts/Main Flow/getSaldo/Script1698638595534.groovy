@@ -39,6 +39,8 @@ if (usageSaldo == 'Send') {
 	funcSaldoSign(result)
 } else if (usageSaldo == 'Stamp') {
 	funcSaldoStamp(result)
+} else if (usageSaldo == 'Register') {
+	funcSaldoRegis(result, countCheckSaldo, conneSign)
 }
 
 return result
@@ -176,5 +178,178 @@ def funcFindSaldo(HashMap result, String vendorVerifikasi, ArrayList saldoList, 
 				}
 			}
 		}
+	}
+}
+
+def funcSaldoRegis(HashMap result, int countCheckSaldo, Connection conneSign) {
+	String vendorVerifikasi
+	
+	ArrayList saldoList = []
+	
+	if (!findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Register With')).equalsIgnoreCase(
+		'API Register')) {
+	
+		vendorVerifikasi = 'ESIGN/ADINS'
+		
+		if ((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')) == '1') &&
+			(findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) == '1')) {
+			useSaldo = 'WhatsApp Message'
+		} else {
+			useSaldo = 'OTP'
+		}
+			
+		saldoList = [useSaldo]
+		
+		funcFindSaldo(result, vendorVerifikasi, saldoList, forAutosign)
+		
+		if (((countCheckSaldo == 1) && ((GlobalVariable.FlagFailed == 0) || findTestData(excel).getValue(GlobalVariable.NumofColm,
+			rowExcel('Status')).equalsIgnoreCase('Warning'))) && (GlobalVariable.Psre == 'VIDA')) {
+			'call function input filter saldo'
+			inputFilterSaldo(useSaldo, conneSign)
+		}
+	}
+	
+	if (GlobalVariable.Psre == 'VIDA') {
+		saldoList = ['Verifikasi','PNBP']
+	} else if (GlobalVariable.Psre == 'PRIVY') {
+		saldoList = ['Verifikasi']
+	}
+	
+	funcFindSaldo(result, GlobalVariable.Psre, saldoList, forAutosign)
+
+	if (countCheckSaldo == 1) {
+		'call function input filter saldo'
+		inputFilterSaldo('Verification', conneSign)
+	
+		if ((GlobalVariable.FlagFailed == 0) && (GlobalVariable.Psre == 'VIDA')) {
+			'call function input filter saldo'
+			inputFilterSaldo('PNBP', conneSign)
+		}
+		
+		if ((GlobalVariable.FlagFailed == 0) && (GlobalVariable.Psre == 'DIGI')) {
+			'call function input filter saldo'
+			inputFilterSaldo('Text Verification', conneSign)
+		}
+	}
+	
+	return result
+}
+
+def inputFilterSaldo(String tipeSaldo, Connection conneSign) {
+	'get current date'
+	currentDate = new Date().format('yyyy-MM-dd')
+
+	'input tipe saldo'
+	WebUI.setText(findTestObject('RegisterEsign/checkSaldo/input_TipeSaldo'), tipeSaldo)
+
+	'enter untuk input tipe saldo'
+	WebUI.sendKeys(findTestObject('RegisterEsign/checkSaldo/input_TipeSaldo'), Keys.chord(Keys.ENTER))
+
+	'input tanggal Transaksi'
+	WebUI.setText(findTestObject('RegisterEsign/checkSaldo/input_TanggalTransaksi'), currentDate)
+
+	'click button cari'
+	WebUI.click(findTestObject('RegisterEsign/checkSaldo/button_Cari'))
+
+	'get row'
+	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
+
+	'modify object button last page'
+	modifyObjectButtonLastPage = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath',
+		'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' +
+		variable.size()) + ']', true)
+
+	if (WebUI.getAttribute(modifyObjectButtonLastPage, 'class', FailureHandling.OPTIONAL) != 'disabled') {
+		'click button last page'
+		WebUI.click(findTestObject('RegisterEsign/checkSaldo/button_LastPage'))
+	}
+	
+	'get row'
+	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
+
+	'modify object no transaksi'
+	modifyObjectNoTransaksi = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath',
+		'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[1]/div', true)
+
+	'modify object tanggal transaksi'
+	modifyObjectTanggalTransaksi = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath',
+		'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[2]/div', true)
+
+	'modify object tipe transaksi'
+	modifyObjectTipeTransaksi = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath',
+		'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[3]/div', true)
+
+	'modify object user'
+	modifyObjectUser = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 'equals',
+		('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[4]/div', true)
+
+	'modify object no kontrak'
+	modifyObjectNoKontrak = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath',
+		'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[5]/div', true)
+
+	'modify object Catatan'
+	modifyObjectCatatan = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 'equals',
+		('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[8]/div', true)
+
+	'modify object qty'
+	modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 'equals',
+		('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[9]/div', true)
+
+	'check if email kosong atau tidak'
+	if (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Email')).length() > 2) {
+		'get email excel'
+		email = findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Email')).replace('"', '')
+	} else {
+		'get name + email hosting'
+		email = (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Nama')).replace('"', '') +
+		CustomKeywords.'connection.DataVerif.getEmailHosting'(conneSign))
+	}
+	
+	'get trx dari db'
+	ArrayList<String> result = CustomKeywords.'connection.DataVerif.getSaldoTrx'(conneSign, email, findTestData(excel).getValue(
+			GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"', ''), 'Use ' + tipeSaldo)
+
+	arrayIndex = 0
+
+	'verify no trx ui = db'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectNoTransaksi), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE),
+		' No Trx ' + tipeSaldo)
+
+	'verify tgl trx ui = db'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectTanggalTransaksi), result[arrayIndex++], false,
+			FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Trx ' + tipeSaldo)
+
+	'verify tipe trx ui = db'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectTipeTransaksi), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE),
+		' Tipe Trx ' + tipeSaldo)
+
+	'verify user trx ui = db'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectUser), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE),
+		' User ' + tipeSaldo)
+
+	'verify note trx ui = db'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectCatatan), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE),
+		' Notes ' + tipeSaldo)
+
+	'verify qty trx ui = db'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectQty), (result[arrayIndex++]).toString().replace(
+				'-', ''), false, FailureHandling.CONTINUE_ON_FAILURE), ' Qty Trx ' + tipeSaldo)
+}
+
+def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
+	if (isMatch == false) {
+		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+			((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +
+			GlobalVariable.ReasonFailedVerifyEqualOrMatch) + reason)
+
+		GlobalVariable.FlagFailed = 1
 	}
 }

@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "9A97C19EFB4C9E3F775F7894AB47B193",
+  "keywordFileContentHash": "60E053316FA19EA8A1F0F3BF8438A227",
   "keywordClasses": [
     {
       "name": "connection.APIFullService",
@@ -48,19 +48,6 @@
             },
             {
               "name": "idno",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.lang.String",
-                "unresolvedClassName": "String",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            },
-            {
-              "name": "email",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -2751,11 +2738,8 @@
                 "errorOnParsing": false
               }
             }
-<<<<<<< HEAD
           ],
           "javadoc": ""
-=======
-          ]
         },
         {
           "name": "getDataInvRegist",
@@ -2799,8 +2783,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+          ],
+          "javadoc": ""
         }
       ]
     }

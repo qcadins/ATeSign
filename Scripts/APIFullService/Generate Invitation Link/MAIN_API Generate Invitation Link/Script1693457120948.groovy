@@ -264,7 +264,7 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign, int firstRun) 
         findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))) || (firstRun == 
         0)) {
 		'call test case login per case'
-		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathAPIGenerateInvLink, ('Email') : 'Email Login', ('Password') : 'Password Login'
+		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathAPIGenerateInvLink, ('Email') : 'Email Login', ('Password') : 'Password Login'
 			, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)		
 	}
 

@@ -26,7 +26,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Inveditor Login'))) || firstRun == 0
 			|| GlobalVariable.LoginAgain == 0){
 			'call test case login per case'
-			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : SheetName, ('Path') : excelPathBuatUndangan, ('Email') : 'Inveditor Login', ('Password') : 'Inveditor Password Login'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : SheetName, ('Path') : excelPathBuatUndangan, ('Email') : 'Inveditor Login', ('Password') : 'Inveditor Password Login'
 				, ('Perusahaan') : 'Inveditor Perusahaan Login', ('Peran') : 'Inveditor Peran Login'], FailureHandling.STOP_ON_FAILURE)
 			
 			firstRun = 1

@@ -420,7 +420,7 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
     ArrayList<String> saldo = []
 	
 	'call test case login per case'
-	WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathAPIRegistrasi, ('Email') : 'Email Login', ('Password') : 'Password Login'
+	WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathAPIRegistrasi, ('Email') : 'Email Login', ('Password') : 'Password Login'
 		, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
 
     'check if button menu visible atau tidak'
