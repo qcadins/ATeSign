@@ -1326,4 +1326,25 @@ public class APIFullService {
 		}
 		listdata
 	}
+	@Keyword
+	getCountInvCodeonDB(Connection conn, String decrypted) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT COUNT(invitation_code) FROM tr_invitation_link WHERE invitation_code = '" + decrypted + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+
+		if (data != null) {
+			Integer.parseInt(data)
+		} else {
+			data = 0
+		}
+		Integer.parseInt(data)
+	}
 }

@@ -45,8 +45,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			value = findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Message'))
 		}
 		
-		println(value)
-		
 	    'HIT API'
 	    respon = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/API Check Inv Register Status', [('callerId') : findTestData(excelPathCheckInvRegisterStatus).getValue(
 			GlobalVariable.NumofColm, rowExcel('CallerId')), ('msg') : '"' + value + '"']))

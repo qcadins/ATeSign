@@ -12,8 +12,10 @@ ArrayList<String> arrayMatch = []
 
 'get data store db'
 ArrayList<String> result = CustomKeywords.'connection.APIFullService.getGenInvLink'(conneSign, GlobalVariable.Tenant, findTestData(excelPathGenInvLink).getValue(GlobalVariable.NumofColm, 
-        rowExcel('tlp')).replace('"', ''), findTestData(excelPathGenInvLink).getValue(GlobalVariable.NumofColm, rowExcel('idKtp')).replace('"', ''), findTestData(
-        excelPathGenInvLink).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace('"', '').toUpperCase())
+        rowExcel('tlp')).replace('"', ''), findTestData(excelPathGenInvLink).getValue(GlobalVariable.NumofColm, rowExcel('idKtp')).replace('"', ''))
+
+//findTestData(
+//	excelPathGenInvLink).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace('"', '').toUpperCase()
 
 'declare arrayindex'
 arrayindex = 0
