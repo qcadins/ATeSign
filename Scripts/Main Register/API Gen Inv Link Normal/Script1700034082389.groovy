@@ -60,6 +60,8 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
         (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + 
         ';') + GlobalVariable.ReasonFailedHitAPI)
+	
+	GlobalVariable.FlagFailed = 1
 }
 
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {

@@ -13,7 +13,7 @@ import org.openqa.selenium.Keys as Keys
 'check if login sama || perlu melakukan login lagi'
 if ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inveditor Login')) != findTestData(
 	excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inveditor Login'))) ||
-(GlobalVariable.LoginAgain == 0)) {
+(GlobalVariable.LoginAgain == 0) || WebUI.verifyElementNotPresent(findTestObject('RegisterEsign/menu_BuatUndangan'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 	'call test case login per case'
 	WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathRegister
 			, ('Email') : 'Inveditor Login', ('Password') : 'Inveditor Password Login', ('Perusahaan') : 'Inveditor Perusahaan Login'
