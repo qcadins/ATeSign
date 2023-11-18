@@ -88,17 +88,17 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'verify Email sesuai inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Email'), 'value').toUpperCase(), 
-        findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email')).replace('"', '').toUpperCase(), 
+        findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', '').toUpperCase(), 
         false, FailureHandling.CONTINUE_ON_FAILURE), ' Email')
 
 'verify NIK sesuai inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_NIK'), 'value').toUpperCase(), 
-        findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('NIK')).replace('"', '').toUpperCase(), 
+        findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$NIK')).replace('"', '').toUpperCase(), 
         false, FailureHandling.CONTINUE_ON_FAILURE), ' NIK')
 
 'verify Nama Lengkap sesuai inputan'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_NamaLengkap'), 'value').toUpperCase(), 
-        findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Nama')).replace('"', '').toUpperCase(), 
+        findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"', '').toUpperCase(), 
         false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama Lengkap')
 
 'verify tempat lahir sesuai inputan'
@@ -244,7 +244,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     GlobalVariable.FlagFailed = 1
 } else {
     'check if email kosong atau tidak'
-    if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email')).length() > 2) {
+    if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 2) {
         ArrayList<String> listOTP = []
 
         'delay untuk menunggu OTP'
@@ -448,7 +448,7 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 def checkTrxMutation(Connection conneSign) {
     if (GlobalVariable.checkStoreDB == 'Yes') {
         resultTrx = CustomKeywords.'connection.APIFullService.getAPIGenInvLinkVerifTrx'(conneSign, findTestData(excelPathRegister).getValue(
-                GlobalVariable.NumofColm, rowExcel('Email')).replace('"', ''), findTestData(excelPathRegister).getValue(
+                GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', ''), findTestData(excelPathRegister).getValue(
                 GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"', ''))
 
         'declare arraylist arraymatch'
@@ -588,7 +588,7 @@ def checkSaldoOTP() {
     if (WebUI.verifyElementPresent(modifyObjectUser, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
         'verify user name ui = excel'
         checkVerifyEqualOrMatch(WebUI.verifyNotMatch(WebUI.getText(modifyObjectUser), findTestData(excelPathRegister).getValue(
-                    GlobalVariable.NumofColm, rowExcel('Email')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), 
+                    GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), 
             ' User')
     }
     
@@ -625,7 +625,7 @@ def getOTP(Connection conneSign) {
 
     'get OTP dari DB'
     OTP = CustomKeywords.'connection.DataVerif.getOTP'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('Email')).replace('"', '').toUpperCase())
+            rowExcel('$Email')).replace('"', '').toUpperCase())
 
     return OTP
 }

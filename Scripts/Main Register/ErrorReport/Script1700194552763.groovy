@@ -30,7 +30,7 @@ String resultTotalData = CustomKeywords.'connection.ErrorReport.getTotalDataErro
 
 'get error detail dari DB'
 String resultErrorDetail = CustomKeywords.'connection.ErrorReport.getErrorReportDetail'(conneSign, findTestData(excelPathRegister).getValue(
-        GlobalVariable.NumofColm, rowExcel('Nama')).toUpperCase())
+        GlobalVariable.NumofColm, rowExcel('$Nama')).toUpperCase())
 
 'get total data'
 totalData = WebUI.getText(findTestObject('ErrorReport/label_TotalData')).split(' ')
@@ -46,7 +46,7 @@ WebUI.sendKeys(findTestObject('ErrorReport/select_Modul'), Keys.chord(Keys.ENTER
 
 'input nama'
 WebUI.setText(findTestObject('ErrorReport/input_Nama'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-        rowExcel('Nama')))
+        rowExcel('$Nama')))
 
 'input tanggal dari'
 WebUI.setText(findTestObject('ErrorReport/input_TanggalDari'), currentDate)

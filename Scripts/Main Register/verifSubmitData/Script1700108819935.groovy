@@ -13,7 +13,7 @@ WebUI.click(findTestObject('InquiryInvitation/menu_InquiryInvitation'))
 
 'input email'
 WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
-        rowExcel('Email')))
+        rowExcel('$Email')))
 
 'Looping delay untuk handling search data selama +- 2 menit'
 for (int i = 1; i <= 8; i++) {
@@ -31,11 +31,11 @@ for (int i = 1; i <= 8; i++) {
 
 'verify nama'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('InquiryInvitation/tr_Name')).toUpperCase(), findTestData(
-            excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Nama')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama')
+            excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama')
 
 'verify email'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('InquiryInvitation/tr_Receiver')).toUpperCase(), 
-        findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Email')
+        findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Email')
 
 'verify phone'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('InquiryInvitation/tr_Phone')).toUpperCase(), findTestData(
@@ -96,7 +96,7 @@ def verifyListUndangan() {
 	
 	'set text penerima undangan'
 	WebUI.setText(findTestObject('ListUndangan/input_PenerimaUndangan'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
-			rowExcel('Email')))
+			rowExcel('$Email')))
 	
 	'set text tanggal pengiriman dari'
 	WebUI.setText(findTestObject('ListUndangan/input_TanggalPengirimanDari'), currentDate)
@@ -117,7 +117,7 @@ def verifyListUndangan() {
 	
 	'verify penerima undangan'
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/table_PenerimaUndangan')), findTestData(
-				excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Email')), false, FailureHandling.CONTINUE_ON_FAILURE), ' Penerima Undangan')
+				excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('$Email')), false, FailureHandling.CONTINUE_ON_FAILURE), ' Penerima Undangan')
 	
 	tanggalPengiriman = WebUI.getText(findTestObject('ListUndangan/table_TanggalPengiriman')).split(' ', -1)
 

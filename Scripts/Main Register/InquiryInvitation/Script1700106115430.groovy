@@ -26,7 +26,7 @@ int editAfterRegister = CustomKeywords.'connection.InquiryInvitation.getSetEditA
 int resendLink = CustomKeywords.'connection.InquiryInvitation.getSetResendLink'(conneSign)
 
 int invLink = CustomKeywords.'connection.InquiryInvitation.getSetInvLinkAct'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('Email')).replace('"','').toUpperCase())
+            rowExcel('$Email')).replace('"','').toUpperCase())
 
 'call function inputSearch'
 inputSearch()
@@ -41,7 +41,7 @@ if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryInv
 	
 	    'get data buat undangan dari DB'
 	    ArrayList<String> result = CustomKeywords.'connection.InquiryInvitation.inquiryInvitationViewDataVerif'(conneSign, findTestData(
-	            excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email')).replace('"','').toUpperCase())
+	            excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"','').toUpperCase())
 	
 	    '1 karena invited by belum bisa di get value dari UI'
 	    arrayindex = 1
@@ -116,11 +116,11 @@ if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryInv
 	    }
 	    
 	    'input NIK'
-	    WebUI.setText(findTestObject('InquiryInvitation/edit_NIK'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('NIK')).replace('"',''))
+	    WebUI.setText(findTestObject('InquiryInvitation/edit_NIK'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$NIK')).replace('"',''))
 	
 	    'input nama lengkap'
 	    WebUI.setText(findTestObject('InquiryInvitation/edit_Nama'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-	            rowExcel('Nama')).replace('"',''))
+	            rowExcel('$Nama')).replace('"',''))
 	
 	    'input tempat lahir'
 	    WebUI.setText(findTestObject('InquiryInvitation/edit_TempatLahir'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
@@ -152,7 +152,7 @@ if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryInv
 	    if (WebUI.getAttribute(findTestObject('InquiryInvitation/edit_Email'), 'disabled', FailureHandling.OPTIONAL) != 'true') {
 	        'input email'
 	        WebUI.setText(findTestObject('InquiryInvitation/edit_Email'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-	                rowExcel('Email')).replace('"',''))
+	                rowExcel('$Email')).replace('"',''))
 	    }
 	    
 	    'input alamat lengkap'
@@ -378,7 +378,7 @@ if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryInv
 				} else {
 					'HIT API get Invitation Link'
 					responGetInvLink = WS.sendRequest(findTestObject('Postman/Get Inv Link', [('callerId') : '""', ('receiverDetail') : 
-								findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email')), ('tenantCode') : ('"' +
+								findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')), ('tenantCode') : ('"' +
 								GlobalVariable.Tenant) + '"', ('vendorCode') : ('"' + GlobalVariable.Psre) + '"']))
 			
 					'Jika status HIT API 200 OK'
@@ -448,7 +448,7 @@ def inputSearch() {
 	if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Input With')).equalsIgnoreCase('Email')) {
 		'set text search box dengan email'
 		WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
-				rowExcel('Email')).replace('"',''))
+				rowExcel('$Email')).replace('"',''))
 	} else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Input With')).equalsIgnoreCase('Phone')) {
 		'set text search box dengan Phone'
 		WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
@@ -456,7 +456,7 @@ def inputSearch() {
 	} else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Input With')).equalsIgnoreCase('NIK')) {
 		'set text search box dengan NIK'
 		WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
-				rowExcel('NIK')).replace('"',''))
+				rowExcel('$NIK')).replace('"',''))
 	}
 }
 

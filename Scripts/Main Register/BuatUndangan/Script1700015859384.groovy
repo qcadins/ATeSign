@@ -116,13 +116,10 @@ if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/label_ValidationErr
         GlobalVariable.token = WS.getElementPropertyValue(responLogin, 'access_token')
 
 		String receiverDetail
-		
-		println(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email')).length())
-		println(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email')))
-		
+
 		'check if email kosong atau tidak'
-		if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email')).length() > 2) {
-			receiverDetail = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email'))
+		if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 2) {
+			receiverDetail = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email'))
 		} else {
 			receiverDetail = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon'))	
 		}
@@ -188,11 +185,11 @@ if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/label_ValidationErr
     if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting is_active Link')).length() > 
     0) {
 		'check if email kosong atau tidak'
-		if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email')).length() > 0) {
+		if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 0) {
 	    	'setting Link Is Active'
 	    	CustomKeywords.'connection.APIFullService.settingLinkIsActive'(conneSign, findTestData(excelPathRegister).getValue(
 	    			GlobalVariable.NumofColm, rowExcel('Setting is_active Link')), findTestData(excelPathRegister).getValue(
-	    					GlobalVariable.NumofColm, rowExcel('Email')))
+	    					GlobalVariable.NumofColm, rowExcel('$Email')))
 		} else {
 			'setting Link Is Active'
 			CustomKeywords.'connection.APIFullService.settingLinkIsActive'(conneSign, findTestData(excelPathRegister).getValue(
@@ -245,11 +242,11 @@ def inputBuatUndangan() {
 
     'input NIK'
     WebUI.setText(findTestObject('RegisterEsign/input_NIK'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('NIK')))
+            rowExcel('$NIK')))
 
     'input nama lengkap'
     WebUI.setText(findTestObject('RegisterEsign/input_NamaLengkap'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('Nama')))
+            rowExcel('$Nama')))
 
     'input tempat lahir'
     WebUI.setText(findTestObject('RegisterEsign/input_TempatLahir'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
@@ -276,7 +273,7 @@ def inputBuatUndangan() {
 
     'input email'
     WebUI.setText(findTestObject('RegisterEsign/input_Email'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('Email')))
+            rowExcel('$Email')))
 
     'input alamat lengkap'
     WebUI.setText(findTestObject('RegisterEsign/input_AlamatLengkap'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 

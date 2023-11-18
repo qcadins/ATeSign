@@ -51,13 +51,13 @@ if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
 respon = WS.sendRequest(findTestObject('APIFullService/Postman/Register', [('callerId') : findTestData(excelPathRegister).getValue(
                 GlobalVariable.NumofColm, rowExcel('callerId')), ('psreCode') : findTestData(excelPathRegister).getValue(
                 GlobalVariable.NumofColm, rowExcel('psreInput')), ('nama') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-                rowExcel('Nama')), ('email') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-                    'Email')), ('tmpLahir') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
+                rowExcel('$Nama')), ('email') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
+                    '$Email')), ('tmpLahir') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
                     'Tempat Lahir')), ('tglLahir') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
                     'Tanggal Lahir')), ('jenisKelamin') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
                 rowExcel('Jenis Kelamin')), ('tlp') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
                 rowExcel('No Telepon')), ('idKtp') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-                    'NIK')), ('alamat') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
+                    '$NIK')), ('alamat') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
                     'Alamat')), ('kecamatan') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
                     'Kecamatan')), ('kelurahan') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
                     'Kelurahan')), ('kota') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
@@ -87,7 +87,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         if (GlobalVariable.checkStoreDB == 'Yes') {
             'get psre Registered'
             String resultVendorRegistered = CustomKeywords.'connection.APIFullService.getRegisteredVendor'(conneSign, findTestData(
-                    excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email')).replace('"', ''))
+                    excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', ''))
 
             ArrayList<String> resultTrx = CustomKeywords.'connection.APIFullService.getAPIRegisterTrx'(conneSign, trxNo[
                 0], trxNo[1])
@@ -106,11 +106,11 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 
                 'get data from db'
                 ArrayList<String> result = CustomKeywords.'connection.APIFullService.checkAPIRegisterActive'(conneSign, 
-                    findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email')).replace('"', ''), 
+                    findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', ''), 
                     findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"', ''))
 
                 ArrayList<String> resultDataUser = CustomKeywords.'connection.Registrasi.buatUndanganStoreDB'(conneSign, 
-                    findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email')).replace('"', ''), 
+                    findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', ''), 
                     findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"', ''))
 
                 println(resultDataUser)
@@ -131,7 +131,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 
                 'verify full name'
                 arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathRegister).getValue(
-                            GlobalVariable.NumofColm, rowExcel('Nama')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+                            GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
                 'verify tempat lahir'
                 arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathRegister).getValue(
@@ -149,10 +149,10 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
                 arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathRegister).getValue(
                             GlobalVariable.NumofColm, rowExcel('Jenis Kelamin')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email')) != '""') {
+                if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')) != '""') {
                     'verify email'
                     arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathRegister).getValue(
-                                GlobalVariable.NumofColm, rowExcel('Email')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+                                GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
                 } else {
                     arrayIndex++
                 }

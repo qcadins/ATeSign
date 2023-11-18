@@ -28,7 +28,7 @@ WebUI.click(findTestObject('PencarianPenggunaAdmin/Pengguna/menu_Pelanggan'))
 if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Input with')).equalsIgnoreCase('Email')) {
     'set text search box dengan email'
     WebUI.setText(findTestObject('PencarianPenggunaAdmin/Pengguna/input_SearchBox'), findTestData(excelPathRegister).getValue(
-            GlobalVariable.NumofColm, rowExcel('Email')))
+            GlobalVariable.NumofColm, rowExcel('$Email')))
 } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Input with')).equalsIgnoreCase('Phone')) {
     'set text search box dengan Phone'
     WebUI.setText(findTestObject('PencarianPenggunaAdmin/Pengguna/input_SearchBox'), findTestData(excelPathRegister).getValue(
@@ -36,7 +36,7 @@ if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
 } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Input with')).equalsIgnoreCase('NIK')) {
     'set text search box dengan NIK'
     WebUI.setText(findTestObject('PencarianPenggunaAdmin/Pengguna/input_SearchBox'), findTestData(excelPathRegister).getValue(
-            GlobalVariable.NumofColm, rowExcel('NIK')))
+            GlobalVariable.NumofColm, rowExcel('$NIK')))
 }
 
 'click button cari'
@@ -108,11 +108,11 @@ if (WebUI.verifyElementPresent(findTestObject('PencarianDokumen/noDataWarning'),
                 1, GlobalVariable.StatusSuccess)
 
             if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Input with')) == 'Email') {
-                value = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase()
+                value = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).toUpperCase()
             } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Input with')) == 'Phone') {
                 value = convertSHA256(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon')))
             } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Input with')) == 'Id no') {
-                value = convertSHA256(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('NIK')))
+                value = convertSHA256(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$NIK')))
             }
             
             'get data reset request OTP dari DB'

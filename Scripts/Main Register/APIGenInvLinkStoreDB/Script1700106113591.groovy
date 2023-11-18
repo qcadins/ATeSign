@@ -12,7 +12,7 @@ ArrayList<String> arrayMatch = []
 
 'get data store db'
 ArrayList<String> result = CustomKeywords.'connection.APIFullService.getGenInvLink'(conneSign, GlobalVariable.Tenant, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-        rowExcel('No Telepon')).replace('"', ''), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('NIK')).replace('"', ''))
+        rowExcel('No Telepon')).replace('"', ''), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$NIK')).replace('"', ''))
 
 'declare arrayindex'
 arrayindex = 0
@@ -56,14 +56,14 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(Global
 
 emailDB = result[arrayindex++]
 
-if(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email')) != '""') {
+if(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')) != '""') {
 	'verify email'
-	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email')).replace('"', '').toUpperCase(), 
+	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', '').toUpperCase(), 
 			emailDB, false, FailureHandling.CONTINUE_ON_FAILURE))	
 }
 
 'verify id no / ktp'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('NIK')).replace('"', ''), result[
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$NIK')).replace('"', ''), result[
         arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'verify phone'
@@ -75,7 +75,7 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(Global
         result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'verify full name'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Nama')).replace('"', ''), result[
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"', ''), result[
         arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'verify tenant code'

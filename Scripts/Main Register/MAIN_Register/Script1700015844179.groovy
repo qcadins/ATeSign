@@ -147,12 +147,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting is_active Link')).length() > 
                 0) {
                     'check if email kosong atau tidak'
-                    if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email')).length() > 
+                    if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 
                     2) {
                         'setting Link Is Active'
                         CustomKeywords.'connection.APIFullService.settingLinkIsActive'(conneSign, findTestData(excelPathRegister).getValue(
                                 GlobalVariable.NumofColm, rowExcel('Setting is_active Link')), findTestData(excelPathRegister).getValue(
-                                GlobalVariable.NumofColm, rowExcel('Email')).replace('"', ''))
+                                GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', ''))
                     } else {
                         'setting Link Is Active'
                         CustomKeywords.'connection.APIFullService.settingLinkIsActive'(conneSign, findTestData(excelPathRegister).getValue(
@@ -225,7 +225,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 '0') || (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')) == 
                 'null')) && (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == 
                 '1')) || (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == 
-                '0')) && findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase().contains(
+                '0')) && findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).toUpperCase().contains(
                     'OUTLOOK.COM')) && (GlobalVariable.Psre == 'VIDA')) {
                     'call keyword get email'
                     String emailCert = CustomKeywords.'customizekeyword.GetEmail.getEmailContent'(findTestData(excelPathRegister).getValue(

@@ -8,7 +8,7 @@ import internal.GlobalVariable as GlobalVariable
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get data buat undangan dari DB'
-result = CustomKeywords.'connection.InquiryInvitation.inquiryInvitationStoreDB'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('NIK')).replace('"',''))
+result = CustomKeywords.'connection.InquiryInvitation.inquiryInvitationStoreDB'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$NIK')).replace('"',''))
 
 'declare arraylist arraymatch'
 arrayMatch = []
@@ -25,11 +25,11 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(Global
 		false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'verify NIK'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('NIK')).replace('"','').toUpperCase(), (result[arrayindex++]).toUpperCase(),
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$NIK')).replace('"','').toUpperCase(), (result[arrayindex++]).toUpperCase(),
 		false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'verify Nama'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Nama')).replace('"','').toUpperCase(), (result[arrayindex++]).toUpperCase(),
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"','').toUpperCase(), (result[arrayindex++]).toUpperCase(),
 		false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'verify tempat lahir'
@@ -47,9 +47,9 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(Global
 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"','').toUpperCase(), (result[arrayindex++]).toUpperCase(),
 		false, FailureHandling.CONTINUE_ON_FAILURE))
 
-if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email')).replace('"','') == 'Email') {
+if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"','') == 'Email') {
 	'verify email'
-	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email')).replace('"','').toUpperCase(), (result[arrayindex++]).toUpperCase(),
+	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"','').toUpperCase(), (result[arrayindex++]).toUpperCase(),
 		false, FailureHandling.CONTINUE_ON_FAILURE))
 }else {
 	arrayindex++

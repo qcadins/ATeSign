@@ -57,13 +57,13 @@ if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
 
 'HIT API'
 respon = WS.sendRequest(findTestObject('APIFullService/Postman/Generate Invitation Link', [('nama') : findTestData(excelPathRegister).getValue(
-                GlobalVariable.NumofColm, rowExcel('Nama')), ('email') : findTestData(excelPathRegister).getValue(
-                GlobalVariable.NumofColm, rowExcel('Email')), ('tmpLahir') : findTestData(excelPathRegister).getValue(
+                GlobalVariable.NumofColm, rowExcel('$Nama')), ('email') : findTestData(excelPathRegister).getValue(
+                GlobalVariable.NumofColm, rowExcel('$Email')), ('tmpLahir') : findTestData(excelPathRegister).getValue(
                 GlobalVariable.NumofColm, rowExcel('Tempat Lahir')), ('tglLahir') : findTestData(excelPathRegister).getValue(
                 GlobalVariable.NumofColm, rowExcel('Tanggal Lahir')), ('jenisKelamin') : findTestData(excelPathRegister).getValue(
                 GlobalVariable.NumofColm, rowExcel('Jenis Kelamin')), ('tlp') : findTestData(excelPathRegister).getValue(
                 GlobalVariable.NumofColm, rowExcel('No Telepon')), ('idKtp') : findTestData(excelPathRegister).getValue(
-                GlobalVariable.NumofColm, rowExcel('NIK')), ('alamat') : findTestData(excelPathRegister).getValue(
+                GlobalVariable.NumofColm, rowExcel('$NIK')), ('alamat') : findTestData(excelPathRegister).getValue(
                 GlobalVariable.NumofColm, rowExcel('Alamat')), ('kecamatan') : findTestData(excelPathRegister).getValue(
                 GlobalVariable.NumofColm, rowExcel('Kecamatan')), ('kelurahan') : findTestData(excelPathRegister).getValue(
                 GlobalVariable.NumofColm, rowExcel('Kelurahan')), ('kota') : findTestData(excelPathRegister).getValue(
@@ -86,6 +86,14 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         'mengambil response'
         GlobalVariable.Link = WS.getElementPropertyValue(respon, 'link', FailureHandling.OPTIONAL)
 
+		if(GlobalVariable.Link == '') {
+			'Write To Excel GlobalVariable.StatusFailed and errormessage'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+				'Generate Link Null / Kosong')
+			
+			GlobalVariable.FlagFailed = 1
+		}
+		
         if ((GlobalVariable.checkStoreDB == 'Yes') && (GlobalVariable.FlagFailed == 0)) {
             'call test case ResponseAPIStoreDB'
             WebUI.callTestCase(findTestCase('Main Register/APIGenInvLinkStoreDB'), [('excelPathGenInvLink') : 'APIFullService/API_GenInvLink'], 

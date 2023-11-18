@@ -12,12 +12,12 @@ ArrayList<String> listInvitation = []
 
 'Declare variable untuk sendRequest'
 (listInvitation[0]) = (((((((((((((((((((((((((('{"email" :' + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-    rowExcel('Email'))) + ',"nama" :') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Nama'))) + 
+    rowExcel('$Email'))) + ',"nama" :') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Nama'))) + 
 ',"tlp": ') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No telepon'))) + ',"jenisKelamin" : ') + 
 findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Jenis Kelamin'))) + ',"tmpLahir" : ') + findTestData(
     excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Tempat Lahir'))) + ',"tglLahir" : ') + findTestData(
     excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Lahir'))) + ',"idKtp" : ') + findTestData(excelPathRegister).getValue(
-    GlobalVariable.NumofColm, rowExcel('NIK'))) + ', "provinsi" : ') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+    GlobalVariable.NumofColm, rowExcel('$NIK'))) + ', "provinsi" : ') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
     rowExcel('Provinsi'))) + ', "kota" : ') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
         'Kota'))) + ', "kecamatan" : ') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Kecamatan'))) + 
 ',"kelurahan": ') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Kelurahan'))) + ',"kodePos" : ') + 
