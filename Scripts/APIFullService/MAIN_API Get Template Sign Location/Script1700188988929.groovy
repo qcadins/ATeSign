@@ -3,7 +3,9 @@ import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import java.sql.Connection as Connection
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
+import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
+import groovy.json.JsonSlurper
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - Full API Services.xlsx')
@@ -70,99 +72,65 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					ArrayList arrayMatch = []
 					
 					'get data store db'
-					ArrayList result = CustomKeywords.'connection.APIFullService.getDataInvRegist'(conneSign, GlobalVariable.Tenant.replace('"', ''), findTestData(excelPathGetInvData).getValue(GlobalVariable.NumofColm,
-							rowExcel('Email')).replace('"', ''))
+					ArrayList result = CustomKeywords.'connection.APIFullService.getTemplateSignloc'(conneSign, findTestData(excelPathGetTempSign).getValue(
+                        GlobalVariable.NumofColm, rowExcel('documentTemplateCode')).replace('"',''))
 					
+					'ambil countresult yang dikembalikan oleh query result'
+					int countresult = CustomKeywords.'connection.APIFullService.getCountSignLoc'(conneSign, findTestData(excelPathGetTempSign).getValue(
+                        GlobalVariable.NumofColm, rowExcel('documentTemplateCode')).replace('"',''))
+		 
 					'declare arrayindex'
 					arrayindex = 0
 					
-					'verify provinsi'
-					arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'listUser[0].provinsi', FailureHandling.OPTIONAL),
-							result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+					'looping semua array yang terdapat di respon API dan DB'
+					for (i = 0; i < countresult; i++) {
+
+						'verify signerType'
+						arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'templateSignLocation['+ i +'].signerType', FailureHandling.OPTIONAL),
+								result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+						
+						'verify signType'
+						arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'templateSignLocation['+ i +'].signType', FailureHandling.OPTIONAL),
+								result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+						
+						'verify signPage'
+						arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'templateSignLocation['+ i +'].signPage', FailureHandling.OPTIONAL),
+								result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+						
+						'verify digiSignLocation'
+						arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'templateSignLocation['+ i +'].digiSignLocation', FailureHandling.OPTIONAL).toString().replace(' ','').replace('{','').replace('}','').replace('=',':'),
+								result[arrayindex++].toString().replace('"','').replace('{','').replace('}','').replace(' ',''), false, FailureHandling.CONTINUE_ON_FAILURE))
+						
+						'verify tknajSignLocation'
+						arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'templateSignLocation['+ i +'].tknajSignLocation', FailureHandling.OPTIONAL).toString().replace(' ','').replace('{','').replace('}','').replace('=',':'),
+								result[arrayindex++].toString().replace('"','').replace('{','').replace('}','').replace(' ',''), false, FailureHandling.CONTINUE_ON_FAILURE))
+					}
 					
-					'verify kota'
-					arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'listUser[0].kota', FailureHandling.OPTIONAL),
-							result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+					'ambil sign loc untuk vida dan privy'
+					ArrayList resultDetail = (CustomKeywords.'connection.APIFullService.getTemplateSignlocDetail'(conneSign, findTestData(excelPathGetTempSign).getValue(
+                        GlobalVariable.NumofColm, rowExcel('documentTemplateCode')).replace('"',''))).toString().replace('"h"','').replace('"w"','').replace('"x"','').replace('"y"','').replace('{','').replace(':','').replace(' ','').replace(' ','').replace('[','').replace(']','').replace('}','').split(',', -1).sort()
+						
+					def jsonSlurper = new JsonSlurper()
+					def jsonResponseObject = jsonSlurper.parseText(responseBody)
 					
-					'verify kecamatan'
-					arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'listUser[0].kecamatan', FailureHandling.OPTIONAL),
-							result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+					'ambil seluruh vida sign loc dari response'
+					ArrayList vidaSignLocation = jsonResponseObject.templateSignLocation.collect { it.vidaSignLocation }.toString().replace('x:', '').replace('y:', '').replace('h:', '').replace('w:', '').replace(' ','').replace('[','').replace(']','').split(',', -1)
 					
-					'verify email'
-					arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'listUser[0].email', FailureHandling.OPTIONAL),
-						result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+					'ambil seluruh privy sign loc dari response'
+					ArrayList privySignLocation = jsonResponseObject.templateSignLocation.collect { it.privySignLocation }.toString().replace('x:', '').replace('y:', '').replace('h:', '').replace('w:', '').replace(' ','').replace('[','').replace(']','').split(',', -1)
 					
-					'verify is active'
-					arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'listUser[0].isActive', FailureHandling.OPTIONAL),
-						result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+					'gabungkan vida dan privysignloc'
+					vidaSignLocation.addAll(privySignLocation)
 					
-					'verify invitation by'
-					arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'listUser[0].invBy', FailureHandling.OPTIONAL),
-						result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+					'sort ulang vidaSignloc'
+					vidaSignLocation.sort()
 					
-					'verify recieverDetail'
-					arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'listUser[0].recieverDetail', FailureHandling.OPTIONAL),
-						result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-					
-					'verify creation time'
-					arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'listUser[0].invCrt', FailureHandling.OPTIONAL),
-						result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-					
-					'verify resendActivationLinkStatus'
-					arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'listUser[0].resendActivationLinkStatus', FailureHandling.OPTIONAL),
-						result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-					
-					'verify vendorName'
-					arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'listUser[0].vendorName', FailureHandling.OPTIONAL),
-						result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-					
-					'verify vendorCode'
-					arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'listUser[0].vendorCode', FailureHandling.OPTIONAL),
-						result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-					
-					'verify isEditable'
-					arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'listUser[0].isEditable', FailureHandling.OPTIONAL),
-						result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-					
-					'verify isRegenerable'
-					arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'listUser[0].isRegenerable', FailureHandling.OPTIONAL),
-						result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-					
-					'verify kelurahan'
-					arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'listUser[0].kelurahan', FailureHandling.OPTIONAL),
-						result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-					
-					'verify kodePos'
-					arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'listUser[0].kodePos', FailureHandling.OPTIONAL),
-						result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-					
-					'verify nama'
-					arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'listUser[0].nama', FailureHandling.OPTIONAL),
-						result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-					
-					'verify alamat'
-					arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'listUser[0].alamat', FailureHandling.OPTIONAL),
-						result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-					
-					'verify jenisKelamin'
-					arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'listUser[0].jenisKelamin', FailureHandling.OPTIONAL),
-						result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-					
-					'verify tlp'
-					arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'listUser[0].tlp', FailureHandling.OPTIONAL),
-						result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-					
-					'verify tmpLahir'
-					arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'listUser[0].tmpLahir', FailureHandling.OPTIONAL),
-						result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-					
-					'verify tglLahir'
-					arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'listUser[0].tglLahir', FailureHandling.OPTIONAL),
-						result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-					
-					'verify idKtp'
-					arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'listUser[0].idKtp', FailureHandling.OPTIONAL),
-						result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+					'looping semua array yang terdapat di respon API dan DB'
+					for (i = 0; i < resultDetail.size(); i++) {
+						
+						'verify vida and privySignLocation'
+						arrayMatch.add(WebUI.verifyMatch(resultDetail[i], vidaSignLocation[i], false, FailureHandling.CONTINUE_ON_FAILURE))
+					}
 					
 					'jika data db tidak sesuai dengan excel'
 					if (arrayMatch.contains(false)) {
@@ -170,8 +138,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 						
 						'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
 						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-							GlobalVariable.StatusFailed, (findTestData(excelPathGetInvData).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
+							GlobalVariable.StatusFailed, (findTestData(excelPathGetTempSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
 					}
+				}
+				
+				'tulis sukses jika store DB berhasil'
+				if (GlobalVariable.FlagFailed == 0) {
+					'write to excel success'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
+						1, GlobalVariable.StatusSuccess)
 				}
             } else {
                 'mengambil status code berdasarkan response HIT API'

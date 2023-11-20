@@ -18,11 +18,11 @@
       <variableId>eed1b1c7-5141-4879-b4af-9a0565b27e39</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'APIFullService/API_Download'</defaultValue>
+      <defaultValue>'APIFullService/API Get Template Sign Loc'</defaultValue>
       <description></description>
       <id>027a2b0a-c74f-4df7-aa4a-04bae4b4c2ea</id>
       <masked>false</masked>
-      <name>excelPathAPIDownload</name>
+      <name>excelPathGetTempSign</name>
    </variable>
    <variable>
       <defaultValue>'API Get Template Sign Loc'</defaultValue>
