@@ -55,7 +55,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))) || (firstRun == 
         0)) {
             'call test case login per case'
-            WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathManualStamptoStamp
+            WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathManualStamptoStamp
                     , ('Email') : 'Email Login', ('Password') : 'Password Login', ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], 
                 FailureHandling.STOP_ON_FAILURE)
 
@@ -791,7 +791,7 @@ def loginAdminGetSaldo(Connection conneSign, String start, String sheet) {
 
     if (start == 'Yes') {
         'call test case login per case'
-        WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathManualStamptoStamp
+        WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathManualStamptoStamp
                 , ('Email') : 'Email Login', ('Password') : 'Password Login', ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], 
             FailureHandling.STOP_ON_FAILURE)
     }

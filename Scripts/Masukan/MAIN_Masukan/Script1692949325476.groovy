@@ -17,7 +17,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         break
     } else if (findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 		'panggil fungsi login'
-		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathMasukan], FailureHandling.CONTINUE_ON_FAILURE)
+		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathMasukan], FailureHandling.CONTINUE_ON_FAILURE)
 
         'delay untuk nunggu alert error hilang'
         WebUI.delay(10)

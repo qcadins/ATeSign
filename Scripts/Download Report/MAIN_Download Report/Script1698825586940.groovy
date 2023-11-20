@@ -37,7 +37,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		if (findTestData(excelPathDownRep).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) !=
 			findTestData(excelPathDownRep).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')) || firstRun == 0) {
 			'call test case login per case'
-			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathDownRep, ('Email') : 'Email Login', ('Password') : 'Password Login'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathDownRep, ('Email') : 'Email Login', ('Password') : 'Password Login'
 				, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
 			
 			settingzoom()

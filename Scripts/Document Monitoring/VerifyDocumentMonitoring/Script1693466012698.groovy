@@ -51,7 +51,7 @@ for (int o = 1; o <= 1; o++) {
         linkDocumentMonitoring = ''
     } else if (linkDocumentMonitoring == '') {
 		'panggil fungsi login'
-		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
+		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet,
 			('Path') : excelPathFESignDocument, ('Email') : 'Email Login', ('Password') : 'Password Login',
 				 ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.CONTINUE_ON_FAILURE)
 

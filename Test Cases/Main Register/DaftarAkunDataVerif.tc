@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>DaftarAkunDataVerif</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>4bdb31c6-92ca-46e4-8c1f-b068451e05f2</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>b735784b-9c42-43b2-a743-d6fb2f61ad27</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>d00fea7f-a9b4-47fa-ad45-8170eaa950f8</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>1304e9ee-5efe-4e88-b066-09838da894ca</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Registrasi/MainRegister'</defaultValue>
+      <description></description>
+      <id>b735784b-9c42-43b2-a743-d6fb2f61ad27</id>
+      <masked>false</masked>
+      <name>excelPathRegister</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>d00fea7f-a9b4-47fa-ad45-8170eaa950f8</id>
+      <masked>false</masked>
+      <name>otpBefore</name>
+   </variable>
+   <variable>
+      <defaultValue>'Main Register'</defaultValue>
+      <description></description>
+      <id>1304e9ee-5efe-4e88-b066-09838da894ca</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>

@@ -25,7 +25,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		if(findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, rowExcel('Status')) != 
 			findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, rowExcel('Status')) || firstRun == 0) {
 			'call test case login per case'
-			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathPencarianPengguna, ('Email') : 'Inveditor Login', ('Password') : 'Inveditor Password Login'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathPencarianPengguna, ('Email') : 'Inveditor Login', ('Password') : 'Inveditor Password Login'
 				, ('Perusahaan') : 'Inveditor Perusahaan Login', ('Peran') : 'Inveditor Peran Login'], FailureHandling.STOP_ON_FAILURE)
 			
 			'apakah cek paging diperlukan di awal run'
