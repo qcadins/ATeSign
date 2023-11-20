@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "4DA1B3E2B5797C13CA8CBDF39E50C782",
+  "keywordFileContentHash": "4B1178D8522E50EC2AFF6AC4FAA663D7",
   "keywordClasses": [
     {
       "name": "customizekeyword.ConvertFile",
@@ -25,6 +25,38 @@
         },
         {
           "name": "decodeBase64",
+          "parameters": [
+            {
+              "name": "base64String",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "filename",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "decodeBase64crt",
           "parameters": [
             {
               "name": "base64String",

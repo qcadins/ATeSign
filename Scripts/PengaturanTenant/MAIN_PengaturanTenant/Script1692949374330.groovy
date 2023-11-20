@@ -43,7 +43,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         ArrayList resultDbPrevious = [], arrSplitResultDb = [], arrTipeSaldoBefore = [], arrSaldoTipeSaldoBefore = []
 
         'declare variable inisialisasi for'
-        int i, j
+        int i, j, index
 
         'inisalisasi arrayIndex yaitu 0'
         arrayIndex = 0
@@ -220,9 +220,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         
         'Mengambil Email dari excel untuk diinput dan displit'
         arrayEmailInput = findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('Email Reminder Saldo')).split(',', -1)
-
+		
         'looping untuk hapus email reminder yang tidak ada di excel'
-        for (index = 25; index <= (25 + countEmailBefore.size()); index++) {
+        for (index = 25; index < (25 + countEmailBefore.size()); index++) {
+			
             'modify object untuk input email'
             modifyObjectInputEmail = WebUI.modifyObjectProperty(findTestObject('PengaturanTenant/input_PenerimaEmailReminderSaldo'), 
                 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/div[' + 
@@ -236,13 +237,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             if (WebUI.verifyElementPresent(modifyObjectInputEmail, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
                 'looping untuk input email reminder'
                 for (indexexcel = 1; indexexcel <= arrayEmailInput.size(); indexexcel++) {
+
+					println index
+					println countEmailBefore.size()
+					println indexexcel
+					
                     'check if email ui = excel'
                     if (WebUI.getAttribute(modifyObjectInputEmail, 'value', FailureHandling.OPTIONAL).equalsIgnoreCase(arrayEmailInput[
                         (indexexcel - 1)])) {
                         break
                     } else {
                         if (indexexcel == arrayEmailInput.size()) {
-                            'click tambah email'
+                            'click hapus email'
                             WebUI.click(modifyObjectButtonHapus)
 
                             index--
@@ -253,11 +259,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 break
             }
         }
+		
+		WebUI.delay(10)
         
         'looping untuk input email reminder yang tidak ada di ui'
         for (indexexcel = 1; indexexcel <= arrayEmailInput.size(); indexexcel++) {
+			
+			index = 25 + indexexcel - 1
+			
             'looping untuk delete email reminder'
-            for (index = 25; index <= (25 + countEmailBefore.size()); index++) {
+            for (index; index < (index + countEmailBefore.size()); index++) {
+				
                 'modify object untuk delete email'
                 modifyObjectInputEmail = WebUI.modifyObjectProperty(findTestObject('PengaturanTenant/input_PenerimaEmailReminderSaldo'), 
                     'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant-settings/div[2]/div/div/div/div/form/div[' + 
