@@ -38,6 +38,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		'setting psre per case'
 		GlobalVariable.Psre = findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
 		
+		'check if tidak mau menggunakan tenant code yang benar'
+		if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'No') {
+			'set tenant kosong'
+			GlobalVariable.Tenant = findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Wrong tenant Code'))
+		} else if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'Yes') {
+			GlobalVariable.Tenant = findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
+		}
+		
 		'setting menggunakan base url yang benar atau salah'
 		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPIGenerateInvLink, GlobalVariable.NumofColm, rowExcel('Use Correct base Url'))
 		
@@ -72,25 +80,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			CustomKeywords.'connection.APIFullService.settingAllowRegenerateLink'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Allow Regenarate Link')))
 		}
 		
-//		'check ada value maka setting must use wa first'
-//		if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')).length() > 0) {
-//			'setting must use wa first'
-//			CustomKeywords.'connection.APIFullService.settingMustUseWAFirst'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')))
-//		}
-//		
-//		'check ada value maka setting use wa message'
-//		if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')).length() > 0) {
-//			'setting use wa message'
-//			CustomKeywords.'connection.APIFullService.settingUseWAMessage'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')))
-//		}
+		'check ada value maka setting must use wa first'
+		if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')).length() > 0) {
+			'setting must use wa first'
+			CustomKeywords.'connection.APIFullService.settingMustUseWAFirst'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')))
+		}
 		
-        'check if tidak mau menggunakan tenant code yang benar'
-        if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'No') {
-            'set tenant kosong'
-            GlobalVariable.Tenant = findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Wrong tenant Code'))
-        } else if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'Yes') {
-            GlobalVariable.Tenant = findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
-        }
+		'check ada value maka setting use wa message'
+		if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')).length() > 0) {
+			'setting use wa message'
+			CustomKeywords.'connection.APIFullService.settingUseWAMessage'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')))
+		}
         
         'check if mau menggunakan api_key yang salah atau benar'
         if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('use Correct API Key')) == 'Yes') {
@@ -264,7 +264,7 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign, int firstRun) 
         findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))) || (firstRun == 
         0)) {
 		'call test case login per case'
-		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathAPIGenerateInvLink, ('Email') : 'Email Login', ('Password') : 'Password Login'
+		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathAPIGenerateInvLink, ('Email') : 'Email Login', ('Password') : 'Password Login'
 			, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)		
 	}
 
@@ -289,6 +289,15 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign, int firstRun) 
 	'get row'
 	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > div > div > div h3'))
 
+	if (findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')) == '1' &&
+		findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) == '1') {
+		'set tipe saldo yang digunakan WA'
+		useSaldo = 'WhatsApp Message'
+	} else {
+		'set tipe saldo a=yang digunakan OTP'
+		useSaldo = 'OTP'
+	}	
+	
 	for (index = 2; index <= (variable.size()/2); index++) {
 		'modify object box info'
 		modifyObjectBoxInfo = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath',
@@ -296,7 +305,7 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign, int firstRun) 
 			']/div/div/div/div/div[1]/h3', true)
 
 		'check if box info = tipe saldo di excel'
-		if (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase('OTP')) {
+		if (WebUI.getText(modifyObjectBoxInfo).equalsIgnoreCase(useSaldo)) {
 			'modify object qty'
 			modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath',
 				'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/div/div/div/div[' + index) +
@@ -311,7 +320,7 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign, int firstRun) 
 
 	if ((countCheckSaldo == 1) && (GlobalVariable.FlagFailed == 0 || findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Warning')) && GlobalVariable.Psre == 'VIDA') {
 		'call function input filter saldo'
-		inputFilterSaldo('OTP', conneSign)
+		inputFilterSaldo(useSaldo, conneSign)
 	}
 
 	'select vendor'
@@ -478,7 +487,7 @@ def inputFilterSaldo(String tipeSaldo, Connection conneSign) {
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectCatatan), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Notes ' + tipeSaldo)
 
 	'verify qty trx ui = db'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectQty), (result[arrayIndex++]),
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectQty), (result[arrayIndex++]).toString().replace('-',''),
 			false, FailureHandling.CONTINUE_ON_FAILURE), ' Qty Trx ' + tipeSaldo)
 }
 

@@ -19,10 +19,10 @@ public class APIFullService {
 	String emailWhere, selectData
 
 	@Keyword
-	getGenInvLink(Connection conn, String tenant, String phone, String idno, String email) {
+	getGenInvLink(Connection conn, String tenant, String phone, String idno) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select tril.usr_crt, tril.gender, tril.kelurahan, tril.kecamatan, tril.kota, tril.zip_code, tril.date_of_birth, tril.place_of_birth, tril.provinsi, tril.email, tril.id_no, tril.phone, tril.address, tril.full_name, mst.tenant_code from tr_invitation_link as tril join ms_tenant as mst on tril.id_ms_tenant = mst.id_ms_tenant where tril.is_active = '1' and mst.tenant_code = '" + tenant + "' and tril.phone = '" + phone + "' and tril.id_no = '" + idno + "' and tril.email = '" + email + "'")
+		resultSet = stm.executeQuery("select tril.usr_crt, tril.gender, tril.kelurahan, tril.kecamatan, tril.kota, tril.zip_code, tril.date_of_birth, tril.place_of_birth, tril.provinsi, tril.email, tril.id_no, tril.phone, tril.address, tril.full_name, mst.tenant_code from tr_invitation_link as tril join ms_tenant as mst on tril.id_ms_tenant = mst.id_ms_tenant where tril.is_active = '1' and mst.tenant_code = '" + tenant + "' and tril.phone = '" + phone + "' and tril.id_no = '" + idno + "'")
 
 		metadata = resultSet.metaData
 
@@ -1311,5 +1311,120 @@ public class APIFullService {
 		if (value != '') {
 			updateVariable = stm.executeUpdate("UPDATE ms_tenant SET use_wa_message = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
 		}
+	}
+
+	@Keyword
+	getDataInvRegist(Connection conn, String tenant, String email) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select tril.provinsi, tril.kota, tril.kecamatan, tril.email, tril.is_active, tril.invitation_by, tril.receiver_detail, TO_CHAR(tril.dtm_upd, 'DD-Mon-YYYY HH24:MI:SS') AS formatted_timestamp, mv.resend_activation_link, mv.vendor_name, mv.vendor_code, mv.edit_after_register, mvot.allow_regenerate_inv_link, tril.kelurahan, tril.zip_code, tril.full_name, tril.address, tril.gender, tril.phone, tril.place_of_birth, TO_CHAR(tril.date_of_birth, 'YYYY-Mon-DD') AS formatted_date, tril.id_no from tr_invitation_link as tril join ms_tenant as mst on tril.id_ms_tenant = mst.id_ms_tenant left join ms_vendor mv ON mv.id_ms_vendor = tril.id_ms_vendor left join ms_vendoroftenant mvot ON mvot.id_ms_vendor = tril.id_ms_vendor AND mvot.id_ms_tenant = tril.id_ms_tenant where tril.is_active = '1' and mst.tenant_code = '" + tenant + "' and tril.email = '" + email + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+	@Keyword
+	getInvRegisterData(Connection conn, String email) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select tril.provinsi, tril.kota, tril.kecamatan, tril.email, tril.kelurahan, tril.zip_code, tril.full_name, tril.address, tril.gender, tril.phone, tril.place_of_birth, tril.date_of_birth, tril.id_no, mst.tenant_code, mv.vendor_code, mv.vendor_name, mv.verif_phone from tr_invitation_link as tril join ms_tenant as mst on tril.id_ms_tenant = mst.id_ms_tenant left join ms_vendor mv ON mv.id_ms_vendor = tril.id_ms_vendor where tril.is_active = '1' and tril.email = '" + email + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+	@Keyword
+	getCountInvCodeonDB(Connection conn, String decrypted) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT COUNT(invitation_code) FROM tr_invitation_link WHERE invitation_code = '" + decrypted + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+
+		if (data != null) {
+			Integer.parseInt(data)
+		} else {
+			data = 0
+		}
+		Integer.parseInt(data)
+	}
+	@Keyword
+	getTemplateSignloc(Connection conn, String doctemplatecode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT CASE WHEN mlo.description = 'Stamp Duty (materai)' THEN 'Stamp Duty' ELSE ml.description END as signer_type, mlo.description, sign_page, jsonb_build_object( 'llx', round((sign_location::jsonb->>'llx')::numeric), 'lly', round((sign_location::jsonb->>'lly')::numeric), 'urx', round((sign_location::jsonb->>'urx')::numeric), 'ury', round((sign_location::jsonb->>'ury')::numeric)) AS digiSignLoc, jsonb_build_object( 'llx', round((sign_location::jsonb->>'llx')::numeric), 'lly', round((sign_location::jsonb->>'lly')::numeric), 'urx', round((sign_location::jsonb->>'urx')::numeric), 'ury', round((sign_location::jsonb->>'ury')::numeric) ) AS tknajasignLoc FROM ms_doc_template_sign_loc mdts JOIN ms_doc_template mdt ON mdt.id_doc_template = mdts.id_doc_template LEFT JOIN ms_lov ml ON mdts.lov_signer_type = ml.id_lov JOIN ms_lov mlo ON mdts.lov_sign_type = mlo.id_lov WHERE doc_template_code = '" + doctemplatecode + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+	@Keyword
+	getTemplateSignlocDetail(Connection conn, String doctemplatecode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT jsonb_build_object( 'x', round((vida_sign_location::jsonb->>'x')::numeric), 'y', round((vida_sign_location::jsonb->>'y')::numeric), 'h', round((vida_sign_location::jsonb->>'h')::numeric), 'w', round((vida_sign_location::jsonb->>'w')::numeric))::text::jsonb AS vidasignLoc, jsonb_build_object( 'x', round((privy_sign_location::jsonb->>'x')::numeric), 'y', round((privy_sign_location::jsonb->>'y')::numeric), 'h', round((privy_sign_location::jsonb->>'h')::numeric), 'w', round((privy_sign_location::jsonb->>'w')::numeric) )::text::jsonb AS privysignLoc FROM ms_doc_template_sign_loc mdts JOIN ms_doc_template mdt ON mdt.id_doc_template = mdts.id_doc_template WHERE doc_template_code = '" + doctemplatecode + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+	@Keyword
+	getCountSignLoc(Connection conn, String doctemplatecode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT count(id_ms_doc_template_sign_loc) FROM ms_doc_template_sign_loc mdts JOIN ms_doc_template mdt ON mdt.id_doc_template = mdts.id_doc_template WHERE doc_template_code = '" + doctemplatecode + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+
+		if (data != null) {
+			Integer.parseInt(data)
+		} else {
+			data = 0
+		}
+		Integer.parseInt(data)
 	}
 }

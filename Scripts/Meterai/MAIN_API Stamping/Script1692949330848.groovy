@@ -172,7 +172,7 @@ def loginAdminGetSaldo(Connection conneSign, String start) {
 
     if (start == 'Yes') {
 		'call test case login per case'
-		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathStamping, ('Email') : 'Email Login', ('Password') : 'Password Login'
+		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathStamping, ('Email') : 'Email Login', ('Password') : 'Password Login'
 			, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
     }
     

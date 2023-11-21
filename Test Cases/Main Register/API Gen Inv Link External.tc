@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>API Gen Inv Link External</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>6dfb022c-977e-4b87-9ad6-d77143b55bff</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>476d4198-7166-4ad2-88b7-b137185d0458</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>e7e3e309-f6aa-4dad-a7a6-5c56e4d18414</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>e6489c12-5609-4952-926e-40442987391b</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Registrasi/MainRegister'</defaultValue>
+      <description></description>
+      <id>476d4198-7166-4ad2-88b7-b137185d0458</id>
+      <masked>false</masked>
+      <name>excelPathRegister</name>
+   </variable>
+   <variable>
+      <defaultValue>'Main Register'</defaultValue>
+      <description></description>
+      <id>e7e3e309-f6aa-4dad-a7a6-5c56e4d18414</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>e6489c12-5609-4952-926e-40442987391b</id>
+      <masked>false</masked>
+      <name>firstRun</name>
+   </variable>
+</TestCaseEntity>

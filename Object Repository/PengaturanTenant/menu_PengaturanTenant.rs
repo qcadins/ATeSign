@@ -7,15 +7,15 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[contains(@class, 'sidebar-content main-menu-content')]/div[1]/ul/li[3]/a/span</value>
-      </entry>
-      <entry>
-         <key>XPATH</key>
-         <value>(.//*[normalize-space(text()) and normalize-space(.)='Meterai'])[1]/following::span[1]</value>
+         <value>//*[@href = '/tenant-setting']</value>
       </entry>
       <entry>
          <key>CSS</key>
          <value>li.ng-tns-c133-2.ng-star-inserted.active > a.ng-tns-c133-2.ng-star-inserted > span.menu-title.ng-tns-c133-2</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>(.//*[normalize-space(text()) and normalize-space(.)='Meterai'])[1]/following::span[1]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -26,7 +26,7 @@
       <name>tag</name>
       <type>Main</type>
       <value>span</value>
-      <webElementGuid>4f7fb906-f417-479d-8bed-a5aa478a291a</webElementGuid>
+      <webElementGuid>699fe42f-17f0-49a8-9462-a4117dd02850</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -34,7 +34,7 @@
       <name>class</name>
       <type>Main</type>
       <value>menu-title ng-tns-c133-2</value>
-      <webElementGuid>58a4c122-6e50-4cfd-b97d-2f206815f982</webElementGuid>
+      <webElementGuid>1f1d8233-ecd2-407a-8408-e25413252f12</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -42,15 +42,15 @@
       <name>text</name>
       <type>Main</type>
       <value>Pengaturan Tenant</value>
-      <webElementGuid>56babee5-092f-4926-a19b-867a2c308ee3</webElementGuid>
+      <webElementGuid>b23524d4-5514-4fde-a870-1fef49b6948e</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>href</name>
       <type>Main</type>
-      <value>//*[contains(@class, 'sidebar-content main-menu-content')]/div[1]/ul/li[3]/a/span</value>
-      <webElementGuid>d9c35390-0328-47b3-b935-2dc9d8eae559</webElementGuid>
+      <value>/tenant-setting</value>
+      <webElementGuid>43dfa441-7722-464a-998c-44f68b276a01</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -58,7 +58,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Meterai'])[1]/following::span[1]</value>
-      <webElementGuid>ba3b83cc-9173-4e36-b539-fe8779edbba6</webElementGuid>
+      <webElementGuid>5d75ce4b-4bd0-4ade-9113-7a1970829b23</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -66,7 +66,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Saldo'])[1]/following::span[2]</value>
-      <webElementGuid>b419c273-403f-4e2d-a54f-c73520fa22c6</webElementGuid>
+      <webElementGuid>b9dd18b3-a79c-4b31-8a38-f23ee3e3313f</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -74,7 +74,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='List Undangan'])[1]/preceding::span[1]</value>
-      <webElementGuid>3772eac9-ae77-430e-8ef1-2f1f26c58ad5</webElementGuid>
+      <webElementGuid>3cd244e9-13eb-4739-8168-8bb966b57c7a</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -82,7 +82,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='e-Meterai Monitoring'])[1]/preceding::span[2]</value>
-      <webElementGuid>b0cb66a1-ab27-4d79-99cf-a1ed86810dbf</webElementGuid>
+      <webElementGuid>06131f1c-aaa4-4df9-b650-4188acb4296b</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -90,7 +90,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='Pengaturan Tenant']/parent::*</value>
-      <webElementGuid>64e13789-adfd-4e1a-9103-fa155b9fff0c</webElementGuid>
+      <webElementGuid>98deee91-4a44-4616-9eea-dc3354248711</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -98,7 +98,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//li[3]/a/span</value>
-      <webElementGuid>79d6f909-b174-4723-be11-564a0de243b7</webElementGuid>
+      <webElementGuid>4e4c9513-93d7-4639-9fd0-7ac9e6365e66</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -106,6 +106,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//span[(text() = 'Pengaturan Tenant' or . = 'Pengaturan Tenant')]</value>
-      <webElementGuid>c1e6212a-83f3-44f7-a6d1-5441727b90a1</webElementGuid>
+      <webElementGuid>8afa0fcd-46f7-41a9-aea5-eb557e4d228c</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

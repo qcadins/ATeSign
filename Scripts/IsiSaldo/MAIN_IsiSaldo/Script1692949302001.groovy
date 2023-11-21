@@ -57,7 +57,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		//		}
 
         'call test case login per case'
-		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathIsiSaldo, ('Email') : 'Email Login - Admin Esign', ('Password') : 'Password Login - Admin Esign'
+		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathIsiSaldo, ('Email') : 'Email Login - Admin Esign', ('Password') : 'Password Login - Admin Esign'
 			, ('Perusahaan') : 'Perusahaan Login - Admin Esign', ('Peran') : 'Peran Login - Admin Esign'], FailureHandling.STOP_ON_FAILURE)
         
         'check if button menu visible atau tidak'
@@ -235,7 +235,7 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
     ArrayList<String> saldo = []
 
     'call test case login per case'
-	WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathIsiSaldo, ('Email') : 'Email Login', ('Password') : 'Password Login'
+	WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathIsiSaldo, ('Email') : 'Email Login', ('Password') : 'Password Login'
 		, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
 
     'click ddl bahasa'

@@ -46,7 +46,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         countCheckSaldo = 1
 
         'call test case login per case'
-		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathIsiSaldo, ('Email') : 'Email Login', ('Password') : 'Password Login'
+		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathIsiSaldo, ('Email') : 'Email Login', ('Password') : 'Password Login'
 			, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
 
 		'check if button menu visible atau tidak'
@@ -226,7 +226,7 @@ public loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
     ArrayList<String> saldo = []
 	
 	'panggil fungsi login'
-	WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : 'isiSaldo',
+	WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : 'isiSaldo',
 		('Path') : excelPathIsiSaldo], FailureHandling.CONTINUE_ON_FAILURE)
 
     'click ddl bahasa'

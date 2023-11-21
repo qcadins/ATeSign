@@ -65,7 +65,7 @@ if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), Globa
 	errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 	
 	'Tulis di excel itu adalah error'
-	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm,
+	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 		GlobalVariable.StatusWarning, (findTestData(Path).getValue(GlobalVariable.NumofColm, 2).replace(
 		'-', '') + ';') + '<' + errormessage + '>')
 	
@@ -73,5 +73,5 @@ if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), Globa
 }
 
 def rowExcel(String cellValue) {
-	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, SheetName, cellValue)
+	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }

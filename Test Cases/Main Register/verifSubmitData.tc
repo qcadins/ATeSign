@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>verifSubmitData</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>706e20bc-7f17-4ea8-905c-c81cea0da520</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>c3358f48-ce20-4cb3-8567-deee6b82ef8d</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>675dc2ab-4b86-4d48-8039-f01a6d398688</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Registrasi/BuatUndangan'</defaultValue>
+      <description></description>
+      <id>c3358f48-ce20-4cb3-8567-deee6b82ef8d</id>
+      <masked>false</masked>
+      <name>excelPathBuatUndangan</name>
+   </variable>
+   <variable>
+      <defaultValue>'BuatUndangan'</defaultValue>
+      <description></description>
+      <id>675dc2ab-4b86-4d48-8039-f01a6d398688</id>
+      <masked>false</masked>
+      <name>SheetName</name>
+   </variable>
+</TestCaseEntity>

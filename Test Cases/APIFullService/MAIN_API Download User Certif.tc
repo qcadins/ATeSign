@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API Download User Certif</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>6402d175-65ff-4218-b23a-26a6ca8a2a0b</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>e92b8305-f6ce-46c4-9ac6-952f8ad937f9</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>88a63f45-3112-48d8-aa6d-d71e0ef18b31</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'APIFullService/API Download User Certif'</defaultValue>
+      <description></description>
+      <id>e92b8305-f6ce-46c4-9ac6-952f8ad937f9</id>
+      <masked>false</masked>
+      <name>excelPathAPIDownload</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Download User Certif'</defaultValue>
+      <description></description>
+      <id>88a63f45-3112-48d8-aa6d-d71e0ef18b31</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>

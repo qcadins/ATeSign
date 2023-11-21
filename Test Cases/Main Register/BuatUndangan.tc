@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>BuatUndangan</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>36de7d0e-6cef-4abc-9fe0-ea9b93ee764a</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>b3cd456d-d071-4339-8d96-53edad4b73ad</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>0a37f7fb-d068-4c23-bdb9-82d287410a06</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>044afcbd-7ce8-41b0-8f51-e990dca52062</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Registrasi/MainRegister'</defaultValue>
+      <description></description>
+      <id>b3cd456d-d071-4339-8d96-53edad4b73ad</id>
+      <masked>false</masked>
+      <name>excelPathRegister</name>
+   </variable>
+   <variable>
+      <defaultValue>'Main Register'</defaultValue>
+      <description></description>
+      <id>0a37f7fb-d068-4c23-bdb9-82d287410a06</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+   <variable>
+      <defaultValue>0</defaultValue>
+      <description></description>
+      <id>044afcbd-7ce8-41b0-8f51-e990dca52062</id>
+      <masked>false</masked>
+      <name>firstRun</name>
+   </variable>
+</TestCaseEntity>

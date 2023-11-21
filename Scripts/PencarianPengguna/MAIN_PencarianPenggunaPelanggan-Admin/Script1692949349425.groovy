@@ -27,7 +27,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		if (findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) !=
 			findTestData(excelPathPencarianPengguna).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')) || checkLogin == 0) {
 			'panggil fungsi login'
-			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet,
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet,
 				('Path') : excelPathPencarianPengguna, ('Email') : 'Email Login', ('Password') : 'Password Login',
 					('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.CONTINUE_ON_FAILURE)
 			

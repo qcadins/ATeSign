@@ -34,7 +34,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathGenerateLink, GlobalVariable.NumofColm, rowExcel('Use Correct base Url'))
 		
 		'call test case login per case'
-		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('SheetName') : sheet, ('Path') : excelPathGenerateLink, ('Email') : 'Inveditor Login', ('Password') : 'Inveditor Password Login'
+		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathGenerateLink, ('Email') : 'Inveditor Login', ('Password') : 'Inveditor Password Login'
 			, ('Perusahaan') : 'Inveditor Perusahaan Login', ('Peran') : 'Inveditor Peran Login'], FailureHandling.STOP_ON_FAILURE)
 		
 		'check ada value maka setting email service tenant'
