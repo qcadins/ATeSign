@@ -308,6 +308,7 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                     }
                 }
             }
+			actionDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y])
         } else {
             'Jika tidak ada, maka datanya tidak ada di UI.'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
@@ -344,6 +345,9 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
     }
     
     if (isStamping == 'Yes') {
+		
+		inputDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, settingHO)
+		
         'click button start stamping'
         WebUI.click(findTestObject('DocumentMonitoring/button_startStamping'))
 

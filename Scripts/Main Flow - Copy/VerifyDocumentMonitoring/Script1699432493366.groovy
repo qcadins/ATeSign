@@ -22,7 +22,7 @@ String settingHO = ''
 'Jika nomor Kontrak kosong'
 if (nomorKontrak == '') {
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
-    'API Send Document External') {
+    'API Send Docum	ent External') {
         'Mengambil nomor kontrak dari excel'
         nomorKontrak = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo (Send External)')).replace(
             '"', '')
@@ -35,6 +35,13 @@ if (nomorKontrak == '') {
     'Manual Sign') {
         'Mengambil documen id dari excel'
         nomorKontrak = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen (Send Manual)'))
+    } else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
+    'Sign Only' || findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
+    'Stamp Only') {
+		documentId = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ', -1)
+	
+        'Mengambil documen id dari excel'
+        nomorKontrak = CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, documentId[0])
     }
 }
 
@@ -52,24 +59,39 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
     if (linkDocumentMonitoring == 'Not Used') {
         openHamburgAndroid()
 
-        'Fokus ke document monitoring'
-        WebUI.focus(findTestObject('DocumentMonitoring/DocumentMonitoring'))
+		'Fokus ke document monitoring'
+		WebUI.focus(findTestObject('DocumentMonitoring/DocumentMonitoring'))
 
-        'Klik Button menu Document Monitoring'
-        WebUI.click(findTestObject('DocumentMonitoring/DocumentMonitoring'))
+		'Klik Button menu Document Monitoring'
+		WebUI.click(findTestObject('DocumentMonitoring/DocumentMonitoring'))
 
-        closeHamburgAndroid()
+		closeHamburgAndroid()
 
-        linkDocumentMonitoring = ''
     } else if (linkDocumentMonitoring == '') {
-        'Call test Case untuk login sebagai admin wom admin client'
-        WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
-
-        'Fokus ke document monitoring'
-        WebUI.focus(findTestObject('DocumentMonitoring/DocumentMonitoring'))
-
-        'Klik Button menu Document Monitoring'
-        WebUI.click(findTestObject('DocumentMonitoring/DocumentMonitoring'))
+		if (!(WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/input_NamaPelanggan'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL))) {
+			if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/DocumentMonitoring'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+				'cek apakah elemen menu ditutup'
+				if (WebUI.verifyElementVisible(findTestObject('button_HamburberSideMenu'), FailureHandling.OPTIONAL)) {
+					'klik pada button hamburber'
+					WebUI.click(findTestObject('button_HamburberSideMenu'))
+				}
+				
+				'klik button saldo'
+				WebUI.click(findTestObject('DocumentMonitoring/DocumentMonitoring'))
+		
+				'cek apakah tombol x terlihat'
+				if (WebUI.verifyElementVisible(findTestObject('buttonX_sideMenu'), FailureHandling.OPTIONAL)) {
+					'klik pada button X'
+					WebUI.click(findTestObject('buttonX_sideMenu'))
+				}
+			} else {
+				'Call test Case untuk login sebagai admin wom admin client'
+				WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
+				
+				'klik button saldo'
+				WebUI.click(findTestObject('DocumentMonitoring/DocumentMonitoring'))
+			}
+		}
     } else {
         'check if ingin menggunakan embed atau tidakk'
         if (GlobalVariable.RunWithEmbed == 'Yes') {
@@ -139,8 +161,6 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
 
         'Jika valuenya ada'
         if (WebUI.verifyElementPresent(modifyObjectvalues, GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
-            'scroll menuju values element'
-            WebUI.scrollToElement(modifyObjectvalues, GlobalVariable.TimeOut)
 
             'Pembuatan untuk array Index result Query'
             arrayIndex = 0
@@ -160,6 +180,7 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
 
             'Looping berdasarkan row yang ada pada value'
             for (j = 1; j <= sizeRowofLabelValue.size(); j++) {
+
                 'Looping berdasarkan column yang ada pada value tanpa aksi.'
                 for (i = 1; i <= sizeColumnofLabelValue.size(); i++) {
                     'modify object label Value'
@@ -167,6 +188,8 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                         'equals', ((('//*[@id="listDokumen"]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
                         j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div', true)
 
+					WebUI.scrollToElement(modifyObjectvalues,GlobalVariable.TimeOut)
+					
                     'Jika berada di column ke 7'
                     if (i == 7) {
                         'Split teks proses TTD'
@@ -213,9 +236,8 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                                 FailureHandling.CONTINUE_ON_FAILURE))
                     }
                 }
+				actionDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, settingHO, j)
             }
-			
-			actionDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y])
         } else {
             'Jika tidak ada, maka datanya tidak ada di UI.'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
@@ -235,9 +257,6 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
         'Jika valuenya ada'
         if (WebUI.verifyElementPresent(modifyObjectvalues, GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
             WebUI.delay(2)
-
-            'scroll menuju values element'
-            WebUI.scrollToElement(modifyObjectvalues, GlobalVariable.TimeOut)
 
             'Mengambil row size dari value'
             sizeRowofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-content-layout > div > div > div > div.content-wrapper.p-0 > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
@@ -264,6 +283,8 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                         'equals', ((('/html/body/app-root/app-content-layout/div/div/div/div[2]/app-inquiry/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
                         j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div', true)
 
+					WebUI.scrollToElement(modifyObjectvalues,GlobalVariable.TimeOut)
+					
                     'Jika berada di column ke 7'
                     if (i == 7) {
                         'Split teks proses TTD'
@@ -307,7 +328,9 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                                 FailureHandling.CONTINUE_ON_FAILURE))
                     }
                 }
+				actionDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, settingHO, j)
             }
+			
         } else {
             'Jika tidak ada, maka datanya tidak ada di UI.'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
@@ -724,51 +747,51 @@ def verifySaldoUsed(Connection conneSign, String sheet, String nomorKontrak, int
 
 def inputDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan, String linkDocumentMonitoring, String settingHO) {
     'Pembuatan untuk array Index result Query'
-    arrayIndex = 0
+    arrayIndexInput = 0
 
     'Mengambil value db untuk input-input monitoring seperti nomor kontrak, cabang, dan wilayah'
     inputDocumentMonitoring = CustomKeywords.'connection.DocumentMonitoring.getInputDocumentMonitoring'(conneSign, nomorKontrakPerPilihan)
 
     'Set text mengenai teks customer'
-    WebUI.setText(findTestObject('DocumentMonitoring/input_NamaPelanggan'), inputDocumentMonitoring[arrayIndex++], FailureHandling.OPTIONAL)
+    WebUI.setText(findTestObject('DocumentMonitoring/input_NamaPelanggan'), inputDocumentMonitoring[arrayIndexInput++], FailureHandling.OPTIONAL)
 
     'Set text mengneai input nomor kontrak'
     WebUI.setText(findTestObject('DocumentMonitoring/input_NoKontrak'), nomorKontrakPerPilihan)
 
     'Set text mengenai tanggal permintaan dari'
-    WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalPermintaanDari'), inputDocumentMonitoring[arrayIndex++])
+    WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalPermintaanDari'), inputDocumentMonitoring[arrayIndexInput++])
 
     'Set text mengenai tanggal selesai dari'
-    WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalSelesaiDari'), inputDocumentMonitoring[(arrayIndex - 1)])
+    WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalSelesaiDari'), inputDocumentMonitoring[(arrayIndexInput - 1)])
 
     'Set text tanggal permintaan sampai'
-    WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalPermintaanSampai'), inputDocumentMonitoring[arrayIndex++])
+    WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalPermintaanSampai'), inputDocumentMonitoring[arrayIndexInput++])
 
     'Set text tanggal selesai sampai'
-    WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalSelesaiSampai'), inputDocumentMonitoring[(arrayIndex - 
+    WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalSelesaiSampai'), inputDocumentMonitoring[(arrayIndexInput - 
         1)])
 
     'Set text mengenai tipe dokumen'
-    WebUI.setText(findTestObject('DocumentMonitoring/input_TipeDok'), inputDocumentMonitoring[arrayIndex++])
+    WebUI.setText(findTestObject('DocumentMonitoring/input_TipeDok'), inputDocumentMonitoring[arrayIndexInput++])
 
     'Enter'
     WebUI.sendKeys(findTestObject('DocumentMonitoring/input_TipeDok'), Keys.chord(Keys.ENTER))
 
     'Set text mengenai status dokumen'
-    WebUI.setText(findTestObject('DocumentMonitoring/input_Status'), inputDocumentMonitoring[arrayIndex++])
+    WebUI.setText(findTestObject('DocumentMonitoring/input_Status'), inputDocumentMonitoring[arrayIndexInput++])
 
     'Enter'
     WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Status'), Keys.chord(Keys.ENTER))
 
     if (linkDocumentMonitoring == '') {
         'Set text mengenai wilayah'
-        WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndex++], FailureHandling.OPTIONAL)
+        WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndexInput++], FailureHandling.OPTIONAL)
 
         'Enter'
         WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER))
 
         'Set text mengenai input cabang'
-        WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndex++], FailureHandling.OPTIONAL)
+        WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndexInput++], FailureHandling.OPTIONAL)
 
         'Enter'
         WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER))
@@ -776,13 +799,13 @@ def inputDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan,
     
     if (WebUI.verifyMatch(settingHO.toString(), '1', true, FailureHandling.OPTIONAL) == true) {
         'Set text mengenai wilayah'
-        WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndex++])
+        WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndexInput++])
 
         'Enter'
         WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER))
 
         'Set text mengenai input cabang'
-        WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndex++])
+        WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndexInput++])
 
         'Enter'
         WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER))
@@ -798,7 +821,7 @@ def inputDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan,
 		'xpath', 'equals', ("//*[@id='prosesMaterai']/div/div/div[3]/input"), true)
 	}
 	'Set text mengenai input cabang'
-	WebUI.setText(modifyObjectProsesMeterai, inputDocumentMonitoring[arrayIndex++])
+	WebUI.setText(modifyObjectProsesMeterai, inputDocumentMonitoring[arrayIndexInput++])
     
 	'Enter'
 	WebUI.sendKeys(modifyObjectProsesMeterai, Keys.chord(Keys.ENTER))
@@ -909,9 +932,13 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     }
 }
 
-def actionDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan) {
+def actionDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan, String linkDocumentMonitoring, String settingHO, int j) {
+	'get row lastest'
+	modifyObjectSigner = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/button_modifyDownload'),
+		'xpath', 'equals', '/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-monitoring-document/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper['+ j +']/datatable-body-row/div[2]/datatable-body-cell[10]/div/a[3]/em', true)
+	
 	'click button view signer'
-	WebUI.click(findTestObject('DocumentMonitoring/button_Signer'))
+	WebUI.click(modifyObjectSigner)
 	
 	'get row popup'
 	variableRowPopup = DriverFactory.webDriver.findElements(By.cssSelector('body > ngb-modal-window > div > div > app-signer > div.modal-body > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
@@ -959,8 +986,12 @@ def actionDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan
 	
 	if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Need Download Document ?')) ==
 		'Yes') {
+		'get row lastest'
+		modifyObjectDownload = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/button_modifyDownload'),
+			'xpath', 'equals', '/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-monitoring-document/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper['+ j +']/datatable-body-row/div[2]/datatable-body-cell[10]/div/a[2]/em', true)
+		
 			'click button download'
-			WebUI.click(findTestObject('DocumentMonitoring/button_Download'))
+			WebUI.click(modifyObjectDownload)
 	
 			'check if error alert present'
 			if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
@@ -990,8 +1021,12 @@ def actionDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan
 		
 	if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Need View Document ?')) ==
 	'Yes') {
+	'get row lastest'
+	modifyObjectView = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/button_modifyDownload'),
+		'xpath', 'equals', '/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-monitoring-document/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper['+ j +']/datatable-body-row/div[2]/datatable-body-cell[10]/div/a[1]/em', true)
+	
 		'click button view dokumen'
-		WebUI.click(findTestObject('DocumentMonitoring/button_View'))
+		WebUI.click(modifyObjectView)
 
 		'check if error alert present'
 		if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
@@ -1016,5 +1051,7 @@ def actionDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan
 			FailureHandling.OPTIONAL)) {
 			checkVerifyEqualOrMatch(false, ' button view tidak berfungsi')
 		}
+		
+		inputDocumentMonitoring(conneSign, nomorKontrakPerPilihan, linkDocumentMonitoring, settingHO)
 	}
 }

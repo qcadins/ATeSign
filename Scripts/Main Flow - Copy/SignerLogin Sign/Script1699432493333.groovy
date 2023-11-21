@@ -23,13 +23,6 @@ int flagBreak = 0, isLocalhost = 0, alreadyVerif = 0, saldoForCheckingDB = 0, ju
 
 useBiom = 0
 
-'reset value GV'
-GlobalVariable.eSignData.putAt('VerifikasiOTP', 0)
-
-GlobalVariable.eSignData.putAt('VerifikasiBiometric', 0)
-
-GlobalVariable.eSignData.putAt('VerifikasiSign', 0)
-
 'Inisialisasi array untuk Listotp, arraylist arraymatch'
 ArrayList listOTP = [],  arrayMatch = [], loopingEmailSigner = []
 
@@ -83,32 +76,11 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
     'Inisialisasi variable total document yang akan disign, count untuk resend, dan saldo yang akan digunakan'
     int totalDocSign, countResend = 0, countSaldoSplitLiveFCused = 0
 
-	'saldo before'
-    HashMap<String, String> resultSaldoBefore = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathFESignDocument
-            , ('sheet') : sheet, ('vendor') : vendor, ('usageSaldo') : 'Sign'], FailureHandling.CONTINUE_ON_FAILURE)
-
-	'jika digisign, maka sign type yang akan diambil adalah Dokumen, jika vendor lainnya yaitu TTD'
-    if (vendor.equalsIgnoreCase('Digisign')) {
-        signType = 'Dokumen'
-    } else {
-        signType = 'TTD'
-    }
-    
-	'get saldo before'
-    saldoSignBefore = resultSaldoBefore.get(signType)
-
-    'tutup browsernya'
-    WebUI.closeBrowser()
-
     'ubah flag untuk buka localhost jika syarat if terpenuhi'
     if ((!(vendor.equalsIgnoreCase('Privy')) && !(vendor.equalsIgnoreCase('Digisign'))) && (mustFaceCompDB == '1')) {
         'ubah keperluan untuk pakai Localhost'
         isLocalhost = 1
     }
-    
-    'call Test Case untuk login sebagai user berdasarkan doc id'
-    WebUI.callTestCase(findTestCase('Main Flow/Login'), [('sheet') : sheet, ('email') : GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[
-                0]), ('excel') : excelPathFESignDocument], FailureHandling.CONTINUE_ON_FAILURE)
 
 	'check popup'
     if (checkPopup() == true) {
@@ -635,8 +607,12 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
                         
 						'jika jumlahsignertanda tangannya bukan 0 dan jumlahnya tidak sesuai dengan seharusnya document tersebut'
                         if ((jumlahSignerTandaTangan != 0) && (jumlahSignerTandaTangan != jumlahHarusTandaTangan)) {
+							if (jumlahSignerTandaTangan == saldoForCheckingDB) { 
+								saldoForCheckingDB = jumlahSignerTandaTangan
+							} else {
 							'menambah saldo for checking db ke jumlah signer tanda tangan'
                             saldoForCheckingDB = (saldoForCheckingDB + jumlahSignerTandaTangan)
+							}
                         } else if ((jumlahSignerTandaTangan != 0) && (jumlahSignerTandaTangan == jumlahHarusTandaTangan)) {
 							'jika jumlah signer tanda tangan bukan 0 dan jumlahnya sama dengan signing seharusnya, maka jumlah signer tanda tangan akan masuk ke saldo checking db'
                             saldoForCheckingDB = jumlahSignerTandaTangan
@@ -675,9 +651,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
             if (flagBreak == 1) {
                 break
             }
-            
-            'Browser ditutup'
-            WebUI.closeBrowser()
+
         } else {
             'Jika popup berhasilnya tidak ada, maka Savenya gagal'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
@@ -706,8 +680,8 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 	
 	GlobalVariable.eSignData.putAt('NoKontrakProcessed', noKontrak)
 	
-    checkAutoStamp(conneSign, noKontrak, resultSaldoBefore)
-
+    checkAutoStamp(conneSign, noKontrak, GlobalVariable.saldo)
+		
     'check flagBreak untuk sequential'
     if (flagBreak == 1) {
         continue
@@ -1179,8 +1153,7 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
     'ubah pemakaian biom menjadi false'
     useBiom = 0
 
-    if (CustomKeywords.'connection.DataVerif.getEmailServiceFromUser'(conneSign, CustomKeywords.'connection.DataVerif.getEmailServiceFromUser'(
-            conneSign, noTelpSigner)) == '0') {
+    if (CustomKeywords.'connection.DataVerif.getEmailServiceFromTenant'(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))) == '1') {
         noTelpSigner = CustomKeywords.'connection.DataVerif.getEmailFromPhone'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
                 noTelpSigner))
     }
@@ -1218,6 +1191,14 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
 
     if ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Correct OTP (Yes/No)')).split(
         ';', -1)[GlobalVariable.indexUsed]) == 'Yes') {
+	
+	if ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email')) ==
+		'1') && email.contains('OUTLOOK.COM')) {
+			'call keyword get otp dari email'
+			OTP = CustomKeywords.'customizekeyword.GetEmail.getEmailContent'(email, findTestData(excelPathFESignDocument).getValue(
+					GlobalVariable.NumofColm, rowExcel('Password Signer')), 'OTP')
+		}
+		
         'value OTP dari db / email'
         WebUI.setText(findTestObject('KotakMasuk/Sign/input_OTP'), OTP)
 

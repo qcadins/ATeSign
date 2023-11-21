@@ -557,12 +557,16 @@ def inputEMeteraiMonitoring(Connection conneSign) {
     if (WebUI.verifyElementPresent(findTestObject('Object Repository/e-Meterai Monitoring/button_Set Ulang'), GlobalVariable.TimeOut)) {
         totalMeterai = findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Jumlah Meterai'))
 
+		ArrayList<String> inputEMeterai = CustomKeywords.'connection.ManualStamp.getInputeMeteraiMonitoring'(conneSign,
+			findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')),
+			GlobalVariable.Tenant)
+
         for (int i = 1; i <= 20; i++) {
             if (flagBreak == 1) {
                 break
             }
             
-            ArrayList<String> inputEMeterai = CustomKeywords.'connection.ManualStamp.getInputeMeteraiMonitoring'(conneSign, 
+            inputEMeterai = CustomKeywords.'connection.ManualStamp.getInputeMeteraiMonitoring'(conneSign, 
                 findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')), 
                 GlobalVariable.Tenant)
 
@@ -663,10 +667,6 @@ def inputEMeteraiMonitoring(Connection conneSign) {
                     ArrayList<String> result = CustomKeywords.'connection.eMeteraiMonitoring.geteMeteraiMonitoring'(conneSign, 
                         findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))
 
-					println(result)
-					
-					println(index)
-					
                     'verify no dokumen'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_NomorDokumen')), 
                             result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Nomor Dokumen ')
@@ -781,8 +781,9 @@ def inputEMeteraiMonitoring(Connection conneSign) {
                     WebUI.delay(15)
                 }
             }
-            return inputEMeterai[6]
+
         }
+		return inputEMeterai[6]
     }
 }
 
@@ -892,7 +893,8 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
     'get row di saldo'
     variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper '))
 	
-	if (findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')) == 'PRIVY') {
+	
+	if (CustomKeywords.'connection.ManualStamp.getLovVendorStamping'(conneSign, GlobalVariable.Tenant) == 'Privy') {
 		'ambil inquiry di db'
 		inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldoForMeteraiPrivy'(conneSign, findTestData(
             excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))
@@ -915,28 +917,13 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
 
             'Jika u di lokasi qty atau kolom ke 9'
             if (colm == 9) {
-                'Jika yang qtynya 1 dan databasenya juga, berhasil'
-                if ((WebUI.getText(modifyperrowpercolumn) == '1') || ((inquiryDB[index]) == '-1')) {
-                    'Jika bukan untuk 2 kolom itu, maka check ke db'
-                    checkVerifyEqualOrMatch(WebUI.verifyMatch('-' + WebUI.getText(modifyperrowpercolumn), inquiryDB[index], 
-                            false, FailureHandling.CONTINUE_ON_FAILURE), 'pada Kuantitas di Mutasi Saldo dengan nomor kontrak ' + 
-                        findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Tipe Dokumen')).replace(
-                            '"', ''))
+				'Jika bukan untuk 2 kolom itu, maka check ke db'
+				checkVerifyEqualOrMatch(WebUI.verifyMatch('-' + WebUI.getText(modifyperrowpercolumn), inquiryDB[index],
+						false, FailureHandling.CONTINUE_ON_FAILURE), 'pada Kuantitas di Mutasi Saldo dengan nomor kontrak ' +
+					findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Tipe Dokumen')).replace(
+						'"', ''))
 
-                    index++
-                } else {
-                    'Jika bukan -1, atau masih 0. Maka ttdnya dibilang error'
-                    GlobalVariable.FlagFailed = 1
-
-                    'Jika saldonya belum masuk dengan flag, maka signnya gagal.'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                        GlobalVariable.StatusFailed, (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
-                            rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedSignGagal) + ' terlihat pada Kuantitas di Mutasi Saldo dengan nomor kontrak ') + 
-                        findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Tipe Dokumen')).replace(
-                            '"', ''))
-
-                    index++
-                }
+				index++
             } else if (colm == 10) {
                 'Jika di kolom ke 10, atau di FE table saldo'
             } else {

@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "961B76590EB6F815E98F5618EBC208FF",
+  "keywordFileContentHash": "9BE1D444FDF324B6E8C433FFF8F558A3",
   "keywordClasses": [
     {
       "name": "connection.ManualStamp",
@@ -227,6 +227,38 @@
             },
             {
               "name": "vendorStamping",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getLovVendorStamping",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "tenantCode",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

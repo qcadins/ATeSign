@@ -248,7 +248,7 @@ for (int i = 0; i < docid.size(); i++) {
         if ((signActions[loopPerSignActionPerSigner]).replace('"', '') == 'at') {
 			if (!psreCodeDB[i].toString().equalsIgnoreCase('Privy')) {
 			'Mengambil trxno dari column tersebut'
-			trxno = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('trxNo')).split(', ', -1)
+			trxno = CustomKeywords.'connection.SendSign.getTrxNo'(conneSign, docid[i])
 
              'Mengambil emailSign dari excel dan displit kembali'
               emailSign = ((findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$email (Send Normal)')).replace(
@@ -271,7 +271,7 @@ for (int i = 0; i < docid.size(); i++) {
             arrayMatch.add(WebUI.verifyMatch(trxno[indexTrx++], resulttrxsigning[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
             'verify ref no di trx'
-            arrayMatch.add(WebUI.verifyMatch(refNo, resulttrxsigning[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+            arrayMatch.add(WebUI.verifyMatch(refNo.replace('"',''), resulttrxsigning[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
             'verify date req di trx'
             arrayMatch.add(WebUI.verifyMatch(currentDate, resulttrxsigning[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))

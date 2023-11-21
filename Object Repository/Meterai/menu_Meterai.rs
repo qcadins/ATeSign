@@ -7,17 +7,25 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[contains(@class, 'sidebar-content main-menu-content')]/div[1]/ul/li[2]</value>
+         <value>//*[@href = '/master/stampduty']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>//*[contains(@class, 'sidebar-content main-menu-content')]/div[1]/ul/li[2]</value>
-      <webElementGuid>12f9d39c-1273-4400-adf9-4d86e51fd95e</webElementGuid>
+      <webElementGuid>f599dafe-bd7f-4f58-8209-ecaa5066c7d5</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>href</name>
+      <type>Main</type>
+      <value>/master/stampduty</value>
+      <webElementGuid>54271336-06cc-42b9-a4f0-d00d3b5be716</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

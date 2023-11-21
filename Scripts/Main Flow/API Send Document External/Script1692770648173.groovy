@@ -503,7 +503,6 @@ def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) 
 	
 		bodyAPI = setBodyForStampingLocation(pageStamp[i], llxStamp[i], llyStamp[i], urxStamp[i], uryStamp[i], bodyAPI)
 		
-		
 		'jika dokumennya di akhir'
 		if (i == documentFile.size() - 1) {
 			'input body API berdasarkan bodyAPI diatasnya'
@@ -611,6 +610,7 @@ def setBodyForStampingLocation(String pageStamp, String llxStamp, String llyStam
 				}
 			}
 		}
+	
 	}
 	
 	return bodyAPI

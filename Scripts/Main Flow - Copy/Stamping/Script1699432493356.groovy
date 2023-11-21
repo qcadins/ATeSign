@@ -29,7 +29,7 @@ prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, 
     'No')) {
         'ambil idLov untuk diupdate secara otomatis ke DB'
         int idLov = CustomKeywords.'connection.ManualStamp.getIdLovVendorStamping'(conneSign, findTestData(excelPathStamping).getValue(
-                GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')))
+         GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')))
 
         'lakukan update vendor stamping yang akan dipakai'
         CustomKeywords.'connection.UpdateData.updateVendorStamping'(conneSign, idLov)
@@ -46,11 +46,6 @@ prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, 
 
     'ambil nama vendor dari DB'
     String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, refNumber)
-
-    HashMap<String, String> getSaldo = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathStamping
-            , ('sheet') : sheet, ('vendor') : vendor, ('usageSaldo') : 'Stamp'], FailureHandling.CONTINUE_ON_FAILURE)
-
-    saldoBefore = getSaldo.get('Meterai')
 
     if ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Option for Stamp Document :')) == 
     'API Stamping External') || (findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Option for Stamp Document :')) == 
@@ -133,6 +128,8 @@ prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, 
                         arrayMatch.add(WebUI.verifyMatch(totalMateraiAndTotalStamping[0], totalMateraiAndTotalStamping[1], 
                                 false, FailureHandling.CONTINUE_ON_FAILURE))
 
+						GlobalVariable.eSignData.putAt('VerifikasiMeterai', Integer.parseInt(totalMateraiAndTotalStamping[0]))
+
                         'jika data db tidak bertambah'
                         if (arrayMatch.contains(false)) {
                             'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
@@ -181,9 +178,9 @@ prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, 
 
                     if (((totalMateraiAndTotalStamping[0]) != '0') && (prosesMaterai != 63)) {
                         'Call verify meterai'
-                        WebUI.callTestCase(findTestCase('Main Flow/verifyMeterai'), [('excelPathMeterai') : excelPathStamping
-                                , ('sheet') : sheet, ('noKontrak') : nomorKontrakDocument.replace('"', ''), ('linkDocumentMonitoring') : linkDocumentMonitoring
-                                , ('CancelDocsStamp') : CancelDocsStamp], FailureHandling.CONTINUE_ON_FAILURE)
+                        WebUI.callTestCase(findTestCase('Main Flow - Copy/verifyMeterai'), [('excelPathMeterai') : excelPathStamping
+                         , ('sheet') : sheet, ('noKontrak') : nomorKontrakDocument.replace('"', ''), ('linkDocumentMonitoring') : linkDocumentMonitoring
+                        , ('CancelDocsStamp') : CancelDocsStamp], FailureHandling.CONTINUE_ON_FAILURE)
                     }
                 }
             } else {
@@ -199,33 +196,6 @@ prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, 
                 , ('sheet') : sheet, ('linkDocumentMonitoring') : 'Not Used', ('nomorKontrak') : refNumber, ('isStamping') : 'Yes'
                 , ('CancelDocsStamp') : CancelDocsStamp], FailureHandling.CONTINUE_ON_FAILURE)
     }
-    
-    getSaldo = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathStamping, ('sheet') : sheet, ('vendor') : vendor
-            , ('usageSaldo') : 'Stamp'], FailureHandling.CONTINUE_ON_FAILURE)
-
-    saldoAfter = getSaldo.get('Meterai')
-
-    'mengambil value db proses ttd'
-    prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, refNumber)
-
-    if ((prosesMaterai == 53) || (prosesMaterai == 63)) {
-        if (WebUI.verifyEqual(Integer.parseInt(saldoBefore), Integer.parseInt(saldoAfter), FailureHandling.OPTIONAL)) {
-            'write to excel status failed dan reason'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
-                    '-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + ' terhadap total saldo dimana saldo awal dan saldo setelah meterai sama ')
-        } else {
-            verifySaldoUsed(conneSign, sheet, refNumber, prosesMaterai)
-        }
-    } else if ((prosesMaterai == 51) || (prosesMaterai == 61)) {
-        if (saldoBefore != saldoAfter) {
-            'write to excel status failed dan reason'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
-                    '-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + ' terhadap total saldo dimana saldo awal dan saldo setelah meterai tidak sama ')
-        }
-    }
-
 
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if (isMatch == false) {

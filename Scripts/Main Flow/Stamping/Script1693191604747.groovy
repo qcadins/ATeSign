@@ -256,7 +256,7 @@ def verifySaldoUsed(Connection conneSign, String sheet, String refNumber, int pr
     WebUI.setText(findTestObject('Saldo/input_tipesaldo'), 'Stamp Duty')
 
     'enter'
-    WebUI.sendKeys(findTestObject('Saldo/input_tipeSaldo'), Keys.chord(Keys.ARROW_DOWN))
+   // WebUI.sendKeys(findTestObject('Saldo/input_tipeSaldo'), Keys.chord(Keys.ARROW_DOWN))
 
     'enter'
     WebUI.sendKeys(findTestObject('Saldo/input_tipeSaldo'), Keys.chord(Keys.ENTER))
