@@ -41,7 +41,7 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description>Pemakaian di Main Flow untuk storing saldo</description>
-      <initValue>[('VerifikasiBiometric') : 0, ('VerifikasiOTP') : 0, ('VerifikasiSign') : 0]</initValue>
+      <initValue>[('VerifikasiBiometric') : 0, ('VerifikasiOTP') : 0, ('VerifikasiSign') : 0, ('VerifikasiMeterai') : 0]</initValue>
       <name>eSignData</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>
@@ -198,6 +198,11 @@
       <description></description>
       <initValue>findTestData('Login/Setting').getValue(9, 2)</initValue>
       <name>RunWithEmbed</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>[:]</initValue>
+      <name>saldo</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>

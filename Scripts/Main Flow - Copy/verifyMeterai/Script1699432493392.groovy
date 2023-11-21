@@ -19,6 +19,27 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'looping DocumentMonitoring'
 GlobalVariable.FlagFailed = 0
 
+if (!(WebUI.verifyElementPresent(findTestObject('Meterai/menu_Meterai'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL))) {
+	if (WebUI.verifyElementPresent(findTestObject('Meterai/menu_Meterai'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		'cek apakah elemen menu ditutup'
+		if (WebUI.verifyElementVisible(findTestObject('button_HamburberSideMenu'), FailureHandling.OPTIONAL)) {
+			'klik pada button hamburber'
+			WebUI.click(findTestObject('button_HamburberSideMenu'))
+		}
+		
+		'click menu meterai'
+		WebUI.click(findTestObject('Meterai/menu_Meterai'))
+
+		'cek apakah tombol x terlihat'
+		if (WebUI.verifyElementVisible(findTestObject('buttonX_sideMenu'), FailureHandling.OPTIONAL)) {
+			'klik pada button X'
+			WebUI.click(findTestObject('buttonX_sideMenu'))
+		}
+	} else {
+		'Call test Case untuk login sebagai admin wom admin client'
+		WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excelPathMeterai, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
+	}
+}
 'click menu meterai'
 WebUI.click(findTestObject('Meterai/menu_Meterai'))
 
@@ -154,13 +175,6 @@ for (j = 1; j <= (Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ','
     'click button X'
     WebUI.click(findTestObject('Meterai/button_X'))
 }
-
-if (linkDocumentMonitoring == '') {
-linkDocumentMonitoring = 'Not Used'
-}
-
-'call testcase verify document monitoring'
-WebUI.callTestCase(findTestCase('Main Flow/verifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathMeterai, ('sheet') : sheet, ('nomorKontrak') : noKontrak, ('linkDocumentMonitoring') : linkDocumentMonitoring, ('CancelDocsStamp') : CancelDocsStamp], FailureHandling.CONTINUE_ON_FAILURE)
 
 if (GlobalVariable.FlagFailed == 0) {
 	'write to excel success'

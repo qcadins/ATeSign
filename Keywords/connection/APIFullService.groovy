@@ -416,6 +416,11 @@ public class APIFullService {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
+
+		if (data == null) {
+			data = ''
+		}
+
 		data
 	}
 
@@ -939,6 +944,23 @@ public class APIFullService {
 			helperQuery = 'tdds.id_document_d_sign'
 		}
 
+		helperResult = stm.executeQuery("select id_ms_doc_template from tr_Document_d tdd left join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h WHERE tdd.document_id = '"+value+"' OR tdh.ref_number = '"+value+"'")
+		metadata = helperResult.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (helperResult.next()) {
+			data = helperResult.getObject(1)
+		}
+		
+		if (data != 'null') {
+			helperQuery = 'tdds.seq_no'
+		} else if (data == 'null') {
+			if (helperQuery != 'tdds.seq_no') {
+				helperQuery = 'tdds.id_document_d_sign'
+			}
+		}
+		
 		resultSet = stm.executeQuery("SELECT STRING_AGG(login_id, ';' ORDER BY seq_no) AS aa FROM (SELECT DISTINCT tdds.id_ms_user,au.login_id, FIRST_VALUE("+helperQuery+") OVER (PARTITION BY tdds.id_ms_user ORDER BY tdds.seq_no) AS seq_no FROM tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user WHERE tdd.document_id = '"+ value +"' OR tdh.ref_number = '"+ value +"') AS alls;")
 		metadata = resultSet.metaData
 
@@ -1225,8 +1247,6 @@ public class APIFullService {
 
 	@Keyword
 	getIfSignerAutosign(Connection conn, String documentId, String emailSigner) {
-		String dataaa
-
 		stm = conn.createStatement()
 		resultSet = stm.executeQuery("select msl.description from tr_Document_d tdd left join tr_document_d_sign tdds on tdd.id_document_d = tdds.id_document_d left join am_msuser amm on amm.id_ms_user = tdds.id_ms_user left join ms_lov msl on  tdds.lov_autosign = msl.id_lov where tdd.document_id = '"+documentId+"' AND amm.login_id = '"+emailSigner+"'")
 		metadata = resultSet.getMetaData()
@@ -1275,18 +1295,21 @@ public class APIFullService {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	settingMustUseWAFirst(Connection conn, String value) {
 		stm = conn.createStatement()
-
-		updateVariable = stm.executeUpdate("UPDATE ms_tenant SET must_use_wa_first = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
+		if (value != '') {
+			updateVariable = stm.executeUpdate("UPDATE ms_tenant SET must_use_wa_first = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
+		}
 	}
-	
+
 	@Keyword
 	settingUseWAMessage(Connection conn, String value) {
 		stm = conn.createStatement()
 
-		updateVariable = stm.executeUpdate("UPDATE ms_tenant SET use_wa_message = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
+		if (value != '') {
+			updateVariable = stm.executeUpdate("UPDATE ms_tenant SET use_wa_message = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
+		}
 	}
 }

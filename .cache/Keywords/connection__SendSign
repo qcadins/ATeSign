@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "E107460C69A7EBE99BF79F6CCF020D45",
+  "keywordFileContentHash": "4073BE3383018FE17385A894278B2A11",
   "keywordClasses": [
     {
       "name": "connection.SendSign",
@@ -1135,6 +1135,38 @@
         },
         {
           "name": "getProsesTtdProgressPrivy",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "documentId",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getTrxNo",
           "parameters": [
             {
               "name": "conn",

@@ -138,4 +138,23 @@ public class ManualStamp {
 		}
 		Integer.parseInt(data)
 	}
+
+	@Keyword
+	getLovVendorStamping(Connection conn, String tenantCode) {
+		stm = conn.createStatement()
+		resultSet = stm.executeQuery("select msl.description from ms_tenant mst left join ms_lov msl on msl.id_lov = mst.lov_vendor_stamping where mst.tenant_code = '"+tenantCode+"'")
+		metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		
+		if (data == null) {
+			data = 'null'
+		}
+		
+		data
+	}
 }

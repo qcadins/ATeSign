@@ -33,11 +33,14 @@ if (GlobalVariable.RunWith == 'Mobile') {
 	Mobile.tapAtPosition(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), FailureHandling.OPTIONAL)
 	
 } else {
-	'open browser'
-	WebUI.openBrowser(findTestData('Login/Login').getValue(1, 2))
+	if (!(checkBeforeSigning == 'Yes') || !(findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Option for Sign Document per Signer')).split(';', -1)[GlobalVariable.opsiSigning] ==
+		'Sign Via Inbox')) {
+		'open browser'
+		WebUI.openBrowser(findTestData('Login/Login').getValue(1, 2))
 	
-	'maximized window'
-	WebUI.maximizeWindow()
+		'maximized window'
+		WebUI.maximizeWindow()
+	}
 }
 
 if (email == '') {
@@ -81,6 +84,10 @@ if (email == '') {
 } else {
     if ((checkBeforeSigning == 'Yes') || (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Option for Sign Document per Signer')).split(';', -1)[GlobalVariable.opsiSigning] == 
     'Sign Via Inbox')) {
+
+	if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/menu_Beranda'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+			
+		}
         'input email'
         WebUI.setText(findTestObject('Login/input_Email'), email)
 

@@ -165,6 +165,8 @@ if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, ro
         }  else {
             getErrorMessageAPI(respon_OTP)
         }
+    } else {
+		getErrorMessageAPI(respon_OTP)
     }
 	   } else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use correct OTP From Database (Sign External)')).split(
         ';', -1)[GlobalVariable.indexUsed] == 'Yes') {
@@ -209,19 +211,28 @@ if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, ro
 
             'Dikasih delay 1 detik dikarenakan loading untuk mendapatkan OTP.'
             WebUI.delay(3)
-
-            'Mengambil otp dari database'
-            otp = (('"' + CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, (findTestData(excelPathAPISignDocument).getValue(
+			
+			email = (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(
+				';', -1)[GlobalVariable.indexUsed]).replace('"', '')
+				
+			if ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Sign External)')) ==
+				'1') && email.contains('OUTLOOK.COM')) {
+					WebUI.delay(20)
+					'call keyword get otp dari email'
+					otp = (('"' + CustomKeywords.'customizekeyword.GetEmail.getEmailContent'(email, findTestData(excelPathAPISignDocument).getValue(
+							GlobalVariable.NumofColm, rowExcel('Password Signer')), 'OTP')) + '"')
+				} else {
+				
+					'Mengambil otp dari database'
+					otp = (('"' + CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, (findTestData(excelPathAPISignDocument).getValue(
                     GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(';', -1)[GlobalVariable.indexUsed]).replace(
                     '"', ''))) + '"')
+				}
         } else {
             getErrorMessageAPI(respon_OTP)
         }
     } else {
-        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.HITAPI Gagal'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
-            GlobalVariable.ReasonFailedOTPError)
+		getErrorMessageAPI(respon_OTP)
     }
 } else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use correct OTP From Database (Sign External)')).split(
         ';', -1)[GlobalVariable.indexUsed] == 'No') {

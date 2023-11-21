@@ -635,7 +635,12 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
                         }
                         
                         if ((jumlahSignerTandaTangan != 0) && (jumlahSignerTandaTangan != jumlahHarusTandaTangan)) {
+                            if (jumlahSignerTandaTangan == saldoForCheckingDB) { 
+								saldoForCheckingDB = jumlahSignerTandaTangan
+							} else {
+							'menambah saldo for checking db ke jumlah signer tanda tangan'
                             saldoForCheckingDB = (saldoForCheckingDB + jumlahSignerTandaTangan)
+							}
                         } else if ((jumlahSignerTandaTangan != 0) && (jumlahSignerTandaTangan == jumlahHarusTandaTangan)) {
                             saldoForCheckingDB = jumlahSignerTandaTangan
                         }
@@ -706,7 +711,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
     noKontrakPerDoc = noKontrak.split(';', -1)
 
     'beri maks 30 sec mengenai perubahan total sign'
-    for (b = 1; b <= 3; b++) {
+    for (b = 1; b <= 1; b++) {
         HashMap<String, String> resultSaldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathFESignDocument
                 , ('sheet') : sheet, ('vendor') : vendor, ('usageSaldo') : 'Sign'], FailureHandling.CONTINUE_ON_FAILURE)
 

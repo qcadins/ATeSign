@@ -35,7 +35,7 @@
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>POST</restRequestMethod>
-   <restUrl>http://gdkwebsvr:7021/adimobile/esign/services/embed/user/sentOtpSigningEmbed</restUrl>
+   <restUrl>${base_url}/services/embed/user/sentOtpSigningEmbed</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>

@@ -539,4 +539,23 @@ public class SendSign {
 		}
 		Integer.parseInt(data)
 	}
+
+	@Keyword
+	getTrxNo(Connection conn, String documentId) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select tbm.trx_no from tr_Document_d tdd LEFT JOIN tr_balance_mutation tbm on tbm.id_document_d = tdd.id_Document_d LEFT JOIN tr_document_h tdh on tbm.id_Document_h = tdh.id_document_h WHERE tdd.document_id = '"+documentId+"' Order by tbm.dtm_crt asc ")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
 }
