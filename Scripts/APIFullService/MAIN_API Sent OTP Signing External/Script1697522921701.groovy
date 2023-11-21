@@ -92,7 +92,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing', [('callerId') : findTestData(excelPathAPISentOTPSigning).getValue(
                         GlobalVariable.NumofColm, rowExcel('$callerId')), ('phoneNo') : findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 
                         rowExcel('phoneNo')), ('email') : findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('email'))
-                    , ('refnumber') : findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')), ('listDocumentId') : listDoc]))
+                    , ('refnumber') : findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')), ('listDocumentId') : listDoc,
+					('vendor') : '"' + GlobalVariable.Psre + '"']))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
