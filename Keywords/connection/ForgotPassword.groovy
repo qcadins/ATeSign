@@ -15,17 +15,24 @@ import groovy.sql.Sql as Sql
 
 public class ForgotPassword {
 
-	String data
-	int columnCount
+	String data, helperQuery
+	int columnCount, i, countLengthforSHA256 = 64
 	Statement stm
 	ResultSet resultSet
 	ResultSetMetaData metadata
+	ArrayList<String> listdata = []
 
 	@Keyword
 	getResetCode(Connection conn, String email) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT reset_code FROM am_msuser WHERE login_id = '" + email + "'")
+		if (email.length() == countLengthforSHA256) {
+			helperQuery = 'hashed_phone'
+		} else {
+			helperQuery = 'login_id'
+		}
+
+		resultSet = stm.executeQuery("SELECT reset_code FROM am_msuser WHERE "+helperQuery+" = '" + email + "'")
 
 		while (resultSet.next()){
 
@@ -71,9 +78,15 @@ public class ForgotPassword {
 	getResetNum(Connection conn, String email) {
 		int data
 
+		if (email.length() == countLengthforSHA256) {
+			helperQuery = 'hashed_phone'
+		} else {
+			helperQuery = 'login_id'
+		}
+
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT reset_code_request_num FROM am_msuser where login_id = '" +  email  + "'")
+		resultSet = stm.executeQuery("SELECT reset_code_request_num FROM am_msuser where "+helperQuery+" = '" +  email  + "'")
 
 		while (resultSet.next()){
 
@@ -87,9 +100,15 @@ public class ForgotPassword {
 	getTenantCode(Connection conn, String email) {
 		data
 
+		if (email.length() == countLengthforSHA256) {
+			helperQuery = 'amu.hashed_phone'
+		} else {
+			helperQuery = 'amu.login_id'
+		}
+
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT mt.tenant_code FROM am_msuser amu LEFT JOIN ms_useroftenant mot ON mot.id_ms_user = amu.id_ms_user LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mot.id_ms_tenant LEFT JOIN tr_document_h tdh ON tdh.id_ms_tenant = mt.id_ms_tenant WHERE amu.login_id = '" + email + "' ORDER BY id_document_h DESC LIMIT 1")
+		resultSet = stm.executeQuery("SELECT mt.tenant_code FROM am_msuser amu LEFT JOIN ms_useroftenant mot ON mot.id_ms_user = amu.id_ms_user LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mot.id_ms_tenant LEFT JOIN tr_document_h tdh ON tdh.id_ms_tenant = mt.id_ms_tenant WHERE "+helperQuery+" = '" + email + "' ORDER BY id_document_h DESC LIMIT 1")
 
 		while (resultSet.next()){
 
@@ -104,7 +123,13 @@ public class ForgotPassword {
 
 		stm = conn.createStatement()
 
-		int updateCount = stm.executeUpdate("UPDATE am_msuser SET reset_code_request_num = 0 WHERE login_id = '" + email + "';")
+		if (email.length() == countLengthforSHA256) {
+			helperQuery = 'hashed_phone'
+		} else {
+			helperQuery = 'login_id'
+		}
+
+		int updateCount = stm.executeUpdate("UPDATE am_msuser SET reset_code_request_num = 0 WHERE "+helperQuery+" = '" + email + "';")
 	}
 
 	@Keyword
@@ -113,5 +138,24 @@ public class ForgotPassword {
 		stm = conn.createStatement()
 
 		int updateCount = stm.executeUpdate("UPDATE ms_tenant SET otp_active_duration = " + otpduration + " WHERE tenant_code = '" + tenantcode + "';")
+	}
+
+	@Keyword
+	getTrxSaldoWASMS(Connection conn, String usage, String fullName) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT tbm.trx_no, TO_CHAR(tbm.trx_date, 'YYYY-MM-DD HH24:MI:SS'), 'Use ' || msl.description, amm.full_name, '', '', '', tbm.notes, tbm.qty FROM tr_balance_mutation tbm LEFT JOIN ms_lov msl ON tbm.lov_balance_type = msl.id_lov LEFT JOIN am_msuser amm ON tbm.id_ms_user = amm.id_ms_user LEFT JOIN tr_document_d tdd ON tbm.id_document_d = tdd.id_document_d LEFT JOIN tr_document_h tdh ON tbm.id_document_h = tdh.id_document_h WHERE msl.description = '"+usage+"' AND amm.full_name = '"+fullName+"' ORDER BY tbm.dtm_crt DESC LIMIT 1;")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
 	}
 }

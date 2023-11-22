@@ -399,7 +399,9 @@ if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, ro
                                 }
                             }
 
-
+							WebUI.comment(saldoBefore.toString())
+							WebUI.comment(saldoAfter.toString())
+							
 							'looping untuk mendapatkan total saldo yang digunakan per nomor kontrak'
 								nomorKontrak = CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, GlobalVariable.storeVar.keySet()[0])
 								'Mengambil value dari db mengenai tipe pembayran'

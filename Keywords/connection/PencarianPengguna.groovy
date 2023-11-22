@@ -53,7 +53,7 @@ public class PencarianPengguna {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getUserDataAPI(Connection conn, String email) {
 		stm = conn.createStatement()

@@ -22,7 +22,7 @@ String settingHO = ''
 'Jika nomor Kontrak kosong'
 if (nomorKontrak == '') {
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
-    'API Send Docum	ent External') {
+    'API Send Document External') {
         'Mengambil nomor kontrak dari excel'
         nomorKontrak = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo (Send External)')).replace(
             '"', '')
@@ -37,7 +37,8 @@ if (nomorKontrak == '') {
         nomorKontrak = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen (Send Manual)'))
     } else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
     'Sign Only' || findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
-    'Stamp Only') {
+    'Stamp Only' || findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
+    'Cancel Only') {
 		documentId = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ', -1)
 	
         'Mengambil documen id dari excel'

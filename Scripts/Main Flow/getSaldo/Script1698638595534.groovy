@@ -92,6 +92,15 @@ def funcSaldoSend(HashMap result) {
 	
 	funcFindSaldo(result, vendorVerifikasi, saldoList, forAutosign)
 
+	vendorVerifikasi = 'ESIGN/ADINS'
+	
+	saldoList = ['SMS Notif', 'WhatsApp Message']
+	
+	forAutosign = false
+	
+	funcFindSaldo(result, vendorVerifikasi, saldoList, forAutosign)
+	
+	WebUI.comment(result.toString())
 	return result
 }
 
@@ -100,7 +109,7 @@ def funcSaldoSign(HashMap result) {
 	
 	ArrayList saldoList = []
 	
-	saldoList = ['Meterai']
+	saldoList = ['Meterai', 'SMS Notif', 'WhatsApp Message']
 	
 	vendorVerifikasi = 'ESIGN/ADINS'
 	
@@ -199,6 +208,8 @@ def funcSaldoRegis(HashMap result, int countCheckSaldo, Connection conneSign) {
 		}
 			
 		saldoList = [useSaldo]
+		
+		saldoList.add('SMS Notif')
 		
 		funcFindSaldo(result, vendorVerifikasi, saldoList, forAutosign)
 		

@@ -217,6 +217,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 println(saldoAfter)
 
+				WebUI.comment(saldoBefore.toString())
+				WebUI.comment(saldoAfter.toString())
+				
                 'verify saldo before dan after'
                 checkVerifyEqualOrMatch(WebUI.verifyMatch(saldoBefore.toString(), saldoAfter.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), 
                     ' Saldo Gagal Potong')
