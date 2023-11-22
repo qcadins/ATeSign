@@ -246,6 +246,32 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
                     1, GlobalVariable.StatusSuccess)
             }
         }
+    } else if (code == 8106) {
+		
+		'cek ke excel bahwa data user sudah diregist otomatis ke tenant lain'
+		result = CustomKeywords.'connection.Registrasi.checkAddUserOtherTenant'(conneSign,
+			findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"',''))
+		
+		if (result == 0) {
+			
+			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+				(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +
+					'Error User di Tenant baru tidak berhasil ditambahkan')
+			
+		} else if (result > 1) {
+			
+			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+				(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +
+					'Terdapat 2 user yang sama di tenant ' + GlobalVariable.Tenant)
+		} else {
+			
+			'write to excel success'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
+				1, GlobalVariable.StatusSuccess)
+		}
+		
     } else {
         'mengambil status code berdasarkan response HIT API'
         message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)

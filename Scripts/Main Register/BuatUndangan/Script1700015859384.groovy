@@ -146,7 +146,38 @@ if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/label_ValidationErr
 					
 					GlobalVariable.FlagFailed = 1
                 }
-            } else {
+            } else if (status_Code == 5512 || WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL) == 'Tidak bisa mengakses user milik tenant lain') {
+			
+				'cek ke excel bahwa data user sudah diregist otomatis ke tenant lain'
+				result = CustomKeywords.'connection.Registrasi.checkAddUserOtherTenant'(conneSign,
+					findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"',''))
+				
+				if (result == 0) {
+					
+					'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+						(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +
+							'Error User di Tenant baru tidak berhasil ditambahkan')
+					
+					GlobalVariable.FlagFailed = 1
+					
+				} else if (result > 1) {
+					
+					'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+						(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +
+							'Terdapat 2 user yang sama di tenant ' + GlobalVariable.Tenant)
+					
+					GlobalVariable.FlagFailed = 1
+				} else {
+					
+					'write to excel success'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
+						1, GlobalVariable.StatusSuccess)
+					
+					GlobalVariable.FlagFailed = 1
+				}
+			} else {
                 messageFailed = WS.getElementPropertyValue(responGetInvLink, 'status.message', FailureHandling.OPTIONAL).toString()
 
                 'write to excel status failed dan reason'

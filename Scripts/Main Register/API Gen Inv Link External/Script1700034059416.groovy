@@ -95,6 +95,39 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 
             GlobalVariable.FlagFailed = 1
         }
+		
+		if (WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL) == 'User sudah terdaftar') {
+			
+			'cek ke excel bahwa data user sudah diregist otomatis ke tenant lain'
+			result = CustomKeywords.'connection.Registrasi.checkAddUserOtherTenant'(conneSign,
+				findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"',''))
+			
+			if (result == 0) {
+				
+				'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+					(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +
+						'Error User di Tenant baru tidak berhasil ditambahkan')
+				
+				GlobalVariable.FlagFailed = 1
+				
+			} else if (result > 1) {
+				
+				'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+					(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +
+						'Terdapat 2 user yang sama di tenant ' + GlobalVariable.Tenant)
+				
+				GlobalVariable.FlagFailed = 1
+			} else {
+				
+				'write to excel success'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
+					1, GlobalVariable.StatusSuccess)
+				
+				GlobalVariable.FlagFailed = 1
+			}
+		}
         
         if ((GlobalVariable.checkStoreDB == 'Yes') && (GlobalVariable.FlagFailed == 0)) {
             'call test case ResponseAPIStoreDB'
