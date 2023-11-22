@@ -21,6 +21,8 @@ def currentDate = new Date().format('yyyy-MM-dd')
 'Inisialisasi flag break untuk sequential'
 int flagBreak = 0, isLocalhost = 0, alreadyVerif = 0, saldoForCheckingDB = 0, jumlahHarusTandaTangan = 0, jumlahSignerTandaTangan = 0, countAutosign = 0
 
+HashMap<String, String> resultSaldoAfter, resultSaldoBefore
+
 useBiom = 0
 
 'reset value GV'
@@ -82,7 +84,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
     int totalDocSign, countResend = 0, countSaldoSplitLiveFCused = 0
 
 	'saldo before'
-    HashMap<String, String> resultSaldoBefore = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathFESignDocument
+    resultSaldoBefore = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathFESignDocument
             , ('sheet') : sheet, ('vendor') : vendor, ('usageSaldo') : 'Sign'], FailureHandling.CONTINUE_ON_FAILURE)
 
 	'jika digisign, maka sign type yang akan diambil adalah Dokumen, jika vendor lainnya yaitu TTD'
@@ -711,7 +713,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 
     'beri maks 30 sec mengenai perubahan total sign'
     for (b = 1; b <= 1; b++) {
-        HashMap<String, String> resultSaldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathFESignDocument
+        resultSaldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathFESignDocument
                 , ('sheet') : sheet, ('vendor') : vendor, ('usageSaldo') : 'Sign'], FailureHandling.CONTINUE_ON_FAILURE)
 
         saldoSignAfter = resultSaldoAfter.get(signType)
@@ -726,6 +728,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 
             'cek apa pernah menggunakan biometrik'
             if (useBiom == 0) {
+				
                 'Jika count saldo otp after dengan yang before dikurangi 1 ditambah dengan '
                 if (WebUI.verifyEqual(Integer.parseInt(resultSaldoBefore.get('OTP')) - countResend, Integer.parseInt(resultSaldoAfter.get(
                             'OTP')), FailureHandling.OPTIONAL)) {
@@ -771,7 +774,10 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
             break
         }
     }
-    
+	
+	WebUI.comment(resultSaldoBefore.toString())
+	WebUI.comment(resultSaldoAfter.toString())
+	
     'looping berdasarkan total dokumen dari dokumen template code'
     for (int i = 0; i < noKontrakPerDoc.size(); i++) {
         'Input filter di Mutasi Saldo'

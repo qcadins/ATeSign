@@ -21,6 +21,8 @@ def currentDate = new Date().format('yyyy-MM-dd')
 'Inisialisasi flag break untuk sequential'
 int flagBreak = 0, isLocalhost = 0, alreadyVerif = 0,  saldoForCheckingDB = 0, jumlahHarusTandaTangan = 0, jumlahSignerTandaTangan = 0,  countAutosign = 0
 
+HashMap<String, String> resultSaldoBefore, resultSaldoAfter
+
 useBiom = 0
 
 'reset value GV'
@@ -712,7 +714,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 
     'beri maks 30 sec mengenai perubahan total sign'
     for (b = 1; b <= 1; b++) {
-        HashMap<String, String> resultSaldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathFESignDocument
+        resultSaldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathFESignDocument
                 , ('sheet') : sheet, ('vendor') : vendor, ('usageSaldo') : 'Sign'], FailureHandling.CONTINUE_ON_FAILURE)
 
         'mengambil saldo before'
@@ -774,6 +776,9 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
         }
     }
     
+	WebUI.comment(resultSaldoBefore.toString())
+	WebUI.comment(resultSaldoAfter.toString())
+	
     'looping berdasarkan total dokumen dari dokumen template code'
     for (i = 0; i < noKontrakPerDoc.size(); i++) {
         'Input filter di Mutasi Saldo'
@@ -1102,7 +1107,7 @@ def generateEncryptMessage(Connection conneSign, String documentId, String email
     linkDocumentMonitoring = ((((((((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Base Link Document Monitoring')) + 
     '?msg=') + encryptMsg) + '&isHO=') + (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel(
             'isHO')).split(';', -1)[GlobalVariable.indexUsed])) + '&isMonitoring=') + (findTestData(excelPathFESignDocument).getValue(
-        GlobalVariable.NumofColm, rowExcel('isMonitoring')).split(';', -1)[GlobalVariable.indexUsed])) + '&tenantCode=') + 
+        GlobalVariable.NumofColm, rowExcel('isMonitoring')))) + '&tenantCode=') + 
     tenantCode)
 
     'membuat link kotak masuk'

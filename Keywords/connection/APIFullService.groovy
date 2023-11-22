@@ -952,7 +952,7 @@ public class APIFullService {
 		while (helperResult.next()) {
 			data = helperResult.getObject(1)
 		}
-		
+
 		if (data != 'null') {
 			helperQuery = 'tdds.seq_no'
 		} else if (data == 'null') {
@@ -960,7 +960,7 @@ public class APIFullService {
 				helperQuery = 'tdds.id_document_d_sign'
 			}
 		}
-		
+
 		resultSet = stm.executeQuery("SELECT STRING_AGG(login_id, ';' ORDER BY seq_no) AS aa FROM (SELECT DISTINCT tdds.id_ms_user,au.login_id, FIRST_VALUE("+helperQuery+") OVER (PARTITION BY tdds.id_ms_user ORDER BY tdds.seq_no) AS seq_no FROM tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user WHERE tdd.document_id = '"+ value +"' OR tdh.ref_number = '"+ value +"') AS alls;")
 		metadata = resultSet.metaData
 

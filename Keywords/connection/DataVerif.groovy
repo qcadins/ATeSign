@@ -9,7 +9,7 @@ import internal.GlobalVariable
 
 public class DataVerif {
 
-	String data
+	String data, helperQuery
 	int columnCount, i, updateVariable
 	Statement stm
 	ResultSetMetaData metadata
@@ -480,5 +480,120 @@ public class DataVerif {
 		} else {
 			data = 0
 		}
+	}
+
+	@Keyword
+	getMustUseWAFirst(Connection conn, String tenantCode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select must_use_wa_first from ms_tenant where tenant_code = '"+tenantCode+"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+
+		if (data == null) {
+			data = '0'
+		}
+		data
+	}
+
+	@Keyword
+	getUseWAMessage(Connection conn, String tenantCode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select use_wa_message from ms_tenant where tenant_code = '"+tenantCode+"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+
+		if (data == null) {
+			data = '0'
+		}
+		data
+	}
+
+	@Keyword
+	getEmailServiceAsVendorUser(Connection conn, String emailSigner) {
+		stm = conn.createStatement()
+
+		if (!emailSigner.contains('@')) {
+			helperQuery = 'amm.hashed_phone'
+		} else {
+			helperQuery = 'amm.login_id'
+		}
+
+		resultSet = stm.executeQuery("select msvr.email_service from ms_vendor_registered_user msvr left join am_msuser amm on amm.id_ms_user = msvr.id_ms_user left join ms_vendor msv on msvr.id_ms_vendor = msv.id_ms_vendor where '"+helperQuery+"' = '"+emailSigner+"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+
+		if (data == null) {
+			data = '0'
+		}
+		data
+	}
+
+	@Keyword
+	getSMSSetting(Connection conn, String decisionCode) {
+		stm = conn.createStatement()
+
+		if (decisionCode == 'Forgot Password') {
+			helperQuery = 'SEND_SMS_FORPASS'
+		} else if (decisionCode == 'Send Document') {
+			helperQuery = 'SEND_SMS_SENDDOC'
+		} else if (decisionCode == 'OTP') {
+			helperQuery = 'SEND_SMS_OTP_USER'
+		}
+		resultSet = stm.executeQuery("select gs_value from am_generalsetting where gs_code = '"+helperQuery+"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+
+		if (data == null) {
+			data = '0'
+		}
+		data
+	}
+
+	@Keyword
+	getFullNameOfUser(Connection conn, String valueUser) {
+
+		if (!valueUser.contains('@')) {
+			helperQuery = 'hashed_phone'
+		} else {
+			helperQuery = 'login_id'
+		}
+
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select full_name from am_msuser where '"+helperQuery+"' = '"+valueUser+"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+
+		if (data == null) {
+			data = '0'
+		}
+		data
 	}
 }

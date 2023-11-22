@@ -206,6 +206,10 @@ def checkPaging() {
     'click button cari'
     WebUI.click(findTestObject('PencarianPenggunaAdmin/Karyawan/button_Cari'))
 
+	'ambil total trx berdasarkan filter yang telah disiapkan pada ui'
+	totalPenggunaUI = WebUI.getText(findTestObject('PencarianPenggunaAdmin/label_TotalPencarianPengguna')).split(' ', -1)
+
+	if (Integer.parseInt(totalPenggunaUI[0]) > 10) {
     'click page 2'
     WebUI.click(findTestObject('PencarianPenggunaAdmin/Karyawan/page_2'))
 
@@ -233,6 +237,7 @@ def checkPaging() {
     'verify page 1 active'
     checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianPenggunaAdmin/Karyawan/label_Page'), 
                 'ng-reflect-page'), '1', false, FailureHandling.CONTINUE_ON_FAILURE))
+	}
 }
 
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
