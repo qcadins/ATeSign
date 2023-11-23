@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API Signing Hash File</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>60022862-3023-4949-8d1e-b00cf0491012</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>ad20d1e7-96e0-4120-a36b-b7e7da1274d0</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>a490110c-75ee-4607-975d-64ea9e3432f7</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'APIFullService/API Signing Hash File'</defaultValue>
+      <description></description>
+      <id>ad20d1e7-96e0-4120-a36b-b7e7da1274d0</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Signing Hash File'</defaultValue>
+      <description></description>
+      <id>a490110c-75ee-4607-975d-64ea9e3432f7</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>
