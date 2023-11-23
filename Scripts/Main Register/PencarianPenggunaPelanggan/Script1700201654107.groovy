@@ -28,15 +28,15 @@ WebUI.click(findTestObject('PencarianPenggunaAdmin/Pengguna/menu_Pelanggan'))
 if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Input with')).equalsIgnoreCase('Email')) {
     'set text search box dengan email'
     WebUI.setText(findTestObject('PencarianPenggunaAdmin/Pengguna/input_SearchBox'), findTestData(excelPathRegister).getValue(
-            GlobalVariable.NumofColm, rowExcel('$Email')))
+            GlobalVariable.NumofColm, rowExcel('$Email')).replace('"',''))
 } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Input with')).equalsIgnoreCase('Phone')) {
     'set text search box dengan Phone'
     WebUI.setText(findTestObject('PencarianPenggunaAdmin/Pengguna/input_SearchBox'), findTestData(excelPathRegister).getValue(
-            GlobalVariable.NumofColm, rowExcel('No Telepon')))
+            GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"',''))
 } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Input with')).equalsIgnoreCase('NIK')) {
     'set text search box dengan NIK'
     WebUI.setText(findTestObject('PencarianPenggunaAdmin/Pengguna/input_SearchBox'), findTestData(excelPathRegister).getValue(
-            GlobalVariable.NumofColm, rowExcel('$NIK')))
+            GlobalVariable.NumofColm, rowExcel('$NIK')).replace('"',''))
 }
 
 'click button cari'
@@ -50,14 +50,14 @@ if (WebUI.verifyElementPresent(findTestObject('PencarianDokumen/noDataWarning'),
         ';') + 'Hasil Pencarian tidak ada')
 } else {
     'check if View / reset OTP'
-    if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Pencarian Pengguna Action')).equalsIgnoreCase(
+    if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Check Pencarian Pengguna')).equalsIgnoreCase(
         'View')) {
         'click button view'
         WebUI.click(findTestObject('PencarianPenggunaAdmin/Karyawan/button_View'))
 
         'get data view dari DB'
         ArrayList<String> resultData = CustomKeywords.'connection.PencarianPengguna.getPencarianPengguna'(conneSign, findTestData(
-                excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).toUpperCase())
+                excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"','').toUpperCase())
 
         index = 0
 
@@ -90,7 +90,7 @@ if (WebUI.verifyElementPresent(findTestObject('PencarianDokumen/noDataWarning'),
 
         'click button kembali'
         WebUI.click(findTestObject('PencarianPenggunaAdmin/View/button_Kembali'))
-    } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Pencarian Pengguna Action')).equalsIgnoreCase(
+    } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Check Pencarian Pengguna')).equalsIgnoreCase(
         'Reset OTP')) {
         'click button reset OTP'
         WebUI.click(findTestObject('PencarianPenggunaAdmin/Pengguna/button_ResetOTP'))
@@ -108,11 +108,11 @@ if (WebUI.verifyElementPresent(findTestObject('PencarianDokumen/noDataWarning'),
                 1, GlobalVariable.StatusSuccess)
 
             if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Input with')) == 'Email') {
-                value = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).toUpperCase()
+                value = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"','').toUpperCase()
             } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Input with')) == 'Phone') {
-                value = convertSHA256(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon')))
+                value = convertSHA256(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"',''))
             } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Input with')) == 'Id no') {
-                value = convertSHA256(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$NIK')))
+                value = convertSHA256(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$NIK')).replace('"',''))
             }
             
             'get data reset request OTP dari DB'
@@ -127,7 +127,7 @@ if (WebUI.verifyElementPresent(findTestObject('PencarianDokumen/noDataWarning'),
                 ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
                     '-', '') + ';') + GlobalVariable.ReasonFailedResend) + ' OTP')
         }
-    } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Pencarian Pengguna Action')).equalsIgnoreCase(
+    } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Check Pencarian Pengguna')).equalsIgnoreCase(
         'Resend Link')) {
         'click button resend link'
         WebUI.click(findTestObject('PencarianPenggunaAdmin/Pengguna/button_ResendLink'))
@@ -165,7 +165,7 @@ if (GlobalVariable.FlagFailed == 0) {
 def checkPaging() {
     'input search box'
     WebUI.setText(findTestObject('PencarianPenggunaAdmin/Pengguna/input_SearchBox'), findTestData(excelPathRegister).getValue(
-            GlobalVariable.NumofColm, rowExcel('$Email')))
+            GlobalVariable.NumofColm, rowExcel('$Email')).replace('"',''))
 
     'click button cari'
     WebUI.click(findTestObject('PencarianPenggunaAdmin/Pengguna/button_Cari'))
