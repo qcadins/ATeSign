@@ -59,9 +59,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct OTP')) == 'No') {
 			'set otp salah'
 			otp = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong OTP'))
+			
 		} else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct OTP')) == 'Yes') {
-			'get otp dari DB'
-			otp = CustomKeywords.'connection.DataVerif.getOTP'(conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Email')))
+			'get otp yang betul'
+			otp = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('OTP'))
 		}
 		
 		'setting menggunakan base url yang benar atau salah'
@@ -71,7 +72,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		ArrayList documentId = [], list = [], listDocId = []
 	
 		'Mengambil document id dari excel dan displit'
-		documentId = findTestData(excelPathAPIGetSignLink).getValue(GlobalVariable.NumofColm, rowExcel('Document Hash')).split(';', -1)
+		documentId = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Document Hash')).split(';', -1)
 	
 		for (int q = 0; q < documentId.size(); q++) {
 			list.add('"' + documentId.get(q) + '"');
@@ -87,11 +88,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		String listDoc = listDocId.toString().replace('[','').replace(']','')
 		
 		'HIT API send otp ke email invitasi'
-		respon = WS.sendRequest(findTestObject('Postman/API Signing Hash File', [
+		respon = WS.sendRequest(findTestObject('APIFullService/Postman/API Signing Hash File', [
 			('callerId') : ('"' + findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId'))) + '"',
 			('loginId') : ('"' + findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Email'))) + '"',
 			('otp') : ('"' + otp + '"'),
-				('documentHash') : listDoc]))
+				('documentHash') : listDoc,
+				('psre') : ('"' + GlobalVariable.Psre + '"')]))
 
 		'ambil lama waktu yang diperlukan hingga request menerima balikan'
 		def elapsedTime = (respon.getElapsedTime()) / 1000 + ' second'
@@ -170,33 +172,4 @@ def getErrorMessageAPI(def respon) {
 
 def rowExcel(String cellValue) {
     return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
-}
-
-def parseCodeOnly(String url) {
-
-	'ambil data sesudah "code="'
-	Pattern pattern = Pattern.compile("code=([^&]+)")
-	
-	'ambil matcher dengan URL'
-	Matcher matcher = pattern.matcher(url)
-	
-	'cek apakah apttern nya sesuai'
-	if (matcher.find()) {
-		'ubah jadi string'
-		String code = matcher.group(1).replace('%3D','=')
-		
-		return code
-	} else {
-		
-		return ''
-	}
-}
-
-def decryptLink(Connection conneSign, String invCode) {
-	aesKey = CustomKeywords.'connection.DataVerif.getAESKey'(conneSign)
-	
-	'enkripsi msg'
-	encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseDecrypt'(invCode, aesKey)
- 
-	return encryptMsg
 }

@@ -11,7 +11,7 @@
    <httpBody></httpBody>
    <httpBodyContent>{
   &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: ${callerId}\n    },\n    \&quot;documentHash\&quot;: [\n        ${documentHash}\n    ], \n    \&quot;otp\&quot;: ${otp},\n    \&quot;email\&quot;: ${loginId},\n    \&quot;psreCode\&quot;: ${psre}\n}&quot;,
-  &quot;contentType&quot;: &quot;text/plain&quot;,
+  &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
    <httpBodyType>text</httpBodyType>
@@ -20,7 +20,7 @@
       <matchCondition>equals</matchCondition>
       <name>Content-Type</name>
       <type>Main</type>
-      <value>text/plain</value>
+      <value>application/json</value>
       <webElementGuid>ad4fbb6f-ae93-457b-ad0f-ac4398bcf65c</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>

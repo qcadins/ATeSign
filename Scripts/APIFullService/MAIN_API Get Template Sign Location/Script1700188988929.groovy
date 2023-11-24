@@ -149,24 +149,23 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 						1, GlobalVariable.StatusSuccess)
 				}
             } else {
-                'mengambil status code berdasarkan response HIT API'
-                message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
-
-                'Write To Excel GlobalVariable.StatusFailed and errormessage'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                    GlobalVariable.StatusFailed, '<' + message + '>')
+				getErrorMessageAPI(respon)
             }
         } else {
-            'mengambil status code berdasarkan response HIT API'
-            message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
-
-            'Write To Excel GlobalVariable.StatusFailed and errormessage'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                GlobalVariable.StatusFailed, '<' + message + '>')
+            getErrorMessageAPI(respon)
         }
     }
 }
 
 def rowExcel(String cellValue) {
 	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+}
+
+def getErrorMessageAPI(def respon) {
+	'mengambil status code berdasarkan response HIT API'
+	message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
+
+	'Write To Excel GlobalVariable.StatusFailed and errormessage'
+	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+		GlobalVariable.StatusFailed, '<' + message + '>')
 }
