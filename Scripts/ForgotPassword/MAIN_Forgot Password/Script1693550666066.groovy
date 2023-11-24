@@ -53,7 +53,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
         GlobalVariable.Tenant = tenantcode
 
-		println GlobalVariable.Tenant
         if (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration (Empty/0/1/>1)')).length() > 
         0) {
             'ubah durasi aktif di DB'
@@ -121,7 +120,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 WebUI.click(findTestObject('ForgotPassword/button_Batal'))
 
                 continue
-            }
+            } else if (WebUI.verifyElementPresent(findTestObject('ForgotPassword/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+				
+				'ambil error dan get text dari error tersebut'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+					(((findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) +
+					';') + '<') + WebUI.getText(findTestObject('ForgotPassword/lbl_popup'))) + '>')
+
+				'klik pada tombol batal'
+				WebUI.click(findTestObject('ForgotPassword/button_Batal'))
+
+				continue
+			}
             
             'ambil request num'
             int requestNumresetCode = CustomKeywords.'connection.ForgotPassword.getResetNum'(conneSign, emailSHA256)

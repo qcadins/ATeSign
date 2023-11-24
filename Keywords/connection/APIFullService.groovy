@@ -1427,4 +1427,22 @@ public class APIFullService {
 		}
 		Integer.parseInt(data)
 	}
+	@Keyword
+	getTenantSettingAPIOnly(Connection conn) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT tenant_code, tenant_name, mst.ref_number_label, mst.activation_callback_url, mst.use_wa_message, mst.threshold_balance, mst.email_reminder_dest FROM ms_tenant mst WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
 }

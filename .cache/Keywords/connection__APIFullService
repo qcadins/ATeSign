@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "EF9A0762FA1E7BCBE0F243042A2C5F54",
+  "keywordFileContentHash": "CB40DD5C753259EC0F84B194F2DD28D0",
   "keywordClasses": [
     {
       "name": "connection.APIFullService",
@@ -2936,6 +2936,25 @@
               "type": {
                 "fullClassName": "java.lang.String",
                 "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getTenantSettingAPIOnly",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
                 "isArray": false,
                 "isGnericsPlaceHolder": false,
                 "hasImmutableClassName": false,
