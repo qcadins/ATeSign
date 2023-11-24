@@ -18,14 +18,14 @@
       <variableId>3fbc4873-bab3-42fe-b0d6-8f629b9dda1e</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'APIFullService/API_GenInvLink'</defaultValue>
+      <defaultValue>'Registrasi/MainRegister'</defaultValue>
       <description></description>
       <id>228633db-3582-4e75-8a10-588b5dbb9f95</id>
       <masked>false</masked>
-      <name>excelPathAPIGenerateInvLink</name>
+      <name>excelPathRegister</name>
    </variable>
    <variable>
-      <defaultValue>'API Generate Invitation Link'</defaultValue>
+      <defaultValue>'Main Register'</defaultValue>
       <description></description>
       <id>3fbc4873-bab3-42fe-b0d6-8f629b9dda1e</id>
       <masked>false</masked>
