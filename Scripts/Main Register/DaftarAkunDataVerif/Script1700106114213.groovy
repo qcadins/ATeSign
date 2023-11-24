@@ -106,7 +106,7 @@ checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Daf
         findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Tempat Lahir')).replace('"', 
             '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Tempat Lahir')
 
-if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Register With')).equalsIgnoreCase(
+if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
 	'Menu Buat Undangan')) {
 	'parse Date from yyyy-MM-dd > MM/dd/yyyy'
 	sDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
@@ -365,7 +365,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
 
                 'looping untuk mengeck apakah case selanjutnya ingin melanjutkan input pada form aktivasi'
                 while (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Continue Register & Activation')).equalsIgnoreCase(
-                    'Continue')) {
+                    'Continue') && GlobalVariable.FlagFailed > 0) {
                     (GlobalVariable.NumofColm)++
 
                     GlobalVariable.FlagFailed = 0
@@ -381,13 +381,13 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
 
                 'looping untuk mengeck apakah case selanjutnya ingin melanjutkan input pada form aktivasi'
                 while (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Continue Register & Activation')).equalsIgnoreCase(
-                    'Continue')) {
+                    'Continue') && GlobalVariable.FlagFailed > 0) {
                     (GlobalVariable.NumofColm)++
 
                     GlobalVariable.FlagFailed = 0
 
                     'call testcase form aktivasi vida'
-                    WebUI.callTestCase(findTestCase('Main Register/Generate Invitation Link/FormAktivasiEsign'), [('excelPathRegister') : excelPathRegister], 
+                    WebUI.callTestCase(findTestCase('Main Register/FormAktivasiEsign'), [('excelPathRegister') : excelPathRegister], 
                         FailureHandling.CONTINUE_ON_FAILURE)
                 }
             }

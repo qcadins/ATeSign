@@ -199,7 +199,7 @@ def funcSaldoRegis(HashMap result, int countCheckSaldo, Connection conneSign) {
 	
 	ArrayList saldoList = []
 	
-	if (!findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Register With')).equalsIgnoreCase(
+	if (!findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
 		'API Register')) {
 	
 		vendorVerifikasi = 'ESIGN/ADINS'

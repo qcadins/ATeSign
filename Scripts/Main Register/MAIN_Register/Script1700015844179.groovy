@@ -141,8 +141,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         if (GlobalVariable.FlagFailed == 0) {
-            if (!(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
-                'API Register'))) {
+            if (!findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
+                'API Register')) {
                 'check ada value maka setting Link Is Active'
                 if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting is_active Link')).length() > 
                 0) {
@@ -172,12 +172,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         FailureHandling.CONTINUE_ON_FAILURE)
                 }
             
-				if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
+				if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Register With')).equalsIgnoreCase(
 					'API Register by Invitation')) {
 					'call test case api register by invitation'
 					WebUI.callTestCase(findTestCase('Main Register/API Register By Invitation'), [('excelPathRegister') : excelPathRegister, ('sheet') : 'Main Register'],
 						FailureHandling.STOP_ON_FAILURE)
-				} else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
+				} else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Register With')).equalsIgnoreCase(
 					'Front End Register')) {
 					'call test case daftar akun verif'
 		            WebUI.callTestCase(findTestCase('Main Register/DaftarAkunDataVerif'), [('excelPathRegister') : excelPathRegister
@@ -185,7 +185,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					
 					'looping untuk mengeck apakah case selanjutnya ingin melanjutkan input pada form registrasi'
 					while (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Continue Register & Activation')).equalsIgnoreCase(
-						'Continue')) {
+						'Continue') && GlobalVariable.FlagFailed > 0) {
 						(GlobalVariable.NumofColm)++
 		
 						GlobalVariable.FlagFailed = 0
