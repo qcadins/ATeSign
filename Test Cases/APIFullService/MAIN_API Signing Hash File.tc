@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>NewUserStoreDB</name>
+   <name>MAIN_API Signing Hash File</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>fd14780b-8357-4e77-81c9-ed7f1da0fbd0</testCaseGuid>
+   <testCaseGuid>60022862-3023-4949-8d1e-b00cf0491012</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>228633db-3582-4e75-8a10-588b5dbb9f95</variableId>
+      <variableId>ad20d1e7-96e0-4120-a36b-b7e7da1274d0</variableId>
    </variableLinks>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>3fbc4873-bab3-42fe-b0d6-8f629b9dda1e</variableId>
+      <variableId>a490110c-75ee-4607-975d-64ea9e3432f7</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'Registrasi/MainRegister'</defaultValue>
+      <defaultValue>'APIFullService/API Signing Hash File'</defaultValue>
       <description></description>
-      <id>228633db-3582-4e75-8a10-588b5dbb9f95</id>
+      <id>ad20d1e7-96e0-4120-a36b-b7e7da1274d0</id>
       <masked>false</masked>
-      <name>excelPathRegister</name>
+      <name>excelPath</name>
    </variable>
    <variable>
-      <defaultValue>'Main Register'</defaultValue>
+      <defaultValue>'API Signing Hash File'</defaultValue>
       <description></description>
-      <id>3fbc4873-bab3-42fe-b0d6-8f629b9dda1e</id>
+      <id>a490110c-75ee-4607-975d-64ea9e3432f7</id>
       <masked>false</masked>
       <name>sheet</name>
    </variable>

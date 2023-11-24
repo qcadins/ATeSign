@@ -57,7 +57,7 @@ public class APIFullService {
 	getAPIGenInvLinkVerifTrx(Connection conn, String name, String phone) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select qty from tr_balance_mutation tbm left join am_msuser am on am.id_ms_user = tbm.id_ms_user join ms_lov ml on ml.id_lov = tbm.lov_trx_type where ml.description = 'Use Verification' AND (am.full_name = '" + name + "' OR tbm.usr_crt = '" + phone + "')")
+		resultSet = stm.executeQuery("select qty from tr_balance_mutation tbm left join am_msuser am on am.id_ms_user = tbm.id_ms_user join ms_lov ml on ml.id_lov = tbm.lov_trx_type where ml.description = 'Use Verification' AND (am.full_name = '" + name + "' OR tbm.usr_crt = '" + phone + "')  order by trx_date desc")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

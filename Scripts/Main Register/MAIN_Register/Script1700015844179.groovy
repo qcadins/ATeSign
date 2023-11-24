@@ -48,7 +48,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
         'check if tidak mau menggunakan tenant code yang benar'
         if ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 
-        'Yes') || findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Register With')).equalsIgnoreCase(
+        'Yes') || findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
             'Menu Buat Undangan')) {
             GlobalVariable.Tenant = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
         } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 
@@ -118,22 +118,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
         countCheckSaldo = 1
 
-        if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Register With')).equalsIgnoreCase(
+        if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
             'Menu Buat Undangan')) {
             'call test case buat undangan'
             WebUI.callTestCase(findTestCase('Main Register/BuatUndangan'), [('excelPathRegister') : excelPathRegister], 
                 FailureHandling.CONTINUE_ON_FAILURE)
-        } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Register With')).equalsIgnoreCase(
+        } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
             'API Generate Inv Link Normal')) {
             'call test case api generate invitation link Normal'
             WebUI.callTestCase(findTestCase('Main Register/API Gen Inv Link Normal'), [('excelPathRegister') : excelPathRegister
                     , ('sheet') : 'Main Register'], FailureHandling.STOP_ON_FAILURE)
-        } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Register With')).equalsIgnoreCase(
+        } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
             'API Generate Inv Link External')) {
             'call test case api generate invitation link external'
             WebUI.callTestCase(findTestCase('Main Register/API Gen Inv Link External'), [('excelPathRegister') : excelPathRegister
                     , ('sheet') : 'Main Register'], FailureHandling.STOP_ON_FAILURE)
-        } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Register With')).equalsIgnoreCase(
+        } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
             'API Register')) {
             'call test case api register external'
             WebUI.callTestCase(findTestCase('Main Register/API Registrasi'), [('excelPathRegister') : excelPathRegister, ('sheet') : 'Main Register'], 
@@ -141,7 +141,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         if (GlobalVariable.FlagFailed == 0) {
-            if (!(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Register With')).equalsIgnoreCase(
+            if (!(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
                 'API Register'))) {
                 'check ada value maka setting Link Is Active'
                 if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting is_active Link')).length() > 
@@ -172,21 +172,29 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         FailureHandling.CONTINUE_ON_FAILURE)
                 }
             
-	            'call test case daftar akun verif'
-	            WebUI.callTestCase(findTestCase('Main Register/DaftarAkunDataVerif'), [('excelPathRegister') : excelPathRegister
-	                    , ('otpBefore') : saldoBefore.get('OTP')], FailureHandling.CONTINUE_ON_FAILURE)
-	
-	            'looping untuk mengeck apakah case selanjutnya ingin melanjutkan input pada form registrasi'
-	            while (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Continue Register & Activation')).equalsIgnoreCase(
-	                'Continue')) {
-	                (GlobalVariable.NumofColm)++
-	
-	                GlobalVariable.FlagFailed = 0
-	
-	                'call test case daftar akun verif'
-	                WebUI.callTestCase(findTestCase('Main Register/DaftarAkunDataVerif'), [('excelPathRegister') : excelPathRegister
-	                        , ('otpBefore') : saldoBefore.get('OTP')], FailureHandling.CONTINUE_ON_FAILURE)
-	            }
+				if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
+					'API Register by Invitation')) {
+					'call test case api register by invitation'
+					WebUI.callTestCase(findTestCase('Main Register/API Register By Invitation'), [('excelPathRegister') : excelPathRegister, ('sheet') : 'Main Register'],
+						FailureHandling.STOP_ON_FAILURE)
+				} else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
+					'Front End Register')) {
+					'call test case daftar akun verif'
+		            WebUI.callTestCase(findTestCase('Main Register/DaftarAkunDataVerif'), [('excelPathRegister') : excelPathRegister
+		                    , ('otpBefore') : saldoBefore.get('OTP')], FailureHandling.CONTINUE_ON_FAILURE)
+					
+					'looping untuk mengeck apakah case selanjutnya ingin melanjutkan input pada form registrasi'
+					while (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Continue Register & Activation')).equalsIgnoreCase(
+						'Continue')) {
+						(GlobalVariable.NumofColm)++
+		
+						GlobalVariable.FlagFailed = 0
+		
+						'call test case daftar akun verif'
+						WebUI.callTestCase(findTestCase('Main Register/DaftarAkunDataVerif'), [('excelPathRegister') : excelPathRegister
+								, ('otpBefore') : saldoBefore.get('OTP')], FailureHandling.CONTINUE_ON_FAILURE)
+					}
+				}
             }
             
             if (GlobalVariable.FlagFailed == 0) {
@@ -197,13 +205,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'kurang saldo before dengan proses PNBP'
                     saldoBefore.put('PNBP', (Integer.parseInt(saldoBefore.get('PNBP')) - 1).toString())
 
-                    if (!(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Register With')).equalsIgnoreCase(
+                    if (!(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
                         'API Register'))) {
                         'kurang saldo before dengan jumlah counter send OTP'
                         saldoBefore.put('OTP', (Integer.parseInt(saldoBefore.get('OTP')) - GlobalVariable.Counter).toString())
                     }
                 } else {
-                    if (!(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Register With')).equalsIgnoreCase(
+                    if (!(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
                         'API Register'))) {
                         'kurang saldo before dengan jumlah counter send OTP'
                         saldoBefore.put('OTP', (Integer.parseInt(saldoBefore.get('OTP')) - GlobalVariable.Counter).toString())
@@ -224,16 +232,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 checkVerifyEqualOrMatch(WebUI.verifyMatch(saldoBefore.toString(), saldoAfter.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), 
                     ' Saldo Gagal Potong')
 
-                if ((((((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')) == 
+                if (((((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')) == 
                 '0') || (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')) == 
                 'null')) && (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == 
-                '1')) || (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == 
-                '0')) && findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).toUpperCase().contains(
-                    'OUTLOOK.COM')) && (GlobalVariable.Psre == 'VIDA')) {
+                '1')) || ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == 
+                '0') && findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).toUpperCase().contains(
+                    'OUTLOOK.COM')) && (GlobalVariable.Psre == 'VIDA'))) {
                     'call keyword get email'
                     String emailCert = CustomKeywords.'customizekeyword.GetEmail.getEmailContent'(findTestData(excelPathRegister).getValue(
-                            GlobalVariable.NumofColm, rowExcel('email')).replace('"', ''), findTestData(excelPathRegister).getValue(
-                            GlobalVariable.NumofColm, rowExcel('Password')).replace('"', ''), 'Certif')
+                            GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', ''), findTestData(excelPathRegister).getValue(
+                            GlobalVariable.NumofColm, rowExcel('Password - Aktivasi')).replace('"', ''), 'Certif')
 
                     'verify email cert'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(emailCert, 'Penerbitan Sertifikat Elektronik', false, FailureHandling.CONTINUE_ON_FAILURE), 

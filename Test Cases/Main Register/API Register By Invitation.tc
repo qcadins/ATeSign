@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>NewUserStoreDB</name>
+   <name>API Register By Invitation</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>fd14780b-8357-4e77-81c9-ed7f1da0fbd0</testCaseGuid>
+   <testCaseGuid>46e6c505-43c5-4ec8-b5c4-184c475494a2</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>228633db-3582-4e75-8a10-588b5dbb9f95</variableId>
+      <variableId>86d76c97-7115-425c-bd6e-5b2dd18247ae</variableId>
    </variableLinks>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>3fbc4873-bab3-42fe-b0d6-8f629b9dda1e</variableId>
+      <variableId>ebc333b7-7922-418b-a376-a3d2e17297fb</variableId>
    </variableLinks>
    <variable>
       <defaultValue>'Registrasi/MainRegister'</defaultValue>
       <description></description>
-      <id>228633db-3582-4e75-8a10-588b5dbb9f95</id>
+      <id>86d76c97-7115-425c-bd6e-5b2dd18247ae</id>
       <masked>false</masked>
       <name>excelPathRegister</name>
    </variable>
    <variable>
       <defaultValue>'Main Register'</defaultValue>
       <description></description>
-      <id>3fbc4873-bab3-42fe-b0d6-8f629b9dda1e</id>
+      <id>ebc333b7-7922-418b-a376-a3d2e17297fb</id>
       <masked>false</masked>
       <name>sheet</name>
    </variable>

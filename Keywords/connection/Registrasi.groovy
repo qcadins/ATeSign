@@ -105,4 +105,20 @@ public class Registrasi {
 
 		int resultSet = stm.executeUpdate("UPDATE ms_tenant SET send_cert_notif_by_sms = "+ value +" WHERE tenant_code = '"+ GlobalVariable.Tenant +"'")
 	}
+
+	@Keyword
+	checkAddUserOtherTenant(Connection conn, String notelp) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT count(*) FROM ms_useroftenant WHERE id_ms_user IN( select id_ms_user from am_msuser WHERE hashed_phone = encode(sha256('" + notelp + "'), 'hex')) AND id_ms_tenant IN (SELECT id_ms_tenant FROM ms_tenant WHERE tenant_code = '" + GlobalVariable.Tenant + "')")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		Integer.parseInt(data)
+	}
 }

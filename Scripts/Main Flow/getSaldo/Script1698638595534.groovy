@@ -27,6 +27,8 @@ HashMap<String, String> result = new HashMap<String, String>()
 
 if (vendor.toString().contains('digi') || vendor.toString().contains('DIGI')) {
 	vendor = 'DIGISIGN'
+} else if (vendor.toString().contains('TKNAJ')) {
+	vendor = 'TEKENAJA'
 }
 
 'return total saldo awal'
@@ -211,8 +213,6 @@ def funcSaldoRegis(HashMap result, int countCheckSaldo, Connection conneSign) {
 			
 		saldoList = [useSaldo]
 		
-		saldoList.add('SMS Notif')
-		
 		funcFindSaldo(result, vendorVerifikasi, saldoList, forAutosign)
 		
 		if (((countCheckSaldo == 1) && ((GlobalVariable.FlagFailed == 0) || findTestData(excel).getValue(GlobalVariable.NumofColm,
@@ -222,13 +222,13 @@ def funcSaldoRegis(HashMap result, int countCheckSaldo, Connection conneSign) {
 		}
 	}
 	
-	if (GlobalVariable.Psre == 'VIDA') {
+	if (vendor == 'VIDA') {
 		saldoList = ['Verifikasi','PNBP']
-	} else if (GlobalVariable.Psre == 'PRIVY') {
+	} else if (vendor == 'PRIVY' || vendor == 'TEKENAJA') {
 		saldoList = ['Verifikasi']
 	}
 	
-	funcFindSaldo(result, GlobalVariable.Psre, saldoList, forAutosign)
+	funcFindSaldo(result, vendor, saldoList, forAutosign)
 
 	if (countCheckSaldo == 1) {
 		'call function input filter saldo'

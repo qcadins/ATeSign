@@ -7,6 +7,9 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import java.sql.Connection as Connection
 import internal.GlobalVariable as GlobalVariable
 
+'connect DB eSign'
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
+
 'Pembuatan pengisian variable di sendRequest per column berdasarkan data excel.'
 ArrayList<String> listInvitation = []
 
@@ -39,6 +42,38 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         'Mengambil links berdasarkan response HIT API'
         GlobalVariable.Link = WS.getElementPropertyValue(respon, 'links', FailureHandling.OPTIONAL).toString().replace('[', 
             '').replace(']', '')
+			
+			if (WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL) == 'User sudah terdaftar') {
+				'cek ke excel bahwa data user sudah diregist otomatis ke tenant lain'
+				result = CustomKeywords.'connection.Registrasi.checkAddUserOtherTenant'(conneSign,
+					findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"',''))
+				
+				if (result == 0) {
+					
+					'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+						(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +
+							'Error User di Tenant baru tidak berhasil ditambahkan')
+					
+					GlobalVariable.FlagFailed = 1
+					
+				} else if (result > 1) {
+					
+					'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+						(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +
+							'Terdapat 2 user yang sama di tenant ' + GlobalVariable.Tenant)
+					
+					GlobalVariable.FlagFailed = 1
+				} else {
+					
+					'write to excel success'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
+						1, GlobalVariable.StatusSuccess)
+					
+					GlobalVariable.FlagFailed = 1
+				}
+			}
 
         if (GlobalVariable.FlagFailed == 0) {
             'write to excel success'
