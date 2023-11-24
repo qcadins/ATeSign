@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "7F13C997A8969991B927A8E8CFE5E2E6",
+  "keywordFileContentHash": "E7E7D4989DB3E27AF74E411A0B1B1578",
   "keywordClasses": [
     {
       "name": "connection.DataVerif",
@@ -1111,6 +1111,51 @@
             },
             {
               "name": "valueUser",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getTrxSaldoWASMS",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "usage",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "fullName",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

@@ -105,7 +105,7 @@ public class Registrasi {
 
 		int resultSet = stm.executeUpdate("UPDATE ms_tenant SET send_cert_notif_by_sms = "+ value +" WHERE tenant_code = '"+ GlobalVariable.Tenant +"'")
 	}
-	
+
 	@Keyword
 	checkAddUserOtherTenant(Connection conn, String notelp) {
 		stm = conn.createStatement()

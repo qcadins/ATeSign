@@ -143,6 +143,8 @@ def funcSaldoSign(HashMap result) {
 		saldoList = ['TTD']
 	}
 	
+	forAutosign = true
+	
 	funcFindSaldo(result, vendorVerifikasi, saldoList, forAutosign)
 
 	return result
