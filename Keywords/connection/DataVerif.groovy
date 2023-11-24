@@ -530,7 +530,7 @@ public class DataVerif {
 			helperQuery = 'amm.login_id'
 		}
 
-		resultSet = stm.executeQuery("select msvr.email_service from ms_vendor_registered_user msvr left join am_msuser amm on amm.id_ms_user = msvr.id_ms_user left join ms_vendor msv on msvr.id_ms_vendor = msv.id_ms_vendor where '"+helperQuery+"' = '"+emailSigner+"'")
+		resultSet = stm.executeQuery("select msvr.email_service from ms_vendor_registered_user msvr left join am_msuser amm on amm.id_ms_user = msvr.id_ms_user left join ms_vendor msv on msvr.id_ms_vendor = msv.id_ms_vendor where "+helperQuery+" = '"+emailSigner+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -556,7 +556,7 @@ public class DataVerif {
 		} else if (decisionCode == 'OTP') {
 			helperQuery = 'SEND_SMS_OTP_USER'
 		}
-		resultSet = stm.executeQuery("select gs_value from am_generalsetting where gs_code = '"+helperQuery+"'")
+		resultSet = stm.executeQuery("select gs_value from am_generalsetting left join ms_tenant mst on am_generalsetting.id_ms_tenant = mst.id_ms_tenant where gs_code = '"+helperQuery+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -582,7 +582,7 @@ public class DataVerif {
 
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select full_name from am_msuser where '"+helperQuery+"' = '"+valueUser+"'")
+		resultSet = stm.executeQuery("select full_name from am_msuser where "+helperQuery+" = '"+valueUser+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -591,9 +591,25 @@ public class DataVerif {
 			data = resultSet.getObject(1)
 		}
 
-		if (data == null) {
-			data = '0'
-		}
 		data
+	}
+
+	@Keyword
+	getTrxSaldoWASMS(Connection conn, String usage, String fullName) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT tbm.trx_no, TO_CHAR(tbm.trx_date, 'YYYY-MM-DD HH24:MI:SS'), 'Use ' || msl.description, amm.full_name, '', '', '', tbm.notes, tbm.qty FROM tr_balance_mutation tbm LEFT JOIN ms_lov msl ON tbm.lov_balance_type = msl.id_lov LEFT JOIN am_msuser amm ON tbm.id_ms_user = amm.id_ms_user LEFT JOIN tr_document_d tdd ON tbm.id_document_d = tdd.id_document_d LEFT JOIN tr_document_h tdh ON tbm.id_document_h = tdh.id_document_h WHERE msl.description = '"+usage+"' AND amm.full_name = '"+fullName+"' AND tbm.trx_date >= CURRENT_DATE AND tbm.trx_date < CURRENT_DATE + 1 ORDER BY tbm.dtm_crt DESC LIMIT 1;")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
 	}
 }

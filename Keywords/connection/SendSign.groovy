@@ -511,7 +511,7 @@ public class SendSign {
 		}
 
 		if (data == null || data == 'null') {
-			resultSet = stm.executeQuery("select msv.vendor_code from ms_vendoroftenant mvot left join ms_tenant mst on mvot.id_ms_tenant = mst.id_ms_tenant join ms_vendor msv on mvot.id_ms_vendor = msv.id_ms_vendor WHERE mst.tenant_code = '"+tenantCode+"' ORDER BY mvot.default_vendor limit 1")
+			resultSet = stm.executeQuery("select msv.vendor_name from ms_vendoroftenant mvot left join ms_tenant mst on mvot.id_ms_tenant = mst.id_ms_tenant join ms_vendor msv on mvot.id_ms_vendor = msv.id_ms_vendor WHERE mst.tenant_code = '"+tenantCode+"' ORDER BY mvot.default_vendor limit 1")
 			metadata = resultSet.metaData
 
 			columnCount = metadata.getColumnCount()
@@ -557,5 +557,20 @@ public class SendSign {
 			}
 		}
 		listdata
+	}
+	
+	@Keyword
+	getVendorNameUsingDocId(Connection conn, String docId) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select case when msv.vendor_name is not null then msv.vendor_code else msv1.vendor_code end from tr_document_d tdd left join ms_doc_template mdt on tdd.id_ms_doc_template = mdt.id_doc_template left join ms_vendor msv on tdd.id_ms_vendor = msv.id_ms_vendor left join ms_vendor msv1 on mdt.id_ms_vendor = msv1.id_ms_vendor where tdd.document_id = '"+ docId +"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
 	}
 }

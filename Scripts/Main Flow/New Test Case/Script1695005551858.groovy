@@ -23,9 +23,7 @@ import java.sql.Connection as Connection
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-'ambil inquiry di db'
-ArrayList inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldo'(conneSign, 'MAINTENANCE DOC DIGIS 2', '10', 'Use Document')
+String aa = '0'
+int aaa = 8
 
-println inquiryDB[7]
-
-println inquiryDB
+println aa + aaa

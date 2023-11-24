@@ -110,18 +110,28 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'klik pada tombol ya'
             WebUI.click(findTestObject('ForgotPassword/button_YaKonfirm'))
 
-            'check apakah muncul error'
-            if (WebUI.verifyElementPresent(findTestObject('ForgotPassword/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-                'ambil error dan get text dari error tersebut'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                    (((findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
-                    ';') + '<') + WebUI.getText(findTestObject('ForgotPassword/errorLog'))) + '>')
-
-                'klik pada tombol batal'
-                WebUI.click(findTestObject('ForgotPassword/button_Batal'))
-
-                continue
-            }
+			'check apakah muncul error'
+			if (WebUI.verifyElementPresent(findTestObject('ForgotPassword/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+				'ambil error dan get text dari error tersebut'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+					(((findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) +
+					';') + '<') + WebUI.getText(findTestObject('ForgotPassword/errorLog'))) + '>')
+ 
+				'klik pada tombol batal'
+				WebUI.click(findTestObject('ForgotPassword/button_Batal'))
+ 
+				continue
+			} else if (WebUI.verifyElementPresent(findTestObject('ForgotPassword/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+				'ambil error dan get text dari error tersebut'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+					(((findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) +
+					';') + '<') + WebUI.getText(findTestObject('ForgotPassword/lbl_popup'))) + '>')
+ 
+				'klik pada tombol batal'
+				WebUI.click(findTestObject('ForgotPassword/button_Batal'))
+ 
+				continue
+			}
             
             'ambil request num'
             int requestNumresetCode = CustomKeywords.'connection.ForgotPassword.getResetNum'(conneSign, emailSHA256)
@@ -168,11 +178,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
             'check apakah muncul error'
             if (WebUI.verifyElementPresent(findTestObject('ForgotPassword/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-                'ambil error dan get text dari error tersebut'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                    (((findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
-                    ';') + '<') + WebUI.getText(findTestObject('ForgotPassword/lbl_popup'))) + '>')
-
                 'klik pada tombol OK'
                 WebUI.click(findTestObject('ForgotPassword/button_OK'))
             }
@@ -187,7 +192,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             continue
         }
 
-		
         'input password baru'
         WebUI.setText(findTestObject('ForgotPassword/input_newPass'), findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, 
                 rowExcel('$Password Baru')))
@@ -344,7 +348,7 @@ def verifConfirmation(Connection conneSign) {
     if (WebUI.verifyElementPresent(findTestObject('ForgotPassword/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
         'ambil error dan get text dari error tersebut'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            (((findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
+            (((findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-','') + ';') + 
             '<') + WebUI.getText(findTestObject('ForgotPassword/lbl_popup'))) + '>')
 
         'klik pada tombol OK'
@@ -435,49 +439,49 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 
     mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
 
-	println emailServiceOnVendor
-	println fullNameUser
-	println mustUseWAFirst
-	WebUI.delay(30)
-    if (mustUseWAFirst == 1) {
+    if (mustUseWAFirst == '1') {
         'menggunakan saldo wa'
-        ArrayList balmut = CustomKeywords.'connection.ForgotPassword.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message', fullNameUser)
-
-        println(balmut)
-
-        WebUI.delay(30)
+        ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message', fullNameUser)
+		
+		if (balmut.size() == 0) {
+			'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+				((findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-',
+					'') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp'))
+		}
     } else {
+		if (emailServiceOnVendor == '1') {
             useWAMessage = CustomKeywords.'connection.DataVerif.getUseWAMessage'(conneSign, GlobalVariable.Tenant)
 
-            if (useWAMessage == 1) {
+            if (useWAMessage == '1') {
                 'menggunakan saldo wa'
-                ArrayList balmut = CustomKeywords.'connection.ForgotPassword.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message', 
+                ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message', 
                     fullNameUser)
-
-                println(balmut)
-
-                WebUI.delay(30)
-            } else if (useWaMessage == 0) {
+			
+				if (balmut.size() == 0) {
+					'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+						((findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-',
+							'') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp'))
+				}
+            } else if (useWAMessage == '0') {
                 'ke sms / wa'
                 SMSSetting = CustomKeywords.'connection.DataVerif.getSMSSetting'(conneSign, 'Forgot Password')
 
-                if (SMSSetting == 1) {
+                if (SMSSetting == '1') {
                     'ke sms'
-
                     'menggunakan saldo wa'
-                    ArrayList balmut = CustomKeywords.'connection.ForgotPassword.getTrxSaldoWASMS'(conneSign, 'SMS Notif', 
+                    ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'SMS Notif', 
                         fullNameUser)
-
-                    println(balmut)
-
-                    WebUI.delay(30)
-                } else {
-					sentOtpByEmail = CustomKeywords.'connection.DataVerif.getSentOtpByEmail'(conneSign, GlobalVariable.Tenant)
 					
-					if (sentOtpByEmail == 1) {
-						println 'menggunakan saldo email'
+					if (balmut.size() == 0) {
+						'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+							((findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-',
+								'') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via SMS'))
 					}
-				}
+                }
+            }
             }
     }
 }

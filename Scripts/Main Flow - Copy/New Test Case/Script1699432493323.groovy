@@ -20,13 +20,29 @@ import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import org.openqa.selenium.By as By
 import java.sql.Connection as Connection
 import org.apache.commons.lang3.time.StopWatch
-
+import org.apache.commons.lang3.time.DurationFormatUtils
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-import org.apache.commons.lang3.time.DurationFormatUtils
+GlobalVariable.NumofColm = 2
 
-StopWatch watch = StopWatch.createStarted()
 
-WebUI.delay(15) 
+'get data file path'
+GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign Main.xlsx')
 
+HashMap<String, String> resultSaldoBefore = new HashMap<String, String>()
+
+GlobalVariable.saldo = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : 'Main/Main'
+, ('sheet') : 'Main', ('vendor') : 'DIGISIGN', ('usageSaldo') : 'Sign'], FailureHandling.CONTINUE_ON_FAILURE)
+
+resultSaldoBefore.putAll(GlobalVariable.saldo)
+
+WebUI.comment(resultSaldoBefore.toString())
+WebUI.comment(GlobalVariable.saldo.toString())
+
+GlobalVariable.saldo = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : 'Main/Main'
+	, ('sheet') : 'Main', ('vendor') : 'VIDA', ('usageSaldo') : 'Sign'], FailureHandling.CONTINUE_ON_FAILURE)
+
+resultSaldoBefore.putAll(GlobalVariable.saldo)
+println GlobalVariable.saldo
+println resultSaldoBefore

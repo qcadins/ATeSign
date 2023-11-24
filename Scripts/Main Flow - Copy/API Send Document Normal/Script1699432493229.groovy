@@ -24,10 +24,6 @@ int splitnum = -1
 
 boolean useAutoSign = false
 
-HashMap<String, String> resultSaldoBeforeLoop = new HashMap<String, String>()
-
-HashMap<String, String> resultSaldoBefore = new HashMap<String, String>()
-
 'setting menggunakan base url yang benar atau salah'
 CustomKeywords.'connection.APIFullService.settingBaseUrl'(API_Excel_Path, GlobalVariable.NumofColm, rowExcel('Use Correct base Url (Send Normal)'))
 
@@ -136,15 +132,6 @@ String stringRefno = '', bodyAPI = ''
 
 if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$signAction (Send Normal)')).contains('at')) {
 	useAutoSign = true
-	
-	for (loopingGetSaldoBefore = 0; loopingGetSaldoBefore < documentTemplateCode.size(); loopingGetSaldoBefore++) {
-		logicVendor = CustomKeywords.'connection.SendSign.getProyectionOfVendorForSend'(conneSign, documentTemplateCode[loopingGetSaldoBefore].replace('"',''), GlobalVariable.Tenant)
-
-		resultSaldoBeforeLoop = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : API_Excel_Path
-			, ('sheet') : sheet, ('vendor') : logicVendor, ('usageSaldo') : 'Send'], FailureHandling.CONTINUE_ON_FAILURE)
-		
-		resultSaldoBefore.putAll(resultSaldoBeforeLoop)
-	}
 }
 
 'Looping berdasarkan total dari dokumen file ukuran'
@@ -323,45 +310,11 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 	getErrorMessageAPI(respon)	
 }
 
-checkSaldoAutoSign(useAutoSign, resultSaldoBefore, conneSign)
+if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).length() > 0) {
+    checkSaldoWAOrSMS(conneSign, findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$idKtp (Send Normal)')).replace(
+            '"', ''))
+} 
 
-def checkSaldoAutoSign(boolean useAutoSign, HashMap resultSaldoBefore, Connection conneSign) {
-	if (useAutoSign == true) {
-		HashMap<String, String> resultSaldoAfterLoop = new HashMap<String, String>()
-		
-		HashMap<String, String> resultSaldoAfter = new HashMap<String, String>()
-		
-		if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document')) != '') {
-		resultSaldoAfterLoop = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : API_Excel_Path
-			, ('sheet') : sheet, ('vendor') : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document')), ('usageSaldo') : 'Send'], FailureHandling.CONTINUE_ON_FAILURE)
-		
-		resultSaldoAfter.putAll(resultSaldoAfterLoop)
-
-		
-		'ini adalah autosignnya success'
-		if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('trxNo')).replace(', ','').length() > 0) {
-				testingTrxNo = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('trxNo')).split(', ', -1)
-
-				if (WebUI.verifyEqual(Integer.parseInt(resultSaldoAfter[findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document'))]), 
-					Integer.parseInt(resultSaldoBefore[findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document'))]) - testingTrxNo.size(), FailureHandling.CONTINUE_ON_FAILURE) == false) {
-
-				'Write To Excel GlobalVariable.StatusFailed and errormessage'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-				GlobalVariable.StatusFailed,findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';' + ' Saldo pemotongan autosign tidak terpotong. ')
-				} else {
-					if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document')) == 'DIGI') {
-						tipeSaldo = 'Document'
-					} else {
-						tipeSaldo = 'Sign'
-					}
-					
-					inputFilterSaldo(tipeSaldo, conneSign, testingTrxNo.size()) 
-				}
-			
-		}
-		}
-	}
-}
 
 def rowExcel(String cellValue) {
     return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
@@ -497,4 +450,103 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 
 		GlobalVariable.FlagFailed = 1
 	}
+}
+
+def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
+	int penggunaanSaldo
+
+	ArrayList balmut = []
+
+	String tipeSaldo
+	
+	ArrayList emailPerDoc = emailSigner.split('\\n', -1)
+
+	for (loopingEmailPerDoc = 0; loopingEmailPerDoc < emailPerDoc.size(); loopingEmailPerDoc++) {
+		ArrayList email = (emailPerDoc[loopingEmailPerDoc]).split(';', -1)
+
+		for (loopingEmail = 0; loopingEmail < email.size(); loopingEmail++) {
+			(email[loopingEmail]) = CustomKeywords.'connection.DataVerif.getEmailFromNIK'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
+					email[loopingEmail]))
+
+			emailServiceOnVendor = CustomKeywords.'connection.DataVerif.getEmailServiceAsVendorUser'(conneSign, email[loopingEmail])
+
+			fullNameUser = CustomKeywords.'connection.DataVerif.getFullNameOfUser'(conneSign, email[loopingEmail])
+
+			mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
+
+			if (mustUseWAFirst == '1') {
+				tipeSaldo = 'WhatsApp Message'
+
+				'menggunakan saldo wa'
+				balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
+
+				if (balmut.size() == 0) {
+					'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+						GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel(
+								'Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
+				} else {
+					penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
+				}
+			} else {
+				if (emailServiceOnVendor == '1') {
+					useWAMessage = CustomKeywords.'connection.DataVerif.getUseWAMessage'(conneSign, GlobalVariable.Tenant)
+
+					if (useWAMessage == '1') {
+						tipeSaldo = 'WhatsApp Message'
+
+						'menggunakan saldo wa'
+						balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
+
+						if (balmut.size() == 0) {
+							'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+								GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,
+									rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
+						} else {
+							penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
+						}
+					} else if (useWAMessage == '0') {
+						'ke sms / wa'
+						SMSSetting = CustomKeywords.'connection.DataVerif.getSMSSetting'(conneSign, 'Send Document')
+
+						if (SMSSetting == '1') {
+							'ke sms'
+							tipeSaldo = 'SMS Notif'
+
+							balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
+
+							if (balmut.size() == 0) {
+								'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+								CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+									GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,
+										rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via SMS')
+							} else {
+								penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		int pemotonganSaldo = 0
+
+		int increment
+
+		for (looping = 0; looping < penggunaanSaldo; looping++) {
+			if (looping == 0) {
+				increment = 0
+			} else {
+				increment = (increment + 10)
+			}
+			
+			pemotonganSaldo = (pemotonganSaldo + Integer.parseInt(balmut[(increment + 8)].replace('-','')))
+		}
+
+		if (tipeSaldo == 'WhatsApp Message') {
+			GlobalVariable.eSignData.putAt('CountVerifikasiWA', pemotonganSaldo)
+		} else if (tipeSaldo == 'SMS Notif') {
+			GlobalVariable.eSignData.putAt('CountVerifikasiSMS', pemotonganSaldo)
+		}	}
 }
