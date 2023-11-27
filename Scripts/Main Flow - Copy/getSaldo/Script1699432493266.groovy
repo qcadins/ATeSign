@@ -316,14 +316,17 @@ def inputFilterSaldo(String tipeSaldo, Connection conneSign) {
 		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[9]/div', true)
 
 	'check if email kosong atau tidak'
-	if (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 2 &&
-		!(findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Invite By')).equalsIgnoreCase('SMS'))) {
-		'get email excel'
+	if (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase('Edit') &&
+		findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Invite By')).equalsIgnoreCase('Email')) {
+		'get email dari row edit'
+		email = findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Email - Edit')).replace('"', '')
+	} else if (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 2 &&
+		!findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase('Edit')) {
+		'get email dari row input'
 		email = findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', '')
 	} else {
 		'get name + email hosting'
-		email = (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"', '') +
-		CustomKeywords.'connection.DataVerif.getEmailHosting'(conneSign))
+		email = findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"', '') + CustomKeywords.'connection.DataVerif.getEmailHosting'(conneSign)
 	}
 	
 	'get trx dari db'

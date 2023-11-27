@@ -112,7 +112,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         'get saldo before'
-        saldoBefore = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathRegister, ('sheet') : sheet
+        saldoBefore = WebUI.callTestCase(findTestCase('Main Flow - Copy/getSaldo'), [('excel') : excelPathRegister, ('sheet') : sheet
                 , ('vendor') : GlobalVariable.Psre, ('usageSaldo') : 'Register', ('countCheckSaldo') : countCheckSaldo], 
             FailureHandling.CONTINUE_ON_FAILURE)
 
@@ -219,7 +219,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 }
                 
                 'get saldo after'
-                saldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathRegister, ('sheet') : sheet
+                saldoAfter = WebUI.callTestCase(findTestCase('Main Flow - Copy/getSaldo'), [('excel') : excelPathRegister, ('sheet') : sheet
                         , ('vendor') : GlobalVariable.Psre, ('usageSaldo') : 'Register', ('countCheckSaldo') : countCheckSaldo], 
                     FailureHandling.CONTINUE_ON_FAILURE)
 
