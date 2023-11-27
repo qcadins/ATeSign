@@ -316,7 +316,8 @@ def inputFilterSaldo(String tipeSaldo, Connection conneSign) {
 		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[9]/div', true)
 
 	'check if email kosong atau tidak'
-	if (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 2) {
+	if (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 2 &&
+		!(findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Invite By')).equalsIgnoreCase('SMS'))) {
 		'get email excel'
 		email = findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', '')
 	} else {

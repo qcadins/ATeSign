@@ -116,28 +116,25 @@ if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryInv
 	    }
 	    
 	    'input NIK'
-	    WebUI.setText(findTestObject('InquiryInvitation/edit_NIK'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$NIK')).replace('"',''))
+	    WebUI.setText(findTestObject('InquiryInvitation/edit_NIK'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('NIK - Edit')).replace('"',''))
 	
 	    'input nama lengkap'
 	    WebUI.setText(findTestObject('InquiryInvitation/edit_Nama'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-	            rowExcel('$Nama')).replace('"',''))
+	            rowExcel('Nama - Edit')).replace('"',''))
 	
 	    'input tempat lahir'
 	    WebUI.setText(findTestObject('InquiryInvitation/edit_TempatLahir'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-	            rowExcel('Tempat Lahir')).replace('"',''))
-	
-		'parse Date from yyyy-MM-dd > MM/dd/yyyy'
-		sDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-	            rowExcel('Tanggal Lahir')).replace('"',''), 'yyyy-MM-dd', 'MM/dd/yyyy')
-		
+	            rowExcel('Tempat Lahir - Edit')).replace('"',''))
+			
 	    'input tanggal lahir'
-	    WebUI.setText(findTestObject('InquiryInvitation/edit_TanggalLahir'), sDate)
+	    WebUI.setText(findTestObject('InquiryInvitation/edit_TanggalLahir'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+	            rowExcel('Tanggal Lahir - Edit')).replace('"',''))
 	
 	    'cek if pria(M) / wanita(F)'
-	    if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Jenis Kelamin')).replace('"','').equalsIgnoreCase('M')) {
+	    if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Jenis Kelamin - Edit')).replace('"','').equalsIgnoreCase('M')) {
 	        'click radio pria'
 	        WebUI.click(findTestObject('InquiryInvitation/radio_Male'))
-	    } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Jenis Kelamin')).replace('"','').equalsIgnoreCase('F')) {
+	    } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Jenis Kelamin - Edit')).replace('"','').equalsIgnoreCase('F')) {
 	        'click radio wanita'
 	        WebUI.click(findTestObject('InquiryInvitation/radio_Female'))
 	    }
@@ -146,38 +143,38 @@ if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryInv
 	    'true') {
 	        'input no handphone'
 	        WebUI.setText(findTestObject('InquiryInvitation/edit_noHandphone'), findTestData(excelPathRegister).getValue(
-	                GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"',''))
+	                GlobalVariable.NumofColm, rowExcel('No Telepon - Edit')).replace('"',''))
 	    }
 	    
 	    if (WebUI.getAttribute(findTestObject('InquiryInvitation/edit_Email'), 'disabled', FailureHandling.OPTIONAL) != 'true') {
 	        'input email'
 	        WebUI.setText(findTestObject('InquiryInvitation/edit_Email'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-	                rowExcel('$Email')).replace('"',''))
+	                rowExcel('Email - Edit')).replace('"',''))
 	    }
 	    
 	    'input alamat lengkap'
 	    WebUI.setText(findTestObject('InquiryInvitation/edit_Alamat'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-	            rowExcel('Alamat')).replace('"',''))
+	            rowExcel('Alamat - Edit')).replace('"',''))
 	
 	    'input provinsi'
 	    WebUI.setText(findTestObject('InquiryInvitation/edit_Provinsi'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-	            rowExcel('Provinsi')).replace('"',''))
+	            rowExcel('Provinsi - Edit')).replace('"',''))
 	
 	    'input kota'
 	    WebUI.setText(findTestObject('InquiryInvitation/edit_Kota'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-	            rowExcel('Kota')).replace('"',''))
+	            rowExcel('Kota - Edit')).replace('"',''))
 	
 	    'input kecamatan'
 	    WebUI.setText(findTestObject('InquiryInvitation/edit_Kecamatan'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-	            rowExcel('Kecamatan')).replace('"',''))
+	            rowExcel('Kecamatan - Edit')).replace('"',''))
 	
 	    'input kelurahan'
 	    WebUI.setText(findTestObject('InquiryInvitation/edit_Kelurahan'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-	            rowExcel('Kelurahan')).replace('"',''))
+	            rowExcel('Kelurahan - Edit')).replace('"',''))
 	
 	    'input kode pos'
 	    WebUI.setText(findTestObject('InquiryInvitation/edit_KodePos'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-	            rowExcel('Kode Pos')).replace('"',''))
+	            rowExcel('Kode Pos - Edit')).replace('"',''))
 	
 	    'click button Simpan'
 	    WebUI.click(findTestObject('InquiryInvitation/button_Simpan'))
@@ -196,8 +193,9 @@ if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryInv
 	            WebUI.callTestCase(findTestCase('Main Register/InquiryInvitationStoreDB'), [:], FailureHandling.CONTINUE_ON_FAILURE)
 	        }
 	        
-			'call function input search'
-	        inputSearch()
+			'set text search box dengan Phone'
+			WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
+					rowExcel('NIK - Edit')).replace('"',''))
 	        
 	        'click button cari'
 	        WebUI.click(findTestObject('InquiryInvitation/button_Cari'))

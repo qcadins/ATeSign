@@ -86,73 +86,13 @@ WebUI.delay(3)
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-'verify Email sesuai inputan'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Email'), 'value').toUpperCase(), 
-        findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', '').toUpperCase(), 
-        false, FailureHandling.CONTINUE_ON_FAILURE), ' Email')
-
-'verify NIK sesuai inputan'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_NIK'), 'value').toUpperCase(), 
-        findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$NIK')).replace('"', '').toUpperCase(), 
-        false, FailureHandling.CONTINUE_ON_FAILURE), ' NIK')
-
-'verify Nama Lengkap sesuai inputan'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_NamaLengkap'), 'value').toUpperCase(), 
-        findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"', '').toUpperCase(), 
-        false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama Lengkap')
-
-'verify tempat lahir sesuai inputan'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_TempatLahir'), 'value').toUpperCase(), 
-        findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Tempat Lahir')).replace('"', 
-            '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Tempat Lahir')
-
-if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
-	'Menu Buat Undangan')) {
-	'parse Date from yyyy-MM-dd > MM/dd/yyyy'
-	sDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
-		rowExcel('Tanggal Lahir')).replace('"',''), 'MM/dd/yyyy', 'yyyy-MM-dd')
+if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')) == 'Edit') {
+	'call function verify daftar akun after edit'
+	verifyDataDaftarAkunAfterEdit()
 } else {
-	sDate = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Lahir')).replace('"','')
+	'call function verify daftar akun'
+	verifyDataDaftarAkun()
 }
-
-'verify tanggal lahir sesuai inputan'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_TanggalLahir'), 'value').toUpperCase(), 
-        sDate, false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Lahir')
-
-'verify No Handphone sesuai inputan'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_NoHandphone'), 'value').toUpperCase(), 
-        findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"', '').toUpperCase(), 
-        false, FailureHandling.CONTINUE_ON_FAILURE), ' No Handphone')
-
-'verify alamat sesuai inputan'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_AlamatLengkap'), 'value').toUpperCase(), 
-        findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Alamat')).replace('"', '').toUpperCase(), 
-        false, FailureHandling.CONTINUE_ON_FAILURE), ' Alamat')
-
-'verify provinsi sesuai inputan'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(getTextorAttribute(findTestObject('DaftarAkun/input_Provinsi')), findTestData(
-            excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Provinsi')).replace('"', '').toUpperCase(), 
-        false, FailureHandling.CONTINUE_ON_FAILURE), ' Provinsi')
-
-'verify kota sesuai inputan'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(getTextorAttribute(findTestObject('DaftarAkun/input_Kota')), findTestData(excelPathRegister).getValue(
-            GlobalVariable.NumofColm, rowExcel('Kota')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), 
-    ' Kota')
-
-'verify Kecamatan sesuai inputan'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(getTextorAttribute(findTestObject('DaftarAkun/input_Kecamatan')), findTestData(
-            excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Kecamatan')).replace('"', '').toUpperCase(), 
-        false, FailureHandling.CONTINUE_ON_FAILURE), ' Kecamatan')
-
-'verify Kelurahan sesuai inputan'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Kelurahan'), 'value').toUpperCase(), 
-        findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Kelurahan')).replace('"', 
-            '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Kelurahan')
-
-'verify KodePos sesuai inputan'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_KodePos'), 'value').toUpperCase(), 
-        findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Kode Pos')).replace('"', '').toUpperCase(), 
-        false, FailureHandling.CONTINUE_ON_FAILURE), ' KodePos')
 
 'check mau foto selfie atau tidak'
 if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Foto Selfie')) == 'Yes') {
@@ -244,7 +184,8 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
     GlobalVariable.FlagFailed = 1
 } else {
     'check if email kosong atau tidak'
-    if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 2) {
+    if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 2 && 
+		!(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Invite By')).equalsIgnoreCase('SMS'))) {
         ArrayList<String> listOTP = []
 
         'delay untuk menunggu OTP'
@@ -435,7 +376,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
 }
 
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
-    if ((isMatch == false) && (GlobalVariable.FlagFailed == 0)) {
+    if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
             ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
@@ -630,3 +571,144 @@ def getOTP(Connection conneSign) {
     return OTP
 }
 
+def verifyDataDaftarAkun () {
+	'verify Email sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Email'), 'value').toUpperCase(),
+			findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', '').toUpperCase(),
+			false, FailureHandling.CONTINUE_ON_FAILURE), ' Email')
+	
+	'verify NIK sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_NIK'), 'value').toUpperCase(),
+			findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$NIK')).replace('"', '').toUpperCase(),
+			false, FailureHandling.CONTINUE_ON_FAILURE), ' NIK')
+	
+	'verify Nama Lengkap sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_NamaLengkap'), 'value').toUpperCase(),
+			findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"', '').toUpperCase(),
+			false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama Lengkap')
+	
+	'verify tempat lahir sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_TempatLahir'), 'value').toUpperCase(),
+			findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Tempat Lahir')).replace('"',
+				'').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Tempat Lahir')
+	
+	if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
+		'Menu Buat Undangan')) {
+		'parse Date from yyyy-MM-dd > MM/dd/yyyy'
+		sDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
+			rowExcel('Tanggal Lahir')).replace('"',''), 'MM/dd/yyyy', 'yyyy-MM-dd')
+	} else {
+		sDate = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Lahir')).replace('"','')
+	}
+	
+	'verify tanggal lahir sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_TanggalLahir'), 'value').toUpperCase(),
+			sDate, false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Lahir')
+	
+	'verify No Handphone sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_NoHandphone'), 'value').toUpperCase(),
+			findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"', '').toUpperCase(),
+			false, FailureHandling.CONTINUE_ON_FAILURE), ' No Handphone')
+	
+	'verify alamat sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_AlamatLengkap'), 'value').toUpperCase(),
+			findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Alamat')).replace('"', '').toUpperCase(),
+			false, FailureHandling.CONTINUE_ON_FAILURE), ' Alamat')
+	
+	'verify provinsi sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(getTextorAttribute(findTestObject('DaftarAkun/input_Provinsi')), findTestData(
+				excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Provinsi')).replace('"', '').toUpperCase(),
+			false, FailureHandling.CONTINUE_ON_FAILURE), ' Provinsi')
+	
+	'verify kota sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(getTextorAttribute(findTestObject('DaftarAkun/input_Kota')), findTestData(excelPathRegister).getValue(
+				GlobalVariable.NumofColm, rowExcel('Kota')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE),
+		' Kota')
+	
+	'verify Kecamatan sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(getTextorAttribute(findTestObject('DaftarAkun/input_Kecamatan')), findTestData(
+				excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Kecamatan')).replace('"', '').toUpperCase(),
+			false, FailureHandling.CONTINUE_ON_FAILURE), ' Kecamatan')
+	
+	'verify Kelurahan sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Kelurahan'), 'value').toUpperCase(),
+			findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Kelurahan')).replace('"',
+				'').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Kelurahan')
+	
+	'verify KodePos sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_KodePos'), 'value').toUpperCase(),
+			findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Kode Pos')).replace('"', '').toUpperCase(),
+			false, FailureHandling.CONTINUE_ON_FAILURE), ' KodePos')
+}
+
+def verifyDataDaftarAkunAfterEdit () {
+	
+	if(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Invite By')).equalsIgnoreCase('SMS')) {
+		'verify Email sesuai inputan'
+		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Email'), 'value').toUpperCase(),
+				'', false, FailureHandling.CONTINUE_ON_FAILURE), ' Email')
+	} else {
+		'verify Email sesuai inputan'
+		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Email'), 'value').toUpperCase(),
+				findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email - Edit')).replace('"', '').toUpperCase(),
+				false, FailureHandling.CONTINUE_ON_FAILURE), ' Email')		
+	}
+	
+	'verify NIK sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_NIK'), 'value').toUpperCase(),
+			findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('NIK - Edit')).replace('"', '').toUpperCase(),
+			false, FailureHandling.CONTINUE_ON_FAILURE), ' NIK')
+	
+	'verify Nama Lengkap sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_NamaLengkap'), 'value').toUpperCase(),
+			findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Nama - Edit')).replace('"', '').toUpperCase(),
+			false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama Lengkap')
+	
+	'verify tempat lahir sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_TempatLahir'), 'value').toUpperCase(),
+			findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Tempat Lahir - Edit')).replace('"',
+				'').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Tempat Lahir')
+	
+	'parse Date from yyyy-MM-dd > MM/dd/yyyy'
+	sDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
+		rowExcel('Tanggal Lahir - Edit')).replace('"',''), 'MM/dd/yyyy', 'yyyy-MM-dd')
+	
+	'verify tanggal lahir sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_TanggalLahir'), 'value').toUpperCase(),
+			sDate, false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Lahir')
+	
+	'verify No Handphone sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_NoHandphone'), 'value').toUpperCase(),
+			findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon - Edit')).replace('"', '').toUpperCase(),
+			false, FailureHandling.CONTINUE_ON_FAILURE), ' No Handphone')
+	
+	'verify alamat sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_AlamatLengkap'), 'value').toUpperCase(),
+			findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Alamat - Edit')).replace('"', '').toUpperCase(),
+			false, FailureHandling.CONTINUE_ON_FAILURE), ' Alamat')
+	
+	'verify provinsi sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(getTextorAttribute(findTestObject('DaftarAkun/input_Provinsi')), findTestData(
+				excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Provinsi - Edit')).replace('"', '').toUpperCase(),
+			false, FailureHandling.CONTINUE_ON_FAILURE), ' Provinsi')
+	
+	'verify kota sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(getTextorAttribute(findTestObject('DaftarAkun/input_Kota')), findTestData(excelPathRegister).getValue(
+				GlobalVariable.NumofColm, rowExcel('Kota - Edit')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE),
+		' Kota')
+	
+	'verify Kecamatan sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(getTextorAttribute(findTestObject('DaftarAkun/input_Kecamatan')), findTestData(
+				excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Kecamatan - Edit')).replace('"', '').toUpperCase(),
+			false, FailureHandling.CONTINUE_ON_FAILURE), ' Kecamatan')
+	
+	'verify Kelurahan sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Kelurahan'), 'value').toUpperCase(),
+			findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Kelurahan - Edit')).replace('"',
+				'').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Kelurahan')
+	
+	'verify KodePos sesuai inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_KodePos'), 'value').toUpperCase(),
+			findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Kode Pos - Edit')).replace('"', '').toUpperCase(),
+			false, FailureHandling.CONTINUE_ON_FAILURE), ' KodePos')
+}
