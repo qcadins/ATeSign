@@ -12,15 +12,21 @@ import org.openqa.selenium.Keys as Keys
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'check if email kosong atau tidak'
-if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 2) {
-	'setting reset OTP pada DB 0'
-	CustomKeywords.'connection.DataVerif.settingResetOTPNol'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-			rowExcel('$Email')).replace('"', '').toUpperCase())	
+if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase('Edit') &&
+	findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Invite By')).equalsIgnoreCase('Email')) {
+	'get email dari row edit'
+	email = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email - Edit')).replace('"', '')
+} else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 2 &&
+	!findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase('Edit')) {
+	'get email dari row input'
+	email = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', '')
 } else {
-	'setting reset OTP pada DB 0'
-	CustomKeywords.'connection.DataVerif.settingResetOTPNol'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
-			rowExcel('No Telepon')).replace('"', '').toUpperCase())
+	'get name + email hosting'
+	email = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"', '') + CustomKeywords.'connection.DataVerif.getEmailHosting'(conneSign)
 }
+
+'setting reset OTP pada DB 0'
+CustomKeywords.'connection.DataVerif.settingResetOTPNol'(conneSign, email.toUpperCase())
 
 int delayExpiredOTP
 
@@ -30,14 +36,6 @@ if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
 	CustomKeywords.'connection.APIFullService.settingOTPActiveDuration'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')))
 	
 	delayExpiredOTP = 60 * Integer.parseInt(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')))
-}
-
-'check if email kosong atau tidak'
-if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 2) {
-	email = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', '')	
-} else {
-	'get name + email hosting'
-	email = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"', '') + CustomKeywords.'connection.DataVerif.getEmailHosting'(conneSign)
 }
 
 'check email sesuai dengan inputan'
@@ -234,8 +232,7 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
 						break
 					} else {
 						'get data reset request OTP dari DB'
-						Integer resultResetOTP = CustomKeywords.'connection.DataVerif.getResetOTP'(conneSign, findTestData(excelPathRegister).getValue(
-								GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', '').toUpperCase())
+						Integer resultResetOTP = CustomKeywords.'connection.DataVerif.getResetOTP'(conneSign, email.toUpperCase())
 	
 						'verify counter OTP Katalon sesuai dengan counter OTP DB'
 						checkVerifyEqualOrMatch(WebUI.verifyEqual(resultResetOTP, OTPResendCount++, FailureHandling.CONTINUE_ON_FAILURE), ' OTP')
@@ -307,8 +304,7 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
 						break
 					} else {
 						'get data reset request OTP dari DB'
-						Integer resultResetOTP = CustomKeywords.'connection.DataVerif.getResetOTP'(conneSign, findTestData(excelPathRegister).getValue(
-								GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', '').toUpperCase())
+						Integer resultResetOTP = CustomKeywords.'connection.DataVerif.getResetOTP'(conneSign, email.toUpperCase())
 	
 						'verify counter OTP Katalon sesuai dengan counter OTP DB'
 						checkVerifyEqualOrMatch(WebUI.verifyEqual(resultResetOTP, OTPResendCount++, FailureHandling.CONTINUE_ON_FAILURE), ' OTP')
@@ -390,16 +386,8 @@ def getOTP(Connection conneSign) {
 	'declare string OTP'
 	String OTP
 
-	'check if email kosong atau tidak'
-	if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 2) {
-		'get OTP dari DB'
-		OTP = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
-				rowExcel('$Email')).replace('"', '').toUpperCase())
-	} else {
-		'get OTP dari DB'
-		OTP = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
-				rowExcel('No Telepon')).replace('"', '').toUpperCase())
-	}
+	'get OTP dari DB'
+	OTP = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, email.toUpperCase())
 	
 	return OTP
 }

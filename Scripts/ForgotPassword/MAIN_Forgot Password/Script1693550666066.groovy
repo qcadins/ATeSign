@@ -53,7 +53,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
         GlobalVariable.Tenant = tenantcode
 
-		println GlobalVariable.Tenant
         if (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration (Empty/0/1/>1)')).length() > 
         0) {
             'ubah durasi aktif di DB'

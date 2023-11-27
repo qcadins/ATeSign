@@ -69,12 +69,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     GlobalVariable.NumofColm, rowExcel('Setting Email Service')))
         }
         
-        'check ada value maka setting email certif notif'
-        if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')).length() > 
+        'check ada value maka setting SMS certif notif'
+        if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Certif Notif')).length() > 
         0) {
-            'setting email email certif notif'
+            'setting email SMS certif notif'
             CustomKeywords.'connection.Registrasi.settingSendCertNotifbySMS'(conneSign, findTestData(excelPathRegister).getValue(
-                    GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')))
+                    GlobalVariable.NumofColm, rowExcel('Setting SMS Certif Notif')))
         }
         
         'check ada value maka setting allow regenerate link'
@@ -141,8 +141,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         if (GlobalVariable.FlagFailed == 0) {
-            if (!(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
-                'API Register'))) {
+            if (!findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
+                'API Register')) {
                 'check ada value maka setting Link Is Active'
                 if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting is_active Link')).length() > 
                 0) {
@@ -172,12 +172,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         FailureHandling.CONTINUE_ON_FAILURE)
                 }
             
-				if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
+				if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Register With')).equalsIgnoreCase(
 					'API Register by Invitation')) {
 					'call test case api register by invitation'
 					WebUI.callTestCase(findTestCase('Main Register/API Register By Invitation'), [('excelPathRegister') : excelPathRegister, ('sheet') : 'Main Register'],
 						FailureHandling.STOP_ON_FAILURE)
-				} else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
+				} else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Register With')).equalsIgnoreCase(
 					'Front End Register')) {
 					'call test case daftar akun verif'
 		            WebUI.callTestCase(findTestCase('Main Register/DaftarAkunDataVerif'), [('excelPathRegister') : excelPathRegister
@@ -185,7 +185,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					
 					'looping untuk mengeck apakah case selanjutnya ingin melanjutkan input pada form registrasi'
 					while (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Continue Register & Activation')).equalsIgnoreCase(
-						'Continue')) {
+						'Continue') && GlobalVariable.FlagFailed > 0) {
 						(GlobalVariable.NumofColm)++
 		
 						GlobalVariable.FlagFailed = 0
@@ -232,12 +232,25 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 checkVerifyEqualOrMatch(WebUI.verifyMatch(saldoBefore.toString(), saldoAfter.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), 
                     ' Saldo Gagal Potong')
 
-                if (((((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')) == 
-                '0') || (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Certif Notif')) == 
-                'null')) && (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == 
-                '1')) || ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == 
-                '0') && findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).toUpperCase().contains(
-                    'OUTLOOK.COM')) && (GlobalVariable.Psre == 'VIDA'))) {
+				'check if email kosong atau tidak'
+				if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase('Edit') &&
+					findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Invite By')).equalsIgnoreCase('Email')) {
+					'get email dari row edit'
+					email = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email - Edit')).replace('"', '')
+				} else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 2 &&
+					!findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase('Edit')) {
+					'get email dari row input'
+					email = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', '')
+				} else {
+					'get name + email hosting'
+					email = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"', '') + CustomKeywords.'connection.DataVerif.getEmailHosting'(conneSign)
+				}
+				
+                if (((((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Certif Notif')) == 
+                '0') || (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Certif Notif')) == 
+                'null')) && ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == 
+                '1') || findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == 
+                '0')) && email.toUpperCase().contains('OUTLOOK.COM') && (GlobalVariable.Psre == 'VIDA'))) {
                     'call keyword get email'
                     String emailCert = CustomKeywords.'customizekeyword.GetEmail.getEmailContent'(findTestData(excelPathRegister).getValue(
                             GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', ''), findTestData(excelPathRegister).getValue(
@@ -254,6 +267,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     WebUI.callTestCase(findTestCase('Main Register/PencarianPenggunaPelanggan'), [('excelPathRegister') : 'Registrasi/MainRegister'
                             , ('sheet') : 'Main Register'], FailureHandling.STOP_ON_FAILURE)
                 }
+				
+				'call test case Store DB'
+				WebUI.callTestCase(findTestCase('Main Register/NewUserStoreDB'), [('excelPathRegister') : 'Registrasi/MainRegister'
+						, ('sheet') : 'Main Register'], FailureHandling.STOP_ON_FAILURE)
             }
         }
     }

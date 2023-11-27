@@ -50,7 +50,7 @@ if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
 'HIT API'
 respon = WS.sendRequest(findTestObject('APIFullService/Postman/Register', [('callerId') : findTestData(excelPathRegister).getValue(
                 GlobalVariable.NumofColm, rowExcel('callerId')), ('psreCode') : findTestData(excelPathRegister).getValue(
-                GlobalVariable.NumofColm, rowExcel('psreInput')), ('nama') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+                GlobalVariable.NumofColm, rowExcel('PsreInput')), ('nama') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
                 rowExcel('$Nama')), ('email') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
                     '$Email')), ('tmpLahir') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
                     'Tempat Lahir')), ('tglLahir') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
@@ -85,9 +85,16 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         println(trxNo)
 
         if (GlobalVariable.checkStoreDB == 'Yes') {
+			'check if email kosong atau tidak'
+			if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 2) {
+				email = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', '')
+			} else {
+				'get name + email hosting'
+				email = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"', '') + CustomKeywords.'connection.DataVerif.getEmailHosting'(conneSign)
+			}
+			
             'get psre Registered'
-            String resultVendorRegistered = CustomKeywords.'connection.APIFullService.getRegisteredVendor'(conneSign, findTestData(
-                    excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', ''))
+            String resultVendorRegistered = CustomKeywords.'connection.APIFullService.getRegisteredVendor'(conneSign, email)
 
             ArrayList<String> resultTrx = CustomKeywords.'connection.APIFullService.getAPIRegisterTrx'(conneSign, trxNo[
                 0], trxNo[1])
@@ -210,7 +217,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
                 }
             }
             
-            if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('psreInput')) == '""') {
+            if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('PsreInput')) == '""') {
                 String resultDefaultVvendor = CustomKeywords.'connection.APIFullService.getDefaultVendor'(conneSign, GlobalVariable.Tenant)
 
                 'verify psre default =  respon'
@@ -219,7 +226,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
                 if (((GlobalVariable.Psre == 'VIDA') || (GlobalVariable.Psre == 'DIGI')) || (GlobalVariable.Psre == 'TKNAJ')) {
                     'verify psre registered db = excel'
                     arrayMatch.add(WebUI.verifyMatch(resultVendorRegistered.toUpperCase(), findTestData(excelPathRegister).getValue(
-                                GlobalVariable.NumofColm, rowExcel('psreInput')).replace('"', '').toUpperCase(), false, 
+                                GlobalVariable.NumofColm, rowExcel('PsreInput')).replace('"', '').toUpperCase(), false, 
                             FailureHandling.CONTINUE_ON_FAILURE))
 
                     'verify psre registered db =  respon'
@@ -229,7 +236,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
                 
                 'verify psre input =  respon'
                 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-                                'psreInput')).replace('"', '').toUpperCase(), psreCode.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+                                'PsreInput')).replace('"', '').toUpperCase(), psreCode.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
             }
             
             'jika data db tidak sesuai dengan excel'
