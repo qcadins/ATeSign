@@ -30,19 +30,13 @@ GlobalVariable.NumofColm = 2
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign Main.xlsx')
 
-HashMap<String, String> resultSaldoBefore = new HashMap<String, String>()
-
-GlobalVariable.saldo = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : 'Main/Main'
-, ('sheet') : 'Main', ('vendor') : 'DIGISIGN', ('usageSaldo') : 'Sign'], FailureHandling.CONTINUE_ON_FAILURE)
-
-resultSaldoBefore.putAll(GlobalVariable.saldo)
-
-WebUI.comment(resultSaldoBefore.toString())
-WebUI.comment(GlobalVariable.saldo.toString())
-
-GlobalVariable.saldo = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : 'Main/Main'
-	, ('sheet') : 'Main', ('vendor') : 'VIDA', ('usageSaldo') : 'Sign'], FailureHandling.CONTINUE_ON_FAILURE)
-
-resultSaldoBefore.putAll(GlobalVariable.saldo)
-println GlobalVariable.saldo
-println resultSaldoBefore
+int aa = 15
+println aa / 10
+ArrayList variableSaldoRow = ['OTP','WhatsApp Message']
+for (int j = variableSaldoRow.size(); j >= 0; j--) {
+	if (j == 0) {
+		j = variableSaldoRow.size()
+		println j
+	}
+	
+}

@@ -20,6 +20,11 @@
       <name>base_url</name>
    </GlobalVariableEntity>
    <GlobalVariableEntity>
+      <description>Per menit untuk query</description>
+      <initValue>2</initValue>
+      <name>batasWaktu</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
       <description></description>
       <initValue>findTestData('Login/Setting').getValue(2, 2)</initValue>
       <name>checkPaging</name>

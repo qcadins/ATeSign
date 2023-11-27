@@ -595,10 +595,28 @@ public class DataVerif {
 	}
 
 	@Keyword
-	getTrxSaldoWASMS(Connection conn, String usage, String fullName) {
+	getTrxSaldoWASMS(Connection conn, String usage, String fullName, int limit) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT tbm.trx_no, TO_CHAR(tbm.trx_date, 'YYYY-MM-DD HH24:MI:SS'), 'Use ' || msl.description, amm.full_name, '', '', '', tbm.notes, tbm.qty FROM tr_balance_mutation tbm LEFT JOIN ms_lov msl ON tbm.lov_balance_type = msl.id_lov LEFT JOIN am_msuser amm ON tbm.id_ms_user = amm.id_ms_user LEFT JOIN tr_document_d tdd ON tbm.id_document_d = tdd.id_document_d LEFT JOIN tr_document_h tdh ON tbm.id_document_h = tdh.id_document_h WHERE msl.description = '"+usage+"' AND amm.full_name = '"+fullName+"' AND tbm.trx_date >= CURRENT_DATE AND tbm.trx_date < CURRENT_DATE + 1 ORDER BY tbm.dtm_crt DESC LIMIT 1;")
+		resultSet = stm.executeQuery("SELECT tbm.trx_no, TO_CHAR(tbm.trx_date, 'YYYY-MM-DD HH24:MI:SS'), 'Use ' || msl.description, amm.full_name, '', '', '', tbm.notes, tbm.qty FROM tr_balance_mutation tbm LEFT JOIN ms_lov msl ON tbm.lov_balance_type = msl.id_lov LEFT JOIN am_msuser amm ON tbm.id_ms_user = amm.id_ms_user LEFT JOIN tr_document_d tdd ON tbm.id_document_d = tdd.id_document_d LEFT JOIN tr_document_h tdh ON tbm.id_document_h = tdh.id_document_h WHERE msl.description = '"+usage+"' AND amm.full_name = '"+fullName+"' AND tbm.trx_date BETWEEN current_timestamp - interval '"+GlobalVariable.batasWaktu+" minutes' AND current_timestamp + interval '"+GlobalVariable.batasWaktu+" minutes' ORDER BY tbm.dtm_crt DESC LIMIT "+limit+";")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+
+	@Keyword
+	getDetailTrx(Connection conn, String trxNo) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT tbm.trx_no, TO_CHAR(tbm.trx_date, 'YYYY-MM-DD HH24:MI:SS'), 'Use ' || msl.description, amm.full_name, '', '', '', tbm.notes, tbm.qty FROM tr_balance_mutation tbm LEFT JOIN ms_lov msl ON tbm.lov_balance_type = msl.id_lov LEFT JOIN am_msuser amm ON tbm.id_ms_user = amm.id_ms_user LEFT JOIN tr_document_d tdd ON tbm.id_document_d = tdd.id_document_d LEFT JOIN tr_document_h tdh ON tbm.id_document_h = tdh.id_document_h WHERE tbm.trx_no = '"+trxNo+"' ORDER BY tbm.dtm_crt DESC")
 
 		metadata = resultSet.metaData
 

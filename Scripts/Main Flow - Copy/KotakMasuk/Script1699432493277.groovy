@@ -38,9 +38,6 @@ resultHashMap = loopingMultiDoc(docId, conneSign, refNumber,resultHashMap)
 
 for (t = 0; t < resultHashMap.keySet().size();t++) {
 if (GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0]) == GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0])) {
-	println 'success'
-	println GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0])
-	println GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0])
 	flagBreak = 1
 }
 }
