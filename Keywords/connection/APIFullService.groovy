@@ -72,10 +72,11 @@ public class APIFullService {
 	}
 
 	@Keyword
-	getAPIGenInvLinkOTPTrx(Connection conn, String name) {
+	getAPIGenInvLinkOTPTrx(Connection conn, String name, String usedSaldo) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select tbm.qty from tr_balance_mutation tbm join am_msuser am on am.id_ms_user = tbm.id_ms_user join ms_lov ml on ml.id_lov = tbm.lov_trx_type where am.full_name = '"+ name +"' and ml.description = 'Use OTP'")
+		resultSet = stm.executeQuery("select tbm.qty from tr_balance_mutation tbm join am_msuser am on am.id_ms_user = tbm.id_ms_user join ms_lov ml on ml.id_lov = tbm.lov_trx_type where am.full_name = '"+ name +"' and ml.description = 'Use " + usedSaldo + "'")
+
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -1448,7 +1449,7 @@ public class APIFullService {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	settingSendSMSGenInv(Connection conn, String value) {
 		stm = conn.createStatement()

@@ -204,15 +204,28 @@ def funcSaldoRegis(HashMap result, int countCheckSaldo, Connection conneSign) {
 	
 		vendorVerifikasi = 'ESIGN/ADINS'
 		
-		if ((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')) == '1') &&
-			(findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) == '1')) {
+		'check jika Must use WA message = 1'
+		if ((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')) == '1')) {
 			useSaldo = 'WhatsApp Message'
+			
+			saldoList = [useSaldo,'OTP']
 		} else {
-			useSaldo = 'OTP'
+			'check jika email service on'
+			if (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == '1') {
+				'check jika use WA message = 1'
+				if((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) == '1')) {
+					useSaldo = 'WhatsApp Message'
+			
+					saldoList = [useSaldo,'OTP']
+				} else {
+					'jika use WA message bukan 1 maka use OTP'
+					useSaldo = 'OTP'
+			
+					saldoList = [useSaldo]
+				}
+			}
 		}
 			
-		saldoList = [useSaldo]
-		
 		if (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Certif Notif')) ==
 				'1' || findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS GenInv')) ==
 				'1') {
