@@ -104,7 +104,8 @@ public class DataVerif {
 	getSaldoTrx(Connection conn, String email, String notelp, String desc) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT tbm.trx_no, to_char(trx_date, 'yyyy-MM-dd HH24:mi:SS'), description, CASE WHEN amu.full_name IS NULL THEN tbm.usr_crt ELSE amu.full_name END, notes, qty FROM tr_balance_mutation tbm JOIN ms_lov ml ON ml.id_lov = tbm.lov_trx_type LEFT JOIN am_msuser amu ON amu.id_ms_user = tbm.id_ms_user WHERE description = '"+ desc +"' AND (tbm.usr_crt = '"+ email.toUpperCase() +"' OR tbm.usr_crt = '"+ notelp +"') ORDER BY id_balance_mutation DESC LIMIT 1")
+		resultSet = stm.executeQuery("SELECT tbm.trx_no, to_char(trx_date, 'yyyy-MM-dd HH24:mi:SS'), description, CASE WHEN amu.full_name IS NULL THEN tbm.usr_crt ELSE amu.full_name END, notes, qty FROM tr_balance_mutation tbm JOIN ms_lov ml ON ml.id_lov = tbm.lov_trx_type LEFT JOIN am_msuser amu ON amu.id_ms_user = tbm.id_ms_user WHERE description = '"+ desc +"' ORDER BY id_balance_mutation DESC LIMIT 1")
+//		resultSet = stm.executeQuery("SELECT tbm.trx_no, to_char(trx_date, 'yyyy-MM-dd HH24:mi:SS'), description, CASE WHEN amu.full_name IS NULL THEN tbm.usr_crt ELSE amu.full_name END, notes, qty FROM tr_balance_mutation tbm JOIN ms_lov ml ON ml.id_lov = tbm.lov_trx_type LEFT JOIN am_msuser amu ON amu.id_ms_user = tbm.id_ms_user WHERE description = '"+ desc +"' AND (tbm.usr_crt = '"+ email.toUpperCase() +"' OR tbm.usr_crt = '"+ notelp +"') ORDER BY id_balance_mutation DESC LIMIT 1")
 
 		metadata = resultSet.metaData
 

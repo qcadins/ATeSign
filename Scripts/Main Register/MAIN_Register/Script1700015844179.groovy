@@ -110,6 +110,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'get api key salah dari excel'
             GlobalVariable.api_key = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Wrong API Key'))
         }
+		
+		'check ada value maka setting send sms gen inv link'
+		if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS GenInv')).length() >
+		0) {
+			'setting send sms gen inv link'
+			CustomKeywords.'connection.APIFullService.settingSendSMSGenInv'(conneSign, findTestData(excelPathRegister).getValue(
+					GlobalVariable.NumofColm, rowExcel('Setting Send SMS GenInv')))
+		}
         
         'get saldo before'
         saldoBefore = WebUI.callTestCase(findTestCase('Main Flow - Copy/getSaldo'), [('excel') : excelPathRegister, ('sheet') : sheet
@@ -210,6 +218,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         'kurang saldo before dengan jumlah counter send OTP'
                         saldoBefore.put('OTP', (Integer.parseInt(saldoBefore.get('OTP')) - GlobalVariable.Counter).toString())
                     }
+					
+					if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS GenInv')) ==
+						'1') {
+						'kurang saldo before dengan proses send certif dan link undangan melalui sms'
+						saldoBefore.put('SMS Notif', (Integer.parseInt(saldoBefore.get('SMS Notif')) - 1).toString())
+					}
+					
+					if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Certif Notif')) == 
+							'1') {
+						'kurang saldo before dengan proses send certif melalui sms'
+						saldoBefore.put('SMS Notif', (Integer.parseInt(saldoBefore.get('SMS Notif')) - 1).toString())
+					}
+					
                 } else {
                     if (!(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
                         'API Register'))) {

@@ -1448,4 +1448,12 @@ public class APIFullService {
 		}
 		listdata
 	}
+	
+	@Keyword
+	settingSendSMSGenInv(Connection conn, String value) {
+		stm = conn.createStatement()
+		if (value != '') {
+			updateVariable = stm.executeUpdate("UPDATE am_generalsetting SET gs_value = "+ value +" WHERE gs_code = 'SEND_SMS_GENINV'")
+		}
+	}
 }
