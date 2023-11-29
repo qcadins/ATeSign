@@ -7,9 +7,6 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import java.sql.Connection as Connection
 import internal.GlobalVariable as GlobalVariable
 
-'connect DB eSign'
-Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
-
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - API Only.xlsx')
 

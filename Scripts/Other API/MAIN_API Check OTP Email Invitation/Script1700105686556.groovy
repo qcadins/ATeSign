@@ -52,7 +52,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		
 		'ubah invitation menjadi code only'
 		String code = parseCodeOnly(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Invitation Link')))
-		
+
 		'lakukan decrypt untuk code dari link diatas dan cek ke DB'
 		String decryptedKey = decryptLink(conneSign, code)
 		
@@ -133,7 +133,10 @@ def parseCodeOnly(String url) {
 	'cek apakah apttern nya sesuai'
 	if (matcher.find()) {
 		'ubah jadi string'
-		String code = matcher.group(1).replace('%3D','=')
+		String code = matcher.group(1)
+		
+		'decode semua ascii pada url'
+		code = URLDecoder.decode(code, "UTF-8")
 		
 		return code
 	} else {
