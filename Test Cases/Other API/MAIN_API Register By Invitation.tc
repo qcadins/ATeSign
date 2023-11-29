@@ -4,30 +4,30 @@
    <name>MAIN_API Register By Invitation</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>0e66c539-2141-48fd-ae45-82080932d6c0</testCaseGuid>
+   <testCaseGuid>3cff04b0-0da5-4bbf-a39a-78bda6aa8d47</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>e1f77a30-8080-4787-ac6e-5c6c5f4e7cc8</variableId>
+      <variableId>e9abcad0-057b-4e3b-b35b-e8be079fbbaa</variableId>
    </variableLinks>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>8fcbf852-63e7-4a7e-9289-e8a136459440</variableId>
+      <variableId>ae63779d-0604-4798-840c-ebf2cfc0c921</variableId>
    </variableLinks>
    <variable>
       <defaultValue>'Registrasi/Register By Invitation'</defaultValue>
       <description></description>
-      <id>e1f77a30-8080-4787-ac6e-5c6c5f4e7cc8</id>
+      <id>e9abcad0-057b-4e3b-b35b-e8be079fbbaa</id>
       <masked>false</masked>
       <name>excelPathGenerateLink</name>
    </variable>
    <variable>
       <defaultValue>'API Register By Invitation'</defaultValue>
       <description></description>
-      <id>8fcbf852-63e7-4a7e-9289-e8a136459440</id>
+      <id>ae63779d-0604-4798-840c-ebf2cfc0c921</id>
       <masked>false</masked>
       <name>sheet</name>
    </variable>
