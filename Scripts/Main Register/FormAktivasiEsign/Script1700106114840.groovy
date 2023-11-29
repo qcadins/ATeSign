@@ -120,7 +120,23 @@ if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/FormAktivasiEsign/a
 	}
 	
 	if (GlobalVariable.checkStoreDB == 'Yes') {
-		resultTrx = CustomKeywords.'connection.APIFullService.getAPIGenInvLinkOTPTrx'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"',''))
+		'check jika Must use WA message = 1'
+    	if ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')) == '1')) {
+    		usedSaldo = 'WhatsApp Message'
+    	} else {
+    		'check jika email service on'
+    		if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == '1') {
+    			'check jika use WA message = 1'
+    			if((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) == '1')) {
+    				usedSaldo = 'WhatsApp Message'
+    			} else {
+    				'jika use WA message bukan 1 maka use OTP'
+    				usedSaldo = 'OTP'
+    			}
+    		}
+    	}
+		
+		resultTrx = CustomKeywords.'connection.APIFullService.getAPIGenInvLinkOTPTrx'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"',''), usedSaldo)
 
 		'declare arraylist arraymatch'
 		ArrayList<String> arrayMatch = []

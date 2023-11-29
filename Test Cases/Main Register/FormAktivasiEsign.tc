@@ -17,6 +17,12 @@
       <value></value>
       <variableId>c3f1e099-5920-4513-b457-3dc275eed159</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>3fe02ad9-a4ff-4d91-a3c4-b68ce252b9c6</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>'Registrasi/MainRegister'</defaultValue>
       <description></description>
@@ -30,5 +36,12 @@
       <id>c3f1e099-5920-4513-b457-3dc275eed159</id>
       <masked>false</masked>
       <name>sheet</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>3fe02ad9-a4ff-4d91-a3c4-b68ce252b9c6</id>
+      <masked>false</masked>
+      <name>usedSaldo</name>
    </variable>
 </TestCaseEntity>

@@ -204,14 +204,33 @@ def funcSaldoRegis(HashMap result, int countCheckSaldo, Connection conneSign) {
 	
 		vendorVerifikasi = 'ESIGN/ADINS'
 		
-		if ((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')) == '1') &&
-			(findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) == '1')) {
+		'check jika Must use WA message = 1'
+		if ((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')) == '1')) {
 			useSaldo = 'WhatsApp Message'
+			
+			saldoList = [useSaldo,'OTP']
 		} else {
-			useSaldo = 'OTP'
+			'check jika email service on'
+			if (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == '1') {
+				'check jika use WA message = 1'
+				if((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) == '1')) {
+					useSaldo = 'WhatsApp Message'
+			
+					saldoList = [useSaldo,'OTP']
+				} else {
+					'jika use WA message bukan 1 maka use OTP'
+					useSaldo = 'OTP'
+			
+					saldoList = [useSaldo]
+				}
+			}
 		}
 			
-		saldoList = [useSaldo]
+		if (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Certif Notif')) ==
+				'1' || findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS GenInv')) ==
+				'1') {
+			saldoList.add('SMS Notif')
+		}
 		
 		funcFindSaldo(result, vendorVerifikasi, saldoList, forAutosign)
 		
@@ -219,6 +238,12 @@ def funcSaldoRegis(HashMap result, int countCheckSaldo, Connection conneSign) {
 			rowExcel('Status')).equalsIgnoreCase('Warning'))) && (GlobalVariable.Psre == 'VIDA')) {
 			'call function input filter saldo'
 			inputFilterSaldo(useSaldo, conneSign)
+			
+			if (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Certif Notif')) ==
+				'1' || findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS GenInv')) ==
+				'1') {
+				inputFilterSaldo('SMS', conneSign)
+			}
 		}
 	}
 	
@@ -351,10 +376,21 @@ def inputFilterSaldo(String tipeSaldo, Connection conneSign) {
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectUser), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE),
 		' User ' + tipeSaldo)
 
+	Note = WebUI.getText(modifyObjectCatatan)
+	
 	'verify note trx ui = db'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectCatatan), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE),
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(Note, result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE),
 		' Notes ' + tipeSaldo)
 
+	if(tipeSaldo == 'SMS' && Note.toLowerCase().contains('error')) {
+		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+			((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + '; <') +
+			Note + '>'))
+
+		GlobalVariable.FlagFailed = 1
+	}
+	
 	'verify qty trx ui = db'
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectQty), (result[arrayIndex++]).toString().replace(
 				'-', ''), false, FailureHandling.CONTINUE_ON_FAILURE), ' Qty Trx ' + tipeSaldo)
