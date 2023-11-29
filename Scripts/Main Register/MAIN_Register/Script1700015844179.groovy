@@ -207,131 +207,138 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 }
             }
         
-        if (GlobalVariable.FlagFailed == 0) {
-            'kurang saldo before dengan proses verifikasi'
-            saldoBefore.put('Verifikasi', (Integer.parseInt(saldoBefore.get('Verifikasi')) - GlobalVariable.VerificationCount).toString())
-
-            if (GlobalVariable.Psre == 'VIDA') {
-                'kurang saldo before dengan proses PNBP'
-                saldoBefore.put('PNBP', (Integer.parseInt(saldoBefore.get('PNBP')) - 1).toString())
-
-                if (!(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
-                    'API Register'))) {
-                	'check jika Must use WA message = 1'
-                	if ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')) == '1')) {
-                		usedSaldo = 'WhatsApp Message'
-                	} else {
-                		'check jika email service on'
-                		if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == '1') {
-                			'check jika use WA message = 1'
-                			if((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) == '1')) {
-                				usedSaldo = 'WhatsApp Message'
-                			} else {
-                				'jika use WA message bukan 1 maka use OTP'
-                				usedSaldo = 'OTP'
-                			}
-                		}
-                	}
-				
-                    'kurang saldo before dengan jumlah counter send OTP'
-                    saldoBefore.put(usedSaldo, (Integer.parseInt(saldoBefore.get(usedSaldo)) - GlobalVariable.Counter).toString())
-                }
-                
-                if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS GenInv')) == 
-                '1') {
-                    'kurang saldo before dengan proses send certif dan link undangan melalui sms'
-                    saldoBefore.put('SMS Notif', (Integer.parseInt(saldoBefore.get('SMS Notif')) - 1).toString())
-                }
-                
-                if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Certif Notif')) == 
-                '1') {
-                    'kurang saldo before dengan proses send certif melalui sms'
-                    saldoBefore.put('SMS Notif', (Integer.parseInt(saldoBefore.get('SMS Notif')) - 1).toString())
-                }
-            } else {
-                if (!(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
-                    'API Register'))) {
-                    'kurang saldo before dengan jumlah counter send OTP'
-                    saldoBefore.put('OTP', (Integer.parseInt(saldoBefore.get('OTP')) - GlobalVariable.Counter).toString())
-                }
-            }
-            
-            'get saldo after'
-            saldoAfter = WebUI.callTestCase(findTestCase('Main Flow - Copy/getSaldo'), [('excel') : excelPathRegister, ('sheet') : sheet
-                    , ('vendor') : GlobalVariable.Psre, ('usageSaldo') : 'Register', ('countCheckSaldo') : countCheckSaldo], 
-                FailureHandling.CONTINUE_ON_FAILURE)
-
-            println(saldoAfter)
-
-            WebUI.comment(saldoBefore.toString())
-
-            WebUI.comment(saldoAfter.toString())
-
-            'verify saldo before dan after'
-            checkVerifyEqualOrMatch(WebUI.verifyMatch(saldoBefore.toString(), saldoAfter.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), 
-                ' Saldo Gagal Potong')
-
-            'check if email kosong atau tidak'
-            if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase(
-                'Edit') && findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Invite By')).equalsIgnoreCase(
-                'Email')) {
-                'get email dari row edit'
-                email = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email - Edit')).replace(
-                    '"', '')
-            } else if ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 
-            2) && !(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase(
-                'Edit'))) {
-                'get email dari row input'
-                email = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', 
-                    '')
-            } else {
-                'get name + email hosting'
-                email = (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"', 
-                    '') + CustomKeywords.'connection.DataVerif.getEmailHosting'(conneSign))
-            }
-            
-            if (((((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Certif Notif')) == 
-            '0') || (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Certif Notif')) == 
-            'null')) && ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == 
-            '1') || (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == 
-            '0'))) && email.toUpperCase().contains('OUTLOOK.COM')) && (GlobalVariable.Psre == 'VIDA')) {
-                'call keyword get email'
-                String emailCert = CustomKeywords.'customizekeyword.GetEmail.getEmailContent'(findTestData(excelPathRegister).getValue(
-                        GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', ''), findTestData(excelPathRegister).getValue(
-                        GlobalVariable.NumofColm, rowExcel('Password - Aktivasi')).replace('"', ''), 'Certif')
-
-                'verify email cert'
-                checkVerifyEqualOrMatch(WebUI.verifyMatch(emailCert, 'Penerbitan Sertifikat Elektronik', false, FailureHandling.CONTINUE_ON_FAILURE), 
-                    ' email cert tidak terkirim')
-            }
-            
-            if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Check Pencarian Pengguna')).length() > 
-            0) {
-                'call test case pencarian pengguna'
-                WebUI.callTestCase(findTestCase('Main Register/PencarianPenggunaPelanggan'), [('excelPathRegister') : 'Registrasi/MainRegister'
-                        , ('sheet') : 'Main Register'], FailureHandling.STOP_ON_FAILURE)
-            }
-            
-            'call test case Store DB'
-            WebUI.callTestCase(findTestCase('Main Register/NewUserStoreDB'), [('excelPathRegister') : 'Registrasi/MainRegister'
-                    , ('sheet') : 'Main Register'], FailureHandling.STOP_ON_FAILURE)
+	        if (GlobalVariable.FlagFailed == 0) {
+	            'kurang saldo before dengan proses verifikasi'
+	            saldoBefore.put('Verifikasi', (Integer.parseInt(saldoBefore.get('Verifikasi')) - GlobalVariable.VerificationCount).toString())
+	
+	            if (GlobalVariable.Psre == 'VIDA') {
+	                'kurang saldo before dengan proses PNBP'
+	                saldoBefore.put('PNBP', (Integer.parseInt(saldoBefore.get('PNBP')) - 1).toString())
+	
+	                if (!(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
+	                    'API Register'))) {
+	                	'check jika Must use WA message = 1'
+	                	if ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')) == '1')) {
+	                		usedSaldo = 'WhatsApp Message'
+	                	} else {
+	                		'check jika email service on'
+	                		if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == '1') {
+	                			'check jika use WA message = 1'
+	                			if(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) == '1') {
+	                				usedSaldo = 'WhatsApp Message'
+	                			} else {
+		            				'jika use WA message bukan 1 maka use OTP'
+		            				usedSaldo = 'OTP'
+								}
+	                		} else {
+	            				'jika use WA message bukan 1 maka use OTP'
+	            				usedSaldo = 'OTP'
+	                		}
+	                	}
+					
+	                    'kurang saldo before dengan jumlah counter send OTP'
+	                    saldoBefore.put(usedSaldo, (Integer.parseInt(saldoBefore.get(usedSaldo)) - GlobalVariable.Counter).toString())
+	                }
+	                
+	                if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS GenInv')) == '1') {
+						
+						'check jika Must use WA message = 1'
+						if ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')) == '1')) {
+							usedSaldo = 'WhatsApp Message'
+						} else {
+							'check jika email service on'
+							if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == '1') {
+								'check jika use WA message = 1'
+								if(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) == '1') {
+									usedSaldo = 'WhatsApp Message'
+								} else {
+									'jika use WA message bukan 1 maka use SMS Notif'
+									usedSaldo = 'SMS Notif'
+								}
+							} else {
+								'jika use WA message bukan 1 maka use SMS Notif'
+								usedSaldo = 'SMS Notif'
+							}
+						}
+						
+	                    'kurang saldo before dengan proses send certif dan link undangan melalui sms'
+	                    saldoBefore.put(usedSaldo, (Integer.parseInt(saldoBefore.get(usedSaldo)) - 1).toString())
+	                }
+	                
+	                if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Certif Notif')) == 
+	                '1') {
+	                    'kurang saldo before dengan proses send certif melalui sms'
+	                    saldoBefore.put('SMS Notif', (Integer.parseInt(saldoBefore.get('SMS Notif')) - 1).toString())
+	                }
+	            } else {
+	                if (!(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
+	                    'API Register'))) {
+	                    'kurang saldo before dengan jumlah counter send OTP'
+	                    saldoBefore.put('OTP', (Integer.parseInt(saldoBefore.get('OTP')) - GlobalVariable.Counter).toString())
+	                }
+	            }
+	            
+	            'get saldo after'
+	            saldoAfter = WebUI.callTestCase(findTestCase('Main Flow - Copy/getSaldo'), [('excel') : excelPathRegister, ('sheet') : sheet
+	                    , ('vendor') : GlobalVariable.Psre, ('usageSaldo') : 'Register', ('countCheckSaldo') : countCheckSaldo], 
+	                FailureHandling.CONTINUE_ON_FAILURE)
+	
+	            println(saldoAfter)
+	
+	            WebUI.comment(saldoBefore.toString())
+	
+	            WebUI.comment(saldoAfter.toString())
+	
+	            'verify saldo before dan after'
+	            checkVerifyEqualOrMatch(WebUI.verifyMatch(saldoBefore.toString(), saldoAfter.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), 
+	                ' Saldo Gagal Potong')
+	
+	            'check if email kosong atau tidak'
+	            if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase(
+	                'Edit') && findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Invite By')).equalsIgnoreCase(
+	                'Email')) {
+	                'get email dari row edit'
+	                email = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email - Edit')).replace(
+	                    '"', '')
+	            } else if ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 
+	            2) && !(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase(
+	                'Edit'))) {
+	                'get email dari row input'
+	                email = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', 
+	                    '')
+	            } else {
+	                'get name + email hosting'
+	                email = (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"', 
+	                    '') + CustomKeywords.'connection.DataVerif.getEmailHosting'(conneSign))
+	            }
+	            
+	            if (((((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Certif Notif')) == 
+	            '0') || (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Certif Notif')) == 
+	            'null')) && ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == 
+	            '1') || (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == 
+	            '0'))) && email.toUpperCase().contains('OUTLOOK.COM')) && (GlobalVariable.Psre == 'VIDA')) {
+	                'call keyword get email'
+	                String emailCert = CustomKeywords.'customizekeyword.GetEmail.getEmailContent'(findTestData(excelPathRegister).getValue(
+	                        GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', ''), findTestData(excelPathRegister).getValue(
+	                        GlobalVariable.NumofColm, rowExcel('Password - Aktivasi')).replace('"', ''), 'Certif')
+	
+	                'verify email cert'
+	                checkVerifyEqualOrMatch(WebUI.verifyMatch(emailCert, 'Penerbitan Sertifikat Elektronik', false, FailureHandling.CONTINUE_ON_FAILURE), 
+	                    ' email cert tidak terkirim')
+	            }
+	            
+	            if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Check Pencarian Pengguna')).length() > 
+	            0) {
+	                'call test case pencarian pengguna'
+	                WebUI.callTestCase(findTestCase('Main Register/PencarianPenggunaPelanggan'), [('excelPathRegister') : 'Registrasi/MainRegister'
+	                        , ('sheet') : 'Main Register'], FailureHandling.STOP_ON_FAILURE)
+	            }
+	            
+	            'call test case Store DB'
+	            WebUI.callTestCase(findTestCase('Main Register/NewUserStoreDB'), [('excelPathRegister') : 'Registrasi/MainRegister'
+	                    , ('sheet') : 'Main Register'], FailureHandling.STOP_ON_FAILURE)
+	        }
         }
-        } 
-//		else {
-//			if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
-//				'API Generate Inv Link Normal') || findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
-//				'API Generate Inv Link External')) {
-//				if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS GenInv')) == 
-//                '1') {
-//					
-//				}
-//			} else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
-//				'API Register')) {
-//				'call test case api register external'
-//				WebUI.callTestCase(findTestCase('Main Register/API Registrasi'), [('excelPathRegister') : excelPathRegister, ('sheet') : 'Main Register'],
-//					FailureHandling.STOP_ON_FAILURE)
-//			}
-//		}
     }
 }
 
@@ -349,4 +356,3 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
         GlobalVariable.FlagFailed = 1
     }
 }
-

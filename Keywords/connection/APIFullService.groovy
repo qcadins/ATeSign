@@ -1457,4 +1457,92 @@ public class APIFullService {
 			updateVariable = stm.executeUpdate("UPDATE am_generalsetting SET gs_value = "+ value +" WHERE gs_code = 'SEND_SMS_GENINV'")
 		}
 	}
+
+	@Keyword
+	getSaldoTrx(Connection conn, String value, String desc) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT qty FROM tr_balance_mutation tbm JOIN ms_lov ml ON ml.id_lov = tbm.lov_trx_type LEFT JOIN am_msuser amu ON amu.id_ms_user = tbm.id_ms_user WHERE description = 'Use "+ desc +"' AND tbm.usr_crt = '"+ value.toUpperCase() +"' ORDER BY id_balance_mutation DESC LIMIT 1")
+
+		metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+
+	@Keyword
+	getVendorofTenant(Connection conn) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select msv.vendor_code, msv.vendor_name from ms_vendoroftenant mvot left join ms_tenant mst on mvot.id_ms_tenant = mst.id_ms_tenant left join ms_vendor msv on mvot.id_ms_vendor = msv.id_ms_vendor where mst.tenant_code = '"+ GlobalVariable.Tenant +"' and msv.is_active = '1' and msv.is_operating = '1' and mvot.default_vendor > '0' order by mvot.id_ms_vendoroftenant desc")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+
+	@Keyword
+	getLovGroup(Connection conn, String value) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select code, description, sequence from ms_lov where lov_group = '"+ value.toUpperCase() +"' and is_active = '1'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+	
+	@Keyword
+	getRegionList(Connection conn) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select region_code, region_name from ms_region mr join ms_tenant mt on mr.id_ms_tenant = mt.id_ms_tenant where tenant_code = '"+ GlobalVariable.Tenant +"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+	
+	@Keyword
+	getOfficeList(Connection conn) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select office_code, office_name from ms_office mo join ms_tenant mt on mo.id_ms_tenant = mt.id_ms_tenant where tenant_code = '"+ GlobalVariable.Tenant +"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
 }

@@ -93,6 +93,20 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
 			rowExcel('Link Invitation') - 1, GlobalVariable.NumofColm - 1, GlobalVariable.Link)
 		
+		'ambil lama waktu yang diperlukan hingga request menerima balikan'
+		def elapsedTime = (respon.getElapsedTime()) / 1000 + ' second'
+		
+		'ambil body dari hasil respons'
+		responseBody = respon.getResponseBodyContent()
+		
+		'panggil keyword untuk proses beautify dari respon json yang didapat'
+		CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1,
+			findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+		
+		'write to excel response elapsed time'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 1, GlobalVariable.NumofColm -
+			1, elapsedTime.toString())
+		
 		if (GlobalVariable.Link == '') {
 			'Write To Excel GlobalVariable.StatusFailed and errormessage'
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
@@ -129,12 +143,14 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 				'write to excel success'
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
 					1, GlobalVariable.StatusSuccess)
-				
-				GlobalVariable.FlagFailed = 1
 			}
 		}
 		
 		if ((GlobalVariable.checkStoreDB == 'Yes') && (GlobalVariable.FlagFailed == 0)) {
+			'write to excel success'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
+				1, GlobalVariable.StatusSuccess)
+			
 			'call test case ResponseAPIStoreDB'
 			WebUI.callTestCase(findTestCase('Main Register/APIGenInvLinkStoreDB'), [('excelPathRegister') : excelPathRegister],
 				FailureHandling.CONTINUE_ON_FAILURE)

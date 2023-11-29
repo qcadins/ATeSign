@@ -28,7 +28,7 @@ public class ConvertFile {
 		// Write the decoded bytes to the file
 		Files.write(Paths.get(filePath), bytes)
 	}
-	
+
 	@Keyword
 	decodeBase64crt(String base64String, String filename) {
 		byte[] bytes = DatatypeConverter.parseBase64Binary(base64String)
