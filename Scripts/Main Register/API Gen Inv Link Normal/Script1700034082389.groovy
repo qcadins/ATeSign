@@ -37,6 +37,20 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
     'mengambil status code berdasarkan response HIT API'
     status_Code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
+	'ambil lama waktu yang diperlukan hingga request menerima balikan'
+	def elapsedTime = (respon.getElapsedTime()) / 1000 + ' second'
+	
+	'ambil body dari hasil respons'
+	responseBody = respon.getResponseBodyContent()
+	
+	'panggil keyword untuk proses beautify dari respon json yang didapat'
+	CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1,
+		findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+	
+	'write to excel response elapsed time'
+	CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 1, GlobalVariable.NumofColm -
+		1, elapsedTime.toString())
+	
     'jika status codenya 0'
     if (status_Code == 0) {
         'Mengambil links berdasarkan response HIT API'
@@ -47,19 +61,13 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
 			rowExcel('Link Invitation') - 1, GlobalVariable.NumofColm - 1, GlobalVariable.Link)
 		
-		'ambil lama waktu yang diperlukan hingga request menerima balikan'
-		def elapsedTime = (respon.getElapsedTime()) / 1000 + ' second'
-		
-		'ambil body dari hasil respons'
-		responseBody = respon.getResponseBodyContent()
-		
-		'panggil keyword untuk proses beautify dari respon json yang didapat'
-		CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1,
-			findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
-		
-		'write to excel response elapsed time'
-		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 1, GlobalVariable.NumofColm -
-			1, elapsedTime.toString())
+		if (GlobalVariable.Link == '') {
+			'Write To Excel GlobalVariable.StatusFailed and errormessage'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+				'Generate Link Null / Kosong')
+
+			GlobalVariable.FlagFailed = 1
+		}
 		
 		if (WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL) == 'User sudah terdaftar') {
 			'cek ke excel bahwa data user sudah diregist otomatis ke tenant lain'
