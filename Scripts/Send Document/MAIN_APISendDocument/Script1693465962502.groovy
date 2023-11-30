@@ -274,14 +274,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
                     1, GlobalVariable.StatusSuccess)
 
                 'Call Test case mengneai Kotak Masuk'
-                WebUI.callTestCase(findTestCase('InactiveTC/Send Document/KotakMasuk'), [('excelPathFESignDocument') : API_Excel_Path
+                WebUI.callTestCase(findTestCase('Send Document/KotakMasuk'), [('excelPathFESignDocument') : API_Excel_Path
                         , ('jumlahsignertandatangan') : jumlahsignertandatangan, ('isDownloadDocument') : isDownloadDocument
                         , ('isDeleteDownloadedDocument') : isDeleteDownloadedDocument, ('isViewDocument') : isViewDocument
                         , ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
 
                 if (GlobalVariable.checkStoreDB == 'Yes') {
                     'call test case ResponseAPIStoreDB'
-                    WebUI.callTestCase(findTestCase('InactiveTC/Send Document/ResponseAPIStoreDB'), [('API_Excel_Path') : API_Excel_Path], 
+                    WebUI.callTestCase(findTestCase('Send Document/ResponseAPIStoreDB'), [('API_Excel_Path') : API_Excel_Path], 
                         FailureHandling.CONTINUE_ON_FAILURE)
                 }
                 
@@ -295,7 +295,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
                     '<' + messageFailed + '>')
 
                      'call test case error report'
-                    WebUI.callTestCase(findTestCase('InactiveTC/Send Document/ErrorReport'), [('API_Excel_Path') : API_Excel_Path], 
+                    WebUI.callTestCase(findTestCase('Send Document/ErrorReport'), [('API_Excel_Path') : API_Excel_Path], 
                         FailureHandling.CONTINUE_ON_FAILURE)
                 
             }

@@ -99,12 +99,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		if (vendor.equalsIgnoreCase('Privy')) {
 			'request OTP dengan HIT API'
 
-			'Constraint : Dokumen yang dipasang selalu dengan referal number di dokumen pertama.'
-			respon_OTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing siap delete', [('callerId') : findTestData(
+			respon_OTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing', [('callerId') : findTestData(
 							excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('phoneNo') : findTestData(
 							excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('phoneNo')), ('email') : findTestData(excelPathAPISignDocument).getValue(
-							GlobalVariable.NumofColm, rowExcel('email')), ('refnumber') : ('"' + CustomKeywords.'connection.APIFullService.getRefNumber'(
-							conneSign, documentId[0])) + '"']))
+							GlobalVariable.NumofColm, rowExcel('email')), ('refnumber') : '"' + refNumber + '"',('listDocumentId') : findTestData(excelPathAPISignDocument).getValue(
+						GlobalVariable.NumofColm, rowExcel('$documentid')).replace('[','').replace(']',''), ('vendor') : '"' + vendor + '"']))
 
 			'Jika status HIT API 200 OK'
 			if (WS.verifyResponseStatusCode(respon_OTP, 200, FailureHandling.OPTIONAL) == true) {
@@ -125,10 +124,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			'request OTP dengan HIT API'
 
 			'Constraint : Dokumen yang dipasang selalu dengan referal number di dokumen pertama.'
-			respon_OTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing siap delete', [('callerId') : findTestData(
+			respon_OTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing', [('callerId') : findTestData(
 							excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('phoneNo') : findTestData(
 							excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('phoneNo')), ('email') : findTestData(excelPathAPISignDocument).getValue(
-							GlobalVariable.NumofColm, rowExcel('email')), ('refnumber') : '"' + refNumber + '"']))
+							GlobalVariable.NumofColm, rowExcel('email')), ('refnumber') : '"' + refNumber + '"',('listDocumentId') : findTestData(excelPathAPISignDocument).getValue(
+						GlobalVariable.NumofColm, rowExcel('$documentid')).replace('[','').replace(']',''), ('vendor') : '"' + vendor + '"']))
 
 			'Jika status HIT API 200 OK'
 			if (WS.verifyResponseStatusCode(respon_OTP, 200, FailureHandling.OPTIONAL) == true) {

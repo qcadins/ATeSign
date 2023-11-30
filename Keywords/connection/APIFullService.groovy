@@ -152,7 +152,7 @@ public class APIFullService {
 
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select count(distinct (tdds.id_document_d)) from tr_document_d_sign tdds join tr_document_d tdd on tdds.id_document_d = tdd.id_document_d join am_msuser amm on amm.id_ms_user = tdds.id_ms_user join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join ms_tenant mst on tdd.id_ms_tenant = mst.id_ms_tenant where amm.login_id = '"+email+"' and tdds.sign_date is null and mst.tenant_code = '"+tenantCode+"' group by mst.tenant_code, mst.api_key")
+		resultSet = stm.executeQuery("select count(distinct (tdds.id_document_d)) from tr_document_d_sign tdds join tr_document_d tdd on tdds.id_document_d = tdd.id_document_d join am_msuser amm on amm.id_ms_user = tdds.id_ms_user join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join ms_tenant mst on tdd.id_ms_tenant = mst.id_ms_tenant where amm.login_id = '"+email+"' and tdds.sign_date is null and mst.tenant_code = '"+tenantCode+"' AND tdh.is_active = '1' group by mst.tenant_code, mst.api_key")
 		metadata = resultSet.getMetaData()
 
 		columnCount = metadata.getColumnCount()
@@ -866,7 +866,7 @@ public class APIFullService {
 	getSeqNoBasedOnDocTemplate(Connection conn, String docTemplate, String signerType) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select seq_no from ms_doc_template_sign_loc mdtsl join ms_doc_template mdt on mdtsl.id_doc_template = mdt.id_doc_template left join ms_lov msl on mdtsl.lov_sign_type = msl.id_lov left join ms_lov msl1 on mdtsl.lov_signer_type = msl1.id_lov where mdt.doc_template_code = '"+ docTemplate +"' and msl.description = 'Tanda tangan' and msl1.code = '"+ signerType +"' limit 1")
+		resultSet = stm.executeQuery("select seq_no from ms_doc_template_sign_loc mdtsl join ms_doc_template mdt on mdtsl.id_doc_template = mdt.id_doc_template left join ms_lov msl on mdtsl.lov_sign_type = msl.id_lov left join ms_lov msl1 on mdtsl.lov_signer_type = msl1.id_lov left join ms_tenant mst on mdt.id_ms_tenant = mst.id_ms_tenant where mst.tenant_code = '"+GlobalVariable.Tenant+"' and mdt.doc_template_code = '"+ docTemplate +"' and msl.description = 'Tanda tangan' and msl1.code = '"+ signerType +"' limit 1")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
