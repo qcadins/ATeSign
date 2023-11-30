@@ -708,8 +708,6 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 
     noKontrakPerDoc = noKontrak.split(';', -1)
 
-
-
     GlobalVariable.eSignData.putAt('VerifikasiSign', saldoUsed)
 
     checkAutoStamp(conneSign, noKontrak, GlobalVariable.saldo)
@@ -1159,6 +1157,8 @@ def verifOTPMethod(Connection conneSign, String emailSigner, ArrayList listOTP, 
 }
 
 def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList listOTP, String noTelpSigner, String otpAfter, String vendor) {
+	countResend = 0
+	
 	GlobalVariable.eSignData.putAt('VerifikasiOTP', 1)
 	
 	checkSaldoWAOrSMS(conneSign)
@@ -1307,9 +1307,6 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
 
     GlobalVariable.eSignData.putAt('VerifikasiOTP', GlobalVariable.eSignData.getAt('VerifikasiOTP') + countResend)
 	
-
-	println GlobalVariable.eSignData
-	WebUI.delay(100)
 }
 
 def verifBiomMethod(int isLocalhost, int maxFaceCompDB, int countLivenessFaceComp, Connection conneSign, String emailSigner, ArrayList listOTP, String noTelpSigner, String otpAfter, String vendor) {
@@ -1632,6 +1629,8 @@ def checkSaldoWAOrSMS(Connection conneSign) {
 						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 							GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
 								rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP')
+						
+						GlobalVariable.eSignData.putAt('VerifikasiOTP', GlobalVariable.eSignData.getAt('VerifikasiOTP') - 1)
 					} else {
 						penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
 					}
@@ -1648,6 +1647,9 @@ def checkSaldoWAOrSMS(Connection conneSign) {
 						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 							GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
 								rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP')
+						
+						GlobalVariable.eSignData.putAt('VerifikasiOTP', GlobalVariable.eSignData.getAt('VerifikasiOTP') - 1)
+
 					} else {
 						penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
 					}
