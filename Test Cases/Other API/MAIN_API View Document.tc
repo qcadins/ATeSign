@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API View Document</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>60d46cc4-52f4-4b86-a1c3-6a4226866541</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>7fb2c887-49ec-46e6-bdc7-56ec40171d9e</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>e6b509c4-dd7b-4872-8baa-357dd0b7b991</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/View Document'</defaultValue>
+      <description></description>
+      <id>7fb2c887-49ec-46e6-bdc7-56ec40171d9e</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API View Document'</defaultValue>
+      <description></description>
+      <id>e6b509c4-dd7b-4872-8baa-357dd0b7b991</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>

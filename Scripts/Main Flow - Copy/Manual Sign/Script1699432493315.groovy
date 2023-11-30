@@ -38,8 +38,6 @@ GlobalVariable.FlagFailed = 0
 'Inisialisasi array dan variable'
 ArrayList<String> namaTandaTangan = [], notelpTandaTangan = []
 
-indexEmail = 0
-
 'inisiasi index menjadi 8 untuk modify object ketika tidak pada e-meterai'
 index = 9
 
@@ -79,6 +77,8 @@ WebUI.delay(2)
 
 WebUI.focus(findTestObject('ManualSign/lbl_ManualSign'))
 
+loopcase = 1
+for (looping = 0; looping < loopcase; looping++) {
 'Pengecekan apakah masuk page manual sign'
 if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), GlobalVariable.TimeOut)) {
     'Input form yang ada pada page'
@@ -110,15 +110,18 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
     'diberikan delay 3 detik dengan loading'
     WebUI.delay(1)
 
-    checkErrorLog()
+    if (checkErrorLog() == true)
+    {
+		continue
+	}
 
     if (emailService.toString() == '1') {
         if (WebUI.verifyElementNotPresent(findTestObject('ManualSign/input_phonePenandaTangan'), GlobalVariable.TimeOut, 
             FailureHandling.OPTIONAL)) {
             'write excel mengenai error log tersebut'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed') + 
-                    ';') + 'Field phone tidak muncul saat setting email service aktif pada tenant ') + GlobalVariable.Tenant)
+                findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
+                    ';' + 'Field phone tidak muncul saat setting email service aktif pada tenant ' + GlobalVariable.Tenant)
         }
     }
     
@@ -167,13 +170,13 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
                     ';') + '<') + error) + '>')
 				
                 'diberikan delay 2 detik agar sudah ter write sebelum button cancel'
-                WebUI.delay(2)
+                WebUI.delay(1)
 
                 'klik button cancel'
                 WebUI.click(findTestObject('ManualSign/button_Cancel'))
 
                 'delay 2 detik agar cancelnya benar-benar diclick'
-                WebUI.delay(2)
+                WebUI.delay(1)
 				
 				continue
             }
@@ -296,7 +299,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 		WebUI.click(findTestObject('Object Repository/ManualSign/btn_ttd'))
 
 		'diberikan delay 5 detik untuk loading'
-		WebUI.delay(5)
+		WebUI.delay(3)
 
 		'Klik set tanda tangan'
 		WebUI.click(findTestObject('ManualSign/btn_setTandaTangan'))
@@ -331,7 +334,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
             WebUI.click(findTestObject('Object Repository/ManualSign/btn_meterai'))
         }
         
-        WebUI.delay(3)
+        WebUI.delay(1)
 
         'modify label tipe tanda tangan di kotak'
         modifyobjectTTDlblRoleTandaTangan = WebUI.modifyObjectProperty(findTestObject('Object Repository/ManualSign/modifyObject'), 
@@ -518,6 +521,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 		checkSaldoWAOrSMS(conneSign, findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel(
 					'Email (Send Manual)')).replace('"', ''))
 	}
+}
 }
 }
 
@@ -778,4 +782,28 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 		}
 }
 
-
+def funcLogin() {
+	if (!(WebUI.verifyElementPresent(findTestObject('Saldo/ddl_Vendor'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL))) {
+		if (WebUI.verifyElementPresent(findTestObject('Saldo/menu_Saldo'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+			'cek apakah elemen menu ditutup'
+			if (WebUI.verifyElementVisible(findTestObject('button_HamburberSideMenu'), FailureHandling.OPTIONAL)) {
+				'klik pada button hamburber'
+				WebUI.click(findTestObject('button_HamburberSideMenu'))
+			}
+			
+			'klik button saldo'
+			WebUI.click(findTestObject('Saldo/menu_Saldo'))
+	
+			'cek apakah tombol x terlihat'
+			if (WebUI.verifyElementVisible(findTestObject('buttonX_sideMenu'), FailureHandling.OPTIONAL)) {
+				'klik pada button X'
+				WebUI.click(findTestObject('buttonX_sideMenu'))
+			}
+		} else {
+			'Call test Case untuk login sebagai admin wom admin client'
+			WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excel, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
+		}
+	} else {
+		WebUI.refresh()
+	}
+}

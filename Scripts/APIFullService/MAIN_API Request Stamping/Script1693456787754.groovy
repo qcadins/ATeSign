@@ -117,7 +117,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 								'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
 								CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
 									GlobalVariable.StatusFailed, (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, 
-										rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB + ' Pemotongan Saldo tidak sesuai jumlah stamping')								
+										rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB + ' Stamping Gagal dalam kurun waktu '+ meteraiTrx * 20 + ' detik')								
 							}
 							
 							WebUI.delay(10)

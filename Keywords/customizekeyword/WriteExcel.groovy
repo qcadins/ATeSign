@@ -15,7 +15,7 @@ public class WriteExcel {
 		XSSFSheet sheet = workbook.getSheet(sheetName)
 
 		'Write data to excel'
-		sheet.getRow(rowNo).createCell(collNo).setCellValue(cellValue)
+		sheet.getRow(rowNo).getCell(collNo).setCellValue(cellValue)
 
 		file.close()
 		FileOutputStream outFile = new FileOutputStream(new File(filePath))

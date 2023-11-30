@@ -108,7 +108,7 @@ if (email == '') {
             'input peran'
             WebUI.click(findTestObject('Login/input_Peran'))
 
-            WebUI.delay(2)
+            WebUI.delay(1)
 			
 			GlobalVariable.roleLogin = WebUI.getText(findTestObject('Login/peranTerpilih'))
 			
@@ -182,7 +182,7 @@ def runWithEmbed(String linkUrl) {
 			WebUI.openBrowser(GlobalVariable.embedUrl)
 			
 			'Diberikan delay 3 sec'
-			WebUI.delay(3)
+			WebUI.delay(2)
 			
 			'klik titik tiga'
 			Mobile.tapAtPosition(1000, 180, FailureHandling.OPTIONAL)
@@ -195,7 +195,7 @@ def runWithEmbed(String linkUrl) {
 			WebUI.openBrowser(GlobalVariable.embedUrl)
 	
 			'Diberikan delay 3 sec'
-			WebUI.delay(3)
+			WebUI.delay(2)
 	
 			'Maximize windows'
 			WebUI.maximizeWindow()
