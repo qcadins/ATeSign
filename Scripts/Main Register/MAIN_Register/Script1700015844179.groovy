@@ -138,17 +138,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'API Generate Inv Link Normal')) {
             'call test case api generate invitation link Normal'
             WebUI.callTestCase(findTestCase('Main Register/API Gen Inv Link Normal'), [('excelPathRegister') : excelPathRegister
-                    , ('sheet') : 'Main Register'], FailureHandling.STOP_ON_FAILURE)
+                    , ('sheet') : 'Main Register'], FailureHandling.CONTINUE_ON_FAILURE)
         } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
             'API Generate Inv Link External')) {
             'call test case api generate invitation link external'
             WebUI.callTestCase(findTestCase('Main Register/API Gen Inv Link External'), [('excelPathRegister') : excelPathRegister
-                    , ('sheet') : 'Main Register'], FailureHandling.STOP_ON_FAILURE)
+                    , ('sheet') : 'Main Register'], FailureHandling.CONTINUE_ON_FAILURE)
         } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
             'API Register')) {
             'call test case api register external'
             WebUI.callTestCase(findTestCase('Main Register/API Registrasi'), [('excelPathRegister') : excelPathRegister, ('sheet') : 'Main Register'], 
-                FailureHandling.STOP_ON_FAILURE)
+                FailureHandling.CONTINUE_ON_FAILURE)
         }
         
         if ((GlobalVariable.FlagFailed == 0) && (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
@@ -187,7 +187,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'API Register by Invitation')) {
                 'call test case api register by invitation'
                 WebUI.callTestCase(findTestCase('Main Register/API Register By Invitation'), [('excelPathRegister') : excelPathRegister
-                        , ('sheet') : 'Main Register'], FailureHandling.STOP_ON_FAILURE)
+                        , ('sheet') : 'Main Register'], FailureHandling.CONTINUE_ON_FAILURE)
             } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Register With')).equalsIgnoreCase(
                 'Front End Register')) {
                 'call test case daftar akun verif'
@@ -331,12 +331,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 	            0) {
 	                'call test case pencarian pengguna'
 	                WebUI.callTestCase(findTestCase('Main Register/PencarianPenggunaPelanggan'), [('excelPathRegister') : 'Registrasi/MainRegister'
-	                        , ('sheet') : 'Main Register'], FailureHandling.STOP_ON_FAILURE)
+	                        , ('sheet') : 'Main Register'], FailureHandling.CONTINUE_ON_FAILURE)
 	            }
 	            
 	            'call test case Store DB'
 	            WebUI.callTestCase(findTestCase('Main Register/NewUserStoreDB'), [('excelPathRegister') : 'Registrasi/MainRegister'
-	                    , ('sheet') : 'Main Register'], FailureHandling.STOP_ON_FAILURE)
+	                    , ('sheet') : 'Main Register'], FailureHandling.CONTINUE_ON_FAILURE)
 	        }
         }
     }

@@ -23,6 +23,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         break
     } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 
+		'setting menggunakan base url yang benar atau salah'
+		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
+		
         'HIT API'
         responLogin = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/Login', [('email') : findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('email')).replace('"', ''), ('password') : findTestData(excelPath).getValue(
@@ -58,12 +61,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'get current date'
                     currentDate = new Date().format('yyyy-MM-dd')
 				
-					'get message'
-					message = WS.getElementPropertyValue(responConfirmSignDoc, 'status')
-					
-					'write to excel response'
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 5,
-						GlobalVariable.NumofColm - 1, '<' + message + '>')
+					'ambil lama waktu yang diperlukan hingga request menerima balikan'
+		            def elapsedTime = (responConfirmSignDoc.getElapsedTime() / 1000) + ' second'
+		
+		            'ambil body dari hasil respons'
+		            responseBody = responConfirmSignDoc.getResponseBodyContent()
+		
+		            'panggil keyword untuk proses beautify dari respon json yang didapat'
+		            CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
+		                    excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+		
+		            'write to excel response elapsed time'
+		            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 
+		                1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
 
                     'check Db'
                     if (GlobalVariable.checkStoreDB == 'Yes') {
@@ -107,7 +117,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             }
         } else {
 			'mengambil status code berdasarkan response HIT API'
-		    message = WS.getElementPropertyValue(respon, 'error_description', FailureHandling.OPTIONAL).toString()
+		    message = WS.getElementPropertyValue(responLogin, 'error_description', FailureHandling.OPTIONAL).toString()
 		
 		    'Write To Excel GlobalVariable.StatusFailed and errormessage'
 		    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
