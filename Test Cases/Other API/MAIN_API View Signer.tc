@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>MAIN_API Confirm Sign Document</name>
+   <name>MAIN_API View Signer</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>3fe07c5e-0c6e-4d97-946f-83469736a2dc</testCaseGuid>
+   <testCaseGuid>279684eb-f759-42d9-8a22-9aeb934d32ca</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>f857134e-7443-4448-ac88-cef0ea9474b1</variableId>
+      <variableId>a826389b-ddec-4b61-ac51-0ad0c1f8ba55</variableId>
    </variableLinks>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>3679b1d3-edb4-480f-8fc4-0eedc69a89b2</variableId>
+      <variableId>a7631c84-e977-4b6c-8a41-831b1a4ae200</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'Registrasi/Confirm Sign Document'</defaultValue>
+      <defaultValue>'API/View Signer'</defaultValue>
       <description></description>
-      <id>f857134e-7443-4448-ac88-cef0ea9474b1</id>
+      <id>a826389b-ddec-4b61-ac51-0ad0c1f8ba55</id>
       <masked>false</masked>
-      <name>API_Excel_Path</name>
+      <name>excelPath</name>
    </variable>
    <variable>
-      <defaultValue>'API Confirm Sign Document'</defaultValue>
+      <defaultValue>'API View Signer'</defaultValue>
       <description></description>
-      <id>3679b1d3-edb4-480f-8fc4-0eedc69a89b2</id>
+      <id>a7631c84-e977-4b6c-8a41-831b1a4ae200</id>
       <masked>false</masked>
       <name>sheet</name>
    </variable>

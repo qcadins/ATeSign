@@ -1509,7 +1509,7 @@ public class APIFullService {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getRegionList(Connection conn) {
 		stm = conn.createStatement()
@@ -1527,12 +1527,30 @@ public class APIFullService {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getOfficeList(Connection conn) {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select office_code, office_name from ms_office mo join ms_tenant mt on mo.id_ms_tenant = mt.id_ms_tenant where tenant_code = '"+ GlobalVariable.Tenant +"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+
+	@Keyword
+	getViewSigner(Connection conn, String documentId) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select ml1.description, am.full_name, am.hashed_phone, am.login_id, case when to_char(tdds.sign_date, 'yyyy-mm-dd hh24:mi:ss') is not null then 'Signed' else 'Need Sign' end, case when to_char(tdds.sign_date, 'yyyy-mm-dd hh24:mi:ss') is not null then to_char(tdds.sign_date, 'yyyy-mm-dd hh24:mi:ss') else '' end , case when am.is_active = '1' then 'Sudah Aktivasi' else 'Belum Aktivasi' end from tr_document_d_sign tdds join tr_document_d tdd on tdd.id_document_d = tdds.id_document_d join ms_lov ml1 on tdds.lov_signer_type = ml1.id_lov join am_msuser am on am.id_ms_user = tdds.id_ms_user where document_id = '"+ documentId +"' group by id_ms_tenant, document_id, ml1.description, am.full_name, am.hashed_phone, am.login_id, to_char(tdds.sign_date, 'yyyy-mm-dd hh24:mi:ss'), am.is_active, tdds.seq_no order by tdds.seq_no asc")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
