@@ -26,18 +26,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 		
 		GlobalVariable.FlagFailed = 0
-		
+
 		'setting menggunakan base url yang benar atau salah'
 		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
-
-		'check if tidak mau menggunakan tenant code yang benar'
-		if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'No') {
-			'set tenant kosong'
-			GlobalVariable.Tenant = '"' + findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong tenant Code')) + '"'
-		} else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'Yes') {
-			'get tenant per case dari colm excel'
-			GlobalVariable.Tenant = '"' + findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login')) + '"'
-		}
 		
 		'ubah invitation menjadi code only'
 		String code = parseCodeOnly(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Invitation Link')))
@@ -60,19 +51,23 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 				GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Link gagal di-decrypt')
-			
 		}
 		
+		'write to excel otp before'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('OTP before') - 1, GlobalVariable.NumofColm -
+			1, CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('phoneNumber'))))
+		
 		'HIT API Vendor List registrasi'
-		responVendorList = WS.sendRequest(findTestObject('Postman/vendorListInvReg', [
+		respon = WS.sendRequest(findTestObject('Postman/Sent OTP Activation User', [
 			('callerId') : ('"' + findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId'))) + '"',
-				('code') : ('"' + code + '"')]))
+				('code') : ('"' + code + '"'),
+				('phoneNo') : ('"' + findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('phoneNumber')) + '"')]))
 
 		'ambil lama waktu yang diperlukan hingga request menerima balikan'
-		def elapsedTime = (responVendorList.getElapsedTime()) / 1000 + ' second'
+		def elapsedTime = (respon.getElapsedTime()) / 1000 + ' second'
 		
 		'ambil body dari hasil respons'
-		responseBody = responVendorList.getResponseBodyContent()
+		responseBody = respon.getResponseBodyContent()
 		
 		'panggil keyword untuk proses beautify dari respon json yang didapat'
 		CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1,
@@ -83,21 +78,35 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			1, elapsedTime.toString())
 		
 		'Jika status HIT API 200 OK'
-		if (WS.verifyResponseStatusCode(responVendorList, 200, FailureHandling.OPTIONAL) == true) {
+		if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
 			'get Status Code'
-			status_Code = WS.getElementPropertyValue(responVendorList, 'status.code')
+			status_Code = WS.getElementPropertyValue(respon, 'status.code')
 
 			'Jika status codenya 0'
 			if (status_Code == 0) {
+				
+				'write to excel otp latest'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('OTP latest') - 1, GlobalVariable.NumofColm -
+					1, CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('phoneNumber'))))
 			  
-				'write to excel success'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
+				'cek apakah send ulang OTP berhasil'
+				if (WebUI.verifyNotMatch(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('OTP before')),
+					findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('OTP latest')), false, FailureHandling.OPTIONAL)) {
+				
+					'write to excel success'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
 						1, GlobalVariable.StatusSuccess)
+				} else {
+					
+					'Write To Excel GlobalVariable.StatusFailed and errormessage'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+						((findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Hit sukses, namun OTP tidak ter-update'))
+				}
 			} else {
-				getErrorMessageAPI(responVendorList)
+				getErrorMessageAPI(respon)
 			}
 		} else {
-			getErrorMessageAPI(responVendorList)
+			getErrorMessageAPI(respon)
 		}
     }
 }
@@ -119,7 +128,6 @@ def rowExcel(String cellValue) {
 }
 
 def parseCodeOnly(String url) {
-
 	'ambil data sesudah "code="'
 	Pattern pattern = Pattern.compile("code=([^&]+)")
 	
@@ -140,7 +148,6 @@ def parseCodeOnly(String url) {
 		return ''
 	}
 }
-
 def decryptLink(Connection conneSign, String invCode) {
 	aesKey = CustomKeywords.'connection.DataVerif.getAESKey'(conneSign)
 	
