@@ -79,22 +79,41 @@ respon = WS.sendRequest(findTestObject('APIFullService/Postman/Generate Invitati
                     'Task No')), ('callerId') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
                     'callerId'))]))
 
+
 'Jika status HIT API 200 OK'
 if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
-    'get status code'
-    code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
+	'get status code'
+	code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
-    if (code == 0) {
-        'mengambil response'
-        GlobalVariable.Link = WS.getElementPropertyValue(respon, 'link', FailureHandling.OPTIONAL)
+	if (code == 0) {
+		'mengambil response'
+		GlobalVariable.Link = WS.getElementPropertyValue(respon, 'link', FailureHandling.OPTIONAL)
 
-        if (GlobalVariable.Link == '') {
-            'Write To Excel GlobalVariable.StatusFailed and errormessage'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                'Generate Link Null / Kosong')
+		'write to excel generated link'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
+			rowExcel('Link Invitation') - 1, GlobalVariable.NumofColm - 1, GlobalVariable.Link)
+		
+		'ambil lama waktu yang diperlukan hingga request menerima balikan'
+		def elapsedTime = (respon.getElapsedTime()) / 1000 + ' second'
+		
+		'ambil body dari hasil respons'
+		responseBody = respon.getResponseBodyContent()
+		
+		'panggil keyword untuk proses beautify dari respon json yang didapat'
+		CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1,
+			findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+		
+		'write to excel response elapsed time'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 1, GlobalVariable.NumofColm -
+			1, elapsedTime.toString())
+		
+		if (GlobalVariable.Link == '') {
+			'Write To Excel GlobalVariable.StatusFailed and errormessage'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+				'Generate Link Null / Kosong')
 
-            GlobalVariable.FlagFailed = 1
-        }
+			GlobalVariable.FlagFailed = 1
+		}
 		
 		if (WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL) == 'User sudah terdaftar') {
 			
@@ -124,24 +143,27 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 				'write to excel success'
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
 					1, GlobalVariable.StatusSuccess)
-				
-				GlobalVariable.FlagFailed = 1
 			}
 		}
-        
-        if ((GlobalVariable.checkStoreDB == 'Yes') && (GlobalVariable.FlagFailed == 0)) {
-            'call test case ResponseAPIStoreDB'
-            WebUI.callTestCase(findTestCase('Main Register/APIGenInvLinkStoreDB'), [('excelPathGenInvLink') : 'APIFullService/API_GenInvLink'], 
-                FailureHandling.CONTINUE_ON_FAILURE)
-        }
-    } else {
-        'call function get API error message'
-        getAPIErrorMessage(respon)
-    }
+		
+		if ((GlobalVariable.checkStoreDB == 'Yes') && (GlobalVariable.FlagFailed == 0)) {
+			'write to excel success'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
+				1, GlobalVariable.StatusSuccess)
+			
+			'call test case ResponseAPIStoreDB'
+			WebUI.callTestCase(findTestCase('Main Register/APIGenInvLinkStoreDB'), [('excelPathRegister') : excelPathRegister],
+				FailureHandling.CONTINUE_ON_FAILURE)
+		}
+	} else {
+		'call function get API error message'
+		getAPIErrorMessage(respon)
+	}
 } else {
-    'call function get API error message'
-    getAPIErrorMessage(respon)
+	'call function get API error message'
+	getAPIErrorMessage(respon)
 }
+
 
 def getAPIErrorMessage(def respon) {
     'mengambil status code berdasarkan response HIT API'
@@ -168,4 +190,3 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 def rowExcel(String cellValue) {
     return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
-

@@ -72,10 +72,11 @@ public class APIFullService {
 	}
 
 	@Keyword
-	getAPIGenInvLinkOTPTrx(Connection conn, String name) {
+	getAPIGenInvLinkOTPTrx(Connection conn, String name, String usedSaldo) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select tbm.qty from tr_balance_mutation tbm join am_msuser am on am.id_ms_user = tbm.id_ms_user join ms_lov ml on ml.id_lov = tbm.lov_trx_type where am.full_name = '"+ name +"' and ml.description = 'Use OTP'")
+		resultSet = stm.executeQuery("select tbm.qty from tr_balance_mutation tbm join am_msuser am on am.id_ms_user = tbm.id_ms_user join ms_lov ml on ml.id_lov = tbm.lov_trx_type where am.full_name = '"+ name +"' and ml.description = 'Use " + usedSaldo + "'")
+
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -1436,6 +1437,120 @@ public class APIFullService {
 
 		resultSet = stm.executeQuery("SELECT tenant_code, tenant_name, mst.ref_number_label, mst.activation_callback_url, mst.use_wa_message, mst.threshold_balance, mst.email_reminder_dest FROM ms_tenant mst WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
 
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+
+	@Keyword
+	settingSendSMSGenInv(Connection conn, String value) {
+		stm = conn.createStatement()
+		if (value != '') {
+			updateVariable = stm.executeUpdate("UPDATE am_generalsetting SET gs_value = "+ value +" WHERE gs_code = 'SEND_SMS_GENINV'")
+		}
+	}
+
+	@Keyword
+	getSaldoTrx(Connection conn, String value, String desc) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT qty FROM tr_balance_mutation tbm JOIN ms_lov ml ON ml.id_lov = tbm.lov_trx_type LEFT JOIN am_msuser amu ON amu.id_ms_user = tbm.id_ms_user WHERE description = 'Use "+ desc +"' AND tbm.usr_crt = '"+ value.toUpperCase() +"' ORDER BY id_balance_mutation DESC LIMIT 1")
+
+		metadata = resultSet.getMetaData()
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+
+	@Keyword
+	getVendorofTenant(Connection conn) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select msv.vendor_code, msv.vendor_name from ms_vendoroftenant mvot left join ms_tenant mst on mvot.id_ms_tenant = mst.id_ms_tenant left join ms_vendor msv on mvot.id_ms_vendor = msv.id_ms_vendor where mst.tenant_code = '"+ GlobalVariable.Tenant +"' and msv.is_active = '1' and msv.is_operating = '1' and mvot.default_vendor > '0' order by mvot.id_ms_vendoroftenant desc")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+
+	@Keyword
+	getLovGroup(Connection conn, String value) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select code, description, sequence from ms_lov where lov_group = '"+ value.toUpperCase() +"' and is_active = '1'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+
+	@Keyword
+	getRegionList(Connection conn) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select region_code, region_name from ms_region mr join ms_tenant mt on mr.id_ms_tenant = mt.id_ms_tenant where tenant_code = '"+ GlobalVariable.Tenant +"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+
+	@Keyword
+	getOfficeList(Connection conn) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select office_code, office_name from ms_office mo join ms_tenant mt on mo.id_ms_tenant = mt.id_ms_tenant where tenant_code = '"+ GlobalVariable.Tenant +"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+
+	@Keyword
+	getViewSigner(Connection conn, String documentId) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select ml1.description, am.full_name, am.hashed_phone, am.login_id, case when to_char(tdds.sign_date, 'yyyy-mm-dd hh24:mi:ss') is not null then 'Signed' else 'Need Sign' end, case when to_char(tdds.sign_date, 'yyyy-mm-dd hh24:mi:ss') is not null then to_char(tdds.sign_date, 'yyyy-mm-dd hh24:mi:ss') else '' end , case when am.is_active = '1' then 'Sudah Aktivasi' else 'Belum Aktivasi' end from tr_document_d_sign tdds join tr_document_d tdd on tdd.id_document_d = tdds.id_document_d join ms_lov ml1 on tdds.lov_signer_type = ml1.id_lov join am_msuser am on am.id_ms_user = tdds.id_ms_user where document_id = '"+ documentId +"' group by id_ms_tenant, document_id, ml1.description, am.full_name, am.hashed_phone, am.login_id, to_char(tdds.sign_date, 'yyyy-mm-dd hh24:mi:ss'), am.is_active, tdds.seq_no order by tdds.seq_no asc")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

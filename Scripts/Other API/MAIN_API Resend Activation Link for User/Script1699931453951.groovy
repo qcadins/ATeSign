@@ -12,9 +12,6 @@ import org.openqa.selenium.By as By
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - API Only.xlsx')
 
-'connect dengan db'
-Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
-
 'get colm excel'
 int countColmExcel = findTestData(excelPath).columnNumbers
 

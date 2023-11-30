@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>MAIN_API Register By Invitation</name>
+   <name>MAIN_API Sent OTP Activation User</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>0e66c539-2141-48fd-ae45-82080932d6c0</testCaseGuid>
+   <testCaseGuid>59a01a08-bba6-4c06-8efd-3f781bece648</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>e1f77a30-8080-4787-ac6e-5c6c5f4e7cc8</variableId>
+      <variableId>8ad19c32-6ee3-4e13-9485-230c0c2e3659</variableId>
    </variableLinks>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>8fcbf852-63e7-4a7e-9289-e8a136459440</variableId>
+      <variableId>02753e1e-f66b-473c-9477-eba05fa165a7</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'Registrasi/Register By Invitation'</defaultValue>
+      <defaultValue>'API/Sent OTP Activ User'</defaultValue>
       <description></description>
-      <id>e1f77a30-8080-4787-ac6e-5c6c5f4e7cc8</id>
+      <id>8ad19c32-6ee3-4e13-9485-230c0c2e3659</id>
       <masked>false</masked>
-      <name>excelPathGenerateLink</name>
+      <name>excelPath</name>
    </variable>
    <variable>
-      <defaultValue>'API Register By Invitation'</defaultValue>
+      <defaultValue>'API Sent OTP Activ User'</defaultValue>
       <description></description>
-      <id>8fcbf852-63e7-4a7e-9289-e8a136459440</id>
+      <id>02753e1e-f66b-473c-9477-eba05fa165a7</id>
       <masked>false</masked>
       <name>sheet</name>
    </variable>

@@ -43,37 +43,53 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         GlobalVariable.Link = WS.getElementPropertyValue(respon, 'links', FailureHandling.OPTIONAL).toString().replace('[', 
             '').replace(']', '')
 			
-			if (WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL) == 'User sudah terdaftar') {
-				'cek ke excel bahwa data user sudah diregist otomatis ke tenant lain'
-				result = CustomKeywords.'connection.Registrasi.checkAddUserOtherTenant'(conneSign,
-					findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"',''))
+		'write to excel generated link'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
+			rowExcel('Link Invitation') - 1, GlobalVariable.NumofColm - 1, GlobalVariable.Link)
+		
+		'ambil lama waktu yang diperlukan hingga request menerima balikan'
+		def elapsedTime = (respon.getElapsedTime()) / 1000 + ' second'
+		
+		'ambil body dari hasil respons'
+		responseBody = respon.getResponseBodyContent()
+		
+		'panggil keyword untuk proses beautify dari respon json yang didapat'
+		CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1,
+			findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+		
+		'write to excel response elapsed time'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 1, GlobalVariable.NumofColm -
+			1, elapsedTime.toString())
+		
+		if (WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL) == 'User sudah terdaftar') {
+			'cek ke excel bahwa data user sudah diregist otomatis ke tenant lain'
+			result = CustomKeywords.'connection.Registrasi.checkAddUserOtherTenant'(conneSign,
+				findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"',''))
+			
+			if (result == 0) {
 				
-				if (result == 0) {
-					
-					'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-						(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +
-							'Error User di Tenant baru tidak berhasil ditambahkan')
-					
-					GlobalVariable.FlagFailed = 1
-					
-				} else if (result > 1) {
-					
-					'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-						(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +
-							'Terdapat 2 user yang sama di tenant ' + GlobalVariable.Tenant)
-					
-					GlobalVariable.FlagFailed = 1
-				} else {
-					
-					'write to excel success'
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
-						1, GlobalVariable.StatusSuccess)
-					
-					GlobalVariable.FlagFailed = 1
-				}
+				'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+					(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +
+						'Error User di Tenant baru tidak berhasil ditambahkan')
+				
+				GlobalVariable.FlagFailed = 1
+				
+			} else if (result > 1) {
+				
+				'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+					(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +
+						'Terdapat 2 user yang sama di tenant ' + GlobalVariable.Tenant)
+				
+				GlobalVariable.FlagFailed = 1
+			} else {
+				
+				'write to excel success'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
+					1, GlobalVariable.StatusSuccess)
 			}
+		}
 
         if (GlobalVariable.FlagFailed == 0) {
             'write to excel success'
@@ -85,6 +101,32 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
                 WebUI.callTestCase(findTestCase('Main Register/APIGenInvLinkStoreDB'), [('excelPathRegister') : 'Registrasi/MainRegister'
                         , ('sheet') : 'Main Register'], FailureHandling.CONTINUE_ON_FAILURE)
             }
+			
+			if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS GenInv')) ==
+				'1') {
+					'check jika Must use WA message = 1'
+					if ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')) == '1')) {
+						usedSaldo = 'WhatsApp Message'
+					} else {
+						'check jika email service on'
+						if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == '1') {
+							'check jika use WA message = 1'
+							if(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) == '1') {
+								usedSaldo = 'WhatsApp Message'
+							} else {
+								'jika use WA message bukan 1 maka use SMS Notif'
+								usedSaldo = 'SMS'
+							}
+						} else {
+							'jika use WA message bukan 1 maka use SMS Notif'
+							usedSaldo = 'SMS'
+						}
+					}
+					
+					'check potong saldo sms notif / WA untuk kirim link undangan'
+					checkVerifyEqualOrMatch(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getSaldoTrx'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('callerId')).replace('"',''), usedSaldo),
+						'-1', false, FailureHandling.CONTINUE_ON_FAILURE), ' Saldo '+ usedSaldo +' tidak terpotong untuk kirim link undangan')
+			}
         }
     } else {
         'call function get API error message'
@@ -125,4 +167,3 @@ def getAPIErrorMessage(def respon) {
 def rowExcel(String cellValue) {
     return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
-
