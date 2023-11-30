@@ -1457,4 +1457,22 @@ public class APIFullService {
 			updateVariable = stm.executeUpdate("UPDATE am_generalsetting SET gs_value = "+ value +" WHERE gs_code = 'SEND_SMS_GENINV'")
 		}
 	}
+	@Keyword
+	getUpdateActivationUserAPIOnly(Connection conn, String value) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT amu.full_name, amu.hashed_id_no, mvru.hashed_signer_registered_phone, signer_registered_email, TO_CHAR(mvru.dtm_crt::timestamp, 'DD FMMonth YYYY HH24:MI:SS') AS formatted_date FROM am_msuser amu LEFT JOIN ms_vendor_registered_user mvru ON mvru.id_ms_user = amu.id_ms_user WHERE login_id = '" + value + "' OR hashed_phone = encode(sha256('" + value + "'), 'hex')")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
 }

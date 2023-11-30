@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>MAIN_API Sent OTP Activation User</name>
+   <name>MAIN_API Inquiry</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>59a01a08-bba6-4c06-8efd-3f781bece648</testCaseGuid>
+   <testCaseGuid>822e28f8-ef73-4760-b221-0631c95e9532</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>8ad19c32-6ee3-4e13-9485-230c0c2e3659</variableId>
+      <variableId>14607c34-4d0a-46f9-a6b2-27f53a1063f8</variableId>
    </variableLinks>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
       <type>DEFAULT</type>
       <value></value>
-      <variableId>02753e1e-f66b-473c-9477-eba05fa165a7</variableId>
+      <variableId>b644a649-0d47-4ded-9407-f625a635ba0f</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'API/Sent OTP Activ User'</defaultValue>
+      <defaultValue>'API/Inquiry'</defaultValue>
       <description></description>
-      <id>8ad19c32-6ee3-4e13-9485-230c0c2e3659</id>
+      <id>14607c34-4d0a-46f9-a6b2-27f53a1063f8</id>
       <masked>false</masked>
       <name>excelPath</name>
    </variable>
    <variable>
-      <defaultValue>'API Sent OTP Activation User'</defaultValue>
+      <defaultValue>'API Inquiry'</defaultValue>
       <description></description>
-      <id>02753e1e-f66b-473c-9477-eba05fa165a7</id>
+      <id>b644a649-0d47-4ded-9407-f625a635ba0f</id>
       <masked>false</masked>
       <name>sheet</name>
    </variable>

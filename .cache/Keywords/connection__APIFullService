@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "86042269FF089103A928B106B120F3A3",
+  "keywordFileContentHash": "9131BE2D6758E6CC141A580B8ABA2219",
   "keywordClasses": [
     {
       "name": "connection.APIFullService",
@@ -2980,6 +2980,38 @@
         },
         {
           "name": "settingSendSMSGenInv",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "value",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getUpdateActivationUserAPIOnly",
           "parameters": [
             {
               "name": "conn",
