@@ -90,7 +90,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		
 		flaggingOTP = CustomKeywords.'connection.DataVerif.getParameterFlagPassOTP'(conneSign, findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('$documentid')).replace('"','').replace('[','').replace(']',''))
 		
-		if (refNumber.toString() == 'null') {
+		if (refNumber.toString() == 'null' || refNumber.toString() == '') {
 			refNumber = ''
 			
 			vendor = ''
