@@ -14,14 +14,15 @@ public class WriteExcel {
 		XSSFWorkbook workbook = new XSSFWorkbook(file)
 		XSSFSheet sheet = workbook.getSheet(sheetName)
 
-		'Write data to excel'
-		sheet.getRow(rowNo).getCell(collNo).setCellValue(cellValue)
+		def row = sheet.getRow(rowNo) ?: sheet.createRow(rowNo)
+		def cell = row.getCell(collNo) ?: row.createCell(collNo)
+
+		cell.setCellValue(cellValue)
 
 		file.close()
-		FileOutputStream outFile = new FileOutputStream(new File(filePath))
-		workbook.write(outFile)
-		outFile.flush()
-		outFile.close()
+		file.withCloseable {
+			workbook.write(new FileOutputStream(new File(filePath)))
+		}
 	}
 
 	@Keyword
