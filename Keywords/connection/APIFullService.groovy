@@ -1457,6 +1457,25 @@ public class APIFullService {
 			updateVariable = stm.executeUpdate("UPDATE am_generalsetting SET gs_value = "+ value +" WHERE gs_code = 'SEND_SMS_GENINV'")
 		}
 	}
+	
+	@Keyword
+	getUpdateActivationUserAPIOnly(Connection conn, String value) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT amu.full_name, amu.hashed_id_no, mvru.hashed_signer_registered_phone, signer_registered_email, TO_CHAR(mvru.dtm_crt::timestamp, 'DD FMMonth YYYY HH24:MI:SS') AS formatted_date FROM am_msuser amu LEFT JOIN ms_vendor_registered_user mvru ON mvru.id_ms_user = amu.id_ms_user WHERE login_id = '" + value + "' OR hashed_phone = encode(sha256('" + value + "'), 'hex')")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
 
 	@Keyword
 	getSaldoTrx(Connection conn, String value, String desc) {
@@ -1551,6 +1570,7 @@ public class APIFullService {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select ml1.description, am.full_name, am.hashed_phone, am.login_id, case when to_char(tdds.sign_date, 'yyyy-mm-dd hh24:mi:ss') is not null then 'Signed' else 'Need Sign' end, case when to_char(tdds.sign_date, 'yyyy-mm-dd hh24:mi:ss') is not null then to_char(tdds.sign_date, 'yyyy-mm-dd hh24:mi:ss') else '' end , case when am.is_active = '1' then 'Sudah Aktivasi' else 'Belum Aktivasi' end from tr_document_d_sign tdds join tr_document_d tdd on tdd.id_document_d = tdds.id_document_d join ms_lov ml1 on tdds.lov_signer_type = ml1.id_lov join am_msuser am on am.id_ms_user = tdds.id_ms_user where document_id = '"+ documentId +"' group by id_ms_tenant, document_id, ml1.description, am.full_name, am.hashed_phone, am.login_id, to_char(tdds.sign_date, 'yyyy-mm-dd hh24:mi:ss'), am.is_active, tdds.seq_no order by tdds.seq_no asc")
+		
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -1564,3 +1584,4 @@ public class APIFullService {
 		listdata
 	}
 }
+
