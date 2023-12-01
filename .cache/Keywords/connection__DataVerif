@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "keywordFileContentHash": "756C46F228EAC0963B5397143776DA04",
-=======
-  "keywordFileContentHash": "E483E397AF0E9B0A9B6AB1F851F9DE7E",
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+  "keywordFileContentHash": "147EEF0C0B0291D9D50CACC088F841EB",
   "keywordClasses": [
     {
       "name": "connection.DataVerif",
