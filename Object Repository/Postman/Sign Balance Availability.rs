@@ -6,11 +6,20 @@
    <elementGuidId>3eea9e61-f1c3-4544-a9c0-fd649e28d67c</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
+   <authorizationRequest>
+      <authorizationInfo>
+         <entry>
+            <key>bearerToken</key>
+            <value>${token}</value>
+         </entry>
+      </authorizationInfo>
+      <authorizationType>Bearer</authorizationType>
+   </authorizationRequest>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\r\n    \&quot;listDocumentId\&quot;: [\r\n        \&quot;00155D0B-7502-A2EA-11EE-67DBCB63ACF0\&quot;\r\n    ],\r\n    \&quot;audit\&quot;: {\r\n        \&quot;callerId\&quot;: \&quot;USERCIIB@GMAIL.COM\&quot;\r\n    },\r\n    \&quot;tenantCode\&quot;: \&quot;WOMF\&quot;,\r\n    \&quot;vendorCode\&quot;: \&quot;VIDA\&quot;\r\n}&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;listDocumentId\&quot;: [\n        ${docId}\n    ],\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: ${callerId}\n    },\n    \&quot;tenantCode\&quot;: ${tenantCode},\n    \&quot;vendorCode\&quot;: ${vendorCode}\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -30,14 +39,6 @@
       <type>Main</type>
       <value>id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7</value>
       <webElementGuid>d994a2b1-f9c4-4fe0-91a5-4f00bf387e7c</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Authorization</name>
-      <type>Main</type>
-      <value>Bearer On/9D5PcN+EdCPp1Jr5XNN0EB5M=</value>
-      <webElementGuid>a6fd33b0-f2dd-403e-a51c-0ca5c0a5b512</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -87,11 +88,19 @@
       <value>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36</value>
       <webElementGuid>ac7a4ab8-f972-4afc-a78c-4f5d2baf2f38</webElementGuid>
    </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Authorization</name>
+      <type>Main</type>
+      <value>Bearer ${token}</value>
+      <webElementGuid>9cb257ad-6372-4abd-ad0c-d1ed516736c1</webElementGuid>
+   </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>POST</restRequestMethod>
-   <restUrl>http://gdkwebsvr:7021/adimobile/esign/services/saldo/s/SignBalanceAvailability</restUrl>
+   <restUrl>${base_url}/services/saldo/s/SignBalanceAvailability</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>
@@ -100,5 +109,32 @@
    <soapServiceFunction></soapServiceFunction>
    <socketTimeout>-1</socketTimeout>
    <useServiceInfoFromWsdl>true</useServiceInfoFromWsdl>
+   <variables>
+      <defaultValue>GlobalVariable.base_url</defaultValue>
+      <description></description>
+      <id>9e9a0fcd-e461-4273-b95c-08fc9d75dfcd</id>
+      <masked>false</masked>
+      <name>base_url</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.token</defaultValue>
+      <description></description>
+      <id>4e70d19f-0b35-4328-a1b7-291a1f04282d</id>
+      <masked>false</masked>
+      <name>token</name>
+   </variables>
+   <verificationScript>import static org.assertj.core.api.Assertions.*
+
+import com.kms.katalon.core.testobject.RequestObject
+import com.kms.katalon.core.testobject.ResponseObject
+import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
+import com.kms.katalon.core.webservice.verification.WSResponseManager
+
+import groovy.json.JsonSlurper
+import internal.GlobalVariable as GlobalVariable
+
+RequestObject request = WSResponseManager.getInstance().getCurrentRequest()
+
+ResponseObject response = WSResponseManager.getInstance().getCurrentResponse()</verificationScript>
    <wsdlAddress></wsdlAddress>
 </WebServiceRequestEntity>
