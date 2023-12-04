@@ -1609,6 +1609,8 @@ public class APIFullService {
 
 		resultSet = stm.executeQuery("SELECT liveness_facecompare_services, use_liveness_facecompare_first FROM ms_tenant WHERE tenant_code = '" + tenantcode + "'")
 
+		metadata = resultSet.metaData
+
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {

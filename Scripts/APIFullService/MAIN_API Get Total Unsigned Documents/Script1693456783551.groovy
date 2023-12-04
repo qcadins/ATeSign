@@ -55,20 +55,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'get status code'
             code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
-			'ambil lama waktu yang diperlukan hingga request menerima balikan'
-			def elapsedTime = (respon.getElapsedTime() / 1000) + ' second'
-
-			'ambil body dari hasil respons'
-			responseBody = respon.getResponseBodyContent()
-
-			'panggil keyword untuk proses beautify dari respon json yang didapat'
-			CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
-					excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
-
-			'write to excel response elapsed time'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') -
-				1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
-			
             'jika codenya 0'
             if (code == 0) {
                 'mengambil response totalUnsignedDocuments'
@@ -76,7 +62,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 'input di excel mengenai totalUnsignedDocuments yang telah didapat'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
-                    rowExcel('Total Unsigned Documents') - 1, GlobalVariable.NumofColm - 1, totalUnsignedDocuments.toString())
+                    5, GlobalVariable.NumofColm - 1, totalUnsignedDocuments.toString())
 
                 'check Db'
                 if (GlobalVariable.checkStoreDB == 'Yes') {
