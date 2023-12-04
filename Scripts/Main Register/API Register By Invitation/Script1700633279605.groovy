@@ -69,72 +69,22 @@ String selfPhoto, idPhoto
 
             'jika status codenya 0'
             if (status_Code == 0) {
-				'declare arraylist arraymatch'
-				ArrayList<String> arrayMatch = []
 				
-//                if ((GlobalVariable.checkStoreDB == 'Yes') && (GlobalVariable.FlagFailed == 0)) {
-//                	'declare arrayindex'
-//					arrayindex = 0
-//					
-//					'get data buat undangan dari DB'
-//					ArrayList<String> resultDataDiri = CustomKeywords.'connection.Registrasi.buatUndanganStoreDB'(conneSign, findTestData(excelPathRegister).getValue(
-//							GlobalVariable.NumofColm, rowExcel('$Email')).replace('"','').toUpperCase())
-//					
-//					'verify nama'
-//					arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"','').toUpperCase(),
-//							(resultDataDiri[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-//					
-//					'verify tempat lahir'
-//					arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Tempat Lahir')).replace('"','').toUpperCase(),
-//							(resultDataDiri[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-//					
-//					'parse Date from MM/dd/yyyy > yyyy-MM-dd'
-//					sDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(resultDataDiri[arrayindex++],
-//						'MM/dd/yyyy', 'yyyy-MM-dd')
-//					
-//					'verify tanggal lahir'
-//					arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Lahir')).replace('"',''),
-//							sDate, false, FailureHandling.CONTINUE_ON_FAILURE))
-//					
-//					'verify jenis kelamin'
-//					arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('jenisKelamin')).replace('"','').toUpperCase(),
-//							(resultDataDiri[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-//					
-//					'verify email'
-//					arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"','').toUpperCase(),
-//							(resultDataDiri[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-//					
-//					'verify provinsi'
-//					arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('provinsi')).replace('"','').toUpperCase(),
-//							(resultDataDiri[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-//					
-//					'verify kota'
-//					arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('kota')).replace('"','').toUpperCase(),
-//							(resultDataDiri[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-//					
-//					'verify kecamatan'
-//					arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('kecamatan')).replace('"','').toUpperCase(),
-//							(resultDataDiri[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-//					
-//					'verify kelurahan'
-//					arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('kelurahan')).replace('"','').toUpperCase(),
-//							(resultDataDiri[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-//					
-//					'verify kode pos'
-//					arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('kodePos')).replace('"','').toUpperCase(),
-//							(resultDataDiri[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-//                }
-//				
-//				'jika data db tidak sesuai dengan excel'
-//				if (arrayMatch.contains(false)) {
-//					'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-//					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(SheetName, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-//						(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
-//				} else {
-//					'write to excel success'
-//					CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
-//						1, GlobalVariable.StatusSuccess)
-//				}
+				'call testcase form aktivasi vida'
+				WebUI.callTestCase(findTestCase('Main Register/FormAktivasiEsign'), [('excelPathRegister') : excelPathRegister],
+					FailureHandling.CONTINUE_ON_FAILURE)
+
+				'looping untuk mengeck apakah case selanjutnya ingin melanjutkan input pada form aktivasi'
+				while (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Continue Register & Activation')).equalsIgnoreCase(
+					'Continue') && GlobalVariable.FlagFailed > 0) {
+					(GlobalVariable.NumofColm)++
+
+					GlobalVariable.FlagFailed = 0
+
+					'call testcase form aktivasi vida'
+					WebUI.callTestCase(findTestCase('Main Register/FormAktivasiEsign'), [('excelPathRegister') : excelPathRegister],
+						FailureHandling.CONTINUE_ON_FAILURE)
+				}
             } else {
                 'call function get API error message'
                 getAPIErrorMessage(respon)

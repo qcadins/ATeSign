@@ -120,7 +120,8 @@ if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
 
 
     'check mau foto KTP atau tidak'
-    if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Foto KTP')) == 'Yes') {
+    if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Foto KTP')) == 'Yes' && 
+		findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('idPhoto')) == '""') {
         if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Upload Foto KTP')).length() == 
         0) {
             'click ambil foto KTP'
@@ -156,12 +157,14 @@ if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
     'click checkbox'
     WebUI.click(findTestObject('DaftarAkun/checkbox_SyaratdanKetentuan'))
 
-    if (GlobalVariable.Psre == 'VIDA') {
+    if (GlobalVariable.Psre == 'VIDA' || GlobalVariable.Psre == 'TKNAJ') {
         'click checkbox setuju'
         WebUI.click(findTestObject('DaftarAkun/checkbox_Setuju'))
-
-        'click checkbox setuju'
-        WebUI.click(findTestObject('DaftarAkun/checkbox_SetujuVIDA'))
+		
+		if (GlobalVariable.Psre == 'VIDA') {
+	        'click checkbox setuju'
+	        WebUI.click(findTestObject('DaftarAkun/checkbox_SetujuVIDA'))
+		}
     }
 }
 
@@ -272,7 +275,7 @@ if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'
         WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Verifikasi'))
     }
     
-    if (GlobalVariable.Psre == 'VIDA') {
+    if (GlobalVariable.Psre == 'VIDA' || GlobalVariable.Psre == 'TKNAJ') {
         'get reason error log'
         reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).toString().toLowerCase()
 

@@ -223,12 +223,17 @@ def funcSaldoRegis(HashMap result, int countCheckSaldo, Connection conneSign) {
 			
 					saldoList = [useSaldo]
 				}
+			} else {
+				'jika email service 0'
+				useSaldo = 'OTP'
+		
+				saldoList = [useSaldo]
 			}
 		}
 			
-		if (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Certif Notif')) ==
+		if ((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Certif Notif')) ==
 				'1' || findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS GenInv')) ==
-				'1') {
+				'1') && findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() <= 2) {
 			saldoList.add('SMS Notif')
 		}
 		
