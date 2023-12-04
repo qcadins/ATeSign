@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API Sent OTP Signing Verif</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>8236dcd6-a0a2-400f-8dcb-fe3ff32c3685</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>b130a2ad-f299-414c-8284-00a436acccec</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>bf9c7e1f-b2d8-42ac-92c4-22d4381f8d96</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/Sent OTP Signing Verif'</defaultValue>
+      <description></description>
+      <id>b130a2ad-f299-414c-8284-00a436acccec</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Sent OTP Signing Verif'</defaultValue>
+      <description></description>
+      <id>bf9c7e1f-b2d8-42ac-92c4-22d4381f8d96</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>
