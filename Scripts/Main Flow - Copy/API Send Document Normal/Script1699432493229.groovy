@@ -556,6 +556,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 			GlobalVariable.eSignData.putAt('CountVerifikasiWA', pemotonganSaldo)
 		} else if (tipeSaldo == 'SMS Notif') {
 			GlobalVariable.eSignData.putAt('CountVerifikasiSMS', pemotonganSaldo)
-		}	}
+		}	
+		}
 	}
 }

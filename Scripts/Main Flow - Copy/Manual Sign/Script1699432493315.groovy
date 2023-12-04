@@ -16,20 +16,19 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'get current date'
 def currentDate = new Date().format('yyyy-MM-dd')
 
-'declare untuk split array excel dan beberapa variable yang dibutuhkan'
+'declare untuk split array excelPathManualSigntoSign dan beberapa variable yang dibutuhkan'
 semicolon = ';'
 
 splitIndex = -1
 
 indexForCatatanStamp = 0
 
-'memanggil test case login untuk admin wom dengan Admin Client'
-WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excelPathManualSigntoSign, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
+funcLogin()
 
-'get tenant dari excel percase'
+'get tenant dari excelPathManualSigntoSign percase'
 GlobalVariable.Tenant = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))
 
-'get psre dari excel percase'
+'get psre dari excelPathManualSigntoSign percase'
 GlobalVariable.Psre = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Vendor'))
 
 'declare flag failed'
@@ -78,6 +77,7 @@ WebUI.delay(2)
 WebUI.focus(findTestObject('ManualSign/lbl_ManualSign'))
 
 loopcase = 1
+
 for (looping = 0; looping < loopcase; looping++) {
 'Pengecekan apakah masuk page manual sign'
 if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), GlobalVariable.TimeOut)) {
@@ -118,7 +118,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
     if (emailService.toString() == '1') {
         if (WebUI.verifyElementNotPresent(findTestObject('ManualSign/input_phonePenandaTangan'), GlobalVariable.TimeOut, 
             FailureHandling.OPTIONAL)) {
-            'write excel mengenai error log tersebut'
+            'write excelPathManualSigntoSign mengenai error log tersebut'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                 findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
                     ';' + 'Field phone tidak muncul saat setting email service aktif pada tenant ' + GlobalVariable.Tenant)
@@ -164,7 +164,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
                 'get text error log'
                 error = WebUI.getText(findTestObject('ManualSign/errorLog_PenandaTangan'))
 
-                'write excel mengenai error log tersebut'
+                'write excelPathManualSigntoSign mengenai error log tersebut'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                     (((findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + 
                     ';') + '<') + error) + '>')
@@ -205,7 +205,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
         'check save ada attribute disabled'
         if (WebUI.verifyElementHasAttribute(findTestObject('ManualSign/button_Save'), 'disabled', GlobalVariable.TimeOut, 
             FailureHandling.OPTIONAL)) {
-            'write to excel save gagal'
+            'write to excelPathManualSigntoSign save gagal'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                 (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
                 ';') + GlobalVariable.ReasonFailedMandatory)
@@ -223,6 +223,8 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
             arrayIndexValue = 0
 
             indexObject = 1
+			
+			indexEmail = 0
 
             'gmofidy modifyObjectInformasiPenandaTangan'
             modifyObjectInformasiPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/modifyObject'), 'xpath', 
@@ -266,14 +268,14 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
     
     'jika button next ada disabled'
     if (WebUI.verifyElementHasAttribute(findTestObject('ManualSign/button_Next'), 'disabled', GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-        'write to excel bahwa save gagal'
+        'write to excelPathManualSigntoSign bahwa save gagal'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
             (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
             GlobalVariable.ReasonFailedSaveGagal)
 		 
     } else {
         if (WebUI.verifyElementPresent(modifyObjectLblDaftarPenandaTangan, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-            'write to excel bahwa save gagal'
+            'write to excelPathManualSigntoSign bahwa save gagal'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                 (((findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
                 ';') + '<') + 'Silahkan tambah penanda tangan terlebih dulu!') + '>')
@@ -285,12 +287,12 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 	
 	'check element present pada next tanda tangan'
 	if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_documentNo'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-		'check ui dan excel pada nomor dokumen'
+		'check ui dan excelPathManualSigntoSign pada nomor dokumen'
 		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualSign/lbl_documentNo'),
 					'value'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen (Send Manual)')),
 				false, FailureHandling.CONTINUE_ON_FAILURE), ' pada informasi nomor dokumen ')
 
-		'check ui dan excel pada nama dokumen'
+		'check ui dan excelPathManualSigntoSign pada nama dokumen'
 		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualSign/input_documentName'),
 					'value'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Nama Dokumen (Send Manual)')),
 				false, FailureHandling.CONTINUE_ON_FAILURE), ' pada informasi nama dokumen ')
@@ -355,7 +357,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
                 countValue = 0
             }
             
-            'Memilih tipe signer apa berdasarkan excel'
+            'Memilih tipe signer apa berdasarkan excelPathManualSigntoSign'
             WebUI.selectOptionByLabel(findTestObject('ManualSign/ddl_TipeTandaTangan'), ((namaTandaTangan[index]) + ' - ') + 
                 (notelpTandaTangan[index]), false)
 
@@ -364,7 +366,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
             'Klik set tanda tangan'
             WebUI.click(findTestObject('ManualSign/btn_setTandaTangan'))
 
-            'Verifikasi antara excel dan UI, apakah tipenya sama'
+            'Verifikasi antara excelPathManualSigntoSign dan UI, apakah tipenya sama'
             checkVerifyEqualOrMatch(WebUI.verifyMatch(namaTandaTangan[index], WebUI.getText(modifyobjectTTDlblRoleTandaTangan), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada nama tanda tangan signer')
         }
         
@@ -424,7 +426,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
     checkErrorLog()
 
     if (GlobalVariable.FlagFailed == 0) {
-        'write to excel success'
+        'write to excelPathManualSigntoSign success'
         CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Status') - 1, GlobalVariable.NumofColm - 
             1, GlobalVariable.StatusSuccess)
 		
@@ -503,15 +505,15 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 						CustomKeywords.'connection.APIFullService.getPrivyStampLocation'(conneSign, docId), false, FailureHandling.CONTINUE_ON_FAILURE))
 			}
 			
-            'jika data db tidak sesuai dengan excel'
+            'jika data db tidak sesuai dengan excelPathManualSigntoSign'
             if (arrayMatch.contains(false)) {
-                'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+                'Write To excelPathManualSigntoSign GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                     (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
                     ';') + GlobalVariable.ReasonFailedStoredDB)
             }
 			
-            'Write to excel mengenai Document ID'
+            'Write to excelPathManualSigntoSign mengenai Document ID'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('documentid') - 
                 1, GlobalVariable.NumofColm - 1, docId)
         }
@@ -527,7 +529,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if (isMatch == false) {
-        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+        'Write To excelPathManualSigntoSign GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
             ((findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
             reason)
@@ -543,7 +545,7 @@ def checkErrorLog() {
         errormessage = WebUI.getAttribute(findTestObject('ManualSign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
 
         if (!(errormessage.contains('Permintaan tanda tangan berhasil dibuat.'))) {
-            'Tulis di excel itu adalah error'
+            'Tulis di excelPathManualSigntoSign itu adalah error'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                 (((findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + 
                 '<') + errormessage) + '>')
@@ -591,7 +593,7 @@ def inputForm() {
     'Klik enter'
     WebUI.sendKeys(findTestObject('ManualSign/input_isSequence'), Keys.chord(Keys.ENTER))
 
-    'Code untuk mengambil file berdasarkan direktori masing-masing sekaligus ambil value dari excel'
+    'Code untuk mengambil file berdasarkan direktori masing-masing sekaligus ambil value dari excelPathManualSigntoSign'
     String userDir = System.getProperty('user.dir')
 
     String filePath = userDir + findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Dokumen (Send Manual)'))
@@ -641,7 +643,7 @@ def sortingSequenceSign() {
     'check if Sequential signing iya'
     if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$isSequence (Send Manual)')).equalsIgnoreCase(
         'Ya')) {
-        'get urutan seq sign dari excel'
+        'get urutan seq sign dari excelPathManualSigntoSign'
         ArrayList<String> seqSignRole = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel(
                 'Urutan Signing (Send Manual)')).toString().toUpperCase().split(';', -1)
 
@@ -664,7 +666,7 @@ def sortingSequenceSign() {
                 modifyObjectNew = WebUI.modifyObjectProperty(findTestObject('TandaTanganDokumen/modifyObject'), 'xpath', 
                     'equals', ('//*[@id="cdk-drop-list-0"]/div[' + index) + ']', true)
 
-                'pindahin ke urutan sesuai excel'
+                'pindahin ke urutan sesuai excelPathManualSigntoSign'
                 WebUI.dragAndDropToObject(modifyObject, modifyObjectNew)
 
                 'untuk proses pemindahan'
@@ -682,22 +684,24 @@ def sortingSequenceSign() {
     }
 }
 
-
 def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
+	int penggunaanSaldo
+
 	ArrayList balmut = []
 
-	int penggunaanSaldo = 0
-
 	String tipeSaldo
-
+	
 	ArrayList emailPerDoc = emailSigner.split('\\n', -1)
 
 	for (loopingEmailPerDoc = 0; loopingEmailPerDoc < emailPerDoc.size(); loopingEmailPerDoc++) {
 		ArrayList email = (emailPerDoc[loopingEmailPerDoc]).split(';', -1)
 
 		for (loopingEmail = 0; loopingEmail < email.size(); loopingEmail++) {
-			emailServiceOnVendor = CustomKeywords.'connection.DataVerif.getEmailServiceAsVendorUser'(conneSign, email[loopingEmail])
+			(email[loopingEmail]) = CustomKeywords.'connection.DataVerif.getEmailFromNIK'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
+					email[loopingEmail]))
 
+			emailServiceOnVendor = CustomKeywords.'connection.DataVerif.getEmailServiceAsVendorUser'(conneSign, email[loopingEmail])
+			
 			fullNameUser = CustomKeywords.'connection.DataVerif.getFullNameOfUser'(conneSign, email[loopingEmail])
 
 			mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
@@ -706,15 +710,15 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 				tipeSaldo = 'WhatsApp Message'
 
 				'menggunakan saldo wa'
-				balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser, 1)
+				balmut = balmut + CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser, 1)
 
 				if (balmut.size() == 0) {
 					'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-						GlobalVariable.StatusFailed, (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
-							rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
+						GlobalVariable.StatusFailed, (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel(
+								'Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
 				} else {
-					penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
+					penggunaanSaldo = ((balmut.size() / 9))
 				}
 			} else {
 				if (emailServiceOnVendor == '1') {
@@ -724,7 +728,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 						tipeSaldo = 'WhatsApp Message'
 
 						'menggunakan saldo wa'
-						balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser, 1)
+						balmut = balmut + CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser, 1)
 
 						if (balmut.size() == 0) {
 							'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
@@ -732,7 +736,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 								GlobalVariable.StatusFailed, (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
 									rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
 						} else {
-							penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
+							penggunaanSaldo = ((balmut.size() / 9))
 						}
 					} else if (useWAMessage == '0') {
 						'ke sms / wa'
@@ -742,7 +746,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 							'ke sms'
 							tipeSaldo = 'SMS Notif'
 
-							balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser, 1)
+							balmut = balmut + CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser, 1)
 
 							if (balmut.size() == 0) {
 								'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
@@ -750,7 +754,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 									GlobalVariable.StatusFailed, (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
 										rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via SMS')
 							} else {
-								penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
+								penggunaanSaldo = ((balmut.size() / 9))
 							}
 						}
 					}
@@ -762,29 +766,36 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 
 		int increment
 
-		for (looping = 0; looping < penggunaanSaldo; looping++) {
-			if (looping == 0) {
+		if (penggunaanSaldo > 0) {
+		for (looping = 1; looping <= penggunaanSaldo; looping++) {
+			if (looping == 1) {
 				increment = 0
 			} else {
-				increment = (increment + 10)
+				increment = (increment + 9)
 			}
-			
+
 			pemotonganSaldo = (pemotonganSaldo + Integer.parseInt(balmut[(increment + 8)].replace('-','')))
 			
-			GlobalVariable.eSignData.putAt('allTrxNo', GlobalVariable.eSignData.getAt('allTrxNo') + balmut[increment + 0] + ';')
+			GlobalVariable.eSignData.putAt('allTrxNo', GlobalVariable.eSignData.getAt('allTrxNo') + balmut[increment] + ';')
 			
+			GlobalVariable.eSignData.putAt('allSignType', GlobalVariable.eSignData.getAt('allSignType') + balmut[increment + 2].replace('Use ','') + ';')
+			
+			GlobalVariable.eSignData.putAt('emailUsageSign', GlobalVariable.eSignData.getAt('emailUsageSign') + fullNameUser + ';')
 		}
+
+		
 		if (tipeSaldo == 'WhatsApp Message') {
 			GlobalVariable.eSignData.putAt('CountVerifikasiWA', pemotonganSaldo)
 		} else if (tipeSaldo == 'SMS Notif') {
 			GlobalVariable.eSignData.putAt('CountVerifikasiSMS', pemotonganSaldo)
 		}
 		}
+	}
 }
 
 def funcLogin() {
-	if (!(WebUI.verifyElementPresent(findTestObject('Saldo/ddl_Vendor'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL))) {
-		if (WebUI.verifyElementPresent(findTestObject('Saldo/menu_Saldo'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+	if (!(WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL))) {
+		if (WebUI.verifyElementPresent(findTestObject('ManualSign/ManualSign'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 			'cek apakah elemen menu ditutup'
 			if (WebUI.verifyElementVisible(findTestObject('button_HamburberSideMenu'), FailureHandling.OPTIONAL)) {
 				'klik pada button hamburber'
@@ -792,7 +803,7 @@ def funcLogin() {
 			}
 			
 			'klik button saldo'
-			WebUI.click(findTestObject('Saldo/menu_Saldo'))
+			WebUI.click(findTestObject('ManualSign/ManualSign'))
 	
 			'cek apakah tombol x terlihat'
 			if (WebUI.verifyElementVisible(findTestObject('buttonX_sideMenu'), FailureHandling.OPTIONAL)) {
@@ -801,7 +812,7 @@ def funcLogin() {
 			}
 		} else {
 			'Call test Case untuk login sebagai admin wom admin client'
-			WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excel, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
+			WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excelPathManualSigntoSign, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
 		}
 	} else {
 		WebUI.refresh()

@@ -703,13 +703,9 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 }
 
 def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
+	int penggunaanSaldo
+
 	ArrayList balmut = []
-
-	int penggunaanSaldo = 0
-	
-	int pemotonganSaldo = 0
-
-	int increment
 
 	String tipeSaldo
 	
@@ -723,7 +719,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 					email[loopingEmail]))
 
 			emailServiceOnVendor = CustomKeywords.'connection.DataVerif.getEmailServiceAsVendorUser'(conneSign, email[loopingEmail])
-
+			
 			fullNameUser = CustomKeywords.'connection.DataVerif.getFullNameOfUser'(conneSign, email[loopingEmail])
 
 			mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
@@ -732,15 +728,15 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 				tipeSaldo = 'WhatsApp Message'
 
 				'menggunakan saldo wa'
-				balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser, 1)
+				balmut = balmut + CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser, 1)
 
 				if (balmut.size() == 0) {
 					'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-						GlobalVariable.StatusFailed, (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm,
-							rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
+						GlobalVariable.StatusFailed, (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel(
+								'Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
 				} else {
-					penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
+					penggunaanSaldo = ((balmut.size() / 9))
 				}
 			} else {
 				if (emailServiceOnVendor == '1') {
@@ -750,7 +746,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 						tipeSaldo = 'WhatsApp Message'
 
 						'menggunakan saldo wa'
-						balmut = CustomKeywords.'connection.DataVerif.'(conneSign, tipeSaldo, fullNameUser, 1)
+						balmut = balmut + CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser, 1)
 
 						if (balmut.size() == 0) {
 							'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
@@ -758,7 +754,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 								GlobalVariable.StatusFailed, (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm,
 									rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
 						} else {
-							penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
+							penggunaanSaldo = ((balmut.size() / 9))
 						}
 					} else if (useWAMessage == '0') {
 						'ke sms / wa'
@@ -768,7 +764,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 							'ke sms'
 							tipeSaldo = 'SMS Notif'
 
-							balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser, 1)
+							balmut = balmut + CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser, 1)
 
 							if (balmut.size() == 0) {
 								'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
@@ -776,37 +772,41 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 									GlobalVariable.StatusFailed, (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm,
 										rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via SMS')
 							} else {
-								penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
+								penggunaanSaldo = ((balmut.size() / 9))
 							}
 						}
 					}
 				}
 			}
 		}
+		
+		int pemotonganSaldo = 0
 
-		for (looping = 0; looping < penggunaanSaldo; looping++) {
-			if (looping == 0) {
+		int increment
+
+		if (penggunaanSaldo > 0) {
+		for (looping = 1; looping <= penggunaanSaldo; looping++) {
+			if (looping == 1) {
 				increment = 0
 			} else {
-				increment = (increment + 10)
+				increment = (increment + 9)
 			}
-			
+
 			pemotonganSaldo = (pemotonganSaldo + Integer.parseInt(balmut[(increment + 8)].replace('-','')))
 			
-			GlobalVariable.eSignData.putAt('allTrxNo', GlobalVariable.eSignData.getAt('allTrxNo') + balmut[increment + 0] + ';')
+			GlobalVariable.eSignData.putAt('allTrxNo', GlobalVariable.eSignData.getAt('allTrxNo') + balmut[increment] + ';')
 			
 			GlobalVariable.eSignData.putAt('allSignType', GlobalVariable.eSignData.getAt('allSignType') + balmut[increment + 2].replace('Use ','') + ';')
 			
 			GlobalVariable.eSignData.putAt('emailUsageSign', GlobalVariable.eSignData.getAt('emailUsageSign') + fullNameUser + ';')
-	
-			pemotonganSaldo = (pemotonganSaldo + Integer.parseInt(balmut[(increment + 8)].replace('-','')))
-			GlobalVariable.eSignData.putAt('allTrxNo', GlobalVariable.eSignData.getAt('allTrxNo') + balmut[increment + 0] + ';')
 		}
-		}
+
 		
 		if (tipeSaldo == 'WhatsApp Message') {
 			GlobalVariable.eSignData.putAt('CountVerifikasiWA', pemotonganSaldo)
 		} else if (tipeSaldo == 'SMS Notif') {
 			GlobalVariable.eSignData.putAt('CountVerifikasiSMS', pemotonganSaldo)
+		}	
 		}
+	}
 }
