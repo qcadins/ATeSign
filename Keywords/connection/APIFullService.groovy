@@ -1583,5 +1583,41 @@ public class APIFullService {
 		}
 		listdata
 	}
+
+	@Keyword
+	getSignerDetailAPIOnly(Connection conn, String value) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT mvru.hashed_signer_registered_phone, signer_registered_email, CASE WHEN amu.liveness_facecompare_request_num is null THEN 0 ELSE amu.liveness_facecompare_request_num END as maxFacecomprequestNum FROM am_msuser amu LEFT JOIN ms_vendor_registered_user mvru ON mvru.id_ms_user = amu.id_ms_user WHERE login_id = '" + value + "' OR hashed_phone = encode(sha256('" + value + "'), 'hex')")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+	
+	@Keyword
+	getLivenessFCTenantStatAPIOnly(Connection conn, String tenantcode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT liveness_facecompare_services, use_liveness_facecompare_first FROM ms_tenant WHERE tenant_code = '" + tenantcode + "'")
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
 }
 
