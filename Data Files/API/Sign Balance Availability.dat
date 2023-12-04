@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DataFileEntity>
    <description></description>
-   <name>Sent OTP Activ User</name>
+   <name>Sign Balance Availability</name>
    <tag></tag>
    <containsHeaders>false</containsHeaders>
    <csvSeperator></csvSeperator>
-   <dataFileGUID>fc446bc6-3358-4de6-857a-c741a9a23ae5</dataFileGUID>
+   <dataFileGUID>b7806bf0-8ce2-4735-9783-c4e050004efc</dataFileGUID>
    <dataSourceUrl>Excel/2.1 Esign - API Only.xlsx</dataSourceUrl>
    <driver>ExcelFile</driver>
    <isInternalPath>true</isInternalPath>
    <query></query>
    <secureUserAccount>false</secureUserAccount>
-   <sheetName>API Sent OTP Activation User</sheetName>
+   <sheetName>API Sign Balance Availability</sheetName>
    <usingGlobalDBSetting>false</usingGlobalDBSetting>
 </DataFileEntity>

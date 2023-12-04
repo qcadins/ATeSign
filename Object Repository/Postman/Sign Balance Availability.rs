@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebServiceRequestEntity>
    <description></description>
-   <name>Verify OTP Activation User</name>
+   <name>Sign Balance Availability</name>
    <tag></tag>
-   <elementGuidId>42bbb5b2-f6a8-47b1-9069-1c22390ca1a3</elementGuidId>
+   <elementGuidId>3eea9e61-f1c3-4544-a9c0-fd649e28d67c</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
+   <authorizationRequest>
+      <authorizationInfo>
+         <entry>
+            <key>bearerToken</key>
+            <value>${token}</value>
+         </entry>
+      </authorizationInfo>
+      <authorizationType>Bearer</authorizationType>
+   </authorizationRequest>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n    \&quot;msg\&quot;: ${code},\n    \&quot;phoneNo\&quot;: ${phoneNo},\n    \&quot;otpCode\&quot;: ${otp},\n    \&quot;audit\&quot;: {}\n}&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;listDocumentId\&quot;: [\n        ${docId}\n    ],\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: ${callerId}\n    },\n    \&quot;tenantCode\&quot;: ${tenantCode},\n    \&quot;vendorCode\&quot;: ${vendorCode}\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -21,7 +30,7 @@
       <name>Accept</name>
       <type>Main</type>
       <value>application/json, text/plain, */*</value>
-      <webElementGuid>3bdcbd95-6efa-4bf6-a96a-fb49ec96d67c</webElementGuid>
+      <webElementGuid>dcb53d89-d620-47c1-ae96-090976359b74</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -29,7 +38,7 @@
       <name>Accept-Language</name>
       <type>Main</type>
       <value>id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7</value>
-      <webElementGuid>5b51bd3f-6bdf-4aeb-b61d-9ded247ed640</webElementGuid>
+      <webElementGuid>d994a2b1-f9c4-4fe0-91a5-4f00bf387e7c</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -37,7 +46,7 @@
       <name>Connection</name>
       <type>Main</type>
       <value>keep-alive</value>
-      <webElementGuid>cec3a1c3-18a0-4464-bfb0-d5a38d4f9a25</webElementGuid>
+      <webElementGuid>5549ec0e-cb54-4f92-943b-6667e0a6bb25</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -45,7 +54,7 @@
       <name>Content-Type</name>
       <type>Main</type>
       <value>application/json</value>
-      <webElementGuid>60875e2c-105e-4d80-aecd-4e1b2e7dbca1</webElementGuid>
+      <webElementGuid>851dffc3-fab6-4a5e-a87f-917629510a4b</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -53,7 +62,7 @@
       <name>DNT</name>
       <type>Main</type>
       <value>1</value>
-      <webElementGuid>90e731ee-fd63-4dc0-8415-9b108d81a661</webElementGuid>
+      <webElementGuid>4ebcf8ef-a628-4be7-8831-1dd8ee4f8ea5</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -61,7 +70,7 @@
       <name>Origin</name>
       <type>Main</type>
       <value>http://gdkwebsvr:8080</value>
-      <webElementGuid>f4649a0d-2a04-47d6-b861-572e4709e0c9</webElementGuid>
+      <webElementGuid>dced9bb0-0a4f-424e-a7a0-776132573771</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -69,7 +78,7 @@
       <name>Referer</name>
       <type>Main</type>
       <value>http://gdkwebsvr:8080/</value>
-      <webElementGuid>ace839b5-216b-4962-a12a-554f69bf24df</webElementGuid>
+      <webElementGuid>520b1c13-a5ab-46d9-9293-fc477b7546cf</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -77,13 +86,21 @@
       <name>User-Agent</name>
       <type>Main</type>
       <value>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36</value>
-      <webElementGuid>8deb09e9-fc5f-4a12-95c3-6467f025e9f7</webElementGuid>
+      <webElementGuid>ac7a4ab8-f972-4afc-a78c-4f5d2baf2f38</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Authorization</name>
+      <type>Main</type>
+      <value>Bearer ${token}</value>
+      <webElementGuid>9cb257ad-6372-4abd-ad0c-d1ed516736c1</webElementGuid>
    </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>POST</restRequestMethod>
-   <restUrl>${base_url}/services/user/verifyOtpActivationUser</restUrl>
+   <restUrl>${base_url}/services/saldo/s/SignBalanceAvailability</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>
@@ -95,9 +112,16 @@
    <variables>
       <defaultValue>GlobalVariable.base_url</defaultValue>
       <description></description>
-      <id>3a95759f-1f8a-4da9-95fa-4ed24a44eae6</id>
+      <id>9e9a0fcd-e461-4273-b95c-08fc9d75dfcd</id>
       <masked>false</masked>
       <name>base_url</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.token</defaultValue>
+      <description></description>
+      <id>4e70d19f-0b35-4328-a1b7-291a1f04282d</id>
+      <masked>false</masked>
+      <name>token</name>
    </variables>
    <verificationScript>import static org.assertj.core.api.Assertions.*
 

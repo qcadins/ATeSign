@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebServiceRequestEntity>
    <description></description>
-   <name>Verify OTP Activation User</name>
+   <name>Inquiry Normal</name>
    <tag></tag>
-   <elementGuidId>42bbb5b2-f6a8-47b1-9069-1c22390ca1a3</elementGuidId>
+   <elementGuidId>6bdeb92b-768a-4a5a-8a34-f6ef499e6e1f</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n    \&quot;msg\&quot;: ${code},\n    \&quot;phoneNo\&quot;: ${phoneNo},\n    \&quot;otpCode\&quot;: ${otp},\n    \&quot;audit\&quot;: {}\n}&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;page\&quot;: ${page},\n    \&quot;tenantCode\&quot;: \&quot;${tenantCode}\&quot;,\n    \&quot;customerName\&quot;: \&quot;${customerName}\&quot;,\n    \&quot;refNumber\&quot;: \&quot;${refNumber}\&quot;,\n    \&quot;requestedDateStart\&quot;: \&quot;${requestedDateStart}\&quot;,\n    \&quot;requestedDateEnd\&quot;: \&quot;${requestedDateEnd}\&quot;,\n    \&quot;completedDateStart\&quot;: \&quot;${completedDateStart}\&quot;,\n    \&quot;completedDateEnd\&quot;: \&quot;${completedDateEnd}\&quot;,\n    \&quot;docType\&quot;: \&quot;${documentType}\&quot;,\n    \&quot;transactionStatus\&quot;: \&quot;${transactionStatus}\&quot;,\n    \&quot;regionCode\&quot;: \&quot;${regionCode}\&quot;,\n    \&quot;officeCode\&quot;: \&quot;${officeCode}\&quot;,\n    \&quot;stampingStatus\&quot;: \&quot;${stampingStatus}\&quot;,\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    }\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -21,7 +21,7 @@
       <name>Accept</name>
       <type>Main</type>
       <value>application/json, text/plain, */*</value>
-      <webElementGuid>3bdcbd95-6efa-4bf6-a96a-fb49ec96d67c</webElementGuid>
+      <webElementGuid>ad35e2df-c484-4c78-aa4e-8818c8c32a2e</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -29,7 +29,15 @@
       <name>Accept-Language</name>
       <type>Main</type>
       <value>id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7</value>
-      <webElementGuid>5b51bd3f-6bdf-4aeb-b61d-9ded247ed640</webElementGuid>
+      <webElementGuid>54005d8a-5659-4e4f-8c6b-fda7fc71d64f</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Authorization</name>
+      <type>Main</type>
+      <value>Bearer ${token}</value>
+      <webElementGuid>9cff642d-8116-4838-a739-58b55fc3c181</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -37,7 +45,7 @@
       <name>Connection</name>
       <type>Main</type>
       <value>keep-alive</value>
-      <webElementGuid>cec3a1c3-18a0-4464-bfb0-d5a38d4f9a25</webElementGuid>
+      <webElementGuid>b9a3a88e-b78c-4bda-92f1-0b3100ab026d</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -45,7 +53,7 @@
       <name>Content-Type</name>
       <type>Main</type>
       <value>application/json</value>
-      <webElementGuid>60875e2c-105e-4d80-aecd-4e1b2e7dbca1</webElementGuid>
+      <webElementGuid>af663913-d141-40ab-8426-331f01fccc67</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -53,7 +61,7 @@
       <name>DNT</name>
       <type>Main</type>
       <value>1</value>
-      <webElementGuid>90e731ee-fd63-4dc0-8415-9b108d81a661</webElementGuid>
+      <webElementGuid>b9ccf827-159e-45c6-aa0a-dc131eb00f42</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -61,7 +69,7 @@
       <name>Origin</name>
       <type>Main</type>
       <value>http://gdkwebsvr:8080</value>
-      <webElementGuid>f4649a0d-2a04-47d6-b861-572e4709e0c9</webElementGuid>
+      <webElementGuid>ecc8ec1c-fec9-4ba4-8d11-9e205537acb4</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -69,7 +77,7 @@
       <name>Referer</name>
       <type>Main</type>
       <value>http://gdkwebsvr:8080/</value>
-      <webElementGuid>ace839b5-216b-4962-a12a-554f69bf24df</webElementGuid>
+      <webElementGuid>6ed5057e-91b1-449c-b18d-cccbecc10c36</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -77,13 +85,13 @@
       <name>User-Agent</name>
       <type>Main</type>
       <value>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36</value>
-      <webElementGuid>8deb09e9-fc5f-4a12-95c3-6467f025e9f7</webElementGuid>
+      <webElementGuid>b553d9c7-57ae-4f4e-9dac-3f6563f14ca8</webElementGuid>
    </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>POST</restRequestMethod>
-   <restUrl>${base_url}/services/user/verifyOtpActivationUser</restUrl>
+   <restUrl>${base_url}/services/document/s/inquiryNormal</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>
@@ -95,9 +103,23 @@
    <variables>
       <defaultValue>GlobalVariable.base_url</defaultValue>
       <description></description>
-      <id>3a95759f-1f8a-4da9-95fa-4ed24a44eae6</id>
+      <id>ee4d2420-514a-44ff-b95e-be9157769f2f</id>
       <masked>false</masked>
       <name>base_url</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.token</defaultValue>
+      <description></description>
+      <id>e5d36f82-0f66-4e3f-8fa7-8cd055f4c72b</id>
+      <masked>false</masked>
+      <name>token</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.Tenant</defaultValue>
+      <description></description>
+      <id>95433647-f560-4072-b6bb-3a820a08fe3d</id>
+      <masked>false</masked>
+      <name>tenantCode</name>
    </variables>
    <verificationScript>import static org.assertj.core.api.Assertions.*
 

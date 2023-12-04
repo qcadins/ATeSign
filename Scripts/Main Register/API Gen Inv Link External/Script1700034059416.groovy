@@ -85,6 +85,20 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 	'get status code'
 	code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
+	'ambil lama waktu yang diperlukan hingga request menerima balikan'
+	def elapsedTime = (respon.getElapsedTime()) / 1000 + ' second'
+	
+	'ambil body dari hasil respons'
+	responseBody = respon.getResponseBodyContent()
+	
+	'panggil keyword untuk proses beautify dari respon json yang didapat'
+	CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1,
+		findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+	
+	'write to excel response elapsed time'
+	CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 1, GlobalVariable.NumofColm -
+		1, elapsedTime.toString())
+	
 	if (code == 0) {
 		'mengambil response'
 		GlobalVariable.Link = WS.getElementPropertyValue(respon, 'link', FailureHandling.OPTIONAL)
@@ -92,20 +106,6 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 		'write to excel generated link'
 		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
 			rowExcel('Link Invitation') - 1, GlobalVariable.NumofColm - 1, GlobalVariable.Link)
-		
-		'ambil lama waktu yang diperlukan hingga request menerima balikan'
-		def elapsedTime = (respon.getElapsedTime()) / 1000 + ' second'
-		
-		'ambil body dari hasil respons'
-		responseBody = respon.getResponseBodyContent()
-		
-		'panggil keyword untuk proses beautify dari respon json yang didapat'
-		CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1,
-			findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
-		
-		'write to excel response elapsed time'
-		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 1, GlobalVariable.NumofColm -
-			1, elapsedTime.toString())
 		
 		if (GlobalVariable.Link == '') {
 			'Write To Excel GlobalVariable.StatusFailed and errormessage'
