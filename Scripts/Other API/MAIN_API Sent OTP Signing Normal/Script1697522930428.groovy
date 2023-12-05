@@ -36,11 +36,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         if (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Vendor Code')) == 'Yes') {
 			'get psre per case dari excel'
 		   	GlobalVariable.Psre = findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('$vendorCode'))
-        } else if (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('use Correct API Key')) == 'No') {
+        } else if (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Vendor Code')) == 'No') {
 			'get api key salah dari excel'
 			GlobalVariable.Psre = findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Vendor Code'))
         }
-        
+
         'mengambil reset otp request numbernya awal berapa'
         reset_otp_request_num = Integer.parseInt(CustomKeywords.'connection.APIFullService.getResetCodeRequestNum'(conneSign, findTestData(excelPathAPISentOTPSigning).getValue(
 				GlobalVariable.NumofColm, rowExcel('Email Login'))))

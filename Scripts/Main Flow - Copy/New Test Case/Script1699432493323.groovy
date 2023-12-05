@@ -26,17 +26,13 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 GlobalVariable.NumofColm = 2
 
-
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign Main.xlsx')
 
-int aa = 15
-println aa / 10
-ArrayList variableSaldoRow = ['OTP','WhatsApp Message']
-for (int j = variableSaldoRow.size(); j >= 0; j--) {
-	if (j == 0) {
-		j = variableSaldoRow.size()
-		println j
-	}
-	
+int b = 1
+for (int j = 1; j <= b; j++) {
+println b
+b++
+println b
+WebUI.comment(j.toString())
 }

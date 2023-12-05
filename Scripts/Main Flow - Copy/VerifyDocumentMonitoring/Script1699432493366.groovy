@@ -409,8 +409,7 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
 						'Write To Excel GlobalVariable.StatusFailed and errormessage'
 						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 							GlobalVariable.StatusFailed, ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
-								rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedProsesStamping) + ' dengan alasan ') +
-						errorMessageDB.toString()
+								rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedProsesStamping) + ' dengan alasan ' + errorMessageDB.toString())
 
 						GlobalVariable.FlagFailed = 1
 
@@ -421,7 +420,8 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
 
 						'Mengambil value total stamping dan total meterai'
 						ArrayList<String> totalMateraiAndTotalStamping = CustomKeywords.'connection.Meterai.getTotalMateraiAndTotalStamping'(
-							conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 10))
+							conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, nomorKontrakPerPilihan[
+						y]))
 
 						'declare arraylist arraymatch'
 						arrayMatch = []

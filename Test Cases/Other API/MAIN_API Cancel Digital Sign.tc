@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API Cancel Digital Sign</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>2327a225-aa6e-4c6b-981a-227ad7477330</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>67cb2b7e-2ec3-48cd-9781-15d3c2ade667</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>6fc3f7e8-73ef-4a4a-bd81-6966e0fc27d8</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/Cancel Sign'</defaultValue>
+      <description></description>
+      <id>67cb2b7e-2ec3-48cd-9781-15d3c2ade667</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Cancel Digital Sign'</defaultValue>
+      <description></description>
+      <id>6fc3f7e8-73ef-4a4a-bd81-6966e0fc27d8</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>
