@@ -49,10 +49,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			   GlobalVariable.NumofColm, rowExcel('Doc ID')), ('email') : findTestData(excelPathCheckDocBeforeSigning).getValue(GlobalVariable.NumofColm, rowExcel('email'))]))
 	
 		   if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
-			   
-			   'get status code'
-			   code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
-			   if (code == 0) {
 			   'get  doc id'
 			   docId = WS.getElementPropertyValue(respon, 'listCheckDocumentBeforeSigning.documentId', FailureHandling.OPTIONAL)
 			   
@@ -95,27 +91,21 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 						   0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 				   }
 			   }
-			   } else {
-				   'call function get error message API'
-				   getErrorMessageAPI(respon, 'status.message')
-			   }
+			   
 		   } else {
 		        'call function get error message API'
-				getErrorMessageAPI(respon, '')
+				getErrorMessageAPI(respon)
 		   }	
 	    } else {
 			'call function get error message API'
-			getErrorMessageAPI(responLogin, '')
+			getErrorMessageAPI(responLogin)
 	    }
     }
 }
 
-def getErrorMessageAPI(def respon, String value) {
-	if (value == '') {
-		value = 'error_description'
-	}
+def getErrorMessageAPI(def respon) {
 	'mengambil status code berdasarkan response HIT API'
-	message = WS.getElementPropertyValue(respon, value, FailureHandling.OPTIONAL)
+	message = WS.getElementPropertyValue(respon, 'error_description', FailureHandling.OPTIONAL)
 
 	'Write To Excel GlobalVariable.StatusFailed and errormessage'
 	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,

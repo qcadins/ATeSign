@@ -171,7 +171,7 @@ def rowExcel(String cellValue) {
 }
 
 def encryptLink(Connection conneSign, String documentId, String emailSigner, String aesKey) {
-	officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, documentId)
+	officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, documentId, findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Tenant')))
 	
 	'pembuatan message yang akan dienkrip'
 	msg = '{"tenantCode":"'+findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))+'","officeCode":"'+officeCode+'","email":"'+emailSigner+'"}'

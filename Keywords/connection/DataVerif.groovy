@@ -432,7 +432,7 @@ public class DataVerif {
 	getEmailServiceFromTenant(Connection conn, String tenantCode) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select must_use_wa_first from ms_tenant where tenant_code = '"+tenantCode+"'")
+		resultSet = stm.executeQuery("select sent_otp_by_email from ms_tenant where tenant_code = '"+tenantCode+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -441,26 +441,13 @@ public class DataVerif {
 			data = resultSet.getObject(1)
 		}
 
-		if (data == '0') {
-			resultSet = stm.executeQuery("select sent_otp_by_email from ms_tenant where tenant_code = '"+tenantCode+"'")
-			metadata = resultSet.metaData
-
-			columnCount = metadata.getColumnCount()
-
-			while (resultSet.next()) {
-				data = resultSet.getObject(1)
-			}
-
-			if (data == null) {
-				data = '0'
-			}
-
-			data
-		} else {
-			data
+		if (data == null) {
+			data = '0'
 		}
 
+		data
 	}
+
 	@Keyword
 	getEmailFromPhone(Connection conn, String hashPhone) {
 		stm = conn.createStatement()

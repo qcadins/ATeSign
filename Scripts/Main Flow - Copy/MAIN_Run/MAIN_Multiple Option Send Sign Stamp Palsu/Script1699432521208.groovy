@@ -23,7 +23,7 @@ sheet = 'Main'
 def currentDate = new Date().format('yyyy-MM-dd')
 //321, 370
 'looping untuk menjalankan Main'
-for (GlobalVariable.NumofColm = 447; GlobalVariable.NumofColm <= findTestData(excelPathMain).columnNumbers; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 428; GlobalVariable.NumofColm <= findTestData(excelPathMain).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break //  'Input enter'
         //WebUI.sendKeys(findTestObject('Saldo/input_tipedokumen'), Keys.chord(Keys.ENTER))
@@ -311,7 +311,7 @@ for (GlobalVariable.NumofColm = 447; GlobalVariable.NumofColm <= findTestData(ex
                                 GlobalVariable.indexUsed = indexReadDataExcelAPINormal
 
                                 'call test case api sign document normal'
-                                WebUI.callTestCase(findTestCase('Main Flow - Copy/API Sign Document Normal'), [('API_Excel_Path') : excelPathMain
+                                WebUI.callTestCase(findTestCase('Main Flow/API Sign Document Normal'), [('API_Excel_Path') : excelPathMain
                                         , ('sheet') : sheet, ('CancelDocsSign') : cancelDocsValue], FailureHandling.CONTINUE_ON_FAILURE)
 
                                 'set boolean menjadi true'
@@ -324,7 +324,7 @@ for (GlobalVariable.NumofColm = 447; GlobalVariable.NumofColm <= findTestData(ex
                                 GlobalVariable.indexUsed = indexReadDataExcelWebview
 
                                 'call test case webview embed sign'
-                                WebUI.callTestCase(findTestCase('Main Flow - Copy/Webview Embed Sign'), [('excelPathFESignDocument') : excelPathMain
+                                WebUI.callTestCase(findTestCase('Main Flow/Webview Embed Sign'), [('excelPathFESignDocument') : excelPathMain
                                         , ('sheet') : sheet, ('indexUsed') : indexReadDataExcelWebview, ('opsiSigning') : opsiSigning[
                                         i], ('CancelDocsSign') : cancelDocsValue], FailureHandling.CONTINUE_ON_FAILURE)
 
@@ -338,7 +338,7 @@ for (GlobalVariable.NumofColm = 447; GlobalVariable.NumofColm <= findTestData(ex
                                 GlobalVariable.indexUsed = indexReadDataExcelEmbed
 
                                 'call test case webview embed sign'
-                                WebUI.callTestCase(findTestCase('Main Flow - Copy/Webview Embed Sign'), [('excelPathFESignDocument') : excelPathMain
+                                WebUI.callTestCase(findTestCase('Main Flow/Webview Embed Sign'), [('excelPathFESignDocument') : excelPathMain
                                         , ('sheet') : sheet, ('indexUsed') : indexReadDataExcelEmbed, ('opsiSigning') : opsiSigning[
                                         i], ('CancelDocsSign') : cancelDocsValue], FailureHandling.CONTINUE_ON_FAILURE)
 
@@ -405,8 +405,9 @@ for (GlobalVariable.NumofColm = 447; GlobalVariable.NumofColm <= findTestData(ex
                         continue
                     }
                 }
-				
-				if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Do Stamp for this document?')) != 'No' || findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Need Sign for this document?')) != 'No') {
+
+				if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Do Stamp for this document?')) == 
+                'No' && findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Need Sign for this document?')) == 'No') {
 				 'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
 				 WebUI.callTestCase(findTestCase('Main Flow - Copy/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathMain
 					 , ('sheet') : sheet, ('nomorKontrak') : GlobalVariable.eSignData.getAt('NoKontrakProcessed'), ('vendor') : vendor],
@@ -457,7 +458,7 @@ for (GlobalVariable.NumofColm = 447; GlobalVariable.NumofColm <= findTestData(ex
                 checkVerifyEqualorMatch(WebUI.verifyEqual(Integer.parseInt(resultSaldoBefore.get('WhatsApp Message')) - GlobalVariable.eSignData.getAt(
                         'CountVerifikasiWA'), Integer.parseInt(resultSaldoAfter.get('WhatsApp Message')), FailureHandling.CONTINUE_ON_FAILURE), 'pada saldo before dan after WhatsApp Message')
             }
-
+			
             if (GlobalVariable.eSignData.getAt('VerifikasiMeterai') > 0) {
                 'Jika count saldo sign/ttd diatas (after) sama dengan yang dulu/pertama (before) dikurang jumlah dokumen yang ditandatangani'
                 if (WebUI.verifyNotEqual(Integer.parseInt(resultSaldoBefore.get('Meterai')) - GlobalVariable.eSignData.getAt(
@@ -586,7 +587,6 @@ for (GlobalVariable.NumofColm = 447; GlobalVariable.NumofColm <= findTestData(ex
             GlobalVariable.eSignData.putAt('NoKontrakProcessed', CustomKeywords.'connection.APIFullService.getRefNumber'(
                     conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('documentid'))))
 
-
             'loopig berdasarkan total dokumen dari dokumen template code'
             if (GlobalVariable.eSignData.getAt('VerifikasiMeterai') > 0) {
                 for (i = 0; i < GlobalVariable.eSignData.getAt('NoKontrakProcessed').split(';', -1).size(); i++) {
@@ -682,15 +682,12 @@ for (GlobalVariable.NumofColm = 447; GlobalVariable.NumofColm <= findTestData(ex
                     }
                 }
             }
-
-			
-            WebUI.comment(GlobalVariable.eSignData.toString())
-			WebUI.delay(100000000)
-			
+            
             ArrayList signTypes = GlobalVariable.eSignData.getAt('allSignType').toString().split(';', -1)
 
             ArrayList trxNo = (GlobalVariable.eSignData.getAt('allTrxNo').toString()).split(';', -1)
 			
+            WebUI.comment(GlobalVariable.eSignData.toString())
 
             if (signTypes.size() != trxNo.size()) {
                 'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
