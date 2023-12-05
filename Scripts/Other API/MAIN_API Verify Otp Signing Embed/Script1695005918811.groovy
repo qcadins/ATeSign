@@ -22,7 +22,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
     } else if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
-			
+		
+		'setting menggunakan base url yang benar atau salah'
+		CustomKeywords.'connection.APIFullService.settingBaseUrl'(API_Excel_Path, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
+
+		GlobalVariable.FlagFailed = 0
+		
 		'Mengambil aes key based on tenant tersebut'
 		String aesKey = CustomKeywords.'connection.APIFullService.getAesKeyBasedOnTenant'(conneSign, findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('tenantCode')).replace('"',''))
 		
@@ -36,12 +41,26 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		println encryptMsg
 
 		'HIT API'
-        respon = WS.sendRequest(findTestObject('Postman/Verify Otp Signing Embed', [('msg') : '"' + encryptMsg + '"', 
+        respon = WS.sendRequest(findTestObject('Postman/Verify Otp Signing Embed', [('msg') : encryptMsg, 
 			('tenantCode') : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('tenantCode')), 
 			('phoneNo') : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('phoneNo')),
 			('otpCode') : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('otpCode')), 
 			('callerId') : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('callerId'))]))
 
+		'ambil lama waktu yang diperlukan hingga request menerima balikan'
+		def elapsedTime = (respon.getElapsedTime()) / 1000 + ' second'
+		
+		'ambil body dari hasil respons'
+		responseBody = respon.getResponseBodyContent()
+		
+		'panggil keyword untuk proses beautify dari respon json yang didapat'
+		CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1,
+			findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+		
+		'write to excel response elapsed time'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 1, GlobalVariable.NumofColm -
+			1, elapsedTime.toString())
+		
 		'Jika status HIT API 200 OK'
 		if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
 			'get Status Code'

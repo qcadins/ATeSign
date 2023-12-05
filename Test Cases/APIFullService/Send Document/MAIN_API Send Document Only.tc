@@ -17,6 +17,12 @@
       <value></value>
       <variableId>50efe255-198a-4bf5-be0a-7667f30e45da</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>a7c730c0-9b0e-4476-8c2e-bfcee005640f</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>'APIFullService/API_SendDoc'</defaultValue>
       <description></description>
@@ -30,5 +36,12 @@
       <id>50efe255-198a-4bf5-be0a-7667f30e45da</id>
       <masked>false</masked>
       <name>excelPathSetting</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Send Document'</defaultValue>
+      <description></description>
+      <id>a7c730c0-9b0e-4476-8c2e-bfcee005640f</id>
+      <masked>false</masked>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>

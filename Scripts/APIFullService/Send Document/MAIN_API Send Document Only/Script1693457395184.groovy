@@ -86,7 +86,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
         llxStamp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('llx (stamp)')).split(delimiter, splitnum)
 
-        llyStamp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('lly (stamp')).split(delimiter, splitnum)
+        llyStamp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('lly (stamp)')).split(delimiter, splitnum)
 
         urxStamp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('urx (stamp)')).split(delimiter, splitnum)
 
@@ -516,27 +516,27 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 				'Jika doc template code di excel tidak sesuai dengan response doc template code'
 				if (documentTemplateCode.toString().replace('"','') != responseDocTemplateCode.toString()) {
 					'write to excel status failed dan reason failed h'
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm,
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 						GlobalVariable.StatusFailed, (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 2).replace(
 							'-', '') + semicolon) + GlobalVariable.ReasonFailedSaveGagal + ' pada perbedaan document template code ')
 				}
 			
                'Memasukkan documentid dan trxno ke dalam excel'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
                     5, GlobalVariable.NumofColm - 1, documentId.toString().replace('[', '').replace(']', ''))
 
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document', 
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
                     6, GlobalVariable.NumofColm - 1, trxno.toString().replace('[', '').replace(']', ''))
 
 				'write to excel success'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'API Send Document',
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
 					0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 
                 'Jika check storedb'
                 if (GlobalVariable.checkStoreDB == 'Yes') {
                     'call test case storedb'
 					WebUI.callTestCase(findTestCase('APIFullService/Send Document/API Send Document Store DB'), [('excelPathAPISendDoc') : excelPathAPISendDoc
-						, ('sheet') : 'API Send Document', ('signlocStoreDB') : signlocStoreDB], FailureHandling.CONTINUE_ON_FAILURE)
+						, ('sheet') : sheet, ('signlocStoreDB') : signlocStoreDB], FailureHandling.CONTINUE_ON_FAILURE)
                 }
             } else {
 				getErrorMessageAPI(respon)
@@ -560,7 +560,7 @@ def getErrorMessageAPI(def respon) {
 	message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
 	'Write To Excel GlobalVariable.StatusFailed and errormessage'
-	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Send Document', GlobalVariable.NumofColm,
+	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 		GlobalVariable.StatusFailed, '<' + message + '>')
 	
 	GlobalVariable.FlagFailed = 1
