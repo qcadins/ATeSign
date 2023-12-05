@@ -126,7 +126,7 @@ public class APIFullService {
 	getTenantAPIKey(Connection conn, String tenantcode) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT api_key FROM ms_tenant WHERE tenant_code = '" +  tenantcode  + "'")
+		resultSet = stm.executeQuery("SELECT api_key FROM ms_tenant WHERE tenant_code = '" +tenantcode+ "'")
 
 		metadata = resultSet.metaData
 
