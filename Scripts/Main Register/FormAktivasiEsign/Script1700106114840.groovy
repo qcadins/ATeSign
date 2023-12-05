@@ -11,6 +11,61 @@ import org.openqa.selenium.Keys as Keys
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
+'check if ingin menggunakan embed atau tidak'
+if (GlobalVariable.RunWithEmbed == 'Yes') {
+	'replace https > http'
+	link = GlobalVariable.Link
+
+	'check if ingin menggunakan local host atau tidak'
+	if (GlobalVariable.useLocalHost == 'Yes') {
+		'navigate url ke daftar akun'
+		WebUI.navigateToUrl(GlobalVariable.embedUrl.replace('http://gdkwebsvr:8080', GlobalVariable.urlLocalHost))
+
+		WebUI.delay(3)
+
+		'navigate url ke daftar akun'
+		WebUI.setText(findTestObject('EmbedView/inputLinkEmbed'), link.replace('http://gdkwebsvr:8080', GlobalVariable.urlLocalHost))
+	} else if (GlobalVariable.useLocalHost == 'No') {
+		'navigate url ke daftar akun'
+		WebUI.navigateToUrl(GlobalVariable.embedUrl)
+
+		WebUI.delay(3)
+
+		'navigate url ke daftar akun'
+		WebUI.setText(findTestObject('EmbedView/inputLinkEmbed'), link)
+	}
+	
+	'click button embed'
+	WebUI.click(findTestObject('EmbedView/button_Embed'))
+
+	'swith to iframe'
+	WebUI.switchToFrame(findTestObject('EmbedView/iFrameEsign'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
+} else if (GlobalVariable.RunWithEmbed == 'No') {
+	'replace https > http'
+	link = GlobalVariable.Link.replace('https', 'http')
+
+	'check if ingin menggunakan local host atau tidak'
+	if (GlobalVariable.useLocalHost == 'Yes') {
+		'navigate url ke daftar akun'
+		WebUI.openBrowser(link)
+
+		'delay 3 detik'
+		WebUI.delay(3)
+
+		'replace gdk > localhost'
+		link = GlobalVariable.Link.replace('https://gdkwebsvr:8080', GlobalVariable.urlLocalHost)
+
+		'navigate url ke daftar akun'
+		WebUI.navigateToUrl(link)
+	} else if (GlobalVariable.useLocalHost == 'No') {
+		'navigate url ke daftar akun'
+		WebUI.openBrowser(link)
+	}
+}
+
+'maximize window'
+WebUI.maximizeWindow()
+
 'check if email kosong atau tidak'
 if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase('Edit') &&
 	findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Invite By')).equalsIgnoreCase('Email')) {
@@ -133,7 +188,10 @@ if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/FormAktivasiEsign/a
     				'jika use WA message bukan 1 maka use OTP'
     				usedSaldo = 'OTP'
     			}
-    		}
+    		} else {
+				'jika use WA message bukan 1 maka use OTP'
+				usedSaldo = 'OTP'
+			}
     	}
 		
 		resultTrx = CustomKeywords.'connection.APIFullService.getAPIGenInvLinkOTPTrx'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"',''), usedSaldo)
@@ -351,8 +409,20 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
 		'click button proses OTP'
 		WebUI.click(findTestObject('RegisterEsign/FormAktivasiEsign/button_ProsesOTP'))
 
-		'check if aktivasi berhasil dengan OTP yang benar'
-		if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/FormAktivasiEsign/popUp_AktivasiBerhasil'), GlobalVariable.TimeOut,
+		'check if error / success'
+		if(WebUI.verifyElementPresent(findTestObject('DaftarAkun/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+			'get reason error log'
+			reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).toString().toLowerCase()
+			
+			'write to excel status failed dan reason'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+				GlobalVariable.StatusFailed, (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+					'-', '') + ';') + '<' + reason + '>')
+			
+			GlobalVariable.FlagFailed = 1
+			
+			inputed = 1
+		} else if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/FormAktivasiEsign/popUp_AktivasiBerhasil'), GlobalVariable.TimeOut,
 			FailureHandling.OPTIONAL)) {
 			if (GlobalVariable.FlagFailed == 0) {
 				'write to excel success'

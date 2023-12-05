@@ -1602,6 +1602,7 @@ public class APIFullService {
 		}
 		listdata
 	}
+
 	@Keyword
 	getLivenessFCTenantStatAPIOnly(Connection conn, String tenantcode) {
 		stm = conn.createStatement()
