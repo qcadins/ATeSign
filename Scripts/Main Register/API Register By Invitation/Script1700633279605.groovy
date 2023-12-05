@@ -31,8 +31,14 @@ String selfPhoto, idPhoto
 		String value
 		
 		if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Input correct Message')).equalsIgnoreCase('Yes')) {
+			if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 2) {
+				receiverDetail = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', '')
+			} else {
+				receiverDetail = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"','')
+			}
+			
 			'get invitationcode dari DB > encrypt invitation code > encode invitation code yang sudah di encrypt'
-			value = encodeValue(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"','') , conneSign)
+			value = encodeValue(receiverDetail , conneSign)
 		} else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Input correct Message')).equalsIgnoreCase('No')) {
 			value = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Message'))
 		}

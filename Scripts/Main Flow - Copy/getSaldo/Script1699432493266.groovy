@@ -244,9 +244,9 @@ def funcSaldoRegis(HashMap result, int countCheckSaldo, Connection conneSign) {
 			'call function input filter saldo'
 			inputFilterSaldo(useSaldo, conneSign)
 			
-			if (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Certif Notif')) ==
+			if ((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Certif Notif')) ==
 				'1' || findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS GenInv')) ==
-				'1') {
+				'1') && findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() <= 2) {
 				inputFilterSaldo('SMS', conneSign)
 			}
 		}
