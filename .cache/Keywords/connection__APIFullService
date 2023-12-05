@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "D73D2EE3B00821CA4F4A407178507855",
+  "keywordFileContentHash": "F3C715D1FDFF116AEA2587BC419F5D8F",
   "keywordClasses": [
     {
       "name": "connection.APIFullService",
@@ -3009,8 +3009,6 @@
             }
           ],
           "javadoc": ""
-<<<<<<< HEAD
-=======
         },
         {
           "name": "getUpdateActivationUserAPIOnly",
@@ -3043,7 +3041,6 @@
             }
           ],
           "javadoc": ""
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
         },
         {
           "name": "getSaldoTrx",
@@ -3210,8 +3207,6 @@
             }
           ],
           "javadoc": ""
-<<<<<<< HEAD
-=======
         },
         {
           "name": "getSignerDetailAPIOnly",
@@ -3276,7 +3271,6 @@
             }
           ],
           "javadoc": ""
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
         }
       ]
     }
