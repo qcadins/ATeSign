@@ -242,30 +242,33 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 	                    saldoBefore.put(usedSaldo, (Integer.parseInt(saldoBefore.get(usedSaldo)) - GlobalVariable.Counter).toString())
 	                }
 	                
-	                if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS GenInv')) == '1' &&
-						findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase('Regenerate invitation link') &&
-						findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() <= 2) {
-						'check jika Must use WA message = 1'
-						if ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')) == '1')) {
-							usedSaldo = 'WhatsApp Message'
-						} else {
-							'check jika email service on'
-							if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == '1') {
-								'check jika use WA message = 1'
-								if(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) == '1') {
-									usedSaldo = 'WhatsApp Message'
-								} else {
+	                if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS GenInv')) == '1') {
+	                	if(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() <= 2) {
+	                	
+							'check jika Must use WA message = 1'
+							if ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')) == '1') ||
+								findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) == '1') {
+								usedSaldo = 'WhatsApp Message'
+							} else {
 									'jika use WA message bukan 1 maka use SMS Notif'
 									usedSaldo = 'SMS Notif'
-								}
-							} else {
-								'jika use WA message bukan 1 maka use SMS Notif'
-								usedSaldo = 'SMS Notif'
+								
+							}
+							
+							if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase('Regenerate invitation link') &&
+									!findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
+											'API Generate Inv Link Normal')) {
+								'kurang saldo before dengan proses send link undangan melalui sms 1x regenarate link'
+								saldoBefore.put(usedSaldo, (Integer.parseInt(saldoBefore.get(usedSaldo)) - 1).toString())
+							} else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
+										'API Generate Inv Link Normal') && findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase('Regenerate invitation link')) {
+								'kurang saldo before dengan proses send link undangan melalui sms 1x hit api 1x regenrate link'
+								saldoBefore.put(usedSaldo, (Integer.parseInt(saldoBefore.get(usedSaldo)) - 2).toString())
 							}
 						}
 						
-	                    'kurang saldo before dengan proses send certif dan link undangan melalui sms'
-	                    saldoBefore.put(usedSaldo, (Integer.parseInt(saldoBefore.get(usedSaldo)) - 1).toString())
+						
+	                    
 	                }
 	                
 	                if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Certif Notif')) == 

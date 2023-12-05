@@ -12,187 +12,22 @@
    <rerunImmediately>false</rerunImmediately>
    <testSuiteGuid>8f33660b-94d0-42d5-9a0f-6678b45bebcb</testSuiteGuid>
    <testCaseLink>
-      <guid>29e2b99a-93ae-440d-86e3-f4e0db0a5278</guid>
-      <isReuseDriver>false</isReuseDriver>
-      <isRun>false</isRun>
-      <testCaseId>Test Cases/APIFullService/MAIN_API Sent OTP Signing External</testCaseId>
-      <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>4abe51c1-f4be-43f2-bce5-10b35328294f</variableId>
-      </variableLink>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>29bba4d0-7846-40de-98c8-f17e41319494</variableId>
-      </variableLink>
-   </testCaseLink>
-   <testCaseLink>
-      <guid>48ae2b27-cf06-473c-bf60-d3cfc9768ac6</guid>
-      <isReuseDriver>false</isReuseDriver>
-      <isRun>false</isRun>
-      <testCaseId>Test Cases/Main Flow/MAIN_Run/MAIN_Multiple Option Send Sign Stamp</testCaseId>
-      <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>27383196-e193-4ebf-aafd-0354514ee333</variableId>
-      </variableLink>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>28279fa3-7cb0-4ca3-af09-467fbb63691d</variableId>
-      </variableLink>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>5cfcc2fb-894d-4d00-85e9-f660322f8667</variableId>
-      </variableLink>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>83e10f18-066a-4f5e-81fb-3319cf32e077</variableId>
-      </variableLink>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>33b92bde-769e-41a1-bb40-7ae0edec2128</variableId>
-      </variableLink>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>ccef44fe-6f7a-46eb-8158-514a925dd6f7</variableId>
-      </variableLink>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>d26fafc0-7e84-4bbf-b1c0-95b3c45c7fb1</variableId>
-      </variableLink>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>33f27d7f-d074-4c76-a906-d09a2034d147</variableId>
-      </variableLink>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>9f74454e-d7f1-400f-8c97-70b44de7d3af</variableId>
-      </variableLink>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>53000c7c-39ce-4d2a-8261-7a6e094a63d3</variableId>
-      </variableLink>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>f0ba1cd1-cbe1-49f4-98a4-be18fa76a878</variableId>
-      </variableLink>
-   </testCaseLink>
-   <testCaseLink>
-      <guid>d6584629-d31b-4f3c-a65b-effd06a1694d</guid>
-      <isReuseDriver>false</isReuseDriver>
-      <isRun>false</isRun>
-      <testCaseId>Test Cases/Manual Stamp/MAIN_Manual Stamp to Stamp</testCaseId>
-      <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>64851fc8-0c13-4197-9eb0-9bca920fc756</variableId>
-      </variableLink>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>3eb80b35-564e-4c4e-8b03-12309ca63fef</variableId>
-      </variableLink>
-   </testCaseLink>
-   <testCaseLink>
-      <guid>7994b096-8cbc-404e-a7f8-0d1fb5c0f191</guid>
+      <guid>f5514988-a836-4975-a0dd-5fbb0f224eec</guid>
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
-      <testCaseId>Test Cases/Main Flow - Copy/MAIN_Run/MAIN_Multiple Option Send Sign Stamp Palsu</testCaseId>
+      <testCaseId>Test Cases/Main Register/MAIN_Register</testCaseId>
       <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
       <variableLink>
          <testDataLinkId></testDataLinkId>
          <type>DEFAULT</type>
          <value></value>
-         <variableId>3712d3c3-fceb-4a48-9386-2fe26c752b91</variableId>
+         <variableId>8b496a5f-f2c3-41f7-8b19-002af48df479</variableId>
       </variableLink>
       <variableLink>
          <testDataLinkId></testDataLinkId>
          <type>DEFAULT</type>
          <value></value>
-         <variableId>adec8afd-9261-4486-b7fe-590bb686e950</variableId>
-      </variableLink>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>d2839192-cd3d-479f-a325-40555ea890c7</variableId>
-      </variableLink>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>16183a04-f305-46e6-be3f-143fdeff6ad3</variableId>
-      </variableLink>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>6cdf4c0c-0cb4-481a-8a71-5824bb05d6b4</variableId>
-      </variableLink>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>b4024942-6794-4c04-9d34-bfafe8295eda</variableId>
-      </variableLink>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>0cd87180-9e91-4a91-a291-4b1b396ca9f3</variableId>
-      </variableLink>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>b5f9f829-caf7-4517-b4bf-1a94d9066783</variableId>
-      </variableLink>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>417047dd-5438-4e28-9282-f601ccc71494</variableId>
-      </variableLink>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>0e4d5824-5b5d-418f-aa4c-1cf145523c87</variableId>
-      </variableLink>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>6af75adb-3219-4469-aae4-6cddaea94bdd</variableId>
+         <variableId>2b83ce14-0b18-424b-87af-6e007cb224ea</variableId>
       </variableLink>
    </testCaseLink>
 </TestSuiteEntity>
