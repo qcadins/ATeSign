@@ -1621,5 +1621,37 @@ public class APIFullService {
 		}
 		listdata
 	}
+	@Keyword
+	convertRegionOfficetoCode(Connection conn, String officeName, String regionName, String tenantCode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT COALESCE(office_code,'') FROM ms_office mso LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mso.id_ms_tenant WHERE office_name = '" + officeName + "' AND tenant_code = '" + tenantCode + "' LIMIT 1")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		
+		resultSet = stm.executeQuery("SELECT COALESCE(region_code,'') FROM ms_region mro LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mro.id_ms_tenant WHERE region_name = '" + regionName + "' AND tenant_code = '" + tenantCode + "' LIMIT 1")
+		
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		
+		listdata
+	}
 }
 
