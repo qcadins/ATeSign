@@ -16,6 +16,8 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 'get colm excel'
 int countColmExcel = findTestData(excelPath).columnNumbers
 
+ArrayList regionOffice = []
+
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
@@ -34,6 +36,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
         }
         
+		'ubah region name dan office name yang diinput menjadi code'
+		regionOffice = CustomKeywords.'connection.APIFullService.convertRegionOfficetoCode'(conneSign,
+			findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Office Name*')),
+			findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Region Name*')), GlobalVariable.Tenant)
+		
         'HIT API Login untuk ambil bearer token'
         respon_login = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('username')), ('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
@@ -47,18 +54,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'HIT API'
             respon = WS.sendRequest(findTestObject('Postman/Inquiry Normal', [('page') : (findTestData(excelPath).getValue(
                             GlobalVariable.NumofColm, rowExcel('Page'))), ('customerName') : (findTestData(excelPath).getValue(
-                            GlobalVariable.NumofColm, rowExcel('Customer Name'))), ('refNumber') : (findTestData(excelPath).getValue(
-                            GlobalVariable.NumofColm, rowExcel('Ref Number'))), ('requestedDateStart') : (findTestData(excelPath).getValue(
-                            GlobalVariable.NumofColm, rowExcel('Request Date Start'))), ('requestedDateEnd') : (findTestData(excelPath).getValue(
-                            GlobalVariable.NumofColm, rowExcel('Request Date End'))), ('completedDateStart') : (findTestData(excelPath).getValue(
-                            GlobalVariable.NumofColm, rowExcel('Complete Date Start'))), ('completedDateEnd') : (findTestData(excelPath).getValue(
-                            GlobalVariable.NumofColm, rowExcel('Complete Date End'))), ('documentType') : (findTestData(excelPath).getValue(
-                            GlobalVariable.NumofColm, rowExcel('Document Type'))), ('transactionStatus') : (findTestData(excelPath).getValue(
-                            GlobalVariable.NumofColm, rowExcel('Transaction Status'))), ('regionCode') : (findTestData(excelPath).getValue(
-                            GlobalVariable.NumofColm, rowExcel('Region Code'))), ('officeCode') : (findTestData(excelPath).getValue(
-                            GlobalVariable.NumofColm, rowExcel('Office Code'))), ('stampingStatus') : (findTestData(excelPath).getValue(
-                            GlobalVariable.NumofColm, rowExcel('Stamping Status'))), ('callerId') : (findTestData(excelPath).getValue(
-                            GlobalVariable.NumofColm, rowExcel('Username')))]))
+                            GlobalVariable.NumofColm, rowExcel('Customer Name*'))), ('refNumber') : (findTestData(excelPath).getValue(
+                            GlobalVariable.NumofColm, rowExcel('Ref Number*'))), ('requestedDateStart') : (findTestData(excelPath).getValue(
+                            GlobalVariable.NumofColm, rowExcel('Request Date Start*'))), ('requestedDateEnd') : (findTestData(excelPath).getValue(
+                            GlobalVariable.NumofColm, rowExcel('Request Date End*'))), ('completedDateStart') : (findTestData(excelPath).getValue(
+                            GlobalVariable.NumofColm, rowExcel('Complete Date Start*'))), ('completedDateEnd') : (findTestData(excelPath).getValue(
+                            GlobalVariable.NumofColm, rowExcel('Complete Date End*'))), ('documentType') : (findTestData(excelPath).getValue(
+                            GlobalVariable.NumofColm, rowExcel('Document Type*'))), ('transactionStatus') : (findTestData(excelPath).getValue(
+                            GlobalVariable.NumofColm, rowExcel('Transaction Status*'))), ('stampingStatus') : (findTestData(excelPath).getValue(
+                            GlobalVariable.NumofColm, rowExcel('Stamping Status*'))), ('callerId') : (findTestData(excelPath).getValue(
+                            GlobalVariable.NumofColm, rowExcel('username'))), ('regionCode') : (regionOffice[0]), ('officeCode') : (regionOffice[1])]))
 
             'ambil lama waktu yang diperlukan hingga request menerima balikan'
             def elapsedTime = (respon.getElapsedTime() / 1000) + ' second'

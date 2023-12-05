@@ -53,7 +53,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Link gagal di-decrypt')
 		}
 				
-		'HIT API Vendor List registrasi'
+		'HIT API Update status aktivasi user'
 		respon = WS.sendRequest(findTestObject('Postman/Update Activation User', [
 			('callerId') : ('"' + findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId'))) + '"',
 				('code') : ('"' + code + '"'),

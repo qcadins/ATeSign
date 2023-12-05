@@ -145,6 +145,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 							GlobalVariable.NumofColm, rowExcel('email')).replace('"', ''))) + '"')
 				} else {
 					getErrorMessageAPI(respon_OTP)
+					
+					otp = '""'
 				}
 			} else {
 				'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.HITAPI Gagal'
@@ -372,7 +374,7 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 	if (isMatch == false) {
 		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
 		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-			GlobalVariable.StatusFailed, ((findTestData(excelPathAPIGenerateInvLink).getValue(GlobalVariable.NumofColm,
+			GlobalVariable.StatusFailed, ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm,
 				rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + reason)
 
 		GlobalVariable.FlagFailed = 1
@@ -385,7 +387,8 @@ def getErrorMessageAPI(def respon) {
 
 	'Write To Excel GlobalVariable.StatusFailed and errormessage'
 	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-		GlobalVariable.StatusFailed, ('<' + message) + '>')
+		GlobalVariable.StatusFailed, ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm,
+			rowExcel('Reason Failed')) + ';') + '<' + message) + '>')
 	
 	GlobalVariable.FlagFailed = 1
 }
