@@ -375,9 +375,8 @@ if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryInv
 					GlobalVariable.FlagFailed = 1
 				} else {
 					'HIT API get Invitation Link'
-					responGetInvLink = WS.sendRequest(findTestObject('Postman/Get Inv Link', [('callerId') : '""', ('receiverDetail') : 
-								findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')), ('tenantCode') : ('"' +
-								GlobalVariable.Tenant) + '"', ('vendorCode') : ('"' + GlobalVariable.Psre) + '"']))
+					responGetInvLink = WS.sendRequest(findTestObject('Postman/Get Inv Link', [('callerId') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('receiverDetail') : 
+								findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email'))]))
 			
 					'Jika status HIT API 200 OK'
 					if (WS.verifyResponseStatusCode(responGetInvLink, 200, FailureHandling.OPTIONAL) == true) {

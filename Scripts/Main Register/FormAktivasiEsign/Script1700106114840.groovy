@@ -233,7 +233,7 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
 		'write to excel status failed dan reason'
 		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 			GlobalVariable.StatusFailed, (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
-				rowExcel('Reason Failed')).replace('-', '') + ';') + '<' + reason + '> Form Aktivasi Vida')
+				rowExcel('Reason Failed')).replace('-', '') + ';') + '<' + reason + '> Form Aktivasi')
 
 		'click button tutup error'
 		WebUI.click(findTestObject('RegisterEsign/FormAktivasiEsign/button_OK'))

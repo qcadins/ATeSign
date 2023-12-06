@@ -57,7 +57,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('OTP before') - 1, GlobalVariable.NumofColm -
 			1, CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('phoneNumber'))))
 		
-		'HIT API Vendor List registrasi'
+		'HIT API Sent OTP untuk aktivasi user'
 		respon = WS.sendRequest(findTestObject('Postman/Sent OTP Activation User', [
 			('callerId') : ('"' + findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId'))) + '"',
 				('code') : ('"' + code + '"'),

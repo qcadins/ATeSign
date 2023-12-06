@@ -100,12 +100,25 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'get status code'
             code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
+			'ambil lama waktu yang diperlukan hingga request menerima balikan'
+			def elapsedTime = (respon.getElapsedTime() / 1000) + ' second'
+
+			'ambil body dari hasil respons'
+			responseBody = respon.getResponseBodyContent()
+
+			'panggil keyword untuk proses beautify dari respon json yang didapat'
+			CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
+					excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+
+			'write to excel response elapsed time'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') -
+				1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+			
 			'declare arraylist arraymatch'
 			ArrayList<String> arrayMatch = []
 			
             'jika codenya 0'
             if (code == 0) {
-				
 				if(findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Sign External)')) == '0') {
 					'jika psre bukan privy, lakukan pengecekan store DB'
 					if (GlobalVariable.Psre != 'PRIVY') {

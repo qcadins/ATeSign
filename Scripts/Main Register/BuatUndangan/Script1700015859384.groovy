@@ -86,7 +86,7 @@ if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/label_ValidationErr
     GlobalVariable.FlagFailed = 1
 
     'call test case error report'
-    WebUI.callTestCase(findTestCase('Register eSign/ErrorReport'), [('excelPathRegister') : excelPathRegister], 
+    WebUI.callTestCase(findTestCase('Main Register/ErrorReport'), [('excelPathRegister') : excelPathRegister], 
         FailureHandling.CONTINUE_ON_FAILURE)
 	
 	GlobalVariable.LoginAgain = 1
@@ -459,7 +459,7 @@ def getErrorLog() {
     GlobalVariable.FlagFailed = 1
 
     'call test case error report'
-    WebUI.callTestCase(findTestCase('Register eSign/ErrorReport'), [('excelPathRegister') : excelPathRegister], 
+    WebUI.callTestCase(findTestCase('Main Register/ErrorReport'), [('excelPathRegister') : excelPathRegister], 
         FailureHandling.CONTINUE_ON_FAILURE)
 }
 

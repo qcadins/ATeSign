@@ -10,7 +10,7 @@
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: ${callerId}\n    },\n    \&quot;tenantCode\&quot;: ${tenantCode},\n    \&quot;users\&quot;: [\n\t\t\t${users}\n    ]\n}\n&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    },\n    \&quot;tenantCode\&quot;: \&quot;${tenantCode}\&quot;,\n    \&quot;users\&quot;: [\n\t\t\t${users}\n    ]\n}\n&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -28,7 +28,7 @@
       <matchCondition>equals</matchCondition>
       <name>x-api-key</name>
       <type>Main</type>
-      <value>${apikey}@${tenant}</value>
+      <value>${apikey}@${tenantCode}</value>
       <webElementGuid>126edc16-faca-4106-8b50-0c1f188b934d</webElementGuid>
    </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
@@ -63,7 +63,7 @@
       <description></description>
       <id>20672a21-2ae9-4513-9abb-41d64c550bbb</id>
       <masked>false</masked>
-      <name>tenant</name>
+      <name>tenantCode</name>
    </variables>
    <verificationScript>import static org.assertj.core.api.Assertions.*
 
