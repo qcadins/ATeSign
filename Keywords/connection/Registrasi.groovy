@@ -74,6 +74,9 @@ public class Registrasi {
 		while (resultSet.next()) {
 			for (i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
+				if(data == null) {
+					data = ''
+				}
 				listdata.add(data)
 			}
 		}

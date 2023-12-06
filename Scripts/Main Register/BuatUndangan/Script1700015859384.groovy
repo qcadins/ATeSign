@@ -125,8 +125,8 @@ if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/label_ValidationErr
 		}
 		
         'HIT API get Invitation Link'
-        responGetInvLink = WS.sendRequest(findTestObject('Postman/Get Inv Link', [('callerId') : '""', ('receiverDetail') : ('"' + 
-                    receiverDetail) + '"', ('tenantCode') : ('"' + GlobalVariable.Tenant) + '"', ('vendorCode') : ('"' + GlobalVariable.Psre) + '"']))
+        responGetInvLink = WS.sendRequest(findTestObject('Postman/Get Inv Link', [('callerId') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), 
+			('receiverDetail') : (receiverDetail)]))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(responGetInvLink, 200, FailureHandling.OPTIONAL) == true) {
