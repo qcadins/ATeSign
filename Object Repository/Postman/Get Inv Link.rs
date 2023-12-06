@@ -19,7 +19,7 @@
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n  \&quot;audit\&quot;: {\n    \&quot;callerId\&quot;: ${callerId}\n  },\n    \&quot;receiverDetail\&quot;: ${receiverDetail},\n    \&quot;tenantCode\&quot;: ${tenantCode},\n\t\&quot;vendorCode\&quot;: ${vendorCode}\n}&quot;,
+  &quot;text&quot;: &quot;{\n  \&quot;audit\&quot;: {\n    \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n  },\n    \&quot;receiverDetail\&quot;: \&quot;${receiverDetail}\&quot;,\n    \&quot;tenantCode\&quot;: \&quot;${tenantCode}\&quot;,\n\t\&quot;vendorCode\&quot;: \&quot;${vendorCode}\&quot;\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -74,6 +74,20 @@
       <id>f3d9e8be-7e73-47c6-b358-9887f5cbd9bb</id>
       <masked>false</masked>
       <name>token</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.Tenant</defaultValue>
+      <description></description>
+      <id>db30a43b-3ab3-4461-8901-7b2e1a5c7f0c</id>
+      <masked>false</masked>
+      <name>tenantCode</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.Psre</defaultValue>
+      <description></description>
+      <id>dcddcea4-b30f-4705-a331-b56e4c6e5537</id>
+      <masked>false</masked>
+      <name>vendorCode</name>
    </variables>
    <verificationScript>import static org.assertj.core.api.Assertions.*
 

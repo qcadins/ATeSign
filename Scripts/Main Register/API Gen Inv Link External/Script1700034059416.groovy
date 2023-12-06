@@ -41,8 +41,8 @@ GlobalVariable.FlagFailed = 0
 
 'check if self photo mau menggunakan base64 yang salah atau benar'
 if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 SelfPhoto')) == 'Yes') {
-    selfPhoto = (('"' + CustomKeywords.'customizekeyword.ConvertFile.base64File'(findTestData(excelPathRegister).getValue(
-            GlobalVariable.NumofColm, rowExcel('selfPhoto')))) + '"')
+    selfPhoto = ((CustomKeywords.'customizekeyword.ConvertFile.base64File'(findTestData(excelPathRegister).getValue(
+            GlobalVariable.NumofColm, rowExcel('selfPhoto')))))
 } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 SelfPhoto')) == 
 'No') {
     selfPhoto = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('selfPhoto'))
@@ -50,8 +50,8 @@ if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
 
 'check if id photo mau menggunakan base64 yang salah atau benar'
 if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 IdPhoto')) == 'Yes') {
-    idPhoto = (('"' + CustomKeywords.'customizekeyword.ConvertFile.base64File'(findTestData(excelPathRegister).getValue(
-            GlobalVariable.NumofColm, rowExcel('idPhoto')))) + '"')
+    idPhoto = ((CustomKeywords.'customizekeyword.ConvertFile.base64File'(findTestData(excelPathRegister).getValue(
+            GlobalVariable.NumofColm, rowExcel('idPhoto')))))
 } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 IdPhoto')) == 
 'No') {
     idPhoto = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('idPhoto'))

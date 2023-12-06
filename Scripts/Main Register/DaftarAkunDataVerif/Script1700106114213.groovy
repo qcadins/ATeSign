@@ -121,7 +121,7 @@ if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
 
     'check mau foto KTP atau tidak'
     if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Foto KTP')) == 'Yes' && 
-		(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('idPhoto')) == '""' ||
+		(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('idPhoto')) == '' ||
 			findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
             'Menu Buat Undangan'))) {
         if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Upload Foto KTP')).length() == 

@@ -14,23 +14,22 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 ArrayList<String> listInvitation = []
 
 'Declare variable untuk sendRequest'
-(listInvitation[0]) = (((((((((((((((((((((((((('{"email" :' + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-    rowExcel('$Email'))) + ',"nama" :') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Nama'))) + 
-',"tlp": ') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No telepon'))) + ',"jenisKelamin" : ') + 
-findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Jenis Kelamin'))) + ',"tmpLahir" : ') + findTestData(
-    excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Tempat Lahir'))) + ',"tglLahir" : ') + findTestData(
-    excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Lahir'))) + ',"idKtp" : ') + findTestData(excelPathRegister).getValue(
-    GlobalVariable.NumofColm, rowExcel('$NIK'))) + ', "provinsi" : ') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-    rowExcel('Provinsi'))) + ', "kota" : ') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-        'Kota'))) + ', "kecamatan" : ') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Kecamatan'))) + 
-',"kelurahan": ') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Kelurahan'))) + ',"kodePos" : ') + 
-findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Kode Pos'))) + ',"alamat" : ') + findTestData(
-    excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Alamat'))) + '}  ')
+(listInvitation[0]) = (((((((((((((((((((((((((('{"email" : "' + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+    rowExcel('$Email'))) + '" ,"nama" : "') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Nama'))) + 
+'" ,"tlp": "') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No telepon'))) + '" ,"jenisKelamin" : "') + 
+findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Jenis Kelamin'))) + '" ,"tmpLahir" : "') + findTestData(
+    excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Tempat Lahir'))) + '" ,"tglLahir" : "') + findTestData(
+    excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Lahir'))) + '" ,"idKtp" : "') + findTestData(excelPathRegister).getValue(
+    GlobalVariable.NumofColm, rowExcel('$NIK'))) + '" , "provinsi" : "') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+    rowExcel('Provinsi'))) + '" , "kota" : "') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
+        'Kota'))) + '" , "kecamatan" : "') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Kecamatan'))) + 
+'" ,"kelurahan": "') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Kelurahan'))) + '" ,"kodePos" : "') + 
+findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Kode Pos'))) + '" ,"alamat" : "') + findTestData(
+    excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Alamat'))) + '" }')
 
 'HIT API'
 respon = WS.sendRequest(findTestObject('Postman/Gen Invitation Link', [('callerId') : findTestData(excelPathRegister).getValue(
-                GlobalVariable.NumofColm, rowExcel('callerId')), ('tenantCode') : findTestData(excelPathRegister).getValue(
-                GlobalVariable.NumofColm, rowExcel('$Tenant Code')), ('users') : listInvitation[0]]))
+                GlobalVariable.NumofColm, rowExcel('callerId')), ('users') : listInvitation[0]]))
 
 'Jika status HIT API 200 OK'
 if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
