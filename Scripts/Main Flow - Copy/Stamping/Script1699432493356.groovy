@@ -128,7 +128,7 @@ prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, 
                         arrayMatch.add(WebUI.verifyMatch(totalMateraiAndTotalStamping[0], totalMateraiAndTotalStamping[1], 
                                 false, FailureHandling.CONTINUE_ON_FAILURE))
 
-						GlobalVariable.eSignData.putAt('VerifikasiMeterai', Integer.parseInt(totalMateraiAndTotalStamping[0]))
+						GlobalVariable.eSignData.putAt('VerifikasiMeterai', GlobalVariable.eSignData.getAt('VerifikasiMeterai') + Integer.parseInt(totalMateraiAndTotalStamping[0]))
 
                         'jika data db tidak bertambah'
                         if (arrayMatch.contains(false)) {
@@ -176,7 +176,7 @@ prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, 
                     totalMateraiAndTotalStamping = CustomKeywords.'connection.Meterai.getTotalMateraiAndTotalStamping'(conneSign, 
                         nomorKontrakDocument.replace('"', ''))
 
-                    if (((totalMateraiAndTotalStamping[0]) != '0') && (prosesMaterai != 63)) {
+                    if (((totalMateraiAndTotalStamping[0]) != '0') && (prosesMaterai != 63 || prosesMaterai != 53)) {
                         'Call verify meterai'
                         WebUI.callTestCase(findTestCase('Main Flow - Copy/verifyMeterai'), [('excelPathMeterai') : excelPathStamping
                          , ('sheet') : sheet, ('noKontrak') : nomorKontrakDocument.replace('"', ''), ('linkDocumentMonitoring') : linkDocumentMonitoring
@@ -192,10 +192,42 @@ prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, 
     } else if (findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Option for Stamp Document :')) == 
     'Start Stamping') {
         'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
-        WebUI.callTestCase(findTestCase('Main Flow/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathStamping
-                , ('sheet') : sheet, ('linkDocumentMonitoring') : 'Not Used', ('nomorKontrak') : refNumber, ('isStamping') : 'Yes'
+        WebUI.callTestCase(findTestCase('Main Flow - Copy/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathStamping
+                , ('sheet') : sheet, ('linkDocumentMonitoring') : '', ('nomorKontrak') : refNumber, ('isStamping') : 'Yes'
                 , ('CancelDocsStamp') : CancelDocsStamp], FailureHandling.CONTINUE_ON_FAILURE)
+		
+		'Mengambil value total stamping dan total meterai'
+		totalMateraiAndTotalStamping = CustomKeywords.'connection.Meterai.getTotalMateraiAndTotalStamping'(conneSign,
+			refNumber)
+
+		'mengambil value db proses ttd'
+		prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, refNumber)
+		
+		if (((totalMateraiAndTotalStamping[0]) != '0') && (prosesMaterai != 63 || prosesMaterai != 53)) {
+			'Call verify meterai'
+			WebUI.callTestCase(findTestCase('Main Flow - Copy/verifyMeterai'), [('excelPathMeterai') : excelPathStamping
+			 , ('sheet') : sheet, ('noKontrak') : refNumber, ('linkDocumentMonitoring') : linkDocumentMonitoring
+			, ('CancelDocsStamp') : CancelDocsStamp], FailureHandling.CONTINUE_ON_FAILURE)
+		}
     }
+	
+	'inisialisasi variable untuk looping. Looping diperlukan untuk break/continue'
+	forLoopingWithBreakAndContinue = 1
+	
+	'looping'
+	for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
+		'mengambil value db proses ttd'
+		prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, refNumber)
+		
+		if (prosesMaterai == 1 || prosesMaterai == 51 || prosesMaterai == 321 || prosesMaterai == 521 || prosesMaterai == 61) {
+		if (findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Using Retry Stamping Feature ?')) == 'Yes') {
+			'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
+			WebUI.callTestCase(findTestCase('Main Flow - Copy/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathStamping
+					, ('sheet') : sheet, ('linkDocumentMonitoring') : '', ('nomorKontrak') : refNumber, ('isStamping') : ''
+					, ('CancelDocsStamp') : CancelDocsStamp, ('retryStamping') : findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Using Retry Stamping Feature ?'))], FailureHandling.CONTINUE_ON_FAILURE)
+			}
+		}
+	}
 
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if (isMatch == false) {

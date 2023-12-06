@@ -291,17 +291,28 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					}
                 }
             }
-        } else if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('Start Stamping')) {
-			'click button start stamping'
-			WebUI.click(findTestObject('DocumentMonitoring/button_startStamping'))
+        } else if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('Start Stamping') || 
+			findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('Retry Stamping')) {
+			if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Action')) == 'Start Stamping') {
+				'click button start stamping'
+				WebUI.click(findTestObject('DocumentMonitoring/button_startStamping'))
+			} else {
+				'Jika aksinya mengenai retry stamping dan retry stamping from upload, klik'
+				WebUI.click(findTestObject('Object Repository/e-Meterai Monitoring/table_Aksi Retry Stamping'))
+			}
 			
 			'Jika start stamping'
 			if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/label_startStamping'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 				'klik cancel'
 				WebUI.click(findTestObject('Object Repository/DocumentMonitoring/button_cancelStartStamping'))
 				
-				'click button start stamping'
-				WebUI.click(findTestObject('DocumentMonitoring/button_startStamping'))
+				if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Action')) == 'Start Stamping') {
+					'click button start stamping'
+					WebUI.click(findTestObject('DocumentMonitoring/button_startStamping'))
+				} else {
+					'Jika aksinya mengenai retry stamping dan retry stamping from upload, klik'
+					WebUI.click(findTestObject('Object Repository/e-Meterai Monitoring/table_Aksi Retry Stamping'))
+				}
 				
 				'klik yes'
 				WebUI.click(findTestObject('Object Repository/DocumentMonitoring/button_yesStartStamping'))
@@ -331,7 +342,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 								GlobalVariable.NumofColm, rowExcel('No Kontrak')))
 			
 						'jika proses materai gagal (51)'
-						if (prosesMaterai == 51) {
+						if (prosesMaterai == 51 || prosesMaterai == 61) {
 							'Write To Excel GlobalVariable.StatusFailed and errormessage'
 							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 								GlobalVariable.ReasonFailedProsesStamping)
@@ -339,7 +350,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 							GlobalVariable.FlagFailed = 1
 			
 							break
-						} else if (prosesMaterai == 53) {
+						} else if (prosesMaterai == 53 || prosesMaterai == 63) {
 							'Jika proses meterai sukses (53), berikan delay 3 sec untuk update di db'
 							WebUI.delay(3)
 			

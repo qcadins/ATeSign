@@ -45,8 +45,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.token = WS.getElementPropertyValue(respon_login, 'access_token')
 
             'HIT API'
-            respon = WS.sendRequest(findTestObject('Postman/Vendor', [('callerId') : (findTestData(excelPath).getValue(
-                            GlobalVariable.NumofColm, rowExcel('username')))]))
+            respon = WS.sendRequest(findTestObject('Postman/Vendor', [('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                            rowExcel('username'))]))
 
             'ambil lama waktu yang diperlukan hingga request menerima balikan'
             def elapsedTime = (respon.getElapsedTime() / 1000) + ' second'
@@ -75,22 +75,28 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                     if (GlobalVariable.checkStoreDB == 'Yes') {
                         'declare arraylist arraymatch'
-                        ArrayList arrayMatch = []
+                        ArrayList<String> arrayMatch = []
 
                         'get data store db'
-                        ArrayList result = CustomKeywords.'connection.APIFullService.getVendorofTenant'(conneSign)
+                        ArrayList<String> result = CustomKeywords.'connection.APIFullService.getVendorofTenant'(conneSign)
 
-                        println(result)
+                        for (i = 0; i < resultVendorCode.toString().split(', ', -1).size(); i++) {
+							'declare arrayindex'
+							arrayindex = 0
+							
+                            for (index = 0; index < (result.size() / 2); index++) {
+                                if ((result[arrayindex]) == (resultVendorCode[i])) {
+                                    'verify vendor code'
+                                    arrayMatch.add(WebUI.verifyMatch(result[arrayindex++], resultVendorCode[i], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                        'declare arrayindex'
-                        arrayindex = 0
+                                    'verify vendor name'
+                                    arrayMatch.add(WebUI.verifyMatch(result[arrayindex++], resultVendorName[i], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                        for (index = 0; index < (result.size() / 2); index++) {
-                            'verify vendor code'
-                            arrayMatch.add(WebUI.verifyMatch(result[arrayindex++], resultVendorCode[index], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-                            'verify vendor name'
-                            arrayMatch.add(WebUI.verifyMatch(result[arrayindex++], resultVendorName[index], false, FailureHandling.CONTINUE_ON_FAILURE))
+                                    break
+                                } else {
+									arrayindex = arrayindex + 2
+								}
+                            }
                         }
                         
                         'jika data db tidak sesuai dengan excel'

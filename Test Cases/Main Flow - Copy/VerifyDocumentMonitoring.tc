@@ -53,6 +53,12 @@
       <value></value>
       <variableId>d6b71f16-533f-4504-8241-f2a0b0af7e9d</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>8083c697-0181-44ca-8605-c454f9ccc8a1</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -108,5 +114,12 @@
       <id>d6b71f16-533f-4504-8241-f2a0b0af7e9d</id>
       <masked>false</masked>
       <name>vendor</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>8083c697-0181-44ca-8605-c454f9ccc8a1</id>
+      <masked>false</masked>
+      <name>retryStamping</name>
    </variable>
 </TestCaseEntity>

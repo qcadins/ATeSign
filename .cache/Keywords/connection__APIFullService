@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "F3C715D1FDFF116AEA2587BC419F5D8F",
+  "keywordFileContentHash": "C3935C2AFD24BC48EAE9E518ECE855C4",
   "keywordClasses": [
     {
       "name": "connection.APIFullService",
@@ -3258,6 +3258,38 @@
             },
             {
               "name": "tenantcode",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "getTenantCodeFromUser",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "emailSigner",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

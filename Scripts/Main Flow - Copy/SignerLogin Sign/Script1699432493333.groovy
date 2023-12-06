@@ -121,6 +121,8 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
     
     checkBulkSigning()
 
+	checkPopupWarning()
+	
     'refresh buat reset nav bar selanjutnya'
     WebUI.refresh()
 
@@ -842,8 +844,11 @@ def checkPopupWarning() {
                 '-', '') + ';') + '<') + lblpopup) + '>')
 
         'Klik OK untuk popupnya'
-        WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
+        WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'), FailureHandling.OPTIONAL)
 
+		'Klik checkbox ttd untuk semua'
+		WebUI.click(findTestObject('KotakMasuk/Sign/checkbox_ttdsemua'))
+		
         return true
     }
     
@@ -1161,8 +1166,8 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
 	
 	GlobalVariable.eSignData.putAt('VerifikasiOTP', 1)
 	
-	checkSaldoWAOrSMS(conneSign)
-	
+	checkSaldoWAOrSMS(conneSign, vendor)
+
     'check ada value maka Setting OTP Active Duration'
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() > 
     0) {
@@ -1571,7 +1576,7 @@ def checkAutoStamp(Connection conneSign, String noKontrak, HashMap<String, Strin
     }
 }
 
-def checkSaldoWAOrSMS(Connection conneSign) {
+def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
     ArrayList balmut = []
 
     int penggunaanSaldo = 0
@@ -1586,6 +1591,12 @@ def checkSaldoWAOrSMS(Connection conneSign) {
 
     mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
 
+	if (vendor.equalsIgnoreCase('Privy')) {
+		mustUseWaFirst = '0'
+		
+		emailServiceOnVendor = '0'
+	}
+	
     if (mustUseWAFirst == '1') {
         tipeSaldo = 'WhatsApp Message'
 

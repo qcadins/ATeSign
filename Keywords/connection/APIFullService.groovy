@@ -126,7 +126,7 @@ public class APIFullService {
 	getTenantAPIKey(Connection conn, String tenantcode) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT api_key FROM ms_tenant WHERE tenant_code = '" +  tenantcode  + "'")
+		resultSet = stm.executeQuery("SELECT api_key FROM ms_tenant WHERE tenant_code = '" +tenantcode+ "'")
 
 		metadata = resultSet.metaData
 
@@ -135,9 +135,11 @@ public class APIFullService {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		if (data == null || data == 'null') {
+
+		if (data.toString() == 'null') {
 			data = ''
 		}
+
 		data
 	}
 
@@ -1620,6 +1622,21 @@ public class APIFullService {
 			}
 		}
 		listdata
+	}
+
+	@Keyword
+	getTenantCodeFromUser(Connection conn, String emailSigner) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select mst.tenant_code from ms_useroftenant muot left join ms_tenant mst on muot.id_ms_tenant = mst.id_ms_tenant left join am_msuser amm on amm.id_ms_user = muot.id_ms_user where amm.login_id = '"+ emailSigner +"' order by muot.dtm_upd desc limit 1")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
 	}
 }
 
