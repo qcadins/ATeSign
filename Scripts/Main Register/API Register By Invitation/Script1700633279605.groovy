@@ -15,15 +15,15 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 String selfPhoto, idPhoto
 
 		if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 SelfPhoto')) == 'Yes') {
-			selfPhoto = (('"' + CustomKeywords.'customizekeyword.ConvertFile.base64File'(findTestData(excelPathRegister).getValue(
-					GlobalVariable.NumofColm, rowExcel('selfPhoto')))) + '"')
+			selfPhoto = (CustomKeywords.'customizekeyword.ConvertFile.base64File'(findTestData(excelPathRegister).getValue(
+					GlobalVariable.NumofColm, rowExcel('selfPhoto'))))
 		} else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 SelfPhoto')) == 'No') {
 			selfPhoto = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('selfPhoto'))
 		}
 		
 		if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 IdPhoto')) == 'Yes') {
-			idPhoto = (('"' + CustomKeywords.'customizekeyword.ConvertFile.base64File'(findTestData(excelPathRegister).getValue(
-					GlobalVariable.NumofColm, rowExcel('idPhoto')))) + '"')
+			idPhoto = (CustomKeywords.'customizekeyword.ConvertFile.base64File'(findTestData(excelPathRegister).getValue(
+					GlobalVariable.NumofColm, rowExcel('idPhoto'))))
 		} else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 IdPhoto')) == 'No') {
 			idPhoto = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('idPhoto'))
 		}
@@ -49,23 +49,23 @@ String selfPhoto, idPhoto
         ArrayList listInvitation = []
 
         'Declare variable untuk sendRequest'
-        (listInvitation[0]) = ((((((((((((((((((((((((((('{"email" :') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('$Email'))) + ',"nama" :') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('$Nama'))) + ',"tlp": ') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-                'No Telepon'))) + ',"jenisKelamin" : ') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('Jenis Kelamin'))) + ',"tmpLahir" : ') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('Tempat Lahir'))) + ',"tglLahir" : ') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('Tanggal Lahir'))) + ',"idKtp" : ') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('$NIK'))) + ', "provinsi" : ') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('Provinsi'))) + ', "kota" : ') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('Kota'))) + ', "kecamatan" : ') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('Kecamatan'))) + ',"kelurahan": ') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('Kelurahan'))) + ',"kodePos" : ') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('Kode Pos'))) + ',"alamat" : ') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('Alamat'))) + ',"selfPhoto" : ' + selfPhoto + ',"idPhoto" : ' + idPhoto + '}  ')
+        (listInvitation[0]) = ((((((((((((((((((((((((((('{"email" : "') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+            rowExcel('$Email'))) + '" ,"nama" : "') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+            rowExcel('$Nama'))) + '" ,"tlp": "') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
+                'No Telepon'))) + '" ,"jenisKelamin" : "') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+            rowExcel('Jenis Kelamin'))) + '" ,"tmpLahir" : "') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+            rowExcel('Tempat Lahir'))) + '" ,"tglLahir" : "') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+            rowExcel('Tanggal Lahir'))) + '" ,"idKtp" : "') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+            rowExcel('$NIK'))) + '" , "provinsi" : "') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+            rowExcel('Provinsi'))) + '" , "kota" : "') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+            rowExcel('Kota'))) + '" , "kecamatan" : "') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+            rowExcel('Kecamatan'))) + '" ,"kelurahan": "') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+            rowExcel('Kelurahan'))) + '" ,"kodePos" : "') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+            rowExcel('Kode Pos'))) + '" ,"alamat" : "') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+            rowExcel('Alamat'))) + '" ,"selfPhoto" : "' + selfPhoto + '" ,"idPhoto" : "' + idPhoto + '" }')
 
         'HIT API'
-        respon = WS.sendRequest(findTestObject('Postman/Register Invitation', [('msg') : '"' + value + '"', ('userData') : listInvitation[0], 
+        respon = WS.sendRequest(findTestObject('Postman/Register Invitation', [('msg') : value, ('userData') : listInvitation[0], 
 			('callerId') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('callerId'))]))
 
         'Jika status HIT API 200 OK'

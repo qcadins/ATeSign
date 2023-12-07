@@ -120,8 +120,8 @@ if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
 
 
     'check mau foto KTP atau tidak'
-    if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Foto KTP')) == 'Yes' && 
-		findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('idPhoto')) == '""') {
+    if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Foto KTP')) == 'Yes' &&
+		WebUI.verifyElementClickable(findTestObject('Object Repository/DaftarAkun/button_AmbilFotoKTP'), FailureHandling.OPTIONAL)) {
         if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Upload Foto KTP')).length() == 
         0) {
             'click ambil foto KTP'

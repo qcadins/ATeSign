@@ -25,8 +25,13 @@ int editAfterRegister = CustomKeywords.'connection.InquiryInvitation.getSetEditA
 
 int resendLink = CustomKeywords.'connection.InquiryInvitation.getSetResendLink'(conneSign)
 
-int invLink = CustomKeywords.'connection.InquiryInvitation.getSetInvLinkAct'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('$Email')).replace('"','').toUpperCase())
+if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 2) {
+	receiverDetail = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', '').toUpperCase()
+} else {
+	receiverDetail = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"','').toUpperCase()
+}
+
+int invLink = CustomKeywords.'connection.InquiryInvitation.getSetInvLinkAct'(conneSign, receiverDetail)
 
 'call function inputSearch'
 inputSearch()
@@ -374,10 +379,10 @@ if(WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryInv
 		
 					GlobalVariable.FlagFailed = 1
 				} else {
+					
 					'HIT API get Invitation Link'
-					responGetInvLink = WS.sendRequest(findTestObject('Postman/Get Inv Link', [('callerId') : '""', ('receiverDetail') : 
-								findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')), ('tenantCode') : ('"' +
-								GlobalVariable.Tenant) + '"', ('vendorCode') : ('"' + GlobalVariable.Psre) + '"']))
+					responGetInvLink = WS.sendRequest(findTestObject('Postman/Get Inv Link', [('callerId') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('receiverDetail') : 
+								receiverDetail]))
 			
 					'Jika status HIT API 200 OK'
 					if (WS.verifyResponseStatusCode(responGetInvLink, 200, FailureHandling.OPTIONAL) == true) {

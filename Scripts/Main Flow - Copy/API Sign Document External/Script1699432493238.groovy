@@ -120,7 +120,7 @@ if (vendor.equalsIgnoreCase('Privy') || vendor.equalsIgnoreCase('Digisign')) {
                     ';', -1)[GlobalVariable.indexUsed], ('email') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
                     rowExcel('email (Sign External)')).split(';', -1)[GlobalVariable.indexUsed], ('refnumber') : ('"' + 
                 CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, GlobalVariable.storeVar.keySet()[[0]])) + 
-                '"', ('listDocumentId') : documentIdInput.replace('[', '').replace(']', '')]))
+                '"', ('listDocumentId') : documentIdInput.replace('[', '').replace(']', ''), ('vendor') : '"' + vendor + '"']))
 
     'Jika status HIT API 200 OK'
     if (WS.verifyResponseStatusCode(respon_OTP, 200, FailureHandling.OPTIONAL) == true) {
@@ -183,7 +183,7 @@ if (vendor.equalsIgnoreCase('Privy') || vendor.equalsIgnoreCase('Digisign')) {
                     ';', -1)[GlobalVariable.indexUsed], ('email') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
                     rowExcel('email (Sign External)')).split(';', -1)[GlobalVariable.indexUsed], ('refnumber') : ('"' + 
                 CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, GlobalVariable.storeVar.keySet()[[0]])) + 
-                '"', ('listDocumentId') : documentIdInput.replace('[', '').replace(']', '')]))
+                '"', ('listDocumentId') : documentIdInput.replace('[', '').replace(']', ''), ('vendor') : '"' + vendor + '"']))
 
     'Jika status HIT API 200 OK'
     if (WS.verifyResponseStatusCode(respon_OTP, 200, FailureHandling.OPTIONAL) == true) {
@@ -366,7 +366,8 @@ if (otp.replace('"', '').length() >= 0) {
 					
 					GlobalVariable.eSignData.putAt('VerifikasiBiometric', countBiometric)
 
-					checkSaldoWAOrSMS(conneSign)
+					checkSaldoWAOrSMS(conneSign, vendor)
+					
 					checkAutoStamp(conneSign, refNumber, GlobalVariable.saldo)
                     break
                 } else if (v == 20) {
@@ -999,7 +1000,7 @@ def checkAutoStamp(Connection conneSign, String noKontrak, HashMap<String, Strin
     }
 }
 
-def checkSaldoWAOrSMS(Connection conneSign) {
+def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 	ArrayList balmut = []
 
 	int penggunaanSaldo = 0
@@ -1014,6 +1015,11 @@ def checkSaldoWAOrSMS(Connection conneSign) {
 
 	mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
 
+	if (vendor.equalsIgnoreCase('Privy')) {
+		mustUseWaFirst = '0'
+		
+		emailServiceOnVendor = '0'
+	}
 	if (mustUseWAFirst == '1') {
 		tipeSaldo = 'WhatsApp Message'
 

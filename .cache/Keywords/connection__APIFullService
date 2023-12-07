@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "952A952610636034CFC75759504F6740",
+  "keywordFileContentHash": "C3935C2AFD24BC48EAE9E518ECE855C4",
   "keywordClasses": [
     {
       "name": "connection.APIFullService",
@@ -3273,7 +3273,7 @@
           "javadoc": ""
         },
         {
-          "name": "convertRegionOfficetoCode",
+          "name": "getTenantCodeFromUser",
           "parameters": [
             {
               "name": "conn",
@@ -3289,33 +3289,7 @@
               }
             },
             {
-              "name": "officeName",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.lang.String",
-                "unresolvedClassName": "String",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            },
-            {
-              "name": "regionName",
-              "initialExpression": "",
-              "type": {
-                "fullClassName": "java.lang.String",
-                "unresolvedClassName": "String",
-                "isArray": false,
-                "isGnericsPlaceHolder": false,
-                "hasImmutableClassName": false,
-                "genericsTypes": [],
-                "errorOnParsing": false
-              }
-            },
-            {
-              "name": "tenantCode",
+              "name": "emailSigner",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

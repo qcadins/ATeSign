@@ -723,8 +723,9 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 					email[loopingEmail]))
 
 			emailServiceOnVendor = CustomKeywords.'connection.DataVerif.getEmailServiceAsVendorUser'(conneSign, email[loopingEmail])
-
+			
 			fullNameUser = CustomKeywords.'connection.DataVerif.getFullNameOfUser'(conneSign, email[loopingEmail])
+
 
 			mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
 
@@ -738,7 +739,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 					'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 						GlobalVariable.StatusFailed, (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm,
-							rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
+							rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via WhatsApp')
 				} else {
 					penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
 				}
@@ -756,7 +757,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 							'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
 							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 								GlobalVariable.StatusFailed, (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm,
-									rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
+									rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via WhatsApp')
 						} else {
 							penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
 						}
@@ -774,7 +775,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 								'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
 								CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 									GlobalVariable.StatusFailed, (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm,
-										rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via SMS')
+										rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via SMS')
 							} else {
 								penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
 							}
@@ -799,8 +800,6 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 			
 			GlobalVariable.eSignData.putAt('emailUsageSign', GlobalVariable.eSignData.getAt('emailUsageSign') + fullNameUser + ';')
 	
-			pemotonganSaldo = (pemotonganSaldo + Integer.parseInt(balmut[(increment + 8)].replace('-','')))
-			GlobalVariable.eSignData.putAt('allTrxNo', GlobalVariable.eSignData.getAt('allTrxNo') + balmut[increment + 0] + ';')
 		}
 		}
 		

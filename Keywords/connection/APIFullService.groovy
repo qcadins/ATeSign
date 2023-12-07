@@ -135,9 +135,11 @@ public class APIFullService {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		if (data == null || data == 'null') {
+
+		if (data.toString() == 'null') {
 			data = ''
 		}
+
 		data
 	}
 
@@ -1621,7 +1623,23 @@ public class APIFullService {
 		}
 		listdata
 	}
+
 	@Keyword
+	getTenantCodeFromUser(Connection conn, String emailSigner) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select mst.tenant_code from ms_useroftenant muot left join ms_tenant mst on muot.id_ms_tenant = mst.id_ms_tenant left join am_msuser amm on amm.id_ms_user = muot.id_ms_user where amm.login_id = '"+ emailSigner +"' order by muot.dtm_upd desc limit 1")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+	
+		@Keyword
 	convertRegionOfficetoCode(Connection conn, String officeName, String regionName, String tenantCode) {
 		stm = conn.createStatement()
 
@@ -1637,9 +1655,9 @@ public class APIFullService {
 				listdata.add(data)
 			}
 		}
-		
+
 		resultSet = stm.executeQuery("SELECT COALESCE(region_code,'') FROM ms_region mro LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mro.id_ms_tenant WHERE region_name = '" + regionName + "' AND tenant_code = '" + tenantCode + "' LIMIT 1")
-		
+
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -1650,7 +1668,7 @@ public class APIFullService {
 				listdata.add(data)
 			}
 		}
-		
+
 		listdata
 	}
 }

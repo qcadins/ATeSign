@@ -49,6 +49,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             emailSHA256 = email
         }
         
+		'setting email service tenant'
+		CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(excelPathForgotPass).getValue(
+			GlobalVariable.NumofColm, rowExcel('Setting Email Service')),emailSHA256)
+		
         String tenantcode = CustomKeywords.'connection.ForgotPassword.getTenantCode'(conneSign, emailSHA256)
 
         GlobalVariable.Tenant = tenantcode
@@ -126,6 +130,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					(((findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) +
 					';') + '<') + WebUI.getText(findTestObject('ForgotPassword/lbl_popup'))) + '>')
  
+				WebUI.click(findTestObject('ForgotPassword/button_OK'))
+				
 				'klik pada tombol batal'
 				WebUI.click(findTestObject('ForgotPassword/button_Batal'))
  

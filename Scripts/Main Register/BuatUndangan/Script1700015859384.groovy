@@ -86,7 +86,7 @@ if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/label_ValidationErr
     GlobalVariable.FlagFailed = 1
 
     'call test case error report'
-    WebUI.callTestCase(findTestCase('Register eSign/ErrorReport'), [('excelPathRegister') : excelPathRegister], 
+    WebUI.callTestCase(findTestCase('Main Register/ErrorReport'), [('excelPathRegister') : excelPathRegister], 
         FailureHandling.CONTINUE_ON_FAILURE)
 	
 	GlobalVariable.LoginAgain = 1
@@ -125,8 +125,8 @@ if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/label_ValidationErr
 		}
 		
         'HIT API get Invitation Link'
-        responGetInvLink = WS.sendRequest(findTestObject('Postman/Get Inv Link', [('callerId') : '""', ('receiverDetail') : ('"' + 
-                    receiverDetail) + '"', ('tenantCode') : ('"' + GlobalVariable.Tenant) + '"', ('vendorCode') : ('"' + GlobalVariable.Psre) + '"']))
+        responGetInvLink = WS.sendRequest(findTestObject('Postman/Get Inv Link', [('callerId') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), 
+			('receiverDetail') : (receiverDetail)]))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(responGetInvLink, 200, FailureHandling.OPTIONAL) == true) {
@@ -459,7 +459,7 @@ def getErrorLog() {
     GlobalVariable.FlagFailed = 1
 
     'call test case error report'
-    WebUI.callTestCase(findTestCase('Register eSign/ErrorReport'), [('excelPathRegister') : excelPathRegister], 
+    WebUI.callTestCase(findTestCase('Main Register/ErrorReport'), [('excelPathRegister') : excelPathRegister], 
         FailureHandling.CONTINUE_ON_FAILURE)
 }
 

@@ -675,8 +675,6 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 	documentTemplateNamePerDoc = documentTemplateName.split(';', -1)
 
 	noKontrakPerDoc = noKontrak.split(';', -1)
-
-	checkSaldoWAOrSMS(conneSign)
 	
 	GlobalVariable.eSignData.putAt('VerifikasiSign', saldoUsed)
 	
@@ -1150,7 +1148,8 @@ def signingProcessStoreDB(Connection conneSign, String emailSigner, int jumlahSi
 }
 
 def verifOTPMethod(Connection conneSign, String emailSigner, ArrayList listOTP, String noTelpSigner, String otpAfter, String vendor) {
-    'Klik verifikasi by OTP'
+
+	 'Klik verifikasi by OTP'
     WebUI.click(findTestObject('KotakMasuk/Sign/btn_verifOTP'))
 
     'Memindahkan variable ke findTestObject'
@@ -1210,7 +1209,15 @@ def verifOTPMethod(Connection conneSign, String emailSigner, ArrayList listOTP, 
 }
 
 def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList listOTP, String noTelpSigner, String otpAfter, String vendor) {
-    'check ada value maka Setting OTP Active Duration'
+	countResend = 0
+	
+	GlobalVariable.eSignData.putAt('VerifikasiOTP', 1)
+	
+	checkSaldoWAOrSMS(conneSign, vendor)
+	
+	WebUI.delay(100)
+	
+	'check ada value maka Setting OTP Active Duration'
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() > 
     0) {
         'Setting OTP Active Duration'
@@ -1607,7 +1614,7 @@ def checkAutoStamp(Connection conneSign, String noKontrak, HashMap<String, Strin
 	}
 }
 
-def checkSaldoWAOrSMS(Connection conneSign) {
+def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 	ArrayList balmut = []
 
 	int penggunaanSaldo = 0
@@ -1622,6 +1629,12 @@ def checkSaldoWAOrSMS(Connection conneSign) {
 
 	mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
 
+	if (vendor.equalsIgnoreCase('Privy')) {
+		mustUseWaFirst = '0'
+		
+		emailServiceOnVendor = '0'
+	}
+	
 	if (mustUseWAFirst == '1') {
 		tipeSaldo = 'WhatsApp Message'
 

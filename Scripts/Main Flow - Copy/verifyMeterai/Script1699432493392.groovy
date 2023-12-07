@@ -50,7 +50,7 @@ ArrayList totalMateraiAndTotalStamping = CustomKeywords.'connection.Meterai.getT
 int indexInput = 0, indexValue = 0, indexGetNomorMaterai = 0
 
 'looping per total meterai yang telah distamp'
-for (j = 1; j <= (Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ',''))); j++) {
+for (j = 1; j <= Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ','')); j++) {
 	'ambil value db untuk mau input apa'
 	ArrayList inputBasedOnAPIStamping = CustomKeywords.'connection.Meterai.getInputMeterai'(conneSign, noKontrak)
 
@@ -176,7 +176,7 @@ for (j = 1; j <= (Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ','
     WebUI.click(findTestObject('Meterai/button_X'))
 }
 
-if (GlobalVariable.FlagFailed == 0) {
+if (GlobalVariable.FlagFailed == 0 && Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ','')) > 0) {
 	'write to excel success'
 	CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet , rowExcel('Status') - 1, GlobalVariable.NumofColm -
 		1, GlobalVariable.StatusSuccess)

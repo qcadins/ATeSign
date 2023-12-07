@@ -23,7 +23,7 @@ sheet = 'Main'
 def currentDate = new Date().format('yyyy-MM-dd')
 //321, 370
 'looping untuk menjalankan Main'
-for (GlobalVariable.NumofColm = 428; GlobalVariable.NumofColm <= findTestData(excelPathMain).columnNumbers; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathMain).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break //  'Input enter'
         //WebUI.sendKeys(findTestObject('Saldo/input_tipedokumen'), Keys.chord(Keys.ENTER))
@@ -407,13 +407,12 @@ for (GlobalVariable.NumofColm = 428; GlobalVariable.NumofColm <= findTestData(ex
                 }
 
 				if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Do Stamp for this document?')) == 
-                'No' && findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Need Sign for this document?')) == 'No') {
+                'Yes' || findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Need Sign for this document?')) == 'Yes') {
 				 'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
 				 WebUI.callTestCase(findTestCase('Main Flow - Copy/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathMain
 					 , ('sheet') : sheet, ('nomorKontrak') : GlobalVariable.eSignData.getAt('NoKontrakProcessed'), ('vendor') : vendor],
 				 FailureHandling.CONTINUE_ON_FAILURE)
 				 
-	 
             resultSaldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathMain, ('sheet') : sheet
                     , ('vendor') : vendor, ('usageSaldo') : 'Sign'], FailureHandling.CONTINUE_ON_FAILURE)
 
@@ -459,6 +458,8 @@ for (GlobalVariable.NumofColm = 428; GlobalVariable.NumofColm <= findTestData(ex
                         'CountVerifikasiWA'), Integer.parseInt(resultSaldoAfter.get('WhatsApp Message')), FailureHandling.CONTINUE_ON_FAILURE), 'pada saldo before dan after WhatsApp Message')
             }
 			
+			println GlobalVariable.eSignData
+			WebUI.delay(100000000)
             if (GlobalVariable.eSignData.getAt('VerifikasiMeterai') > 0) {
                 'Jika count saldo sign/ttd diatas (after) sama dengan yang dulu/pertama (before) dikurang jumlah dokumen yang ditandatangani'
                 if (WebUI.verifyNotEqual(Integer.parseInt(resultSaldoBefore.get('Meterai')) - GlobalVariable.eSignData.getAt(
@@ -919,7 +920,7 @@ def inputFilterTrx(Connection conneSign, String currentDate, String noKontrak, S
     WebUI.setText(findTestObject('Saldo/input_tipesaldo'), signType)
 
     if (signType == 'Stamp Duty') {
-        WebUI.sendKeys(findTestObject('Saldo/input_tipesaldo'), Keys.chord(Keys.ARROW_DOWN))
+       // WebUI.sendKeys(findTestObject('Saldo/input_tipesaldo'), Keys.chord(Keys.ARROW_DOWN))
     }
     
     'Input enter'
