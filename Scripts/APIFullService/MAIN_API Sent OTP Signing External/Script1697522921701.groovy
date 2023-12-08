@@ -54,11 +54,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         
         'mengambil reset otp request numbernya awal berapa'
         reset_otp_request_num = CustomKeywords.'connection.APIFullService.getResetCodeRequestNum'(conneSign, findTestData(excelPathAPISentOTPSigning).getValue(
-                GlobalVariable.NumofColm, rowExcel('email')).replace('"', ''))
+                GlobalVariable.NumofColm, rowExcel('email')))
 
         'mengambil nilai otp awal baik berisi ataupun kosong'
         otp_code = CustomKeywords.'connection.DataVerif.getOTP'(conneSign, findTestData(excelPathAPISentOTPSigning).getValue(
-                GlobalVariable.NumofColm, rowExcel('email')).replace('"', ''))
+                GlobalVariable.NumofColm, rowExcel('email')))
 
 		'inisialisasi arrayList'
 		ArrayList documentId = [], list = [], listDocId = []
@@ -93,7 +93,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         GlobalVariable.NumofColm, rowExcel('$callerId')), ('phoneNo') : findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 
                         rowExcel('phoneNo')), ('email') : findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('email'))
                     , ('refnumber') : findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')), ('listDocumentId') : listDoc,
-					('vendor') : '"' + GlobalVariable.Psre + '"']))
+					('vendor') : GlobalVariable.Psre]))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
@@ -144,18 +144,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		
 							'verify email'
 							arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toUpperCase(), findTestData(excelPathAPISentOTPSigning).getValue(
-										GlobalVariable.NumofColm, rowExcel('email')).replace('"', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
+										GlobalVariable.NumofColm, rowExcel('email')), false, FailureHandling.CONTINUE_ON_FAILURE))
 		
 							'verify trx qty = -1'
 							arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
 		
 							'verify ref number'
 							arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], findTestData(excelPathAPISentOTPSigning).getValue(
-										GlobalVariable.NumofColm, rowExcel('refNumber')).replace('"', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
+										GlobalVariable.NumofColm, rowExcel('refNumber')), false, FailureHandling.CONTINUE_ON_FAILURE))
 		
 							'verify no telp'
 							arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], findTestData(excelPathAPISentOTPSigning).getValue(
-										GlobalVariable.NumofColm, rowExcel('phoneNo')).replace('"', '') + ' : Send OTP SMS', false, FailureHandling.CONTINUE_ON_FAILURE))
+										GlobalVariable.NumofColm, rowExcel('phoneNo')) + ' : Send OTP SMS', false, FailureHandling.CONTINUE_ON_FAILURE))
 							
 							newOTP = (result[arrayIndex++])
 							

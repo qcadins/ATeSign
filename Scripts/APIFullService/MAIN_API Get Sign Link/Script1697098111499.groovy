@@ -64,9 +64,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		String listDoc = listDocId.toString().replace('[','').replace(']','')
 		
 		'HIT API Sign Document'
-		respon_signdoc = WS.sendRequest(findTestObject('APIFullService/Postman/API Get Sign Link', [('callerId') : ('"' + findTestData(excelPathAPIGetSignLink).getValue(
-						GlobalVariable.NumofColm, rowExcel('$CallerId'))) + '"', ('listDocumentId') : listDoc, ('loginId') : ('"' +
-					findTestData(excelPathAPIGetSignLink).getValue(GlobalVariable.NumofColm, rowExcel('$loginId'))) + '"']))
+		respon_signdoc = WS.sendRequest(findTestObject('APIFullService/Postman/API Get Sign Link', [('callerId') : findTestData(excelPathAPIGetSignLink).getValue(
+						GlobalVariable.NumofColm, rowExcel('$CallerId')), ('listDocumentId') : listDoc,
+					('loginId') : findTestData(excelPathAPIGetSignLink).getValue(GlobalVariable.NumofColm, rowExcel('$loginId'))]))
 
 		'Jika status HIT API 200 OK'
 		if (WS.verifyResponseStatusCode(respon_signdoc, 200, FailureHandling.OPTIONAL) == true) {
