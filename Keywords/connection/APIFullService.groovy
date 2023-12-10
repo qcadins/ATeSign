@@ -1689,5 +1689,49 @@ public class APIFullService {
 		}
 		listdata
 	}
-}
+	@Keyword
+	getAutoStampAfterSignAPIOnly(Connection conn, String tenant) {
+		stm = conn.createStatement()
 
+		resultSet = stm.executeQuery("SELECT CASE WHEN automatic_stamping_after_sign is null OR automatic_stamping_after_sign = '0' THEN 'false' WHEN automatic_stamping_after_sign = '1' THEN 'true' END FROM ms_tenant WHERE tenant_code = '" + tenant + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+	@Keyword
+	getAutoStampTenantAPIOnly(Connection conn, String tenant) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT automatic_stamping_after_sign FROM ms_tenant WHERE tenant_code = '" + tenant + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+	@Keyword
+	DownloadReportCountAPIOnly(Connection conn, String tenant) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT count(*) FROM tr_manual_report mr LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mr.id_ms_tenant WHERE mt.tenant_code = '" + tenant + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+}
