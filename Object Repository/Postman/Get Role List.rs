@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebServiceRequestEntity>
    <description></description>
-   <name>Send Document Signing</name>
+   <name>Get Role List</name>
    <tag></tag>
-   <elementGuidId>d78d3b70-1811-43f7-a996-099240cf5435</elementGuidId>
+   <elementGuidId>ffe3894d-8e5b-4d49-a6b8-09fc98876375</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n    \&quot;tenantCode\&quot;: \&quot;${tenantCode}\&quot;,\n    \&quot;requests\&quot;: [\n        ${request}\n    ],\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    }\n}&quot;,
+  &quot;text&quot;: &quot;{\&quot;audit\&quot;:{\&quot;callerId\&quot;:\&quot;${callerId}\&quot;},\&quot;tenantCode\&quot;:\&quot;${tenantCode}\&quot;}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -18,32 +18,48 @@
    <httpHeaderProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
+      <name>Accept</name>
+      <type>Main</type>
+      <value>application/json, text/plain, */*</value>
+      <webElementGuid>f76ca15e-3e84-4c17-8748-bfc94db51a65</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Accept-Language</name>
+      <type>Main</type>
+      <value>en-US,en;q=0.9</value>
+      <webElementGuid>5996ca29-373b-42dd-bda4-ea58e070f784</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Authorization</name>
+      <type>Main</type>
+      <value>Bearer ${token}</value>
+      <webElementGuid>3e457dbf-3744-4e81-9413-64de2150b270</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Connection</name>
+      <type>Main</type>
+      <value>keep-alive</value>
+      <webElementGuid>583bbce8-2095-4fab-b601-eac300e6c9df</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
       <name>Content-Type</name>
       <type>Main</type>
       <value>application/json</value>
-      <webElementGuid>e0d4518a-c30b-405d-80b2-499e55e723b6</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Accept</name>
-      <type>Main</type>
-      <value>application/json</value>
-      <webElementGuid>d584cb4e-4e09-4e68-bef5-391cc7107956</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>x-api-key</name>
-      <type>Main</type>
-      <value>${api_key}@${tenant_code}</value>
-      <webElementGuid>e86b730e-38c1-4537-8335-d2b6c7bf4f79</webElementGuid>
+      <webElementGuid>18fad342-1992-445a-800d-e1bbc28970b3</webElementGuid>
    </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>POST</restRequestMethod>
-   <restUrl>${base_url}/services/external/document/sendDocumentSigning</restUrl>
+   <restUrl>${base_url}/services/role/s/getrolelist</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>
@@ -55,23 +71,16 @@
    <variables>
       <defaultValue>GlobalVariable.base_url</defaultValue>
       <description></description>
-      <id>54f56ae6-2376-486e-a148-9f823bea69ef</id>
+      <id>216490d9-bfb0-4f4a-963c-c9f5f691a923</id>
       <masked>false</masked>
       <name>base_url</name>
    </variables>
    <variables>
-      <defaultValue>GlobalVariable.api_key</defaultValue>
+      <defaultValue>GlobalVariable.token</defaultValue>
       <description></description>
-      <id>1bec220b-749b-41e5-91cf-ca92506814ba</id>
+      <id>30f9a013-9a81-4509-a537-ae1b1f57c20d</id>
       <masked>false</masked>
-      <name>api_key</name>
-   </variables>
-   <variables>
-      <defaultValue>GlobalVariable.Tenant</defaultValue>
-      <description></description>
-      <id>e993ffa2-e3cf-4a1c-ace2-504579b490b6</id>
-      <masked>false</masked>
-      <name>tenant_code</name>
+      <name>token</name>
    </variables>
    <verificationScript>import static org.assertj.core.api.Assertions.*
 

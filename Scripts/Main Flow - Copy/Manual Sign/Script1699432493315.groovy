@@ -70,8 +70,6 @@ catatanStamping = findTestData(excelPathManualSigntoSign).getValue(GlobalVariabl
 
 funcLogin()
 
-WebUI.focus(findTestObject('ManualSign/lbl_ManualSign'))
-
 loopcase = 1
 
 for (looping = 0; looping < loopcase; looping++) {

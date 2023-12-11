@@ -3264,7 +3264,14 @@
                 "errorOnParsing": false
               }
             }
+<<<<<<< HEAD
           ]
+=======
+          ],
+          "javadoc": ""
+<<<<<<< HEAD
+=======
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
         },
         {
           "name": "getProfileAPIOnly",
@@ -3388,6 +3395,7 @@
                 "errorOnParsing": false
               }
             }
+<<<<<<< HEAD
           ]
         },
         {
@@ -3433,6 +3441,11 @@
               }
             }
           ]
+=======
+          ],
+          "javadoc": ""
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
         }
       ]
     }

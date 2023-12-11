@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebServiceRequestEntity>
    <description></description>
-   <name>Send Document Signing</name>
+   <name>Error History Act Status</name>
    <tag></tag>
-   <elementGuidId>d78d3b70-1811-43f7-a996-099240cf5435</elementGuidId>
+   <elementGuidId>c6f1107a-bf26-40df-82a7-2ed8451693fd</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n    \&quot;tenantCode\&quot;: \&quot;${tenantCode}\&quot;,\n    \&quot;requests\&quot;: [\n        ${request}\n    ],\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    }\n}&quot;,
+  &quot;text&quot;: &quot;{\&quot;idErrorHistory\&quot;:${idErrorHistory},\&quot;audit\&quot;:{\&quot;callerId\&quot;:\&quot;${callerId}\&quot;},\&quot;tenantCode\&quot;:\&quot;${tenantCode}\&quot;}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -18,32 +18,48 @@
    <httpHeaderProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
+      <name>Accept</name>
+      <type>Main</type>
+      <value>application/json, text/plain, */*</value>
+      <webElementGuid>4a490a13-4c58-406f-b015-2a4e7cd597d7</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Accept-Language</name>
+      <type>Main</type>
+      <value>en-US,en;q=0.9</value>
+      <webElementGuid>8366b92c-ce87-43d1-a07d-8b197a10d2ef</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Authorization</name>
+      <type>Main</type>
+      <value>Bearer ${token}</value>
+      <webElementGuid>4cf8144b-ba1e-443b-bbf5-73ba8c8570ec</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Connection</name>
+      <type>Main</type>
+      <value>keep-alive</value>
+      <webElementGuid>1a20fed0-d7bc-4f76-b4c5-80bfd957fff8</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
       <name>Content-Type</name>
       <type>Main</type>
       <value>application/json</value>
-      <webElementGuid>e0d4518a-c30b-405d-80b2-499e55e723b6</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Accept</name>
-      <type>Main</type>
-      <value>application/json</value>
-      <webElementGuid>d584cb4e-4e09-4e68-bef5-391cc7107956</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>x-api-key</name>
-      <type>Main</type>
-      <value>${api_key}@${tenant_code}</value>
-      <webElementGuid>e86b730e-38c1-4537-8335-d2b6c7bf4f79</webElementGuid>
+      <webElementGuid>dc3cdb7b-c1e3-47b0-9e34-8cac5bcdc4cd</webElementGuid>
    </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>POST</restRequestMethod>
-   <restUrl>${base_url}/services/external/document/sendDocumentSigning</restUrl>
+   <restUrl>${base_url}/services/errorReport/s/errHistActStatus</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>
@@ -55,23 +71,16 @@
    <variables>
       <defaultValue>GlobalVariable.base_url</defaultValue>
       <description></description>
-      <id>54f56ae6-2376-486e-a148-9f823bea69ef</id>
+      <id>3d968749-728a-4d42-b654-4657f3394925</id>
       <masked>false</masked>
       <name>base_url</name>
    </variables>
    <variables>
-      <defaultValue>GlobalVariable.api_key</defaultValue>
+      <defaultValue>GlobalVariable.token</defaultValue>
       <description></description>
-      <id>1bec220b-749b-41e5-91cf-ca92506814ba</id>
+      <id>f74502d2-53ad-47d3-b182-c70a94082c9c</id>
       <masked>false</masked>
-      <name>api_key</name>
-   </variables>
-   <variables>
-      <defaultValue>GlobalVariable.Tenant</defaultValue>
-      <description></description>
-      <id>e993ffa2-e3cf-4a1c-ace2-504579b490b6</id>
-      <masked>false</masked>
-      <name>tenant_code</name>
+      <name>token</name>
    </variables>
    <verificationScript>import static org.assertj.core.api.Assertions.*
 

@@ -570,6 +570,8 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
             'Mensplit nomor kontrak yang telah disatukan'
             noKontrakPerDoc = noKontrak.split(';', -1)
 
+			GlobalVariable.eSignData.putAt('NoKontrakProcessed', noKontrak)
+			
             'looping untuk mendapatkan total saldo yang digunakan per nomor kontrak'
             for (i = 0; i < noKontrakPerDoc.size(); i++) {
                 if (checkingAutoSign == true) {
@@ -677,8 +679,6 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 	noKontrakPerDoc = noKontrak.split(';', -1)
 	
 	GlobalVariable.eSignData.putAt('VerifikasiSign', saldoUsed)
-	
-	GlobalVariable.eSignData.putAt('NoKontrakProcessed', noKontrak)
 	
 	checkAutoStamp(conneSign, noKontrak, GlobalVariable.saldo)
 	

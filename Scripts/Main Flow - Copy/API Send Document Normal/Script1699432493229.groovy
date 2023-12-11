@@ -273,8 +273,8 @@ if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('us
 
 'Hit API'
 respon = WS.sendRequest(findTestObject('Postman/Send Document', [('tenantCode') : findTestData(API_Excel_Path).getValue(
-                GlobalVariable.NumofColm, rowExcel('$tenantCode (Send Normal)')), ('request') : stringRefno, ('callerId') : findTestData(
-                API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('callerId (Send Normal)'))]))
+                GlobalVariable.NumofColm, rowExcel('$tenantCode (Send Normal)')).replace('"',''), ('request') : stringRefno, ('callerId') : findTestData(
+                API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('callerId (Send Normal)')).replace('"','')]))
 
 'jika response 200 / hit api berhasil'
 if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {

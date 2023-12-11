@@ -91,9 +91,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		respon = WS.sendRequest(findTestObject('APIFullService/Postman/API Signing Hash File', [
 			('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')),
 			('loginId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Email')),
-			('otp') : otp,
-				('documentHash') : listDoc,
-				('psre') : GlobalVariable.Psre]))
+			('otp') : (otp),('documentHash') : listDoc,('psre') : (GlobalVariable.Psre)]))
 
 		'ambil lama waktu yang diperlukan hingga request menerima balikan'
 		def elapsedTime = (respon.getElapsedTime()) / 1000 + ' second'

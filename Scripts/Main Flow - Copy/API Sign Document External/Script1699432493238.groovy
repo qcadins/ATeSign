@@ -154,7 +154,9 @@ if (vendor.equalsIgnoreCase('Privy') || vendor.equalsIgnoreCase('Digisign')) {
             }
             
             println(otp)
-        }
+        } else {
+		getErrorMessageAPI(respon_OTP)
+	}
 		countOTP++
     } else {
 		getErrorMessageAPI(respon_OTP)
