@@ -77,7 +77,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                     'get data from db'
                     ArrayList<String> result = CustomKeywords.'connection.APIFullService.getAPICheckRegisterStoreDB'(conneSign, 
-                        findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('userData')).replace('"', ''))
+                        findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('userData')))
 
 					println(result)
 					

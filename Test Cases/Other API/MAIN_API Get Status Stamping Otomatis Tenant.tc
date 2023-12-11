@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API Get Status Stamping Otomatis Tenant</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>51d80b9f-6eed-4cf1-a8a2-bdb1765221c4</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>05192d93-54b7-4683-ac06-18acbc67da10</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>372ee8ed-58e9-4f0b-8bb0-578315341c03</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/Get Status AutoStamp Tenant'</defaultValue>
+      <description></description>
+      <id>05192d93-54b7-4683-ac06-18acbc67da10</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Get Status AutoStamp Tenant'</defaultValue>
+      <description></description>
+      <id>372ee8ed-58e9-4f0b-8bb0-578315341c03</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>

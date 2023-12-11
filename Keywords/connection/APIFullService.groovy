@@ -1638,8 +1638,8 @@ public class APIFullService {
 		}
 		data
 	}
-	
-		@Keyword
+
+	@Keyword
 	convertRegionOfficetoCode(Connection conn, String officeName, String regionName, String tenantCode) {
 		stm = conn.createStatement()
 
@@ -1671,5 +1671,67 @@ public class APIFullService {
 
 		listdata
 	}
-}
+	@Keyword
+	getProfileAPIOnly(Connection conn, String email) {
+		stm = conn.createStatement()
 
+		resultSet = stm.executeQuery("SELECT mt.tenant_name, mro.role_code, mro.role_name, mt.tenant_code FROM am_msuser amu LEFT JOIN ms_useroftenant mot ON mot.id_ms_user = amu.id_ms_user LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mot.id_ms_tenant LEFT JOIN am_memberofrole mor ON mor.id_ms_user = amu.id_ms_user LEFT JOIN am_msrole mro ON mro.id_ms_role = mor.id_ms_role WHERE amu.login_id = '" + email + "' ORDER BY mro.id_ms_role DESC")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+	@Keyword
+	getAutoStampAfterSignAPIOnly(Connection conn, String tenant) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT CASE WHEN automatic_stamping_after_sign is null OR automatic_stamping_after_sign = '0' THEN 'false' WHEN automatic_stamping_after_sign = '1' THEN 'true' END FROM ms_tenant WHERE tenant_code = '" + tenant + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+	@Keyword
+	getAutoStampTenantAPIOnly(Connection conn, String tenant) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT automatic_stamping_after_sign FROM ms_tenant WHERE tenant_code = '" + tenant + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+	@Keyword
+	DownloadReportCountAPIOnly(Connection conn, String tenant) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT count(*) FROM tr_manual_report mr LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mr.id_ms_tenant WHERE mt.tenant_code = '" + tenant + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+}

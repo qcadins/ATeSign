@@ -82,8 +82,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 if (GlobalVariable.checkStoreDB == 'Yes') {
                     'get data from db'
                     result = CustomKeywords.'connection.APIFullService.getTotalUnsignedDocuments'(conneSign, GlobalVariable.Tenant, 
-                        findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace(
-                            '"', ''))
+                        findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('email')))
 					
                     'verify total Unsigned Documents'
                     if (WebUI.verifyEqual(result, findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, 

@@ -69,13 +69,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 		
 		'inisialisasi arrayList'
-		ArrayList documentId = [], list = [], listDocId = []
+		ArrayList documentHash = [], list = [], listDocId = []
 	
 		'Mengambil document id dari excel dan displit'
-		documentId = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Document Hash')).split(';', -1)
+		documentHash = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Document Hash')).split(';', -1)
 	
-		for (int q = 0; q < documentId.size(); q++) {
-			list.add('"' + documentId.get(q) + '"');
+		for (int q = 0; q < documentHash.size(); q++) {
+			list.add('"' + documentHash.get(q) + '"');
 			
 			if (q == 0) {
 				listDocId.add(list.get(q));
@@ -89,11 +89,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		
 		'HIT API send otp ke email invitasi'
 		respon = WS.sendRequest(findTestObject('APIFullService/Postman/API Signing Hash File', [
-			('callerId') : ('"' + findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId'))) + '"',
-			('loginId') : ('"' + findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Email'))) + '"',
-			('otp') : ('"' + otp + '"'),
+			('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')),
+			('loginId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Email')),
+			('otp') : otp,
 				('documentHash') : listDoc,
-				('psre') : ('"' + GlobalVariable.Psre + '"')]))
+				('psre') : GlobalVariable.Psre]))
 
 		'ambil lama waktu yang diperlukan hingga request menerima balikan'
 		def elapsedTime = (respon.getElapsedTime()) / 1000 + ' second'

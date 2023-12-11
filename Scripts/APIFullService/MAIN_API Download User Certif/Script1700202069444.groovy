@@ -24,7 +24,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPIDownload, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 		
 		'get psre dari excel per case'
-		GlobalVariable.Psre = '"' + findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login')) + '"'
+		GlobalVariable.Psre = findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
 		
         'check if tidak mau menggunakan tenant code yang benar'
         if (findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code')) == 'No') {
