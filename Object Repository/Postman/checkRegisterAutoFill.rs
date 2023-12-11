@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebServiceRequestEntity>
+   <description></description>
+   <name>checkRegisterAutoFill</name>
+   <tag></tag>
+   <elementGuidId>8f024ff4-f7c6-48b3-87ff-e3116b615326</elementGuidId>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <connectionTimeout>-1</connectionTimeout>
+   <followRedirects>false</followRedirects>
+   <httpBody></httpBody>
+   <httpBodyContent>{
+  &quot;text&quot;: &quot;{\r\n    \&quot;checkRegisterDetail\&quot;: \&quot;KEVIN.EDGAR@AD-INS.COM\&quot;,\r\n    \&quot;vendorCode\&quot;: \&quot;PRIVY\&quot;,\r\n    \&quot;audit\&quot;: {\r\n        \&quot;callerId\&quot;: \&quot;ADMIN@WOM.CO.ID\&quot;\r\n    },\r\n    \&quot;tenantCode\&quot;: \&quot;WOMF\&quot;\r\n}&quot;,
+  &quot;contentType&quot;: &quot;application/json&quot;,
+  &quot;charset&quot;: &quot;UTF-8&quot;
+}</httpBodyContent>
+   <httpBodyType>text</httpBodyType>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Accept</name>
+      <type>Main</type>
+      <value>application/json, text/plain, */*</value>
+      <webElementGuid>95057790-7000-4638-9162-c69514cf909f</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Accept-Language</name>
+      <type>Main</type>
+      <value>id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7</value>
+      <webElementGuid>436efde1-7cfc-426f-b94e-a4c87c58b144</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Authorization</name>
+      <type>Main</type>
+      <value>Bearer /bZraCPgCNkcNKn2ywFBkcNE1Zg=</value>
+      <webElementGuid>0c2464a4-8cb1-42d1-ab87-1b5cfe5c7256</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Connection</name>
+      <type>Main</type>
+      <value>keep-alive</value>
+      <webElementGuid>42671c5e-1cbc-4711-931f-36486f7009d4</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Content-Type</name>
+      <type>Main</type>
+      <value>application/json</value>
+      <webElementGuid>a36bb9a7-b47f-4df7-a46e-7df82845449d</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>DNT</name>
+      <type>Main</type>
+      <value>1</value>
+      <webElementGuid>ff8f5120-0a86-4d7f-83fd-a761aee4d321</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Origin</name>
+      <type>Main</type>
+      <value>http://gdkwebsvr:8080</value>
+      <webElementGuid>95af363a-6d54-4472-ad90-4036f36bc4f0</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Referer</name>
+      <type>Main</type>
+      <value>http://gdkwebsvr:8080/</value>
+      <webElementGuid>1318879c-55ab-4830-99ad-c8a810e899f0</webElementGuid>
+   </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>User-Agent</name>
+      <type>Main</type>
+      <value>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36</value>
+      <webElementGuid>92b263b7-c0e5-47ca-beab-862134ee3c51</webElementGuid>
+   </httpHeaderProperties>
+   <katalonVersion>8.5.5</katalonVersion>
+   <maxResponseSize>-1</maxResponseSize>
+   <migratedVersion>5.4.1</migratedVersion>
+   <restRequestMethod>POST</restRequestMethod>
+   <restUrl>http://gdkwebsvr:7021/adimobile/esign/services/user/s/checkRegisterAutoFill</restUrl>
+   <serviceType>RESTful</serviceType>
+   <soapBody></soapBody>
+   <soapHeader></soapHeader>
+   <soapRequestMethod></soapRequestMethod>
+   <soapServiceEndpoint></soapServiceEndpoint>
+   <soapServiceFunction></soapServiceFunction>
+   <socketTimeout>-1</socketTimeout>
+   <useServiceInfoFromWsdl>true</useServiceInfoFromWsdl>
+   <wsdlAddress></wsdlAddress>
+</WebServiceRequestEntity>

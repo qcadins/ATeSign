@@ -1734,4 +1734,22 @@ public class APIFullService {
 		}
 		data
 	}
+	@Keyword
+	getListPaymentTypeAPIOnly(Connection conn, String tenant, String vendor) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT mlov.code, mlov.description FROM ms_paymentsigntypeoftenant mspot LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mspot.id_ms_tenant LEFT JOIN ms_vendor mv ON mv.id_ms_vendor = mspot.id_ms_vendor LEFT JOIN ms_lov mlov ON mlov.id_lov = mspot.lov_payment_sign_type WHERE vendor_code = '" + vendor + "' AND tenant_code = '" + tenant + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
 }
