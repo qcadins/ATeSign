@@ -49,7 +49,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
         String signType
 
-        String minuses = '-'
+        String minuses = '-', usageSaldo = ''
 
         String cancelDocsValue = '', logicVendor
 
@@ -83,9 +83,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             for (loopingGetSaldoBefore = 0; loopingGetSaldoBefore < documentTemplateCode.size(); loopingGetSaldoBefore++) {
                 logicVendor = CustomKeywords.'connection.SendSign.getProyectionOfVendorForSend'(conneSign, (documentTemplateCode[
                     loopingGetSaldoBefore]).replace('"', ''), GlobalVariable.Tenant)
+				
+				usageSaldo = 'Sign'
 
                 GlobalVariable.saldo = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathMain
-                        , ('sheet') : sheet, ('vendor') : logicVendor, ('usageSaldo') : 'Sign'], FailureHandling.CONTINUE_ON_FAILURE)
+                        , ('sheet') : sheet, ('vendor') : logicVendor, ('usageSaldo') : usageSaldo], FailureHandling.CONTINUE_ON_FAILURE)
 
                 resultSaldoBefore.putAll(GlobalVariable.saldo)
 				
@@ -99,8 +101,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 logicVendor = CustomKeywords.'connection.SendSign.getProyectionOfVendorForSend'(conneSign, (documentTemplateCode[
                     loopingGetSaldoBefore]).replace('"', ''), GlobalVariable.Tenant)
 
+				usageSaldo = 'Sign'
+				
                 GlobalVariable.saldo = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathMain
-                        , ('sheet') : sheet, ('vendor') : logicVendor, ('usageSaldo') : 'Sign'], FailureHandling.CONTINUE_ON_FAILURE)
+                        , ('sheet') : sheet, ('vendor') : logicVendor, ('usageSaldo') : usageSaldo], FailureHandling.CONTINUE_ON_FAILURE)
 
                 resultSaldoBefore.putAll(GlobalVariable.saldo)
             }
@@ -108,8 +112,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         'Manual Sign') {
             logicVendor = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('$PSrE (Send Manual)'))
 
+			usageSaldo = 'Sign'
+			
             GlobalVariable.saldo = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathMain, ('sheet') : sheet
-                    , ('vendor') : logicVendor, ('usageSaldo') : 'Sign'], FailureHandling.CONTINUE_ON_FAILURE)
+                    , ('vendor') : logicVendor, ('usageSaldo') : usageSaldo], FailureHandling.CONTINUE_ON_FAILURE)
 
             resultSaldoBefore.putAll(GlobalVariable.saldo)
         } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
@@ -117,14 +123,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             logicVendor = CustomKeywords.'connection.SendSign.getVendorNameUsingDocId'(conneSign, findTestData(excelPathMain).getValue(
                     GlobalVariable.NumofColm, rowExcel('documentid')))
 
+			usageSaldo = 'Sign'
+			
             GlobalVariable.saldo = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathMain, ('sheet') : sheet
-                    , ('vendor') : logicVendor, ('usageSaldo') : 'Sign'], FailureHandling.CONTINUE_ON_FAILURE)
+                    , ('vendor') : logicVendor, ('usageSaldo') : usageSaldo], FailureHandling.CONTINUE_ON_FAILURE)
 
             resultSaldoBefore.putAll(GlobalVariable.saldo)
         } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
         'Stamp Only') {
+		usageSaldo = 'Stamp'
+		
             GlobalVariable.saldo = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathMain, ('sheet') : sheet
-                    , ('vendor') : '', ('usageSaldo') : 'Stamp'], FailureHandling.CONTINUE_ON_FAILURE)
+                    , ('vendor') : '', ('usageSaldo') : usageSaldo], FailureHandling.CONTINUE_ON_FAILURE)
 
             resultSaldoBefore.putAll(GlobalVariable.saldo)
         }
@@ -408,15 +418,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
 				if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Do Stamp for this document?')) == 
                 'Yes' || findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Need Sign for this document?')) == 'Yes') {
+				if (vendor.toString() == 'null') {
+					'ambil nama vendor dari DB'
+					vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('documentid')))
+				}
+				
 				 'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
 				 WebUI.callTestCase(findTestCase('Main Flow - Copy/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathMain
 					 , ('sheet') : sheet, ('nomorKontrak') : GlobalVariable.eSignData.getAt('NoKontrakProcessed'), ('vendor') : vendor],
 				 FailureHandling.CONTINUE_ON_FAILURE)
 				 
             resultSaldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathMain, ('sheet') : sheet
-                    , ('vendor') : vendor, ('usageSaldo') : 'Sign'], FailureHandling.CONTINUE_ON_FAILURE)
-
-            WebUI.comment(GlobalVariable.eSignData.toString())
+                    , ('vendor') : vendor, ('usageSaldo') : usageSaldo], FailureHandling.CONTINUE_ON_FAILURE)
 
             'Jika count saldo sign/ttd diatas (after) sama dengan yang dulu/pertama (before) dikurang jumlah dokumen yang ditandatangani'
             if (checkVerifyEqualorMatch(WebUI.verifyEqual(Integer.parseInt(resultSaldoBefore.get(vendor)) - GlobalVariable.eSignData.getAt('CountVerifikasiSign'), 

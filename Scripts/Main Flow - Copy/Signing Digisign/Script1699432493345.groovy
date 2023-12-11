@@ -26,9 +26,7 @@ if (flowGetSignLink == '' || flowGetSignLink == null) {
 		
 		'Klik ya untuk konfirmasi ttd'
 		WebUI.click(findTestObject('KotakMasuk/Sign/btn_YaKonfirmasiTTD'))
-
 	}
-	
 	'change frame ke digisign'
 	WebUI.switchToFrame(findTestObject('Signing-DIGISIGN/iFrame'), GlobalVariable.TimeOut)
 }

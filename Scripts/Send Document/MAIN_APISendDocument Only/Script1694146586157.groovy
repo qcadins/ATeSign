@@ -242,8 +242,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
         
         'Hit API'
         respon = WS.sendRequest(findTestObject('Postman/Send Document', [('tenantCode') : findTestData(API_Excel_Path).getValue(
-                        GlobalVariable.NumofColm, rowExcel('$tenantCode')), ('request') : stringRefno, ('callerId') : findTestData(API_Excel_Path).getValue(
-                        GlobalVariable.NumofColm, rowExcel('callerId'))]))
+                        GlobalVariable.NumofColm, rowExcel('$tenantCode')).replace('"',''), ('request') : stringRefno, ('callerId') : findTestData(API_Excel_Path).getValue(
+                        GlobalVariable.NumofColm, rowExcel('callerId')).replace('"','')]))
 
 		'ambil lama waktu yang diperlukan hingga request menerima balikan'
 		def elapsedTime = (respon.getElapsedTime()) / 1000 + ' second'

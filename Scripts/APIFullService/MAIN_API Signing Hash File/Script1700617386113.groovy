@@ -89,11 +89,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		
 		'HIT API send otp ke email invitasi'
 		respon = WS.sendRequest(findTestObject('APIFullService/Postman/API Signing Hash File', [
-			('callerId') : ('"' + findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId'))) + '"',
-			('loginId') : ('"' + findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Email'))) + '"',
-			('otp') : ('"' + otp + '"'),
+			('callerId') : (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId'))),
+			('loginId') : (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Email'))),
+			('otp') : (otp),
 				('documentHash') : listDoc,
-				('psre') : ('"' + GlobalVariable.Psre + '"')]))
+				('psre') : (GlobalVariable.Psre)]))
 
 		'ambil lama waktu yang diperlukan hingga request menerima balikan'
 		def elapsedTime = (respon.getElapsedTime()) / 1000 + ' second'

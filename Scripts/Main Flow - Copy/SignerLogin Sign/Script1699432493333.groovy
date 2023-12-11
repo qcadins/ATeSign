@@ -593,6 +593,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
             noKontrakPerDoc = noKontrak.split(';', -1)
 
 			GlobalVariable.eSignData.putAt('NoKontrakProcessed', noKontrak)
+			
             'looping untuk mendapatkan total saldo yang digunakan per nomor kontrak'
             for (i = 0; i < noKontrakPerDoc.size(); i++) {
                 'jika dia ada autosign'

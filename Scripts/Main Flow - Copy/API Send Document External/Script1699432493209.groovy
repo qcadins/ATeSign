@@ -65,8 +65,8 @@ if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExce
 
 'Hit API'
 respon = WS.sendRequest(findTestObject('APIFullService/Postman/Send Document Signing', [('tenantCode') : findTestData(excelPathAPISendDoc).getValue(
-                GlobalVariable.NumofColm, rowExcel('$tenantCode (Send External)')), ('request') : stringRefno, ('callerId') : findTestData(excelPathAPISendDoc).getValue(
-                GlobalVariable.NumofColm, rowExcel('callerId (Send External)'))]))
+                GlobalVariable.NumofColm, rowExcel('$tenantCode (Send External)')).replace('"',''), ('request') : stringRefno, ('callerId') : findTestData(excelPathAPISendDoc).getValue(
+                GlobalVariable.NumofColm, rowExcel('callerId (Send External)')).replace('"','')]))
 
 'jika response 200 / hit api berhasil'
 if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {

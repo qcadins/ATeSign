@@ -495,8 +495,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         }
 		
         'Hit API'
-        respon = WS.sendRequest(findTestObject('APIFullService/Postman/Send Document Signing', [('tenantCode') : GlobalVariable.Tenant, ('request') : stringRefno, ('callerId') : findTestData(
-                        excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 43)]))
+        respon = WS.sendRequest(findTestObject('APIFullService/Postman/Send Document Signing', [('tenantCode') : GlobalVariable.Tenant.replace('"',''), ('request') : stringRefno, ('callerId') : findTestData(
+                        excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 43).replace('"','')]))
 
         'jika response 200 / hit api berhasil'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {

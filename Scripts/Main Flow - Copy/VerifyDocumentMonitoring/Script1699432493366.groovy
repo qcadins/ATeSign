@@ -51,7 +51,7 @@ nomorKontrakPerPilihan = nomorKontrak.split(';', -1).toUnique()
 
 if (vendor.toString() == 'null') {
 	'ambil nama vendor dari DB'
-String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, nomorKontrakPerPilihan[0])
+vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('documentid')))
 }
 
 documentId = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ', -1)
