@@ -86,7 +86,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                     'get data from db'
                     ArrayList<String> result = CustomKeywords.'connection.APIFullService.getAPICheckSigningStoreDB'(conneSign, 
-                        findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')).replace('"', ''))
+                        findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')))
 
                     'declare arraylist arraymatch'
                     ArrayList<String> arrayMatch = []
