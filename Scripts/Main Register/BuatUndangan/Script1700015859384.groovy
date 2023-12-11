@@ -146,7 +146,7 @@ if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/label_ValidationErr
 					
 					GlobalVariable.FlagFailed = 1
                 }
-            } else if (status_Code == 5512 || WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL) == 'Tidak bisa mengakses user milik tenant lain') {
+            } else if (status_Code == 5512 || WS.getElementPropertyValue(responGetInvLink, 'status.message', FailureHandling.OPTIONAL) == 'Tidak bisa mengakses user milik tenant lain') {
 			
 				'cek ke excel bahwa data user sudah diregist otomatis ke tenant lain'
 				result = CustomKeywords.'connection.Registrasi.checkAddUserOtherTenant'(conneSign,
