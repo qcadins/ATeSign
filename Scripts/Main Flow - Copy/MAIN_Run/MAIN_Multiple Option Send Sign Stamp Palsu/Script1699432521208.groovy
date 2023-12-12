@@ -76,7 +76,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         LinkedHashMap signerInput = new LinkedHashMap()
 
 		if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Expected')).toUpperCase() != 'FAILED') {
-        if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 'API Send Document External') {
+        if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 'API Send Document External'
+			|| findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 'API Send Document Internal') {
             documentTemplateCode = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('$documentTemplateCode')).split(
                 ';', -1)
 
@@ -91,26 +92,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                 resultSaldoBefore.putAll(GlobalVariable.saldo)
 				
-            }
-        } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
-        'API Send Document Normal') {
-            documentTemplateCode = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('$documentTemplateCode')).split(
-                ';', -1)
-
-            for (loopingGetSaldoBefore = 0; loopingGetSaldoBefore < documentTemplateCode.size(); loopingGetSaldoBefore++) {
-                logicVendor = CustomKeywords.'connection.SendSign.getProyectionOfVendorForSend'(conneSign, (documentTemplateCode[
-                    loopingGetSaldoBefore]).replace('"', ''), GlobalVariable.Tenant)
-
-				usageSaldo = 'Sign'
-				
-                GlobalVariable.saldo = WebUI.callTestCase(findTestCase('Main Flow - Copy/getSaldo'), [('excel') : excelPathMain
-                        , ('sheet') : sheet, ('vendor') : logicVendor, ('usageSaldo') : usageSaldo], FailureHandling.CONTINUE_ON_FAILURE)
-
-                resultSaldoBefore.putAll(GlobalVariable.saldo)
             }
         } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
         'Manual Sign') {
-            logicVendor = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('$PSrE (Send Manual)'))
+            logicVendor = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Vendor'))
 
 			usageSaldo = 'Sign'
 			
@@ -159,7 +144,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             documentId = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ', 
                 -1)
 
-            signerInput = checkingDocAndEmailFromInput(documentId, '$email (Send Normal)', signerInput)
+            signerInput = checkingDocAndEmailFromInput(documentId, '$email', signerInput)
         } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
         'Manual Sign') {
             'jika send document menggunakan manual sign, maka call test case manual sign'
@@ -817,7 +802,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     break
                 }
             }
-        }
+        } else {
+			if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 'Manual Sign') {
+			'call test case kotak masuk dan verify document monitoring. Document monitoring terdapat didalam kotak masuk.'
+			WebUI.callTestCase(findTestCase('Main Flow - Copy/KotakMasuk'), [('excelPathFESignDocument') : excelPathMain
+					, ('sheet') : sheet, ('checkBeforeSigning') : 'Yes'], FailureHandling.CONTINUE_ON_FAILURE)
+			}}
         }
         
         watch.stop()

@@ -184,7 +184,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
         }
         
         'diberikan delay 3 detik untuk'
-        WebUI.delay(2)
+        WebUI.delay(1)
 
         'check save ada attribute disabled'
         if (WebUI.verifyElementHasAttribute(findTestObject('ManualSign/button_Save'), 'disabled', GlobalVariable.TimeOut, 
@@ -220,7 +220,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 
             'query check informasi dari user tersebut'
             queryCheckInformationUser = CustomKeywords.'connection.ManualSign.getInformationUser'(conneSign, emailPenandaTangan[
-                indexEmail++], findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$PSrE (Send Manual)')))
+                indexEmail++], GlobalVariable.Psre)
 
             if ((valueInformasi[2]) == (emailPenandaTangan[(indexEmail - 1)])) {
                 'check ui dan query mengenai nama signer'
@@ -282,7 +282,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 		WebUI.click(findTestObject('Object Repository/ManualSign/btn_ttd'))
 
 		'diberikan delay 5 detik untuk loading'
-		WebUI.delay(3)
+		WebUI.delay(1)
 
 		'Klik set tanda tangan'
 		WebUI.click(findTestObject('ManualSign/btn_setTandaTangan'))
@@ -412,7 +412,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
             1, GlobalVariable.StatusSuccess)
 		
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('PsRE Document') - 1,
-				GlobalVariable.NumofColm - 1, findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$PSrE (Send Manual)')))
+				GlobalVariable.NumofColm - 1, findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('')))
 
 
         if (GlobalVariable.checkStoreDB == 'Yes') {
@@ -424,8 +424,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
             ArrayList<String> arrayMatch = []
 
             'verify vendor'
-            arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
-                        rowExcel('$PSrE (Send Manual)')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+            arrayMatch.add(WebUI.verifyMatch(GlobalVariable.Psre, result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
             'verify ref number'
             arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
@@ -464,7 +463,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
             'verify tipe dokumen peruri'
             arrayMatch.add(WebUI.verifyMatch(tipeDokumenPeruri, result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-            totalDocument = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Dokumen (Send Manual)')).split(
+            totalDocument = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('documentFile')).split(
                 '\\n', -1)
 
             'verify total dokumen'
@@ -502,7 +501,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 	
 	if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).length() > 0) {
 		checkSaldoWAOrSMS(conneSign, findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel(
-					'Email (Send Manual)')).replace('"', ''))
+					'$email')).replace('"', ''))
 	}
 }
 }
@@ -542,8 +541,7 @@ def checkErrorLog() {
 
 def inputForm() {
     'Input teks di nama template dokumen'
-    WebUI.setText(findTestObject('ManualSign/input_psre'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
-            rowExcel('$PSrE (Send Manual)')))
+    WebUI.setText(findTestObject('ManualSign/input_psre'), GlobalVariable.Psre)
 
     'Klik enter'
     WebUI.sendKeys(findTestObject('ManualSign/input_psre'), Keys.chord(Keys.ENTER))
@@ -569,15 +567,15 @@ def inputForm() {
 
     'Input AKtif pada input Status'
     WebUI.setText(findTestObject('ManualSign/input_isSequence'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
-            rowExcel('$isSequence')))
+            rowExcel('isSequence')))
 
     'Klik enter'
     WebUI.sendKeys(findTestObject('ManualSign/input_isSequence'), Keys.chord(Keys.ENTER))
 
     'Code untuk mengambil file berdasarkan direktori masing-masing sekaligus ambil value dari excel'
-    String userDir = System.getProperty('user.dir')
+    String userDir = System.getProperty('user.dir') + '\\File'
 
-    String filePath = userDir + findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Dokumen (Send Manual)'))
+    String filePath = userDir + findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('documentFile')).replace('/','\\')
 
     'Upload file berdasarkan filePath yang telah dirancang'
     WebUI.uploadFile(findTestObject('ManualSign/input_documentExample'), filePath, FailureHandling.CONTINUE_ON_FAILURE)
@@ -622,7 +620,7 @@ def rowExcel(String cellValue) {
 
 def sortingSequenceSign() {
     'check if Sequential signing iya'
-    if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$isSequence')).equalsIgnoreCase(
+    if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('isSequence')).equalsIgnoreCase(
         'Ya')) {
         'get urutan seq sign dari excel'
         ArrayList<String> seqSignRole = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel(
@@ -651,7 +649,7 @@ def sortingSequenceSign() {
                 WebUI.dragAndDropToObject(modifyObject, modifyObjectNew)
 
                 'untuk proses pemindahan'
-                WebUI.delay(2)
+                WebUI.delay(1)
 
                 seq--
             }
@@ -661,7 +659,7 @@ def sortingSequenceSign() {
         WebUI.click(findTestObject('Object Repository/ManualSign/btn_simpan'))
 
         'delay untuk loading simpan'
-        WebUI.delay(3)
+        WebUI.delay(1)
     }
 }
 
@@ -763,8 +761,10 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 			GlobalVariable.eSignData.putAt('CountVerifikasiWA', pemotonganSaldo)
 		} else if (tipeSaldo == 'SMS Notif') {
 			GlobalVariable.eSignData.putAt('CountVerifikasiSMS', pemotonganSaldo)
-		}	}
+		}	
+		}
 	}
+
 }
 
 def funcLogin() {
@@ -786,7 +786,7 @@ def funcLogin() {
 			}
 		} else {
 			'Call test Case untuk login sebagai admin wom admin client'
-			WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excel, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
+			WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excelPathManualSigntoSign, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
 			
 			'klik button saldo'
 			WebUI.click(findTestObject('ManualSign/ManualSign'))

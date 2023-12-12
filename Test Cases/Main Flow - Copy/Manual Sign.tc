@@ -11,11 +11,24 @@
       <value></value>
       <variableId>f375e9b7-0c9f-418a-ba74-7300a888c08c</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>ff3ce37b-84ec-4608-9744-14b4d05ce73d</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
       <id>f375e9b7-0c9f-418a-ba74-7300a888c08c</id>
       <masked>false</masked>
       <name>excelPathManualSigntoSign</name>
+   </variable>
+   <variable>
+      <defaultValue>'Main'</defaultValue>
+      <description></description>
+      <id>ff3ce37b-84ec-4608-9744-14b4d05ce73d</id>
+      <masked>false</masked>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>

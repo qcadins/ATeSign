@@ -241,9 +241,7 @@ for (int i = 0; i < docid.size(); i++) {
 	signAction = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$signAction')).split(enter, splitnum)
 	
 	signActions = (signAction[i]).split(semicolon, splitnum)
-	
-	WebUI.comment(signActions.toString())
-	
+
     'Looping berdasarkan jumlah dari signAction'
 
             for (loopPerSignActionPerSigner = 0; loopPerSignActionPerSigner < signActions.size(); loopPerSignActionPerSigner++) {

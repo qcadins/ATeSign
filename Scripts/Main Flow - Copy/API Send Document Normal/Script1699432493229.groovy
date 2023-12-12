@@ -558,4 +558,10 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 			GlobalVariable.eSignData.putAt('CountVerifikasiSMS', pemotonganSaldo)
 		}	}
 	}
+	
+	
+	println GlobalVariable.eSignData
+	println penggunaanSaldo
+	println balmut
+	WebUI.delay(100000000000)
 }
