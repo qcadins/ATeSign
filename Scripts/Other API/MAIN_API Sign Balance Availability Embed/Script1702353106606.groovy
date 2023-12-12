@@ -57,9 +57,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 		def timestamp = dateFormat.format(currentDate)
 
 		if (aesKey.toString() != 'null') {
+			'Mengambil document id dari excel dan displit'
+			documentId = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Document ID')).split(';', -1)
+			
 			'get office code dari db'
-			officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, findTestData(excelPath).getValue(
-					GlobalVariable.NumofColm, rowExcel('Document ID')))
+			officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, documentId[0])
 			
 			'pembuatan message yang akan dienkrip'
 			msg = (((((('{\'officeCode\':\'' + officeCode) + '\',\'email\':\'') + findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('email'))) + '\',\'timestamp\':\'') +
@@ -72,12 +74,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 				'encrypt and decode officecode + email + time stamp'
 				endcodedMsg = encryptEncodeValue(msg, aesKey)
 			}
-			
-			'Mengambil document id dari excel dan displit'
-			documentId = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Document ID')).split(';', -1)
 				
 			for (int q = 0; q < documentId.size(); q++) {
-				encryptDocID = encryptEncodeValue(documentId[q].toString(), aesKey)
+				if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct DocumentID')) == 'No') {
+					encryptDocID = documentId
+				} else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct DocumentID')) == 'Yes') {
+					encryptDocID = encryptEncodeValue(documentId[q].toString(), aesKey)					
+				}
 				
 				listDocId.add('"' + encryptDocID + '"');
 			}
