@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API List Payment Type</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>ca5e4c21-e4a7-41f4-b2ae-af839407f9d9</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>6b3baf31-9f64-49bf-8715-4ac81f02adf6</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>789416f2-acd4-405e-9df1-385d58c0a76d</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/List Payment Type'</defaultValue>
+      <description></description>
+      <id>6b3baf31-9f64-49bf-8715-4ac81f02adf6</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API List Payment Type'</defaultValue>
+      <description></description>
+      <id>789416f2-acd4-405e-9df1-385d58c0a76d</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>
