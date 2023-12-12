@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API RegionList Embed</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>7ef51751-c8bb-4057-99db-0c58bf29076a</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>8a88d535-ae57-4c45-be7c-a16bac7b0ae8</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>d449ecf3-cd14-4c7b-90e7-3f72d0fa22a3</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/RegionList Embed'</defaultValue>
+      <description></description>
+      <id>8a88d535-ae57-4c45-be7c-a16bac7b0ae8</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API RegionList Embed'</defaultValue>
+      <description></description>
+      <id>d449ecf3-cd14-4c7b-90e7-3f72d0fa22a3</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>
