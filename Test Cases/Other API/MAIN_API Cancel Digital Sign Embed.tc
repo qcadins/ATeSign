@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API Cancel Digital Sign Embed</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>917c5723-a259-42f6-a43f-5f5d1f6ae73a</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>62d87d76-ea5e-41a2-96a4-057bc0dbcc3c</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>fb6694ba-d218-4bef-87ab-325095388faa</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/Cancel Digital Sign Embed'</defaultValue>
+      <description></description>
+      <id>62d87d76-ea5e-41a2-96a4-057bc0dbcc3c</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Cancel Digital Sign Embed'</defaultValue>
+      <description></description>
+      <id>fb6694ba-d218-4bef-87ab-325095388faa</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>

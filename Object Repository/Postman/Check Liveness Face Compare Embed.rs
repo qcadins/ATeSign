@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebServiceRequestEntity>
    <description></description>
-   <name>getPsrePriority</name>
+   <name>Check Liveness Face Compare Embed</name>
    <tag></tag>
-   <elementGuidId>a50063f1-f25e-4ba6-a232-24a273c408ea</elementGuidId>
+   <elementGuidId>059d96e8-1044-4145-9e94-be71593cf760</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <authorizationRequest>
@@ -19,7 +19,7 @@
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n    \&quot;tenantCode\&quot;: \&quot;${tenantCode}\&quot;,\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    }\n}&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    },\n    \&quot;tenantCode\&quot;: \&quot;${tenantCode}\&quot;,\n  \t\&quot;msg\&quot;: \&quot;${msg}\&quot;\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -30,7 +30,7 @@
       <name>Accept</name>
       <type>Main</type>
       <value>application/json, text/plain, */*</value>
-      <webElementGuid>abfab383-381b-4980-8a2b-b176a803f98a</webElementGuid>
+      <webElementGuid>5aacc465-838b-4275-9c00-ceed424e60d3</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -38,7 +38,7 @@
       <name>Accept-Language</name>
       <type>Main</type>
       <value>id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7</value>
-      <webElementGuid>6d44bb8d-a35f-4f53-8aea-67ddd546e05f</webElementGuid>
+      <webElementGuid>9d3f3bdd-666c-4120-bf09-8cbef0203fda</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -46,7 +46,7 @@
       <name>Connection</name>
       <type>Main</type>
       <value>keep-alive</value>
-      <webElementGuid>e0509148-6099-4bc0-8e50-260ae9df6965</webElementGuid>
+      <webElementGuid>841514bb-ae32-406b-9949-703f27c8264f</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -54,7 +54,7 @@
       <name>Content-Type</name>
       <type>Main</type>
       <value>application/json</value>
-      <webElementGuid>77d6a9c1-7bdb-45de-82bc-3d975b2d511e</webElementGuid>
+      <webElementGuid>5f65da2e-60a2-4ccd-9663-7a1ad9368e40</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -62,7 +62,7 @@
       <name>DNT</name>
       <type>Main</type>
       <value>1</value>
-      <webElementGuid>96b21284-0c6b-4e3e-afe6-a255c4a92183</webElementGuid>
+      <webElementGuid>f33aa35c-0b2f-4eb2-ab8c-c6ff3ccdfa8e</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -70,7 +70,7 @@
       <name>Origin</name>
       <type>Main</type>
       <value>http://gdkwebsvr:8080</value>
-      <webElementGuid>0cdd6e87-1a52-4ac7-965e-eeb878ed39bd</webElementGuid>
+      <webElementGuid>50aebe1a-4188-42c3-adcd-ae690e79df1a</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -78,29 +78,21 @@
       <name>Referer</name>
       <type>Main</type>
       <value>http://gdkwebsvr:8080/</value>
-      <webElementGuid>4d8e0080-a324-4ab1-a90c-f729540d944f</webElementGuid>
+      <webElementGuid>3f414830-f65a-477e-b34e-80b8c0fc708a</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>User-Agent</name>
       <type>Main</type>
-      <value>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36</value>
-      <webElementGuid>f66d8ce8-b2f9-4240-8681-ede556335de9</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Authorization</name>
-      <type>Main</type>
-      <value>Bearer ${token}</value>
-      <webElementGuid>934b55f2-53d4-453e-9109-cb2f507d1e3c</webElementGuid>
+      <value>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36</value>
+      <webElementGuid>b2c61ae1-44f2-4e5b-ba68-d88f2de54d3c</webElementGuid>
    </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>POST</restRequestMethod>
-   <restUrl>${base_url}/services/data/s/getPsrePriority</restUrl>
+   <restUrl>${base_url}/services/embed/tenant/checkLivenessFaceCompareServiceEmbed</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>
@@ -112,21 +104,21 @@
    <variables>
       <defaultValue>GlobalVariable.base_url</defaultValue>
       <description></description>
-      <id>a0688288-87a1-4300-8405-c2df55b06454</id>
+      <id>27d10953-943b-408f-9425-658b2697484a</id>
       <masked>false</masked>
       <name>base_url</name>
    </variables>
    <variables>
       <defaultValue>GlobalVariable.token</defaultValue>
       <description></description>
-      <id>5b98eb28-9336-4d44-bebd-b892d472fa43</id>
+      <id>25297977-6c59-4bba-915d-cb830a61d574</id>
       <masked>false</masked>
       <name>token</name>
    </variables>
    <variables>
       <defaultValue>GlobalVariable.Tenant</defaultValue>
       <description></description>
-      <id>6a0c7bcd-1ea5-447d-9aad-ca3c1656dbb5</id>
+      <id>bb90d177-b89a-4582-89cd-90c84c82893d</id>
       <masked>false</masked>
       <name>tenantCode</name>
    </variables>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebServiceRequestEntity>
    <description></description>
-   <name>getPsrePriority</name>
+   <name>Sign Balance Availability Embed</name>
    <tag></tag>
-   <elementGuidId>a50063f1-f25e-4ba6-a232-24a273c408ea</elementGuidId>
+   <elementGuidId>b8dd7cf1-b398-484a-bae6-d587c4545d9d</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <authorizationRequest>
@@ -19,7 +19,7 @@
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n    \&quot;tenantCode\&quot;: \&quot;${tenantCode}\&quot;,\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    }\n}&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;listDocumentId\&quot;: [\n        ${docId}\n    ],\n    \&quot;audit\&quot;: {\n      \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n             },\n\t\&quot;msg\&quot;: \&quot;${msg}\&quot;,\n    \&quot;tenantCode\&quot;: \&quot;${tenantCode}\&quot;,\n    \&quot;vendorCode\&quot;: \&quot;${vendorCode}\&quot;\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -30,7 +30,7 @@
       <name>Accept</name>
       <type>Main</type>
       <value>application/json, text/plain, */*</value>
-      <webElementGuid>abfab383-381b-4980-8a2b-b176a803f98a</webElementGuid>
+      <webElementGuid>dcb53d89-d620-47c1-ae96-090976359b74</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -38,7 +38,7 @@
       <name>Accept-Language</name>
       <type>Main</type>
       <value>id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7</value>
-      <webElementGuid>6d44bb8d-a35f-4f53-8aea-67ddd546e05f</webElementGuid>
+      <webElementGuid>d994a2b1-f9c4-4fe0-91a5-4f00bf387e7c</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -46,7 +46,7 @@
       <name>Connection</name>
       <type>Main</type>
       <value>keep-alive</value>
-      <webElementGuid>e0509148-6099-4bc0-8e50-260ae9df6965</webElementGuid>
+      <webElementGuid>5549ec0e-cb54-4f92-943b-6667e0a6bb25</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -54,7 +54,7 @@
       <name>Content-Type</name>
       <type>Main</type>
       <value>application/json</value>
-      <webElementGuid>77d6a9c1-7bdb-45de-82bc-3d975b2d511e</webElementGuid>
+      <webElementGuid>851dffc3-fab6-4a5e-a87f-917629510a4b</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -62,7 +62,7 @@
       <name>DNT</name>
       <type>Main</type>
       <value>1</value>
-      <webElementGuid>96b21284-0c6b-4e3e-afe6-a255c4a92183</webElementGuid>
+      <webElementGuid>4ebcf8ef-a628-4be7-8831-1dd8ee4f8ea5</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -70,7 +70,7 @@
       <name>Origin</name>
       <type>Main</type>
       <value>http://gdkwebsvr:8080</value>
-      <webElementGuid>0cdd6e87-1a52-4ac7-965e-eeb878ed39bd</webElementGuid>
+      <webElementGuid>dced9bb0-0a4f-424e-a7a0-776132573771</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -78,29 +78,21 @@
       <name>Referer</name>
       <type>Main</type>
       <value>http://gdkwebsvr:8080/</value>
-      <webElementGuid>4d8e0080-a324-4ab1-a90c-f729540d944f</webElementGuid>
+      <webElementGuid>520b1c13-a5ab-46d9-9293-fc477b7546cf</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>User-Agent</name>
       <type>Main</type>
-      <value>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36</value>
-      <webElementGuid>f66d8ce8-b2f9-4240-8681-ede556335de9</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>true</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Authorization</name>
-      <type>Main</type>
-      <value>Bearer ${token}</value>
-      <webElementGuid>934b55f2-53d4-453e-9109-cb2f507d1e3c</webElementGuid>
+      <value>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36</value>
+      <webElementGuid>ac7a4ab8-f972-4afc-a78c-4f5d2baf2f38</webElementGuid>
    </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>POST</restRequestMethod>
-   <restUrl>${base_url}/services/data/s/getPsrePriority</restUrl>
+   <restUrl>${base_url}/services/embed/saldo/SignBalanceAvailabilityEmbed</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>
@@ -112,23 +104,30 @@
    <variables>
       <defaultValue>GlobalVariable.base_url</defaultValue>
       <description></description>
-      <id>a0688288-87a1-4300-8405-c2df55b06454</id>
+      <id>9e9a0fcd-e461-4273-b95c-08fc9d75dfcd</id>
       <masked>false</masked>
       <name>base_url</name>
    </variables>
    <variables>
       <defaultValue>GlobalVariable.token</defaultValue>
       <description></description>
-      <id>5b98eb28-9336-4d44-bebd-b892d472fa43</id>
+      <id>4e70d19f-0b35-4328-a1b7-291a1f04282d</id>
       <masked>false</masked>
       <name>token</name>
    </variables>
    <variables>
       <defaultValue>GlobalVariable.Tenant</defaultValue>
       <description></description>
-      <id>6a0c7bcd-1ea5-447d-9aad-ca3c1656dbb5</id>
+      <id>68234fb1-138b-48e8-82c0-9090215923a1</id>
       <masked>false</masked>
       <name>tenantCode</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.Psre</defaultValue>
+      <description></description>
+      <id>82eb5a18-4e62-4c6a-b149-3125655cc860</id>
+      <masked>false</masked>
+      <name>vendorCode</name>
    </variables>
    <verificationScript>import static org.assertj.core.api.Assertions.*
 
