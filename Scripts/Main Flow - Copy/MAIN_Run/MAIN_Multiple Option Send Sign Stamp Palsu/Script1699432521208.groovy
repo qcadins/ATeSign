@@ -77,7 +77,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
 		if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Expected')).toUpperCase() != 'FAILED') {
         if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 'API Send Document External') {
-            documentTemplateCode = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('$documentTemplateCode (Send External)')).split(
+            documentTemplateCode = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('$documentTemplateCode')).split(
                 ';', -1)
 
             for (loopingGetSaldoBefore = 0; loopingGetSaldoBefore < documentTemplateCode.size(); loopingGetSaldoBefore++) {
@@ -86,7 +86,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 				
 				usageSaldo = 'Sign'
 
-                GlobalVariable.saldo = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathMain
+                GlobalVariable.saldo = WebUI.callTestCase(findTestCase('Main Flow - Copy/getSaldo'), [('excel') : excelPathMain
                         , ('sheet') : sheet, ('vendor') : logicVendor, ('usageSaldo') : usageSaldo], FailureHandling.CONTINUE_ON_FAILURE)
 
                 resultSaldoBefore.putAll(GlobalVariable.saldo)
@@ -94,7 +94,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             }
         } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
         'API Send Document Normal') {
-            documentTemplateCode = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('$documentTemplateCode (Send Normal)')).split(
+            documentTemplateCode = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('$documentTemplateCode')).split(
                 ';', -1)
 
             for (loopingGetSaldoBefore = 0; loopingGetSaldoBefore < documentTemplateCode.size(); loopingGetSaldoBefore++) {
@@ -103,7 +103,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
 				usageSaldo = 'Sign'
 				
-                GlobalVariable.saldo = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathMain
+                GlobalVariable.saldo = WebUI.callTestCase(findTestCase('Main Flow - Copy/getSaldo'), [('excel') : excelPathMain
                         , ('sheet') : sheet, ('vendor') : logicVendor, ('usageSaldo') : usageSaldo], FailureHandling.CONTINUE_ON_FAILURE)
 
                 resultSaldoBefore.putAll(GlobalVariable.saldo)
@@ -114,7 +114,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
 			usageSaldo = 'Sign'
 			
-            GlobalVariable.saldo = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathMain, ('sheet') : sheet
+            GlobalVariable.saldo = WebUI.callTestCase(findTestCase('Main Flow - Copy/getSaldo'), [('excel') : excelPathMain, ('sheet') : sheet
                     , ('vendor') : logicVendor, ('usageSaldo') : usageSaldo], FailureHandling.CONTINUE_ON_FAILURE)
 
             resultSaldoBefore.putAll(GlobalVariable.saldo)
@@ -125,7 +125,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
 			usageSaldo = 'Sign'
 			
-            GlobalVariable.saldo = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathMain, ('sheet') : sheet
+            GlobalVariable.saldo = WebUI.callTestCase(findTestCase('Main Flow - Copy/getSaldo'), [('excel') : excelPathMain, ('sheet') : sheet
                     , ('vendor') : logicVendor, ('usageSaldo') : usageSaldo], FailureHandling.CONTINUE_ON_FAILURE)
 
             resultSaldoBefore.putAll(GlobalVariable.saldo)
@@ -133,7 +133,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         'Stamp Only') {
 		usageSaldo = 'Stamp'
 		
-            GlobalVariable.saldo = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathMain, ('sheet') : sheet
+            GlobalVariable.saldo = WebUI.callTestCase(findTestCase('Main Flow - Copy/getSaldo'), [('excel') : excelPathMain, ('sheet') : sheet
                     , ('vendor') : '', ('usageSaldo') : usageSaldo], FailureHandling.CONTINUE_ON_FAILURE)
 
             resultSaldoBefore.putAll(GlobalVariable.saldo)
@@ -149,7 +149,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             documentId = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ', 
                 -1)
 
-            signerInput = checkingDocAndEmailFromInput(documentId, '$email (Send External)', signerInput)
+            signerInput = checkingDocAndEmailFromInput(documentId, '$email', signerInput)
         } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
         'API Send Document Normal') {
             'jika send document menggunakan api send normal, maka call test case send doc normal'
@@ -321,7 +321,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                 GlobalVariable.indexUsed = indexReadDataExcelAPINormal
 
                                 'call test case api sign document normal'
-                                WebUI.callTestCase(findTestCase('Main Flow/API Sign Document Normal'), [('API_Excel_Path') : excelPathMain
+                                WebUI.callTestCase(findTestCase('Main Flow - Copy/API Sign Document Normal'), [('API_Excel_Path') : excelPathMain
                                         , ('sheet') : sheet, ('CancelDocsSign') : cancelDocsValue], FailureHandling.CONTINUE_ON_FAILURE)
 
                                 'set boolean menjadi true'
@@ -334,7 +334,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                 GlobalVariable.indexUsed = indexReadDataExcelWebview
 
                                 'call test case webview embed sign'
-                                WebUI.callTestCase(findTestCase('Main Flow/Webview Embed Sign'), [('excelPathFESignDocument') : excelPathMain
+                                WebUI.callTestCase(findTestCase('Main Flow - Copy/Webview Embed Sign'), [('excelPathFESignDocument') : excelPathMain
                                         , ('sheet') : sheet, ('indexUsed') : indexReadDataExcelWebview, ('opsiSigning') : opsiSigning[
                                         i], ('CancelDocsSign') : cancelDocsValue], FailureHandling.CONTINUE_ON_FAILURE)
 
@@ -348,7 +348,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                 GlobalVariable.indexUsed = indexReadDataExcelEmbed
 
                                 'call test case webview embed sign'
-                                WebUI.callTestCase(findTestCase('Main Flow/Webview Embed Sign'), [('excelPathFESignDocument') : excelPathMain
+                                WebUI.callTestCase(findTestCase('Main Flow - Copy/Webview Embed Sign'), [('excelPathFESignDocument') : excelPathMain
                                         , ('sheet') : sheet, ('indexUsed') : indexReadDataExcelEmbed, ('opsiSigning') : opsiSigning[
                                         i], ('CancelDocsSign') : cancelDocsValue], FailureHandling.CONTINUE_ON_FAILURE)
 
@@ -428,7 +428,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 					 , ('sheet') : sheet, ('nomorKontrak') : GlobalVariable.eSignData.getAt('NoKontrakProcessed'), ('vendor') : vendor],
 				 FailureHandling.CONTINUE_ON_FAILURE)
 				 
-            resultSaldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathMain, ('sheet') : sheet
+            resultSaldoAfter = WebUI.callTestCase(findTestCase('Main Flow - Copy/getSaldo'), [('excel') : excelPathMain, ('sheet') : sheet
                     , ('vendor') : vendor, ('usageSaldo') : usageSaldo], FailureHandling.CONTINUE_ON_FAILURE)
 
             'Jika count saldo sign/ttd diatas (after) sama dengan yang dulu/pertama (before) dikurang jumlah dokumen yang ditandatangani'

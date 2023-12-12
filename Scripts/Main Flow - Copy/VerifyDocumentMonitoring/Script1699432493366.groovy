@@ -22,19 +22,11 @@ String settingHO = ''
 'Jika nomor Kontrak kosong'
 if (nomorKontrak == '' || nomorKontrak.toString() == 'null') {
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
-    'API Send Document External') {
-        'Mengambil nomor kontrak dari excel'
-        nomorKontrak = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo (Send External)')).replace(
-            '"', '')
-    } else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
-    'API Send Document Normal') {
-        'Mengambil nomor kontrak dari excel'
-        nomorKontrak = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo (Send Normal)')).replace(
-            '"', '')
-    } else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
+    'API Send Document External' || findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
+    'API Send Document Normal' || findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
     'Manual Sign') {
-        'Mengambil documen id dari excel'
-        nomorKontrak = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen (Send Manual)'))
+        'Mengambil nomor kontrak dari excel'
+        nomorKontrak = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo'))
     } else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
     'Sign Only' || findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
     'Stamp Only' || findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 

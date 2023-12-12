@@ -26,63 +26,63 @@ arrayMatch = []
 'Mengambil documentid di excel dan displit'
 docid = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ', splitnum)
 
-signerType = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$signerType (Send External)')).split(
+signerType = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$signerType')).split(
     enter, splitnum)
 
 seqNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('SeqNo (Send External)')).split(enter, 
     splitnum)
 
-tlp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$tlp (Send External)')).split(enter, 
+tlp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$tlp')).split(enter, 
     splitnum)
 
-idKtp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$idKtp (Send External)')).split(enter, 
+idKtp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$idKtp')).split(enter, 
     splitnum)
 
-email = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$email (Send External)')).split(enter, 
+email = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$email')).split(enter, 
     splitnum)
 
-refNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo (Send External)'))
+refNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo'))
 
 'looping berdasarkan jumlah dari document id '
 for (int i = 0; i < docid.size(); i++) {
     'Inisialisasi document template code berdasarkan delimiter ;'
-    documentTemplateCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$documentTemplateCode (Send External)')).split(
+    documentTemplateCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$documentTemplateCode')).split(
         semicolon, splitnum)
 
     'Inisialisasi document name berdasarkan delimiter ;'
-    documentName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('documentName (Send External)')).split(
+    documentName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('documentName')).split(
         semicolon, splitnum)
 
     'Inisialisasi office Code berdasarkan delimiter ;'
-    officeCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('officeCode (Send External)')).split(
+    officeCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('officeCode')).split(
         semicolon, splitnum)
 
     'Inisialisasi office name berdasarkan delimiter ;'
-    officeName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('officeName (Send External)')).split(
+    officeName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('officeName')).split(
         semicolon, splitnum)
 
     'Inisialisasi region code berdasarkan delimiter ;'
-    regionCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('regionCode (Send External)')).split(
+    regionCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('regionCode')).split(
         semicolon, splitnum)
 
     'Inisialisasi region name berdasarkan delimiter ;'
-    regionName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('regionName (Send External)')).split(
+    regionName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('regionName')).split(
         semicolon, splitnum)
 
     'Inisialisasi business line code berdasarkan delimiter ;'
-    businessLineCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('businessLineCode (Send External)')).split(
+    businessLineCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('businessLineCode')).split(
         semicolon, splitnum)
 
     'Inisialisasi business line name berdasarkan delimiter ;'
-    businessLineName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('businessLineName (Send External)')).split(
+    businessLineName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('businessLineName')).split(
         semicolon, splitnum)
 
     'Inisialisasi is sequence berdasarkan delimiter ;'
-    isSequence = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('isSequence (Send External)')).split(
+    isSequence = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('isSequence')).split(
         semicolon, splitnum)
 
     'Inisialisasi psre Code berdasarkan delimiter ;'
-    psreCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('psreCode (Send External)')).split(
+    psreCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('psreCode')).split(
         semicolon, splitnum)
 
     'Inisialisasi pageSign berdasarkan delimiter enter'
@@ -199,7 +199,7 @@ for (int i = 0; i < docid.size(); i++) {
     }
     
     'verify tenant code'
-    arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$tenantCode (Send External)')).replace(
+    arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Tenant')).replace(
                 '"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify ref number'
@@ -257,7 +257,7 @@ for (int i = 0; i < docid.size(); i++) {
     } 
 	
         'split signer untuk doc1 dan signer untuk doc2'
-        signAction = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$signAction (Send External)')).split(
+        signAction = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$signAction')).split(
             enter, splitnum)
 
             signActions = (signAction[i]).split(semicolon, splitnum)
@@ -265,17 +265,18 @@ for (int i = 0; i < docid.size(); i++) {
             for (loopPerSignActionPerSigner = 0; loopPerSignActionPerSigner < signActions.size(); loopPerSignActionPerSigner++) {
                 'Jika signAction tersebut adalah AT'
                 if ((signActions[loopPerSignActionPerSigner]).replace('"', '') == 'at') {
+
                     'Mengambil trxno dari column tersebut'
                     trxno = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('trxNo')).split(
                         ', ', -1)
 
                     'Mengambil emailSign dari excel dan displit kembali'
-                    emailSign = ((findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$email (Send External)')).replace(
+                    emailSign = ((findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$email')).replace(
                         '"', '').split(enter, splitnum)[i]).split(semicolon, splitnum)[loopPerSignActionPerSigner])
 
 					if (emailSign == '') {
 						'Mengambil emailSign dari excel dan displit kembali'
-						ktpSign = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$idKtp (Send External)')).replace('"', '').split(enter, splitnum)[i].split(semicolon, splitnum)[loopPerSignActionPerSigner])
+						ktpSign = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$idKtp')).replace('"', '').split(enter, splitnum)[i].split(semicolon, splitnum)[loopPerSignActionPerSigner])
 					
 						emailSign = CustomKeywords.'connection.DataVerif.getEmailFromNIK'(conneSign, ktpSign)
 					}
@@ -291,7 +292,7 @@ for (int i = 0; i < docid.size(); i++) {
 
                     'verify ref no di trx'
                     arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 
-                                rowExcel('$referenceNo (Send External)')).replace('"', ''), resulttrxsigning[arrayindex++], 
+                                rowExcel('$referenceNo')).replace('"', ''), resulttrxsigning[arrayindex++], 
                             false, FailureHandling.CONTINUE_ON_FAILURE))
 
                     'verify date req di trx'
