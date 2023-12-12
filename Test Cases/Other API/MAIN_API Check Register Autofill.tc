@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API Check Register Autofill</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>13b8794d-ccbd-4bd0-8e7d-5f30b84afc5d</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>ef24ee4f-74ba-42b3-8395-d822b28556bc</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>d5feac1b-d8a7-4854-9d30-2df3123a586f</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/Check Register Autofill'</defaultValue>
+      <description></description>
+      <id>ef24ee4f-74ba-42b3-8395-d822b28556bc</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Check Register Autofill'</defaultValue>
+      <description></description>
+      <id>d5feac1b-d8a7-4854-9d30-2df3123a586f</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>
