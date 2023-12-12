@@ -76,7 +76,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         'HIT API'
-        respon = WS.sendRequest(findTestObject('Postman/View Document Embed', [('documentId') : endcodedDocumentId, ('msg') : endcodedMsg
+        respon = WS.sendRequest(findTestObject('Postman/Cancel Digital Sign Embed', [('documentId') : endcodedDocumentId, ('msg') : endcodedMsg
                     , ('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId'))]))
 
         'ambil lama waktu yang diperlukan hingga request menerima balikan'
@@ -100,16 +100,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
             'jika status codenya 0'
             if (status_Code == 0) {
-                resultbase64 = WS.getElementPropertyValue(respon, 'pdfBase64', FailureHandling.OPTIONAL)
+                result = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL).toString()
 
-                if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct DocumentID')).equalsIgnoreCase('Yes')) {
-                    'decode Bas64 to File PDF'
-                    CustomKeywords.'customizekeyword.ConvertFile.decodeBase64'(resultbase64, findTestData(excelPath).getValue(
-                            GlobalVariable.NumofColm, rowExcel('Scenario')))
-                }
-                
                 'tulis sukses jika store DB berhasil'
-                if (GlobalVariable.FlagFailed == 0) {
+                if (GlobalVariable.FlagFailed == 0 && result.equalsIgnoreCase('Success')) {
                     'write to excel success'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
                         1, GlobalVariable.StatusSuccess)
