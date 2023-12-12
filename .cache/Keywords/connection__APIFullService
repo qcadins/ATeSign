@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "D9B60F36A7780CB442A35DF7A38350EC",
+  "keywordFileContentHash": "0A9C2FC8A6A5E29EAD0C85DEE0D5D7A9",
   "keywordClasses": [
     {
       "name": "connection.APIFullService",
@@ -3361,8 +3361,6 @@
             }
           ],
           "javadoc": ""
-<<<<<<< HEAD
-=======
         },
         {
           "name": "getProfileAPIOnly",
@@ -3491,7 +3489,6 @@
             }
           ],
           "javadoc": ""
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
         }
       ]
     }
