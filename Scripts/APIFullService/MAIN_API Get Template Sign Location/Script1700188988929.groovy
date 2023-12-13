@@ -73,11 +73,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					
 					'get data store db'
 					ArrayList result = CustomKeywords.'connection.APIFullService.getTemplateSignloc'(conneSign, findTestData(excelPathGetTempSign).getValue(
-                        GlobalVariable.NumofColm, rowExcel('documentTemplateCode')).replace('"',''))
+                        GlobalVariable.NumofColm, rowExcel('documentTemplateCode')).replace('"',''), GlobalVariable.Tenant)
 					
 					'ambil countresult yang dikembalikan oleh query result'
 					int countresult = CustomKeywords.'connection.APIFullService.getCountSignLoc'(conneSign, findTestData(excelPathGetTempSign).getValue(
-                        GlobalVariable.NumofColm, rowExcel('documentTemplateCode')).replace('"',''))
+                        GlobalVariable.NumofColm, rowExcel('documentTemplateCode')).replace('"',''), GlobalVariable.Tenant)
 		 
 					'declare arrayindex'
 					arrayindex = 0
@@ -108,7 +108,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					
 					'ambil sign loc untuk vida dan privy'
 					ArrayList resultDetail = (CustomKeywords.'connection.APIFullService.getTemplateSignlocDetail'(conneSign, findTestData(excelPathGetTempSign).getValue(
-                        GlobalVariable.NumofColm, rowExcel('documentTemplateCode')).replace('"',''))).toString().replace('"h"','').replace('"w"','').replace('"x"','').replace('"y"','').replace('{','').replace(':','').replace(' ','').replace(' ','').replace('[','').replace(']','').replace('}','').split(',', -1).sort()
+                        GlobalVariable.NumofColm, rowExcel('documentTemplateCode')).replace('"',''), GlobalVariable.Tenant)).toString().replace('"h"','').replace('"w"','').replace('"x"','').replace('"y"','').replace('{','').replace(':','').replace(' ','').replace(' ','').replace('[','').replace(']','').replace('}','').split(',', -1).sort()
 						
 					def jsonSlurper = new JsonSlurper()
 					def jsonResponseObject = jsonSlurper.parseText(responseBody)

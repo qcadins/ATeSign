@@ -33,6 +33,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
         }
         
+		'check if tidak mau menggunakan password yang benar'
+		if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Password')) == 'No') {
+			'set password kosong'
+			pass = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong password'))
+		} else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Password')) == 'Yes') {
+			'get password per case dari colm excel'
+			pass = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('password'))
+		}
+		
         'HIT API Login untuk ambil bearer token'
         respon_login = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('username')), ('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
@@ -42,15 +51,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         if (WS.verifyResponseStatusCode(respon_login, 200, FailureHandling.OPTIONAL) == true) {
             'Parsing token menjadi GlobalVariable'
             GlobalVariable.token = WS.getElementPropertyValue(respon_login, 'access_token')
-
-			'check if tidak mau menggunakan password yang benar'
-			if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Password')) == 'No') {
-				'set tenant kosong'
-				pass = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong password'))
-			} else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Password')) == 'Yes') {
-				'get tenant per case dari colm excel'
-				pass = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('password'))
-			}
 			
             'HIT API'
             respon = WS.sendRequest(findTestObject('Postman/Signer Data Verification', [

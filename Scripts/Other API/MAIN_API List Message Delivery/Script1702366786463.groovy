@@ -33,6 +33,8 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 
 int countColmExcel = findTestData(excelPath).columnNumbers
 
+String dateStart, dateEnd, deliveryStatus
+
 // Looping to iterate from GlobalVariable.NumofColm to countColmExcel. Use GlobalVariable.NumofColm as the variable starting from 2.
 for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; GlobalVariable.NumofColm++) {
 	// Create a variable 'status' and store the value of the 'Status' cell in the current column
@@ -55,7 +57,7 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; Globa
 			GlobalVariable.Psre = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Vendor Code'))
 		} else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Vendor Code')) == 'Yes') {
 			'get vendor per case dari colm excel'
-			GlobalVariable.Psre = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Vendor Code'))
+			GlobalVariable.Psre = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Vendor Code*'))
 		}
 
 		// Create a variable 'userCorrectTenantCode' and store the value of the 'Use Correct Tenant Code' cell in the current column
@@ -69,8 +71,14 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; Globa
 		else if (userCorrectTenantCode == 'No') {
 			GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Tenant Code'))
 		}
+		
+		'ambil data date start'
+		dateStart = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Report Date Start*'))
+		
+		'ambil data date start'
+		dateEnd = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Report Date End*'))
 
-	   'HIT API Login untuk token : andy@ad-ins.com'
+	   'HIT API Login untuk token'
 		respon_login = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('username'))
 					, ('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('password'))]))
 
@@ -78,11 +86,38 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; Globa
 		if (WS.verifyResponseStatusCode(respon_login, 200, FailureHandling.OPTIONAL)) {
 			GlobalVariable.token = WS.getElementPropertyValue(respon_login, 'access_token')
 			
+			'check delivery status dan convert menjadi integer yang benar'
+			if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Delivery Status*')) == 'All' ||
+					findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Delivery Status*')) == '') {
+				'set deliverystatus kosong'
+				deliveryStatus = ''
+			} else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Delivery Status*')) == 'Not Started') {
+				'set deliverystatus 0'
+				deliveryStatus = '0'
+			} else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Delivery Status*')) == 'Waiting') {
+				'set deliverystatus 1'
+				deliveryStatus = '1'
+			} else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Delivery Status*')) == 'Failed') {
+				'set deliverystatus 2'
+				deliveryStatus = '2'
+			} else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Delivery Status*')) == 'Delivered') {
+				'set deliverystatus 3'
+				deliveryStatus = '3'
+			} else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Delivery Status*')) == 'Read') {
+				'set deliverystatus 4'
+				deliveryStatus = '4'
+			}
+			
 			// Send an API request to the Vendor object in the Postman repository and retrieve the response
 			'HIT API utamanya'
-			 respon = WS.sendRequest(findTestObject('Postman/checkRegisterAutoFill', [
+			 respon = WS.sendRequest(findTestObject('Postman/listMessageDelivery', [
 				 ('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('username')),
-				  ('email') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Email'))]))
+				  ('page') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Page*')),
+				  ('messageMedia') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Message Media*')),
+				  ('dateStart') : dateStart,
+				  ('dateEnd') : dateEnd,
+				  ('deliveryStatus') : deliveryStatus,
+				  ('recipient') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Recipient*'))]))
 	 
 			 // Create a variable 'elapsedTime' which contains the elapsed time in seconds
 			 def elapsedTime = respon.getElapsedTime() / 1000 + ' seconds'
@@ -107,29 +142,71 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; Globa
 	 
 					 // If GlobalVariable.checkStoreDB is 'Yes', perform some actions
 					 if (GlobalVariable.checkStoreDB == 'Yes') {
-						 // Declare an ArrayList called 'arrayMatch'
-						 def arrayMatch = []
-	 
-						 // Declare an ArrayList called 'result' and store the result of the 'getVendorofTenant' keyword from the 'APIFullService' class
-						 def result = CustomKeywords.'connection.APIFullService.getCheckRegistAutoFillAPIOnly'(conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Email')))
-	 
-						 def arrayIndex = 0
 						 
-						 'verify fullName di API dengan DB'
-						 arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], WS.getElementPropertyValue(respon, 'fullName', FailureHandling.OPTIONAL).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
-						 
-						 'verify emailUser di API dengan DB'
-						 arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], WS.getElementPropertyValue(respon, 'emailUser', FailureHandling.OPTIONAL).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
-						 
-						 'verify phoneNumUser di API dengan DB'
-						 arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(WS.getElementPropertyValue(respon, 'phoneNumUser', FailureHandling.OPTIONAL).toString()), false, FailureHandling.CONTINUE_ON_FAILURE))
+						 if (WS.getElementPropertyValue(respon, 'page').toString() != '' &&
+							 	WS.getElementPropertyValue(respon, 'page').toString() != '0' &&
+								 	WS.getElementPropertyValue(respon, 'page').toString() != 'null') {
+								 
+							 vendorname = WS.getElementPropertyValue(respon, 'listMessageDeliveryReport.vendorName')
+							 
+							 reportTime = WS.getElementPropertyValue(respon, 'listMessageDeliveryReport.reportTime')
+							 
+							 recipient = WS.getElementPropertyValue(respon, 'listMessageDeliveryReport.recipient')
+							 
+							 trxNo = WS.getElementPropertyValue(respon, 'listMessageDeliveryReport.trxNo')
+							 
+							 messageMedia = WS.getElementPropertyValue(respon, 'listMessageDeliveryReport.messageMedia')
+							 
+							 deliveryState = WS.getElementPropertyValue(respon, 'listMessageDeliveryReport.deliveryStatus')
+							 
+							 deliveryStatusInformation = WS.getElementPropertyValue(respon, 'listMessageDeliveryReport.deliveryStatusInformation')
+							 
+							 int index = (WS.getElementPropertyValue(respon, 'page') - 1) * 10
+							
+							 // Declare an ArrayList called 'arrayMatch'
+							 def arrayMatch = []
+							 
+							 // Declare an ArrayList called 'result' and store the result of the 'getVendorofTenant' keyword from the 'APIFullService' class
+							 ArrayList result = CustomKeywords.'connection.APIFullService.getListMessageDeliveryAPIOnly'(conneSign, GlobalVariable.Tenant, GlobalVariable.Psre,
+								 findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Message Media*')),
+								dateStart, dateEnd, deliveryStatus,
+								findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Recipient*')))
+		 
+							 int arrayIndex = 0
 	 
-						 // If 'arrayMatch' contains 'false', set GlobalVariable.FlagFailed to 1 and perform some actions
-						 if (arrayMatch.contains(false)) {
-							 GlobalVariable.FlagFailed = 1
+							 'loop untuk pengecekan hasil dari DB'
+							 for (index; index < (vendorname.size()); index++) {
 	 
-							 // Write the status reason to the Excel file
-							 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';' + GlobalVariable.ReasonFailedStoredDB)
+								 'verify vendorname'
+								 arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], vendorname[index], false, FailureHandling.CONTINUE_ON_FAILURE))
+								 
+								 'verify reportTime'
+								 arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], reportTime[index], false, FailureHandling.CONTINUE_ON_FAILURE))
+	 
+								 'verify recipient'
+								 arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], recipient[index], false, FailureHandling.CONTINUE_ON_FAILURE))
+								 
+								 'verify trxNo'
+								 arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], trxNo[index], false, FailureHandling.CONTINUE_ON_FAILURE))
+								 
+								 'verify messageMedia'
+								 arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], messageMedia[index], false, FailureHandling.CONTINUE_ON_FAILURE))
+								 
+								 'verify deliveryStatus'
+								 arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], deliveryState[index], false, FailureHandling.CONTINUE_ON_FAILURE))
+								 
+								 'verify deliveryStatusInformation'
+								 arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], deliveryStatusInformation[index], false, FailureHandling.CONTINUE_ON_FAILURE))
+	 
+							 }
+							 
+							 // If 'arrayMatch' contains 'false', set GlobalVariable.FlagFailed to 1 and perform some actions
+							 if (arrayMatch.contains(false)) {
+								 GlobalVariable.FlagFailed = 1
+		 
+								 // Write the status reason to the Excel file
+								 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';' + GlobalVariable.ReasonFailedStoredDB)
+							 }
 						 }
 					 }
 	 
