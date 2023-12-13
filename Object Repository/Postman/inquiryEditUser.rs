@@ -6,11 +6,20 @@
    <elementGuidId>73248fce-9617-489e-ba89-c2601e72eba1</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
+   <authorizationRequest>
+      <authorizationInfo>
+         <entry>
+            <key>bearerToken</key>
+            <value>${token}</value>
+         </entry>
+      </authorizationInfo>
+      <authorizationType>Bearer</authorizationType>
+   </authorizationRequest>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\r\n    \&quot;page\&quot;: 1,\r\n    \&quot;userIdentifier\&quot;: \&quot;USERCJEE@GMAIL.COM\&quot;,\r\n    \&quot;audit\&quot;: {\r\n        \&quot;callerId\&quot;: \&quot;ADMIN@TAFS.CO.ID\&quot;\r\n    },\r\n    \&quot;tenantCode\&quot;: \&quot;TAFS\&quot;\r\n}&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;page\&quot;: \&quot;${page}\&quot;,\n    \&quot;userIdentifier\&quot;: \&quot;${email}\&quot;,\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    },\n    \&quot;tenantCode\&quot;: \&quot;${tenantCode}\&quot;\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -30,14 +39,6 @@
       <type>Main</type>
       <value>id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7</value>
       <webElementGuid>3d80003c-3258-40b3-9ebb-873af6bc955b</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Authorization</name>
-      <type>Main</type>
-      <value>Bearer q2cn1mBriVtBKHqq6p3OEZ9TRzQ=</value>
-      <webElementGuid>298ede08-9036-4e0c-b631-eb3b2f9836a0</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -87,11 +88,19 @@
       <value>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36</value>
       <webElementGuid>de52639d-b86d-4f65-a36e-98d3ca5a7bfc</webElementGuid>
    </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Authorization</name>
+      <type>Main</type>
+      <value>Bearer ${token}</value>
+      <webElementGuid>ccff7966-adb9-41b7-8089-a6a7dec6f331</webElementGuid>
+   </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>POST</restRequestMethod>
-   <restUrl>http://gdkwebsvr:7021/adimobile/esign/services/user/s/inquiryEditUser</restUrl>
+   <restUrl>${base_url}/services/user/s/inquiryEditUser</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>
@@ -100,5 +109,39 @@
    <soapServiceFunction></soapServiceFunction>
    <socketTimeout>-1</socketTimeout>
    <useServiceInfoFromWsdl>true</useServiceInfoFromWsdl>
+   <variables>
+      <defaultValue>GlobalVariable.base_url</defaultValue>
+      <description></description>
+      <id>444fbb35-e154-41de-ac56-ff7f6fb038ef</id>
+      <masked>false</masked>
+      <name>base_url</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.token</defaultValue>
+      <description></description>
+      <id>6a2176e4-62b5-4d2c-baa6-58652bc5634c</id>
+      <masked>false</masked>
+      <name>token</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.Tenant</defaultValue>
+      <description></description>
+      <id>a5341125-5d6b-4292-ae00-afb34f551a54</id>
+      <masked>false</masked>
+      <name>tenantCode</name>
+   </variables>
+   <verificationScript>import static org.assertj.core.api.Assertions.*
+
+import com.kms.katalon.core.testobject.RequestObject
+import com.kms.katalon.core.testobject.ResponseObject
+import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
+import com.kms.katalon.core.webservice.verification.WSResponseManager
+
+import groovy.json.JsonSlurper
+import internal.GlobalVariable as GlobalVariable
+
+RequestObject request = WSResponseManager.getInstance().getCurrentRequest()
+
+ResponseObject response = WSResponseManager.getInstance().getCurrentResponse()</verificationScript>
    <wsdlAddress></wsdlAddress>
 </WebServiceRequestEntity>

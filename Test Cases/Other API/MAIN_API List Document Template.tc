@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API List Document Template</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>85536865-390f-472b-bfb4-18433df7b6ae</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>61a64073-4aa3-459d-8e99-8412cfff9400</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>f93e3124-7d43-45a1-a30e-68718ffe5ca2</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/List Document Template'</defaultValue>
+      <description></description>
+      <id>61a64073-4aa3-459d-8e99-8412cfff9400</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API List Document Template'</defaultValue>
+      <description></description>
+      <id>f93e3124-7d43-45a1-a30e-68718ffe5ca2</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>
