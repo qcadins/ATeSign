@@ -127,8 +127,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			respon_OTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing', [('callerId') : findTestData(
 							excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('phoneNo') : findTestData(
 							excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('phoneNo')), ('email') : findTestData(excelPathAPISignDocument).getValue(
-							GlobalVariable.NumofColm, rowExcel('email')), ('refnumber') : '"' + refNumber + '"',('listDocumentId') : findTestData(excelPathAPISignDocument).getValue(
-						GlobalVariable.NumofColm, rowExcel('$documentid')).replace('[','').replace(']',''), ('vendor') : '"' + vendor + '"']))
+							GlobalVariable.NumofColm, rowExcel('email')), ('refnumber') : refNumber, ('listDocumentId') : findTestData(excelPathAPISignDocument).getValue(
+						GlobalVariable.NumofColm, rowExcel('$documentid')).replace('[','').replace(']',''), ('vendor') : vendor]))
 
 			'Jika status HIT API 200 OK'
 			if (WS.verifyResponseStatusCode(respon_OTP, 200, FailureHandling.OPTIONAL) == true) {
@@ -141,12 +141,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					WebUI.delay(1)
 
 					'Mengambil otp dari database'
-					otp = (('"' + CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathAPISignDocument).getValue(
-							GlobalVariable.NumofColm, rowExcel('email')).replace('"', ''))) + '"')
+					otp = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathAPISignDocument).getValue(
+							GlobalVariable.NumofColm, rowExcel('email')).replace('"', ''))
 				} else {
 					getErrorMessageAPI(respon_OTP)
 					
-					otp = '""'
+					otp = ''
 				}
 			} else {
 				'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.HITAPI Gagal'
@@ -162,17 +162,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		'check if mau menggunakan base64 untuk photo yang salah atau benar'
 		if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use Base64 SelfPhoto')) == 'Yes') {
 			'get base64 photo dari fungsi'
-			photo = (('"' + phototoBase64(findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('SelfPhoto')))) +
-			'"')
+			photo = phototoBase64(findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('SelfPhoto')))
 		} else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use Base64 SelfPhoto')) == 'No') {
 			'get base64 photo salah dari excel'
-			photo = (('"' + findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('SelfPhoto'))) + '"')
+			photo = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('SelfPhoto'))
 		}
 		
 		'check if mau menggunakan ip address yang salah atau benar'
 		if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct ipAddress')) == 'Yes') {
 			'get ip address dari fungsi'
-			ipaddress = (('"' + correctipAddress()) + '"')
+			ipaddress = correctipAddress()
 		} else if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct ipAddress')) == 'No') {
 			'get ip address salah dari excel'
 			ipaddress = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('ipAddress'))
@@ -197,6 +196,20 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			'get status code'
 			code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
+			'ambil lama waktu yang diperlukan hingga request menerima balikan'
+			def elapsedTime = (respon.getElapsedTime() / 1000) + ' second'
+			
+			'ambil body dari hasil respons'
+			responseBody = respon.getResponseBodyContent()
+
+			'panggil keyword untuk proses beautify dari respon json yang didapat'
+			CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
+					excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+
+			'write to excel response elapsed time'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') -
+				1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+			
 			'get status code'
 			trxNo = WS.getElementPropertyValue(respon, 'trxNo', FailureHandling.OPTIONAL)
 
@@ -307,28 +320,6 @@ def responseAPIStoreDB(Connection conneSign, String ipaddress, String[] document
 
 		'verify qty dalam transaksi. Jika done = 1'
 		arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
-
-		'Check liveness compare adalah 0 dikarenakan trxNo yang didapat adalah transaksi untuk liveness compare.'
-
-		'Ini perlu dideklarasi dikarenakan jika 2 dokumen, trxNo tetap 1, sehingga perlu diflag apakah dia sudah check trxnya atau belum'
-		checkLivenessCompare = 0
-
-		'Jika trxNonya tidak kosong dan checkLivenessComparenya 0'
-		if ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('trxno')) != '') && (checkLivenessCompare ==
-		0)) {
-			'verify trx no. Jika sesuai, maka'
-			if (WebUI.verifyEqual(result[arrayIndex++], findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm,
-					rowExcel('trxno')), FailureHandling.CONTINUE_ON_FAILURE)) {
-				'Ditambah 1'
-				checkLivenessCompare++
-
-				'arrayMatchnya diinput true'
-				arrayMatch.add(true)
-			}
-		} else {
-			'Tambah dari arrayIndex'
-			arrayIndex++
-		}
 		
 		'verify request status. 3 = done'
 		arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], '3', false, FailureHandling.CONTINUE_ON_FAILURE))
