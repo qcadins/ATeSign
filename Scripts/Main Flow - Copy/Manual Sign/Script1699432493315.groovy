@@ -29,7 +29,7 @@ indexEmail = 0
 GlobalVariable.Tenant = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))
 
 'get psre dari excel percase'
-GlobalVariable.Psre = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Vendor'))
+GlobalVariable.Psre = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('psreCode'))
 
 'declare flag failed'
 GlobalVariable.FlagFailed = 0

@@ -115,7 +115,7 @@ if (vendor.equalsIgnoreCase('Privy') || vendor.equalsIgnoreCase('Digisign')) {
 
     'Constraint : Dokumen yang dipasang selalu dengan referal number di dokumen pertama.'
     respon_OTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing', [('callerId') : findTestData(excelPathAPISignDocument).getValue(
-                    GlobalVariable.NumofColm, rowExcel('callerId (Sign External)')).split(';', -1)[GlobalVariable.indexUsed]
+                    GlobalVariable.NumofColm, rowExcel('callerId'))
                 , ('phoneNo') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('phoneNo (Sign External)')).split(
                     ';', -1)[GlobalVariable.indexUsed], ('email') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
                     rowExcel('email (Sign External)')).split(';', -1)[GlobalVariable.indexUsed], ('refnumber') : ( 
@@ -180,7 +180,7 @@ if (vendor.equalsIgnoreCase('Privy') || vendor.equalsIgnoreCase('Digisign')) {
 
     'Constraint : Dokumen yang dipasang selalu dengan referal number di dokumen pertama.'
     respon_OTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing', [('callerId') : findTestData(excelPathAPISignDocument).getValue(
-                    GlobalVariable.NumofColm, rowExcel('callerId (Sign External)')).split(';', -1)[GlobalVariable.indexUsed]
+                    GlobalVariable.NumofColm, rowExcel('callerId'))
                 , ('phoneNo') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('phoneNo (Sign External)')).split(
                     ';', -1)[GlobalVariable.indexUsed], ('email') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
                     rowExcel('email (Sign External)')).split(';', -1)[GlobalVariable.indexUsed], ('refnumber') : ( 
@@ -265,7 +265,7 @@ if (otp.length() >= 0) {
 
     'HIT API Sign'
     respon = WS.sendRequest(findTestObject('APIFullService/Postman/Sign Document', [('callerId') : findTestData(excelPathAPISignDocument).getValue(
-                    GlobalVariable.NumofColm, rowExcel('callerId (Sign External)')).split(';', -1)[GlobalVariable.indexUsed]
+                    GlobalVariable.NumofColm, rowExcel('callerId'))
                 , ('documentId') : documentIdInput, ('email') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
                     rowExcel('email (Sign External)')).split(';', -1)[GlobalVariable.indexUsed], ('password') : (findTestData(
                     excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Password Signer'))), ('ipAddress') : ipaddress
@@ -453,7 +453,7 @@ def responseAPIStoreDB(Connection conneSign, String ipaddress, String documentId
 
     'verify callerId'
     arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
-                rowExcel('callerId (Sign External)')).split(';', -1)[GlobalVariable.indexUsed]).replace('"', ''), false, 
+                rowExcel('callerId'))), false, 
             FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify signing proces. 0 berarti tidak ada proses tanda tangan lagi.'
@@ -595,8 +595,7 @@ def verifySaldoUsedForLiveness(Connection conneSign, String trxNo) {
         'get trx dari db'
         ArrayList result = CustomKeywords.'connection.DataVerif.getSaldoTrx'(conneSign, (findTestData(excelPathAPISignDocument).getValue(
                 GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(';', -1)[GlobalVariable.indexUsed]).replace(
-                '"', ''), (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('callerId (Sign External)')).split(
-                ';', -1)[GlobalVariable.indexUsed]).replace('"', ''), checkTypeofUsedSaldo)
+                '"', ''), (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('callerId'))), checkTypeofUsedSaldo)
 
         arrayIndex = 0
 
