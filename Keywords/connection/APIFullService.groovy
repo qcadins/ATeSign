@@ -1850,7 +1850,7 @@ public class APIFullService {
 	@Keyword
 	listDocTemplateAPIOnly(Connection conn, String tenant, String docTempCode, String docTempName, String isActive) {
 		String commandCode = '', commandName = '', commandisActive = ''
-		
+
 		if (docTempCode == '') {
 			commandCode = '--'
 		}
@@ -1860,13 +1860,28 @@ public class APIFullService {
 		if (isActive == '') {
 			commandisActive = '--'
 		}
-		
+
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT count(*) FROM ms_doc_template mdt LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mdt.id_ms_tenant WHERE tenant_code = '" + tenant + "'" + '\n' + 
-			commandCode + " and mdt.doc_template_code = '" + docTempCode + "'" + '\n' + 
-			commandName + " AND mdt.doc_template_name = '" + docTempName + "'" + '\n' + 
-			commandisActive + " AND mdt.is_active = '" + isActive + "'")
+		resultSet = stm.executeQuery("SELECT count(*) FROM ms_doc_template mdt LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mdt.id_ms_tenant WHERE tenant_code = '" + tenant + "'" + '\n' +
+				commandCode + " and mdt.doc_template_code = '" + docTempCode + "'" + '\n' +
+				commandName + " AND mdt.doc_template_name = '" + docTempName + "'" + '\n' +
+				commandisActive + " AND mdt.is_active = '" + isActive + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+	@Keyword
+	getResetOtpCodeAPIOnly(Connection conn, String email) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT reset_code_request_num FROM am_msuser where login_id = '" + email + "'")
 
 		metadata = resultSet.metaData
 
