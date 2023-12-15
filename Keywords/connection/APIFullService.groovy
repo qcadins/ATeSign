@@ -1850,7 +1850,7 @@ public class APIFullService {
 	@Keyword
 	listDocTemplateAPIOnly(Connection conn, String tenant, String docTempCode, String docTempName, String isActive) {
 		String commandCode = '', commandName = '', commandisActive = ''
-		
+
 		if (docTempCode == '') {
 			commandCode = '--'
 		}
@@ -1860,13 +1860,13 @@ public class APIFullService {
 		if (isActive == '') {
 			commandisActive = '--'
 		}
-		
+
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT count(*) FROM ms_doc_template mdt LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mdt.id_ms_tenant WHERE tenant_code = '" + tenant + "'" + '\n' + 
-			commandCode + " and mdt.doc_template_code = '" + docTempCode + "'" + '\n' + 
-			commandName + " AND mdt.doc_template_name = '" + docTempName + "'" + '\n' + 
-			commandisActive + " AND mdt.is_active = '" + isActive + "'")
+		resultSet = stm.executeQuery("SELECT count(*) FROM ms_doc_template mdt LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mdt.id_ms_tenant WHERE tenant_code = '" + tenant + "'" + '\n' +
+				commandCode + " and mdt.doc_template_code = '" + docTempCode + "'" + '\n' +
+				commandName + " AND mdt.doc_template_name = '" + docTempName + "'" + '\n' +
+				commandisActive + " AND mdt.is_active = '" + isActive + "'")
 
 		metadata = resultSet.metaData
 
@@ -1876,5 +1876,112 @@ public class APIFullService {
 			data = resultSet.getObject(1)
 		}
 		data
+	}
+	@Keyword
+	getResetOtpCodeAPIOnly(Connection conn, String email) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT reset_code_request_num FROM am_msuser where login_id = '" + email + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+	@Keyword
+	businessLineAPIOnly(Connection conn, String tenant) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT count(*) FROM ms_business_line mbl LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mbl.id_ms_tenant WHERE tenant_code = '" + tenant + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+
+		if (data != null) {
+			Integer.parseInt(data)
+		} else {
+			data = 0
+		}
+
+		Integer.parseInt(data)
+	}
+	@Keyword
+	listTenantAPIOnly(Connection conn, String tenantName, String isActive) {
+		String commandName = '', commandisActive = '', commandWhere = 'AND'
+
+		if (tenantName == '') {
+			commandName = '--'
+			commandWhere = 'WHERE'
+		}
+		if (isActive == '') {
+			commandisActive = '--'
+		}
+
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT count(*) from ms_tenant " + '\n' +
+				commandName + " WHERE tenant_name LIKE '" + tenantName + "%'" + '\n' +
+				commandisActive + commandWhere + " is_active = '" + isActive + "'")
+
+		metadata = resultSet.metaData
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+
+		if (data != null) {
+			Integer.parseInt(data)
+		} else {
+			data = 0
+		}
+
+		Integer.parseInt(data)
+	}
+	@Keyword
+	listPsreSettingAPIOnly(Connection conn, String vendorName, String vendorCode, String isActive, String isOperating) {
+		String commandName = '', commandisActive = '', commandCode = '', commandisOperating = ''
+
+		if (vendorName == '') {
+			commandName = '--'
+		}
+		if (vendorCode == '') {
+			commandCode = '--'
+		}
+		if (isActive == '') {
+			commandisActive = '--'
+		}
+		if (isOperating == '') {
+			commandisOperating = '--'
+		}
+
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT count(*) FROM ms_vendor mv LEFT JOIN ms_lov mlo ON mlo.id_lov = mv.lov_vendor_type WHERE mlo.code = 'PSRE'" + '\n' +
+				commandName + " AND vendor_name LIKE '%" + vendorName + "%'" + '\n' +
+				commandCode + " AND vendor_code LIKE '%" + vendorCode + "%'" + '\n' +
+				commandisActive + " AND mv.is_active = '" + isActive + "'" + '\n' +
+				commandisOperating + " AND mv.is_operating = '" + isOperating + "'")
+
+		metadata = resultSet.metaData
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+
+		if (data != null) {
+			Integer.parseInt(data)
+		} else {
+			data = 0
+		}
+		Integer.parseInt(data)
 	}
 }

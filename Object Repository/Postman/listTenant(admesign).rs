@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebServiceRequestEntity>
    <description></description>
-   <name>resetOtpCode</name>
+   <name>listTenant(admesign)</name>
    <tag></tag>
-   <elementGuidId>468db4dd-fc1b-420c-9543-3cecb6879e56</elementGuidId>
+   <elementGuidId>9e040f28-0adb-41f4-bdb1-9d7bef1e9585</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <authorizationRequest>
@@ -19,7 +19,7 @@
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n    \&quot;loginId\&quot;: \&quot;${email}\&quot;,\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    },\n    \&quot;tenantCode\&quot;: \&quot;${tenantCode}\&quot;\n}&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;page\&quot;: \&quot;${page}\&quot;,\n    \&quot;tenantName\&quot;: \&quot;${tenantName}\&quot;,\n    \&quot;status\&quot;: \&quot;${isActive}\&quot;,\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    },\n    \&quot;tenantCode\&quot;: \&quot;${tenantCode}\&quot;\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -30,7 +30,7 @@
       <name>Accept</name>
       <type>Main</type>
       <value>application/json, text/plain, */*</value>
-      <webElementGuid>9d491ae3-e2dd-4aba-ba91-01273e545320</webElementGuid>
+      <webElementGuid>3ae1f174-7e2a-4fa9-8a99-743a01b34f2e</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -38,7 +38,7 @@
       <name>Accept-Language</name>
       <type>Main</type>
       <value>id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7</value>
-      <webElementGuid>5e0e51aa-37d4-4d09-aad5-2d1f1edbadb0</webElementGuid>
+      <webElementGuid>9672e9b6-0a27-4d61-aac8-d2d4bba5069d</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -46,7 +46,7 @@
       <name>Connection</name>
       <type>Main</type>
       <value>keep-alive</value>
-      <webElementGuid>e1b5cca2-6b88-4896-afb2-2bbba5012b64</webElementGuid>
+      <webElementGuid>4414c89b-dd1a-49fb-92df-11511f01c416</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -54,7 +54,7 @@
       <name>Content-Type</name>
       <type>Main</type>
       <value>application/json</value>
-      <webElementGuid>09fadc05-da18-4a79-883d-300dd2113fc1</webElementGuid>
+      <webElementGuid>de44558c-a09c-48f5-8848-ab898660f702</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -62,7 +62,7 @@
       <name>DNT</name>
       <type>Main</type>
       <value>1</value>
-      <webElementGuid>85b106b1-26d6-497d-8c38-bbebb3c597c7</webElementGuid>
+      <webElementGuid>1e3f0225-eaaf-4171-8628-975288ff5848</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -70,7 +70,7 @@
       <name>Origin</name>
       <type>Main</type>
       <value>http://gdkwebsvr:8080</value>
-      <webElementGuid>dc1d971e-1194-48e4-be5e-b56a9f68c700</webElementGuid>
+      <webElementGuid>d6153b4a-5553-488f-8f72-f7ad832bb9df</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -78,7 +78,7 @@
       <name>Referer</name>
       <type>Main</type>
       <value>http://gdkwebsvr:8080/</value>
-      <webElementGuid>23067897-5cc7-47c8-a93c-be122348be01</webElementGuid>
+      <webElementGuid>0ee704e6-e352-479b-88a5-7b2d2da58bc1</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -86,7 +86,7 @@
       <name>User-Agent</name>
       <type>Main</type>
       <value>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36</value>
-      <webElementGuid>c401485b-e48d-41e3-bc44-2f78daf21b3f</webElementGuid>
+      <webElementGuid>4adccfa6-b795-4ce7-a3fd-8e5cf7ebf7da</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>true</isSelected>
@@ -94,13 +94,13 @@
       <name>Authorization</name>
       <type>Main</type>
       <value>Bearer ${token}</value>
-      <webElementGuid>30887625-41fc-4c95-bf88-b2383cd2fd0a</webElementGuid>
+      <webElementGuid>48797d02-fa6d-410d-8644-20bf029385e6</webElementGuid>
    </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>POST</restRequestMethod>
-   <restUrl>${base_url}/services/user/s/resetOtpCode</restUrl>
+   <restUrl>${base_url}/services/tenant/s/listTenant</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>
@@ -112,21 +112,21 @@
    <variables>
       <defaultValue>GlobalVariable.base_url</defaultValue>
       <description></description>
-      <id>c47bab64-a800-42e7-a176-7dc3411e47ec</id>
+      <id>7e43cae7-0aa1-4d41-8103-c463c8958157</id>
       <masked>false</masked>
       <name>base_url</name>
    </variables>
    <variables>
       <defaultValue>GlobalVariable.token</defaultValue>
       <description></description>
-      <id>ebdac2d1-29c0-4490-bfc3-12f39f97dc55</id>
+      <id>da099e5c-bc14-4ee9-a366-7e06a43f8117</id>
       <masked>false</masked>
       <name>token</name>
    </variables>
    <variables>
       <defaultValue>GlobalVariable.Tenant</defaultValue>
       <description></description>
-      <id>6ff967f0-0114-4900-bea7-3ee0be482656</id>
+      <id>eb53106b-5f7d-4164-821d-ff34fbd0e8f7</id>
       <masked>false</masked>
       <name>tenantCode</name>
    </variables>
