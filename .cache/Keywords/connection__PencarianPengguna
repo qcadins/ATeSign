@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "496BBBF66062D79A67D8757B9A9DA829",
+  "keywordFileContentHash": "9875CF3C8518A33553673FA1B96C5EE7",
   "keywordClasses": [
     {
       "name": "connection.PencarianPengguna",
@@ -33,8 +33,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getPencarianPengguna",
@@ -65,8 +64,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getUserDataAPI",
@@ -97,11 +95,10 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         }
       ]
     }
   ],
-  "javadocParsed": true
+  "javadocParsed": false
 }
