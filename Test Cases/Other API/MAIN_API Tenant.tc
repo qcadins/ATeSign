@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API Tenant</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>4c00a2d1-1a7d-4a37-bf37-cc5ba2f251f2</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>b05c3231-8ffb-4d51-9092-e5dfeefb0bad</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>0c980e17-845e-44a0-bd74-2fb2f7dcade9</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/Tenant'</defaultValue>
+      <description></description>
+      <id>b05c3231-8ffb-4d51-9092-e5dfeefb0bad</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Tenant'</defaultValue>
+      <description></description>
+      <id>0c980e17-845e-44a0-bd74-2fb2f7dcade9</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>
