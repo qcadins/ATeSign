@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "D69244E7755EDE1BF3E61B7698CFF5C8",
+  "keywordFileContentHash": "A1C23F088CE64A7ED291EB7DB698210B",
   "keywordClasses": [
     {
       "name": "connection.ManualStamp",
@@ -20,7 +20,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getDocTypePeruri",
@@ -38,7 +39,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getManualStamp",
@@ -82,7 +84,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getInputeMeteraiMonitoring",
@@ -126,7 +129,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getProsesMeterai",
@@ -170,7 +174,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "gettrxSaldoForMeterai",
@@ -201,7 +206,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getIdLovVendorStamping",
@@ -232,7 +238,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getLovVendorStamping",
@@ -263,10 +270,11 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         }
       ]
     }
   ],
-  "javadocParsed": false
+  "javadocParsed": true
 }

@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "08DF02B7525A3C388C3D9233D7921775",
+  "keywordFileContentHash": "719E7BFF97CE893EC1117CBE4B33B240",
   "keywordClasses": [
     {
       "name": "connection.APIFullService",
@@ -3850,8 +3850,6 @@
             }
           ],
           "javadoc": ""
-          }
-          ]
         },
         {
           "name": "getResetOtpCodeAPIOnly",
@@ -3882,7 +3880,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "businessLineAPIOnly",
@@ -3913,7 +3912,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "listTenantAPIOnly",
@@ -3957,7 +3957,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "listPsreSettingAPIOnly",
@@ -4027,7 +4028,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         }
       ]
     }

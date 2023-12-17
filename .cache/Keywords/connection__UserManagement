@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "5EF575F4E0F7715395E12382A73D27BB",
+  "keywordFileContentHash": "62A6BDFA2358A9191F5E394E70C562F3",
   "keywordClasses": [
     {
       "name": "connection.UserManagement",
@@ -20,7 +20,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getUserManagement",
@@ -64,7 +65,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getUserManagementonEdit",
@@ -108,7 +110,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getUserManagementNewStoreDB",
@@ -152,7 +155,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getUserManagementEditStoreDB",
@@ -196,7 +200,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "convertRoleCodetoName",
@@ -227,7 +232,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getddlRoleUserManagement",
@@ -258,7 +264,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getRoleUserManagementAPI",
@@ -289,10 +296,11 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         }
       ]
     }
   ],
-  "javadocParsed": false
+  "javadocParsed": true
 }
