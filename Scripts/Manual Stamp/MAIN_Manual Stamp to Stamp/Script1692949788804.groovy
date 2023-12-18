@@ -528,8 +528,8 @@ def zoomSetting(int percentage) {
 
     WebDriver driver = DriverFactory.webDriver
 
-    'buka tab baru'
-        ((driver) as JavascriptExecutor).executeScript('window.open();')
+    'open new tab'
+    WebUI.executeJavaScript('window.open();', [])
 
     'ambil index tab yang sedang dibuka di chrome'
     int currentTab = WebUI.getWindowIndex()
@@ -539,11 +539,12 @@ def zoomSetting(int percentage) {
 
     driver.get('chrome://settings/')
 
-        ((driver) as JavascriptExecutor).executeScript(('chrome.settingsPrivate.setDefaultZoom(' + percentageZoom.toString()) + 
-        ');')
+	'open new tab'
+	WebUI.executeJavaScript(('chrome.settingsPrivate.setDefaultZoom(' + percentageZoom.toString()) + ');', [])
 
     'close tab baru'
-        ((driver) as JavascriptExecutor).executeScript('window.close();')
+	WebUI.executeJavaScript('window.close();', [])
+       
 }
 
 def inputEMeteraiMonitoring(Connection conneSign) {

@@ -1022,10 +1022,10 @@ public class APIFullService {
 	}
 
 	@Keyword
-	getInvitationCode(Connection conn, String email) {
+	getInvitationCode(Connection conn, String value) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select invitation_code from tr_invitation_link inv JOIN ms_vendor mv ON inv.id_ms_vendor = mv.id_ms_vendor where  receiver_detail = '"+ email +"' and vendor_code = '"+ GlobalVariable.Psre +"'")
+		resultSet = stm.executeQuery("select invitation_code from tr_invitation_link inv JOIN ms_vendor mv ON inv.id_ms_vendor = mv.id_ms_vendor where  receiver_detail = '"+ value +"' or phone = '"+ value +"' and vendor_code = '"+ GlobalVariable.Psre +"'")
 
 		metadata = resultSet.metaData
 
@@ -1060,10 +1060,14 @@ public class APIFullService {
 	}
 
 	@Keyword
-	getCheckInvRegisStoreDB(Connection conn, String email) {
+	getCheckInvRegisStoreDB(Connection conn, String value) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT CASE WHEN login_id is null then '0' else '1' END, CASE WHEN login_id is null then '0' else '1' END, case when request_status = '0' or '1' then '1' else '2' end, notes FROM tr_balance_mutation tbm JOIN tr_job_check_register_status tjc ON tbm.id_balance_mutation = tjc.id_balance_mutation LEFT JOIN am_msuser amu ON tbm.id_ms_user = amu.id_ms_user WHERE tjc.usr_crt = '"+ email +"'")
+		if (GlobalVariable.Psre == 'PRIVY') {
+			resultSet = stm.executeQuery("SELECT CASE WHEN login_id is null then '0' else '1' END, CASE WHEN login_id is null then '0' else '1' END, case when request_status = '0' or '1' then '1' else '2' end, notes FROM tr_balance_mutation tbm JOIN tr_job_check_register_status tjc ON tbm.id_balance_mutation = tjc.id_balance_mutation LEFT JOIN am_msuser amu ON tbm.id_ms_user = amu.id_ms_user WHERE amu.login_id = '"+ value +"' or tbm.usr_crt = '"+ value +"'")
+		} else {
+			resultSet = stm.executeQuery("select mvru.is_active, is_registered, '0', '', is_external_activation from ms_vendor_registered_user mvru join ms_vendor mv on mvru.id_ms_vendor = mv.id_ms_vendor where signer_registered_email = '"+ value +"' or hashed_signer_registered_phone = encode(sha256('"+ value +"'), 'hex') and mv.vendor_code = '"+ GlobalVariable.Psre  +"'")
+		}
 
 		metadata = resultSet.metaData
 
@@ -1072,7 +1076,11 @@ public class APIFullService {
 		while (resultSet.next()) {
 			for (i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
-				listdata.add(data)
+				if(data == null) {
+					listdata.add('0')
+				} else {
+					listdata.add(data)
+				}
 			}
 		}
 		listdata
