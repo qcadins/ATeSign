@@ -43,7 +43,7 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; Globa
 		break
 	}
 	// If status is 'Unexecuted', set GlobalVariable.FlagFailed to 0 and perform some actions
-	else if (status == 'Unexecuted') {
+	else if (status.equalsIgnoreCase('Unexecuted')) {
 		GlobalVariable.FlagFailed = 0
 
 		// Call the 'settingBaseUrl' keyword from the 'APIFullService' class with the necessary parameters

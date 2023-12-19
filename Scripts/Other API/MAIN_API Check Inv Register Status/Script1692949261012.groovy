@@ -30,29 +30,40 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		'setting menggunakan base url yang benar atau salah'
 		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathCheckInvRegisterStatus, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 		
-		if (findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Psre')).equalsIgnoreCase('No')) {
-			GlobalVariable.Psre = findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Psre'))
-		} else if (findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Psre')).equalsIgnoreCase('Yes')) {
-			GlobalVariable.Psre = findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
-		}
+		'get psre dari excel per case'
+		GlobalVariable.Psre = findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
 		
 		String value
 		
 		if (findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Input correct Message')).equalsIgnoreCase('Yes')) {
 			'get invitationcode dari DB > encrypt invitation code > encode invitation code yang sudah di encrypt'
-			value = encodeValue(findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Email')), conneSign)
+			value = encodeValue(findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Email/PhoneNo')), conneSign)
 		} else if (findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Input correct Message')).equalsIgnoreCase('No')) {
 			value = findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Message'))
 		}
 		
 	    'HIT API'
 	    respon = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/API Check Inv Register Status', [('callerId') : findTestData(excelPathCheckInvRegisterStatus).getValue(
-			GlobalVariable.NumofColm, rowExcel('CallerId')), ('msg') : '"' + value + '"']))
+			GlobalVariable.NumofColm, rowExcel('CallerId')), ('msg') : value]))
 	
 		   if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
 			   
 			   'get  code'
 			   code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
+			   
+			   'ambil lama waktu yang diperlukan hingga request menerima balikan'
+			   def elapsedTime = (respon.getElapsedTime() / 1000) + ' second'
+   
+			   'ambil body dari hasil respons'
+			   responseBody = respon.getResponseBodyContent()
+   
+			   'panggil keyword untuk proses beautify dari respon json yang didapat'
+			   CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
+					   excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+   
+			   'write to excel response elapsed time'
+			   CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') -
+				   1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
 			   
 			   if(code == 0) {
 				   'get activeStatus'
@@ -66,6 +77,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				   
 				   'get verificationResult'
 				   verificationResult = WS.getElementPropertyValue(respon, 'verificationResult', FailureHandling.OPTIONAL)
+				   
+				   'get activationByExternalFlow'
+				   activationByExternalFlowResult = WS.getElementPropertyValue(respon, 'activationByExternalFlow', FailureHandling.OPTIONAL)
 				
 				   'write to excel success'
 				   CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
@@ -73,42 +87,36 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 	
 				   'write to excel verif status'
 				   CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
-					   5, GlobalVariable.NumofColm - 1, activeStatus + ';' + registrationStatus + ';' + verificationInProgress + ';' + verificationResult)
+					   rowExcel('Result') - 1, GlobalVariable.NumofColm - 1, activeStatus + ';' + registrationStatus + 
+					   ';' + verificationInProgress + ';' + verificationResult + ';' + activationByExternalFlowResult)
 				   
 				   if(GlobalVariable.checkStoreDB == 'Yes') {
 					   'declare arraylist arraymatch'
 					   ArrayList<String> arrayMatch = []
+
+					   'get result dari db'
+					   result = CustomKeywords.'connection.APIFullService.getCheckInvRegisStoreDB'(conneSign, findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Email/PhoneNo')))
 					   
-					   if(GlobalVariable.Psre == 'PRIVY') {
-						   'get result dari db'
-						   result = CustomKeywords.'connection.APIFullService.getCheckInvRegisStoreDB'(conneSign, findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Email')))
-						   
-						   arrayIndex = 0 
-						   
-						   'verify activeStatus'
-						   arrayMatch.add(WebUI.verifyMatch(activeStatus, result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-						   
-						   'verify registrationStatus'
-						   arrayMatch.add(WebUI.verifyMatch(registrationStatus, result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-						   
-						   'verify verificationInProgress'
-						   arrayMatch.add(WebUI.verifyMatch(verificationInProgress, result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-						   
-						   'verify verificationResult'
-						   arrayMatch.add(WebUI.verifyMatch(verificationResult, result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-						   
-					   } else if(GlobalVariable.Psre == 'VIDA') {
-						   'verify activeStatus'
-						   arrayMatch.add(WebUI.verifyMatch(activeStatus, '0', false, FailureHandling.CONTINUE_ON_FAILURE))
-						   
-						   'verify registrationStatus'
-						   arrayMatch.add(WebUI.verifyMatch(registrationStatus, '1', false, FailureHandling.CONTINUE_ON_FAILURE))
-						   
-						   'verify verificationInProgress'
-						   arrayMatch.add(WebUI.verifyMatch(verificationInProgress, '0', false, FailureHandling.CONTINUE_ON_FAILURE))
-						   
-						   'verify verificationResult'
-						   arrayMatch.add(WebUI.verifyMatch(verificationResult, '', false, FailureHandling.CONTINUE_ON_FAILURE))
+					   arrayIndex = 0 
+					   
+					   'verify activeStatus'
+					   arrayMatch.add(WebUI.verifyMatch(activeStatus, result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+					   
+					   'verify registrationStatus'
+					   arrayMatch.add(WebUI.verifyMatch(registrationStatus, result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+					   
+					   'verify verificationInProgress'
+					   arrayMatch.add(WebUI.verifyMatch(verificationInProgress, result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+					   
+					   'verify verificationResult'
+					   arrayMatch.add(WebUI.verifyMatch(verificationResult, result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+					   
+					   if (GlobalVariable.Psre != 'PRIVY') {
+						   'verify activationByExternalFlowResult'
+						   arrayMatch.add(WebUI.verifyMatch(activationByExternalFlowResult, result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))							   
+					   } else {
+						   'verify activationByExternalFlowResult'
+						   arrayMatch.add(WebUI.verifyMatch(activationByExternalFlowResult.toString(), 'null', false, FailureHandling.CONTINUE_ON_FAILURE))
 					   }
 					   
 					   'jika data db tidak sesuai dengan excel'
