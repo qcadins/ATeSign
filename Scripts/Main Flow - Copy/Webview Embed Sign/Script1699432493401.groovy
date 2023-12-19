@@ -699,7 +699,7 @@ def encryptLink(Connection conneSign, String documentId, String emailSigner, Str
     officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, documentId)
 
     'pembuatan message yang akan dienkrip'
-    msg = (((((('{"officeCode" : "' + officeCode) + '", "email" : ') + emailSigner) + ',"timestamp" : "') + currentDateTimeStamp) + 
+    msg = (((((('{"officeCode" : "' + officeCode) + '", "email" : "') + emailSigner) + '","timestamp" : "') + currentDateTimeStamp) + 
     '"}')
 	
     'enkripsi msg'
@@ -879,9 +879,8 @@ def generateEncryptMessage(Connection conneSign, String documentId, String email
     'membuat link document monitoring'
     linkDocumentMonitoring = ((((((((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Base Link Document Monitoring')) + 
     '?msg=') + encryptMsg) + '&isHO=') + (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel(
-            'isHO')).split(';', -1)[GlobalVariable.indexUsed])) + '&isMonitoring=') + (findTestData(excelPathFESignDocument).getValue(
-        GlobalVariable.NumofColm, rowExcel('isMonitoring')).split(';', -1)[GlobalVariable.indexUsed])) + '&tenantCode=') + 
-    tenantCode)
+            'isHO')))) + '&isMonitoring=') + (findTestData(excelPathFESignDocument).getValue(
+        GlobalVariable.NumofColm, rowExcel('isMonitoring')))) + '&tenantCode=') + tenantCode)
 
     'membuat link kotak masuk'
     linkKotakMasuk = ((((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Base Link KotakMasuk')) + 

@@ -75,7 +75,7 @@ prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, 
 		if ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code (Stamp)'))) == 'No') {
 			'set tenant kosong'
 			GlobalVariable.Tenant = (findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Wrong tenant Code (Stamp)')))
-		} else if (findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code (Stamp')) == 'Yes') {
+		} else if (findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code (Stamp)')) == 'Yes') {
 			'Input tenant'
 			GlobalVariable.Tenant = findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))
 		}

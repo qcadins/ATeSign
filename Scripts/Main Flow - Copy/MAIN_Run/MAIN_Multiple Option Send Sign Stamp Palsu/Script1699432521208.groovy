@@ -62,6 +62,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         'pasang gv tenant agar tidak berubah'
         GlobalVariable.Tenant = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))
 
+		if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Document Monitoring Using ?')) == 'Embed') {
+			GlobalVariable.RunWithEmbed = 'Yes'
+		} else {
+			GlobalVariable.RunWithEmbed = 'No'
+		}
+		
         'inisialisasi signerInput dan email signer sebagai array list'
         ArrayList emailSignerPerDoc
 
@@ -469,7 +475,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             }
             
             'loopig berdasarkan total dokumen dari dokumen template code'
-            if (GlobalVariable.eSignData.getAt('VerifikasiSign') > 0) {
+            if (GlobalVariable.eSignData.getAt('CountVerifikasiSign') > 0) {
                 'loopig berdasarkan total dokumen dari dokumen template code'
                 for (i = 0; i < GlobalVariable.eSignData.getAt('NoKontrakProcessed').split(';', -1).size(); i++) {
                     'ambil nama vendor dari DB'

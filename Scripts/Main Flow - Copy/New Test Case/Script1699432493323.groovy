@@ -29,20 +29,6 @@ GlobalVariable.NumofColm = 2
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign Main.xlsx')
 
-HashMap aa = []
-aa.put('USERCJIA@GMAIL.COM', '1')
-aa.put('USERCIIE@AD-INS.COM', '1')
+boolean aaaa = CustomKeywords.'connection.SendSign.getCheckingActiveDocument'(conneSign, 'DOC P 1')
 
-GlobalVariable.storeVar.putAt('00155D0B-7502-8FE8-11EE-98A96BAF4E51', 'USERCJIA@GMAIL.COM')
-
-println aa
-println GlobalVariable.storeVar
-
-for (looping = 0; looping < aa.keySet().size(); looping++) {
-if (GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0]) == aa.keySet()[looping]) {
-	flagBreak = 1
-} else {
-	println GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0])
-	println aa.keySet()[looping]
-}
-}
+println aaaa

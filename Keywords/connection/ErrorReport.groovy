@@ -72,7 +72,7 @@ public class ErrorReport {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("SELECT treh.user_name, treh.user_idno, msl.description FROM tr_error_history_user_detail treh LEFT JOIN tr_error_history teh on treh.id_error_history = teh.id_error_history LEFT JOIN ms_lov msl ON treh.lov_signer_type = msl.id_lov WHERE treh.id_error_history = '"+idErrorHistory+"' ")
-		
+
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -85,13 +85,13 @@ public class ErrorReport {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getErrorHistoryAPI(Connection conn, String idErrorHistory) {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select teh.id_error_history, msl.description, teh.ref_number, teh.cust_name, teh.office, teh.region, teh.business_line, teh.error_type, teh.error_date, teh.error_message, msv.vendor_code from tr_error_history teh left join ms_lov msl on teh.lov_modul = msl.id_lov left join ms_vendor msv on teh.id_ms_vendor = msv.id_ms_vendor where teh.error_date >= date_trunc('month', now()) and teh.error_date <= now() LIMIT 10 OFFSET 11")
-		
+
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -104,7 +104,7 @@ public class ErrorReport {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getStatusActivationAPI(Connection conn, String email, String idErrorReport) {
 		stm = conn.createStatement()

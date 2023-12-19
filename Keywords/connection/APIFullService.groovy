@@ -289,8 +289,7 @@ public class APIFullService {
 	getSignLocation(Connection conn, String docid) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select STRING_AGG(tdds.sign_location,';') from tr_document_d tdd join tr_document_d_sign tdds on tdd.id_document_d = tdds.id_document_d where tdd.document_id = '" + docid + "'")
-
+		resultSet = stm.executeQuery("SELECT STRING_AGG(sign_locations, ';') AS combined_sign_locations FROM (SELECT STRING_AGG(tdds.sign_location, ';') AS sign_locations FROM tr_document_d tdd JOIN tr_document_d_sign tdds ON tdd.id_document_d = tdds.id_document_d WHERE tdd.document_id = '"+docid+"' GROUP BY tdds.id_document_d_sign) AS subquery;")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -1794,6 +1793,24 @@ public class APIFullService {
 
 		resultSet = stm.executeQuery("SELECT mv.vendor_code, mv.vendor_name, default_vendor FROM ms_vendoroftenant vot LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = vot.id_ms_tenant LEFT JOIN ms_vendor mv ON mv.id_ms_vendor = vot.id_ms_vendor WHERE tenant_code = '" + tenant + "' AND lov_vendor_type != 160 ORDER BY default_vendor ASC")
 
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+
+	@Keyword
+	getPaymentSignTypeAPI(Connection conn, String tenantCode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select DISTINCT msl.code, msl.description from ms_paymentsigntypeoftenant mpst left join ms_tenant mst on mpst.id_ms_tenant = mst.id_ms_tenant left join ms_lov msl on mpst.lov_payment_sign_type = msl.id_lov where mst.tenant_code = '"+tenantCode+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
