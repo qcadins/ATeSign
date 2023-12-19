@@ -416,7 +416,7 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 def checkTrxMutation(Connection conneSign) {
     if (GlobalVariable.checkStoreDB == 'Yes') {
         resultTrx = CustomKeywords.'connection.APIFullService.getAPIGenInvLinkVerifTrx'(conneSign, findTestData(excelPathRegister).getValue(
-                GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', ''), findTestData(excelPathRegister).getValue(
+                GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"', ''), findTestData(excelPathRegister).getValue(
                 GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"', ''))
 
         'declare arraylist arraymatch'

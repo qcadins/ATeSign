@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "7C2A3BC7D9E907846CE17D9F990715A3",
+  "keywordFileContentHash": "BB42BBD335DDECA7F0E2C533A2FBBE0B",
   "keywordClasses": [
     {
       "name": "connection.Registrasi",
@@ -33,8 +33,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getGenInvLink",
@@ -104,8 +103,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "buatUndanganStoreDB",
@@ -149,8 +147,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getBuatUndanganDataPerusahaanStoreDB",
@@ -181,8 +178,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "getRegisterPrivyStoreDB",
@@ -213,8 +209,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "settingSendCertNotifbySMS",
@@ -245,8 +240,7 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         },
         {
           "name": "checkAddUserOtherTenant",
@@ -277,11 +271,10 @@
                 "errorOnParsing": false
               }
             }
-          ],
-          "javadoc": ""
+          ]
         }
       ]
     }
   ],
-  "javadocParsed": true
+  "javadocParsed": false
 }

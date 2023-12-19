@@ -29,10 +29,6 @@ GlobalVariable.NumofColm = 2
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign Main.xlsx')
 
-int b = 1
-for (int j = 1; j <= b; j++) {
-println b
-b++
-println b
-WebUI.comment(j.toString())
-}
+boolean aaaa = CustomKeywords.'connection.SendSign.getCheckingActiveDocument'(conneSign, 'DOC P 1')
+
+println aaaa

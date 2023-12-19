@@ -4,6 +4,7 @@ import com.kms.katalon.core.annotation.Keyword
 import javax.xml.bind.DatatypeConverter
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.util.Base64 as base64
 
 public class ConvertFile {
 
@@ -13,7 +14,7 @@ public class ConvertFile {
 		FileInputStream fis = new FileInputStream(f)
 		byte[] byteArray = new byte[(int)f.length()]
 		fis.read(byteArray)
-		String imageString = new sun.misc.BASE64Encoder().encode(byteArray)
+		String imageString = base64.getEncoder().encodeToString(byteArray)
 
 		imageString.replaceAll('[\r\n\t ]', '')
 	}

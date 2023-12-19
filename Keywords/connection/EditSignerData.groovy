@@ -9,7 +9,7 @@ import internal.GlobalVariable
 
 public class EditSignerData {
 
-	String data
+	String data, helperQuery
 	int columnCount, i, countLengthforSHA256 = 64
 	Statement stm
 	ResultSetMetaData metadata
@@ -115,6 +115,62 @@ public class EditSignerData {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select case when msvr.is_active = '1' then 'Sudah Aktivasi' else 'Belum Aktivasi' end from ms_useroftenant muot join am_msuser amm on muot.id_ms_user = amm.id_ms_user join ms_vendor_registered_user msvr on amm.id_ms_user = msvr.id_ms_user join ms_vendor msv on msvr.id_ms_vendor = msv.id_ms_vendor join ms_tenant mst on muot.id_ms_tenant = mst.id_ms_tenant join am_user_personal_data aupd on amm.id_ms_user = aupd.id_ms_user where " + valueWhere + " and msv.is_active = '1' and msv.is_operating = '1' and mst.tenant_code = '"+tenantCode+"' and msv.vendor_name = '"+vendorName+"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+
+	@Keyword
+	getGetListDataPenggunaAPI(Connection conn, String value, String tenantCode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select amm.login_id, amm.full_name, CASE WHEN msvr.is_registered = '0' THEN 'belum registrasi' ELSE CASE WHEN msvr.is_active = '0' THEN 'belum aktivasi' ELSE 'sudah aktivasi' END END, msv.vendor_code, msvr.is_registered, msvr.is_active, msv.vendor_name from am_msuser amm  left join ms_useroftenant muot on amm.id_ms_user = muot.id_ms_user left join ms_vendor_registered_user msvr on amm.id_ms_user = msvr.id_ms_user left join ms_vendor msv on msvr.id_ms_vendor = msv.id_ms_vendor left join ms_tenant mst on muot.id_ms_tenant = mst.id_ms_tenant where (amm.login_id = '"+value+"' OR amm.hashed_phone = encode(sha256('"+value+"'), 'hex') OR amm.hashed_id_no = encode(sha256('"+value+"'), 'hex')) AND mst.tenant_code = '"+tenantCode+"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+
+	@Keyword
+	getUpdateDataSignerAPI(Connection conn, String value, String tenantCode, String vendorCode) {
+		if (vendorCode != '') {
+			helperQuery =  "and msv.vendor_code = '" + vendorCode + "'"
+		} else {
+			helperQuery = ''
+		}
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select amm.full_name, amm.login_id, amm.hashed_phone, amm.hashed_id_no, aupd.date_of_birth from ms_useroftenant muot join am_msuser amm on muot.id_ms_user = amm.id_ms_user join ms_vendor_registered_user msvr on amm.id_ms_user = msvr.id_ms_user join ms_vendor msv on msvr.id_ms_vendor = msv.id_ms_vendor join ms_tenant mst on muot.id_ms_tenant = mst.id_ms_tenant join am_user_personal_data aupd on amm.id_ms_user = aupd.id_ms_user where (amm.login_id = '"+value+"' OR amm.hashed_phone = encode(sha256('"+value+"'), 'hex') OR amm.hashed_id_no = encode(sha256('"+value+"'), 'hex')) and msv.is_active = '1' and msv.is_operating = '1' and mst.tenant_code = '" + tenantCode + "'" + helperQuery + "")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+	
+	@Keyword
+	getStatusActivationAPI(Connection conn, String value, String tenantCode, String vendorCode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select msvr.is_active from ms_useroftenant muot join am_msuser amm on muot.id_ms_user = amm.id_ms_user join ms_vendor_registered_user msvr on amm.id_ms_user = msvr.id_ms_user join ms_vendor msv on msvr.id_ms_vendor = msv.id_ms_vendor join ms_tenant mst on muot.id_ms_tenant = mst.id_ms_tenant join am_user_personal_data aupd on amm.id_ms_user = aupd.id_ms_user where (amm.login_id = '"+value+"' OR amm.hashed_phone = encode(sha256('"+value+"'), 'hex') OR amm.hashed_id_no = encode(sha256('"+value+"'), 'hex')) and msv.is_active = '1' and msv.is_operating = '1' and mst.tenant_code = '"+tenantCode+"' and msv.vendor_code = '"+vendorCode+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

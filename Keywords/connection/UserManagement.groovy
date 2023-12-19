@@ -135,13 +135,31 @@ public class UserManagement {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getRoleUserManagementAPI(Connection conn, String tenantCode) {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select role_name, role_code from am_msrole amm join ms_tenant mst on amm.id_ms_tenant = mst.id_ms_tenant where mst.tenant_code = '" + tenantCode + "' and is_usermanagement = '1' order by id_ms_role asc")
 
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+
+	@Keyword
+	getDataUserManagementViewAPI(Connection conn, String roleCode, String tenantCode, String loginId) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select amm.login_id, amm.full_name, amr.role_code,TO_char(amm.dtm_crt, 'YYYY-MM-DD'), mso.office_code, mso.office_name, msvr.is_active  from am_memberofrole amor left join am_msrole amr on amr.id_ms_role = amor.id_ms_role left join ms_vendor_registered_user msvr on amor.id_ms_user = msvr.id_ms_user left join am_msuser amm on amm.id_ms_user = msvr.id_ms_user left join ms_useroftenant muot on amm.id_ms_user = muot.id_ms_user left join ms_office mso on mso.id_ms_office = amm.id_ms_office left join ms_tenant mst on muot.id_ms_tenant = mst.id_ms_tenant where amm.login_id = '"+loginId+"' AND mst.tenant_code = '"+tenantCode+"' AND amr.role_code = '"+roleCode+"' AND msvr.is_active = '1'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
