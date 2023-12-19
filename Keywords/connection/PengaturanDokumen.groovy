@@ -137,4 +137,41 @@ public class PengaturanDokumen {
 		}
 		data
 	}
+	
+	@Keyword
+	getDocumentTemplateAPI(Connection conn, String documentTemplateCode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select mdtsl.sign_location, msl.code, msl1.code, mdtsl.sign_page, mdtsl.transform, mdtsl.tekenaj_sign_location, mdtsl.vida_sign_location, mdtsl.privy_sign_location, mdtsl.seq_no from ms_doc_template mdt left join ms_doc_template_sign_loc mdtsl on mdt.id_doc_template = mdtsl.id_doc_template left join ms_lov msl on mdtsl.lov_signer_type = msl.id_lov left join ms_lov msl1 on mdtsl.lov_sign_type = msl1.id_lov where mdt.doc_template_code = '"+documentTemplateCode+"'")
+		
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+	
+	@Keyword
+	getDocumentTemplateAPI2(Connection conn, String documentTemplateCode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select mdt.doc_template_code, mdt.doc_template_name, mdt.doc_template_description, mdt.is_active, msl.code, mdt.is_sequence, msv.vendor_code  from ms_doc_template mdt left join ms_lov msl on mdt.lov_payment_sign_type = msl.id_lov left join ms_vendor msv on mdt.id_ms_vendor = msv.id_ms_vendor where mdt.doc_template_code = '"+documentTemplateCode+"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
 }

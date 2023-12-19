@@ -23,6 +23,16 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'declare arraylist arraymatch'
 arrayMatch = []
 
+String checkActiveDocument = CustomKeywords.'connection.SendSign.getCheckingActiveDocument'(conneSign, findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo')))
+
+if (checkActiveDocument != '') {
+	println checkActiveDocument
+	'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+		(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-','') + semicolon) +
+		'<Nomor Kontrak ' + checkActiveDocument + 'masih aktif>')
+}
+
 'Mengambil documentid di excel dan displit'
 docid = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ', splitnum)
 

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API Get List User Management</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>f5ba2b50-6aa9-4634-a378-944212f5e232</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>c517e364-b71c-4d49-8522-eb822b827ddf</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>60121192-4ac6-4a4c-bf67-b93c30e19aba</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/Get List User Management'</defaultValue>
+      <description></description>
+      <id>c517e364-b71c-4d49-8522-eb822b827ddf</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Get List User Mangement'</defaultValue>
+      <description></description>
+      <id>60121192-4ac6-4a4c-bf67-b93c30e19aba</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>

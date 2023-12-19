@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API List Monitoring</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>a8784e93-3c10-4fa5-9e46-e296af287241</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>2affd91a-1e1e-4390-9b9e-01c1a850584c</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>0dfe7aba-9dc1-4035-a8c7-413d456f4750</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/List Monitoring'</defaultValue>
+      <description></description>
+      <id>2affd91a-1e1e-4390-9b9e-01c1a850584c</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API List Monitoring'</defaultValue>
+      <description></description>
+      <id>0dfe7aba-9dc1-4035-a8c7-413d456f4750</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>

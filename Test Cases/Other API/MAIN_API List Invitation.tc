@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API List Invitation</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>86d467b5-b636-45eb-8e85-d01c0d27c583</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>e46a2f6b-6e7d-4062-ab72-803886c112a8</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>4d7edf44-369b-49a1-b0c6-8ed1fed0fe46</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/List Invitation'</defaultValue>
+      <description></description>
+      <id>e46a2f6b-6e7d-4062-ab72-803886c112a8</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API List Invitation'</defaultValue>
+      <description></description>
+      <id>4d7edf44-369b-49a1-b0c6-8ed1fed0fe46</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>
