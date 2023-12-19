@@ -3534,7 +3534,6 @@
             }
           ],
           "javadoc": ""
-<<<<<<< HEAD
         },
         {
           "name": "getStatusEmailServiceAPIOnly",
@@ -3631,8 +3630,6 @@
             }
           ],
           "javadoc": ""
-=======
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
         }
       ]
     }
