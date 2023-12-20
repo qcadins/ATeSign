@@ -1831,7 +1831,7 @@ public class APIFullService {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getListMessageDeliveryAPIOnly(Connection conn, String tenant, String vendor, String messageMedia, String dateStart, String dateEnd, String deliveryStatus, String recipient) {
 		String commandRec = '', commandReport = '', commandMedia = '', commandVendor = '', commandDelivStat = ''
@@ -2009,5 +2009,62 @@ public class APIFullService {
 			data = 0
 		}
 		Integer.parseInt(data)
+	}
+	
+	@Keyword
+	getPsrePriorityAPIONLY(Connection conn) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT VENDOR_CODE FROM ms_vendoroftenant mvt JOIN ms_tenant mt ON mvt.id_ms_tenant = mt.id_ms_tenant JOIN ms_vendor mv ON mvt.id_ms_vendor = mv.id_ms_vendor join ms_lov ml on ml.id_lov = mv.lov_vendor_type WHERE mt.tenant_code = '"+ GlobalVariable.Tenant +"' AND ml.description = 'PSRE' AND default_vendor is not null ORDER BY mvt.default_vendor ASC")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+	
+	@Keyword
+	getTopUpAPIONLY(Connection conn, String value) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select tenant_code, vendor_code, ml.description, notes, qty, ref_no, To_char(trx_date, 'yyyy-MM-dd') from tr_balance_mutation tbm join ms_tenant mt on mt.id_ms_tenant = tbm.id_ms_tenant join ms_vendor mv on mv.id_ms_vendor = tbm.id_ms_vendor join ms_lov ml on ml.id_lov = tbm.lov_balance_type where ref_no = '"+ value +"'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+	
+	@Keyword
+	getUpdateVendorPsreAPIONLY(Connection conn) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select vendor_code, vendor_name, mv.is_active, is_operating, ml.code from ms_vendor mv join ms_lov ml on ml.id_lov = mv.lov_vendor_sign_payment_type where vendor_code = '"+ GlobalVariable.Psre +"'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
 	}
 }

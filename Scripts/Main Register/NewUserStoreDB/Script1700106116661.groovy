@@ -122,12 +122,20 @@ def verifyStoreDB(ArrayList<String> arrayMatch, ArrayList<String> resultDataPeru
 	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
 					'Tempat Lahir')).replace('"', '').toUpperCase(), (resultDataDiri[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
-	'parse Date from MM/dd/yyyy > yyyy-MM-dd'
-	sDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(resultDataDiri[arrayindex++], 'MM/dd/yyyy', 'yyyy-MM-dd')
+	if(!findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
+            'Menu Buat Undangan')) {
+		'parse Date from MM/dd/yyyy > yyyy-MM-dd'
+		sDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(resultDataDiri[arrayindex++], 'MM/dd/yyyy', 'yyyy-MM-dd')
 
-	'verify tanggal lahir'
-	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-					'Tanggal Lahir')).replace('"', ''), sDate, false, FailureHandling.CONTINUE_ON_FAILURE))
+		'verify tanggal lahir'
+		arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
+				'Tanggal Lahir')).replace('"', ''), sDate, false, FailureHandling.CONTINUE_ON_FAILURE))
+	} else {
+		'verify tanggal lahir'
+		arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
+				'Tanggal Lahir')).replace('"', ''), resultDataDiri[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+	}
+	
 
 	'verify jenis kelamin'
 	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
