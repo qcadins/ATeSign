@@ -1752,4 +1752,73 @@ public class APIFullService {
 		}
 		listdata
 	}
+	@Keyword
+	getStatusEmailServiceAPIOnly(Connection conn, String tenant) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT tenant_code, tenant_name, email_service FROM ms_tenant WHERE tenant_code = '" + tenant + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+	@Keyword
+	getCheckRegistAutoFillAPIOnly(Connection conn, String email) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT full_name, login_id, hashed_phone FROM am_msuser WHERE login_id = '" + email + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+	@Keyword
+	getPsrePriorityAPIOnly(Connection conn, String tenant) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT mv.vendor_code, mv.vendor_name, default_vendor FROM ms_vendoroftenant vot LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = vot.id_ms_tenant LEFT JOIN ms_vendor mv ON mv.id_ms_vendor = vot.id_ms_vendor WHERE tenant_code = '" + tenant + "' AND lov_vendor_type != 160 ORDER BY default_vendor ASC")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+	@Keyword
+	getIDManualReportAPIOnly(Connection conn, String filename) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT id_manual_report FROM tr_manual_report WHERE filename = '" + filename + "' ORDER BY report_date LIMIT 1")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		Integer.parseInt(data)
+	}
 }

@@ -30,7 +30,6 @@ public class BeautifyJson {
 			try {
 				needto.writeToExcel(GlobalVariable.DataFilePath, sheet, rowNo, GlobalVariable.NumofColm -
 						1, beautifiedJson.toString())
-
 			} catch (Exception ex) {
 
 				String beautifiedJsonPath = System.getProperty('user.dir') + '\\Response\\' + fileName + '.json'
@@ -40,7 +39,6 @@ public class BeautifyJson {
 				needto.writeToExcel(GlobalVariable.DataFilePath, sheet, rowNo, GlobalVariable.NumofColm -
 						1, beautifiedJsonPath)
 			}
-
 		} catch (Exception e) {
 			println("Failed to beautify the JSON: ${e.getMessage()}")
 		}
