@@ -617,8 +617,7 @@ public class DataVerif {
 	getDetailTrx(Connection conn, String trxNo) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT tbm.trx_no, TO_CHAR(tbm.trx_date, 'YYYY-MM-DD HH24:MI:SS'), 'Use ' || msl.description, amm.full_name, '', '', '', tbm.notes, tbm.qty FROM tr_balance_mutation tbm LEFT JOIN ms_lov msl ON tbm.lov_balance_type = msl.id_lov LEFT JOIN am_msuser amm ON tbm.id_ms_user = amm.id_ms_user LEFT JOIN tr_document_d tdd ON tbm.id_document_d = tdd.id_document_d LEFT JOIN tr_document_h tdh ON tbm.id_document_h = tdh.id_document_h WHERE tbm.trx_no = '"+trxNo+"' ORDER BY tbm.dtm_crt DESC")
-
+		resultSet = stm.executeQuery("SELECT tbm.trx_no, TO_CHAR(tbm.trx_date, 'YYYY-MM-DD HH24:MI:SS'), 'Use ' || msl.description, amm.full_name, tdh.ref_number||'('||amm1.full_name||')', msl1.code, '', tbm.notes, tbm.qty FROM tr_balance_mutation tbm LEFT JOIN ms_lov msl ON tbm.lov_balance_type = msl.id_lov LEFT JOIN am_msuser amm ON tbm.id_ms_user = amm.id_ms_user LEFT JOIN tr_document_d tdd ON tbm.id_document_d = tdd.id_document_d LEFT JOIN tr_document_h tdh ON tbm.id_document_h = tdh.id_document_h  left join am_msuser amm1 on tdh.id_msuser_customer = amm1.id_ms_user left join ms_lov msl1 on tdh.lov_doc_type = msl1.id_lov WHERE tbm.trx_no = '"+trxNo+"' ORDER BY tbm.dtm_crt DESC")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -626,9 +625,48 @@ public class DataVerif {
 		while (resultSet.next()) {
 			for (i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
-				listdata.add(data)
+				if (data == null) {
+					listdata.add('')
+				} else {
+					listdata.add(data)
+				}
 			}
 		}
 		listdata
+	}
+
+	@Keyword
+	getLimitValidationLivenessDaily(Connection conn) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select gs_value from am_generalsetting WHERE gs_code = 'LIVENESS_FACECOMPARE_VALIDATION_USER_DAILY_LIMIT'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+
+	@Keyword
+	getCountValidationFaceCompDaily(Connection conn, String email) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT liveness_facecompare_validation_num FROM am_msuser WHERE login_id = '" + email + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		if (data != null) {
+			Integer.parseInt(data)
+		} else {
+			data = 0
+		}
 	}
 }

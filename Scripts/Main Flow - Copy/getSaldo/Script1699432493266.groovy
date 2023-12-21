@@ -23,11 +23,15 @@ import java.sql.Connection as Connection
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
+'inisialisasi result'
 HashMap<String, String> result = new HashMap<String, String>()
 
+'jika vendornya ada teks digi ataupun DIGI'
 if (vendor.toString().contains('digi') || vendor.toString().contains('DIGI')) {
+	'vendornya digisign'
 	vendor = 'DIGISIGN'
 } else if (vendor.toString().contains('TKNAJ')) {
+	'jika vendornya TKNAJ, maka tekenaja'
 	vendor = 'TEKENAJA'
 }
 
@@ -35,6 +39,7 @@ if (vendor.toString().contains('digi') || vendor.toString().contains('DIGI')) {
 String totalSaldoOTP, vendorVerifikasi, totalSaldo
 
 funcLogin()
+
 if (usageSaldo == 'Send') {
 	funcSaldoSend(result)
 } else if (usageSaldo == 'Sign') {
@@ -78,79 +83,100 @@ def funcLogin() {
 }
 
 def funcSaldoSend(HashMap result) {
+	'string vendorVerifikasi, saldo list'
 	String vendorVerifikasi
 	
 	ArrayList saldoList = []
 
+	'vendor yang telah diinput akan masuk sebagai open dan get saldo menggunakan vendor verifikasi'
 	vendorVerifikasi = vendor
 	
+	'jika digisign, maka saldo list yang akan diambil adalah dokumen, selainnya adalah TTD'
 	if (vendorVerifikasi.equalsIgnoreCase('DIGISIGN')) {
 		saldoList = ['Dokumen']
 	} else {
 		saldoList = ['TTD']
 	}
 	
+	'untuk autosign akan dihidupkan agar saldo document/ttd akan disimpan pada hashmap dalam nama vendor'
 	forAutosign = true
 	
+	'get menggunakan func find saldo'
 	funcFindSaldo(result, vendorVerifikasi, saldoList, forAutosign)
 
+	'vendor yang akan dibuka yaitu ESIGN/ADINS untuk mengambil SMS dan WA'
 	vendorVerifikasi = 'ESIGN/ADINS'
 	
 	saldoList = ['SMS Notif', 'WhatsApp Message']
 	
+	'forautosign akan dimatikan'
 	forAutosign = false
 	
+	'get saldo menggunakan func find saldo'
 	funcFindSaldo(result, vendorVerifikasi, saldoList, forAutosign)
 	
-	WebUI.comment(result.toString())
 	return result
 }
 
 def funcSaldoSign(HashMap result) {
+	'inisialisasi vendor verifikasi dan saldo list beserta list-list yang akan diambil'
 	String vendorVerifikasi
 	
 	ArrayList saldoList = []
 	
+	'untuk sign, yang akan diambil adalah meterai, sms, dan wa'
 	saldoList = ['Meterai', 'SMS Notif', 'WhatsApp Message']
 	
+	'vendor verifikasi akan membuka ESIGN/ADINS'
 	vendorVerifikasi = 'ESIGN/ADINS'
 	
+	'get saldo menggunakan func find saldo'
 	funcFindSaldo(result, vendorVerifikasi, saldoList, forAutosign)
 	
+	'jika vendornya bukan privy dan bukan digisng'
 	if (!vendor.equalsIgnoreCase('Privy') && !vendor.equalsIgnoreCase('DIGISIGN')) {
 		'list data saldo yang perlu diambil'
 		saldoList = ['Liveness', 'Face Compare', 'Liveness Face Compare', 'OTP']
 		
+		'vendor verifikasi open ESIGN ADINS lagi'
 		vendorVerifikasi = 'ESIGN/ADINS'
 	} else if (vendor.equalsIgnoreCase('Privy')) {
+		'vendornya akan open Privy dan get OTP'
 		vendorVerifikasi = vendor
 		
 		'list data saldo yang perlu diambil'
 		saldoList = ['OTP']
 	} else if (vendor.equalsIgnoreCase('DIGISIGN')) {
+		'vendor akan open DIGISIGN dan get OTP'
 		vendorVerifikasi = vendor
 		
 		saldoList = ['OTP']
 	}
 	
+	'get saldo menggunakan func find saldo'
 	funcFindSaldo(result, vendorVerifikasi, saldoList, forAutosign)
 
+	'vendor tetap pada vendornya'
 	vendorVerifikasi = vendor
 	
+	'jika digisign, maka get Dokumen, jika yang lain, maka TTD'
 	if (vendorVerifikasi.equalsIgnoreCase('DIGISIGN')) {
 		saldoList = ['Dokumen']
 	} else {
 		saldoList = ['TTD']
 	}
 	
+	'for autosign akan true'
 	forAutosign = true
 	
+	'get saldo'
 	funcFindSaldo(result, vendorVerifikasi, saldoList, forAutosign)
 
 	return result
 }
 
 def funcSaldoStamp(HashMap result) {
+	'inisialisasi vendor verifikasi dengan mengambil value meterai di ESIGN/ADINS'
 	String vendorVerifikasi
 	
 	ArrayList saldoList = []

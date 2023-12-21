@@ -348,8 +348,6 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
                         (documentTemplateNamePerDoc.size() - (i + 1))], false), '')
             }
         }
-        
-        WebUI.delay(5)
 
         'Scroll ke btn Proses'
         WebUI.scrollToElement(findTestObject('KotakMasuk/Sign/btn_Proses'), GlobalVariable.TimeOut)
@@ -990,7 +988,7 @@ def checkBeforeChoosingOTPOrBiometric(String emailSigner, Connection conneSign, 
 
 def inputMasukanAndWriteResultSign() {
     'Diberikan delay 4 sec dikarenakan loading'
-    WebUI.delay(4)
+    WebUI.delay(2)
 
     'Mendapat total success dan failed'
     String countSuccessSign = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_success'))
@@ -1318,7 +1316,16 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
 def verifBiomMethod(int isLocalhost, int maxFaceCompDB, int countLivenessFaceComp, Connection conneSign, String emailSigner, ArrayList listOTP, String noTelpSigner, String otpAfter, String vendor) {
     useBiom = 1
 
+	'ambil kondisi max liveness harian'
+	int maxFaceCompValidationDB = Integer.parseInt(CustomKeywords.'connection.DataVerif.getLimitValidationLivenessDaily'(conneSign))
+
+	'dapatkan count untuk limit harian facecompare akun tersebut'
+	int countLivenessValidationFaceComp = CustomKeywords.'connection.DataVerif.getCountValidationFaceCompDaily'(conneSign, GlobalVariable.storeVar.getAt(
+			GlobalVariable.storeVar.keySet()[0]))
+	
     countSaldoSplitLiveFCused = 0
+	
+	countValidation = 0
 
     'Klik biometric object'
     WebUI.click(findTestObject('KotakMasuk/Sign/btn_verifBiom'))
@@ -1344,7 +1351,7 @@ def verifBiomMethod(int isLocalhost, int maxFaceCompDB, int countLivenessFaceCom
     }
     
     'looping hingga count sampai batas maksimal harian'
-    while (countLivenessFaceComp != (maxFaceCompDB + 1)) {
+    while (countLivenessFaceComp != (maxFaceCompDB + 1) || countLivenessValidationFaceComp != (maxFaceCompValidationDB + 1)) {
         'klik untuk ambil foto'
         WebUI.click(findTestObject('KotakMasuk/Sign/btn_ProsesBiom'))
 
@@ -1369,8 +1376,11 @@ def verifBiomMethod(int isLocalhost, int maxFaceCompDB, int countLivenessFaceCom
             } else if (messageError.equalsIgnoreCase('Verifikasi user gagal. Foto Diri tidak sesuai.') || messageError.equalsIgnoreCase(
                 'Lebih dari satu wajah terdeteksi. Pastikan hanya satu wajah yang terlihat')) {
                 countSaldoSplitLiveFCused++
-            }
-            
+            } else if (messageError.equalsIgnoreCase('Face detected blurry') || messageError.equalsIgnoreCase('Wajah terdeteksi terlalu jauh dengan kamera. Dekatkan jarak antara wajah Anda dengan kamera'))
+            {
+				countValidation++
+			}
+			
             GlobalVariable.eSignData.putAt('VerifikasiBiometric', countSaldoSplitLiveFCused)
 
             'ambil message error'
@@ -1387,6 +1397,10 @@ def verifBiomMethod(int isLocalhost, int maxFaceCompDB, int countLivenessFaceCom
                 break
             }
             
+			'dapatkan count untuk limit harian facecompare akun tersebut'
+			countLivenessValidationFaceComp = CustomKeywords.'connection.DataVerif.getCountValidationFaceCompDaily'(conneSign, GlobalVariable.storeVar.getAt(
+					GlobalVariable.storeVar.keySet()[0]))
+			
             'ambil terbaru count dari DB'
             countLivenessFaceComp = CustomKeywords.'connection.DataVerif.getCountFaceCompDaily'(conneSign, emailSigner)
         } else {
@@ -1672,6 +1686,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 
     int increment
 
+	if (penggunaanSaldo > 0) {
     for (looping = 0; looping < penggunaanSaldo; looping++) {
         if (looping == 0) {
             increment = 0
@@ -1683,7 +1698,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 		
 		GlobalVariable.eSignData.putAt('allTrxNo', GlobalVariable.eSignData.getAt('allTrxNo') + balmut[increment + 0] + ';')
 		
-		GlobalVariable.eSignData.putAt('allSignType', GlobalVariable.eSignData.getAt('allSignType') + balmut[increment + 2].replace('Use ',''))
+		GlobalVariable.eSignData.putAt('allSignType', GlobalVariable.eSignData.getAt('allSignType') + balmut[increment + 2].replace('Use ','') + ';')
 		
 		GlobalVariable.eSignData.putAt('emailUsageSign', GlobalVariable.eSignData.getAt('emailUsageSign') + fullNameUser + ';')
 	
@@ -1696,5 +1711,6 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
         GlobalVariable.eSignData.putAt('CountVerifikasiSMS', GlobalVariable.eSignData.getAt('CountVerifikasiSMS') + pemotonganSaldo)
 		GlobalVariable.eSignData.putAt('VerifikasiOTP', GlobalVariable.eSignData.getAt('VerifikasiOTP') - GlobalVariable.eSignData.getAt('CountVerifikasiWA'))
     }
+	}
 }
 

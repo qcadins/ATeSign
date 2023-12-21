@@ -221,7 +221,7 @@ if (vendor.equalsIgnoreCase('Privy') || vendor.equalsIgnoreCase('Digisign')) {
     otp = (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Wrong OTP (Sign External)')).split(
         ';', -1)[GlobalVariable.indexUsed])
 }
-
+'jika otpnya masuk'
 if (otp.length() >= 0) {
     'check if mau menggunakan base64 untuk photo yang salah atau benar'
     if ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use Base64 SelfPhoto (Sign External)')).split(
@@ -498,7 +498,7 @@ def responseAPIStoreDB(Connection conneSign, String ipaddress, String documentId
             GlobalVariable.ReasonFailedStoredDB)
     }
 }
-
+/*
 def verifySaldoUsedForLiveness(Connection conneSign, String trxNo) {
     'klik button saldo'
     WebUI.click(findTestObject('isiSaldo/SaldoAdmin/menu_Saldo'))
@@ -628,7 +628,7 @@ def verifySaldoUsedForLiveness(Connection conneSign, String trxNo) {
             ' Balance ')
     }
 }
-
+*/
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
@@ -656,6 +656,7 @@ def rowExcel(String cellValue) {
     return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
+/*
 def verifySaldoSigned(Connection conneSign, String documentId, String signTypeUsed) {
     'get current date'
     def currentDate = new Date().format('yyyy-MM-dd')
@@ -812,7 +813,7 @@ def verifySaldoSigned(Connection conneSign, String documentId, String signTypeUs
         }
     }
 }
-
+*/
 def getPaymentTypeUsed(Connection conneSign, String vendor) {
     ArrayList paymentType = []
 
@@ -1002,6 +1003,7 @@ def checkAutoStamp(Connection conneSign, String noKontrak, HashMap<String, Strin
 }
 
 def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
+	'inisialisasi balmut, penggunaan saldo, dan tipe saldo. Get email serbice as vendor, full name user, dan setting must use wa'
 	ArrayList balmut = []
 
 	int penggunaanSaldo = 0
@@ -1016,12 +1018,14 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 
 	mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
 
+	'jika menggunakan privy, maka tidak bisa menggunakan wa dan pemotongan melalui otp privy'
 	if (vendor.equalsIgnoreCase('Privy')) {
 		mustUseWaFirst = '0'
 		
 		emailServiceOnVendor = '0'
 	}
 	
+	'jika must use wa'
 	if (mustUseWAFirst == '1') {
 		tipeSaldo = 'WhatsApp Message'
 
@@ -1037,6 +1041,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 			penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
 		}
 	} else {
+		'jika email service on vendor hidup'
 		if (emailServiceOnVendor == '1') {
 			useWAMessage = CustomKeywords.'connection.DataVerif.getUseWAMessage'(conneSign, GlobalVariable.Tenant)
 
@@ -1055,7 +1060,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 					penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
 				}
 			} else if (useWAMessage == '0') {
-					'ke sms'
+					'ke otp'
 					tipeSaldo = 'OTP'
 
 					balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser, GlobalVariable.eSignData.getAt('VerifikasiOTP'))
@@ -1096,6 +1101,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 
 	int increment
 
+	if (penggunaanSaldo > 0) {
 	for (looping = 0; looping < penggunaanSaldo; looping++) {
 		if (looping == 0) {
 			increment = 0
@@ -1107,7 +1113,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 		
 		GlobalVariable.eSignData.putAt('allTrxNo', GlobalVariable.eSignData.getAt('allTrxNo') + balmut[increment + 0] + ';')
 		
-		GlobalVariable.eSignData.putAt('allSignType', GlobalVariable.eSignData.getAt('allSignType') + balmut[increment + 2].replace('Use ',''))
+		GlobalVariable.eSignData.putAt('allSignType', GlobalVariable.eSignData.getAt('allSignType') + balmut[increment + 2].replace('Use ','') + ';')
 		
 		GlobalVariable.eSignData.putAt('emailUsageSign', GlobalVariable.eSignData.getAt('emailUsageSign') + fullNameUser + ';')
 	
@@ -1119,5 +1125,6 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 	} else if (tipeSaldo == 'SMS Notif') {
 		GlobalVariable.eSignData.putAt('CountVerifikasiSMS', GlobalVariable.eSignData.getAt('CountVerifikasiSMS') + pemotonganSaldo)
 		GlobalVariable.eSignData.putAt('VerifikasiOTP', GlobalVariable.eSignData.getAt('VerifikasiOTP') - GlobalVariable.eSignData.getAt('CountVerifikasiWA'))
+	}
 	}
 }

@@ -226,6 +226,16 @@ prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, 
 		}
     }
 	
+	if (GlobalVariable.FlagFailed == 0) {
+		'write to excel success'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel(
+				'Status') - 1, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+	} else {
+		'write to excel success'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel(
+				'Status') - 1, GlobalVariable.NumofColm - 1, GlobalVariable.StatusFailed)
+	}
+	
 	'inisialisasi variable untuk looping. Looping diperlukan untuk break/continue'
 	forLoopingWithBreakAndContinue = 1
 	

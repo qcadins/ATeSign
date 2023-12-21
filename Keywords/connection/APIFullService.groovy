@@ -1831,7 +1831,7 @@ public class APIFullService {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getListMessageDeliveryAPIOnly(Connection conn, String tenant, String vendor, String messageMedia, String dateStart, String dateEnd, String deliveryStatus, String recipient) {
 		String commandRec = '', commandReport = '', commandMedia = '', commandVendor = '', commandDelivStat = ''
@@ -1972,6 +1972,7 @@ public class APIFullService {
 
 		Integer.parseInt(data)
 	}
+
 	@Keyword
 	listPsreSettingAPIOnly(Connection conn, String vendorName, String vendorCode, String isActive, String isOperating) {
 		String commandName = '', commandisActive = '', commandCode = '', commandisOperating = ''

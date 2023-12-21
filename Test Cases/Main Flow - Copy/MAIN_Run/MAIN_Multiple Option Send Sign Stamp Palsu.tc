@@ -71,6 +71,12 @@
       <value></value>
       <variableId>6af75adb-3219-4469-aae4-6cddaea94bdd</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>81288e95-c2fa-4b7d-b830-7f9f3ff4b2f9</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>'Main/Main'</defaultValue>
       <description></description>
@@ -147,5 +153,12 @@
       <id>6af75adb-3219-4469-aae4-6cddaea94bdd</id>
       <masked>false</masked>
       <name>indexReadDataExcelInboxSigner</name>
+   </variable>
+   <variable>
+      <defaultValue>'Main'</defaultValue>
+      <description></description>
+      <id>81288e95-c2fa-4b7d-b830-7f9f3ff4b2f9</id>
+      <masked>false</masked>
+      <name>sheet</name>
    </variable>
 </TestCaseEntity>

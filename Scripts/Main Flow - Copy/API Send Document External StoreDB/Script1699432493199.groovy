@@ -23,10 +23,11 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'declare arraylist arraymatch'
 arrayMatch = []
 
+'check active atau tidaknya document based on nomor kontrak + '-''
 String checkActiveDocument = CustomKeywords.'connection.SendSign.getCheckingActiveDocument'(conneSign, findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo')))
 
+'jika check active document tidak kosong, maka ada document yang masih aktif padahal secara nomor kontrak sudah ada _'
 if (checkActiveDocument != '') {
-	println checkActiveDocument
 	'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
 	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 		(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-','') + semicolon) +
@@ -36,6 +37,7 @@ if (checkActiveDocument != '') {
 'Mengambil documentid di excel dan displit'
 docid = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ', splitnum)
 
+'inisialisasi varaible pada value-value yang diperlukan'
 signerType = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$signerType')).split(
     enter, splitnum)
 
@@ -105,6 +107,7 @@ for (int i = 0; i < docid.size(); i++) {
     'declare arrayindex'
     arrayindex = 0
 
+	'sign loc displit |'
     signlocStoreDBSplit = signlocStoreDB.split('\\|', -1)
 
     'Jika documentTemplateCode di dokumen pertama adalah kosong'
@@ -126,17 +129,22 @@ for (int i = 0; i < docid.size(); i++) {
     'Splitting email berdasarkan excel per dokumen'
     emailExcel = (email[i]).replace('"', '').split(semicolon, splitnum)
     
+	'looping per email'
     for (int r = 0; r < emailExcel.size(); r++) {
+		'jika email excelnya kosong'
         if ((emailExcel[r]) == '') {
             'Splitting email berdasarkan excel per dokumen'
             idKtpExcel = (idKtp[i]).replace('"', '').split(semicolon, splitnum)
 
+			'convert id ktp menjadi sha256'
             (emailExcel[r]) = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(idKtpExcel[r])
         }
         
+		'get email dan signer type pada send doc'
         ArrayList resultStoreEmailandType = CustomKeywords.'connection.APIFullService.getSendDocForEmailAndSignerType'(conneSign, 
             docid[i], emailExcel[r])
 
+		'jika result email dan signer type sizenya lebih dari 1'
         if (resultStoreEmailandType.size() > 1) {
             'declare arrayindex'
             arrayindex = 0
@@ -284,6 +292,7 @@ for (int i = 0; i < docid.size(); i++) {
                     emailSign = ((findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$email')).replace(
                         '"', '').split(enter, splitnum)[i]).split(semicolon, splitnum)[loopPerSignActionPerSigner])
 
+					'jika emailnya kosong, maka get email dari NIK'
 					if (emailSign == '') {
 						'Mengambil emailSign dari excel dan displit kembali'
 						ktpSign = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$idKtp')).replace('"', '').split(enter, splitnum)[i].split(semicolon, splitnum)[loopPerSignActionPerSigner])

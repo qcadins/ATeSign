@@ -719,7 +719,7 @@ def inputDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan,
     'Enter'
     WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Status'), Keys.chord(Keys.ENTER))
 
-    if (linkDocumentMonitoring == '') {
+    if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/input_Wilayah'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
         'Set text mengenai wilayah'
         WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndexInput++], FailureHandling.OPTIONAL)
 
@@ -731,32 +731,20 @@ def inputDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan,
 
         'Enter'
         WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER))
-    }
-    
-    if (WebUI.verifyMatch(settingHO.toString(), '1', true, FailureHandling.OPTIONAL) == true) {
-        'Set text mengenai wilayah'
-        WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndexInput++])
-
-        'Enter'
-        WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER))
-
-        'Set text mengenai input cabang'
-        WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndexInput++])
-
-        'Enter'
-        WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER))
-    }
-    
+    } 
+	
     if (linkDocumentMonitoring == '') {
         'modify object test status tanda tangan di beranda'
         modifyObjectProsesMeterai = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/input_prosesMeterai'), 
-            'xpath', 'equals', '//*[@id = \'stampingStatus\']/div/div/div[3]/input', true)
+            'xpath', 'equals', '//*[@id="stampingStatus"]/div/div/div[3]/input', true)
     } else if (linkDocumentMonitoring.contains('embed/V2/inquiry?')) {
         'modify object test status tanda tangan di beranda'
         modifyObjectProsesMeterai = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/input_prosesMeterai'), 
             'xpath', 'equals', '//*[@id=\'prosesMaterai\']/div/div/div[3]/input', true)
     }
     
+	WebUI.focus(modifyObjectProsesMeterai)
+	
     'Set text mengenai input cabang'
     WebUI.setText(modifyObjectProsesMeterai, inputDocumentMonitoring[arrayIndexInput++])
 

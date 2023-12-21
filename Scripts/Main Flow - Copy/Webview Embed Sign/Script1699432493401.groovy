@@ -1213,9 +1213,7 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
 	GlobalVariable.eSignData.putAt('VerifikasiOTP', 1)
 	
 	checkSaldoWAOrSMS(conneSign, vendor)
-	
-	WebUI.delay(100)
-	
+
 	'check ada value maka Setting OTP Active Duration'
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() > 
     0) {
@@ -1238,11 +1236,11 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
     'ubah pemakaian biom menjadi false'
     useBiom = 0
 	
-	if (CustomKeywords.'connection.DataVerif.getEmailServiceFromUser'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
-		noTelpSigner), vendor) == '0') {
-	noTelpSigner = CustomKeywords.'connection.DataVerif.getEmailFromPhone'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
-			noTelpSigner))
-		}
+    if (CustomKeywords.'connection.DataVerif.getEmailServiceFromTenant'(conneSign, findTestData(excelPathFESignDocument).getValue(
+            GlobalVariable.NumofColm, rowExcel('Tenant'))) == '1') {
+        noTelpSigner = CustomKeywords.'connection.DataVerif.getEmailFromPhone'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
+                noTelpSigner))
+    }
 
     'Verifikasi antara no telp yang dinput dengan yang sebelumnya'
     checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('KotakMasuk/Sign/lbl_phoneNo'), 'value'), 
@@ -1703,6 +1701,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 
 	int increment
 
+	if (penggunaanSaldo > 0) {
 	for (looping = 0; looping < penggunaanSaldo; looping++) {
 		if (looping == 0) {
 			increment = 0
@@ -1714,9 +1713,10 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 		
 		GlobalVariable.eSignData.putAt('allTrxNo', GlobalVariable.eSignData.getAt('allTrxNo') + balmut[increment + 0] + ';')
 		
-		GlobalVariable.eSignData.putAt('allSignType', GlobalVariable.eSignData.getAt('allSignType') + balmut[increment + 2].replace('Use ',''))
+		GlobalVariable.eSignData.putAt('allSignType', GlobalVariable.eSignData.getAt('allSignType') + balmut[increment + 2].replace('Use ','') + ';')
 		
-		GlobalVariable.eSignData.putAt('emailUsageSign', GlobalVariable.eSignData.getAt('emailUsageSign') + ';' + fullNameUser)
+		GlobalVariable.eSignData.putAt('emailUsageSign', GlobalVariable.eSignData.getAt('emailUsageSign') + fullNameUser + ';')
+	
 	
 	}
 	
@@ -1724,5 +1724,6 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 		GlobalVariable.eSignData.putAt('CountVerifikasiWA', GlobalVariable.eSignData.getAt('CountVerifikasiWA') + pemotonganSaldo)
 	} else if (tipeSaldo == 'SMS Notif') {
 		GlobalVariable.eSignData.putAt('CountVerifikasiSMS', GlobalVariable.eSignData.getAt('CountVerifikasiSMS') + pemotonganSaldo)
+	}
 	}
 }
