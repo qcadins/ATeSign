@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API Signer Data Verification Embed</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>256ef7bc-458e-40cc-a1f6-c6d1c2df564d</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>83ef55a4-76b8-4d1b-9756-cbf533996f97</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>b16c86ad-cdb0-450c-ad0e-31169c836fa3</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/Signer Data Verif Embed'</defaultValue>
+      <description></description>
+      <id>83ef55a4-76b8-4d1b-9756-cbf533996f97</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Signer Data Verif Embed'</defaultValue>
+      <description></description>
+      <id>b16c86ad-cdb0-450c-ad0e-31169c836fa3</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>

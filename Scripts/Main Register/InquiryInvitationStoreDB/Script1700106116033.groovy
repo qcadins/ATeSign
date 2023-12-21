@@ -16,13 +16,21 @@ arrayMatch = []
 'declare arrayindex'
 arrayindex = 0
 
-'verify invite by'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Invite By')).toUpperCase(), (result[arrayindex++]).toUpperCase(),
-		false, FailureHandling.CONTINUE_ON_FAILURE))
+if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Invite By')).length() > 0) {
+	'verify invite by'
+	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Invite By')).toUpperCase(), (result[arrayindex++]).toUpperCase(),
+			false, FailureHandling.CONTINUE_ON_FAILURE))	
+} else {
+	arrayindex++
+}
 
-'verify receiver detail'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Receiver Detail')).toUpperCase(), (result[arrayindex++]).toUpperCase(),
-		false, FailureHandling.CONTINUE_ON_FAILURE))
+if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Receiver Detail')).length() > 0) {
+	'verify receiver detail'
+	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Receiver Detail')).toUpperCase(), (result[arrayindex++]).toUpperCase(),
+			false, FailureHandling.CONTINUE_ON_FAILURE))	
+} else {
+	arrayindex++
+}
 
 'verify NIK'
 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('NIK - Edit')).replace('"','').toUpperCase(), (result[arrayindex++]).toUpperCase(),

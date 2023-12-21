@@ -21,6 +21,9 @@ import org.openqa.selenium.By as By
 import java.sql.Connection as Connection
 import org.apache.commons.lang3.time.StopWatch
 import org.apache.commons.lang3.time.DurationFormatUtils
+import java.util.ArrayList as arr
+import org.openqa.selenium.Keys as Keys
+import org.openqa.selenium.By as By
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
@@ -29,10 +32,17 @@ GlobalVariable.NumofColm = 2
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign Main.xlsx')
 
-int b = 1
-for (int j = 1; j <= b; j++) {
-println b
-b++
-println b
-WebUI.comment(j.toString())
-}
+aa = CustomKeywords.'connection.DataVerif.getDetailTrx'(conneSign, '834839')
+println aa
+
+  'get row lastest'
+                        modifyObjectBtnLastest = WebUI.modifyObjectProperty(findTestObject('Object Repository/KotakMasuk/Sign/modifyObject'), 
+                            'class', 'equals', ('datatable-icon-skip'), true)
+
+						'jika btn lastest dapat diclick'
+                        if (WebUI.verifyElementPresent(modifyObjectBtnLastest, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+                            WebUI.focus(modifyObjectBtnLastest)
+
+                            'Klik button Lastest'
+                            WebUI.click(modifyObjectBtnLastest, FailureHandling.CONTINUE_ON_FAILURE)
+                        }

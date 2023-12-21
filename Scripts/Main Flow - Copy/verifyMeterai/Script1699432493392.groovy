@@ -95,6 +95,8 @@ for (j = 1; j <= Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ',''
     'set text no meterai'
     WebUI.setText(findTestObject('Meterai/input_NoMeterai'), inputBasedOnAPIStamping[indexInput++])
 
+	WebUI.focus(findTestObject('Meterai/button_Cari'))
+	
     'click button cari'
     WebUI.click(findTestObject('Meterai/button_Cari'))
 

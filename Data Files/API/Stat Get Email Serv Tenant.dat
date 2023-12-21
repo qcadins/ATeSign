@@ -3,10 +3,9 @@
    <description></description>
    <name>Stat Get Email Serv Tenant</name>
    <tag></tag>
-   <connectionProperties/>
    <containsHeaders>false</containsHeaders>
    <csvSeperator></csvSeperator>
-   <dataFileGUID>6a8677f6-2351-4a18-b57b-6391c35b3c30</dataFileGUID>
+   <dataFileGUID>e9e47820-216b-45b4-adb9-1378914c095d</dataFileGUID>
    <dataSourceUrl>Excel/2.1 Esign - API Only.xlsx</dataSourceUrl>
    <driver>ExcelFile</driver>
    <isInternalPath>true</isInternalPath>

@@ -32,15 +32,32 @@ String refNumber = CustomKeywords.'connection.APIFullService.getRefNumber'(conne
 
 flagBreak = 0
 
+boolean usingHashMap = false
+
 'looping berdasarkan jumlah dokumen'
 resultHashMap = loopingMultiDoc(docId, conneSign, refNumber,resultHashMap) 
 
-
 for (t = 0; t < resultHashMap.keySet().size();t++) {
-if (GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0]) == GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0])) {
-	flagBreak = 1
+
+if (GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0]) == resultHashMap.keySet()[t]) {
+	break
+} else if (t == resultHashMap.keySet().size() - 1) {
+	WebUI.comment('error tidak menemukan email')
 }
 }
+'inisialisasi variable untuk looping. Looping diperlukan untuk break/continue'
+forLoopingWithBreakAndContinue = 1
+
+'looping'
+for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
+	
+	if (GlobalVariable.storeVar.toString() == '[:]' || usingHashMap == true) {
+		usingHashMap = true
+		
+		forLoopingWithBreakAndContinue = resultHashMap.keySet().size()
+		
+		GlobalVariable.storeVar.putAt(0, resultHashMap.keySet()[o])
+	}
 
     'call Test Case untuk login sebagai user berdasarkan doc id'
     WebUI.callTestCase(findTestCase('Main Flow/Login'), [('email') : GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0]), ('excel') : excelPathFESignDocument
@@ -72,8 +89,9 @@ if (GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0]) == Global
     WebUI.delay(2)
 
     if (GlobalVariable.roleLogin == 'BM MF') {
-        //WebUI.setText(findTestObject('PencarianDokumen/input_NamaPelanggan'), inputPencarianDokumen[arrayIndex++])
-        'input nama pelanggan'
+        not_run: WebUI.setText(findTestObject('PencarianDokumen/input_NamaPelanggan'), inputPencarianDokumen[arrayIndex++])
+        
+		'input nama pelanggan'
         arrayIndex++
 
         'input no kontrak'
@@ -520,7 +538,7 @@ if (GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0]) == Global
         }
 		loopingPerDocument++
     }
-
+}
 
 'jika data db tidak sesuai dengan excel'
 if (arrayMatch.contains(false)) {
@@ -551,14 +569,19 @@ def closeHamburgAndroid() {
 }
 
 def loopingMultiDoc(ArrayList docId, Connection conneSign, String refNumber, LinkedHashMap resultHashMap) {
+	'looping document id'
 	for (loopingDocument = 0; loopingDocument < docId.size(); loopingDocument++) {
 		'Mengambil email berdasarkan documentId'
 		ArrayList emailSigner = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, docId[loopingDocument]).split(
 			';', -1)
 		
+		'ambil vendor berdasarkan document id'
 		String vendor = CustomKeywords.'connection.SendSign.getVendorCodeUsingDocId'(conneSign, docId[loopingDocument])
+		
+		'get looping email signer'
 		for (loopingEmailSigner = 0; loopingEmailSigner < emailSigner.size(); loopingEmailSigner++) {
 			
+			'jika vendor privy, maka cehcking apakah signer tersebut autosign. Jika autosign ,maka continue'
 			if (vendor.equalsIgnoreCase('Privy')) {
 				ifSignerAuto = CustomKeywords.'connection.APIFullService.getIfSignerAutosign'(conneSign,docId[loopingDocument],emailSigner[loopingEmailSigner])
 
@@ -567,14 +590,20 @@ def loopingMultiDoc(ArrayList docId, Connection conneSign, String refNumber, Lin
 				}
 			}
 			
+			'get total document based on signer'
 			count = CustomKeywords.'connection.SendSign.getTotalDocumentBasedOnSigner'(conneSign, refNumber, emailSigner[loopingEmailSigner])
 	
+			'jika countnya lebih dari 0'
 			if (count > 0) {
+				'jika result hashmapnya sizenya 0, maka langsung input email beserta count'
 				if (resultHashMap.keySet().size() == 0) {
 					resultHashMap.put(emailSigner[loopingEmailSigner], count)
 				} else {
+					'looping result hash map'
 					for (q = 0; q < resultHashMap.keySet().size(); q++) {
+						'jika result hash map tidak sesuai dengan email signer'
 						if ((resultHashMap.keySet()[q]) != (emailSigner[loopingEmailSigner])) {
+							'result hash map akan diinput dengan email yang berbeda beserta count'
 							resultHashMap.put(emailSigner[loopingEmailSigner], count)
 						}
 					}

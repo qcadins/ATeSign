@@ -4,6 +4,7 @@
    <name>MAIN_API Get Status Email Service Tenant</name>
    <tag></tag>
    <comment></comment>
+<<<<<<< HEAD
    <testCaseGuid>5977d16f-53f6-4144-9874-6eabc8750522</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
@@ -28,6 +29,66 @@
       <defaultValue>'API Stat Get Email Serv Tenant'</defaultValue>
       <description></description>
       <id>de48d4fb-0f61-4818-872d-09db220a4449</id>
+=======
+   <testCaseGuid>e1ef6144-ce5d-4b57-9dd7-7bba700d9d5b</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>be1d16f3-9406-4195-91cc-9a33d02718fb</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>5e28a60f-d6b3-46be-8150-611fe3d07cb9</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/Stat Get Email Serv Tenant'</defaultValue>
+      <description></description>
+      <id>be1d16f3-9406-4195-91cc-9a33d02718fb</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Stat Get Email Serv Tenant'</defaultValue>
+      <description></description>
+      <id>5e28a60f-d6b3-46be-8150-611fe3d07cb9</id>
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API Get Status Email Service Tenant</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>e1ef6144-ce5d-4b57-9dd7-7bba700d9d5b</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>be1d16f3-9406-4195-91cc-9a33d02718fb</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>5e28a60f-d6b3-46be-8150-611fe3d07cb9</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/Stat Get Email Serv Tenant'</defaultValue>
+      <description></description>
+      <id>be1d16f3-9406-4195-91cc-9a33d02718fb</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Stat Get Email Serv Tenant'</defaultValue>
+      <description></description>
+      <id>5e28a60f-d6b3-46be-8150-611fe3d07cb9</id>
       <masked>false</masked>
       <name>sheet</name>
    </variable>

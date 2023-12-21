@@ -22,40 +22,40 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 ArrayList arrayMatch = []
 
 'Inisialisasi tenant Code'
-tenantCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$tenantCode (Send Normal)'))
+tenantCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))
 
 'Inisialisasi ref No berdasarkan delimiter ;'
-refNo = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo (Send Normal)'))
+refNo = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo'))
 
 'Inisialisasi document template code berdasarkan delimiter ;'
-documentTemplateCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$documentTemplateCode (Send Normal)')).split(semicolon, splitnum)
+documentTemplateCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$documentTemplateCode')).split(semicolon, splitnum)
 
 'Inisialisasi office Code berdasarkan delimiter ;'
-officeCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('officeCode (Send Normal)')).split(semicolon, splitnum)
+officeCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('officeCode')).split(semicolon, splitnum)
 
 'Inisialisasi office name berdasarkan delimiter ;'
-officeName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('officeName (Send Normal)')).split(semicolon, splitnum)
+officeName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('officeName')).split(semicolon, splitnum)
 
 'Inisialisasi region code berdasarkan delimiter ;'
-regionCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('regionCode (Send Normal)')).split(semicolon, splitnum)
+regionCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('regionCode')).split(semicolon, splitnum)
 
 'Inisialisasi region name berdasarkan delimiter ;'
-regionName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('regionName (Send Normal)')).split(semicolon, splitnum)
+regionName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('regionName')).split(semicolon, splitnum)
 
 'Inisialisasi business line code berdasarkan delimiter ;'
-businessLineCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('businessLineCode (Send Normal)')).split(semicolon, splitnum)
+businessLineCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('businessLineCode')).split(semicolon, splitnum)
 
 'Inisialisasi business line name berdasarkan delimiter ;'
-businessLineName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('businessLineName (Send Normal)')).split(semicolon, splitnum)
+businessLineName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('businessLineName')).split(semicolon, splitnum)
 
 'Inisialisasi is sequence berdasarkan delimiter ;'
-isSequence = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('isSequence (Send Normal)')).split(semicolon, splitnum)
+isSequence = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('isSequence')).split(semicolon, splitnum)
 
 'Inisialisasi document file berdasarkan delimiter ;'
-documentFile = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('documentFile (Send Normal)')).split(enter, splitnum)
+documentFile = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('documentFile')).split(enter, splitnum)
 
 'Inisialisasi psre Code berdasarkan delimiter ;'
-psreCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$psreCode (Send Normal)')).split(semicolon, splitnum)
+psreCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('psreCode')).split(semicolon, splitnum)
 
 'Inisialisasi successUrl berdasarkan delimiter ;'
 successURL = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('successURL (Send Normal)')).split(semicolon, splitnum)
@@ -64,7 +64,7 @@ successURL = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, row
 uploadURL = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('uploadURL (Send Normal)')).split(semicolon, splitnum)
 
 'split signer untuk doc1 dan signer untuk doc2'
-signerType = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$signerType (Send Normal)')).split(enter, splitnum)
+signerType = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$signerType')).split(enter, splitnum)
 
 signSequence = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('signSequence (Send Normal)')).split(enter, splitnum)
 
@@ -82,17 +82,17 @@ kota = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel(
 
 nama = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$nama (Send Normal)')).split(enter, splitnum)
 
-tlp = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$tlp (Send Normal)')).split(enter, splitnum)
+tlp = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$tlp')).split(enter, splitnum)
 
 tglLahir = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('tglLahir (Send Normal)')).split(enter, splitnum)
 
 provinsi = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('provinsi (Send Normal)')).split(enter, splitnum)
 
-idKtp = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$idKtp (Send Normal)')).split(enter, splitnum)
+idKtp = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$idKtp')).split(enter, splitnum)
 
 tmpLahir = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('tmpLahir (Send Normal)')).split(enter, splitnum)
 
-email = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$email (Send Normal)')).split(enter, splitnum)
+email = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$email')).split(enter, splitnum)
 
 npwp = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('npwp (Send Normal)')).split(enter, splitnum)
 
@@ -238,25 +238,26 @@ for (int i = 0; i < docid.size(); i++) {
 		}
 	}
 	
-	signAction = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$signAction (Send Normal)')).split(enter, splitnum)
+	signAction = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$signAction')).split(enter, splitnum)
 	
 	signActions = (signAction[i]).split(semicolon, splitnum)
+
     'Looping berdasarkan jumlah dari signAction'
 
             for (loopPerSignActionPerSigner = 0; loopPerSignActionPerSigner < signActions.size(); loopPerSignActionPerSigner++) {
         'Jika signAction tersebut adalah AT'
-        if ((signAction[loopPerSignActionPerSigner]).replace('"', '') == 'at') {
+        if ((signActions[loopPerSignActionPerSigner]).replace('"', '') == 'at') {
 			
 			'Mengambil trxno dari column tersebut'
 			trxno = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('trxNo')).split(', ', -1)
 
              'Mengambil emailSign dari excel dan displit kembali'
-              emailSign = ((findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$email (Send Normal)')).replace(
+              emailSign = ((findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$email')).replace(
               '"', '').split(enter, splitnum)[i]).split(semicolon, splitnum)[loopPerSignActionPerSigner])
 
 			  if (emailSign == '') {
 				  'Mengambil emailSign dari excel dan displit kembali'
-				  ktpSign = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$idKtp (Send Normal)')).replace('"', '').split(enter, splitnum)[i].split(semicolon, splitnum)[loopPerSignActionPerSigner])
+				  ktpSign = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$idKtp')).replace('"', '').split(enter, splitnum)[i].split(semicolon, splitnum)[loopPerSignActionPerSigner])
 			  
 				  emailSign = CustomKeywords.'connection.DataVerif.getEmailFromNIK'(conneSign, ktpSign)
 			  }

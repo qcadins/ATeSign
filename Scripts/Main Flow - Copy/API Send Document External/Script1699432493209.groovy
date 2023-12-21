@@ -23,50 +23,56 @@ enter = '\\n'
 int splitnum = -1
 
 'setting menggunakan base url yang benar atau salah'
-CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPISendDoc, GlobalVariable.NumofColm, rowExcel('Use Correct base Url (Send External)'))
+CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPISendDoc, GlobalVariable.NumofColm, rowExcel('Use Correct base Url'))
 
 'Deklarasi variable mengenai signLoc untuk store db'
 String signlocStoreDB
 
+'get data inisialisasi dari excel'
 getDataExcel(semicolon, splitnum, delimiter, enter)
 
-if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$signAction (Send External)')).contains('at')) {
+'jika sign action terdapat at'
+if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$signAction')).contains('at')) {
+	'flag use autosign'
 	useAutoSign = true
 }
 
 'Deklarasi variable string Ref no untuk full body API.'
 String stringRefno = new String()
 
+'inisialisasi split'
 ArrayList split = []
 
+'set body api untuk send document external kepada split'
 split = setBodyAPI(stringRefno, signlocStoreDB, conneSign)
 
+'body untuk send document'
 stringRefno = split[0]
 
+'body untuk sign location store db'
 signlocStoreDB = split[1]
 
 'Jika flag tenant no'
-if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code (Send External)')) == 'No') {
+if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'No') {
     'set tenant kosong'
-    GlobalVariable.Tenant = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Wrong tenant Code (Send External)'))
-} else if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code (Send External)')) == 'Yes') {
+    GlobalVariable.Tenant = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Wrong tenant Code'))
+} else if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'Yes') {
     'Input tenant'
     GlobalVariable.Tenant = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))
 }
 
 'check if mau menggunakan api_key yang salah atau benar'
-if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('use Correct API Key (Send External)')) == 'Yes') {
+if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('use Correct API Key')) == 'Yes') {
     'get api key dari db'
     GlobalVariable.api_key = CustomKeywords.'connection.APIFullService.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
-} else if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('use Correct API Key (Send External)')) == 'No') {
+} else if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('use Correct API Key')) == 'No') {
     'get api key salah dari excel'
-    GlobalVariable.api_key = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Wrong API Key (Send External)'))
+    GlobalVariable.api_key = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Wrong API Key'))
 }
 
 'Hit API'
-respon = WS.sendRequest(findTestObject('APIFullService/Postman/Send Document Signing', [('tenantCode') : findTestData(excelPathAPISendDoc).getValue(
-                GlobalVariable.NumofColm, rowExcel('$tenantCode (Send External)')).replace('"',''), ('request') : stringRefno, ('callerId') : findTestData(excelPathAPISendDoc).getValue(
-                GlobalVariable.NumofColm, rowExcel('callerId (Send External)')).replace('"','')]))
+respon = WS.sendRequest(findTestObject('APIFullService/Postman/Send Document Signing', [('tenantCode') : findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Tenant')),('request') : stringRefno, ('callerId') : findTestData(excelPathAPISendDoc).getValue(
+                GlobalVariable.NumofColm, rowExcel('callerId'))]))
 
 'jika response 200 / hit api berhasil'
 if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
@@ -109,7 +115,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         'Jika check storedb'
         if (GlobalVariable.checkStoreDB == 'Yes') {
             'call test case storedb'
-            WebUI.callTestCase(findTestCase('Main Flow/API Send Document External StoreDB'), [('excelPathAPISendDoc') : excelPathAPISendDoc
+            WebUI.callTestCase(findTestCase('Main Flow - Copy/API Send Document External StoreDB'), [('excelPathAPISendDoc') : excelPathAPISendDoc
                     , ('sheet') : sheet, ('signlocStoreDB') : signlocStoreDB, ('responsePsreCode') : responsePsreCode], FailureHandling.CONTINUE_ON_FAILURE)
         }
     } else {
@@ -119,8 +125,10 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
     getErrorMessageAPI(respon)
 }
 
+'jika tidak ada document id'
 if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).length() > 0) {
-	checkSaldoWAOrSMS(conneSign, findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$idKtp (Send External)')).replace(
+	'get check saldo wa or sms di send document'
+	checkSaldoWAOrSMS(conneSign, findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$idKtp')).replace(
 			'"', ''))
 }
 
@@ -146,51 +154,51 @@ def rowExcel(String cellValue) {
 
 def getDataExcel(String semicolon, int splitnum, String delimiter, String enter) {
 	'Inisialisasi ref No'
-	refNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo (Send External)'))
+	refNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo'))
 	
 	'Inisialisasi document template code berdasarkan delimiter ;'
-	documentTemplateCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$documentTemplateCode (Send External)')).split(semicolon, splitnum)
+	documentTemplateCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$documentTemplateCode')).split(semicolon, splitnum)
 	
 	'Inisialisasi document name berdasarkan delimiter ;'
-	documentName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('documentName (Send External)')).split(semicolon, splitnum)
+	documentName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('documentName')).split(semicolon, splitnum)
 	
 	'Inisialisasi office Code berdasarkan delimiter ;'
-	officeCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('officeCode (Send External)')).split(semicolon, splitnum)
+	officeCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('officeCode')).split(semicolon, splitnum)
 	
 	'Inisialisasi office name berdasarkan delimiter ;'
-	officeName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('officeName (Send External)')).split(semicolon, splitnum)
+	officeName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('officeName')).split(semicolon, splitnum)
 	
 	'Inisialisasi region code berdasarkan delimiter ;'
-	regionCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('regionCode (Send External)')).split(semicolon, splitnum)
+	regionCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('regionCode')).split(semicolon, splitnum)
 	
 	'Inisialisasi region name berdasarkan delimiter ;'
-	regionName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('regionName (Send External)')).split(semicolon, splitnum)
+	regionName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('regionName')).split(semicolon, splitnum)
 	
 	'Inisialisasi business line code berdasarkan delimiter ;'
-	businessLineCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('businessLineCode (Send External)')).split(semicolon, splitnum)
+	businessLineCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('businessLineCode')).split(semicolon, splitnum)
 	
 	'Inisialisasi business line name berdasarkan delimiter ;'
-	businessLineName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('businessLineName (Send External)')).split(semicolon, splitnum)
+	businessLineName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('businessLineName')).split(semicolon, splitnum)
 	
 	'Inisialisasi is sequence berdasarkan delimiter ;'
-	isSequence = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('isSequence (Send External)')).split(semicolon, splitnum)
+	isSequence = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('isSequence')).split(semicolon, splitnum)
 	
 	'Inisialisasi psre Code berdasarkan delimiter ;'
-	psreCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('psreCode (Send External)')).split(semicolon, splitnum)
+	psreCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('psreCode')).split(semicolon, splitnum)
 	
 	'Inisialisasi document file berdasarkan delimiter ;'
-	documentFile = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('documentFile (Send External)')).split(enter, splitnum)
+	documentFile = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('documentFile')).split(enter, splitnum)
 	
 	'split signer untuk doc1 dan signer untuk doc2'
-	signAction = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$signAction (Send External)')).split(enter, splitnum)
+	signAction = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$signAction')).split(enter, splitnum)
 	
-	signerType = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$signerType (Send External)')).split(enter, splitnum)
+	signerType = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$signerType')).split(enter, splitnum)
 	
-	tlp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$tlp (Send External)')).split(enter, splitnum)
+	tlp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$tlp')).split(enter, splitnum)
 	
-	idKtp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$idKtp (Send External)')).split(enter, splitnum)
+	idKtp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$idKtp')).split(enter, splitnum)
 	
-	email = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$email (Send External)')).split(enter, splitnum)
+	email = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$email')).split(enter, splitnum)
 	
 	pageStamp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('page (Send stampExternal)')).split(delimiter, splitnum)
 	
@@ -227,11 +235,11 @@ def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) 
 		String bodyAPI = new String()
 	
 		'Pengisian body'
-		bodyAPI = (((((((((((((((((((((((bodyAPI + '{"referenceNo" : ') + refNo) + ', "documentTemplateCode": ') + (documentTemplateCode[
-		i])) + ', "documentName": ') + (documentName[i])) + ', "officeCode": ') + (officeCode[i])) + ', "officeName": ') + (officeName[
-		i])) + ', "regionCode": ') + (regionCode[i])) + ', "regionName": ') + (regionName[i])) + ', "businessLineCode": ') +
-		(businessLineCode[i])) + ', "businessLineName": ') + (businessLineName[i])) + ', "isSequence": ') + (isSequence[i])) +
-		',  "psreCode": ') + (psreCode[i])) + ',')
+		bodyAPI = (((((((((((((((((((((((bodyAPI + '{"referenceNo" : "') + refNo) + '", "documentTemplateCode": "') + (documentTemplateCode[
+		i])) + '", "documentName": "') + (documentName[i])) + '", "officeCode": "') + (officeCode[i])) + '", "officeName": "') + (officeName[
+		i])) + '", "regionCode": "') + (regionCode[i])) + '", "regionName": "') + (regionName[i])) + '", "businessLineCode": "') +
+		(businessLineCode[i])) + '", "businessLineName": "') + (businessLineName[i])) + '", "isSequence": "') + (isSequence[i])) +
+		'",  "psreCode": "') + (psreCode[i])) + '",')
 	
 		'Memasukkan bodyAPI ke stringRefno'
 		stringRefno = (stringRefno + bodyAPI)
@@ -297,7 +305,7 @@ def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) 
 						'jika seq numbernya tidak kosong'
 						if ((seqNos[p]) != '') {
 							'Memasukkan value seqNo dan body API kepada array'
-							seqNoBodyAPI.add(',"seqNo": ' + (seqNos[p]))
+							seqNoBodyAPI.add(',"seqNo": "' + (seqNos[p])) + '"'
 						} else {
 							'Jika seq number kosong ,maka input kosong'
 							seqNoBodyAPI.add('')
@@ -418,13 +426,13 @@ def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) 
 			}
 			
 			'check ada value maka setting email service tenant'
-			if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service (Send External)')).length() > 0) {
+			if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')).length() > 0) {
 			for (loopingSignerEmailActive = 0; loopingSignerEmailActive < idKtps.size(); loopingSignerEmailActive++) {
 				SHA256IdNo = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(idKtps[loopingSignerEmailActive].replace('"', ''))
 				
 				'setting email service tenant'
 				CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(excelPathAPISendDoc).getValue(
-                    GlobalVariable.NumofColm, rowExcel('Setting Email Service (Send External)')),SHA256IdNo)
+                    GlobalVariable.NumofColm, rowExcel('Setting Email Service')),SHA256IdNo)
 			}
 			}
 			
@@ -439,7 +447,7 @@ def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) 
 		bodyAPI = new String()
 		
 		'Jika dokumennya menggunakan base64'
-		if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 Document (Send External)')) == 'Yes') {
+		if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 Document')) == 'Yes') {
 			'input bodyAPI dengan Base64'
 			bodyAPI = (((bodyAPI + '"documentFile": "') + CustomKeywords.'customizekeyword.ConvertFile.base64File'(documentFile[
 				i])) + '"')
@@ -568,7 +576,7 @@ def setBodyForStampingLocation(String pageStamp, String llxStamp, String llyStam
 
 
 def bodyLocationCoordinate(String llxSigns, String llySigns, String urxSigns, String urySigns) {
-	return '{"llx":' + llxSigns + ',"lly":' + llySigns +',"urx":' + urxSigns + ',"ury":' + urySigns +'}'
+	return '{"llx":"' + llxSigns + '","lly":"' + llySigns +'","urx":"' + urxSigns + '","ury":"' + urySigns +'"}'
 }
 
 def bodyLocationPage(String pageSigns) {
@@ -576,13 +584,13 @@ def bodyLocationPage(String pageSigns) {
 }
 
 def bodyLocationCoordinatePage(String llxSigns, String llySigns, String urxSigns, String urySigns, String pageSigns) {
-	return  '{"page":' + pageSigns + ',"llx":' + llxSigns + ',"lly":' + llySigns + ',"urx":' + urxSigns + ', "ury":' + urySigns + '}'
+	return  '{"page":' + pageSigns + ',"llx":"' + llxSigns + '","lly":"' + llySigns + '","urx":"' + urxSigns + '", "ury":"' + urySigns + '"}'
 }
 
 def bodySigner(String signActions, String signerTypes, String tlps, String idKtps, String emails, String bodyAPI) {
-	return '{"signAction": ' + signActions + ',"signerType": ' + signerTypes + ',"tlp": ' + tlps + ',"idKtp": ' + idKtps + ',"email": ' + emails + bodyAPI + '}'
+	return '{"signAction": "' + signActions + '","signerType": "' + signerTypes + '","tlp": "' + tlps + '","idKtp": "' + idKtps + '","email": "' + emails + '"' + bodyAPI + '}'
 }
-
+/*
 def inputFilterTrx(String documentType, String signType) {
 		'get current date'
 		currentDate = new Date().format('yyyy-MM-dd')
@@ -602,17 +610,17 @@ def inputFilterTrx(String documentType, String signType) {
 		'Input date sekarang'
 		WebUI.setText(findTestObject('Saldo/input_fromdate'), currentDate)
 	
-	   // 'Input tipe dokumen'
-		//WebUI.setText(findTestObject('Saldo/input_tipedokumen'), documentType)
+	    'Input tipe dokumen'
+		not_run: WebUI.setText(findTestObject('Saldo/input_tipedokumen'), documentType)
 	
-	  //  'Input enter'
-		//WebUI.sendKeys(findTestObject('Saldo/input_tipedokumen'), Keys.chord(Keys.ENTER))
+	    'Input enter'
+		not_run: WebUI.sendKeys(findTestObject('Saldo/input_tipedokumen'), Keys.chord(Keys.ENTER))
 	
 		'Input referal number'
-		WebUI.setText(findTestObject('Saldo/input_refnumber'), findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo (Send External)')).replace('"',''))
+		WebUI.setText(findTestObject('Saldo/input_refnumber'), findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo')))
 	
-	  //  'Input documentTemplateName'
-	 //   WebUI.setText(findTestObject('Saldo/input_namadokumen'), documentTemplateName)
+	    'Input documentTemplateName'
+	   not_run: WebUI.setText(findTestObject('Saldo/input_namadokumen'), documentTemplateName)
 	
 		'Input date sekarang'
 		WebUI.setText(findTestObject('Saldo/input_todate'), currentDate)
@@ -621,7 +629,7 @@ def inputFilterTrx(String documentType, String signType) {
 		WebUI.click(findTestObject('Saldo/btn_cari'))
 }
 def inputFilterSaldo(String tipeSaldo, Connection conneSign, int saldoDocAutosign) {
-	documentType = CustomKeywords.'connection.APIFullService.getDocumentType'(conneSign, findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo (Send External)')))
+	documentType = CustomKeywords.'connection.APIFullService.getDocumentType'(conneSign, findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo')))
 	
 	inputFilterTrx(documentType, tipeSaldo)
 
@@ -645,7 +653,7 @@ def inputFilterSaldo(String tipeSaldo, Connection conneSign, int saldoDocAutosig
 	variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
 
 	'get trx dari db'
-	ArrayList result = CustomKeywords.'connection.APIFullService.gettrxSaldo'(conneSign, findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo (Send External)')).replace('"',''), saldoDocAutosign.toString(), 'Use ' + tipeSaldo)
+	ArrayList result = CustomKeywords.'connection.APIFullService.gettrxSaldo'(conneSign, findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo')).replace('"',''), saldoDocAutosign.toString(), 'Use ' + tipeSaldo)
 
 	index = 0
 	
@@ -667,7 +675,7 @@ def inputFilterSaldo(String tipeSaldo, Connection conneSign, int saldoDocAutosig
 					'Jika bukan untuk 2 kolom itu, maka check ke db'
 					checkVerifyEqualOrMatch(WebUI.verifyMatch('-' + WebUI.getText(modifyperrowpercolumn), result[
 							index++], false, FailureHandling.CONTINUE_ON_FAILURE), 'pada Kuantitas di Mutasi Saldo dengan nomor kontrak ' +
-						(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo (Send External)')).replace('"','')))
+						(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo')).replace('"','')))
 				} else {
 					'Jika bukan -1, atau masih 0. Maka ttdnya dibilang error'
 					GlobalVariable.FlagFailed = 1
@@ -684,13 +692,13 @@ def inputFilterSaldo(String tipeSaldo, Connection conneSign, int saldoDocAutosig
 				'Jika bukan untuk 2 kolom itu, maka check ke db'
 				checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyperrowpercolumn), result[index++],
 						false, FailureHandling.CONTINUE_ON_FAILURE), ' pada Mutasi Saldo dengan nomor kontrak ' +
-					(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo (Send External)')).replace('"','')))
+					(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo')).replace('"','')))
 			}
 		}
 	}
 
 }
-
+*/
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 	if (isMatch == false) {
 		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
@@ -703,80 +711,100 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 }
 
 def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
+	'inisialisasi arraylist balmut'
 	ArrayList balmut = []
 
-	int penggunaanSaldo = 0
-	
-	int pemotonganSaldo = 0
+	'inisialisasi penggunaan saldo, pemotongan saldo, dan increment untuk kebutuhan selanjutnya'
+	int penggunaanSaldo = 0,  pemotonganSaldo = 0, increment
 
-	int increment
-
+	'inisialisasi tipesaldo'
 	String tipeSaldo
 	
+	'get email per document menggunakan email signer yang diplit enter'
 	ArrayList emailPerDoc = emailSigner.split('\\n', -1)
 
+	'looping per email per document'
 	for (loopingEmailPerDoc = 0; loopingEmailPerDoc < emailPerDoc.size(); loopingEmailPerDoc++) {
+		'split lagi per ;'
 		ArrayList email = (emailPerDoc[loopingEmailPerDoc]).split(';', -1)
 
+		'looping email per ';''
 		for (loopingEmail = 0; loopingEmail < email.size(); loopingEmail++) {
+			'get email dari nik/notelp/email tersebut'
 			(email[loopingEmail]) = CustomKeywords.'connection.DataVerif.getEmailFromNIK'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
 					email[loopingEmail]))
 
+			'get email service dari email tersebut'
 			emailServiceOnVendor = CustomKeywords.'connection.DataVerif.getEmailServiceAsVendorUser'(conneSign, email[loopingEmail])
 			
+			'get full name user dari email tersebut'
 			fullNameUser = CustomKeywords.'connection.DataVerif.getFullNameOfUser'(conneSign, email[loopingEmail])
 
-
+			'get settinog must use wa first'
 			mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
 
+			'jika must use wa first'
 			if (mustUseWAFirst == '1') {
+				'tipe saldonya menjadi wa'
 				tipeSaldo = 'WhatsApp Message'
 
 				'menggunakan saldo wa'
 				balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser, 1)
 
+				'jika arraylist tidak ada isinya'
 				if (balmut.size() == 0) {
 					'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 						GlobalVariable.StatusFailed, (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm,
 							rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via WhatsApp')
 				} else {
+					'penggunaan saldo get dari kuantitas per array list balance mutation'
 					penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
 				}
 			} else {
+				'jika email servicenya 1'
 				if (emailServiceOnVendor == '1') {
+					'check use wa message'
 					useWAMessage = CustomKeywords.'connection.DataVerif.getUseWAMessage'(conneSign, GlobalVariable.Tenant)
 
+					'jika menggunakan wa'
 					if (useWAMessage == '1') {
 						tipeSaldo = 'WhatsApp Message'
 
 						'menggunakan saldo wa'
 						balmut = CustomKeywords.'connection.DataVerif.'(conneSign, tipeSaldo, fullNameUser, 1)
 
+						'jika balmutnya tidak ada value'
 						if (balmut.size() == 0) {
 							'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
 							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 								GlobalVariable.StatusFailed, (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm,
 									rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via WhatsApp')
 						} else {
+							'penggunaan saldo didapat dari ikuantitaas query balmut'
 							penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
 						}
 					} else if (useWAMessage == '0') {
+						'jika tidak menggunakan use wa message, maka mengarah ke sms'
 						'ke sms / wa'
 						SMSSetting = CustomKeywords.'connection.DataVerif.getSMSSetting'(conneSign, 'Send Document')
 
+						'jika setting sms = 1'
 						if (SMSSetting == '1') {
 							'ke sms'
 							tipeSaldo = 'SMS Notif'
 
+							'get balmut dari sms '
 							balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser, 1)
 
+							'jika tidak ada balmut'
 							if (balmut.size() == 0) {
 								'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
 								CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 									GlobalVariable.StatusFailed, (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm,
 										rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via SMS')
 							} else {
+								'get kuantitas dari balmut'
 								penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
 							}
 						}
@@ -785,27 +813,38 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 			}
 		}
 
+		'jika ada penggunaan saldo'
+		if (penggunaanSaldo > 0) {
+		'looping mengenai penggunaan saldo'
 		for (looping = 0; looping < penggunaanSaldo; looping++) {
+			'jika loopingan pertama, incrementnya 0'
 			if (looping == 0) {
 				increment = 0
 			} else {
-				increment = (increment + 10)
+				'increment meningkat 9'
+				increment = (increment + 9)
 			}
 			
+			'pemotongan saldo akan di get berdasarkan kuantitas yang awalnya hanya get dari total 11 row query'
 			pemotonganSaldo = (pemotonganSaldo + Integer.parseInt(balmut[(increment + 8)].replace('-','')))
 			
+			'input value trx number ke hashmap'
 			GlobalVariable.eSignData.putAt('allTrxNo', GlobalVariable.eSignData.getAt('allTrxNo') + balmut[increment + 0] + ';')
 			
+			'input value sign type ke hashmap'
 			GlobalVariable.eSignData.putAt('allSignType', GlobalVariable.eSignData.getAt('allSignType') + balmut[increment + 2].replace('Use ','') + ';')
 			
+			'input email usage sign (nama/email) ke hashmap'
 			GlobalVariable.eSignData.putAt('emailUsageSign', GlobalVariable.eSignData.getAt('emailUsageSign') + fullNameUser + ';')
 	
 		}
 		}
 		
+		'jika tipenya wa, maka tambah pemotongan saldo ke countverifikasiwa, jika sms, maka ke sms'
 		if (tipeSaldo == 'WhatsApp Message') {
 			GlobalVariable.eSignData.putAt('CountVerifikasiWA', pemotonganSaldo)
 		} else if (tipeSaldo == 'SMS Notif') {
 			GlobalVariable.eSignData.putAt('CountVerifikasiSMS', pemotonganSaldo)
 		}
+	}
 }

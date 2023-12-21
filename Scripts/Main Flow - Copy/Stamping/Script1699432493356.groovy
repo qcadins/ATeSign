@@ -30,7 +30,7 @@ prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, 
         'ambil idLov untuk diupdate secara otomatis ke DB'
         int idLov = CustomKeywords.'connection.ManualStamp.getIdLovVendorStamping'(conneSign, findTestData(excelPathStamping).getValue(
          GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')))
-
+		
         'lakukan update vendor stamping yang akan dipakai'
         CustomKeywords.'connection.UpdateData.updateVendorStamping'(conneSign, idLov)
     }
@@ -69,11 +69,26 @@ prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, 
         
         nomorKontrakDocument = (('"' + refNumber) + '"')
 
-        callerId = findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('callerId (API Stamping External and API Stamping Normal)'))
+        callerId = findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('callerId'))
 
-        'get api key dari db'
-        GlobalVariable.api_key = CustomKeywords.'connection.APIFullService.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
-
+		'Jika flag tenant no'
+		if ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code (Stamp)'))) == 'No') {
+			'set tenant kosong'
+			GlobalVariable.Tenant = (findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Wrong tenant Code (Stamp)')))
+		} else if (findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code (Stamp)')) == 'Yes') {
+			'Input tenant'
+			GlobalVariable.Tenant = findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))
+		}
+		
+		'check if mau menggunakan api_key yang salah atau benar'
+		if ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('use Correct API Key (Stamp)'))) == 'Yes') {
+			'get api key dari db'
+			GlobalVariable.api_key = CustomKeywords.'connection.APIFullService.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
+		} else if ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('use Correct API Key (Stamp)'))) == 'No') {
+			'get api key salah dari excel'
+			GlobalVariable.api_key = (findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Wrong API Key (Stamp)')))
+		}
+		
         'HIT API stamping'
         respon = WS.sendRequest(findTestObject('Flow Stamping', [('callerId') : callerId, ('valueRefNum') : valueRefNum, ('refNumber') : nomorKontrakDocument]))
 
@@ -210,6 +225,16 @@ prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, 
 			, ('CancelDocsStamp') : CancelDocsStamp], FailureHandling.CONTINUE_ON_FAILURE)
 		}
     }
+	
+	if (GlobalVariable.FlagFailed == 0) {
+		'write to excel success'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel(
+				'Status') - 1, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+	} else {
+		'write to excel success'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel(
+				'Status') - 1, GlobalVariable.NumofColm - 1, GlobalVariable.StatusFailed)
+	}
 	
 	'inisialisasi variable untuk looping. Looping diperlukan untuk break/continue'
 	forLoopingWithBreakAndContinue = 1

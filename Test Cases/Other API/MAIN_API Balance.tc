@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API Balance</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>d6c7e22e-3d23-4255-a7aa-9227e9986ebb</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>59449849-4274-443a-b535-89dee820ca5e</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>67b6308c-ff2d-4677-bad9-0511dc0d0bf3</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/Balance'</defaultValue>
+      <description></description>
+      <id>59449849-4274-443a-b535-89dee820ca5e</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Balance'</defaultValue>
+      <description></description>
+      <id>67b6308c-ff2d-4677-bad9-0511dc0d0bf3</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>

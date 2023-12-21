@@ -89,6 +89,14 @@
       <value>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36</value>
       <webElementGuid>2c80301d-6858-4682-8b4e-9624bf4f34a4</webElementGuid>
    </httpHeaderProperties>
+   <httpHeaderProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>Authorization</name>
+      <type>Main</type>
+      <value>Bearer ${token}</value>
+      <webElementGuid>ebc18d32-297d-4764-8e0f-bebae9ab9066</webElementGuid>
+   </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
@@ -120,6 +128,21 @@
       <defaultValue>GlobalVariable.Tenant</defaultValue>
       <description></description>
       <id>ca42a169-cb0a-4195-9794-e10fc6fd8d2b</id>
+      <id>8cc8a76c-52ac-4d24-ba9c-5e4d767b1a24</id>
+      <masked>false</masked>
+      <name>base_url</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.token</defaultValue>
+      <description></description>
+      <id>55bd06fb-93fa-4ddc-ab6f-3944b6ffa244</id>
+      <masked>false</masked>
+      <name>token</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.Tenant</defaultValue>
+      <description></description>
+      <id>0272b854-d9b0-4908-83e1-d02a08011a18</id>
       <masked>false</masked>
       <name>tenantCode</name>
    </variables>

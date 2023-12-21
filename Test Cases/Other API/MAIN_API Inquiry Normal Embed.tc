@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API Inquiry Normal Embed</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>d517a1a6-66e5-42fa-a251-69abd8b31a29</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>42cfec75-cdf4-460d-8997-4799556d2db8</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>6b7fbd38-99f0-4579-aed3-5bf4647a629d</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/Inquiry Normal Embed'</defaultValue>
+      <description></description>
+      <id>42cfec75-cdf4-460d-8997-4799556d2db8</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Inquiry Normal Embed'</defaultValue>
+      <description></description>
+      <id>6b7fbd38-99f0-4579-aed3-5bf4647a629d</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>

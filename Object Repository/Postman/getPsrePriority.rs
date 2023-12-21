@@ -128,6 +128,21 @@
       <defaultValue>GlobalVariable.Tenant</defaultValue>
       <description></description>
       <id>b7933daf-6c70-4779-9e83-ced5ebf3f550</id>
+      <id>a0688288-87a1-4300-8405-c2df55b06454</id>
+      <masked>false</masked>
+      <name>base_url</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.token</defaultValue>
+      <description></description>
+      <id>5b98eb28-9336-4d44-bebd-b892d472fa43</id>
+      <masked>false</masked>
+      <name>token</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.Tenant</defaultValue>
+      <description></description>
+      <id>6a0c7bcd-1ea5-447d-9aad-ca3c1656dbb5</id>
       <masked>false</masked>
       <name>tenantCode</name>
    </variables>

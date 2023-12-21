@@ -573,4 +573,57 @@ public class SendSign {
 		}
 		data
 	}
+
+	@Keyword
+	getCheckingActiveDocument(Connection conn, String refNumber) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT is_active, ref_number FROM tr_document_h WHERE ref_number LIKE '"+refNumber+"${"_"}%' ESCAPE '\$' ORDER BY dtm_crt DESC")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+
+		String check = ''
+
+		for (i = 0; i < listdata.size(); i++) {
+			if (listdata[i] == '1') {
+				check = check + listdata[i+1] + ', '
+			} else if (i == listdata.size() - 1) {
+				check = check + ''
+			}
+		}
+
+		if (check.size() == 0) {
+			check
+		} else {
+			check.substring(0, check.length() - 2)
+		}
+	}
+
+	@Keyword
+	getEmaiLFromNIK(Connection conn, String nik) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT login_id from am_msuser where hashed_id_no =  encode(sha256('" +  nik  + "'), 'hex')")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
 }

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API Get Data User Management View</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>a8d0d277-3226-40c7-86dc-3415ef34b7b5</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>8c325efe-2268-4d69-b0d1-dbb7e8f78573</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>cba0922c-a8d2-4edc-a1c5-74988b728791</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/Get Data User Management View'</defaultValue>
+      <description></description>
+      <id>8c325efe-2268-4d69-b0d1-dbb7e8f78573</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Get Data UM View'</defaultValue>
+      <description></description>
+      <id>cba0922c-a8d2-4edc-a1c5-74988b728791</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>

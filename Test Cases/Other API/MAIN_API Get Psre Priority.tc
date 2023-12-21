@@ -4,6 +4,7 @@
    <name>MAIN_API Get Psre Priority</name>
    <tag></tag>
    <comment></comment>
+<<<<<<< HEAD
    <testCaseGuid>6b433970-fe7c-4409-b611-2a85df1ad058</testCaseGuid>
    <variableLinks>
       <testDataLinkId></testDataLinkId>
@@ -28,6 +29,65 @@
       <defaultValue>'API Get Psre Priority'</defaultValue>
       <description></description>
       <id>c9444554-29c1-4e2c-8cba-848348d5e8fe</id>
+   <testCaseGuid>066dcc57-1f19-44cc-9bc9-bda4218d3036</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>ddacce99-feef-4759-8a3f-86ecc08e6cc8</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>df88401b-06be-4d1a-9ed0-3d1d02ba527b</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/Get Psre Priority'</defaultValue>
+      <description></description>
+      <id>ddacce99-feef-4759-8a3f-86ecc08e6cc8</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Get Psre Priority'</defaultValue>
+      <description></description>
+      <id>df88401b-06be-4d1a-9ed0-3d1d02ba527b</id>
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API Get Psre Priority</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>066dcc57-1f19-44cc-9bc9-bda4218d3036</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>ddacce99-feef-4759-8a3f-86ecc08e6cc8</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>df88401b-06be-4d1a-9ed0-3d1d02ba527b</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/Get Psre Priority'</defaultValue>
+      <description></description>
+      <id>ddacce99-feef-4759-8a3f-86ecc08e6cc8</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Get Psre Priority'</defaultValue>
+      <description></description>
+      <id>df88401b-06be-4d1a-9ed0-3d1d02ba527b</id>
       <masked>false</masked>
       <name>sheet</name>
    </variable>

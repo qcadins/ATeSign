@@ -289,8 +289,7 @@ public class APIFullService {
 	getSignLocation(Connection conn, String docid) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select STRING_AGG(tdds.sign_location,';') from tr_document_d tdd join tr_document_d_sign tdds on tdd.id_document_d = tdds.id_document_d where tdd.document_id = '" + docid + "'")
-
+		resultSet = stm.executeQuery("SELECT STRING_AGG(sign_locations, ';') AS combined_sign_locations FROM (SELECT STRING_AGG(tdds.sign_location, ';') AS sign_locations FROM tr_document_d tdd JOIN tr_document_d_sign tdds ON tdd.id_document_d = tdds.id_document_d WHERE tdd.document_id = '"+docid+"' GROUP BY tdds.id_document_d_sign) AS subquery;")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -1022,10 +1021,10 @@ public class APIFullService {
 	}
 
 	@Keyword
-	getInvitationCode(Connection conn, String email) {
+	getInvitationCode(Connection conn, String value) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select invitation_code from tr_invitation_link inv JOIN ms_vendor mv ON inv.id_ms_vendor = mv.id_ms_vendor where  receiver_detail = '"+ email +"' and vendor_code = '"+ GlobalVariable.Psre +"'")
+		resultSet = stm.executeQuery("select invitation_code from tr_invitation_link inv JOIN ms_vendor mv ON inv.id_ms_vendor = mv.id_ms_vendor where  receiver_detail = '"+ value +"' or phone = '"+ value +"' and vendor_code = '"+ GlobalVariable.Psre +"'")
 
 		metadata = resultSet.metaData
 
@@ -1060,10 +1059,14 @@ public class APIFullService {
 	}
 
 	@Keyword
-	getCheckInvRegisStoreDB(Connection conn, String email) {
+	getCheckInvRegisStoreDB(Connection conn, String value) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT CASE WHEN login_id is null then '0' else '1' END, CASE WHEN login_id is null then '0' else '1' END, case when request_status = '0' or '1' then '1' else '2' end, notes FROM tr_balance_mutation tbm JOIN tr_job_check_register_status tjc ON tbm.id_balance_mutation = tjc.id_balance_mutation LEFT JOIN am_msuser amu ON tbm.id_ms_user = amu.id_ms_user WHERE tjc.usr_crt = '"+ email +"'")
+		if (GlobalVariable.Psre == 'PRIVY') {
+			resultSet = stm.executeQuery("SELECT CASE WHEN login_id is null then '0' else '1' END, CASE WHEN login_id is null then '0' else '1' END, case when request_status = '0' or '1' then '1' else '2' end, notes FROM tr_balance_mutation tbm JOIN tr_job_check_register_status tjc ON tbm.id_balance_mutation = tjc.id_balance_mutation LEFT JOIN am_msuser amu ON tbm.id_ms_user = amu.id_ms_user WHERE amu.login_id = '"+ value +"' or tbm.usr_crt = '"+ value +"'")
+		} else {
+			resultSet = stm.executeQuery("select mvru.is_active, is_registered, '0', '', is_external_activation from ms_vendor_registered_user mvru join ms_vendor mv on mvru.id_ms_vendor = mv.id_ms_vendor where signer_registered_email = '"+ value +"' or hashed_signer_registered_phone = encode(sha256('"+ value +"'), 'hex') and mv.vendor_code = '"+ GlobalVariable.Psre  +"'")
+		}
 
 		metadata = resultSet.metaData
 
@@ -1072,7 +1075,11 @@ public class APIFullService {
 		while (resultSet.next()) {
 			for (i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
-				listdata.add(data)
+				if(data == null) {
+					listdata.add('0')
+				} else {
+					listdata.add(data)
+				}
 			}
 		}
 		listdata
@@ -1377,10 +1384,10 @@ public class APIFullService {
 		Integer.parseInt(data)
 	}
 	@Keyword
-	getTemplateSignloc(Connection conn, String doctemplatecode) {
+	getTemplateSignloc(Connection conn, String doctemplatecode, String tenant) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT CASE WHEN mlo.description = 'Stamp Duty (materai)' THEN 'Stamp Duty' ELSE ml.description END as signer_type, mlo.description, sign_page, jsonb_build_object( 'llx', round((sign_location::jsonb->>'llx')::numeric), 'lly', round((sign_location::jsonb->>'lly')::numeric), 'urx', round((sign_location::jsonb->>'urx')::numeric), 'ury', round((sign_location::jsonb->>'ury')::numeric)) AS digiSignLoc, jsonb_build_object( 'llx', round((sign_location::jsonb->>'llx')::numeric), 'lly', round((sign_location::jsonb->>'lly')::numeric), 'urx', round((sign_location::jsonb->>'urx')::numeric), 'ury', round((sign_location::jsonb->>'ury')::numeric) ) AS tknajasignLoc FROM ms_doc_template_sign_loc mdts JOIN ms_doc_template mdt ON mdt.id_doc_template = mdts.id_doc_template LEFT JOIN ms_lov ml ON mdts.lov_signer_type = ml.id_lov JOIN ms_lov mlo ON mdts.lov_sign_type = mlo.id_lov WHERE doc_template_code = '" + doctemplatecode + "'")
+		resultSet = stm.executeQuery("SELECT CASE WHEN mlo.description = 'Stamp Duty (materai)' THEN 'Stamp Duty' ELSE ml.description END as signer_type, mlo.description, sign_page, jsonb_build_object( 'llx', round((sign_location::jsonb->>'llx')::numeric), 'lly', round((sign_location::jsonb->>'lly')::numeric), 'urx', round((sign_location::jsonb->>'urx')::numeric), 'ury', round((sign_location::jsonb->>'ury')::numeric)) AS digiSignLoc, jsonb_build_object( 'llx', round((sign_location::jsonb->>'llx')::numeric), 'lly', round((sign_location::jsonb->>'lly')::numeric), 'urx', round((sign_location::jsonb->>'urx')::numeric), 'ury', round((sign_location::jsonb->>'ury')::numeric) ) AS tknajasignLoc FROM ms_doc_template_sign_loc mdts JOIN ms_doc_template mdt ON mdt.id_doc_template = mdts.id_doc_template LEFT JOIN ms_lov ml ON mdts.lov_signer_type = ml.id_lov JOIN ms_lov mlo ON mdts.lov_sign_type = mlo.id_lov LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mdt.id_ms_tenant WHERE doc_template_code = '" + doctemplatecode + "' AND tenant_code = '" + tenant + "'")
 
 		metadata = resultSet.metaData
 
@@ -1395,10 +1402,10 @@ public class APIFullService {
 		listdata
 	}
 	@Keyword
-	getTemplateSignlocDetail(Connection conn, String doctemplatecode) {
+	getTemplateSignlocDetail(Connection conn, String doctemplatecode, String tenant) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT jsonb_build_object( 'x', round((vida_sign_location::jsonb->>'x')::numeric), 'y', round((vida_sign_location::jsonb->>'y')::numeric), 'h', round((vida_sign_location::jsonb->>'h')::numeric), 'w', round((vida_sign_location::jsonb->>'w')::numeric))::text::jsonb AS vidasignLoc, jsonb_build_object( 'x', round((privy_sign_location::jsonb->>'x')::numeric), 'y', round((privy_sign_location::jsonb->>'y')::numeric), 'h', round((privy_sign_location::jsonb->>'h')::numeric), 'w', round((privy_sign_location::jsonb->>'w')::numeric) )::text::jsonb AS privysignLoc FROM ms_doc_template_sign_loc mdts JOIN ms_doc_template mdt ON mdt.id_doc_template = mdts.id_doc_template WHERE doc_template_code = '" + doctemplatecode + "'")
+		resultSet = stm.executeQuery("SELECT jsonb_build_object( 'x', round((vida_sign_location::jsonb->>'x')::numeric), 'y', round((vida_sign_location::jsonb->>'y')::numeric), 'h', round((vida_sign_location::jsonb->>'h')::numeric), 'w', round((vida_sign_location::jsonb->>'w')::numeric))::text::jsonb AS vidasignLoc, jsonb_build_object( 'x', round((privy_sign_location::jsonb->>'x')::numeric), 'y', round((privy_sign_location::jsonb->>'y')::numeric), 'h', round((privy_sign_location::jsonb->>'h')::numeric), 'w', round((privy_sign_location::jsonb->>'w')::numeric) )::text::jsonb AS privysignLoc FROM ms_doc_template_sign_loc mdts JOIN ms_doc_template mdt ON mdt.id_doc_template = mdts.id_doc_template LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mdt.id_ms_tenant WHERE doc_template_code = '" + doctemplatecode + "' AND tenant_code = '" + tenant + "'")
 
 		metadata = resultSet.metaData
 
@@ -1413,10 +1420,10 @@ public class APIFullService {
 		listdata
 	}
 	@Keyword
-	getCountSignLoc(Connection conn, String doctemplatecode) {
+	getCountSignLoc(Connection conn, String doctemplatecode, String tenant) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT count(id_ms_doc_template_sign_loc) FROM ms_doc_template_sign_loc mdts JOIN ms_doc_template mdt ON mdt.id_doc_template = mdts.id_doc_template WHERE doc_template_code = '" + doctemplatecode + "'")
+		resultSet = stm.executeQuery("SELECT count(id_ms_doc_template_sign_loc) FROM ms_doc_template_sign_loc mdts JOIN ms_doc_template mdt ON mdt.id_doc_template = mdts.id_doc_template LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mdt.id_ms_tenant WHERE doc_template_code = '" + doctemplatecode + "' AND tenant_code = '" + tenant + "'")
 
 		metadata = resultSet.metaData
 
@@ -1571,7 +1578,7 @@ public class APIFullService {
 	getViewSigner(Connection conn, String documentId) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select ml1.description, am.full_name, am.hashed_phone, am.login_id, case when to_char(tdds.sign_date, 'yyyy-mm-dd hh24:mi:ss') is not null then 'Signed' else 'Need Sign' end, case when to_char(tdds.sign_date, 'yyyy-mm-dd hh24:mi:ss') is not null then to_char(tdds.sign_date, 'yyyy-mm-dd hh24:mi:ss') else '' end , case when am.is_active = '1' then 'Sudah Aktivasi' else 'Belum Aktivasi' end from tr_document_d_sign tdds join tr_document_d tdd on tdd.id_document_d = tdds.id_document_d join ms_lov ml1 on tdds.lov_signer_type = ml1.id_lov join am_msuser am on am.id_ms_user = tdds.id_ms_user where document_id = '"+ documentId +"' group by id_ms_tenant, document_id, ml1.description, am.full_name, am.hashed_phone, am.login_id, to_char(tdds.sign_date, 'yyyy-mm-dd hh24:mi:ss'), am.is_active, tdds.seq_no order by tdds.seq_no asc")
+		resultSet = stm.executeQuery("select CASE WHEN ml1.description is null then 'Signer' else ml1.description END, am.full_name, am.hashed_phone, am.login_id, case when to_char(tdds.sign_date, 'yyyy-mm-dd hh24:mi:ss') is not null then 'Signed' else 'Need Sign' end, case when to_char(tdds.sign_date, 'yyyy-mm-dd hh24:mi:ss') is not null then to_char(tdds.sign_date, 'yyyy-mm-dd hh24:mi:ss') else '' end , case when am.is_active = '1' then 'Sudah Aktivasi' else 'Belum Aktivasi' end from tr_document_d_sign tdds join tr_document_d tdd on tdd.id_document_d = tdds.id_document_d left join ms_lov ml1 on tdds.lov_signer_type = ml1.id_lov join am_msuser am on am.id_ms_user = tdds.id_ms_user where document_id = '"+ documentId +"' group by id_ms_tenant, document_id, ml1.description, am.full_name, am.hashed_phone, am.login_id, to_char(tdds.sign_date, 'yyyy-mm-dd hh24:mi:ss'), am.is_active, tdds.seq_no order by tdds.seq_no asc")
 
 		metadata = resultSet.metaData
 
@@ -1820,5 +1827,260 @@ public class APIFullService {
 			data = resultSet.getObject(1)
 		}
 		Integer.parseInt(data)
+	}
+
+	@Keyword
+	getPaymentSignTypeAPI(Connection conn, String tenantCode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select DISTINCT msl.code, msl.description from ms_paymentsigntypeoftenant mpst left join ms_tenant mst on mpst.id_ms_tenant = mst.id_ms_tenant left join ms_lov msl on mpst.lov_payment_sign_type = msl.id_lov where mst.tenant_code = '"+tenantCode+"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+
+	@Keyword
+	getListMessageDeliveryAPIOnly(Connection conn, String tenant, String vendor, String messageMedia, String dateStart, String dateEnd, String deliveryStatus, String recipient) {
+		String commandRec = '', commandReport = '', commandMedia = '', commandVendor = '', commandDelivStat = ''
+
+		stm = conn.createStatement()
+
+		if (recipient == '') {
+			commandRec = '--'
+		}
+		if (dateStart == ''|| dateEnd == '') {
+			commandReport = '--'
+		}
+		if (messageMedia == '') {
+			commandMedia = '--'
+		}
+		if (vendor == '') {
+			commandVendor = '--'
+		}
+		if (deliveryStatus == '') {
+			commandDelivStat = '--'
+		}
+		resultSet = stm.executeQuery("SELECT vendor_name, mdr.report_time, recipient_detail, trx_no, description, delivery_status, CASE WHEN delivery_status = '0' THEN 'Not Started' WHEN delivery_status = '1' THEN 'Waiting' WHEN delivery_status = '2' THEN 'Failed' WHEN delivery_status = '3' THEN 'Delivered' WHEN delivery_status = '4' THEN 'Read' END as delivery_status_information FROM tr_message_delivery_report mdr LEFT JOIN ms_tenant mt ON mdr.id_ms_tenant = mt.id_ms_tenant LEFT JOIN ms_vendor mv ON mv.id_ms_vendor = mdr.id_ms_vendor LEFT JOin ms_lov mlov ON mlov.id_lov = mdr.lov_message_media WHERE tenant_code = '" + tenant + "'" + '\n' +
+		commandRec + " AND(recipient_detail = '" + recipient + "') " + '\n' +
+		commandReport +" AND(mdr.report_time BETWEEN '" + dateStart + " 00:00:00.000' AND '" + dateEnd + " 23:59:59.999') " + '\n' +
+		commandMedia +" AND (mlov.description = '" + messageMedia + "') " + '\n' +
+		commandVendor +" AND (vendor_code = '" + vendor + "') " + '\n' +
+		commandDelivStat +" AND (mdr.delivery_status = '" + deliveryStatus + "') " + '\n' +
+		"ORDER BY report_time DESC ")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+	@Keyword
+	listDocTemplateAPIOnly(Connection conn, String tenant, String docTempCode, String docTempName, String isActive) {
+		String commandCode = '', commandName = '', commandisActive = ''
+
+		if (docTempCode == '') {
+			commandCode = '--'
+		}
+		if (docTempName == '') {
+			commandName = '--'
+		}
+		if (isActive == '') {
+			commandisActive = '--'
+		}
+
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT count(*) FROM ms_doc_template mdt LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mdt.id_ms_tenant WHERE tenant_code = '" + tenant + "'" + '\n' +
+		commandCode + " and mdt.doc_template_code = '" + docTempCode + "'" + '\n' +
+		commandName + " AND mdt.doc_template_name = '" + docTempName + "'" + '\n' +
+		commandisActive + " AND mdt.is_active = '" + isActive + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+	@Keyword
+	getResetOtpCodeAPIOnly(Connection conn, String email) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT reset_code_request_num FROM am_msuser where login_id = '" + email + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+	@Keyword
+	businessLineAPIOnly(Connection conn, String tenant) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT count(*) FROM ms_business_line mbl LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mbl.id_ms_tenant WHERE tenant_code = '" + tenant + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+
+		if (data != null) {
+			Integer.parseInt(data)
+		} else {
+			data = 0
+		}
+
+		Integer.parseInt(data)
+	}
+	@Keyword
+	listTenantAPIOnly(Connection conn, String tenantName, String isActive) {
+		String commandName = '', commandisActive = '', commandWhere = 'AND'
+
+		if (tenantName == '') {
+			commandName = '--'
+			commandWhere = 'WHERE'
+		}
+		if (isActive == '') {
+			commandisActive = '--'
+		}
+
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT count(*) from ms_tenant " + '\n' +
+		commandName + " WHERE tenant_name LIKE '" + tenantName + "%'" + '\n' +
+		commandisActive + commandWhere + " is_active = '" + isActive + "'")
+
+		metadata = resultSet.metaData
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+
+		if (data != null) {
+			Integer.parseInt(data)
+		} else {
+			data = 0
+		}
+
+		Integer.parseInt(data)
+	}
+
+	@Keyword
+	listPsreSettingAPIOnly(Connection conn, String vendorName, String vendorCode, String isActive, String isOperating) {
+		String commandName = '', commandisActive = '', commandCode = '', commandisOperating = ''
+
+		if (vendorName == '') {
+			commandName = '--'
+		}
+		if (vendorCode == '') {
+			commandCode = '--'
+		}
+		if (isActive == '') {
+			commandisActive = '--'
+		}
+		if (isOperating == '') {
+			commandisOperating = '--'
+		}
+
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT count(*) FROM ms_vendor mv LEFT JOIN ms_lov mlo ON mlo.id_lov = mv.lov_vendor_type WHERE mlo.code = 'PSRE'" + '\n' +
+		commandName + " AND vendor_name LIKE '%" + vendorName + "%'" + '\n' +
+		commandCode + " AND vendor_code LIKE '%" + vendorCode + "%'" + '\n' +
+		commandisActive + " AND mv.is_active = '" + isActive + "'" + '\n' +
+		commandisOperating + " AND mv.is_operating = '" + isOperating + "'")
+
+		metadata = resultSet.metaData
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+
+		if (data != null) {
+			Integer.parseInt(data)
+		} else {
+			data = 0
+		}
+		Integer.parseInt(data)
+	}
+
+	@Keyword
+	getPsrePriorityAPIONLY(Connection conn) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT VENDOR_CODE FROM ms_vendoroftenant mvt JOIN ms_tenant mt ON mvt.id_ms_tenant = mt.id_ms_tenant JOIN ms_vendor mv ON mvt.id_ms_vendor = mv.id_ms_vendor join ms_lov ml on ml.id_lov = mv.lov_vendor_type WHERE mt.tenant_code = '"+ GlobalVariable.Tenant +"' AND ml.description = 'PSRE' AND default_vendor is not null ORDER BY mvt.default_vendor ASC")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+
+	@Keyword
+	getTopUpAPIONLY(Connection conn, String value) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select tenant_code, vendor_code, ml.description, notes, qty, ref_no, To_char(trx_date, 'yyyy-MM-dd') from tr_balance_mutation tbm join ms_tenant mt on mt.id_ms_tenant = tbm.id_ms_tenant join ms_vendor mv on mv.id_ms_vendor = tbm.id_ms_vendor join ms_lov ml on ml.id_lov = tbm.lov_balance_type where ref_no = '"+ value +"'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+
+	@Keyword
+	getUpdateVendorPsreAPIONLY(Connection conn) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select vendor_code, vendor_name, mv.is_active, is_operating, ml.code from ms_vendor mv join ms_lov ml on ml.id_lov = mv.lov_vendor_sign_payment_type where vendor_code = '"+ GlobalVariable.Psre +"'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
 	}
 }
