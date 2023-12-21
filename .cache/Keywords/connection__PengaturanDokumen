@@ -33,7 +33,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "dataDocTemplateStoreDB",
@@ -64,7 +65,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getLovTipePembayaran",
@@ -82,7 +84,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getTotalDokumenTemplatKode",
@@ -100,7 +103,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getDDLVendor",
@@ -118,7 +122,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getDefaultVendor",
@@ -136,7 +141,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getUrutanSigning",
@@ -167,7 +173,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getDocumentTemplateAPI",
@@ -198,7 +205,8 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         },
         {
           "name": "getDocumentTemplateAPI2",
@@ -229,10 +237,11 @@
                 "errorOnParsing": false
               }
             }
-          ]
+          ],
+          "javadoc": ""
         }
       ]
     }
   ],
-  "javadocParsed": false
+  "javadocParsed": true
 }
