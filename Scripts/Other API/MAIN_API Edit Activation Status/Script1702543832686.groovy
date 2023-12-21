@@ -87,9 +87,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					
 					ArrayList arrayMatch = []
 
-					'verify signer type'
-					arrayMatch.add(WebUI.verifyMatch(result, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('isActive')).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
-
+					if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('isActive')).toString() != '') {
+						'verify signer type'
+						arrayMatch.add(WebUI.verifyMatch(result, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('isActive')).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+					}
 					
 					'jika data db tidak sesuai dengan excel'
 					if (arrayMatch.contains(false)) {
