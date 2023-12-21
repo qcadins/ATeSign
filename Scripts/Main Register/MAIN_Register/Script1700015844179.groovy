@@ -40,7 +40,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         GlobalVariable.VerificationCount = 1
-
+		
+		GlobalVariable.Counter = 0
+		
         int countCheckSaldo = 0
 
         'get psre per case'
@@ -119,7 +121,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     GlobalVariable.NumofColm, rowExcel('Setting Send SMS GenInv')))
         }
         
-        if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Run API Only')).equalsIgnoreCase(
+        if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Run API Only - Gen Link')).equalsIgnoreCase(
             'No')) {
             'get saldo before'
             saldoBefore = WebUI.callTestCase(findTestCase('Main Flow - Copy/getSaldo'), [('excel') : excelPathRegister, ('sheet') : sheet
@@ -152,7 +154,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         if ((GlobalVariable.FlagFailed == 0) && (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-            'Run API Only')).equalsIgnoreCase('No') || findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+            'Run API Only - Gen Link')).equalsIgnoreCase('No') || findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
             rowExcel('Generate Link With')).equalsIgnoreCase('Menu Buat Undangan')) && !(findTestData(excelPathRegister).getValue(
             GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase('API Register'))) {
             'check ada value maka setting Link Is Active'
@@ -188,6 +190,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'call test case api register by invitation'
                 WebUI.callTestCase(findTestCase('Main Register/API Register By Invitation'), [('excelPathRegister') : excelPathRegister
                         , ('sheet') : 'Main Register'], FailureHandling.CONTINUE_ON_FAILURE)
+				
+				if(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Run API Only - Register')).equalsIgnoreCase('Yes')) {
+					
+					if (GlobalVariable.FlagFailed == 0) {
+						'write to excel success'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
+							1, GlobalVariable.StatusSuccess)
+					}
+					
+					continue
+				}
             } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Register With')).equalsIgnoreCase(
                 'Front End Register')) {
                 'call test case daftar akun verif'

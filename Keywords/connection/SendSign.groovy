@@ -573,13 +573,13 @@ public class SendSign {
 		}
 		data
 	}
-	
+
 	@Keyword
 	getCheckingActiveDocument(Connection conn, String refNumber) {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("SELECT is_active, ref_number FROM tr_document_h WHERE ref_number LIKE '"+refNumber+"${"_"}%' ESCAPE '\$' ORDER BY dtm_crt DESC")
-					 
+
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -591,9 +591,9 @@ public class SendSign {
 			}
 		}
 		listdata
-		
+
 		String check = ''
-		
+
 		for (i = 0; i < listdata.size(); i++) {
 			if (listdata[i] == '1') {
 				check = check + listdata[i+1] + ', '
@@ -601,14 +601,14 @@ public class SendSign {
 				check = check + ''
 			}
 		}
-		
+
 		if (check.size() == 0) {
 			check
 		} else {
 			check.substring(0, check.length() - 2)
 		}
 	}
-	
+
 	@Keyword
 	getEmaiLFromNIK(Connection conn, String nik) {
 		stm = conn.createStatement()

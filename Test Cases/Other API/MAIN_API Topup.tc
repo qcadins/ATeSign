@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API Topup</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>280f1e3d-abc6-43ac-96c4-ac93dba1f1b1</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>3f07b7f7-091c-4b39-b446-13e0027760dd</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>0b1441f8-4902-4c08-9130-b69c2a9a2a6b</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/TopUp'</defaultValue>
+      <description></description>
+      <id>3f07b7f7-091c-4b39-b446-13e0027760dd</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API TopUp'</defaultValue>
+      <description></description>
+      <id>0b1441f8-4902-4c08-9130-b69c2a9a2a6b</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>
