@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebServiceRequestEntity>
    <description></description>
-   <name>checkRegisterAutoFill</name>
+   <name>tryCallback</name>
    <tag></tag>
-   <elementGuidId>8f024ff4-f7c6-48b3-87ff-e3116b615326</elementGuidId>
+   <elementGuidId>374246ca-87db-4a6e-8604-067aed93592d</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <authorizationRequest>
@@ -20,7 +20,7 @@
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n    \&quot;checkRegisterDetail\&quot;: \&quot;${email}\&quot;,\n    \&quot;vendorCode\&quot;: \&quot;${vendorCode}\&quot;,\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    },\n    \&quot;tenantCode\&quot;: \&quot;${tenantCode}\&quot;\n}&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    },\n    \&quot;tenantCode\&quot;: \&quot;${tenantCode}\&quot;\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -31,7 +31,7 @@
       <name>Accept</name>
       <type>Main</type>
       <value>application/json, text/plain, */*</value>
-      <webElementGuid>95057790-7000-4638-9162-c69514cf909f</webElementGuid>
+      <webElementGuid>8b44459b-89b4-4ebf-b64b-6b1903ebb7fe</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -39,7 +39,7 @@
       <name>Accept-Language</name>
       <type>Main</type>
       <value>id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7</value>
-      <webElementGuid>436efde1-7cfc-426f-b94e-a4c87c58b144</webElementGuid>
+      <webElementGuid>9d52b51e-ea23-4df6-a879-0049c985f03c</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -47,7 +47,7 @@
       <name>Connection</name>
       <type>Main</type>
       <value>keep-alive</value>
-      <webElementGuid>42671c5e-1cbc-4711-931f-36486f7009d4</webElementGuid>
+      <webElementGuid>543cadbb-4539-40b9-b8a3-f6f005be587a</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -55,7 +55,7 @@
       <name>Content-Type</name>
       <type>Main</type>
       <value>application/json</value>
-      <webElementGuid>a36bb9a7-b47f-4df7-a46e-7df82845449d</webElementGuid>
+      <webElementGuid>4cbc0266-7a4f-4d76-bd2c-07b5d1a4ff2d</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -63,7 +63,7 @@
       <name>DNT</name>
       <type>Main</type>
       <value>1</value>
-      <webElementGuid>ff8f5120-0a86-4d7f-83fd-a761aee4d321</webElementGuid>
+      <webElementGuid>a7b15d28-1899-43d6-96de-c110cbbc8722</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -71,7 +71,7 @@
       <name>Origin</name>
       <type>Main</type>
       <value>http://gdkwebsvr:8080</value>
-      <webElementGuid>95af363a-6d54-4472-ad90-4036f36bc4f0</webElementGuid>
+      <webElementGuid>e14f99b5-8d2d-4054-858a-2d921bfde3fa</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -79,7 +79,7 @@
       <name>Referer</name>
       <type>Main</type>
       <value>http://gdkwebsvr:8080/</value>
-      <webElementGuid>1318879c-55ab-4830-99ad-c8a810e899f0</webElementGuid>
+      <webElementGuid>de9d969d-4308-472a-afaf-767534ee434d</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -87,7 +87,7 @@
       <name>User-Agent</name>
       <type>Main</type>
       <value>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36</value>
-      <webElementGuid>92b263b7-c0e5-47ca-beab-862134ee3c51</webElementGuid>
+      <webElementGuid>75149ade-b4ba-4630-a7c9-b024658f3277</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>true</isSelected>
@@ -95,13 +95,13 @@
       <name>Authorization</name>
       <type>Main</type>
       <value>Bearer ${token}</value>
-      <webElementGuid>933b4c53-0784-460c-9377-00c3fd8b5ce5</webElementGuid>
+      <webElementGuid>8b5a0838-69c7-4f26-9ac2-9b9a3214fd2b</webElementGuid>
    </httpHeaderProperties>
-   <katalonVersion>8.5.5</katalonVersion>
+   <katalonVersion>9.0.0</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>POST</restRequestMethod>
-   <restUrl>${base_url}/services/user/s/checkRegisterAutoFill</restUrl>
+   <restUrl>${base_url}/services/tenant/s/tryCallback</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>
@@ -113,30 +113,23 @@
    <variables>
       <defaultValue>GlobalVariable.base_url</defaultValue>
       <description></description>
-      <id>f335c5e7-a47e-455c-acd1-a13be834bed3</id>
+      <id>cf9011be-e1f7-421e-b6c4-2bfca67a91c3</id>
       <masked>false</masked>
       <name>base_url</name>
    </variables>
    <variables>
-      <defaultValue>GlobalVariable.token</defaultValue>
-      <description></description>
-      <id>9a0064a1-bc0b-4946-8b48-3357de3345ce</id>
-      <masked>false</masked>
-      <name>token</name>
-   </variables>
-   <variables>
-      <defaultValue>GlobalVariable.Psre</defaultValue>
-      <description></description>
-      <id>6fbb27df-e922-4faa-af84-27b7f9cbe7e4</id>
-      <masked>false</masked>
-      <name>vendorCode</name>
-   </variables>
-   <variables>
       <defaultValue>GlobalVariable.Tenant</defaultValue>
       <description></description>
-      <id>1d14954b-d401-4a5c-91fc-88b19cf11773</id>
+      <id>9eeed850-4b0b-460c-b748-d46e131f0bc9</id>
       <masked>false</masked>
       <name>tenantCode</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.token</defaultValue>
+      <description></description>
+      <id>72318264-95df-4584-b4eb-c3a59523fa38</id>
+      <masked>false</masked>
+      <name>token</name>
    </variables>
    <verificationScript>import static org.assertj.core.api.Assertions.*
 

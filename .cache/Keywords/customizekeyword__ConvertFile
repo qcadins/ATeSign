@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "F61ACCAAB9989A6E08E98E6DD88A087F",
+  "keywordFileContentHash": "A16F3E2093354D5CC9AE92160CDEBEC3",
   "keywordClasses": [
     {
       "name": "customizekeyword.ConvertFile",
@@ -57,6 +57,38 @@
         },
         {
           "name": "decodeBase64crt",
+          "parameters": [
+            {
+              "name": "base64String",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "filename",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
+          "name": "decodeBase64Excel",
           "parameters": [
             {
               "name": "base64String",

@@ -101,22 +101,18 @@ public class WriteExcel {
 		XSSFSheet sheet = workbook.getSheet(sheetName); //getSheet -> sheet num n (start from index 0)
 		XSSFRow row = null;
 		int row_num=-1;
-		for(int i=0; i <= sheet.getLastRowNum(); i++)
-		{
+		for(int i=0; i <= sheet.getLastRowNum(); i++) {
 			row = sheet.getRow(i)
 			try{
 				if(row.getCell(0).getStringCellValue().equalsIgnoreCase(cellValue)){
 					row_num = i
 					break
 				}
-
 			}
 			catch(Exception e){
 			}
-
 		}
 		file.close()
 		return row_num+1
 	}
-
 }
