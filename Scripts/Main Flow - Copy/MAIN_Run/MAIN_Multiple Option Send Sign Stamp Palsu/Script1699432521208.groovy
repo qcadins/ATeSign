@@ -405,6 +405,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                         , ('sheet') : sheet, ('CancelDocsSign') : cancelDocsValue, ('vendor') : vendor], 
                                     FailureHandling.CONTINUE_ON_FAILURE)
 
+								flagBreak = 1
                                 break
                             }
                         }
@@ -430,7 +431,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     continue
                 }
             }
-            
+				
 			'jika melakukan stamping dan dilakukan signing'
             if ((findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Do Stamp for this document?')) == 
             'Yes') || (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Need Sign for this document?')) == 
@@ -441,18 +442,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             GlobalVariable.NumofColm, rowExcel('documentid')))
                 }
                 
-                'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
-                WebUI.callTestCase(findTestCase('Main Flow - Copy/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathMain
+				if (cancelDocsValue == '') {
+					'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
+					WebUI.callTestCase(findTestCase('Main Flow - Copy/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathMain
                         , ('sheet') : sheet, ('nomorKontrak') : GlobalVariable.eSignData.getAt('NoKontrakProcessed'), ('vendor') : vendor], 
                     FailureHandling.CONTINUE_ON_FAILURE)
-
+				}
+				
 				'get result saldo after'
                 resultSaldoAfter = WebUI.callTestCase(findTestCase('Main Flow - Copy/getSaldo'), [('excel') : excelPathMain
                         , ('sheet') : sheet, ('vendor') : vendor, ('usageSaldo') : usageSaldo], FailureHandling.CONTINUE_ON_FAILURE)
 
 				WebUI.comment(GlobalVariable.eSignData.toString())
 				
-				''
 				if (GlobalVariable.eSignData.getAt('allTrxNo').toString().size() > 0) {
                 'Jika count saldo sign/ttd diatas (after) sama dengan yang dulu/pertama (before) dikurang jumlah dokumen yang ditandatangani'
                 if (checkVerifyEqualorMatch(WebUI.verifyEqual(Integer.parseInt(resultSaldoBefore.get(vendor)) - GlobalVariable.eSignData.getAt(

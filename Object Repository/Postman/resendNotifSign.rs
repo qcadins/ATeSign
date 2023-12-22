@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebServiceRequestEntity>
    <description></description>
-   <name>checkRegisterAutoFill</name>
+   <name>resendNotifSign</name>
    <tag></tag>
-   <elementGuidId>8f024ff4-f7c6-48b3-87ff-e3116b615326</elementGuidId>
+   <elementGuidId>486dc716-24bb-43fd-b227-a59cd2b04698</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <authorizationRequest>
@@ -20,7 +20,7 @@
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n    \&quot;checkRegisterDetail\&quot;: \&quot;${email}\&quot;,\n    \&quot;vendorCode\&quot;: \&quot;${vendorCode}\&quot;,\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    },\n    \&quot;tenantCode\&quot;: \&quot;${tenantCode}\&quot;\n}&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;documentId\&quot;: \&quot;${docId}\&quot;,\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    },\n    \&quot;tenantCode\&quot;: \&quot;${tenantCode}\&quot;\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -31,7 +31,7 @@
       <name>Accept</name>
       <type>Main</type>
       <value>application/json, text/plain, */*</value>
-      <webElementGuid>95057790-7000-4638-9162-c69514cf909f</webElementGuid>
+      <webElementGuid>a2864435-e8e5-4b58-a8c6-c9b95d01430c</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -39,7 +39,7 @@
       <name>Accept-Language</name>
       <type>Main</type>
       <value>id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7</value>
-      <webElementGuid>436efde1-7cfc-426f-b94e-a4c87c58b144</webElementGuid>
+      <webElementGuid>7d99a48a-9c82-40e8-b298-61998475784d</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -47,7 +47,7 @@
       <name>Connection</name>
       <type>Main</type>
       <value>keep-alive</value>
-      <webElementGuid>42671c5e-1cbc-4711-931f-36486f7009d4</webElementGuid>
+      <webElementGuid>4257b9cc-7ea9-482f-b56d-4d13bfe3fcd8</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -55,7 +55,7 @@
       <name>Content-Type</name>
       <type>Main</type>
       <value>application/json</value>
-      <webElementGuid>a36bb9a7-b47f-4df7-a46e-7df82845449d</webElementGuid>
+      <webElementGuid>c5e8107d-9cba-44ad-aa3c-fb62d332c6e2</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -63,7 +63,7 @@
       <name>DNT</name>
       <type>Main</type>
       <value>1</value>
-      <webElementGuid>ff8f5120-0a86-4d7f-83fd-a761aee4d321</webElementGuid>
+      <webElementGuid>7ee87e6d-7e23-401a-8a6f-caef26661e4c</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -71,7 +71,7 @@
       <name>Origin</name>
       <type>Main</type>
       <value>http://gdkwebsvr:8080</value>
-      <webElementGuid>95af363a-6d54-4472-ad90-4036f36bc4f0</webElementGuid>
+      <webElementGuid>0c110eb2-5efe-4441-abfb-410baa7cf04e</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -79,7 +79,7 @@
       <name>Referer</name>
       <type>Main</type>
       <value>http://gdkwebsvr:8080/</value>
-      <webElementGuid>1318879c-55ab-4830-99ad-c8a810e899f0</webElementGuid>
+      <webElementGuid>a28d9a39-d841-406a-9cce-5cdfd58eb41b</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -87,7 +87,7 @@
       <name>User-Agent</name>
       <type>Main</type>
       <value>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36</value>
-      <webElementGuid>92b263b7-c0e5-47ca-beab-862134ee3c51</webElementGuid>
+      <webElementGuid>4c8009d4-6fa8-4378-82f4-c5ed2b2d7763</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>true</isSelected>
@@ -95,13 +95,13 @@
       <name>Authorization</name>
       <type>Main</type>
       <value>Bearer ${token}</value>
-      <webElementGuid>933b4c53-0784-460c-9377-00c3fd8b5ce5</webElementGuid>
+      <webElementGuid>305cc7fd-42fb-471a-bbe4-f5a5fa72d2ae</webElementGuid>
    </httpHeaderProperties>
-   <katalonVersion>8.5.5</katalonVersion>
+   <katalonVersion>9.0.0</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>POST</restRequestMethod>
-   <restUrl>${base_url}/services/user/s/checkRegisterAutoFill</restUrl>
+   <restUrl>${base_url}/services/document/s/resendNotifSign</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>
@@ -113,28 +113,21 @@
    <variables>
       <defaultValue>GlobalVariable.base_url</defaultValue>
       <description></description>
-      <id>f335c5e7-a47e-455c-acd1-a13be834bed3</id>
+      <id>94429dae-5f39-47fa-852f-4be6bc61f4b4</id>
       <masked>false</masked>
       <name>base_url</name>
    </variables>
    <variables>
       <defaultValue>GlobalVariable.token</defaultValue>
       <description></description>
-      <id>9a0064a1-bc0b-4946-8b48-3357de3345ce</id>
+      <id>c99ec15f-0d1e-43ad-925f-20a9c3dec275</id>
       <masked>false</masked>
       <name>token</name>
    </variables>
    <variables>
-      <defaultValue>GlobalVariable.Psre</defaultValue>
-      <description></description>
-      <id>6fbb27df-e922-4faa-af84-27b7f9cbe7e4</id>
-      <masked>false</masked>
-      <name>vendorCode</name>
-   </variables>
-   <variables>
       <defaultValue>GlobalVariable.Tenant</defaultValue>
       <description></description>
-      <id>1d14954b-d401-4a5c-91fc-88b19cf11773</id>
+      <id>85167e5c-7b9f-4910-b29d-c3cd0c1decb4</id>
       <masked>false</masked>
       <name>tenantCode</name>
    </variables>

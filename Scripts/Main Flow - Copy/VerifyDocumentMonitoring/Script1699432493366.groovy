@@ -173,8 +173,8 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                     }
                 }
                 
-                if (((((CancelDocsStamp == 'Yes') || (isStamping == 'Yes')) || (retryStamping == 'Yes')) || (CancelDocsSend == 
-                'Yes')) || (CancelDocsSign == 'Yes')) {
+                if (((((CancelDocsStamp != 'Yes') || (isStamping != 'Yes')) || (retryStamping != 'Yes')) || (CancelDocsSend != 
+                'Yes')) || (CancelDocsSign != 'Yes')) {
                     actionDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, settingHO, j)
                 }
             }
@@ -268,8 +268,8 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                     }
                 }
                 
-                if (((((CancelDocsStamp == 'Yes') || (isStamping == 'Yes')) || (retryStamping == 'Yes')) || (CancelDocsSend == 
-                'Yes')) || (CancelDocsSign == 'Yes')) {
+                if (((((CancelDocsStamp != 'Yes') || (isStamping != 'Yes')) || (retryStamping != 'Yes')) || (CancelDocsSend != 
+                'Yes')) || (CancelDocsSign != 'Yes')) {
                     actionDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, settingHO, j)
                 }
             }

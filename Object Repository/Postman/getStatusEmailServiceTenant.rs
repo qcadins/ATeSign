@@ -15,6 +15,7 @@
       </authorizationInfo>
       <authorizationType>Bearer</authorizationType>
    </authorizationRequest>
+   <autoUpdateContent>false</autoUpdateContent>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
@@ -112,6 +113,21 @@
    <variables>
       <defaultValue>GlobalVariable.base_url</defaultValue>
       <description></description>
+      <id>f770d804-209e-4d00-9836-4b084f6b1e71</id>
+      <masked>false</masked>
+      <name>base_url</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.token</defaultValue>
+      <description></description>
+      <id>6159268f-786e-4bd1-b612-11e82177c3e5</id>
+      <masked>false</masked>
+      <name>token</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.Tenant</defaultValue>
+      <description></description>
+      <id>ca42a169-cb0a-4195-9794-e10fc6fd8d2b</id>
       <id>8cc8a76c-52ac-4d24-ba9c-5e4d767b1a24</id>
       <masked>false</masked>
       <name>base_url</name>

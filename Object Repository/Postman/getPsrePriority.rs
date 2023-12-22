@@ -15,6 +15,7 @@
       </authorizationInfo>
       <authorizationType>Bearer</authorizationType>
    </authorizationRequest>
+   <autoUpdateContent>false</autoUpdateContent>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
@@ -94,7 +95,7 @@
       <name>Authorization</name>
       <type>Main</type>
       <value>Bearer ${token}</value>
-      <webElementGuid>934b55f2-53d4-453e-9109-cb2f507d1e3c</webElementGuid>
+      <webElementGuid>4ebd71fc-4ee0-47f2-8c30-87f4cf1b8ebb</webElementGuid>
    </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>
@@ -112,6 +113,21 @@
    <variables>
       <defaultValue>GlobalVariable.base_url</defaultValue>
       <description></description>
+      <id>c196b642-66d5-41ef-b5b0-e41b62ac3ec0</id>
+      <masked>false</masked>
+      <name>base_url</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.token</defaultValue>
+      <description></description>
+      <id>9e9ef511-1d70-4ab3-a71e-daace54fd232</id>
+      <masked>false</masked>
+      <name>token</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.Tenant</defaultValue>
+      <description></description>
+      <id>b7933daf-6c70-4779-9e83-ced5ebf3f550</id>
       <id>a0688288-87a1-4300-8405-c2df55b06454</id>
       <masked>false</masked>
       <name>base_url</name>

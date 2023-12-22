@@ -90,6 +90,12 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
     'Inisialisasi variable total document yang akan disign, count untuk resend, dan saldo yang akan digunakan'
     int totalDocSign, countResend = 0, countSaldoSplitLiveFCused = 0
 
+	'ambil kondisi max liveness harian'
+	int maxFaceCompValidationDB = Integer.parseInt(CustomKeywords.'connection.DataVerif.getLimitValidationLivenessDaily'(conneSign))
+
+	'dapatkan count untuk limit harian facecompare akun tersebut'
+	int countLivenessValidationFaceComp = CustomKeywords.'connection.DataVerif.getCountValidationFaceCompDaily'(conneSign, GlobalVariable.storeVar.getAt(
+			GlobalVariable.storeVar.keySet()[0]))
 
     'ubah flag untuk buka localhost jika syarat if terpenuhi'
     if (!(vendor.equalsIgnoreCase('Privy')) && (mustFaceCompDB == '1')) {
@@ -403,8 +409,8 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
             }
             
             'jika case privy dan mustliveness aktif serta diatas limit'
-            if (vendor.equalsIgnoreCase('Privy') || (((mustFaceCompDB == '1') && (countLivenessFaceComp >= maxFaceCompDB)) && 
-            (alreadyVerif == 0))) {
+            if (vendor.equalsIgnoreCase('Privy') || ((mustFaceCompDB == '1' && (countLivenessFaceComp >= maxFaceCompDB) && (countLivenessValidationFaceComp >= maxFaceCompValidationDB)) && 
+            alreadyVerif == 0)) {
                 'pastikan tombol verifikasi biometrik tidak muncul'
                 if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/btn_verifBiom'), GlobalVariable.TimeOut, 
                     FailureHandling.OPTIONAL)) {
@@ -448,8 +454,8 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
                         continue
                     }
                 }
-            } else if (((mustFaceCompDB == '1') && (countLivenessFaceComp < maxFaceCompDB)) && (alreadyVerif == 0)) {
-                'pastikan button otp tidak ada'
+            } else if (((mustFaceCompDB == '1') && (countLivenessFaceComp < maxFaceCompDB) && (countLivenessValidationFaceComp < maxFaceCompValidationDB)) && (alreadyVerif == 0)) {
+				 'pastikan button otp tidak ada'
                 checkVerifyEqualorMatch(WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/btn_verifOTP'), GlobalVariable.TimeOut, 
                         FailureHandling.OPTIONAL), 'Tombol OTP muncul pada Vendor selain Privy yang mewajibkan FaceCompare')
 
@@ -1363,11 +1369,22 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
 }
 
 def verifBiomMethod(int isLocalhost, int maxFaceCompDB, int countLivenessFaceComp, Connection conneSign, String emailSigner, ArrayList listOTP, String noTelpSigner, String otpAfter, String vendor) {
-    useBiom = 1
-
-    'Klik biometric object'
-    WebUI.click(findTestObject('KotakMasuk/Sign/btn_verifBiom'))
-
+		useBiom = 1
+		
+		'ambil kondisi max liveness harian'
+		maxFaceCompValidationDB = Integer.parseInt(CustomKeywords.'connection.DataVerif.getLimitValidationLivenessDaily'(conneSign))
+	
+		'dapatkan count untuk limit harian facecompare akun tersebut'
+		countLivenessValidationFaceComp = CustomKeywords.'connection.DataVerif.getCountValidationFaceCompDaily'(conneSign, GlobalVariable.storeVar.getAt(
+				GlobalVariable.storeVar.keySet()[0]))
+		
+		countSaldoSplitLiveFCused = 0
+		
+		countValidation = 0
+	
+		'Klik biometric object'
+		WebUI.click(findTestObject('KotakMasuk/Sign/btn_verifBiom'))
+		
     'button menyetujui'
     if ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Menyetujui(Yes/No)')).split(
         ';', -1)[GlobalVariable.indexUsed]) == 'Yes') {
@@ -1384,56 +1401,66 @@ def verifBiomMethod(int isLocalhost, int maxFaceCompDB, int countLivenessFaceCom
         MobileBuiltInKeywords.tapAndHoldAtPosition(895, 1364, 3)
     }
     
-    'looping hingga count sampai batas maksimal harian'
-    while (countLivenessFaceComp != (maxFaceCompDB + 1)) {
-        'klik untuk ambil foto'
-        WebUI.click(findTestObject('KotakMasuk/Sign/btn_ProsesBiom'))
+	'looping hingga count sampai batas maksimal harian'
+	while (countLivenessFaceComp != (maxFaceCompDB + 1) || countLivenessValidationFaceComp != (maxFaceCompValidationDB + 1)) {
+		'klik untuk ambil foto'
+		WebUI.click(findTestObject('KotakMasuk/Sign/btn_ProsesBiom'))
 
-        'jika error muncul'
-        if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), 60, FailureHandling.OPTIONAL)) {
-            'ambil message error'
-            String messageError = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'))
+		'jika error muncul'
+		if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), 60, FailureHandling.OPTIONAL)) {
+			'ambil message error'
+			String messageError = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'))
 
-            if (messageError.equalsIgnoreCase('Percobaan verifikasi wajah sudah melewati batas harian')) {
-                countSaldoSplitLiveFCused++
+			if (messageError.equalsIgnoreCase('Percobaan verifikasi wajah sudah melewati batas harian')) {
+				countSaldoSplitLiveFCused++
 
-                'klik tombol OK'
-                WebUI.click(findTestObject('Object Repository/KotakMasuk/Sign/button_OK'))
+				'klik tombol OK'
+				WebUI.click(findTestObject('Object Repository/KotakMasuk/Sign/button_OK'))
 
-                'klik tombol lanjut dengan OTP'
-                WebUI.click(findTestObject('Object Repository/KotakMasuk/Sign/btn_LanjutdenganOTP'))
+				if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Force Change Method if other Method Failed?')).split(';', -1)[GlobalVariable.indexUsed] == 'Yes') {
+					'klik tombol lanjut dengan OTP'
+					WebUI.click(findTestObject('Object Repository/KotakMasuk/Sign/btn_LanjutdenganOTP'))
+					
+					'panggil fungsi verifOTP'
+					if (verifOTPMethodDetail(conneSign, emailSigner, listOTP, noTelpSigner, otpAfter, vendor) == false) {
+						return false
+					}
+				} else {
+					'klik tombol Cancel'
+					WebUI.click(findTestObject('Object Repository/KotakMasuk/Sign/btn_LanjutdenganBatal'))
+				}
 
-                'panggil fungsi verifOTP'
-                if (verifOTPMethodDetail(conneSign, emailSigner, listOTP, noTelpSigner, otpAfter, vendor) == false) {
-                    return false
-                }
-            } else if (messageError.equalsIgnoreCase('Verifikasi user gagal. Foto Diri tidak sesuai.') || messageError.equalsIgnoreCase(
-                'Lebih dari satu wajah terdeteksi. Pastikan hanya satu wajah yang terlihat')) {
-                countSaldoSplitLiveFCused++
-            }
-            
-            GlobalVariable.eSignData.putAt('VerifikasiBiometric', countSaldoSplitLiveFCused)
+			} else if (messageError.equalsIgnoreCase('Verifikasi user gagal. Foto Diri tidak sesuai.') || messageError.equalsIgnoreCase(
+				'Lebih dari satu wajah terdeteksi. Pastikan hanya satu wajah yang terlihat')) {
+				countSaldoSplitLiveFCused++
+			} else if (messageError.equalsIgnoreCase('Face detected blurry') || messageError.equalsIgnoreCase('Wajah terdeteksi terlalu jauh dengan kamera. Dekatkan jarak antara wajah Anda dengan kamera')
+				|| messageError.equalsIgnoreCase('Image resolution too small')) {
 
-            'ambil message error'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
-                    '-', '') + ';') + '<') + messageError) + '>')
+				countValidation++
+			}
+			
+			GlobalVariable.eSignData.putAt('VerifikasiBiometric', countSaldoSplitLiveFCused)
 
-            'klik pada tombol OK'
-            WebUI.click(findTestObject('KotakMasuk/Sign/button_OK'))
+			'ambil message error'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+				(((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+					'-', '') + ';') + '<') + messageError) + '>')
 
-            GlobalVariable.FlagFailed = 1
+			'klik pada tombol OK'
+			WebUI.click(findTestObject('KotakMasuk/Sign/button_OK'))
 
-            if (messageError.equalsIgnoreCase('Image resolution too small')) {
-                break
-            }
-            
-            'ambil terbaru count dari DB'
-            countLivenessFaceComp = CustomKeywords.'connection.DataVerif.getCountFaceCompDaily'(conneSign, emailSigner)
-        } else {
-            break
-        }
-    }
+			GlobalVariable.FlagFailed = 1
+			
+			'dapatkan count untuk limit harian facecompare akun tersebut'
+			countLivenessValidationFaceComp = CustomKeywords.'connection.DataVerif.getCountValidationFaceCompDaily'(conneSign, GlobalVariable.storeVar.getAt(
+					GlobalVariable.storeVar.keySet()[0]))
+			
+			'ambil terbaru count dari DB'
+			countLivenessFaceComp = CustomKeywords.'connection.DataVerif.getCountFaceCompDaily'(conneSign, emailSigner)
+		} else {
+			break
+		}
+	}
 }
 
 def inputDataforVerif() {
