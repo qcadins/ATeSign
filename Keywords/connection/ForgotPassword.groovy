@@ -158,4 +158,35 @@ public class ForgotPassword {
 		}
 		listdata
 	}
+	@Keyword
+	getBusinessLineOfficeCode(Connection conn, String email) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT id_ms_business_line, tbm.id_ms_office FROM tr_balance_mutation tbm JOIN ms_tenant mt ON mt.id_ms_tenant = tbm.id_ms_tenant JOIN ms_useroftenant mot ON mot.id_ms_tenant = mt.id_ms_tenant JOIN am_msuser amu ON amu.id_ms_user = mot.id_ms_user WHERE(notes ILIKE '%SEND OTP%' OR notes ILIKE '%Sending WhatsApp%') AND tbm.id_ms_user is not null AND login_id = '" + email + "' ORDER BY trx_date DESC LIMIT 1")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+
+		resultSet = stm.executeQuery("SELECT COALESCE(tdh.id_ms_business_line, tlink.id_ms_business_line) AS id_ms_business_line, COALESCE(tdh.id_ms_office, tlink.id_ms_office) AS id_ms_office FROM tr_document_d td LEFT JOIN tr_document_h tdh ON td.id_document_h = tdh.id_document_h LEFT JOIN tr_document_d_sign tds ON tds.id_document_d = td.id_document_d LEFT JOIN am_msuser amu ON amu.id_ms_user = tds.id_ms_user LEFT JOIN tr_invitation_link tlink ON tlink.email = '" + email + "' WHERE amu.login_id = '" + email + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
 }

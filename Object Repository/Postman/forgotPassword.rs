@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebServiceRequestEntity>
    <description></description>
-   <name>OfficeList</name>
+   <name>forgotPassword</name>
    <tag></tag>
-   <elementGuidId>a227719f-a4b1-4259-b568-f1e8dd815d7d</elementGuidId>
+   <elementGuidId>bcd635a5-6812-42ea-96ec-93cab46bf720</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <autoUpdateContent>false</autoUpdateContent>
@@ -11,7 +11,7 @@
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    },\n    \&quot;tenantCode\&quot;: \&quot;${tenantCode}\&quot;,\n  \t\&quot;regionCode\&quot;: \&quot;${regionCode}\&quot;\n}&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    },\n    \&quot;loginId\&quot;: \&quot;${loginId}\&quot;\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -22,7 +22,7 @@
       <name>Accept</name>
       <type>Main</type>
       <value>application/json, text/plain, */*</value>
-      <webElementGuid>ad35e2df-c484-4c78-aa4e-8818c8c32a2e</webElementGuid>
+      <webElementGuid>845a3e7a-b637-407e-b94c-f19ab9a6b14e</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -30,15 +30,7 @@
       <name>Accept-Language</name>
       <type>Main</type>
       <value>id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7</value>
-      <webElementGuid>54005d8a-5659-4e4f-8c6b-fda7fc71d64f</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Authorization</name>
-      <type>Main</type>
-      <value>Bearer ${token}</value>
-      <webElementGuid>9cff642d-8116-4838-a739-58b55fc3c181</webElementGuid>
+      <webElementGuid>a7c972e5-6b77-4fb8-8584-18f383ec842d</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -46,7 +38,7 @@
       <name>Connection</name>
       <type>Main</type>
       <value>keep-alive</value>
-      <webElementGuid>b9a3a88e-b78c-4bda-92f1-0b3100ab026d</webElementGuid>
+      <webElementGuid>c8065a81-107a-4f97-a6d2-90d62777b822</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -54,7 +46,7 @@
       <name>Content-Type</name>
       <type>Main</type>
       <value>application/json</value>
-      <webElementGuid>af663913-d141-40ab-8426-331f01fccc67</webElementGuid>
+      <webElementGuid>54676f00-ec6f-488e-97bc-6358f2bea600</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -62,7 +54,7 @@
       <name>DNT</name>
       <type>Main</type>
       <value>1</value>
-      <webElementGuid>b9ccf827-159e-45c6-aa0a-dc131eb00f42</webElementGuid>
+      <webElementGuid>e9b5d9ec-d28c-43f2-b0d0-9564666a05d2</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -70,7 +62,7 @@
       <name>Origin</name>
       <type>Main</type>
       <value>http://gdkwebsvr:8080</value>
-      <webElementGuid>ecc8ec1c-fec9-4ba4-8d11-9e205537acb4</webElementGuid>
+      <webElementGuid>6726aabb-7e97-4842-895c-8e4a1265d05b</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -78,21 +70,21 @@
       <name>Referer</name>
       <type>Main</type>
       <value>http://gdkwebsvr:8080/</value>
-      <webElementGuid>6ed5057e-91b1-449c-b18d-cccbecc10c36</webElementGuid>
+      <webElementGuid>04d84e62-6550-492e-b59a-2f7829170e6a</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>User-Agent</name>
       <type>Main</type>
-      <value>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36</value>
-      <webElementGuid>b553d9c7-57ae-4f4e-9dac-3f6563f14ca8</webElementGuid>
+      <value>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36</value>
+      <webElementGuid>33534186-d597-4512-b112-118bdb11e11b</webElementGuid>
    </httpHeaderProperties>
-   <katalonVersion>8.5.5</katalonVersion>
+   <katalonVersion>9.0.0</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>POST</restRequestMethod>
-   <restUrl>${base_url}/services/data/s/officeList</restUrl>
+   <restUrl>${base_url}/services/user/forgotPassword</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>
@@ -104,23 +96,9 @@
    <variables>
       <defaultValue>GlobalVariable.base_url</defaultValue>
       <description></description>
-      <id>ee4d2420-514a-44ff-b95e-be9157769f2f</id>
+      <id>40efd92c-69b4-4bf0-b1dc-8a9126b18db1</id>
       <masked>false</masked>
       <name>base_url</name>
-   </variables>
-   <variables>
-      <defaultValue>GlobalVariable.token</defaultValue>
-      <description></description>
-      <id>e5d36f82-0f66-4e3f-8fa7-8cd055f4c72b</id>
-      <masked>false</masked>
-      <name>token</name>
-   </variables>
-   <variables>
-      <defaultValue>GlobalVariable.Tenant</defaultValue>
-      <description></description>
-      <id>95433647-f560-4072-b6bb-3a820a08fe3d</id>
-      <masked>false</masked>
-      <name>tenantCode</name>
    </variables>
    <verificationScript>import static org.assertj.core.api.Assertions.*
 
