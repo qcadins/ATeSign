@@ -97,7 +97,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         ArrayList arrayMatch = []
 
                         'get data store db'
-                        ArrayList result = CustomKeywords.'connection.APIFullService.getOfficeList'(conneSign)
+                        ArrayList result = CustomKeywords.'connection.APIFullService.getOfficeList'(conneSign, '')
 
                         'declare arrayindex'
                         arrayindex = 0

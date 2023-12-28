@@ -1,4 +1,3 @@
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
@@ -31,7 +30,7 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; Globa
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
         // Create a variable 'userCorrectTenantCode' and store the value of the 'use Correct Tenant Code' cell in the current column
-        def userCorrectTenantCode = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code'))
+        String userCorrectTenantCode = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code'))
 
         // If userCorrectTenantCode is 'Yes', store the value of 'Tenant Login' cell in GlobalVariable.Tenant
         if (userCorrectTenantCode == 'Yes') {
@@ -71,11 +70,11 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; Globa
 	
 			// If the response status code is 200, perform some actions
 			if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL)) {
-				// Get the 'status.code' parameter from the response and store it in 'status_Code'
-				def status_Code = WS.getElementPropertyValue(respon, 'status.code')
+				// Get the 'status.code' parameter from the response and store it in 'statusCode'
+				def statusCode = WS.getElementPropertyValue(respon, 'status.code')
 	
-				// If status_Code is 0, perform some actions
-				if (status_Code == 0) {
+				// If statusCode is 0, perform some actions
+				if (statusCode == 0) {
 	
 					// If GlobalVariable.checkStoreDB is 'Yes', perform some actions
 					if (GlobalVariable.checkStoreDB == 'Yes') {
@@ -117,8 +116,8 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; Globa
 						}
 					}
 	
-					// If status_Code is 0 and GlobalVariable.FlagFailed is 0, perform some actions
-					if (status_Code == 0 && GlobalVariable.FlagFailed == 0) {
+					// If statusCode is 0 and GlobalVariable.FlagFailed is 0, perform some actions
+					if (statusCode == 0 && GlobalVariable.FlagFailed == 0) {
 						// Write the status to the Excel file
 						CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 					}
@@ -146,9 +145,9 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; Globa
  *
  *  @param respon The API response
  */
-def getErrorMessageAPI(respon) {
+def getErrorMessageAPI(def respon) {
     // Get the 'status.message' parameter from the response and store it in 'message'
-    def message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
+    String message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
     // Write the status reason to the Excel file
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';' + message)

@@ -1559,15 +1559,15 @@ public class APIFullService {
 	@Keyword
 	getOfficeList(Connection conn, String region) {
 		String commandRegion = ''
-		
+
 		if (region == '') {
 			commandRegion = '--'
 		}
-		
+
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select office_code, office_name from ms_office mo LEFT join ms_tenant mt on mo.id_ms_tenant = mt.id_ms_tenant LEFT JOIN ms_region mr ON mr.id_ms_region = mo.id_ms_region where tenant_code = '" + GlobalVariable.Tenant + "'" + '\n' + 
-		commandRegion + " AND region_code = '" + region + "'")
+		resultSet = stm.executeQuery("select office_code, office_name from ms_office mo LEFT join ms_tenant mt on mo.id_ms_tenant = mt.id_ms_tenant LEFT JOIN ms_region mr ON mr.id_ms_region = mo.id_ms_region where tenant_code = '" + GlobalVariable.Tenant + "'" + '\n' +
+				commandRegion + " AND region_code = '" + region + "'")
 
 		metadata = resultSet.metaData
 
