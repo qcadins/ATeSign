@@ -5,7 +5,7 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
 'connect DB eSign'
-Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
+CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get data buat undangan dari DB'
 result = CustomKeywords.'connection.InquiryInvitation.inquiryInvitationStoreDB'(conneSign, findTestData(excelPathAPIGenerateInvLink).getValue(
