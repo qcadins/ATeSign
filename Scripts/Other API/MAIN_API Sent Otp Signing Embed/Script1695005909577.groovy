@@ -5,11 +5,11 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import internal.GlobalVariable as GlobalVariable
 import java.sql.Connection as Connection
 
-'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
-
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
+
+'get data file path'
+GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
 'get colm excel'
 int countColmExcel = findTestData(excelPath).columnNumbers
@@ -29,12 +29,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
         if (aesKey != null) {
             'enkripsi msg'
-            encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(findTestData(excelPath).getValue(
-                    GlobalVariable.NumofColm, rowExcel('msg')), aesKey)
+            encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                    rowExcel('msg')), aesKey)
         } else {
             encryptMsg = ''
         }
-
+        
         'HIT API'
         respon = WS.sendRequest(findTestObject('Postman/Sent Otp Signing Embed', [('msg') : ('"' + encryptMsg) + '"', ('tenantCode') : findTestData(
                         excelPath).getValue(GlobalVariable.NumofColm, rowExcel('tenantCode')), ('phoneNo') : findTestData(
@@ -43,7 +43,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId'))]))
 
         'ambil lama waktu yang diperlukan hingga request menerima balikan'
-        elapsedTime = (respon.elapsedTime / 1000) + ' second'
+        elapsedTime = ((respon.elapsedTime / 1000) + ' second')
 
         'ambil body dari hasil respons'
         responseBody = respon.responseBodyContent
@@ -89,8 +89,8 @@ def getErrorMessageAPI(def respon) {
 
     'Write To Excel GlobalVariable.StatusFailed and errormessage'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-        ((findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + 
-        ';') + ('<' + message)) + '>')
+        ((findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + 
+        ('<' + message)) + '>')
 
     GlobalVariable.FlagFailed = 1
 }
@@ -109,6 +109,6 @@ def encryptLink(Connection conneSign, String documentId, String emailSigner, Str
     'enkripsi msg'
     encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(msg, aesKey)
 
-	encryptMsg
+    encryptMsg
 }
 

@@ -19,40 +19,49 @@ int countColmExcel = findTestData(excelPathAPIRequestStamping).columnNumbers
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
-    } else if (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
-		
-		'setting menggunakan base url yang benar atau salah'
-		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPIRequestStamping, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
-		
-		'get psre dari excel per case'
-		GlobalVariable.Psre = findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
-		
-		'check if tidak mau menggunakan tenant code yang benar'
-		if (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code')) == 'No') {
-			'set tenant kosong'
-			GlobalVariable.Tenant = findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Tenant Code'))
-		} else if (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code')) == 'Yes') {
-			GlobalVariable.Tenant = findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
-			
-			'ubah vendor stamping jika diperlukan '
-			if (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')).length() >
-				0 && findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')) != 'No') {
-				
-				'ambil idLov untuk diupdate secara otomatis ke DB'
-				int idLov = CustomKeywords.'connection.ManualStamp.getIdLovVendorStamping'(conneSign, findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')))
-				
-				'lakukan update vendor stamping yang akan dipakai'
-				CustomKeywords.'connection.UpdateData.updateVendorStamping'(conneSign, idLov)
-			}
-		}
-		
-		'check if mau menggunakan api_key yang salah atau benar'
-        if (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct API Key')) == 'Yes') {
+    } else if (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase(
+        'Unexecuted')) {
+        'setting menggunakan base url yang benar atau salah'
+        CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPIRequestStamping, GlobalVariable.NumofColm, 
+            rowExcel('Use Correct Base Url'))
+
+        'get psre dari excel per case'
+        GlobalVariable.Psre = findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
+
+        'check if tidak mau menggunakan tenant code yang benar'
+        if (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code')) == 
+        'No') {
+            'set tenant kosong'
+            GlobalVariable.Tenant = findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel(
+                    'Wrong Tenant Code'))
+        } else if (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code')) == 
+        'Yes') {
+            GlobalVariable.Tenant = findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel(
+                    'Tenant Login'))
+
+            'ubah vendor stamping jika diperlukan '
+            if ((findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')).length() > 
+            0) && (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')) != 
+            'No')) {
+                'ambil idLov untuk diupdate secara otomatis ke DB'
+                int idLov = CustomKeywords.'connection.ManualStamp.getIdLovVendorStamping'(conneSign, findTestData(excelPathAPIRequestStamping).getValue(
+                        GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')))
+
+                'lakukan update vendor stamping yang akan dipakai'
+                CustomKeywords.'connection.UpdateData.updateVendorStamping'(conneSign, idLov)
+            }
+        }
+        
+        'check if mau menggunakan api_key yang salah atau benar'
+        if (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct API Key')) == 
+        'Yes') {
             'get api key dari db'
             GlobalVariable.api_key = CustomKeywords.'connection.APIFullService.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
-        } else if (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct API Key')) == 'No') {
+        } else if (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct API Key')) == 
+        'No') {
             'get api key salah dari excel'
-            GlobalVariable.api_key = findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Wrong API Key'))
+            GlobalVariable.api_key = findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel(
+                    'Wrong API Key'))
         }
         
         'HIT API check Status stamping'
@@ -64,106 +73,111 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
             code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
-			'ambil lama waktu yang diperlukan hingga request menerima balikan'
-			def elapsedTime = (respon.getElapsedTime()) / 1000 + ' second'
-			
-			'ambil body dari hasil respons'
-			responseBody = respon.getResponseBodyContent()
-			
-			'panggil keyword untuk proses beautify dari respon json yang didapat'
-			CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1,
-				findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
-			
-			'write to excel response elapsed time'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 1, GlobalVariable.NumofColm -
-				1, elapsedTime.toString())
-			
+            'ambil lama waktu yang diperlukan hingga request menerima balikan'
+            elapsedTime = (respon.elapsedTime / 1000) + ' second'
+
+            'ambil body dari hasil respons'
+            responseBody = respon.responseBodyContent
+
+            'panggil keyword untuk proses beautify dari respon json yang didapat'
+            CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
+                    excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+
+            'write to excel response elapsed time'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 
+                1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+
             if (code == 0) {
                 'mengambil response'
                 message = WS.getElementPropertyValue(respon, 'checkStampingStatus.message', FailureHandling.OPTIONAL)
 
                 if (GlobalVariable.checkStoreDB == 'Yes') {
-					'get totalMaterai from db'
-					String totalMaterai = CustomKeywords.'connection.APIFullService.getTotalMaterai'(conneSign, findTestData(excelPathAPIRequestStamping).getValue(
-                        GlobalVariable.NumofColm, rowExcel('refNumber')).replace('"',''))
-					
-					'looping untuk delay sebanyak total materai yang ada pada document'
-					for (i = 0 ; i <= Integer.parseInt(totalMaterai) ; i++) {
-						'delay untuk menunggu proses transaksi selesai sebanyak total materai yang ada'
-						WebUI.delay(10)
-					}
-					
-					'mengambil value db proses ttd'
-					int prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, findTestData(excelPathAPIRequestStamping).getValue(
-                        GlobalVariable.NumofColm, rowExcel('refNumber')).replace('"',''))
+                    'get totalMaterai from db'
+                    String totalMaterai = CustomKeywords.'connection.APIFullService.getTotalMaterai'(conneSign, findTestData(
+                            excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')).replace(
+                            '"', ''))
 
-					'jika proses materai gagal (51)'
-					if ((prosesMaterai == 51) || (prosesMaterai == 61)) {
-						
-						'Diberikan delay 3 detik untuk update error message pada db'
-						WebUI.delay(3)
-						
-						'get reason gailed error message untuk stamping'
-						errorMessageDB = CustomKeywords.'connection.Meterai.getErrorMessage'(conneSign, findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')).replace('"',''))
-					   
-						'Write To Excel GlobalVariable.StatusFailed and errormessage'
-						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-						GlobalVariable.ReasonFailedProsesStamping + ' dengan alasan ' + errorMessageDB.toString())
+                    'looping untuk delay sebanyak total materai yang ada pada document'
+                    for (i = 0; i <= Integer.parseInt(totalMaterai); i++) {
+                        'delay untuk menunggu proses transaksi selesai sebanyak total materai yang ada'
+                        WebUI.delay(10)
+                    }
+                    
+                    'mengambil value db proses ttd'
+                    int prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, findTestData(excelPathAPIRequestStamping).getValue(
+                            GlobalVariable.NumofColm, rowExcel('refNumber')).replace('"', ''))
 
-						GlobalVariable.FlagFailed = 1
-					}
+                    'jika proses materai gagal (51)'
+                    if ((prosesMaterai == 51) || (prosesMaterai == 61)) {
+                        'Diberikan delay 3 detik untuk update error message pada db'
+                        WebUI.delay(3)
 
-					'looping untuk cek saldo'
-					for (meteraiTrx = 1; meteraiTrx <= 20; meteraiTrx++) {
-						'declare arraylist arraymatch'
-						arrayMatch = []
-						
-						'get trx from db'
-						String result = CustomKeywords.'connection.APIFullService.getAPIRequestStampingTrx'(conneSign, findTestData(excelPathAPIRequestStamping).getValue(
-								GlobalVariable.NumofColm, rowExcel('refNumber')).replace('"',''), totalMaterai)
-						
-						'verify saldo terpotong'
-						arrayMatch.add(WebUI.verifyMatch(result, '-'+totalMaterai, false, FailureHandling.OPTIONAL))
-						
-						'jika data db tidak sesuai dengan excel'
-	                    if (arrayMatch.contains(false)) {
-							if(meteraiTrx == 20) {
-								'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-								CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-									GlobalVariable.StatusFailed, (findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, 
-										rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB + ' Stamping Gagal dalam kurun waktu '+ meteraiTrx * 20 + ' detik')								
-							}
-							
-							WebUI.delay(10)
-	                    } else {
-	                        'write to excel success'
-	                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
-	                            0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-							
-							break
-	                    }
-					}                 
+                        'get reason gailed error message untuk stamping'
+                        errorMessageDB = CustomKeywords.'connection.Meterai.getErrorMessage'(conneSign, findTestData(excelPathStamping).getValue(
+                                GlobalVariable.NumofColm, rowExcel('refNumber')).replace('"', ''))
+
+                        'Write To Excel GlobalVariable.StatusFailed and errormessage'
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                            GlobalVariable.StatusFailed, (GlobalVariable.ReasonFailedProsesStamping + ' dengan alasan ') + 
+                            errorMessageDB.toString())
+
+                        GlobalVariable.FlagFailed = 1
+                    }
+                    
+                    'looping untuk cek saldo'
+                    for (meteraiTrx = 1; meteraiTrx <= 20; meteraiTrx++) {
+                        'declare arraylist arraymatch'
+                        arrayMatch = []
+
+                        'get trx from db'
+                        String result = CustomKeywords.'connection.APIFullService.getAPIRequestStampingTrx'(conneSign, findTestData(
+                                excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')).replace(
+                                '"', ''), totalMaterai)
+
+                        'verify saldo terpotong'
+                        arrayMatch.add(WebUI.verifyMatch(result, '-' + totalMaterai, false, FailureHandling.OPTIONAL))
+
+                        'jika data db tidak sesuai dengan excel'
+                        if (arrayMatch.contains(false)) {
+                            if (meteraiTrx == 20) {
+                                'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+                                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                                    GlobalVariable.StatusFailed, ((((findTestData(excelPathAPIRequestStamping).getValue(
+                                        GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB) + 
+                                    ' Stamping Gagal dalam kurun waktu ') + (meteraiTrx * 20)) + ' detik')
+                            }
+                            
+                            WebUI.delay(10)
+                        } else {
+                            'write to excel success'
+                            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
+                                0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+
+                            break
+                        }
+                    }
                 }
             } else {
-               'call function get error msg'
-			   getErrorMsg(respon)	
+                'call function get error msg'
+                getErrorMsg(respon)
             }
         } else {
             'call function get error msg'
-			getErrorMsg(respon)
+            getErrorMsg(respon)
         }
     }
 }
 
-def getErrorMsg (def respon) {
-	'mengambil status code berdasarkan response HIT API'
-	message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
+def getErrorMsg(def respon) {
+    'mengambil status code berdasarkan response HIT API'
+    message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
-	'Write To Excel GlobalVariable.StatusFailed and errormessage'
-	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-		GlobalVariable.StatusFailed, '<' + message + '>')
+    'Write To Excel GlobalVariable.StatusFailed and errormessage'
+    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+        ('<' + message) + '>')
 }
 
 def rowExcel(String cellValue) {
-	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
+
