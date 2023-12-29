@@ -1,4 +1,3 @@
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
@@ -6,8 +5,6 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import java.sql.Connection as Connection
-import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
-import org.openqa.selenium.By as By
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - API Only.xlsx')
@@ -22,10 +19,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
     } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
+        'setting menggunakan base url yang benar atau salah'
+        CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
-		'setting menggunakan base url yang benar atau salah'
-		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
-		
         'HIT API'
         responLogin = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/Login', [('email') : findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('email')).replace('"', ''), ('password') : findTestData(excelPath).getValue(
@@ -41,45 +37,43 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'No')) {
                 GlobalVariable.token = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Token'))
             }
-            
-            println(GlobalVariable.token)
 
             'HIT API Sign Document'
-            responConfirmSignDoc = WS.sendRequest(findTestObject('Postman/Confirm Sign Document', [('callerId') : findTestData(excelPath).getValue(
-                            GlobalVariable.NumofColm, rowExcel('callerId')), ('email') : findTestData(excelPath).getValue(
-                            GlobalVariable.NumofColm, rowExcel('email')), ('documentId') : findTestData(excelPath).getValue(
-                            GlobalVariable.NumofColm, rowExcel('documentId')), ('browser') : findTestData(excelPath).getValue(
-                            GlobalVariable.NumofColm, rowExcel('browser'))]))
+            responConfirmSignDoc = WS.sendRequest(findTestObject('Postman/Confirm Sign Document', [('callerId') : findTestData(
+                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('email') : findTestData(
+                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('email')), ('documentId') : findTestData(
+                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentId')), ('browser') : findTestData(
+                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('browser'))]))
 
             'Jika status HIT API 200 OK'
             if (WS.verifyResponseStatusCode(responConfirmSignDoc, 200, FailureHandling.OPTIONAL) == true) {
                 'get Status Code'
-                status_Code = WS.getElementPropertyValue(responConfirmSignDoc, 'status.code')
+                statusCode = WS.getElementPropertyValue(responConfirmSignDoc, 'status.code')
 
                 'Jika status codenya 0'
-                if (status_Code == 0) {
+                if (statusCode == 0) {
                     'get current date'
                     currentDate = new Date().format('yyyy-MM-dd')
-				
-					'ambil lama waktu yang diperlukan hingga request menerima balikan'
-		            def elapsedTime = (responConfirmSignDoc.getElapsedTime() / 1000) + ' second'
-		
-		            'ambil body dari hasil respons'
-		            responseBody = responConfirmSignDoc.getResponseBodyContent()
-		
-		            'panggil keyword untuk proses beautify dari respon json yang didapat'
-		            CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
-		                    excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
-		
-		            'write to excel response elapsed time'
-		            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 
-		                1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+
+                    'ambil lama waktu yang diperlukan hingga request menerima balikan'
+                    elapsedTime = (responConfirmSignDoc.elapsedTime / 1000) + ' second'
+
+                    'ambil body dari hasil respons'
+                    responseBody = responConfirmSignDoc.responseBodyContent
+
+                    'panggil keyword untuk proses beautify dari respon json yang didapat'
+                    CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, 
+                        findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+
+                    'write to excel response elapsed time'
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel(
+                            'Process Time') - 1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
 
                     'check Db'
                     if (GlobalVariable.checkStoreDB == 'Yes') {
                         for (timeout = 1; timeout <= 10; timeout++) {
                             'declare arraylist arraymatch'
-                            ArrayList<String> arrayMatch = []
+                            ArrayList arrayMatch = []
 
                             'get sign date from db'
                             result = CustomKeywords.'connection.SendSign.getSignDocEmbedStoreDB'(conneSign, findTestData(
@@ -116,16 +110,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 getErrorMessageAPI(responConfirmSignDoc)
             }
         } else {
-			'mengambil status code berdasarkan response HIT API'
-		    message = WS.getElementPropertyValue(responLogin, 'error_description', FailureHandling.OPTIONAL).toString()
-		
-		    'Write To Excel GlobalVariable.StatusFailed and errormessage'
-		    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-		        (((findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + 
-		        ';') + '<') + message) + '>')
-		
-		    GlobalVariable.FlagFailed = 1
-		}
+            'mengambil status code berdasarkan response HIT API'
+            message = WS.getElementPropertyValue(responLogin, 'error_description', FailureHandling.OPTIONAL).toString()
+
+            'Write To Excel GlobalVariable.StatusFailed and errormessage'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                (((findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + 
+                ';') + '<') + message) + '>')
+
+            GlobalVariable.FlagFailed = 1
+        }
     }
 }
 
@@ -135,12 +129,13 @@ def getErrorMessageAPI(def respon) {
 
     'Write To Excel GlobalVariable.StatusFailed and errormessage'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-        ((findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
-        ('<' + message)) + '>')
+        ((findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + ('<' + message)) + 
+        '>')
 
     GlobalVariable.FlagFailed = 1
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
+
