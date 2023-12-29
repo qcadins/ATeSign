@@ -22,7 +22,7 @@
       <description></description>
       <id>47f122d8-b5a9-4cd6-94e1-9e155f97bd0c</id>
       <masked>false</masked>
-      <name>API_Excel_Path</name>
+      <name>excelPath</name>
    </variable>
    <variable>
       <defaultValue>'API Verify OTP Signing Embed'</defaultValue>
