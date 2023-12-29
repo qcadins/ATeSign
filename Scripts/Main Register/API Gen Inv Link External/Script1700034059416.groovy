@@ -2,47 +2,26 @@ import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import java.sql.Connection as Connection
-import org.openqa.selenium.By as By
-import org.openqa.selenium.Keys as Keys
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
-import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
-import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
-import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
-import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
-import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
-import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
-import com.kms.katalon.core.testcase.TestCase as TestCase
-import com.kms.katalon.core.testdata.TestData as TestData
-import com.kms.katalon.core.testobject.TestObject as TestObject
-import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
 
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-String selfPhoto
-
-String idPhoto
+String selfPhoto, idPhoto
 
 GlobalVariable.VerificationCount = 1
 
 GlobalVariable.Counter = 0
 
-'declare variable array'
-ArrayList saldoBefore
-
-ArrayList saldoAfter
-
-int countCheckSaldo = 0
-
 GlobalVariable.FlagFailed = 0
 
 'check if self photo mau menggunakan base64 yang salah atau benar'
 if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 SelfPhoto')) == 'Yes') {
-    selfPhoto = ((CustomKeywords.'customizekeyword.ConvertFile.base64File'(findTestData(excelPathRegister).getValue(
-            GlobalVariable.NumofColm, rowExcel('selfPhoto')))))
+    selfPhoto = CustomKeywords.'customizekeyword.ConvertFile.base64File'(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+            rowExcel('selfPhoto')))
 } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 SelfPhoto')) == 
 'No') {
     selfPhoto = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('selfPhoto'))
@@ -50,8 +29,8 @@ if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
 
 'check if id photo mau menggunakan base64 yang salah atau benar'
 if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 IdPhoto')) == 'Yes') {
-    idPhoto = ((CustomKeywords.'customizekeyword.ConvertFile.base64File'(findTestData(excelPathRegister).getValue(
-            GlobalVariable.NumofColm, rowExcel('idPhoto')))))
+    idPhoto = CustomKeywords.'customizekeyword.ConvertFile.base64File'(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+            rowExcel('idPhoto')))
 } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 IdPhoto')) == 
 'No') {
     idPhoto = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('idPhoto'))
@@ -79,91 +58,84 @@ respon = WS.sendRequest(findTestObject('APIFullService/Postman/Generate Invitati
                     'Task No')), ('callerId') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
                     'callerId'))]))
 
-
 'Jika status HIT API 200 OK'
 if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
-	'get status code'
-	code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
+    'get status code'
+    code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
-	'ambil lama waktu yang diperlukan hingga request menerima balikan'
-	def elapsedTime = (respon.getElapsedTime()) / 1000 + ' second'
-	
-	'ambil body dari hasil respons'
-	responseBody = respon.getResponseBodyContent()
-	
-	'panggil keyword untuk proses beautify dari respon json yang didapat'
-	CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1,
-		findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
-	
-	'write to excel response elapsed time'
-	CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 1, GlobalVariable.NumofColm -
-		1, elapsedTime.toString())
-	
-	if (code == 0) {
-		'mengambil response'
-		GlobalVariable.Link = WS.getElementPropertyValue(respon, 'link', FailureHandling.OPTIONAL)
+    'ambil lama waktu yang diperlukan hingga request menerima balikan'
+    elapsedTime = (respon.elapsedTime / 1000) + ' second'
 
-		'write to excel generated link'
-		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
-			rowExcel('Link Invitation') - 1, GlobalVariable.NumofColm - 1, GlobalVariable.Link)
-		
-		if (GlobalVariable.Link == '') {
-			'Write To Excel GlobalVariable.StatusFailed and errormessage'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-				'Generate Link Null / Kosong')
+    'ambil body dari hasil respons'
+    responseBody = respon.responseBodyContent
 
-			GlobalVariable.FlagFailed = 1
-		}
-		
-		if (WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL) == 'User sudah terdaftar') {
-			
-			'cek ke excel bahwa data user sudah diregist otomatis ke tenant lain'
-			result = CustomKeywords.'connection.Registrasi.checkAddUserOtherTenant'(conneSign,
-				findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"',''))
-			
-			if (result == 0) {
-				
-				'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-					(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +
-						'Error User di Tenant baru tidak berhasil ditambahkan')
-				
-				GlobalVariable.FlagFailed = 1
-				
-			} else if (result > 1) {
-				
-				'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-					(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +
-						'Terdapat 2 user yang sama di tenant ' + GlobalVariable.Tenant)
-				
-				GlobalVariable.FlagFailed = 1
-			} else {
-				
-				'write to excel success'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
-					1, GlobalVariable.StatusSuccess)
-			}
-		}
-		
-		if ((GlobalVariable.checkStoreDB == 'Yes') && (GlobalVariable.FlagFailed == 0)) {
-			'write to excel success'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
-				1, GlobalVariable.StatusSuccess)
-			
-			'call test case ResponseAPIStoreDB'
-			WebUI.callTestCase(findTestCase('Main Register/APIGenInvLinkStoreDB'), [('excelPathRegister') : excelPathRegister],
-				FailureHandling.CONTINUE_ON_FAILURE)
-		}
-	} else {
-		'call function get API error message'
-		getAPIErrorMessage(respon)
-	}
+    'panggil keyword untuk proses beautify dari respon json yang didapat'
+    CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(excelPathRegister).getValue(
+            GlobalVariable.NumofColm, rowExcel('Scenario')))
+
+    'write to excel response elapsed time'
+    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 
+        1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+
+    if (code == 0) {
+        'mengambil response'
+        GlobalVariable.Link = WS.getElementPropertyValue(respon, 'link', FailureHandling.OPTIONAL)
+
+        'write to excel generated link'
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Link Invitation') - 
+            1, GlobalVariable.NumofColm - 1, GlobalVariable.Link)
+
+        if (GlobalVariable.Link == '') {
+            'Write To Excel GlobalVariable.StatusFailed and errormessage'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                'Generate Link Null / Kosong')
+
+            GlobalVariable.FlagFailed = 1
+        }
+        
+        if (WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL) == 'User sudah terdaftar') {
+            'cek ke excel bahwa data user sudah diregist otomatis ke tenant lain'
+            result = CustomKeywords.'connection.Registrasi.checkAddUserOtherTenant'(conneSign, findTestData(excelPathRegister).getValue(
+                    GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"', ''))
+
+            if (result == 0) {
+                'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                    (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
+                    'Error User di Tenant baru tidak berhasil ditambahkan')
+
+                GlobalVariable.FlagFailed = 1
+            } else if (result > 1) {
+                'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                    ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
+                    'Terdapat 2 user yang sama di tenant ') + GlobalVariable.Tenant)
+
+                GlobalVariable.FlagFailed = 1
+            } else {
+                'write to excel success'
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
+                    1, GlobalVariable.StatusSuccess)
+            }
+        }
+        
+        if ((GlobalVariable.checkStoreDB == 'Yes') && (GlobalVariable.FlagFailed == 0)) {
+            'write to excel success'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
+                1, GlobalVariable.StatusSuccess)
+
+            'call test case ResponseAPIStoreDB'
+            WebUI.callTestCase(findTestCase('Main Register/APIGenInvLinkStoreDB'), [('excelPathRegister') : excelPathRegister], 
+                FailureHandling.CONTINUE_ON_FAILURE)
+        }
+    } else {
+        'call function get API error message'
+        getAPIErrorMessage(respon)
+    }
 } else {
-	'call function get API error message'
-	getAPIErrorMessage(respon)
+    'call function get API error message'
+    getAPIErrorMessage(respon)
 }
-
 
 def getAPIErrorMessage(def respon) {
     'mengambil status code berdasarkan response HIT API'
@@ -188,5 +160,6 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
+
