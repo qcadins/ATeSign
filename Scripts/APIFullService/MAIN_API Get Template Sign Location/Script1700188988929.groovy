@@ -16,6 +16,8 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'get colm excel'
 int countColmExcel = findTestData(excelPathGetTempSign).columnNumbers
 
+String signertypeCode
+
 'looping API Download Document'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathGetTempSign).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
@@ -45,11 +47,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'get api key salah dari excel'
             GlobalVariable.api_key = findTestData(excelPathGetTempSign).getValue(GlobalVariable.NumofColm, rowExcel('Wrong API Key'))
         }
+		
+		'cek apakah perlu ubah signer type code untuk stamp duty'
+		if (findTestData(excelPathGetTempSign).getValue(GlobalVariable.NumofColm, rowExcel('signerTypeCode')) == 'SDT') {
+			signertypeCode = 'Stamp Duty'
+		} else {
+			signertypeCode = findTestData(excelPathGetTempSign).getValue(GlobalVariable.NumofColm, rowExcel('signerTypeCode'))
+		}
         
         'HIT API get template sign loc'
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Get Template Sign Location', [('callerId') : findTestData(
-                        excelPathGetTempSign).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('docTempCode') : findTestData(
-                        excelPathGetTempSign).getValue(GlobalVariable.NumofColm, rowExcel('documentTemplateCode'))]))
+                    excelPathGetTempSign).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('docTempCode') : findTestData(
+                      excelPathGetTempSign).getValue(GlobalVariable.NumofColm, rowExcel('documentTemplateCode')), ('signerTypeCode') : signertypeCode]))
 
         'ambil lama waktu yang diperlukan hingga request menerima balikan'
         elapsedTime = ((respon.elapsedTime / 1000) + ' second')
@@ -77,12 +86,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'get data store db'
                     ArrayList result = CustomKeywords.'connection.APIFullService.getTemplateSignloc'(conneSign, findTestData(
                             excelPathGetTempSign).getValue(GlobalVariable.NumofColm, rowExcel('documentTemplateCode')).replace(
-                            '"', ''), GlobalVariable.Tenant)
+                            '"', ''), GlobalVariable.Tenant, findTestData(excelPathGetTempSign).getValue(GlobalVariable.NumofColm, rowExcel('signerTypeCode')))
 
                     'ambil countresult yang dikembalikan oleh query result'
                     int countresult = CustomKeywords.'connection.APIFullService.getCountSignLoc'(conneSign, findTestData(
                             excelPathGetTempSign).getValue(GlobalVariable.NumofColm, rowExcel('documentTemplateCode')).replace(
-                            '"', ''), GlobalVariable.Tenant)
+                            '"', ''), GlobalVariable.Tenant, findTestData(excelPathGetTempSign).getValue(GlobalVariable.NumofColm, rowExcel('signerTypeCode')))
 
                     'declare arrayindex'
                     arrayindex = 0
@@ -117,7 +126,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'ambil sign loc untuk vida dan privy'
                     ArrayList resultDetail = CustomKeywords.'connection.APIFullService.getTemplateSignlocDetail'(conneSign, 
                         findTestData(excelPathGetTempSign).getValue(GlobalVariable.NumofColm, rowExcel('documentTemplateCode')).replace(
-                            '"', ''), GlobalVariable.Tenant).toString().replace('"h"', '').replace('"w"', '').replace('"x"', 
+                            '"', ''), GlobalVariable.Tenant, findTestData(excelPathGetTempSign).getValue(GlobalVariable.NumofColm, rowExcel('signerTypeCode'))).toString().replace('"h"', '').replace('"w"', '').replace('"x"', 
                         '').replace('"y"', '').replace('{', '').replace(':', '').replace(' ', '').replace(' ', '').replace(
                         '[', '').replace(']', '').replace('}', '').split(',', -1).sort()
 
