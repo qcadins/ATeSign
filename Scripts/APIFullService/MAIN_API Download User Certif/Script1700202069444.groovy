@@ -54,7 +54,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'HIT API check Download User certif'
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Download user Certificate', [('callerId') : findTestData(
                         excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('loginId') : findTestData(excelPathAPIDownload).getValue(
-                        GlobalVariable.NumofColm, rowExcel('Email'))]))
+                        GlobalVariable.NumofColm, rowExcel('Email')), ('noTelp') : findTestData(excelPathAPIDownload).getValue(
+                        GlobalVariable.NumofColm, rowExcel('No Telp'))]))
 		
 		'ambil lama waktu yang diperlukan hingga request menerima balikan'
 		def elapsedTime = (respon.getElapsedTime()) / 1000 + ' second'
@@ -76,10 +77,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
             if (code == 0) {
                 'mengambil response'
-                base64PDF = WS.getElementPropertyValue(respon, 'userCertificate', FailureHandling.OPTIONAL)
+                base64CRT = WS.getElementPropertyValue(respon, 'userCertificate', FailureHandling.OPTIONAL)
 
-                'decode Bas64 to File PDF'
-                CustomKeywords.'customizekeyword.ConvertFile.decodeBase64crt'(base64PDF, findTestData(excelPathAPIDownload).getValue(
+                'decode Bas64 to File certif'
+                CustomKeywords.'customizekeyword.ConvertFile.decodeBase64crt'(base64CRT, findTestData(excelPathAPIDownload).getValue(
                         GlobalVariable.NumofColm, rowExcel('File Name')))
 
                 'check is file downloaded dan apakah mau di delete'
