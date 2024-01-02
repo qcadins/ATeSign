@@ -336,15 +336,15 @@ def inputBuatUndangan() {
 
     'input office'
     WebUI.setText(findTestObject('RegisterEsign/input_Office'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('Office')))
+            rowExcel('OfficeName')))
 
     'input lini bisnis'
     WebUI.setText(findTestObject('RegisterEsign/input_LiniBisnis'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('Lini Bisnis')))
+            rowExcel('BusinessLineName')))
 
     'input task no'
     WebUI.setText(findTestObject('RegisterEsign/input_TaskNo'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('Task No')))
+            rowExcel('Ref No')))
 }
 
 def inputCancel() {

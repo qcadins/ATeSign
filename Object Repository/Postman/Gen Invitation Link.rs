@@ -6,11 +6,12 @@
    <elementGuidId>54a08ce5-a590-48a4-856d-2170d60719ce</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
+   <autoUpdateContent>false</autoUpdateContent>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    },\n    \&quot;tenantCode\&quot;: \&quot;${tenantCode}\&quot;,\n    \&quot;users\&quot;: [\n\t\t\t${users}\n    ]\n}\n&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    },\n    \&quot;tenantCode\&quot;: \&quot;${tenantCode}\&quot;,\n  \t\&quot;businessLineCode\&quot; : \&quot;${businessLineCode}\&quot;,\n    \&quot;businessLineName\&quot; : \&quot;${businessLineName}\&quot;,\n    \&quot;officeCode\&quot; : \&quot;${officeCode}\&quot;,\n    \&quot;officeName\&quot; : \&quot;${officeName}\&quot;,\n    \&quot;regionCode\&quot; : \&quot;${regionCode}\&quot;,\n    \&quot;regionName\&quot; : \&quot;${regionName}\&quot;,\n    \&quot;referenceNo\&quot; : \&quot;${referenceNo}\&quot;,\n    \&quot;users\&quot;: [\n\t\t\t${users}\n    ]\n}\n&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
