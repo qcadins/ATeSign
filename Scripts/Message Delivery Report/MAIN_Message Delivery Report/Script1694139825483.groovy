@@ -94,12 +94,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             checkPaging(currentDate, firstDateOfMonth, conneSign)
 
             'get ddl tipe Saldo'
-            ArrayList<String> resultVendor = CustomKeywords.'connection.messageDeliveryReport.getDDLVendor'(conneSign, GlobalVariable.Tenant)
+            ArrayList<String> resultVendor = CustomKeywords.'connection.MessageDeliveryReport.getDDLVendor'(conneSign, GlobalVariable.Tenant)
 
             checkDDL(findTestObject('MessageDeliveryReport/input_vendor'), resultVendor, 'DDL Vendor')
 
             'get ddl tipe Saldo'
-            ArrayList<String> resultMessageMedia = CustomKeywords.'connection.messageDeliveryReport.getDDLMessageMedia'(
+            ArrayList<String> resultMessageMedia = CustomKeywords.'connection.MessageDeliveryReport.getDDLMessageMedia'(
                 conneSign)
 
             checkDDL(findTestObject('MessageDeliveryReport/input_messageMedia'), resultMessageMedia, 'DDL Message Media')
@@ -123,7 +123,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'Jika bukan di page 1, verifikasi menggunakan button Lastest. Get row lastest'
             getColumn = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-list-message-delivery-report > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller > datatable-row-wrapper:nth-child(1) > datatable-body-row datatable-body-cell'))
 
-			ArrayList<String> result = CustomKeywords.'connection.messageDeliveryReport.getFilterMessageDeliveryReport'(
+			ArrayList<String> result = CustomKeywords.'connection.MessageDeliveryReport.getFilterMessageDeliveryReport'(
 				conneSign, GlobalVariable.Tenant, storeHashMapForVerify())
 			
 			println result
@@ -271,7 +271,7 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
     totalTrxUI = WebUI.getText(findTestObject('MessageDeliveryReport/label_TotalMessageDeliveryReport')).split(' ', -1)
 
     'ambil total trx berdasarkan filter yang telah disiapkan pada db'
-    totalTrxDB = CustomKeywords.'connection.messageDeliveryReport.getTotalMessageDeliveryReport'(conneSign, GlobalVariable.Tenant)
+    totalTrxDB = CustomKeywords.'connection.MessageDeliveryReport.getTotalMessageDeliveryReport'(conneSign, GlobalVariable.Tenant)
 
     'verify total Saldo'
     checkVerifyPaging(WebUI.verifyMatch(totalTrxUI[0], totalTrxDB, false, FailureHandling.CONTINUE_ON_FAILURE), ' total transaksi ui dan db tidak match')

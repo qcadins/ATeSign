@@ -16,13 +16,7 @@ public class GetEmail {
 
 	@Keyword
 	getEmailContent(String email, String inputPassword, String value) {
-		String host = 'outlook.office365.com'
-
-		String otpCode
-
-		String username = email
-
-		String password = inputPassword
+		String host = 'outlook.office365.com', otpCode, username = email, password = inputPassword
 
 		Properties properties = new Properties()
 
@@ -47,19 +41,11 @@ public class GetEmail {
 		// retrieve the messages from the folder in an array and print it
 		Message[] messages = emailFolder.messages
 
-		println('messages.length---' + messages.length)
-
 		int lastEmailSequence = messages.length
 
 		Message message = messages[(lastEmailSequence - 1)]
 
 		String emailSubject = message.subject
-
-		println('Email Number ' + lastEmailSequence)
-
-		println('Subject: ' + emailSubject)
-
-		println('From: ' + (message.from[0]))
 
 		Object content = message.content
 
@@ -90,7 +76,7 @@ public class GetEmail {
 					println(textWithoutHtml)
 
 					break
-				} else if(!(contentType.startsWith('text/plain') || contentType.startsWith('text/html'))) {
+				} else if (!(contentType.startsWith('text/plain') || contentType.startsWith('text/html'))) {
 					InputStream is = bodyPart.inputStream
 					BufferedReader br = new BufferedReader(new InputStreamReader(is))
 					String line
@@ -132,24 +118,25 @@ public class GetEmail {
 			return matcher.group()
 		}
 
-		return 'false'
+		'false'
 	}
 
 	def findText(String text) {
-		Pattern pattern = Pattern.compile("Yth(.+?)Tim eSignHub")
+		Pattern pattern = Pattern.compile('Yth(.+?)Tim eSignHub')
 
 		Matcher matcher = pattern.matcher(text)
 
 		if (matcher.find()) {
 			// Extract the matched text
 			String extractedText = matcher.group(1).trim()
-			String cleanedText = extractedText.replaceAll("[\\n]+", " ")
+			String cleanedText = extractedText.replaceAll('[\\n]+', ' ')
 			return extractedText
 		} else {
-			println("Match not found.")
+			println('Match not found.')
 
 			return 'false'
 		}
 	}
+	
 }
 
