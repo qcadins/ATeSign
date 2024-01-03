@@ -1,13 +1,6 @@
 package customizekeyword
 
-import customizekeyword.WriteExcel
-import com.kms.katalon.core.testobject.RequestObject
-import com.kms.katalon.core.testobject.ResponseObject
 import com.kms.katalon.core.annotation.Keyword
-import org.apache.poi.xssf.usermodel.XSSFRow
-import org.apache.poi.xssf.usermodel.XSSFSheet
-import org.apache.poi.xssf.usermodel.XSSFWorkbook
-import org.apache.poi.ss.usermodel.*
 import internal.GlobalVariable
 
 public class BeautifyJson {
@@ -28,17 +21,20 @@ public class BeautifyJson {
 			try {
 				needto.writeToExcel(GlobalVariable.DataFilePath, sheet, rowNo, GlobalVariable.NumofColm -
 						1, beautifiedJson.toString())
-			} catch (Exception ex) {
+			} catch (FileNotFoundException ex) {
 				String beautifiedJsonPath = System.getProperty('user.dir') + '\\Response\\' + fileName + '.json'
 
 				new File(beautifiedJsonPath).text = beautifiedJson
 
 				needto.writeToExcel(GlobalVariable.DataFilePath, sheet, rowNo, GlobalVariable.NumofColm -
 						1, beautifiedJsonPath)
+
+				Throwable.printStackTrace()
 			}
 		} catch (Exception e) {
-			println("Failed to beautify the JSON: ${e.message}")
+			this.println("Failed to beautify the JSON: ${e.message}")
+			
+			Throwable.printStackTrace()
 		}
 	}
-	
 }

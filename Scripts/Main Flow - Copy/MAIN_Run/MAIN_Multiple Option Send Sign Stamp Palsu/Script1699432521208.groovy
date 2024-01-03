@@ -1016,6 +1016,11 @@ def inputFilterTrx(Connection conneSign, String currentDate, String noKontrak, S
 	not_run: 'Input documentTemplateName'
 	not_run:  WebUI.setText(findTestObject('Saldo/input_namadokumen'), documentTemplateName)
 
+	if (signType == 'Stamp Duty') {
+		'Input down untuk stamp duty'
+		WebUI.sendKeys(findTestObject('Saldo/input_tipesaldo'), Keys.chord(Keys.ARROW_DOWN))
+	}
+	
     'Input enter'
     WebUI.sendKeys(findTestObject('Saldo/input_tipesaldo'), Keys.chord(Keys.ENTER))
 
