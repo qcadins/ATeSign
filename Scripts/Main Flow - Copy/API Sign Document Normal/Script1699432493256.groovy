@@ -25,7 +25,7 @@ GlobalVariable.Tenant = findTestData(API_Excel_Path).getValue(GlobalVariable.Num
 
 ArrayList totalSignedBefore = [], totalSignedAfter = []
 
-HashMap<String, String> saldoBefore = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : API_Excel_Path
+HashMap<String, String> saldoBefore = WebUI.callTestCase(findTestCase('null'), [('excel') : API_Excel_Path
 	, ('sheet') : sheet, ('vendor') : vendor, ('usageSaldo') : 'Sign'], FailureHandling.CONTINUE_ON_FAILURE)
 
 ttdBefore = saldoBefore.get('TTD')
@@ -101,11 +101,11 @@ if (WS.verifyResponseStatusCode(respon_login, 200, FailureHandling.OPTIONAL) == 
 							'Panggil function responseAPIStoreDB dengan parameter totalSigned, ipaddress, dan array dari documentId'
 							
 							'Memanggil testCase mengenai SignDocumentStoreDb'
-							WebUI.callTestCase(findTestCase('Main Flow/API Sign Document Normal StoreDB'), [('API_Excel_Path') : API_Excel_Path, ('sheet') : sheet],
+							WebUI.callTestCase(findTestCase('null'), [('API_Excel_Path') : API_Excel_Path, ('sheet') : sheet],
 								FailureHandling.CONTINUE_ON_FAILURE)
 						}
 
-						HashMap<String, String> saldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : API_Excel_Path
+						HashMap<String, String> saldoAfter = WebUI.callTestCase(findTestCase('null'), [('excel') : API_Excel_Path
 							, ('sheet') : sheet, ('vendor') : vendor, ('usageSaldo') : 'Sign'], FailureHandling.CONTINUE_ON_FAILURE)
 						
 						ttdAfter = saldoAfter.get('TTD')
@@ -134,7 +134,7 @@ if (WS.verifyResponseStatusCode(respon_login, 200, FailureHandling.OPTIONAL) == 
 					}
 					
 					'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
-					WebUI.callTestCase(findTestCase('Main Flow/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : API_Excel_Path
+					WebUI.callTestCase(findTestCase('null'), [('excelPathFESignDocument') : API_Excel_Path
 							, ('sheet') : sheet, ('linkDocumentMonitoring') : 'Not Used', ('nomorKontrak') : refNumber, ('CancelDocsSign') : CancelDocsSign],
 						FailureHandling.CONTINUE_ON_FAILURE)
 				}

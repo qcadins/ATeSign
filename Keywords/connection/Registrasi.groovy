@@ -62,10 +62,14 @@ public class Registrasi {
 	}
 
 	@Keyword
-	getBuatUndanganDataPerusahaanStoreDB(Connection conn, String value) {
+	getBuatUndanganDataPerusahaanStoreDB(Connection conn, String value, String method) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select region, office, business_line, task_no from tr_invitation_link where receiver_detail = '" +  value  + "'")
+		if (!method.equalsIgnoreCase('API Generate Inv Link Normal')) {
+			resultSet = stm.executeQuery("select office, business_line, ref_number, region from tr_invitation_link where receiver_detail = '" +  value  + "'")
+		} else {
+			resultSet = stm.executeQuery("select office_name, business_line_name, ref_number, office_code, business_line_code from tr_invitation_link til join ms_office mo on mo.id_ms_office = til.id_ms_office join ms_business_line mbl on mbl.id_ms_business_line = til.id_ms_business_line where receiver_detail = '" +  value  + "'")
+		}
 
 		metadata = resultSet.metaData
 

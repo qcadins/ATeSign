@@ -190,7 +190,7 @@ for (int o = 0; o < documentFile.size(); o++) {
             list.add(((((((((((((((((((((((((((((((((((((('{"signAction": "' + (signActions[i])) + '","signerType": "') + (signerTypes[
                 i])) + '","signSequence":"') + (signSequences[i])) + '","alamat": "') + (alamats[(i)])) + '","jenisKelamin": "') + 
                 (jenisKelamins[i])) + '","kecamatan": "') + (kecamatans[i])) + '","kelurahan": "') + (kelurahans[i])) + '","kodePos": "') + 
-                (kodePoss[i])) + ',"kota": ') + (kotas[i])) + ',"nama": ') + (namas[i])) + ',"tlp": ') + (tlps[i])) + ',"tglLahir": ') + 
+                (kodePoss[i])) + '","kota": "') + (kotas[i])) + '","nama": "') + (namas[i])) + '","tlp": "') + (tlps[i])) + '","tglLahir": "') + 
                 (tglLahirs[i])) + '","provinsi": "') + (provinsis[i])) + '","idKtp": "') + (idKtps[i])) + '","tmpLahir": "') + 
                 (tmpLahirs[i])) + '","email": "') + (emails[i])) + '","npwp": "') + (npwps[i])) + '","idPhoto": "') + idPhotos[i]) + 
                 '","signerSelfPhoto": "') + signerSelfPhotos[i]) + '"}')

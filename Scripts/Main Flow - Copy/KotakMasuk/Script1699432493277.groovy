@@ -60,7 +60,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 	}
 
     'call Test Case untuk login sebagai user berdasarkan doc id'
-    WebUI.callTestCase(findTestCase('Main Flow/Login'), [('email') : GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0]), ('excel') : excelPathFESignDocument
+    WebUI.callTestCase(findTestCase('Main Flow - Copy/Login'), [('email') : GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0]), ('excel') : excelPathFESignDocument
             , ('checkBeforeSigning') : checkBeforeSigning, ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
 
     'get data kotak masuk send document secara asc, dimana customer no 1'
@@ -160,6 +160,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
     resultStamping = CustomKeywords.'connection.SendSign.getTotalStampingandTotalMaterai'(conneSign, result[0], GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0]))
 	
 	loopingPerDocument = 0
+	
     for (c = 0; c < resultHashMap.get(GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0])); c++) {
         'ambil row lastest pencarian dokumen'
         variablePencarianDokumenRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))

@@ -104,7 +104,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
     }
     
     'Call test Case untuk login sebagai admin wom admin client'
-    WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excelPathFESignDocument, ('sheet') : sheet, ('linkUrl') : result.get(
+    WebUI.callTestCase(findTestCase('Main Flow - Copy/Login'), [('excel') : excelPathFESignDocument, ('sheet') : sheet, ('linkUrl') : result.get(
                 'encryptKotakMasuk')], FailureHandling.CONTINUE_ON_FAILURE)
 
     checkBulkSigning()
@@ -670,7 +670,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
         }
     } else {
         'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
-        WebUI.callTestCase(findTestCase('Main Flow/Signing Digisign'), [('excelPathFESignDocument') : excelPathFESignDocument
+        WebUI.callTestCase(findTestCase('Main Flow - Copy/Signing Digisign'), [('excelPathFESignDocument') : excelPathFESignDocument
                 , ('sheet') : sheet, ('nomorKontrak') : noKontrak, ('documentId') : documentId, ('emailSigner') : GlobalVariable.storeVar.getAt(
                     GlobalVariable.storeVar.keySet()[0])], FailureHandling.CONTINUE_ON_FAILURE)
 
@@ -1540,7 +1540,7 @@ def checkAutoStamp(Connection conneSign, String noKontrak, HashMap<String, Strin
 							WebUI.delay(3)
 							
 							'get saldo after'
-							resultSaldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'),
+							resultSaldoAfter = WebUI.callTestCase(findTestCase('Main Flow - Copy/getSaldo'),
 								[('excel') : excelPathFESignDocument, ('sheet') : sheet, ('usageSaldo') : 'Stamp'],
 								FailureHandling.CONTINUE_ON_FAILURE)
 							
@@ -1612,7 +1612,7 @@ def checkAutoStamp(Connection conneSign, String noKontrak, HashMap<String, Strin
 	
 						if (((totalMateraiAndTotalStamping[0]) != '0') && (prosesMaterai != 63)) {
 							'Call verify meterai'
-							WebUI.callTestCase(findTestCase('Main Flow/verifyMeterai'), [('excelPathMeterai') : excelPathFESignDocument
+							WebUI.callTestCase(findTestCase('Main Flow - Copy/Stamping'), [('excelPathMeterai') : excelPathFESignDocument
 									, ('sheet') : sheet, ('noKontrak') : noKontrakPerDoc[loopingPerKontrak], ('linkDocumentMonitoring') : ''
 									, ('CancelDocsStamp') : findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
 										rowExcel('Cancel Docs after Stamp?'))], FailureHandling.CONTINUE_ON_FAILURE)
@@ -1625,7 +1625,7 @@ def checkAutoStamp(Connection conneSign, String noKontrak, HashMap<String, Strin
 							rowExcel('Reason Failed')).replace('-', '') + ';') + 'Autostamp gagal ')
 
 					'get saldo after'
-					resultSaldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'),
+					resultSaldoAfter = WebUI.callTestCase(findTestCase('Main Flow - Copy/getSaldo'),
 						[('excel') : excelPathFESignDocument, ('sheet') : sheet, ('usageSaldo') : 'Stamp'],
 						FailureHandling.CONTINUE_ON_FAILURE)
 					
@@ -1670,7 +1670,9 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 				(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
 					'-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
-		} else {
+			
+			GlobalVariable.FlagFailed = 1
+			} else {
 			penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
 		}
 	} else {
@@ -1688,7 +1690,9 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 						GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
 							rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
-				} else {
+					
+					GlobalVariable.FlagFailed = 1
+					} else {
 					penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
 				}
 			} else if (useWAMessage == '0') {
@@ -1702,7 +1706,9 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 							GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
 								rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP')
-					} else {
+						
+						GlobalVariable.FlagFailed = 1
+						} else {
 						penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
 					}
 				
@@ -1718,6 +1724,8 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 							GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
 								rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP')
+						
+						GlobalVariable.FlagFailed = 1
 					} else {
 						penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
 					}

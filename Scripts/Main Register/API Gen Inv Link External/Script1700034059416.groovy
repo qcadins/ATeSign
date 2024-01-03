@@ -53,9 +53,9 @@ respon = WS.sendRequest(findTestObject('APIFullService/Postman/Generate Invitati
                     'Kode Pos')), ('selfPhoto') : selfPhoto, ('idPhoto') : idPhoto, ('region') : findTestData(excelPathRegister).getValue(
                 GlobalVariable.NumofColm, rowExcel('Wilayah')), ('type') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
                 rowExcel('Type')), ('office') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-                    'Office')), ('businessLine') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-                    'Lini Bisnis')), ('taskNo') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-                    'Task No')), ('callerId') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
+                    'OfficeName')), ('businessLine') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
+                    'BusinessLineName')), ('taskNo') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
+                    'Ref No')), ('callerId') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
                     'callerId'))]))
 
 'Jika status HIT API 200 OK'

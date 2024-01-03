@@ -37,7 +37,7 @@ if (!(WebUI.verifyElementPresent(findTestObject('Meterai/menu_Meterai'), GlobalV
 		}
 	} else {
 		'Call test Case untuk login sebagai admin wom admin client'
-		WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excelPathMeterai, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
+		WebUI.callTestCase(findTestCase('Main Flow - Copy/Login'), [('excel') : excelPathMeterai, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
 	}
 }
 'click menu meterai'

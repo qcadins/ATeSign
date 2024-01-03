@@ -37,7 +37,7 @@ CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPISignDocume
 'ambil nama vendor dari DB'
 String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, refNumber)
 
-if (vendor == null) {
+if (vendor == ) {
     vendor = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Vendor'))
 }
 
@@ -46,7 +46,7 @@ ArrayList tenantVendor = CustomKeywords.'connection.DataVerif.getTenantandVendor
     0])
 
 'setting vendor otp dimatikan/diaktifkan'
-if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Enable User Vendor OTP? (Sign External)')).length() > 
+if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting must_user_vendor_otp (Sign External)')).length() > 
 0) {
     'update setting vendor otp ke table di DB'
     CustomKeywords.'connection.UpdateData.updateVendorOTP'(conneSign, tenantVendor[1], findTestData(excelPathAPISignDocument).getValue(
@@ -284,7 +284,7 @@ if (otp.length() >= 0) {
         psreCode = WS.getElementPropertyValue(respon, 'psreCode', FailureHandling.OPTIONAL)
 
         'Jika trxNonya tidak kosong dari response'
-        if (trxNo != null) {
+        if (trxNo != ) {
             'Input excel'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('trxNos') - 
                 1, GlobalVariable.NumofColm - 1, findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
@@ -335,7 +335,7 @@ if (otp.length() >= 0) {
                         responseAPIStoreDB(conneSign, ipaddress, GlobalVariable.storeVar.keySet()[0], trxNo.toString())
                     }
                     
-                    if (trxNo != null) {
+                    if (trxNo != ) {
                         'ambil trx no untuk displit'
                         trxNo = trxNo.replace('[', '').replace(']', '').split(', ', -1)
 
@@ -469,7 +469,7 @@ def responseAPIStoreDB(Connection conneSign, String ipaddress, String documentId
     arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], GlobalVariable.Tenant, false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'Jika trxNonya tidak kosong'
-    if (trxNo != 'null') {
+    if (trxNo != '') {
         trxNo = trxNo.split(', ', -1)
 
         'Array result. Value dari db'
@@ -901,7 +901,7 @@ def checkAutoStamp(Connection conneSign, String noKontrak, HashMap<String, Strin
                         } else if (((prosesMaterai == 53) || (prosesMaterai == 63)) || (flagErrorDMS == 1)) {
                             WebUI.delay(3)
 
-                            resultSaldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathAPISignDocument
+                            resultSaldoAfter = WebUI.callTestCase(findTestCase(''), [('excel') : excelPathAPISignDocument
                                     , ('sheet') : sheet, ('usageSaldo') : 'Stamp'], FailureHandling.CONTINUE_ON_FAILURE)
 
                             saldoAfter = resultSaldoAfter.get('Meterai')
@@ -974,7 +974,7 @@ def checkAutoStamp(Connection conneSign, String noKontrak, HashMap<String, Strin
 
                         if (((totalMateraiAndTotalStamping[0]) != '0') && (prosesMaterai != 63)) {
                             'Call verify meterai'
-                            WebUI.callTestCase(findTestCase('Main Flow/verifyMeterai'), [('excelPathMeterai') : excelPathAPISignDocument
+                            WebUI.callTestCase(findTestCase(''), [('excelPathMeterai') : excelPathAPISignDocument
                                     , ('sheet') : sheet, ('noKontrak') : noKontrakPerDoc[loopingPerKontrak], ('linkDocumentMonitoring') : ''
                                     , ('CancelDocsStamp') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
                                         rowExcel('Cancel Docs after Stamp?'))], FailureHandling.CONTINUE_ON_FAILURE)
@@ -987,7 +987,7 @@ def checkAutoStamp(Connection conneSign, String noKontrak, HashMap<String, Strin
                             rowExcel('Reason Failed')).replace('-', '') + ';') + 'Autostamp gagal ')
 
                     'get saldo after'
-                    resultSaldoAfter = WebUI.callTestCase(findTestCase('Main Flow/getSaldo'), [('excel') : excelPathAPISignDocument
+                    resultSaldoAfter = WebUI.callTestCase(findTestCase('Main Flow - Copy/getSaldo'), [('excel') : excelPathAPISignDocument
                             , ('sheet') : sheet, ('usageSaldo') : 'Stamp'], FailureHandling.CONTINUE_ON_FAILURE)
 
                     'get saldo after meterai'
@@ -1037,7 +1037,10 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 				(findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
 					'-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
-		} else {
+			
+			GlobalVariable.FlagFailed = 1
+			
+			} else {
 			penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
 		}
 	} else {
@@ -1056,7 +1059,9 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 						GlobalVariable.StatusFailed, (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm,
 							rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
-				} else {
+					
+					GlobalVariable.FlagFailed = 1
+					} else {
 					penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
 				}
 			} else if (useWAMessage == '0') {
@@ -1070,6 +1075,8 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 							GlobalVariable.StatusFailed, (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm,
 								rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP')
+						
+						GlobalVariable.FlagFailed = 1
 						
 						GlobalVariable.eSignData.putAt('VerifikasiOTP', GlobalVariable.eSignData.getAt('VerifikasiOTP') - 1)
 					} else {
@@ -1088,6 +1095,8 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 							GlobalVariable.StatusFailed, (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm,
 								rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP')
+						
+						GlobalVariable.FlagFailed = 1
 						
 						GlobalVariable.eSignData.putAt('VerifikasiOTP', GlobalVariable.eSignData.getAt('VerifikasiOTP') - 1)
 

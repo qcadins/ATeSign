@@ -959,7 +959,9 @@ public class APIFullService {
 		}
 
 		if (data != 'null') {
-			helperQuery = 'tdds.seq_no'
+			if (helperQuery != 'tdds.id_document_d_sign') {
+				helperQuery = 'tdds.seq_no'
+			}
 		} else if (data == 'null') {
 			if (helperQuery != 'tdds.seq_no') {
 				helperQuery = 'tdds.id_document_d_sign'

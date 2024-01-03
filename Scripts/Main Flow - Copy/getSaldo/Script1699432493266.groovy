@@ -75,7 +75,7 @@ def funcLogin() {
 			}
 		} else {
 			'Call test Case untuk login sebagai admin wom admin client'
-			WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excel, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
+			WebUI.callTestCase(findTestCase('Main Flow - Copy/Login'), [('excel') : excel, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
 		}
 	} else {
 		WebUI.refresh()
@@ -406,6 +406,10 @@ def inputFilterSaldo(String tipeSaldo, Connection conneSign) {
 	'verify user trx ui = db'
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectUser), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE),
 		' User ' + tipeSaldo)
+	
+	'verify ref no trx ui = db'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectNoKontrak), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE),
+		' Ref No ' + tipeSaldo)
 
 	Note = WebUI.getText(modifyObjectCatatan)
 	
@@ -425,6 +429,27 @@ def inputFilterSaldo(String tipeSaldo, Connection conneSign) {
 	'verify qty trx ui = db'
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectQty), (result[arrayIndex++]).toString().replace(
 				'-', ''), false, FailureHandling.CONTINUE_ON_FAILURE), ' Qty Trx ' + tipeSaldo)
+	
+	WebUI.comment(findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')))
+	
+	if (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
+            'API Generate Inv Link Normal')) {
+		'verify office code trx ui = db'
+		checkVerifyEqualOrMatch(WebUI.verifyMatch(findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('OfficeCode'))
+			, (result[arrayIndex++]).toString().replace('-', ''), false, FailureHandling.CONTINUE_ON_FAILURE), ' office code Trx ' + tipeSaldo)
+		
+		'verify office name trx ui = db'
+		checkVerifyEqualOrMatch(WebUI.verifyMatch(findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('OfficeName'))
+			, (result[arrayIndex++]).toString().replace('-', ''), false, FailureHandling.CONTINUE_ON_FAILURE), ' office name Trx ' + tipeSaldo)
+		
+		'verify business line code trx ui = db'
+		checkVerifyEqualOrMatch(WebUI.verifyMatch(findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('BusinessLineCode'))
+			, (result[arrayIndex++]).toString().replace('-', ''), false, FailureHandling.CONTINUE_ON_FAILURE), ' business line code Trx ' + tipeSaldo)
+		
+		'verify business line name trx ui = db'
+		checkVerifyEqualOrMatch(WebUI.verifyMatch(findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('BusinessLineName'))
+			, (result[arrayIndex++]).toString().replace('-', ''), false, FailureHandling.CONTINUE_ON_FAILURE), ' business line name Trx ' + tipeSaldo)
+	}
 }
 
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {

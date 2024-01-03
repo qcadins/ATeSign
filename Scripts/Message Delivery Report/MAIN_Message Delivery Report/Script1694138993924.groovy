@@ -64,13 +64,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				checkPaging(conneSign)
 	
 				'get ddl vendor'
-				ArrayList<String> resultVendor = CustomKeywords.'connection.messageDeliveryReport.getDDLVendor'(conneSign, GlobalVariable.Tenant)
+				ArrayList<String> resultVendor = CustomKeywords.'connection.MessageDeliveryReport.getDDLVendor'(conneSign, GlobalVariable.Tenant)
 	
 				'check dll vendor'
 				checkDDL(findTestObject('MessageDeliveryReport/input_vendor'), resultVendor, 'DDL Vendor')
 	
 				'get ddl message media'
-				ArrayList<String> resultMessageMedia = CustomKeywords.'connection.messageDeliveryReport.getDDLMessageMedia'(
+				ArrayList<String> resultMessageMedia = CustomKeywords.'connection.MessageDeliveryReport.getDDLMessageMedia'(
 					conneSign)
 	
 				'check ddl message media'
@@ -107,7 +107,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             getColumn = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-list-message-delivery-report > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller > datatable-row-wrapper:nth-child(1) > datatable-body-row datatable-body-cell'))
 
 			'db hasil pencarian'
-			ArrayList<String> result = CustomKeywords.'connection.messageDeliveryReport.getFilterMessageDeliveryReport'(
+			ArrayList<String> result = CustomKeywords.'connection.MessageDeliveryReport.getFilterMessageDeliveryReport'(
 				conneSign, GlobalVariable.Tenant, storeHashMapForVerify())
 
 			'jika rownya tidak ada'
@@ -263,7 +263,7 @@ def checkPaging(Connection conneSign) {
     totalTrxUI = WebUI.getText(findTestObject('MessageDeliveryReport/label_TotalMessageDeliveryReport')).split(' ', -1)
 
     'ambil total trx berdasarkan filter yang telah disiapkan pada db'
-    totalTrxDB = CustomKeywords.'connection.messageDeliveryReport.getTotalMessageDeliveryReport'(conneSign, GlobalVariable.Tenant)
+    totalTrxDB = CustomKeywords.'connection.MessageDeliveryReport.getTotalMessageDeliveryReport'(conneSign, GlobalVariable.Tenant)
 
     'verify total trx pada message delivery report'
     checkVerifyPaging(WebUI.verifyMatch(totalTrxUI[0], totalTrxDB, false, FailureHandling.CONTINUE_ON_FAILURE), ' total transaksi ui dan db tidak match')
