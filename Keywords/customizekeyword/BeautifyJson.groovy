@@ -28,13 +28,10 @@ public class BeautifyJson {
 
 				needto.writeToExcel(GlobalVariable.DataFilePath, sheet, rowNo, GlobalVariable.NumofColm -
 						1, beautifiedJsonPath)
-
-				Throwable.printStackTrace()
 			}
-		} catch (Exception e) {
-			this.println("Failed to beautify the JSON: ${e.message}")
-			
-			Throwable.printStackTrace()
+		} catch (FileNotFoundException e) {
+			println("Failed to beautify the JSON: ${e.message}")
 		}
 	}
+	
 }
