@@ -2,7 +2,6 @@ package customizekeyword
 
 import com.kms.katalon.core.annotation.Keyword
 import internal.GlobalVariable
-import customizekeyword.WriteExcel
 
 public class BeautifyJson {
 
@@ -20,20 +19,22 @@ public class BeautifyJson {
 			beautifiedJson = builder.toPrettyString()
 
 			try {
-				println 'success'
 				needto.writeToExcel(GlobalVariable.DataFilePath, sheet, rowNo, GlobalVariable.NumofColm -
 						1, beautifiedJson.toString())
-			} catch (Exception ex) {
-				println 'failed'
+			} catch (FileNotFoundException ex) {
 				String beautifiedJsonPath = System.getProperty('user.dir') + '\\Response\\' + fileName + '.json'
 
 				new File(beautifiedJsonPath).text = beautifiedJson
 
 				needto.writeToExcel(GlobalVariable.DataFilePath, sheet, rowNo, GlobalVariable.NumofColm -
 						1, beautifiedJsonPath)
+
+				Throwable.printStackTrace()
 			}
 		} catch (Exception e) {
-			println("Failed to beautify the JSON: ${e.message}")
+			this.println("Failed to beautify the JSON: ${e.message}")
+			
+			Throwable.printStackTrace()
 		}
 	}
 }

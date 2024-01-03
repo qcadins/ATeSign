@@ -74,25 +74,25 @@ public class MessageDeliveryReport {
 		for (String key : value.keySet()) {
 			String values = value.get(key)
 			if (values == "" || values == "All") {
-				commandSql.put(key,'--')
+				commandSql.put(key, '--')
 			} else {
-				commandSql.put(key,'')
+				commandSql.put(key, '')
 			}
 		}
-		if (commandSql.get("Report Time Start").length() <= 0 && commandSql.get("Report Time End").length() <= 0) {
-			commandSql.put("defaultSetting", '--')
+		if (commandSql.get('Report Time Start').length() <= 0 && commandSql.get('Report Time End').length() <= 0) {
+			commandSql.put('defaultSetting', '--')
 		} else {
-			commandSql.put("defaultSetting", '')
+			commandSql.put('defaultSetting', '')
 		}
 
-		resultSet = stm.executeQuery("SELECT mv.vendor_name,TO_CHAR(mdr.report_time,'DD-Mon-YYYY HH24:MI:SS'),mdr.recipient_detail,mdr.trx_no,ml.description,CASE WHEN mdr.delivery_status = '0' THEN 'Not Started' WHEN mdr.delivery_status = '1' THEN 'Waiting' WHEN mdr.delivery_status = '2' THEN 'Failed' WHEN mdr.delivery_status = '3' THEN 'Delivered' WHEN mdr.delivery_status = '4' THEN 'Read' ELSE '' END FROM tr_message_delivery_report mdr LEFT JOIN ms_vendor mv ON (mdr.id_ms_vendor = mv.id_ms_vendor) LEFT JOIN ms_lov ml ON (mdr.lov_message_media = ml.id_lov) LEFT JOIN ms_tenant mt ON (mdr.id_ms_tenant = mt.id_ms_tenant) WHERE mt.tenant_code = '" + tenantCode + "'" + '\n' + 
-				commandSql.get("defaultSetting") + " and mdr.report_time >= date_trunc('MONTH', now()) and mdr.report_time <= now()" + '\n' + 
-				commandSql.get("Vendor") + " and mv.vendor_name = '" + value.get("Vendor") + "'" + '\n' + 
-				commandSql.get("Message Media") + " and ml.description = '" + value.get("Message Media") + "'" + '\n' + 
-				commandSql.get("Report Time Start") + " and TO_CHAR(mdr.report_time, 'yyyy-MM-dd') >= '" + value.get("Report Time Start") + "'" + '\n' + 
-				commandSql.get("Report Time End") + "and TO_CHAR(mdr.report_time, 'yyyy-MM-dd') <= '" + value.get("Report Time End") + "'" + '\n' + 
-				commandSql.get("Status Delivery") + " and mdr.delivery_status = '" + value.get("Status Delivery") + "'" + '\n' + 
-				commandSql.get("Recipient") + " and recipient_detail = '" + value.get("Recipient") + "'" + '\n' + 
+		resultSet = stm.executeQuery("SELECT mv.vendor_name,TO_CHAR(mdr.report_time, 'DD-Mon-YYYY HH24:MI:SS'),mdr.recipient_detail,mdr.trx_no,ml.description,CASE WHEN mdr.delivery_status = '0' THEN 'Not Started' WHEN mdr.delivery_status = '1' THEN 'Waiting' WHEN mdr.delivery_status = '2' THEN 'Failed' WHEN mdr.delivery_status = '3' THEN 'Delivered' WHEN mdr.delivery_status = '4' THEN 'Read' ELSE '' END FROM tr_message_delivery_report mdr LEFT JOIN ms_vendor mv ON (mdr.id_ms_vendor = mv.id_ms_vendor) LEFT JOIN ms_lov ml ON (mdr.lov_message_media = ml.id_lov) LEFT JOIN ms_tenant mt ON (mdr.id_ms_tenant = mt.id_ms_tenant) WHERE mt.tenant_code = '" + tenantCode + "'" + '\n' +
+				commandSql.get('defaultSetting') + " and mdr.report_time >= date_trunc('MONTH', now()) and mdr.report_time <= now()" + '\n' +
+				commandSql.get('Vendor') + " and mv.vendor_name = '" + value.get('Vendor') + "'" + '\n' +
+				commandSql.get('Message Media') + " and ml.description = '" + value.get('Message Media') + "'" + '\n' +
+				commandSql.get('Report Time Start') + " and TO_CHAR(mdr.report_time, 'yyyy-MM-dd') >= '" + value.get('Report Time Start') + "'" + '\n' +
+				commandSql.get('Report Time End') + "and TO_CHAR(mdr.report_time, 'yyyy-MM-dd') <= '" + value.get('Report Time End') + "'" + '\n' +
+				commandSql.get('Status Delivery') + " and mdr.delivery_status = '" + value.get('Status Delivery') + "'" + '\n' +
+				commandSql.get('Recipient') + " and recipient_detail = '" + value.get('Recipient') + "'" + '\n' +
 				" ORDER BY mdr.report_time DESC")
 
 		metadata = resultSet.metaData
@@ -107,5 +107,4 @@ public class MessageDeliveryReport {
 		}
 		listdata
 	}
-	
 }
