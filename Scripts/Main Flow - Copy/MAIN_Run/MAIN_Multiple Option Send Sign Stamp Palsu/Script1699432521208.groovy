@@ -21,7 +21,7 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 def currentDate = new Date().format('yyyy-MM-dd')
 
 'looping untuk menjalankan Main'
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathMain).columnNumbers; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 61; GlobalVariable.NumofColm <= findTestData(excelPathMain).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break 
     } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
@@ -54,13 +54,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         'pasang gv tenant agar tidak berubah'
         GlobalVariable.Tenant = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))
 
-		'Memilih document monitoring menggunakan apa berdasarkan input. Jika embed, maka setting GV Yes, jika tidak, maka setting No'
-        if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Document Monitoring Using ?')) == 'Embed') {
-            GlobalVariable.RunWithEmbed = 'Yes'
-        } else {
-            GlobalVariable.RunWithEmbed = 'No'
-        }
-        
         'inisialisasi signerInput dan email signer sebagai array list'
         ArrayList emailSignerPerDoc, signers = [], documentId = [], signersPerDoc = []
 
@@ -203,7 +196,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Need Sign for this document?')) == 
                 'Yes') {
                     'setting must liveness dimatikan/diaktifkan'
-                    if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must LivenessFaceCompare')).length() > 
+                    if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting use_liveness_facecompare_first')).length() > 
                     0) {
                         'update setting vendor otp ke table di DB'
                         CustomKeywords.'connection.UpdateData.settingLivenessFaceCompare'(conneSign, findTestData(excelPathMain).getValue(
@@ -778,7 +771,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             'class', 'equals', ('datatable-icon-skip'), true)
 
 						'jika btn lastest dapat diclick'
-                        if (WebUI.verifyElementPresent(modifyObjectBtnLastest, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+                        if (WebUI.verifyElementVisible(modifyObjectBtnLastest, FailureHandling.OPTIONAL)) {
                             WebUI.focus(modifyObjectBtnLastest)
 
                             'Klik button Lastest'

@@ -32,17 +32,23 @@ GlobalVariable.NumofColm = 2
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign Main.xlsx')
 
-aa = CustomKeywords.'connection.DataVerif.getDetailTrx'(conneSign, '834839')
-println aa
+'ambil row lastest pencarian dokumen'
+variablePencarianDokumenRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
 
-  'get row lastest'
-                        modifyObjectBtnLastest = WebUI.modifyObjectProperty(findTestObject('Object Repository/KotakMasuk/Sign/modifyObject'), 
-                            'class', 'equals', ('datatable-icon-skip'), true)
+'ambil column lastest pencarian dokumen'
+variablePencarianDokumenColumn = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller > datatable-row-wrapper > datatable-body-row datatable-body-cell'))
 
-						'jika btn lastest dapat diclick'
-                        if (WebUI.verifyElementPresent(modifyObjectBtnLastest, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-                            WebUI.focus(modifyObjectBtnLastest)
+println variablePencarianDokumenRow
+println variablePencarianDokumenColumn
+println variablePencarianDokumenRow.size()
+println variablePencarianDokumenColumn.size()
 
-                            'Klik button Lastest'
-                            WebUI.click(modifyObjectBtnLastest, FailureHandling.CONTINUE_ON_FAILURE)
-                        }
+'modify object text refnum, tipe dok, nama dok, tgl permintaan, tgl selesai, proses ttd, total materai, status'
+modifyObjectPencarianDokumen = WebUI.modifyObjectProperty(findTestObject('PencarianDokumen/text_refnum'), 'xpath',
+	'equals', ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-inquiry/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+	(variablePencarianDokumenRow.size() - 0)) + ']/datatable-body-row/div[2]/datatable-body-cell[') + 1) + ']/div',
+	true)
+
+WebUI.scrollToElement(modifyObjectPencarianDokumen, GlobalVariable.TimeOut)
+
+println WebUI.getText(modifyObjectPencarianDokumen)

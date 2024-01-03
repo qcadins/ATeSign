@@ -116,7 +116,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 					}
 					
 					'call test case signing digisign'
-					WebUI.callTestCase(findTestCase('Main Flow/Signing Digisign'), [('excelPathFESignDocument') : excelPathAPIGetSignLink
+					WebUI.callTestCase(findTestCase('null'), [('excelPathFESignDocument') : excelPathAPIGetSignLink
 						, ('sheet') : sheet, ('flowGetSignLink') : 'Yes', ('emailSigner') : findTestData(excelPathAPIGetSignLink).getValue(GlobalVariable.NumofColm, rowExcel('$loginId')),
 							('documentId') : documentId, ('nomorKontrak'): refNum], FailureHandling.CONTINUE_ON_FAILURE)
 				}

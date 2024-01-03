@@ -6,11 +6,12 @@
    <elementGuidId>a7e8c85a-1adc-46a5-ac38-3ec1074002c0</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
+   <autoUpdateContent>false</autoUpdateContent>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    },\n    \&quot;email\&quot;: \&quot;${email}\&quot;,\n    \&quot;psreCode\&quot;: \&quot;${psreCode}\&quot;,\n    \&quot;otp\&quot;: \&quot;${otp}\&quot;,\n    \&quot;docs\&quot;: [\n        {\n            \&quot;docSourceName\&quot;: \&quot;${docSourceName}\&quot;,\n            \&quot;docDestinationName\&quot;: \&quot;${docDestinationName}\&quot;,\n            \&quot;signLocation\&quot;: {\n                \&quot;llx\&quot;: ${llx},\n                \&quot;lly\&quot;: ${lly},\n                \&quot;urx\&quot;: ${urx},\n                \&quot;ury\&quot;: ${ury},\n                \&quot;page\&quot; : ${page}\n            }\n        }\n    ]\n}&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    },\n    \&quot;email\&quot;: \&quot;${email}\&quot;,\n    \&quot;psreCode\&quot;: \&quot;${psreCode}\&quot;,\n    \&quot;otp\&quot;: \&quot;${otp}\&quot;,\n  \&quot;phone\&quot; : \&quot;${phone}\&quot;,\n    \&quot;docs\&quot;: [\n        {\n            \&quot;docSourceName\&quot;: \&quot;${docSourceName}\&quot;,\n            \&quot;docDestinationName\&quot;: \&quot;${docDestinationName}\&quot;,\n            \&quot;signLocation\&quot;: {\n                \&quot;llx\&quot;: ${llx},\n                \&quot;lly\&quot;: ${lly},\n                \&quot;urx\&quot;: ${urx},\n                \&quot;ury\&quot;: ${ury},\n                \&quot;page\&quot; : ${page}\n            }\n        }\n    ]\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>

@@ -19,6 +19,13 @@ ArrayList nomorKontrakPerPilihan = []
 
 String settingHO = ''
 
+'Memilih document monitoring menggunakan apa berdasarkan input. Jika embed, maka setting GV Yes, jika tidak, maka setting No'
+if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Document Monitoring Using ?')) == 'Embed') {
+	GlobalVariable.RunWithEmbed = 'Yes'
+} else {
+	GlobalVariable.RunWithEmbed = 'No'
+}
+
 'Jika nomor Kontrak kosong'
 if ((nomorKontrak == '') || (nomorKontrak.toString() == 'null')) {
     if (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
@@ -1071,7 +1078,7 @@ def funcLogin(Connection conneSign, String documentId) {
                 }
             } else {
                 'Call test Case untuk login sebagai admin wom admin client'
-                WebUI.callTestCase(findTestCase('Main Flow/Login'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
+                WebUI.callTestCase(findTestCase('Main Flow - Copy/Login'), [('excel') : excelPathFESignDocument, ('sheet') : sheet], 
                     FailureHandling.CONTINUE_ON_FAILURE)
 
                 'klik button saldo'

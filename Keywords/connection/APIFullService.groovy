@@ -959,7 +959,9 @@ public class APIFullService {
 		}
 
 		if (data != 'null') {
-			helperQuery = 'tdds.seq_no'
+			if (helperQuery != 'tdds.id_document_d_sign') {
+				helperQuery = 'tdds.seq_no'
+			}
 		} else if (data == 'null') {
 			if (helperQuery != 'tdds.seq_no') {
 				helperQuery = 'tdds.id_document_d_sign'
@@ -1869,12 +1871,12 @@ public class APIFullService {
 			commandDelivStat = '--'
 		}
 		resultSet = stm.executeQuery("SELECT vendor_name, mdr.report_time, recipient_detail, trx_no, description, delivery_status, CASE WHEN delivery_status = '0' THEN 'Not Started' WHEN delivery_status = '1' THEN 'Waiting' WHEN delivery_status = '2' THEN 'Failed' WHEN delivery_status = '3' THEN 'Delivered' WHEN delivery_status = '4' THEN 'Read' END as delivery_status_information FROM tr_message_delivery_report mdr LEFT JOIN ms_tenant mt ON mdr.id_ms_tenant = mt.id_ms_tenant LEFT JOIN ms_vendor mv ON mv.id_ms_vendor = mdr.id_ms_vendor LEFT JOin ms_lov mlov ON mlov.id_lov = mdr.lov_message_media WHERE tenant_code = '" + tenant + "'" + '\n' +
-		commandRec + " AND(recipient_detail = '" + recipient + "') " + '\n' +
-		commandReport +" AND(mdr.report_time BETWEEN '" + dateStart + " 00:00:00.000' AND '" + dateEnd + " 23:59:59.999') " + '\n' +
-		commandMedia +" AND (mlov.description = '" + messageMedia + "') " + '\n' +
-		commandVendor +" AND (vendor_code = '" + vendor + "') " + '\n' +
-		commandDelivStat +" AND (mdr.delivery_status = '" + deliveryStatus + "') " + '\n' +
-		"ORDER BY report_time DESC ")
+				commandRec + " AND(recipient_detail = '" + recipient + "') " + '\n' +
+				commandReport +" AND(mdr.report_time BETWEEN '" + dateStart + " 00:00:00.000' AND '" + dateEnd + " 23:59:59.999') " + '\n' +
+				commandMedia +" AND (mlov.description = '" + messageMedia + "') " + '\n' +
+				commandVendor +" AND (vendor_code = '" + vendor + "') " + '\n' +
+				commandDelivStat +" AND (mdr.delivery_status = '" + deliveryStatus + "') " + '\n' +
+				"ORDER BY report_time DESC ")
 
 		metadata = resultSet.metaData
 
@@ -1905,9 +1907,9 @@ public class APIFullService {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("SELECT count(*) FROM ms_doc_template mdt LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mdt.id_ms_tenant WHERE tenant_code = '" + tenant + "'" + '\n' +
-		commandCode + " and mdt.doc_template_code = '" + docTempCode + "'" + '\n' +
-		commandName + " AND mdt.doc_template_name = '" + docTempName + "'" + '\n' +
-		commandisActive + " AND mdt.is_active = '" + isActive + "'")
+				commandCode + " and mdt.doc_template_code = '" + docTempCode + "'" + '\n' +
+				commandName + " AND mdt.doc_template_name = '" + docTempName + "'" + '\n' +
+				commandisActive + " AND mdt.is_active = '" + isActive + "'")
 
 		metadata = resultSet.metaData
 
@@ -1970,8 +1972,8 @@ public class APIFullService {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("SELECT count(*) from ms_tenant " + '\n' +
-		commandName + " WHERE tenant_name LIKE '" + tenantName + "%'" + '\n' +
-		commandisActive + commandWhere + " is_active = '" + isActive + "'")
+				commandName + " WHERE tenant_name LIKE '" + tenantName + "%'" + '\n' +
+				commandisActive + commandWhere + " is_active = '" + isActive + "'")
 
 		metadata = resultSet.metaData
 
@@ -2008,10 +2010,10 @@ public class APIFullService {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("SELECT count(*) FROM ms_vendor mv LEFT JOIN ms_lov mlo ON mlo.id_lov = mv.lov_vendor_type WHERE mlo.code = 'PSRE'" + '\n' +
-		commandName + " AND vendor_name LIKE '%" + vendorName + "%'" + '\n' +
-		commandCode + " AND vendor_code LIKE '%" + vendorCode + "%'" + '\n' +
-		commandisActive + " AND mv.is_active = '" + isActive + "'" + '\n' +
-		commandisOperating + " AND mv.is_operating = '" + isOperating + "'")
+				commandName + " AND vendor_name LIKE '%" + vendorName + "%'" + '\n' +
+				commandCode + " AND vendor_code LIKE '%" + vendorCode + "%'" + '\n' +
+				commandisActive + " AND mv.is_active = '" + isActive + "'" + '\n' +
+				commandisOperating + " AND mv.is_operating = '" + isOperating + "'")
 
 		metadata = resultSet.metaData
 
