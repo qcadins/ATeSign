@@ -7,7 +7,7 @@ import internal.GlobalVariable
 import org.apache.poi.xssf.usermodel.XSSFRow
 
 public class WriteExcel {
-	
+
 	@Keyword
 	writeToExcel(String filePath, String sheetName, int rowNo, int collNo, String cellValue) {
 		FileInputStream file = new FileInputStream(new File(filePath))
@@ -15,8 +15,8 @@ public class WriteExcel {
 		XSSFWorkbook workbook = new XSSFWorkbook(file)
 		XSSFSheet sheet = workbook.getSheet(sheetName)
 
-		row = sheet.getRow(rowNo) ?: sheet.createRow(rowNo)
-		cell = row.getCell(collNo) ?: row.createCell(collNo)
+		def row = sheet.getRow(rowNo) ?: sheet.createRow(rowNo)
+		def cell = row.getCell(collNo) ?: row.createCell(collNo)
 
 		cell.setCellValue(cellValue)
 
@@ -116,5 +116,4 @@ public class WriteExcel {
 		file.close()
 		rowNum + 1
 	}
-	
 }

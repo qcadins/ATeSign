@@ -18,12 +18,12 @@ public class BeautifyJson {
 	def process(String responseBody, String sheet, int rowNo, String fileName) {
 		try {
 			// Parse the original JSON string
-			slurper = new groovy.json.JsonSlurper()
-			json = slurper.parseText(responseBody)
+			def slurper = new groovy.json.JsonSlurper()
+			def json = slurper.parseText(responseBody)
 
 			// Beautify the JSON
-			builder = new groovy.json.JsonBuilder(json)
-			beautifiedJson = builder.toPrettyString()
+			def builder = new groovy.json.JsonBuilder(json)
+			def beautifiedJson = builder.toPrettyString()
 
 			try {
 				needto.writeToExcel(GlobalVariable.DataFilePath, sheet, rowNo, GlobalVariable.NumofColm -
