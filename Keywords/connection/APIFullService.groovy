@@ -1386,10 +1386,21 @@ public class APIFullService {
 		Integer.parseInt(data)
 	}
 	@Keyword
-	getTemplateSignloc(Connection conn, String doctemplatecode, String tenant) {
+	getTemplateSignloc(Connection conn, String doctemplatecode, String tenant, String signertypeCode) {
+		String commandCode = '', queryActive = ''
+		
+		if (signertypeCode == '') {
+			commandCode = '--'
+		} else if (signertypeCode == 'SDT') {
+			queryActive = ' AND mlo.code'
+		} else {
+			queryActive = ' AND ml.code'
+		}
+		
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT CASE WHEN mlo.description = 'Stamp Duty (materai)' THEN 'Stamp Duty' ELSE ml.description END as signer_type, mlo.description, sign_page, jsonb_build_object( 'llx', round((sign_location::jsonb->>'llx')::numeric), 'lly', round((sign_location::jsonb->>'lly')::numeric), 'urx', round((sign_location::jsonb->>'urx')::numeric), 'ury', round((sign_location::jsonb->>'ury')::numeric)) AS digiSignLoc, jsonb_build_object( 'llx', round((sign_location::jsonb->>'llx')::numeric), 'lly', round((sign_location::jsonb->>'lly')::numeric), 'urx', round((sign_location::jsonb->>'urx')::numeric), 'ury', round((sign_location::jsonb->>'ury')::numeric) ) AS tknajasignLoc FROM ms_doc_template_sign_loc mdts JOIN ms_doc_template mdt ON mdt.id_doc_template = mdts.id_doc_template LEFT JOIN ms_lov ml ON mdts.lov_signer_type = ml.id_lov JOIN ms_lov mlo ON mdts.lov_sign_type = mlo.id_lov LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mdt.id_ms_tenant WHERE doc_template_code = '" + doctemplatecode + "' AND tenant_code = '" + tenant + "'")
+		resultSet = stm.executeQuery("SELECT CASE WHEN mlo.description = 'Stamp Duty (materai)' THEN 'Stamp Duty' ELSE ml.description END as signer_type, mlo.description, sign_page, jsonb_build_object( 'llx', round((sign_location::jsonb->>'llx')::numeric), 'lly', round((sign_location::jsonb->>'lly')::numeric), 'urx', round((sign_location::jsonb->>'urx')::numeric), 'ury', round((sign_location::jsonb->>'ury')::numeric)) AS digiSignLoc, jsonb_build_object( 'llx', round((sign_location::jsonb->>'llx')::numeric), 'lly', round((sign_location::jsonb->>'lly')::numeric), 'urx', round((sign_location::jsonb->>'urx')::numeric), 'ury', round((sign_location::jsonb->>'ury')::numeric) ) AS tknajasignLoc FROM ms_doc_template_sign_loc mdts JOIN ms_doc_template mdt ON mdt.id_doc_template = mdts.id_doc_template LEFT JOIN ms_lov ml ON mdts.lov_signer_type = ml.id_lov JOIN ms_lov mlo ON mdts.lov_sign_type = mlo.id_lov LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mdt.id_ms_tenant WHERE doc_template_code = '" + doctemplatecode + "' AND tenant_code = '" + tenant + "'" + '\n' + 
+			commandCode + queryActive + "= '" + signertypeCode + "'")
 
 		metadata = resultSet.metaData
 
@@ -1404,11 +1415,22 @@ public class APIFullService {
 		listdata
 	}
 	@Keyword
-	getTemplateSignlocDetail(Connection conn, String doctemplatecode, String tenant) {
+	getTemplateSignlocDetail(Connection conn, String doctemplatecode, String tenant, String signertypeCode) {
+		String commandCode = '', queryActive = ''
+		
+		if (signertypeCode == '') {
+			commandCode = '--'
+		} else if (signertypeCode == 'SDT') {
+			queryActive = ' AND mlo.code'
+		} else {
+			queryActive = ' AND ml.code'
+		}
+		
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT jsonb_build_object( 'x', round((vida_sign_location::jsonb->>'x')::numeric), 'y', round((vida_sign_location::jsonb->>'y')::numeric), 'h', round((vida_sign_location::jsonb->>'h')::numeric), 'w', round((vida_sign_location::jsonb->>'w')::numeric))::text::jsonb AS vidasignLoc, jsonb_build_object( 'x', round((privy_sign_location::jsonb->>'x')::numeric), 'y', round((privy_sign_location::jsonb->>'y')::numeric), 'h', round((privy_sign_location::jsonb->>'h')::numeric), 'w', round((privy_sign_location::jsonb->>'w')::numeric) )::text::jsonb AS privysignLoc FROM ms_doc_template_sign_loc mdts JOIN ms_doc_template mdt ON mdt.id_doc_template = mdts.id_doc_template LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mdt.id_ms_tenant WHERE doc_template_code = '" + doctemplatecode + "' AND tenant_code = '" + tenant + "'")
-
+		resultSet = stm.executeQuery("SELECT jsonb_build_object( 'x', round((vida_sign_location::jsonb->>'x')::numeric), 'y', round((vida_sign_location::jsonb->>'y')::numeric), 'h', round((vida_sign_location::jsonb->>'h')::numeric), 'w', round((vida_sign_location::jsonb->>'w')::numeric))::text::jsonb AS vidasignLoc, jsonb_build_object( 'x', round((privy_sign_location::jsonb->>'x')::numeric), 'y', round((privy_sign_location::jsonb->>'y')::numeric), 'h', round((privy_sign_location::jsonb->>'h')::numeric), 'w', round((privy_sign_location::jsonb->>'w')::numeric) )::text::jsonb AS privysignLoc FROM ms_doc_template_sign_loc mdts JOIN ms_doc_template mdt ON mdt.id_doc_template = mdts.id_doc_template LEFT JOIN ms_lov ml ON mdts.lov_signer_type = ml.id_lov LEFT JOIN ms_lov mlo ON mdts.lov_sign_type = mlo.id_lov  LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mdt.id_ms_tenant WHERE doc_template_code = '" + doctemplatecode + "' AND tenant_code = '" + tenant + "'" + '\n' + 
+			commandCode + queryActive + " = '" + signertypeCode + "'")
+		
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -1422,10 +1444,21 @@ public class APIFullService {
 		listdata
 	}
 	@Keyword
-	getCountSignLoc(Connection conn, String doctemplatecode, String tenant) {
+	getCountSignLoc(Connection conn, String doctemplatecode, String tenant, String signertypeCode) {
+		String commandCode = '', queryActive = ''
+		
+		if (signertypeCode == '') {
+			commandCode = '--'
+		} else if (signertypeCode == 'SDT') {
+			queryActive = ' AND mlo.code'
+		} else {
+			queryActive = ' AND ml.code'
+		}
+		
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT count(id_ms_doc_template_sign_loc) FROM ms_doc_template_sign_loc mdts JOIN ms_doc_template mdt ON mdt.id_doc_template = mdts.id_doc_template LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mdt.id_ms_tenant WHERE doc_template_code = '" + doctemplatecode + "' AND tenant_code = '" + tenant + "'")
+		resultSet = stm.executeQuery("SELECT count(id_ms_doc_template_sign_loc) FROM ms_doc_template_sign_loc mdts JOIN ms_doc_template mdt ON mdt.id_doc_template = mdts.id_doc_template LEFT JOIN ms_lov ml ON mdts.lov_signer_type = ml.id_lov LEFT JOIN ms_lov mlo ON mdts.lov_sign_type = mlo.id_lov LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mdt.id_ms_tenant WHERE doc_template_code = '" + doctemplatecode + "' AND tenant_code = '" + tenant + "'" + '\n' + 
+			commandCode + queryActive + " = '" + signertypeCode + "'")
 
 		metadata = resultSet.metaData
 
@@ -1559,10 +1592,18 @@ public class APIFullService {
 	}
 
 	@Keyword
-	getOfficeList(Connection conn) {
+	getOfficeList(Connection conn, String region) {
+		String commandRegion = ''
+
+		if (region == '') {
+			commandRegion = '--'
+		}
+
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select office_code, office_name from ms_office mo join ms_tenant mt on mo.id_ms_tenant = mt.id_ms_tenant where tenant_code = '"+ GlobalVariable.Tenant +"'")
+		resultSet = stm.executeQuery("select office_code, office_name from ms_office mo LEFT join ms_tenant mt on mo.id_ms_tenant = mt.id_ms_tenant LEFT JOIN ms_region mr ON mr.id_ms_region = mo.id_ms_region where tenant_code = '" + GlobalVariable.Tenant + "'" + '\n' +
+				commandRegion + " AND region_code = '" + region + "'")
+
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

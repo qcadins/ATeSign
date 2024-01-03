@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "BB42BBD335DDECA7F0E2C533A2FBBE0B",
+  "keywordFileContentHash": "85894A9790F08813325968969F30A111",
   "keywordClasses": [
     {
       "name": "connection.Registrasi",
@@ -180,6 +180,19 @@
                 "genericsTypes": [],
                 "errorOnParsing": false
               }
+            },
+            {
+              "name": "method",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
             }
           ],
           "javadoc": ""
@@ -201,7 +214,7 @@
               }
             },
             {
-              "name": "NIK",
+              "name": "nik",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",

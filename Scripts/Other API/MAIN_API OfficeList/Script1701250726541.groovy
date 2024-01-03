@@ -45,8 +45,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.token = WS.getElementPropertyValue(respon_login, 'access_token')
 
             'HIT API'
-            respon = WS.sendRequest(findTestObject('Postman/OfficeList', [('callerId') : (findTestData(excelPath).getValue(
-                            GlobalVariable.NumofColm, rowExcel('username')))]))
+            respon = WS.sendRequest(findTestObject('Postman/OfficeList', [
+						('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('username')),
+						('regionCode') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Region Code'))]))
 
             'ambil lama waktu yang diperlukan hingga request menerima balikan'
             def elapsedTime = (respon.getElapsedTime() / 1000) + ' second'
@@ -78,7 +79,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         ArrayList arrayMatch = []
 
                         'get data store db'
-                        ArrayList result = CustomKeywords.'connection.APIFullService.getOfficeList'(conneSign)
+                        ArrayList result = CustomKeywords.'connection.APIFullService.getOfficeList'(conneSign,
+							findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Region Code')))
 
                         'declare arrayindex'
                         arrayindex = 0

@@ -20,7 +20,7 @@ public class Registrasi {
 	settingEmailServiceTenant(Connection conn, String value) {
 		stm = conn.createStatement()
 
-		int resultSet = stm.executeUpdate("UPDATE ms_tenant SET email_service = '"+ value +"' WHERE tenant_code = '"+ GlobalVariable.Tenant +"'")
+		stm.executeUpdate("UPDATE ms_tenant SET email_service = '" + value + "' WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
 	}
 
 	@Keyword
@@ -62,10 +62,14 @@ public class Registrasi {
 	}
 
 	@Keyword
-	getBuatUndanganDataPerusahaanStoreDB(Connection conn, String value) {
+	getBuatUndanganDataPerusahaanStoreDB(Connection conn, String value, String method) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select region, office, business_line, task_no from tr_invitation_link where receiver_detail = '" +  value  + "'")
+		if (!method.equalsIgnoreCase('API Generate Inv Link Normal')) {
+			resultSet = stm.executeQuery("select office, business_line, ref_number, region from tr_invitation_link where receiver_detail = '" +  value  + "'")
+		} else {
+			resultSet = stm.executeQuery("select office_name, business_line_name, ref_number, office_code, business_line_code from tr_invitation_link til join ms_office mo on mo.id_ms_office = til.id_ms_office join ms_business_line mbl on mbl.id_ms_business_line = til.id_ms_business_line where receiver_detail = '" +  value  + "'")
+		}
 
 		metadata = resultSet.metaData
 
@@ -74,7 +78,7 @@ public class Registrasi {
 		while (resultSet.next()) {
 			for (i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
-				if(data == null) {
+				if (data == null) {
 					data = ''
 				}
 				listdata.add(data)
@@ -84,10 +88,10 @@ public class Registrasi {
 	}
 
 	@Keyword
-	getRegisterPrivyStoreDB(Connection conn, String NIK) {
+	getRegisterPrivyStoreDB(Connection conn, String nik) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT request_status, is_external FROM tr_balance_mutation tbm JOIN tr_job_check_register_status tjc ON tbm.id_balance_mutation = tjc.id_balance_mutation WHERE tjc.hashed_id_no = encode(sha256('"+ NIK +"'), 'hex')")
+		resultSet = stm.executeQuery("SELECT request_status, is_external FROM tr_balance_mutation tbm JOIN tr_job_check_register_status tjc ON tbm.id_balance_mutation = tjc.id_balance_mutation WHERE tjc.hashed_id_no = encode(sha256('" + nik + "'), 'hex')")
 
 		metadata = resultSet.metaData
 
@@ -106,7 +110,7 @@ public class Registrasi {
 	settingSendCertNotifbySMS(Connection conn, String value) {
 		stm = conn.createStatement()
 
-		int resultSet = stm.executeUpdate("UPDATE ms_tenant SET send_cert_notif_by_sms = "+ value +" WHERE tenant_code = '"+ GlobalVariable.Tenant +"'")
+		stm.executeUpdate("UPDATE ms_tenant SET send_cert_notif_by_sms = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
 	}
 
 	@Keyword

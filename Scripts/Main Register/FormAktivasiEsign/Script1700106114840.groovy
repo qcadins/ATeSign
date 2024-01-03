@@ -66,155 +66,180 @@ if (GlobalVariable.RunWithEmbed == 'Yes') {
 'maximize window'
 WebUI.maximizeWindow()
 
-'check if email kosong atau tidak'
-if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase('Edit') &&
-	(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Invite By')).equalsIgnoreCase('Email') ||
-		findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email - Edit')).length() > 0)) {
-	'get email dari row edit'
-	email = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email - Edit')).replace('"', '')
-} else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 2 &&
-	!findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase('Edit')) {
-	'get email dari row input'
-	email = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', '')
+if (GlobalVariable.Psre == 'PRIVY') {
+	if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_SuccessPrivy'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		'get message dari ui'
+		reason = WebUI.getText(findTestObject('DaftarAkun/label_SuccessPrivy'))
+
+		'check if registrasi berhasil dan write ke excel'
+		if (reason.equalsIgnoreCase('Proses verifikasi anda sedang diproses. Harap menunggu proses verifikasi selesai.') &&
+		(GlobalVariable.FlagFailed == 0)) {
+			'write to excel success'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
+				1, GlobalVariable.StatusSuccess)
+		} else {
+			'write to excel status failed dan reason'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+				GlobalVariable.StatusFailed, (((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
+					rowExcel('Reason Failed')).replace('-', '') + ';') + '<') + reason) + '>')
+			
+			GlobalVariable.FlagFailed = 1
+		}
+
+		'call function check mutation trx'
+		checkTrxMutation(conneSign)
+	}
 } else {
-	'get name + email hosting'
-	email = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"', '') + CustomKeywords.'connection.DataVerif.getEmailHosting'(conneSign)
-}
-
-'setting reset OTP pada DB 0'
-CustomKeywords.'connection.DataVerif.settingResetOTPNol'(conneSign, email.toUpperCase())
-
-int delayExpiredOTP
-
-'check ada value maka Setting OTP Active Duration'
-if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() > 0) {
-	'Setting OTP Active Duration'
-	CustomKeywords.'connection.APIFullService.settingOTPActiveDuration'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')))
-	
-	delayExpiredOTP = 60 * Integer.parseInt(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')))
-}
-
-'check email sesuai dengan inputan'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/FormAktivasiEsign/input_Email'), 'value',
-		FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), email.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Email')
-
-'check nama lengkap sesuai dengan inputan'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/FormAktivasiEsign/input_NamaLengkap'), 
-            'value', FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('$Nama')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama Lengkap')
-
-'input kata sandi untuk verify button set ulang'
-WebUI.setText(findTestObject('RegisterEsign/FormAktivasiEsign/input_KataSandi'), '@Abcd1234')
-
-'input ulang kata sandi untuk verify button set ulang'
-WebUI.setText(findTestObject('RegisterEsign/FormAktivasiEsign/input_UlangKataSandi'), '@Abcd1234')
-
-'click button set ulang untuk reset field kata sandi dan ulang kata sandi (2x karena klik 1x hanya menghilangkan warning saja)'
-WebUI.click(findTestObject('RegisterEsign/FormAktivasiEsign/button_SetUlang'))
-
-WebUI.click(findTestObject('RegisterEsign/FormAktivasiEsign/button_SetUlang'))
-
-'verify kata sandi sudah kosong'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/FormAktivasiEsign/input_KataSandi'), 
-            'value'), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' Kata Sandi')
-
-'verify ulang kata sandi sudah kosong'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/FormAktivasiEsign/input_UlangKataSandi'), 
-            'value'), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' Ulang Kata Sandi')
-
-'input kata sandi'
-WebUI.setText(findTestObject('RegisterEsign/FormAktivasiEsign/input_KataSandi'), findTestData(excelPathRegister).getValue(
-        GlobalVariable.NumofColm, rowExcel('Password - Aktivasi')))
-
-'click button mata kata sandi'
-WebUI.click(findTestObject('RegisterEsign/FormAktivasiEsign/button_MataKataSandi'))
-
-'get text kata sandi'
-KataSandi = WebUI.getAttribute(findTestObject('RegisterEsign/FormAktivasiEsign/input_KataSandi'), 'value')
-
-'check kata sandi sesuai inputan excel'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(KataSandi, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('Password - Aktivasi')), false, FailureHandling.CONTINUE_ON_FAILURE), ' Kata Sandi')
-
-'input ulang kata sandi'
-WebUI.setText(findTestObject('RegisterEsign/FormAktivasiEsign/input_UlangKataSandi'), findTestData(excelPathRegister).getValue(
-        GlobalVariable.NumofColm, rowExcel('Retype Password - Aktivasi')))
-
-'click button mata ulang kata sandi'
-WebUI.click(findTestObject('RegisterEsign/FormAktivasiEsign/button_MataUlangKataSandi'))
-
-'get text ulang kata sandi'
-UlangKataSandi = WebUI.getAttribute(findTestObject('RegisterEsign/FormAktivasiEsign/input_UlangKataSandi'), 'value')
-
-'check ulang kata sandi sesuai inputan excel'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(UlangKataSandi, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('Retype Password - Aktivasi')), false, FailureHandling.CONTINUE_ON_FAILURE), ' Ulang Kata Sandi')
-
-'verify warning password'
-if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/FormAktivasiEsign/alertText'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-    'get text reason'
-    reason = WebUI.getText(findTestObject('RegisterEsign/FormAktivasiEsign/alertText'))
-
-    'write to excel status failed dan reason'
-    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-        GlobalVariable.StatusFailed, (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
-            '-', '') + ';') + '<' + reason + '>')
-
-    GlobalVariable.FlagFailed = 1
-} else if (WebUI.verifyElementClickable(findTestObject('RegisterEsign/FormAktivasiEsign/button_Proses'), FailureHandling.OPTIONAL)) {
-	'flag untuk count inputed'
-	int inputed = 0
-	
-	'call function input otp'
-	inputed = inputOTP(inputed, delayExpiredOTP, conneSign)
-	
-	println(inputed)
-	if(inputed > 0 && findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Resend After Check Expired')).equalsIgnoreCase('Yes')) {
-		
-		'call function input otp'
-		inputOTP(inputed, delayExpiredOTP, conneSign)
+	'check if email kosong atau tidak'
+	if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase('Edit') &&
+			(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Invite By')).equalsIgnoreCase('Email') ||
+					findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email - Edit')).length() > 0)) {
+		'get email dari row edit'
+		email = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email - Edit')).replace('"', '')
+	} else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 2 &&
+			!findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase('Edit')) {
+		'get email dari row input'
+		email = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', '')
+	} else {
+		'get name + email hosting'
+		email = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"', '') + CustomKeywords.'connection.DataVerif.getEmailHosting'(conneSign)
 	}
 	
-	if (GlobalVariable.checkStoreDB == 'Yes') {
-		'check jika Must use WA message = 1'
-    	if ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')) == '1')) {
-    		usedSaldo = 'WhatsApp Message'
-    	} else {
-    		'check jika email service on'
-    		if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == '1') {
-    			'check jika use WA message = 1'
-    			if((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) == '1')) {
-    				usedSaldo = 'WhatsApp Message'
-    			} else {
-    				'jika use WA message bukan 1 maka use OTP'
-    				usedSaldo = 'OTP'
-    			}
-    		} else {
-				'jika use WA message bukan 1 maka use OTP'
-				usedSaldo = 'OTP'
+	'setting reset OTP pada DB 0'
+	CustomKeywords.'connection.DataVerif.settingResetOTPNol'(conneSign, email.toUpperCase())
+	
+	int delayExpiredOTP
+	
+	'check ada value maka Setting OTP Active Duration'
+	if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() > 0) {
+		'Setting OTP Active Duration'
+		CustomKeywords.'connection.APIFullService.settingOTPActiveDuration'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')))
+		
+		delayExpiredOTP = 60 * Integer.parseInt(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')))
+	}
+	
+	'check email sesuai dengan inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/FormAktivasiEsign/input_Email'), 'value',
+			FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), email.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Email')
+	
+	'check nama lengkap sesuai dengan inputan'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/FormAktivasiEsign/input_NamaLengkap'), 
+			'value', FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+					rowExcel('$Nama')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama Lengkap')
+	
+	'input kata sandi untuk verify button set ulang'
+	WebUI.setText(findTestObject('RegisterEsign/FormAktivasiEsign/input_KataSandi'), '@Abcd1234')
+	
+	'input ulang kata sandi untuk verify button set ulang'
+	WebUI.setText(findTestObject('RegisterEsign/FormAktivasiEsign/input_UlangKataSandi'), '@Abcd1234')
+	
+	'click button set ulang untuk reset field kata sandi dan ulang kata sandi (2x karena klik 1x hanya menghilangkan warning saja)'
+	WebUI.click(findTestObject('RegisterEsign/FormAktivasiEsign/button_SetUlang'))
+	
+	WebUI.click(findTestObject('RegisterEsign/FormAktivasiEsign/button_SetUlang'))
+	
+	'verify kata sandi sudah kosong'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/FormAktivasiEsign/input_KataSandi'), 
+			'value'), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' Kata Sandi')
+	
+	'verify ulang kata sandi sudah kosong'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('RegisterEsign/FormAktivasiEsign/input_UlangKataSandi'), 
+			'value'), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' Ulang Kata Sandi')
+	
+	'input kata sandi'
+	WebUI.setText(findTestObject('RegisterEsign/FormAktivasiEsign/input_KataSandi'), findTestData(excelPathRegister).getValue(
+			GlobalVariable.NumofColm, rowExcel('Password - Aktivasi')))
+	
+	'click button mata kata sandi'
+	WebUI.click(findTestObject('RegisterEsign/FormAktivasiEsign/button_MataKataSandi'))
+	
+	'get text kata sandi'
+	KataSandi = WebUI.getAttribute(findTestObject('RegisterEsign/FormAktivasiEsign/input_KataSandi'), 'value')
+	
+	'check kata sandi sesuai inputan excel'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(KataSandi, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+			rowExcel('Password - Aktivasi')), false, FailureHandling.CONTINUE_ON_FAILURE), ' Kata Sandi')
+	
+	'input ulang kata sandi'
+	WebUI.setText(findTestObject('RegisterEsign/FormAktivasiEsign/input_UlangKataSandi'), findTestData(excelPathRegister).getValue(
+			GlobalVariable.NumofColm, rowExcel('Retype Password - Aktivasi')))
+	
+	'click button mata ulang kata sandi'
+	WebUI.click(findTestObject('RegisterEsign/FormAktivasiEsign/button_MataUlangKataSandi'))
+	
+	'get text ulang kata sandi'
+	UlangKataSandi = WebUI.getAttribute(findTestObject('RegisterEsign/FormAktivasiEsign/input_UlangKataSandi'), 'value')
+	
+	'check ulang kata sandi sesuai inputan excel'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(UlangKataSandi, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+			rowExcel('Retype Password - Aktivasi')), false, FailureHandling.CONTINUE_ON_FAILURE), ' Ulang Kata Sandi')
+	
+	'verify warning password'
+	if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/FormAktivasiEsign/alertText'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		'get text reason'
+		reason = WebUI.getText(findTestObject('RegisterEsign/FormAktivasiEsign/alertText'))
+				
+				'write to excel status failed dan reason'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+						GlobalVariable.StatusFailed, (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+								'-', '') + ';') + '<' + reason + '>')
+				
+				GlobalVariable.FlagFailed = 1
+	} else if (WebUI.verifyElementClickable(findTestObject('RegisterEsign/FormAktivasiEsign/button_Proses'), FailureHandling.OPTIONAL)) {
+		'flag untuk count inputed'
+		int inputed = 0
+				
+				'call function input otp'
+				inputed = inputOTP(inputed, delayExpiredOTP, conneSign)
+				
+				println(inputed)
+				if(inputed > 0 && findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Resend After Check Expired')).equalsIgnoreCase('Yes')) {
+					
+					'call function input otp'
+					inputOTP(inputed, delayExpiredOTP, conneSign)
+				}
+		
+		if (GlobalVariable.checkStoreDB == 'Yes') {
+			'check jika Must use WA message = 1'
+			if ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')) == '1')) {
+				usedSaldo = 'WhatsApp Message'
+			} else {
+				'check jika email service on'
+				if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == '1') {
+					'check jika use WA message = 1'
+					if((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) == '1')) {
+						usedSaldo = 'WhatsApp Message'
+					} else {
+						'jika use WA message bukan 1 maka use OTP'
+						usedSaldo = 'OTP'
+					}
+				} else {
+					'jika use WA message bukan 1 maka use OTP'
+					usedSaldo = 'OTP'
+				}
 			}
-    	}
-		
-		resultTrx = CustomKeywords.'connection.APIFullService.getAPIGenInvLinkOTPTrx'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"',''), usedSaldo)
-
-		'declare arraylist arraymatch'
-		ArrayList<String> arrayMatch = []
-
-		int sum = 0
-		for (String value : resultTrx) {
-			int intValue = Integer.parseInt(value)
-			sum += intValue
-		}
-		
-		'verify trx qty = -1'
-		arrayMatch.add(WebUI.verifyEqual(sum, -GlobalVariable.Counter, FailureHandling.CONTINUE_ON_FAILURE))
-
-		'jika data db tidak sesuai dengan excel'
-		if (arrayMatch.contains(false)) {
-			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet,
-				GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (findTestData(excelPathRegister).getValue(
-					GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
+			
+			resultTrx = CustomKeywords.'connection.APIFullService.getAPIGenInvLinkOTPTrx'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"',''), usedSaldo)
+					
+					'declare arraylist arraymatch'
+					ArrayList<String> arrayMatch = []
+							
+							int sum = 0
+							for (String value : resultTrx) {
+								int intValue = Integer.parseInt(value)
+										sum += intValue
+							}
+			
+			'verify trx qty = -1'
+			arrayMatch.add(WebUI.verifyEqual(sum, -GlobalVariable.Counter, FailureHandling.CONTINUE_ON_FAILURE))
+			
+			'jika data db tidak sesuai dengan excel'
+			if (arrayMatch.contains(false)) {
+				'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet,
+						GlobalVariable.NumofColm, GlobalVariable.StatusFailed, (findTestData(excelPathRegister).getValue(
+								GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
+			}
 		}
 	}
 }

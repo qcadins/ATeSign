@@ -43,7 +43,13 @@ String selfPhoto, idPhoto
 			value = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Message'))
 		}
 		
-		println(value)
+		if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
+			'Menu Buat Undangan')) {
+			sDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+            rowExcel('Tanggal Lahir')), 'MM/dd/yyyy', 'yyyy-MM-dd')
+		} else {
+			sDate = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Lahir'))
+		}
 		
         'Pembuatan pengisian variable di sendRequest per column berdasarkan data excel.'
         ArrayList listInvitation = []
@@ -54,8 +60,7 @@ String selfPhoto, idPhoto
             rowExcel('$Nama'))) + '" ,"tlp": "') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
                 'No Telepon'))) + '" ,"jenisKelamin" : "') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
             rowExcel('Jenis Kelamin'))) + '" ,"tmpLahir" : "') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('Tempat Lahir'))) + '" ,"tglLahir" : "') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('Tanggal Lahir'))) + '" ,"idKtp" : "') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+            rowExcel('Tempat Lahir'))) + '" ,"tglLahir" : "') + sDate) + '" ,"idKtp" : "') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
             rowExcel('$NIK'))) + '" , "provinsi" : "') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
             rowExcel('Provinsi'))) + '" , "kota" : "') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
             rowExcel('Kota'))) + '" , "kecamatan" : "') + findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 

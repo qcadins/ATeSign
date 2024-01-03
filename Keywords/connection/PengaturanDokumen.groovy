@@ -137,13 +137,13 @@ public class PengaturanDokumen {
 		}
 		data
 	}
-	
+
 	@Keyword
 	getDocumentTemplateAPI(Connection conn, String documentTemplateCode) {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select mdtsl.sign_location, msl.code, msl1.code, mdtsl.sign_page, mdtsl.transform, mdtsl.tekenaj_sign_location, mdtsl.vida_sign_location, mdtsl.privy_sign_location, mdtsl.seq_no from ms_doc_template mdt left join ms_doc_template_sign_loc mdtsl on mdt.id_doc_template = mdtsl.id_doc_template left join ms_lov msl on mdtsl.lov_signer_type = msl.id_lov left join ms_lov msl1 on mdtsl.lov_sign_type = msl1.id_lov where mdt.doc_template_code = '"+documentTemplateCode+"'")
-		
+
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -156,7 +156,7 @@ public class PengaturanDokumen {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getDocumentTemplateAPI2(Connection conn, String documentTemplateCode) {
 		stm = conn.createStatement()

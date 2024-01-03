@@ -1,32 +1,12 @@
-import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
-import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
-import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
-import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
-import com.kms.katalon.core.testcase.TestCase as TestCase
-import com.kms.katalon.core.testdata.TestData as TestData
-import com.kms.katalon.core.testng.keyword.TestNGBuiltinKeywords as TestNGKW
-import com.kms.katalon.core.testobject.TestObject as TestObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
-import org.openqa.selenium.Keys as Keys
-
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
-import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
-import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
-import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
-import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import java.sql.Connection as Connection
-import internal.GlobalVariable as GlobalVariable
 
-def conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
+conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - API Only.xlsx')
@@ -38,7 +18,7 @@ String dateStart, dateEnd, deliveryStatus
 // Looping to iterate from GlobalVariable.NumofColm to countColmExcel. Use GlobalVariable.NumofColm as the variable starting from 2.
 for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; GlobalVariable.NumofColm++) {
 	// Create a variable 'status' and store the value of the 'Status' cell in the current column
-	def status = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status'))
+	status = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status'))
 
 	// If status is empty, break the loop
 	if (status == '') {
@@ -61,7 +41,7 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; Globa
 		}
 
 		// Create a variable 'userCorrectTenantCode' and store the value of the 'Use Correct Tenant Code' cell in the current column
-		def userCorrectTenantCode = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code'))
+		userCorrectTenantCode = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code'))
 
 		// If userCorrectTenantCode is 'Yes', store the value of 'Tenant Login' cell in GlobalVariable.Tenant
 		if (userCorrectTenantCode == 'Yes') {
@@ -78,7 +58,7 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; Globa
 		'ambil data date start'
 		dateEnd = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Report Date End*'))
 
-	   'HIT API Login untuk token'
+		'HIT API Login untuk token'
 		respon_login = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('username'))
 					, ('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('password'))]))
 
@@ -120,10 +100,10 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; Globa
 				  ('recipient') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Recipient*'))]))
 	 
 			 // Create a variable 'elapsedTime' which contains the elapsed time in seconds
-			 def elapsedTime = respon.getElapsedTime() / 1000 + ' seconds'
+			 elapsedTime = respon.elapsedTime / 1000 + ' seconds'
 	 
 			 // Create a variable 'responseBody' which contains the response body content
-			 def responseBody = respon.getResponseBodyContent()
+			 responseBody = respon.responseBodyContent
 	 
 			 // Process the response body to beautify the JSON format
 			 CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1,
@@ -134,11 +114,11 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; Globa
 	 
 			 // If the response status code is 200, perform some actions
 			 if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL)) {
-				 // Get the 'status.code' parameter from the response and store it in 'status_Code'
-				 def status_Code = WS.getElementPropertyValue(respon, 'status.code')
+				 // Get the 'status.code' parameter from the response and store it in 'statusCode'
+				 def statusCode = WS.getElementPropertyValue(respon, 'status.code')
 	 
-				 // If status_Code is 0, perform some actions
-				 if (status_Code == 0) {
+				 // If statusCode is 0, perform some actions
+				 if (statusCode == 0) {
 	 
 					 // If GlobalVariable.checkStoreDB is 'Yes', perform some actions
 					 if (GlobalVariable.checkStoreDB == 'Yes') {
@@ -164,7 +144,7 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; Globa
 							 int index = (WS.getElementPropertyValue(respon, 'page') - 1) * 10
 							
 							 // Declare an ArrayList called 'arrayMatch'
-							 def arrayMatch = []
+							 arrayMatch = []
 							 
 							 // Declare an ArrayList called 'result' and store the result of the 'getVendorofTenant' keyword from the 'APIFullService' class
 							 ArrayList result = CustomKeywords.'connection.APIFullService.getListMessageDeliveryAPIOnly'(conneSign, GlobalVariable.Tenant, GlobalVariable.Psre,
@@ -216,7 +196,7 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; Globa
 						 CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 					 }
 				 }
-				 // If status_Code is not 0, perform some actions
+				 // If statusCode is not 0, perform some actions
 				 else {
 					 // Get the error message from the response and write it to the Excel file
 					 getErrorMessageAPI(respon)
@@ -239,9 +219,9 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; Globa
  *
  *  @param respon The API response
  */
-def getErrorMessageAPI(respon) {
+def getErrorMessageAPI(def respon) {
 	// Get the 'status.message' parameter from the response and store it in 'message'
-	def message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
+	message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
 	// Write the status reason to the Excel file
 	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';' + message)
@@ -256,7 +236,7 @@ def getErrorMessageAPI(respon) {
  *  @param cellValue The value of the cell
  *  @return The row number of the cell
  */
-def rowExcel(cellValue) {
+def rowExcel(String cellValue) {
 	// Call the 'getExcelRow' keyword from the 'WriteExcel' class with the necessary parameters
 	CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }

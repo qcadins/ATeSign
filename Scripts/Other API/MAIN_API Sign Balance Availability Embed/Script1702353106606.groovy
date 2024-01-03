@@ -1,14 +1,10 @@
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-
-import java.nio.charset.StandardCharsets
-import java.sql.Connection
-import java.text.SimpleDateFormat
-
+import java.nio.charset.StandardCharsets as StandardCharsets
+import java.sql.Connection as Connection
+import java.text.SimpleDateFormat as SimpleDateFormat
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
-import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
 'get data file path'
@@ -19,146 +15,144 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'Pembuatan pengisian variable di sendRequest per jumlah documentId.'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPath).columnNumbers; (GlobalVariable.NumofColm)++) {
-	if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
-		break
-	} else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
-	
-		'inisialisasi arrayList'
-		ArrayList documentId = [], listDocId = []
-		
-		'setting menggunakan base url yang benar atau salah'
-		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
+    if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
+        break
+    } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
+        'inisialisasi arrayList'
+        ArrayList documentId = [], listDocId = []
 
-		'check if tidak mau menggunakan vendor code yang benar'
-		if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Vendor Code')) == 'No') {
-			'set vendor kosong'
-			GlobalVariable.Psre = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Vendor Code'))
-		} else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Vendor Code')) == 'Yes') {
-			'get vendor per case dari colm excel'
-			GlobalVariable.Psre = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
-		}
-		
-		'check if tidak mau menggunakan tenant code yang benar'
-		if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'No') {
-			'set tenant kosong'
-			GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong tenant Code'))
-		} else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'Yes') {
-			'get tenant per case dari colm excel'
-			GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
-		}
-		
-		'get aesKet Tenant'
-		aesKey = CustomKeywords.'connection.APIFullService.getAesKeyBasedOnTenant'(conneSign, GlobalVariable.Tenant)
+        'setting menggunakan base url yang benar atau salah'
+        CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
-		def currentDate = new Date()
+        'check if tidak mau menggunakan vendor code yang benar'
+        if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Vendor Code')) == 'No') {
+            'set vendor kosong'
+            GlobalVariable.Psre = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Vendor Code'))
+        } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Vendor Code')) == 'Yes') {
+            'get vendor per case dari colm excel'
+            GlobalVariable.Psre = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
+        }
+        
+        'check if tidak mau menggunakan tenant code yang benar'
+        if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'No') {
+            'set tenant kosong'
+            GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong tenant Code'))
+        } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'Yes') {
+            'get tenant per case dari colm excel'
+            GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
+        }
+        
+        'get aesKet Tenant'
+        aesKey = CustomKeywords.'connection.APIFullService.getAesKeyBasedOnTenant'(conneSign, GlobalVariable.Tenant)
 
-		def dateFormat = new SimpleDateFormat('yyyy-MM-dd HH:mm:ss')
+        currentDate = new Date()
 
-		def timestamp = dateFormat.format(currentDate)
+        dateFormat = new SimpleDateFormat('yyyy-MM-dd HH:mm:ss')
 
-		if (aesKey.toString() != 'null') {
-			'Mengambil document id dari excel dan displit'
-			documentId = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Document ID')).split(';', -1)
-			
-			'get office code dari db'
-			officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, documentId[0])
-			
-			'pembuatan message yang akan dienkrip'
-			msg = (((((('{\'officeCode\':\'' + officeCode) + '\',\'email\':\'') + findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('email'))) + '\',\'timestamp\':\'') +
-			timestamp) + '\'}')
+        timestamp = dateFormat.format(currentDate)
 
-			if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Msg')) == 'No') {
-				'officecode + email + time stamp tanpa encrypt'
-				endcodedMsg = msg
-			} else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Msg')) == 'Yes') {
-				'encrypt and decode officecode + email + time stamp'
-				endcodedMsg = encryptEncodeValue(msg, aesKey)
-			}
-				
-			for (int q = 0; q < documentId.size(); q++) {
-				if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct DocumentID')) == 'No') {
-					encryptDocID = documentId
-				} else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct DocumentID')) == 'Yes') {
-					encryptDocID = encryptEncodeValue(documentId[q].toString(), aesKey)					
-				}
-				
-				listDocId.add('"' + encryptDocID + '"');
-			}
-			
-		} else {
-			endcodedMsg = ''
-		}
-		
-		'ubah menjadi string'
-		String listDoc = listDocId.toString().replace('[','').replace(']','')
-	
-			'HIT API Sign Balance availability'
-			respon_signBalVal = WS.sendRequest(findTestObject('Postman/Sign Balance Availability Embed', [
-				('callerId') : (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId'))),
-				('docId') : listDoc, ('msg') : endcodedMsg]))
-	
-			'ambil lama waktu yang diperlukan hingga request menerima balikan'
-			def elapsedTime = (respon_signBalVal.getElapsedTime() / 1000) + ' second'
+        if (aesKey.toString() != 'null') {
+            'Mengambil document id dari excel dan displit'
+            documentId = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Document ID')).split(';', 
+                -1)
 
-			'ambil body dari hasil respons'
-			responseBody = respon_signBalVal.getResponseBodyContent()
+            'get office code dari db'
+            officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, documentId[0])
 
-			'panggil keyword untuk proses beautify dari respon json yang didapat'
-			CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
-					excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+            'pembuatan message yang akan dienkrip'
+            msg = (((((('{\'officeCode\':\'' + officeCode) + '\',\'email\':\'') + findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                rowExcel('email'))) + '\',\'timestamp\':\'') + timestamp) + '\'}')
 
-			'write to excel response elapsed time'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') -
-				1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
-			
-			'Jika status HIT API 200 OK'
-			if (WS.verifyResponseStatusCode(respon_signBalVal, 200, FailureHandling.OPTIONAL) == true) {
-				'get Status Code'
-				status_Code = WS.getElementPropertyValue(respon_signBalVal, 'status.code')
-	
-				'Jika status codenya 0'
-				if (status_Code == 0) {
-					'get vendor Code'
-					GlobalVariable.Response = WS.getElementPropertyValue(respon_signBalVal, 'vendorCode')
-	
-					'write to excel success'
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
-						0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-				} else {
-					getErrorMessageAPI(respon_signBalVal)
-				}
-			} else {
-				getErrorMessageAPI(respon_signBalVal)
-			}
-	}
+            if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Msg')) == 'No') {
+                'officecode + email + time stamp tanpa encrypt'
+                endcodedMsg = msg
+            } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Msg')) == 'Yes') {
+                'encrypt and decode officecode + email + time stamp'
+                endcodedMsg = encryptEncodeValue(msg, aesKey)
+            }
+            
+            for (int q = 0; q < documentId.size(); q++) {
+                if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct DocumentID')) == 'No') {
+                    encryptDocID = documentId
+                } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct DocumentID')) == 
+                'Yes') {
+                    encryptDocID = encryptEncodeValue((documentId[q]).toString(), aesKey)
+                }
+                
+                listDocId.add(('"' + encryptDocID) + '"')
+            }
+        } else {
+            endcodedMsg = ''
+        }
+        
+        'ubah menjadi string'
+        String listDoc = listDocId.toString().replace('[', '').replace(']', '')
+
+        'HIT API Sign Balance availability'
+        respon_signBalVal = WS.sendRequest(findTestObject('Postman/Sign Balance Availability Embed', [('callerId') : findTestData(
+                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('docId') : listDoc, ('msg') : endcodedMsg]))
+
+        'ambil lama waktu yang diperlukan hingga request menerima balikan'
+        elapsedTime = (respon_signBalVal.elapsedTime / 1000) + ' second'
+
+        'ambil body dari hasil respons'
+        responseBody = respon_signBalVal.responseBodyContent
+
+        'panggil keyword untuk proses beautify dari respon json yang didapat'
+        CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
+                excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+
+        'write to excel response elapsed time'
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 
+            1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+
+        'Jika status HIT API 200 OK'
+        if (WS.verifyResponseStatusCode(respon_signBalVal, 200, FailureHandling.OPTIONAL) == true) {
+            'get Status Code'
+            status_Code = WS.getElementPropertyValue(respon_signBalVal, 'status.code')
+
+            'Jika status codenya 0'
+            if (status_Code == 0) {
+                'get vendor Code'
+                GlobalVariable.Response = WS.getElementPropertyValue(respon_signBalVal, 'vendorCode')
+
+                'write to excel success'
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
+                    1, GlobalVariable.StatusSuccess)
+            } else {
+                getErrorMessageAPI(respon_signBalVal)
+            }
+        } else {
+            getErrorMessageAPI(respon_signBalVal)
+        }
+    }
 }
 
 def rowExcel(String cellValue) {
-	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
 def getErrorMessageAPI(def respon) {
-	'mengambil status code berdasarkan response HIT API'
-	message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
+    'mengambil status code berdasarkan response HIT API'
+    message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
-	'Write To Excel GlobalVariable.StatusFailed and errormessage'
-	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-		((findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + ('<' + message.toString())) +
-		'>')
+    'Write To Excel GlobalVariable.StatusFailed and errormessage'
+    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+        ((findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + ('<' + message.toString())) + 
+        '>')
 
-	GlobalVariable.FlagFailed = 1
+    GlobalVariable.FlagFailed = 1
 }
 
 def encryptEncodeValue(String value, String aesKey) {
-	'enkripsi msg'
-	encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(value, aesKey)
+    'enkripsi msg'
+    encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(value, aesKey)
 
-	println(encryptMsg)
-
-	try {
-		return URLEncoder.encode(encryptMsg, StandardCharsets.UTF_8.toString())
-	}
-	catch (UnsupportedEncodingException ex) {
-		throw new RuntimeException(ex.getCause())
-	}
+    try {
+        return URLEncoder.encode(encryptMsg, StandardCharsets.UTF_8.toString())
+    }
+    catch (UnsupportedEncodingException ex) {
+        throw new RuntimeException(ex.cause)
+    } 
 }
+

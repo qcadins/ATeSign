@@ -1,4 +1,3 @@
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
@@ -6,10 +5,8 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import java.sql.Connection as Connection
-import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
-import org.openqa.selenium.By as By
-import java.util.regex.Matcher
-import java.util.regex.Pattern
+import java.util.regex.Matcher as Matcher
+import java.util.regex.Pattern as Pattern
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - API Only.xlsx')
@@ -52,120 +49,122 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         GlobalVariable.NumofColm, rowExcel('refNumber')), ('login') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('username'))]))
 
-		'ambil lama waktu yang diperlukan hingga request menerima balikan'
-		def elapsedTime = (respon.getElapsedTime()) / 1000 + ' second'
-		
-		'ambil body dari hasil respons'
-		responseBody = respon.getResponseBodyContent()
-		
-		'panggil keyword untuk proses beautify dari respon json yang didapat'
-		CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1,
-			findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
-		
-		'write to excel response elapsed time'
-		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 1, GlobalVariable.NumofColm -
-			1, elapsedTime.toString())
-		
+        'ambil lama waktu yang diperlukan hingga request menerima balikan'
+        elapsedTime = (respon.elapsedTime / 1000) + ' second'
+
+        'ambil body dari hasil respons'
+        responseBody = respon.responseBodyContent
+
+        'panggil keyword untuk proses beautify dari respon json yang didapat'
+        CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
+                excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+
+        'write to excel response elapsed time'
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 
+            1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+
         'Jika status HIT API Login 200 OK'
         if (WS.verifyResponseStatusCode(respon_login, 200, FailureHandling.OPTIONAL) == true) {
             'get Status Code'
-            status_Code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
-			
+            statusCode = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
             'Jika status codenya 0'
-            if (status_Code == 0) {
+            if (statusCode == 0) {
                 int prosesMaterai
 
-				if (GlobalVariable.checkStoreDB == 'Yes') {
-                'looping dari 1 hingga 12'
-                for (i = 1; i <= 12; i++) {
-                    'mengambil value db proses meterai'
-                    prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, findTestData(excelPath).getValue(
-                            GlobalVariable.NumofColm, rowExcel('refNumber')))
-
-                    'jika proses materai gagal (51)/(61)'
-                    if ((prosesMaterai == 51) || (prosesMaterai == 61)) {
-                        'Kasih delay untuk mendapatkan update db untuk error stamping'
-                        WebUI.delay(3)
-
-                        'get reason gailed error message untuk stamping'
-                        errorMessageDB = CustomKeywords.'connection.Meterai.getErrorMessage'(conneSign, findTestData(excelPath).getValue(
+                if (GlobalVariable.checkStoreDB == 'Yes') {
+                    'looping dari 1 hingga 12'
+                    for (i = 1; i <= 12; i++) {
+                        'mengambil value db proses meterai'
+                        prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, findTestData(excelPath).getValue(
                                 GlobalVariable.NumofColm, rowExcel('refNumber')))
 
-                        'Write To Excel GlobalVariable.StatusFailed and errormessage'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                            GlobalVariable.StatusFailed, ((findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
-                                    'Reason Failed')).replace('-','') + ';') + GlobalVariable.ReasonFailedProsesStamping) + ' dengan alasan ' + errorMessageDB.toString())
+                        'jika proses materai gagal (51)/(61)'
+                        if ((prosesMaterai == 51) || (prosesMaterai == 61)) {
+                            'Kasih delay untuk mendapatkan update db untuk error stamping'
+                            WebUI.delay(3)
 
-                        GlobalVariable.FlagFailed = 1
+                            'get reason gailed error message untuk stamping'
+                            errorMessageDB = CustomKeywords.'connection.Meterai.getErrorMessage'(conneSign, findTestData(
+                                    excelPath).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')))
 
-                        break
-                    } else if ((prosesMaterai == 53) || (prosesMaterai == 63)) {
-                        'Jika proses meterai sukses (53), berikan delay 3 sec untuk update di db'
-                        WebUI.delay(3)
-
-						ArrayList inquiryDB = []
-                        'Mengambil value total stamping dan total meterai'
-                        ArrayList totalMateraiAndTotalStamping = CustomKeywords.'connection.Meterai.getTotalMateraiAndTotalStamping'(
-                            conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')))
-
-                        'declare arraylist arraymatch'
-                        arrayMatch = []
-
-                        'dibandingkan total meterai dan total stamp'
-                        arrayMatch.add(WebUI.verifyMatch(totalMateraiAndTotalStamping[0], totalMateraiAndTotalStamping[1], 
-                                false, FailureHandling.CONTINUE_ON_FAILURE))
-
-						if (prosesMaterai == 63) {
-							'ambil inquiry di db'
-							inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldoForMeteraiPrivy'(conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')))
-						} else {
-							'ambil inquiry di db'
-							inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldoForMeterai'(conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')))
-						}
-						
-						WebUI.comment("Balance Mutation : " + inquiryDB.toString().replace('[','').replace(']',''))
-						
-						arrayMatch.add(WebUI.verifyMatch(inquiryDB[4], findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')).toString().toUpperCase(),
-							false, FailureHandling.CONTINUE_ON_FAILURE))
-						
-						arrayMatch.add(WebUI.verifyMatch(inquiryDB[8], '-1',
-							false, FailureHandling.CONTINUE_ON_FAILURE))
-						
-                        'jika data db tidak bertambah'
-                        if (arrayMatch.contains(false)) {
-                            'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+                            'Write To Excel GlobalVariable.StatusFailed and errormessage'
                             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                                GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-                                    rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
+                                GlobalVariable.StatusFailed, (((findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                                    rowExcel('Reason Failed')).replace('-', '') + ';') + GlobalVariable.ReasonFailedProsesStamping) + 
+                                ' dengan alasan ') + errorMessageDB.toString())
 
                             GlobalVariable.FlagFailed = 1
-                        }
-                        
-                        break
-                    } else {
-                        'Jika bukan 51 dan 61, maka diberikan delay 20 detik'
-                        WebUI.delay(10)
 
-                        'Jika looping berada di akhir, tulis error failed proses stamping'
-                        if (i == 12) {
-                            'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-                            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                                GlobalVariable.StatusFailed, ((((findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-                                    rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedProsesStamping) + ' dengan jeda waktu ') + 
-                                (i * 12)) + ' detik ')
+                            break
+                        } else if ((prosesMaterai == 53) || (prosesMaterai == 63)) {
+                            'Jika proses meterai sukses (53), berikan delay 3 sec untuk update di db'
+                            WebUI.delay(3)
 
-                            GlobalVariable.FlagFailed = 1
+                            ArrayList inquiryDB = []
+
+                            'Mengambil value total stamping dan total meterai'
+                            ArrayList totalMateraiAndTotalStamping = CustomKeywords.'connection.Meterai.getTotalMateraiAndTotalStamping'(
+                                conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')))
+
+                            'declare arraylist arraymatch'
+                            arrayMatch = []
+
+                            'dibandingkan total meterai dan total stamp'
+                            arrayMatch.add(WebUI.verifyMatch(totalMateraiAndTotalStamping[0], totalMateraiAndTotalStamping[
+                                    1], false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                            if (prosesMaterai == 63) {
+                                'ambil inquiry di db'
+                                inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldoForMeteraiPrivy'(conneSign, 
+                                    findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')))
+                            } else {
+                                'ambil inquiry di db'
+                                inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldoForMeterai'(conneSign, 
+                                    findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')))
+                            }
+                            
+                            WebUI.comment('Balance Mutation : ' + inquiryDB.toString().replace('[', '').replace(']', ''))
+
+                            arrayMatch.add(WebUI.verifyMatch(inquiryDB[4], findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                                        rowExcel('refNumber')).toString().toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                            arrayMatch.add(WebUI.verifyMatch(inquiryDB[8], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                            'jika data db tidak bertambah'
+                            if (arrayMatch.contains(false)) {
+                                'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+                                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                                    GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                                        rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
+
+                                GlobalVariable.FlagFailed = 1
+                            }
+                            
+                            break
+                        } else {
+                            'Jika bukan 51 dan 61, maka diberikan delay 20 detik'
+                            WebUI.delay(10)
+
+                            'Jika looping berada di akhir, tulis error failed proses stamping'
+                            if (i == 12) {
+                                'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+                                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                                    GlobalVariable.StatusFailed, ((((findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                                        rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedProsesStamping) + 
+                                    ' dengan jeda waktu ') + (i * 12)) + ' detik ')
+
+                                GlobalVariable.FlagFailed = 1
+                            }
                         }
                     }
                 }
-            }
-			
-			if (GlobalVariable.FlagFailed == 0) {
-				'write to excel success'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
-					1, GlobalVariable.StatusSuccess)
-			}
+                
+                if (GlobalVariable.FlagFailed == 0) {
+                    'write to excel success'
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
+                        1, GlobalVariable.StatusSuccess)
+                }
             } else {
                 getErrorMessageAPI(respon)
             }
@@ -179,21 +178,21 @@ def getErrorMessageAPI(def respon) {
     'mengambil status code berdasarkan response HIT API'
     message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
-	if (message == null) {
-		'mengambil status code berdasarkan response HIT API'
-		message = WS.getElementPropertyValue(respon, 'error_description', FailureHandling.OPTIONAL)
-	
-	}
+    if (message == null) {
+        'mengambil status code berdasarkan response HIT API'
+        message = WS.getElementPropertyValue(respon, 'error_description', FailureHandling.OPTIONAL)
+    }
+    
     'Write To Excel GlobalVariable.StatusFailed and errormessage'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-        ((findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-','') + ';') + ('<' + message)) + 
-        '>')
+        ((findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + 
+        ('<' + message)) + '>')
 
     GlobalVariable.FlagFailed = 1
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
 def parseCodeOnly(String url) {
@@ -223,6 +222,6 @@ def decryptLink(Connection conneSign, String invCode) {
     'enkripsi msg'
     encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseDecrypt'(invCode, aesKey)
 
-    return encryptMsg
+    encryptMsg
 }
 

@@ -4,5 +4,31 @@
    <name>MAIN_API Update Document Template</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>3d8129f8-4b5d-467e-a708-8cd38a6262a4</testCaseGuid>
+   <testCaseGuid>899e434b-c0b0-4fee-8c18-4579ff96a9bb</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>82e94600-9517-4337-bb04-b80da3f5f6c2</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>c60f62a6-c24c-4cab-994e-1ddd3ce9cac7</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/Update Document Template'</defaultValue>
+      <description></description>
+      <id>82e94600-9517-4337-bb04-b80da3f5f6c2</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Update Document Template'</defaultValue>
+      <description></description>
+      <id>c60f62a6-c24c-4cab-994e-1ddd3ce9cac7</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
 </TestCaseEntity>

@@ -6,11 +6,9 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import internal.GlobalVariable as GlobalVariable
 import java.nio.charset.StandardCharsets as StandardCharsets
 import java.sql.Connection as Connection
-import java.text.SimpleDateFormat
-import java.util.regex.Matcher
-import java.util.regex.Pattern
-
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
+import java.text.SimpleDateFormat as SimpleDateFormat
+import java.util.regex.Matcher as Matcher
+import java.util.regex.Pattern as Pattern
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - API Only.xlsx')
@@ -44,11 +42,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'get aesKet Tenant'
         aesKey = CustomKeywords.'connection.APIFullService.getAesKeyBasedOnTenant'(conneSign, GlobalVariable.Tenant)
 
-        def currentDate = new Date()
+        currentDate = new Date()
 
-        def dateFormat = new SimpleDateFormat('yyyy-MM-dd HH:mm:ss')
+        dateFormat = new SimpleDateFormat('yyyy-MM-dd HH:mm:ss')
 
-        def timestamp = dateFormat.format(currentDate)
+        timestamp = dateFormat.format(currentDate)
 
         if (aesKey.toString() != 'null') {
             'Mengambil document id dari excel dan displit'
@@ -88,13 +86,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         String listDoc = listDocId.toString().replace('[', '').replace(']', '')
 
         'HIT API'
-        respon = WS.sendRequest(findTestObject('Postman/Check Document Before Signing Embed', [('docId') : parseCodeOnly(listDoc), ('msg') : parseCodeOnly(endcodedMsg)]))
+        respon = WS.sendRequest(findTestObject('Postman/Check Document Before Signing Embed', [('docId') : parseCodeOnly(
+                        listDoc), ('msg') : parseCodeOnly(endcodedMsg)]))
 
         'ambil lama waktu yang diperlukan hingga request menerima balikan'
-        def elapsedTime = (respon.getElapsedTime() / 1000) + ' second'
+        elapsedTime = (respon.elapsedTime / 1000) + ' second'
 
         'ambil body dari hasil respons'
-        responseBody = respon.getResponseBodyContent()
+        responseBody = respon.responseBodyContent
 
         'panggil keyword untuk proses beautify dari respon json yang didapat'
         CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
@@ -106,10 +105,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
             'get Status Code'
-            status_Code = WS.getElementPropertyValue(respon, 'status.code')
+            statusCode = WS.getElementPropertyValue(respon, 'status.code')
 
             'Jika status codenya 0'
-            if (status_Code == 0) {
+            if (statusCode == 0) {
                 'get  doc id'
                 docId = WS.getElementPropertyValue(respon, 'listCheckDocumentBeforeSigning.documentId', FailureHandling.OPTIONAL)
 
@@ -121,17 +120,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     ArrayList arrayMatch = []
 
                     for (index = 0; index < docId.size(); index++) {
-						
-						println(signingProcess)
-						
-						'decrypt docid'
-						decryptedDocId =  CustomKeywords.'customizekeyword.ParseText.parseDecrypt'(docId[index], aesKey)
-						
+                        println(signingProcess)
+
+                        'decrypt docid'
+                        decryptedDocId = CustomKeywords.'customizekeyword.ParseText.parseDecrypt'(docId[index], aesKey)
+
                         'get data from DB'
                         ArrayList resultDB = CustomKeywords.'connection.APIFullService.getDocSignSequence'(conneSign, decryptedDocId, 
-							findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace(
-                                '"', ''))
-						
+                            findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('email')).replace('"', ''))
+
                         arrayIndex = 0
 
                         'verify doc ID'
@@ -173,42 +170,39 @@ def getErrorMessageAPI(def respon) {
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
 def encryptEncodeValue(String value, String aesKey) {
     'enkripsi msg'
     encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(value, aesKey)
 
-    println(encryptMsg)
-
     try {
         return URLEncoder.encode(encryptMsg, StandardCharsets.UTF_8.toString())
     }
     catch (UnsupportedEncodingException ex) {
-        throw new RuntimeException(ex.getCause())
+        throw new RuntimeException(ex.cause)
     } 
 }
 
 def parseCodeOnly(String url) {
-	
-		'ambil data sesudah "code="'
-		Pattern pattern = Pattern.compile("([^&]+)")
-		
-		'ambil matcher dengan URL'
-		Matcher matcher = pattern.matcher(url)
-		
-		'cek apakah apttern nya sesuai'
-		if (matcher.find()) {
-			'ubah jadi string'
-			String code = matcher.group(1)
-			
-			'decode semua ascii pada url'
-			code = URLDecoder.decode(code, "UTF-8")
-			
-			return code
-		} else {
-			
-			return ''
-		}
-	}
+    'ambil data sesudah "code="'
+    Pattern pattern = Pattern.compile('([^&]+)')
+
+    'ambil matcher dengan URL'
+    Matcher matcher = pattern.matcher(url)
+
+    'cek apakah apttern nya sesuai'
+    if (matcher.find()) {
+        'ubah jadi string'
+        String code = matcher.group(1)
+
+        'decode semua ascii pada url'
+        code = URLDecoder.decode(code, 'UTF-8')
+
+        return code
+    } else {
+        return ''
+    }
+}
+
