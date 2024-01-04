@@ -6,11 +6,15 @@
    <elementGuidId>9eead5b2-4e4c-411b-afca-6a8c5e83e3bf</elementGuidId>
    <selectorCollection>
       <entry>
+         <key>XPATH</key>
+         <value>//*[@formcontrolname = 'region']/div/div/div[2]/input</value>
+      </entry>
+      <entry>
          <key>BASIC</key>
          <value>//*[@id=&quot;region&quot;]</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>BASIC</selectorMethod>
+   <selectorMethod>XPATH</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -18,6 +22,6 @@
       <name>xpath</name>
       <type>Main</type>
       <value>//*[@id=&quot;region&quot;]</value>
-      <webElementGuid>1d441929-aa44-4ea2-83bb-6d118229207d</webElementGuid>
+      <webElementGuid>f8dd23fa-6d1d-407d-b956-c21ba9b5b2f6</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

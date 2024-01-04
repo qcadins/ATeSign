@@ -6,18 +6,30 @@
    <elementGuidId>d0bb4416-0968-461e-823c-508543f167a6</elementGuidId>
    <selectorCollection>
       <entry>
+         <key>XPATH</key>
+         <value></value>
+      </entry>
+      <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;taskNo&quot;]</value>
+         <value>//*[@formcontrolname = 'refNumber']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>//*[@id=&quot;taskNo&quot;]</value>
-      <webElementGuid>5765bb76-bed7-4bab-b45f-864b5940882e</webElementGuid>
+      <webElementGuid>46d9277c-7806-4cf0-bfdd-047352068ab0</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>formcontrolname</name>
+      <type>Main</type>
+      <value>refNumber</value>
+      <webElementGuid>cc735197-5ebd-404b-bd9f-e9e81864dbba</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

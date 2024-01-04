@@ -6,11 +6,15 @@
    <elementGuidId>92aba47b-5a16-462c-8dac-e65c15bb05a7</elementGuidId>
    <selectorCollection>
       <entry>
+         <key>XPATH</key>
+         <value>//*[@formcontrolname = 'office']/div/div/div[2]/input</value>
+      </entry>
+      <entry>
          <key>BASIC</key>
          <value>//*[@id=&quot;office&quot;]</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>BASIC</selectorMethod>
+   <selectorMethod>XPATH</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -18,6 +22,6 @@
       <name>xpath</name>
       <type>Main</type>
       <value>//*[@id=&quot;office&quot;]</value>
-      <webElementGuid>283e29cb-d162-4a92-9279-0885c37a4b93</webElementGuid>
+      <webElementGuid>aa7e0c55-9d47-4e9f-8be8-6f3f64ce9bdc</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

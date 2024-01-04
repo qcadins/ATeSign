@@ -34,7 +34,7 @@ if (GlobalVariable.Psre == 'VIDA') {
     'get data buat undangan dari DB'
     resultDataDiri = CustomKeywords.'connection.Registrasi.buatUndanganStoreDB'(conneSign, email.toUpperCase(), 
         findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"', ''))
-	
+
 	'check if email kosong atau tidak'
 	if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase('Edit') &&
 		findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Invite By')).equalsIgnoreCase('Email')) {
@@ -63,11 +63,14 @@ if (GlobalVariable.Psre == 'VIDA') {
 
 	if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')) == 'Edit') {
 		'call function verify store db after edit'
-		verifyStoreDBAfterEdit(arrayMatch, resultDataPerusahaan, resultDataDiri)
+		verifyStoreDBAfterEdit(arrayMatch, resultDataDiri)
 	} else {
 		'call function verify store db'
-		verifyStoreDB(arrayMatch, resultDataPerusahaan, resultDataDiri)		
+		verifyStoreDB(arrayMatch, resultDataDiri)		
 	}
+	
+	'call function verify store db data perusahaan'
+	verifyStoreDBDataPerusahaan(arrayMatch, resultDataPerusahaan)
 
     'jika data db tidak sesuai dengan excel'
     if (arrayMatch.contains(false)) {
@@ -113,7 +116,7 @@ def rowExcel(String cellValue) {
     return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
-def verifyStoreDB(ArrayList<String> arrayMatch, ArrayList<String> resultDataPerusahaan, ArrayList<String> resultDataDiri) {
+def verifyStoreDB(ArrayList<String> arrayMatch, ArrayList<String> resultDataDiri) {
 	'verify nama'
 	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
 					'$Nama')).replace('"', '').toUpperCase(), (resultDataDiri[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -164,45 +167,9 @@ def verifyStoreDB(ArrayList<String> arrayMatch, ArrayList<String> resultDataPeru
 	'verify kode pos'
 	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
 					'Kode Pos')).replace('"', '').toUpperCase(), (resultDataDiri[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-
-	'declare arrayindex'
-	arrayindex = 0
-
-	'verify office'
-	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-					'OfficeName')).replace('"', '').toUpperCase(), (resultDataPerusahaan[arrayindex++]).toUpperCase(), false,
-			FailureHandling.CONTINUE_ON_FAILURE))
-
-	'verify lini bisnis'
-	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-					'BusinessLineName')).replace('"', '').toUpperCase(), (resultDataPerusahaan[arrayindex++]).toUpperCase(),
-			false, FailureHandling.CONTINUE_ON_FAILURE))
-
-	'verify Taskno'
-	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-					'Ref No')).replace('"', '').toUpperCase(), (resultDataPerusahaan[arrayindex++]).toUpperCase(), false,
-			FailureHandling.CONTINUE_ON_FAILURE))
-	
-	if (!(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
-	                    'API Generate Inv Link Normal'))) {
-		'verify wilayah'
-		arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-						'Wilayah')).replace('"', '').toUpperCase(), (resultDataPerusahaan[arrayindex++]).toUpperCase(), false,
-				FailureHandling.CONTINUE_ON_FAILURE))
-	} else {
-		'verify office code'
-		arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-						'OfficeCode')).replace('"', '').toUpperCase(), (resultDataPerusahaan[arrayindex++]).toUpperCase(), false,
-				FailureHandling.CONTINUE_ON_FAILURE))
-	
-		'verify businessline code'
-		arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-						'BusinessLineCode')).replace('"', '').toUpperCase(), (resultDataPerusahaan[arrayindex++]).toUpperCase(),
-				false, FailureHandling.CONTINUE_ON_FAILURE))
-	}
 }
 
-def verifyStoreDBAfterEdit(ArrayList<String> arrayMatch, ArrayList<String> resultDataPerusahaan, ArrayList<String> resultDataDiri) {
+def verifyStoreDBAfterEdit(ArrayList<String> arrayMatch, ArrayList<String> resultDataDiri) {
 	'verify nama'
 	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
 					'Nama - Edit')).replace('"', '').toUpperCase(), (resultDataDiri[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -242,27 +209,43 @@ def verifyStoreDBAfterEdit(ArrayList<String> arrayMatch, ArrayList<String> resul
 	'verify kode pos'
 	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
 					'Kode Pos - Edit')).replace('"', '').toUpperCase(), (resultDataDiri[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+}
 
+def verifyStoreDBDataPerusahaan(ArrayList<String> arrayMatch, ArrayList<String> resultDataPerusahaan) {
 	'declare arrayindex'
 	arrayindex = 0
 
-	'verify wilayah'
-	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-					'Wilayah - Edit')).replace('"', '').toUpperCase(), (resultDataPerusahaan[arrayindex++]).toUpperCase(), false,
-			FailureHandling.CONTINUE_ON_FAILURE))
-
 	'verify office'
 	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-					'Office - Edit')).replace('"', '').toUpperCase(), (resultDataPerusahaan[arrayindex++]).toUpperCase(), false,
+					'OfficeName')).replace('"', '').toUpperCase(), (resultDataPerusahaan[arrayindex++]).toUpperCase(), false,
 			FailureHandling.CONTINUE_ON_FAILURE))
 
 	'verify lini bisnis'
 	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-					'Lini Bisnis - Edit')).replace('"', '').toUpperCase(), (resultDataPerusahaan[arrayindex++]).toUpperCase(),
+					'BusinessLineName')).replace('"', '').toUpperCase(), (resultDataPerusahaan[arrayindex++]).toUpperCase(),
 			false, FailureHandling.CONTINUE_ON_FAILURE))
 
-	'verify Taskno'
+	'verify ref no'
 	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-					'Task No - Edit')).replace('"', '').toUpperCase(), (resultDataPerusahaan[arrayindex++]).toUpperCase(), false,
+					'Ref No')).replace('"', '').toUpperCase(), (resultDataPerusahaan[arrayindex++]).toUpperCase(), false,
 			FailureHandling.CONTINUE_ON_FAILURE))
+	
+	if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
+						'API Generate Inv Link Normal')) {
+		'verify office code'
+		arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
+				'OfficeCode')).replace('"', '').toUpperCase(), (resultDataPerusahaan[arrayindex++]).toUpperCase(), false,
+				FailureHandling.CONTINUE_ON_FAILURE))
+		
+		'verify businessline code'
+		arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
+				'BusinessLineCode')).replace('"', '').toUpperCase(), (resultDataPerusahaan[arrayindex++]).toUpperCase(),
+				false, FailureHandling.CONTINUE_ON_FAILURE))
+	} else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
+						'API Generate Inv Link External')) {
+		'verify wilayah'
+		arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
+				'Wilayah')).replace('"', '').toUpperCase(), (resultDataPerusahaan[arrayindex++]).toUpperCase(), false,
+				FailureHandling.CONTINUE_ON_FAILURE))
+	}
 }

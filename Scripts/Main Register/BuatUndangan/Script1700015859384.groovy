@@ -330,17 +330,32 @@ def inputBuatUndangan() {
     WebUI.setText(findTestObject('RegisterEsign/input_KodePos'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
             rowExcel('Kode Pos')))
 
-    'input wilayah'
-    WebUI.setText(findTestObject('RegisterEsign/input_Wilayah'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('Wilayah')))
+	if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Wilayah')).length() > 0) {
+	    'input wilayah'
+	    WebUI.setText(findTestObject('RegisterEsign/input_Wilayah'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+	            rowExcel('Wilayah')))
+	
+		'enter wilayah'
+		WebUI.sendKeys(findTestObject('RegisterEsign/input_Wilayah'), Keys.chord(Keys.ENTER), FailureHandling.CONTINUE_ON_FAILURE)
+	}
+	
+	if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('OfficeName')).length() > 0) {
+		'input office'
+		WebUI.setText(findTestObject('RegisterEsign/input_Office'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+				rowExcel('OfficeName')))		
+		
+		'enter office'
+		WebUI.sendKeys(findTestObject('RegisterEsign/input_Office'), Keys.chord(Keys.ENTER), FailureHandling.CONTINUE_ON_FAILURE)
+	}
 
-    'input office'
-    WebUI.setText(findTestObject('RegisterEsign/input_Office'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('OfficeName')))
-
-    'input lini bisnis'
-    WebUI.setText(findTestObject('RegisterEsign/input_LiniBisnis'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-            rowExcel('BusinessLineName')))
+	if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('BusinessLineName')).length() > 0) {
+	    'input lini bisnis'
+	    WebUI.setText(findTestObject('RegisterEsign/input_LiniBisnis'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+	            rowExcel('BusinessLineName')))
+		
+		'enter lini bisnis'
+		WebUI.sendKeys(findTestObject('RegisterEsign/input_LiniBisnis'), Keys.chord(Keys.ENTER), FailureHandling.CONTINUE_ON_FAILURE)
+	}
 
     'input task no'
     WebUI.setText(findTestObject('RegisterEsign/input_TaskNo'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
