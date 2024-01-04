@@ -190,7 +190,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
       
         countResend = resendFunction(conneSign, countResend, resetCodefromDB)
 
-		checkSaldoWAOrSMS(conneSign, emailSHA256)
+		checkBalanceMutation(conneSign, emailSHA256)
 		
         'panggil fungsi konfirmasi verif'
         if (verifConfirmation(conneSign) == true) {
@@ -437,7 +437,7 @@ def openBrowser() {
     WebUI.maximizeWindow()
 }
 
-def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
+def checkBalanceMutation(Connection conneSign, String emailSigner) {
     emailServiceOnVendor = CustomKeywords.'connection.DataVerif.getEmailServiceAsVendorUser'(conneSign, emailSigner)
 
     fullNameUser = CustomKeywords.'connection.DataVerif.getFullNameOfUser'(conneSign, emailSigner)
