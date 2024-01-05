@@ -5,8 +5,8 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import java.nio.charset.StandardCharsets as StandardCharsets
 import java.sql.Connection as Connection
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import java.time.LocalDateTime as LocalDateTime
+import java.time.format.DateTimeFormatter as DateTimeFormatter
 import internal.GlobalVariable as GlobalVariable
 
 'connect DB eSign'
@@ -41,11 +41,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
         currentDate = LocalDateTime.now()
 
-		localeIndonesia = new Locale('id', 'ID')
-		
-		formatter = DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm:ss', localeIndonesia)
-		
-		formattedDate = currentDate.format(formatter)
+        localeIndonesia = new Locale('id', 'ID')
+
+        formatter = DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm:ss', localeIndonesia)
+
+        formattedDate = currentDate.format(formatter)
 
         if (aesKey.toString() != 'null') {
             'pembuatan message yang akan dienkrip'
@@ -65,30 +65,28 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         'HIT API'
-        respon = WS.sendRequest(findTestObject('Postman/RegionList Embed', [
-				('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), 
-				('msg') : endcodedMsg
-				]))
+        respon = WS.sendRequest(findTestObject('Postman/RegionList Embed', [('callerId') : findTestData(excelPath).getValue(
+                        GlobalVariable.NumofColm, rowExcel('callerId')), ('msg') : endcodedMsg]))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
             'mengambil status code berdasarkan response HIT API'
             statusCode = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
-			'ambil lama waktu yang diperlukan hingga request menerima balikan'
-			elapsedTime = (respon.elapsedTime / 1000) + ' second'
-	
-			'ambil body dari hasil respons'
-			responseBody = respon.responseBodyContent
-	
-			'panggil keyword untuk proses beautify dari respon json yang didapat'
-			CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
-					excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
-	
-			'write to excel response elapsed time'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') -
-				1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
-			
+            'ambil lama waktu yang diperlukan hingga request menerima balikan'
+            elapsedTime = ((respon.elapsedTime / 1000) + ' second')
+
+            'ambil body dari hasil respons'
+            responseBody = respon.responseBodyContent
+
+            'panggil keyword untuk proses beautify dari respon json yang didapat'
+            CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
+                    excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+
+            'write to excel response elapsed time'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 
+                1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+
             'jika status codenya 0'
             if (statusCode == 0) {
                 resultRegionCode = WS.getElementPropertyValue(respon, 'regionList.regionCode', FailureHandling.OPTIONAL)
@@ -171,6 +169,8 @@ def encryptEncodeValue(String value, String aesKey) {
     try {
         return URLEncoder.encode(encryptMsg, StandardCharsets.UTF_8.toString())
     }
-    catch (UnsupportedEncodingException ex) { throw new RuntimeException(ex.cause) } 
+    catch (UnsupportedEncodingException ex) {
+        throw new RuntimeException(ex.cause)
+    } 
 }
 

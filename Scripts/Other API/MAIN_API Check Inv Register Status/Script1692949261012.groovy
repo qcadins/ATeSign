@@ -48,17 +48,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         'HIT API'
-        respon = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/API Check Inv Register Status', [
-					('callerId') : findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('CallerId')), 
-					('msg') : value
-					]))
+        respon = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/API Check Inv Register Status', [('callerId') : findTestData(
+                        excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('CallerId')), ('msg') : value]))
 
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
             'get  code'
             code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
             'ambil lama waktu yang diperlukan hingga request menerima balikan'
-            elapsedTime = (respon.elapsedTime / 1000) + ' second'
+            elapsedTime = ((respon.elapsedTime / 1000) + ' second')
 
             'ambil body dari hasil respons'
             responseBody = respon.responseBodyContent
@@ -169,7 +167,9 @@ def encodeValue(String value, Connection conneSign) {
     try {
         return URLEncoder.encode(encryptCode, StandardCharsets.UTF_8.toString())
     }
-    catch (UnsupportedEncodingException ex) { throw new RuntimeException(ex.cause) } 
+    catch (UnsupportedEncodingException ex) {
+        throw new RuntimeException(ex.cause)
+    } 
 }
 
 def rowExcel(String cellValue) {
