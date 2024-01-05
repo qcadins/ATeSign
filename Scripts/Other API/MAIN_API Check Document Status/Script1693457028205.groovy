@@ -1,17 +1,11 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import internal.GlobalVariable as GlobalVariable
-import java.sql.Connection as Connection
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - Full API Services - Privy.xlsx')
-
-'Connect DB eSign'
-Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get colm excel'
 int countColmExcel = findTestData(excelPathCheckDocumentStatus).columnNumbers

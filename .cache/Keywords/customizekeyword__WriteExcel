@@ -1,5 +1,5 @@
 {
-  "keywordFileContentHash": "2658FA673D3848628EED11393AD673FF",
+  "keywordFileContentHash": "23D471639F6420CB374304362B04DE06",
   "keywordClasses": [
     {
       "name": "customizekeyword.WriteExcel",
@@ -205,8 +205,8 @@
               "name": "cellValue",
               "initialExpression": "",
               "type": {
-                "fullClassName": "java.lang.Double",
-                "unresolvedClassName": "Double",
+                "fullClassName": "java.math.BigDecimal",
+                "unresolvedClassName": "BigDecimal",
                 "isArray": false,
                 "isGnericsPlaceHolder": false,
                 "hasImmutableClassName": false,

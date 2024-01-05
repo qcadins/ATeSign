@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API Verify Liveness Face Compare Embed</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>a0606259-d2b9-43f0-a4db-c377b57f3634</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>8e8c854b-3c42-4460-b0c8-4877622b0080</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>570851a3-d2f1-4803-a144-0896843030af</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/Verify Liveness FC Embed'</defaultValue>
+      <description></description>
+      <id>8e8c854b-3c42-4460-b0c8-4877622b0080</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Verify Liveness FC Embed'</defaultValue>
+      <description></description>
+      <id>570851a3-d2f1-4803-a144-0896843030af</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>

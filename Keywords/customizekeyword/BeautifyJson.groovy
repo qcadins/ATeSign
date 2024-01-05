@@ -36,5 +36,4 @@ public class BeautifyJson {
 			println("Failed to beautify the JSON: ${e.message}")
 		}
 	}
-	
 }
