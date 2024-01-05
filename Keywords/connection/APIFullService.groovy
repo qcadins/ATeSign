@@ -2126,4 +2126,23 @@ public class APIFullService {
 		}
 		listdata
 	}
+	
+	@Keyword
+	getProfileUserAPIONLY(Connection conn, String email) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT full_name, login_id, amu.hashed_phone, mv.vendor_code FROM am_msuser amu LEFT JOIN ms_vendor_registered_user mvt ON mvt.id_ms_user = amu.id_ms_user LEFT JOIN ms_vendor mv ON mv.id_ms_vendor = mvt.id_ms_vendor WHERE amu.login_id = '" + email + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
 }

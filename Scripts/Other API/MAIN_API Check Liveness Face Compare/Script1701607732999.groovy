@@ -50,10 +50,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				('tenantCode') : ('"' + GlobalVariable.Tenant + '"')]))
 
             'ambil lama waktu yang diperlukan hingga request menerima balikan'
-            def elapsedTime = (respon.getElapsedTime() / 1000) + ' second'
+            String elapsedTime = (respon.elapsedTime) / 1000 + ' second'
 
             'ambil body dari hasil respons'
-            responseBody = respon.getResponseBodyContent()
+            responseBody = respon.responseBodyContent
 
             'panggil keyword untuk proses beautify dari respon json yang didapat'
             CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
@@ -61,7 +61,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
             'write to excel response elapsed time'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 
-                1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+                1, GlobalVariable.NumofColm - 1, elapsedTime)
 
             'Jika status HIT API 200 OK'
             if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
