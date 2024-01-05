@@ -41,7 +41,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
         currentDate = LocalDateTime.now()
 
-		localeIndonesia = new Locale("id", "ID")
+		localeIndonesia = new Locale('id', 'ID')
 		
 		formatter = DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm:ss', localeIndonesia)
 		
@@ -67,7 +67,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'HIT API'
         respon = WS.sendRequest(findTestObject('Postman/RegionList Embed', [
 				('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), 
-				('msg') : endcodedMsg]))
+				('msg') : endcodedMsg
+				]))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
@@ -170,8 +171,6 @@ def encryptEncodeValue(String value, String aesKey) {
     try {
         return URLEncoder.encode(encryptMsg, StandardCharsets.UTF_8.toString())
     }
-    catch (UnsupportedEncodingException ex) {
-        new RuntimeException(ex.cause)
-    } 
+    catch (UnsupportedEncodingException ex) { throw new RuntimeException(ex.cause) } 
 }
 
