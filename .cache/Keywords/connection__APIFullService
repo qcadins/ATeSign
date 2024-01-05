@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "keywordFileContentHash": "437DEB214E4FF137FCC4AE6B001720FD",
-=======
-  "keywordFileContentHash": "A90BD4F234A6EB973ECE64979259D632",
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+  "keywordFileContentHash": "B481C168402608C8FD63D44F9A343A93",
   "keywordClasses": [
     {
       "name": "connection.APIFullService",
@@ -2908,6 +2904,19 @@
                 "genericsTypes": [],
                 "errorOnParsing": false
               }
+            },
+            {
+              "name": "signertypeCode",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
             }
           ],
           "javadoc": ""
@@ -2953,6 +2962,19 @@
                 "genericsTypes": [],
                 "errorOnParsing": false
               }
+            },
+            {
+              "name": "signertypeCode",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
             }
           ],
           "javadoc": ""
@@ -2988,6 +3010,19 @@
             },
             {
               "name": "tenant",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "signertypeCode",
               "initialExpression": "",
               "type": {
                 "fullClassName": "java.lang.String",
@@ -3209,6 +3244,19 @@
               "type": {
                 "fullClassName": "java.sql.Connection",
                 "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "region",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
                 "isArray": false,
                 "isGnericsPlaceHolder": false,
                 "hasImmutableClassName": false,
@@ -3675,6 +3723,38 @@
           "javadoc": ""
         },
         {
+          "name": "getIDManualReportAPIOnly",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "filename",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
+        },
+        {
           "name": "getPaymentSignTypeAPI",
           "parameters": [
             {
@@ -4066,8 +4146,6 @@
             }
           ],
           "javadoc": ""
-<<<<<<< HEAD
-=======
         },
         {
           "name": "getPsrePriorityAPIONLY",
@@ -4138,7 +4216,38 @@
             }
           ],
           "javadoc": ""
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+        },
+        {
+          "name": "getProfileUserAPIONLY",
+          "parameters": [
+            {
+              "name": "conn",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.sql.Connection",
+                "unresolvedClassName": "Connection",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            },
+            {
+              "name": "email",
+              "initialExpression": "",
+              "type": {
+                "fullClassName": "java.lang.String",
+                "unresolvedClassName": "String",
+                "isArray": false,
+                "isGnericsPlaceHolder": false,
+                "hasImmutableClassName": false,
+                "genericsTypes": [],
+                "errorOnParsing": false
+              }
+            }
+          ],
+          "javadoc": ""
         }
       ]
     }
