@@ -55,7 +55,7 @@ public class WriteExcel {
 	}
 
 	@Keyword
-	writeToExcelDecimal(String filePath, String sheetName, int rowNo, int collNo, Double cellValue) {
+	writeToExcelDecimal(String filePath, String sheetName, int rowNo, int collNo, BigDecimal cellValue) {
 		file = new FileInputStream(new File(filePath)) //initiate excel repository
 
 		workbook = new XSSFWorkbook(file)
@@ -112,7 +112,7 @@ public class WriteExcel {
 
 	//keyword getExcelRow
 	@Keyword
-	public int getExcelRow(String filePath, String sheetName, String cellValue) {
+	getExcelRow(String filePath, String sheetName, String cellValue) {
 		file = new FileInputStream(new File(filePath)) //initiate excel repository
 		workbook = new XSSFWorkbook(file)
 		sheet = workbook.getSheet(sheetName) //getSheet -> sheet num n (start from index 0)
@@ -125,8 +125,8 @@ public class WriteExcel {
 					rowNum = i
 					break
 				}
-			}
-			catch(Exception e) {
+			} catch(Exception e) {
+				e.printStackTrace()
 			}
 		}
 		file.close()
