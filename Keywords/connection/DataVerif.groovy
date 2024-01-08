@@ -116,7 +116,7 @@ public class DataVerif {
 				data = resultSet.getObject(i)
 				if (data == null) {
 					listdata.add('')
-				} else {					
+				} else {
 					listdata.add(data)
 				}
 			}

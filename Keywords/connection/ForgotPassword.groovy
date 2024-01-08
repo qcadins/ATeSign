@@ -168,7 +168,7 @@ public class ForgotPassword {
 			}
 		}
 
-		resultSet = stm.executeQuery("SELECT COALESCE(tdh.id_ms_business_line, tlink.id_ms_business_line) AS id_ms_business_line, COALESCE(tdh.id_ms_office, tlink.id_ms_office) AS id_ms_office FROM tr_document_d td LEFT JOIN tr_document_h tdh ON td.id_document_h = tdh.id_document_h LEFT JOIN tr_document_d_sign tds ON tds.id_document_d = td.id_document_d LEFT JOIN am_msuser amu ON amu.id_ms_user = tds.id_ms_user LEFT JOIN tr_invitation_link tlink ON tlink.email = '" + email + "' WHERE amu.login_id = '" + email + "'")
+		resultSet = stm.executeQuery("SELECT COALESCE(tdh.id_ms_business_line, tlink.id_ms_business_line) AS id_ms_business_line, COALESCE(tdh.id_ms_office, tlink.id_ms_office) AS id_ms_office FROM tr_document_d td LEFT JOIN tr_document_h tdh ON td.id_document_h = tdh.id_document_h LEFT JOIN tr_document_d_sign tds ON tds.id_document_d = td.id_document_d LEFT JOIN am_msuser amu ON amu.id_ms_user = tds.id_ms_user LEFT JOIN tr_invitation_link tlink ON tlink.email = '" + email + "' WHERE amu.login_id = '" + email + "' ORDER BY td.id_document_d DESC LIMIT 1")
 
 		metadata = resultSet.metaData
 
