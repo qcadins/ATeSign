@@ -878,8 +878,7 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
 	}
 	
 	'cek apakah perlu untuk pengecekan DB'
-	if (GlobalVariable.checkStoreDB == 'Yes' &&
-		findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == '1') {
+	if (GlobalVariable.checkStoreDB == 'Yes') {
 		
 		WebUI.delay(1)
 		
