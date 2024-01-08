@@ -137,6 +137,5 @@ public class GetEmail {
 			return 'false'
 		}
 	}
-	
 }
 

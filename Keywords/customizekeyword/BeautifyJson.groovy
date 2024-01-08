@@ -2,6 +2,8 @@ package customizekeyword
 
 import com.kms.katalon.core.annotation.Keyword
 import internal.GlobalVariable
+import groovy.json.JsonSlurper
+import groovy.json.JsonBuilder
 
 public class BeautifyJson {
 
@@ -11,16 +13,16 @@ public class BeautifyJson {
 	def process(String responseBody, String sheet, int rowNo, String fileName) {
 		try {
 			// Parse the original JSON string
-			slurper = new groovy.json.JsonSlurper()
-			json = slurper.parseText(responseBody)
+			JsonSlurper slurper = new JsonSlurper()
+			Map json = slurper.parseText(responseBody)
 
 			// Beautify the JSON
-			builder = new groovy.json.JsonBuilder(json)
-			beautifiedJson = builder.toPrettyString()
+			JsonBuilder builder = new JsonBuilder(json)
+			String beautifiedJson = builder.toPrettyString()
 
 			try {
 				needto.writeToExcel(GlobalVariable.DataFilePath, sheet, rowNo, GlobalVariable.NumofColm -
-						1, beautifiedJson.toString())
+						1, beautifiedJson)
 			} catch (FileNotFoundException ex) {
 				String beautifiedJsonPath = System.getProperty('user.dir') + '\\Response\\' + fileName + '.json'
 
@@ -29,12 +31,12 @@ public class BeautifyJson {
 				needto.writeToExcel(GlobalVariable.DataFilePath, sheet, rowNo, GlobalVariable.NumofColm -
 						1, beautifiedJsonPath)
 
-				Throwable.printStackTrace()
+				ex.printStackTrace()
 			}
 		} catch (Exception e) {
 			this.println("Failed to beautify the JSON: ${e.message}")
 			
-			Throwable.printStackTrace()
+			e.printStackTrace()
 		}
 	}
 }

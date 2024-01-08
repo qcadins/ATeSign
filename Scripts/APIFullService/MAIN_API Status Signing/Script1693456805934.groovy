@@ -47,7 +47,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'HIT API check Status Signing'
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Check Status Signing', [('callerId') : findTestData(
                         excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('refNumber') : findTestData(excelPathAPICheckSigning).getValue(
-                        GlobalVariable.NumofColm, rowExcel('refNumber'))]))
+                        GlobalVariable.NumofColm, rowExcel('refNumber')), ('phoneNo') : findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, rowExcel('phoneNo')),
+					('name') : findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, rowExcel('name'))]))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {

@@ -375,26 +375,6 @@ public class SendSign {
 	}
 
 	@Keyword
-	getTrxSendDocSigning(Connection conn, String trxno) {
-		stm = conn.createStatement()
-
-		resultSet = stm.executeQuery("select trx_no,ref_no, TO_CHAR(trx_date, 'yyyy-MM-DD'), qty, notes from tr_balance_mutation where trx_no = '" + trxno + "'")
-
-		metadata = resultSet.metaData
-
-		columnCount = metadata.getColumnCount()
-
-		while (resultSet.next()) {
-			for (i = 1 ; i <= columnCount ; i++) {
-				data = resultSet.getObject(i)
-				listdata.add(data)
-			}
-		}
-		listdata
-	}
-
-
-	@Keyword
 	getDataPencarianDokumen(Connection conn, String emailSigner, String refNumber) {
 		stm = conn.createStatement()
 

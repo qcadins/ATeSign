@@ -33,14 +33,11 @@ if (GlobalVariable.RunWith == 'Mobile') {
 	Mobile.tapAtPosition(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), FailureHandling.OPTIONAL)
 	
 } else {
-	if (!(checkBeforeSigning == 'Yes') || !(findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Option for Sign Document per Signer')).split(';', -1)[GlobalVariable.opsiSigning] ==
-		'Sign Via Inbox')) {
-		'open browser'
-		WebUI.openBrowser(findTestData('Login/Login').getValue(1, 2))
+	'open browser'
+	WebUI.openBrowser(findTestData('Login/Login').getValue(1, 2))
 	
-		'maximized window'
-		WebUI.maximizeWindow()
-	}
+	'maximized window'
+	WebUI.maximizeWindow()
 }
 
 if (email == '') {
@@ -61,6 +58,10 @@ if (email == '') {
         'click button login'
         WebUI.click(findTestObject('Login/button_Login'), FailureHandling.STOP_ON_FAILURE)
 
+		WebUI.delay(1)
+		
+		WebUI.focus(findTestObject('Login/input_Perusahaan'))
+		
         'input perusahaan'
         WebUI.setText(findTestObject('Login/input_Perusahaan'), findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel(
                     'Perusahaan')))
@@ -84,10 +85,6 @@ if (email == '') {
 } else {
     if ((checkBeforeSigning == 'Yes') || (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Option for Sign Document per Signer')).split(';', -1)[GlobalVariable.opsiSigning] == 
     'Sign Via Inbox')) {
-
-	if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/menu_Beranda'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-			
-		}
         'input email'
         WebUI.setText(findTestObject('Login/input_Email'), email)
 
@@ -108,7 +105,7 @@ if (email == '') {
             'input peran'
             WebUI.click(findTestObject('Login/input_Peran'))
 
-            WebUI.delay(1)
+            WebUI.delay(2)
 			
 			GlobalVariable.roleLogin = WebUI.getText(findTestObject('Login/peranTerpilih'))
 			
@@ -182,7 +179,7 @@ def runWithEmbed(String linkUrl) {
 			WebUI.openBrowser(GlobalVariable.embedUrl)
 			
 			'Diberikan delay 3 sec'
-			WebUI.delay(2)
+			WebUI.delay(3)
 			
 			'klik titik tiga'
 			Mobile.tapAtPosition(1000, 180, FailureHandling.OPTIONAL)
@@ -195,7 +192,7 @@ def runWithEmbed(String linkUrl) {
 			WebUI.openBrowser(GlobalVariable.embedUrl)
 	
 			'Diberikan delay 3 sec'
-			WebUI.delay(2)
+			WebUI.delay(3)
 	
 			'Maximize windows'
 			WebUI.maximizeWindow()
@@ -256,4 +253,3 @@ def runWithEmbed(String linkUrl) {
 		}
     }
 }
-

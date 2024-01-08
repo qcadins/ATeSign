@@ -238,6 +238,7 @@ for (int i = 0; i < docid.size(); i++) {
 		}
 	}
 	
+	if (psreCodeDB != 'PRIVY') {
 	signAction = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$signAction')).split(enter, splitnum)
 	
 	signActions = (signAction[i]).split(semicolon, splitnum)
@@ -263,7 +264,7 @@ for (int i = 0; i < docid.size(); i++) {
 			  }
 			  
             'get data result trx untuk signing'
-            resulttrxsigning = CustomKeywords.'connection.SendSign.getTrxSendDocSigning'(conneSign, trxno[indexTrx])
+            resulttrxsigning = CustomKeywords.'connection.APIFullService.getTrxSendDocSigning'(conneSign, trxno[indexTrx])
 
             'declare arrayindex'
             arrayindex = 0
@@ -282,8 +283,21 @@ for (int i = 0; i < docid.size(); i++) {
 
             'verify trx autosign'
             arrayMatch.add(WebUI.verifyMatch(resulttrxsigning[arrayindex++], ('Auto Sign (' + emailSign) + ')', false, FailureHandling.CONTINUE_ON_FAILURE))
+			
+			'verify office code'
+			arrayMatch.add(WebUI.verifyMatch(resulttrxsigning[arrayindex++], officeCode[i],
+					false, FailureHandling.CONTINUE_ON_FAILURE))
+			
+			'verify region code'
+			arrayMatch.add(WebUI.verifyMatch(resulttrxsigning[arrayindex++], regionCode[i],
+					false, FailureHandling.CONTINUE_ON_FAILURE))
+			
+			'verify business line code'
+			arrayMatch.add(WebUI.verifyMatch(resulttrxsigning[arrayindex++], businessLineCode[i],
+					false, FailureHandling.CONTINUE_ON_FAILURE))
         }
     }
+	}
 }
 
 'jika data db tidak sesuai dengan excel'

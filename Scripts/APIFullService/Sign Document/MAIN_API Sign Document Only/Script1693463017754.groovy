@@ -189,7 +189,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 						GlobalVariable.NumofColm, rowExcel('$documentid')), ('email') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm,
 						rowExcel('email')), ('password') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('password'))
 					, ('ipAddress') : ipaddress, ('browserInfo') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm,
-						rowExcel('browserInfo')), ('otp') : otp, ('selfPhoto') : photo]))
+						rowExcel('browserInfo')), ('otp') : otp, ('selfPhoto') : photo, ('phoneNo') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('phoneNo signer'))]))
 
 		'Jika status HIT API 200 OK'
 		if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {

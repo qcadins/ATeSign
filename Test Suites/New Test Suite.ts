@@ -12,22 +12,117 @@
    <rerunImmediately>false</rerunImmediately>
    <testSuiteGuid>8f33660b-94d0-42d5-9a0f-6678b45bebcb</testSuiteGuid>
    <testCaseLink>
-      <guid>f5514988-a836-4975-a0dd-5fbb0f224eec</guid>
+      <guid>ea2c789e-82be-408b-b108-46c6c75a16c7</guid>
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
-      <testCaseId>Test Cases/Main Register/MAIN_Register</testCaseId>
+      <testCaseId>Test Cases/Other API/MAIN_API Get List Data Pengguna</testCaseId>
       <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
       <variableLink>
          <testDataLinkId></testDataLinkId>
          <type>DEFAULT</type>
          <value></value>
-         <variableId>8b496a5f-f2c3-41f7-8b19-002af48df479</variableId>
+         <variableId>dea78894-4ead-4e70-95c5-2e9367831a3c</variableId>
       </variableLink>
       <variableLink>
          <testDataLinkId></testDataLinkId>
          <type>DEFAULT</type>
          <value></value>
-         <variableId>2b83ce14-0b18-424b-87af-6e007cb224ea</variableId>
+         <variableId>4f2cef0e-273e-4597-b522-2fa0c0439972</variableId>
+      </variableLink>
+   </testCaseLink>
+   <testCaseLink>
+      <guid>2cb9290d-31ef-4172-9bfb-8b89fb8f648b</guid>
+      <isReuseDriver>false</isReuseDriver>
+      <isRun>true</isRun>
+      <testCaseId>Test Cases/Other API/MAIN_API Update Data Signer</testCaseId>
+      <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
+      <variableLink>
+         <testDataLinkId></testDataLinkId>
+         <type>DEFAULT</type>
+         <value></value>
+         <variableId>5f1b3a2b-fa6c-4df7-8a63-7890f23f5041</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId></testDataLinkId>
+         <type>DEFAULT</type>
+         <value></value>
+         <variableId>f2511a82-ed4a-4603-997c-6fc8e8cb2270</variableId>
+      </variableLink>
+   </testCaseLink>
+   <testCaseLink>
+      <guid>4759fb91-9d3e-4ce5-95ee-a8eb120053b2</guid>
+      <isReuseDriver>false</isReuseDriver>
+      <isRun>true</isRun>
+      <testCaseId>Test Cases/Other API/MAIN_API Edit Activation Status</testCaseId>
+      <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
+      <variableLink>
+         <testDataLinkId></testDataLinkId>
+         <type>DEFAULT</type>
+         <value></value>
+         <variableId>658353be-0668-4d5b-9882-f2c795d88fb5</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId></testDataLinkId>
+         <type>DEFAULT</type>
+         <value></value>
+         <variableId>8624efa9-5f96-46a0-9209-1eb6b0f85802</variableId>
+      </variableLink>
+   </testCaseLink>
+   <testCaseLink>
+      <guid>365b4d80-79ed-47cf-878a-878c82f7d89d</guid>
+      <isReuseDriver>false</isReuseDriver>
+      <isRun>true</isRun>
+      <testCaseId>Test Cases/Other API/MAIN_API List</testCaseId>
+      <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
+      <variableLink>
+         <testDataLinkId></testDataLinkId>
+         <type>DEFAULT</type>
+         <value></value>
+         <variableId>a0c6808b-2f1d-4139-9b2c-9f6c290f0513</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId></testDataLinkId>
+         <type>DEFAULT</type>
+         <value></value>
+         <variableId>5af9b103-b8c1-4bad-a5ff-1fe737e24e47</variableId>
+      </variableLink>
+   </testCaseLink>
+   <testCaseLink>
+      <guid>c4c31484-9213-44f3-9af3-16319fe0c793</guid>
+      <isReuseDriver>false</isReuseDriver>
+      <isRun>true</isRun>
+      <testCaseId>Test Cases/Other API/MAIN_API Get Data User Management View</testCaseId>
+      <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
+      <variableLink>
+         <testDataLinkId></testDataLinkId>
+         <type>DEFAULT</type>
+         <value></value>
+         <variableId>8c325efe-2268-4d69-b0d1-dbb7e8f78573</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId></testDataLinkId>
+         <type>DEFAULT</type>
+         <value></value>
+         <variableId>cba0922c-a8d2-4edc-a1c5-74988b728791</variableId>
+      </variableLink>
+   </testCaseLink>
+   <testCaseLink>
+      <guid>b758dc1f-608b-4450-ac7e-6d68f42f5315</guid>
+      <isReuseDriver>false</isReuseDriver>
+      <isRun>true</isRun>
+      <testCaseId>Test Cases/Other API/MAIN_API Get List User Management</testCaseId>
+      <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
+      <variableLink>
+         <testDataLinkId></testDataLinkId>
+         <type>DEFAULT</type>
+         <value></value>
+         <variableId>c517e364-b71c-4d49-8522-eb822b827ddf</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId></testDataLinkId>
+         <type>DEFAULT</type>
+         <value></value>
+         <variableId>60121192-4ac6-4a4c-bf67-b93c30e19aba</variableId>
       </variableLink>
    </testCaseLink>
 </TestSuiteEntity>

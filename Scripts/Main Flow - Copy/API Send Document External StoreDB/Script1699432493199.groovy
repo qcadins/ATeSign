@@ -274,6 +274,7 @@ for (int i = 0; i < docid.size(); i++) {
         }
     } 
 	
+	if (psreCodeDB != 'PRIVY') {
         'split signer untuk doc1 dan signer untuk doc2'
         signAction = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$signAction')).split(
             enter, splitnum)
@@ -323,8 +324,21 @@ for (int i = 0; i < docid.size(); i++) {
                     'verify trx autosign'
                     arrayMatch.add(WebUI.verifyMatch(resulttrxsigning[arrayindex++], ('Auto Sign (' + emailSign) + ')', 
                             false, FailureHandling.CONTINUE_ON_FAILURE))
+					
+					'verify office code'
+					arrayMatch.add(WebUI.verifyMatch(resulttrxsigning[arrayindex++], officeCode[i],
+							false, FailureHandling.CONTINUE_ON_FAILURE))
+					
+					'verify region code'
+					arrayMatch.add(WebUI.verifyMatch(resulttrxsigning[arrayindex++], regionCode[i],
+							false, FailureHandling.CONTINUE_ON_FAILURE))
+					
+					'verify business line code'
+					arrayMatch.add(WebUI.verifyMatch(resulttrxsigning[arrayindex++], businessLineCode[i],
+							false, FailureHandling.CONTINUE_ON_FAILURE))
                 }
             }
+	}
         
     
     

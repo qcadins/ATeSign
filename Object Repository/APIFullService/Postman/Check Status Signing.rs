@@ -6,11 +6,12 @@
    <elementGuidId>a047e5c2-97bb-4b5b-abf9-6a0aabc2b9b2</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
+   <autoUpdateContent>false</autoUpdateContent>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    },\n    \&quot;refNumber\&quot;: \&quot;${refNumber}\&quot;\n }&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    },\n    \&quot;refNumber\&quot;: \&quot;${refNumber}\&quot;,\n  \&quot;phoneNo\&quot;: \&quot;${phoneNo}\&quot;,\n  \&quot;name\&quot;: \&quot;${name}\&quot;\n }&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
