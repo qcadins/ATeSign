@@ -1,26 +1,11 @@
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
-import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
-import java.sql.Connection as Connection
-import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
-import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
-import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
-import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
-import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
-import com.kms.katalon.core.testcase.TestCase as TestCase
-import com.kms.katalon.core.testdata.TestData as TestData
-import com.kms.katalon.core.testobject.TestObject as TestObject
-import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
-
-'connect dengan db'
-Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'variable untuk keperluan split excel'
 semicolon = ';'
@@ -28,8 +13,6 @@ semicolon = ';'
 delimiter = '\\|'
 
 enter = '\\n'
-
-int splitnum = -1
 
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_Excel_Path).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
@@ -62,7 +45,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
         'Inisialisasi isSequence'
         isSequence = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('isSequence'))
 
-        def documentFile
+        String documentFile
 
         'Inisialisasi documentFile'
         if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 Document')) == 
@@ -168,7 +151,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 
         'looping untuk menggabungkan Signer'
         for (signerIndex = 0; signerIndex < nama.size(); signerIndex++) {
-            def signLoc = ''
+            String signLoc = ''
 
             'Inisialisasi id'
             ids = (id[signerIndex]).split(semicolon, -1)
@@ -222,70 +205,70 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
         }
         
         'menggabungkan body request kedalam 1 variable'
-        bodyAPIFinal = (bodyAPIFinal + bodyAPI + '}')
-		
-		'HIT API'
-		responLogin = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/Login', [('email') : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 
-			rowExcel('Email Login')).toString(), ('password') : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Password Login')).toString()]))
-		
-		'Jika status HIT API 200 OK'
-		if (WS.verifyResponseStatusCode(responLogin, 200, FailureHandling.OPTIONAL) == true) {
-			if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Use True Token')).equalsIgnoreCase(
-				'Yes')) {
-				'Parsing token menjadi GlobalVariable'
-				GlobalVariable.token = WS.getElementPropertyValue(responLogin, 'access_token')
-			} else if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Use True Token')).equalsIgnoreCase(
-				'No')) {
-				GlobalVariable.token = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Token'))
-			}
-			
-			println(GlobalVariable.token)
+        bodyAPIFinal = ((bodyAPIFinal + bodyAPI) + '}')
 
-			'HIT API Manual Sign'
-			responManualSign = WS.sendRequest(findTestObject('Postman/Manual Sign', [('request') : bodyAPIFinal]))
-			
-			'Jika status HIT API 200 OK'
-			if (WS.verifyResponseStatusCode(responManualSign, 200, FailureHandling.OPTIONAL) == true) {
-				'get Status Code'
-				status_Code = WS.getElementPropertyValue(responManualSign, 'status.code')
+        'HIT API'
+        responLogin = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/Login', [('email') : findTestData(API_Excel_Path).getValue(
+                        GlobalVariable.NumofColm, rowExcel('Email Login')).toString(), ('password') : findTestData(API_Excel_Path).getValue(
+                        GlobalVariable.NumofColm, rowExcel('Password Login')).toString()]))
 
-				'Jika status codenya 0'
-				if (status_Code == 0) {
-					'get message'
-					message = WS.getElementPropertyValue(responManualSign, 'status')
-					
-					'write to excel response'
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 5,
-						GlobalVariable.NumofColm - 1, '<' + message + '>')
-					
-					if (GlobalVariable.FlagFailed == 0) {
-						'write to excel success'
-						CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0,
-							GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-					}
-				} else {
-					getErrorMessageAPI(responManualSign)
-				}
-			} else {
-				getErrorMessageAPI(responManualSign)
-			}
-		} else {
-			'mengambil status code berdasarkan response HIT API'
-		    message = WS.getElementPropertyValue(responLogin, 'error_description', FailureHandling.OPTIONAL).toString()
-		
-		    'Write To Excel GlobalVariable.StatusFailed and errormessage'
-		    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-		        (((findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + 
-		        ';') + '<') + message) + '>')
-		
-		    GlobalVariable.FlagFailed = 1
-		}
+        'Jika status HIT API 200 OK'
+        if (WS.verifyResponseStatusCode(responLogin, 200, FailureHandling.OPTIONAL) == true) {
+            if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Use True Token')).equalsIgnoreCase(
+                'Yes')) {
+                'Parsing token menjadi GlobalVariable'
+                GlobalVariable.token = WS.getElementPropertyValue(responLogin, 'access_token')
+            } else if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Use True Token')).equalsIgnoreCase(
+                'No')) {
+                GlobalVariable.token = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Token'))
+            }
+            
+            println(GlobalVariable.token)
+
+            'HIT API Manual Sign'
+            responManualSign = WS.sendRequest(findTestObject('Postman/Manual Sign', [('request') : bodyAPIFinal]))
+
+            'Jika status HIT API 200 OK'
+            if (WS.verifyResponseStatusCode(responManualSign, 200, FailureHandling.OPTIONAL) == true) {
+                'get Status Code'
+                status_Code = WS.getElementPropertyValue(responManualSign, 'status.code')
+
+                'Jika status codenya 0'
+                if (status_Code == 0) {
+                    'get message'
+                    message = WS.getElementPropertyValue(responManualSign, 'status')
+
+                    'write to excel response'
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 5, GlobalVariable.NumofColm - 
+                        1, ('<' + message) + '>')
+
+                    if (GlobalVariable.FlagFailed == 0) {
+                        'write to excel success'
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, 
+                            GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+                    }
+                } else {
+                    getErrorMessageAPI(responManualSign)
+                }
+            } else {
+                getErrorMessageAPI(responManualSign)
+            }
+        } else {
+            'mengambil status code berdasarkan response HIT API'
+            message = WS.getElementPropertyValue(responLogin, 'error_description', FailureHandling.OPTIONAL).toString()
+
+            'Write To Excel GlobalVariable.StatusFailed and errormessage'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                (((findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', 
+                    '') + ';') + '<') + message) + '>')
+
+            GlobalVariable.FlagFailed = 1
+        }
     }
 }
 
-
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
 def getErrorMessageAPI(def respon) {
@@ -299,3 +282,4 @@ def getErrorMessageAPI(def respon) {
 
     GlobalVariable.FlagFailed = 1
 }
+
