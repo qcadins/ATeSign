@@ -410,37 +410,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					}
                 }
             }
-			
-			if (GlobalVariable.checkStoreDB == 'Yes' && !findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Run With')).equalsIgnoreCase('Embed V2')) {
-				'declare arraylist arraymatch'
-				ArrayList arrayMatch = []
-				
-				'ambil data last transaction dari DB'
-				ArrayList resultDB = CustomKeywords.'connection.ForgotPassword.getBusinessLineOfficeCode'(conneSign,
-					findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')))
-				
-				println(resultDB)
-				
-				'declare arrayindex'
-				arrayindex = 0
-				
-				'lakukan loop untuk pengecekan data'
-				for (int i = 0; i < (resultDB.size() / 2); i++) {
-					
-					'verify business line dan office code'
-					arrayMatch.add(WebUI.verifyMatch(resultDB[i].toString(), resultDB[i+2].toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
-				}
-				
-				'jika data db tidak sesuai dengan excel'
-				if (arrayMatch.contains(false)) {
-					GlobalVariable.FlagFailed = 1
-		
-					'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-						GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(GlobalVariable.NumofColm,
-							rowExcel('Reason Failed')) + ';') + 'Transaksi OTP tidak masuk balance mutation')
-				}
-			}
         } else if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('Start Stamping') || 
 			findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('Retry Stamping')) {
 			if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Action')) == 'Start Stamping') {
@@ -878,8 +847,7 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
 	}
 	
 	'cek apakah perlu untuk pengecekan DB'
-	if (GlobalVariable.checkStoreDB == 'Yes' &&
-		findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == '1') {
+	if (GlobalVariable.checkStoreDB == 'Yes' && !findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Run With')).equalsIgnoreCase('Embed V2')) {
 		
 		WebUI.delay(1)
 		
