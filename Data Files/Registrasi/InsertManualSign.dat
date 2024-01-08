@@ -3,10 +3,11 @@
    <description></description>
    <name>InsertManualSign</name>
    <tag></tag>
+   <connectionProperties/>
    <containsHeaders>false</containsHeaders>
    <csvSeperator></csvSeperator>
    <dataFileGUID>f1bd0e23-9d40-4c63-8104-3199df66198b</dataFileGUID>
-   <dataSourceUrl>Excel/2. Esign.xlsx</dataSourceUrl>
+   <dataSourceUrl>Excel/2.1 Esign - API Only.xlsx</dataSourceUrl>
    <driver>ExcelFile</driver>
    <isInternalPath>true</isInternalPath>
    <query></query>

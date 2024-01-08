@@ -1,0 +1,19 @@
+{
+    "status": {
+        "code": 0
+    },
+    "listActStatus": [
+        {
+            "name": "USERCJAJ",
+            "idNo": "2171021502010002",
+            "activationStatus": "Sudah Aktivasi",
+            "signerType": "Employee"
+        },
+        {
+            "name": "USERCJAH",
+            "idNo": "1671080101030010",
+            "activationStatus": "Sudah Aktivasi",
+            "signerType": "Customer"
+        }
+    ]
+}

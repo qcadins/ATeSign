@@ -38,7 +38,7 @@ GlobalVariable.FlagFailed = 0
 ArrayList<String> namaTandaTangan = [], notelpTandaTangan = []
 
 'inisiasi index menjadi 8 untuk modify object ketika tidak pada e-meterai'
-index = 9
+index = 12
 
 'Inisialisasi variable yang dibutuhkan'
 emailPenandaTangan = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$email')).split(
@@ -76,10 +76,10 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
     if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Membutuhkan e-Meterai (Send Manual)')) == 
     'Yes') {
         'index meningkat karena tambahan 2 kolom ketika menggunakan e-meterai'
-        index = 11
+        index = 14
     } else {
         'modify menuju index normal'
-        index = 9
+        index = 12
     }
 	
 	'modify label daftar penanda tangan dengan naiknya index'
@@ -90,6 +90,14 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 	modifyObjectbuttonTambahPenandaTangan = WebUI.modifyObjectProperty(findTestObject('ManualSign/button_tambahTandaTangan'),
 		'xpath', 'equals', ('//*[@id="msxForm"]/div[' + index) + ']/div[2]/a', true)
 	
+	'check ada value maka setting email service tenant'
+	if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')).length() > 0) {
+		for (loopingSigner = 0; loopingSigner < emailPenandaTangan.size(); loopingSigner++) {
+			'setting email service tenant'
+			CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(excelPathManualSigntoSign).getValue(
+				GlobalVariable.NumofColm, rowExcel('Setting Email Service')),emailPenandaTangan[loopingSigner])
+		}
+	}
     emailService = CustomKeywords.'connection.DataVerif.getEmailService'(conneSign, GlobalVariable.Tenant)
 
     'click tambah penanda tangan'
@@ -472,6 +480,28 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
             'verify manual upload'
             arrayMatch.add(WebUI.verifyMatch('1', result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
+			'verify is seq'
+			arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
+						rowExcel('isSequence')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+			
+			if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('officeCode')) != '') {
+				'verify office code'
+				arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
+						rowExcel('officeCode')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+			}
+			
+			if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('regionCode')) != '') {
+				'verify region code'
+				arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
+						rowExcel('regionCode')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+			}
+			
+			if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('businessLineCode')) != '') {
+				'verify business line code'
+				arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
+						rowExcel('businessLineCode')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+			}
+			
 			String docId = CustomKeywords.'connection.DataVerif.getDocId'(conneSign, findTestData(excelPathManualSigntoSign).getValue(
 				GlobalVariable.NumofColm, rowExcel('$referenceNo')), GlobalVariable.Tenant)
 			
@@ -565,13 +595,40 @@ def inputForm() {
     'Klik enter'
     WebUI.sendKeys(findTestObject('ManualSign/input_jenisPembayaran'), Keys.chord(Keys.ENTER))
 
-    'Input AKtif pada input Status'
+    'Input is sequence'
     WebUI.setText(findTestObject('ManualSign/input_isSequence'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
             rowExcel('isSequence')))
 
     'Klik enter'
     WebUI.sendKeys(findTestObject('ManualSign/input_isSequence'), Keys.chord(Keys.ENTER))
+	
+	if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('businessLineCode')) != '') {
+		'Input pada business line'
+		WebUI.setText(findTestObject('ManualSign/input_businessLineCode'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
+			rowExcel('businessLineCode')))
 
+		'Klik enter'
+		WebUI.sendKeys(findTestObject('ManualSign/input_businessLineCode'), Keys.chord(Keys.ENTER))
+	}
+	
+	if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('regionCode')) != '') {
+		'Input pada region code'
+		WebUI.setText(findTestObject('ManualSign/input_regionCode'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
+			rowExcel('regionCode')))
+
+		'Klik enter'
+			WebUI.sendKeys(findTestObject('ManualSign/input_regionCode'), Keys.chord(Keys.ENTER))
+	}
+	
+	if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('officeCode')) != '') {
+		'Input pada office code'
+		WebUI.setText(findTestObject('ManualSign/input_officeCode'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
+			rowExcel('officeCode')))
+
+		'Klik enter'
+		WebUI.sendKeys(findTestObject('ManualSign/input_officeCode'), Keys.chord(Keys.ENTER))
+	}
+	
     'Code untuk mengambil file berdasarkan direktori masing-masing sekaligus ambil value dari excel'
     String userDir = System.getProperty('user.dir') + '\\File'
 
@@ -622,6 +679,8 @@ def sortingSequenceSign() {
     'check if Sequential signing iya'
     if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('isSequence')).equalsIgnoreCase(
         'Ya')) {
+	
+	if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Urutan Signing (Send Manual)')) != '') {
         'get urutan seq sign dari excel'
         ArrayList<String> seqSignRole = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel(
                 'Urutan Signing (Send Manual)')).toString().toUpperCase().split(';', -1)
@@ -654,7 +713,7 @@ def sortingSequenceSign() {
                 seq--
             }
         }
-        
+	}
         'click button simpan'
         WebUI.click(findTestObject('Object Repository/ManualSign/btn_simpan'))
 

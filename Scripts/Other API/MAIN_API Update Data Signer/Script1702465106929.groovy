@@ -61,7 +61,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
                 excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
 
-		WebUI.delay(10000000)
         'write to excel response elapsed time'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 
             1, GlobalVariable.NumofColm - 1, elapsedTime.toString())

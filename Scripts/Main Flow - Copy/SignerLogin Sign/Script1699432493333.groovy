@@ -1150,6 +1150,13 @@ def verifOTPMethod(Connection conneSign, String emailSigner, ArrayList listOTP, 
             ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
                 '-', '') + ';') + GlobalVariable.ReasonFailedSaveGagal) + ' dengan alasan tidak muncul page input OTP')
     } else {
+		'setting sent otp by email'
+		if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email')).length() >
+		0) {
+			'update setting sent otp by email'
+			CustomKeywords.'connection.SendSign.settingSentOTPbyEmail'(conneSign, findTestData(excelPathFESignDocument).getValue(
+					GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email')))
+		}
 		
         if (verifOTPMethodDetail(conneSign, emailSigner, listOTP, noTelpSigner, otpAfter, vendor) == false) {
             return false
@@ -1185,14 +1192,6 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
                 rowExcel('Setting OTP Active Duration'))))
     }
     
-    'setting sent otp by email'
-    if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email')).length() > 
-    0) {
-        'update setting sent otp by email'
-        CustomKeywords.'connection.SendSign.settingSentOTPbyEmail'(conneSign, findTestData(excelPathFESignDocument).getValue(
-                GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email')))
-    }
-    
     'ubah pemakaian biom menjadi false'
     useBiom = 0
 
@@ -1216,11 +1215,25 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
                     GlobalVariable.NumofColm, rowExcel('Password Signer')), 'OTP')
         } else if ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email')) == 
         '0') || !(email.contains('OUTLOOK.COM'))) {
-            'Dikasih delay 50 detik dikarenakan loading untuk mendapatkan OTP Privy via SMS.'
-            WebUI.delay(50)
+		if (CustomKeywords.'connection.DataVerif.getEmailServiceFromTenant'(conneSign, findTestData(excelPathFESignDocument).getValue(
+			GlobalVariable.NumofColm, rowExcel('Tenant'))) == '0' &&
+		CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, findTestData(excelPathFESignDocument).getValue(
+			GlobalVariable.NumofColm, rowExcel('Tenant'))) == '0' &&
+		CustomKeywords.'connection.DataVerif.getUseWAMessage'(conneSign, findTestData(excelPathFESignDocument).getValue(
+			GlobalVariable.NumofColm, rowExcel('Tenant'))) == '0') {
+			if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Getting OTP Value from SMS ?')) == 'Yes') {
+				OTP = CustomKeywords.'customizekeyword.GetSMS.getOTP'('PrivyID')
 
-            OTP = (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Manual OTP')).split(
-                ';', -1)[GlobalVariable.indexUsed])
+			}
+			else {
+				'Dikasih delay 50 detik dikarenakan loading untuk mendapatkan OTP Privy via SMS.'
+				WebUI.delay(50)
+	
+				OTP = (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Manual OTP')).split(
+					';', -1)[GlobalVariable.indexUsed])
+			}
+			}
+
         }
     } else {
         'OTP yang pertama dimasukkan kedalam 1 var'
@@ -1240,8 +1253,30 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
             'call keyword get otp dari email'
             OTP = CustomKeywords.'customizekeyword.GetEmail.getEmailContent'(email, findTestData(excelPathFESignDocument).getValue(
                     GlobalVariable.NumofColm, rowExcel('Password Signer')), 'OTP')
+        }    else if ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email')) == 
+        '0') || !(email.contains('OUTLOOK.COM'))) {
+		if (CustomKeywords.'connection.DataVerif.getEmailServiceFromTenant'(conneSign, findTestData(excelPathFESignDocument).getValue(
+			GlobalVariable.NumofColm, rowExcel('Tenant'))) == '0' &&
+		CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, findTestData(excelPathFESignDocument).getValue(
+			GlobalVariable.NumofColm, rowExcel('Tenant'))) == '0' &&
+		CustomKeywords.'connection.DataVerif.getUseWAMessage'(conneSign, findTestData(excelPathFESignDocument).getValue(
+			GlobalVariable.NumofColm, rowExcel('Tenant'))) == '0') {
+			if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Getting OTP Value from SMS ?')) == 'Yes') {
+				WebUI.delay(2)
+				
+				OTP = CustomKeywords.'customizekeyword.GetSMS.getOTP'('eSignHub')
+			}
+			else {
+				'Dikasih delay 50 detik dikarenakan loading untuk mendapatkan OTP Privy via SMS.'
+				WebUI.delay(50)
+	
+				OTP = (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Manual OTP')).split(
+					';', -1)[GlobalVariable.indexUsed])
+				}
+			}
+
         }
-        
+      
         'value OTP dari db / email'
         WebUI.setText(findTestObject('KotakMasuk/Sign/input_OTP'), OTP)
 

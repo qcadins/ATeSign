@@ -286,6 +286,16 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
+      <initValue>findTestData('Login/Setting').getValue(13, 2)</initValue>
+      <name>tokenGmail</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>findTestData('Login/Setting').getValue(12, 2)</initValue>
+      <name>tokenSourceDevice</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
       <initValue>1</initValue>
       <name>VerificationCount</name>
    </GlobalVariableEntity>

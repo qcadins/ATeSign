@@ -35,5 +35,4 @@ public class ParseText {
 		byte[] encodedHash = digest.digest(input.getBytes('UTF-8'))
 		encodedHash.collect { String.format('%02x', it) }.join()
 	}
-	
 }

@@ -270,7 +270,7 @@ public class APIFullService {
 	getTrxSendDocSigning(Connection conn, String trxno) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select trx_no,ref_no, TO_CHAR(trx_date, 'yyyy-MM-DD'), qty, notes from tr_balance_mutation where trx_no = '" + trxno + "'")
+		resultSet = stm.executeQuery("select tbm.trx_no,tbm.ref_no, TO_CHAR(tbm.trx_date, 'yyyy-MM-DD'), tbm.qty, tbm.notes, mso.office_code, msr.region_code, mbl.business_line_code from tr_balance_mutation tbm left join ms_business_line mbl on tbm.id_ms_business_line = mbl.id_ms_business_line left join ms_office mso on tbm.id_ms_office = mso.id_ms_office left join ms_region msr on mso.id_ms_region = msr.id_ms_region where trx_no = '" + trxno + "'")
 
 		metadata = resultSet.metaData
 
@@ -279,6 +279,9 @@ public class APIFullService {
 		while (resultSet.next()) {
 			for (i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
+				if (data == null) {
+					data = ''
+				}
 				listdata.add(data)
 			}
 		}

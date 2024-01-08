@@ -21,7 +21,7 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 def currentDate = new Date().format('yyyy-MM-dd')
 
 'looping untuk menjalankan Main'
-for (GlobalVariable.NumofColm = 61; GlobalVariable.NumofColm <= findTestData(excelPathMain).columnNumbers; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathMain).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break 
     } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
@@ -185,6 +185,8 @@ for (GlobalVariable.NumofColm = 61; GlobalVariable.NumofColm <= findTestData(exc
 
             'jika ada proses cancel doc'
             if (cancelDocsValue == 'Yes') {
+				stopStopWatch(watch)
+				
                 'lanjutkan loop'
                 continue
             }
@@ -881,18 +883,21 @@ for (GlobalVariable.NumofColm = 61; GlobalVariable.NumofColm <= findTestData(exc
             }
         }
         
-		'stopwatch distop'
-        watch.stop()
-
-		'total waktu running akan masuk kedalam string ini'
-        String formattedElapsedTime = DurationFormatUtils.formatDurationHMS(watch.getTime())
-
-		'write elapsed time'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Elapsed Time') - 
-            1, GlobalVariable.NumofColm - 1, 'Elapsed Time: ' + formattedElapsedTime)
+		stopStopWatch(watch)
     }
 }
 
+def stopStopWatch(def watch) {
+	'stopwatch distop'
+	watch.stop()
+
+	'total waktu running akan masuk kedalam string ini'
+	String formattedElapsedTime = DurationFormatUtils.formatDurationHMS(watch.getTime())
+
+	'write elapsed time'
+	CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Elapsed Time') -
+		1, GlobalVariable.NumofColm - 1, 'Elapsed Time: ' + formattedElapsedTime)
+}
 def inisializeArray(boolean isUsed, int indexReadDataExcel) {
 	'jika belum digunakan'
     if (isUsed == false) {
