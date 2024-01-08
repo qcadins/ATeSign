@@ -1,9 +1,10 @@
 package customizekeyword
 
 import com.kms.katalon.core.annotation.Keyword
-import internal.GlobalVariable
-import groovy.json.JsonSlurper
+
 import groovy.json.JsonBuilder
+import groovy.json.JsonSlurper
+import internal.GlobalVariable
 
 public class BeautifyJson {
 
@@ -22,7 +23,7 @@ public class BeautifyJson {
 
 			try {
 				needto.writeToExcel(GlobalVariable.DataFilePath, sheet, rowNo, GlobalVariable.NumofColm -
-						1, beautifiedJson)
+						1, beautifiedJson.toString())
 			} catch (FileNotFoundException ex) {
 				String beautifiedJsonPath = System.getProperty('user.dir') + '\\Response\\' + fileName + '.json'
 
@@ -30,13 +31,9 @@ public class BeautifyJson {
 
 				needto.writeToExcel(GlobalVariable.DataFilePath, sheet, rowNo, GlobalVariable.NumofColm -
 						1, beautifiedJsonPath)
-
-				ex.printStackTrace()
 			}
-		} catch (Exception e) {
-			this.println("Failed to beautify the JSON: ${e.message}")
-			
-			e.printStackTrace()
+		} catch (FileNotFoundException e) {
+			println("Failed to beautify the JSON: ${e.message}")
 		}
 	}
 }

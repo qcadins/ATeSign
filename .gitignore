@@ -22,4 +22,5 @@ build
 /.settings/
 .project
 Reports/
-.cache
+.cache/
+Excel/

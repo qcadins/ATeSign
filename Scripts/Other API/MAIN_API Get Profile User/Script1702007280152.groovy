@@ -10,6 +10,9 @@ import internal.GlobalVariable as GlobalVariable
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - API Only.xlsx')
 
+'connect dengan db'
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
+
 'get colm excel'
 int countColmExcel = findTestData(excelPath).columnNumbers
 
@@ -69,10 +72,51 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 'jika status codenya 0'
                 if (status_Code == 0) {
-                    'write to excel success'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, 
-                        GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 					
+					if ((GlobalVariable.checkStoreDB == 'Yes') && (GlobalVariable.FlagFailed == 0)) {
+						ArrayList result = CustomKeywords.'connection.APIFullService.getProfileUserAPIONLY'(conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Email')))
+						
+						emailList = WS.getElementPropertyValue(respon, 'bean.email', FailureHandling.OPTIONAL)
+						
+						phoneList = WS.getElementPropertyValue(respon, 'bean.phoneNumber', FailureHandling.OPTIONAL)
+						
+						vendorList = WS.getElementPropertyValue(respon, 'bean.vendor', FailureHandling.OPTIONAL)
+											
+						arrayIndex = 0
+						
+						ArrayList arrayMatch = []
+	
+						for (index = 0; index < (result.size() / 4); index++) {
+							'verify full name'
+							arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], WS.getElementPropertyValue(respon, 'nama', FailureHandling.OPTIONAL).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+	
+							'verify email'
+							arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], emailList[index], false, FailureHandling.CONTINUE_ON_FAILURE))
+							
+							'verify phoneNo'
+							arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++],
+								CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(phoneList[index]) ,false, FailureHandling.CONTINUE_ON_FAILURE))
+							
+							'verify vendor'
+							arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], vendorList[index], false, FailureHandling.CONTINUE_ON_FAILURE))
+						}
+						
+						'jika data db tidak sesuai dengan excel'
+						if (arrayMatch.contains(false)) {
+							GlobalVariable.FlagFailed = 1
+							
+							'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+								GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
+						}
+					}
+	
+					'tulis sukses jika store DB berhasil'
+					if (GlobalVariable.FlagFailed == 0) {
+						'write to excel success'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
+							1, GlobalVariable.StatusSuccess)
+					}
                 } else {
                     'call function get API error message'
                     getErrorMessageAPI(respon)

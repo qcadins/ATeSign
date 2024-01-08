@@ -53,19 +53,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         'HIT API check Status stamping'
-        respon = WS.sendRequest(findTestObject('APIFullService/Postman/Check Stamping Status', [('callerId') : findTestData(
-                        excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('refNumber') : findTestData(
-                        excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, rowExcel('refNumber'))]))
+        respon = WS.sendRequest(findTestObject('APIFullService/Postman/Check Stamping Status', [
+			('callerId') : findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), 
+			('refNumber') : findTestData(excelPathAPICheckStamping).getValue(GlobalVariable.NumofColm, rowExcel('refNumber'))]))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
             code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
             'ambil lama waktu yang diperlukan hingga request menerima balikan'
-            def elapsedTime = (respon.getElapsedTime() / 1000) + ' second'
+            elapsedTime = (respon.elapsedTime / 1000) + ' second'
 
             'ambil body dari hasil respons'
-            responseBody = respon.getResponseBodyContent()
+            responseBody = respon.responseBodyContent
 
             'panggil keyword untuk proses beautify dari respon json yang didapat'
             CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
@@ -159,6 +159,6 @@ def getErrorMessageAPI(def respon) {
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 

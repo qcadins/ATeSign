@@ -45,7 +45,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'HIT API send otp ke email invitasi'
         respon = WS.sendRequest(findTestObject('Postman/forgotPassword', [('callerId') : email, ('loginId') : email]))
 
-		checkSaldoWAOrSMS(conneSign, emailSHA256)
+		checkBalanceMutation(conneSign, emailSHA256)
 		
         'ambil lama waktu yang diperlukan hingga request menerima balikan'
         elapsedTime = (respon.elapsedTime / 1000) + ' second'
@@ -144,7 +144,7 @@ def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
-def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
+def checkBalanceMutation(Connection conneSign, String emailSigner) {
 	emailServiceOnVendor = CustomKeywords.'connection.DataVerif.getEmailServiceAsVendorUser'(conneSign, emailSigner)
 
 	fullNameUser = CustomKeywords.'connection.DataVerif.getFullNameOfUser'(conneSign, emailSigner)

@@ -211,7 +211,7 @@ public class DataVerif {
 	getTenantCode(Connection conn, String loginId) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select mst.tenant_code from ms_tenant mst join ms_useroftenant muot on mst.id_ms_tenant = muot.id_ms_tenant join am_msuser amm on amm.id_ms_user = muot.id_ms_user where amm.login_id = '" + loginId + "'")
+		resultSet = stm.executeQuery("select mst.tenant_code from ms_tenant mst join ms_useroftenant muot on mst.id_ms_tenant = muot.id_ms_tenant join am_msuser amm on amm.id_ms_user = muot.id_ms_user where amm.login_id = '" + loginId.toUpperCase() + "'")
 
 		metadata = resultSet.metaData
 
@@ -311,10 +311,10 @@ public class DataVerif {
 	}
 
 	@Keyword
-	getOfficeCode(Connection conn, String documentId) {
+	getOfficeCode(Connection conn, String value) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select mso.office_code from ms_office mso left join tr_document_h tdh on tdh.id_ms_office = mso.id_ms_office left join tr_document_d tdd on tdd.id_document_h = tdh.id_document_h where tdd.document_id = '"+documentId+"'")
+		resultSet = stm.executeQuery("select mso.office_code from ms_office mso left join tr_document_h tdh on tdh.id_ms_office = mso.id_ms_office left join tr_document_d tdd on tdd.id_document_h = tdh.id_document_h where tdd.document_id = '"+ value +"' OR tdh.ref_number = '"+ value +"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -587,7 +587,7 @@ public class DataVerif {
 
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select full_name from am_msuser where "+helperQuery+" = '"+valueUser+"'")
+		resultSet = stm.executeQuery("select full_name from am_msuser where "+helperQuery+" = '"+ valueUser.toUpperCase() +"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -600,7 +600,7 @@ public class DataVerif {
 	}
 
 	@Keyword
-	getTrxSaldoWASMS(Connection conn, String usage, String fullName, int limit) {
+	getTrxSaldoWASMS(Connection conn, String usage, String fullName) {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("SELECT tbm.trx_no, TO_CHAR(tbm.trx_date, 'YYYY-MM-DD HH24:MI:SS'), 'Use ' || msl.description, amm.full_name, '', '', '', tbm.notes, tbm.qty FROM tr_balance_mutation tbm LEFT JOIN ms_lov msl ON tbm.lov_balance_type = msl.id_lov LEFT JOIN am_msuser amm ON tbm.id_ms_user = amm.id_ms_user LEFT JOIN tr_document_d tdd ON tbm.id_document_d = tdd.id_document_d LEFT JOIN tr_document_h tdh ON tbm.id_document_h = tdh.id_document_h WHERE msl.description = '"+usage+"' AND amm.full_name = '"+fullName+"' AND tbm.trx_date BETWEEN current_timestamp - interval '"+GlobalVariable.batasWaktu+" minutes' AND current_timestamp + interval '"+GlobalVariable.batasWaktu+" minutes' ORDER BY tbm.dtm_crt DESC;")
@@ -653,7 +653,7 @@ public class DataVerif {
 		}
 		data
 	}
-
+	
 	@Keyword
 	getCountValidationFaceCompDaily(Connection conn, String email) {
 		stm = conn.createStatement()

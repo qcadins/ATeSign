@@ -34,9 +34,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         'HIT API Login untuk ambil bearer token'
-        responLogin = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-                        rowExcel('username')), ('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-                        rowExcel('password'))]))
+        responLogin = WS.sendRequest(findTestObject('Postman/Login', [
+						('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('username')), 
+						('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('password'))]))
 
         'Jika status HIT API Login 200 OK'
         if (WS.verifyResponseStatusCode(responLogin, 200, FailureHandling.OPTIONAL) == true) {
@@ -48,7 +48,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             rowExcel('username'))]))
 
             'ambil lama waktu yang diperlukan hingga request menerima balikan'
-            elapsedTime = (respon.elapsedTime / 1000) + ' second'
+            elapsedTime = ((respon.elapsedTime / 1000) + ' second')
 
             'ambil body dari hasil respons'
             responseBody = respon.responseBodyContent

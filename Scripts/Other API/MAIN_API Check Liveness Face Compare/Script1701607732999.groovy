@@ -45,15 +45,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.token = WS.getElementPropertyValue(respon_login, 'access_token')
 
             'HIT API'
-            respon = WS.sendRequest(findTestObject('Postman/Check Liveness Face Compare', [
-				('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('username')),
-				('tenantCode') : ('"' + GlobalVariable.Tenant + '"')]))
+            respon = WS.sendRequest(findTestObject('Postman/Check Liveness Face Compare', [('callerId') : findTestData(excelPath).getValue(
+                            GlobalVariable.NumofColm, rowExcel('username')), ('tenantCode') : ('"' + GlobalVariable.Tenant) + 
+                        '"']))
 
             'ambil lama waktu yang diperlukan hingga request menerima balikan'
-            def elapsedTime = (respon.getElapsedTime() / 1000) + ' second'
+            String elapsedTime = (respon.elapsedTime) / 1000 + ' second'
 
             'ambil body dari hasil respons'
-            responseBody = respon.getResponseBodyContent()
+            responseBody = respon.responseBodyContent
 
             'panggil keyword untuk proses beautify dari respon json yang didapat'
             CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
@@ -61,7 +61,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
             'write to excel response elapsed time'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 
-                1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+                1, GlobalVariable.NumofColm - 1, elapsedTime)
 
             'Jika status HIT API 200 OK'
             if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
@@ -70,25 +70,25 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 'jika status codenya 0'
                 if (status_Code == 0) {
-
                     if (GlobalVariable.checkStoreDB == 'Yes') {
                         'declare arraylist arraymatch'
                         ArrayList arrayMatch = []
 
                         'get data store db'
-                        ArrayList result = CustomKeywords.'connection.APIFullService.getLivenessFCTenantStatAPIOnly'(conneSign, GlobalVariable.Tenant)
+                        ArrayList result = CustomKeywords.'connection.APIFullService.getLivenessFCTenantStatAPIOnly'(conneSign, 
+                            GlobalVariable.Tenant)
 
                         'declare arrayindex'
                         arrayindex = 0
 
-						'verify livenessFacecompareServicesStatus'
-						arrayMatch.add(WebUI.verifyMatch(result[arrayindex++], 
-							WS.getElementPropertyValue(respon, 'livenessFacecompareServicesStatus', FailureHandling.OPTIONAL), false, FailureHandling.CONTINUE_ON_FAILURE))
+                        'verify livenessFacecompareServicesStatus'
+                        arrayMatch.add(WebUI.verifyMatch(result[arrayindex++], WS.getElementPropertyValue(respon, 'livenessFacecompareServicesStatus', 
+                                    FailureHandling.OPTIONAL), false, FailureHandling.CONTINUE_ON_FAILURE))
 
-						'verify vendor name'
-						arrayMatch.add(WebUI.verifyMatch(result[arrayindex++],
-							WS.getElementPropertyValue(respon, 'mustLivenessFaceCompareFirst', FailureHandling.OPTIONAL), false, FailureHandling.CONTINUE_ON_FAILURE))
-                        
+                        'verify vendor name'
+                        arrayMatch.add(WebUI.verifyMatch(result[arrayindex++], WS.getElementPropertyValue(respon, 'mustLivenessFaceCompareFirst', 
+                                    FailureHandling.OPTIONAL), false, FailureHandling.CONTINUE_ON_FAILURE))
+
                         'jika data db tidak sesuai dengan excel'
                         if (arrayMatch.contains(false)) {
                             GlobalVariable.FlagFailed = 1

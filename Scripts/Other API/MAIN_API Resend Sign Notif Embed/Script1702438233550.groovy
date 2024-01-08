@@ -1,14 +1,12 @@
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-
-import java.nio.charset.StandardCharsets
-import java.sql.Connection
-import java.text.SimpleDateFormat
-
+import java.nio.charset.StandardCharsets as StandardCharsets
+import java.sql.Connection as Connection
+import java.time.LocalDateTime as LocalDateTime
+import java.time.format.DateTimeFormatter as DateTimeFormatter
 import internal.GlobalVariable as GlobalVariable
 
 'connect DB eSign'
@@ -38,55 +36,78 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
         }
         
-		'get aesKet Tenant'
-        aesKey = CustomKeywords.'connection.APIFullService.getAesKeyBasedOnTenant'(conneSign, GlobalVariable.Tenant)
+        'get office code dari db'
+        officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                rowExcel('Document ID')))
 
-        def currentDate = new Date()
+        if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Embed Version')).equalsIgnoreCase('V2')) {
+            'get aesKet Tenant'
+            aesKey = CustomKeywords.'connection.APIFullService.getAesKeyBasedOnTenant'(conneSign, GlobalVariable.Tenant)
 
-        def dateFormat = new SimpleDateFormat('yyyy-MM-dd HH:mm:ss')
+            currentDate = LocalDateTime.now()
 
-        def timestamp = dateFormat.format(currentDate)
+            localeIndonesia = new Locale('id', 'ID')
 
-        if (aesKey.toString() != 'null') {
-            'get office code dari db'
-            officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, findTestData(excelPath).getValue(
-                    GlobalVariable.NumofColm, rowExcel('Document ID')))
+            formatter = DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm:ss', localeIndonesia)
+
+            formattedDate = currentDate.format(formatter)
 
             'pembuatan message yang akan dienkrip'
-            msg = (((((("{'officeCode':'" + officeCode) + "','email':'") + findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-                rowExcel('email'))) + "','timestamp':'") + timestamp) + "'}")
+            msg = (((((('{\'officeCode\':\'' + officeCode) + '\',\'email\':\'') + findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                rowExcel('email'))) + '\',\'timestamp\':\'') + formattedDate) + '\'}')
 
-			if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Msg')) == 'No') {
-				'officecode + email + time stamp tanpa encrypt'
-				endcodedMsg = msg
-			} else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Msg')) == 'Yes') {				
-				'encrypt and decode officecode + email + time stamp'
-				endcodedMsg = encryptEncodeValue(msg, aesKey)
-			}
+            url = 'embed/document/resendSignNotif'
+        } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Embed Version')).equalsIgnoreCase(
+            'V1')) {
+            'get aesKet general'
+            aesKey = CustomKeywords.'connection.DataVerif.getAESKey'(conneSign)
 
-			if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct DocumentID')) == 'No') {
-				'get document id polos dari excel'
-				endcodedDocumentId = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
-                        'Document ID'))
-			} else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct DocumentID')) == 'Yes') {
-				'encrypt document id'
-				endcodedDocumentId = encryptEncodeValue(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
-						'Document ID')), aesKey)				
-			}
+            'pembuatan message yang akan dienkrip'
+            msg = (((((('{\'officeCode\':\'' + officeCode) + '\',\'email\':\'') + findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                rowExcel('email'))) + '\',\'tenantCode\':\'') + GlobalVariable.Tenant) + '\'}')
+
+            url = 'document/resendSignNotif'
+        }
+        
+        if (aesKey.toString() != 'null') {
+            if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Msg')) == 'No') {
+                'officecode + email + time stamp tanpa encrypt'
+                endcodedMsg = msg
+            } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Msg')) == 'Yes') {
+                'encrypt and decode officecode + email + time stamp'
+                endcodedMsg = encryptEncodeValue(msg, aesKey)
+            }
+            
+            if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct DocumentID')) == 'No') {
+                'get document id polos dari excel'
+                endcodedDocumentId = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Document ID'))
+            } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct DocumentID')) == 
+            'Yes') {
+                'encrypt document id'
+                endcodedDocumentId = encryptEncodeValue(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
+                            'Document ID')), aesKey)
+            }
         } else {
             endcodedMsg = ''
         }
-		
-            'HIT API'
-            respon = WS.sendRequest(findTestObject('Postman/Resend Sign Notif Embed', [
-				('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')),
-				('documentId') : endcodedDocumentId, ('msg') : endcodedMsg]))
+        
+        println(endcodedMsg)
+
+        'HIT API'
+        respon = WS.sendRequest(findTestObject('Postman/Resend Sign Notif Embed', [
+						('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), 
+						('documentId') : endcodedDocumentId, ('msg') : endcodedMsg, ('url') : url]))
+
+        'Jika status HIT API 200 OK'
+        if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
+            'mengambil status code berdasarkan response HIT API'
+            statusCode = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
             'ambil lama waktu yang diperlukan hingga request menerima balikan'
-            def elapsedTime = (respon.getElapsedTime() / 1000) + ' second'
+            elapsedTime = ((respon.elapsedTime / 1000) + ' second')
 
             'ambil body dari hasil respons'
-            responseBody = respon.getResponseBodyContent()
+            responseBody = respon.responseBodyContent
 
             'panggil keyword untuk proses beautify dari respon json yang didapat'
             CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
@@ -96,29 +117,143 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 
                 1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
 
-            'Jika status HIT API 200 OK'
-            if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
-                'mengambil status code berdasarkan response HIT API'
-                status_Code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
+            'jika status codenya 0'
+            if (statusCode == 0) {
+                if (GlobalVariable.checkStoreDB == 'Yes') {
+                    emailServiceOnTenant = CustomKeywords.'connection.DataVerif.getEmailService'(conneSign, GlobalVariable.Tenant)
 
-                'jika status codenya 0'
-                if (status_Code == 0) {
-                    'tulis sukses jika store DB berhasil'
-                    if (GlobalVariable.FlagFailed == 0) {
-                        'write to excel success'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, 
-                            GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+					String emailSHA256
+					
+					if (!(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('email')).contains('@'))) {
+						emailSHA256 = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('email')))
+					} else {
+						emailSHA256 = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('email'))
+					}
+					
+                    fullNameUser = CustomKeywords.'connection.DataVerif.getFullNameOfUser'(conneSign, emailSHA256)
+
+                    mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
+
+                    if (mustUseWAFirst == '1') {
+                        'menggunakan saldo wa'
+                        ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message', 
+                            fullNameUser)
+
+                        if (balmut.size() == 0) {
+                            GlobalVariable.FlagFailed = 1
+
+                            'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+                            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                                GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                                    rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
+                        }
+                        
+                        if ((balmut[8]) != -1) {
+                            GlobalVariable.FlagFailed = 1
+
+                            'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+                            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                                GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                                    rowExcel('Reason Failed')) + ';') + 'Saldo WA tidak terpotong')
+                        }
+                    } else {
+                        if (emailServiceOnTenant == 1) {
+                            useWAMessage = CustomKeywords.'connection.DataVerif.getUseWAMessage'(conneSign, GlobalVariable.Tenant)
+
+                            if (useWAMessage == '1') {
+                                'menggunakan saldo wa'
+                                ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message', 
+                                    fullNameUser)
+
+                                if (balmut.size() == 0) {
+                                    GlobalVariable.FlagFailed = 1
+
+                                    'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+                                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                                        GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(
+                                            GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
+                                }
+                                
+                                if ((balmut[8]) != -1) {
+                                    GlobalVariable.FlagFailed = 1
+
+                                    'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+                                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                                        GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(
+                                            GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Saldo WA tidak terpotong')
+                                }
+                            } else if (useWAMessage == '0') {
+                                'menggunakan saldo wa'
+                                ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'SMS Notif', 
+                                    fullNameUser)
+
+                                if (balmut.size() == 0) {
+                                    GlobalVariable.FlagFailed = 1
+
+                                    'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+                                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                                        GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(
+                                            GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via SMS')
+                                }
+                                
+                                if ((balmut[8]) != -1) {
+                                    GlobalVariable.FlagFailed = 1
+
+                                    'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+                                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                                        GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(
+                                            GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Saldo SMS tidak terpotong')
+                                }
+                            }
+                        }
                     }
-                } else {
-                    'call function get API error message'
-                    getErrorMessageAPI(respon)
+                    
+                    'declare arraylist arraymatch'
+                    ArrayList arrayMatch = []
+
+                    'ambil data last transaction dari DB'
+                    ArrayList resultDB = CustomKeywords.'connection.ForgotPassword.getBusinessLineOfficeCode'(conneSign, 
+                        findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('email')))
+
+                    println(resultDB)
+
+                    'declare arrayindex'
+                    arrayindex = 0
+
+                    'lakukan loop untuk pengecekan data'
+                    for (int i = 0; i < (resultDB.size() / 2); i++) {
+                        'verify business line dan office code'
+                        arrayMatch.add(WebUI.verifyMatch((resultDB[i]).toString(), (resultDB[(i + 2)]).toString(), false, 
+                                FailureHandling.CONTINUE_ON_FAILURE))
+                    }
+                    
+                    'jika data db tidak sesuai dengan excel'
+                    if (arrayMatch.contains(false)) {
+                        GlobalVariable.FlagFailed = 1
+
+                        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                            GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
+                                    'Reason Failed')) + ';') + 'Transaksi OTP tidak masuk balance mutation')
+                    }
+                }
+                
+                'tulis sukses jika store DB berhasil'
+                if (GlobalVariable.FlagFailed == 0) {
+                    'write to excel success'
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
+                        1, GlobalVariable.StatusSuccess)
                 }
             } else {
-                'write to excel status failed dan reason : '
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                    (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', 
-                        '') + ';') + GlobalVariable.ReasonFailedHitAPI)
+                'call function get API error message'
+                getErrorMessageAPI(respon)
             }
+        } else {
+            'write to excel status failed dan reason : '
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + 
+                ';') + GlobalVariable.ReasonFailedHitAPI)
+        }
     }
 }
 
@@ -135,19 +270,20 @@ def getErrorMessageAPI(def respon) {
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
 def encryptEncodeValue(String value, String aesKey) {
-	'enkripsi msg'
-	encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(value, aesKey)
+    'enkripsi msg'
+    encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(value, aesKey)
 
-	println(encryptMsg)
+    println(encryptMsg)
 
-	try {
-		return URLEncoder.encode(encryptMsg, StandardCharsets.UTF_8.toString())
-	}
-	catch (UnsupportedEncodingException ex) {
-		throw new RuntimeException(ex.getCause())
-	}
+    try {
+        return URLEncoder.encode(encryptMsg, StandardCharsets.UTF_8.toString())
+    }
+    catch (UnsupportedEncodingException ex) {
+        throw new RuntimeException(ex.cause)
+    } 
 }
+

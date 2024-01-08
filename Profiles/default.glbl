@@ -16,6 +16,11 @@
    </GlobalVariableEntity>
    <GlobalVariableEntity>
       <description></description>
+      <initValue>findTestData('Login/Setting').getValue(12, 2)</initValue>
+      <name>BaseLink</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
       <initValue>findTestData('Login/Setting').getValue(7, 2)</initValue>
       <name>base_url</name>
    </GlobalVariableEntity>

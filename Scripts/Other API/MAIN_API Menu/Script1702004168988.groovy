@@ -70,42 +70,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 'jika status codenya 0'
                 if (status_Code == 0) {
-
-//                    if (GlobalVariable.checkStoreDB == 'Yes') {
-//                        'declare arraylist arraymatch'
-//                        ArrayList arrayMatch = []
-//
-//                        'get data store db'
-//                        ArrayList result = CustomKeywords.'connection.APIFullService.getLivenessFCTenantStatAPIOnly'(conneSign, GlobalVariable.Tenant)
-//
-//                        'declare arrayindex'
-//                        arrayindex = 0
-//
-//						'verify livenessFacecompareServicesStatus'
-//						arrayMatch.add(WebUI.verifyMatch(result[arrayindex++], 
-//							WS.getElementPropertyValue(respon, 'livenessFacecompareServicesStatus', FailureHandling.OPTIONAL), false, FailureHandling.CONTINUE_ON_FAILURE))
-//
-//						'verify vendor name'
-//						arrayMatch.add(WebUI.verifyMatch(result[arrayindex++],
-//							WS.getElementPropertyValue(respon, 'mustLivenessFaceCompareFirst', FailureHandling.OPTIONAL), false, FailureHandling.CONTINUE_ON_FAILURE))
-//                        
-//                        'jika data db tidak sesuai dengan excel'
-//                        if (arrayMatch.contains(false)) {
-//                            GlobalVariable.FlagFailed = 1
-//
-//                            'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-//                            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-//                                GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-//                                    rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
-//                        }
-//                    }
-//                    
-//                    'tulis sukses jika store DB berhasil'
-//                    if (GlobalVariable.FlagFailed == 0) {
-                        'write to excel success'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, 
-                            GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-//                    }
+	                'write to excel success'
+	                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, 
+	                    GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
                 } else {
                     'call function get API error message'
                     getErrorMessageAPI(respon)
