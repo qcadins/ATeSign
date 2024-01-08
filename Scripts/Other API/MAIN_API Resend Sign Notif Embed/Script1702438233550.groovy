@@ -2,6 +2,8 @@ import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
+import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
+
 import java.nio.charset.StandardCharsets as StandardCharsets
 import java.sql.Connection
 import java.time.LocalDateTime
@@ -103,6 +105,37 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			
             'jika status codenya 0'
             if (statusCode == 0) {
+				if (GlobalVariable.checkStoreDB == 'Yes') {
+					'declare arraylist arraymatch'
+					ArrayList arrayMatch = []
+					
+					'ambil data last transaction dari DB'
+					ArrayList resultDB = CustomKeywords.'connection.ForgotPassword.getBusinessLineOfficeCode'(conneSign,
+						findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('email')))
+					
+					println(resultDB)
+					
+					'declare arrayindex'
+					arrayindex = 0
+					
+					'lakukan loop untuk pengecekan data'
+					for (int i = 0; i < (resultDB.size() / 2); i++) {
+						
+						'verify business line dan office code'
+						arrayMatch.add(WebUI.verifyMatch(resultDB[i].toString(), resultDB[i+2].toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+					}
+					
+					'jika data db tidak sesuai dengan excel'
+					if (arrayMatch.contains(false)) {
+						GlobalVariable.FlagFailed = 1
+			
+						'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+							GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(GlobalVariable.NumofColm,
+								rowExcel('Reason Failed')) + ';') + 'Transaksi OTP tidak masuk balance mutation')
+					}
+				}
+				
                 'tulis sukses jika store DB berhasil'
                 if (GlobalVariable.FlagFailed == 0) {
                     'write to excel success'
