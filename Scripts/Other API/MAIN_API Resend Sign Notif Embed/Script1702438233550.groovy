@@ -3,7 +3,6 @@ import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-
 import java.nio.charset.StandardCharsets as StandardCharsets
 import java.sql.Connection
 import java.time.LocalDateTime
@@ -37,27 +36,40 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'get tenant per case dari colm excel'
             GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
         }
-        
-        'get aesKet Tenant'
-        aesKey = CustomKeywords.'connection.APIFullService.getAesKeyBasedOnTenant'(conneSign, GlobalVariable.Tenant)
-
-        currentDate = LocalDateTime.now()
-
-        localeIndonesia = new Locale('id', 'ID')
-
-        formatter = DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm:ss', localeIndonesia)
-
-        formattedDate = currentDate.format(formatter)
+				
+		'get office code dari db'
+		officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, findTestData(excelPath).getValue(
+				GlobalVariable.NumofColm, rowExcel('Document ID')))
+		
+		if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Embed Version')).equalsIgnoreCase('V2')) {
+			'get aesKet Tenant'
+			aesKey = CustomKeywords.'connection.APIFullService.getAesKeyBasedOnTenant'(conneSign, GlobalVariable.Tenant)
+			
+			currentDate = LocalDateTime.now()
+			
+			localeIndonesia = new Locale('id', 'ID')
+	
+			formatter = DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm:ss', localeIndonesia)
+	
+			formattedDate = currentDate.format(formatter)
+			
+			'pembuatan message yang akan dienkrip'
+			msg = (((((('{\'officeCode\':\'' + officeCode) + '\',\'email\':\'') + findTestData(excelPath).getValue(GlobalVariable.NumofColm,
+				rowExcel('email'))) + '\',\'timestamp\':\'') + formattedDate) + '\'}')
+			
+			url = 'embed/document/resendSignNotif'
+		} else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Embed Version')).equalsIgnoreCase('V1')) {
+			'get aesKet general'
+			aesKey = CustomKeywords.'connection.DataVerif.getAESKey'(conneSign)
+			
+			'pembuatan message yang akan dienkrip'
+			msg = (((((('{\'officeCode\':\'' + officeCode) + '\',\'email\':\'') + findTestData(excelPath).getValue(GlobalVariable.NumofColm,
+				rowExcel('email'))) + '\',\'tenantCode\':\'') + GlobalVariable.Tenant) + '\'}')
+			
+			url = 'document/resendSignNotif'
+		}
 
         if (aesKey.toString() != 'null') {
-            'get office code dari db'
-            officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, findTestData(excelPath).getValue(
-                    GlobalVariable.NumofColm, rowExcel('Document ID')))
-
-            'pembuatan message yang akan dienkrip'
-            msg = (((((('{\'officeCode\':\'' + officeCode) + '\',\'email\':\'') + findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-                rowExcel('email'))) + '\',\'timestamp\':\'') + formattedDate) + '\'}')
-
             if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Msg')) == 'No') {
                 'officecode + email + time stamp tanpa encrypt'
                 endcodedMsg = msg
@@ -79,10 +91,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             endcodedMsg = ''
         }
         
+		println(endcodedMsg)
+		
         'HIT API'
         respon = WS.sendRequest(findTestObject('Postman/Resend Sign Notif Embed', [
 						('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), 
-						('documentId') : endcodedDocumentId, ('msg') : endcodedMsg]))
+						('documentId') : endcodedDocumentId, ('msg') : endcodedMsg, ('url') : url]))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {

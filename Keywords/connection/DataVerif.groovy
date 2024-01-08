@@ -211,7 +211,7 @@ public class DataVerif {
 	getTenantCode(Connection conn, String loginId) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select mst.tenant_code from ms_tenant mst join ms_useroftenant muot on mst.id_ms_tenant = muot.id_ms_tenant join am_msuser amm on amm.id_ms_user = muot.id_ms_user where amm.login_id = '" + loginId + "'")
+		resultSet = stm.executeQuery("select mst.tenant_code from ms_tenant mst join ms_useroftenant muot on mst.id_ms_tenant = muot.id_ms_tenant join am_msuser amm on amm.id_ms_user = muot.id_ms_user where amm.login_id = '" + loginId.toUpperCase() + "'")
 
 		metadata = resultSet.metaData
 
@@ -311,10 +311,10 @@ public class DataVerif {
 	}
 
 	@Keyword
-	getOfficeCode(Connection conn, String documentId) {
+	getOfficeCode(Connection conn, String value) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select mso.office_code from ms_office mso left join tr_document_h tdh on tdh.id_ms_office = mso.id_ms_office left join tr_document_d tdd on tdd.id_document_h = tdh.id_document_h where tdd.document_id = '"+documentId+"'")
+		resultSet = stm.executeQuery("select mso.office_code from ms_office mso left join tr_document_h tdh on tdh.id_ms_office = mso.id_ms_office left join tr_document_d tdd on tdd.id_document_h = tdh.id_document_h where tdd.document_id = '"+ value +"' OR tdh.ref_number = '"+ value +"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
