@@ -361,7 +361,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 }
             }
 			
-			if (GlobalVariable.checkStoreDB == 'Yes' && findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Run With')).equalsIgnoreCase('Embed V1')) {
+			if (GlobalVariable.checkStoreDB == 'Yes' && !findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Run With')).equalsIgnoreCase('Embed V2')) {
 				'declare arraylist arraymatch'
 				ArrayList arrayMatch = []
 				
