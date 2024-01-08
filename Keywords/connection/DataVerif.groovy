@@ -587,7 +587,7 @@ public class DataVerif {
 
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select full_name from am_msuser where "+helperQuery+" = '"+valueUser+"'")
+		resultSet = stm.executeQuery("select full_name from am_msuser where "+helperQuery+" = '"+ valueUser.toUpperCase() +"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
