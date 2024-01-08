@@ -3,6 +3,11 @@ import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import internal.GlobalVariable as GlobalVariable
+import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
+import java.sql.Connection
+
+'connect dengan db'
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - API Only.xlsx')
@@ -104,8 +109,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             } else {
                 'write to excel status failed dan reason : '
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                    (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', 
-                        '') + ';') + GlobalVariable.ReasonFailedHitAPI)
+                    (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedHitAPI)
             }
         } else {
             getErrorMessageAPI(responLogin)
@@ -141,16 +145,18 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
 		ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message', fullNameUser)
 		
 		if (balmut.size() == 0) {
+			GlobalVariable.FlagFailed = 1
+			
 			'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-				((findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-',
-					'') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp'))
+				((findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp'))
 		}
 		if (balmut[8] != (-1)) {
+			GlobalVariable.FlagFailed = 1
+			
 			'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-				((findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-',
-					'') + ';') + 'Saldo WA tidak terpotong'))
+				((findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Saldo WA tidak terpotong'))
 		}
 	} else {
 		if (emailServiceOnTenant == 1) {
@@ -162,41 +168,39 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
 					fullNameUser)
 			
 				if (balmut.size() == 0) {
+					GlobalVariable.FlagFailed = 1
+					
 					'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-						((findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-',
-							'') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp'))
+						((findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp'))
 				}
 				
 				if (balmut[8] != (-1)) {
+					GlobalVariable.FlagFailed = 1
+					
 					'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-						((findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-',
-							'') + ';') + 'Saldo WA tidak terpotong'))
+						((findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Saldo WA tidak terpotong'))
 				}
 			} else if (useWAMessage == '0') {
-				'ke sms / wa'
-				SMSSetting = CustomKeywords.'connection.DataVerif.getSMSSetting'(conneSign, 'Forgot Password')
-
-				if (SMSSetting == '1') {
-					'ke sms'
-					'menggunakan saldo wa'
-					ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'SMS Notif',
-						fullNameUser)
+				'menggunakan saldo wa'
+				ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'SMS Notif',
+					fullNameUser)
+				
+				if (balmut.size() == 0) {
+					GlobalVariable.FlagFailed = 1
 					
-					if (balmut.size() == 0) {
-						'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-							((findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-',
-								'') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via SMS'))
-					}
+					'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+						((findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via SMS'))
+				}
+				
+				if (balmut[8] != (-1)) {
+					GlobalVariable.FlagFailed = 1
 					
-					if (balmut[8] != (-1)) {
-						'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-							((findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-',
-								'') + ';') + 'Saldo SMS tidak terpotong'))
-					}
+					'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+						((findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Saldo SMS tidak terpotong'))
 				}
 			}
 		}
