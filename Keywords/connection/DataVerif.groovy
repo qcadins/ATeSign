@@ -640,6 +640,21 @@ public class DataVerif {
 	}
 
 	@Keyword
+	getLimitValidationLivenessDaily(Connection conn) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select gs_value from am_generalsetting WHERE gs_code = 'LIVENESS_FACECOMPARE_VALIDATION_USER_DAILY_LIMIT'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+	
+	@Keyword
 	getCountValidationFaceCompDaily(Connection conn, String email) {
 		stm = conn.createStatement()
 
@@ -657,20 +672,5 @@ public class DataVerif {
 		} else {
 			data = 0
 		}
-	}
-	
-	@Keyword
-	getLimitValidationLivenessDaily(Connection conn) {
-		stm = conn.createStatement()
-
-		resultSet = stm.executeQuery("select gs_value from am_generalsetting WHERE gs_code = 'LIVENESS_FACECOMPARE_VALIDATION_USER_DAILY_LIMIT'")
-		metadata = resultSet.metaData
-
-		columnCount = metadata.getColumnCount()
-
-		while (resultSet.next()) {
-			data = resultSet.getObject(1)
-		}
-		data
 	}
 }
