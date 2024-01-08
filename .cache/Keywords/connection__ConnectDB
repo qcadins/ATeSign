@@ -6,11 +6,10 @@
       "keywordMethods": [
         {
           "name": "connectDBeSign",
-          "parameters": [],
-          "javadoc": ""
+          "parameters": []
         }
       ]
     }
   ],
-  "javadocParsed": true
+  "javadocParsed": false
 }

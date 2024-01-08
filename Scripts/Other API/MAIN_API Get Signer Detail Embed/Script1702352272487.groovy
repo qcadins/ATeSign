@@ -1,16 +1,13 @@
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import internal.GlobalVariable
-
-import java.nio.charset.StandardCharsets
+import internal.GlobalVariable as GlobalVariable
+import java.nio.charset.StandardCharsets as StandardCharsets
 import java.sql.Connection as Connection
-import java.text.SimpleDateFormat as SimpleDateFormat
-import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
-import org.openqa.selenium.By as By
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - API Only.xlsx')
@@ -51,17 +48,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'get aesKet Tenant'
         aesKey = CustomKeywords.'connection.APIFullService.getAesKeyBasedOnTenant'(conneSign, GlobalVariable.Tenant)
 
-        def currentDate = new Date()
+        currentDate = LocalDateTime.now()
 
-        def dateFormat = new SimpleDateFormat('yyyy-MM-dd HH:mm:ss')
+        localeIndonesia = new Locale('id', 'ID')
 
-        def timestamp = dateFormat.format(currentDate)
+        formatter = DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm:ss', localeIndonesia)
+
+        formattedDate = currentDate.format(formatter)
 
         if (aesKey.toString() != 'null') {
             'pembuatan message yang akan dienkrip'
             msg = (((((('{\'officeCode\':\'' + findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('officeCode'))) + 
             '\',\'email\':\'') + findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('email'))) + '\',\'timestamp\':\'') + 
-            timestamp) + '\'}')
+            formattedDate) + '\'}')
 
             if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Msg')) == 'No') {
                 'officecode + email + time stamp tanpa encrypt'
@@ -78,10 +77,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         responSignerDetail = WS.sendRequest(findTestObject('Postman/Get Signer Detail Embed', [('msg') : endcodedMsg]))
 
         'ambil lama waktu yang diperlukan hingga request menerima balikan'
-        def elapsedTime = (responSignerDetail.getElapsedTime() / 1000) + ' second'
+        elapsedTime = (responSignerDetail.elapsedTime / 1000) + ' second'
 
         'ambil body dari hasil respons'
-        responseBody = responSignerDetail.getResponseBodyContent()
+        responseBody = responSignerDetail.responseBodyContent
 
         'panggil keyword untuk proses beautify dari respon json yang didapat'
         CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
@@ -94,10 +93,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(responSignerDetail, 200, FailureHandling.OPTIONAL) == true) {
             'get Status Code'
-            status_Code = WS.getElementPropertyValue(responSignerDetail, 'status.code')
+            statusCode = WS.getElementPropertyValue(responSignerDetail, 'status.code')
 
             'Jika status codenya 0'
-            if (status_Code == 0) {
+            if (statusCode == 0) {
                 if ((GlobalVariable.checkStoreDB == 'Yes') && (GlobalVariable.FlagFailed == 0)) {
                     'declare arraylist arraymatch'
                     ArrayList arrayMatch = []
@@ -161,7 +160,7 @@ def getErrorMessageAPI(def respon) {
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
 def encryptEncodeValue(String value, String aesKey) {
@@ -174,7 +173,7 @@ def encryptEncodeValue(String value, String aesKey) {
         return URLEncoder.encode(encryptMsg, StandardCharsets.UTF_8.toString())
     }
     catch (UnsupportedEncodingException ex) {
-        throw new RuntimeException(ex.getCause())
+        throw new RuntimeException(ex.cause)
     } 
 }
 
