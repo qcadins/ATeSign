@@ -148,7 +148,7 @@ def encryptEncodeValue(String value, String aesKey) {
         return URLEncoder.encode(encryptMsg, StandardCharsets.UTF_8.toString())
     }
     catch (UnsupportedEncodingException ex) {
-        throw new RuntimeException(ex.getCause())
+        throw new RuntimeException(ex.cause)
     } 
 }
 
