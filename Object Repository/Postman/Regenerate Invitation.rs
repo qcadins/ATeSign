@@ -6,11 +6,12 @@
    <elementGuidId>72158c42-cc81-482b-96ab-19fe28cc5cb1</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
+   <autoUpdateContent>false</autoUpdateContent>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: ${callerId}\n    },\n    \&quot;receiverDetail\&quot;: ${receiverDetail},\n    \&quot;tenantCode\&quot;: ${tenantCode},\n\t\&quot;vendorCode\&quot;: ${vendorCode}\n}&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    },\n    \&quot;receiverDetail\&quot;: \&quot;${receiverDetail}\&quot;,\n    \&quot;tenantCode\&quot;: \&quot;${tenantCode}\&quot;,\n\t\&quot;vendorCode\&quot;: \&quot;${vendorCode}\&quot;\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -113,6 +114,20 @@
       <id>e48b1a91-f6dc-47bb-a286-801b5a15ac4a</id>
       <masked>false</masked>
       <name>token</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.Tenant</defaultValue>
+      <description></description>
+      <id>d723c747-7e70-4253-84ad-dd0e06237d5b</id>
+      <masked>false</masked>
+      <name>tenantCode</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.Psre</defaultValue>
+      <description></description>
+      <id>c13fd78f-2780-46f5-ab3e-361cc9320787</id>
+      <masked>false</masked>
+      <name>vendorCode</name>
    </variables>
    <verificationScript>import static org.assertj.core.api.Assertions.*
 
