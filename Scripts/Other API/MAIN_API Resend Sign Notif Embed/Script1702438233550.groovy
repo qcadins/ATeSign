@@ -36,7 +36,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'get tenant per case dari colm excel'
             GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
         }
-        
+				
 		'get office code dari db'
 		officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, findTestData(excelPath).getValue(
 				GlobalVariable.NumofColm, rowExcel('Document ID')))
@@ -44,6 +44,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Embed Version')).equalsIgnoreCase('V2')) {
 			'get aesKet Tenant'
 			aesKey = CustomKeywords.'connection.APIFullService.getAesKeyBasedOnTenant'(conneSign, GlobalVariable.Tenant)
+			
+			currentDate = LocalDateTime.now()
+			
+			localeIndonesia = new Locale('id', 'ID')
+	
+			formatter = DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm:ss', localeIndonesia)
+	
+			formattedDate = currentDate.format(formatter)
 			
 			'pembuatan message yang akan dienkrip'
 			msg = (((((('{\'officeCode\':\'' + officeCode) + '\',\'email\':\'') + findTestData(excelPath).getValue(GlobalVariable.NumofColm,
@@ -60,14 +68,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			
 			url = 'document/resendSignNotif'
 		}
-
-        currentDate = LocalDateTime.now()
-
-        localeIndonesia = new Locale('id', 'ID')
-
-        formatter = DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm:ss', localeIndonesia)
-
-        formattedDate = currentDate.format(formatter)
 
         if (aesKey.toString() != 'null') {
             if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Msg')) == 'No') {

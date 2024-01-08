@@ -1,7 +1,11 @@
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import java.sql.Connection as Connection
+import java.sql.Connection
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
+import com.kms.katalon.core.configuration.RunConfiguration
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
@@ -25,27 +29,92 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
     } else if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
-		
-		'check if email login case selanjutnya masih sama dengan sebelumnya'
-		if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) !=
-			findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')) || firstRun == 0) {
-			'call test case login per case'
-			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathDocumentMonitoring, ('Email') : 'Email Login', ('Password') : 'Password Login'
-				, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
-			
-			'apakah cek paging diperlukan di awal run'
-			if(GlobalVariable.checkPaging.equals('Yes')) {
-				'call function check paging'
-				checkPaging()
-			}
-			firstRun = 1
-		}
-		
-		'click menu DocumentMonitoring'
-		WebUI.click(findTestObject('DocumentMonitoring/DocumentMonitoring'))
-		
 		if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 			GlobalVariable.FlagFailed = 0
+		}
+		
+		'get office code dari db'
+		officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, findTestData(excelPathDocumentMonitoring).getValue(
+				GlobalVariable.NumofColm, rowExcel('No Kontrak')))
+		
+		GlobalVariable.Tenant = CustomKeywords.'connection.DataVerif.getTenantCode'(conneSign, findTestData(excelPathDocumentMonitoring).getValue(
+				GlobalVariable.NumofColm, rowExcel('Email Login')))
+					
+		if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Run With')).equalsIgnoreCase('Normal')) {
+			'check if email login case selanjutnya masih sama dengan sebelumnya'
+			if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) !=
+				findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')) || firstRun == 0 ||
+				findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm - 1, rowExcel('Run With')) !=
+				findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Run With'))) {
+				'call test case login per case'
+				WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathDocumentMonitoring, ('Email') : 'Email Login', ('Password') : 'Password Login'
+					, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
+				
+				'apakah cek paging diperlukan di awal run'
+				if(GlobalVariable.checkPaging.equals('Yes')) {
+					'call function check paging'
+					checkPaging()
+				}
+				firstRun = 1
+			}
+			
+			'click menu DocumentMonitoring'
+			WebUI.click(findTestObject('DocumentMonitoring/DocumentMonitoring'))
+		} else{
+			'setting untuk membuat lokasi default folder download'
+			HashMap<String, ArrayList> chromePrefs = [:]
+			
+			chromePrefs.put('download.default_directory', System.getProperty('user.dir') + '\\Download')
+			
+			chromePrefs.put('profile.default_content_setting_values.media_stream_camera', 1)
+			
+			RunConfiguration.setWebDriverPreferencesProperty('prefs', chromePrefs)
+			
+			String url
+			
+			'open browser'
+			WebUI.openBrowser('')
+			
+			if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Run With')).equalsIgnoreCase('Embed V1')) {
+				'get aesKey general'
+				aesKey = CustomKeywords.'connection.DataVerif.getAESKey'(conneSign)
+				
+				'pembuatan message yang akan dienkrip'
+				msg = (((((('{\'officeCode\':\'' + officeCode) + '\',\'email\':\'') + findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm,
+					rowExcel('Email Login'))) + '\',\'tenantCode\':\'') + GlobalVariable.Tenant) + '\'}')
+				
+				endcodedMsg = encryptValue(msg, aesKey)
+				
+				url = GlobalVariable.BaseLink + 'embed/inquiry?msg=' + endcodedMsg + '&isMonitoring=true&isHO=1'
+				
+			} else if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Run With')).equalsIgnoreCase('Embed V2')) {
+				'get aesKey Tenant'
+				aesKey = CustomKeywords.'connection.APIFullService.getAesKeyBasedOnTenant'(conneSign, GlobalVariable.Tenant)
+				
+				currentDate = LocalDateTime.now()
+				
+				localeIndonesia = new Locale('id', 'ID')
+		
+				formatter = DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm:ss', localeIndonesia)
+		
+				formattedDate = currentDate.format(formatter)
+				
+				'pembuatan message yang akan dienkrip'
+				msg = (((((('{\'officeCode\':\'' + officeCode) + '\',\'email\':\'') + findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm,
+					rowExcel('Email Login'))) + '\',\'timestamp\':\'') + formattedDate) + '\'}')
+				
+				endcodedMsg = encryptValue(msg, aesKey)
+				
+				url = GlobalVariable.BaseLink + 'embed/V2/inquiry?msg=' + endcodedMsg + '&isHO=1&isMonitoring=true&tenantCode=' + GlobalVariable.Tenant
+			}
+			
+			'navigate to url esign'
+			WebUI.navigateToUrl(url)
+			
+			WebUI.delay(GlobalVariable.TimeOut)
+			
+			'maximized window'
+			WebUI.maximizeWindow()
 		}
 		
         'set text nama Pelanggan'
@@ -291,6 +360,37 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					}
                 }
             }
+			
+			if (GlobalVariable.checkStoreDB == 'Yes' && findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Run With')).equalsIgnoreCase('Embed V1')) {
+				'declare arraylist arraymatch'
+				ArrayList arrayMatch = []
+				
+				'ambil data last transaction dari DB'
+				ArrayList resultDB = CustomKeywords.'connection.ForgotPassword.getBusinessLineOfficeCode'(conneSign,
+					findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')))
+				
+				println(resultDB)
+				
+				'declare arrayindex'
+				arrayindex = 0
+				
+				'lakukan loop untuk pengecekan data'
+				for (int i = 0; i < (resultDB.size() / 2); i++) {
+					
+					'verify business line dan office code'
+					arrayMatch.add(WebUI.verifyMatch(resultDB[i].toString(), resultDB[i+2].toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+				}
+				
+				'jika data db tidak sesuai dengan excel'
+				if (arrayMatch.contains(false)) {
+					GlobalVariable.FlagFailed = 1
+		
+					'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+						GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(GlobalVariable.NumofColm,
+							rowExcel('Reason Failed')) + ';') + 'Transaksi OTP tidak masuk balance mutation')
+				}
+			}
         } else if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('Start Stamping') || 
 			findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('Retry Stamping')) {
 			if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Action')) == 'Start Stamping') {
@@ -653,3 +753,9 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 def rowExcel(String cellValue) {
 	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
+
+def encryptValue(String value, String aesKey) {
+	'enkripsi msg'
+	encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(value, aesKey)
+}
+
