@@ -32,12 +32,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		'ambil email user yang akan digunakan untuk ambil tenant code'
 		String email = findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))
 		
-		'ambil tenant code dari DB'
-		String tenantcode = CustomKeywords.'connection.DataVerif.getTenantCode'(conneSign, email)
-		
-		'masukkan tenant code kedalam Global Variable'
-		GlobalVariable.Tenant = tenantcode
-		
 		'deklarasi email konversi kedalam bentuk SHA256'
 		String emailSHA256
 		
@@ -47,32 +41,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			emailSHA256 = email
 		}
 		
-		'settingemail service tenant dimatikan/diaktifkan'
-		if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')).length() >
-		0) {
-			'setting email service tenant'
-			CustomKeywords.'connection.APIFullService.settingEmailServiceTenant'(conneSign, findTestData(excelPathDocumentMonitoring).getValue(
-				GlobalVariable.NumofColm, rowExcel('Setting Email Service')))
-		}
-		
-		'check if email login case selanjutnya masih sama dengan sebelumnya'
-		if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) !=
-			findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')) || firstRun == 0) {
-			'call test case login per case'
-			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathDocumentMonitoring, ('Email') : 'Email Login', ('Password') : 'Password Login'
-				, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
-			
-			'apakah cek paging diperlukan di awal run'
-			if(GlobalVariable.checkPaging.equals('Yes')) {
-				'call function check paging'
-				checkPaging()
-			}
-			firstRun = 1
-		}
-		
-		'click menu DocumentMonitoring'
-		WebUI.click(findTestObject('DocumentMonitoring/DocumentMonitoring'))
-		
 		if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 			GlobalVariable.FlagFailed = 0
 		}
@@ -81,8 +49,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, findTestData(excelPathDocumentMonitoring).getValue(
 				GlobalVariable.NumofColm, rowExcel('No Kontrak')))
 		
-		GlobalVariable.Tenant = CustomKeywords.'connection.DataVerif.getTenantCode'(conneSign, findTestData(excelPathDocumentMonitoring).getValue(
-				GlobalVariable.NumofColm, rowExcel('Email Login')))
+		GlobalVariable.Tenant = CustomKeywords.'connection.DataVerif.getTenantCode'(conneSign, email)
 					
 		if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Run With')).equalsIgnoreCase('Normal')) {
 			'check if email login case selanjutnya masih sama dengan sebelumnya'
@@ -124,8 +91,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				aesKey = CustomKeywords.'connection.DataVerif.getAESKey'(conneSign)
 				
 				'pembuatan message yang akan dienkrip'
-				msg = (((((('{\'officeCode\':\'' + officeCode) + '\',\'email\':\'') + findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm,
-					rowExcel('Email Login'))) + '\',\'tenantCode\':\'') + GlobalVariable.Tenant) + '\'}')
+				msg = (((((('{\'officeCode\':\'' + officeCode) + '\',\'email\':\'') + email) + '\',\'tenantCode\':\'') + GlobalVariable.Tenant) + '\'}')
 				
 				endcodedMsg = encryptValue(msg, aesKey)
 				
@@ -144,8 +110,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				formattedDate = currentDate.format(formatter)
 				
 				'pembuatan message yang akan dienkrip'
-				msg = (((((('{\'officeCode\':\'' + officeCode) + '\',\'email\':\'') + findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm,
-					rowExcel('Email Login'))) + '\',\'timestamp\':\'') + formattedDate) + '\'}')
+				msg = (((((('{\'officeCode\':\'' + officeCode) + '\',\'email\':\'') + email) + '\',\'timestamp\':\'') + formattedDate) + '\'}')
 				
 				endcodedMsg = encryptValue(msg, aesKey)
 				
@@ -774,80 +739,80 @@ def rowExcel(String cellValue) {
 }
 
 def checkBalanceMutation(Connection conneSign, String emailSigner) {
-	emailServiceOnTenant = CustomKeywords.'connection.DataVerif.getEmailService'(conneSign, GlobalVariable.Tenant)
-
-	fullNameUser = CustomKeywords.'connection.DataVerif.getFullNameOfUser'(conneSign, emailSigner)
-
-	mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
-
-	if (mustUseWAFirst == '1') {
-		'menggunakan saldo wa'
-		ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message', fullNameUser)
-		
-		if (balmut.size() == 0) {
-			GlobalVariable.FlagFailed = 1
+	'cek apakah perlu untuk pengecekan DB'
+	if (GlobalVariable.checkStoreDB == 'Yes' && !findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Run With')).equalsIgnoreCase('Embed V2')) {
+		emailServiceOnTenant = CustomKeywords.'connection.DataVerif.getEmailService'(conneSign, GlobalVariable.Tenant)
+	
+		fullNameUser = CustomKeywords.'connection.DataVerif.getFullNameOfUser'(conneSign, emailSigner)
+	
+		mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
+	
+		if (mustUseWAFirst == '1') {
+			'menggunakan saldo wa'
+			ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message', fullNameUser)
 			
-			'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-				((findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp'))
-		}
-		if (balmut[8] != (-1)) {
-			GlobalVariable.FlagFailed = 1
-			
-			'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-				((findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Saldo WA tidak terpotong'))
-		}
-	} else {
-		if (emailServiceOnTenant == 1) {
-			useWAMessage = CustomKeywords.'connection.DataVerif.getUseWAMessage'(conneSign, GlobalVariable.Tenant)
-
-			if (useWAMessage == '1') {
-				'menggunakan saldo wa'
-				ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message',
-					fullNameUser)
-			
-				if (balmut.size() == 0) {
-					GlobalVariable.FlagFailed = 1
-					
-					'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-						((findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp'))
-				}
+			if (balmut.size() == 0) {
+				GlobalVariable.FlagFailed = 1
 				
-				if (balmut[8] != (-1)) {
-					GlobalVariable.FlagFailed = 1
-					
-					'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-						((findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Saldo WA tidak terpotong'))
-				}
-			} else if (useWAMessage == '0') {
-				'menggunakan saldo wa'
-				ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'SMS Notif',
-					fullNameUser)
+				'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+					((findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp'))
+			}
+			if (balmut[8] != (-1)) {
+				GlobalVariable.FlagFailed = 1
 				
-				if (balmut.size() == 0) {
-					GlobalVariable.FlagFailed = 1
-					
-					'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-						((findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via SMS'))
-				}
+				'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+					((findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Saldo WA tidak terpotong'))
+			}
+		} else {
+			if (emailServiceOnTenant == 1) {
+				useWAMessage = CustomKeywords.'connection.DataVerif.getUseWAMessage'(conneSign, GlobalVariable.Tenant)
+	
+				if (useWAMessage == '1') {
+					'menggunakan saldo wa'
+					ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message',
+						fullNameUser)
 				
-				if (balmut[8] != (-1)) {
-					GlobalVariable.FlagFailed = 1
+					if (balmut.size() == 0) {
+						GlobalVariable.FlagFailed = 1
+						
+						'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+							((findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp'))
+					}
 					
-					'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-						((findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Saldo SMS tidak terpotong'))
+					if (balmut[8] != (-1)) {
+						GlobalVariable.FlagFailed = 1
+						
+						'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+							((findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Saldo WA tidak terpotong'))
+					}
+				} else if (useWAMessage == '0') {
+					'menggunakan saldo wa'
+					ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'SMS Notif',
+						fullNameUser)
+					
+					if (balmut.size() == 0) {
+						GlobalVariable.FlagFailed = 1
+						
+						'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+							((findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via SMS'))
+					}
+					
+					if (balmut[8] != (-1)) {
+						GlobalVariable.FlagFailed = 1
+						
+						'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+							((findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Saldo SMS tidak terpotong'))
+					}
 				}
 			}
 		}
-	}
 	
-	'cek apakah perlu untuk pengecekan DB'
-	if (GlobalVariable.checkStoreDB == 'Yes' && !findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Run With')).equalsIgnoreCase('Embed V2')) {
 		
 		WebUI.delay(1)
 		
@@ -856,7 +821,7 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
 		
 		'ambil data last transaction dari DB'
 		ArrayList resultDB = CustomKeywords.'connection.ForgotPassword.getBusinessLineOfficeCode'(conneSign,
-			findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('username')))
+			findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')))
 		
 		'declare arrayindex'
 		arrayindex = 0
