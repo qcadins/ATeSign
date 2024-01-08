@@ -789,58 +789,60 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
 						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 							((findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Saldo WA tidak terpotong'))
 					}
-				} else if (useWAMessage == '0') {
-					'menggunakan saldo wa'
-					ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'SMS Notif',
-						fullNameUser)
+			} else if (useWAMessage == '0') {
+				'menggunakan saldo wa'
+				ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'SMS Notif',
+					fullNameUser)
+				
+				if (balmut.size() == 0) {
+					GlobalVariable.FlagFailed = 1
 					
-					if (balmut.size() == 0) {
-						GlobalVariable.FlagFailed = 1
-						
-						'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-							((findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via SMS'))
-					}
+					'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+						((findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via SMS'))
+				}
+				
+				if (balmut[8] != (-1)) {
+					GlobalVariable.FlagFailed = 1
 					
-					if (balmut[8] != (-1)) {
-						GlobalVariable.FlagFailed = 1
-						
-						'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-							((findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Saldo SMS tidak terpotong'))
-					}
+					'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+						((findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Saldo SMS tidak terpotong'))
 				}
 			}
 		}
-	
-		
-		WebUI.delay(1)
-		
-		'declare arraylist arraymatch'
-		ArrayList arrayMatch = []
-		
-		'ambil data last transaction dari DB'
-		ArrayList resultDB = CustomKeywords.'connection.ForgotPassword.getBusinessLineOfficeCode'(conneSign,
-			findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')))
-		
-		'declare arrayindex'
-		arrayindex = 0
-		
-		'lakukan loop untuk pengecekan data'
-		for (int i = 0; i < (resultDB.size() / 2); i++) {
+		'cek apakah perlu untuk pengecekan DB'
+		if (GlobalVariable.checkStoreDB == 'Yes') {
 			
-			'verify business line dan office code'
-			arrayMatch.add(WebUI.verifyMatch(resultDB[i].toString(), resultDB[i+2].toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
-		}
+			WebUI.delay(1)
+			
+			'declare arraylist arraymatch'
+			ArrayList arrayMatch = []
+			
+			'ambil data last transaction dari DB'
+			ArrayList resultDB = CustomKeywords.'connection.ForgotPassword.getBusinessLineOfficeCode'(conneSign,
+				findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')))
+			
+			'declare arrayindex'
+			arrayindex = 0
+			
+			'lakukan loop untuk pengecekan data'
+			for (int i = 0; i < (resultDB.size() / 2); i++) {
+				
+				'verify business line dan office code'
+				arrayMatch.add(WebUI.verifyMatch(resultDB[i].toString(), resultDB[i+2].toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+			}
+			
+			'jika data db tidak sesuai dengan excel'
+			if (arrayMatch.contains(false)) {
+				GlobalVariable.FlagFailed = 1
 		
-		'jika data db tidak sesuai dengan excel'
-		if (arrayMatch.contains(false)) {
-			GlobalVariable.FlagFailed = 1
-
-			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-				GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm,
-					rowExcel('Reason Failed')) + ';') + 'Transaksi OTP tidak masuk balance mutation')
+				'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+					GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm,
+						rowExcel('Reason Failed')) + ';') + 'Transaksi OTP tidak masuk balance mutation')
+				}
+			}
 		}
 	}
 }
