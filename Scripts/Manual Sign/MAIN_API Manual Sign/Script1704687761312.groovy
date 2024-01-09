@@ -78,10 +78,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
         tenantCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
 
         'join all main parameter'
-        String bodyAPI = (((((((((((((((((((('{"audit": {"callerId": "' + callerId) + '"},"psreCode": "') + psreCode) + '","tenantCode": "') + 
-        tenantCode) + '","referenceNo": "') + refNo) + '","documentName": "') + documentName) + '","documentDate": "') + documentDate) + 
-        '","peruriDocType": "') + peruriDocType) + '","isAutomaticStamp": "') + isAutomaticStamp) + '","paymentType": "') + paymentType) + 
-        '","isSequence": "') + isSequence) + '","documentFile": ') + documentFile
+        String bodyAPI = (((((((((((((((((((('{"audit": {"callerId": "' + callerId) + '"},"psreCode": "') + psreCode) + 
+        '","tenantCode": "') + tenantCode) + '","referenceNo": "') + refNo) + '","documentName": "') + documentName) + '","documentDate": "') + 
+        documentDate) + '","peruriDocType": "') + peruriDocType) + '","isAutomaticStamp": "') + isAutomaticStamp) + '","paymentType": "') + 
+        paymentType) + '","isSequence": "') + isSequence) + '","documentFile": ') + documentFile
 
         'pindahkan hasil bodiAPI ke bodyAPIFinal'
         String bodyAPIFinal = bodyAPI
@@ -208,87 +208,87 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
             }
             
             if ((nama.size() - 1) == signerIndex) {
-                bodyAPI = ((((((((((((bodyAPI + '{"name":"') + (nama[signerIndex])) + '","phone": "') + (tlp[signerIndex])) + 
+                bodyAPI = (((((((((((((bodyAPI + '{"name":"') + (nama[signerIndex])) + '","phone": "') + (tlp[signerIndex])) + 
                 '","email": "') + (email[signerIndex])) + '","signerTypeCode": "') + (signerType[signerIndex])) + '","seqNo": "') + 
-                (signSequence[signerIndex])) + '"' + signLoc) + '}')
+                (signSequence[signerIndex])) + '"') + signLoc) + '}')
 
                 bodyAPI = ((',"signers": [' + bodyAPI) + ']')
             } else if ((nama.size() - 1) != signerIndex) {
-                bodyAPI = ((((((((((((bodyAPI + '{"name":"') + (nama[signerIndex])) + '","phone": "') + (tlp[signerIndex])) + 
+                bodyAPI = (((((((((((((bodyAPI + '{"name":"') + (nama[signerIndex])) + '","phone": "') + (tlp[signerIndex])) + 
                 ',""email": "') + (email[signerIndex])) + '","signerTypeCode": "') + (signerType[signerIndex])) + '","seqNo": "') + 
-                (signSequence[signerIndex])) + '"' + signLoc) + '},')
+                (signSequence[signerIndex])) + '"') + signLoc) + '},')
             }
         }
         
         'menggabungkan body request kedalam 1 variable'
-        bodyAPIFinal = (bodyAPIFinal + bodyAPI + '}')
-		
-		'HIT API'
-		responLogin = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/Login', [('email') : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 
-			rowExcel('Email Login')).toString(), ('password') : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Password Login')).toString()]))
-		
-		'Jika status HIT API 200 OK'
-		if (WS.verifyResponseStatusCode(responLogin, 200, FailureHandling.OPTIONAL) == true) {
-			if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Use True Token')).equalsIgnoreCase(
-				'Yes')) {
-				'Parsing token menjadi GlobalVariable'
-				GlobalVariable.token = WS.getElementPropertyValue(responLogin, 'access_token')
-			} else if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Use True Token')).equalsIgnoreCase(
-				'No')) {
-				GlobalVariable.token = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Token'))
-			}
-			
-			println(GlobalVariable.token)
+        bodyAPIFinal = ((bodyAPIFinal + bodyAPI) + '}')
 
-			'HIT API Manual Sign'
-			responManualSign = WS.sendRequest(findTestObject('Postman/Manual Sign', [('request') : bodyAPIFinal]))
-			
-			'ambil lama waktu yang diperlukan hingga request menerima balikan'
-			def elapsedTime = (responManualSign.getElapsedTime()) / 1000 + ' second'
-			
-			'ambil body dari hasil respons'
-			responseBody = responManualSign.getResponseBodyContent()
-			
-			'panggil keyword untuk proses beautify dari respon json yang didapat'
-			CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1,
-				findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
-			
-			'write to excel response elapsed time'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 1, GlobalVariable.NumofColm -
-				1, elapsedTime.toString())
-			
-			'Jika status HIT API 200 OK'
-			if (WS.verifyResponseStatusCode(responManualSign, 200, FailureHandling.OPTIONAL) == true) {
-				'get Status Code'
-				status_Code = WS.getElementPropertyValue(responManualSign, 'status.code')
+        'HIT API'
+        responLogin = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/Login', [('email') : findTestData(API_Excel_Path).getValue(
+                        GlobalVariable.NumofColm, rowExcel('Email Login')).toString(), ('password') : findTestData(API_Excel_Path).getValue(
+                        GlobalVariable.NumofColm, rowExcel('Password Login')).toString()]))
 
-				'Jika status codenya 0'
-				if (status_Code == 0) {
-					if (GlobalVariable.FlagFailed == 0) {
-						'write to excel success'
-						CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0,
-							GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-					}
-				} else {
-					getErrorMessageAPI(responManualSign)
-				}
-			} else {
-				getErrorMessageAPI(responManualSign)
-			}
-		} else {
-			'mengambil status code berdasarkan response HIT API'
-		    message = WS.getElementPropertyValue(responLogin, 'error_description', FailureHandling.OPTIONAL).toString()
-		
-		    'Write To Excel GlobalVariable.StatusFailed and errormessage'
-		    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-		        (((findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + 
-		        ';') + '<') + message) + '>')
-		
-		    GlobalVariable.FlagFailed = 1
-		}
+        'Jika status HIT API 200 OK'
+        if (WS.verifyResponseStatusCode(responLogin, 200, FailureHandling.OPTIONAL) == true) {
+            if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Use True Token')).equalsIgnoreCase(
+                'Yes')) {
+                'Parsing token menjadi GlobalVariable'
+                GlobalVariable.token = WS.getElementPropertyValue(responLogin, 'access_token')
+            } else if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Use True Token')).equalsIgnoreCase(
+                'No')) {
+                GlobalVariable.token = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Token'))
+            }
+            
+            println(GlobalVariable.token)
+
+            'HIT API Manual Sign'
+            responManualSign = WS.sendRequest(findTestObject('Postman/Manual Sign', [('request') : bodyAPIFinal]))
+
+            'ambil lama waktu yang diperlukan hingga request menerima balikan'
+            def elapsedTime = (responManualSign.getElapsedTime() / 1000) + ' second'
+
+            'ambil body dari hasil respons'
+            responseBody = responManualSign.getResponseBodyContent()
+
+            'panggil keyword untuk proses beautify dari respon json yang didapat'
+            CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
+                    API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+
+            'write to excel response elapsed time'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 
+                1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+
+            'Jika status HIT API 200 OK'
+            if (WS.verifyResponseStatusCode(responManualSign, 200, FailureHandling.OPTIONAL) == true) {
+                'get Status Code'
+                status_Code = WS.getElementPropertyValue(responManualSign, 'status.code')
+
+                'Jika status codenya 0'
+                if (status_Code == 0) {
+                    if (GlobalVariable.FlagFailed == 0) {
+                        'write to excel success'
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, 
+                            GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+                    }
+                } else {
+                    getErrorMessageAPI(responManualSign)
+                }
+            } else {
+                getErrorMessageAPI(responManualSign)
+            }
+        } else {
+            'mengambil status code berdasarkan response HIT API'
+            message = WS.getElementPropertyValue(responLogin, 'error_description', FailureHandling.OPTIONAL).toString()
+
+            'Write To Excel GlobalVariable.StatusFailed and errormessage'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                (((findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', 
+                    '') + ';') + '<') + message) + '>')
+
+            GlobalVariable.FlagFailed = 1
+        }
     }
 }
-
 
 def rowExcel(String cellValue) {
     return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
@@ -305,3 +305,4 @@ def getErrorMessageAPI(def respon) {
 
     GlobalVariable.FlagFailed = 1
 }
+

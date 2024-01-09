@@ -1,4 +1,6 @@
 import groovy.json.JsonSlurper
+import internal.GlobalVariable
+
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
