@@ -851,6 +851,9 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
 
     documentName = CustomKeywords.'connection.DataVerif.getDocumentName'(conneSign, findTestData(excelPathManualStamptoStamp).getValue(
             GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))
+	
+	officeName = CustomKeywords.'connection.DataVerif.getOfficeName'(conneSign, findTestData(excelPathManualStamptoStamp).getValue(
+            GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))
 
     'klik ddl untuk tenant memilih mengenai Vida'
     WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)
@@ -892,6 +895,9 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
 
     'Input date sekarang'
     WebUI.setText(findTestObject('Saldo/input_todate'), currentDate)
+	
+	'Input office name'
+	WebUI.setText(findTestObject('Saldo/input_officeName'), officeName)
 
     'Klik cari'
     WebUI.click(findTestObject('Saldo/btn_cari'))
@@ -901,7 +907,6 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
 
     'get row di saldo'
     variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper '))
-	
 	
 	if (CustomKeywords.'connection.ManualStamp.getLovVendorStamping'(conneSign, GlobalVariable.Tenant) == 'Privy') {
 		'ambil inquiry di db'
