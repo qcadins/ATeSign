@@ -673,7 +673,7 @@ def inputEMeteraiMonitoring(Connection conneSign) {
                     }
                     
                     'get stampduty data dari db'
-                    ArrayList<String> result = CustomKeywords.'connection.eMeteraiMonitoring.geteMeteraiMonitoring'(conneSign, 
+                    ArrayList<String> result = CustomKeywords.'connection.EMeteraiMonitoring.geteMeteraiMonitoring'(conneSign, 
                         findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))
 
                     'verify no dokumen'

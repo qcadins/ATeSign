@@ -15,11 +15,12 @@
       </authorizationInfo>
       <authorizationType>Bearer</authorizationType>
    </authorizationRequest>
+   <autoUpdateContent>false</autoUpdateContent>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: ${callerId}\n    },\n    \&quot;vendorCode\&quot;: ${vendorCode},\n    \&quot;email\&quot;: ${loginId},\n    \&quot;tenantCode\&quot;: ${tenantCode}\n}&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    },\n    \&quot;vendorCode\&quot;: \&quot;${vendorCode}\&quot;,\n    \&quot;email\&quot;: \&quot;${loginId}\&quot;,\n    \&quot;tenantCode\&quot;: \&quot;${tenantCode}\&quot;\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -122,6 +123,20 @@
       <id>d4eda131-e7f2-459e-b285-64f58c3c32df</id>
       <masked>false</masked>
       <name>token</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.Tenant</defaultValue>
+      <description></description>
+      <id>2c948473-4b08-4386-a6fa-fd39dfb7f73d</id>
+      <masked>false</masked>
+      <name>tenantCode</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.Psre</defaultValue>
+      <description></description>
+      <id>48cd28e6-c55c-4786-968e-1ad19866687f</id>
+      <masked>false</masked>
+      <name>vendorCode</name>
    </variables>
    <verificationScript>import static org.assertj.core.api.Assertions.*
 
