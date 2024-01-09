@@ -31,7 +31,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong tenant Code'))
         } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'Yes') {
             'get tenant per case dari colm excel'
-            GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Code'))
+            GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
         }
 		
 		'check if tidak mau menggunakan psre code yang benar'
@@ -53,12 +53,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'Parsing token menjadi GlobalVariable'
             GlobalVariable.token = WS.getElementPropertyValue(respon_login, 'access_token')
 
-            'HIT API'
-            respon = WS.sendRequest(findTestObject('Postman/Balance Mutation File', [('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-                            rowExcel('username')), ('balanceType') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-                            rowExcel('BalanceType Code')), ('referenceNo') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-                            rowExcel('Ref Number')), ('transactionType') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-                            rowExcel('Transaction Type'))]))
+			'HIT API'
+			respon = WS.sendRequest(findTestObject('Postman/Get Balance Mutation File', [('pageNum') : findTestData(
+				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Page*')), ('balType') : findTestData(
+				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Balance Type*')), ('refNo') : findTestData(
+				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Ref Number*')), ('tranxType') : findTestData(
+				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Transaction Type*')), ('docname') : findTestData(
+				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Document Name*')), ('tranxDateStart') : findTestData(
+				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Transaction Date Start*')), ('tranxDateEnd') : findTestData(
+				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Transaction Date End*')), ('docType') : findTestData(
+				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Document Type*')), ('officeCode') : findTestData(
+				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Office Code*')),('callerId') : findTestData(
+				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('username'))]))
 
             'ambil lama waktu yang diperlukan hingga request menerima balikan'
             def elapsedTime = (respon.getElapsedTime() / 1000) + ' second'
@@ -81,12 +87,20 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 'jika status codenya 0'
                 if (status_Code == 0) {
-                    'tulis sukses jika store DB berhasil'
-                    if (GlobalVariable.FlagFailed == 0) {
-                        'write to excel success'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, 
-                            GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-                    }
+                    'mengambil response'
+		            base64Xlsx = WS.getElementPropertyValue(respon, 'excelBase64', FailureHandling.OPTIONAL)
+		
+		            'decode Bas64 to File certif'
+		            CustomKeywords.'customizekeyword.ConvertFile.decodeBase64Excel'(base64Xlsx, findTestData(excelPath).getValue(
+		                    GlobalVariable.NumofColm, rowExcel('File Name')))
+		
+		            'check is file downloaded dan apakah mau di delete'
+		            if (CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPath).getValue(
+		                    GlobalVariable.NumofColm, rowExcel('Delete File ?'))) == true) {
+		                'write to excel success'
+		                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
+		                    0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+		            }
                 } else {
                     'call function get API error message'
                     getErrorMessageAPI(respon)

@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>ddlClass</name>
+   <name>input_officeName</name>
    <tag></tag>
-   <elementGuidId>4032ce20-dc0f-4aba-830d-c079817df026</elementGuidId>
+   <elementGuidId>58cd2151-8692-4af2-81e3-02e32395b19c</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[contains(@class, 'ng-dropdown-panel ng-star-inserted ng-select-')]</value>
+         <value>//*[@id=&quot;officeCode&quot;]/div/div/div[3]/input</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
       <isSelected>true</isSelected>
-      <matchCondition>contains</matchCondition>
-      <name>class</name>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
       <type>Main</type>
-      <value>ng-dropdown-panel ng-star-inserted ng-select-</value>
-      <webElementGuid>4ae4bdc0-2c87-456e-9647-32c2a49acdcb</webElementGuid>
+      <value>//*[@id=&quot;officeCode&quot;]/div/div/div[3]/input</value>
+      <webElementGuid>4c609024-670e-4407-a0a3-ec15f2662bc2</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

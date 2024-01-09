@@ -116,6 +116,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		'verify tgl trx ui = db'
 		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Saldo/label_TableTglTrx')), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Tgl Trx')
 		
+		'verify cabang ui = db'
+		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Saldo/label_TableCabang')), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Cabang')
+		
 		'verify tipe trx ui = db'
 		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Saldo/label_TableTipeTrx')), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Tipe Trx')
 		
@@ -135,25 +138,28 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Saldo/label_TableNotes')), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Note')
 		
 		'verify qty ui = db'
-		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Saldo/label_TableQty')), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Qty')
+		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Saldo/label_TableQty')).replace(',', ''), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Qty')
 		
 		'verify Total Data ui = db'
-		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Saldo/Label_TotalSaldo')), (result.size()/9).toString() + ' total', false, FailureHandling.CONTINUE_ON_FAILURE), ' Total Data Tidak Match')
+		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Saldo/Label_TotalSaldo')), (result.size()/10).toString() + ' total', false, FailureHandling.CONTINUE_ON_FAILURE), ' Total Data Tidak Match')
 		
 		if (findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Download File')) == 'Yes'){
-			
 			'klik pada tombol unduh excel'
 			WebUI.click(findTestObject('Object Repository/Saldo/button_UnduhExcel'))
 			
-			WebUI.delay(10)
+			WebUI.delay(5)
 			
 			'pengecekan file yang sudah didownload'
 			boolean isDownloaded = CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Delete Downloaded File ?')))
-			
-			println(isDownloaded)
-		
+
 			'jika file tidak terdeteksi telah terdownload'
 			checkVerifyEqualOrMatch(WebUI.verifyEqual(isDownloaded, true, FailureHandling.CONTINUE_ON_FAILURE), GlobalVariable.ReasonFailedDownload)	
+		}
+		
+		if (GlobalVariable.FlagFailed == 0) {
+			'write to excel success'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
+				1, GlobalVariable.StatusSuccess)
 		}
 	}
 }
@@ -194,6 +200,9 @@ def inputSaldo() {
 
 	'Input date sekarang'
 	WebUI.setText(findTestObject('Saldo/input_todate'), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Transaksi Sampai')))
+	
+	'Input office name'
+	WebUI.setText(findTestObject('Saldo/input_officeName'), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Office Name')))
 }
 
 def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection conneSign) {
