@@ -494,6 +494,6 @@ def storeHashMapForVerify() {
 
     result.put('Recipient', findTestData(excelPathMessageDeliveryReport).getValue(GlobalVariable.NumofColm, rowExcel('Recipient')))
 
-    result
+    	result
 }
 

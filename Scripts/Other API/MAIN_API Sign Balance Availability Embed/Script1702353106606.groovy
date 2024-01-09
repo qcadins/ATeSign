@@ -1,6 +1,5 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import java.nio.charset.StandardCharsets as StandardCharsets
 import java.sql.Connection as Connection
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter

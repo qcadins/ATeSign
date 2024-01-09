@@ -1,18 +1,14 @@
+import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import internal.GlobalVariable as GlobalVariable
-import java.sql.Connection as Connection
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
-
-'Connect DB eSign'
-Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'call test case untuk ambil user access token'
-WebUI.callTestCase(findTestCase('Other API/Response API User Access Token'), [('excelPath') : excelPathRequestOTP
-        , ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
+WebUI.callTestCase(findTestCase('Other API/Response API User Access Token'), [('excelPath') : excelPathRequestOTP, ('sheet') : sheet], 
+    FailureHandling.CONTINUE_ON_FAILURE)
 
 if (findTestData(excelPathRequestOTP).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Success')) {
     'Jika access token tidak yang sebenarnya atau berasal dari call test case user access token'
@@ -49,7 +45,7 @@ if (findTestData(excelPathRequestOTP).getValue(GlobalVariable.NumofColm, 1).equa
 
         'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            '<' + message + '>')
+            ('<' + message) + '>')
     }
 }
 

@@ -1,17 +1,13 @@
+import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import internal.GlobalVariable as GlobalVariable
-import java.sql.Connection as Connection
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - Full API Services.xlsx')
-
-'Connect DB eSign'
-Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get colm excel'
 int countColmExcel = findTestData(excelPathConfirmOTP).columnNumbers
@@ -21,13 +17,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     if (findTestData(excelPathConfirmOTP).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(excelPathConfirmOTP).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
-		
-		'setting menggunakan base url yang benar atau salah'
-		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathConfirmOTP, GlobalVariable.NumofColm, 16)
-		
+        'setting menggunakan base url yang benar atau salah'
+        CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathConfirmOTP, GlobalVariable.NumofColm, 16)
+
         'call test case menuju Request OTP Privy'
-        WebUI.callTestCase(findTestCase('Other API/API Request OTP'), [('excelPathRequestOTP') : excelPathConfirmOTP
-                , ('sheet') : 'API Confirm OTP - Privy'], FailureHandling.CONTINUE_ON_FAILURE)
+        WebUI.callTestCase(findTestCase('Other API/API Request OTP'), [('excelPathRequestOTP') : excelPathConfirmOTP, ('sheet') : 'API Confirm OTP - Privy'], 
+            FailureHandling.CONTINUE_ON_FAILURE)
 
         'Jika request otpnya success'
         if (findTestData(excelPathConfirmOTP).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Success')) {
@@ -64,7 +59,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 'Write To Excel GlobalVariable.StatusFailed and errormessage dari api'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('API Confirm OTP - Privy', GlobalVariable.NumofColm, 
-                    GlobalVariable.StatusFailed, '<' + message + '>')
+                    GlobalVariable.StatusFailed, ('<' + message) + '>')
             }
         }
     }
