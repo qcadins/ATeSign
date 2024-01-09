@@ -7,7 +7,7 @@ import java.sql.Statement
 import com.kms.katalon.core.annotation.Keyword
 
 public class EMeteraiMonitoring {
-	
+
 	String data
 	int columnCount, i
 	Statement stm
@@ -79,5 +79,4 @@ public class EMeteraiMonitoring {
 		}
 		listdata
 	}
-	
 }
