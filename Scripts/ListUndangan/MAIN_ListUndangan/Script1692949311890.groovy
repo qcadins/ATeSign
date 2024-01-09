@@ -10,20 +10,20 @@ import org.openqa.selenium.Keys as Keys
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
 
 'call test case login per case'
-WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathListUndangan, ('Email') : 'Email Login', ('Password') : 'Password Login'
-	, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
+WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathListUndangan, ('Email') : 'Email Login'
+        , ('Password') : 'Password Login', ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
 
 if (findTestData(excelPathListUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
-	GlobalVariable.FlagFailed = 0
+    GlobalVariable.FlagFailed = 0
 }
 
 'click menu list undangan'
 WebUI.click(findTestObject('ListUndangan/menu_ListUndangan'))
 
 'apakah cek paging diperlukan'
-if(GlobalVariable.checkPaging.equals('Yes')) {
-	'call function check paging'
-	checkPaging()
+if (GlobalVariable.checkPaging == 'Yes') {
+    'call function check paging'
+    checkPaging()
 }
 
 'set text tanggal pengiriman dari'
@@ -47,8 +47,8 @@ if (findTestData(excelPathListUndangan).getValue(GlobalVariable.NumofColm, rowEx
     if (CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathListUndangan).getValue(GlobalVariable.NumofColm, 
             rowExcel('Keep Download file ?'))) == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedDownload'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(excelPathListUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            (findTestData(excelPathListUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
             GlobalVariable.ReasonFailedDownload)
 
         GlobalVariable.FlagFailed = 1
@@ -127,67 +127,69 @@ def checkPaging() {
     WebUI.click(findTestObject('ListUndangan/input_StatusRegistrasi'))
 
     'verify field ke reset'
-    checkVerifyPaging(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/selected_DDL')), 'All', false, FailureHandling.CONTINUE_ON_FAILURE)) 
+    checkVerifyPaging(WebUI.verifyMatch(WebUI.getText(findTestObject('ListUndangan/selected_DDL')), 'All', false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'click object lain untuk close ddl'
     WebUI.click(findTestObject('ListUndangan/input_TanggalPengirimanDari'))
 
-	'check if ada paging'
-	if(WebUI.verifyElementVisible(findTestObject('DocumentMonitoring/button_NextPage'), FailureHandling.OPTIONAL)) {
-		'click next page'
-		WebUI.click(findTestObject('ListUndangan/button_NextPage'))
-		
-		'verify paging di page 2'
-		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ListUndangan/paging_Page'), 'aria-label',
-		FailureHandling.CONTINUE_ON_FAILURE), 'page 2', false, FailureHandling.CONTINUE_ON_FAILURE))
-		
-		'click prev page'
-		WebUI.click(findTestObject('ListUndangan/button_PrevPage'))
-	
-		'verify paging di page 1'
-		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ListUndangan/paging_Page'), 'aria-label',
-		FailureHandling.CONTINUE_ON_FAILURE), 'page 1', false, FailureHandling.CONTINUE_ON_FAILURE))
-		
-		'click last page'
-		WebUI.click(findTestObject('ListUndangan/button_LastPage'))
-	
-		'get total data'
-		lastPage = Double.parseDouble(WebUI.getText(findTestObject('ListUndangan/label_TotalData')).split(' ',-1)[0])/10
-		
-		'jika hasil perhitungan last page memiliki desimal'
-		if (lastPage.toString().contains('.0')) {
-			'tidak ada round up'
-			additionalRoundUp = 0
-		} else {
-			'round up dengan tambahan 0.5'
-			additionalRoundUp = 0.5
-		}
-		
-		'verify paging di page terakhir'
-		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ListUndangan/paging_Page'), 'aria-label',
-		FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage+additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+    'check if ada paging'
+    if (WebUI.verifyElementVisible(findTestObject('DocumentMonitoring/button_NextPage'), FailureHandling.OPTIONAL)) {
+        'click next page'
+        WebUI.click(findTestObject('ListUndangan/button_NextPage'))
 
-		'click first page'
-		WebUI.click(findTestObject('ListUndangan/button_FirstPage'))
+        'verify paging di page 2'
+        checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ListUndangan/paging_Page'), 'aria-label', 
+                    FailureHandling.CONTINUE_ON_FAILURE), 'page 2', false, FailureHandling.CONTINUE_ON_FAILURE))
 
-		'verify paging di page 1'
-		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ListUndangan/paging_Page'), 'aria-label',
-		FailureHandling.CONTINUE_ON_FAILURE), 'page 1', false, FailureHandling.CONTINUE_ON_FAILURE))
-	}
+        'click prev page'
+        WebUI.click(findTestObject('ListUndangan/button_PrevPage'))
 
+        'verify paging di page 1'
+        checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ListUndangan/paging_Page'), 'aria-label', 
+                    FailureHandling.CONTINUE_ON_FAILURE), 'page 1', false, FailureHandling.CONTINUE_ON_FAILURE))
+
+        'click last page'
+        WebUI.click(findTestObject('ListUndangan/button_LastPage'))
+
+        'get total data'
+        lastPage = (Double.parseDouble(WebUI.getText(findTestObject('ListUndangan/label_TotalData')).split(' ', -1)[0]) / 
+        10)
+
+        'jika hasil perhitungan last page memiliki desimal'
+        if (lastPage.toString().contains('.0')) {
+            'tidak ada round up'
+            additionalRoundUp = 0
+        } else {
+            'round up dengan tambahan 0.5'
+            additionalRoundUp = 0.5
+        }
+        
+        'verify paging di page terakhir'
+        checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ListUndangan/paging_Page'), 'aria-label', 
+                    FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage + additionalRoundUp), 
+                false, FailureHandling.CONTINUE_ON_FAILURE))
+
+        'click first page'
+        WebUI.click(findTestObject('ListUndangan/button_FirstPage'))
+
+        'verify paging di page 1'
+        checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ListUndangan/paging_Page'), 'aria-label', 
+                    FailureHandling.CONTINUE_ON_FAILURE), 'page 1', false, FailureHandling.CONTINUE_ON_FAILURE))
+    }
 }
 
 def checkVerifyPaging(Boolean isMatch) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(excelPathListUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
-            ';') + GlobalVariable.ReasonFailedPaging)
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            (findTestData(excelPathListUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
+            GlobalVariable.ReasonFailedPaging)
 
         GlobalVariable.FlagFailed = 1
     }
 }
 
 def rowExcel(String cellValue) {
-	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
+
