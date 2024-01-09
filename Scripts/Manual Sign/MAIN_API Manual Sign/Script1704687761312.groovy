@@ -1,26 +1,12 @@
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.model.FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
-import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
-import java.sql.Connection as Connection
-import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
-import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
-import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
-import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
-import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
-import com.kms.katalon.core.testcase.TestCase as TestCase
-import com.kms.katalon.core.testdata.TestData as TestData
-import com.kms.katalon.core.testobject.TestObject as TestObject
-import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - API Only.xlsx')
-
-'connect dengan db'
-Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'variable untuk keperluan split excel'
 semicolon = ';'
@@ -28,8 +14,6 @@ semicolon = ';'
 delimiter = '\\|'
 
 enter = '\\n'
-
-int splitnum = -1
 
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_Excel_Path).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
@@ -62,7 +46,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
         'Inisialisasi isSequence'
         isSequence = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('isSequence'))
 
-        def documentFile
+        String documentFile
 
         'Inisialisasi documentFile'
         if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 Document')) == 
@@ -167,7 +151,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 
         'looping untuk menggabungkan Signer'
         for (signerIndex = 0; signerIndex < nama.size(); signerIndex++) {
-            def signLoc = ''
+            String signLoc = ''
 
             'Inisialisasi id'
             ids = (id[signerIndex]).split(semicolon, -1)
@@ -224,9 +208,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
         bodyAPIFinal = ((bodyAPIFinal + bodyAPI) + '}')
 
         'HIT API'
-        responLogin = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/Login', [('email') : findTestData(API_Excel_Path).getValue(
-                        GlobalVariable.NumofColm, rowExcel('Email Login')).toString(), ('password') : findTestData(API_Excel_Path).getValue(
-                        GlobalVariable.NumofColm, rowExcel('Password Login')).toString()]))
+        responLogin = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/Login', [
+						('email') : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')), 
+						('password') : findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Password Login'))]))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(responLogin, 200, FailureHandling.OPTIONAL) == true) {
@@ -244,27 +228,27 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
             'HIT API Manual Sign'
             responManualSign = WS.sendRequest(findTestObject('Postman/Manual Sign', [('request') : bodyAPIFinal]))
 
-            'ambil lama waktu yang diperlukan hingga request menerima balikan'
-            def elapsedTime = (responManualSign.getElapsedTime() / 1000) + ' second'
-
-            'ambil body dari hasil respons'
-            responseBody = responManualSign.getResponseBodyContent()
-
-            'panggil keyword untuk proses beautify dari respon json yang didapat'
-            CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
-                    API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
-
-            'write to excel response elapsed time'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 
-                1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
-
             'Jika status HIT API 200 OK'
             if (WS.verifyResponseStatusCode(responManualSign, 200, FailureHandling.OPTIONAL) == true) {
                 'get Status Code'
-                status_Code = WS.getElementPropertyValue(responManualSign, 'status.code')
+                statusCode = WS.getElementPropertyValue(responManualSign, 'status.code')
 
+				'ambil lama waktu yang diperlukan hingga request menerima balikan'
+				elapsedTime = (responManualSign.elapsedTime / 1000) + ' second'
+	
+				'ambil body dari hasil respons'
+				responseBody = responManualSign.responseBodyContent
+	
+				'panggil keyword untuk proses beautify dari respon json yang didapat'
+				CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
+						API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+	
+				'write to excel response elapsed time'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') -
+					1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+				
                 'Jika status codenya 0'
-                if (status_Code == 0) {
+                if (statusCode == 0) {
                     if (GlobalVariable.FlagFailed == 0) {
                         'write to excel success'
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, 
@@ -291,10 +275,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
-def getErrorMessageAPI(def respon) {
+def getErrorMessageAPI(ResponseObject respon) {
     'mengambil status code berdasarkan response HIT API'
     message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL).toString()
 

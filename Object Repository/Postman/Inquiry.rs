@@ -15,11 +15,12 @@
       </authorizationInfo>
       <authorizationType>Bearer</authorizationType>
    </authorizationRequest>
+   <autoUpdateContent>false</autoUpdateContent>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n    \&quot;tenantCode\&quot;: ${tenantCode},\n    \&quot;transactionStatus\&quot;: ${transactionStatus},\n    \&quot;page\&quot;: ${pageNum},\n    \&quot;inquiryType\&quot;: ${inquiryType},\n    \&quot;isOffice\&quot;: ${booleanisOffice},\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: ${callerId}\n    }\n}&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;tenantCode\&quot;: \&quot;${tenantCode}\&quot;,\n    \&quot;transactionStatus\&quot;: \&quot;${transactionStatus}\&quot;,\n    \&quot;page\&quot;: ${pageNum},\n    \&quot;inquiryType\&quot;: \&quot;${inquiryType}\&quot;,\n    \&quot;isOffice\&quot;: ${booleanisOffice},\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    }\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -122,6 +123,13 @@
       <id>9ef851e7-98ea-4c86-a970-7dee067fc76f</id>
       <masked>false</masked>
       <name>token</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.Tenant</defaultValue>
+      <description></description>
+      <id>8dbcdb79-5840-4e00-ad49-a006930dbc03</id>
+      <masked>false</masked>
+      <name>tenantCode</name>
    </variables>
    <verificationScript>import static org.assertj.core.api.Assertions.*
 

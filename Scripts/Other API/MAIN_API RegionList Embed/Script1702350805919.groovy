@@ -3,7 +3,6 @@ import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import java.nio.charset.StandardCharsets as StandardCharsets
 import java.sql.Connection as Connection
 import java.time.LocalDateTime as LocalDateTime
 import java.time.format.DateTimeFormatter as DateTimeFormatter
@@ -163,14 +162,5 @@ def rowExcel(String cellValue) {
 def encryptEncodeValue(String value, String aesKey) {
     'enkripsi msg'
     encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(value, aesKey)
-
-    println(encryptMsg)
-
-    try {
-        return URLEncoder.encode(encryptMsg, StandardCharsets.UTF_8.toString())
-    }
-    catch (UnsupportedEncodingException ex) {
-        throw new RuntimeException(ex.cause)
-    } 
 }
 

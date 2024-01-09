@@ -1,14 +1,9 @@
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.model.FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
-import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import java.sql.Connection as Connection
 import internal.GlobalVariable as GlobalVariable
-
-'connect DB eSign'
-Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - API Only.xlsx')
@@ -33,25 +28,25 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'get tenant per case dari colm excel'
             GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
         }
-		
-		'check if tidak mau menggunakan psre code yang benar'
-		if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Vendor Code')) == 'No') {
-			'set psre kosong'
-			GlobalVariable.Psre = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Vendor Code'))
-		} else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Vendor Code')) == 'Yes') {
-			'get psre per case dari colm excel'
-			GlobalVariable.Psre = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Vendor Code'))
-		}
+        
+        'check if tidak mau menggunakan psre code yang benar'
+        if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Vendor Code')) == 'No') {
+            'set psre kosong'
+            GlobalVariable.Psre = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Vendor Code'))
+        } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Vendor Code')) == 'Yes') {
+            'get psre per case dari colm excel'
+            GlobalVariable.Psre = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Vendor Code'))
+        }
         
         'HIT API Login untuk ambil bearer token'
-        respon_login = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-                        rowExcel('username')), ('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-                        rowExcel('password'))]))
+        responLogin = WS.sendRequest(findTestObject('Postman/Login', [
+						('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('username')), 
+						('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('password'))]))
 
         'Jika status HIT API Login 200 OK'
-        if (WS.verifyResponseStatusCode(respon_login, 200, FailureHandling.OPTIONAL) == true) {
+        if (WS.verifyResponseStatusCode(responLogin, 200, FailureHandling.OPTIONAL) == true) {
             'Parsing token menjadi GlobalVariable'
-            GlobalVariable.token = WS.getElementPropertyValue(respon_login, 'access_token')
+            GlobalVariable.token = WS.getElementPropertyValue(responLogin, 'access_token')
 
 			'HIT API'
 			respon = WS.sendRequest(findTestObject('Postman/Get Balance Mutation File', [('pageNum') : findTestData(
@@ -83,14 +78,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'Jika status HIT API 200 OK'
             if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
                 'mengambil status code berdasarkan response HIT API'
-                status_Code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
-
+                statusCode = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
+				
                 'jika status codenya 0'
                 if (status_Code == 0) {
                     'mengambil response'
 		            base64Xlsx = WS.getElementPropertyValue(respon, 'excelBase64', FailureHandling.OPTIONAL)
 		
-		            'decode Bas64 to File certif'
+		            'decode Bas64 to Excel file'
 		            CustomKeywords.'customizekeyword.ConvertFile.decodeBase64Excel'(base64Xlsx, findTestData(excelPath).getValue(
 		                    GlobalVariable.NumofColm, rowExcel('File Name')))
 		
@@ -112,12 +107,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         '') + ';') + GlobalVariable.ReasonFailedHitAPI)
             }
         } else {
-            getErrorMessageAPI(respon_login)
+            getErrorMessageAPI(responLogin)
         }
     }
 }
 
-def getErrorMessageAPI(def respon) {
+def getErrorMessageAPI(ResponseObject respon) {
     'mengambil status code berdasarkan response HIT API'
     message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
@@ -130,6 +125,5 @@ def getErrorMessageAPI(def respon) {
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
-
