@@ -693,7 +693,7 @@ public class DataVerif {
 				}
 			}
 		}
-		
+
 		println listdata.size()
 		resultSet = stm.executeQuery("select mso.office_code, msr.region_code, mbl.business_line_code from tr_balance_mutation tbm left join ms_office mso on tbm.id_ms_office = mso.id_ms_office left join ms_region msr on mso.id_ms_region = msr.id_ms_region left join ms_business_line mbl on tbm.id_ms_business_line = mbl.id_ms_business_line left join tr_document_h tdh on tbm.id_document_h = tdh.id_document_h where tdh.ref_number = '"+refNumber+"' ORDER BY tbm.trx_date desc limit 1")
 		metadata = resultSet.metaData
@@ -711,5 +711,19 @@ public class DataVerif {
 			}
 		}
 		listdata
+	}
+	@Keyword
+	getOfficeName(Connection conn, String value) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select mso.office_name from ms_office mso left join tr_document_h tdh on tdh.id_ms_office = mso.id_ms_office left join tr_document_d tdd on tdd.id_document_h = tdh.id_document_h where tdd.document_id = '"+ value +"' OR tdh.ref_number = '"+ value +"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
 	}
 }

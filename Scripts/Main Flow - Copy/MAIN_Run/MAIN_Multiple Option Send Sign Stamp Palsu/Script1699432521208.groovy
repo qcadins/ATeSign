@@ -525,10 +525,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         } else {
                             signType = 'Sign'
                         }
-                        
+
+						'deklarasi officeName'
+						officeName = CustomKeywords.'connection.DataVerif.getOfficeName'(conneSign,
+							GlobalVariable.eSignData.getAt('NoKontrakProcessed').split(';', -1)[i])
+						
                         'Input filter di Mutasi Saldo'
                         inputFilterTrx(conneSign, currentDate, GlobalVariable.eSignData.getAt('NoKontrakProcessed').split(
-                                ';', -1)[i], signType)
+                                ';', -1)[i], signType, officeName)
 
                         'Mengambil value dari db mengenai tipe pembayran'
                         paymentType = CustomKeywords.'connection.APIFullService.getPaymentType'(conneSign, GlobalVariable.eSignData.getAt(
@@ -638,9 +642,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)
 
                         signType = 'Stamp Duty'
+						
+						'deklarasi officeName'
+						officeName = CustomKeywords.'connection.DataVerif.getOfficeName'(conneSign,
+							GlobalVariable.eSignData.getAt('NoKontrakProcessed'))
 
                         'Input filter di Mutasi Saldo'
-                        inputFilterTrx(conneSign, currentDate, GlobalVariable.eSignData.getAt('NoKontrakProcessed'), signType)
+                        inputFilterTrx(conneSign, currentDate, GlobalVariable.eSignData.getAt('NoKontrakProcessed'), signType, officeName)
 
                         'mengambil value db proses ttd'
                         prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, GlobalVariable.eSignData.getAt(
@@ -756,8 +764,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 							continue
 						}
 						
+						'deklarasi officeName'
+						officeName = CustomKeywords.'connection.DataVerif.getOfficeName'(conneSign,
+							findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('documentid')))
+						
                         'Input filter di Mutasi Saldo'
-                        inputFilterTrx(conneSign, currentDate, '', signTypes[looping])
+                        inputFilterTrx(conneSign, currentDate, '', signTypes[looping], officeName)
 
 						'inquirydb mengenai get detail trx'
                         inquiryDB = CustomKeywords.'connection.DataVerif.getDetailTrx'(conneSign, trxNo[looping])
@@ -947,6 +959,8 @@ def inisializeValue() {
 	'inisialisasi is used api external, normal, use ui, dan seluruh index read data excel, opsi signing, '
 	'count verifikasi otp, biometric, sign, wa, sms, alltrxno, allsigntype, emailusagesign'
 	
+	String officeName = ''
+	
     isUsedAPIExternal = false
 
     isUsedAPINormal = false
@@ -1005,7 +1019,7 @@ def checkingDocAndEmailFromInput(ArrayList documentId, String rowEmail, LinkedHa
     return signerInput
 }
 
-def inputFilterTrx(Connection conneSign, String currentDate, String noKontrak, String signType) {
+def inputFilterTrx(Connection conneSign, String currentDate, String noKontrak, String signType, String officeName) {
     WebUI.click(findTestObject('Saldo/button_SetUlang'))
 	
 	String documentType = ''
@@ -1043,7 +1057,10 @@ def inputFilterTrx(Connection conneSign, String currentDate, String noKontrak, S
 
     'Input date sekarang'
     WebUI.setText(findTestObject('Saldo/input_todate'), currentDate)
-
+	
+	'Input office name'
+	WebUI.setText(findTestObject('Saldo/input_officeName'), officeName)
+	
     'Klik cari'
     WebUI.click(findTestObject('Saldo/btn_cari'))
 }

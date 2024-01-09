@@ -345,31 +345,36 @@ def inputFilterSaldo(String tipeSaldo, Connection conneSign) {
 	modifyObjectTanggalTransaksi = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath',
 		'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
 		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[2]/div', true)
+	
+	'modify object office'
+	modifyObjectOffice = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 'equals',
+		('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[3]/div', true)
 
 	'modify object tipe transaksi'
 	modifyObjectTipeTransaksi = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath',
 		'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[3]/div', true)
+		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[4]/div', true)
 
 	'modify object user'
 	modifyObjectUser = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 'equals',
 		('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[4]/div', true)
+		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[5]/div', true)
 
 	'modify object no kontrak'
 	modifyObjectNoKontrak = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath',
 		'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[5]/div', true)
+		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[6]/div', true)
 
 	'modify object Catatan'
 	modifyObjectCatatan = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 'equals',
 		('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[8]/div', true)
+		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[9]/div', true)
 
 	'modify object qty'
 	modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 'equals',
 		('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[9]/div', true)
+		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[10]/div', true)
 
 	'check if email kosong atau tidak'
 	if (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase('Edit') &&
@@ -398,6 +403,10 @@ def inputFilterSaldo(String tipeSaldo, Connection conneSign) {
 	'verify tgl trx ui = db'
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectTanggalTransaksi), result[arrayIndex++], false,
 			FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Trx ' + tipeSaldo)
+	
+	'verify office ui = db'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectOffice), result[arrayIndex++], false,
+			FailureHandling.CONTINUE_ON_FAILURE), ' Office ' + tipeSaldo)
 
 	'verify tipe trx ui = db'
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectTipeTransaksi), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE),
