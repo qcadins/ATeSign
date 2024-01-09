@@ -622,7 +622,7 @@ public class DataVerif {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("SELECT tbm.trx_no, mso.office_name, TO_CHAR(tbm.trx_date, 'YYYY-MM-DD HH24:MI:SS'), 'Use ' || msl.description, amm.full_name, tdh.ref_number||'('||amm1.full_name||')', msl1.code, '', tbm.notes, tbm.qty FROM tr_balance_mutation tbm LEFT JOIN ms_office mso on tbm.id_ms_office = mso.id_ms_office LEFT JOIN ms_business_line mbl on tbm.id_ms_business_line = mbl.id_ms_business_line LEFT JOIN ms_lov msl ON tbm.lov_balance_type = msl.id_lov LEFT JOIN am_msuser amm ON tbm.id_ms_user = amm.id_ms_user LEFT JOIN tr_document_d tdd ON tbm.id_document_d = tdd.id_document_d LEFT JOIN tr_document_h tdh ON tbm.id_document_h = tdh.id_document_h  left join am_msuser amm1 on tdh.id_msuser_customer = amm1.id_ms_user left join ms_lov msl1 on tdh.lov_doc_type = msl1.id_lov WHERE tbm.trx_no = '"+trxNo+"' ORDER BY tbm.dtm_crt DESC")
-		
+
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -711,5 +711,20 @@ public class DataVerif {
 			}
 		}
 		listdata
+	}
+	
+	@Keyword
+	getOfficeName(Connection conn, String value) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select mso.office_name from ms_office mso left join tr_document_h tdh on tdh.id_ms_office = mso.id_ms_office left join tr_document_d tdd on tdd.id_document_h = tdh.id_document_h where tdd.document_id = '"+ value +"' OR tdh.ref_number = '"+ value +"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
 	}
 }
