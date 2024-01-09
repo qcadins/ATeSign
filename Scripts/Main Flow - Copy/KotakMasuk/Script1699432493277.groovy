@@ -8,16 +8,16 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.By as By
 import org.openqa.selenium.Keys as Keys
-import com.kms.katalon.core.configuration.RunConfiguration as RunConfiguration
 
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get current date'
-def currentDate = new Date().format('yyyy-MM-dd')
+currentDate = new Date().format('yyyy-MM-dd')
 
 'mengambil document dari excel yang telah diberikan.'
-ArrayList docId = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ', -1)
+ArrayList docId = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(
+    ', ', -1)
 
 'declare arraylist arraymatch'
 ArrayList arrayMatch = []
@@ -26,7 +26,7 @@ ArrayList arrayMatch = []
 arrayIndex = 0
 
 'bikin variable hashmap untuk ambil count per signer'
-HashMap<String, String> resultHashMap = new LinkedHashMap()
+HashMap<String, String> resultHashMap = [:]
 
 String refNumber = CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, docId[0])
 
@@ -35,39 +35,37 @@ flagBreak = 0
 boolean usingHashMap = false
 
 'looping berdasarkan jumlah dokumen'
-resultHashMap = loopingMultiDoc(docId, conneSign, refNumber,resultHashMap) 
+resultHashMap = loopingMultiDoc(docId, conneSign, refNumber, resultHashMap)
 
-for (t = 0; t < resultHashMap.keySet().size();t++) {
+for (t = 0; t < resultHashMap.keySet().size(); t++) {
+    if (GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])] == resultHashMap.keySet()[t]) {
+        break
+    } else if (t == (resultHashMap.keySet().size() - 1)) {
+        WebUI.comment('error tidak menemukan email')
+    }
+}
 
-if (GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0]) == resultHashMap.keySet()[t]) {
-	break
-} else if (t == resultHashMap.keySet().size() - 1) {
-	WebUI.comment('error tidak menemukan email')
-}
-}
 'inisialisasi variable untuk looping. Looping diperlukan untuk break/continue'
 forLoopingWithBreakAndContinue = 1
 
 'looping'
 for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
-	
-	if (GlobalVariable.storeVar.toString() == '[:]' || usingHashMap == true) {
-		usingHashMap = true
-		
-		forLoopingWithBreakAndContinue = resultHashMap.keySet().size()
-		
-		GlobalVariable.storeVar.putAt(0, resultHashMap.keySet()[o])
-	}
+    if ((GlobalVariable.storeVar.toString() == '[:]') || (usingHashMap == true)) {
+        usingHashMap = true
 
+        forLoopingWithBreakAndContinue = resultHashMap.keySet().size()
+
+        GlobalVariable.storeVar[0] = resultHashMap.keySet()[o]
+    }
+    
     'call Test Case untuk login sebagai user berdasarkan doc id'
-    WebUI.callTestCase(findTestCase('Main Flow - Copy/Login'), [('email') : GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0]), ('excel') : excelPathFESignDocument
+    WebUI.callTestCase(findTestCase('Main Flow - Copy/Login'), [('email') : GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])], ('excel') : excelPathFESignDocument
             , ('checkBeforeSigning') : checkBeforeSigning, ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
 
     'get data kotak masuk send document secara asc, dimana customer no 1'
-    ArrayList result = CustomKeywords.'connection.SendSign.getKotakMasukSendDoc'(conneSign, refNumber, GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0]))
+    ArrayList result = CustomKeywords.'connection.SendSign.getKotakMasukSendDoc'(conneSign, refNumber, GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])])
 
-    ArrayList documentIdBasedOnLogin = CustomKeywords.'connection.DataVerif.getDocIdBasedOnLoginSigner'(conneSign, refNumber, 
-        GlobalVariable.Tenant, GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0]))
+    ArrayList documentIdBasedOnLogin = CustomKeywords.'connection.DataVerif.getDocIdBasedOnLoginSigner'(conneSign, refNumber, GlobalVariable.Tenant, GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])])
 
     'declare array proses Ttd pada Pencarian Dokumen. Digunakan untuk membandingkan dengan Kotak Masuk / Beranda. '
     ArrayList prosesTtdPencarianDokumen = [], totalMateraiPencarianDokumen = []
@@ -80,7 +78,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
     closeHamburgAndroid()
 
     'query untuk input pencarian dokumen'
-    ArrayList inputPencarianDokumen = CustomKeywords.'connection.SendSign.getDataPencarianDokumen'(conneSign, GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0]), refNumber)
+    ArrayList inputPencarianDokumen = CustomKeywords.'connection.SendSign.getDataPencarianDokumen'(conneSign, GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])], refNumber)
 
     'inisialisasi arrayindex'
     arrayIndex = 0
@@ -90,8 +88,8 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 
     if (GlobalVariable.roleLogin == 'BM MF') {
         not_run: WebUI.setText(findTestObject('PencarianDokumen/input_NamaPelanggan'), inputPencarianDokumen[arrayIndex++])
-        
-		'input nama pelanggan'
+
+        'input nama pelanggan'
         arrayIndex++
 
         'input no kontrak'
@@ -157,11 +155,11 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
     indexArrayMeterai = 0
 
     'Jika kolom dicheck pada Total Meterai, keyword untuk mengecek total stamping dan total materai berdasarkan document id'
-    resultStamping = CustomKeywords.'connection.SendSign.getTotalStampingandTotalMaterai'(conneSign, result[0], GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0]))
-	
-	loopingPerDocument = 0
-	
-    for (c = 0; c < resultHashMap.get(GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0])); c++) {
+    resultStamping = CustomKeywords.'connection.SendSign.getTotalStampingandTotalMaterai'(conneSign, result[0], GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])])
+
+    loopingPerDocument = 0
+
+    for (c = 0; c < resultHashMap.get(GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])]); c++) {
         'ambil row lastest pencarian dokumen'
         variablePencarianDokumenRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
 
@@ -181,12 +179,12 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 
             'ambil column lastest pencarian dokumen'
             variablePencarianDokumenColumn = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller > datatable-row-wrapper > datatable-body-row datatable-body-cell'))
-			
-			variablePencarianDokumenRow.size() == variablePencarianDokumenRow.size() - c
-			
-			resultHashMap.put(GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0]), resultHashMap.get(GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0])) - c)
-			
-			c = 0
+
+            variablePencarianDokumenRow.size() == (variablePencarianDokumenRow.size() - c)
+
+            resultHashMap.put(GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])], resultHashMap.get(GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])]) - c)
+
+            c = 0
         }
         
         'loop berdasarkan jumlah kolom dan dicheck dari 1 - 10.'
@@ -197,8 +195,8 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
                 (variablePencarianDokumenRow.size() - c)) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div', 
                 true)
 
-			WebUI.scrollToElement(modifyObjectPencarianDokumen, GlobalVariable.TimeOut)
-			
+            WebUI.scrollToElement(modifyObjectPencarianDokumen, GlobalVariable.TimeOut)
+
             if (i == (6 + tambahanColumn)) {
                 'Jika kolom dicheck pada Proses TTD, mengambil text mengenai proses tanda tangan dan displit menjadi 2, yang pertama menjadi jumlah signer yang sudah tanda tangan. Yang kedua menjadi total signer'
                 prosesTtdPencarianDokumen.add(WebUI.getText(modifyObjectPencarianDokumen).split('/', -1))
@@ -210,21 +208,23 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
                     c])
 
                 'Pengecekan proses sign'
-                arrayMatch.add(WebUI.verifyEqual(jumlahSignerTelahTandaTangan, prosesTtdPencarianDokumen[loopingPerDocument][0].replace(' ', 
-                            ''), FailureHandling.CONTINUE_ON_FAILURE))
+                arrayMatch.add(WebUI.verifyEqual(jumlahSignerTelahTandaTangan, ((prosesTtdPencarianDokumen[loopingPerDocument])[
+                        0]).replace(' ', ''), FailureHandling.CONTINUE_ON_FAILURE))
 
                 'Pengecekan total proses tanda tangan'
-                arrayMatch.add(WebUI.verifyEqual(jumlahSignerHarusTandaTangan, prosesTtdPencarianDokumen[loopingPerDocument][1].replace(' ', 
-                            ''), FailureHandling.CONTINUE_ON_FAILURE))
+                arrayMatch.add(WebUI.verifyEqual(jumlahSignerHarusTandaTangan, ((prosesTtdPencarianDokumen[loopingPerDocument])[
+                        1]).replace(' ', ''), FailureHandling.CONTINUE_ON_FAILURE))
             } else if (i == (7 + tambahanColumn)) {
                 'Mengambil teks dari UI dan displit berdasarkan proses stamping dan total materai'
                 totalMateraiPencarianDokumen.add(WebUI.getText(modifyObjectPencarianDokumen).split('/', -1))
 
                 'Pengecekan proses stamping'
-                arrayMatch.add(WebUI.verifyEqual(totalMateraiPencarianDokumen[loopingPerDocument][0], resultStamping[indexArrayMeterai++], FailureHandling.CONTINUE_ON_FAILURE))
+                arrayMatch.add(WebUI.verifyEqual((totalMateraiPencarianDokumen[loopingPerDocument])[0], resultStamping[indexArrayMeterai++], 
+                        FailureHandling.CONTINUE_ON_FAILURE))
 
                 'Pengecekan total materai'
-                arrayMatch.add(WebUI.verifyEqual(totalMateraiPencarianDokumen[loopingPerDocument][1], resultStamping[indexArrayMeterai++], FailureHandling.CONTINUE_ON_FAILURE))
+                arrayMatch.add(WebUI.verifyEqual((totalMateraiPencarianDokumen[loopingPerDocument])[1], resultStamping[indexArrayMeterai++], 
+                        FailureHandling.CONTINUE_ON_FAILURE))
             } else if (i == (variablePencarianDokumenColumn.size() / variablePencarianDokumenRow.size())) {
                 'Untuk ke sembilan tidak dibuat pengecekan dikarenakan itu adalah aksi. AKsi tidak dapat dicheck'
             } else if (i == 4) {
@@ -248,9 +248,10 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
                         FailureHandling.CONTINUE_ON_FAILURE))
             }
         }
-		loopingPerDocument++
+        
+        loopingPerDocument++
     }
-
+    
     openHamburgAndroid()
 
     'Klik objek Beranda'
@@ -277,47 +278,49 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
     
     WebUI.delay(GlobalVariable.TimeOut)
 
-	'looping berdasarkan jumlah dokumen'
-	resultHashMap = loopingMultiDoc(docId,conneSign, refNumber,resultHashMap)
-	
-	'variable count total document sebelum dilakukannya view document'
-	int countTotalDocumentBeforeView, countClickedButtonPrevious = 0
+    'looping berdasarkan jumlah dokumen'
+    resultHashMap = loopingMultiDoc(docId, conneSign, refNumber, resultHashMap)
 
-	loopingPerDocument = 0
+    'variable count total document sebelum dilakukannya view document'
+    int countClickedButtonPrevious = 0
+
+    loopingPerDocument = 0
+
     for (c = 0; c < resultHashMap.get(GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0])); c++) {
-        if (isViewDocument != 'Yes' || c == 0) {
-			'get row pada beranda'
-			variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
+        if ((isViewDocument != 'Yes') || (c == 0)) {
+            'get row pada beranda'
+            variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
         } else {
-			'Klik button Lastest'
-			WebUI.click(modifyObjectBtnLastest, FailureHandling.OPTIONAL)
-		}
-
+            'Klik button Lastest'
+            WebUI.click(modifyObjectBtnLastest, FailureHandling.OPTIONAL)
+        }
+        
         if (c >= variable.size()) {
             'Agar dapat ke Lastest, modifikasi button Lastest pada paging'
             modifyObjectBtnPrevious = WebUI.modifyObjectProperty(findTestObject('Object Repository/KotakMasuk/Sign/btn_Lastest'), 
                 'xpath', 'equals', '/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[2]/a/i', 
                 true)
-			
-			countClickedButtonPrevious++
-			
-			for (loopingClickPrevious = 0; loopingClickPrevious < countClickedButtonPrevious; loopingClickPrevious++) {
-				WebUI.click(modifyObjectBtnPrevious)
-			}
-			
+
+            countClickedButtonPrevious++
+
+            for (loopingClickPrevious = 0; loopingClickPrevious < countClickedButtonPrevious; loopingClickPrevious++) {
+                WebUI.click(modifyObjectBtnPrevious)
+            }
+            
             'get row pada beranda'
             variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
 
-			variable.size() == variable.size() - c
-			
-            resultHashMap.put(GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0]), resultHashMap.get(GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0])) - c)
-			
+            variable.size() == (variable.size() - c)
+
+            resultHashMap.put(GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0]), resultHashMap.get(GlobalVariable.storeVar.getAt(
+                        GlobalVariable.storeVar.keySet()[0])) - c)
+
             c = 0
         }
-		
-		'get row pada beranda'
-		variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
         
+        'get row pada beranda'
+        variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
+
         'index row distart dari 2 karena yang 1 adalah button ttd'
         indexRow = 2
 
@@ -383,9 +386,8 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
             (variable.size() - c)) + ']/datatable-body-row/div[2]/datatable-body-cell[') + indexRow) + ']/div/a[3]/em', 
             true)
 
-		
-		WebUI.scrollToElement(modifyObjectTextRefNum, GlobalVariable.TimeOut)
-		
+        WebUI.scrollToElement(modifyObjectTextRefNum, GlobalVariable.TimeOut)
+
         'verifikasi ref number dengan database'
         arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectTextRefNum), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
@@ -421,7 +423,8 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
         ArrayList prosesTtd = WebUI.getText(modifyObjectTextProsesTtd).split('/', -1)
 
         'verifikasi total signer beranda dan pencarian dokumen'
-        arrayMatch.add(WebUI.verifyMatch(prosesTtd.toString(), prosesTtdPencarianDokumen[loopingPerDocument].toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+        arrayMatch.add(WebUI.verifyMatch(prosesTtd.toString(), (prosesTtdPencarianDokumen[loopingPerDocument]).toString(), 
+                false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'Jika error lognya muncul'
         if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
@@ -474,8 +477,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 
         isDownloadDocument = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Need Download Document ?'))
 
-        isDeleteDownloadedDocument = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel(
-                'Delete Downloaded Document'))
+        isDeleteDownloadedDocument = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Delete Downloaded Document'))
 
         isViewDocument = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Need View Document ?'))
 
@@ -493,9 +495,9 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
         
         'Jika is View Document yes, maka '
         if (isViewDocument == 'Yes') {
-			'ambil count total document sebelum diview'
-			countTotalDocumentBeforeView = variable.size()
-			
+            'ambil count total document sebelum diview'
+            countTotalDocumentBeforeView = variable.size()
+
             'Klik View Document'
             WebUI.click(modifyObjectBtnViewDoc)
 
@@ -527,17 +529,17 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
                 
                 'Diverifikasi dengan UI didepan'
                 arrayMatch.add(WebUI.verifyMatch(labelRefNum, labelViewDoc, false, FailureHandling.CONTINUE_ON_FAILURE))
-				
+
                 'Klik kembali'
                 WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_backViewDokumen'))
-
             } else {
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                     ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
                     ';') + GlobalVariable.ReasonFailedProcessNotDone) + ' untuk proses View dokumen tanda tangan. ')
             }
         }
-		loopingPerDocument++
+        
+        loopingPerDocument++
     }
 }
 
@@ -550,7 +552,7 @@ if (arrayMatch.contains(false)) {
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
 def openHamburgAndroid() {
@@ -570,48 +572,50 @@ def closeHamburgAndroid() {
 }
 
 def loopingMultiDoc(ArrayList docId, Connection conneSign, String refNumber, LinkedHashMap resultHashMap) {
-	'looping document id'
-	for (loopingDocument = 0; loopingDocument < docId.size(); loopingDocument++) {
-		'Mengambil email berdasarkan documentId'
-		ArrayList emailSigner = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, docId[loopingDocument]).split(
-			';', -1)
-		
-		'ambil vendor berdasarkan document id'
-		String vendor = CustomKeywords.'connection.SendSign.getVendorCodeUsingDocId'(conneSign, docId[loopingDocument])
-		
-		'get looping email signer'
-		for (loopingEmailSigner = 0; loopingEmailSigner < emailSigner.size(); loopingEmailSigner++) {
-			
-			'jika vendor privy, maka cehcking apakah signer tersebut autosign. Jika autosign ,maka continue'
-			if (vendor.equalsIgnoreCase('Privy')) {
-				ifSignerAuto = CustomKeywords.'connection.APIFullService.getIfSignerAutosign'(conneSign,docId[loopingDocument],emailSigner[loopingEmailSigner])
+    'looping document id'
+    for (loopingDocument = 0; loopingDocument < docId.size(); loopingDocument++) {
+        'Mengambil email berdasarkan documentId'
+        ArrayList emailSigner = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, docId[loopingDocument]).split(
+            ';', -1)
 
-				if (ifSignerAuto == 'Autosign') {
-					continue
-				}
-			}
-			
-			'get total document based on signer'
-			count = CustomKeywords.'connection.SendSign.getTotalDocumentBasedOnSigner'(conneSign, refNumber, emailSigner[loopingEmailSigner])
-	
-			'jika countnya lebih dari 0'
-			if (count > 0) {
-				'jika result hashmapnya sizenya 0, maka langsung input email beserta count'
-				if (resultHashMap.keySet().size() == 0) {
-					resultHashMap.put(emailSigner[loopingEmailSigner], count)
-				} else {
-					'looping result hash map'
-					for (q = 0; q < resultHashMap.keySet().size(); q++) {
-						'jika result hash map tidak sesuai dengan email signer'
-						if ((resultHashMap.keySet()[q]) != (emailSigner[loopingEmailSigner])) {
-							'result hash map akan diinput dengan email yang berbeda beserta count'
-							resultHashMap.put(emailSigner[loopingEmailSigner], count)
-						}
-					}
-				}
-			}
-		}
-	}
-	
-	return resultHashMap
+        'ambil vendor berdasarkan document id'
+        String vendor = CustomKeywords.'connection.SendSign.getVendorCodeUsingDocId'(conneSign, docId[loopingDocument])
+
+        'get looping email signer'
+        for (loopingEmailSigner = 0; loopingEmailSigner < emailSigner.size(); loopingEmailSigner++) {
+            'jika vendor privy, maka cehcking apakah signer tersebut autosign. Jika autosign ,maka continue'
+            if (vendor.equalsIgnoreCase('Privy')) {
+                ifSignerAuto = CustomKeywords.'connection.APIFullService.getIfSignerAutosign'(conneSign, docId[loopingDocument], 
+                    emailSigner[loopingEmailSigner])
+
+                if (ifSignerAuto == 'Autosign') {
+                    continue
+                }
+            }
+            
+            'get total document based on signer'
+            count = CustomKeywords.'connection.SendSign.getTotalDocumentBasedOnSigner'(conneSign, refNumber, emailSigner[
+                loopingEmailSigner])
+
+            'jika countnya lebih dari 0'
+            if (count > 0) {
+                'jika result hashmapnya sizenya 0, maka langsung input email beserta count'
+                if (resultHashMap.keySet().size() == 0) {
+                    resultHashMap.put(emailSigner[loopingEmailSigner], count)
+                } else {
+                    'looping result hash map'
+                    for (q = 0; q < resultHashMap.keySet().size(); q++) {
+                        'jika result hash map tidak sesuai dengan email signer'
+                        if ((resultHashMap.keySet()[q]) != (emailSigner[loopingEmailSigner])) {
+                            'result hash map akan diinput dengan email yang berbeda beserta count'
+                            resultHashMap.put(emailSigner[loopingEmailSigner], count)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    resultHashMap
 }
+
