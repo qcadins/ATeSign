@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>label_TableQty</name>
+   <name>label_TableCabang</name>
    <tag></tag>
-   <elementGuidId>ccfabbb8-b7ce-4d6e-b9fa-c00a5a9c0c63</elementGuidId>
+   <elementGuidId>70bfae64-4551-4f8f-850c-485b141c3e03</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'datatable-scroll ng-star-inserted']/datatable-row-wrapper[1]/datatable-body-row/div[2]/datatable-body-cell[10]/div</value>
+         <value>//*[@class = 'datatable-scroll ng-star-inserted']/datatable-row-wrapper[1]/datatable-body-row/div[2]/datatable-body-cell[3]/div/p</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,8 +17,8 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@class = 'datatable-scroll ng-star-inserted']/datatable-row-wrapper[1]/datatable-body-row/div[2]/datatable-body-cell[10]/div</value>
-      <webElementGuid>428dc944-ed27-4374-9c5c-6d22d089f576</webElementGuid>
+      <value>//*[@class = 'datatable-scroll ng-star-inserted']/datatable-row-wrapper[1]/datatable-body-row/div[2]/datatable-body-cell[3]/div/p</value>
+      <webElementGuid>a2d81f35-95c3-408d-9050-bf14171309db</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -26,6 +26,6 @@
       <name>class</name>
       <type>Main</type>
       <value>datatable-scroll ng-star-inserted</value>
-      <webElementGuid>6feac564-5dda-427e-a8b9-aa0d94fb868c</webElementGuid>
+      <webElementGuid>cde410f0-1393-4cd7-a5e5-7d40accac5b3</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

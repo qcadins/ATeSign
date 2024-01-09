@@ -15,11 +15,12 @@
       </authorizationInfo>
       <authorizationType>Bearer</authorizationType>
    </authorizationRequest>
+   <autoUpdateContent>true</autoUpdateContent>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n    \&quot;tenantCode\&quot;: \&quot;${tenantCode}\&quot;,\n    \&quot;vendorCode\&quot;: \&quot;${vendorCode}\&quot;,\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    },\n    \&quot;page\&quot;: \&quot;${pageNum}\&quot;,\n    \&quot;balanceType\&quot;: \&quot;${balType}\&quot;,\n    \&quot;referenceNo\&quot;: \&quot;${refNo}\&quot;,\n    \&quot;transactionType\&quot;: \&quot;${tranxType}\&quot;,\n    \&quot;documentName\&quot;: \&quot;${docname}\&quot;,\n    \&quot;transactionDateStart\&quot;: \&quot;${tranxDateStart}\&quot;,\n    \&quot;transactionDateEnd\&quot;: \&quot;${tranxDateEnd}\&quot;,\n    \&quot;documentType\&quot;: \&quot;${docType}\&quot;\n}&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;tenantCode\&quot;: \&quot;${tenantCode}\&quot;,\n    \&quot;vendorCode\&quot;: \&quot;${vendorCode}\&quot;,\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    },\n    \&quot;page\&quot;: \&quot;${pageNum}\&quot;,\n    \&quot;balanceType\&quot;: \&quot;${balType}\&quot;,\n    \&quot;referenceNo\&quot;: \&quot;${refNo}\&quot;,\n    \&quot;transactionType\&quot;: \&quot;${tranxType}\&quot;,\n    \&quot;documentName\&quot;: \&quot;${docname}\&quot;,\n    \&quot;transactionDateStart\&quot;: \&quot;${tranxDateStart}\&quot;,\n    \&quot;transactionDateEnd\&quot;: \&quot;${tranxDateEnd}\&quot;,\n    \&quot;documentType\&quot;: \&quot;${docType}\&quot;,\n  \t\&quot;officeCode\&quot;: \&quot;${officeCode}\&quot;\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>

@@ -16,7 +16,7 @@ public class GetEmail {
 
 	@Keyword
 	getEmailContent(String email, String inputPassword, String value) {
-		String host = 'outlook.office365.com', otpCode, username = email, password = inputPassword
+		String host = 'outlook.office365.com', otpCode = '', username = email, password = inputPassword
 
 		Properties properties = new Properties()
 
@@ -129,13 +129,14 @@ public class GetEmail {
 		if (matcher.find()) {
 			// Extract the matched text
 			String extractedText = matcher.group(1).trim()
-			String cleanedText = extractedText.replaceAll('[\\n]+', ' ')
+//			String cleanedText = extractedText.replaceAll('[\\n]+', ' ')
 			return extractedText
-		} else {
-			println('Match not found.')
-
-			return 'false'
 		}
+		
+		println('Match not found.')
+		
+		return 'false'
 	}
+	
 }
 

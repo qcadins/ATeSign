@@ -228,9 +228,25 @@ public class Saldo {
 
 	@Keyword
 	getTrxSaldo(Connection conn, String date, String refNo, String trxType, String documentName) {
+		String commandRefNo = '', commandTrxType = '', commandDocName = ''
+
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT tbm.trx_no, TO_CHAR(trx_date, 'yyyy-MM-dd HH24:MI:SS'), ml.description, full_name, CONCAT(ref_no,'(',full_name,')'), ml2.code, case when mdt.doc_template_name != null or mdt.doc_template_name != '' then mdt.doc_template_name else tdd.document_name end, notes, qty*-1 FROM tr_balance_mutation tbm LEFT JOIN ms_lov ml ON tbm.lov_trx_type = ml.id_lov LEFT JOIN tr_document_h tdh ON tbm.id_document_h = tdh.id_document_h LEFT JOIN tr_document_d tdd ON tbm.id_document_d = tdd.id_document_d LEFT JOIN am_msuser amu ON tbm.id_ms_user = amu.id_ms_user LEFT JOIN( SELECT id_lov, code FROM ms_lov) ml2 ON tdh.lov_doc_type = ml2.id_lov LEFT JOIN ms_doc_template mdt ON tdd.id_ms_doc_template = mdt.id_doc_template WHERE TO_CHAR(trx_date, 'yyyy-MM-dd') = '" + date + "' AND ml.description = '" + trxType + "' AND ref_no = '" + refNo + "' AND (tdd.document_name = '" + documentName + "' OR mdt.doc_template_name = '" + documentName + "')")
+		if (refNo == '') {
+			commandRefNo = '--'
+		}
+		if (trxType == '') {
+			commandTrxType = '--'
+		}
+		if (documentName == '') {
+			commandDocName = '--'
+		}
+
+		resultSet = stm.executeQuery("SELECT COALESCE(tbm.trx_no,''), COALESCE(TO_CHAR(trx_date, 'yyyy-MM-dd HH24:MI:SS'),''),COALESCE(mo.office_name ,''), COALESCE(ml.description,''), COALESCE(full_name,''), COALESCE(ref_no,''), COALESCE(ml2.code,''), COALESCE(case when mdt.doc_template_name != null or mdt.doc_template_name != '' then mdt.doc_template_name else tdd.document_name end,''), COALESCE(notes,''), COALESCE(qty,0) FROM tr_balance_mutation tbm LEFT JOIN ms_lov ml ON tbm.lov_trx_type = ml.id_lov LEFT JOIN tr_document_h tdh ON tbm.id_document_h = tdh.id_document_h LEFT JOIN tr_document_d tdd ON tbm.id_document_d = tdd.id_document_d LEFT JOIN am_msuser amu ON tbm.id_ms_user = amu.id_ms_user LEFT JOIN( SELECT id_lov, code FROM ms_lov) ml2 ON tdh.lov_doc_type = ml2.id_lov LEFT JOIN ms_doc_template mdt ON tdd.id_ms_doc_template = mdt.id_doc_template LEFT JOIN ms_office mo ON mo.id_ms_office = tdh.id_ms_office WHERE TO_CHAR(trx_date, 'yyyy-MM-dd') = '" + date + "'" + '\n' +
+				commandTrxType + " AND ml.description = '" + trxType + "'" + '\n' +
+				commandRefNo + " AND ref_no = '" + refNo + "'" + '\n' +
+				commandDocName + " AND (tdd.document_name = '" + documentName + "' OR mdt.doc_template_name = '" + documentName + "')")
+
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

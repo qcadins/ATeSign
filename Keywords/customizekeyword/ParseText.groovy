@@ -33,6 +33,8 @@ public class ParseText {
 	convertToSHA256(String input) {
 		MessageDigest digest = MessageDigest.getInstance('SHA-256')
 		byte[] encodedHash = digest.digest(input.getBytes('UTF-8'))
-		encodedHash.collect { String.format('%02x', it) }.join()
+		encodedHash.collect { byteValue ->
+		    String.format('%02x', byteValue)
+		}.join()
 	}
 }
