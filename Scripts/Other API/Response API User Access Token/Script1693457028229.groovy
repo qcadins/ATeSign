@@ -3,7 +3,6 @@ import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import java.sql.Connection as Connection
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
-import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
 if (sheet == '') {
@@ -19,9 +18,6 @@ if (sheet == '') {
 
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
-
-'get colm excel'
-int countColmExcel = findTestData(excelPath).columnNumbers
 
 'get privyId dari DB'
 privyId = CustomKeywords.'connection.APIFullService.getPrivyId'(conneSign, emailSigner)
@@ -39,7 +35,7 @@ if (WS.verifyResponseStatusCode(respon, 201, FailureHandling.OPTIONAL) == true) 
     'print token'
     GlobalVariable.AccessToken = token
 
-	'print token yang ada'
+    'print token yang ada'
     println(token)
 
     'write to excel success'
