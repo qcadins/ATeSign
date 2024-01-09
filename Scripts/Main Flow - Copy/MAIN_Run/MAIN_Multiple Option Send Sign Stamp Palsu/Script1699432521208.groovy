@@ -53,9 +53,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         GlobalVariable.Tenant = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))
 
         'inisialisasi signerInput dan email signer sebagai array list'
-        ArrayList emailSignerPerDoc = [], documentId = [], signersPerDoc = []
-
-        LinkedHashMap emailSigner = [:], signerInput = [:]
+        ArrayList emailSignerPerDoc = [], documentId = [], signersPerDoc = [], emailSigner = [:], signerInput = [:]
 
         'Jika expectednya bukan Failed. Ini digunakan untuk agar tidak mengambil saldo before jika expectednya failed.'
         if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Expected')).toUpperCase() != 'FAILED') {
@@ -214,9 +212,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             emailSignerPerDoc = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, documentId[
                                 i]).split(';', -1)
 
-                            emailSignerPerDoc.collect { String email ->
-							    email.trim()
-							}
+                            emailSignerPerDoc.collect({ String email ->
+                                    email.trim()
+                                })
 
                             emailSigner.put(documentId[i], emailSignerPerDoc)
                         }
@@ -239,9 +237,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             emailSignerPerDoc = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel(
                                     'email Signer (Sign Only)')).split(';', -1)
 
-                            emailSignerPerDoc.collect { String email ->
-							    email.trim()
-							}
+                            emailSignerPerDoc.collect({ String email ->
+                                    email.trim()
+                                })
 
                             emailSigner.put(documentId[i], emailSignerPerDoc)
                         }
@@ -284,17 +282,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             GlobalVariable.storeVar = [:]
 
                             'input documetn id dan email'
-                            GlobalVariable.storeVar[emailSigner.keySet()[i]] = emailSigner.get(emailSigner.keySet()[i])[y]
+                            (GlobalVariable.storeVar[(emailSigner.keySet()[i])]) = (emailSigner.get(emailSigner.keySet()[
+                                i])[y])
 
                             'reset global variable verifikasi otp, biometric, dan sign'
 
                             'reset value GV'
-                            GlobalVariable.eSignData['VerifikasiOTP'] = 0
-							
-							GlobalVariable.eSignData['VerifikasiBiometric'] = 0
-							
-							GlobalVariable.eSignData['VerifikasiSign'] = 0
-							
+                            (GlobalVariable.eSignData['VerifikasiOTP']) = 0
+
+                            (GlobalVariable.eSignData['VerifikasiBiometric']) = 0
+
+                            (GlobalVariable.eSignData['VerifikasiSign']) = 0
+
                             'jika opsi tanda tangannya bukan sign only dan stamp only'
                             if ((findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 
                             'Sign Only') && (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 
@@ -379,16 +378,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             (GlobalVariable.opsiSigning)++
 
                             'total saldo otp'
-							GlobalVariable.eSignData['CountVerifikasiOTP'] = GlobalVariable.eSignData['CountVerifikasiOTP'] +
-							                                                GlobalVariable.eSignData['VerifikasiOTP']
-																			
-							'total saldo biometric'
-							GlobalVariable.eSignData['CountVerifikasiBiometric'] = GlobalVariable.eSignData['CountVerifikasiBiometric'] +
-							                                                       GlobalVariable.eSignData['VerifikasiBiometric']
-																				   
-							'total saldo sign'
-							GlobalVariable.eSignData['CountVerifikasiSign'] = GlobalVariable.eSignData['CountVerifikasiSign'] +
-							                                                   GlobalVariable.eSignData['VerifikasiSign']
+                            (GlobalVariable.eSignData['CountVerifikasiOTP']) = ((GlobalVariable.eSignData['CountVerifikasiOTP']) + 
+                            (GlobalVariable.eSignData['VerifikasiOTP']))
+
+                            'total saldo biometric'
+                            (GlobalVariable.eSignData['CountVerifikasiBiometric']) = ((GlobalVariable.eSignData['CountVerifikasiBiometric']) + 
+                            (GlobalVariable.eSignData['VerifikasiBiometric']))
+
+                            'total saldo sign'
+                            (GlobalVariable.eSignData['CountVerifikasiSign']) = ((GlobalVariable.eSignData['CountVerifikasiSign']) + 
+                            (GlobalVariable.eSignData['VerifikasiSign']))
 
                             'jika cancel doc tidak kosong, maka open document monitoring'
                             if (cancelDocsValue != '') {
@@ -438,8 +437,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 if (cancelDocsValue == '') {
                     'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
                     WebUI.callTestCase(findTestCase('Main Flow - Copy/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathMain
-                            , ('sheet') : sheet, ('nomorKontrak') : GlobalVariable.eSignData['NoKontrakProcessed']
-                            , ('vendor') : vendor], FailureHandling.CONTINUE_ON_FAILURE)
+                            , ('sheet') : sheet, ('nomorKontrak') : GlobalVariable.eSignData['NoKontrakProcessed'], ('vendor') : vendor], 
+                        FailureHandling.CONTINUE_ON_FAILURE)
                 }
                 
                 'get result saldo after'
@@ -448,15 +447,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                 WebUI.comment(GlobalVariable.eSignData.toString())
 
-                if (GlobalVariable.eSignData['allTrxNo'].toString().size() > 0) {
+                if ((GlobalVariable.eSignData['allTrxNo']).toString().size() > 0) {
                     'Jika count saldo sign/ttd diatas (after) sama dengan yang dulu/pertama (before) dikurang jumlah dokumen yang ditandatangani'
-                    if (checkVerifyEqualorMatch(WebUI.verifyEqual(Integer.parseInt(resultSaldoBefore.get(vendor)) - GlobalVariable.eSignData['CountVerifikasiSign'], 
-						Integer.parseInt(resultSaldoAfter.get(vendor)), FailureHandling.CONTINUE_ON_FAILURE), ' pada saldo before dan after Sign di vendor ' + vendor)) {
+                    if (checkVerifyEqualorMatch(WebUI.verifyEqual(Integer.parseInt(resultSaldoBefore.get(vendor)) - (GlobalVariable.eSignData[
+                            'CountVerifikasiSign']), Integer.parseInt(resultSaldoAfter.get(vendor)), FailureHandling.CONTINUE_ON_FAILURE), 
+                        ' pada saldo before dan after Sign di vendor ' + vendor)) {
                         flagBreak = 0
 
                         'Jika count saldo otp after dengan yang before dikurangi 1 ditambah dengan '
-                        checkVerifyEqualorMatch(WebUI.verifyEqual(Integer.parseInt(resultSaldoBefore.get('OTP')) - GlobalVariable.eSignData['CountVerifikasiOTP'], 
-							Integer.parseInt(resultSaldoAfter.get('OTP')), FailureHandling.CONTINUE_ON_FAILURE), ' pada saldo before dan after OTP')
+                        checkVerifyEqualorMatch(WebUI.verifyEqual(Integer.parseInt(resultSaldoBefore.get('OTP')) - (GlobalVariable.eSignData[
+                                'CountVerifikasiOTP']), Integer.parseInt(resultSaldoAfter.get('OTP')), FailureHandling.CONTINUE_ON_FAILURE), 
+                            ' pada saldo before dan after OTP')
 
                         'cek apa pernah menggunakan biometrik'
                         if (GlobalVariable.eSignData.getAt('CountVerifikasiBiometric') > 0) {
@@ -467,36 +468,39 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             'jika saldo liveness digabung dengan facecompare'
                             if (isSplitLivenessFc == '0') {
                                 'cek apakah saldo liveness facecompare masih sama'
-                                checkVerifyEqualorMatch(WebUI.verifyEqual(Integer.parseInt(resultSaldoBefore.get('Liveness Face Compare')) - GlobalVariable.eSignData['CountVerifikasiBiometric'], 
-									Integer.parseInt(resultSaldoAfter.get('Liveness Face Compare')), FailureHandling.CONTINUE_ON_FAILURE), ' pada saldo before dan after Liveness Face Compare')
+                                checkVerifyEqualorMatch(WebUI.verifyEqual(Integer.parseInt(resultSaldoBefore.get('Liveness Face Compare')) - 
+                                        (GlobalVariable.eSignData['CountVerifikasiBiometric']), Integer.parseInt(resultSaldoAfter.get(
+                                                'Liveness Face Compare')), FailureHandling.CONTINUE_ON_FAILURE), ' pada saldo before dan after Liveness Face Compare')
                             } else if (isSplitLivenessFc == '1') {
                                 'cek apakah saldo liveness masih sama'
-                                checkVerifyEqualorMatch(WebUI.verifyEqual(Integer.parseInt(resultSaldoBefore.get('Liveness')) - GlobalVariable.eSignData['CountVerifikasiBiometric'], 
-									Integer.parseInt(resultSaldoAfter.get('Liveness')), FailureHandling.CONTINUE_ON_FAILURE), ' pada saldo before dan after Liveness')  
-								
-								'cek apakah saldo facecompare masih sama'
-                                checkVerifyEqualorMatch(WebUI.verifyEqual(Integer.parseInt(resultSaldoBefore.get('Face Compare')) - GlobalVariable.eSignData['CountVerifikasiBiometric'], 
-									Integer.parseInt(resultSaldoAfter.get('Face Compare')), FailureHandling.CONTINUE_ON_FAILURE), 'pada saldo before dan after Face Compare')
+                                checkVerifyEqualorMatch(WebUI.verifyEqual(Integer.parseInt(resultSaldoBefore.get('Liveness')) - 
+                                        (GlobalVariable.eSignData['CountVerifikasiBiometric']), Integer.parseInt(resultSaldoAfter.get(
+                                                'Liveness')), FailureHandling.CONTINUE_ON_FAILURE), ' pada saldo before dan after Liveness')
+
+                                'cek apakah saldo facecompare masih sama'
+                                checkVerifyEqualorMatch(WebUI.verifyEqual(Integer.parseInt(resultSaldoBefore.get('Face Compare')) - 
+                                        (GlobalVariable.eSignData['CountVerifikasiBiometric']), Integer.parseInt(resultSaldoAfter.get(
+                                                'Face Compare')), FailureHandling.CONTINUE_ON_FAILURE), 'pada saldo before dan after Face Compare')
                             }
                         }
                         
                         'check saldo mengenai sms notif'
                         checkVerifyEqualorMatch(WebUI.verifyEqual(Integer.parseInt(resultSaldoBefore.get('SMS Notif')) - 
-                                GlobalVariable.eSignData['CountVerifikasiSMS'], Integer.parseInt(resultSaldoAfter.get(
+                                (GlobalVariable.eSignData['CountVerifikasiSMS']), Integer.parseInt(resultSaldoAfter.get(
                                         'SMS Notif')), FailureHandling.CONTINUE_ON_FAILURE), ' pada saldo before dan after SMS Notif')
 
                         'check saldo mengenai WhatsApp Message'
                         checkVerifyEqualorMatch(WebUI.verifyEqual(Integer.parseInt(resultSaldoBefore.get('WhatsApp Message')) - 
-                                GlobalVariable.eSignData['CountVerifikasiWA'], Integer.parseInt(resultSaldoAfter.get(
-                                        'WhatsApp Message')), FailureHandling.CONTINUE_ON_FAILURE), 'pada saldo before dan after WhatsApp Message')
+                                (GlobalVariable.eSignData['CountVerifikasiWA']), Integer.parseInt(resultSaldoAfter.get('WhatsApp Message')), 
+                                FailureHandling.CONTINUE_ON_FAILURE), 'pada saldo before dan after WhatsApp Message')
                     }
                 }
                 
                 'check penggunaan saldo meterai'
-                if (GlobalVariable.eSignData['VerifikasiMeterai'] > 0) {
+                if ((GlobalVariable.eSignData['VerifikasiMeterai']) > 0) {
                     'Jika count saldo sign/ttd diatas (after) sama dengan yang dulu/pertama (before) dikurang jumlah dokumen yang ditandatangani'
-                    if (WebUI.verifyNotEqual(Integer.parseInt(resultSaldoBefore.get('Meterai')) - GlobalVariable.eSignData[
-                            'VerifikasiMeterai'], Integer.parseInt(resultSaldoAfter.get('Meterai')), FailureHandling.OPTIONAL)) {
+                    if (WebUI.verifyNotEqual(Integer.parseInt(resultSaldoBefore.get('Meterai')) - (GlobalVariable.eSignData[
+                        'VerifikasiMeterai']), Integer.parseInt(resultSaldoAfter.get('Meterai')), FailureHandling.OPTIONAL)) {
                         'Write To Excel GlobalVariable.StatusFailed and total signernya tidak sesuai'
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                             GlobalVariable.StatusFailed, (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, 
@@ -505,12 +509,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 }
                 
                 'check penggunaan saldo sign'
-                if (GlobalVariable.eSignData['CountVerifikasiSign'] > 0) {
+                if ((GlobalVariable.eSignData['CountVerifikasiSign']) > 0) {
                     'looping berdasarkan total dokumen dari dokumen template code'
-                    for (i = 0; i < GlobalVariable.eSignData['NoKontrakProcessed'].split(';', -1).size(); i++) {
+                    for (i = 0; i < (GlobalVariable.eSignData['NoKontrakProcessed']).split(';', -1).size(); i++) {
                         'ambil nama vendor dari DB'
-                        vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, GlobalVariable.eSignData[
-                                'NoKontrakProcessed'].split(';', -1)[i])
+                        vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, (GlobalVariable.eSignData[
+                            'NoKontrakProcessed']).split(';', -1)[i])
 
                         'jika vendornya digisign, maka signtypenya adalah Document'
                         if (vendor == 'DIGISIGN') {
@@ -519,26 +523,30 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             signType = 'Sign'
                         }
                         
+                        'deklarasi officeName'
+                        officeName = CustomKeywords.'connection.DataVerif.getOfficeName'(conneSign, GlobalVariable.eSignData.getAt(
+                                'NoKontrakProcessed').split(';', -1)[i])
+
                         'Input filter di Mutasi Saldo'
-                        inputFilterTrx(conneSign, currentDate, GlobalVariable.eSignData['NoKontrakProcessed'].split(
-                                ';', -1)[i], signType)
+                        inputFilterTrx(conneSign, currentDate, (GlobalVariable.eSignData['NoKontrakProcessed']).split(';', 
+                                -1)[i], signType, officeName)
 
                         'Mengambil value dari db mengenai tipe pembayran'
-                        paymentType = CustomKeywords.'connection.APIFullService.getPaymentType'(conneSign, GlobalVariable.eSignData[
-                                'NoKontrakProcessed'].split(';', -1)[i])
+                        paymentType = CustomKeywords.'connection.APIFullService.getPaymentType'(conneSign, (GlobalVariable.eSignData[
+                            'NoKontrakProcessed']).split(';', -1)[i])
 
                         'Jika tipe pembayarannya per sign'
                         if (paymentType == 'Per Sign') {
                             'Memanggil saldo total yang telah digunakan per dokumen tersebut'
                             saldoUsedperDoc = CustomKeywords.'connection.APIFullService.getTotalSignedUsingRefNumber'(conneSign, 
-                                GlobalVariable.eSignData['NoKontrakProcessed'].split(';', -1)[i])
+                                (GlobalVariable.eSignData['NoKontrakProcessed']).split(';', -1)[i])
 
                             if (saldoUsedperDoc == '0') {
                                 WebUI.delay(10)
 
                                 'Memanggil saldo total yang telah digunakan per dokumen tersebut'
                                 saldoUsedperDoc = CustomKeywords.'connection.APIFullService.getTotalSignedUsingRefNumber'(
-                                    conneSign, GlobalVariable.eSignData['NoKontrakProcessed'].split(';', -1)[i])
+                                    conneSign, (GlobalVariable.eSignData['NoKontrakProcessed']).split(';', -1)[i])
                             }
                         } else {
                             saldoUsedperDoc = 1
@@ -557,8 +565,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                                 'ambil inquiry di db'
                                 ArrayList inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldo'(conneSign, 
-                                    GlobalVariable.eSignData['NoKontrakProcessed'].split(';', -1)[i], GlobalVariable.eSignData[
-                                        'CountVerifikasiSign'].toString(), 'Use ' + signType)
+                                    (GlobalVariable.eSignData['NoKontrakProcessed']).split(';', -1)[i], (GlobalVariable.eSignData[
+                                    'CountVerifikasiSign']).toString(), 'Use ' + signType)
 
                                 index = 0
 
@@ -574,7 +582,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                         WebUI.scrollToElement(modifyperrowpercolumn, GlobalVariable.TimeOut)
 
                                         'Jika u di lokasi qty atau kolom ke 9'
-                                        if (u == 9) {
+                                        if (u == 10) {
                                             'Jika yang qtynya 1 dan databasenya juga, berhasil'
                                             minuses = '-'
 
@@ -586,14 +594,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                             'Jika bukan untuk 2 kolom itu, maka check ke db'
                                             checkVerifyEqualorMatch(WebUI.verifyMatch(minuses + WebUI.getText(modifyperrowpercolumn), 
                                                     inquiryDB[index++], false, FailureHandling.CONTINUE_ON_FAILURE), 'pada Kuantitas di Mutasi Saldo dengan nomor kontrak ' + 
-                                                (GlobalVariable.eSignData['NoKontrakProcessed'].split(';', -1)[i]))
+                                                ((GlobalVariable.eSignData['NoKontrakProcessed']).split(';', -1)[i]))
                                         } else if (u == variableSaldoColumn.size()) {
                                             'Jika di kolom ke 10, atau di FE table saldo, check saldo dari table dengan saldo yang sekarang. Takeout dari dev karena no issue dan sudah sepakat'
                                         } else {
                                             'Jika bukan untuk 2 kolom itu, maka check ke db'
                                             checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(modifyperrowpercolumn), 
                                                     inquiryDB[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' pada Mutasi Saldo dengan nomor kontrak ' + 
-                                                (GlobalVariable.eSignData['NoKontrakProcessed'].split(';', -1)[i]))
+                                                ((GlobalVariable.eSignData['NoKontrakProcessed']).split(';', -1)[i]))
                                         }
                                     }
                                 }
@@ -606,7 +614,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                                         GlobalVariable.StatusFailed, (((((findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, 
                                             rowExcel('Reason Failed')).replace('-', '') + ';') + GlobalVariable.ReasonFailedNoneUI) + 
-                                        ' dengan nomor kontrak ') + '<') + (GlobalVariable.eSignData['NoKontrakProcessed'].split(
+                                        ' dengan nomor kontrak ') + '<') + ((GlobalVariable.eSignData['NoKontrakProcessed']).split(
                                             ';', -1)[i])) + '>')
                                 }
                                 
@@ -633,8 +641,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                         signType = 'Stamp Duty'
 
+                        'deklarasi officeName'
+                        officeName = CustomKeywords.'connection.DataVerif.getOfficeName'(conneSign, GlobalVariable.eSignData.getAt(
+                                'NoKontrakProcessed'))
+
                         'Input filter di Mutasi Saldo'
-                        inputFilterTrx(conneSign, currentDate, GlobalVariable.eSignData.getAt('NoKontrakProcessed'), signType)
+                        inputFilterTrx(conneSign, currentDate, GlobalVariable.eSignData.getAt('NoKontrakProcessed'), signType, 
+                            officeName)
 
                         'mengambil value db proses ttd'
                         prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, GlobalVariable.eSignData.getAt(
@@ -675,7 +688,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                         WebUI.scrollToElement(modifyperrowpercolumn, GlobalVariable.TimeOut)
 
                                         'Jika u di lokasi qty atau kolom ke 9'
-                                        if (u == 9) {
+                                        if (u == 10) {
                                             minuses = '-'
 
                                             'jika hasil query adalah 0, maka minus akan menjadi string kosong'
@@ -748,6 +761,69 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         for (looping = (signTypes.size() - 1); looping >= 0; looping--) {
                             if ((signTypes[looping]) == '') {
                                 continue
+                            }
+                            
+                            'deklarasi officeName'
+                            officeName = CustomKeywords.'connection.DataVerif.getOfficeName'(conneSign, findTestData(excelPathMain).getValue(
+                                    GlobalVariable.NumofColm, rowExcel('documentid')))
+
+                            'Input filter di Mutasi Saldo'
+                            inputFilterTrx(conneSign, currentDate, '', signTypes[looping], officeName)
+
+                            'inquirydb mengenai get detail trx'
+                            inquiryDB = CustomKeywords.'connection.DataVerif.getDetailTrx'(conneSign, trxNo[looping])
+
+                            'inisialisasi is Checked'
+                            boolean isChecked
+
+                            'Get row lastest'
+                            variableLastest = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
+
+                            'get row lastest'
+                            modifyObjectBtnLastest = WebUI.modifyObjectProperty(findTestObject('Object Repository/KotakMasuk/Sign/modifyObject'), 
+                                'class', 'equals', 'datatable-icon-skip', true)
+
+                            'jika btn lastest dapat diclick'
+                            if (WebUI.verifyElementVisible(modifyObjectBtnLastest, FailureHandling.OPTIONAL)) {
+                                WebUI.focus(modifyObjectBtnLastest)
+
+                                'Klik button Lastest'
+                                WebUI.click(modifyObjectBtnLastest, FailureHandling.CONTINUE_ON_FAILURE)
+                            }
+                            
+                            'get column di saldo'
+                            variableSaldoColumn = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-header > div > div.datatable-row-center.ng-star-inserted datatable-header-cell'))
+
+                            'get row di saldo'
+                            variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
+
+                            index = 0
+
+                            'looping mengenai rownya'
+                            for (j = variableSaldoRow.size(); j >= 0; j--) {
+                                'jika rownya diawal'
+                                if (j == 0) {
+                                    'jika masih belum terchecked'
+                                    if (isChecked == false) {
+                                        'click button previous'
+                                        WebUI.click(findTestObject('KotakMasuk/Sign/btn_balmut_Previous'))
+
+                                        'get column di saldo'
+                                        variableSaldoColumn = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-header > div > div.datatable-row-center.ng-star-inserted datatable-header-cell'))
+
+                                        'get row di saldo'
+                                        variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
+
+                                        'variable j akan diubah valuenya menjadi variable saldo row + 1 (di + 1 dikarenakan penggunaan fornya)'
+                                        j = (variableSaldoRow.size() + 1)
+
+                                        'is check menjadi true'
+                                        isChecked = true
+
+                                        'continue'
+                                        continue
+                                    }
+                                }
                             }
                             
                             'Input filter di Mutasi Saldo'
@@ -860,7 +936,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                     }
                                 }
                             }
-							
+                            
                             break
                         }
                     }
@@ -899,7 +975,7 @@ def inisializeArray(boolean isUsed, int indexReadDataExcel) {
     if (isUsed == false) {
         'return angka indexreaddataexcel'
         return indexReadDataExcel
-    } 
+    }
     
     'return angka indexreaddataexcel dengan plus 1'
     indexReadDataExcel + 1
@@ -944,6 +1020,8 @@ def inisializeValue() {
     'inisialisasi is used api external, normal, use ui, dan seluruh index read data excel, opsi signing, '
 
     'count verifikasi otp, biometric, sign, wa, sms, alltrxno, allsigntype, emailusagesign'
+    String officeName = ''
+
     isUsedAPIExternal = false
 
     isUsedAPINormal = false
@@ -1004,7 +1082,7 @@ def checkingDocAndEmailFromInput(ArrayList documentId, String rowEmail, LinkedHa
     signerInput
 }
 
-def inputFilterTrx(Connection conneSign, String currentDate, String noKontrak, String signType) {
+def inputFilterTrx(Connection conneSign, String currentDate, String noKontrak, String signType, String officeName) {
     WebUI.click(findTestObject('Saldo/button_SetUlang'))
 
     String documentType = ''
@@ -1043,6 +1121,9 @@ def inputFilterTrx(Connection conneSign, String currentDate, String noKontrak, S
 
     'Input date sekarang'
     WebUI.setText(findTestObject('Saldo/input_todate'), currentDate)
+
+    'Input office name'
+    WebUI.setText(findTestObject('Saldo/input_officeName'), officeName)
 
     'Klik cari'
     WebUI.click(findTestObject('Saldo/btn_cari'))

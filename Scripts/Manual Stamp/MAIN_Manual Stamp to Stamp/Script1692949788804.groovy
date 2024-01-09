@@ -280,6 +280,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                 index = 0
 
                                 ArrayList<String> arrayMatch = []
+								
+								ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getOfficeRegionBlineCodeUsingRefNum'(conneSign, findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))
+								
+								'lakukan loop untuk pengecekan data'
+								for (int i = 0; i < (officeRegionBline.size() / 3); i++) {
+									'verify business line dan office code'
+									arrayMatch.add(WebUI.verifyMatch(officeRegionBline[i].toString(), officeRegionBline[i+3].toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+								}
 
                                 'verify ref number'
                                 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 

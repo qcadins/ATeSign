@@ -24,7 +24,7 @@ public class BeautifyJson {
 			try {
 				needto.writeToExcel(GlobalVariable.DataFilePath, sheet, rowNo, GlobalVariable.NumofColm -
 						1, beautifiedJson)
-			} catch (FileNotFoundException ex) {
+			} catch (IllegalArgumentException ex) {
 				String beautifiedJsonPath = System.getProperty('user.dir') + '\\Response\\' + fileName + '.json'
 
 				new File(beautifiedJsonPath).text = beautifiedJson
@@ -32,7 +32,7 @@ public class BeautifyJson {
 				needto.writeToExcel(GlobalVariable.DataFilePath, sheet, rowNo, GlobalVariable.NumofColm -
 						1, beautifiedJsonPath)
 			}
-		} catch (FileNotFoundException e) {
+		} catch (IllegalArgumentException e) {
 			println("Failed to beautify the JSON: ${e.message}")
 		}
 	}

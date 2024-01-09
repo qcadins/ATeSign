@@ -205,4 +205,40 @@ public class Meterai {
 		}
 		data
 	}
+
+	@Keyword
+	getInsertStampingPaymentReceipt(Connection conn, String transactionId) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select mst.tenant_code, mdt.doc_template_code, tdh.ref_number, tdd.tenant_transaction_id, tdd.document_name,TO_CHAR(tdd.request_date,'yyyy-mm-dd'), msl_doctype.code, tdd.document_nominal, mpdt.peruri_doc_id, mso.office_code, mso.office_name, msr.region_code, msr.region_name , msl_idtype.code, tdd.id_no, tdd.id_name from tr_balance_mutation tbm left join ms_tenant mst on tbm.id_ms_tenant = mst.id_ms_tenant left join tr_document_h tdh on tbm.id_document_h = tdh.id_document_h left join tr_document_d tdd on tdd.id_document_h = tdh.id_document_h left join ms_doc_template mdt on tdd.id_ms_doc_template = mdt.id_doc_template left join tr_stamp_duty tsd on tbm.id_stamp_duty = tsd.id_stamp_duty left join ms_lov msl_doctype on tdh.lov_doc_type = msl_doctype.id_lov left join ms_peruri_doc_type mpdt on tdd.id_peruri_doc_type = mpdt.id_peruri_doc_type left join ms_office mso on tdh.id_ms_office = mso.id_ms_office left join ms_region msr on mso.id_ms_region = msr.id_ms_region left join ms_lov msl_idtype on tdd.lov_id_type = msl_idtype.id_lov where tdd.tenant_transaction_id = '"+transactionId+"' order by tbm.dtm_crt desc ")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
+
+	@Keyword
+	getCountTotalStampDutyOnTemplate(Connection conn, String docTemplateCode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select COUNT(msl.code) from ms_doc_template_sign_loc mdtsl left join ms_lov msl on mdtsl.lov_sign_type = msl.id_lov left join ms_doc_template mdt on mdtsl.id_doc_template = mdt.id_doc_template WHERE msl.code = 'SDT' AND mdt.doc_template_code = '"+docTemplateCode+"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		if (data == null) {
+			data = '0'
+		}
+		data
+	}
 }

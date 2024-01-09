@@ -49,15 +49,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
             'HIT API'
             respon = WS.sendRequest(findTestObject('Postman/List Balance Mutation (Saldo)', [('pageNum') : findTestData(
-                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Page*')), ('balType') : findTestData(
-                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Balance Type*')), ('refNo') : findTestData(
-                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Ref Number*')), ('tranxType') : findTestData(
-                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Transaction Type*')), ('docname') : findTestData(
-                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Document Name*')), ('tranxDateStart') : findTestData(
-                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Transaction Date Start*')), ('tranxDateEnd') : findTestData(
-                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Transaction Date End*')), ('docType') : findTestData(
-                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Document Type*')), ('callerId') : findTestData(
-                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('username'))]))
+				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Page*')), ('balType') : findTestData(
+				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Balance Type*')), ('refNo') : findTestData(
+				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Ref Number*')), ('tranxType') : findTestData(
+				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Transaction Type*')), ('docname') : findTestData(
+				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Document Name*')), ('tranxDateStart') : findTestData(
+				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Transaction Date Start*')), ('tranxDateEnd') : findTestData(
+				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Transaction Date End*')), ('docType') : findTestData(
+				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Document Type*')), ('officeCode') : findTestData(
+				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Office Code*')),('callerId') : findTestData(
+				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('username'))]))
 
             'Jika status HIT API 200 OK'
             if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {

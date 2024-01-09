@@ -95,13 +95,86 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			
             'jika status codenya 0'
             if (statusCode == 0) {
-                result = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL).toString()
-
+				'write to excel success'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
+					1, GlobalVariable.StatusSuccess)
+				
                 'tulis sukses jika store DB berhasil'
-                if ((GlobalVariable.FlagFailed == 0) && result.equalsIgnoreCase('Success')) {
-                    'write to excel success'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
-                        1, GlobalVariable.StatusSuccess)
+                if ((GlobalVariable.FlagFailed == 0)) {
+					
+					if (GlobalVariable.checkStoreDB == 'Yes') {
+						ArrayList resultStoreDB = CustomKeywords.'connection.Meterai.getInsertStampingPaymentReceipt'(conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentTransactionId')))
+						
+						println resultStoreDB
+						WebUI.delay(30)
+						'declare arraylist arraymatch'
+						arrayMatch = []
+						
+						arrayIndex = 0
+						
+						for (index = 0; index < resultStoreDB.size()/16; index++) {
+							'check store db dari input'
+							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],GlobalVariable.Tenant, false, FailureHandling.CONTINUE_ON_FAILURE))
+							
+							'check store db dari input'
+							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentTemplateCode')), false, FailureHandling.CONTINUE_ON_FAILURE))
+							
+							'check store db dari input'
+							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentNumber')), false, FailureHandling.CONTINUE_ON_FAILURE))
+							
+							'check store db dari input'
+							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentTransactionId')), false, FailureHandling.CONTINUE_ON_FAILURE))
+							
+							'check store db dari input'
+							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('docName')), false, FailureHandling.CONTINUE_ON_FAILURE))
+							
+							'check store db dari input'
+							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('docDate')), false, FailureHandling.CONTINUE_ON_FAILURE))
+							
+							'check store db dari input'
+							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('docType')), false, FailureHandling.CONTINUE_ON_FAILURE))
+							
+							'check store db dari input'
+							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('docNominal')), false, FailureHandling.CONTINUE_ON_FAILURE))
+							
+							'check store db dari input'
+							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('peruriDocTypeId')), false, FailureHandling.CONTINUE_ON_FAILURE))
+							
+							'check store db dari input'
+							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('officeCode')), false, FailureHandling.CONTINUE_ON_FAILURE))
+							
+							'check store db dari input'
+							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('officeName')), false, FailureHandling.CONTINUE_ON_FAILURE))
+							
+							'check store db dari input'
+							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('regionCode')), false, FailureHandling.CONTINUE_ON_FAILURE))
+							
+							'check store db dari input'
+							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('regionName')), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+							'check store db dari input'
+							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('idType')), false, FailureHandling.CONTINUE_ON_FAILURE))
+							
+							'check store db dari input'
+							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('idNo')), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+							'check store db dari input'
+							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('taxOwedsName')), false, FailureHandling.CONTINUE_ON_FAILURE))
+						}
+						
+						'dibandingkan total meterai dan total stamp'
+						arrayMatch.add(WebUI.verifyEqual(resultStoreDB.size()/16, Integer.parseInt(CustomKeywords.'connection.Meterai.getCountTotalStampDutyOnTemplate'(conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentTemplateCode')))) + 1, FailureHandling.CONTINUE_ON_FAILURE))
+
+						'jika data db tidak bertambah'
+						if (arrayMatch.contains(false)) {
+							'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+								GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(GlobalVariable.NumofColm,
+									rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
+
+							GlobalVariable.FlagFailed = 1
+						}
+					}
                 }
             } else {
                 'call function get API error message'
