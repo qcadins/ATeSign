@@ -23,7 +23,7 @@ public class BeautifyJson {
 
 			try {
 				needto.writeToExcel(GlobalVariable.DataFilePath, sheet, rowNo, GlobalVariable.NumofColm -
-						1, beautifiedJson.toString())
+						1, beautifiedJson)
 			} catch (FileNotFoundException ex) {
 				String beautifiedJsonPath = System.getProperty('user.dir') + '\\Response\\' + fileName + '.json'
 

@@ -15,7 +15,7 @@ public class WriteExcel {
 	XSSFSheet sheet
 	XSSFRow row
 	XSSFCell cell
-	
+
 	@Keyword
 	writeToExcel(String filePath, String sheetName, int rowNo, int collNo, String cellValue) {
 		file = new FileInputStream(new File(filePath))
@@ -24,10 +24,10 @@ public class WriteExcel {
 		sheet = workbook.getSheet(sheetName)
 
 		// Explicitly specify types for row and cell
-	    row = sheet.getRow(rowNo) ?: sheet.createRow(rowNo)
-	    cell = row.getCell(collNo) ?: row.createCell(collNo)
-	
-	    cell.cellValue = cellValue
+		row = sheet.getRow(rowNo) ?: sheet.createRow(rowNo)
+		cell = row.getCell(collNo) ?: row.createCell(collNo)
+
+		cell.cellValue = cellValue
 
 		file.close()
 		file.withCloseable {
@@ -42,10 +42,10 @@ public class WriteExcel {
 		sheet = workbook.getSheet(sheetName)
 
 		// Explicitly specify types for row and cell
-	    row = sheet.getRow(rowNo) ?: sheet.createRow(rowNo)
-	    cell = row.getCell(collNo) ?: row.createCell(collNo)
-	
-	    cell.cellValue = cellValue
+		row = sheet.getRow(rowNo) ?: sheet.createRow(rowNo)
+		cell = row.getCell(collNo) ?: row.createCell(collNo)
+
+		cell.cellValue = cellValue
 
 		file.close()
 		FileOutputStream outFile = new FileOutputStream(new File(filePath))
@@ -61,10 +61,10 @@ public class WriteExcel {
 		workbook = new XSSFWorkbook(file)
 		sheet = workbook.getSheet(sheetName)
 
-	    row = sheet.getRow(rowNo) ?: sheet.createRow(rowNo)
-	    cell = row.getCell(collNo) ?: row.createCell(collNo)
-	
-	    cell.cellValue = cellValue
+		row = sheet.getRow(rowNo) ?: sheet.createRow(rowNo)
+		cell = row.getCell(collNo) ?: row.createCell(collNo)
+
+		cell.cellValue = cellValue
 
 		file.close()
 		FileOutputStream outFile = new FileOutputStream(new File(filePath))
@@ -88,10 +88,10 @@ public class WriteExcel {
 		workbook = new XSSFWorkbook(file)
 		sheet = workbook.getSheet(sheetName)
 
-	    row = sheet.getRow(rowNo) ?: sheet.createRow(rowNo)
-	    cell = row.getCell(collNo) ?: row.createCell(collNo)
-	
-	    cell.cellValue = cellValue
+		row = sheet.getRow(rowNo) ?: sheet.createRow(rowNo)
+		cell = row.getCell(collNo) ?: row.createCell(collNo)
+
+		cell.cellValue = cellValue
 
 		file.close()
 		FileOutputStream outFile = new FileOutputStream(new File(filePath))
