@@ -581,7 +581,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                         WebUI.scrollToElement(modifyperrowpercolumn, GlobalVariable.TimeOut)
 
                                         'Jika u di lokasi qty atau kolom ke 9'
-                                        if (u == 9) {
+                                        if (u == 10) {
                                             'Jika yang qtynya 1 dan databasenya juga, berhasil'
                                             minuses = '-'
 											'jika hasil query adalah 0, maka minusesnya tidak akan ada'
@@ -681,7 +681,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                         WebUI.scrollToElement(modifyperrowpercolumn, GlobalVariable.TimeOut)
 
                                         'Jika u di lokasi qty atau kolom ke 9'
-                                        if (u == 9) {
+                                        if (u == 10) {
                                             minuses = '-'
 
 											'jika hasil query adalah 0, maka minus akan menjadi string kosong'
@@ -758,7 +758,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 						
                         'Input filter di Mutasi Saldo'
                         inputFilterTrx(conneSign, currentDate, '', signTypes[looping])
-
+						
 						'inquirydb mengenai get detail trx'
                         inquiryDB = CustomKeywords.'connection.DataVerif.getDetailTrx'(conneSign, trxNo[looping])
 
