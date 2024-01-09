@@ -3,10 +3,11 @@ import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.model.FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject
+
 import internal.GlobalVariable as GlobalVariable
 import java.sql.Connection as Connection
-import java.net.InetAddress as InetAddress
 import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import org.openqa.selenium.By as By
 import org.openqa.selenium.Keys as Keys
@@ -14,38 +15,19 @@ import org.openqa.selenium.Keys as Keys
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-'declafe split'
-int splitnum = -1
-
 String refNumber = CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, GlobalVariable.storeVar.keySet()[[
         0]])
 
 documentIdInput = (('["' + (GlobalVariable.storeVar.keySet()[[0]])) + '"]')
 
-int saldoUsed = 0
-
-int delayExpiredOTP = 0
-
-int countOTP = 0
-
-int countBiometric = 0
+int delayExpiredOTP = 0, countOTP = 0, countBiometric = 0
 
 GlobalVariable.FlagFailed = 0
 
 'Inisialisasi otp, photo, ipaddress, dan total signed sebelumnya yang dikosongkan'
-String otp
+String otp, photo, ipaddress
 
-String photo
-
-String ipaddress
-
-ArrayList totalSignedBefore = []
-
-ArrayList totalSignedAfter = []
-
-ArrayList flaggingOTP = []
-
-ArrayList loopingEmailSigner = []
+ArrayList totalSignedBefore = [], totalSignedAfter = []
 
 'setting menggunakan base url yang benar atau salah'
 CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPISignDocument, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url (Sign External)'))
@@ -130,24 +112,24 @@ if (vendor.equalsIgnoreCase('Privy') || vendor.equalsIgnoreCase('Digisign')) {
     'request OTP dengan HIT API'
 
     'Constraint : Dokumen yang dipasang selalu dengan referal number di dokumen pertama.'
-    respon_OTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing', [('callerId') : findTestData(excelPathAPISignDocument).getValue(
+    responOTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing', [('callerId') : findTestData(excelPathAPISignDocument).getValue(
                     GlobalVariable.NumofColm, rowExcel('callerId')), ('phoneNo') : findTestData(excelPathAPISignDocument).getValue(
-                    GlobalVariable.NumofColm, rowExcel('phoneNo (Sent Otp)')).split(';', -1)[GlobalVariable.indexUsed]
-                , ('email') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(
+                    GlobalVariable.NumofColm, rowExcel('phoneNo (Sent Otp)')).split(';', -1)[GlobalVariable.indexUsed], ('email') : findTestData(
+                    excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(
                     ';', -1)[GlobalVariable.indexUsed], ('refnumber') : CustomKeywords.'connection.APIFullService.getRefNumber'(
                     conneSign, GlobalVariable.storeVar.keySet()[[0]]), ('listDocumentId') : documentIdInput.replace('[', 
                     '').replace(']', ''), ('vendor') : vendor]))
 
     'Jika status HIT API 200 OK'
-    if (WS.verifyResponseStatusCode(respon_OTP, 200, FailureHandling.OPTIONAL) == true) {
+    if (WS.verifyResponseStatusCode(responOTP, 200, FailureHandling.OPTIONAL) == true) {
         'get status code'
-        code_otp = WS.getElementPropertyValue(respon_OTP, 'status.code', FailureHandling.OPTIONAL)
+        codeOTP = WS.getElementPropertyValue(responOTP, 'status.code', FailureHandling.OPTIONAL)
 
         'get psreCode'
-        psreCode = WS.getElementPropertyValue(respon_OTP, 'psreCode', FailureHandling.OPTIONAL)
+        psreCode = WS.getElementPropertyValue(responOTP, 'psreCode', FailureHandling.OPTIONAL)
 
         'jika codenya 0'
-        if (code_otp == 0) {
+        if (codeOTP == 0) {
             'verify psre respon == psre db'
             checkVerifyEqualOrMatch(WebUI.verifyMatch(psreCode.toString().toUpperCase(), vendor.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), 
                 ' pada psre response dengan vendor DB ')
@@ -169,12 +151,11 @@ if (vendor.equalsIgnoreCase('Privy') || vendor.equalsIgnoreCase('Digisign')) {
                         GlobalVariable.NumofColm, rowExcel('Tenant'))) == '0')) {
                     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Getting OTP Value from SMS ?')) == 
                     'Yes') {
-					if (vendor.equalsIgnoreCase('Privy')) {
-                        OTP = CustomKeywords.'customizekeyword.GetSMS.getOTP'('PrivyID')
-					}
-					else if (vendor.equalsIgnoreCase('Digisign')) {
-						OTP = CustomKeywords.'customizekeyword.GetSMS.getOTP'('DIGISIGN')
-					}
+                        if (vendor.equalsIgnoreCase('Privy')) {
+                            OTP = CustomKeywords.'customizekeyword.GetSMS.getOTP'('PrivyID')
+                        } else if (vendor.equalsIgnoreCase('Digisign')) {
+                            OTP = CustomKeywords.'customizekeyword.GetSMS.getOTP'('DIGISIGN')
+                        }
                     } else {
                         'Dikasih delay 50 detik dikarenakan loading untuk mendapatkan OTP Privy via SMS.'
                         WebUI.delay(50)
@@ -187,12 +168,12 @@ if (vendor.equalsIgnoreCase('Privy') || vendor.equalsIgnoreCase('Digisign')) {
             
             println(otp)
         } else {
-            getErrorMessageAPI(respon_OTP)
+            getErrorMessageAPI(responOTP)
         }
         
         countOTP++
     } else {
-        getErrorMessageAPI(respon_OTP)
+        getErrorMessageAPI(responOTP)
     }
 } else if ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use correct OTP From Database (Sign External)')).split(
     ';', -1)[GlobalVariable.indexUsed]) == 'Yes') {
@@ -212,46 +193,47 @@ if (vendor.equalsIgnoreCase('Privy') || vendor.equalsIgnoreCase('Digisign')) {
     'request OTP dengan HIT API'
 
     'Constraint : Dokumen yang dipasang selalu dengan referal number di dokumen pertama.'
-    respon_OTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing', [('callerId') : findTestData(excelPathAPISignDocument).getValue(
+    responOTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing', [('callerId') : findTestData(excelPathAPISignDocument).getValue(
                     GlobalVariable.NumofColm, rowExcel('callerId')), ('phoneNo') : findTestData(excelPathAPISignDocument).getValue(
-                    GlobalVariable.NumofColm, rowExcel('phoneNo (Sent Otp)')).split(';', -1)[GlobalVariable.indexUsed]
-                , ('email') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(
+                    GlobalVariable.NumofColm, rowExcel('phoneNo (Sent Otp)')).split(';', -1)[GlobalVariable.indexUsed], ('email') : findTestData(
+                    excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(
                     ';', -1)[GlobalVariable.indexUsed], ('refnumber') : CustomKeywords.'connection.APIFullService.getRefNumber'(
                     conneSign, GlobalVariable.storeVar.keySet()[[0]]), ('listDocumentId') : documentIdInput.replace('[', 
                     '').replace(']', ''), ('vendor') : vendor]))
 
     'Jika status HIT API 200 OK'
-    if (WS.verifyResponseStatusCode(respon_OTP, 200, FailureHandling.OPTIONAL) == true) {
+    if (WS.verifyResponseStatusCode(responOTP, 200, FailureHandling.OPTIONAL) == true) {
         'get status code'
-        code_otp = WS.getElementPropertyValue(respon_OTP, 'status.code', FailureHandling.OPTIONAL)
+        codeOTP = WS.getElementPropertyValue(responOTP, 'status.code', FailureHandling.OPTIONAL)
 
         'get psreCode'
-        psreCode = WS.getElementPropertyValue(respon_OTP, 'psreCode', FailureHandling.OPTIONAL)
+        psreCode = WS.getElementPropertyValue(responOTP, 'psreCode', FailureHandling.OPTIONAL)
 
         'jika codenya 0'
-        if (code_otp == 0) {
+        if (codeOTP == 0) {
             checkVerifyEqualOrMatch(WebUI.verifyMatch(psreCode.toString().toUpperCase(), vendor.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), 
                 ' pada psre response dengan vendor DB ')
 
             'Dikasih delay 1 detik dikarenakan loading untuk mendapatkan OTP.'
             WebUI.delay(3)
 
-			if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(';', -1)[GlobalVariable.indexUsed] == '') {
-				'Mengambil otp dari database'
-				otp = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, (findTestData(excelPathAPISignDocument).getValue(
-                    GlobalVariable.NumofColm, rowExcel('phoneNo (Sign External)')).split(';', -1)[GlobalVariable.indexUsed]))
-			} else {
-				'Mengambil otp dari database'
-				otp = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, (findTestData(excelPathAPISignDocument).getValue(
-					GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(';', -1)[GlobalVariable.indexUsed]))
-			}
-			
+            if ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(
+                ';', -1)[GlobalVariable.indexUsed]) == '') {
+                'Mengambil otp dari database'
+                otp = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathAPISignDocument).getValue(
+                        GlobalVariable.NumofColm, rowExcel('phoneNo (Sign External)')).split(';', -1)[GlobalVariable.indexUsed])
+            } else {
+                'Mengambil otp dari database'
+                otp = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathAPISignDocument).getValue(
+                        GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(';', -1)[GlobalVariable.indexUsed])
+            }
+            
             countOTP++
         } else {
-            getErrorMessageAPI(respon_OTP)
+            getErrorMessageAPI(responOTP)
         }
     } else {
-        getErrorMessageAPI(respon_OTP)
+        getErrorMessageAPI(responOTP)
     }
 } else if ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use correct OTP From Database (Sign External)')).split(
     ';', -1)[GlobalVariable.indexUsed]) == 'No') {
@@ -309,7 +291,8 @@ if (otp.length() >= 0) {
                     ';', -1)[GlobalVariable.indexUsed], ('password') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
                     rowExcel('Password Signer')), ('ipAddress') : ipaddress, ('browserInfo') : findTestData(excelPathAPISignDocument).getValue(
                     GlobalVariable.NumofColm, rowExcel('browserInfo (Sign External)')).split(';', -1)[GlobalVariable.indexUsed]
-                , ('otp') : otp, ('selfPhoto') : photo, ('phoneNo') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('phoneNo (Sign External)'))]))
+                , ('otp') : otp, ('selfPhoto') : photo, ('phoneNo') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
+                    rowExcel('phoneNo (Sign External)'))]))
 
     'Jika status HIT API 200 OK'
     if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
@@ -399,11 +382,11 @@ if (otp.length() >= 0) {
                         }
                     }
                     
-                    GlobalVariable.eSignData.putAt('VerifikasiSign', Integer.parseInt(signCount))
+                    GlobalVariable.eSignData['VerifikasiSign'] = Integer.parseInt(signCount)
 
-                    GlobalVariable.eSignData.putAt('VerifikasiOTP', countOTP)
+                    GlobalVariable.eSignData['VerifikasiOTP'] = countOTP
 
-                    GlobalVariable.eSignData.putAt('VerifikasiBiometric', countBiometric)
+                    GlobalVariable.eSignData['VerifikasiBiometric'] = countBiometric
 
                     checkSaldoWAOrSMS(conneSign, vendor)
 
@@ -439,309 +422,21 @@ if (otp.length() >= 0) {
                 }
             }
             
-            GlobalVariable.eSignData.putAt('NoKontrakProcessed', refNumber)
+            GlobalVariable.eSignData['NoKontrakProcessed'] = refNumber
         } else {
             getErrorMessageAPI(respon)
         }
     } else {
         getErrorMessageAPI(respon)
     }
-} /*
-def verifySaldoUsedForLiveness(Connection conneSign, String trxNo) {
-    'klik button saldo'
-    WebUI.click(findTestObject('isiSaldo/SaldoAdmin/menu_Saldo'))
-
-    'klik ddl untuk tenant memilih mengenai Vida'
-    WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)
-
-    docid = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(',' - 
-        1)
-
-    noKontrak = ''
-
-    for (int i = 1; i <= docid.size(); i++) {
-        if (noKontrak != '') {
-            noKontrak = (noKontrak + ';')
-        }
-        
-        noKontrak = (noKontrak + CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, docid[(i - 1)]))
-    }
-    
-    'ambil trx no untuk displit'
-    trxNo = trxNo.split(',', -1)
-
-    'looping per trx no'
-    for (int i = 0; i < trxNo.size(); i++) {
-        'Mengambil tipe saldo yang telah digunakan'
-        checkTypeofUsedSaldo = CustomKeywords.'connection.APIFullService.getTypeUsedSaldo'(conneSign, trxNo[i])
-
-        'input tipe saldo'
-        WebUI.setText(findTestObject('RegisterEsign/checkSaldo/input_TipeSaldo'), checkTypeofUsedSaldo.replace('Use ', ''))
-
-        'enter untuk input tipe saldo'
-        WebUI.sendKeys(findTestObject('RegisterEsign/checkSaldo/input_TipeSaldo'), Keys.chord(Keys.ENTER))
-
-        'click button cari'
-        WebUI.click(findTestObject('RegisterEsign/checkSaldo/button_Cari'))
-
-        'get row'
-        variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
-
-        'modify object button last page'
-        modifyObjectButtonLastPage = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 
-            'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' + 
-            variable.size()) + ']', true)
-
-        if (WebUI.getAttribute(modifyObjectButtonLastPage, 'class', FailureHandling.OPTIONAL) != 'disabled') {
-            'click button last page'
-            WebUI.click(findTestObject('RegisterEsign/checkSaldo/button_LastPage'))
-        }
-        
-        'get row'
-        variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
-
-        'modify object no transaksi'
-        modifyObjectNoTransaksi = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 
-            'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-            variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[1]/div', true)
-
-        'modify object tanggal transaksi'
-        modifyObjectTanggalTransaksi = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 
-            'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-            variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[2]/div', true)
-
-        'modify object tipe transaksi'
-        modifyObjectTipeTransaksi = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 
-            'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-            variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[3]/div', true)
-
-        'modify object user'
-        modifyObjectUser = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 
-            'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-            variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[4]/div', true)
-
-        'modify object no kontrak'
-        modifyObjectNoKontrak = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 
-            'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-            variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[5]/div', true)
-
-        'modify object Catatan'
-        modifyObjectCatatan = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 
-            'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-            variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[8]/div', true)
-
-        'modify object qty'
-        modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 'equals', 
-            ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-            variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[9]/div', true)
-
-        'modify object qty'
-        modifyObjectBalance = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 
-            'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-            variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[10]/div', true)
-
-        'get trx dari db'
-        ArrayList result = CustomKeywords.'connection.DataVerif.getSaldoTrx'(conneSign, (findTestData(excelPathAPISignDocument).getValue(
-                GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(';', -1)[GlobalVariable.indexUsed]).replace(
-                '"', ''), (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('callerId'))), checkTypeofUsedSaldo)
-
-        arrayIndex = 0
-
-        'verify no trx ui = db'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectNoTransaksi), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), 
-            ' No Trx')
-
-        'verify tgl trx ui = db'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectTanggalTransaksi), (result[arrayIndex++]).replace(
-                    '.0', ''), false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Trx')
-
-        'verify tipe trx ui = db'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectTipeTransaksi), result[arrayIndex++], false, 
-                FailureHandling.CONTINUE_ON_FAILURE), ' Tipe Trx')
-
-        'verify user trx ui = db'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectUser), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), 
-            ' User')
-
-        'verify note trx ui = db'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectCatatan), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), 
-            ' Notes')
-
-        'verify qty trx ui = db'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectQty), (result[arrayIndex++]).replace('-', ''), 
-                false, FailureHandling.CONTINUE_ON_FAILURE), ' Qty Trx')
-
-        'verify qty trx ui = db'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectBalance), '1'.replace('-', ''), false, FailureHandling.CONTINUE_ON_FAILURE), 
-            ' Balance ')
-    }
-}
-*/
-/*
-def verifySaldoSigned(Connection conneSign, String documentId, String signTypeUsed) {
-    'get current date'
-    def currentDate = new Date().format('yyyy-MM-dd')
-
-    'klik button saldo'
-    WebUI.click(findTestObject('isiSaldo/SaldoAdmin/menu_Saldo'))
-
-    String noKontrak = CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, documentId)
-
-    String documentTemplateName = CustomKeywords.'connection.DataVerif.getDocumentName'(conneSign, noKontrak)
-
-    if (signTypeUsed == 'TTD') {
-        signTypeUsed = 'Sign'
-    } else {
-        signTypeUsed = 'Document'
-    }
-    
-    'ambil nama vendor dari DB'
-    String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, noKontrak)
-
-    'klik ddl untuk tenant memilih mengenai Vida'
-    WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), vendor, false)
-
-    documentType = CustomKeywords.'connection.APIFullService.getDocumentType'(conneSign, noKontrak)
-
-    'input filter dari saldo'
-    WebUI.setText(findTestObject('Saldo/input_tipesaldo'), signTypeUsed)
-
-    'Input enter'
-    WebUI.sendKeys(findTestObject('Saldo/input_tipesaldo'), Keys.chord(Keys.ENTER))
-
-    'Input tipe transaksi'
-    WebUI.setText(findTestObject('Saldo/input_tipetransaksi'), 'Use ' + signTypeUsed)
-
-    'Input enter'
-    WebUI.sendKeys(findTestObject('Saldo/input_tipetransaksi'), Keys.chord(Keys.ENTER))
-
-    'Input date sekarang'
-    WebUI.setText(findTestObject('Saldo/input_fromdate'), currentDate)
-
-    'Input tipe dokumen'
-    WebUI.setText(findTestObject('Saldo/input_tipedokumen'), documentType)
-
-    'Input enter'
-    WebUI.sendKeys(findTestObject('Saldo/input_tipedokumen'), Keys.chord(Keys.ENTER))
-
-    'Input referal number'
-    WebUI.setText(findTestObject('Saldo/input_refnumber'), noKontrak)
-
-    'Input documentTemplateName'
-    WebUI.setText(findTestObject('Saldo/input_namadokumen'), documentTemplateName)
-
-    'Input date sekarang'
-    WebUI.setText(findTestObject('Saldo/input_todate'), currentDate)
-
-    'Klik cari'
-    WebUI.click(findTestObject('Saldo/btn_cari'))
-
-    'Mengambil value dari db mengenai tipe pembayran'
-    paymentType = CustomKeywords.'connection.APIFullService.getPaymentType'(conneSign, noKontrak)
-
-    'Jika tipe pembayarannya per sign'
-    if (paymentType == 'Per Sign') {
-        'Memanggil saldo total yang telah digunakan per dokumen tersebut'
-        saldoUsedperDoc = CustomKeywords.'connection.APIFullService.getTotalSignedUsingRefNumber'(conneSign, noKontrak)
-
-        if (saldoUsedperDoc == '0') {
-            WebUI.delay(10)
-
-            'Memanggil saldo total yang telah digunakan per dokumen tersebut'
-            saldoUsedperDoc = CustomKeywords.'connection.APIFullService.getTotalSignedUsingRefNumber'(conneSign, noKontrak)
-        }
-    } else {
-        saldoUsedperDoc = 1
-    }
-    
-    'delay dari 10 sampe 60 detik'
-    for (int d = 1; d <= 6; d++) {
-        'Jika dokumennya ada, maka'
-        if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_notrxsaldo'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-            'get column di saldo'
-            variableSaldoColumn = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-header > div > div.datatable-row-center.ng-star-inserted datatable-header-cell'))
-
-            'get row di saldo'
-            variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
-
-            WebUI.delay(2)
-
-            'ambil inquiry di db'
-            ArrayList inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldo'(conneSign, noKontrak, saldoUsedperDoc.toString(), 
-                'Use ' + signTypeUsed)
-
-            index = 0
-
-            'check total row dengan yang tertandatangan'
-            checkVerifyEqualOrMatch(WebUI.verifyMatch(variableSaldoRow.size().toString(), saldoUsedperDoc.toString(), false, 
-                    FailureHandling.CONTINUE_ON_FAILURE), ' pada jumlah tertanda tangan dengan row transaksi ')
-
-            'looping mengenai rownya'
-            for (int j = 1; j <= variableSaldoRow.size(); j++) {
-                'looping mengenai columnnya'
-                for (int u = 1; u <= variableSaldoColumn.size(); u++) {
-                    'modify per row dan column. column menggunakan u dan row menggunakan documenttemplatename'
-                    modifyperrowpercolumn = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/lbl_notrxsaldo'), 
-                        'xpath', 'equals', ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-                        j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + u) + ']/div', true)
-
-                    WebUI.scrollToElement(modifyperrowpercolumn, GlobalVariable.TimeOut)
-
-                    'Jika u di lokasi qty atau kolom ke 9'
-                    if (u == 9) {
-                        'Jika yang qtynya 1 dan databasenya juga, berhasil'
-                        if ((WebUI.getText(modifyperrowpercolumn) == '1') || ((inquiryDB[(u - 1)]) == '-1')) {
-                            'Jika bukan untuk 2 kolom itu, maka check ke db'
-                            checkVerifyEqualOrMatch(WebUI.verifyMatch('-' + WebUI.getText(modifyperrowpercolumn), inquiryDB[
-                                    index++], false, FailureHandling.CONTINUE_ON_FAILURE), 'pada Kuantitas di Mutasi Saldo dengan nomor kontrak ' + 
-                                noKontrak)
-                        } else {
-                            'Jika bukan -1, atau masih 0. Maka ttdnya dibilang error'
-                            GlobalVariable.FlagFailed = 1
-
-                            'Jika saldonya belum masuk dengan flag, maka signnya gagal.'
-                            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                                GlobalVariable.StatusFailed, ((((';' + GlobalVariable.ReasonFailedSignGagal) + ' terlihat pada Kuantitas di Mutasi Saldo dengan nomor kontrak ') + 
-                                '<') + noKontrak) + '>')
-                        }
-                    } else if (u == variableSaldoColumn.size()) {
-                        'Jika di kolom ke 10, atau di FE table saldo, check saldo dari table dengan saldo yang sekarang. Takeout dari dev karena no issue dan sudah sepakat'
-                    } else {
-                        'Jika bukan untuk 2 kolom itu, maka check ke db'
-                        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyperrowpercolumn), inquiryDB[index++], 
-                                false, FailureHandling.CONTINUE_ON_FAILURE), ' pada Mutasi Saldo dengan nomor kontrak ' + 
-                            noKontrak)
-                    }
-                }
-            }
-            
-            break
-        } else {
-            'jika kesempatan yang terakhir'
-            if (d == 6) {
-                'Jika masih tidak ada'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                    (((((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
-                        '-', '') + ';') + GlobalVariable.ReasonFailedNoneUI) + ' dengan nomor kontrak ') + '<') + noKontrak) + 
-                    '>')
-            }
-            
-            'delay 10 detik'
-            WebUI.delay(10)
-
-            'Klik cari'
-            WebUI.click(findTestObject('Saldo/btn_cari'))
-        }
-    }
-}
-*/
+} 
 
 def correctipAddress() {
-    return InetAddress.localHost.hostAddress
+    InetAddress.localHost.hostAddress
 }
 
 def phototoBase64(String filePath) {
-    return CustomKeywords.'customizekeyword.ConvertFile.base64File'(filePath)
+    CustomKeywords.'customizekeyword.ConvertFile.base64File'(filePath)
 }
 
 def responseAPIStoreDB(Connection conneSign, String ipaddress, String documentId, String trxNo) {
@@ -798,18 +493,20 @@ def responseAPIStoreDB(Connection conneSign, String ipaddress, String documentId
         trxNo = trxNo.split(', ', -1)
 
         'Array result. Value dari db'
-        trxList = CustomKeywords.'connection.APIFullService.getTrxNoAPISign'(conneSign, (documentId))
+        trxList = CustomKeywords.'connection.APIFullService.getTrxNoAPISign'(conneSign, documentId)
 
         for (loopingTrxNo = 0; loopingTrxNo < trxNo.size(); loopingTrxNo++) {
-			println trxNo[loopingTrxNo]
+            println(trxNo[loopingTrxNo])
 
-			println trxList
-			WebUI.delay(50)
-			if (trxList.contains(trxNo[loopingTrxNo])) {
+            println(trxList)
+
+            WebUI.delay(50)
+
+            if (trxList.contains(trxNo[loopingTrxNo])) {
                 continue
             }
             
-            if ((loopingTrxNo == (trxNo.size() - 1))) {
+            if (loopingTrxNo == (trxNo.size() - 1)) {
                 'Write To Excel GlobalVariable.StatusFailed dengan alasan bahwa saldo transaksi '
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                     (((((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
@@ -839,7 +536,7 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     }
 }
 
-def getErrorMessageAPI(def respon) {
+def getErrorMessageAPI(ResponseObject respon) {
     'mengambil status code berdasarkan response HIT API'
     message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
@@ -852,7 +549,7 @@ def getErrorMessageAPI(def respon) {
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
 def getPaymentTypeUsed(Connection conneSign, String vendor) {
@@ -877,7 +574,7 @@ def getPaymentTypeUsed(Connection conneSign, String vendor) {
         paymentType = ['OTP']
     }
     
-    return paymentType
+    paymentType
 }
 
 def checkAutoStamp(Connection conneSign, String noKontrak, HashMap<String, String> resultSaldoBefore) {
@@ -1051,11 +748,9 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 
     String tipeSaldo
 
-    emailServiceOnVendor = CustomKeywords.'connection.DataVerif.getEmailServiceAsVendorUser'(conneSign, GlobalVariable.storeVar.getAt(
-            GlobalVariable.storeVar.keySet()[0]))
+    emailServiceOnVendor = CustomKeywords.'connection.DataVerif.getEmailServiceAsVendorUser'(conneSign, GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])])
 
-    fullNameUser = CustomKeywords.'connection.DataVerif.getFullNameOfUser'(conneSign, GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[
-            0]))
+    fullNameUser = CustomKeywords.'connection.DataVerif.getFullNameOfUser'(conneSign, GlobalVariable.storeVar[GlobalVariable.storeVar.keySet()[0]])
 
     mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
 
@@ -1071,8 +766,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
         tipeSaldo = 'WhatsApp Message'
 
         'menggunakan saldo wa'
-        balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser, GlobalVariable.eSignData.getAt(
-                'VerifikasiOTP'))
+        balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser, GlobalVariable.eSignData['VerifikasiOTP'])
 
         if (balmut.size() == 0) {
             'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
@@ -1121,7 +815,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 
                     GlobalVariable.FlagFailed = 1
 
-                    GlobalVariable.eSignData.putAt('VerifikasiOTP', GlobalVariable.eSignData.getAt('VerifikasiOTP') - 1)
+                    GlobalVariable.eSignData['VerifikasiOTP'] = GlobalVariable.eSignData['VerifikasiOTP'] - 1
                 } else {
                     penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
                 }
@@ -1148,9 +842,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
         }
     }
     
-    int pemotonganSaldo = 0
-
-    int increment
+    int pemotonganSaldo = 0, increment
 
     if (penggunaanSaldo > 0) {
         for (looping = 0; looping < penggunaanSaldo; looping++) {
@@ -1162,27 +854,21 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
             
             pemotonganSaldo = (pemotonganSaldo + Integer.parseInt((balmut[(increment + 8)]).replace('-', '')))
 
-            GlobalVariable.eSignData.putAt('allTrxNo', (GlobalVariable.eSignData.getAt('allTrxNo') + (balmut[(increment + 
-                0)])) + ';')
+            GlobalVariable.eSignData['allTrxNo'] = (GlobalVariable.eSignData['allTrxNo'] + (balmut[(increment + 0)])) + ';'
 
-            GlobalVariable.eSignData.putAt('allSignType', (GlobalVariable.eSignData.getAt('allSignType') + (balmut[(increment + 
-                2)]).replace('Use ', '')) + ';')
+            GlobalVariable.eSignData['allSignType'] = (GlobalVariable.eSignData['allSignType'] + (balmut[(increment + 2)]).replace('Use ', '')) + ';'
 
-            GlobalVariable.eSignData.putAt('emailUsageSign', (GlobalVariable.eSignData.getAt('emailUsageSign') + fullNameUser) + 
-                ';')
+            GlobalVariable.eSignData['emailUsageSign'] = (GlobalVariable.eSignData['emailUsageSign'] + fullNameUser) + ';'
         }
         
         if (tipeSaldo == 'WhatsApp Message') {
-            GlobalVariable.eSignData.putAt('CountVerifikasiWA', GlobalVariable.eSignData.getAt('CountVerifikasiWA') + pemotonganSaldo)
-
-            GlobalVariable.eSignData.putAt('VerifikasiOTP', GlobalVariable.eSignData.getAt('VerifikasiOTP') - GlobalVariable.eSignData.getAt(
-                    'CountVerifikasiWA'))
+            GlobalVariable.eSignData['CountVerifikasiWA'] = GlobalVariable.eSignData['CountVerifikasiWA'] + pemotonganSaldo
+			
+			GlobalVariable.eSignData['VerifikasiOTP'] = GlobalVariable.eSignData['VerifikasiOTP'] - GlobalVariable.eSignData['CountVerifikasiWA']
         } else if (tipeSaldo == 'SMS Notif') {
-            GlobalVariable.eSignData.putAt('CountVerifikasiSMS', GlobalVariable.eSignData.getAt('CountVerifikasiSMS') + 
-                pemotonganSaldo)
-
-            GlobalVariable.eSignData.putAt('VerifikasiOTP', GlobalVariable.eSignData.getAt('VerifikasiOTP') - GlobalVariable.eSignData.getAt(
-                    'CountVerifikasiWA'))
+            GlobalVariable.eSignData['CountVerifikasiSMS'] = GlobalVariable.eSignData['CountVerifikasiSMS'] + pemotonganSaldo
+			
+			GlobalVariable.eSignData['VerifikasiOTP'] = GlobalVariable.eSignData['VerifikasiOTP'] - GlobalVariable.eSignData['CountVerifikasiWA']
         }
     }
 }
