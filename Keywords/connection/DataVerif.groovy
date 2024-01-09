@@ -653,7 +653,7 @@ public class DataVerif {
 		}
 		data
 	}
-	
+
 	@Keyword
 	getCountValidationFaceCompDaily(Connection conn, String email) {
 		stm = conn.createStatement()
@@ -672,5 +672,44 @@ public class DataVerif {
 		} else {
 			data = 0
 		}
+	}
+
+	@Keyword
+	getOfficeRegionBlineCodeUsingRefNum(Connection conn, String refNumber) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select mso.office_code, msr.region_code, mbl.business_line_code from tr_document_h tdh left join ms_office mso on tdh.id_ms_office = mso.id_ms_office left join ms_region msr on mso.id_ms_region = msr.id_ms_region left join ms_business_line mbl on tdh.id_ms_business_line = mbl.id_ms_business_line where tdh.ref_number = '"+refNumber+"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				if (data == null) {
+					listdata.add('')
+				} else {
+					listdata.add(data)
+				}
+			}
+		}
+		
+		println listdata.size()
+		resultSet = stm.executeQuery("select mso.office_code, msr.region_code, mbl.business_line_code from tr_balance_mutation tbm left join ms_office mso on tbm.id_ms_office = mso.id_ms_office left join ms_region msr on mso.id_ms_region = msr.id_ms_region left join ms_business_line mbl on tbm.id_ms_business_line = mbl.id_ms_business_line left join tr_document_h tdh on tbm.id_document_h = tdh.id_document_h where tdh.ref_number = '"+refNumber+"' ORDER BY tbm.trx_date desc limit 1")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				if (data == null) {
+					listdata.add('')
+				} else {
+					listdata.add(data)
+				}
+			}
+		}
+		listdata
 	}
 }

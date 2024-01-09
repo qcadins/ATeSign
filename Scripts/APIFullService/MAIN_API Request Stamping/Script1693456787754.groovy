@@ -149,10 +149,25 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             
                             WebUI.delay(10)
                         } else {
+							ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getOfficeRegionBlineCodeUsingRefNum'(conneSign, findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')))
+							
+							'lakukan loop untuk pengecekan data'
+							for (int i = 0; i < (officeRegionBline.size() / 3); i++) {
+								'verify business line dan office code'
+								arrayMatch.add(WebUI.verifyMatch(officeRegionBline[i].toString(), officeRegionBline[i+3].toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+							}
+							
+							'jika data db tidak sesuai dengan excel'
+							if (arrayMatch.contains(false)) {
+									'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+									CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+										GlobalVariable.StatusFailed, ((((findTestData(excelPathAPIRequestStamping).getValue(
+											GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB))))
+								} else {
                             'write to excel success'
                             CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
                                 0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-
+								}
                             break
                         }
                     }
