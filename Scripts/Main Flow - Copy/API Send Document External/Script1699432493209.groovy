@@ -759,7 +759,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 							rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via WhatsApp')
 				} else {
 					'penggunaan saldo get dari kuantitas per array list balance mutation'
-					penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
+					penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
 				}
 			} else {
 				'jika email servicenya 1'
@@ -772,7 +772,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 						tipeSaldo = 'WhatsApp Message'
 
 						'menggunakan saldo wa'
-						balmut = CustomKeywords.'connection.DataVerif.'(conneSign, tipeSaldo, fullNameUser, 1)
+						balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser, 1)
 
 						'jika balmutnya tidak ada value'
 						if (balmut.size() == 0) {
@@ -782,7 +782,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 									rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via WhatsApp')
 						} else {
 							'penggunaan saldo didapat dari ikuantitaas query balmut'
-							penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
+							penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
 						}
 					} else if (useWAMessage == '0') {
 						'jika tidak menggunakan use wa message, maka mengarah ke sms'
@@ -805,7 +805,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 										rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via SMS')
 							} else {
 								'get kuantitas dari balmut'
-								penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
+								penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
 							}
 						}
 					}
@@ -821,18 +821,18 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 			if (looping == 0) {
 				increment = 0
 			} else {
-				'increment meningkat 9'
-				increment = (increment + 9)
+				'increment meningkat 10'
+				increment = (increment + 10)
 			}
 			
 			'pemotongan saldo akan di get berdasarkan kuantitas yang awalnya hanya get dari total 11 row query'
-			pemotonganSaldo = (pemotonganSaldo + Integer.parseInt(balmut[(increment + 8)].replace('-','')))
+			pemotonganSaldo = (pemotonganSaldo + Integer.parseInt(balmut[(increment + 9)].replace('-','')))
 			
 			'input value trx number ke hashmap'
 			GlobalVariable.eSignData.putAt('allTrxNo', GlobalVariable.eSignData.getAt('allTrxNo') + balmut[increment + 0] + ';')
 			
 			'input value sign type ke hashmap'
-			GlobalVariable.eSignData.putAt('allSignType', GlobalVariable.eSignData.getAt('allSignType') + balmut[increment + 2].replace('Use ','') + ';')
+			GlobalVariable.eSignData.putAt('allSignType', GlobalVariable.eSignData.getAt('allSignType') + balmut[increment + 3].replace('Use ','') + ';')
 			
 			'input email usage sign (nama/email) ke hashmap'
 			GlobalVariable.eSignData.putAt('emailUsageSign', GlobalVariable.eSignData.getAt('emailUsageSign') + fullNameUser + ';')
