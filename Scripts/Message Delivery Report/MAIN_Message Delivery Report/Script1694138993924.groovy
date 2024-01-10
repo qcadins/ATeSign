@@ -406,12 +406,12 @@ def rowExcel(String cellValue) {
 }
 
 def zoomSetting(int percentage) {
-    Float percentageZoom = percentage / 100
+    BigDecimal percentageZoom = percentage / 100
 
-    WebDriver driver = DriverFactory.webDriver
+    WebDriver driver = DriverFactory.webDriver as JavascriptExecutor
 
     'buka tab baru'
-        ((driver) as JavascriptExecutor).executeScript('window.open();')
+    driver.executeScript('window.open();')
 
     'ambil index tab yang sedang dibuka di chrome'
     int currentTab = WebUI.windowIndex
@@ -421,11 +421,10 @@ def zoomSetting(int percentage) {
 
     driver.get('chrome://settings/')
 
-        ((driver) as JavascriptExecutor).executeScript(('chrome.settingsPrivate.setDefaultZoom(' + percentageZoom) + 
-        ');')
+	driver.executeScript("chrome.settingsPrivate.setDefaultZoom($percentageZoom);")
 
     'close tab baru'
-        ((driver) as JavascriptExecutor).executeScript('window.close();')
+    driver.executeScript('window.close();')
 }
 
 def checkErrorLog() {
@@ -494,6 +493,6 @@ def storeHashMapForVerify() {
 
     result.put('Recipient', findTestData(excelPathMessageDeliveryReport).getValue(GlobalVariable.NumofColm, rowExcel('Recipient')))
 
-    	result
+	result
 }
 
