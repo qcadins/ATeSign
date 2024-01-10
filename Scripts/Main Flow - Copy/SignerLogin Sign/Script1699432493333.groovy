@@ -1265,13 +1265,6 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
 				
 				OTP = CustomKeywords.'customizekeyword.GetSMS.getOTP'('eSignHub')
 			}
-			else {
-				'Dikasih delay 50 detik dikarenakan loading untuk mendapatkan OTP Privy via SMS.'
-				WebUI.delay(50)
-	
-				OTP = (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Manual OTP')).split(
-					';', -1)[GlobalVariable.indexUsed])
-				}
 			}
 
         }
@@ -1288,6 +1281,14 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
             WebUI.delay(delayExpiredOTP)
         }
     } else {
+		'check if ingin testing expired otp'
+		if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() >
+		0) {
+			'delay untuk input expired otp'
+			delayExpiredOTP = (delayExpiredOTP + 10)
+
+			WebUI.delay(delayExpiredOTP)
+		}
         'value OTP dari excel'
         WebUI.setText(findTestObject('KotakMasuk/Sign/input_OTP'), findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                 rowExcel('Manual OTP')).split(';', -1)[GlobalVariable.indexUsed])
