@@ -605,7 +605,7 @@ def inputForm() {
 	if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('businessLineCode')) != '') {
 		'Input pada business line'
 		WebUI.setText(findTestObject('ManualSign/input_businessLineCode'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
-			rowExcel('businessLineCode')))
+			rowExcel('businessLineName')))
 
 		'Klik enter'
 		WebUI.sendKeys(findTestObject('ManualSign/input_businessLineCode'), Keys.chord(Keys.ENTER))
@@ -614,7 +614,7 @@ def inputForm() {
 	if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('regionCode')) != '') {
 		'Input pada region code'
 		WebUI.setText(findTestObject('ManualSign/input_regionCode'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
-			rowExcel('regionCode')))
+			rowExcel('regionName')))
 
 		'Klik enter'
 			WebUI.sendKeys(findTestObject('ManualSign/input_regionCode'), Keys.chord(Keys.ENTER))
@@ -623,7 +623,7 @@ def inputForm() {
 	if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('officeCode')) != '') {
 		'Input pada office code'
 		WebUI.setText(findTestObject('ManualSign/input_officeCode'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
-			rowExcel('officeCode')))
+			rowExcel('officeName')))
 
 		'Klik enter'
 		WebUI.sendKeys(findTestObject('ManualSign/input_officeCode'), Keys.chord(Keys.ENTER))
