@@ -62,7 +62,7 @@ for (GlobalVariable.NumofColm = 11; GlobalVariable.NumofColm <= countColmExcel; 
         inputPagingAndVerify(conneSign)
 
         'ambil value db mengenai progress stamping'
-        progressStamping = CustomKeywords.'connection.eMeteraiMonitoring.getProseseMeteraiMonitoring'(conneSign, findTestData(
+        progressStamping = CustomKeywords.'connection.EMeteraiMonitoring.getProseseMeteraiMonitoring'(conneSign, findTestData(
                 excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Nomor Dokumen')))
 		
         'Jika stampingnya failed'
@@ -77,7 +77,7 @@ for (GlobalVariable.NumofColm = 11; GlobalVariable.NumofColm <= countColmExcel; 
 
                 'verify error message'
                 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/label_ModalBody')), 
-                        CustomKeywords.'connection.eMeteraiMonitoring.getErrorMessage'(conneSign, result[0]), false, FailureHandling.CONTINUE_ON_FAILURE), 
+                        CustomKeywords.'connection.EMeteraiMonitoring.getErrorMessage'(conneSign, result[0]), false, FailureHandling.CONTINUE_ON_FAILURE), 
                     ' Error Message ')
 
                 'Klik button X'
@@ -134,7 +134,7 @@ for (GlobalVariable.NumofColm = 11; GlobalVariable.NumofColm <= countColmExcel; 
                             'looping per 10 detik hingga 60 detik'
                             for (int i = 1; i <= 6; i++) {
                                 'Ambil value db lagi mengenai progress stamping'
-                                progressStampingAfter = CustomKeywords.'connection.eMeteraiMonitoring.getProseseMeteraiMonitoring'(
+                                progressStampingAfter = CustomKeywords.'connection.EMeteraiMonitoring.getProseseMeteraiMonitoring'(
                                     conneSign, findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, 
                                         rowExcel('Nomor Dokumen')))
 
@@ -291,7 +291,7 @@ for (GlobalVariable.NumofColm = 11; GlobalVariable.NumofColm <= countColmExcel; 
 
 def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection conneSign) {
 	'get total emeterai dari db'
-    totaleMeteraiMonitoringDB = CustomKeywords.'connection.eMeteraiMonitoring.getTotaleMeteraiMonitoring'(conneSign, GlobalVariable.Tenant)
+    totaleMeteraiMonitoringDB = CustomKeywords.'connection.EMeteraiMonitoring.getTotaleMeteraiMonitoring'(conneSign, GlobalVariable.Tenant)
 	
 	'click menu meterai'
 	WebUI.click(findTestObject('e-Meterai Monitoring/menu_emeteraiMonitoring'))
@@ -582,7 +582,7 @@ def inputPagingAndVerify(Connection conneSign) {
     }
     
     'get stampduty data dari db'
-    result = CustomKeywords.'connection.eMeteraiMonitoring.geteMeteraiMonitoring'(conneSign, findTestData(excelPathemeteraiMonitoring).getValue(
+    result = CustomKeywords.'connection.EMeteraiMonitoring.geteMeteraiMonitoring'(conneSign, findTestData(excelPathemeteraiMonitoring).getValue(
             GlobalVariable.NumofColm, rowExcel('Nomor Dokumen')))
 
     index = 0

@@ -23,20 +23,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
         'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
-
-		String email = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('username'))
-		
-		String tenantcode = CustomKeywords.'connection.DataVerif.getTenantCode'(conneSign, email)
-		
-		GlobalVariable.Tenant = tenantcode
-		
-		String emailSHA256
-		
-		if (!(email.contains('@'))) {
-			emailSHA256 = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(email)
-		} else {
-			emailSHA256 = email
-		}
 		
 		'settingemail service tenant dimatikan/diaktifkan'
 		if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')).length() >
@@ -93,7 +79,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 if (statusCode == 0) {
 					if (GlobalVariable.checkStoreDB == 'Yes') {
 						'cek balance mutation dan juga pemotongan saldo'
-						checkBalanceMutation(conneSign, emailSHA256)
+						checkBalanceMutation(conneSign)
 					}
 					
 					'tulis sukses jika store DB berhasil'
@@ -133,7 +119,19 @@ def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
-def checkBalanceMutation(Connection conneSign, String emailSigner) {
+def checkBalanceMutation(Connection conneSign) {
+	
+	'deklarasi email signer'
+	String emailSigner = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('username'))
+	
+	'deklarasi global variabel tenant'
+	GlobalVariable.Tenant = CustomKeywords.'connection.DataVerif.getTenantCode'(conneSign, emailSigner)
+	
+	'conversi email menjadi format sha256 kalau perlu'
+	if (!(emailSigner.contains('@'))) {
+		emailSigner = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(emailSigner)
+	}
+	
 	emailServiceOnTenant = CustomKeywords.'connection.DataVerif.getEmailService'(conneSign, GlobalVariable.Tenant)
 
 	fullNameUser = CustomKeywords.'connection.DataVerif.getFullNameOfUser'(conneSign, emailSigner)

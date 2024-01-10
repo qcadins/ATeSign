@@ -1,10 +1,12 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.model.FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
-import java.nio.charset.StandardCharsets as StandardCharsets
-import java.sql.Connection as Connection
-import java.text.SimpleDateFormat as SimpleDateFormat
+import java.sql.Connection
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
 import internal.GlobalVariable as GlobalVariable
 
 'get data file path'
@@ -37,17 +39,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'get aesKet Tenant'
         aesKey = CustomKeywords.'connection.APIFullService.getAesKeyBasedOnTenant'(conneSign, GlobalVariable.Tenant)
 
-        currentDate = new Date()
+		currentDate = LocalDateTime.now()
 
-        dateFormat = new SimpleDateFormat('yyyy-MM-dd HH:mm:ss')
+        localeIndonesia = new Locale('id', 'ID')
 
-        timestamp = dateFormat.format(currentDate)
+        formatter = DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm:ss', localeIndonesia)
+
+        formattedDate = currentDate.format(formatter)
 
         if (aesKey.toString() != 'null') {
             'pembuatan message yang akan dienkrip'
             msg = (((((('{\'officeCode\':\'' + findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('officeCode'))) + 
             '\',\'email\':\'') + findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('email'))) + '\',\'timestamp\':\'') + 
-            timestamp) + '\'}')
+            formattedDate) + '\'}')
 
             if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Msg')) == 'No') {
                 'officecode + email + time stamp tanpa encrypt'
@@ -66,7 +70,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         excelPath).getValue(GlobalVariable.NumofColm, rowExcel('password'))]))
 
         'ambil lama waktu yang diperlukan hingga request menerima balikan'
-        elapsedTime = (respon.elapsedTime / 1000) + ' second'
+        elapsedTime = ((respon.elapsedTime / 1000) + ' second')
 
         'ambil body dari hasil respons'
         responseBody = respon.responseBodyContent
@@ -102,7 +106,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     }
 }
 
-def getErrorMessageAPI(def respon) {
+def getErrorMessageAPI(ResponseObject respon) {
     'mengambil status code berdasarkan response HIT API'
     message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
@@ -121,12 +125,5 @@ def rowExcel(String cellValue) {
 def encryptEncodeValue(String value, String aesKey) {
     'enkripsi msg'
     encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(value, aesKey)
-
-    try {
-        return URLEncoder.encode(encryptMsg, StandardCharsets.UTF_8.toString())
-    }
-    catch (UnsupportedEncodingException ex) {
-        throw new RuntimeException(ex.cause)
-    } 
 }
 

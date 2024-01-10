@@ -673,7 +673,7 @@ def inputEMeteraiMonitoring(Connection conneSign) {
                     }
                     
                     'get stampduty data dari db'
-                    ArrayList<String> result = CustomKeywords.'connection.eMeteraiMonitoring.geteMeteraiMonitoring'(conneSign, 
+                    ArrayList<String> result = CustomKeywords.'connection.EMeteraiMonitoring.geteMeteraiMonitoring'(conneSign, 
                         findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))
 
                     'verify no dokumen'
@@ -851,6 +851,9 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
 
     documentName = CustomKeywords.'connection.DataVerif.getDocumentName'(conneSign, findTestData(excelPathManualStamptoStamp).getValue(
             GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))
+	
+	officeName = CustomKeywords.'connection.DataVerif.getOfficeName'(conneSign, findTestData(excelPathManualStamptoStamp).getValue(
+            GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))
 
     'klik ddl untuk tenant memilih mengenai Vida'
     WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)
@@ -892,6 +895,9 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
 
     'Input date sekarang'
     WebUI.setText(findTestObject('Saldo/input_todate'), currentDate)
+	
+	'Input office name'
+	WebUI.setText(findTestObject('Saldo/input_officeName'), officeName)
 
     'Klik cari'
     WebUI.click(findTestObject('Saldo/btn_cari'))
