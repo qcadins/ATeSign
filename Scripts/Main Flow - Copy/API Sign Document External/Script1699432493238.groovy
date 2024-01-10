@@ -27,7 +27,7 @@ GlobalVariable.FlagFailed = 0
 'Inisialisasi otp, photo, ipaddress, dan total signed sebelumnya yang dikosongkan'
 String otp, photo, ipaddress
 
-ArrayList totalSignedBefore = [], totalSignedAfter = []
+ArrayList totalSignedBefore = [], totalSignedAfter = [], officeRegionBline = []
 
 'setting menggunakan base url yang benar atau salah'
 CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPISignDocument, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url (Sign External)'))
@@ -133,7 +133,7 @@ if (vendor.equalsIgnoreCase('Privy') || vendor.equalsIgnoreCase('Digisign')) {
             'verify psre respon == psre db'
             checkVerifyEqualOrMatch(WebUI.verifyMatch(psreCode.toString().toUpperCase(), vendor.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), 
                 ' pada psre response dengan vendor DB ')
-
+			
             email = (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(
                 ';', -1)[GlobalVariable.indexUsed])
 
@@ -214,6 +214,14 @@ if (vendor.equalsIgnoreCase('Privy') || vendor.equalsIgnoreCase('Digisign')) {
             checkVerifyEqualOrMatch(WebUI.verifyMatch(psreCode.toString().toUpperCase(), vendor.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), 
                 ' pada psre response dengan vendor DB ')
 
+			officeRegionBline = CustomKeywords.'connection.DataVerif.getOfficeRegionBlineCodeUsingRefNum'(conneSign, CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, GlobalVariable.storeVar.keySet()[[0]]))
+			
+			'lakukan loop untuk pengecekan data'
+			for (int i = 0; i < (officeRegionBline.size() / 3); i++) {
+				'verify business line dan office code'
+				checkVerifyEqualOrMatch(WebUI.verifyMatch(officeRegionBline[i].toString(), officeRegionBline[i+3].toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada Office, Region, atau Business Line Document ')
+			}
+			
             'Dikasih delay 1 detik dikarenakan loading untuk mendapatkan OTP.'
             WebUI.delay(3)
 
@@ -320,7 +328,7 @@ if (otp.length() >= 0) {
 
             checkVerifyEqualOrMatch(WebUI.verifyMatch(psreCode.toString().toUpperCase(), vendor.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), 
                 ' pada psre response dengan vendor DB ')
-
+			
             signCount = CustomKeywords.'connection.APIFullService.getTotalSigner'(conneSign, (GlobalVariable.storeVar.keySet()[
                 [0]]).toString(), findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(
                     ';', -1)[GlobalVariable.indexUsed])
@@ -335,6 +343,14 @@ if (otp.length() >= 0) {
                 if ((totalSignedAfter[0]) == ((totalSignedBefore[0]) + Integer.parseInt(signCount))) {
                     WebUI.verifyEqual(totalSignedAfter[0], (totalSignedBefore[0]) + Integer.parseInt(signCount), FailureHandling.CONTINUE_ON_FAILURE)
 
+					officeRegionBline = CustomKeywords.'connection.DataVerif.getOfficeRegionBlineCodeUsingRefNum'(conneSign, CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, GlobalVariable.storeVar.keySet()[[0]]))
+					
+					'lakukan loop untuk pengecekan data'
+					for (int i = 0; i < (officeRegionBline.size() / 3); i++) {
+						'verify business line dan office code'
+						checkVerifyEqualOrMatch(WebUI.verifyMatch(officeRegionBline[i].toString(), officeRegionBline[i+3].toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada Office, Region, atau Business Line Document ')
+					}
+					
                     if (GlobalVariable.FlagFailed == 0) {
                         'write to excel success'
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, 
@@ -421,8 +437,8 @@ if (otp.length() >= 0) {
                     }
                 }
             }
-            
-            GlobalVariable.eSignData['NoKontrakProcessed'] = refNumber
+            GlobalVariable.eSignData['NoKontrakProcessed'] = GlobalVariable.eSignData['NoKontrakProcessed'] + refNumber
+			
         } else {
             getErrorMessageAPI(respon)
         }

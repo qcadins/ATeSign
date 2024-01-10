@@ -576,7 +576,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
             'Mensplit nomor kontrak yang telah disatukan'
             noKontrakPerDoc = noKontrak.split(';', -1)
 
-			GlobalVariable.eSignData.putAt('NoKontrakProcessed', noKontrak)
+			GlobalVariable.eSignData['NoKontrakProcessed'] = GlobalVariable.eSignData['NoKontrakProcessed'] + noKontrak
 			
             'looping untuk mendapatkan total saldo yang digunakan per nomor kontrak'
             for (i = 0; i < noKontrakPerDoc.size(); i++) {

@@ -53,7 +53,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         GlobalVariable.Tenant = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))
 
         'inisialisasi signerInput dan email signer sebagai array list'
-        ArrayList emailSignerPerDoc = [], documentId = [], signersPerDoc = [], emailSigner = [:], signerInput = [:]
+        ArrayList emailSignerPerDoc = [], documentId = [], signersPerDoc = []
+		
+		LinkedHashMap emailSigner = [:], signerInput = [:]
 
         'Jika expectednya bukan Failed. Ini digunakan untuk agar tidak mengambil saldo before jika expectednya failed.'
         if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Expected')).toUpperCase() != 'FAILED') {
@@ -301,7 +303,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                 'call test case kotak masuk'
                                 WebUI.callTestCase(findTestCase('Main Flow - Copy/KotakMasuk'), [('excelPathFESignDocument') : excelPathMain
                                         , ('sheet') : sheet, ('checkBeforeSigning') : 'Yes'], FailureHandling.CONTINUE_ON_FAILURE)
-                            }
+                            } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 'Sign Only') {
+								'call Test Case untuk login sebagai user berdasarkan doc id'
+								WebUI.callTestCase(findTestCase('Main Flow - Copy/Login'), [('email') : GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])], ('excel') : excelPathMain
+										, ('checkBeforeSigning') : 'Yes', ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
+							}
                             
                             'jika opsi signing untuk signer adalah api sign document external'
                             if ((opsiSigning[GlobalVariable.opsiSigning]) == 'API Sign Document External') {
@@ -389,7 +395,24 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             (GlobalVariable.eSignData['CountVerifikasiSign']) = ((GlobalVariable.eSignData['CountVerifikasiSign']) + 
                             (GlobalVariable.eSignData['VerifikasiSign']))
 
-                            'jika cancel doc tidak kosong, maka open document monitoring'
+							if (y + 1 == emailSigner.get(emailSigner.keySet()[i]).size() && i + 1 == emailSigner.keySet().size()) {
+								GlobalVariable.eSignData['NoKontrakProcessed'] = GlobalVariable.eSignData['NoKontrakProcessed'].split(';', -1).toUnique()
+								
+								for (loopingNoKontrak = 0; loopingNoKontrak < GlobalVariable.eSignData['NoKontrakProcessed'].size(); loopingNoKontrak++) {
+									officeRegionBline = CustomKeywords.'connection.DataVerif.getOfficeRegionBlineCodeUsingRefNum'(conneSign, GlobalVariable.eSignData['NoKontrakProcessed'][loopingNoKontrak])
+									
+									'lakukan loop untuk pengecekan data'
+									for (i = 0; i < (officeRegionBline.size() / 3); i++) {
+										'verify business line dan office code'
+										checkVerifyEqualorMatch(WebUI.verifyMatch(officeRegionBline[i].toString(), officeRegionBline[i+3].toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada office, region, dan business line Kontrak' + GlobalVariable.eSignData['NoKontrakProcessed'][loopingNoKontrak])
+									}
+								}
+								GlobalVariable.eSignData['NoKontrakProcessed'] = GlobalVariable.eSignData['NoKontrakProcessed'].toString().replace('[','').replace(']','').replace(', ',';')
+							} else {
+								GlobalVariable.eSignData['NoKontrakProcessed'] = GlobalVariable.eSignData['NoKontrakProcessed']  + ';'
+							}
+							
+							'jika cancel doc tidak kosong, maka open document monitoring'
                             if (cancelDocsValue != '') {
                                 'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
                                 WebUI.callTestCase(findTestCase('Main Flow - Copy/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathMain
@@ -832,9 +855,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             'inquirydb mengenai get detail trx'
                             inquiryDB = CustomKeywords.'connection.DataVerif.getDetailTrx'(conneSign, trxNo[looping])
 
-                            'inisialisasi is Checked'
-                            boolean isChecked
-
                             'Get row lastest'
                             variableLastest = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
 
@@ -1057,6 +1077,8 @@ def inisializeValue() {
     GlobalVariable.eSignData.putAt('allSignType', '')
 
     GlobalVariable.eSignData.putAt('emailUsageSign', '')
+	
+	GlobalVariable.eSignData['NoKontrakProcessed'] = ''
 }
 
 def checkingDocAndEmailFromInput(ArrayList documentId, String rowEmail, LinkedHashMap signerInput) {

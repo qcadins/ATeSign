@@ -500,7 +500,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 								'Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via WhatsApp')
 				} else {
 					'get penggunaan saldo'
-					penggunaanSaldo = ((balmut.size() / 9))
+					penggunaanSaldo = ((balmut.size() / 10))
 				}
 			} else {
 				'jika email servicenya hidup'
@@ -523,7 +523,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 									rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via WhatsApp')
 						} else {
 							'get penggunaan saldo '
-							penggunaanSaldo = ((balmut.size() / 9))
+							penggunaanSaldo = ((balmut.size() / 10))
 						}
 					} else if (useWAMessage == '0') {
 						'jika use wa message 0, maka mengarah ke SMS'
@@ -546,7 +546,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 										rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via SMS')
 							} else {
 								'get penggunaan saldo dari balmut'
-								penggunaanSaldo = ((balmut.size() / 9))
+								penggunaanSaldo = ((balmut.size() / 10))
 							}
 						}
 					}
@@ -562,16 +562,16 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 			if (looping == 1) {
 				increment = 0
 			} else {
-				increment = (increment + 9)
+				increment = (increment + 10)
 			}
 			'pemotongan saldo di get dari balmut kuantitas'
-			pemotonganSaldo = (pemotonganSaldo + Integer.parseInt(balmut[(increment + 8)].replace('-','')))
+			pemotonganSaldo = (pemotonganSaldo + Integer.parseInt(balmut[(increment + 9)].replace('-','')))
 			
 			'trx number akan masuk kepada hashmap'
 			GlobalVariable.eSignData.putAt('allTrxNo', GlobalVariable.eSignData.getAt('allTrxNo') + balmut[increment] + ';')
 			
 			'tipe sign akan masuk kepada hashmap'
-			GlobalVariable.eSignData.putAt('allSignType', GlobalVariable.eSignData.getAt('allSignType') + balmut[increment + 2].replace('Use ','') + ';')
+			GlobalVariable.eSignData.putAt('allSignType', GlobalVariable.eSignData.getAt('allSignType') + balmut[increment + 3].replace('Use ','') + ';')
 			
 			'email usage akan masuk kepada hashmap'
 			GlobalVariable.eSignData.putAt('emailUsageSign', GlobalVariable.eSignData.getAt('emailUsageSign') + fullNameUser + ';')
