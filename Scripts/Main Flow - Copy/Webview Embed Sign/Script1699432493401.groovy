@@ -1310,13 +1310,6 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
 					
 					OTP = CustomKeywords.'customizekeyword.GetSMS.getOTP'('eSignHub')
 				}
-				else {
-					'Dikasih delay 50 detik dikarenakan loading untuk mendapatkan OTP Privy via SMS.'
-					WebUI.delay(50)
-		
-					OTP = (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Manual OTP')).split(
-						';', -1)[GlobalVariable.indexUsed])
-					}
 				}
 	
 			}

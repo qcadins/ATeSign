@@ -411,7 +411,7 @@ def zoomSetting(int percentage) {
     WebDriver driver = DriverFactory.webDriver
 
     'buka tab baru'
-        ((driver) as JavascriptExecutor).executeScript('window.open();')
+     ((driver) as JavascriptExecutor).executeScript('window.open();')
 
     'ambil index tab yang sedang dibuka di chrome'
     int currentTab = WebUI.windowIndex

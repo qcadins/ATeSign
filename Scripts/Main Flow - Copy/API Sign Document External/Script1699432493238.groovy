@@ -149,7 +149,7 @@ if (vendor.equalsIgnoreCase('Privy') || vendor.equalsIgnoreCase('Digisign')) {
                     conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))) == 
                 '0')) && (CustomKeywords.'connection.DataVerif.getUseWAMessage'(conneSign, findTestData(excelPathFESignDocument).getValue(
                         GlobalVariable.NumofColm, rowExcel('Tenant'))) == '0')) {
-                    if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Getting OTP Value from SMS ?')) == 
+                    if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Getting OTP Value from SMS Via Pushbullet ?')) == 
                     'Yes') {
                         if (vendor.equalsIgnoreCase('Privy')) {
                             OTP = CustomKeywords.'customizekeyword.GetSMS.getOTP'('PrivyID')
