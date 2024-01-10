@@ -902,7 +902,6 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
     'get row di saldo'
     variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper '))
 	
-	
 	if (CustomKeywords.'connection.ManualStamp.getLovVendorStamping'(conneSign, GlobalVariable.Tenant) == 'Privy') {
 		'ambil inquiry di db'
 		inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldoForMeteraiPrivy'(conneSign, findTestData(

@@ -712,7 +712,7 @@ public class DataVerif {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getOfficeName(Connection conn, String value) {
 		stm = conn.createStatement()

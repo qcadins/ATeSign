@@ -41,7 +41,7 @@ ArrayList listOTP = []
 
 ArrayList arrayMatch = []
 
-ArrayList loopingEmailSigner = []
+ArrayList loopingEmailSigner = [], officeRegionBline = []
 
 'declare arrayindex'
 arrayIndex = 0
@@ -597,7 +597,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
             'Mensplit nomor kontrak yang telah disatukan'
             noKontrakPerDoc = noKontrak.split(';', -1)
 
-			GlobalVariable.eSignData.putAt('NoKontrakProcessed', noKontrak)
+			GlobalVariable.eSignData['NoKontrakProcessed'] = GlobalVariable.eSignData['NoKontrakProcessed'] + noKontrak
 			
             'looping untuk mendapatkan total saldo yang digunakan per nomor kontrak'
             for (i = 0; i < noKontrakPerDoc.size(); i++) {
@@ -1221,9 +1221,8 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
 			GlobalVariable.NumofColm, rowExcel('Tenant'))) == '0' &&
 		CustomKeywords.'connection.DataVerif.getUseWAMessage'(conneSign, findTestData(excelPathFESignDocument).getValue(
 			GlobalVariable.NumofColm, rowExcel('Tenant'))) == '0') {
-			if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Getting OTP Value from SMS ?')) == 'Yes') {
+			if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Getting OTP Value from SMS Via Pushbullet ?')) == 'Yes') {
 				OTP = CustomKeywords.'customizekeyword.GetSMS.getOTP'('PrivyID')
-
 			}
 			else {
 				'Dikasih delay 50 detik dikarenakan loading untuk mendapatkan OTP Privy via SMS.'
@@ -1261,7 +1260,7 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
 			GlobalVariable.NumofColm, rowExcel('Tenant'))) == '0' &&
 		CustomKeywords.'connection.DataVerif.getUseWAMessage'(conneSign, findTestData(excelPathFESignDocument).getValue(
 			GlobalVariable.NumofColm, rowExcel('Tenant'))) == '0') {
-			if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Getting OTP Value from SMS ?')) == 'Yes') {
+			if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Getting OTP Value from SMS Via Pushbullet ?')) == 'Yes') {
 				WebUI.delay(2)
 				
 				OTP = CustomKeywords.'customizekeyword.GetSMS.getOTP'('eSignHub')
@@ -1661,7 +1660,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
         tipeSaldo = 'WhatsApp Message'
 
         'menggunakan saldo wa'
-        balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser, GlobalVariable.eSignData.getAt('VerifikasiOTP'))
+        balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
 
         if (balmut.size() == 0) {
             'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
@@ -1671,7 +1670,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 			
 			GlobalVariable.FlagFailed = 1
         } else {
-            penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
+            penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
         }
     } else {
         if (emailServiceOnVendor == '1') {
@@ -1681,7 +1680,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
                 tipeSaldo = 'WhatsApp Message'
 
                 'menggunakan saldo wa'
-                balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser, GlobalVariable.eSignData.getAt('VerifikasiOTP'))
+				balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
 
                 if (balmut.size() == 0) {
                     'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
@@ -1691,13 +1690,13 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 					
 					GlobalVariable.FlagFailed = 1
                 } else {
-                    penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
+                    penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
                 }
             } else if (useWAMessage == '0') {
 					'ke sms'
 					tipeSaldo = 'OTP'
 
-					balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser, GlobalVariable.eSignData.getAt('VerifikasiOTP'))
+					balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
 
 					if (balmut.size() == 0) {
 						'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
@@ -1709,7 +1708,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 						
 						GlobalVariable.FlagFailed = 1
 					} else {
-						penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
+						penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
 					}
 				
             }
@@ -1717,7 +1716,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 					'ke sms'
 					tipeSaldo = 'OTP'
 
-					balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser, GlobalVariable.eSignData.getAt('VerifikasiOTP'))
+					balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
 
 					if (balmut.size() == 0) {
 						'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
@@ -1729,7 +1728,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 					
 						GlobalVariable.FlagFailed = 1
 					} else {
-						penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 9))
+						penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
 					}
 				}
     }
@@ -1746,11 +1745,11 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
             increment = (increment + 10)
         }
         
-		pemotonganSaldo = (pemotonganSaldo + Integer.parseInt(balmut[(increment + 8)].replace('-','')))
+		pemotonganSaldo = (pemotonganSaldo + Integer.parseInt(balmut[(increment + 9)].replace('-','')))
 		
 		GlobalVariable.eSignData.putAt('allTrxNo', GlobalVariable.eSignData.getAt('allTrxNo') + balmut[increment + 0] + ';')
 		
-		GlobalVariable.eSignData.putAt('allSignType', GlobalVariable.eSignData.getAt('allSignType') + balmut[increment + 2].replace('Use ','') + ';')
+		GlobalVariable.eSignData.putAt('allSignType', GlobalVariable.eSignData.getAt('allSignType') + balmut[increment + 3].replace('Use ','') + ';')
 		
 		GlobalVariable.eSignData.putAt('emailUsageSign', GlobalVariable.eSignData.getAt('emailUsageSign') + fullNameUser + ';')
 	
