@@ -104,15 +104,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'registeredDate', FailureHandling.OPTIONAL), 
                             result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                    'jika data db tidak sesuai dengan excel'
-                    if (arrayMatch.contains(false)) {
-                        GlobalVariable.FlagFailed = 1
+					'jika data db tidak sesuai dengan excel'
+					if (arrayMatch.contains(false)) {
+						GlobalVariable.FlagFailed = 1
 
-                        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                            GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
-                                    'Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
-                    }
+						'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+							GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
+									'Reason Failed')) + ';') + 'Transaksi OTP tidak masuk balance mutation')
+					}
                 }
                 
                 'tulis sukses jika store DB berhasil'

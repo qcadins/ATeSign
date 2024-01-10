@@ -21,7 +21,7 @@ public class SendSign {
 	settingEmailServiceVendorRegisteredUser(Connection conn, String value, String idNo) {
 		stm = conn.createStatement()
 
-		updateVariable = stm.executeUpdate("UPDATE ms_vendor_registered_user SET email_service = '" + value + "' WHERE EXISTS (SELECT * FROM AM_MSUSER AMM WHERE amm.hashed_id_no = '" + idNo + "' OR amm.hashed_phone = '" + idNo + "' OR amm.login_id = '" + idNo + "'")
+		updateVariable = stm.executeUpdate("UPDATE ms_vendor_registered_user SET email_service = '" + value + "' WHERE EXISTS (SELECT * FROM AM_MSUSER AMM WHERE amm.hashed_id_no = '" + idNo + "' OR amm.hashed_phone = '" + idNo + "' OR amm.login_id = '" + idNo + "')")
 	}
 
 	@Keyword
