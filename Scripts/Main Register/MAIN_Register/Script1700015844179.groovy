@@ -248,7 +248,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     }
                     
                     if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS GenInv')) == 
-                    '0') {
+                    '1') {
                         if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() <= 
                         2) {
                             'check jika Must use WA message = 1'
