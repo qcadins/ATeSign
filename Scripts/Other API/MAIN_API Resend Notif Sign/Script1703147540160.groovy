@@ -214,8 +214,7 @@ def checkBalanceMutation(Connection conneSign) {
 		ArrayList arrayMatch = []
 		
 		'ambil data last transaction dari DB'
-		ArrayList resultDB = CustomKeywords.'connection.ForgotPassword.getBusinessLineOfficeCode'(conneSign,
-			findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('username')))
+		ArrayList resultDB = CustomKeywords.'connection.ForgotPassword.getBusinessLineOfficeCode'(conneSign, emailSigner)
 		
 		'declare arrayindex'
 		arrayindex = 0
