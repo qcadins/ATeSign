@@ -399,7 +399,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 								GlobalVariable.eSignData['NoKontrakProcessed'] = GlobalVariable.eSignData['NoKontrakProcessed'].split(';', -1).toUnique()
 								
 								for (loopingNoKontrak = 0; loopingNoKontrak < GlobalVariable.eSignData['NoKontrakProcessed'].size(); loopingNoKontrak++) {
-									officeRegionBline = CustomKeywords.'connection.DataVerif.getOfficeRegionBlineCodeUsingRefNum'(conneSign, GlobalVariable.eSignData['NoKontrakProcessed'][loopingNoKontrak])
+									ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getOfficeRegionBlineCodeUsingRefNum'(conneSign, GlobalVariable.eSignData['NoKontrakProcessed'][loopingNoKontrak])
 									
 									'lakukan loop untuk pengecekan data'
 									for (i = 0; i < (officeRegionBline.size() / 3); i++) {
