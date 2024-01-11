@@ -214,7 +214,8 @@ def checkBalanceMutation(Connection conneSign) {
 		ArrayList arrayMatch = []
 		
 		'ambil data last transaction dari DB'
-		ArrayList resultDB = CustomKeywords.'connection.ForgotPassword.getBusinessLineOfficeCode'(conneSign, emailSigner)
+		ArrayList resultDB = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(conneSign,
+			findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('username')), 'Document')
 		
 		'declare arrayindex'
 		arrayindex = 0
@@ -223,7 +224,7 @@ def checkBalanceMutation(Connection conneSign) {
 		for (int i = 0; i < (resultDB.size() / 2); i++) {
 			
 			'verify business line dan office code'
-			arrayMatch.add(WebUI.verifyMatch(resultDB[i].toString(), resultDB[i+2].toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+			arrayMatch.add(WebUI.verifyMatch(resultDB[i].toString(), resultDB[i+3].toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
 		}
 		
 		'jika data db tidak sesuai dengan excel'

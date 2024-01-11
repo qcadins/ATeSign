@@ -1,6 +1,7 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.model.FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
@@ -28,7 +29,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
         'ubah invitation menjadi code only'
         String code = parseCodeOnly(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Invitation Link')))
-
+		
         try {
             'lakukan decrypt untuk code dari link diatas dan cek ke DB'
             String decryptedKey = decryptLink(conneSign, code)
@@ -53,9 +54,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
         'HIT API Sent OTP untuk aktivasi user'
         respon = WS.sendRequest(findTestObject('Postman/Sent OTP Activation User', [
-					('callerId') : ('"' + findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId'))) + '"', 
-					('code') : ('"' + code) + '"', 
-					('phoneNo') : ('"' + findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('phoneNumber'))) + '"']))
+					('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), 
+					('code') : code, 
+					('phoneNo') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('phoneNumber'))]))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
@@ -78,6 +79,37 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 	
             'Jika status codenya 0'
             if (statusCode == 0) {
+				if (GlobalVariable.checkStoreDB == 'Yes') {
+					'declare arraylist arraymatch'
+					ArrayList arrayMatch = []
+
+					'ambil data last transaction dari DB'
+					ArrayList resultDB = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(conneSign,
+						findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('phoneNumber')), 'Register')
+
+					println(resultDB)
+
+					'declare arrayindex'
+					arrayindex = 0
+
+					'lakukan loop untuk pengecekan data'
+					for (int i = 0; i < (resultDB.size() / 2); i++) {
+						'verify business line dan office code'
+						arrayMatch.add(WebUI.verifyMatch((resultDB[i]).toString(), (resultDB[(i + 3)]).toString(), false,
+								FailureHandling.CONTINUE_ON_FAILURE))
+					}
+					
+					'jika data db tidak sesuai dengan excel'
+					if (arrayMatch.contains(false)) {
+						GlobalVariable.FlagFailed = 1
+
+						'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+							GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
+									'Reason Failed')) + ';') + 'Transaksi OTP tidak masuk balance mutation')
+					}
+				}
+				
                 'write to excel otp latest'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('OTP latest') - 
                     1, GlobalVariable.NumofColm - 1, CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(
@@ -85,7 +117,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 'cek apakah send ulang OTP berhasil'
                 if (WebUI.verifyNotMatch(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('OTP before')), 
-                    findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('OTP latest')), false, FailureHandling.OPTIONAL)) {
+                    findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('OTP latest')), false, FailureHandling.OPTIONAL) && GlobalVariable.FlagFailed == 0) {
                     'write to excel success'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
                         1, GlobalVariable.StatusSuccess)
@@ -104,7 +136,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     }
 }
 
-def getErrorMessageAPI(def respon) {
+def getErrorMessageAPI(ResponseObject respon) {
     'mengambil status code berdasarkan response HIT API'
     message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
