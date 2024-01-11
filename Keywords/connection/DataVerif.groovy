@@ -208,10 +208,10 @@ public class DataVerif {
 	}
 
 	@Keyword
-	getTenantCode(Connection conn, String loginId) {
+	getTenantCode(Connection conn, String value) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select mst.tenant_code from ms_tenant mst join ms_useroftenant muot on mst.id_ms_tenant = muot.id_ms_tenant join am_msuser amm on amm.id_ms_user = muot.id_ms_user where amm.login_id = '" + loginId.toUpperCase() + "'")
+		resultSet = stm.executeQuery("select mst.tenant_code from ms_tenant mst join ms_useroftenant muot on mst.id_ms_tenant = muot.id_ms_tenant join am_msuser amm on amm.id_ms_user = muot.id_ms_user where amm.login_id = '" + value.toUpperCase() + "' OR hashed_phone = '" + value + "'")
 
 		metadata = resultSet.metaData
 
@@ -510,7 +510,7 @@ public class DataVerif {
 	getUseWAMessage(Connection conn, String tenantCode) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select use_wa_message from ms_tenant where tenant_code = '"+tenantCode+"'")
+		resultSet = stm.executeQuery("select use_wa_message from ms_tenant where tenant_code = '" + tenantCode + "'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -587,7 +587,7 @@ public class DataVerif {
 
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select full_name from am_msuser where "+helperQuery+" = '"+ valueUser.toUpperCase() +"'")
+		resultSet = stm.executeQuery("select full_name from am_msuser where " + helperQuery + " = '"+ valueUser +"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -605,7 +605,7 @@ public class DataVerif {
 
 		resultSet = stm.executeQuery("SELECT tbm.trx_no, mso.office_name, TO_CHAR(tbm.trx_date, 'YYYY-MM-DD HH24:MI:SS'), 'Use ' || msl.description, amm.full_name, '', '', '', tbm.notes, tbm.qty FROM tr_balance_mutation tbm LEFT JOIN ms_office mso on mso.id_ms_office = tbm.id_ms_office LEFT JOIN ms_lov msl ON tbm.lov_balance_type = msl.id_lov LEFT JOIN am_msuser amm ON tbm.id_ms_user = amm.id_ms_user LEFT JOIN tr_document_d tdd ON tbm.id_document_d = tdd.id_document_d LEFT JOIN tr_document_h tdh ON tbm.id_document_h = tdh.id_document_h WHERE msl.description = '"+usage+"' AND amm.full_name = '"+fullName+"' AND tbm.trx_date BETWEEN current_timestamp - interval '"+GlobalVariable.batasWaktu+" minutes' AND current_timestamp + interval '"+GlobalVariable.batasWaktu+" minutes' ORDER BY tbm.dtm_crt DESC;")
 		metadata = resultSet.metaData
-
+		
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
@@ -727,4 +727,49 @@ public class DataVerif {
 		}
 		data
 	}
+
+	@Keyword
+	getBusinessLineOfficeCode(Connection conn, String value, String type) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT qty, id_ms_business_line, tbm.id_ms_office FROM tr_balance_mutation tbm JOIN ms_tenant mt ON mt.id_ms_tenant = tbm.id_ms_tenant JOIN ms_useroftenant mot ON mot.id_ms_tenant = mt.id_ms_tenant JOIN am_msuser amu ON amu.id_ms_user = mot.id_ms_user WHERE(notes ILIKE '%SEND OTP%' OR notes ILIKE '%Sending WhatsApp%' OR notes ILIKE '%Resend sign notification%') AND tbm.id_ms_user is not null AND login_id = '" + value.toUpperCase() + "' OR hashed_phone = encode(sha256('" + value.toUpperCase() + "'), 'hex') ORDER BY trx_date DESC LIMIT 1")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				if (data == null) {
+					listdata.add('')
+				} else {
+					listdata.add(data)
+				}
+			}
+		}
+
+		if (type.equalsIgnoreCase('Register')) {
+			resultSet = stm.executeQuery("select '-1', id_ms_business_line, id_ms_office from tr_invitation_link til join ms_vendor mv on til.id_ms_vendor = mv.id_ms_vendor where (receiver_detail = '" + value.toUpperCase() + "' or phone = '" + value.toUpperCase() + "') order by id_ms_user desc limit 1")
+		} else if (type.equalsIgnoreCase('Document')) {
+			resultSet = stm.executeQuery("SELECT '-1', COALESCE(tdh.id_ms_business_line, tlink.id_ms_business_line) AS id_ms_business_line, COALESCE(tdh.id_ms_office, tlink.id_ms_office) AS id_ms_office FROM tr_document_d td LEFT JOIN tr_document_h tdh ON td.id_document_h = tdh.id_document_h LEFT JOIN tr_document_d_sign tds ON tds.id_document_d = td.id_document_d LEFT JOIN am_msuser amu ON amu.id_ms_user = tds.id_ms_user LEFT JOIN tr_invitation_link tlink ON tlink.email = '" + value.toUpperCase() + "' WHERE amu.login_id = '" + value.toUpperCase() + "' ORDER BY td.id_document_d DESC LIMIT 1")
+		}
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				if (data == null) {
+					listdata.add('')
+				} else {
+					listdata.add(data)
+				}
+			}
+		}
+		listdata
+	}
+
 }
