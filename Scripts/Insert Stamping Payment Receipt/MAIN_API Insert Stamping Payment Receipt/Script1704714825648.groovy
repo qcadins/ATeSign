@@ -105,8 +105,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					if (GlobalVariable.checkStoreDB == 'Yes') {
 						ArrayList resultStoreDB = CustomKeywords.'connection.Meterai.getInsertStampingPaymentReceipt'(conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentTransactionId')))
 						
-						println resultStoreDB
-						WebUI.delay(30)
 						'declare arraylist arraymatch'
 						arrayMatch = []
 						
