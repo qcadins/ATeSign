@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'datatable-pager ng-star-inserted']</value>
+         <value>//*[@class = 'pages active ng-star-inserted']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
-      <value>datatable-pager ng-star-inserted</value>
-      <webElementGuid>3f41963d-d5cb-4835-b09f-03eef2ae106f</webElementGuid>
+      <value>pages active ng-star-inserted</value>
+      <webElementGuid>948adc4f-f1d9-41d5-909c-230f1df49f51</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
