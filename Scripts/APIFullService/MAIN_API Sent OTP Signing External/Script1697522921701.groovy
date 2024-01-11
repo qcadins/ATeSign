@@ -53,11 +53,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         'setting sent otp by email'
-        if (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Sign External)')).length() > 
+        if (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email')).length() > 
         0) {
             'update setting sent otp by email'
             CustomKeywords.'connection.SendSign.settingSentOTPbyEmail'(conneSign, findTestData(excelPathAPISentOTPSigning).getValue(
-                    GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Sign External)')))
+                    GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email')))
         }
         
         'mengambil reset otp request numbernya awal berapa'
@@ -126,7 +126,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
             'jika codenya 0'
             if (code == 0) {
-                if (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Sign External)')) == 
+                if (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email')) == 
                 '0') {
                     'jika psre bukan privy, lakukan pengecekan store DB'
                     if (GlobalVariable.Psre != 'PRIVY') {
