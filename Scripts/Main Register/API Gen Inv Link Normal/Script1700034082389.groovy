@@ -1,7 +1,8 @@
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.model.FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import java.sql.Connection as Connection
@@ -42,24 +43,24 @@ respon = WS.sendRequest(findTestObject('Postman/Gen Invitation Link', [('callerI
 'Jika status HIT API 200 OK'
 if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
     'mengambil status code berdasarkan response HIT API'
-    status_Code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
+    statusCode = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
-    'ambil lama waktu yang diperlukan hingga request menerima balikan'
-    def elapsedTime = (respon.getElapsedTime() / 1000) + ' second'
-
-    'ambil body dari hasil respons'
-    responseBody = respon.getResponseBodyContent()
-
-    'panggil keyword untuk proses beautify dari respon json yang didapat'
-    CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(excelPathRegister).getValue(
-            GlobalVariable.NumofColm, rowExcel('Scenario')))
-
-    'write to excel response elapsed time'
-    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 
-        1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
-
+	'ambil lama waktu yang diperlukan hingga request menerima balikan'
+	elapsedTime = (respon.elapsedTime / 1000) + ' second'
+	
+	'ambil body dari hasil respons'
+	responseBody = respon.responseBodyContent
+	
+	'panggil keyword untuk proses beautify dari respon json yang didapat'
+	CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(excelPathRegister).getValue(
+			GlobalVariable.NumofColm, rowExcel('Scenario')))
+	
+	'write to excel response elapsed time'
+	CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') -
+		1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+	
     'jika status codenya 0'
-    if (status_Code == 0) {
+    if (statusCode == 0) {
         'Mengambil links berdasarkan response HIT API'
         GlobalVariable.Link = WS.getElementPropertyValue(respon, 'links', FailureHandling.OPTIONAL).toString().replace('[', 
             '').replace(']', '')
@@ -114,7 +115,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
             }
             
             if ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS GenInv')) == 
-            '0') && (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() <= 
+            '1') && (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() <= 
             2)) {
                 'check jika Must use WA message = 1'
                 if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')) == 
@@ -150,12 +151,8 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         getAPIErrorMessage(respon)
     }
 } else {
-    'write to excel status failed dan reason : '
-    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-        (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + 
-        ';') + GlobalVariable.ReasonFailedHitAPI)
-
-    GlobalVariable.FlagFailed = 1
+    'call function get API error message'
+        getAPIErrorMessage(respon)
 }
 
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
@@ -169,7 +166,7 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     }
 }
 
-def getAPIErrorMessage(def respon) {
+def getAPIErrorMessage(ResponseObject respon) {
     'jika status codenya bukan 0, yang berarti antara salah verifikasi data dan error'
     messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
@@ -182,6 +179,6 @@ def getAPIErrorMessage(def respon) {
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
