@@ -416,8 +416,8 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 
     if (GlobalVariable.FlagFailed == 0) {
         'write to excel success'
-        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Status') - 1, GlobalVariable.NumofColm - 
-            1, GlobalVariable.StatusSuccess)
+        CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Status') - 1,
+			GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 		
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('PsRE Document') - 1,
 				GlobalVariable.NumofColm - 1, findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Vendor')))
@@ -744,7 +744,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 				tipeSaldo = 'WhatsApp Message'
 
 				'menggunakan saldo wa'
-				balmut = balmut + CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser, 1)
+				balmut = balmut + CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
 
 				'jika balmut tidak terdapat transaksi'
 				if (balmut.size() == 0) {
@@ -766,7 +766,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 						tipeSaldo = 'WhatsApp Message'
 
 						'menggunakan saldo wa'
-						balmut = balmut + CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser, 1)
+						balmut = balmut + CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
 						
 						'jika tidak ada transaksi'
 						if (balmut.size() == 0) {
@@ -786,7 +786,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 							'ke sms'
 							tipeSaldo = 'SMS Notif'
 
-							balmut = balmut + CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser, 1)
+							balmut = balmut + CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
 
 							if (balmut.size() == 0) {
 								'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'

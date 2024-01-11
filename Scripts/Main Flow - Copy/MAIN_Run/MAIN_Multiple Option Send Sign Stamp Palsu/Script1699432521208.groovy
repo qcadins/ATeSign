@@ -399,7 +399,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 								GlobalVariable.eSignData['NoKontrakProcessed'] = GlobalVariable.eSignData['NoKontrakProcessed'].split(';', -1).toUnique()
 								
 								for (loopingNoKontrak = 0; loopingNoKontrak < GlobalVariable.eSignData['NoKontrakProcessed'].size(); loopingNoKontrak++) {
-									officeRegionBline = CustomKeywords.'connection.DataVerif.getOfficeRegionBlineCodeUsingRefNum'(conneSign, GlobalVariable.eSignData['NoKontrakProcessed'][loopingNoKontrak])
+									ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getOfficeRegionBlineCodeUsingRefNum'(conneSign, GlobalVariable.eSignData['NoKontrakProcessed'][loopingNoKontrak])
 									
 									'lakukan loop untuk pengecekan data'
 									for (i = 0; i < (officeRegionBline.size() / 3); i++) {
@@ -413,7 +413,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 							}
 							
 							'jika cancel doc tidak kosong, maka open document monitoring'
-                            if (cancelDocsValue != '') {
+                            if (cancelDocsValue != null || cancelDocsValue != '') {
                                 'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
                                 WebUI.callTestCase(findTestCase('Main Flow - Copy/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathMain
                                         , ('sheet') : sheet, ('CancelDocsSign') : cancelDocsValue, ('vendor') : vendor], 
@@ -850,7 +850,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             }
                             
                             'Input filter di Mutasi Saldo'
-                            inputFilterTrx(conneSign, currentDate, '', signTypes[looping])
+                            inputFilterTrx(conneSign, currentDate, '', signTypes[looping], officeName)
 
                             'inquirydb mengenai get detail trx'
                             inquiryDB = CustomKeywords.'connection.DataVerif.getDetailTrx'(conneSign, trxNo[looping])
