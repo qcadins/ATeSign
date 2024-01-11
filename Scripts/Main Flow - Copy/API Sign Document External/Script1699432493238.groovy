@@ -32,6 +32,20 @@ ArrayList totalSignedBefore = [], totalSignedAfter = [], officeRegionBline = []
 'setting menggunakan base url yang benar atau salah'
 CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPISignDocument, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url (Sign External)'))
 
+'check ada value maka setting email service tenant'
+if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')).length() >0) {
+
+if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(';', -1)[GlobalVariable.indexUsed] == '') {
+		SHA256IdNo = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('phoneNo (Sign External)')).split(';', -1)[GlobalVariable.indexUsed])
+} else {
+	SHA256IdNo = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(';', -1)[GlobalVariable.indexUsed]
+}
+		'setting email service tenant'
+		CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(
+				excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')),
+			SHA256IdNo)
+}
+
 'ambil nama vendor dari DB'
 String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, refNumber)
 
