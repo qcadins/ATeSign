@@ -330,10 +330,14 @@ def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) 
 		
 						'looping mengenai total sequence number'
 						for (int p = 0; p < seqNos.size(); p++) {
+							
+							println seqNo
+							println seqNos
+							println seqNos[p]
 							'jika seq numbernya tidak kosong'
 							if ((seqNos[p]) != '') {
 								'Memasukkan value seqNo dan body API kepada array'
-								seqNoBodyAPI.add(',"seqNo": "' + (seqNos[p])) + '"'
+								seqNoBodyAPI.add(',"seqNo": "' + (seqNos[p]) + '"')
 							} else {
 								'Jika seq number kosong ,maka input kosong'
 								seqNoBodyAPI.add('')
