@@ -766,7 +766,7 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 					((findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp'))
 			}
-			if (balmut[8] != (-1)) {
+			if (balmut[9] != (-1)) {
 				GlobalVariable.FlagFailed = 1
 				
 				'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
@@ -790,7 +790,7 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
 							((findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp'))
 					}
 					
-					if (balmut[8] != (-1)) {
+					if (balmut[9] != (-1)) {
 						GlobalVariable.FlagFailed = 1
 						
 						'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
@@ -810,7 +810,7 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
 						((findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via SMS'))
 				}
 				
-				if (balmut[8] != (-1)) {
+				if (balmut[9] != (-1)) {
 					GlobalVariable.FlagFailed = 1
 					
 					'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'

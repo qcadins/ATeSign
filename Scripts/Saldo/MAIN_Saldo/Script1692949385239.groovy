@@ -106,7 +106,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		
 		ArrayList<String> result = CustomKeywords.'connection.Saldo.getTrxSaldo'(conneSign, findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Transaksi Dari')), 
 			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Nomor Kontrak')), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tipe Transaksi')), 
-			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Nama Dokumen')))
+			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Nama Dokumen')), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Office Name')))
 		
 		arrayIndex = 0
 		

@@ -41,6 +41,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         'setting menggunakan Use Wa Message'
         CustomKeywords.'connection.APIFullService.settingUseWAMessage'(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, 
                 rowExcel('Use WA Message')))
+		
+		'ubah vendor stamping jika diperlukan '
+		if ((findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')).length() >
+		0) && (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')) !=
+		'No')) {
+			'ambil idLov untuk diupdate secara otomatis ke DB'
+			int idLov = CustomKeywords.'connection.ManualStamp.getIdLovVendorStamping'(conneSign, findTestData(excelPathMain).getValue(
+			 GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')))
+			
+			'lakukan update vendor stamping yang akan dipakai'
+			CustomKeywords.'connection.UpdateData.updateVendorStamping'(conneSign, idLov)
+		}
 
         'inisialisasi kebutuhan mengenai vendor, sign type, minuses, usage saldo, canceldocsvalue, logicvendor, flagBreak, flagSkipStamping, saldo Before dan saldo After'
         String vendor, signType, minuses = '-', usageSaldo = '', cancelDocsValue = '', logicVendor
@@ -56,7 +68,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         ArrayList emailSignerPerDoc = [], documentId = [], signersPerDoc = []
 		
 		LinkedHashMap emailSigner = [:], signerInput = [:]
-
+		
         'Jika expectednya bukan Failed. Ini digunakan untuk agar tidak mengambil saldo before jika expectednya failed.'
         if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Expected')).toUpperCase() != 'FAILED') {
             'Jika opsi untuk send document adalah API Send Document External ataupun internal'
@@ -413,7 +425,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 							}
 							
 							'jika cancel doc tidak kosong, maka open document monitoring'
-                            if (cancelDocsValue != '') {
+                            if (cancelDocsValue != null || cancelDocsValue != '') {
                                 'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
                                 WebUI.callTestCase(findTestCase('Main Flow - Copy/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathMain
                                         , ('sheet') : sheet, ('CancelDocsSign') : cancelDocsValue, ('vendor') : vendor], 
@@ -850,7 +862,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             }
                             
                             'Input filter di Mutasi Saldo'
-                            inputFilterTrx(conneSign, currentDate, '', signTypes[looping])
+                            inputFilterTrx(conneSign, currentDate, '', signTypes[looping], officeName)
 
                             'inquirydb mengenai get detail trx'
                             inquiryDB = CustomKeywords.'connection.DataVerif.getDetailTrx'(conneSign, trxNo[looping])

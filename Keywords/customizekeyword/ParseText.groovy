@@ -34,7 +34,7 @@ public class ParseText {
 		MessageDigest digest = MessageDigest.getInstance('SHA-256')
 		byte[] encodedHash = digest.digest(input.getBytes('UTF-8'))
 		encodedHash.collect { byteValue ->
-		    String.format('%02x', byteValue)
+			String.format('%02x', byteValue)
 		}.join()
 	}
 }
