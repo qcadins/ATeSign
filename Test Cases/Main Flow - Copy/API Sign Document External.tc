@@ -23,12 +23,6 @@
       <value></value>
       <variableId>ba547920-7a46-46dd-8583-a6572c6748c7</variableId>
    </variableLinks>
-   <variableLinks>
-      <testDataLinkId></testDataLinkId>
-      <type>DEFAULT</type>
-      <value></value>
-      <variableId>eb34ac60-4886-4c5f-b60b-246ea213f974</variableId>
-   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -49,12 +43,5 @@
       <id>ba547920-7a46-46dd-8583-a6572c6748c7</id>
       <masked>false</masked>
       <name>CancelDocsSign</name>
-   </variable>
-   <variable>
-      <defaultValue>''</defaultValue>
-      <description></description>
-      <id>eb34ac60-4886-4c5f-b60b-246ea213f974</id>
-      <masked>false</masked>
-      <name>SHA256IdNo</name>
    </variable>
 </TestCaseEntity>

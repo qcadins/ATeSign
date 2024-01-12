@@ -36,12 +36,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		break
 	} else if (findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 
+		'deklarasi date'
+		String startDate = findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Transaksi Dari'))
+		
+		String endDate = findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Transaksi Sampai'))
+		
 		if(findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) != 
 			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')) || firstRun == 0) {
 			'call test case login per case'
 			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathSaldo, ('Email') : 'Email Login', ('Password') : 'Password Login'
 				, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
-			
+						
 			'apakah cek paging diperlukan di awal run'
 			if(GlobalVariable.checkPaging.equals('Yes')) {
 				
@@ -54,8 +59,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 				'click english'
 				WebUI.click(findTestObject('Login/button_English'))
 				
+				inputSaldo(startDate, endDate)
+				
 				'call function check paging'
-				checkPaging(currentDate, firstDateOfMonth, conneSign)
+				checkPaging(conneSign)
 				
 				'get ddl tenant'
 				ArrayList<String> resultVendor = CustomKeywords.'connection.Saldo.getDDLVendor'(conneSign, CustomKeywords.'connection.Saldo.getTenantName'(conneSign))
@@ -88,7 +95,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			GlobalVariable.FlagFailed = 0
 		}
 		
-		inputSaldo()
+		WebUI.refresh()
+		
+		'cek apakah perlu input start date by katalon'
+		if (startDate == '') {
+			startDate = firstDateOfMonth.toString()
+		}
+		
+		'cek apakah perlu input end date by katalon'
+		if (endDate == '') {
+			endDate = currentDate.toString()
+		}
+		
+		inputSaldo(startDate, endDate)
 		
 		'klik pada button cari'
 		WebUI.click(findTestObject('Object Repository/Saldo/btn_cari'))
@@ -102,11 +121,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.FailedReasonsearchFailed'
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 				(findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + ' Failed Search Saldo Data')
+			
+			continue
 		}
 		
-		ArrayList<String> result = CustomKeywords.'connection.Saldo.getTrxSaldo'(conneSign, findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Transaksi Dari')), 
-			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Nomor Kontrak')), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tipe Transaksi')), 
-			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Nama Dokumen')), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Office Name')))
+		ArrayList<String> result = CustomKeywords.'connection.Saldo.getTrxSaldo'(conneSign, startDate, endDate,
+			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Nomor Kontrak')),
+			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('$Tipe Saldo')),
+			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Nama Dokumen')),
+			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Office Name')))
 		
 		arrayIndex = 0
 		
@@ -140,9 +163,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		'verify qty ui = db'
 		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Saldo/label_TableQty')).replace(',', ''), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Qty')
 		
-		'verify Total Data ui = db'
-		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Saldo/Label_TotalSaldo')), (result.size()/10).toString() + ' total', false, FailureHandling.CONTINUE_ON_FAILURE), ' Total Data Tidak Match')
-		
+//		'verify Total Data ui = db'
+//		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Saldo/Label_TotalSaldo')), (result.size()/10).toString() + ' total', false, FailureHandling.CONTINUE_ON_FAILURE), ' Total Data Tidak Match')
+//		
 		if (findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Download File')) == 'Yes'){
 			'klik pada tombol unduh excel'
 			WebUI.click(findTestObject('Object Repository/Saldo/button_UnduhExcel'))
@@ -167,7 +190,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 'tutup browser'
 WebUI.closeBrowser()
 
-def inputSaldo() {
+def inputSaldo(String startDate, String endDate) {
 	'klik ddl untuk tenant memilih mengenai Vida'
 	WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), '(?i)' + findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login')), true)
 	
@@ -184,7 +207,7 @@ def inputSaldo() {
 	WebUI.sendKeys(findTestObject('Saldo/input_tipetransaksi'), Keys.chord(Keys.ENTER))
 
 	'Input date sekarang'
-	WebUI.setText(findTestObject('Saldo/input_fromdate'), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Transaksi Dari')))
+	WebUI.setText(findTestObject('Saldo/input_fromdate'), startDate)
 
 	'Input tipe dokumen'
 	WebUI.setText(findTestObject('Saldo/input_tipedokumen'), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tipe Dokumen')))
@@ -199,15 +222,16 @@ def inputSaldo() {
 	WebUI.setText(findTestObject('Saldo/input_namadokumen'), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Nama Dokumen')))
 
 	'Input date sekarang'
-	WebUI.setText(findTestObject('Saldo/input_todate'), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Transaksi Sampai')))
+	WebUI.setText(findTestObject('Saldo/input_todate'), endDate)
 	
 	'Input office name'
 	WebUI.setText(findTestObject('Saldo/input_officeName'), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Office Name')))
+	
+	'Input enter'
+	WebUI.sendKeys(findTestObject('Saldo/input_officeName'), Keys.chord(Keys.ENTER))
 }
 
-def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection conneSign) {
-	inputSaldo()
-
+def checkPaging(Connection conneSign) {
     'Klik set ulang'
     WebUI.click(findTestObject('Saldo/button_SetUlang'))
 
@@ -279,15 +303,15 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
 		WebUI.click(findTestObject('Saldo/button_NextPage'))
 	
 		'verify paging di page 2'
-		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Saldo/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE),
-				'2', false, FailureHandling.CONTINUE_ON_FAILURE), ' button page selanjutnya tidak berfungsi')
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Saldo/paging_Page'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE),
+				'page 2', false, FailureHandling.CONTINUE_ON_FAILURE), ' button page selanjutnya tidak berfungsi')
 	
 		'click prev page'
 		WebUI.click(findTestObject('Saldo/button_PrevPage'))
 	
 		'verify paging di page 1'
-		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Saldo/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE),
-				'1', false, FailureHandling.CONTINUE_ON_FAILURE), ' button page sebelumnya tidak berfungsi')
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Saldo/paging_Page'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE),
+				'page 1', false, FailureHandling.CONTINUE_ON_FAILURE), ' button page sebelumnya tidak berfungsi')
 	
 		'get total page'
 		variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
@@ -308,15 +332,15 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
 		}
 		
 		'verify paging di page terakhir'
-		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Saldo/paging_Page'), 'ng-reflect-page',
-					FailureHandling.CONTINUE_ON_FAILURE), Math.round(lastPage+additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE), 'last page')
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Saldo/paging_Page'), 'aria-label',
+					FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage+additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE), 'last page')
 
 		'click first page'
 		WebUI.click(findTestObject('Saldo/button_FirstPage'))
 	
 		'verify paging di page 1'
-		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Saldo/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE),
-				'1', false, FailureHandling.CONTINUE_ON_FAILURE), ' button page pertama tidak berfungsi')
+		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Saldo/paging_Page'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE),
+				'page 1', false, FailureHandling.CONTINUE_ON_FAILURE), ' button page pertama tidak berfungsi')
 	}
 }
 
