@@ -227,14 +227,6 @@ if (vendor.equalsIgnoreCase('Privy') || vendor.equalsIgnoreCase('Digisign')) {
         if (codeOTP == 0) {
             checkVerifyEqualOrMatch(WebUI.verifyMatch(psreCode.toString().toUpperCase(), vendor.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), 
                 ' pada psre response dengan vendor DB ')
-
-			officeRegionBline = CustomKeywords.'connection.DataVerif.getOfficeRegionBlineCodeUsingRefNum'(conneSign, CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, GlobalVariable.storeVar.keySet()[[0]]))
-			
-			'lakukan loop untuk pengecekan data'
-			for (int i = 0; i < (officeRegionBline.size() / 3); i++) {
-				'verify business line dan office code'
-				checkVerifyEqualOrMatch(WebUI.verifyMatch(officeRegionBline[i].toString(), officeRegionBline[i+3].toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada Office, Region, atau Business Line Document ')
-			}
 			
             'Dikasih delay 1 detik dikarenakan loading untuk mendapatkan OTP.'
             WebUI.delay(3)

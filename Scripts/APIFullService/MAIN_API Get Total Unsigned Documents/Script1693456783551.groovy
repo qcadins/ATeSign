@@ -81,10 +81,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 'check Db'
                 if (GlobalVariable.checkStoreDB == 'Yes') {
+					if (findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('email')) == '') {
                     'get data from db'
                     result = CustomKeywords.'connection.APIFullService.getTotalUnsignedDocuments'(conneSign, GlobalVariable.Tenant, 
-                        findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('email')))
-					
+                        findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('phoneNo')))
+					}
+					else {
+						'get data from db'
+						result = CustomKeywords.'connection.APIFullService.getTotalUnsignedDocuments'(conneSign, GlobalVariable.Tenant,
+							findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('email')))
+					}
                     'verify total Unsigned Documents'
                     if (WebUI.verifyEqual(result, findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, 
                             rowExcel('Total Unsigned Documents')), FailureHandling.CONTINUE_ON_FAILURE)) {
