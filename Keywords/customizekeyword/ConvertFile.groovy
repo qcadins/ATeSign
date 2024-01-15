@@ -14,7 +14,7 @@ public class ConvertFile {
 		FileInputStream fis = new FileInputStream(f)
 		byte[] byteArray = new byte[(int)f.length()]
 		fis.read(byteArray)
-		String imageString = base64.getEncoder().encodeToString(byteArray)
+		String imageString = base64.encoder.encodeToString(byteArray)
 
 		imageString.replaceAll('[\r\n\t ]', '')
 	}
@@ -51,4 +51,5 @@ public class ConvertFile {
 		// Write the decoded bytes to the file
 		Files.write(Paths.get(filePath), bytes)
 	}
+	
 }

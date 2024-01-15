@@ -300,7 +300,7 @@ if (WebUI.verifyElementNotPresent(findTestObject('DaftarAkun/label_SuccessPrivy'
 
                 if (GlobalVariable.Psre == 'DIGI') {
                     'call testcase form aktivasi DIGI'
-                    WebUI.callTestCase(findTestCase('APIFullService/Generate Invitation Link/FormAktivasiDIGI'), [('excelPathRegister') : excelPathRegister], 
+                    WebUI.callTestCase(findTestCase('null'), [('excelPathRegister') : excelPathRegister], 
                         FailureHandling.CONTINUE_ON_FAILURE)
 
                     'looping untuk mengeck apakah case selanjutnya ingin melanjutkan input pada form aktivasi'
@@ -311,7 +311,7 @@ if (WebUI.verifyElementNotPresent(findTestObject('DaftarAkun/label_SuccessPrivy'
                         GlobalVariable.FlagFailed = 0
 
                         'call testcase form aktivasi DIGI'
-                        WebUI.callTestCase(findTestCase('APIFullService/Generate Invitation Link/FormAktivasiDIGI'), [('excelPathRegister') : excelPathRegister], 
+                        WebUI.callTestCase(findTestCase('null'), [('excelPathRegister') : excelPathRegister], 
                             FailureHandling.CONTINUE_ON_FAILURE)
                     }
                 } else {

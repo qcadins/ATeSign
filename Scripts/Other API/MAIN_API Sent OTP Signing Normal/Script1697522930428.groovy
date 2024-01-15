@@ -1,7 +1,8 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.model.FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import internal.GlobalVariable as GlobalVariable
 import java.sql.Connection as Connection
@@ -49,25 +50,21 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         'mengambil reset otp request numbernya awal berapa'
-        reset_otp_request_num = Integer.parseInt(CustomKeywords.'connection.APIFullService.getResetCodeRequestNum'(conneSign, 
+        resetOTPRequestNum = Integer.parseInt(CustomKeywords.'connection.APIFullService.getResetCodeRequestNum'(conneSign, 
                 findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))))
 
         'mengambil nilai otp awal baik berisi ataupun kosong'
-        otp_code = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathAPISentOTPSigning).getValue(
+        otpCode = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, findTestData(excelPathAPISentOTPSigning).getValue(
                 GlobalVariable.NumofColm, rowExcel('Email Login')))
 
-        println(reset_otp_request_num)
+        println(resetOTPRequestNum)
 
-        println(otp_code)
+        println(otpCode)
 
         WebUI.delay(5)
 
         'inisialisasi arrayList'
-        ArrayList documentId = []
-
-        ArrayList list = []
-
-        ArrayList listDocId = []
+        ArrayList documentId = [], list = [], listDocId = []
 
         'Mengambil document id dari excel dan displit'
         documentId = findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('$documentId')).split(
@@ -85,7 +82,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         
         String listDoc
 
-        if (listDocId.isEmpty()) {
+        if (listDocId.empty) {
             'ubah menjadi string'
             listDoc = ''
         } else {
@@ -94,9 +91,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         'HIT API'
-        responLogin = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/Login', [('email') : findTestData(excelPathAPISentOTPSigning).getValue(
-                        GlobalVariable.NumofColm, rowExcel('Email Login')).toString(), ('password') : findTestData(excelPathAPISentOTPSigning).getValue(
-                        GlobalVariable.NumofColm, rowExcel('Password Login')).toString()]))
+        responLogin = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/Login', [
+						('email') : findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')), 
+						('password') : findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('Password Login'))]))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(responLogin, 200, FailureHandling.OPTIONAL) == true) {
@@ -111,13 +108,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             }
             
             'HIT API'
-            respon = WS.sendRequest(findTestObject('Postman/Sent Otp Signing Normal', [('callerId') : ('"' + findTestData(
-                            excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('$callerId'))) + '"'
-                        , ('phoneNo') : ('"' + findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 
-                            rowExcel('$phoneNo'))) + '"', ('vendorCode') : ('"' + findTestData(excelPathAPISentOTPSigning).getValue(
-                            GlobalVariable.NumofColm, rowExcel('$vendorCode'))) + '"', ('tenantCode') : ('"' + findTestData(
-                            excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('$tenantcode'))) + '"'
-                        , ('listDocumentId') : listDoc]))
+            respon = WS.sendRequest(findTestObject('Postman/Sent Otp Signing Normal', [
+						('callerId') : findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('$callerId')), 
+						('phoneNo') : findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('$phoneNo')), 
+						('vendorCode') : findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('$vendorCode')), 
+						('tenantCode') : findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('$tenantcode')), 
+						('listDocumentId') : listDoc]))
 
             'Jika status HIT API 200 OK'
             if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
@@ -166,22 +162,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                                 'verify otp code tidak sama'
                                 arrayMatch.add(WebUI.verifyNotEqual(newOTP, otp_code, FailureHandling.CONTINUE_ON_FAILURE))
                             }
-                            
-                            'verify otp code tidak sama'
-                            arrayMatch.add(WebUI.verifyEqual(newResetNum, reset_otp_request_num + 1, FailureHandling.CONTINUE_ON_FAILURE))
+                        
+                        'verify otp code tidak sama'
+                        arrayMatch.add(WebUI.verifyEqual(newResetNum, resetOTPRequestNum + 1, FailureHandling.CONTINUE_ON_FAILURE))
 
-                            if (arrayMatch.contains(false)) {
-                                'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-                                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                                    GlobalVariable.StatusFailed, (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 
-                                        rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
-                            } else {
-                                'write to excel success'
-                                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
-                                    0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-                            }
+                        if (arrayMatch.contains(false)) {
+                            'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+                            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                                GlobalVariable.StatusFailed, (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 
+                                    rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
+                        } else {
+                            'write to excel success'
+                            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
+                                0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
                         }
                     }
+                   }
                 } else {
                     getErrorMessageAPI(respon)
                 }
@@ -203,10 +199,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
-def getErrorMessageAPI(def respon) {
+def getErrorMessageAPI(ResponseObject respon) {
     'mengambil status code berdasarkan response HIT API'
     message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL).toString()
 
