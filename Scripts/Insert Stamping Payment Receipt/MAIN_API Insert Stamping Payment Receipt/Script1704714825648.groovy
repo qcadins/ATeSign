@@ -1,7 +1,8 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import java.sql.Connection as Connection
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.model.FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
@@ -21,158 +22,175 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
         GlobalVariable.FlagFailed = 0
 
-		String bodyAPI = ''
-		
+        String bodyAPI = ''
+
         'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
-		'Jika flag tenant no'
-		if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'No') {
-			'set tenant kosong'
-			GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong tenant Code'))
-		} else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'Yes') {
-			'Input tenant'
-			GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))
-		}
-		
-		'check if mau menggunakan api_key yang salah atau benar'
-		if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct API Key')) == 'Yes') {
-			'get api key dari db'
-			GlobalVariable.api_key = CustomKeywords.'connection.APIFullService.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
-		} else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct API Key')) == 'No') {
-			'get api key salah dari excel'
-			GlobalVariable.api_key = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong API Key'))
-		}
-
-		'Jika dokumennya menggunakan base64'
-		if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 Document')) == 'Yes') {
-			'input bodyAPI dengan Base64'
-			bodyAPI =  PDFtoBase64(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentFile')))
-		} else {
-			'input bodyAPI tidak dengan Base64'
-			bodyAPI =  findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentFile'))
-		}
-		
+        'Jika flag tenant no'
+        if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'No') {
+            'set tenant kosong'
+            GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong tenant Code'))
+        } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'Yes') {
+            'Input tenant'
+            GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))
+        }
+        
+        'check if mau menggunakan api_key yang salah atau benar'
+        if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct API Key')) == 'Yes') {
+            'get api key dari db'
+            GlobalVariable.api_key = CustomKeywords.'connection.APIFullService.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
+        } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct API Key')) == 'No') {
+            'get api key salah dari excel'
+            GlobalVariable.api_key = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong API Key'))
+        }
+        
+        'Jika dokumennya menggunakan base64'
+        if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 Document')) == 'Yes') {
+            'input bodyAPI dengan Base64'
+            bodyAPI = PDFtoBase64(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentFile')))
+        } else {
+            'input bodyAPI tidak dengan Base64'
+            bodyAPI = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentFile'))
+        }
+        
         'HIT API'
-        respon = WS.sendRequest(findTestObject('Postman/Insert Stamping Payment Receipt', [
-					('documentTemplateCode') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentTemplateCode')), 
-					('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')),
-					('documentNumber') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentNumber')),
-					('documentTransactionId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentTransactionId')),
-					('docName') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('docName')),
-					('docDate') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('docDate')),
-					('docType') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('docType')),
-					('docNominal') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('docNominal')),
-					('peruriDocTypeId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('peruriDocTypeId')),
-					('officeCode') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('officeCode')),
-					('officeName') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('officeName')),
-					('regionCode') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('regionCode')),
-					('regionName') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('regionName')),
-					('idType') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('idType')),
-					('idNo') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('idNo')),
-					('taxOwedsName') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('taxOwedsName')),
-					('returnStampResult') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('returnStampResult')),
-					('documentFile') : bodyAPI]))
+        respon = WS.sendRequest(findTestObject('Postman/Insert Stamping Payment Receipt', [('documentTemplateCode') : findTestData(
+                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentTemplateCode')), ('callerId') : findTestData(
+                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('documentNumber') : findTestData(
+                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentNumber')), ('documentTransactionId') : findTestData(
+                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentTransactionId')), ('docName') : findTestData(
+                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('docName')), ('docDate') : findTestData(excelPath).getValue(
+                        GlobalVariable.NumofColm, rowExcel('docDate')), ('docType') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                        rowExcel('docType')), ('docNominal') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                        rowExcel('docNominal')), ('peruriDocTypeId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                        rowExcel('peruriDocTypeId')), ('officeCode') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                        rowExcel('officeCode')), ('officeName') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                        rowExcel('officeName')), ('regionCode') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                        rowExcel('regionCode')), ('regionName') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                        rowExcel('regionName')), ('idType') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                        rowExcel('idType')), ('idNo') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
+                            'idNo')), ('taxOwedsName') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
+                            'taxOwedsName')), ('returnStampResult') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                        rowExcel('returnStampResult')), ('documentFile') : bodyAPI]))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
             'mengambil status code berdasarkan response HIT API'
             statusCode = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
-			'ambil lama waktu yang diperlukan hingga request menerima balikan'
-			elapsedTime = (respon.elapsedTime / 1000) + ' second'
-	
-			'ambil body dari hasil respons'
-			responseBody = respon.responseBodyContent
-	
-			'panggil keyword untuk proses beautify dari respon json yang didapat'
-			CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
-					excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
-	
-			'write to excel response elapsed time'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') -
-				1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
-			
+            'ambil lama waktu yang diperlukan hingga request menerima balikan'
+            elapsedTime = ((respon.elapsedTime / 1000) + ' second')
+
+            'ambil body dari hasil respons'
+            responseBody = respon.responseBodyContent
+
+            'panggil keyword untuk proses beautify dari respon json yang didapat'
+            CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
+                    excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+
+            'write to excel response elapsed time'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 
+                1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+
             'jika status codenya 0'
             if (statusCode == 0) {
-				'write to excel success'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
-					1, GlobalVariable.StatusSuccess)
-				
+                'write to excel success'
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
+                    1, GlobalVariable.StatusSuccess)
+
                 'tulis sukses jika store DB berhasil'
-                if ((GlobalVariable.FlagFailed == 0)) {
-					
-					if (GlobalVariable.checkStoreDB == 'Yes') {
-						ArrayList resultStoreDB = CustomKeywords.'connection.Meterai.getInsertStampingPaymentReceipt'(conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentTransactionId')))
-						
-						'declare arraylist arraymatch'
-						arrayMatch = []
-						
-						arrayIndex = 0
-						
-						for (index = 0; index < resultStoreDB.size()/16; index++) {
-							'check store db dari input'
-							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],GlobalVariable.Tenant, false, FailureHandling.CONTINUE_ON_FAILURE))
-							
-							'check store db dari input'
-							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentTemplateCode')), false, FailureHandling.CONTINUE_ON_FAILURE))
-							
-							'check store db dari input'
-							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentNumber')), false, FailureHandling.CONTINUE_ON_FAILURE))
-							
-							'check store db dari input'
-							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentTransactionId')), false, FailureHandling.CONTINUE_ON_FAILURE))
-							
-							'check store db dari input'
-							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('docName')), false, FailureHandling.CONTINUE_ON_FAILURE))
-							
-							'check store db dari input'
-							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('docDate')), false, FailureHandling.CONTINUE_ON_FAILURE))
-							
-							'check store db dari input'
-							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('docType')), false, FailureHandling.CONTINUE_ON_FAILURE))
-							
-							'check store db dari input'
-							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('docNominal')), false, FailureHandling.CONTINUE_ON_FAILURE))
-							
-							'check store db dari input'
-							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('peruriDocTypeId')), false, FailureHandling.CONTINUE_ON_FAILURE))
-							
-							'check store db dari input'
-							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('officeCode')), false, FailureHandling.CONTINUE_ON_FAILURE))
-							
-							'check store db dari input'
-							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('officeName')), false, FailureHandling.CONTINUE_ON_FAILURE))
-							
-							'check store db dari input'
-							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('regionCode')), false, FailureHandling.CONTINUE_ON_FAILURE))
-							
-							'check store db dari input'
-							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('regionName')), false, FailureHandling.CONTINUE_ON_FAILURE))
+                if (GlobalVariable.FlagFailed == 0) {
+                    if (GlobalVariable.checkStoreDB == 'Yes') {
+                        ArrayList resultStoreDB = CustomKeywords.'connection.Meterai.getInsertStampingPaymentReceipt'(conneSign, 
+                            findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentTransactionId')))
 
-							'check store db dari input'
-							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('idType')), false, FailureHandling.CONTINUE_ON_FAILURE))
-							
-							'check store db dari input'
-							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('idNo')), false, FailureHandling.CONTINUE_ON_FAILURE))
+                        'declare arraylist arraymatch'
+                        arrayMatch = []
 
-							'check store db dari input'
-							arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++],findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('taxOwedsName')), false, FailureHandling.CONTINUE_ON_FAILURE))
-						}
-						
-						'dibandingkan total meterai dan total stamp'
-						arrayMatch.add(WebUI.verifyEqual(resultStoreDB.size()/16, Integer.parseInt(CustomKeywords.'connection.Meterai.getCountTotalStampDutyOnTemplate'(conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentTemplateCode')))) + 1, FailureHandling.CONTINUE_ON_FAILURE))
+                        arrayIndex = 0
 
-						'jika data db tidak bertambah'
-						if (arrayMatch.contains(false)) {
-							'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-								GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(GlobalVariable.NumofColm,
-									rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
+                        for (index = 0; index < (resultStoreDB.size() / 16); index++) {
+                            'check store db dari input'
+                            arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++], GlobalVariable.Tenant, false, 
+                                    FailureHandling.CONTINUE_ON_FAILURE))
 
-							GlobalVariable.FlagFailed = 1
-						}
-					}
+                            'check store db dari input'
+                            arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++], findTestData(excelPath).getValue(
+                                        GlobalVariable.NumofColm, rowExcel('documentTemplateCode')), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                            'check store db dari input'
+                            arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++], findTestData(excelPath).getValue(
+                                        GlobalVariable.NumofColm, rowExcel('documentNumber')), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                            'check store db dari input'
+                            arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++], findTestData(excelPath).getValue(
+                                        GlobalVariable.NumofColm, rowExcel('documentTransactionId')), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                            'check store db dari input'
+                            arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++], findTestData(excelPath).getValue(
+                                        GlobalVariable.NumofColm, rowExcel('docName')), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                            'check store db dari input'
+                            arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++], findTestData(excelPath).getValue(
+                                        GlobalVariable.NumofColm, rowExcel('docDate')), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                            'check store db dari input'
+                            arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++], findTestData(excelPath).getValue(
+                                        GlobalVariable.NumofColm, rowExcel('docType')), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                            'check store db dari input'
+                            arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++], findTestData(excelPath).getValue(
+                                        GlobalVariable.NumofColm, rowExcel('docNominal')), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                            'check store db dari input'
+                            arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++], findTestData(excelPath).getValue(
+                                        GlobalVariable.NumofColm, rowExcel('peruriDocTypeId')), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                            'check store db dari input'
+                            arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++], findTestData(excelPath).getValue(
+                                        GlobalVariable.NumofColm, rowExcel('officeCode')), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                            'check store db dari input'
+                            arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++], findTestData(excelPath).getValue(
+                                        GlobalVariable.NumofColm, rowExcel('officeName')), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                            'check store db dari input'
+                            arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++], findTestData(excelPath).getValue(
+                                        GlobalVariable.NumofColm, rowExcel('regionCode')), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                            'check store db dari input'
+                            arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++], findTestData(excelPath).getValue(
+                                        GlobalVariable.NumofColm, rowExcel('regionName')), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                            'check store db dari input'
+                            arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++], findTestData(excelPath).getValue(
+                                        GlobalVariable.NumofColm, rowExcel('idType')), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                            'check store db dari input'
+                            arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++], findTestData(excelPath).getValue(
+                                        GlobalVariable.NumofColm, rowExcel('idNo')), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                            'check store db dari input'
+                            arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++], findTestData(excelPath).getValue(
+                                        GlobalVariable.NumofColm, rowExcel('taxOwedsName')), false, FailureHandling.CONTINUE_ON_FAILURE))
+                        }
+                        
+                        'dibandingkan total meterai dan total stamp'
+                        arrayMatch.add(WebUI.verifyEqual(resultStoreDB.size() / 16, Integer.parseInt(CustomKeywords.'connection.Meterai.getCountTotalStampDutyOnTemplate'(
+                                        conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentTemplateCode')))) + 
+                                1, FailureHandling.CONTINUE_ON_FAILURE))
+
+                        'jika data db tidak bertambah'
+                        if (arrayMatch.contains(false)) {
+                            'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+                            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                                GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                                    rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
+
+                            GlobalVariable.FlagFailed = 1
+                        }
+                    }
                 }
             } else {
                 'call function get API error message'
@@ -187,7 +205,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     }
 }
 
-def getErrorMessageAPI(def respon) {
+def getErrorMessageAPI(ResponseObject respon) {
     'mengambil status code berdasarkan response HIT API'
     message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
@@ -203,20 +221,7 @@ def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
-def encryptEncodeValue(String value, String aesKey) {
-    'enkripsi msg'
-    encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(value, aesKey)
-
-    println(encryptMsg)
-
-    try {
-        return URLEncoder.encode(encryptMsg, StandardCharsets.UTF_8.toString())
-    }
-    catch (UnsupportedEncodingException ex) {
-        throw new RuntimeException(ex.cause)
-    } 
-}
-
 def PDFtoBase64(String fileName) {
-	return CustomKeywords.'customizekeyword.ConvertFile.base64File'(fileName)
+    CustomKeywords.'customizekeyword.ConvertFile.base64File'(fileName)
 }
+

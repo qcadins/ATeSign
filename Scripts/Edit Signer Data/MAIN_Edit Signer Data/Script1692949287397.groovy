@@ -21,149 +21,159 @@ int firstRun = 0
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
-    } else if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
+    } else if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase(
+        'Unexecuted')) {
         GlobalVariable.FlagFailed = 0
 
-		'Declare variable yang dibutuhkan'
-		String emailOrNIKExcel, emailOrNIKHash, getVendor
-		
-		'check if email login case selanjutnya masih sama dengan sebelumnya'
-		if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) !=
-			findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')) || firstRun == 0) {
-			'call test case login per case'
-			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathEditSignerData, ('Email') : 'Email Login', ('Password') : 'Password Login'
-				, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
-			
-			'apakah cek paging diperlukan di awal run'
-			if(GlobalVariable.checkPaging.equals('Yes')) {
-				'call function check paging'
-				checkPaging(conneSign)
-			}
-			firstRun = 1
-		}
-		
-		'click menu Edit Signer Data'
-		WebUI.click(findTestObject('Edit Signer Data/menu_Edit Signer Data'))
+        'Declare variable yang dibutuhkan'
+        String emailOrNIKExcel, emailOrNIKHash, getVendor
+
+        'check if email login case selanjutnya masih sama dengan sebelumnya'
+        if ((findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) != findTestData(
+            excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))) || (firstRun == 0)) {
+            'call test case login per case'
+            WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathEditSignerData
+                    , ('Email') : 'Email Login', ('Password') : 'Password Login', ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], 
+                FailureHandling.STOP_ON_FAILURE)
+
+            'apakah cek paging diperlukan di awal run'
+            if (GlobalVariable.checkPaging == 'Yes') {
+                'call function check paging'
+                checkPaging(conneSign)
+            }
+            
+            firstRun = 1
+        }
         
+        'click menu Edit Signer Data'
+        WebUI.click(findTestObject('Edit Signer Data/menu_Edit Signer Data'))
+
         'check if search dengan email/NIK'
-        if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Use input ?')).equalsIgnoreCase('Email')) {
+        if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Use input ?')).equalsIgnoreCase(
+            'Email')) {
             emailOrNIKExcel = findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('$Email'))
-        } else if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Use input ?')).equalsIgnoreCase('NIK')) {
+        } else if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Use input ?')).equalsIgnoreCase(
+            'NIK')) {
             emailOrNIKExcel = findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('$NIK'))
         }
         
-		'search data menggunakan email'
+        'search data menggunakan email'
         searchData(emailOrNIKExcel)
 
-		'Jika aksi Edit Data'
-        if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('Edit Data')) {
-			WebUI.delay(4)
+        'Jika aksi Edit Data'
+        if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase(
+            'Edit Data')) {
+            WebUI.delay(4)
+
             'click button Edit Data'
             WebUI.click(findTestObject('Object Repository/Edit Signer Data/button_AksiEditData'))
 
-			'Klik batal'
+            'Klik batal'
             WebUI.click(findTestObject('Object Repository/Edit Signer Data/button_Batal'))
 
-			'search data menggunakan email'
+            'search data menggunakan email'
             searchData(emailOrNIKExcel)
-			
-			WebUI.delay(4)
-			
-			'klik aksi edit data'
+
+            WebUI.delay(4)
+
+            'klik aksi edit data'
             WebUI.click(findTestObject('Object Repository/Edit Signer Data/button_AksiEditData'))
 
-			'Jika sudah ada header edit'
+            'Jika sudah ada header edit'
             if (WebUI.verifyElementPresent(findTestObject('Object Repository/Edit Signer Data/lbl_HeaderEdit'), GlobalVariable.TimeOut)) {
-				'Jika input menggunakan NIK'
-                if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Use input ?')).equalsIgnoreCase('NIK')) {
+                'Jika input menggunakan NIK'
+                if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Use input ?')).equalsIgnoreCase(
+                    'NIK')) {
                     'convert input menjadi SHA256'
-					emailOrNIKHash = convertSHA256(emailOrNIKExcel)
+                    emailOrNIKHash = convertSHA256(emailOrNIKExcel)
                 } else {
-					'email'
+                    'email'
                     emailOrNIKHash = emailOrNIKExcel.toString().toUpperCase()
                 }
                 
-				'mengambil return vendor dari UI sekaligus check result'
+                'mengambil return vendor dari UI sekaligus check result'
                 getVendor = resultCheck(conneSign, emailOrNIKHash)
 
-				'ambil hasil db sebelum edit'
+                'ambil hasil db sebelum edit'
                 ArrayList resultBefore = CustomKeywords.'connection.EditSignerData.getBeforeEditDataEditSignerData'(conneSign, 
                     emailOrNIKHash, GlobalVariable.Tenant, getVendor)
 
-				'Set Text nama'
+                'Set Text nama'
                 WebUI.setText(findTestObject('Object Repository/Edit Signer Data/input_NamaEditData'), findTestData(excelPathEditSignerData).getValue(
                         GlobalVariable.NumofColm, rowExcel('Nama')))
 
-				'Set text email'
+                'Set text email'
                 WebUI.setText(findTestObject('Object Repository/Edit Signer Data/input_EmailNewEditData'), findTestData(
                         excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Email')))
 
-				'Set text nomor telepon'
+                'Set text nomor telepon'
                 WebUI.setText(findTestObject('Object Repository/Edit Signer Data/input_noPhoneEditData'), findTestData(excelPathEditSignerData).getValue(
                         GlobalVariable.NumofColm, rowExcel('No Handphone')))
 
-				'Set text nomor ktp'
+                'Set text nomor ktp'
                 WebUI.setText(findTestObject('Object Repository/Edit Signer Data/input_noKtpEditData'), findTestData(excelPathEditSignerData).getValue(
                         GlobalVariable.NumofColm, rowExcel('No. KTP')))
 
-				'set text tanggal lahir'
+                'set text tanggal lahir'
                 WebUI.setText(findTestObject('Object Repository/Edit Signer Data/input_dateofBirthEditData'), findTestData(
                         excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Lahir')))
-				
-				'Jikak checkPagingConfirmationnya dapat return true'
+
+                'Jikak checkPagingConfirmationnya dapat return true'
                 if (checkPagingConfirmation() == true) {
                     'write to excel success'
-                    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
-                    0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-					
-					'delay update db selama 3'
-					WebUI.delay(3)
-					
-					'ambil value db mengenai hasil edit'
-                    ArrayList resultAfter = CustomKeywords.'connection.EditSignerData.getBeforeEditDataEditSignerData'(conneSign, 
-                    emailOrNIKHash, GlobalVariable.Tenant, getVendor)
+                    CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
+                        1, GlobalVariable.StatusSuccess)
 
-					'jika before sama dengan after'
+                    'delay update db selama 3'
+                    WebUI.delay(3)
+
+                    'ambil value db mengenai hasil edit'
+                    ArrayList resultAfter = CustomKeywords.'connection.EditSignerData.getBeforeEditDataEditSignerData'(conneSign, 
+                        emailOrNIKHash, GlobalVariable.Tenant, getVendor)
+
+                    'jika before sama dengan after'
                     if (resultBefore == resultAfter) {
-						'Write failed stored db'
+                        'Write failed stored db'
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                             GlobalVariable.StatusFailed, ((findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, 
                                 rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB) + ' pada Edit Data ')
-						
-						GlobalVariable.FlagFailed = 1
+
+                        GlobalVariable.FlagFailed = 1
                     }
                 } else {
-					'Jika tidak sama, maka continue'
-					continue
-				}	
+                    'Jika tidak sama, maka continue'
+                    continue
+                }
             }
-        }	else if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('Edit Aktivasi')) {
+        } else if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase(
+            'Edit Aktivasi')) {
             'Jika aksi edit aktivasi, click button Edit Aktivasi'
             WebUI.click(findTestObject('Object Repository/Edit Signer Data/button_AksiEditAktivasi'))
 
-			'Klik batal'
+            'Klik batal'
             WebUI.click(findTestObject('Object Repository/Edit Signer Data/button_Batal'))
 
-			'Search data menggunakan email'
+            'Search data menggunakan email'
             searchData(emailOrNIKExcel)
 
-			'Klik button edit aktivasi'
+            'Klik button edit aktivasi'
             WebUI.click(findTestObject('Object Repository/Edit Signer Data/button_AksiEditAktivasi'))
 
-			'Jika headernya muncul'
+            'Jika headernya muncul'
             if (WebUI.verifyElementPresent(findTestObject('Object Repository/Edit Signer Data/lbl_HeaderEdit'), GlobalVariable.TimeOut)) {
-                if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Use input ?')).equalsIgnoreCase('NIK')) {
+                if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Use input ?')).equalsIgnoreCase(
+                    'NIK')) {
                     'convert NIK menjadi SHA256'
-					emailOrNIKHash = convertSHA256(emailOrNIKExcel)
+                    emailOrNIKHash = convertSHA256(emailOrNIKExcel)
                 } else {
-					'email'
+                    'email'
                     emailOrNIKHash = emailOrNIKExcel.toString().toUpperCase()
                 }
                 
-				'mengambil return vendor dari UI'
+                'mengambil return vendor dari UI'
                 getVendor = resultCheck(conneSign, emailOrNIKHash)
 
-				'mengambil hasil aktivasi dari db'
+                'mengambil hasil aktivasi dari db'
                 String isActivate = CustomKeywords.'connection.EditSignerData.getStatusActivationEditSignerData'(conneSign, 
                     emailOrNIKHash, GlobalVariable.Tenant, getVendor)
 
@@ -174,7 +184,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         'Klik button input aktivasi'
                         WebUI.click(findTestObject('Object Repository/Edit Signer Data/slider_StatusAktivasiEditStatus'))
                     }
-                } else if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Aktivasi')) == 'No') {
+                } else if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Aktivasi')) == 
+                'No') {
                     'Jika input aktivasi no, namun kondisi sekarang Sudah Aktivasi'
                     if (isActivate == 'Sudah Aktivasi') {
                         'Klik button input aktivasi'
@@ -182,40 +193,39 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     }
                 }
                 
-				'jika check paging confirmation mendapat return true'
+                'jika check paging confirmation mendapat return true'
                 if (checkPagingConfirmation() == true) {
-					'Memberikan delay 3 sec untuk update db'
-					WebUI.delay(3)
-					
-					'Mengambil value db untuk update isActive setelah edit'
+                    'Memberikan delay 3 sec untuk update db'
+                    WebUI.delay(3)
+
+                    'Mengambil value db untuk update isActive setelah edit'
                     String isActivateAfter = CustomKeywords.'connection.EditSignerData.getStatusActivationEditSignerData'(
                         conneSign, emailOrNIKHash, GlobalVariable.Tenant, getVendor)
 
-					'Jika before dan after sama'
-                    if (isActivate.equals(isActivateAfter) == true) {
-						
-						GlobalVariable.FlagFailed = 1
-						
-						'Write excel failed store db'
+                    'Jika before dan after sama'
+                    if (isActivate == isActivateAfter) {
+                        GlobalVariable.FlagFailed = 1
+
+                        'Write excel failed store db'
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                             GlobalVariable.StatusFailed, ((findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, 
                                 rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB) + ' pada Edit Aktivasi')
                     }
                 } else {
-					'Jika tidak sama, maka continue'
-					continue
-				}
-            }			
-        } 
+                    'Jika tidak sama, maka continue'
+                    continue
+                }
+            }
+        }
+        
+        'call function verify after edit'
+        verifyAfterEdit()
 
-		'call function verify after edit'
-		verifyAfterEdit()
-		
-		if (GlobalVariable.FlagFailed == 0) {
-			'write to excel success'
-			CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0,
-					GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-		}
+        if (GlobalVariable.FlagFailed == 0) {
+            'write to excel success'
+            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
+                1, GlobalVariable.StatusSuccess)
+        }
     }
 }
 
@@ -226,43 +236,10 @@ def searchData(String emailOrNIKExcel) {
     WebUI.click(findTestObject('Edit Signer Data/button_Cari'))
 }
 
-def verifyPage(String email) {
-    if (WebUI.verifyElementPresent(findTestObject('Object Repository/Edit Signer Data/lbl_VendorValue'), GlobalVariable.TimeOut)) {
-        if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Use input ?')).equalsIgnoreCase('NIK')) {
-            emailOrNIKHash = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(email)
-        }
-		else {
-			emailOrNIKHash = email
-		}
-        
-        ArrayList result = CustomKeywords.'connection.EditSignerData.getEditSignerData'(conneSign, emailOrNIKHash, GlobalVariable.Tenant)
+def checkPaging(Connection conneSign) {
+    'click menu Edit Signer Data'
+    WebUI.click(findTestObject('Edit Signer Data/menu_Edit Signer Data'))
 
-        index = 0
-
-        'get row beranda'
-        rowBeranda = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-list-data-pengguna > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
-
-        'get row beranda'
-        colBeranda = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-list-data-pengguna > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-body-cell'))
-
-        for (i = 1; i >= rowBeranda.size(); i++) {
-            for (j = 1; j >= (colBeranda.size() - 1); j++) {
-                'modify object text document template name di beranda'
-                modifyObjectLblValue = WebUI.modifyObjectProperty(findTestObject('Edit Signer Data/lbl_VendorValue'), 'xpath', 
-                    'equals', ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-list-data-pengguna/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-                    i) + ']/datatable-body-row/div[2]/datatable-body-cell[') + j) + ']/div/p', true)
-
-                checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectLblValue), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), 
-                    ((' pada data ' + WebUI.getText(modifyObjectLblValue)) + ' dan ') + (result[(index - 1)]))
-            }
-        }
-    }
-}
-
-def checkPaging (Connection conneSign) {
-	'click menu Edit Signer Data'
-	WebUI.click(findTestObject('Edit Signer Data/menu_Edit Signer Data'))
-	
     targetEmailCheck = 'ANDY@AD-INS.COM'
 
     WebUI.setText(findTestObject('Object Repository/Edit Signer Data/input_loginid'), targetEmailCheck)
@@ -309,20 +286,23 @@ def checkPaging (Connection conneSign) {
         'click last page'
         WebUI.click(findTestObject('Edit Signer Data/button_LastPage'))
 
-		'get total data'
-		lastPage = Double.parseDouble(WebUI.getText(findTestObject('Edit Signer Data/label_TotalEditSignerData')).split(' ',-1)[0])/10
-		
-		'jika hasil perhitungan last page memiliki desimal'
-		if (lastPage.toString().contains('.0')) {
-			'tidak ada round up'
-			additionalRoundUp = 0
-		} else {
-			'round up dengan tambahan 0.5'
-			additionalRoundUp = 0.5
-		}
+        'get total data'
+        lastPage = (Double.parseDouble(WebUI.getText(findTestObject('Edit Signer Data/label_TotalEditSignerData')).split(
+                ' ', -1)[0]) / 10)
+
+        'jika hasil perhitungan last page memiliki desimal'
+        if (lastPage.toString().contains('.0')) {
+            'tidak ada round up'
+            additionalRoundUp = 0
+        } else {
+            'round up dengan tambahan 0.5'
+            additionalRoundUp = 0.5
+        }
+        
         'verify paging di last page'
         checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Edit Signer Data/paging_Page'), 'aria-label', 
-					FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage+additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+                    FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage + additionalRoundUp), 
+                false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'click first page'
         WebUI.click(findTestObject('Edit Signer Data/button_FirstPage'))
@@ -336,9 +316,9 @@ def checkPaging (Connection conneSign) {
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, ((findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
-            ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + reason)
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            ((findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
+            GlobalVariable.ReasonFailedVerifyEqualOrMatch) + reason)
 
         GlobalVariable.FlagFailed = 1
     }
@@ -351,9 +331,9 @@ def checkErrorLog() {
         errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
 
         'Tulis di excel itu adalah error'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
-                '-', '') + ';') + '<' + errormessage + '>')
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            (((findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+                '-', '') + ';') + '<') + errormessage) + '>')
 
         return true
     }
@@ -362,17 +342,19 @@ def checkErrorLog() {
 def checkPopup() {
     'Jika popup muncul'
     if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-       'label popup diambil'
-       lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
-       if (!(lblpopup.contains('Success'))) {
-          'Tulis di excel sebagai failed dan error.'
-          CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-          GlobalVariable.StatusFailed, (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
-          '-', '') + ';') + '<' + lblpopup + '>')
-       }
+        'label popup diambil'
+        lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
+
+        if (!(lblpopup.contains('Success'))) {
+            'Tulis di excel sebagai failed dan error.'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                (((findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+                    '-', '') + ';') + '<') + lblpopup) + '>')
+        }
         
         'Klik OK untuk popupnya'
         WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
+
         return true
     }
 }
@@ -380,16 +362,16 @@ def checkPopup() {
 def checkVerifyPaging(Boolean isMatch) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
-            ';') + GlobalVariable.ReasonFailedPaging)
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
+            GlobalVariable.ReasonFailedPaging)
 
         GlobalVariable.FlagFailed = 1
     }
 }
 
 def convertSHA256(String input) {
-    return CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(input)
+    CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(input)
 }
 
 def resultCheck(Connection conneSign, String emailOrNIKHash) {
@@ -408,15 +390,15 @@ def resultCheck(Connection conneSign, String emailOrNIKHash) {
     checkVerifyEqualOrMatch(WebUI.verifyMatch(resultCheck[index++], vendorUI, false, FailureHandling.CONTINUE_ON_FAILURE), 
         ' pada vendor di Edit Data ')
 
-    return vendorUI
+    vendorUI
 }
 
 def checkPagingConfirmation() {
     if (WebUI.verifyElementHasAttribute(findTestObject('Object Repository/Edit Signer Data/button_Update'), 'disabled', 
         GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
-            ';') + GlobalVariable.ReasonFailedSaveGagal)
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
+            GlobalVariable.ReasonFailedSaveGagal)
     } else {
         WebUI.click(findTestObject('Object Repository/Edit Signer Data/button_Update'))
 
@@ -428,8 +410,8 @@ def checkPagingConfirmation() {
         
         if (checkPopup() == true) {
             'write to excel success'
-            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, 
-                GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
+                1, GlobalVariable.StatusSuccess)
 
             return true
         }
@@ -437,32 +419,42 @@ def checkPagingConfirmation() {
 }
 
 def verifyAfterEdit() {
-	
-	'check if search dengan email/NIK'
-	if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Use input ?')).equalsIgnoreCase('Email') && findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Email')).length() > 0) {
-		emailOrNIKExcel = findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Email'))
-	} else if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Use input ?')).equalsIgnoreCase('NIK') && findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('No. KTP')).length() > 0) {
-		emailOrNIKExcel = findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('No. KTP'))
-	} else if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Use input ?')).equalsIgnoreCase('Email')) {
-		emailOrNIKExcel = findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('$Email'))
-	} else if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Use input ?')).equalsIgnoreCase('NIK')) {
-		emailOrNIKExcel = findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('$NIK'))
-	}
-	
-	'search data'
-	searchData(emailOrNIKExcel)
-	
-	if(findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Email')).length() > 0) {
-		'verify email yang berhasil di edit'
-		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Edit Signer Data/label_Email')), findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' email user')		
-	}
-	
-	if(findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Nama')).length() > 0) {
-		'verify nama yang berhasil di edit'
-		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Edit Signer Data/label_Nama')), findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Nama')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), ' nama user')
-	}
+    'check if search dengan email/NIK'
+    if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Use input ?')).equalsIgnoreCase(
+        'Email') && (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Email')).length() > 
+    0)) {
+        emailOrNIKExcel = findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Email'))
+    } else if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Use input ?')).equalsIgnoreCase(
+        'NIK') && (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('No. KTP')).length() > 
+    0)) {
+        emailOrNIKExcel = findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('No. KTP'))
+    } else if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Use input ?')).equalsIgnoreCase(
+        'Email')) {
+        emailOrNIKExcel = findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('$Email'))
+    } else if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Use input ?')).equalsIgnoreCase(
+        'NIK')) {
+        emailOrNIKExcel = findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('$NIK'))
+    }
+    
+    'search data'
+    searchData(emailOrNIKExcel)
+
+    if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Email')).length() > 0) {
+        'verify email yang berhasil di edit'
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Edit Signer Data/label_Email')), 
+                findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase(), 
+                false, FailureHandling.CONTINUE_ON_FAILURE), ' email user')
+    }
+    
+    if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Nama')).length() > 0) {
+        'verify nama yang berhasil di edit'
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Edit Signer Data/label_Nama')), 
+                findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Nama')).toUpperCase(), 
+                false, FailureHandling.CONTINUE_ON_FAILURE), ' nama user')
+    }
 }
 
 def rowExcel(String cellValue) {
-	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
+

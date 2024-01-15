@@ -16,27 +16,28 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     if (findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
     } else if (findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
-		'panggil fungsi login'
-		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathMasukan], FailureHandling.CONTINUE_ON_FAILURE)
+        'panggil fungsi login'
+        WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathMasukan], FailureHandling.CONTINUE_ON_FAILURE)
 
         'delay untuk nunggu alert error hilang'
         WebUI.delay(10)
 
         'click menu masukan'
         WebUI.click(findTestObject('Masukan/menu_Masukan'))
-		
-		if (findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
-			GlobalVariable.FlagFailed = 0
-		}
 
+        if (findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
+            GlobalVariable.FlagFailed = 0
+        }
+        
         'check if cell rating > 0'
         if (findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, rowExcel('$Rating')).length() > 0) {
             'get bintang dari excel untuk modify object bintang yang ingin di click'
-            index = (Integer.parseInt(findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, rowExcel('$Rating'))) * 2)
+            index = (Integer.parseInt(findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, rowExcel('$Rating'))) * 
+            2)
 
             'modify object button Bintang'
             modifyObjectButtonBintang = WebUI.modifyObjectProperty(findTestObject('Masukan/button_RatingBintang'), 'xpath', 
-                'equals', ('//*[@id="rating"]/span[' + index.toString()) + ']/span', true)
+                'equals', ('//*[@id="rating"]/span[' + index) + ']/span', true)
 
             'click bintang'
             WebUI.click(modifyObjectButtonBintang)
@@ -50,7 +51,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         WebUI.click(findTestObject('Masukan/button_Kirim'))
 
         'declare isMmandatory Complete'
-        int isMandatoryComplete = Integer.parseInt(findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, rowExcel('Is Mandatory Complete')))
+        int isMandatoryComplete = Integer.parseInt(findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, rowExcel(
+                    'Is Mandatory Complete')))
 
         'check if alert berhasil muncul'
         if (WebUI.verifyElementPresent(findTestObject('Masukan/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
@@ -71,7 +73,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         (isMandatoryComplete > 0)) {
             'write to excel status failed dan reason'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + GlobalVariable.ReasonFailedMandatory)
+                (findTestData(excelPathMasukan).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', 
+                    '') + ';') + GlobalVariable.ReasonFailedMandatory)
         }
         
         'close Browser'
@@ -80,5 +83,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 }
 
 def rowExcel(String cellValue) {
-	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
+
