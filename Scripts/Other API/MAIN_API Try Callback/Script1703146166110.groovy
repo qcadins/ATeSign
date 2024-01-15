@@ -1,6 +1,7 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.model.FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import java.sql.Connection as Connection
@@ -13,7 +14,6 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 int countColmExcel = findTestData(excelPath).columnNumbers
 
 for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
-
     String status = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status'))
 
     if (status == '') {
@@ -42,7 +42,7 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; (Glob
             respon = WS.sendRequest(findTestObject('Postman/tryCallback', [('callerId') : findTestData(excelPath).getValue(
                             GlobalVariable.NumofColm, rowExcel('username'))]))
 
-            elapsedTime = (respon.elapsedTime / 1000) + ' seconds'
+            elapsedTime = ((respon.elapsedTime / 1000) + ' seconds')
 
             responseBody = respon.responseBodyContent
 
@@ -53,7 +53,7 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; (Glob
                 1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
 
             if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL)) {
-                def statusCode = WS.getElementPropertyValue(respon, 'status.code')
+                statusCode = WS.getElementPropertyValue(respon, 'status.code')
 
                 if (statusCode == 0) {
                     if (GlobalVariable.checkStoreDB == 'Yes') {
@@ -106,9 +106,9 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; (Glob
             getErrorMessageAPI(responLogin)
         }
     }
-} 
+}
 
-def getErrorMessageAPI(def respon) {
+def getErrorMessageAPI(ResponseObject respon) {
     message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
