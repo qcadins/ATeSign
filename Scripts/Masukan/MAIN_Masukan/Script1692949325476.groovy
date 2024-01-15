@@ -37,7 +37,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
             'modify object button Bintang'
             modifyObjectButtonBintang = WebUI.modifyObjectProperty(findTestObject('Masukan/button_RatingBintang'), 'xpath', 
-                'equals', ('//*[@id="rating"]/span[' + index) + ']/span', true)
+                'equals', '//*[@id="rating"]/span[' + index + ']/span', true)
 
             'click bintang'
             WebUI.click(modifyObjectButtonBintang)

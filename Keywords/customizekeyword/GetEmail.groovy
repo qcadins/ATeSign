@@ -51,7 +51,7 @@ public class GetEmail {
 
 		// Pastikan content adalah instance dari MimeMultipart
 		if (content instanceof MimeMultipart) {
-			def mimeMultipart = content as MimeMultipart
+			MimeMultipart mimeMultipart = content
 
 			StringBuilder bodyText = new StringBuilder()
 
