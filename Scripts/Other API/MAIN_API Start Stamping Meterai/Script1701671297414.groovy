@@ -43,6 +43,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.token = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Token'))
         }
         
+		'ubah vendor stamping jika diperlukan '
+		if ((findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')).length() >
+		0) && (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')) !=
+		'No')) {
+			'ambil idLov untuk diupdate secara otomatis ke DB'
+			int idLov = CustomKeywords.'connection.ManualStamp.getIdLovVendorStamping'(conneSign, findTestData(excelPath).getValue(
+					GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')))
+
+			'lakukan update vendor stamping yang akan dipakai'
+			CustomKeywords.'connection.UpdateData.updateVendorStamping'(conneSign, idLov)
+		}
+	
         'HIT API Login untuk token : andy@ad-ins.com'
         respon = WS.sendRequest(findTestObject('Postman/Start Stamping Meterai', [('tenantCode') : findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('tenantCode')), ('refNumber') : findTestData(excelPath).getValue(
@@ -126,17 +138,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             
                             WebUI.comment('Balance Mutation : ' + inquiryDB.toString().replace('[', '').replace(']', ''))
 
-                            arrayMatch.add(WebUI.verifyMatch(inquiryDB[4], findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                            arrayMatch.add(WebUI.verifyMatch(inquiryDB[5], findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                                         rowExcel('refNumber')).toString().toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                            arrayMatch.add(WebUI.verifyMatch(inquiryDB[8], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
+                            arrayMatch.add(WebUI.verifyMatch(inquiryDB[9], '-' + totalMateraiAndTotalStamping[0].toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
-							ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getOfficeRegionBlineCodeUsingRefNum'(conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')))
-							
+							ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(
+								conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')), 'Stamping')
+
 							'lakukan loop untuk pengecekan data'
-							for (int i = 0; i < (officeRegionBline.size() / 3); i++) {
+							for (int i = 0; i < (officeRegionBline.size() / 2); i++) {
 								'verify business line dan office code'
-								arrayMatch.add(WebUI.verifyMatch(officeRegionBline[i].toString(), officeRegionBline[i+3].toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+								arrayMatch.add(WebUI.verifyMatch((officeRegionBline[i]).toString(), (officeRegionBline[(i +
+										3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
 							}
 							
                             'jika data db tidak bertambah'

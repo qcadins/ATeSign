@@ -27,7 +27,7 @@ GlobalVariable.FlagFailed = 0
 'Inisialisasi otp, photo, ipaddress, dan total signed sebelumnya yang dikosongkan'
 String otp, photo, ipaddress
 
-ArrayList totalSignedBefore = [], totalSignedAfter = [], officeRegionBline = []
+ArrayList totalSignedBefore = [], totalSignedAfter = []
 
 'setting menggunakan base url yang benar atau salah'
 CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPISignDocument, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url (Sign External)'))
@@ -349,12 +349,14 @@ if (otp.length() >= 0) {
                 if ((totalSignedAfter[0]) == ((totalSignedBefore[0]) + Integer.parseInt(signCount))) {
                     WebUI.verifyEqual(totalSignedAfter[0], (totalSignedBefore[0]) + Integer.parseInt(signCount), FailureHandling.CONTINUE_ON_FAILURE)
 
-					officeRegionBline = CustomKeywords.'connection.DataVerif.getOfficeRegionBlineCodeUsingRefNum'(conneSign, CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, GlobalVariable.storeVar.keySet()[[0]]))
-					
+					ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(
+						conneSign,  CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, GlobalVariable.storeVar.keySet()[[0]]), 'Signing')
+			
 					'lakukan loop untuk pengecekan data'
-					for (int i = 0; i < (officeRegionBline.size() / 3); i++) {
+					for (int a = 0; a < (officeRegionBline.size() / 2); a++) {
 						'verify business line dan office code'
-						checkVerifyEqualOrMatch(WebUI.verifyMatch(officeRegionBline[i].toString(), officeRegionBline[i+3].toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada Office, Region, atau Business Line Document ')
+						checkVerifyEqualOrMatch(WebUI.verifyMatch((officeRegionBline[a]).toString(), (officeRegionBline[(a +
+								3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE), 'Pada Pengecekan Office dan Business Line')
 					}
 					
                     if (GlobalVariable.FlagFailed == 0) {

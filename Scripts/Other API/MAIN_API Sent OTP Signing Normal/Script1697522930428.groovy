@@ -152,9 +152,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                                 'OTP') - 1, GlobalVariable.NumofColm - 1, newOTP)
 
                         if (GlobalVariable.checkStoreDB == 'Yes') {
-                            officeRegionBline = CustomKeywords.'connection.DataVerif.getOfficeRegionBlineCodeUsingRefNum'(
-                                conneSign, CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('$documentId'))))
-							println officeRegionBline
+                            ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(
+                                conneSign, CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('$documentId'))), 'Signing')
+
                             'lakukan loop untuk pengecekan data'
                             for (int i = 0; i < (officeRegionBline.size() / 3); i++) {
                                 'verify business line dan office code'

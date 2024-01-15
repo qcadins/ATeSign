@@ -50,6 +50,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
         GlobalVariable.FlagFailed = 0
 
+		'ubah vendor stamping jika diperlukan '
+		if ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')).length() >
+		0) && (findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')) !=
+		'No')) {
+			'ambil idLov untuk diupdate secara otomatis ke DB'
+			int idLov = CustomKeywords.'connection.ManualStamp.getIdLovVendorStamping'(conneSign, findTestData(excelPathStamping).getValue(
+					GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')))
+
+			'lakukan update vendor stamping yang akan dipakai'
+			CustomKeywords.'connection.UpdateData.updateVendorStamping'(conneSign, idLov)
+		}
+		
         'HIT API stamping'
         respon = WS.sendRequest(findTestObject('Postman/Stamping', [('callerId') : findTestData(excelPathStamping).getValue(
                         GlobalVariable.NumofColm, rowExcel('callerId')), ('refNumber') : findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 
@@ -68,7 +80,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             GlobalVariable.NumofColm, rowExcel('refNumber')).replace('"', ''))
 
                     'jika proses materai gagal (51)'
-                    if (prosesMaterai == 51) {
+                    if (prosesMaterai == 51 | prosesMaterai == 61) {
 						
 						'Diberikan delay 3 detik untuk update error message pada db'
 						WebUI.delay(3)
@@ -83,7 +95,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         GlobalVariable.FlagFailed = 1
 
                         break
-                    } else if (prosesMaterai == 53) {
+                    } else if (prosesMaterai == 53 || prosesMaterai == 63) {
                         'Jika proses meterai sukses (53), berikan delay 3 sec untuk update di db'
                         WebUI.delay(3)
 
@@ -99,6 +111,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         arrayMatch.add(WebUI.verifyMatch(totalMateraiAndTotalStamping[0], totalMateraiAndTotalStamping[1], 
                                 false, FailureHandling.CONTINUE_ON_FAILURE))
 
+						ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(
+							conneSign, findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')), 'Stamping')
+
+						'lakukan loop untuk pengecekan data'
+						for (int i = 0; i < (officeRegionBline.size() / 2); i++) {
+							'verify business line dan office code'
+							arrayMatch.add(WebUI.verifyMatch((officeRegionBline[i]).toString(), (officeRegionBline[(i +
+									3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+						}
+						
                         'jika data db tidak bertambah'
                         if (arrayMatch.contains(false)) {
                             'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'

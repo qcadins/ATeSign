@@ -102,7 +102,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			respon_OTP = WS.sendRequest(findTestObject('APIFullService/Postman/Sent Otp Signing', [('callerId') : findTestData(
 							excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('phoneNo') : findTestData(
 							excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('phoneNo')), ('email') : findTestData(excelPathAPISignDocument).getValue(
-							GlobalVariable.NumofColm, rowExcel('email')), ('refnumber') : '"' + refNumber + '"',('listDocumentId') : findTestData(excelPathAPISignDocument).getValue(
+							GlobalVariable.NumofColm, rowExcel('email')), ('refnumber') : refNumber, ('listDocumentId') : findTestData(excelPathAPISignDocument).getValue(
 						GlobalVariable.NumofColm, rowExcel('$documentid')).replace('[','').replace(']',''), ('vendor') : '"' + vendor + '"']))
 
 			'Jika status HIT API 200 OK'
@@ -237,7 +237,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 						if ((totalSignedAfter[x]) == ((totalSignedBefore[x]) + Integer.parseInt(signCount))) {
 							WebUI.verifyEqual(totalSignedAfter[x], (totalSignedBefore[x]) + Integer.parseInt(signCount),
 								FailureHandling.CONTINUE_ON_FAILURE)
-
+							
 							'write to excel success'
 							CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet,
 								0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
@@ -350,6 +350,18 @@ def responseAPIStoreDB(Connection conneSign, String ipaddress, String[] document
 
 		'verify tenant'
 		arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], GlobalVariable.Tenant, false, FailureHandling.CONTINUE_ON_FAILURE))
+		
+		ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(
+			conneSign, CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, documentId[i]), 'Signing')
+
+		WebUI.comment(officeRegionBline.toString())
+		
+		'lakukan loop untuk pengecekan data'
+		for (int a = 0; a < (officeRegionBline.size() / 2); a++) {
+			'verify business line dan office code'
+			arrayMatch.add(WebUI.verifyMatch((officeRegionBline[a]).toString(), (officeRegionBline[(a +
+					3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+		}
 	}
 	
 	'jika data db tidak sesuai dengan excel'

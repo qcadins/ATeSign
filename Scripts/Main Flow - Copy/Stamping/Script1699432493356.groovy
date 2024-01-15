@@ -145,12 +145,14 @@ prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, 
 
 						GlobalVariable.eSignData.putAt('VerifikasiMeterai', GlobalVariable.eSignData.getAt('VerifikasiMeterai') + Integer.parseInt(totalMateraiAndTotalStamping[0]))
 
-						ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getOfficeRegionBlineCodeUsingRefNum'(conneSign, nomorKontrakDocument)
-						
+						ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(
+							conneSign, nomorKontrakDocument, 'Stamping')
+
 						'lakukan loop untuk pengecekan data'
-						for (int i = 0; i < (officeRegionBline.size() / 3); i++) {
+						for (int i = 0; i < (officeRegionBline.size() / 2); i++) {
 							'verify business line dan office code'
-							arrayMatch.add(WebUI.verifyMatch(officeRegionBline[i].toString(), officeRegionBline[i+3].toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+							arrayMatch.add(WebUI.verifyMatch((officeRegionBline[i]).toString(), (officeRegionBline[(i +
+									3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
 						}
 						
                         'jika data db tidak bertambah'

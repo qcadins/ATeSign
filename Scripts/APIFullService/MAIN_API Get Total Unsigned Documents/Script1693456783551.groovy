@@ -28,6 +28,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		'get psre dari excel per case'
 		GlobalVariable.Psre = findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
 		
+		'check ada value maka setting email service tenant'
+		if (findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')).length() >
+		0) {
+			String SHA256IdNo = ''
+			
+			if (findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('phoneNo')) != '') {
+				SHA256IdNo = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('phoneNo')))
+			} else if (findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('email')) != '') {
+				SHA256IdNo = findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('email'))
+			}
+				'setting email service tenant'
+				CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(
+						excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')),
+					SHA256IdNo)
+		}
+		
         'check if tidak mau menggunakan tenant code yang benar'
         if (findTestData(excelPathAPIGetTotalUnsignedDocuments).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code')) == 'No') {
             'set tenant kosong'

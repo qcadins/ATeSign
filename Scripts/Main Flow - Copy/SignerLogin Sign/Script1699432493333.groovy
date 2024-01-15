@@ -41,7 +41,7 @@ ArrayList listOTP = []
 
 ArrayList arrayMatch = []
 
-ArrayList loopingEmailSigner = [], officeRegionBline = []
+ArrayList loopingEmailSigner = []
 
 'declare arrayindex'
 arrayIndex = 0
@@ -682,6 +682,18 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
                                         rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedProcessNotDone)
                             }
                         } else {
+							ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(
+								conneSign,  CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, GlobalVariable.storeVar.keySet()[[0]]), 'Signing')
+					
+							WebUI.comment(officeRegionBline.toString())
+							
+							'lakukan loop untuk pengecekan data'
+							for (int a = 0; a < (officeRegionBline.size() / 2); a++) {
+								'verify business line dan office code'
+								checkVerifyEqualorMatch(WebUI.verifyMatch((officeRegionBline[a]).toString(), (officeRegionBline[(a +
+										3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE), 'Pada Pengecekan Office dan Business Line')
+							}
+							
                             'Jika hasil store dbnya true, maka'
                             break
                         }

@@ -280,14 +280,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                 index = 0
 
                                 ArrayList<String> arrayMatch = []
-								
-								ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getOfficeRegionBlineCodeUsingRefNum'(conneSign, findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))
-								
-								'lakukan loop untuk pengecekan data'
-								for (int i = 0; i < (officeRegionBline.size() / 3); i++) {
-									'verify business line dan office code'
-									arrayMatch.add(WebUI.verifyMatch(officeRegionBline[i].toString(), officeRegionBline[i+3].toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
-								}
 
                                 'verify ref number'
                                 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
@@ -358,7 +350,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                             saldoAfter = loginAdminGetSaldo(conneSign, 'No', sheet)
 
-							if(prosesMeterai == 'Success') {								
+							if(prosesMeterai == 'Success') {	
+								arrayMatch = []
+								
+								ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(
+									conneSign, findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')), 'Stamping')
+	
+								'lakukan loop untuk pengecekan data'
+								for (int i = 0; i < (officeRegionBline.size() / 2); i++) {
+									'verify business line dan office code'
+									arrayMatch.add(WebUI.verifyMatch((officeRegionBline[i]).toString(), (officeRegionBline[(i +
+											3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+								}
+								
 	                            if (saldoBefore == saldoAfter) {
 	                                'write to excel status failed dan reason'
 	                                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
@@ -898,6 +902,9 @@ def verifySaldoUsed(Connection conneSign, String sheet) {
 	
 	'Input office name'
 	WebUI.setText(findTestObject('Saldo/input_officeName'), officeName)
+	
+	'Input office name'
+	WebUI.sendKeys(findTestObject('Saldo/input_officeName'), Keys.chord(Keys.ENTER))
 
     'Klik cari'
     WebUI.click(findTestObject('Saldo/btn_cari'))
