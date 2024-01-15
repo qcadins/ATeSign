@@ -24,19 +24,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathUpdateData, GlobalVariable.NumofColm, rowExcel(
                 'Use Correct Base Url'))
 
-        'check if tidak mau menggunakan tenant code yang benar'
-        if (findTestData(excelPathUpdateData).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 
-        'No') {
-            'set tenant kosong'
-            GlobalVariable.Tenant = (('"' + findTestData(excelPathUpdateData).getValue(GlobalVariable.NumofColm, rowExcel(
-                    'Wrong tenant Code'))) + '"')
-        } else if (findTestData(excelPathUpdateData).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 
-        'Yes') {
             'get tenant per case dari colm excel'
             GlobalVariable.Tenant = (('"' + findTestData(excelPathUpdateData).getValue(GlobalVariable.NumofColm, rowExcel(
-                    'Tenant Login'))) + '"')
-        }
-        
+                    'tenantCode'))) + '"')
+
         'Pembuatan pengisian variable di sendRequest per column berdasarkan data excel.'
         ArrayList listInvitation = []
 

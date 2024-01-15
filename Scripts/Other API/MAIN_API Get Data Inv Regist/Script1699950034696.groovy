@@ -27,14 +27,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		'setting menggunakan base url yang benar atau salah'
 		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathGetInvData, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 	
-		'check if tidak mau menggunakan tenant code yang benar'
-		if (findTestData(excelPathGetInvData).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'No') {
-			'set tenant kosong'
-			GlobalVariable.Tenant = '"' + findTestData(excelPathGetInvData).getValue(GlobalVariable.NumofColm, rowExcel('Wrong tenant Code')) + '"'
-		} else if (findTestData(excelPathGetInvData).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'Yes') {
-			'get tenant per case dari colm excel'
-			GlobalVariable.Tenant = '"' + findTestData(excelPathGetInvData).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login')) + '"'
-		}
+		'get tenant per case dari colm excel'
+		GlobalVariable.Tenant = '"' + findTestData(excelPathGetInvData).getValue(GlobalVariable.NumofColm, rowExcel('tenantCode')) + '"'
 		
 		'HIT API Login untuk ambil bearer token'
 		respon_login = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData(excelPathGetInvData).getValue(GlobalVariable.NumofColm, rowExcel('username'))

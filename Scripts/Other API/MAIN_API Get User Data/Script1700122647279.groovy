@@ -28,23 +28,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		'setting menggunakan base url yang benar atau salah'
 		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
-		'check if tidak mau menggunakan vendor code yang benar'
-		if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Vendor Code')) == 'No') {
-			'set vendor kosong'
-			GlobalVariable.Psre = '"' + findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Vendor Code')) + '"'
-		} else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Vendor Code')) == 'Yes') {
-			'get vendor per case dari colm excel'
-			GlobalVariable.Psre = '"' + findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Vendor Code')) + '"'
-		}
-		
-		'check if tidak mau menggunakan tenant code yang benar'
-		if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'No') {
-			'set tenant kosong'
-			GlobalVariable.Tenant = '"' + findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong tenant Code')) + '"'
-		} else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'Yes') {
-			'get tenant per case dari colm excel'
-			GlobalVariable.Tenant = '"' + findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login')) + '"'
-		}
+		'get vendor per case dari colm excel'
+		GlobalVariable.Psre = '"' + findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('vendorCode')) + '"'
+
+		'get tenant per case dari colm excel'
+		GlobalVariable.Tenant = '"' + findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('tenantCode')) + '"'
 		
 		'HIT API Login untuk token : andy@ad-ins.com'
 		respon_login = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('username'))
