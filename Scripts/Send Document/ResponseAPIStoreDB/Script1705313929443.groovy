@@ -100,120 +100,113 @@ idPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 42)
 
 signerSelfPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 43)
 
-docid = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 6).replace('[', '').replace(']', '').split(', ', -1)
+docid = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 6).replace('[', '').replace(']', '').split(', ', 
+    -1)
 
 for (int i = 0; i < docid.size(); i++) {
-	'Split result dari signerType per signer berdasarkan excel yang telah displit per dokumen. '
-	signerTypeExcel = (signerType[i]).replace('"', '').split(semicolon, splitnum)
+    'Split result dari signerType per signer berdasarkan excel yang telah displit per dokumen. '
+    signerTypeExcel = (signerType[i]).replace('"', '').split(semicolon, splitnum)
 
-	'Splitting email berdasarkan excel per dokumen'
-	emailExcel = (email[i]).replace('"', '').split(semicolon, splitnum)
+    'Splitting email berdasarkan excel per dokumen'
+    emailExcel = (email[i]).replace('"', '').split(semicolon, splitnum)
 
-	'get current date'
-	currentDate = new Date().format('yyyy-MM-dd')
-	
-	'get data API Send Document dari DB (hanya 1 signer)'
-	ArrayList result = CustomKeywords.'connection.SendSign.getSendDoc'(conneSign, docid[i])
+    'get current date'
+    currentDate = new Date().format('yyyy-MM-dd')
 
-	'Mengambil email berdasarkan documentId'
-	ArrayList emailSigner = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, docid[i]).split(';', -1)
+    'get data API Send Document dari DB (hanya 1 signer)'
+    ArrayList result = CustomKeywords.'connection.SendSign.getSendDoc'(conneSign, docid[i])
 
-	for(int r = 0 ; r < emailExcel.size() ; r++) {
-		if ((emailExcel[r]) == '') {
-			'Splitting email berdasarkan excel per dokumen'
-			idKtpExcel = (idKtp[i]).replace('"', '').split(semicolon, splitnum)
+    'Mengambil email berdasarkan documentId'
+    ArrayList emailSigner = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, docid[i]).split(';', -1)
 
-			(emailExcel[r]) = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(idKtpExcel[r])
-		}
-  
-		ArrayList resultStoreEmailandType = CustomKeywords.'connection.SendSign.getSendDocForEmailAndSignerType'(conneSign, docid[i], emailExcel[r])
-		
-		if (resultStoreEmailandType.size() > 1) {
-			'declare arrayindex'
-			arrayindex = 0
+    for (int r = 0; r < emailExcel.size(); r++) {
+        if ((emailExcel[r]) == '') {
+            'Splitting email berdasarkan excel per dokumen'
+            idKtpExcel = (idKtp[i]).replace('"', '').split(semicolon, splitnum)
 
-			'verify email'
-			arrayMatch.add(WebUI.verifyMatch(emailExcel[r], resultStoreEmailandType[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+            (emailExcel[r]) = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(idKtpExcel[r])
+        }
+        
+        ArrayList resultStoreEmailandType = CustomKeywords.'connection.SendSign.getSendDocForEmailAndSignerType'(conneSign, 
+            docid[i], emailExcel[r])
 
-			'verify signerType'
-			arrayMatch.add(WebUI.verifyMatch(signerTypeExcel[r], resultStoreEmailandType[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+        if (resultStoreEmailandType.size() > 1) {
+            'declare arrayindex'
+            arrayindex = 0
 
-			'Get value db mengenai seq Number berdasarkan signer type dan doc template'
-			seqNoBasedOnDocTemplate = CustomKeywords.'connection.APIFullService.getSeqNoBasedOnDocTemplate'(conneSign,
-			(documentTemplateCode[i]).replace('"', ''), resultStoreEmailandType[(arrayindex - 1)])
+            'verify email'
+            arrayMatch.add(WebUI.verifyMatch(emailExcel[r], resultStoreEmailandType[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-			'verify sequence number'
-			arrayMatch.add(WebUI.verifyMatch(seqNoBasedOnDocTemplate.toString(), resultStoreEmailandType[arrayindex++],
-			false, FailureHandling.CONTINUE_ON_FAILURE))
-		}		
-	}
-	'declare array index'
-	arrayindex = 0
+            'verify signerType'
+            arrayMatch.add(WebUI.verifyMatch(signerTypeExcel[r], resultStoreEmailandType[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+
+            'Get value db mengenai seq Number berdasarkan signer type dan doc template'
+            seqNoBasedOnDocTemplate = CustomKeywords.'connection.APIFullService.getSeqNoBasedOnDocTemplate'(conneSign, (documentTemplateCode[
+                i]).replace('"', ''), resultStoreEmailandType[(arrayindex - 1)])
+
+            'verify sequence number'
+            arrayMatch.add(WebUI.verifyMatch(seqNoBasedOnDocTemplate.toString(), resultStoreEmailandType[arrayindex++], 
+                    false, FailureHandling.CONTINUE_ON_FAILURE))
+        }
+    }
+    
+    'declare array index'
+    arrayindex = 0
 
     'verify tenant code'
-    arrayMatch.add(WebUI.verifyMatch(tenantCode.replace('"',''),result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+    arrayMatch.add(WebUI.verifyMatch(tenantCode.replace('"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify ref_number'
-    arrayMatch.add(WebUI.verifyMatch(refNo.replace('"', ''),result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+    arrayMatch.add(WebUI.verifyMatch(refNo.replace('"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify document_id'
     arrayMatch.add(WebUI.verifyMatch(docid[i], result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify document template code'
-    arrayMatch.add(WebUI.verifyMatch(documentTemplateCode[i].replace('"', ''), 
-            result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+    arrayMatch.add(WebUI.verifyMatch((documentTemplateCode[i]).replace('"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify office code'
-    arrayMatch.add(WebUI.verifyMatch(officeCode[i].replace('"', ''), 
-            result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+    arrayMatch.add(WebUI.verifyMatch((officeCode[i]).replace('"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify office name'
-    arrayMatch.add(WebUI.verifyMatch(officeName[i].replace('"', ''), 
-            result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+    arrayMatch.add(WebUI.verifyMatch((officeName[i]).replace('"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify region code'
-    arrayMatch.add(WebUI.verifyMatch(regionCode[i].replace('"', ''), 
-            result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+    arrayMatch.add(WebUI.verifyMatch((regionCode[i]).replace('"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify region name'
-    arrayMatch.add(WebUI.verifyMatch(regionName[i].replace('"', ''), 
-            result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+    arrayMatch.add(WebUI.verifyMatch((regionName[i]).replace('"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify business line code'
-    arrayMatch.add(WebUI.verifyMatch(businessLineCode[i].replace('"', ''), 
-            result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+    arrayMatch.add(WebUI.verifyMatch((businessLineCode[i]).replace('"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify business line name'
-    arrayMatch.add(WebUI.verifyMatch(businessLineName[i].replace('"', ''), 
-            result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+    arrayMatch.add(WebUI.verifyMatch((businessLineName[i]).replace('"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify is sequence'
-    arrayMatch.add(WebUI.verifyMatch(isSequence[i].replace('"', ''), 
-            result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-	'get data psre code'
-	String psreCodeDB = CustomKeywords.'connection.SendSign.getVendorCodeUsingDocId'(conneSign, docid[i])
+    arrayMatch.add(WebUI.verifyMatch((isSequence[i]).replace('"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-	'verify psre Code'
-	arrayMatch.add(WebUI.verifyMatch(psreCodeDB, result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-	
+    'get data psre code'
+    String psreCodeDB = CustomKeywords.'connection.SendSign.getVendorCodeUsingDocId'(conneSign, docid[i])
+
+    'verify psre Code'
+    arrayMatch.add(WebUI.verifyMatch(psreCodeDB, result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+
     'verify success url'
-    arrayMatch.add(WebUI.verifyMatch(successURL[i].replace('"', ''), 
-            result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+    arrayMatch.add(WebUI.verifyMatch((successURL[i]).replace('"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify upload url'
-    arrayMatch.add(WebUI.verifyMatch(uploadURL[i].replace('"', ''), 
-            result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-	'verify total document'
-	arrayMatch.add(WebUI.verifyEqual(docid.size(),Integer.parseInt(result[arrayindex++]), FailureHandling.CONTINUE_ON_FAILURE))
+    arrayMatch.add(WebUI.verifyMatch((uploadURL[i]).replace('"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+
+    'verify total document'
+    arrayMatch.add(WebUI.verifyEqual(docid.size(), Integer.parseInt(result[arrayindex++]), FailureHandling.CONTINUE_ON_FAILURE))
 
     'Looping berdasarkan jumlah dari signAction'
     for (int z = 0; z < signAction.size(); z++) {
         'Jika signAction tersebut adalah AT'
         if ((signAction[z]).replace('"', '') == 'at') {
             'Mengambil emailSign dari excel dan displit kembali'
-            emailSign = idKtp[i].split(semicolon, splitnum)[z]
+            emailSign = ((idKtp[i]).split(semicolon, splitnum)[z])
 
             'Mengambil trxno dari column tersebut'
             trxno = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 7)

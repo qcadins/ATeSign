@@ -1,12 +1,8 @@
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import java.sql.Connection as Connection
-import org.openqa.selenium.By as By
-import org.openqa.selenium.Keys as Keys
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
-import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 
@@ -32,16 +28,16 @@ if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
 }
 
 if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 SelfPhoto')) == 'Yes') {
-    selfPhoto = (CustomKeywords.'customizekeyword.ConvertFile.base64File'(findTestData(excelPathRegister).getValue(
-            GlobalVariable.NumofColm, rowExcel('selfPhoto'))))
+    selfPhoto = CustomKeywords.'customizekeyword.ConvertFile.base64File'(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+            rowExcel('selfPhoto')))
 } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 SelfPhoto')) == 
 'No') {
     selfPhoto = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('selfPhoto'))
 }
 
 if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 IdPhoto')) == 'Yes') {
-    idPhoto = (CustomKeywords.'customizekeyword.ConvertFile.base64File'(findTestData(excelPathRegister).getValue(
-            GlobalVariable.NumofColm, rowExcel('idPhoto'))))
+    idPhoto = CustomKeywords.'customizekeyword.ConvertFile.base64File'(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+            rowExcel('idPhoto')))
 } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 IdPhoto')) == 
 'No') {
     idPhoto = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('idPhoto'))
@@ -53,11 +49,11 @@ respon = WS.sendRequest(findTestObject('APIFullService/Postman/Register', [('cal
                 GlobalVariable.NumofColm, rowExcel('PsreInput')), ('nama') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
                 rowExcel('$Nama')), ('email') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
                     '$Email')), ('tmpLahir') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-                    'Tempat Lahir')), ('tglLahir') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-                    'Tanggal Lahir')), ('jenisKelamin') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+                    'Tempat Lahir')), ('tglLahir') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+                rowExcel('Tanggal Lahir')), ('jenisKelamin') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
                 rowExcel('Jenis Kelamin')), ('tlp') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-                rowExcel('No Telepon')), ('idKtp') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-                    '$NIK')), ('alamat') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
+                rowExcel('No Telepon')), ('idKtp') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+                rowExcel('$NIK')), ('alamat') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
                     'Alamat')), ('kecamatan') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
                     'Kecamatan')), ('kelurahan') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
                     'Kelurahan')), ('kota') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
@@ -74,20 +70,20 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
     'declare arraylist arraymatch'
     arrayMatch = []
 
-	'ambil lama waktu yang diperlukan hingga request menerima balikan'
-	def elapsedTime = (respon.getElapsedTime()) / 1000 + ' second'
-	
-	'ambil body dari hasil respons'
-	responseBody = respon.getResponseBodyContent()
-	
-	'panggil keyword untuk proses beautify dari respon json yang didapat'
-	CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1,
-		findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
-	
-	'write to excel response elapsed time'
-	CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 1, GlobalVariable.NumofColm -
-		1, elapsedTime.toString())
-	
+    'ambil lama waktu yang diperlukan hingga request menerima balikan'
+    elapsedTime = (respon.elapsedTime / 1000) + ' second'
+
+    'ambil body dari hasil respons'
+    responseBody = respon.responseBodyContent
+
+    'panggil keyword untuk proses beautify dari respon json yang didapat'
+    CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(excelPathRegister).getValue(
+            GlobalVariable.NumofColm, rowExcel('Scenario')))
+
+    'write to excel response elapsed time'
+    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 
+        1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+
     if (code == 0) {
         'mengambil response'
         trxNo = WS.getElementPropertyValue(respon, 'trxNo', FailureHandling.OPTIONAL)
@@ -95,23 +91,25 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         email = WS.getElementPropertyValue(respon, 'email', FailureHandling.OPTIONAL)
 
         psreCode = WS.getElementPropertyValue(respon, 'psreCode', FailureHandling.OPTIONAL)
-		
+
         println(trxNo)
 
         if (GlobalVariable.checkStoreDB == 'Yes') {
-			'check if email kosong atau tidak'
-			if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 2) {
-				email = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', '')
-			} else {
-				'get name + email hosting'
-				email = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"', '') + CustomKeywords.'connection.DataVerif.getEmailHosting'(conneSign)
-			}
-			
+            'check if email kosong atau tidak'
+            if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 2) {
+                email = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', 
+                    '')
+            } else {
+                'get name + email hosting'
+                email = (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"', 
+                    '') + CustomKeywords.'connection.DataVerif.getEmailHosting'(conneSign))
+            }
+            
             'get psre Registered'
             String resultVendorRegistered = CustomKeywords.'connection.APIFullService.getRegisteredVendor'(conneSign, email)
 
-            ArrayList<String> resultTrx = CustomKeywords.'connection.APIFullService.getAPIRegisterTrx'(conneSign, trxNo[
-                0], trxNo[1])
+            ArrayList resultTrx = CustomKeywords.'connection.APIFullService.getAPIRegisterTrx'(conneSign, trxNo[0], trxNo[
+                1])
 
             'reset index kembali 0 untuk array selanjutnya'
             arrayIndex = 0
@@ -124,20 +122,23 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
                 arrayMatch.add(WebUI.verifyMatch(resultTrx[arrayIndex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
 
                 arrayIndex = 0
-				
-                'get data from db'
-                ArrayList<String> result = CustomKeywords.'connection.APIFullService.checkAPIRegisterActive'(conneSign, 
-                    email, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"', ''))
 
-                ArrayList<String> resultDataUser = CustomKeywords.'connection.Registrasi.buatUndanganStoreDB'(conneSign, 
-                    email, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"', ''))
+                'get data from db'
+                ArrayList result = CustomKeywords.'connection.APIFullService.checkAPIRegisterActive'(conneSign, email, findTestData(
+                        excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"', ''))
+
+                ArrayList resultDataUser = CustomKeywords.'connection.Registrasi.buatUndanganStoreDB'(conneSign, email, 
+                    findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"', 
+                        ''))
 
                 println(resultDataUser)
 
                 if (GlobalVariable.Psre == 'VIDA') {
                     'verify is_active'
                     arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], '1', false, FailureHandling.CONTINUE_ON_FAILURE))
-                } else if (GlobalVariable.Psre == 'DIGI') {
+                } 
+
+				if (GlobalVariable.Psre == 'DIGI') {
                     'verify is_active'
                     arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], '0', false, FailureHandling.CONTINUE_ON_FAILURE))
                 }
@@ -166,11 +167,13 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 
                 'verify jenis kelamin'
                 arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathRegister).getValue(
-                            GlobalVariable.NumofColm, rowExcel('Jenis Kelamin')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+                            GlobalVariable.NumofColm, rowExcel('Jenis Kelamin')).replace('"', '').toUpperCase(), false, 
+                        FailureHandling.CONTINUE_ON_FAILURE))
 
                 'verify email'
-                arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), email.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-                             
+                arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), email.toUpperCase(), false, 
+                        FailureHandling.CONTINUE_ON_FAILURE))
+
                 'verify provinsi'
                 arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathRegister).getValue(
                             GlobalVariable.NumofColm, rowExcel('Provinsi')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -261,31 +264,25 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
             }
         }
     } else if (code == 8106) {
-		
-		'cek ke excel bahwa data user sudah diregist otomatis ke tenant lain'
-		result = CustomKeywords.'connection.Registrasi.checkAddUserOtherTenant'(conneSign,
-			findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"',''))
-		
-		if (result == 0) {
-			
-			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-				(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +
-					'Error User di Tenant baru tidak berhasil ditambahkan')
-			
-		} else if (result > 1) {
-			
-			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-				(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +
-					'Terdapat 2 user yang sama di tenant ' + GlobalVariable.Tenant)
-		} else {
-			
-			'write to excel success'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
-				1, GlobalVariable.StatusSuccess)
-		}
-		
+        'cek ke excel bahwa data user sudah diregist otomatis ke tenant lain'
+        result = CustomKeywords.'connection.Registrasi.checkAddUserOtherTenant'(conneSign, findTestData(excelPathRegister).getValue(
+                GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"', ''))
+
+        if (result == 0) {
+            'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
+                'Error User di Tenant baru tidak berhasil ditambahkan')
+        } else if (result > 1) {
+            'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
+                'Terdapat 2 user yang sama di tenant ') + GlobalVariable.Tenant)
+        } else {
+            'write to excel success'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
+                1, GlobalVariable.StatusSuccess)
+        }
     } else {
         'mengambil status code berdasarkan response HIT API'
         message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
@@ -300,8 +297,8 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 
         if ((GlobalVariable.checkStoreDB == 'Yes') && (trxNo != null)) {
             'get trx dari db'
-            ArrayList<String> resultTrx = CustomKeywords.'connection.APIFullService.getAPIRegisterTrx'(conneSign, trxNo[
-                0], trxNo[1])
+            ArrayList resultTrx = CustomKeywords.'connection.APIFullService.getAPIRegisterTrx'(conneSign, trxNo[0], trxNo[
+                1])
 
             arrayIndex = 0
 
@@ -318,7 +315,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
                     'verify saldo VIDA PNBP / DIGI TEXT VERIFICATION'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch((resultTrx[arrayIndex++]).toString(), 'null', false, FailureHandling.CONTINUE_ON_FAILURE), 
                         ' Gagal Verifikasi Saldo Terpotong - VIDA / DIGI')
-                } 
+                }
             }
             
             'jika data db tidak sesuai dengan excel'
@@ -355,6 +352,6 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 

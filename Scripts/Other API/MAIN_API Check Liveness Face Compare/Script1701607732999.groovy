@@ -1,7 +1,7 @@
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.model.FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import java.sql.Connection as Connection
@@ -29,14 +29,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
        GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('tenantCode'))
         
         'HIT API Login untuk ambil bearer token'
-        respon_login = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+        responLogin = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('username')), ('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('password'))]))
 
         'Jika status HIT API Login 200 OK'
-        if (WS.verifyResponseStatusCode(respon_login, 200, FailureHandling.OPTIONAL) == true) {
+        if (WS.verifyResponseStatusCode(responLogin, 200, FailureHandling.OPTIONAL) == true) {
             'Parsing token menjadi GlobalVariable'
-            GlobalVariable.token = WS.getElementPropertyValue(respon_login, 'access_token')
+            GlobalVariable.token = WS.getElementPropertyValue(responLogin, 'access_token')
 
             'HIT API'
             respon = WS.sendRequest(findTestObject('Postman/Check Liveness Face Compare', [('callerId') : findTestData(excelPath).getValue(
@@ -59,10 +59,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'Jika status HIT API 200 OK'
             if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
                 'mengambil status code berdasarkan response HIT API'
-                status_Code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
+                statusCode = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
                 'jika status codenya 0'
-                if (status_Code == 0) {
+                if (statusCode == 0) {
                     if (GlobalVariable.checkStoreDB == 'Yes') {
                         'declare arraylist arraymatch'
                         ArrayList arrayMatch = []
@@ -110,12 +110,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         '') + ';') + GlobalVariable.ReasonFailedHitAPI)
             }
         } else {
-            getErrorMessageAPI(respon_login)
+            getErrorMessageAPI(responLogin)
         }
     }
 }
 
-def getErrorMessageAPI(def respon) {
+def getErrorMessageAPI(ResponseObject respon) {
     'mengambil status code berdasarkan response HIT API'
     message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
@@ -128,6 +128,6 @@ def getErrorMessageAPI(def respon) {
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 

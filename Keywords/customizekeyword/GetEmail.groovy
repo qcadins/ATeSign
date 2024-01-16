@@ -51,7 +51,7 @@ public class GetEmail {
 
 		// Pastikan content adalah instance dari MimeMultipart
 		if (content instanceof MimeMultipart) {
-			MimeMultipart mimeMultipart = ((content) as MimeMultipart)
+			MimeMultipart mimeMultipart = content
 
 			StringBuilder bodyText = new StringBuilder()
 
@@ -129,14 +129,13 @@ public class GetEmail {
 		if (matcher.find()) {
 			// Extract the matched text
 			String extractedText = matcher.group(1).trim()
-//			String cleanedText = extractedText.replaceAll('[\\n]+', ' ')
+			//			String cleanedText = extractedText.replaceAll('[\\n]+', ' ')
 			return extractedText
 		}
-		
+
 		println('Match not found.')
-		
-		return 'false'
+
+		'false'
 	}
-	
 }
 

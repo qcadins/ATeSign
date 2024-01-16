@@ -24,7 +24,7 @@ public class GetSMS {
 			String otp = digits ? digits.join() : 'No OTP found in the message.'
 			return otp
 		}
+
 		return "Failed to retrieve messages. Status code: ${response.statusCode}"
 	}
-	
 }

@@ -15,12 +15,16 @@
       </authorizationInfo>
       <authorizationType>Bearer</authorizationType>
    </authorizationRequest>
+<<<<<<< HEAD
    <autoUpdateContent>true</autoUpdateContent>
+=======
+   <autoUpdateContent>false</autoUpdateContent>
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    },\n    \&quot;tenantCode\&quot;: ${tenantCode}\n}&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    },\n    \&quot;tenantCode\&quot;: \&quot;${tenantCode}\&quot;\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -87,7 +91,11 @@
    <variables>
       <defaultValue>GlobalVariable.Tenant</defaultValue>
       <description></description>
+<<<<<<< HEAD
       <id>10e01809-c45c-40db-9d9a-7981a598cbb8</id>
+=======
+      <id>c4975f06-fa5e-40bf-be59-45bd73fa1e94</id>
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
       <masked>false</masked>
       <name>tenantCode</name>
    </variables>

@@ -1,6 +1,7 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.model.FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import internal.GlobalVariable as GlobalVariable
 
@@ -22,7 +23,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('tenantCode'))
         
         'inisialisasi arrayList'
-        ArrayList documentId = [], list = [], listDocId = [], emailsString = []
+        ArrayList documentId = [], list = [], listDocId = []
 
         'Mengambil document id dari excel dan displit'
         documentId = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('$documentId')).split(';', -1)
@@ -41,9 +42,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         String listDoc = listDocId.toString().replace('[', '').replace(']', '')
 
         'HIT API Login untuk ambil bearer token'
-        responLogin = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-                        rowExcel('username')), ('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-                        rowExcel('password'))]))
+        responLogin = WS.sendRequest(findTestObject('Postman/Login', [
+			('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('username')), 
+			('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('password'))]))
 
         'Jika status HIT API Login 200 OK'
         if (WS.verifyResponseStatusCode(responLogin, 200, FailureHandling.OPTIONAL) == true) {
@@ -51,12 +52,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             GlobalVariable.token = WS.getElementPropertyValue(responLogin, 'access_token')
 
             'HIT API Sign Balance availability'
-            responSignBalVal = WS.sendRequest(findTestObject('Postman/Sign Balance Availability', [('callerId') : (
-                        findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId'))), ('docId') : listDoc
-                        ]))
+            responSignBalVal = WS.sendRequest(findTestObject('Postman/Sign Balance Availability', [
+        	('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), 
+        	('docId') : listDoc]))
 
             'ambil lama waktu yang diperlukan hingga request menerima balikan'
-            elapsedTime = (responSignBalVal.elapsedTime / 1000) + ' second'
+            elapsedTime = ((responSignBalVal.elapsedTime / 1000) + ' second')
 
             'ambil body dari hasil respons'
             responseBody = responSignBalVal.responseBodyContent
@@ -98,7 +99,7 @@ def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
-def getErrorMessageAPI(def respon) {
+def getErrorMessageAPI(ResponseObject respon) {
     'mengambil status code berdasarkan response HIT API'
     message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 

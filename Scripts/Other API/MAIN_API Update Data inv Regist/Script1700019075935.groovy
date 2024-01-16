@@ -93,7 +93,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                     if ((GlobalVariable.checkStoreDB == 'Yes') && (GlobalVariable.FlagFailed == 0)) {
                         'call test case ResponseAPIStoreDB'
-                        WebUI.callTestCase(findTestCase('Generate Invitation Link/ResponseAPIStoreDB'), [('excelPathGenerateLink') : excelPathUpdateData
+                        WebUI.callTestCase(findTestCase('null'), [('excelPathGenerateLink') : excelPathUpdateData
                                 , ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
                     }
                 } else {
