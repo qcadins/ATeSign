@@ -197,10 +197,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 getErrorMessageAPI(respon)
             }
         } else {
-            'write to excel status failed dan reason : '
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + 
-                ';') + GlobalVariable.ReasonFailedHitAPI)
+          'call function get API error message'
+           getErrorMessageAPI(respon)
         }
     }
 }
