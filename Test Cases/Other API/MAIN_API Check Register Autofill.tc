@@ -4,9 +4,5 @@
    <name>MAIN_API Check Register Autofill</name>
    <tag></tag>
    <comment></comment>
-<<<<<<< HEAD
-   <testCaseGuid>68ff66bd-54ec-4bb9-85ad-1fe2d3a421cd</testCaseGuid>
-=======
-   <testCaseGuid>f36fa48e-4e07-42c3-959b-713660ca7e46</testCaseGuid>
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+   <testCaseGuid>b6e915b5-0d4a-4f48-ad83-6d1b08ca5b33</testCaseGuid>
 </TestCaseEntity>
