@@ -132,5 +132,4 @@ public class WriteExcel {
 		file.close()
 		rowNum + 1
 	}
-	
 }

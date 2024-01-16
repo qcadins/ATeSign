@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DataFileEntity>
    <description></description>
-   <name>Verify Otp Signing</name>
+   <name>Verify Otp Signing Embed</name>
    <tag></tag>
+   <connectionProperties/>
    <containsHeaders>false</containsHeaders>
    <csvSeperator></csvSeperator>
    <dataFileGUID>6bebd657-6445-43e2-8a68-15b4b312e176</dataFileGUID>
-   <dataSourceUrl>Excel/2. Esign.xlsx</dataSourceUrl>
+   <dataSourceUrl>Excel/2.1 Esign - API Only.xlsx</dataSourceUrl>
    <driver>ExcelFile</driver>
    <isInternalPath>true</isInternalPath>
    <properties>

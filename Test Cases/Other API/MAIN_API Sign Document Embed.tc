@@ -18,7 +18,7 @@
       <variableId>c3ea92e7-8233-406f-8e7b-ea6e245ffe4a</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'Registrasi/SignDocument Embed'</defaultValue>
+      <defaultValue>'API/SignDocument Embed'</defaultValue>
       <description></description>
       <id>db8c9a8c-e982-4d0a-b13e-0ce555e917bc</id>
       <masked>false</masked>

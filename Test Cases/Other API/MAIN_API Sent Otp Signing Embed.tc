@@ -18,7 +18,7 @@
       <variableId>957ce3b4-62e3-464c-9d6d-63fd1630e7c3</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'Sent Otp Signing/Sent Otp Signing'</defaultValue>
+      <defaultValue>'API/Sent Otp Signing Embed'</defaultValue>
       <description></description>
       <id>5c6277bc-4590-49b6-bb8e-cb9635d630ec</id>
       <masked>false</masked>
