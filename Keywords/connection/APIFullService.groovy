@@ -2134,7 +2134,7 @@ public class APIFullService {
 	getProfileUserAPIONLY(Connection conn, String email) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT full_name, login_id, amu.hashed_phone, mv.vendor_code FROM am_msuser amu LEFT JOIN ms_vendor_registered_user mvt ON mvt.id_ms_user = amu.id_ms_user LEFT JOIN ms_vendor mv ON mv.id_ms_vendor = mvt.id_ms_vendor WHERE amu.login_id = '" + email + "'")
+		resultSet = stm.executeQuery("SELECT full_name, login_id, mv.vendor_code FROM am_msuser amu LEFT JOIN ms_vendor_registered_user mvt ON mvt.id_ms_user = amu.id_ms_user LEFT JOIN ms_vendor mv ON mv.id_ms_vendor = mvt.id_ms_vendor WHERE amu.login_id = '" + email + "'")
 
 		metadata = resultSet.metaData
 

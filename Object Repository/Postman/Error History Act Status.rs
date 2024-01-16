@@ -6,6 +6,7 @@
    <elementGuidId>c6f1107a-bf26-40df-82a7-2ed8451693fd</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
+   <autoUpdateContent>true</autoUpdateContent>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
@@ -22,14 +23,6 @@
       <type>Main</type>
       <value>application/json, text/plain, */*</value>
       <webElementGuid>4a490a13-4c58-406f-b015-2a4e7cd597d7</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Accept-Language</name>
-      <type>Main</type>
-      <value>en-US,en;q=0.9</value>
-      <webElementGuid>8366b92c-ce87-43d1-a07d-8b197a10d2ef</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>

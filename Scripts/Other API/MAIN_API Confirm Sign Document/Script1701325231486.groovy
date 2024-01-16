@@ -4,6 +4,7 @@ import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
+import java.sql.Connection as Connection
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - API Only.xlsx')
@@ -123,9 +124,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 }
 
 def getErrorMessageAPI(def respon) {
-    'mengambil status code berdasarkan response HIT API'
-    message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
-
+	'mengambil status code berdasarkan response HIT API'
+	message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
+	
     'Write To Excel GlobalVariable.StatusFailed and errormessage'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
         ((findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + ('<' + message)) + 

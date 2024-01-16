@@ -22,23 +22,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
-        'check if tidak mau menggunakan vendor code yang benar'
-        if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Vendor Code')) == 'No') {
-            'set vendor kosong'
-            GlobalVariable.Psre = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Vendor Code'))
-        } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Vendor Code')) == 'Yes') {
-            'get vendor per case dari colm excel'
-            GlobalVariable.Psre = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Vendor Code'))
-        }
-        
-        'check if tidak mau menggunakan tenant code yang benar'
-        if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'No') {
-            'set tenant kosong'
-            GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong tenant Code'))
-        } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'Yes') {
-            'get tenant per case dari colm excel'
-            GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
-        }
+        'get vendor per case dari colm excel'
+        GlobalVariable.Psre = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Vendor Code'))
+
+        'get tenant per case dari colm excel'
+        GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('tenantCode'))
         
         'check if self photo mau menggunakan base64 yang salah atau benar'
         if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 SelfPhoto')) == 'Yes') {
@@ -49,6 +37,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             selfPhoto = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('selfPhoto'))
         }
         
+		'inisialisasi arrayList'
+		ArrayList documentId = [], list = [], listDocId = []
+		
+		'Mengambil document id dari excel dan displit'
+		documentId = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentId')).split(';', -1)
+
+		for (int q = 0; q < documentId.size(); q++) {
+			list.add(('"' + documentId.get(q)) + '"')
+
+			if (q == 0) {
+				listDocId.add(list.get(q))
+			} else {
+				listDocId.set(0, (listDocId.get(0) + ',') + list.get(q))
+			}
+		}
+		
         'HIT API Login untuk ambil bearer token'
         responLogin = WS.sendRequest(findTestObject('Postman/Login', [
 						('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('username')), 
@@ -60,7 +64,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.token = WS.getElementPropertyValue(responLogin, 'access_token')
 
             'HIT API'
-            respon = WS.sendRequest(findTestObject('Postman/verifyLivenessFaceCompare', [
+            respon = WS.sendRequest(findTestObject('Postman/verifyLivenessFaceCompare', [('documentId') : listDocId[0],
 							('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('username')), 
 							('email') : findTestData(excelPath).getValue( GlobalVariable.NumofColm, rowExcel('Email')), 
 							('base64photo') : selfPhoto]))

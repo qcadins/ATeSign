@@ -4,9 +4,31 @@
    <name>MAIN_API Check Register Autofill</name>
    <tag></tag>
    <comment></comment>
-<<<<<<< HEAD
-   <testCaseGuid>68ff66bd-54ec-4bb9-85ad-1fe2d3a421cd</testCaseGuid>
-=======
-   <testCaseGuid>f36fa48e-4e07-42c3-959b-713660ca7e46</testCaseGuid>
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
+   <testCaseGuid>415a584e-771e-444e-b9d7-38e3e94e699e</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>e4f187ef-f93d-471d-90a8-36e165463ffa</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>23a7df71-5537-4e0d-a641-4d5ef88fd56e</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/Check Register Autofill'</defaultValue>
+      <description></description>
+      <id>e4f187ef-f93d-471d-90a8-36e165463ffa</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Check Register Autofill'</defaultValue>
+      <description></description>
+      <id>23a7df71-5537-4e0d-a641-4d5ef88fd56e</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
 </TestCaseEntity>
