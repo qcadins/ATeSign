@@ -15,11 +15,12 @@
       </authorizationInfo>
       <authorizationType>Bearer</authorizationType>
    </authorizationRequest>
+   <autoUpdateContent>false</autoUpdateContent>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n    \&quot;documentId\&quot;: ${documentId},\n    \&quot;email\&quot;: ${email},\n\t\&quot;msg\&quot; : ${msg},\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: ${callerId}\n    }\n}&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;documentId\&quot;: ${documentId},\n    \&quot;email\&quot;: ${email},\n\t\&quot;msg\&quot; : \&quot;${msg}\&quot;,\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    }\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>

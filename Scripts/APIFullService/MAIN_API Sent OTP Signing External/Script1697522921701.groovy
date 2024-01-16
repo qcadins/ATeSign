@@ -140,7 +140,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         'check Db'
                         if (GlobalVariable.checkStoreDB == 'Yes') {
                             arrayIndex = 0
-
+							
                             'get data from db'
                             ArrayList result = CustomKeywords.'connection.APIFullService.checkAPISentOTPSigning'(conneSign, 
                                 findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('trxno')))

@@ -24,15 +24,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
         GlobalVariable.FlagFailed = 0
 
-        'check if tidak mau menggunakan vendor code yang benar'
-        if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Vendor Code')) == 'No') {
-            'set vendor kosong'
-            GlobalVariable.Psre = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Vendor Code'))
-        } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Vendor Code')) == 'Yes') {
-            'get vendor per case dari colm excel'
-            GlobalVariable.Psre = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Vendor Code'))
-        }
-        
+        'get vendor per case dari colm excel'
+        GlobalVariable.Psre = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Vendor Code'))
+
         'check if tidak mau menggunakan OTP yang benar'
         if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct OTP')) == 'No') {
             'set otp salah'
@@ -60,37 +54,37 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Key yang diencrypt pada URL tidak terdapat di DB')
             }
         }
-        catch (Exception e) {
+        catch (IllegalArgumentException e) {
             'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                 (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Link gagal di-decrypt')
         } 
         
         'HIT API send otp ke email invitasi'
-        respon = WS.sendRequest(findTestObject('Postman/Check OTP Email Invitation', [
-					('callerId') : ('"' + findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId'))) + '"', 
-					('loginId') : ('"' + findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Email'))) + '"', 
-					('otp') : ('"' + otp) + '"', ('code') : ('"' + code) + '"']))
+        respon = WS.sendRequest(findTestObject('Postman/Check OTP Email Invitation', [('callerId') : ('"' + findTestData(
+                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId'))) + '"', ('loginId') : ('"' + 
+                    findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Email'))) + '"', ('otp') : ('"' + 
+                    otp) + '"', ('code') : ('"' + code) + '"']))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
             'get Status Code'
             statusCode = WS.getElementPropertyValue(respon, 'status.code')
 
-			'ambil lama waktu yang diperlukan hingga request menerima balikan'
-			elapsedTime = (respon.elapsedTime / 1000) + ' second'
-	
-			'ambil body dari hasil respons'
-			responseBody = respon.responseBodyContent
-	
-			'panggil keyword untuk proses beautify dari respon json yang didapat'
-			CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
-					excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
-	
-			'write to excel response elapsed time'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') -
-				1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
-			
+            'ambil lama waktu yang diperlukan hingga request menerima balikan'
+            elapsedTime = ((respon.elapsedTime / 1000) + ' second')
+
+            'ambil body dari hasil respons'
+            responseBody = respon.responseBodyContent
+
+            'panggil keyword untuk proses beautify dari respon json yang didapat'
+            CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
+                    excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+
+            'write to excel response elapsed time'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 
+                1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+
             'Jika status codenya 0'
             if (statusCode == 0) {
                 'write to excel success'

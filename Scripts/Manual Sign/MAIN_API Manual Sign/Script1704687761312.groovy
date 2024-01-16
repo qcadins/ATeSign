@@ -61,11 +61,20 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
         'Inisialisasi tenantCode'
         tenantCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
 
+		'Inisialisasi officeCode'
+		officeCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('officeCode'))
+
+		'Inisialisasi regionCode'
+		regionCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('regionCode'))
+
+		'Inisialisasi businessLineCode'
+		businessLineCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('businessLineCode'))
+
         'join all main parameter'
-        String bodyAPI = (((((((((((((((((((('{"audit": {"callerId": "' + callerId) + '"},"psreCode": "') + psreCode) + 
-        '","tenantCode": "') + tenantCode) + '","referenceNo": "') + refNo) + '","documentName": "') + documentName) + '","documentDate": "') + 
-        documentDate) + '","peruriDocType": "') + peruriDocType) + '","isAutomaticStamp": "') + isAutomaticStamp) + '","paymentType": "') + 
-        paymentType) + '","isSequence": "') + isSequence) + '","documentFile": ') + documentFile
+        String bodyAPI = '{"audit": {"callerId": "' + callerId + '"},"psreCode": "' + psreCode + 
+        '","tenantCode": "' + tenantCode + '","referenceNo": "' + refNo + '","documentName": "' + documentName + '","documentDate": "' + 
+        documentDate + '","peruriDocType": "' + peruriDocType + '","isAutomaticStamp": "' + isAutomaticStamp + '","paymentType": "' + 
+        paymentType + '","isSequence": "' + isSequence + '","officeCode": "' + officeCode + '","regionCode": "' + regionCode +  '","businessLineCode": "' + businessLineCode + '","documentFile": ' + documentFile
 
         'pindahkan hasil bodiAPI ke bodyAPIFinal'
         String bodyAPIFinal = bodyAPI

@@ -6,11 +6,12 @@
    <elementGuidId>0056059d-502f-4f12-8a15-e76a495fa003</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
+   <autoUpdateContent>false</autoUpdateContent>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n   \t${updateData}\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: ${callerId}\n    },\n    \&quot;tenantCode\&quot;: ${tenantCode}\n}&quot;,
+  &quot;text&quot;: &quot;{\n   \t${updateData}\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    },\n    \&quot;tenantCode\&quot;: ${tenantCode}\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -22,14 +23,6 @@
       <type>Main</type>
       <value>application/json, text/plain, */*</value>
       <webElementGuid>7ec70229-7dba-4e9f-86f4-52cc707f9dea</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Accept-Language</name>
-      <type>Main</type>
-      <value>id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7</value>
-      <webElementGuid>1368c3d8-1784-4bba-9607-ca47c5cf5364</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -54,38 +47,6 @@
       <type>Main</type>
       <value>application/json</value>
       <webElementGuid>710ee6ac-b3e1-4b85-ac61-cb8f3aec3e36</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>DNT</name>
-      <type>Main</type>
-      <value>1</value>
-      <webElementGuid>a055d3e1-a829-472e-8d30-2df53de26d8d</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Origin</name>
-      <type>Main</type>
-      <value>http://gdkwebsvr:8080</value>
-      <webElementGuid>deb8b1a8-0f1e-4bbf-bf25-86ea547034c6</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Referer</name>
-      <type>Main</type>
-      <value>http://gdkwebsvr:8080/</value>
-      <webElementGuid>e12abc4c-7cba-4a32-a278-49a71b1df935</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>User-Agent</name>
-      <type>Main</type>
-      <value>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36</value>
-      <webElementGuid>6164be4b-db7c-4f55-926f-41947f3959ce</webElementGuid>
    </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>

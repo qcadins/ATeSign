@@ -27,14 +27,6 @@
    <httpHeaderProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>Accept-Language</name>
-      <type>Main</type>
-      <value>id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7</value>
-      <webElementGuid>8a917d36-5cde-46ce-bf66-6906e8ab7e56</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
       <name>Authorization</name>
       <type>Main</type>
       <value>Bearer ${token}</value>
@@ -55,38 +47,6 @@
       <type>Main</type>
       <value>application/json</value>
       <webElementGuid>7a3e6c27-88f2-4975-91a1-dd75f4bb1727</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>DNT</name>
-      <type>Main</type>
-      <value>1</value>
-      <webElementGuid>2ad286f7-6655-4a07-a1f1-387862980c87</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Origin</name>
-      <type>Main</type>
-      <value>http://gdkwebsvr:8080</value>
-      <webElementGuid>9fadc0c3-aeee-406e-9ec8-7f5840d42db8</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Referer</name>
-      <type>Main</type>
-      <value>http://gdkwebsvr:8080/</value>
-      <webElementGuid>6d8ebca3-bbbf-4f12-b405-f6edfc5631c4</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>User-Agent</name>
-      <type>Main</type>
-      <value>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36</value>
-      <webElementGuid>571953a4-9f62-44c5-a2c9-b5a88f9d9d62</webElementGuid>
    </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>

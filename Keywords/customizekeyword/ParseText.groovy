@@ -37,4 +37,5 @@ public class ParseText {
 			String.format('%02x', byteValue)
 		}.join()
 	}
+	
 }

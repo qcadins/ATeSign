@@ -36,14 +36,6 @@
    <httpHeaderProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>Accept-Language</name>
-      <type>Main</type>
-      <value>id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7</value>
-      <webElementGuid>697fbede-57b9-42ea-9671-4f1ae92deb18</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
       <name>Connection</name>
       <type>Main</type>
       <value>keep-alive</value>
@@ -56,38 +48,6 @@
       <type>Main</type>
       <value>application/json</value>
       <webElementGuid>7ed8f3f5-68b6-44a4-abaf-bad6715ea68a</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>DNT</name>
-      <type>Main</type>
-      <value>1</value>
-      <webElementGuid>5ad81319-763e-4976-87a1-dc3052852936</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Origin</name>
-      <type>Main</type>
-      <value>http://gdkwebsvr:8080</value>
-      <webElementGuid>55a82ced-1875-4935-8674-c6cc2a8aa023</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Referer</name>
-      <type>Main</type>
-      <value>http://gdkwebsvr:8080/</value>
-      <webElementGuid>1a09561e-ec29-41a9-8244-d5f331f788f9</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>User-Agent</name>
-      <type>Main</type>
-      <value>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36</value>
-      <webElementGuid>87e9ddb7-249c-4f78-81bb-82bc36241529</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>true</isSelected>

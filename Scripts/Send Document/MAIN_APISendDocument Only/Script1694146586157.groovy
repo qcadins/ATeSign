@@ -35,55 +35,73 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
         refNo = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo'))
 
         'Inisialisasi document template code berdasarkan delimiter ;'
-        documentTemplateCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$documentTemplateCode')).split(semicolon, splitnum)
+        documentTemplateCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$documentTemplateCode')).split(
+            semicolon, splitnum)
 
         'Inisialisasi office Code berdasarkan delimiter ;'
-        officeCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('officeCode')).split(semicolon, splitnum)
+        officeCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('officeCode')).split(semicolon, 
+            splitnum)
 
         'Inisialisasi office name berdasarkan delimiter ;'
-        officeName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('officeName')).split(semicolon, splitnum)
+        officeName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('officeName')).split(semicolon, 
+            splitnum)
 
         'Inisialisasi region code berdasarkan delimiter ;'
-        regionCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('regionCode')).split(semicolon, splitnum)
+        regionCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('regionCode')).split(semicolon, 
+            splitnum)
 
         'Inisialisasi region name berdasarkan delimiter ;'
-        regionName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('regionName')).split(semicolon, splitnum)
+        regionName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('regionName')).split(semicolon, 
+            splitnum)
 
         'Inisialisasi business line code berdasarkan delimiter ;'
-        businessLineCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('businessLineCode')).split(semicolon, splitnum)
+        businessLineCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('businessLineCode')).split(
+            semicolon, splitnum)
 
         'Inisialisasi business line name berdasarkan delimiter ;'
-        businessLineName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('businessLineName')).split(semicolon, splitnum)
+        businessLineName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('businessLineName')).split(
+            semicolon, splitnum)
 
         'Inisialisasi is sequence berdasarkan delimiter ;'
-        isSequence = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('isSequence')).split(semicolon, splitnum)
+        isSequence = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('isSequence')).split(semicolon, 
+            splitnum)
 
         'Inisialisasi document file berdasarkan delimiter ;'
-        documentFile = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('documentFile')).split(enter, splitnum)
+        documentFile = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('documentFile')).split(enter, 
+            splitnum)
 
         'Inisialisasi psre Code berdasarkan delimiter ;'
-        psreCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$psreCode')).split(semicolon, splitnum)
+        psreCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$psreCode')).split(semicolon, 
+            splitnum)
 
         'Inisialisasi successUrl berdasarkan delimiter ;'
-        successURL = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('successURL')).split(semicolon, splitnum)
+        successURL = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('successURL')).split(semicolon, 
+            splitnum)
 
         'Inisialisasi psre Code berdasarkan delimiter ;'
-        uploadURL = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('uploadURL')).split(semicolon, splitnum)
+        uploadURL = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('uploadURL')).split(semicolon, 
+            splitnum)
 
         'split signer untuk doc1 dan signer untuk doc2'
-        signAction = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$signAction')).split(enter, splitnum)
+        signAction = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$signAction')).split(enter, 
+            splitnum)
 
-        signerType = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$signerType')).split(enter, splitnum)
+        signerType = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$signerType')).split(enter, 
+            splitnum)
 
-        signSequence = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('signSequence')).split(enter, splitnum)
+        signSequence = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('signSequence')).split(enter, 
+            splitnum)
 
         alamat = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('alamat')).split(enter, splitnum)
 
-        jenisKelamin = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('jenisKelamin')).split(enter, splitnum)
+        jenisKelamin = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('jenisKelamin')).split(enter, 
+            splitnum)
 
-        kecamatan = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('kecamatan')).split(enter, splitnum)
+        kecamatan = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('kecamatan')).split(enter, 
+            splitnum)
 
-        kelurahan = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('kelurahan')).split(enter, splitnum)
+        kelurahan = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('kelurahan')).split(enter, 
+            splitnum)
 
         kodePos = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('kodePos')).split(enter, splitnum)
 
@@ -107,7 +125,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 
         idPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('idPhoto')).split(enter, splitnum)
 
-        signerSelfPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('signerSelfPhoto')).split(enter,splitnum)
+        signerSelfPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('signerSelfPhoto')).split(
+            enter, splitnum)
 
         String stringRefno = new String()
 
@@ -165,8 +184,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
                         (kelurahans[i])) + ',"kodePos": ') + (kodePoss[i])) + ',"kota": ') + (kotas[i])) + ',"nama": ') + 
                         (namas[i])) + ',"tlp": ') + (tlps[i])) + ',"tglLahir": ') + (tglLahirs[i])) + ',"provinsi": ') + 
                         (provinsis[i])) + ',"idKtp": ') + (idKtps[i])) + ',"tmpLahir": ') + (tmpLahirs[i])) + ',"email": ') + 
-                        (emails[i])) + ',"npwp": ') + (npwps[i])) + ',"idPhoto": ') + idPhoto[i]) + ',"signerSelfPhoto": ') + 
-                        signerSelfPhoto[i]) + '}')
+                        (emails[i])) + ',"npwp": ') + (npwps[i])) + ',"idPhoto": ') + (idPhoto[i])) + ',"signerSelfPhoto": ') + 
+                        (signerSelfPhoto[i])) + '}')
                 } else if (i == (signActions.size() - 1)) {
                     list.add(((((((((((((((((((((((((((((((((((((('{"signAction": ' + (signActions[i])) + ',"signerType": ') + 
                         (signerTypes[i])) + ',"signSequence":') + (signSequences[i])) + ',"alamat": ') + (alamats[(i - 1)])) + 
@@ -174,8 +193,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
                         (kelurahans[i])) + ',"kodePos": ') + (kodePoss[i])) + ',"kota": ') + (kotas[i])) + ',"nama": ') + 
                         (namas[i])) + ',"tlp": ') + (tlps[i])) + ',"tglLahir": ') + (tglLahirs[i])) + ',"provinsi": ') + 
                         (provinsis[i])) + ',"idKtp": ') + (idKtps[i])) + ',"tmpLahir": ') + (tmpLahirs[i])) + ',"email": ') + 
-                        (emails[i])) + ',"npwp": ') + (npwps[i])) + ',"idPhoto": ') + idPhoto[i]) + ',"signerSelfPhoto": ') + 
-                        signerSelfPhoto[i]) + '}')
+                        (emails[i])) + ',"npwp": ') + (npwps[i])) + ',"idPhoto": ') + (idPhoto[i])) + ',"signerSelfPhoto": ') + 
+                        (signerSelfPhoto[i])) + '}')
                 } else {
                     list.add(((((((((((((((((((((((((((((((((((((('{"signAction": ' + (signActions[i])) + ',"signerType": ') + 
                         (signerTypes[i])) + ',"signSequence":') + (signSequences[i])) + ',"alamat": ') + (alamats[i])) + 
@@ -183,22 +202,25 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
                         (kelurahans[i])) + ',"kodePos": ') + (kodePoss[i])) + ',"kota": ') + (kotas[i])) + ',"nama": ') + 
                         (namas[i])) + ',"tlp": ') + (tlps[i])) + ',"tglLahir": ') + (tglLahirs[i])) + ',"provinsi": ') + 
                         (provinsis[i])) + ',"idKtp": ') + (idKtps[i])) + ',"tmpLahir": ') + (tmpLahirs[i])) + ',"email": ') + 
-                        (emails[i])) + ',"npwp": ') + (npwps[i])) + ',"idPhoto": ') + idPhoto[i]) + ',"signerSelfPhoto": ') + 
-                        signerSelfPhoto[i]) + '},')
+                        (emails[i])) + ',"npwp": ') + (npwps[i])) + ',"idPhoto": ') + (idPhoto[i])) + ',"signerSelfPhoto": ') + 
+                        (signerSelfPhoto[i])) + '},')
                 }
                 
                 'Memasukkan seluruh BodyAPI ke listSigner'
                 listSigner = (listSigner + (list[(i - 1)]))
 
                 'check ada value maka setting email service tenant'
-                if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Setting Service Tenant')).length() > 0) {
+                if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Setting Service Tenant')).length() > 
+                0) {
                     'setting email service tenant'
                     CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(
-                            API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Setting Service Tenant')), (email[(i - 1)]).replace('"', ''))
+                            API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Setting Service Tenant')), (email[
+                        (i - 1)]).replace('"', ''))
                 }
             }
             
-            if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 Document')) == 'Yes') {
+            if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 Document')) == 
+            'Yes') {
                 bodyAPI = (('"documentFile": "' + CustomKeywords.'customizekeyword.ConvertFile.base64File'(documentFile[
                     o])) + '"')
             } else {
@@ -221,14 +243,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
                 (successURL[o])) + ', "uploadURL": ') + (uploadURL[o])) + '},')
             }
         }
-
+        
         'Jika flag tenant no'
         if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'No') {
             'set tenant kosong'
             GlobalVariable.Tenant = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Wrong tenant Code'))
-        } else if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'Yes') {
+        } else if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 
+        'Yes') {
             'Input tenant'
-            GlobalVariable.Tenant = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$tenantCode').replace('"',''))
+            GlobalVariable.Tenant = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$tenantCode').replace(
+                    '"', ''))
         }
         
         'check if mau menggunakan api_key yang salah atau benar'
@@ -242,33 +266,33 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
         
         'Hit API'
         respon = WS.sendRequest(findTestObject('Postman/Send Document', [('tenantCode') : findTestData(API_Excel_Path).getValue(
-                        GlobalVariable.NumofColm, rowExcel('$tenantCode')).replace('"',''), ('request') : stringRefno, ('callerId') : findTestData(API_Excel_Path).getValue(
-                        GlobalVariable.NumofColm, rowExcel('callerId')).replace('"','')]))
+                        GlobalVariable.NumofColm, rowExcel('$tenantCode')).replace('"', ''), ('request') : stringRefno, ('callerId') : findTestData(
+                        API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('callerId')).replace('"', '')]))
 
-		'ambil lama waktu yang diperlukan hingga request menerima balikan'
-		def elapsedTime = (respon.getElapsedTime()) / 1000 + ' second'
-		
-		'ambil body dari hasil respons'
-		responseBody = respon.getResponseBodyContent()
-		
-		'panggil keyword untuk proses beautify dari respon json yang didapat'
-		CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1,
-			findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
-		
-		'write to excel response elapsed time'
-		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 1, GlobalVariable.NumofColm -
-			1, elapsedTime.toString())
-		
         'jika response 200 / hit api berhasil'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
             'ambil respon text dalam bentuk code.'
-            status_Code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
+            statusCode = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
+			'ambil lama waktu yang diperlukan hingga request menerima balikan'
+			elapsedTime = (respon.elapsedTime / 1000) + ' second'
+	
+			'ambil body dari hasil respons'
+			responseBody = respon.responseBodyContent
+	
+			'panggil keyword untuk proses beautify dari respon json yang didapat'
+			CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
+					API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+	
+			'write to excel response elapsed time'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') -
+				1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+			
             'jika status codenya 0, verifikasi datanya benar'
-            if (status_Code == 0) {
+            if (statusCode == 0) {
                 'write to excel success'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Status') - 1, GlobalVariable.NumofColm - 
-                    1, GlobalVariable.StatusSuccess)
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Status') - 
+                    1, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
 
                 if (GlobalVariable.checkStoreDB == 'Yes') {
                     'call test case ResponseAPIStoreDB'
@@ -282,20 +306,21 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 
                 'write to excel status failed dan reason'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                    (((findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')).replace('-', '') + semicolon) + 
-                    '<') + messageFailed) + '>')
+                    (((findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')).replace('-', 
+                        '') + semicolon) + '<') + messageFailed) + '>')
             }
         } else {
             messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL).toString()
 
             'write to excel status failed dan reason'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (((findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')).replace('-', '') + semicolon) + '<') + 
-                messageFailed) + '>')
+                (((findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')).replace('-', '') + 
+                semicolon) + '<') + messageFailed) + '>')
         }
     }
 }
 
 def rowExcel(String cellValue) {
-	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
+

@@ -15,6 +15,7 @@
       </authorizationInfo>
       <authorizationType>Bearer</authorizationType>
    </authorizationRequest>
+   <autoUpdateContent>true</autoUpdateContent>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
@@ -35,14 +36,6 @@
    <httpHeaderProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>Accept-Language</name>
-      <type>Main</type>
-      <value>id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7</value>
-      <webElementGuid>38dd3ffe-8a77-48ba-b005-451eb78e7daa</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
       <name>Connection</name>
       <type>Main</type>
       <value>keep-alive</value>
@@ -55,38 +48,6 @@
       <type>Main</type>
       <value>application/json</value>
       <webElementGuid>b88187ea-bf3d-459a-8229-d86f147b4afc</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>DNT</name>
-      <type>Main</type>
-      <value>1</value>
-      <webElementGuid>ace24e81-b63d-4794-90df-883f70b9e2fb</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Origin</name>
-      <type>Main</type>
-      <value>http://gdkwebsvr:8080</value>
-      <webElementGuid>40de4d10-c719-4871-92f7-b0d7e5ffe49b</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Referer</name>
-      <type>Main</type>
-      <value>http://gdkwebsvr:8080/</value>
-      <webElementGuid>af76afa7-e1e0-47f9-8d02-578db6551b75</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>User-Agent</name>
-      <type>Main</type>
-      <value>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36</value>
-      <webElementGuid>ea54c26e-5182-40fa-9858-d3769cdf84c8</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>true</isSelected>

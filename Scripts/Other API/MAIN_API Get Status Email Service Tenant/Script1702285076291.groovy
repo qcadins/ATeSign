@@ -1,6 +1,7 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.model.FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import java.sql.Connection as Connection
@@ -14,7 +15,7 @@ int countColmExcel = findTestData(excelPath).columnNumbers
 
 for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     // Create a variable 'status' and store the value of the 'Status' cell in the current column
-    def status = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status'))
+    String status = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status'))
 
     // If status is empty, break the loop
     if (status == '') {
@@ -29,14 +30,10 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; (Glob
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
         // Create a variable 'userCorrectTenantCode' and store the value of the 'Use Correct Tenant Code' cell in the current column
-        def userCorrectTenantCode = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code'))
+      //  String userCorrectTenantCode = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code'))
 
         // If userCorrectTenantCode is 'Yes', store the value of 'Tenant Login' cell in GlobalVariable.Tenant
-        if (userCorrectTenantCode == 'Yes') {
-            GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login')) // If userCorrectTenantCode is 'No', store the value of 'Wrong Tenant Code' cell in GlobalVariable.Tenant
-        } else if (userCorrectTenantCode == 'No') {
-            GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Tenant Code'))
-        }
+        GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('tenantCode'))
         
         // Send an API request to the Login object in the Postman repository and retrieve the response
         'HIT API Login untuk ambil bearer token'
@@ -49,37 +46,36 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; (Glob
             GlobalVariable.token = WS.getElementPropertyValue(reponLogin, 'access_token')
 
             // Send an API request to the Vendor object in the Postman repository and retrieve the response
-            respon = WS.sendRequest(findTestObject('Postman/getStatusEmailServiceTenant', [('callerId') : findTestData(excelPath).getValue(
-                            GlobalVariable.NumofColm, rowExcel('username'))]))
-
-            // Create a variable 'elapsedTime' and store the elapsed time of the request in seconds
-            elapsedTime = (respon.elapsedTime / 1000) + ' seconds'
-
-            // Create a variable 'responseBody' and store the response body content
-            responseBody = respon.responseBodyContent
-
-            // Call a custom keyword 'process' from the 'BeautifyJson' class with 5 parameters
-            CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
-                    excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
-
-            // Call a custom keyword 'writeToExcel' from the 'WriteExcel' class with 5 parameters
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 
-                1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+            respon = WS.sendRequest(findTestObject('Postman/getStatusEmailServiceTenant', [
+						('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('username'))]))
 
             // If the response status code is 200 and failurehandling.OPTIONAL is true, get the 'status.code' parameter from the response and store it in 'statusCode'
             if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
-                def statusCode = WS.getElementPropertyValue(respon, 'status.code')
+                statusCode = WS.getElementPropertyValue(respon, 'status.code')
 
+				// Create a variable 'elapsedTime' and store the elapsed time of the request in seconds
+				elapsedTime = ((respon.elapsedTime / 1000) + ' seconds')
+	
+				// Create a variable 'responseBody' and store the response body content
+				responseBody = respon.responseBodyContent
+	
+				// Call a custom keyword 'process' from the 'BeautifyJson' class with 5 parameters
+				CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
+						excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+	
+				// Call a custom keyword 'writeToExcel' from the 'WriteExcel' class with 5 parameters
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') -
+					1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+				
                 // If statusCode is 0, perform some actions
                 if (statusCode == 0) {
                     // If GlobalVariable.checkStoreDB is 'Yes', perform some actions
                     if (GlobalVariable.checkStoreDB == 'Yes') {
                         // Declare an ArrayList<String> called 'arrayMatch'
-                        def arrayMatch = []
+                        ArrayList arrayMatch = []
 
                         // Declare an ArrayList<String> called 'result' and store the result of the 'getVendorofTenant' custom keyword with 1 parameter
-                        result = CustomKeywords.'connection.APIFullService.getStatusEmailServiceAPIOnly'(conneSign, 
-                            GlobalVariable.Tenant)
+                        result = CustomKeywords.'connection.APIFullService.getStatusEmailServiceAPIOnly'(conneSign, GlobalVariable.Tenant)
 
                         'deklarasi array index'
                         arrayIndex = 0
@@ -125,11 +121,11 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; (Glob
     }
 }
 
-def getErrorMessageAPI(def respon) {
+def getErrorMessageAPI(ResponseObject respon) {
     message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-        (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + message)
+        (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + '<' + message + '>')
 
     GlobalVariable.FlagFailed = 1
 }

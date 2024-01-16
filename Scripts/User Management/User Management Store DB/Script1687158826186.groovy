@@ -7,10 +7,10 @@ import java.sql.Connection as Connection
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('New')) {
-	'declare arraylist arraymatch'
-	ArrayList arrayMatch = []
-	
+'declare arraylist arraymatch'
+ArrayList arrayMatch = []
+
+if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('New')) {	
     'ambil data role dari db'
     ArrayList<String> resultDB = CustomKeywords.'connection.UserManagement.getUserManagementNewStoreDB'(conneSign, findTestData(
             excelPathUserManagement).getValue(GlobalVariable.NumofColm, 17).toUpperCase(), GlobalVariable.Tenant)
@@ -42,9 +42,6 @@ if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6).
         }
     }
 } else if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Setting')) {
-	'declare arraylist arraymatch'
-	ArrayList<String> arrayMatch = new ArrayList<String>()
-	
     'ambil data role dari db'
     ArrayList<String> resultDB = CustomKeywords.'connection.UserManagement.getUserManagementEditStoreDB'(conneSign, findTestData(
             excelPathUserManagement).getValue(GlobalVariable.NumofColm, 17), GlobalVariable.Tenant)

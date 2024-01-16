@@ -25,14 +25,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
-        'check if tidak mau menggunakan tenant code yang benar'
-        if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'No') {
-            'set tenant kosong'
-            GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong tenant Code'))
-        } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'Yes') {
-            'get tenant per case dari colm excel'
-            GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
-        }
+        'get tenant per case dari colm excel'
+        GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('tenantCode'))
         
         'HIT API Login untuk ambil bearer token'
         responLogin = WS.sendRequest(findTestObject('Postman/Login', [
@@ -76,25 +70,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                         emailList = WS.getElementPropertyValue(respon, 'bean.email', FailureHandling.OPTIONAL)
 
-                        phoneList = WS.getElementPropertyValue(respon, 'bean.phoneNumber', FailureHandling.OPTIONAL)
-
                         vendorList = WS.getElementPropertyValue(respon, 'bean.vendor', FailureHandling.OPTIONAL)
 
                         arrayIndex = 0
 
                         ArrayList arrayMatch = []
 
-                        for (index = 0; index < (result.size() / 4); index++) {
+                        for (index = 0; index < (result.size() / 3); index++) {
                             'verify full name'
                             arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], WS.getElementPropertyValue(respon, 'nama', 
                                         FailureHandling.OPTIONAL).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
                             'verify email'
                             arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], emailList[index], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-                            'verify phoneNo'
-                            arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
-                                        phoneList[index]), false, FailureHandling.CONTINUE_ON_FAILURE))
 
                             'verify vendor'
                             arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], vendorList[index], false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -122,10 +110,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     getErrorMessageAPI(respon)
                 }
             } else {
-                'write to excel status failed dan reason : '
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                    (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', 
-                        '') + ';') + GlobalVariable.ReasonFailedHitAPI)
+              'call function get API error message'
+               getErrorMessageAPI(respon)
             }
         } else {
             getErrorMessageAPI(responLogin)

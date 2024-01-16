@@ -1,7 +1,8 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import java.sql.Connection as Connection
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.model.FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
@@ -19,27 +20,35 @@ int countColmExcel = findTestData(excelPathAPICheckRegistrasi).columnNumbers
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
-    } else if (findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
-		
-		'setting menggunakan base url yang benar atau salah'
-		CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPICheckRegistrasi, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
-		
-		'check if mau menggunakan tenant yang salah atau benar'
-		if (findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code')) == 'Yes') {
-			'get tenant dari excel per case'
-			GlobalVariable.Tenant = findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
-		} else if (findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code')) == 'No') {
-			'get Tenant salah dari excel'
-			GlobalVariable.Tenant = findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Tenant Code'))
-		}
-		
+    } else if (findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase(
+        'Unexecuted')) {
+        'setting menggunakan base url yang benar atau salah'
+        CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPICheckRegistrasi, GlobalVariable.NumofColm, 
+            rowExcel('Use Correct Base Url'))
+
+        'check if mau menggunakan tenant yang salah atau benar'
+        if (findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code')) == 
+        'Yes') {
+            'get tenant dari excel per case'
+            GlobalVariable.Tenant = findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel(
+                    'Tenant Login'))
+        } else if (findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code')) == 
+        'No') {
+            'get Tenant salah dari excel'
+            GlobalVariable.Tenant = findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel(
+                    'Wrong Tenant Code'))
+        }
+        
         'check if mau menggunakan api_key yang salah atau benar'
-        if (findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct API Key')) == 'Yes') {
+        if (findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct API Key')) == 
+        'Yes') {
             'get api key dari db'
             GlobalVariable.api_key = CustomKeywords.'connection.APIFullService.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
-        } else if (findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct API Key')) == 'No') {
+        } else if (findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct API Key')) == 
+        'No') {
             'get api key salah dari excel'
-            GlobalVariable.api_key = findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Wrong API Key'))
+            GlobalVariable.api_key = findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel(
+                    'Wrong API Key'))
         }
         
         'HIT API check registrasi'
@@ -52,20 +61,20 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
             code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
-			'ambil lama waktu yang diperlukan hingga request menerima balikan'
-			def elapsedTime = (respon.getElapsedTime() / 1000) + ' second'
+            'ambil lama waktu yang diperlukan hingga request menerima balikan'
+            elapsedTime = (respon.elapsedTime / 1000) + ' second'
 
-			'ambil body dari hasil respons'
-			responseBody = respon.getResponseBodyContent()
+            'ambil body dari hasil respons'
+            responseBody = respon.responseBodyContent
 
-			'panggil keyword untuk proses beautify dari respon json yang didapat'
-			CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
-					excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+            'panggil keyword untuk proses beautify dari respon json yang didapat'
+            CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
+                    excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
 
-			'write to excel response elapsed time'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') -
-				1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
-			
+            'write to excel response elapsed time'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 
+                1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+
             if (code == 0) {
                 'mengambil response'
                 vendor = WS.getElementPropertyValue(respon, 'registrationData.vendor', FailureHandling.OPTIONAL)
@@ -76,30 +85,28 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     arrayIndex = 0
 
                     'get data from db'
-                    ArrayList<String> result = CustomKeywords.'connection.APIFullService.getAPICheckRegisterStoreDB'(conneSign, 
+                    ArrayList result = CustomKeywords.'connection.APIFullService.getAPICheckRegisterStoreDB'(conneSign, 
                         findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('userData')))
 
-					println(result)
-					
+                    println(result)
+
                     'declare arraylist arraymatch'
-                    ArrayList<String> arrayMatch = []
+                    ArrayList arrayMatch = []
 
                     for (index = 0; index < vendor.size(); index++) {
-						
-						arrayIndex = result.indexOf(vendor[index])
-						
-						vendorDB = result[arrayIndex++]
-						
-						vendorStatusDB = result[arrayIndex++]
-						
+                        arrayIndex = result.indexOf(vendor[index])
+
+                        vendorDB = (result[arrayIndex++])
+
+                        vendorStatusDB = (result[arrayIndex++])
+
                         if ((vendor[index]) == vendorDB) {
                             'verify vendor'
-                            arrayMatch.add(WebUI.verifyMatch(vendorDB.toUpperCase(), (vendor[index]).toUpperCase(), 
-                                    false, FailureHandling.CONTINUE_ON_FAILURE))
+                            arrayMatch.add(WebUI.verifyMatch(vendorDB.toUpperCase(), (vendor[index]).toUpperCase(), false, 
+                                    FailureHandling.CONTINUE_ON_FAILURE))
 
                             'verify vendor status'
-                            arrayMatch.add(WebUI.verifyMatch(vendorStatusDB, (vendoractive[index]), 
-                                    false, FailureHandling.CONTINUE_ON_FAILURE))
+                            arrayMatch.add(WebUI.verifyMatch(vendorStatusDB, vendoractive[index], false, FailureHandling.CONTINUE_ON_FAILURE))
                         }
                     }
                     
@@ -109,33 +116,38 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                             GlobalVariable.StatusFailed, (findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, 
                                 rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
-						
-						GlobalVariable.FlagFailed = 1
+
+                        GlobalVariable.FlagFailed = 1
                     } else {
                         'write to excel success'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
-                            0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, 
+                            GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
                     }
                 }
             } else {
                 'mengambil status code berdasarkan response HIT API'
-                message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
-
-                'Write To Excel GlobalVariable.StatusFailed and errormessage'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                    GlobalVariable.StatusFailed, '<' + message + '>')
+				getErrorMessageAPI(respon)
             }
         } else {
             'mengambil status code berdasarkan response HIT API'
-            message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
-
-            'Write To Excel GlobalVariable.StatusFailed and errormessage'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                GlobalVariable.StatusFailed, '<' + message + '>')
+			getErrorMessageAPI(respon)
         }
     }
 }
 
-def rowExcel(String cellValue) {
-	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+def getErrorMessageAPI(ResponseObject respon) {
+	'mengambil status code berdasarkan response HIT API'
+	message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
+
+	'Write To Excel GlobalVariable.StatusFailed and errormessage'
+	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+		((findTestData(excelPathAPICheckRegistrasi).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + ('<' + message)) +
+		'>')
+
+	GlobalVariable.FlagFailed = 1
 }
+
+def rowExcel(String cellValue) {
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+}
+

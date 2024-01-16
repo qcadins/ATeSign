@@ -427,13 +427,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			
 						'jika proses materai gagal (51)'
 						if (prosesMaterai == 51 || prosesMaterai == 61) {
-							'Write To Excel GlobalVariable.StatusFailed and errormessage'
-							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-								GlobalVariable.ReasonFailedProsesStamping)
+							'get reason gailed error message untuk stamping'
+							errorMessageDB = CustomKeywords.'connection.Meterai.getErrorMessage'(conneSign, findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('No Kontrak')))
+
+                        'Write To Excel GlobalVariable.StatusFailed and errormessage'
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                            GlobalVariable.StatusFailed, (((findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 
+                                rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedProsesStamping) + ' dengan alasan ') + 
+                            errorMessageDB.toString())
+
+                        GlobalVariable.FlagFailed = 1
 			
-							GlobalVariable.FlagFailed = 1
-			
-							break
+						break
 						} else if (prosesMaterai == 53 || prosesMaterai == 63) {
 							'Jika proses meterai sukses (53), berikan delay 3 sec untuk update di db'
 							WebUI.delay(3)
@@ -449,12 +454,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 							arrayMatch.add(WebUI.verifyMatch(totalMateraiAndTotalStamping[0], totalMateraiAndTotalStamping[1], false,
 									FailureHandling.CONTINUE_ON_FAILURE))
 			
-							ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getOfficeRegionBlineCodeUsingRefNum'(conneSign, findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('No Kontrak')))
-							
+							ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(
+								conneSign, findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('No Kontrak')), 'Stamping')
+	
 							'lakukan loop untuk pengecekan data'
-							for (int i = 0; i < (officeRegionBline.size() / 3); i++) {
+							for (int i = 0; i < (officeRegionBline.size() / 2); i++) {
 								'verify business line dan office code'
-								arrayMatch.add(WebUI.verifyMatch(officeRegionBline[i].toString(), officeRegionBline[i+3].toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+								arrayMatch.add(WebUI.verifyMatch((officeRegionBline[i]).toString(), (officeRegionBline[(i +
+										3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
 							}
 							
 							'jika data db tidak bertambah'

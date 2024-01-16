@@ -36,14 +36,6 @@
    <httpHeaderProperties>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>Accept-Language</name>
-      <type>Main</type>
-      <value>id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7</value>
-      <webElementGuid>6d44bb8d-a35f-4f53-8aea-67ddd546e05f</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
       <name>Connection</name>
       <type>Main</type>
       <value>keep-alive</value>
@@ -56,38 +48,6 @@
       <type>Main</type>
       <value>application/json</value>
       <webElementGuid>77d6a9c1-7bdb-45de-82bc-3d975b2d511e</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>DNT</name>
-      <type>Main</type>
-      <value>1</value>
-      <webElementGuid>96b21284-0c6b-4e3e-afe6-a255c4a92183</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Origin</name>
-      <type>Main</type>
-      <value>http://gdkwebsvr:8080</value>
-      <webElementGuid>0cdd6e87-1a52-4ac7-965e-eeb878ed39bd</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>Referer</name>
-      <type>Main</type>
-      <value>http://gdkwebsvr:8080/</value>
-      <webElementGuid>4d8e0080-a324-4ab1-a90c-f729540d944f</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>User-Agent</name>
-      <type>Main</type>
-      <value>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36</value>
-      <webElementGuid>f66d8ce8-b2f9-4240-8681-ede556335de9</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>true</isSelected>
@@ -121,21 +81,6 @@
       <defaultValue>GlobalVariable.token</defaultValue>
       <description></description>
       <id>9e9ef511-1d70-4ab3-a71e-daace54fd232</id>
-      <masked>false</masked>
-      <name>token</name>
-   </variables>
-   <variables>
-      <defaultValue>GlobalVariable.Tenant</defaultValue>
-      <description></description>
-      <id>b7933daf-6c70-4779-9e83-ced5ebf3f550</id>
-      <id>a0688288-87a1-4300-8405-c2df55b06454</id>
-      <masked>false</masked>
-      <name>base_url</name>
-   </variables>
-   <variables>
-      <defaultValue>GlobalVariable.token</defaultValue>
-      <description></description>
-      <id>5b98eb28-9336-4d44-bebd-b892d472fa43</id>
       <masked>false</masked>
       <name>token</name>
    </variables>

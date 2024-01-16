@@ -19,4 +19,5 @@ public class JSExecutor {
 
 		DriverFactory.webDriver.executeScript(js, element, newLocation)
 	}
+	
 }

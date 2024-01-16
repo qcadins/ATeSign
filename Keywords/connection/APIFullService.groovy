@@ -155,7 +155,7 @@ public class APIFullService {
 
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select count(distinct (tdds.id_document_d)) from tr_document_d_sign tdds join tr_document_d tdd on tdds.id_document_d = tdd.id_document_d join am_msuser amm on amm.id_ms_user = tdds.id_ms_user join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join ms_tenant mst on tdd.id_ms_tenant = mst.id_ms_tenant where amm.login_id = '"+email+"' and tdds.sign_date is null and mst.tenant_code = '"+tenantCode+"' AND tdh.is_active = '1' group by mst.tenant_code, mst.api_key")
+		resultSet = stm.executeQuery("select count(distinct (tdds.id_document_d)) from tr_document_d_sign tdds join tr_document_d tdd on tdds.id_document_d = tdd.id_document_d join am_msuser amm on amm.id_ms_user = tdds.id_ms_user join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join ms_tenant mst on tdd.id_ms_tenant = mst.id_ms_tenant where (amm.login_id = '"+email+"' OR amm.hashed_phone = encode(sha256('" +  email  + "'), 'hex')) and tdds.sign_date is null and mst.tenant_code = '"+tenantCode+"' AND tdh.is_active = '1' group by mst.tenant_code, mst.api_key")
 		metadata = resultSet.getMetaData()
 
 		columnCount = metadata.getColumnCount()
@@ -2133,7 +2133,7 @@ public class APIFullService {
 	getProfileUserAPIONLY(Connection conn, String email) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT full_name, login_id, amu.hashed_phone, mv.vendor_code FROM am_msuser amu LEFT JOIN ms_vendor_registered_user mvt ON mvt.id_ms_user = amu.id_ms_user LEFT JOIN ms_vendor mv ON mv.id_ms_vendor = mvt.id_ms_vendor WHERE amu.login_id = '" + email + "'")
+		resultSet = stm.executeQuery("SELECT full_name, login_id, mv.vendor_code FROM am_msuser amu LEFT JOIN ms_vendor_registered_user mvt ON mvt.id_ms_user = amu.id_ms_user LEFT JOIN ms_vendor mv ON mv.id_ms_vendor = mvt.id_ms_vendor WHERE amu.login_id = '" + email + "'")
 
 		metadata = resultSet.metaData
 

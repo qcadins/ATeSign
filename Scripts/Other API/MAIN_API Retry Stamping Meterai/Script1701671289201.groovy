@@ -112,15 +112,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             arrayMatch.add(WebUI.verifyMatch(totalMateraiAndTotalStamping[0], totalMateraiAndTotalStamping[
                                     1], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-							ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getOfficeRegionBlineCodeUsingRefNum'(conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')))
-							
+							ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(
+								conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')), 'Stamping')
+	
 							'lakukan loop untuk pengecekan data'
-							for (int i = 0; i < (officeRegionBline.size() / 3); i++) {
+							for (int i = 0; i < (officeRegionBline.size() / 2); i++) {
 								'verify business line dan office code'
-								arrayMatch.add(WebUI.verifyMatch(officeRegionBline[i].toString(), officeRegionBline[i+3].toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+								arrayMatch.add(WebUI.verifyMatch((officeRegionBline[i]).toString(), (officeRegionBline[(i +
+										3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
 							}
 							
-                            'jika data db tidak bertambah'
+                            'jika data db tidak bertambah'	
                             if (arrayMatch.contains(false)) {
                                 'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
                                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 

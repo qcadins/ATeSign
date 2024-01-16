@@ -8,22 +8,22 @@ import java.sql.Connection as Connection
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'declare arraylist arraymatch'
-ArrayList<String> arrayMatch = []
+ArrayList arrayMatch = []
 
 'check if action new/services'
-if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('New') || findTestData(excelPathTenant).getValue(
-    GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('Edit')) {
+if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('New') || findTestData(
+    excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('Edit')) {
     'get data balance mutation dari DB'
-    ArrayList<String> result = CustomKeywords.'connection.Tenant.getTenantStoreDB'(conneSign, findTestData(excelPathTenant).getValue(
+    ArrayList result = CustomKeywords.'connection.Tenant.getTenantStoreDB'(conneSign, findTestData(excelPathTenant).getValue(
             GlobalVariable.NumofColm, rowExcel('$LabelRefNumber')))
 
     'get data services dari DB'
-    ArrayList<String> resultServices = CustomKeywords.'connection.Tenant.getTenantServicesDescription'(conneSign, findTestData(
-            excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('$NamaTenant')))
-	
+    ArrayList resultServices = CustomKeywords.'connection.Tenant.getTenantServicesDescription'(conneSign, findTestData(excelPathTenant).getValue(
+            GlobalVariable.NumofColm, rowExcel('$NamaTenant')))
+
     'declare arrayindex'
     arrayindex = 0
-	
+
     'verify tenant name'
     arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('$NamaTenant')).toUpperCase(), 
             (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -46,12 +46,13 @@ if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('A
             (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify Email reminder'
-    arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase().replace(';',','), 
-            (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+    arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Email')).toUpperCase().replace(
+                ';', ','), (result[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
-    ArrayList<String> arrayServices = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Services')).split(';', -1)
+    ArrayList arrayServices = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Services')).split(
+        ';', -1)
 
-    ArrayList<String> arrayServicesBatasSaldo = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Batas Saldo Services')).split(
+    ArrayList arrayServicesBatasSaldo = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Batas Saldo Services')).split(
         ';', -1)
 
     'looping untuk verif services dan bata saldo'
@@ -59,11 +60,12 @@ if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('A
 
     for (indexExcel = 0; indexExcel < arrayServices.size(); indexExcel++) {
         String services = resultServices[indexServices++]
-		
-		'jika index service sama dengan array size, lakukan break'
-		if(indexServices == arrayServices.size()) {
-			break
-		}
+
+        'jika index service sama dengan array size, lakukan break'
+        if (indexServices == arrayServices.size()) {
+            break
+        }
+        
         if (services.equalsIgnoreCase(arrayServices[indexExcel])) {
             'verify services'
             arrayMatch.add(WebUI.verifyMatch(services.toUpperCase(), (arrayServices[indexExcel]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -76,13 +78,15 @@ if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('A
 } else if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('Service')) {
     'get data balacne mutation dari DB'
     String result = CustomKeywords.'connection.Tenant.getTenantServices'(conneSign, findTestData(excelPathTenant).getValue(
-            GlobalVariable.NumofColm, rowExcel('$Nama Tenants'))).replace('{', '').replace('}', '').replace('"', '').replace(',', '')
+            GlobalVariable.NumofColm, rowExcel('$Nama Tenants'))).replace('{', '').replace('}', '').replace('"', '').replace(
+        ',', '')
 
     'split result to array'
-    ArrayList<String> resultarray = result.split(':0')
+    ArrayList resultarray = result.split(':0')
 
     'get array Services dari excel'
-    ArrayList<String> arrayServices = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('ServicesCheck')).split(';', -1)
+    ArrayList arrayServices = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('ServicesCheck')).split(
+        ';', -1)
 
     'verify services'
     arrayMatch.add(arrayServices.containsAll(resultarray))
@@ -96,5 +100,6 @@ if (arrayMatch.contains(false)) {
 }
 
 def rowExcel(String cellValue) {
-	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
+
