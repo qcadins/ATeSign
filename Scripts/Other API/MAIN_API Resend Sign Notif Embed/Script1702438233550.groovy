@@ -1,10 +1,9 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.kms.katalon.core.model.FailureHandling
-import com.kms.katalon.core.testobject.ResponseObject
+import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject as ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import java.nio.charset.StandardCharsets as StandardCharsets
 import java.sql.Connection as Connection
 import java.time.LocalDateTime as LocalDateTime
 import java.time.format.DateTimeFormatter as DateTimeFormatter
@@ -28,15 +27,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
-        'check if tidak mau menggunakan tenant code yang benar'
-        if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'No') {
-            'set tenant kosong'
-            GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong tenant Code'))
-        } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'Yes') {
-            'get tenant per case dari colm excel'
-            GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
-        }
-        
+        'get tenant per case dari colm excel'
+        GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
+
         'get office code dari db'
         officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                 rowExcel('Document ID')))
@@ -95,9 +88,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         println(endcodedMsg)
 
         'HIT API'
-        respon = WS.sendRequest(findTestObject('Postman/Resend Sign Notif Embed', [
-						('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), 
-						('documentId') : endcodedDocumentId, ('msg') : endcodedMsg, ('url') : url]))
+        respon = WS.sendRequest(findTestObject('Postman/Resend Sign Notif Embed', [('callerId') : findTestData(excelPath).getValue(
+                        GlobalVariable.NumofColm, rowExcel('callerId')), ('documentId') : endcodedDocumentId, ('msg') : endcodedMsg
+                    , ('url') : url]))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
@@ -120,18 +113,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
             'jika status codenya 0'
             if (statusCode == 0) {
-                if (GlobalVariable.checkStoreDB == 'Yes' && findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Embed Version')).equalsIgnoreCase(
-					'V1')) {
+                if ((GlobalVariable.checkStoreDB == 'Yes') && findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                    rowExcel('Embed Version')).equalsIgnoreCase('V1')) {
                     emailServiceOnTenant = CustomKeywords.'connection.DataVerif.getEmailService'(conneSign, GlobalVariable.Tenant)
 
-					String emailSHA256
-					
-					if (!(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('email')).contains('@'))) {
-						emailSHA256 = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('email')))
-					} else {
-						emailSHA256 = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('email'))
-					}
-					
+                    String emailSHA256
+
+                    if (!(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('email')).contains('@'))) {
+                        emailSHA256 = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(findTestData(excelPath).getValue(
+                                GlobalVariable.NumofColm, rowExcel('email')))
+                    } else {
+                        emailSHA256 = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('email'))
+                    }
+                    
                     fullNameUser = CustomKeywords.'connection.DataVerif.getFullNameOfUser'(conneSign, emailSHA256)
 
                     mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
@@ -172,8 +166,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                                     'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
                                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                                        GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(
-                                            GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
+                                        GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                                            rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
                                 }
                                 
                                 if ((balmut[8]) != -1) {
@@ -181,8 +175,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                                     'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
                                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                                        GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(
-                                            GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Saldo WA tidak terpotong')
+                                        GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                                            rowExcel('Reason Failed')) + ';') + 'Saldo WA tidak terpotong')
                                 }
                             } else if (useWAMessage == '0') {
                                 'menggunakan saldo wa'
@@ -194,8 +188,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                                     'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
                                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                                        GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(
-                                            GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via SMS')
+                                        GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                                            rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via SMS')
                                 }
                                 
                                 if ((balmut[8]) != -1) {
@@ -203,8 +197,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                                     'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
                                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                                        GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(
-                                            GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 'Saldo SMS tidak terpotong')
+                                        GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                                            rowExcel('Reason Failed')) + ';') + 'Saldo SMS tidak terpotong')
                                 }
                             }
                         }
@@ -214,8 +208,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     ArrayList arrayMatch = []
 
                     'ambil data last transaction dari DB'
-                    ArrayList resultDB = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(conneSign, 
-                        findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('email')), 'Document')
+                    ArrayList resultDB = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(conneSign, findTestData(
+                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('email')), 'Document')
 
                     println(resultDB)
 
@@ -277,15 +271,6 @@ def rowExcel(String cellValue) {
 
 def encryptEncodeValue(String value, String aesKey) {
     'enkripsi msg'
-    encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(value, aesKey)
-
-    println(encryptMsg)
-
-    try {
-        return URLEncoder.encode(encryptMsg, StandardCharsets.UTF_8.toString())
-    }
-    catch (UnsupportedEncodingException ex) {
-        throw new RuntimeException(ex.cause)
-    } 
+    CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(value, aesKey)
 }
 
