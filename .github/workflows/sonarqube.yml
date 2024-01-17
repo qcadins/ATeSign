@@ -20,7 +20,7 @@ jobs:
         uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_HOST_URL: https://localhost:9000
           # SONAR_SCANNER_OPTS: -X
 
       - name: SonarQube Quality Gate
