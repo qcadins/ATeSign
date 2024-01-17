@@ -1,15 +1,16 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.kms.katalon.core.model.FailureHandling
-import com.kms.katalon.core.testobject.ResponseObject
+import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject as ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
+import java.sql.Connection as Connection
 import java.time.LocalDateTime as LocalDateTime
 import java.time.format.DateTimeFormatter as DateTimeFormatter
 import internal.GlobalVariable as GlobalVariable
 
 'connect DB eSign'
-CustomKeywords.'connection.ConnectDB.connectDBeSign'()
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - API Only.xlsx')
@@ -26,34 +27,42 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
-        'check if tidak mau menggunakan tenant code yang benar'
-        if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'No') {
-            'set tenant kosong'
-            GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong tenant Code'))
-        } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'Yes') {
-            'get tenant per case dari colm excel'
-            GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
-        }
-        
-        'get aesKet Tenant'
-        aesKey = CustomKeywords.'connection.APIFullService.getAesKeyBasedOnTenant'(conneSign, GlobalVariable.Tenant)
+        'get tenant per case dari colm excel'
+        GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
 
-        currentDate = LocalDateTime.now()
+        'get office code dari db'
+        officeCode = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('officeCode'))
 
-        localeIndonesia = new Locale('id', 'ID')
+        if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Embed Version')).equalsIgnoreCase('V2')) {
+            'get aesKet Tenant'
+            aesKey = CustomKeywords.'connection.APIFullService.getAesKeyBasedOnTenant'(conneSign, GlobalVariable.Tenant)
 
-        formatter = DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm:ss', localeIndonesia)
+            currentDate = LocalDateTime.now()
 
-        formattedDate = currentDate.format(formatter)
+            localeIndonesia = new Locale('id', 'ID')
 
-        if (aesKey.toString() != 'null') {
-            'get office code dari db'
-            officeCode = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('officeCode'))
+            formatter = DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm:ss', localeIndonesia)
+
+            formattedDate = currentDate.format(formatter)
 
             'pembuatan message yang akan dienkrip'
             msg = (((((('{\'officeCode\':\'' + officeCode) + '\',\'email\':\'') + findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                 rowExcel('email'))) + '\',\'timestamp\':\'') + formattedDate) + '\'}')
 
+            url = 'embed/tenant/checkLivenessFaceCompareServiceEmbed'
+        } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Embed Version')).equalsIgnoreCase(
+            'V1')) {
+            'get aesKet general'
+            aesKey = CustomKeywords.'connection.DataVerif.getAESKey'(conneSign)
+
+            'pembuatan message yang akan dienkrip'
+            msg = (((((('{\'officeCode\':\'' + officeCode) + '\',\'email\':\'') + findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                rowExcel('email'))) + '\',\'tenantCode\':\'') + GlobalVariable.Tenant) + '\'}')
+
+            url = 'tenant/checkLivenessFaceCompareServiceEmbed'
+        }
+        
+        if (aesKey.toString() != 'null') {
             if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Msg')) == 'No') {
                 'officecode + email + time stamp tanpa encrypt'
                 endcodedMsg = msg
@@ -67,7 +76,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         
         'HIT API'
         respon = WS.sendRequest(findTestObject('Postman/Check Liveness Face Compare Embed', [('callerId') : findTestData(
-                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('msg') : endcodedMsg]))
+                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('msg') : endcodedMsg, ('url') : url]))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
@@ -157,6 +166,6 @@ def rowExcel(String cellValue) {
 
 def encryptEncodeValue(String value, String aesKey) {
     'enkripsi msg'
-	CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(value, aesKey)
+    CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(value, aesKey)
 }
 

@@ -18,7 +18,7 @@
       <variableId>e931b202-0708-4d6a-8f1c-c774d43369ab</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'Verify Otp Signing/Verify Otp Signing'</defaultValue>
+      <defaultValue>'API/Verify Otp Signing Embed'</defaultValue>
       <description></description>
       <id>47f122d8-b5a9-4cd6-94e1-9e155f97bd0c</id>
       <masked>false</masked>

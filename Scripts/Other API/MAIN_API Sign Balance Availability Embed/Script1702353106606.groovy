@@ -1,10 +1,10 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import java.sql.Connection as Connection
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import com.kms.katalon.core.model.FailureHandling
-import com.kms.katalon.core.testobject.ResponseObject
+import java.time.LocalDateTime as LocalDateTime
+import java.time.format.DateTimeFormatter as DateTimeFormatter
+import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject as ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import internal.GlobalVariable as GlobalVariable
 
@@ -20,52 +20,55 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         break
     } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
         'inisialisasi arrayList'
-        ArrayList documentId = [], listDocId = []
+        ArrayList documentId = []
+
+        ArrayList listDocId = []
 
         'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
-        'check if tidak mau menggunakan vendor code yang benar'
-        if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Vendor Code')) == 'No') {
-            'set vendor kosong'
-            GlobalVariable.Psre = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Vendor Code'))
-        } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Vendor Code')) == 'Yes') {
-            'get vendor per case dari colm excel'
-            GlobalVariable.Psre = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
-        }
-        
-        'check if tidak mau menggunakan tenant code yang benar'
-        if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'No') {
-            'set tenant kosong'
-            GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong tenant Code'))
-        } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'Yes') {
-            'get tenant per case dari colm excel'
-            GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
-        }
-        
-        'get aesKet Tenant'
-        aesKey = CustomKeywords.'connection.APIFullService.getAesKeyBasedOnTenant'(conneSign, GlobalVariable.Tenant)
+        'get vendor per case dari colm excel'
+        GlobalVariable.Psre = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
 
-        currentDate = LocalDateTime.now()
+        'get tenant per case dari colm excel'
+        GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
 
-        localeIndonesia = new Locale('id', 'ID')
+        'Mengambil document id dari excel dan displit'
+        documentId = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Document ID')).split(';', -1)
 
-        formatter = DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm:ss', localeIndonesia)
+        'get office code dari db'
+        officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, documentId[0])
 
-        formattedDate = currentDate.format(formatter)
+        if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Embed Version')).equalsIgnoreCase('V2')) {
+            'get aesKet Tenant'
+            aesKey = CustomKeywords.'connection.APIFullService.getAesKeyBasedOnTenant'(conneSign, GlobalVariable.Tenant)
 
-        if (aesKey.toString() != 'null') {
-            'Mengambil document id dari excel dan displit'
-            documentId = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Document ID')).split(';', 
-                -1)
+            currentDate = LocalDateTime.now()
 
-            'get office code dari db'
-            officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, documentId[0])
+            localeIndonesia = new Locale('id', 'ID')
+
+            formatter = DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm:ss', localeIndonesia)
+
+            formattedDate = currentDate.format(formatter)
 
             'pembuatan message yang akan dienkrip'
             msg = (((((('{\'officeCode\':\'' + officeCode) + '\',\'email\':\'') + findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                 rowExcel('email'))) + '\',\'timestamp\':\'') + formattedDate) + '\'}')
 
+            url = 'embed/saldo/SignBalanceAvailabilityEmbed'
+        } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Embed Version')).equalsIgnoreCase(
+            'V1')) {
+            'get aesKet general'
+            aesKey = CustomKeywords.'connection.DataVerif.getAESKey'(conneSign)
+
+            'pembuatan message yang akan dienkrip'
+            msg = (((((('{\'officeCode\':\'' + officeCode) + '\',\'email\':\'') + findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                rowExcel('email'))) + '\',\'tenantCode\':\'') + GlobalVariable.Tenant) + '\'}')
+
+            url = 'saldo/SignBalanceAvailabilityEmbed'
+        }
+        
+        if (aesKey.toString() != 'null') {
             if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Msg')) == 'No') {
                 'officecode + email + time stamp tanpa encrypt'
                 endcodedMsg = msg
@@ -92,41 +95,42 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         String listDoc = listDocId.toString().replace('[', '').replace(']', '')
 
         'HIT API Sign Balance availability'
-        respon_signBalVal = WS.sendRequest(findTestObject('Postman/Sign Balance Availability Embed', [('callerId') : findTestData(
-                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('docId') : listDoc, ('msg') : endcodedMsg]))
-
-        'ambil lama waktu yang diperlukan hingga request menerima balikan'
-        elapsedTime = (respon_signBalVal.elapsedTime / 1000) + ' second'
-
-        'ambil body dari hasil respons'
-        responseBody = respon_signBalVal.responseBodyContent
-
-        'panggil keyword untuk proses beautify dari respon json yang didapat'
-        CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
-                excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
-
-        'write to excel response elapsed time'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 
-            1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+        responsignBalVal = WS.sendRequest(findTestObject('Postman/Sign Balance Availability Embed', [('callerId') : findTestData(
+                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('docId') : listDoc, ('msg') : endcodedMsg
+                    , ('url') : url]))
 
         'Jika status HIT API 200 OK'
-        if (WS.verifyResponseStatusCode(respon_signBalVal, 200, FailureHandling.OPTIONAL) == true) {
+        if (WS.verifyResponseStatusCode(responsignBalVal, 200, FailureHandling.OPTIONAL) == true) {
             'get Status Code'
-            status_Code = WS.getElementPropertyValue(respon_signBalVal, 'status.code')
+            statusCode = WS.getElementPropertyValue(responsignBalVal, 'status.code')
 
+			'ambil lama waktu yang diperlukan hingga request menerima balikan'
+			elapsedTime = ((responsignBalVal.elapsedTime / 1000) + ' second')
+	
+			'ambil body dari hasil respons'
+			responseBody = responsignBalVal.responseBodyContent
+	
+			'panggil keyword untuk proses beautify dari respon json yang didapat'
+			CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
+					excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+	
+			'write to excel response elapsed time'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') -
+				1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+			
             'Jika status codenya 0'
-            if (status_Code == 0) {
+            if (statusCode == 0) {
                 'get vendor Code'
-                GlobalVariable.Response = WS.getElementPropertyValue(respon_signBalVal, 'vendorCode')
+                GlobalVariable.Response = WS.getElementPropertyValue(responsignBalVal, 'vendorCode')
 
                 'write to excel success'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
                     1, GlobalVariable.StatusSuccess)
             } else {
-                getErrorMessageAPI(respon_signBalVal)
+                getErrorMessageAPI(responsignBalVal)
             }
         } else {
-            getErrorMessageAPI(respon_signBalVal)
+            getErrorMessageAPI(responsignBalVal)
         }
     }
 }
@@ -149,6 +153,6 @@ def getErrorMessageAPI(ResponseObject respon) {
 
 def encryptEncodeValue(String value, String aesKey) {
     'enkripsi msg'
-    encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(value, aesKey)
+    CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(value, aesKey)
 }
 

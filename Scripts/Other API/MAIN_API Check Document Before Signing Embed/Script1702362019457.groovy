@@ -1,14 +1,14 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.kms.katalon.core.model.FailureHandling
-import com.kms.katalon.core.testobject.ResponseObject
+import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject as ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import internal.GlobalVariable as GlobalVariable
 import java.nio.charset.StandardCharsets as StandardCharsets
-import java.sql.Connection
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import java.sql.Connection as Connection
+import java.time.LocalDateTime as LocalDateTime
+import java.time.format.DateTimeFormatter as DateTimeFormatter
 import java.util.regex.Matcher as Matcher
 import java.util.regex.Pattern as Pattern
 
@@ -27,45 +27,50 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         break
     } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
         'inisialisasi arrayList'
-        ArrayList documentId = []
-
-        ArrayList listDocId = []
+        ArrayList documentId = [], listDocId = []
 
         'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
-        'check if tidak mau menggunakan tenant code yang benar'
-        if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'No') {
-            'set tenant kosong'
-            GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong tenant Code'))
-        } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'Yes') {
-            'get tenant per case dari colm excel'
-            GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
-        }
+        'get tenant per case dari colm excel'
+        GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
         
-        'get aesKet Tenant'
-        aesKey = CustomKeywords.'connection.APIFullService.getAesKeyBasedOnTenant'(conneSign, GlobalVariable.Tenant)
+        'Mengambil document id dari excel dan displit'
+        documentId = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Document ID')).split(';', -1)
 
-        currentDate = LocalDateTime.now()
+        'get office code dari db'
+        officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, documentId[0])
 
-        localeIndonesia = new Locale('id', 'ID')
+        if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Embed Version')).equalsIgnoreCase('V2')) {
+            'get aesKet Tenant'
+            aesKey = CustomKeywords.'connection.APIFullService.getAesKeyBasedOnTenant'(conneSign, GlobalVariable.Tenant)
 
-        formatter = DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm:ss', localeIndonesia)
+            currentDate = LocalDateTime.now()
 
-        formattedDate = currentDate.format(formatter)
+            localeIndonesia = new Locale('id', 'ID')
 
-        if (aesKey.toString() != 'null') {
-            'Mengambil document id dari excel dan displit'
-            documentId = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Document ID')).split(';', 
-                -1)
+            formatter = DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm:ss', localeIndonesia)
 
-            'get office code dari db'
-            officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, documentId[0])
+            formattedDate = currentDate.format(formatter)
 
             'pembuatan message yang akan dienkrip'
             msg = (((((('{\'officeCode\':\'' + officeCode) + '\',\'email\':\'') + findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                 rowExcel('email'))) + '\',\'timestamp\':\'') + formattedDate) + '\'}')
 
+            url = 'embed/document/checkDocumentBeforeSigningEmbed'
+        } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Embed Version')).equalsIgnoreCase(
+            'V1')) {
+            'get aesKet general'
+            aesKey = CustomKeywords.'connection.DataVerif.getAESKey'(conneSign)
+
+            'pembuatan message yang akan dienkrip'
+            msg = (((((('{\'officeCode\':\'' + officeCode) + '\',\'email\':\'') + findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                rowExcel('email'))) + '\',\'tenantCode\':\'') + GlobalVariable.Tenant) + '\'}')
+
+            url = 'document/checkDocumentBeforeSigningEmbed'
+        }
+        
+        if (aesKey.toString() != 'null') {
             if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Msg')) == 'No') {
                 'officecode + email + time stamp tanpa encrypt'
                 endcodedMsg = msg
@@ -92,27 +97,27 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         String listDoc = listDocId.toString().replace('[', '').replace(']', '')
 
         'HIT API'
-        respon = WS.sendRequest(findTestObject('Postman/Check Document Before Signing Embed', [('docId') : parseCodeOnly(
-                        listDoc), ('msg') : parseCodeOnly(endcodedMsg)]))
+        respon = WS.sendRequest(findTestObject('Postman/Check Document Before Signing Embed', [('docId') : 
+                        listDoc, ('msg') : parseCodeOnly(endcodedMsg), ('url') : url]))
 
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
             'get Status Code'
             statusCode = WS.getElementPropertyValue(respon, 'status.code')
 
-			'ambil lama waktu yang diperlukan hingga request menerima balikan'
-			elapsedTime = ((respon.elapsedTime / 1000) + ' second')
-	
-			'ambil body dari hasil respons'
-			responseBody = respon.responseBodyContent
-	
-			'panggil keyword untuk proses beautify dari respon json yang didapat'
-			CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
-					excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
-	
-			'write to excel response elapsed time'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') -
-				1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
-			
+            'ambil lama waktu yang diperlukan hingga request menerima balikan'
+            elapsedTime = ((respon.elapsedTime / 1000) + ' second')
+
+            'ambil body dari hasil respons'
+            responseBody = respon.responseBodyContent
+
+            'panggil keyword untuk proses beautify dari respon json yang didapat'
+            CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
+                    excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+
+            'write to excel response elapsed time'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 
+                1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+
             'Jika status codenya 0'
             if (statusCode == 0) {
                 'get  doc id'
@@ -181,7 +186,7 @@ def rowExcel(String cellValue) {
 
 def encryptEncodeValue(String value, String aesKey) {
     'enkripsi msg'
-    encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(value, aesKey)
+    CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(value, aesKey)
 }
 
 def parseCodeOnly(String url) {
@@ -200,8 +205,8 @@ def parseCodeOnly(String url) {
         code = URLDecoder.decode(code, 'UTF-8')
 
         return code
-    } 
-		
-	''
+    }
+    
+    ''
 }
 
