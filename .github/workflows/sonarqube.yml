@@ -16,11 +16,11 @@ jobs:
         # with:
         #   fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
     
-      - name: Set up JDK
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: '11'
+      # - name: Set up JDK
+      #   uses: actions/setup-java@v2
+      #   with:
+      #     distribution: 'adopt'
+      #     java-version: '11'
           
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
@@ -29,7 +29,7 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: https://localhost:9000
-          SONAR_SCANNER_OPTS: -X
+          # SONAR_SCANNER_OPTS: -X
 
       - name: SonarQube Quality Gate
         uses: sonarsource/sonarqube-quality-gate-action@master
