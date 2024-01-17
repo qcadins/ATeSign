@@ -216,10 +216,13 @@ prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, 
         }
     } else if (findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Option for Stamp Document :')) == 
     'Start Stamping') {
-        'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
-        WebUI.callTestCase(findTestCase('Main Flow - Copy/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathStamping
-                , ('sheet') : sheet, ('linkDocumentMonitoring') : '', ('nomorKontrak') : refNumber, ('isStamping') : 'Yes'
-                , ('CancelDocsStamp') : CancelDocsStamp], FailureHandling.CONTINUE_ON_FAILURE)
+		if (GlobalVariable.ErrorType.size() > 0) {
+			GlobalVariable.FlagFailed = 1
+		} else {
+		'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
+		WebUI.callTestCase(findTestCase('Main Flow - Copy/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathStamping
+            , ('sheet') : sheet, ('linkDocumentMonitoring') : '', ('nomorKontrak') : refNumber, ('isStamping') : 'Yes'
+            , ('CancelDocsStamp') : CancelDocsStamp], FailureHandling.CONTINUE_ON_FAILURE)
 		
 		'Mengambil value total stamping dan total meterai'
 		totalMateraiAndTotalStamping = CustomKeywords.'connection.Meterai.getTotalMateraiAndTotalStamping'(conneSign,
@@ -233,6 +236,7 @@ prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, 
 			WebUI.callTestCase(findTestCase('Main Flow - Copy/verifyMeterai'), [('excelPathMeterai') : excelPathStamping
 			 , ('sheet') : sheet, ('noKontrak') : refNumber, ('linkDocumentMonitoring') : linkDocumentMonitoring
 			, ('CancelDocsStamp') : CancelDocsStamp], FailureHandling.CONTINUE_ON_FAILURE)
+		}
 		}
     }
 	

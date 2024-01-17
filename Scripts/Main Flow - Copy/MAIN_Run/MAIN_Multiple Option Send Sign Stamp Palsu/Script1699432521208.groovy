@@ -427,7 +427,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 							}
 							
 							'jika cancel doc tidak kosong, maka open document monitoring'
-                            if (cancelDocsValue != null || cancelDocsValue != '') {
+                            if (cancelDocsValue != 'null' || cancelDocsValue != '') {
                                 'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
                                 WebUI.callTestCase(findTestCase('Main Flow - Copy/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathMain
                                         , ('sheet') : sheet, ('CancelDocsSign') : cancelDocsValue, ('vendor') : vendor], 
@@ -816,7 +816,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             inquiryDB = CustomKeywords.'connection.DataVerif.getDetailTrx'(conneSign, trxNo[looping])
 
                             'inisialisasi is Checked'
-                            boolean isChecked
+                            boolean isChecked = true
 
                             'Get row lastest'
                             variableLastest = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
@@ -839,8 +839,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             'get row di saldo'
                             variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
 
-                            index = 0
-
+                            index = 0 
+                          
                             'looping mengenai rownya'
                             for (j = variableSaldoRow.size(); j >= 0; j--) {
                                 'jika rownya diawal'
@@ -865,70 +865,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                         'continue'
                                         continue
                                     }
-                                }
-                            }
-                            
-                            'Input filter di Mutasi Saldo'
-                            inputFilterTrx(conneSign, currentDate, '', signTypes[looping], officeName)
-
-                            'inquirydb mengenai get detail trx'
-                            inquiryDB = CustomKeywords.'connection.DataVerif.getDetailTrx'(conneSign, trxNo[looping])
-
-                            'Get row lastest'
-                            variableLastest = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
-
-                            'get row lastest'
-                            modifyObjectBtnLastest = WebUI.modifyObjectProperty(findTestObject('Object Repository/KotakMasuk/Sign/modifyObject'), 
-                                'class', 'equals', 'datatable-icon-skip', true)
-
-                            'jika btn lastest dapat diclick'
-                            if (WebUI.verifyElementVisible(modifyObjectBtnLastest, FailureHandling.OPTIONAL)) {
-                                WebUI.focus(modifyObjectBtnLastest)
-
-                                'Klik button Lastest'
-                                WebUI.click(modifyObjectBtnLastest, FailureHandling.CONTINUE_ON_FAILURE)
-                            }
-                            
-                            'get column di saldo'
-                            variableSaldoColumn = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-header > div > div.datatable-row-center.ng-star-inserted datatable-header-cell'))
-
-                            'get row di saldo'
-                            variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
-
-                            index = 0
-
-                            'looping mengenai rownya'
-                            for (j = variableSaldoRow.size(); j >= 0; j--) {
-                                'jika rownya diawal'
-                                if (j == 0) {
-                                    'jika masih belum terchecked'
-                                    if (isChecked == false) {
-                                        'click button previous'
-                                        WebUI.click(findTestObject('KotakMasuk/Sign/btn_balmut_Previous'))
-
-                                        'get column di saldo'
-                                        variableSaldoColumn = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-header > div > div.datatable-row-center.ng-star-inserted datatable-header-cell'))
-
-                                        'get row di saldo'
-                                        variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
-
-                                        'variable j akan diubah valuenya menjadi variable saldo row + 1 (di + 1 dikarenakan penggunaan fornya)'
-                                        j = (variableSaldoRow.size() + 1)
-
-                                        'is check menjadi true'
-                                        isChecked = true
-
-                                        'continue'
-                                        continue
-                                    }
-                                }
                                 
-                                'jika ischecked menjadi true'
-                                if (isChecked == true) {
-                                    'break'
-                                    break
+									'jika ischecked menjadi true'
+									if (isChecked == true) {
+										'break'
+										break
+									}
                                 }
-                                
+                            
                                 'looping mengenai columnnya'
                                 for (u = 1; u <= variableSaldoColumn.size(); u++) {
                                     'modify per row dan column. column menggunakan u dan row menggunakan documenttemplatename'
@@ -946,11 +890,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                                             'break ke row selanjutnya'
                                             break
-                                        }
+                                        } else {
+											isChecked = true
+										}
                                     }
                                     
                                     'Jika u di lokasi qty atau kolom ke 9'
-                                    if (u == 9) {
+                                    if (u == 10) {
                                         minuses = '-'
 
                                         'jika hasil query 0 mengenai kuantitas, maka minus akan menjadi string kosong'
@@ -975,8 +921,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                     }
                                 }
                             }
-                            
-                            break
+							break
                         }
                     }
                 }
