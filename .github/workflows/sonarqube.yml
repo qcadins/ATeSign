@@ -21,7 +21,7 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          SONAR_SCANNER_OPTS: -X
+          # SONAR_SCANNER_OPTS: -X
 
       - name: SonarQube Quality Gate
         uses: sonarsource/sonarqube-quality-gate-action@master
@@ -30,4 +30,4 @@ jobs:
         #   scanMetadataReportFile: path/to/your/report-task.txt
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_SCANNER_OPTS: -X
+          # SONAR_SCANNER_OPTS: -X
