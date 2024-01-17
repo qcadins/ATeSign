@@ -53,9 +53,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'HIT API check Status Signing'
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Check Status Signing', [
 			('callerId') : findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), 
-			('refNumber') : findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')), 
-			('phoneNo') : findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, rowExcel('phoneNo')),
-			('name') : findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, rowExcel('name'))]))
+			('refNumber') : findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, rowExcel('refNumber'))]))
 
 
         'Jika status HIT API 200 OK'
@@ -90,12 +88,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 signDate = WS.getElementPropertyValue(respon, 'statusSigning.signer.signDate', FailureHandling.OPTIONAL)
 
+				phoneNo = WS.getElementPropertyValue(respon, 'statusSigning.signer.phoneNo', FailureHandling.OPTIONAL)
+				
+				name = WS.getElementPropertyValue(respon, 'statusSigning.signer.name', FailureHandling.OPTIONAL)
+				
                 if (GlobalVariable.checkStoreDB == 'Yes') {
                     int indexArrayDB = 0, indexColResp = 0, indexRowResp = 0, i = 0
 
                     'get data from db'
                     ArrayList result = CustomKeywords.'connection.APIFullService.getAPICheckSigningStoreDB'(conneSign, findTestData(
-                            excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')))
+                            excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')), GlobalVariable.Tenant)
 
                     'declare arraylist arraymatch'
                     ArrayList arrayMatch = []
@@ -115,11 +117,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                                     'verify email'
                                     arrayMatch.add(WebUI.verifyMatch(((email[indexColResp])[indexRowResp]).toUpperCase(), 
                                             emailDB.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-
-                                    'verify signer type'
-                                    arrayMatch.add(WebUI.verifyMatch(((signerType[indexColResp])[indexRowResp]).toUpperCase(), 
+									if (result[indexArrayDB] == '') {
+										indexArrayDB++
+									} else {
+										'verify signer type'
+                                    	arrayMatch.add(WebUI.verifyMatch(((signerType[indexColResp])[indexRowResp]).toUpperCase(), 
                                             (result[indexArrayDB++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-
+									}
                                     'verify status signing'
                                     arrayMatch.add(WebUI.verifyMatch(((statusSigning[indexColResp])[indexRowResp]).toUpperCase(), 
                                             (result[indexArrayDB++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -131,7 +135,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                                     } else {
                                         indexArrayDB++
                                     }
+									
+									'verify status signing'
+									arrayMatch.add(WebUI.verifyMatch(((name[indexColResp])[indexRowResp]).toUpperCase(),
+											(result[indexArrayDB++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
                                     
+									if (phoneNo.toString().contains('*')) {
+										arrayMatch.add(true)
+									} else {
+										arrayMatch.add(false)
+									}
+									
                                     indexRowResp = 0
 
                                     indexColResp = 0

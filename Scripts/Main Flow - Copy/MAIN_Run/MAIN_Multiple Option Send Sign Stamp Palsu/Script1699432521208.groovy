@@ -411,13 +411,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 								GlobalVariable.eSignData['NoKontrakProcessed'] = GlobalVariable.eSignData['NoKontrakProcessed'].split(';', -1).toUnique()
 								
 								for (loopingNoKontrak = 0; loopingNoKontrak < GlobalVariable.eSignData['NoKontrakProcessed'].size(); loopingNoKontrak++) {
-									ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getOfficeRegionBlineCodeUsingRefNum'(conneSign, GlobalVariable.eSignData['NoKontrakProcessed'][loopingNoKontrak])
-									
-									'lakukan loop untuk pengecekan data'
-									for (i = 0; i < (officeRegionBline.size() / 3); i++) {
-										'verify business line dan office code'
-										checkVerifyEqualorMatch(WebUI.verifyMatch(officeRegionBline[i].toString(), officeRegionBline[i+3].toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada office, region, dan business line Kontrak' + GlobalVariable.eSignData['NoKontrakProcessed'][loopingNoKontrak])
-									}
+										ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(
+											conneSign, CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, GlobalVariable.storeVar.keySet()[0])), 'Signing')
+
+										'lakukan loop untuk pengecekan data'
+										for (i = 0; i < (officeRegionBline.size() / 3); i++) {
+											'verify business line dan office code'
+											checkVerifyEqualorMatch(WebUI.verifyMatch((officeRegionBline[i]).toString(), (officeRegionBline[(i +
+												3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada pengecekan Office/Region/Bline pada Sent otp Signing')
+										}
 								}
 								GlobalVariable.eSignData['NoKontrakProcessed'] = GlobalVariable.eSignData['NoKontrakProcessed'].toString().replace('[','').replace(']','').replace(', ',';')
 							} else {
@@ -425,7 +427,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 							}
 							
 							'jika cancel doc tidak kosong, maka open document monitoring'
-                            if (cancelDocsValue != null || cancelDocsValue != '') {
+                            if (cancelDocsValue != 'null' || cancelDocsValue != '') {
                                 'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
                                 WebUI.callTestCase(findTestCase('Main Flow - Copy/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathMain
                                         , ('sheet') : sheet, ('CancelDocsSign') : cancelDocsValue, ('vendor') : vendor], 
@@ -789,9 +791,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     
                     'jika seluruh trx no ada'
                     if (GlobalVariable.eSignData.getAt('allTrxNo').toString().length() > 0) {
-                        'klik ddl untuk tenant memilih mengenai Vida'
-                        WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)
-
+						if (vendor.equalsIgnoreCase('Privy') || vendor.equalsIgnoreCase('Digisign') || vendor.equalsIgnoreCase('tekenaja')) {
+							'klik ddl untuk tenant memilih mengenai Vida'
+							WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), vendor, false)
+						} else {
+							'klik ddl untuk tenant memilih mengenai Vida'
+							WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)
+						}
+						
                         'looping mengenai sign types '
                         for (looping = (signTypes.size() - 1); looping >= 0; looping--) {
                             if ((signTypes[looping]) == '') {
@@ -809,7 +816,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             inquiryDB = CustomKeywords.'connection.DataVerif.getDetailTrx'(conneSign, trxNo[looping])
 
                             'inisialisasi is Checked'
-                            boolean isChecked
+                            boolean isChecked = true
 
                             'Get row lastest'
                             variableLastest = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
@@ -832,8 +839,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             'get row di saldo'
                             variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
 
-                            index = 0
-
+                            index = 0 
+                          
                             'looping mengenai rownya'
                             for (j = variableSaldoRow.size(); j >= 0; j--) {
                                 'jika rownya diawal'
@@ -858,70 +865,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                         'continue'
                                         continue
                                     }
-                                }
-                            }
-                            
-                            'Input filter di Mutasi Saldo'
-                            inputFilterTrx(conneSign, currentDate, '', signTypes[looping], officeName)
-
-                            'inquirydb mengenai get detail trx'
-                            inquiryDB = CustomKeywords.'connection.DataVerif.getDetailTrx'(conneSign, trxNo[looping])
-
-                            'Get row lastest'
-                            variableLastest = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
-
-                            'get row lastest'
-                            modifyObjectBtnLastest = WebUI.modifyObjectProperty(findTestObject('Object Repository/KotakMasuk/Sign/modifyObject'), 
-                                'class', 'equals', 'datatable-icon-skip', true)
-
-                            'jika btn lastest dapat diclick'
-                            if (WebUI.verifyElementVisible(modifyObjectBtnLastest, FailureHandling.OPTIONAL)) {
-                                WebUI.focus(modifyObjectBtnLastest)
-
-                                'Klik button Lastest'
-                                WebUI.click(modifyObjectBtnLastest, FailureHandling.CONTINUE_ON_FAILURE)
-                            }
-                            
-                            'get column di saldo'
-                            variableSaldoColumn = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-header > div > div.datatable-row-center.ng-star-inserted datatable-header-cell'))
-
-                            'get row di saldo'
-                            variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
-
-                            index = 0
-
-                            'looping mengenai rownya'
-                            for (j = variableSaldoRow.size(); j >= 0; j--) {
-                                'jika rownya diawal'
-                                if (j == 0) {
-                                    'jika masih belum terchecked'
-                                    if (isChecked == false) {
-                                        'click button previous'
-                                        WebUI.click(findTestObject('KotakMasuk/Sign/btn_balmut_Previous'))
-
-                                        'get column di saldo'
-                                        variableSaldoColumn = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-header > div > div.datatable-row-center.ng-star-inserted datatable-header-cell'))
-
-                                        'get row di saldo'
-                                        variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
-
-                                        'variable j akan diubah valuenya menjadi variable saldo row + 1 (di + 1 dikarenakan penggunaan fornya)'
-                                        j = (variableSaldoRow.size() + 1)
-
-                                        'is check menjadi true'
-                                        isChecked = true
-
-                                        'continue'
-                                        continue
-                                    }
-                                }
                                 
-                                'jika ischecked menjadi true'
-                                if (isChecked == true) {
-                                    'break'
-                                    break
+									'jika ischecked menjadi true'
+									if (isChecked == true) {
+										'break'
+										break
+									}
                                 }
-                                
+                            
                                 'looping mengenai columnnya'
                                 for (u = 1; u <= variableSaldoColumn.size(); u++) {
                                     'modify per row dan column. column menggunakan u dan row menggunakan documenttemplatename'
@@ -939,11 +890,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                                             'break ke row selanjutnya'
                                             break
-                                        }
+                                        } else {
+											isChecked = true
+										}
                                     }
                                     
                                     'Jika u di lokasi qty atau kolom ke 9'
-                                    if (u == 9) {
+                                    if (u == 10) {
                                         minuses = '-'
 
                                         'jika hasil query 0 mengenai kuantitas, maka minus akan menjadi string kosong'
@@ -968,8 +921,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                     }
                                 }
                             }
-                            
-                            break
+							break
                         }
                     }
                 }
@@ -1024,8 +976,7 @@ def resetValue() {
     if (((findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 'Sign Only') && 
     (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 'Stamp Only')) && 
     (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 'Cancel Only')) {
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('documentid') - 
-            1, GlobalVariable.NumofColm - 1, '')
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('documentid') - 1, GlobalVariable.NumofColm - 1, '')
     }
     
     'reset value trx no, elapsed time, psre document, trxnos, result count success, result count failed'
@@ -1158,6 +1109,9 @@ def inputFilterTrx(Connection conneSign, String currentDate, String noKontrak, S
 
     'Input office name'
     WebUI.setText(findTestObject('Saldo/input_officeName'), officeName)
+	
+	'Input office name'
+	WebUI.sendKeys(findTestObject('Saldo/input_officeName'), Keys.chord(Keys.ENTER))
 
     'Klik cari'
     WebUI.click(findTestObject('Saldo/btn_cari'))

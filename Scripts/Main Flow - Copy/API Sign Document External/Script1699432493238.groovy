@@ -148,6 +148,16 @@ if (vendor.equalsIgnoreCase('Privy') || vendor.equalsIgnoreCase('Digisign')) {
             checkVerifyEqualOrMatch(WebUI.verifyMatch(psreCode.toString().toUpperCase(), vendor.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), 
                 ' pada psre response dengan vendor DB ')
 			
+			ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(
+				conneSign, CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, GlobalVariable.storeVar.keySet()[0])), 'Signing')
+
+			'lakukan loop untuk pengecekan data'
+			for (i = 0; i < (officeRegionBline.size() / 3); i++) {
+				'verify business line dan office code'
+				checkVerifyEqualOrMatch(WebUI.verifyMatch((officeRegionBline[i]).toString(), (officeRegionBline[(i +
+						3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada pengecekan Office/Region/Bline pada Sent otp Signing')
+			}
+			
             email = (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(
                 ';', -1)[GlobalVariable.indexUsed])
 
@@ -227,6 +237,16 @@ if (vendor.equalsIgnoreCase('Privy') || vendor.equalsIgnoreCase('Digisign')) {
         if (codeOTP == 0) {
             checkVerifyEqualOrMatch(WebUI.verifyMatch(psreCode.toString().toUpperCase(), vendor.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), 
                 ' pada psre response dengan vendor DB ')
+			
+			ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(
+				conneSign, CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, GlobalVariable.storeVar.keySet()[0])), 'Signing')
+
+			'lakukan loop untuk pengecekan data'
+			for (int i = 0; i < (officeRegionBline.size() / 3); i++) {
+				'verify business line dan office code'
+				checkVerifyEqualOrMatch(WebUI.verifyMatch((officeRegionBline[i]).toString(), (officeRegionBline[(i +
+						3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada pengecekan Office/Region/Bline pada Sent otp Signing')
+			}
 			
             'Dikasih delay 1 detik dikarenakan loading untuk mendapatkan OTP.'
             WebUI.delay(3)

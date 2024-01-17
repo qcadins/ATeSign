@@ -18,11 +18,11 @@
       <variableId>24a41225-852e-4317-b5c5-47658f9140ce</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'Registrasi/Confirm Sign Document Embed'</defaultValue>
+      <defaultValue>'API/Confirm Sign Document Embed'</defaultValue>
       <description></description>
       <id>992ff901-2c3f-47fe-a454-5544b2f3d425</id>
       <masked>false</masked>
-      <name>API_Excel_Path</name>
+      <name>excelPath</name>
    </variable>
    <variable>
       <defaultValue>'API Confirm Sign Document Embed'</defaultValue>

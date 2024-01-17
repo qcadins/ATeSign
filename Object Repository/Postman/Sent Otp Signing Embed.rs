@@ -6,11 +6,12 @@
    <elementGuidId>ce40964c-41d5-4149-8762-955887336873</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
+   <autoUpdateContent>false</autoUpdateContent>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\n    \&quot;msg\&quot;: ${msg},\n    \&quot;tenantCode\&quot;: \&quot;${tenantCode}\&quot;,\n    \&quot;vendorCode\&quot;: \&quot;${vendorCode}\&quot;,\n    \&quot;phoneNo\&quot;: \&quot;${phoneNo}\&quot;,\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    }\n}&quot;,
+  &quot;text&quot;: &quot;{\n    \&quot;msg\&quot;: \&quot;${msg}\&quot;,\n    \&quot;tenantCode\&quot;: \&quot;${tenantCode}\&quot;,\n    \&quot;vendorCode\&quot;: \&quot;${vendorCode}\&quot;,\n    \&quot;phoneNo\&quot;: \&quot;${phoneNo}\&quot;,\n    \&quot;audit\&quot;: {\n        \&quot;callerId\&quot;: \&quot;${callerId}\&quot;\n    }\n}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -35,7 +36,7 @@
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>POST</restRequestMethod>
-   <restUrl>${base_url}/services/embed/user/sentOtpSigningEmbed</restUrl>
+   <restUrl>${base_url}/services/${url}</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>
@@ -50,6 +51,20 @@
       <id>58f6f030-f75d-4cde-a5fb-5933e7a8e0fa</id>
       <masked>false</masked>
       <name>base_url</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.Tenant</defaultValue>
+      <description></description>
+      <id>3ce6adac-edd0-400b-a345-42245cbeb70c</id>
+      <masked>false</masked>
+      <name>tenantCode</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.Psre</defaultValue>
+      <description></description>
+      <id>6fea02bd-57b9-470e-afa3-581d2186500a</id>
+      <masked>false</masked>
+      <name>vendorCode</name>
    </variables>
    <verificationScript>import static org.assertj.core.api.Assertions.*
 
