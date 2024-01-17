@@ -18,10 +18,10 @@ jobs:
 
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
-        with:
-          token: ${{ secrets.SONAR_TOKEN }}
-          url: ${{ secrets.SONAR_HOST_URL }}
-          options: -X
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_SCANNER_OPTS: -X
 
       - name: List Contents
         run: ls -R
