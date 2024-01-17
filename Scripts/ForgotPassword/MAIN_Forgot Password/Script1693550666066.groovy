@@ -53,7 +53,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         if (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration (Empty/0/1/>1)')).length() > 
         0) {
             'ubah durasi aktif di DB'
-            CustomKeywords.'connection.ForgotPassword.updateotpActiveDuration'(conneSign, tenantcode, Integer.parseInt(findTestData(
+            CustomKeywords.'connection.ForgotPassword.updateOTPActiveDuration'(conneSign, tenantcode, Integer.parseInt(findTestData(
                         excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration (Empty/0/1/>1)'))))
         }
         
@@ -369,7 +369,22 @@ def resendFunction(Connection conndev, int countResend, ArrayList resetCodefromD
     if (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Resend Reset Code?')) == 'Yes') {
         'ulangi sesuai flag dari excel'
         for (int i = 1; i <= countResend; i++) {
-            WebUI.delay(297)
+			'ambil durasi aktif OTP dari update excel'
+			int otpActiveDuration = Integer.parseInt(findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel(
+						'Setting OTP Active Duration (Empty/0/1/>1)')))
+	
+			int otpDuration = 0
+			
+			'kondisi jika OTP tidak 0 dan null'
+			if ((otpActiveDuration != 0) && (otpActiveDuration != null)) {
+				'hitung durasi aktif otp'
+				otpDuration = (otpActiveDuration * 60) + 10
+				
+				'mulai delay dikurangi otp expire duration'
+				WebUI.delay(297 - otpDuration)
+			} else {
+				WebUI.delay(297)
+			}
 
             'klik pada resend code'
             WebUI.click(findTestObject('ForgotPassword/ResendCode'))
@@ -448,7 +463,7 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
                     '-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
         }
         
-        if ((balmut[8]) != -1) {
+        if ((balmut[9]) != -1) {
             'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                 (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
@@ -470,7 +485,7 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
                             rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
                 }
                 
-                if ((balmut[8]) != -1) {
+                if ((balmut[9]) != -1) {
                     'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, 
@@ -493,7 +508,7 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
                                 rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via SMS')
                     }
                     
-                    if ((balmut[8]) != -1) {
+                    if ((balmut[9]) != -1) {
                         'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                             GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, 
@@ -515,9 +530,6 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
         'ambil data last transaction dari DB'
         ArrayList resultDB = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(conneSign, findTestData(excelPathForgotPass).getValue(
                 GlobalVariable.NumofColm, rowExcel('$EmailForPassChange')), 'Document')
-
-        'declare arrayindex'
-        arrayindex = 0
 
         'lakukan loop untuk pengecekan data'
         for (int i = 0; i < (resultDB.size() / 2); i++) {

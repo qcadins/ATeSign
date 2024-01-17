@@ -31,12 +31,15 @@ int firstRun = 0
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
-    } else if (findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
-        'deklarasi date'
+    } else if (findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {		
+		'deklarasi tenant global'
+		GlobalVariable.Tenant = findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
+		
+		'deklarasi date'
         String startDate = findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Transaksi Dari'))
 
         String endDate = findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Transaksi Sampai'))
-
+				
         if ((findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) != findTestData(
             excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))) || (firstRun == 0)) {
             'call test case login per case'
@@ -122,11 +125,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             continue
         }
         
-        ArrayList result = CustomKeywords.'connection.Saldo.getTrxSaldo'(conneSign, startDate, endDate, findTestData(excelPathSaldo).getValue(
-                GlobalVariable.NumofColm, rowExcel('Nomor Kontrak')), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 
-                rowExcel('$Tipe Saldo')), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Nama Dokumen')), 
-            findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Office Name')))
-
+        ArrayList result = CustomKeywords.'connection.Saldo.getTrxSaldo'(conneSign, startDate, endDate,
+			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Nomor Kontrak')),
+			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('$Tipe Saldo')),
+			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Nama Dokumen')), 
+            findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Office Name')),
+			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login')),
+			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tipe Transaksi')),
+			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tipe Dokumen')))
+		
         arrayIndex = 0
 
         'verify trx no ui = db'
@@ -420,4 +427,3 @@ def checkDDL(TestObject objectDDL, ArrayList listDB, String reason) {
 def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
-

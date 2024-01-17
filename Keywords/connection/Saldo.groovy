@@ -225,33 +225,35 @@ public class Saldo {
 		}
 		listdata
 	}
-
 	@Keyword
-	getTrxSaldo(Connection conn, String startDate, String endDate, String refNo, String saldoType, String documentName, String officeName) {
-		String commandRefNo = '', commandTrxType = '', commandDocName = '', commandOfficeName = ''
+	getTrxSaldo(Connection conn, String startDate, String endDate, String refNo, String saldoType, String documentName, String officeName, String vendor, String trxType, String docType) {
+		String commandRefNo = '', commandTrxType = '', commandDocName = '', commandOfficeName = '', commandDocType = ''
 
 		stm = conn.createStatement()
 
 		if (refNo == '') {
 			commandRefNo = '--'
 		}
-		if (saldoType == '') {
+		if (trxType == 'All' || trxType == '') {
 			commandTrxType = '--'
 		}
 		if (documentName == '') {
 			commandDocName = '--'
 		}
-
 		if (officeName == 'All' || officeName == '') {
 			commandOfficeName = '--'
 		}
-
-		resultSet = stm.executeQuery("SELECT COALESCE(tbm.trx_no,''), COALESCE(TO_CHAR(trx_date, 'yyyy-MM-dd HH24:MI:SS'),''),COALESCE(mo.office_name ,''), COALESCE(ml.description,''), COALESCE(full_name,''), COALESCE(ref_no,''), COALESCE(ml2.code,''), COALESCE(case when mdt.doc_template_name != null or mdt.doc_template_name != '' then mdt.doc_template_name else tdd.document_name end,''), COALESCE(notes,''), COALESCE(qty * -1,0) FROM tr_balance_mutation tbm LEFT JOIN ms_lov ml ON tbm.lov_trx_type = ml.id_lov LEFT JOIN tr_document_h tdh ON tbm.id_document_h = tdh.id_document_h LEFT JOIN tr_document_d tdd ON tbm.id_document_d = tdd.id_document_d LEFT JOIN am_msuser amu ON tbm.id_ms_user = amu.id_ms_user LEFT JOIN( SELECT id_lov, code FROM ms_lov) ml2 ON tdh.lov_doc_type = ml2.id_lov LEFT JOIN ms_doc_template mdt ON tdd.id_ms_doc_template = mdt.id_doc_template LEFT JOIN ms_office mo ON mo.id_ms_office = tbm.id_ms_office WHERE (TO_CHAR(trx_date, 'yyyy-MM-dd') BETWEEN '" + startDate + "' AND '" + endDate + "')" + '\n' +
-				commandTrxType + " AND ml.description ILIKE '%" + saldoType + "%'" + '\n' +
-				commandRefNo + " AND ref_no = '" + refNo + "'" + '\n' +
-				commandDocName + " AND (tdd.document_name = '" + documentName + "' OR mdt.doc_template_name = '" + documentName + "'" + '\n' +
-				commandOfficeName + " AND mo.office_name = '" + officeName + "'" + '\n' +
-				" LIMIT 1")
+		if (docType == 'All' || docType == '') {
+			commandDocType = '--'
+		}
+		
+		resultSet = stm.executeQuery("with bdc AS ( SELECT recap_date, recap_total_balance FROM tr_balance_daily_recap bdc WHERE 1 = 1 AND bdc.id_ms_tenant = (SELECT id_ms_tenant FROM ms_tenant WHERE tenant_code = '" + GlobalVariable.Tenant + "') AND bdc.lov_balance_type = (SELECT id_lov FROM ms_lov WHERE description = '" + saldoType + "' AND lov_group = 'BALANCE_TYPE') AND bdc.recap_date <= ( CAST('" + startDate + "' AS DATE) - INTERVAL '1 DAY' ) ORDER BY bdc.recap_date DESC limit 1 ) select * from ( SELECT tbm.trx_no as trxNo, TO_CHAR( tbm.trx_date, 'YYYY-MM-DD HH24:MI:SS' ) as trxDate, COALESCE(CASE WHEN office_name is null THEN '' ELSE office_name END, '') as officename, ml.description, COALESCE( am.full_name, COALESCE(am.full_name, tbm.usr_crt) ) as customerName, COALESCE(CASE WHEN tbm.ref_no is null then '' ELSE tbm.ref_no END, '') as refNo, COALESCE(mlovDocType.code, '') as documentType, COALESCE(case when docd.id_ms_doc_template is null then docd.document_name else dt.doc_template_name end, '') as documentName, COALESCE(tbm.notes, '') as notes, COALESCE(CAST(tbm.qty * -1 AS VARCHAR), '') FROM tr_balance_mutation tbm join bdc ON 1 = 1 JOIN ms_vendor mv ON mv.id_ms_vendor = tbm.id_ms_vendor left join tr_document_d docd ON docd.id_document_d = tbm.id_document_d LEFT JOIN ms_office mo ON mo.id_ms_office = tbm.id_ms_office LEFT JOIN ms_region mr ON mr.id_ms_region = mo.id_ms_region LEFT JOIN am_msuser am ON am.id_ms_user = tbm.id_ms_user left join ms_doc_template AS dt ON dt.id_doc_template = docd.id_ms_doc_template LEFT JOIN ms_business_line mbl ON mbl.id_ms_business_line = tbm.id_ms_business_line left join tr_document_h doch ON doch.id_document_h = tbm.id_document_h left join ms_lov AS mlovDocType ON mlovDocType.id_lov = doch.lov_doc_type join ms_lov balancetype ON balancetype.id_lov = tbm.lov_balance_type JOIN ms_lov ml ON tbm.lov_trx_type = ml.id_lov where DATE(tbm.trx_date) > bdc.recap_date AND tbm.id_ms_tenant = (SELECT id_ms_tenant FROM ms_tenant WHERE tenant_code = '" + GlobalVariable.Tenant + "') AND tbm.lov_balance_type = (SELECT id_lov FROM ms_lov WHERE description = '" + saldoType + "' AND lov_group = 'BALANCE_TYPE') and DATE(tbm.trx_date) >= '" + startDate + "' and DATE(tbm.trx_date) <= '" + endDate + "' AND vendor_name = '" + vendor + "'" + '\n' +
+				commandTrxType + " AND ml.description = '" + trxType + "'" + '\n' +
+				commandDocType + " AND mlovDocType.description = '" + docType + "'" + '\n' +
+				commandRefNo + " AND tbm.ref_No = '" + refNo + "'" + '\n' +
+				commandDocName + " AND (dt.doc_template_name = '" + documentName + "' OR docd.document_name = '" + documentName + "')" + '\n' +
+				commandOfficeName + " AND office_name = '" + officeName + "'" + '\n' +
+				" order by tbm.trx_date, tbm.trx_no) as result LIMIT 1")
 
 		metadata = resultSet.metaData
 
