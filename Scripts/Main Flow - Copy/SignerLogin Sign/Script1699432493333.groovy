@@ -1190,8 +1190,6 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
 	countResend = 0
 	
 	GlobalVariable.eSignData.putAt('VerifikasiOTP', 1)
-	
-	checkSaldoWAOrSMS(conneSign, vendor)
 
     'check ada value maka Setting OTP Active Duration'
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() > 
@@ -1259,6 +1257,7 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
 
     if ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Correct OTP (Yes/No)')).split(
         ';', -1)[GlobalVariable.indexUsed]) == 'Yes') {
+		if (OTP == '') {
         if ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email')) == 
         '1') && email.contains('OUTLOOK.COM')) {
             'call keyword get otp dari email'
@@ -1278,7 +1277,7 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
 				OTP = CustomKeywords.'customizekeyword.GetSMS.getOTP'('eSignHub')
 			}
 			}
-
+        }
         }
       
         'value OTP dari db / email'
@@ -1362,7 +1361,9 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
             }
         }
     }
-
+	
+	checkSaldoWAOrSMS(conneSign, vendor)
+	
     GlobalVariable.eSignData.putAt('VerifikasiOTP', GlobalVariable.eSignData.getAt('VerifikasiOTP') + countResend)
 	
 }

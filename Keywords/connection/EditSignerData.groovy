@@ -169,10 +169,20 @@ public class EditSignerData {
 	getStatusActivationAPI(Connection conn, String value, String tenantCode, String vendorCode) {
 		stm = conn.createStatement()
 
-		if (tenantCode == '') {
-			helperQuery = ''
-		} else {
-			helperQuery = "and mst.tenant_code = '" + tenantCode + "'"
+		helperQuery = ''
+		if (tenantCode != '') {
+			resultSet = stm.executeQuery("select count(*) from ms_tenant where tenant_code = '"+tenantCode+"'")
+			metadata = resultSet.metaData
+	
+			columnCount = metadata.getColumnCount()
+			
+			while (resultSet.next()) {
+				data = resultSet.getObject(1)
+			}
+			
+			if (Integer.parseInt(data) > 0) {
+				helperQuery = "and mst.tenant_code = '" + tenantCode + "'"
+			}
 		}
 
 		resultSet = stm.executeQuery("select msvr.is_active from ms_useroftenant muot join am_msuser amm on muot.id_ms_user = amm.id_ms_user join ms_vendor_registered_user msvr on amm.id_ms_user = msvr.id_ms_user left join ms_vendor msv on msvr.id_ms_vendor = msv.id_ms_vendor left join ms_tenant mst on muot.id_ms_tenant = mst.id_ms_tenant join am_user_personal_data aupd on amm.id_ms_user = aupd.id_ms_user where (amm.login_id = '" + value + "' OR amm.hashed_phone = encode(sha256('" + value + "'), 'hex') OR amm.hashed_id_no = encode(sha256('" + value + "'), 'hex')) and msv.is_active = '1' and msv.is_operating = '1' " + helperQuery + " and msv.vendor_code = '" + vendorCode + "'")
@@ -185,5 +195,4 @@ public class EditSignerData {
 		}
 		data
 	}
-	
 }

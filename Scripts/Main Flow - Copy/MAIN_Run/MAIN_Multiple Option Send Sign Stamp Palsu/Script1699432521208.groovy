@@ -411,13 +411,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 								GlobalVariable.eSignData['NoKontrakProcessed'] = GlobalVariable.eSignData['NoKontrakProcessed'].split(';', -1).toUnique()
 								
 								for (loopingNoKontrak = 0; loopingNoKontrak < GlobalVariable.eSignData['NoKontrakProcessed'].size(); loopingNoKontrak++) {
-									ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getOfficeRegionBlineCodeUsingRefNum'(conneSign, GlobalVariable.eSignData['NoKontrakProcessed'][loopingNoKontrak])
-									
-									'lakukan loop untuk pengecekan data'
-									for (i = 0; i < (officeRegionBline.size() / 3); i++) {
-										'verify business line dan office code'
-										checkVerifyEqualorMatch(WebUI.verifyMatch(officeRegionBline[i].toString(), officeRegionBline[i+3].toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada office, region, dan business line Kontrak' + GlobalVariable.eSignData['NoKontrakProcessed'][loopingNoKontrak])
-									}
+										ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(
+											conneSign, CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, GlobalVariable.storeVar.keySet()[0])), 'Signing')
+
+										'lakukan loop untuk pengecekan data'
+										for (i = 0; i < (officeRegionBline.size() / 3); i++) {
+											'verify business line dan office code'
+											checkVerifyEqualorMatch(WebUI.verifyMatch((officeRegionBline[i]).toString(), (officeRegionBline[(i +
+												3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada pengecekan Office/Region/Bline pada Sent otp Signing')
+										}
 								}
 								GlobalVariable.eSignData['NoKontrakProcessed'] = GlobalVariable.eSignData['NoKontrakProcessed'].toString().replace('[','').replace(']','').replace(', ',';')
 							} else {
@@ -789,9 +791,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     
                     'jika seluruh trx no ada'
                     if (GlobalVariable.eSignData.getAt('allTrxNo').toString().length() > 0) {
-                        'klik ddl untuk tenant memilih mengenai Vida'
-                        WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)
-
+						if (vendor.equalsIgnoreCase('Privy') || vendor.equalsIgnoreCase('Digisign') || vendor.equalsIgnoreCase('tekenaja')) {
+							'klik ddl untuk tenant memilih mengenai Vida'
+							WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), vendor, false)
+						} else {
+							'klik ddl untuk tenant memilih mengenai Vida'
+							WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)
+						}
+						
                         'looping mengenai sign types '
                         for (looping = (signTypes.size() - 1); looping >= 0; looping--) {
                             if ((signTypes[looping]) == '') {
@@ -1024,8 +1031,7 @@ def resetValue() {
     if (((findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 'Sign Only') && 
     (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 'Stamp Only')) && 
     (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 'Cancel Only')) {
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('documentid') - 
-            1, GlobalVariable.NumofColm - 1, '')
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('documentid') - 1, GlobalVariable.NumofColm - 1, '')
     }
     
     'reset value trx no, elapsed time, psre document, trxnos, result count success, result count failed'
@@ -1158,6 +1164,9 @@ def inputFilterTrx(Connection conneSign, String currentDate, String noKontrak, S
 
     'Input office name'
     WebUI.setText(findTestObject('Saldo/input_officeName'), officeName)
+	
+	'Input office name'
+	WebUI.sendKeys(findTestObject('Saldo/input_officeName'), Keys.chord(Keys.ENTER))
 
     'Klik cari'
     WebUI.click(findTestObject('Saldo/btn_cari'))

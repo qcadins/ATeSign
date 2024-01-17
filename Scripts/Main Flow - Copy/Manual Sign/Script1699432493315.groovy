@@ -484,22 +484,22 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 			arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
 						rowExcel('isSequence')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 			
-			if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('officeCode')) != '') {
+			if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('officeName')) != '') {
 				'verify office code'
 				arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
-						rowExcel('officeCode')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+						rowExcel('officeName')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 			}
 			
-			if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('regionCode')) != '') {
+			if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('regionName')) != '') {
 				'verify region code'
 				arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
-						rowExcel('regionCode')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+						rowExcel('regionName')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 			}
 			
-			if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('businessLineCode')) != '') {
+			if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('businessLineName')) != '') {
 				'verify business line code'
 				arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
-						rowExcel('businessLineCode')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+						rowExcel('businessLineName')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 			}
 			
 			String docId = CustomKeywords.'connection.DataVerif.getDocId'(conneSign, findTestData(excelPathManualSigntoSign).getValue(
@@ -602,7 +602,7 @@ def inputForm() {
     'Klik enter'
     WebUI.sendKeys(findTestObject('ManualSign/input_isSequence'), Keys.chord(Keys.ENTER))
 	
-	if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('businessLineCode')) != '') {
+	if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('businessLineName')) != '') {
 		'Input pada business line'
 		WebUI.setText(findTestObject('ManualSign/input_businessLineCode'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
 			rowExcel('businessLineName')))
@@ -611,7 +611,7 @@ def inputForm() {
 		WebUI.sendKeys(findTestObject('ManualSign/input_businessLineCode'), Keys.chord(Keys.ENTER))
 	}
 	
-	if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('regionCode')) != '') {
+	if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('regionName')) != '') {
 		'Input pada region code'
 		WebUI.setText(findTestObject('ManualSign/input_regionCode'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
 			rowExcel('regionName')))
@@ -620,7 +620,7 @@ def inputForm() {
 			WebUI.sendKeys(findTestObject('ManualSign/input_regionCode'), Keys.chord(Keys.ENTER))
 	}
 	
-	if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('officeCode')) != '') {
+	if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('officeName')) != '') {
 		'Input pada office code'
 		WebUI.setText(findTestObject('ManualSign/input_officeCode'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
 			rowExcel('officeName')))

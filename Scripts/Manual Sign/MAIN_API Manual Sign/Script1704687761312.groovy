@@ -3,7 +3,12 @@ import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling
 import com.kms.katalon.core.testobject.ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
+import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
+import java.sql.Connection as Connection
 import internal.GlobalVariable as GlobalVariable
+
+'connect DB eSign'
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - API Only.xlsx')
@@ -19,6 +24,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
     if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
         break
     } else if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+		'setting menggunakan base url yang benar atau salah'
+		CustomKeywords.'connection.APIFullService.settingBaseUrl'(API_Excel_Path, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
+
         'Inisialisasi callerId'
         callerId = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('callerId'))
 
@@ -59,7 +67,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
         }
         
         'Inisialisasi tenantCode'
-        tenantCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
+        tenantCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('tenantCode'))
 
 		'Inisialisasi officeCode'
 		officeCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('officeCode'))
@@ -223,8 +231,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(responLogin, 200, FailureHandling.OPTIONAL) == true) {
-            if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Use True Token')).equalsIgnoreCase(
-                'Yes')) {
+            if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Use True Token')) != 'No') {
                 'Parsing token menjadi GlobalVariable'
                 GlobalVariable.token = WS.getElementPropertyValue(responLogin, 'access_token')
             } else if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Use True Token')).equalsIgnoreCase(
@@ -262,6 +269,56 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
                         'write to excel success'
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, 
                             GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+						
+						if (GlobalVariable.checkStoreDB == 'Yes') {
+							arrayIndex = 0
+							
+							result = CustomKeywords.'connection.ManualSign.getAPIManualSign'(conneSign, refNo)
+							
+							ArrayList arrayMatch = []
+							
+							arrayMatch.add(WebUI.verifyMatch(psreCode, result[0], false, FailureHandling.CONTINUE_ON_FAILURE))
+							
+							arrayMatch.add(WebUI.verifyMatch(refNo, result[1], false, FailureHandling.CONTINUE_ON_FAILURE))
+							
+							arrayMatch.add(WebUI.verifyMatch(documentName, result[2], false, FailureHandling.CONTINUE_ON_FAILURE))
+							
+							arrayMatch.add(WebUI.verifyMatch(documentDate, result[3], false, FailureHandling.CONTINUE_ON_FAILURE))
+							
+							arrayMatch.add(WebUI.verifyMatch(peruriDocType, result[4], false, FailureHandling.CONTINUE_ON_FAILURE))
+							
+							arrayMatch.add(WebUI.verifyMatch(isAutomaticStamp, result[5], false, FailureHandling.CONTINUE_ON_FAILURE))
+							
+							arrayMatch.add(WebUI.verifyMatch(paymentType, result[6], false, FailureHandling.CONTINUE_ON_FAILURE))
+							
+							arrayMatch.add(WebUI.verifyMatch(isSequence, result[7], false, FailureHandling.CONTINUE_ON_FAILURE))
+							
+							if (officeCode != '') {
+								arrayMatch.add(WebUI.verifyMatch(officeCode, result[8], false, FailureHandling.CONTINUE_ON_FAILURE))
+							}
+							
+							if (regionCode != '') {
+								arrayMatch.add(WebUI.verifyMatch(regionCode, result[9], false, FailureHandling.CONTINUE_ON_FAILURE))
+							}
+							
+							if (businessLineCode != '') {
+								arrayMatch.add(WebUI.verifyMatch(businessLineCode, result[10], false, FailureHandling.CONTINUE_ON_FAILURE))
+							}
+							
+							arrayMatch.add(WebUI.verifyMatch('1', result[11], false, FailureHandling.CONTINUE_ON_FAILURE))
+							
+							arrayMatch.add(WebUI.verifyMatch('1', result[11], false, FailureHandling.CONTINUE_ON_FAILURE))
+							
+							'jika data db tidak sesuai dengan excel'
+							if (arrayMatch.contains(false)) {
+								GlobalVariable.FlagFailed = 1
+		
+								'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+								CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+									GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel(
+											'Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
+							}
+						}
                     }
                 } else {
                     getErrorMessageAPI(responManualSign)

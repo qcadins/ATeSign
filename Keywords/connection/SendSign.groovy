@@ -508,7 +508,7 @@ public class SendSign {
 	getProsesTtdProgressPrivy(Connection conn, String documentId) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT count(tdsr.id_ms_user) FROM tr_document_d tdd left join tr_document_h tdh on tdh.id_document_h = tdd.id_document_h JOIN tr_document_signing_request tdsr ON tdh.id_document_h = tdsr.id_document_h WHERE tdd.document_id = '" + documentId + "'")
+		resultSet = stm.executeQuery("SELECT count(tdsr.id_ms_user) FROM tr_document_d tdd left join tr_document_h tdh on tdh.id_document_h = tdd.id_document_h JOIN tr_document_signing_request tdsr ON tdh.id_document_h = tdsr.id_document_h WHERE tdd.document_id = '" + documentId + "' AND tdsr.request_status != '2'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

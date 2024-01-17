@@ -33,6 +33,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         rowExcel('username')), ('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('password'))]))
 
+		'ambil lama waktu yang diperlukan hingga request menerima balikan'
+		String elapsedTime = ((responLogin.elapsedTime) / 1000) + ' second'
+
+		'write to excel response elapsed time'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') -
+			1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+		
         'Jika status HIT API Login 200 OK'
         if (WS.verifyResponseStatusCode(responLogin, 200, FailureHandling.OPTIONAL) == true) {
             'Parsing token menjadi GlobalVariable'
@@ -43,7 +50,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             GlobalVariable.NumofColm, rowExcel('username'))]))
 
             'ambil lama waktu yang diperlukan hingga request menerima balikan'
-            String elapsedTime = (respon.elapsedTime) / 1000 + ' second'
+            elapsedTime = ((respon.elapsedTime) / 1000) + ' second'
 
             'ambil body dari hasil respons'
             responseBody = respon.responseBodyContent
@@ -54,7 +61,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
             'write to excel response elapsed time'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 
-                1, GlobalVariable.NumofColm - 1, elapsedTime)
+                1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
 
             'Jika status HIT API 200 OK'
             if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
