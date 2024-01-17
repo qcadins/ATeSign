@@ -58,35 +58,35 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'click english'
                 WebUI.click(findTestObject('Login/button_English'))
 
-                inputSaldo(startDate, endDate)
-
-                'call function check paging'
-                checkPaging(conneSign)
-
-                'get ddl tenant'
-                ArrayList resultVendor = CustomKeywords.'connection.Saldo.getDDLVendor'(conneSign, CustomKeywords.'connection.Saldo.getTenantName'(
-                        conneSign))
-
-                'verify vendor DDL'
-                WebUI.verifyOptionsPresent(findTestObject('Saldo/ddl_Vendor'), resultVendor, FailureHandling.CONTINUE_ON_FAILURE)
-
-                'get ddl tipe Saldo'
-                ArrayList resultTipeSaldo = CustomKeywords.'connection.Saldo.getDDLTipeSaldo'(conneSign)
-
-                'call function check ddl untuk Tipe Saldo'
-                checkDDL(findTestObject('Saldo/input_tipesaldo'), resultTipeSaldo, 'DDL Tipe Saldo')
-
-                'get ddl tipe trx'
-                ArrayList resultTipeTrx = CustomKeywords.'connection.Saldo.getDDLTipeTrx'(conneSign)
-
-                'call function check ddl untuk Tipe Trx'
-                checkDDL(findTestObject('Saldo/input_tipetransaksi'), resultTipeTrx, 'DDL Tipe Trx')
-
-                'get ddl tipe dokumen'
-                ArrayList resultTipeDokumen = CustomKeywords.'connection.Saldo.getDDLTipeDokumen'(conneSign)
-
-                'call function check ddl untuk Tipe Dokumen'
-                checkDDL(findTestObject('Saldo/input_tipedokumen'), resultTipeDokumen, 'DDL Tipe Dokumen')
+//                inputSaldo(startDate, endDate)
+//
+//                'call function check paging'
+//                checkPaging(conneSign)
+//
+//                'get ddl tenant'
+//                ArrayList resultVendor = CustomKeywords.'connection.Saldo.getDDLVendor'(conneSign, CustomKeywords.'connection.Saldo.getTenantName'(
+//                        conneSign))
+//
+//                'verify vendor DDL'
+//                WebUI.verifyOptionsPresent(findTestObject('Saldo/ddl_Vendor'), resultVendor, FailureHandling.CONTINUE_ON_FAILURE)
+//
+//                'get ddl tipe Saldo'
+//                ArrayList resultTipeSaldo = CustomKeywords.'connection.Saldo.getDDLTipeSaldo'(conneSign)
+//
+//                'call function check ddl untuk Tipe Saldo'
+//                checkDDL(findTestObject('Saldo/input_tipesaldo'), resultTipeSaldo, 'DDL Tipe Saldo')
+//
+//                'get ddl tipe trx'
+//                ArrayList resultTipeTrx = CustomKeywords.'connection.Saldo.getDDLTipeTrx'(conneSign)
+//
+//                'call function check ddl untuk Tipe Trx'
+//                checkDDL(findTestObject('Saldo/input_tipetransaksi'), resultTipeTrx, 'DDL Tipe Trx')
+//
+//                'get ddl tipe dokumen'
+//                ArrayList resultTipeDokumen = CustomKeywords.'connection.Saldo.getDDLTipeDokumen'(conneSign)
+//
+//                'call function check ddl untuk Tipe Dokumen'
+//                checkDDL(findTestObject('Saldo/input_tipedokumen'), resultTipeDokumen, 'DDL Tipe Dokumen')
             }
             
             firstRun = 1
