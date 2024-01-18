@@ -35,6 +35,12 @@
       <value></value>
       <variableId>edc33b80-b2c2-4c2d-8425-633fe873f7bb</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>c4aa0b41-26c2-41a1-927c-5363050676b3</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -69,5 +75,12 @@
       <id>edc33b80-b2c2-4c2d-8425-633fe873f7bb</id>
       <masked>false</masked>
       <name>flowGetSignLink</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>c4aa0b41-26c2-41a1-927c-5363050676b3</id>
+      <masked>false</masked>
+      <name>nomorKontrak</name>
    </variable>
 </TestCaseEntity>

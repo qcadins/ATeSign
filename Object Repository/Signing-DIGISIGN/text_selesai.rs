@@ -18,6 +18,14 @@
       <name>xpath</name>
       <type>Main</type>
       <value>//*[@id=&quot;proModal&quot;]/div/div/div[1]/h3</value>
-      <webElementGuid>23624064-f741-4af2-a70a-2588ba6e0d9c</webElementGuid>
+      <webElementGuid>a1eb245c-8ed3-4852-8047-185dc74c2268</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>id</name>
+      <type>Main</type>
+      <value>titleAlertR</value>
+      <webElementGuid>85362ccd-06b5-4365-8522-ba05a1c9b6ed</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

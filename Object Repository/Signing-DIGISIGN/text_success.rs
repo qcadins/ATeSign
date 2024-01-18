@@ -18,6 +18,14 @@
       <name>class</name>
       <type>Main</type>
       <value>pull-left</value>
-      <webElementGuid>0cc8980d-1df1-41b1-b7d0-4551d4013478</webElementGuid>
+      <webElementGuid>cde07818-2f70-49ce-bbe7-28c34512a90b</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;textAlertR&quot;]</value>
+      <webElementGuid>8f3b39fe-abbe-435f-8270-b64332fb027f</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

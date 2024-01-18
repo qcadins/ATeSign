@@ -427,7 +427,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 							}
 							
 							'jika cancel doc tidak kosong, maka open document monitoring'
-                            if (cancelDocsValue != 'null' || cancelDocsValue != '') {
+                            if (cancelDocsValue != 'null' && cancelDocsValue != '') {
                                 'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
                                 WebUI.callTestCase(findTestCase('Main Flow - Copy/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathMain
                                         , ('sheet') : sheet, ('CancelDocsSign') : cancelDocsValue, ('vendor') : vendor], 
@@ -550,8 +550,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     'looping berdasarkan total dokumen dari dokumen template code'
                     for (i = 0; i < (GlobalVariable.eSignData['NoKontrakProcessed']).split(';', -1).size(); i++) {
                         'ambil nama vendor dari DB'
-                        vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, (GlobalVariable.eSignData[
-                            'NoKontrakProcessed']).split(';', -1)[i])
+                        vendor = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('PsRE Document'))
 
                         'jika vendornya digisign, maka signtypenya adalah Document'
                         if (vendor == 'DIGISIGN') {
@@ -816,7 +815,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             inquiryDB = CustomKeywords.'connection.DataVerif.getDetailTrx'(conneSign, trxNo[looping])
 
                             'inisialisasi is Checked'
-                            boolean isChecked = true
+                            boolean isChecked
 
                             'Get row lastest'
                             variableLastest = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
@@ -865,13 +864,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                         'continue'
                                         continue
                                     }
-                                
+                                }
 									'jika ischecked menjadi true'
 									if (isChecked == true) {
 										'break'
 										break
 									}
-                                }
+                                
                             
                                 'looping mengenai columnnya'
                                 for (u = 1; u <= variableSaldoColumn.size(); u++) {

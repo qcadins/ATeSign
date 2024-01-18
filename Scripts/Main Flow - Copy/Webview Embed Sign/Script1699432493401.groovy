@@ -684,10 +684,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
         WebUI.callTestCase(findTestCase('Main Flow - Copy/Signing Digisign'), [('excelPathFESignDocument') : excelPathFESignDocument
                 , ('sheet') : sheet, ('nomorKontrak') : noKontrak, ('documentId') : documentId, ('emailSigner') : GlobalVariable.storeVar.getAt(
                     GlobalVariable.storeVar.keySet()[0])], FailureHandling.CONTINUE_ON_FAILURE)
-
-        saldoUsed = (saldoUsed + noKontrakPerDoc.size())
-
-        GlobalVariable.eSignData.putAt('VerifikasiOTP', saldoUsed)
+		saldoUsed = (saldoUsed + noKontrakPerDoc.size())
     }
     
 	'Split dokumen template name dan nomor kontrak per dokumen berdasarkan delimiter ;'
@@ -1235,8 +1232,6 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
 	countResend = 0
 	
 	GlobalVariable.eSignData.putAt('VerifikasiOTP', 1)
-	
-	checkSaldoWAOrSMS(conneSign, vendor)
 
 	'check ada value maka Setting OTP Active Duration'
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() > 
@@ -1322,10 +1317,16 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
 					OTP = CustomKeywords.'customizekeyword.GetSMS.getOTP'('eSignHub')
 				}
 				}
-	
 			}
-		'value OTP dari db / email'
-        WebUI.setText(findTestObject('KotakMasuk/Sign/input_OTP'), OTP)
+			
+			if (OTP.find(/\d/)) {
+				'value OTP dari db / email'
+				WebUI.setText(findTestObject('KotakMasuk/Sign/input_OTP'), OTP)
+			} else {
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+				GlobalVariable.StatusFailed, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+				rowExcel('Reason Failed')).replace('-', '') + ';' + OTP.toString())
+			}
 		
 		'check if ingin testing expired otp'
 		if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() >
@@ -1397,14 +1398,10 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
                 WebUI.click(findTestObject('KotakMasuk/Sign/btn_ProsesOTP'))
             }
         }
-    } else {
-        'tidak ada resend, namun menggunakan send otp satu kali'
-        countResend = 0
     }
-    
-    countResend++
-
-    GlobalVariable.eSignData.putAt('VerifikasiOTP', countResend)
+	checkSaldoWAOrSMS(conneSign, vendor)
+	
+    GlobalVariable.eSignData.putAt('VerifikasiOTP', GlobalVariable.eSignData.getAt('VerifikasiOTP') + countResend)
 }
 
 def verifBiomMethod(int isLocalhost, int maxFaceCompDB, int countLivenessFaceComp, Connection conneSign, String emailSigner, ArrayList listOTP, String noTelpSigner, String otpAfter, String vendor) {

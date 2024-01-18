@@ -46,7 +46,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         }
         
         'inisialisasi arrayList'
-        ArrayList documentId = [], list = [], listDocId = []
+        ArrayList list = [], listDocId = []
+		
+		List documentId = []
 
         'Mengambil document id dari excel dan displit'
         documentId = findTestData(excelPathAPIGetSignLink).getValue(GlobalVariable.NumofColm, rowExcel('$documentId')).split(
@@ -119,7 +121,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     }
                     
                     'call test case signing digisign'
-                    WebUI.callTestCase(findTestCase('Main Flow/Signing Digisign'), [('excelPathFESignDocument') : excelPathAPIGetSignLink
+                    WebUI.callTestCase(findTestCase('Main Flow - Copy/Signing Digisign'), [('excelPathFESignDocument') : excelPathAPIGetSignLink
                             , ('sheet') : sheet, ('flowGetSignLink') : 'Yes', ('emailSigner') : findTestData(excelPathAPIGetSignLink).getValue(
                                 GlobalVariable.NumofColm, rowExcel('$loginId')), ('documentId') : documentId, ('nomorKontrak') : refNum], 
                         FailureHandling.CONTINUE_ON_FAILURE)

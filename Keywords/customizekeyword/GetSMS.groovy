@@ -19,10 +19,16 @@ public class GetSMS {
 				thread.recipients[0]?.name == nameSMS && thread.latest?.body
 			}?.latest?.body ?: "No message found for '$nameSMS'."
 
-			// Extract the number using regular expression
-			List<String> digits = body.findAll(/\d+/)
-			String otp = digits ? digits.join() : 'No OTP found in the message.'
-			return otp
+			// Check if the message contains "OTP"
+			if (body.toString().containsIgnoreCase('http')) {
+				return "OTP Tidak Diterima oleh Pushbullet"
+				// Extract the number using regular expression
+			} else {
+				// Extract the number using regular expression
+				List<String> digits = body.findAll(/\d+/)
+				String otp = digits ? digits.join() : 'No OTP found in the message.'
+				return otp
+			}
 		}
 
 		return "Failed to retrieve messages. Status code: ${response.statusCode}"

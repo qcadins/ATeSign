@@ -8,12 +8,7 @@ import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign Main.xlsx')
-
-println(CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, 'Main', 'status'))
-
-println(CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, 'Main', 'trxNo'))
-
-println(CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, 'Main', 'documentid'))
+sheet = 'Main'
 
 //'connect DB eSign'
 //Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
@@ -29,12 +24,32 @@ println(CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.
 //WebUI.Delay(100000000)
 otp = CustomKeywords.'customizekeyword.GetSMS.getOTP'('eSignHub')
 println otp
+if (otp.find(/\d/)) {
+	println 'ada angka'
+	println otp
+} else {
+	println 'tidak ada angka'
+	println otp
+}
 
 otp1 = CustomKeywords.'customizekeyword.GetSMS.getOTP'('PrivyID')
 println otp1
-
+if (otp1.find(/\d/)) {
+	println 'ada angka'
+	println otp1
+} else {
+	println 'tidak ada angka'
+	println otp1
+}
 otp2 = CustomKeywords.'customizekeyword.GetSMS.getOTP'('DIGISIGN')
 println otp2
+if (otp2.find(/\d/)) {
+	println 'ada angka'
+	println otp2
+} else {
+	println 'tidak ada angka'
+	println otp2
+}
 
 sheet = 'Main'
 GlobalVariable.NumofColm = 4

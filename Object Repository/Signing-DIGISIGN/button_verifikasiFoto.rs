@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>button_verifikasiFoto</name>
+   <tag></tag>
+   <elementGuidId>a9275394-c0c6-41b9-a2a6-2209e8b575d6</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>/html/body/ngb-modal-window/div/div/app-liveness-check/div[3]/button[2]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>/html/body/ngb-modal-window/div/div/app-liveness-check/div[3]/button[2]</value>
+      <webElementGuid>1c7ffb78-ea48-4c83-8593-9633bfcad1b5</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

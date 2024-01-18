@@ -312,8 +312,12 @@ if (otp.length() >= 0) {
         WebUI.delay(delayExpiredOTP)
     }
     
-    'looping berdasarkan ukuran dari dokumen id'
-
+	if (!otp.find(/\d/)) {
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+			GlobalVariable.StatusFailed, findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm,
+				rowExcel('Reason Failed')).replace('-', '') + ';' + otp.toString())
+	}
+	
     'Memasukkan input dari total signed'
     (totalSignedBefore[0]) = CustomKeywords.'connection.APIFullService.getTotalSigned'(conneSign, (GlobalVariable.storeVar.keySet()[
         [0]]).toString())

@@ -18,6 +18,30 @@
       <name>id</name>
       <type>Main</type>
       <value>textAlert</value>
-      <webElementGuid>52501280-b60f-40a0-8e06-b6beca83ebd1</webElementGuid>
+      <webElementGuid>e4e0b75f-11a6-4863-9bca-79bf6c7a68f1</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;textAlert&quot;]/text()</value>
+      <webElementGuid>93c5a526-847d-40a9-86b9-811f4e7bb8e3</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>class</name>
+      <type>Main</type>
+      <value>modal-body</value>
+      <webElementGuid>d30cf85d-956f-4117-8ca1-8a9df31edf56</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>style</name>
+      <type>Main</type>
+      <value>max-height: 378px; overflow-y: auto;</value>
+      <webElementGuid>38ad4590-d1c3-4377-ae60-e25c3195bfdb</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

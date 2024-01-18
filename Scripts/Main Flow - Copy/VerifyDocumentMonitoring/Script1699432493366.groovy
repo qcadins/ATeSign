@@ -20,8 +20,10 @@ ArrayList nomorKontrakPerPilihan = []
 String settingHO = ''
 
 'Memilih document monitoring menggunakan apa berdasarkan input. Jika embed, maka setting GV Yes, jika tidak, maka setting No'
-if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Document Monitoring Using ?')) == 'Embed') {
+if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Document Monitoring Using ?')) == 'Embed V2') {
 	GlobalVariable.RunWithEmbed = 'Yes'
+} else if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Document Monitoring Using ?')) == 'Embed V1') {
+	GlobalVariable.RunWithEmbed = 'V1'
 } else {
 	GlobalVariable.RunWithEmbed = 'No'
 }
@@ -754,7 +756,7 @@ def inputDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan,
         'modify object test status tanda tangan di beranda'
         modifyObjectProsesMeterai = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/input_prosesMeterai'), 
             'xpath', 'equals', '//*[@id="stampingStatus"]/div/div/div[3]/input', true)
-    } else if (linkDocumentMonitoring.contains('embed/V2/inquiry?')) {
+    } else if (linkDocumentMonitoring.contains('embed')) {
         'modify object test status tanda tangan di beranda'
         modifyObjectProsesMeterai = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/input_prosesMeterai'), 
             'xpath', 'equals', '//*[@id=\'prosesMaterai\']/div/div/div[3]/input', true)
@@ -1067,7 +1069,39 @@ def funcLogin(Connection conneSign, String documentId) {
                 (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
                 ';') + '<') + WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label')) + '>')
         }
-    } else {
+    } else if (GlobalVariable.RunWithEmbed == 'V1') {
+		'get aesKey general'
+		aesKey = CustomKeywords.'connection.DataVerif.getAESKey'(conneSign)
+		
+		officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, documentId)
+		
+		emailSigner = ''
+
+        if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
+        'Sign Only') {
+            emailSigner = (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('email Signer (Sign Only)')).split(
+                ';', -1)[0])
+        } else {
+            emailSigner = (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('$email')).split(
+                ';', -1)[0])
+
+            if ((emailSigner == '') && (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel(
+                    '$idKtp')) != '')) {
+                emailSigner = CustomKeywords.'connection.SendSign.getEmaiLFromNIK'(conneSign, findTestData(excelPathFESignDocument).getValue(
+                        GlobalVariable.NumofColm, rowExcel('$idKtp')).split(';', -1)[0])
+            }
+        }
+		
+		'pembuatan message yang akan dienkrip'
+		msg = (((((('{\'officeCode\':\'' + officeCode) + '\',\'email\':\'') + emailSigner) + '\',\'tenantCode\':\'') + GlobalVariable.Tenant) + '\'}')
+		
+		endcodedMsg = encryptValue(msg, aesKey)
+		
+		linkDocumentMonitoring = GlobalVariable.BaseLink + 'embed/inquiry?msg=' + endcodedMsg + '&isMonitoring=' + findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('isMonitoring')) + '&isHO=' + findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('isHO'))
+		
+		WebUI.openBrowser(linkDocumentMonitoring)
+		}
+	else {
         if (!(WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/input_NamaPelanggan'), GlobalVariable.TimeOut, 
             FailureHandling.OPTIONAL))) {
             if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/DocumentMonitoring'), GlobalVariable.TimeOut, 
@@ -1096,6 +1130,11 @@ def funcLogin(Connection conneSign, String documentId) {
             }
         }
     }
+}
+
+def encryptValue(String value, String aesKey) {
+	'enkripsi msg'
+	encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(value, aesKey)
 }
 
 def encryptLink(Connection conneSign, String documentId, String emailSigner, String aesKey) {

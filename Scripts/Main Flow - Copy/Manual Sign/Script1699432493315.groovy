@@ -38,7 +38,7 @@ GlobalVariable.FlagFailed = 0
 ArrayList<String> namaTandaTangan = [], notelpTandaTangan = []
 
 'inisiasi index menjadi 8 untuk modify object ketika tidak pada e-meterai'
-index = 12
+index = 13
 
 'Inisialisasi variable yang dibutuhkan'
 emailPenandaTangan = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$email')).split(
@@ -76,10 +76,10 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
     if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Membutuhkan e-Meterai (Send Manual)')) == 
     'Yes') {
         'index meningkat karena tambahan 2 kolom ketika menggunakan e-meterai'
-        index = 14
+        index = 15
     } else {
         'modify menuju index normal'
-        index = 12
+        index = 13
     }
 	
 	'modify label daftar penanda tangan dengan naiknya index'
@@ -599,8 +599,15 @@ def inputForm() {
     WebUI.setText(findTestObject('ManualSign/input_isSequence'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
             rowExcel('isSequence')))
 
-    'Klik enter'
-    WebUI.sendKeys(findTestObject('ManualSign/input_isSequence'), Keys.chord(Keys.ENTER))
+	'Klik enter'
+	WebUI.sendKeys(findTestObject('ManualSign/input_isSequence'), Keys.chord(Keys.ENTER))
+
+	'Input qr'
+	WebUI.setText(findTestObject('ManualSign/input_qr'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
+			rowExcel('QR')))
+	
+	'Klik enter'
+	WebUI.sendKeys(findTestObject('ManualSign/input_qr'), Keys.chord(Keys.ENTER))
 	
 	if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('businessLineName')) != '') {
 		'Input pada business line'

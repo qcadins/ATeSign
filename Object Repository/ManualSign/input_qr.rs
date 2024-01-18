@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_qr</name>
+   <tag></tag>
+   <elementGuidId>4bad9655-a855-4282-87b8-0cb44bb615b5</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;useSignQr&quot;]/div/div/div[3]/input</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;useSignQr&quot;]/div/div/div[3]/input</value>
+      <webElementGuid>df8d5bc4-f652-46a6-a928-8f7a7c447274</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

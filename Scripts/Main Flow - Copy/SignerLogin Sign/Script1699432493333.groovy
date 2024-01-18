@@ -46,7 +46,7 @@ ArrayList loopingEmailSigner = []
 'declare arrayindex'
 arrayIndex = 0
 
-documentId = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ', 
+List documentId = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ', 
     -1)
 
 'inisialisasi variable untuk looping. Looping diperlukan untuk break/continue'
@@ -717,10 +717,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
         WebUI.callTestCase(findTestCase('Main Flow - Copy/Signing Digisign'), [('excelPathFESignDocument') : excelPathFESignDocument
                 , ('sheet') : sheet, ('nomorKontrak') : noKontrak, ('documentId') : documentId, ('emailSigner') : GlobalVariable.storeVar.getAt(
                     GlobalVariable.storeVar.keySet()[0])], FailureHandling.CONTINUE_ON_FAILURE)
-
-        saldoUsed = (saldoUsed + noKontrakPerDoc.size())
-
-        GlobalVariable.eSignData.putAt('VerifikasiOTP', saldoUsed)
+		saldoUsed = (saldoUsed + noKontrakPerDoc.size())
     }
     
     'Split dokumen template name dan nomor kontrak per dokumen berdasarkan delimiter ;'
@@ -1280,9 +1277,15 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
         }
         }
       
-        'value OTP dari db / email'
-        WebUI.setText(findTestObject('KotakMasuk/Sign/input_OTP'), OTP)
-
+		if (OTP.find(/\d/)) {
+			'value OTP dari db / email'
+			WebUI.setText(findTestObject('KotakMasuk/Sign/input_OTP'), OTP)
+		} else {
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+				GlobalVariable.StatusFailed, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+					rowExcel('Reason Failed')).replace('-', '') + ';' + OTP.toString())
+		}
+		
         'check if ingin testing expired otp'
         if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() > 
         0) {
@@ -1365,7 +1368,6 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
 	checkSaldoWAOrSMS(conneSign, vendor)
 	
     GlobalVariable.eSignData.putAt('VerifikasiOTP', GlobalVariable.eSignData.getAt('VerifikasiOTP') + countResend)
-	
 }
 
 def verifBiomMethod(int isLocalhost, int maxFaceCompDB, int countLivenessFaceComp, Connection conneSign, String emailSigner, ArrayList listOTP, String noTelpSigner, String otpAfter, String vendor) {
