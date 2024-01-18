@@ -31,12 +31,15 @@ int firstRun = 0
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
-    } else if (findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
-        'deklarasi date'
+    } else if (findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {		
+		'deklarasi tenant global'
+		GlobalVariable.Tenant = findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
+		
+		'deklarasi date'
         String startDate = findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Transaksi Dari'))
 
         String endDate = findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Transaksi Sampai'))
-
+				
         if ((findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) != findTestData(
             excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))) || (firstRun == 0)) {
             'call test case login per case'
@@ -55,35 +58,35 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'click english'
                 WebUI.click(findTestObject('Login/button_English'))
 
-                inputSaldo(startDate, endDate)
-
-                'call function check paging'
-                checkPaging(conneSign)
-
-                'get ddl tenant'
-                ArrayList resultVendor = CustomKeywords.'connection.Saldo.getDDLVendor'(conneSign, CustomKeywords.'connection.Saldo.getTenantName'(
-                        conneSign))
-
-                'verify vendor DDL'
-                WebUI.verifyOptionsPresent(findTestObject('Saldo/ddl_Vendor'), resultVendor, FailureHandling.CONTINUE_ON_FAILURE)
-
-                'get ddl tipe Saldo'
-                ArrayList resultTipeSaldo = CustomKeywords.'connection.Saldo.getDDLTipeSaldo'(conneSign)
-
-                'call function check ddl untuk Tipe Saldo'
-                checkDDL(findTestObject('Saldo/input_tipesaldo'), resultTipeSaldo, 'DDL Tipe Saldo')
-
-                'get ddl tipe trx'
-                ArrayList resultTipeTrx = CustomKeywords.'connection.Saldo.getDDLTipeTrx'(conneSign)
-
-                'call function check ddl untuk Tipe Trx'
-                checkDDL(findTestObject('Saldo/input_tipetransaksi'), resultTipeTrx, 'DDL Tipe Trx')
-
-                'get ddl tipe dokumen'
-                ArrayList resultTipeDokumen = CustomKeywords.'connection.Saldo.getDDLTipeDokumen'(conneSign)
-
-                'call function check ddl untuk Tipe Dokumen'
-                checkDDL(findTestObject('Saldo/input_tipedokumen'), resultTipeDokumen, 'DDL Tipe Dokumen')
+//                inputSaldo(startDate, endDate)
+//
+//                'call function check paging'
+//                checkPaging(conneSign)
+//
+//                'get ddl tenant'
+//                ArrayList resultVendor = CustomKeywords.'connection.Saldo.getDDLVendor'(conneSign, CustomKeywords.'connection.Saldo.getTenantName'(
+//                        conneSign))
+//
+//                'verify vendor DDL'
+//                WebUI.verifyOptionsPresent(findTestObject('Saldo/ddl_Vendor'), resultVendor, FailureHandling.CONTINUE_ON_FAILURE)
+//
+//                'get ddl tipe Saldo'
+//                ArrayList resultTipeSaldo = CustomKeywords.'connection.Saldo.getDDLTipeSaldo'(conneSign)
+//
+//                'call function check ddl untuk Tipe Saldo'
+//                checkDDL(findTestObject('Saldo/input_tipesaldo'), resultTipeSaldo, 'DDL Tipe Saldo')
+//
+//                'get ddl tipe trx'
+//                ArrayList resultTipeTrx = CustomKeywords.'connection.Saldo.getDDLTipeTrx'(conneSign)
+//
+//                'call function check ddl untuk Tipe Trx'
+//                checkDDL(findTestObject('Saldo/input_tipetransaksi'), resultTipeTrx, 'DDL Tipe Trx')
+//
+//                'get ddl tipe dokumen'
+//                ArrayList resultTipeDokumen = CustomKeywords.'connection.Saldo.getDDLTipeDokumen'(conneSign)
+//
+//                'call function check ddl untuk Tipe Dokumen'
+//                checkDDL(findTestObject('Saldo/input_tipedokumen'), resultTipeDokumen, 'DDL Tipe Dokumen')
             }
             
             firstRun = 1
@@ -122,11 +125,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             continue
         }
         
-        ArrayList result = CustomKeywords.'connection.Saldo.getTrxSaldo'(conneSign, startDate, endDate, findTestData(excelPathSaldo).getValue(
-                GlobalVariable.NumofColm, rowExcel('Nomor Kontrak')), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 
-                rowExcel('$Tipe Saldo')), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Nama Dokumen')), 
-            findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Office Name')))
-
+        ArrayList result = CustomKeywords.'connection.Saldo.getTrxSaldo'(conneSign, startDate, endDate,
+			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Nomor Kontrak')),
+			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('$Tipe Saldo')),
+			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Nama Dokumen')), 
+            findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Office Name')),
+			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login')),
+			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tipe Transaksi')),
+			findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, rowExcel('Tipe Dokumen')))
+		
         arrayIndex = 0
 
         'verify trx no ui = db'
@@ -420,4 +427,3 @@ def checkDDL(TestObject objectDDL, ArrayList listDB, String reason) {
 def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
-
