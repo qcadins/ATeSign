@@ -28,7 +28,7 @@ jobs:
           projectBaseDir: .
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: https://7cb0-220-247-173-58.ngrok-free.app
+          SONAR_HOST_URL:  https://3ba9-182-253-64-152.ngrok-free.app
           # SONAR_SCANNER_OPTS: -X
 
       - name: SonarQube Quality Gate
