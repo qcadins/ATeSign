@@ -41,9 +41,8 @@ public class ForgotPassword {
 
 		resultSet = stm.executeQuery("SELECT gs_value FROm am_generalsetting WHERE gs_code = 'OTP_RESET_PWD_DAILY'")
 
-		while (resultSet.next()){
-
-			data = resultSet.getObject(1);
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
 		}
 
 		Integer.parseInt(data)
