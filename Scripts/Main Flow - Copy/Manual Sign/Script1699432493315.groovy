@@ -1,20 +1,16 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
+import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
-import com.kms.katalon.core.testobject.TestObject as TestObject
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 import org.openqa.selenium.By as By
 import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import java.sql.Connection as Connection
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
-
-'get current date'
-def currentDate = new Date().format('yyyy-MM-dd')
 
 'declare untuk split array excel dan beberapa variable yang dibutuhkan'
 semicolon = ';'
@@ -93,7 +89,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 		for (loopingSigner = 0; loopingSigner < emailPenandaTangan.size(); loopingSigner++) {
 			'setting email service tenant'
 			CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(excelPathManualSigntoSign).getValue(
-				GlobalVariable.NumofColm, rowExcel('Setting Email Service')),emailPenandaTangan[loopingSigner])
+				GlobalVariable.NumofColm, rowExcel('Setting Email Service')), emailPenandaTangan[loopingSigner])
 		}
 	}
     emailService = CustomKeywords.'connection.DataVerif.getEmailService'(conneSign, GlobalVariable.Tenant)
@@ -104,8 +100,7 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
     'diberikan delay 3 detik dengan loading'
     WebUI.delay(1)
 
-    if (checkErrorLog() == true)
-    {
+    if (checkErrorLog() == true) {
 		continue
 	}
 
@@ -186,7 +181,6 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
             'check data nama dari UI dengan db'
             checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('ManualSign/input_namaPenandaTangan'), 
                         'value'), verifikasiSigner, false, FailureHandling.CONTINUE_ON_FAILURE), ' pada nama Penanda Tangan ')
-
         }
         
         'diberikan delay 3 detik untuk'
@@ -420,7 +414,6 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('PsRE Document') - 1,
 				GlobalVariable.NumofColm - 1, findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Vendor')))
 
-
         if (GlobalVariable.checkStoreDB == 'Yes') {
             result = CustomKeywords.'connection.ManualSign.getManualSign'(conneSign, findTestData(excelPathManualSigntoSign).getValue(
                     GlobalVariable.NumofColm, rowExcel('$referenceNo')))
@@ -568,7 +561,7 @@ def checkErrorLog() {
         }
     }
     
-    return false
+    false
 }
 
 def inputForm() {
@@ -643,7 +636,7 @@ def inputForm() {
     'Code untuk mengambil file berdasarkan direktori masing-masing sekaligus ambil value dari excel'
     String userDir = System.getProperty('user.dir') + '\\File'
 
-    String filePath = userDir + findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('documentFile')).replace('/','\\')
+    String filePath = userDir + findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('documentFile')).replace('/', '\\')
 
     'Upload file berdasarkan filePath yang telah dirancang'
     WebUI.uploadFile(findTestObject('ManualSign/input_documentExample'), filePath, FailureHandling.CONTINUE_ON_FAILURE)
@@ -683,14 +676,13 @@ def inputForm() {
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
 def sortingSequenceSign() {
     'check if Sequential signing iya'
     if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('isSequence')).equalsIgnoreCase(
         'Ya')) {
-	
 	if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Urutan Signing (Send Manual)')) != '') {
         'get urutan seq sign dari excel'
         ArrayList<String> seqSignRole = findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel(
@@ -829,23 +821,23 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 			}
 
 			'get pemotongan saldo dari query dimasukkan kepada pemotongan saldo'
-			pemotonganSaldo = (pemotonganSaldo + Integer.parseInt(balmut[(increment + 9)].replace('-','')))
+			pemotonganSaldo = (pemotonganSaldo + Integer.parseInt(balmut[(increment + 9)].replace('-', '')))
 			
 			'trxno akan dimasukkan kepada hashmap'
-			GlobalVariable.eSignData.putAt('allTrxNo', GlobalVariable.eSignData.getAt('allTrxNo') + balmut[increment] + ';')
+			GlobalVariable.eSignData['allTrxNo'] = GlobalVariable.eSignData['allTrxNo'] + balmut[increment] + ';'
 			
 			'sign type akan dimasukkan kepada hashmap'
-			GlobalVariable.eSignData.putAt('allSignType', GlobalVariable.eSignData.getAt('allSignType') + balmut[increment + 3].replace('Use ','') + ';')
+			GlobalVariable.eSignData['allSignType'] = GlobalVariable.eSignData['allSignType'] + balmut[increment + 3].replace('Use ','') + ';'
 			
 			'email usage sign akan dimasukkan kepada hashmap'
-			GlobalVariable.eSignData.putAt('emailUsageSign', GlobalVariable.eSignData.getAt('emailUsageSign') + fullNameUser + ';')
+			GlobalVariable.eSignData['emailUsageSign'] = GlobalVariable.eSignData['emailUsageSign'] + fullNameUser + ';'
 		}
 
 		
 		if (tipeSaldo == 'WhatsApp Message') {
-			GlobalVariable.eSignData.putAt('CountVerifikasiWA', pemotonganSaldo)
+			GlobalVariable.eSignData['CountVerifikasiWA'] = pemotonganSaldo
 		} else if (tipeSaldo == 'SMS Notif') {
-			GlobalVariable.eSignData.putAt('CountVerifikasiSMS', pemotonganSaldo)
+			GlobalVariable.eSignData['CountVerifikasiSMS'] = pemotonganSaldo
 		}	
 		}
 	}

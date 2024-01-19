@@ -679,16 +679,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         signType = 'Stamp Duty'
 
                         'deklarasi officeName'
-                        officeName = CustomKeywords.'connection.DataVerif.getOfficeName'(conneSign, GlobalVariable.eSignData.getAt(
-                                'NoKontrakProcessed'))
+                        officeName = CustomKeywords.'connection.DataVerif.getOfficeName'(conneSign, GlobalVariable.eSignData['NoKontrakProcessed'])
 
                         'Input filter di Mutasi Saldo'
                         inputFilterTrx(conneSign, currentDate, GlobalVariable.eSignData['NoKontrakProcessed'], signType, 
                             officeName)
 
                         'mengambil value db proses ttd'
-                        prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, GlobalVariable.eSignData.getAt(
-                                'NoKontrakProcessed'))
+                        prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, GlobalVariable.eSignData['NoKontrakProcessed'])
 
                         if (prosesMaterai == 63) {
                             'ambil inquiry di db'
@@ -1045,7 +1043,7 @@ def checkingDocAndEmailFromInput(ArrayList documentId, String rowEmail, LinkedHa
     'looping mengenai document id size'
     for (loopingDocument = (documentId.size() - 1); loopingDocument >= 0; loopingDocument--) {
         'get signers dan displit per enter'
-        signers = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('rowEmail')).split('\n', -1)
+        signers = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel(rowEmail)).split('\n', -1)
 
         ' based on enter'
         signersPerDoc = (signers[loopingDocument]).split(';', -1)
@@ -1058,7 +1056,7 @@ def checkingDocAndEmailFromInput(ArrayList documentId, String rowEmail, LinkedHa
         'masukkan value kepada array list signer input'
         signerInput.put(documentId[loopingDocument], signersPerDoc)
     }
-    return signerInput
+    signerInput
 }
 
 def inputFilterTrx(Connection conneSign, String currentDate, String noKontrak, String signType, String officeName) {

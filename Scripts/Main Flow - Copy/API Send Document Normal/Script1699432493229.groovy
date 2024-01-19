@@ -9,6 +9,7 @@ import java.sql.Connection as Connection
 import org.openqa.selenium.Keys as Keys
 import org.openqa.selenium.By as By
 import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
+import com.kms.katalon.core.testobject.ResponseObject
 
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
@@ -21,9 +22,6 @@ delimiter = '\\|'
 enter = '\\n'
 
 int splitnum = -1
-
-'flag untuk autosign'
-boolean useAutoSign = false
 
 'setting menggunakan base url yang benar atau salah'
 CustomKeywords.'connection.APIFullService.settingBaseUrl'(API_Excel_Path, GlobalVariable.NumofColm, rowExcel('Use Correct base Url'))
@@ -131,11 +129,6 @@ signerSelfPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm
 
 String stringRefno = '', bodyAPI = ''
 
-'jika sign action terdapat at, maka flag autosign akan hidup'
-if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$signAction')).contains('at')) {
-	useAutoSign = true
-}
-
 'Looping berdasarkan total dari dokumen file ukuran'
 for (int o = 0; o < documentFile.size(); o++) {
     'split signer untuk doc1 dan signer untuk doc2'
@@ -185,7 +178,6 @@ for (int o = 0; o < documentFile.size(); o++) {
 	ArrayList<String> list = []
 	
     for (int i = 0; i < signActions.size(); i++) {
-
         if ((i == 0) && (i == (signActions.size() - 1))) {
             list.add(((((((((((((((((((((((((((((((((((((('{"signAction": "' + (signActions[i])) + '","signerType": "') + (signerTypes[
                 i])) + '","signSequence":"') + (signSequences[i])) + '","alamat": "') + (alamats[(i)])) + '","jenisKelamin": "') + 
@@ -223,7 +215,7 @@ for (int o = 0; o < documentFile.size(); o++) {
 				
 				'setting email service tenant'
 				CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(API_Excel_Path).getValue(
-                    GlobalVariable.NumofColm, rowExcel('Setting Email Service')),SHA256IdNo)
+                    GlobalVariable.NumofColm, rowExcel('Setting Email Service')), SHA256IdNo)
 			}
         }
     }
@@ -320,10 +312,10 @@ if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('do
 } 
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
-def getErrorMessageAPI(def respon) {
+def getErrorMessageAPI(ResponseObject respon) {
 	'mengambil status code berdasarkan response HIT API'
 	message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL).toString()
 
@@ -469,10 +461,10 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 
 	'looping email per enter'
 	for (loopingEmailPerDoc = 0; loopingEmailPerDoc < emailPerDoc.size(); loopingEmailPerDoc++) {
-		'split per ';''
+		'split per ';' '
 		ArrayList email = (emailPerDoc[loopingEmailPerDoc]).split(';', -1)
 
-		'looping email per ';''
+		'looping email per ';' '
 		for (loopingEmail = 0; loopingEmail < email.size(); loopingEmail++) {
 			'get email from nik'
 			(email[loopingEmail]) = CustomKeywords.'connection.DataVerif.getEmailFromNIK'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
@@ -565,23 +557,24 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 				increment = (increment + 10)
 			}
 			'pemotongan saldo di get dari balmut kuantitas'
-			pemotonganSaldo = (pemotonganSaldo + Integer.parseInt(balmut[(increment + 9)].replace('-','')))
+			pemotonganSaldo = (pemotonganSaldo + Integer.parseInt(balmut[(increment + 9)].replace('-', '')))
 			
 			'trx number akan masuk kepada hashmap'
-			GlobalVariable.eSignData.putAt('allTrxNo', GlobalVariable.eSignData.getAt('allTrxNo') + balmut[increment] + ';')
+			GlobalVariable.eSignData['allTrxNo'] = GlobalVariable.eSignData['allTrxNo'] + balmut[increment] + ';'
 			
 			'tipe sign akan masuk kepada hashmap'
-			GlobalVariable.eSignData.putAt('allSignType', GlobalVariable.eSignData.getAt('allSignType') + balmut[increment + 3].replace('Use ','') + ';')
+			GlobalVariable.eSignData['allSignType'] = GlobalVariable.eSignData['allSignType'] + balmut[increment + 3].replace('Use ', '') + ';'
 			
 			'email usage akan masuk kepada hashmap'
-			GlobalVariable.eSignData.putAt('emailUsageSign', GlobalVariable.eSignData.getAt('emailUsageSign') + fullNameUser + ';')
+			GlobalVariable.eSignData['emailUsageSign'] = GlobalVariable.eSignData['emailUsageSign'] + fullNameUser + ';'
 		}
 		
 		'jika tipe saldo wa, maka akan terpotong saldo wa dari pemotongan saldo, jika sms, maka mengarah ke sms'
 		if (tipeSaldo == 'WhatsApp Message') {
-			GlobalVariable.eSignData.putAt('CountVerifikasiWA', pemotonganSaldo)
+			GlobalVariable.eSignData['CountVerifikasiWA'] = pemotonganSaldo
 		} else if (tipeSaldo == 'SMS Notif') {
-			GlobalVariable.eSignData.putAt('CountVerifikasiSMS', pemotonganSaldo)
-		}	}
+			GlobalVariable.eSignData['CountVerifikasiSMS'] = pemotonganSaldo
+		}	
+		}
 	}
 }

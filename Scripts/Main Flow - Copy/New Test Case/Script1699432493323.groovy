@@ -1,7 +1,7 @@
 import groovy.json.JsonSlurper
 import internal.GlobalVariable
 import java.sql.Connection as Connection
-
+import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
@@ -51,9 +51,14 @@ if (otp2.find(/\d/)) {
 	println otp2
 }
 
+HashMap aa = []
+
+aa['a'] = 'bbb'
+println aa.keySet()[0]
+
+WebUI.delay(5.25)
 sheet = 'Main'
 GlobalVariable.NumofColm = 4
-CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Main', rowExcel('documentid') - 1, GlobalVariable.NumofColm - 1, '')
 
 def rowExcel(String cellValue) {
 	CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)

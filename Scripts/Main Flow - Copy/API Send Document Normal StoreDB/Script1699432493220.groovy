@@ -115,10 +115,7 @@ for (int i = 0; i < docid.size(); i++) {
 	'get data API Send Document dari DB (hanya 1 signer)'
 	ArrayList result = CustomKeywords.'connection.SendSign.getSendDoc'(conneSign, docid[i])
 
-	'Mengambil email berdasarkan documentId'
-	ArrayList emailSigner = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, docid[i]).split(';', -1)
-
-	for(int r = 0 ; r < emailExcel.size() ; r++) {
+	for (int r = 0; r < emailExcel.size(); r++) {
 		if ((emailExcel[r]) == '') {
 			'Splitting email berdasarkan excel per dokumen'
 			idKtpExcel = (idKtp[i]).replace('"', '').split(semicolon, splitnum)
@@ -151,14 +148,14 @@ for (int i = 0; i < docid.size(); i++) {
 	arrayindex = 0
 
     'verify tenant code'
-    arrayMatch.add(WebUI.verifyMatch(tenantCode.replace('"',''),result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+    arrayMatch.add(WebUI.verifyMatch(tenantCode.replace('"',''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
 	'Maka pengecekan use sign qr via document template'
 	arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getUseSignQRFromDocTemplate'(conneSign, documentTemplateCode[i]),
 	CustomKeywords.'connection.APIFullService.getUseSignQR'(conneSign, docid[i]), false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify ref_number'
-    arrayMatch.add(WebUI.verifyMatch(refNo.replace('"', ''),result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+    arrayMatch.add(WebUI.verifyMatch(refNo.replace('"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'verify document_id'
     arrayMatch.add(WebUI.verifyMatch(docid[i], result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -221,12 +218,11 @@ for (int i = 0; i < docid.size(); i++) {
             result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 	
 	'verify total document'
-	arrayMatch.add(WebUI.verifyEqual(docid.size(),Integer.parseInt(result[arrayindex++]), FailureHandling.CONTINUE_ON_FAILURE))
+	arrayMatch.add(WebUI.verifyEqual(docid.size(), Integer.parseInt(result[arrayindex++]), FailureHandling.CONTINUE_ON_FAILURE))
 
 	if (psreCodeDB == 'PRIVY') {
 		'Jika documentTemplateCode di dokumen pertama adalah kosong'
 		if ((documentTemplateCode[i]).replace('"', '') != '') {
-		   
 			'ambil data privy sign location based on document_template'
 			arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getPrivyStampLocation'(conneSign, docid[i]),
 					CustomKeywords.'connection.APIFullService.getTemplateDocPrivyStampLoc'(conneSign, docid[i]), false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -238,11 +234,8 @@ for (int i = 0; i < docid.size(); i++) {
 			'pastikan privy sign loc tidak kosong'
 			arrayMatch.add(WebUI.verifyNotMatch('',
 					CustomKeywords.'connection.APIFullService.getPrivyStampLocation'(conneSign, docid[i]), false, FailureHandling.CONTINUE_ON_FAILURE))
-	
 		}
-	}
-	
-	if (psreCodeDB != 'PRIVY') {
+	} else if (psreCodeDB != 'PRIVY') {
 	signAction = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$signAction')).split(enter, splitnum)
 	
 	signActions = (signAction[i]).split(semicolon, splitnum)
@@ -312,5 +305,5 @@ if (arrayMatch.contains(false)) {
 }
 
 def rowExcel(String cellValue) {
-	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+	CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
