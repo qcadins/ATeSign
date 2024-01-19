@@ -2189,4 +2189,42 @@ public class APIFullService {
 		}
 		listdata
 	}
+	
+	@Keyword
+	getUseSignQR(Connection conn, String documentId) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select use_sign_qr from tr_Document_d where document_id = '"+documentId+"'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		if (data == null || data == 'null') {
+			data = 0
+		}
+		data
+	}
+	
+	@Keyword
+	getUseSignQRFromDocTemplate(Connection conn, String documentTemplateCode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select use_sign_qr from ms_doc_template where doc_template_code = '"+documentTemplateCode+"'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		if (data == null || data == 'null') {
+			data = 0
+		}
+		data
+	}
 }

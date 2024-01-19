@@ -1185,8 +1185,6 @@ def verifOTPMethod(Connection conneSign, String emailSigner, ArrayList listOTP, 
 
 def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList listOTP, String noTelpSigner, String otpAfter, String vendor) {
 	countResend = 0
-	
-	GlobalVariable.eSignData.putAt('VerifikasiOTP', 1)
 
     'check ada value maka Setting OTP Active Duration'
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() > 
@@ -1211,6 +1209,8 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
     'Verifikasi antara no telp yang dinput dengan yang sebelumnya'
     checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('KotakMasuk/Sign/lbl_phoneNo'), 'value'), 
             noTelpSigner, false), '')
+
+	GlobalVariable.eSignData.putAt('VerifikasiOTP', 1)
 
     email = GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0])
 
@@ -1439,9 +1439,7 @@ def verifBiomMethod(int isLocalhost, int maxFaceCompDB, int countLivenessFaceCom
             } else if (messageError.equalsIgnoreCase('Verifikasi user gagal. Foto Diri tidak sesuai.') || messageError.equalsIgnoreCase(
                 'Lebih dari satu wajah terdeteksi. Pastikan hanya satu wajah yang terlihat')) {
                 countSaldoSplitLiveFCused++
-            } else if (messageError.equalsIgnoreCase('Face detected blurry') || messageError.equalsIgnoreCase('Wajah terdeteksi terlalu jauh dengan kamera. Dekatkan jarak antara wajah Anda dengan kamera')
-				|| messageError.equalsIgnoreCase('Image resolution too small')) {
-
+            } else if (messageError.equalsIgnoreCase('Face detected blurry') || messageError.equalsIgnoreCase('Wajah terdeteksi terlalu jauh dengan kamera. Dekatkan jarak antara wajah Anda dengan kamera')) {
 				countValidation++
 			}
 			

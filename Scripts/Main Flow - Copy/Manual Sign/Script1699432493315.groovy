@@ -19,8 +19,6 @@ def currentDate = new Date().format('yyyy-MM-dd')
 'declare untuk split array excel dan beberapa variable yang dibutuhkan'
 semicolon = ';'
 
-splitIndex = -1
-
 indexForCatatanStamp = 0
 
 indexEmail = 0
@@ -502,6 +500,10 @@ if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), Glob
 						rowExcel('businessLineName')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 			}
 			
+			'verify use sign qr'
+			arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
+					rowExcel('QR')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+
 			String docId = CustomKeywords.'connection.DataVerif.getDocId'(conneSign, findTestData(excelPathManualSigntoSign).getValue(
 				GlobalVariable.NumofColm, rowExcel('$referenceNo')), GlobalVariable.Tenant)
 			
@@ -602,12 +604,14 @@ def inputForm() {
 	'Klik enter'
 	WebUI.sendKeys(findTestObject('ManualSign/input_isSequence'), Keys.chord(Keys.ENTER))
 
-	'Input qr'
-	WebUI.setText(findTestObject('ManualSign/input_qr'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
+	if (!GlobalVariable.Psre.toString().equalsIgnoreCase('Privy')) {
+		'Input qr'
+		WebUI.setText(findTestObject('ManualSign/input_qr'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
 			rowExcel('QR')))
 	
-	'Klik enter'
-	WebUI.sendKeys(findTestObject('ManualSign/input_qr'), Keys.chord(Keys.ENTER))
+		'Klik enter'
+		WebUI.sendKeys(findTestObject('ManualSign/input_qr'), Keys.chord(Keys.ENTER))
+	}
 	
 	if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('businessLineName')) != '') {
 		'Input pada business line'

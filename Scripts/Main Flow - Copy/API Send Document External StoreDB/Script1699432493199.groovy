@@ -89,6 +89,10 @@ for (int i = 0; i < docid.size(); i++) {
     businessLineName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('businessLineName')).split(
         semicolon, splitnum)
 
+	'Inisialisasi business line name berdasarkan delimiter ;'
+	qrEnable = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('QR')).replace('Ya', 'true').replace('Tidak', 'false').split(
+		semicolon, splitnum)
+	
     'Inisialisasi is sequence berdasarkan delimiter ;'
     isSequence = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('isSequence')).split(
         semicolon, splitnum)
@@ -115,7 +119,15 @@ for (int i = 0; i < docid.size(); i++) {
         'Maka pengecekan signlocation yang diinput'
         arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getSignLocation'(conneSign, docid[i]), 
                 signlocStoreDBSplit[i], false, FailureHandling.CONTINUE_ON_FAILURE))
-    }
+		
+		'Maka pengecekan use sign qr yang diinput'
+        arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getUseSignQR'(conneSign, docid[i]), 
+                qrEnable[i], false, FailureHandling.CONTINUE_ON_FAILURE))
+    } else {
+		'Maka pengecekan use sign qr via document template'
+		arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getUseSignQRFromDocTemplate'(conneSign, documentTemplateCode[i]),
+				CustomKeywords.'connection.APIFullService.getUseSignQR'(conneSign, docid[i]), false, FailureHandling.CONTINUE_ON_FAILURE))
+	}
     
     'get current date'
     currentDate = new Date().format('yyyy-MM-dd')
@@ -159,16 +171,7 @@ for (int i = 0; i < docid.size(); i++) {
             if ((documentTemplateCode[i]).replace('"', '') == '') {
                 'Jika is sequence nya bukan 0'
                 if ((isSequence[i]).replace('"', '') != '0') {
-					
-					if (!findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('SeqNo (Send External)')).length() == 0) {
-						'Inisialisasi sequence number berdasarkan delimiter enter'
-						seqNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('SeqNo (Send External)')).split(
-							enter, splitnum)
-						
-						'Splitting sequence number berdasarkan excel per signer'
-						seqNoExcel = (seqNo[i]).split(semicolon, splitnum)
-					}
-					
+
 					if (!findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('SeqNo (Send External)')).length() == 0) {
 						'Inisialisasi sequence number berdasarkan delimiter enter'
 						seqNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('SeqNo (Send External)')).split(
