@@ -28,16 +28,14 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathFEPengaturanTenant).getVa
 arrayMatch.add(WebUI.verifyMatch(currentDate, resultDbNew[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'membuat emailDb menjadi sorted berdasarkan asc'
-emailDb = resultDbNew[arrayIndex++].split(',').collect {
-    it.trim()
-}.sort().join(',')
+emailDb = resultDbNew[arrayIndex++].split(',')*.trim()
 
 'membuat email Excel menjadi sorted berdasarkan asc'
 emailData = findTestData(excelPathFEPengaturanTenant)
     .getValue(GlobalVariable.NumofColm, rowExcel('Email Reminder Saldo'))
     .split(',')
 
-sortedEmails = emailData.collect { it.trim() }.sort()
+sortedEmails = emailData*.trim().sort()
 
 emailExcel = sortedEmails.join(',')
 

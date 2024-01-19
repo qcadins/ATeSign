@@ -23,7 +23,6 @@ println(rowExcel('Cancel Docs after Stamp?'))
 //
 //println balmut
 //WebUI.Delay(100000000)
-<<<<<<< HEAD
 otp = CustomKeywords.'customizekeyword.GetSMS.getOTP'('eSignHub')
 println otp
 if (otp.find(/\d/)) {
@@ -62,7 +61,6 @@ WebUI.delay(5.25)
 sheet = 'Main'
 GlobalVariable.NumofColm = 4
 
-=======
 //otp = CustomKeywords.'customizekeyword.GetSMS.getOTP'('eSignHub')
 //println otp
 //if (otp.find(/\d/)) {
@@ -96,7 +94,6 @@ GlobalVariable.NumofColm = 4
 //GlobalVariable.NumofColm = 4
 //CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Main', rowExcel('documentid') - 1, GlobalVariable.NumofColm - 1, '')
 //
->>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 def rowExcel(String cellValue) {
 	CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }

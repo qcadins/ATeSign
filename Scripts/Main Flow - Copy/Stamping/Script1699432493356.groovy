@@ -6,10 +6,7 @@ import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
-import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
-import org.openqa.selenium.By as By
 import com.kms.katalon.core.testobject.ResponseObject
-import org.openqa.selenium.Keys as Keys
 
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
@@ -140,7 +137,7 @@ prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, 
                         arrayMatch.add(WebUI.verifyMatch(totalMateraiAndTotalStamping[0], totalMateraiAndTotalStamping[1], 
                                 false, FailureHandling.CONTINUE_ON_FAILURE))
 
-						GlobalVariable.eSignData.putAt('VerifikasiMeterai', GlobalVariable.eSignData.getAt('VerifikasiMeterai') + Integer.parseInt(totalMateraiAndTotalStamping[0]))
+						GlobalVariable.eSignData['VerifikasiMeterai'] = GlobalVariable.eSignData['VerifikasiMeterai'] + Integer.parseInt(totalMateraiAndTotalStamping[0])
 
 						ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(
 							conneSign, nomorKontrakDocument, 'Stamping')
