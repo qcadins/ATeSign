@@ -13,56 +13,56 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get colm excel'
-int countColmExcel = findTestData(excelPathAPIDownload).columnNumbers
+int countColmExcel = findTestData(excelPath).columnNumbers
 
 'looping API Download User certif'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
-    if (findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
+    if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
-    } else if (findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase(
+    } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase(
         'Unexecuted')) {
         'setting menggunakan base url yang benar atau salah'
-        CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPIDownload, GlobalVariable.NumofColm, rowExcel(
+        CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel(
                 'Use Correct Base Url'))
 
         'get psre dari excel per case'
-        GlobalVariable.Psre = findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
+        GlobalVariable.Psre = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
 
         'check if tidak mau menggunakan tenant code yang benar'
-        if (findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code')) == 
+        if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code')) == 
         'No') {
             'set tenant kosong'
-            GlobalVariable.Tenant = findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Tenant Code'))
-        } else if (findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code')) == 
+            GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Tenant Code'))
+        } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Tenant Code')) == 
         'Yes') {
-            GlobalVariable.Tenant = findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
+            GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
         }
         
         'check if tidak mau menggunakan psre code yang benar'
-        if (findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Psre Code')) == 
+        if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Psre Code')) == 
         'No') {
             'set tenant kosong'
-            GlobalVariable.Psre = findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Psre Code'))
-        } else if (findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Psre Code')) == 
+            GlobalVariable.Psre = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Psre Code'))
+        } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct Psre Code')) == 
         'Yes') {
-            GlobalVariable.Psre = findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
+            GlobalVariable.Psre = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
         }
         
         'check if mau menggunakan api_key yang salah atau benar'
-        if (findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct API Key')) == 'Yes') {
+        if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct API Key')) == 'Yes') {
             'get api key dari db'
             GlobalVariable.api_key = CustomKeywords.'connection.APIFullService.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
-        } else if (findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct API Key')) == 
+        } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct API Key')) == 
         'No') {
             'get api key salah dari excel'
-            GlobalVariable.api_key = findTestData(excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Wrong API Key'))
+            GlobalVariable.api_key = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong API Key'))
         }
         
         'HIT API check Download User certif'
         respon = WS.sendRequest(findTestObject('APIFullService/Postman/Download user Certificate', [('callerId') : findTestData(
-                        excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('loginId') : findTestData(
-                        excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Email')), ('noTelp') : findTestData(
-                        excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('No Telp'))]))
+                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('loginId') : findTestData(
+                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Email')), ('noTelp') : findTestData(
+                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('No Telp'))]))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
@@ -76,7 +76,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 	
 			'panggil keyword untuk proses beautify dari respon json yang didapat'
 			CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
-					excelPathAPIDownload).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+					excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
 	
 			'write to excel response elapsed time'
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') -
@@ -87,11 +87,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 base64CRT = WS.getElementPropertyValue(respon, 'userCertificate', FailureHandling.OPTIONAL)
 
                 'decode Bas64 to File certif'
-                CustomKeywords.'customizekeyword.ConvertFile.decodeBase64crt'(base64CRT, findTestData(excelPathAPIDownload).getValue(
+                CustomKeywords.'customizekeyword.ConvertFile.decodeBase64crt'(base64CRT, findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('File Name')))
 
                 'check is file downloaded dan apakah mau di delete'
-                if (CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathAPIDownload).getValue(
+                if (CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('Delete File ?'))) == true) {
                     'write to excel success'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
@@ -123,4 +123,3 @@ def getErrorMessageAPI(ResponseObject respon) {
 def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
-

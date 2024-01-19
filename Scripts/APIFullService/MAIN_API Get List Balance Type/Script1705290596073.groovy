@@ -5,7 +5,7 @@ import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
-import groovy.json.JsonSlurper as JsonSlurper
+import com.kms.katalon.core.testobject.ResponseObject
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - Full API Services.xlsx')
@@ -121,7 +121,7 @@ def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
-def getErrorMessageAPI(def respon) {
+def getErrorMessageAPI(ResponseObject respon) {
     'mengambil status code berdasarkan response HIT API'
     message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 

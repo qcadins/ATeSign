@@ -25,6 +25,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         break
     } else if (findTestData(excelPathGetTempSign).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase(
         'Unexecuted')) {
+	
+		GlobalVariable.FlagFailed = 0
+	
         'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathGetTempSign, GlobalVariable.NumofColm, rowExcel(
                 'Use Correct Base Url'))
@@ -171,7 +174,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                                 rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
                     }
                 }
-                
                 'tulis sukses jika store DB berhasil'
                 if (GlobalVariable.FlagFailed == 0) {
                     'write to excel success'
@@ -201,4 +203,3 @@ def getErrorMessageAPI(ResponseObject respon) {
 	
 	GlobalVariable.FlagFailed = 1
 }
-

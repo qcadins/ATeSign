@@ -22,7 +22,7 @@
       <description></description>
       <id>e92b8305-f6ce-46c4-9ac6-952f8ad937f9</id>
       <masked>false</masked>
-      <name>excelPathAPIDownload</name>
+      <name>excelPath</name>
    </variable>
    <variable>
       <defaultValue>'API Download User Certif'</defaultValue>
