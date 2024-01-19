@@ -168,7 +168,7 @@ def encodeValue(String value, Connection conneSign) {
         return URLEncoder.encode(encryptCode, StandardCharsets.UTF_8.toString())
     }
     catch (UnsupportedEncodingException ex) {
-        throw new RuntimeException(ex.cause)
+        println(ex)
     } 
 }
 

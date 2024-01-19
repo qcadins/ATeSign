@@ -1,6 +1,7 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.model.FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
@@ -43,18 +44,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.token = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Token'))
         }
         
-		'ubah vendor stamping jika diperlukan '
-		if ((findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')).length() >
-		0) && (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')) !=
-		'No')) {
-			'ambil idLov untuk diupdate secara otomatis ke DB'
-			int idLov = CustomKeywords.'connection.ManualStamp.getIdLovVendorStamping'(conneSign, findTestData(excelPath).getValue(
-					GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')))
+        'ubah vendor stamping jika diperlukan '
+        if ((findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')).length() > 
+        0) && (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')) != 'No')) {
+            'ambil idLov untuk diupdate secara otomatis ke DB'
+            int idLov = CustomKeywords.'connection.ManualStamp.getIdLovVendorStamping'(conneSign, findTestData(excelPath).getValue(
+                    GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')))
 
-			'lakukan update vendor stamping yang akan dipakai'
-			CustomKeywords.'connection.UpdateData.updateVendorStamping'(conneSign, idLov)
-		}
-	
+            'lakukan update vendor stamping yang akan dipakai'
+            CustomKeywords.'connection.UpdateData.updateVendorStamping'(conneSign, idLov)
+        }
+        
         'HIT API Login untuk token : andy@ad-ins.com'
         respon = WS.sendRequest(findTestObject('Postman/Start Stamping Meterai', [('tenantCode') : findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('tenantCode')), ('refNumber') : findTestData(excelPath).getValue(
@@ -62,7 +62,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         rowExcel('username'))]))
 
         'ambil lama waktu yang diperlukan hingga request menerima balikan'
-        elapsedTime = (respon.elapsedTime / 1000) + ' second'
+        elapsedTime = ((respon.elapsedTime / 1000) + ' second')
 
         'ambil body dari hasil respons'
         responseBody = respon.responseBodyContent
@@ -141,18 +141,20 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             arrayMatch.add(WebUI.verifyMatch(inquiryDB[5], findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                                         rowExcel('refNumber')).toString().toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                            arrayMatch.add(WebUI.verifyMatch(inquiryDB[9], '-' + totalMateraiAndTotalStamping[0].toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+                            arrayMatch.add(WebUI.verifyMatch(inquiryDB[9], '-' + (totalMateraiAndTotalStamping[0]), 
+                                    false, FailureHandling.CONTINUE_ON_FAILURE))
 
-							ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(
-								conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')), 'Stamping')
+                            ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(
+                                conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')), 
+                                'Stamping')
 
-							'lakukan loop untuk pengecekan data'
-							for (int i = 0; i < (officeRegionBline.size() / 2); i++) {
-								'verify business line dan office code'
-								arrayMatch.add(WebUI.verifyMatch((officeRegionBline[i]).toString(), (officeRegionBline[(i +
-										3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
-							}
-							
+                            'lakukan loop untuk pengecekan data'
+                            for (int i = 0; i < (officeRegionBline.size() / 2); i++) {
+                                'verify business line dan office code'
+                                arrayMatch.add(WebUI.verifyMatch((officeRegionBline[i]).toString(), (officeRegionBline[(i + 
+                                        3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+                            }
+                            
                             'jika data db tidak bertambah'
                             if (arrayMatch.contains(false)) {
                                 'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
@@ -196,7 +198,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     }
 }
 
-def getErrorMessageAPI(def respon) {
+def getErrorMessageAPI(ResponseObject respon) {
     'mengambil status code berdasarkan response HIT API'
     message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
@@ -233,9 +235,9 @@ def parseCodeOnly(String url) {
         code = URLDecoder.decode(code, 'UTF-8')
 
         return code
-    } else {
-        return ''
-    }
+    } 
+
+	''
 }
 
 def decryptLink(Connection conneSign, String invCode) {

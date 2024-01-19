@@ -1,6 +1,7 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.model.FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import java.sql.Connection as Connection
 import internal.GlobalVariable as GlobalVariable
@@ -21,7 +22,7 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; (Glob
 
     // If status is empty, break the loop
     if (status == '') {
-        break       
+        break
     } else if (status.equalsIgnoreCase('Unexecuted')) {
         GlobalVariable.FlagFailed = 0
 
@@ -53,7 +54,7 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; (Glob
             respon = WS.sendRequest(findTestObject('Postman/downloadReport', [('callerId') : findTestData(excelPath).getValue(
                             GlobalVariable.NumofColm, rowExcel('username')), ('idManReport') : idManualReport]))
 
-            elapsedTime = (respon.elapsedTime / 1000) + ' seconds'
+            elapsedTime = ((respon.elapsedTime / 1000) + ' seconds')
 
             responseBody = respon.responseBodyContent
 
@@ -64,7 +65,7 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; (Glob
                 1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
 
             if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL)) {
-                def statusCode = WS.getElementPropertyValue(respon, 'status.code')
+                statusCode = WS.getElementPropertyValue(respon, 'status.code')
 
                 if (statusCode == 0) {
                     resultbase64 = WS.getElementPropertyValue(respon, 'xlBase64', FailureHandling.OPTIONAL)
@@ -94,7 +95,7 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; (Glob
     }
 }
 
-def getErrorMessageAPI(def respon) {
+def getErrorMessageAPI(ResponseObject respon) {
     message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 

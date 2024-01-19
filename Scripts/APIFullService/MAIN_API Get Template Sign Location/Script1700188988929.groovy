@@ -1,8 +1,8 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import java.sql.Connection as Connection
-import com.kms.katalon.core.model.FailureHandling
-import com.kms.katalon.core.testobject.ResponseObject
+import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject as ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
@@ -25,9 +25,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         break
     } else if (findTestData(excelPathGetTempSign).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase(
         'Unexecuted')) {
-	
-		GlobalVariable.FlagFailed = 0
-	
+        GlobalVariable.FlagFailed = 0
+
         'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathGetTempSign, GlobalVariable.NumofColm, rowExcel(
                 'Use Correct Base Url'))
@@ -142,15 +141,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     Map jsonResponseObject = jsonSlurper.parseText(responseBody)
 
                     'ambil seluruh vida sign loc dari response'
-					ArrayList vidaSignLocation = jsonResponseObject.templateSignLocation.collect { location ->
-						location.vidaSignLocation
-					}.toString().replace('x:', '').replace('y:', '').replace('h:', '').replace('w:', '').replace(' ', '').replace('[', '').replace(']', '').split(',', -1)
-						
+                    ArrayList vidaSignLocation = jsonResponseObject.templateSignLocation.collect({ def location ->
+                            location.vidaSignLocation
+                        }).toString().replace('x:', '').replace('y:', '').replace('h:', '').replace('w:', '').replace(' ', 
+                        '').replace('[', '').replace(']', '').split(',', -1)
 
                     'ambil seluruh privy sign loc dari response'
-                    ArrayList privySignLocation = jsonResponseObject.templateSignLocation.collect { location ->
-					    location.privySignLocation
-					}.toString().replace('x:', '').replace('y:', '').replace('h:', '').replace('w:', '').replace(' ', '').replace('[', '').replace(']', '').split(',', -1)
+                    ArrayList privySignLocation = jsonResponseObject.templateSignLocation.collect({ def location ->
+                            location.privySignLocation
+                        }).toString().replace('x:', '').replace('y:', '').replace('h:', '').replace('w:', '').replace(' ', 
+                        '').replace('[', '').replace(']', '').split(',', -1)
 
                     'gabungkan vida dan privysignloc'
                     vidaSignLocation.addAll(privySignLocation)
@@ -174,6 +174,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                                 rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
                     }
                 }
+                
                 'tulis sukses jika store DB berhasil'
                 if (GlobalVariable.FlagFailed == 0) {
                     'write to excel success'
@@ -200,6 +201,7 @@ def getErrorMessageAPI(ResponseObject respon) {
     'Write To Excel GlobalVariable.StatusFailed and errormessage'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
         ('<' + message) + '>')
-	
-	GlobalVariable.FlagFailed = 1
+
+    GlobalVariable.FlagFailed = 1
 }
+

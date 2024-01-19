@@ -25,37 +25,36 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
     } else if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
-		
-		'check if email login case selanjutnya masih sama dengan sebelumnya'
-		if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) !=
-			findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')) || firstRun == 0) {
-			'call test case login per case'
-			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathTenant, ('Email') : 'Email Login', ('Password') : 'Password Login'
-				, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
-			
-			'apakah cek paging diperlukan di awal run'
-			if(GlobalVariable.checkPaging.equals('Yes')) {
-				
-				'call function check paging'
-				checkPaging(conneSign)
-				
-				'call function cancel'
-				inputCancel()
-			}
-			
-			firstRun = 1
-		}
-		
-		'click menu tenant'
-		WebUI.click(findTestObject('Tenant/menu_Tenant'))
-		
-		'declare isMmandatory Complete'
-		int isMandatoryComplete = Integer.parseInt(findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 5))
-		
-		if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
-			GlobalVariable.FlagFailed = 0
-		}
-		
+        'check if email login case selanjutnya masih sama dengan sebelumnya'
+        if ((findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) != findTestData(
+            excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))) || (firstRun == 0)) {
+            'call test case login per case'
+            WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathTenant, ('Email') : 'Email Login'
+                    , ('Password') : 'Password Login', ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], 
+                FailureHandling.STOP_ON_FAILURE)
+
+            'apakah cek paging diperlukan di awal run'
+            if (GlobalVariable.checkPaging == 'Yes') {
+                'call function check paging'
+                checkPaging(conneSign)
+
+                'call function cancel'
+                inputCancel()
+            }
+            
+            firstRun = 1
+        }
+        
+        'click menu tenant'
+        WebUI.click(findTestObject('Tenant/menu_Tenant'))
+
+        'declare isMmandatory Complete'
+        int isMandatoryComplete = Integer.parseInt(findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 5))
+
+        if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
+            GlobalVariable.FlagFailed = 0
+        }
+        
         'check if action new/services'
         if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('New')) {
             'click button Baru'
@@ -81,7 +80,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'input API Key'
                 WebUI.setText(findTestObject('Tenant/TenantBaru/input_APIKEY'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
                         21))
-            } else if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Auto Generate API Key')) == 'Yes') {
+            } else if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Auto Generate API Key')) == 
+            'Yes') {
                 'click button generate api key'
                 WebUI.click(findTestObject('Tenant/TenantBaru/button_GenerateAPIKEY'))
 
@@ -94,11 +94,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             }
             
             'get array services dari excel'
-            arrayServices = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Services')).split(';', -1)
+            arrayServices = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Services')).split(
+                ';', -1)
 
             'get array batas saldo dari excel'
-            arrayServicesBatasSaldo = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Batas Saldo Services')).split(';', -1)
-			
+            arrayServicesBatasSaldo = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Batas Saldo Services')).split(
+                ';', -1)
+
             'looping untuk input bata saldo'
             for (index = 5; index < variable.size(); index++) {
                 'modify object button services'
@@ -126,7 +128,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         modifyObjectInputServices = WebUI.modifyObjectProperty(findTestObject('Tenant/TenantBaru/modifyObject'), 
                             'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-add-tenant/div[2]/div/div/div/div/form/div[' + 
                             index) + ']/div/input', true)
-						
+
                         'input batas saldo'
                         WebUI.setText(modifyObjectInputServices, arrayServicesBatasSaldo[indexExcel])
 
@@ -136,7 +138,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             }
             
             'get array email reminder dari excel'
-            arrayEmailReminder = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Email')).split(';', -1)
+            arrayEmailReminder = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Email')).split(
+                ';', -1)
 
             'looping untuk input email reminder'
             for (index = 1; index <= arrayEmailReminder.size(); index++) {
@@ -161,59 +164,55 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     GlobalVariable.NumofColm, rowExcel('$Kode Akses User Admin')))
 
             'check if mandatory complete dan button simpan clickable'
-            if (!(WebUI.verifyElementHasAttribute(findTestObject('Tenant/TenantBaru/button_Simpan'),'disabled', GlobalVariable.TimeOut, FailureHandling.OPTIONAL))) {
-                'click button simpan'
-                WebUI.click(findTestObject('Tenant/TenantBaru/button_Simpan'))
-				
+            if (WebUI.verifyElementHasAttribute(findTestObject('Tenant/TenantBaru/button_Simpan'), 'disabled', GlobalVariable.TimeOut, 
+                FailureHandling.OPTIONAL)) {
+            	'click button Batal'
+            	WebUI.click(findTestObject('Tenant/TenantBaru/button_Batal'))
+            	
+            	'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedMandatory'
+            	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            			(findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedSaveGagal)
+            	
+            	GlobalVariable.FlagFailed = 1
+            } else {
+				'click button simpan'
+				WebUI.click(findTestObject('Tenant/TenantBaru/button_Simpan'))
+
 				if (WebUI.verifyElementPresent(findTestObject('Tenant/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-					
 					'ambil text dari errorlog'
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
 						GlobalVariable.StatusFailed, (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 2) +
 						';') + WebUI.getText(findTestObject('Tenant/errorLog')))
-					
+
 					'click button Batal'
 					WebUI.click(findTestObject('Tenant/TenantBaru/button_Batal'))
-					
-					GlobalVariable.FlagFailed = 1
-					
-				} else if (WebUI.verifyElementPresent(findTestObject('Tenant/popUpMsg'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-                    'click button OK'
-                    WebUI.click(findTestObject('Tenant/button_OK'))
 
-                    'write to excel success'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, 
-                        GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-					
+					GlobalVariable.FlagFailed = 1
+				} else if (WebUI.verifyElementPresent(findTestObject('Tenant/popUpMsg'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+					'click button OK'
+					WebUI.click(findTestObject('Tenant/button_OK'))
+
+					'write to excel success'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
+						1, GlobalVariable.StatusSuccess)
+
 					'call function after add'
 					verifyAfterAddEdit()
-					
-                }
-            } else {
-				'click button Batal'
-				WebUI.click(findTestObject('Tenant/TenantBaru/button_Batal'))
-				
-				'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedMandatory'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-					GlobalVariable.StatusFailed, (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 2) +
-					';') + GlobalVariable.ReasonFailedSaveGagal)
-				
-				GlobalVariable.FlagFailed = 1
 				}
-			 
-				 if (isMandatoryComplete > 0) {
+            }
+            
+            if (isMandatoryComplete > 0) {
                 'click button Batal'
                 WebUI.click(findTestObject('Tenant/TenantBaru/button_Batal'))
 
                 'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedMandatory'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                    GlobalVariable.StatusFailed, (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 2) + 
-                    ';') + GlobalVariable.ReasonFailedMandatory)
-				
-				GlobalVariable.FlagFailed = 1
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                    (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedMandatory)
+
+                GlobalVariable.FlagFailed = 1
             }
-			
-        } else if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('Service')) {
+        } else if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase(
+            'Service')) {
             'call function search'
             searchTenant()
 
@@ -221,10 +220,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             WebUI.click(findTestObject('Tenant/button_ServiceBalance'))
 
             'get array Services dari excel'
-            arrayServices = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('ServicesCheck')).split(';', -1)
+            arrayServices = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('ServicesCheck')).split(
+                ';', -1)
 
             'get array Vendor dari excel'
-            arrayVendor = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('VendorCheck')).split(';', -1)
+            arrayVendor = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('VendorCheck')).split(
+                ';', -1)
 
             'looping untuk input services check'
             for (index = 0; index < arrayServices.size(); index++) {
@@ -240,10 +241,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             }
             
             'get array Services dari excel'
-            arrayServices = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('ServicesUncheck')).split(';', -1)
+            arrayServices = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('ServicesUncheck')).split(
+                ';', -1)
 
             'get array Vendor dari excel'
-            arrayVendor = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('VendorUncheck')).split(';', -1)
+            arrayVendor = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('VendorUncheck')).split(
+                ';', -1)
 
             'looping untuk input services uncheck'
             for (index = 0; index < arrayServices.size(); index++) {
@@ -268,29 +271,29 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 if (WebUI.getAttribute(findTestObject('Tenant/errorLog'), 'aria-label', FailureHandling.OPTIONAL).contains(
                     'berhasil')) {
                     'write to excel success'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, 
-                        GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
+                        1, GlobalVariable.StatusSuccess)
                 }
             } else if (isMandatoryComplete > 0) {
                 'click button Batal'
                 WebUI.click(findTestObject('Tenant/Services/button_Batal'))
 
                 'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedMandatory'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                    GlobalVariable.StatusFailed, (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 2) + 
-                    ';') + GlobalVariable.ReasonFailedMandatory)
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                    (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedMandatory)
             }
-        } else if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('Edit')) {
+        } else if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase(
+            'Edit')) {
             'call function search'
             searchTenant()
 
             'click button edit'
             WebUI.click(findTestObject('Tenant/button_Edit'))
 
-			'input nama tenant'
+            'input nama tenant'
             WebUI.setText(findTestObject('Tenant/TenantBaru/input_NamaTenant'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
                     rowExcel('$NamaTenant')))
-			
+
             'input tenant code'
             WebUI.setText(findTestObject('Tenant/TenantBaru/input_TenantCode'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
                     rowExcel('$KodeTenant')), FailureHandling.OPTIONAL)
@@ -304,7 +307,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'input API Key'
                 WebUI.setText(findTestObject('Tenant/TenantBaru/input_APIKEY'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
                         rowExcel('API Key')))
-            } else if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Auto Generate API Key')) == 'Yes') {
+            } else if (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Auto Generate API Key')) == 
+            'Yes') {
                 'click button generate api key'
                 WebUI.click(findTestObject('Tenant/TenantBaru/button_GenerateAPIKEY'))
 
@@ -312,18 +316,20 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 APIKEY = WebUI.getAttribute(findTestObject('Tenant/TenantBaru/input_APIKEY'), 'value', FailureHandling.CONTINUE_ON_FAILURE)
 
                 'write to excel api key'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('API Key')-1, GlobalVariable.NumofColm - 
-                    1, APIKEY)
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('API Key') - 
+                    1, GlobalVariable.NumofColm - 1, APIKEY)
             }
             
             'get total form'
             variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-add-tenant > div.row.match-height > div > div > div > div > form div'))
 
             'get array services dari excel'
-            arrayServices = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Services')).split(';', -1)
+            arrayServices = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Services')).split(
+                ';', -1)
 
             'get array batas saldo dari excel'
-            arrayServicesBatasSaldo = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Batas Saldo Services')).split(';', -1)
+            arrayServicesBatasSaldo = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Batas Saldo Services')).split(
+                ';', -1)
 
             'looping untuk input bata saldo'
             for (index = 5; index < variable.size(); index++) {
@@ -391,7 +397,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             }
             
             'get array email reminder dari excel'
-            arrayEmailReminder = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Email')).split(';', -1)
+            arrayEmailReminder = findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('Email')).split(
+                ';', -1)
 
             'looping untuk hapus email reminder yang tidak ada di excel'
             for (index = 24; index <= variable.size(); index++) {
@@ -451,49 +458,44 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             }
             
             'check if mandatory complete dan button simpan clickable'
-			if (isMandatoryComplete > 0) {
+            if (isMandatoryComplete > 0) {
                 'click button Batal'
                 WebUI.click(findTestObject('Tenant/Edit/button_Batal'))
 
                 'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedMandatory'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                    GlobalVariable.StatusFailed, (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 2) + 
-                    ';') + GlobalVariable.ReasonFailedMandatory)
-				
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                    (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedMandatory)
             } else if ((isMandatoryComplete == 0) && !(WebUI.verifyElementHasAttribute(findTestObject('Tenant/Edit/button_Simpan'), 
                 'disabled', GlobalVariable.TimeOut, FailureHandling.OPTIONAL))) {
                 'click button simpan'
                 WebUI.click(findTestObject('Tenant/Edit/button_Simpan'))
 
-               if (WebUI.verifyElementPresent(findTestObject('Tenant/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-					
-					'ambil text dari errorlog'
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-						GlobalVariable.StatusFailed, (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 2) +
-						';') + WebUI.getText(findTestObject('Tenant/errorLog')))
-					
-					'click button Batal'
-					WebUI.click(findTestObject('Tenant/TenantBaru/button_Batal'))
-					
-					GlobalVariable.FlagFailed = 1
-					
-				} else if (WebUI.verifyElementPresent(findTestObject('Tenant/popUpMsg'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+                if (WebUI.verifyElementPresent(findTestObject('Tenant/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+                    'ambil text dari errorlog'
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                        GlobalVariable.StatusFailed, (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 2) + 
+                        ';') + WebUI.getText(findTestObject('Tenant/errorLog')))
+
+                    'click button Batal'
+                    WebUI.click(findTestObject('Tenant/TenantBaru/button_Batal'))
+
+                    GlobalVariable.FlagFailed = 1
+                } else if (WebUI.verifyElementPresent(findTestObject('Tenant/popUpMsg'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
                     'click button OK'
                     WebUI.click(findTestObject('Tenant/button_OK'))
 
                     'write to excel success'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, 
-                        GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-					
-					'call function after add'
-					verifyAfterAddEdit()
-					
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
+                        1, GlobalVariable.StatusSuccess)
+
+                    'call function after add'
+                    verifyAfterAddEdit()
                 }
             }
         }
         
         'check if store db'
-        if ((GlobalVariable.checkStoreDB == 'Yes') && (isMandatoryComplete == 0) && GlobalVariable.FlagFailed == 0) {
+        if (((GlobalVariable.checkStoreDB == 'Yes') && (isMandatoryComplete == 0)) && (GlobalVariable.FlagFailed == 0)) {
             'call test case tenant store db'
             WebUI.callTestCase(findTestCase('Tenant/TenantStoreDB'), [('excelPathTenant') : 'Tenant/Tenant'], FailureHandling.STOP_ON_FAILURE)
         }
@@ -501,9 +503,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 }
 
 def checkPaging(Connection conneSign) {
-	'click menu tenant'
-	WebUI.click(findTestObject('Tenant/menu_Tenant'))
-	
+    'click menu tenant'
+    WebUI.click(findTestObject('Tenant/menu_Tenant'))
+
     'input nama tenant'
     WebUI.setText(findTestObject('Tenant/input_NamaTenant'), 'nama tenant')
 
@@ -550,13 +552,6 @@ def checkPaging(Connection conneSign) {
     checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/button_Page1'), 'class', FailureHandling.CONTINUE_ON_FAILURE), 
             'pages active ng-star-inserted', false, FailureHandling.CONTINUE_ON_FAILURE))
 
-    'get total page'
-    def variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-tenant > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
-
-//    'modify object next Page'
-//    def modifyObjectNextPage = WebUI.modifyObjectProperty(findTestObject('Tenant/modifyObject'), 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-tenant/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' + 
-//        variable.size() - 1) + ']', true)
-	
     'click next page'
     WebUI.click(findTestObject('Tenant/button_NextPage'))
 
@@ -573,22 +568,22 @@ def checkPaging(Connection conneSign) {
 
     'click max page'
     WebUI.click(findTestObject('Tenant/button_MaxPage'))
-	
-	'get total data'
-	lastPage = Double.parseDouble(WebUI.getText(findTestObject('Tenant/label_TotalData')).split(' ',-1)[0])/10
-	
-	'jika hasil perhitungan last page memiliki desimal'
-	if (lastPage.toString().contains('.0')) {
-		'tidak ada round up'
-		additionalRoundUp = 0
-	} else {
-		'round up dengan tambahan 0.5'
-		additionalRoundUp = 0.5
-	}
-	
-	'verify paging di page terakhir'
-	checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/paging_Page'), 'ng-reflect-page',
-				FailureHandling.CONTINUE_ON_FAILURE), Math.round(lastPage+additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+    'get total data'
+    lastPage = (Double.parseDouble(WebUI.getText(findTestObject('Tenant/label_TotalData')).split(' ', -1)[0]) / 10)
+
+    'jika hasil perhitungan last page memiliki desimal'
+    if (lastPage.toString().contains('.0')) {
+        'tidak ada round up'
+        additionalRoundUp = 0
+    } else {
+        'round up dengan tambahan 0.5'
+        additionalRoundUp = 0.5
+    }
+    
+    'verify paging di page terakhir'
+    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE), 
+            Math.round(lastPage + additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
     'click min page'
     WebUI.click(findTestObject('Tenant/button_MinPage'))
@@ -625,121 +620,133 @@ def searchTenant() {
 }
 
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
-	if (isMatch == false) {
-		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-			GlobalVariable.StatusFailed, (findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 2) + ';') +
-			GlobalVariable.ReasonFailedVerifyEqualOrMatch + reason)
+    if (isMatch == false) {
+        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            ((findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 2) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
+            reason)
 
-		GlobalVariable.FlagFailed = 1
-	}
+        GlobalVariable.FlagFailed = 1
+    }
 }
 
 def verifyAfterAddEdit() {
-	'input nama tenant'
-	WebUI.setText(findTestObject('Tenant/input_NamaTenant'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm,
-			rowExcel('$NamaTenant')))
-	
-	'click button cari'
-	WebUI.click(findTestObject('Tenant/button_Cari'))
-	
-	'verify nama tenant after add or edit'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Tenant/label_NamaTenant')), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('$NamaTenant')), false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama Tenant after Add or Edit')
-	
-	'verify Kode tenant after add or edit'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Tenant/label_KodeTenant')), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('$KodeTenant')), false, FailureHandling.CONTINUE_ON_FAILURE), ' Kode Tenant after Add or Edit')
+    'input nama tenant'
+    WebUI.setText(findTestObject('Tenant/input_NamaTenant'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
+            rowExcel('$NamaTenant')))
+
+    'click button cari'
+    WebUI.click(findTestObject('Tenant/button_Cari'))
+
+    'verify nama tenant after add or edit'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Tenant/label_NamaTenant')), 
+            findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('$NamaTenant')), false, FailureHandling.CONTINUE_ON_FAILURE), 
+        ' Nama Tenant after Add or Edit')
+
+    'verify Kode tenant after add or edit'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/Tenant/label_KodeTenant')), 
+            findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, rowExcel('$KodeTenant')), false, FailureHandling.CONTINUE_ON_FAILURE), 
+        ' Kode Tenant after Add or Edit')
 }
 
 def inputCancel() {
-	
-	'click button Baru'
-	WebUI.click(findTestObject('Tenant/Button_Baru'))
+    'click button Baru'
+    WebUI.click(findTestObject('Tenant/Button_Baru'))
 
-	'get total form'
-	variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-add-tenant > div.row.match-height > div > div > div > div > form div'))
-	
-	'input nama tenant'
-	WebUI.setText(findTestObject('Tenant/TenantBaru/input_NamaTenant'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm,
-			rowExcel('$NamaTenant')))
+    'get total form'
+    variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-add-tenant > div.row.match-height > div > div > div > div > form div'))
 
-	'input tenant code'
-	WebUI.setText(findTestObject('Tenant/TenantBaru/input_TenantCode'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm,
-			rowExcel('$KodeTenant')))
+    'input nama tenant'
+    WebUI.setText(findTestObject('Tenant/TenantBaru/input_NamaTenant'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
+            rowExcel('$NamaTenant')))
 
-	'input label ref number'
-	WebUI.setText(findTestObject('Tenant/TenantBaru/input_LabelRefNumber'), findTestData(excelPathTenant).getValue(
-			GlobalVariable.NumofColm, rowExcel('$LabelRefNumber')))
+    'input tenant code'
+    WebUI.setText(findTestObject('Tenant/TenantBaru/input_TenantCode'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
+            rowExcel('$KodeTenant')))
 
-	'click button generate api key'
-	WebUI.click(findTestObject('Tenant/TenantBaru/button_GenerateAPIKEY'))
-	
-	'click button batas saldo 1'
-	WebUI.click(findTestObject('Tenant/button_BatasSaldo1'))
-	
-	'input batas saldo 1'
-	WebUI.setText(findTestObject('Tenant/input_BatasSaldo1'), '10')
-	
-	'click button Email Reminder Saldo'
-	WebUI.click(findTestObject('Tenant/button_EmailReminderSaldo'))
-	
-	'input Email Reminder Saldo'
-	WebUI.setText(findTestObject('Tenant/input_EmailReminderSaldo'), 'ABCDE@GMAIL.COM')
+    'input label ref number'
+    WebUI.setText(findTestObject('Tenant/TenantBaru/input_LabelRefNumber'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
+            rowExcel('$LabelRefNumber')))
 
-	'input email user admin'
-	WebUI.setText(findTestObject('Tenant/TenantBaru/input_EmailUserAdmin'), findTestData(excelPathTenant).getValue(
-			GlobalVariable.NumofColm, rowExcel('$Email User Admin')))
+    'click button generate api key'
+    WebUI.click(findTestObject('Tenant/TenantBaru/button_GenerateAPIKEY'))
 
-	'input kode akses user admin'
-	WebUI.setText(findTestObject('Tenant/TenantBaru/input_KodeAksesUserAdmin'), findTestData(excelPathTenant).getValue(
-			GlobalVariable.NumofColm, rowExcel('$Kode Akses User Admin')))
-	
-	'click button batal'
-	WebUI.click(findTestObject('Object Repository/Tenant/TenantBaru/button_Batal'))
+    'click button batas saldo 1'
+    WebUI.click(findTestObject('Tenant/button_BatasSaldo1'))
 
-	if(WebUI.verifyElementPresent(findTestObject('Tenant/button_BatasSaldo1'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-		checkVerifyEqualOrMatch(false, 'FAILED TO CANCEL')
-	}
-	
-	'click button Baru'
-	WebUI.click(findTestObject('Tenant/Button_Baru'))
+    'input batas saldo 1'
+    WebUI.setText(findTestObject('Tenant/input_BatasSaldo1'), '10')
 
-	'delay untuk tunggu button batas saldo'
-	WebUI.delay(5)
-	
-	'check field nama tenant'	
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/TenantBaru/input_NamaTenant'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), 'Field Nama Tenant Tidak Kosong')
-	
-	'check field kode tenant'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/TenantBaru/input_TenantCode'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), 'Field Kode Tenant Tidak Kosong')
-	
-	'check field label ref number tenant'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/TenantBaru/input_LabelRefNumber'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), 'Field Label Ref Number Tenant Tidak Kosong')
-	
-	'check field API Key'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/TenantBaru/input_APIKEY'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), 'Field API Key Tidak Kosong')
-	
-	'click button batas saldo 1'
-	WebUI.click(findTestObject('Tenant/button_BatasSaldo1'))
-	
-	'check field Batas Saldo'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/input_BatasSaldo1'), 'value', FailureHandling.OPTIONAL), '0', false, FailureHandling.CONTINUE_ON_FAILURE), 'Field Batas Saldo Tidak Kosong')
-	
-	'click button Email Reminder Saldo'
-	WebUI.click(findTestObject('Tenant/button_EmailReminderSaldo'))
-	
-	'check field EmailReminderSaldo'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/input_EmailReminderSaldo'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), 'Field EmailReminderSaldo Tidak Kosong')
-	
-	'check field email user admin'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/TenantBaru/input_EmailUserAdmin'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), 'Field email user admin Tidak Kosong')
+    'click button Email Reminder Saldo'
+    WebUI.click(findTestObject('Tenant/button_EmailReminderSaldo'))
 
-	'check kode akses user admin'
-	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/TenantBaru/input_KodeAksesUserAdmin'), 'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), 'Field kode akses user admin Tidak Kosong')
-	
-	'click button batal'
-	WebUI.click(findTestObject('Object Repository/Tenant/TenantBaru/button_Batal'))
+    'input Email Reminder Saldo'
+    WebUI.setText(findTestObject('Tenant/input_EmailReminderSaldo'), 'ABCDE@GMAIL.COM')
+
+    'input email user admin'
+    WebUI.setText(findTestObject('Tenant/TenantBaru/input_EmailUserAdmin'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
+            rowExcel('$Email User Admin')))
+
+    'input kode akses user admin'
+    WebUI.setText(findTestObject('Tenant/TenantBaru/input_KodeAksesUserAdmin'), findTestData(excelPathTenant).getValue(GlobalVariable.NumofColm, 
+            rowExcel('$Kode Akses User Admin')))
+
+    'click button batal'
+    WebUI.click(findTestObject('Object Repository/Tenant/TenantBaru/button_Batal'))
+
+    if (WebUI.verifyElementPresent(findTestObject('Tenant/button_BatasSaldo1'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+        checkVerifyEqualOrMatch(false, 'FAILED TO CANCEL')
+    }
+    
+    'click button Baru'
+    WebUI.click(findTestObject('Tenant/Button_Baru'))
+
+    'delay untuk tunggu button batas saldo'
+    WebUI.delay(5)
+
+    'check field nama tenant'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/TenantBaru/input_NamaTenant'), 'value', 
+                FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), 'Field Nama Tenant Tidak Kosong')
+
+    'check field kode tenant'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/TenantBaru/input_TenantCode'), 'value', 
+                FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), 'Field Kode Tenant Tidak Kosong')
+
+    'check field label ref number tenant'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/TenantBaru/input_LabelRefNumber'), 
+                'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), 'Field Label Ref Number Tenant Tidak Kosong')
+
+    'check field API Key'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/TenantBaru/input_APIKEY'), 'value', 
+                FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), 'Field API Key Tidak Kosong')
+
+    'click button batas saldo 1'
+    WebUI.click(findTestObject('Tenant/button_BatasSaldo1'))
+
+    'check field Batas Saldo'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/input_BatasSaldo1'), 'value', FailureHandling.OPTIONAL), 
+            '0', false, FailureHandling.CONTINUE_ON_FAILURE), 'Field Batas Saldo Tidak Kosong')
+
+    'click button Email Reminder Saldo'
+    WebUI.click(findTestObject('Tenant/button_EmailReminderSaldo'))
+
+    'check field EmailReminderSaldo'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/input_EmailReminderSaldo'), 'value', 
+                FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), 'Field EmailReminderSaldo Tidak Kosong')
+
+    'check field email user admin'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/TenantBaru/input_EmailUserAdmin'), 
+                'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), 'Field email user admin Tidak Kosong')
+
+    'check kode akses user admin'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Tenant/TenantBaru/input_KodeAksesUserAdmin'), 
+                'value', FailureHandling.OPTIONAL), '', false, FailureHandling.CONTINUE_ON_FAILURE), 'Field kode akses user admin Tidak Kosong')
+
+    'click button batal'
+    WebUI.click(findTestObject('Object Repository/Tenant/TenantBaru/button_Batal'))
 }
 
 def rowExcel(String cellValue) {
-	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
+
