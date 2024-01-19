@@ -602,8 +602,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                                 'ambil inquiry di db'
                                 ArrayList inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldo'(conneSign, 
-                                    (GlobalVariable.eSignData['NoKontrakProcessed']).split(';', -1)[i], (GlobalVariable.eSignData[
-                                    'CountVerifikasiSign']).toString(), 'Use ' + signType)
+                                    (GlobalVariable.eSignData['NoKontrakProcessed']).split(';', -1)[i], 'Use ' + signType)
 
                                 index = 0
 

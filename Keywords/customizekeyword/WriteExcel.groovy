@@ -125,8 +125,8 @@ public class WriteExcel {
 					rowNum = i
 					break
 				}
-			} catch(IllegalArgumentException e) {
-				e.printStackTrace()
+			} catch (IllegalArgumentException e) {
+				println(e)
 			}
 		}
 		file.close()

@@ -1,7 +1,7 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.kms.katalon.core.model.FailureHandling
-import com.kms.katalon.core.testobject.ResponseObject
+import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject as ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import internal.GlobalVariable as GlobalVariable
 
@@ -22,68 +22,68 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
         'get tenant per case dari colm excel'
         GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Code'))
-        
+
         'get psre per case dari colm excel'
         GlobalVariable.Psre = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Vendor Code'))
-        
+
         'HIT API Login untuk ambil bearer token'
-        responLogin = WS.sendRequest(findTestObject('Postman/Login', [
-						('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('username')), 
-						('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('password'))]))
+        responLogin = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                        rowExcel('username')), ('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                        rowExcel('password'))]))
 
         'Jika status HIT API Login 200 OK'
         if (WS.verifyResponseStatusCode(responLogin, 200, FailureHandling.OPTIONAL) == true) {
             'Parsing token menjadi GlobalVariable'
             GlobalVariable.token = WS.getElementPropertyValue(responLogin, 'access_token')
 
-			'HIT API'
-			respon = WS.sendRequest(findTestObject('Postman/Get Balance Mutation File', [('pageNum') : findTestData(
-				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Page*')), ('balType') : findTestData(
-				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Balance Type*')), ('refNo') : findTestData(
-				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Ref Number*')), ('tranxType') : findTestData(
-				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Transaction Type*')), ('docname') : findTestData(
-				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Document Name*')), ('tranxDateStart') : findTestData(
-				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Transaction Date Start*')), ('tranxDateEnd') : findTestData(
-				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Transaction Date End*')), ('docType') : findTestData(
-				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Document Type*')), ('officeCode') : findTestData(
-				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Office Code*')),('callerId') : findTestData(
-				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('username'))]))
-
-            'ambil lama waktu yang diperlukan hingga request menerima balikan'
-            def elapsedTime = (respon.getElapsedTime() / 1000) + ' second'
-
-            'ambil body dari hasil respons'
-            responseBody = respon.getResponseBodyContent()
-
-            'panggil keyword untuk proses beautify dari respon json yang didapat'
-            CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
-                    excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
-
-            'write to excel response elapsed time'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 
-                1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+            'HIT API'
+            respon = WS.sendRequest(findTestObject('Postman/Get Balance Mutation File', [('pageNum') : findTestData(excelPath).getValue(
+                            GlobalVariable.NumofColm, rowExcel('Page*')), ('balType') : findTestData(excelPath).getValue(
+                            GlobalVariable.NumofColm, rowExcel('Balance Type*')), ('refNo') : findTestData(excelPath).getValue(
+                            GlobalVariable.NumofColm, rowExcel('Ref Number*')), ('tranxType') : findTestData(excelPath).getValue(
+                            GlobalVariable.NumofColm, rowExcel('Transaction Type*')), ('docname') : findTestData(excelPath).getValue(
+                            GlobalVariable.NumofColm, rowExcel('Document Name*')), ('tranxDateStart') : findTestData(excelPath).getValue(
+                            GlobalVariable.NumofColm, rowExcel('Transaction Date Start*')), ('tranxDateEnd') : findTestData(
+                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Transaction Date End*')), ('docType') : findTestData(
+                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Document Type*')), ('officeCode') : findTestData(
+                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Office Code*')), ('callerId') : findTestData(
+                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('username'))]))
 
             'Jika status HIT API 200 OK'
             if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
                 'mengambil status code berdasarkan response HIT API'
                 statusCode = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
-				
+
+				'ambil lama waktu yang diperlukan hingga request menerima balikan'
+				elapsedTime = (respon.elapsedTime / 1000) + ' second'
+	
+				'ambil body dari hasil respons'
+				responseBody = respon.responseBodyContent
+	
+				'panggil keyword untuk proses beautify dari respon json yang didapat'
+				CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
+						excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+	
+				'write to excel response elapsed time'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') -
+					1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+	
                 'jika status codenya 0'
-                if (status_Code == 0) {
+                if (statusCode == 0) {
                     'mengambil response'
-		            base64Xlsx = WS.getElementPropertyValue(respon, 'excelBase64', FailureHandling.OPTIONAL)
-		
-		            'decode Bas64 to Excel file'
-		            CustomKeywords.'customizekeyword.ConvertFile.decodeBase64Excel'(base64Xlsx, findTestData(excelPath).getValue(
-		                    GlobalVariable.NumofColm, rowExcel('File Name')))
-		
-		            'check is file downloaded dan apakah mau di delete'
-		            if (CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPath).getValue(
-		                    GlobalVariable.NumofColm, rowExcel('Delete File ?'))) == true) {
-		                'write to excel success'
-		                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
-		                    0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-		            }
+                    base64Xlsx = WS.getElementPropertyValue(respon, 'excelBase64', FailureHandling.OPTIONAL)
+
+                    'decode Bas64 to Excel file'
+                    CustomKeywords.'customizekeyword.ConvertFile.decodeBase64Excel'(base64Xlsx, findTestData(excelPath).getValue(
+                            GlobalVariable.NumofColm, rowExcel('File Name')))
+
+                    'check is file downloaded dan apakah mau di delete'
+                    if (CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                            rowExcel('Delete File ?'))) == true) {
+                        'write to excel success'
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, 
+                            GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+                    }
                 } else {
                     'call function get API error message'
                     getErrorMessageAPI(respon)
@@ -115,3 +115,4 @@ def getErrorMessageAPI(ResponseObject respon) {
 def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
+

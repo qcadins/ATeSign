@@ -4,7 +4,11 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import java.sql.Connection as Connection
 
-ArrayList arrayMatch = [], balance = [], resultDbNew = []
+ArrayList arrayMatch = []
+
+ArrayList balance = []
+
+ArrayList resultDbNew = []
 
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
