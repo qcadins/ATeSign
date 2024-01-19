@@ -12,17 +12,19 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 String value
 
 'check if email kosong atau tidak'
-if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase('Edit') &&
-	findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Invite By')).equalsIgnoreCase('Email')) {
-	'get email dari row edit'
-	email = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email - Edit')).replace('"', '')
-} else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 2 &&
-	!findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase('Edit')) {
-	'get email dari row input'
-	email = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', '')
+if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase(
+    'Edit') && findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Invite By')).equalsIgnoreCase(
+    'Email')) {
+    'get email dari row edit'
+    email = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Email - Edit')).replace('"', '')
+} else if ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 2) && !(findTestData(
+    excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase('Edit'))) {
+    'get email dari row input'
+    email = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', '')
 } else {
-	'get name + email hosting'
-	email = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"', '') + CustomKeywords.'connection.DataVerif.getEmailHosting'(conneSign)
+    'get name + email hosting'
+    email = (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"', '') + CustomKeywords.'connection.DataVerif.getEmailHosting'(
+        conneSign))
 }
 
 'jika pengguna belum login'
@@ -45,11 +47,11 @@ if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
 } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Input with')).equalsIgnoreCase('Phone')) {
     'set text search box dengan Phone'
     WebUI.setText(findTestObject('PencarianPenggunaAdmin/Pengguna/input_SearchBox'), findTestData(excelPathRegister).getValue(
-            GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"',''))
+            GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"', ''))
 } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Input with')).equalsIgnoreCase('NIK')) {
     'set text search box dengan NIK'
     WebUI.setText(findTestObject('PencarianPenggunaAdmin/Pengguna/input_SearchBox'), findTestData(excelPathRegister).getValue(
-            GlobalVariable.NumofColm, rowExcel('$NIK')).replace('"',''))
+            GlobalVariable.NumofColm, rowExcel('$NIK')).replace('"', ''))
 }
 
 'click button cari'
@@ -69,7 +71,7 @@ if (WebUI.verifyElementPresent(findTestObject('PencarianDokumen/noDataWarning'),
         WebUI.click(findTestObject('PencarianPenggunaAdmin/Karyawan/button_View'))
 
         'get data view dari DB'
-        ArrayList<String> resultData = CustomKeywords.'connection.PencarianPengguna.getPencarianPengguna'(conneSign, email.toUpperCase())
+        ArrayList resultData = CustomKeywords.'connection.PencarianPengguna.getPencarianPengguna'(conneSign, email.toUpperCase())
 
         index = 0
 
@@ -122,9 +124,11 @@ if (WebUI.verifyElementPresent(findTestObject('PencarianDokumen/noDataWarning'),
             if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Input with')) == 'Email') {
                 value = email.toUpperCase()
             } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Input with')) == 'Phone') {
-                value = convertSHA256(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"',''))
+                value = convertSHA256(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon')).replace(
+                        '"', ''))
             } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Input with')) == 'Id no') {
-                value = convertSHA256(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$NIK')).replace('"',''))
+                value = convertSHA256(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$NIK')).replace(
+                        '"', ''))
             }
             
             'get data reset request OTP dari DB'
@@ -211,10 +215,10 @@ def checkVerifyPaging(Boolean isMatch) {
 }
 
 def convertSHA256(String input) {
-    return CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(input)
+    CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(input)
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 

@@ -1,6 +1,7 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.model.FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import internal.GlobalVariable as GlobalVariable
 import java.sql.Connection as Connection
@@ -99,7 +100,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     }
 }
 
-def getErrorMessageAPI(def respon) {
+def getErrorMessageAPI(ResponseObject respon) {
     'mengambil status code berdasarkan response HIT API'
     message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
@@ -131,9 +132,9 @@ def parseCodeOnly(String url) {
         code = URLDecoder.decode(code, 'UTF-8')
 
         return code
-    } else {
-        return ''
-    }
+    } 
+
+	''
 }
 
 def decryptLink(Connection conneSign, String invCode) {
@@ -142,6 +143,6 @@ def decryptLink(Connection conneSign, String invCode) {
     'enkripsi msg'
     encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseDecrypt'(invCode, aesKey)
 
-    return encryptMsg
+    encryptMsg
 }
 

@@ -1,6 +1,7 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.model.FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import internal.GlobalVariable as GlobalVariable
 
@@ -24,7 +25,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
         'get tenant per case dari colm excel'
         GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('tenantCode'))
-        
+
         'HIT API Login untuk token : andy@ad-ins.com'
         respon_login = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('username')), ('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
@@ -37,36 +38,36 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
             'HIT API'
             respon = WS.sendRequest(findTestObject('Postman/List Balance Mutation (Saldo)', [('pageNum') : findTestData(
-				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Page*')), ('balType') : findTestData(
-				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Balance Type*')), ('refNo') : findTestData(
-				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Ref Number*')), ('tranxType') : findTestData(
-				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Transaction Type*')), ('docname') : findTestData(
-				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Document Name*')), ('tranxDateStart') : findTestData(
-				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Transaction Date Start*')), ('tranxDateEnd') : findTestData(
-				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Transaction Date End*')), ('docType') : findTestData(
-				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Document Type*')), ('officeCode') : findTestData(
-				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Office Code*')),('callerId') : findTestData(
-				excelPath).getValue(GlobalVariable.NumofColm, rowExcel('username'))]))
+                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Page*')), ('balType') : findTestData(
+                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Balance Type*')), ('refNo') : findTestData(
+                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Ref Number*')), ('tranxType') : findTestData(
+                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Transaction Type*')), ('docname') : findTestData(
+                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Document Name*')), ('tranxDateStart') : findTestData(
+                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Transaction Date Start*')), ('tranxDateEnd') : findTestData(
+                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Transaction Date End*')), ('docType') : findTestData(
+                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Document Type*')), ('officeCode') : findTestData(
+                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Office Code*')), ('callerId') : findTestData(
+                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('username'))]))
 
             'Jika status HIT API 200 OK'
             if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
                 'get Status Code'
                 status_Code = WS.getElementPropertyValue(respon, 'status.code')
 
-				'ambil lama waktu yang diperlukan hingga request menerima balikan'
-				elapsedTime = (respon.elapsedTime / 1000) + ' second'
-	
-				'ambil body dari hasil respons'
-				responseBody = respon.responseBodyContent
-	
-				'panggil keyword untuk proses beautify dari respon json yang didapat'
-				CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
-						excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
-	
-				'write to excel response elapsed time'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') -
-					1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
-				
+                'ambil lama waktu yang diperlukan hingga request menerima balikan'
+                elapsedTime = ((respon.elapsedTime / 1000) + ' second')
+
+                'ambil body dari hasil respons'
+                responseBody = respon.responseBodyContent
+
+                'panggil keyword untuk proses beautify dari respon json yang didapat'
+                CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
+                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+
+                'write to excel response elapsed time'
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 
+                    1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+
                 'Jika status codenya 0'
                 if (status_Code == 0) {
                     'write to excel success'
@@ -84,7 +85,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     }
 }
 
-def getErrorMessageAPI(def respon) {
+def getErrorMessageAPI(ResponseObject respon) {
     'mengambil status code berdasarkan response HIT API'
     message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 

@@ -3,18 +3,15 @@ import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import java.sql.Connection as Connection
 import org.openqa.selenium.By as By
-import org.openqa.selenium.Keys as Keys
 import com.kms.katalon.core.configuration.RunConfiguration as RunConfiguration
 import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as MobileBuiltInKeywords
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.testobject.TestObject as TestObject
-import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 
 'setting untuk membuat lokasi default folder download'
-HashMap<String, String> chromePrefs = new HashMap<String, String>()
+HashMap<String, String> chromePrefs = [:]
 
 chromePrefs.put('download.default_directory', System.getProperty('user.dir') + '\\Download')
 
@@ -187,7 +184,7 @@ if (WebUI.verifyElementNotPresent(findTestObject('DaftarAkun/label_SuccessPrivy'
         'check if email kosong atau tidak'
         if ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 2) && !(findTestData(
             excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Invite By')).equalsIgnoreCase('SMS'))) {
-            ArrayList<String> listOTP = []
+            ArrayList listOTP = []
 
             'delay untuk menunggu OTP'
             WebUI.delay(5)
@@ -300,8 +297,7 @@ if (WebUI.verifyElementNotPresent(findTestObject('DaftarAkun/label_SuccessPrivy'
 
                 if (GlobalVariable.Psre == 'DIGI') {
                     'call testcase form aktivasi DIGI'
-                    WebUI.callTestCase(findTestCase('null'), [('excelPathRegister') : excelPathRegister], 
-                        FailureHandling.CONTINUE_ON_FAILURE)
+                    WebUI.callTestCase(findTestCase('null'), [('excelPathRegister') : excelPathRegister], FailureHandling.CONTINUE_ON_FAILURE)
 
                     'looping untuk mengeck apakah case selanjutnya ingin melanjutkan input pada form aktivasi'
                     while (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Continue Register & Activation')).equalsIgnoreCase(
@@ -311,8 +307,7 @@ if (WebUI.verifyElementNotPresent(findTestObject('DaftarAkun/label_SuccessPrivy'
                         GlobalVariable.FlagFailed = 0
 
                         'call testcase form aktivasi DIGI'
-                        WebUI.callTestCase(findTestCase('null'), [('excelPathRegister') : excelPathRegister], 
-                            FailureHandling.CONTINUE_ON_FAILURE)
+                        WebUI.callTestCase(findTestCase('null'), [('excelPathRegister') : excelPathRegister], FailureHandling.CONTINUE_ON_FAILURE)
                     }
                 } else {
                     'call testcase form aktivasi vida'
@@ -346,13 +341,14 @@ if (WebUI.verifyElementNotPresent(findTestObject('DaftarAkun/label_SuccessPrivy'
                 WebUI.click(findTestObject('DaftarAkun/button_X'))
 
                 GlobalVariable.FlagFailed = 1
-            } else if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_SuccessPrivy'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+            } else if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_SuccessPrivy'), GlobalVariable.TimeOut, 
+                FailureHandling.OPTIONAL)) {
                 'get message dari ui'
                 reason = WebUI.getText(findTestObject('DaftarAkun/label_SuccessPrivy'))
 
                 'check if registrasi berhasil dan write ke excel'
-                if (reason.contains('Harap lanjutkan proses aktivasi Anda menggunakan link yang dikirimkan') && 
-                (GlobalVariable.FlagFailed == 0)) {
+                if (reason.contains('Harap lanjutkan proses aktivasi Anda menggunakan link yang dikirimkan') && (GlobalVariable.FlagFailed == 
+                0)) {
                     'write to excel success'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
                         1, GlobalVariable.StatusSuccess)
@@ -361,8 +357,8 @@ if (WebUI.verifyElementNotPresent(findTestObject('DaftarAkun/label_SuccessPrivy'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, (((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
                             rowExcel('Reason Failed')).replace('-', '') + ';') + '<') + reason) + '>')
-					
-					GlobalVariable.FlagFailed = 1
+
+                    GlobalVariable.FlagFailed = 1
                 }
             }
         } else if (GlobalVariable.Psre == 'PRIVY') {
@@ -381,25 +377,25 @@ if (WebUI.verifyElementNotPresent(findTestObject('DaftarAkun/label_SuccessPrivy'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, (((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
                             rowExcel('Reason Failed')).replace('-', '') + ';') + '<') + reason) + '>')
-					
-					GlobalVariable.FlagFailed = 1
-                }
 
+                    GlobalVariable.FlagFailed = 1
+                }
+                
                 'call function check mutation trx'
                 checkTrxMutation(conneSign)
             }
         }
     }
 } else {
-	'get message dari ui'
-	reason = WebUI.getText(findTestObject('DaftarAkun/label_SuccessPrivy'))
-	
-	'write to excel status failed dan reason'
-	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-		GlobalVariable.StatusFailed, (((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
-			rowExcel('Reason Failed')).replace('-', '') + ';') + '<') + reason) + '>')
-	
-	GlobalVariable.FlagFailed = 1
+    'get message dari ui'
+    reason = WebUI.getText(findTestObject('DaftarAkun/label_SuccessPrivy'))
+
+    'write to excel status failed dan reason'
+    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+        (((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + 
+        ';') + '<') + reason) + '>')
+
+    GlobalVariable.FlagFailed = 1
 }
 
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
@@ -420,7 +416,7 @@ def checkTrxMutation(Connection conneSign) {
                 GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"', ''))
 
         'declare arraylist arraymatch'
-        ArrayList<String> arrayMatch = []
+        ArrayList arrayMatch = []
 
         'verify trx qty = -1'
         arrayMatch.add(WebUI.verifyMatch(resultTrx[0], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -436,7 +432,7 @@ def checkTrxMutation(Connection conneSign) {
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
 def getTextorAttribute(TestObject object) {
@@ -449,18 +445,18 @@ def getTextorAttribute(TestObject object) {
         text(WebUI.getText(object).toUpperCase())
     } 
     
-    return text
+    text
 }
 
 def getOTP(Connection conneSign) {
     'declare string OTP'
-    String OTP
+    String otp
 
     'get OTP dari DB'
-    OTP = CustomKeywords.'connection.DataVerif.getOTP'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+    otp = CustomKeywords.'connection.DataVerif.getOTP'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
             rowExcel('$Email')).replace('"', '').toUpperCase())
 
-    return OTP
+    otp
 }
 
 def verifyDataDaftarAkun() {

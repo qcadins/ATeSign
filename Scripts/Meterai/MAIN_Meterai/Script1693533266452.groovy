@@ -31,28 +31,29 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     } else if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
         GlobalVariable.FlagFailed = 0
 
-		'check if email login case selanjutnya masih sama dengan sebelumnya'
-		if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) !=
-			findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')) || firstRun == 0) {
-			'call test case login per case'
-			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathMeterai, ('Email') : 'Email Login', ('Password') : 'Password Login'
-				, ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.STOP_ON_FAILURE)
-			
-			'apakah cek paging diperlukan di awal run'
-			if(GlobalVariable.checkPaging.equals('Yes')) {
-				'call function check paging'
-				checkPaging(currentDate, firstDateOfMonth, conneSign)
-			}
-			
-			firstRun = 1
-		}
-		
-		if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
-			GlobalVariable.FlagFailed = 0
-		}
+        'check if email login case selanjutnya masih sama dengan sebelumnya'
+        if ((findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) != findTestData(
+            excelPathMeterai).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))) || (firstRun == 0)) {
+            'call test case login per case'
+            WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathMeterai, ('Email') : 'Email Login'
+                    , ('Password') : 'Password Login', ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], 
+                FailureHandling.STOP_ON_FAILURE)
+
+            'apakah cek paging diperlukan di awal run'
+            if (GlobalVariable.checkPaging == 'Yes') {
+                'call function check paging'
+                checkPaging(currentDate, firstDateOfMonth, conneSign)
+            }
+            
+            firstRun = 1
+        }
         
-		'click menu meterai'
-		WebUI.click(findTestObject('Meterai/menu_Meterai'))
+        if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
+            GlobalVariable.FlagFailed = 0
+        }
+        
+        'click menu meterai'
+        WebUI.click(findTestObject('Meterai/menu_Meterai'))
 
         'set text no kontrak'
         WebUI.setText(findTestObject('Meterai/input_NoKontrak'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
@@ -177,54 +178,56 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         WebUI.click(findTestObject('Meterai/button_X'))
 
         'check if mau download data meterai'
-        if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, rowExcel('Download File')).equalsIgnoreCase('Yes')) {
+        if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, rowExcel('Download File')).equalsIgnoreCase(
+            'Yes')) {
             'click button download'
             WebUI.click(findTestObject('Meterai/button_UnduhExcel'))
-			
-			'looping hingga 20 detik'
-			for (int i = 1; i <= 4; i++) {
-				'pemberian delay download 5 sec'
-				WebUI.delay(5)
 
-				'check isfiled downloaded'
-				if (CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathMeterai).getValue(
-						GlobalVariable.NumofColm, rowExcel('Delete Downloaded File ?'))) == true) {
-					'Jika sukses downloadnya lebih dari 10 detik'
-					if (i > 2) {
-						'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedPerformance'
-						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-							GlobalVariable.StatusWarning, ((((findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm,
-								rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedPerformance) + ' sejumlah ') + (i * 5)) + ' detik ')
+            'looping hingga 20 detik'
+            for (int i = 1; i <= 4; i++) {
+                'pemberian delay download 5 sec'
+                WebUI.delay(5)
 
-						GlobalVariable.FlagFailed = 1
-					}
-					
-					break
-				} else {
-					'Jika error lognya muncul'
-					if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-						'ambil teks errormessage'
-						errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
+                'check isfiled downloaded'
+                if (CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathMeterai).getValue(
+                        GlobalVariable.NumofColm, rowExcel('Delete Downloaded File ?'))) == true) {
+                    'Jika sukses downloadnya lebih dari 10 detik'
+                    if (i > 2) {
+                        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedPerformance'
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                            GlobalVariable.StatusWarning, ((((findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
+                                rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedPerformance) + ' sejumlah ') + 
+                            (i * 5)) + ' detik ')
 
-						'Tulis di excel itu adalah error'
-						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-							GlobalVariable.StatusFailed, (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm,
-								rowExcel('Reason Failed')).replace('-', '') + ';') + '<' + errormessage + '>')
+                        GlobalVariable.FlagFailed = 1
+                    }
+                    
+                    break
+                } else {
+                    'Jika error lognya muncul'
+                    if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+                        'ambil teks errormessage'
+                        errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
 
-						GlobalVariable.FlagFailed = 1
-					}
-					
-					'Jika sudah loopingan terakhir'
-					if (i == 5) {
-						'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedDownload'
-						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-							GlobalVariable.StatusFailed, (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm,
-								rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedDownload)
+                        'Tulis di excel itu adalah error'
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                            GlobalVariable.StatusFailed, (((findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
+                                rowExcel('Reason Failed')).replace('-', '') + ';') + '<') + errormessage) + '>')
 
-						GlobalVariable.FlagFailed = 1
-					}
-				}
-			}
+                        GlobalVariable.FlagFailed = 1
+                    }
+                    
+                    'Jika sudah loopingan terakhir'
+                    if (i == 5) {
+                        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedDownload'
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                            GlobalVariable.StatusFailed, (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
+                                rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedDownload)
+
+                        GlobalVariable.FlagFailed = 1
+                    }
+                }
+            }
         }
         
         if (GlobalVariable.FlagFailed == 0) {
@@ -236,8 +239,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 }
 
 def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection conneSign) {
-	totalMeteraiDB = CustomKeywords.'connection.Meterai.getTotalMeterai'(conneSign)
-	
+    totalMeteraiDB = CustomKeywords.'connection.Meterai.getTotalMeterai'(conneSign)
+
     'set text no kontrak'
     WebUI.setText(findTestObject('Meterai/input_NoKontrak'), '000111')
 
@@ -322,57 +325,57 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
 
     'click button cari'
     WebUI.click(findTestObject('Meterai/button_Cari'))
-	
+
     'set text tanggal pengiriman ke'
     totalMeteraiUI = WebUI.getText(findTestObject('Meterai/Label_TotalMeterai')).split(' ', -1)
 
-	'verify total Meterai'
-	checkVerifyPaging(WebUI.verifyMatch(totalMeteraiUI[0], totalMeteraiDB, false, FailureHandling.CONTINUE_ON_FAILURE))
-    
-	if (Integer.parseInt(totalMeteraiUI[0]) > 10) {		
-	    'click next page'
-	    WebUI.click(findTestObject('Meterai/button_NextPage'))
-	
-	    'verify paging di page 2'
-	    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE), 
-	            '2', false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-	    'click prev page'
-	    WebUI.click(findTestObject('Meterai/button_PrevPage'))
-	
-	    'verify paging di page 1'
-	    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE), 
-	            '1', false, FailureHandling.CONTINUE_ON_FAILURE))
-		
-		'get total page'
-		variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-stamp-duty > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
-		
-		'click last page'
-		WebUI.click(findTestObject('Meterai/button_LastPage'))
-	
-		'get total data'
-		lastPage = Double.parseDouble(WebUI.getText(findTestObject('Meterai/label_TotalData')).split(' ',-1)[0])/10
-		
-		'jika hasil perhitungan last page memiliki desimal'
-		if (lastPage.toString().contains('.0')) {
-			'tidak ada round up'
-			additionalRoundUp = 0
-		} else {
-			'round up dengan tambahan 0.5'
-			additionalRoundUp = 0.5
-		}
-		
-		'verify paging di page terakhir'
-		checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/paging_Page'), 'ng-reflect-page',
-					FailureHandling.CONTINUE_ON_FAILURE), Math.round(lastPage+additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-	    'click first page'
-	    WebUI.click(findTestObject('Meterai/button_FirstPage'))
-	
-	    'verify paging di page 1'
-	    checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/paging_Page'), 'ng-reflect-page', FailureHandling.CONTINUE_ON_FAILURE), 
-	            '1', false, FailureHandling.CONTINUE_ON_FAILURE))
-	}
+    'verify total Meterai'
+    checkVerifyPaging(WebUI.verifyMatch(totalMeteraiUI[0], totalMeteraiDB, false, FailureHandling.CONTINUE_ON_FAILURE))
+
+    if (Integer.parseInt(totalMeteraiUI[0]) > 10) {
+        'click next page'
+        WebUI.click(findTestObject('Meterai/button_NextPage'))
+
+        'verify paging di page 2'
+        checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/paging_Page'), 'ng-reflect-page', 
+                    FailureHandling.CONTINUE_ON_FAILURE), '2', false, FailureHandling.CONTINUE_ON_FAILURE))
+
+        'click prev page'
+        WebUI.click(findTestObject('Meterai/button_PrevPage'))
+
+        'verify paging di page 1'
+        checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/paging_Page'), 'ng-reflect-page', 
+                    FailureHandling.CONTINUE_ON_FAILURE), '1', false, FailureHandling.CONTINUE_ON_FAILURE))
+
+        'get total page'
+        variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-stamp-duty > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
+
+        'click last page'
+        WebUI.click(findTestObject('Meterai/button_LastPage'))
+
+        'get total data'
+        lastPage = (Double.parseDouble(WebUI.getText(findTestObject('Meterai/label_TotalData')).split(' ', -1)[0]) / 10)
+
+        'jika hasil perhitungan last page memiliki desimal'
+        if (lastPage.toString().contains('.0')) {
+            'tidak ada round up'
+            additionalRoundUp = 0
+        } else {
+            'round up dengan tambahan 0.5'
+            additionalRoundUp = 0.5
+        }
+        
+        'verify paging di page terakhir'
+        checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/paging_Page'), 'ng-reflect-page', 
+                    FailureHandling.CONTINUE_ON_FAILURE), Math.round(lastPage + additionalRoundUp).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+        'click first page'
+        WebUI.click(findTestObject('Meterai/button_FirstPage'))
+
+        'verify paging di page 1'
+        checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Meterai/paging_Page'), 'ng-reflect-page', 
+                    FailureHandling.CONTINUE_ON_FAILURE), '1', false, FailureHandling.CONTINUE_ON_FAILURE))
+    }
 }
 
 def checkVerifyPaging(Boolean isMatch) {
@@ -397,5 +400,6 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 }
 
 def rowExcel(String cellValue) {
-	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
+
