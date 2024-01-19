@@ -376,23 +376,8 @@ def inputFilterSaldo(String tipeSaldo, Connection conneSign) {
 		('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
 		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[10]/div', true)
 
-	'check if email kosong atau tidak'
-	if (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase('Edit') &&
-		findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Invite By')).equalsIgnoreCase('Email')) {
-		'get email dari row edit'
-		email = findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Email - Edit')).replace('"', '')
-	} else if (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 2 &&
-		!findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase('Edit')) {
-		'get email dari row input'
-		email = findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', '')
-	} else {
-		'get name + email hosting'
-		email = findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"', '') + CustomKeywords.'connection.DataVerif.getEmailHosting'(conneSign)
-	}
-	
 	'get trx dari db'
-	ArrayList<String> result = CustomKeywords.'connection.DataVerif.getSaldoTrx'(conneSign, email, findTestData(excel).getValue(
-			GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"', ''), 'Use ' + tipeSaldo)
+	ArrayList<String> result = CustomKeywords.'connection.DataVerif.getSaldoTrx'(conneSign, 'Use ' + tipeSaldo)
 
 	arrayIndex = 0
 
