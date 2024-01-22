@@ -20,7 +20,7 @@ jobs:
         #   projectBaseDir: .
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_HOST_URL: http://sonar.ad-ins.com:9000
           # SONAR_SCANNER_OPTS: -X
 
       # - name: SonarQube Quality Gate
