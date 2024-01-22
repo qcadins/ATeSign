@@ -70,7 +70,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         ArrayList arrayMatch = []
 
                         'get data store db'
-                        String result = CustomKeywords.'connection.APIFullService.DownloadReportCountAPIOnly'(conneSign, 
+                        String result = CustomKeywords.'connection.APIFullService.downloadReportCountAPIOnly'(conneSign, 
                             GlobalVariable.Tenant)
 
                         'verify status di API dengan DB'
