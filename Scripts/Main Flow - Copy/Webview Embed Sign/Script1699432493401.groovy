@@ -1218,10 +1218,6 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
 	'check ada value maka Setting OTP Active Duration'
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() > 
     0) {
-        'Setting OTP Active Duration'
-        CustomKeywords.'connection.APIFullService.settingOTPActiveDuration'(conneSign, findTestData(excelPathFESignDocument).getValue(
-                GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')))
-
         delayExpiredOTP = (60 * Integer.parseInt(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                 rowExcel('Setting OTP Active Duration'))))
     }

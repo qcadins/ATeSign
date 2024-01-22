@@ -9,7 +9,7 @@ import java.sql.Connection as Connection
 import org.openqa.selenium.Keys as Keys
 import org.openqa.selenium.By as By
 import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
-import com.kms.katalon.core.testobject.ResponseObject
+import com.kms.katalon.core.testobject.ResponseObject as ResponseObject
 
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
@@ -34,40 +34,33 @@ documentTemplateCode = findTestData(API_Excel_Path).getValue(GlobalVariable.Numo
     semicolon, splitnum)
 
 'Inisialisasi office Code berdasarkan delimiter ;'
-officeCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('officeCode')).split(
-    semicolon, splitnum)
+officeCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('officeCode')).split(semicolon, splitnum)
 
 'Inisialisasi office name berdasarkan delimiter ;'
-officeName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('officeName')).split(
-    semicolon, splitnum)
+officeName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('officeName')).split(semicolon, splitnum)
 
 'Inisialisasi region code berdasarkan delimiter ;'
-regionCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('regionCode')).split(
-    semicolon, splitnum)
+regionCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('regionCode')).split(semicolon, splitnum)
 
 'Inisialisasi region name berdasarkan delimiter ;'
-regionName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('regionName')).split(
-    semicolon, splitnum)
+regionName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('regionName')).split(semicolon, splitnum)
 
 'Inisialisasi business line code berdasarkan delimiter ;'
-businessLineCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('businessLineCode')).split(
-    semicolon, splitnum)
+businessLineCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('businessLineCode')).split(semicolon, 
+    splitnum)
 
 'Inisialisasi business line name berdasarkan delimiter ;'
-businessLineName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('businessLineName')).split(
-    semicolon, splitnum)
+businessLineName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('businessLineName')).split(semicolon, 
+    splitnum)
 
 'Inisialisasi is sequence berdasarkan delimiter ;'
-isSequence = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('isSequence')).split(
-    semicolon, splitnum)
+isSequence = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('isSequence')).split(semicolon, splitnum)
 
 'Inisialisasi document file berdasarkan delimiter ;'
-documentFile = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('documentFile')).split(
-    enter, splitnum)
+documentFile = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('documentFile')).split(enter, splitnum)
 
 'Inisialisasi psre Code berdasarkan delimiter ;'
-psreCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('psreCode')).split(semicolon, 
-    splitnum)
+psreCode = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('psreCode')).split(semicolon, splitnum)
 
 'Inisialisasi successUrl berdasarkan delimiter ;'
 successURL = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('successURL (Send Normal)')).split(
@@ -78,11 +71,9 @@ uploadURL = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowE
     splitnum)
 
 'split signer untuk doc1 dan signer untuk doc2'
-signAction = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$signAction')).split(
-    enter, splitnum)
+signAction = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$signAction')).split(enter, splitnum)
 
-signerType = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$signerType')).split(
-    enter, splitnum)
+signerType = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$signerType')).split(enter, splitnum)
 
 signSequence = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('signSequence (Send Normal)')).split(
     enter, splitnum)
@@ -123,11 +114,15 @@ email = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel
 
 npwp = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('npwp (Send Normal)')).split(enter, splitnum)
 
-idPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('idPhoto (Send Normal)')).split(enter, splitnum)
+idPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('idPhoto (Send Normal)')).split(enter, 
+    splitnum)
 
-signerSelfPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('signerSelfPhoto (Send Normal)')).split(enter, splitnum)
+signerSelfPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('signerSelfPhoto (Send Normal)')).split(
+    enter, splitnum)
 
-String stringRefno = '', bodyAPI = ''
+String stringRefno = ''
+
+String bodyAPI = ''
 
 'Looping berdasarkan total dari dokumen file ukuran'
 for (int o = 0; o < documentFile.size(); o++) {
@@ -165,92 +160,93 @@ for (int o = 0; o < documentFile.size(); o++) {
     emails = (email[o]).split(semicolon, splitnum)
 
     npwps = (npwp[o]).split(semicolon, splitnum)
-	
-	idPhotos = (idPhoto[o]).split(semicolon, splitnum)
 
-	signerSelfPhotos = (signerSelfPhoto[o]).split(semicolon, splitnum)
-	
+    idPhotos = (idPhoto[o]).split(semicolon, splitnum)
+
+    signerSelfPhotos = (signerSelfPhoto[o]).split(semicolon, splitnum)
+
     String listSigner
 
     listSigner = ''
 
-	'Pembuatan pengisian variable di sendRequest per jumlah signer.'
-	ArrayList<String> list = []
-	
+    'Pembuatan pengisian variable di sendRequest per jumlah signer.'
+    ArrayList<String> list = []
+
     for (int i = 0; i < signActions.size(); i++) {
         if ((i == 0) && (i == (signActions.size() - 1))) {
-            list.add(((((((((((((((((((((((((((((((((((((('{"signAction": "' + (signActions[i])) + '","signerType": "') + (signerTypes[
-                i])) + '","signSequence":"') + (signSequences[i])) + '","alamat": "') + (alamats[(i)])) + '","jenisKelamin": "') + 
-                (jenisKelamins[i])) + '","kecamatan": "') + (kecamatans[i])) + '","kelurahan": "') + (kelurahans[i])) + '","kodePos": "') + 
-                (kodePoss[i])) + '","kota": "') + (kotas[i])) + '","nama": "') + (namas[i])) + '","tlp": "') + (tlps[i])) + '","tglLahir": "') + 
-                (tglLahirs[i])) + '","provinsi": "') + (provinsis[i])) + '","idKtp": "') + (idKtps[i])) + '","tmpLahir": "') + 
-                (tmpLahirs[i])) + '","email": "') + (emails[i])) + '","npwp": "') + (npwps[i])) + '","idPhoto": "') + idPhotos[i]) + 
-                '","signerSelfPhoto": "') + signerSelfPhotos[i]) + '"}')
+            list.add(((((((((((((((((((((((((((((((((((((('{"signAction": "' + (signActions[i])) + '","signerType": "') + 
+                (signerTypes[i])) + '","signSequence":"') + (signSequences[i])) + '","alamat": "') + (alamats[i])) + '","jenisKelamin": "') + 
+                (jenisKelamins[i])) + '","kecamatan": "') + (kecamatans[i])) + '","kelurahan": "') + (kelurahans[i])) + 
+                '","kodePos": "') + (kodePoss[i])) + '","kota": "') + (kotas[i])) + '","nama": "') + (namas[i])) + '","tlp": "') + 
+                (tlps[i])) + '","tglLahir": "') + (tglLahirs[i])) + '","provinsi": "') + (provinsis[i])) + '","idKtp": "') + 
+                (idKtps[i])) + '","tmpLahir": "') + (tmpLahirs[i])) + '","email": "') + (emails[i])) + '","npwp": "') + 
+                (npwps[i])) + '","idPhoto": "') + (idPhotos[i])) + '","signerSelfPhoto": "') + (signerSelfPhotos[i])) + 
+                '"}')
         } else if (i == (signActions.size() - 1)) {
-            list.add(((((((((((((((((((((((((((((((((((((('{"signAction": "' + (signActions[i])) + '","signerType": "') + (signerTypes[
-                i])) + '","signSequence":"') + (signSequences[i])) + '","alamat": "') + (alamats[(i)])) + '","jenisKelamin": "') + 
-                (jenisKelamins[i])) + '","kecamatan": "') + (kecamatans[i])) + '","kelurahan": "') + (kelurahans[i])) + '","kodePos": "') + 
-                (kodePoss[i])) + '","kota": "') + (kotas[i])) + '","nama": "') + (namas[i])) + '","tlp": "') + (tlps[i])) + '","tglLahir": "') + 
-                (tglLahirs[i])) + '","provinsi": "') + (provinsis[i])) + '","idKtp": "') + (idKtps[i])) + '","tmpLahir": "') + 
-                (tmpLahirs[i])) + '","email": "') + (emails[i])) + '","npwp": "') + (npwps[i])) + '","idPhoto": "') + idPhotos[i]) + 
-                '","signerSelfPhoto": "') + signerSelfPhotos[i]) + '"}')
+            list.add(((((((((((((((((((((((((((((((((((((('{"signAction": "' + (signActions[i])) + '","signerType": "') + 
+                (signerTypes[i])) + '","signSequence":"') + (signSequences[i])) + '","alamat": "') + (alamats[i])) + '","jenisKelamin": "') + 
+                (jenisKelamins[i])) + '","kecamatan": "') + (kecamatans[i])) + '","kelurahan": "') + (kelurahans[i])) + 
+                '","kodePos": "') + (kodePoss[i])) + '","kota": "') + (kotas[i])) + '","nama": "') + (namas[i])) + '","tlp": "') + 
+                (tlps[i])) + '","tglLahir": "') + (tglLahirs[i])) + '","provinsi": "') + (provinsis[i])) + '","idKtp": "') + 
+                (idKtps[i])) + '","tmpLahir": "') + (tmpLahirs[i])) + '","email": "') + (emails[i])) + '","npwp": "') + 
+                (npwps[i])) + '","idPhoto": "') + (idPhotos[i])) + '","signerSelfPhoto": "') + (signerSelfPhotos[i])) + 
+                '"}')
         } else {
-            list.add(((((((((((((((((((((((((((((((((((((('{"signAction": "' + (signActions[i])) + '","signerType": "') + (signerTypes[
-                i])) + '","signSequence":"') + (signSequences[i])) + '","alamat": "') + (alamats[(i)])) + '","jenisKelamin": "') + 
-                (jenisKelamins[i])) + '","kecamatan": "') + (kecamatans[i])) + '","kelurahan": "') + (kelurahans[i])) + '","kodePos": "') + 
-                (kodePoss[i])) + '","kota": "') + (kotas[i])) + '","nama": "') + (namas[i])) + '","tlp": "') + (tlps[i])) + '","tglLahir": "') + 
-                (tglLahirs[i])) + '","provinsi": "') + (provinsis[i])) + '","idKtp": "') + (idKtps[i])) + '","tmpLahir": "') + 
-                (tmpLahirs[i])) + '","email": "') + (emails[i])) + '","npwp": "') + (npwps[i])) + '","idPhoto": "') + idPhotos[i]) + 
-                '","signerSelfPhoto": "') + signerSelfPhotos[i]) + '"},')
+            list.add(((((((((((((((((((((((((((((((((((((('{"signAction": "' + (signActions[i])) + '","signerType": "') + 
+                (signerTypes[i])) + '","signSequence":"') + (signSequences[i])) + '","alamat": "') + (alamats[i])) + '","jenisKelamin": "') + 
+                (jenisKelamins[i])) + '","kecamatan": "') + (kecamatans[i])) + '","kelurahan": "') + (kelurahans[i])) + 
+                '","kodePos": "') + (kodePoss[i])) + '","kota": "') + (kotas[i])) + '","nama": "') + (namas[i])) + '","tlp": "') + 
+                (tlps[i])) + '","tglLahir": "') + (tglLahirs[i])) + '","provinsi": "') + (provinsis[i])) + '","idKtp": "') + 
+                (idKtps[i])) + '","tmpLahir": "') + (tmpLahirs[i])) + '","email": "') + (emails[i])) + '","npwp": "') + 
+                (npwps[i])) + '","idPhoto": "') + (idPhotos[i])) + '","signerSelfPhoto": "') + (signerSelfPhotos[i])) + 
+                '"},')
         }
-
+        
         'Memasukkan seluruh BodyAPI ke listSigner'
-        listSigner = (listSigner + (list[(i)]))
+        listSigner = (listSigner + (list[i]))
 
         'check ada value maka setting email service tenant'
         if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')).length() > 
         0) {
-			for (loopingSignerEmailActive = 0; loopingSignerEmailActive < idKtps.size(); loopingSignerEmailActive++) {
-				SHA256IdNo = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(idKtps[loopingSignerEmailActive].replace('"', ''))
-				
-				'setting email service tenant'
-				CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(API_Excel_Path).getValue(
-                    GlobalVariable.NumofColm, rowExcel('Setting Email Service')), SHA256IdNo)
-			}
+            for (loopingSignerEmailActive = 0; loopingSignerEmailActive < idKtps.size(); loopingSignerEmailActive++) {
+                SHA256IdNo = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'((idKtps[loopingSignerEmailActive]).replace(
+                        '"', ''))
+
+                'setting email service tenant'
+                CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(API_Excel_Path).getValue(
+                        GlobalVariable.NumofColm, rowExcel('Setting Email Service')), SHA256IdNo)
+            }
         }
     }
     
-    if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 Document')) == 
-    'Yes') {
+    if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 Document')) == 'Yes') {
         bodyAPI = (('"documentFile": "' + CustomKeywords.'customizekeyword.ConvertFile.base64File'(documentFile[o])) + '"')
     } else {
         bodyAPI = (('"documentFile": "' + (documentFile[o])) + '"')
     }
     
     if (o == (documentFile.size() - 1)) {
-        stringRefno = stringRefno + '{"referenceNo" : "' + refNo + '", "documentTemplateCode": "' + 
-        documentTemplateCode[o] + '", "officeCode": "' + officeCode[o] + '", "officeName": "' + officeName[o] + '", "regionCode": "' + 
-        regionCode[o] + '", "regionName": "' + regionName[o] + '", "businessLineCode": "' + businessLineCode[o] + 
-        '", "businessLineName": "' + businessLineName[o] + '", "isSequence": "' + isSequence[o] + '", "signer":[' + 
-        listSigner + '],' + bodyAPI + ', "psreCode" : "' + psreCode[o] + '", "successURL": "' + successURL[o] + 
-        '", "uploadURL": "' + uploadURL[o] + '"}'
+        stringRefno = (((((((((((((((((((((((((((((stringRefno + '{"referenceNo" : "') + refNo) + '", "documentTemplateCode": "') + 
+        (documentTemplateCode[o])) + '", "officeCode": "') + (officeCode[o])) + '", "officeName": "') + (officeName[o])) + 
+        '", "regionCode": "') + (regionCode[o])) + '", "regionName": "') + (regionName[o])) + '", "businessLineCode": "') + 
+        (businessLineCode[o])) + '", "businessLineName": "') + (businessLineName[o])) + '", "isSequence": "') + (isSequence[
+        o])) + '", "signer":[') + listSigner) + '],') + bodyAPI) + ', "psreCode" : "') + (psreCode[o])) + '", "successURL": "') + 
+        (successURL[o])) + '", "uploadURL": "') + (uploadURL[o])) + '"}')
     } else {
-        stringRefno = stringRefno + '{"referenceNo" : "' + refNo + '", "documentTemplateCode": "' + 
-        documentTemplateCode[o] + '", "officeCode": "' + officeCode[o] + '", "officeName": "' + officeName[o] + '", "regionCode": "' + 
-        regionCode[o] + '", "regionName": "' + regionName[o] + '", "businessLineCode": "' + businessLineCode[o] + 
-        '", "businessLineName": "' + businessLineName[o] + '", "isSequence": "' + isSequence[o] + '", "signer":[' + 
-        listSigner + '],' + bodyAPI + ', "psreCode" : "' + psreCode[o] + '", "successURL": "' + successURL[o] + 
-        '", "uploadURL": "' + uploadURL[o] + '"},'
+        stringRefno = (((((((((((((((((((((((((((((stringRefno + '{"referenceNo" : "') + refNo) + '", "documentTemplateCode": "') + 
+        (documentTemplateCode[o])) + '", "officeCode": "') + (officeCode[o])) + '", "officeName": "') + (officeName[o])) + 
+        '", "regionCode": "') + (regionCode[o])) + '", "regionName": "') + (regionName[o])) + '", "businessLineCode": "') + 
+        (businessLineCode[o])) + '", "businessLineName": "') + (businessLineName[o])) + '", "isSequence": "') + (isSequence[
+        o])) + '", "signer":[') + listSigner) + '],') + bodyAPI) + ', "psreCode" : "') + (psreCode[o])) + '", "successURL": "') + 
+        (successURL[o])) + '", "uploadURL": "') + (uploadURL[o])) + '"},')
     }
 }
 
 'Jika flag tenant no'
-if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 
-'No') {
+if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'No') {
     'set tenant kosong'
     GlobalVariable.Tenant = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Wrong tenant Code'))
-} else if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 
-'Yes') {
+} else if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'Yes') {
     'Input tenant'
     GlobalVariable.Tenant = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))
 }
@@ -259,16 +255,15 @@ if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('us
 if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('use Correct API Key')) == 'Yes') {
     'get api key dari db'
     GlobalVariable.api_key = CustomKeywords.'connection.APIFullService.getTenantAPIKey'(conneSign, GlobalVariable.Tenant)
-} else if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('use Correct API Key')) == 
-'No') {
+} else if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('use Correct API Key')) == 'No') {
     'get api key salah dari excel'
     GlobalVariable.api_key = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Wrong API Key'))
 }
 
 'Hit API'
 respon = WS.sendRequest(findTestObject('Postman/Send Document', [('tenantCode') : findTestData(API_Excel_Path).getValue(
-                GlobalVariable.NumofColm, rowExcel('Tenant')), ('request') : stringRefno, ('callerId') : findTestData(
-                API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('callerId'))]))
+                GlobalVariable.NumofColm, rowExcel('Tenant')), ('request') : stringRefno, ('callerId') : findTestData(API_Excel_Path).getValue(
+                GlobalVariable.NumofColm, rowExcel('callerId'))]))
 
 'jika response 200 / hit api berhasil'
 if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
@@ -287,46 +282,29 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
             1, GlobalVariable.NumofColm - 1, GlobalVariable.Response.toString().replace('[', '').replace(']', ''))
 
         'write to excel success'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Status') - 1, GlobalVariable.NumofColm - 
-            1, GlobalVariable.StatusSuccess)
-		
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Status') - 
+            1, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+
         if (GlobalVariable.checkStoreDB == 'Yes') {
             'call test case ResponseAPIStoreDB'
-            WebUI.callTestCase(findTestCase('Main Flow - Copy/API Send Document Normal StoreDB'), [('API_Excel_Path') : API_Excel_Path, ('sheet') : sheet], 
-                FailureHandling.CONTINUE_ON_FAILURE)
+            WebUI.callTestCase(findTestCase('Main Flow - Copy/API Send Document Normal StoreDB'), [('API_Excel_Path') : API_Excel_Path
+                    , ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
         }
         
         'jika status codenya bukan 0, yang berarti antara salah verifikasi data dan error'
     } else {
-       getErrorMessageAPI(respon)
+        getErrorMessageAPI(respon)
     }
 } else {
-	getErrorMessageAPI(respon)	
+    getErrorMessageAPI(respon)
 }
 
 'jika tidak ada document id'
 if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).length() > 0) {
-	'get checking saldo wa or sms'
+    'get checking saldo wa or sms'
     checkSaldoWAOrSMS(conneSign, findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$idKtp')).replace(
             '"', ''))
-} 
-
-def rowExcel(String cellValue) {
-    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
-}
-
-def getErrorMessageAPI(ResponseObject respon) {
-	'mengambil status code berdasarkan response HIT API'
-	message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL).toString()
-
-	'Write To Excel GlobalVariable.StatusFailed and errormessage'
-	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-		GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';' + '<') + 
-            message + '>')
-
-	GlobalVariable.FlagFailed = 1
-}
-/*
+} /*
 def inputFilterTrx(String documentType, String signType) {
 		'get current date'
 		currentDate = new Date().format('yyyy-MM-dd')
@@ -435,146 +413,200 @@ def inputFilterSaldo(String tipeSaldo, Connection conneSign, int saldoDocAutosig
 
 }
 */
-def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
-	if (isMatch == false) {
-		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-			GlobalVariable.StatusFailed, ((findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) +
-			';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + reason)
 
-		GlobalVariable.FlagFailed = 1
-	}
+def rowExcel(String cellValue) {
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+}
+
+def getErrorMessageAPI(ResponseObject respon) {
+    'mengambil status code berdasarkan response HIT API'
+    message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL).toString()
+
+    'Write To Excel GlobalVariable.StatusFailed and errormessage'
+    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+        (((findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + 
+        ';') + '<') + message) + '>')
+
+    GlobalVariable.FlagFailed = 1
+}
+
+def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
+    if (isMatch == false) {
+        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            ((findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
+            reason)
+
+        GlobalVariable.FlagFailed = 1
+    }
 }
 
 def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
-	'inisialisasi penggunaan saldo, pemotongan saldo, dan increment untuk ekbutuhan selanjutnya'
-	int penggunaanSaldo = 0, pemotonganSaldo = 0, increment
+    'inisialisasi penggunaan saldo, pemotongan saldo, dan increment untuk ekbutuhan selanjutnya'
+    int penggunaanSaldo = 0
 
-	'inisialisasi balmut'
-	ArrayList balmut = []
+    int pemotonganSaldo = 0
 
-	'inisialisasi tipe saldo'
-	String tipeSaldo
-	
-	'get email per doc splitting by enter'
-	ArrayList emailPerDoc = emailSigner.split('\\n', -1)
+    int increment
 
-	'looping email per enter'
-	for (loopingEmailPerDoc = 0; loopingEmailPerDoc < emailPerDoc.size(); loopingEmailPerDoc++) {
-		'split per ';' '
-		ArrayList email = (emailPerDoc[loopingEmailPerDoc]).split(';', -1)
+    'inisialisasi balmut'
+    ArrayList<String> balmut = []
 
-		'looping email per ';' '
-		for (loopingEmail = 0; loopingEmail < email.size(); loopingEmail++) {
-			'get email from nik'
-			(email[loopingEmail]) = CustomKeywords.'connection.DataVerif.getEmailFromNIK'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
-					email[loopingEmail]))
+    'inisialisasi tipe saldo'
+    String tipeSaldo
 
-			'get email service, full name, dan setting must use wa first'
-			emailServiceOnVendor = CustomKeywords.'connection.DataVerif.getEmailServiceAsVendorUser'(conneSign, email[loopingEmail])
-			
-			fullNameUser = CustomKeywords.'connection.DataVerif.getFullNameOfUser'(conneSign, email[loopingEmail])
+    'get email per doc splitting by enter'
+    ArrayList<String> emailPerDoc = emailSigner.split('\\n', -1)
 
-			mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
+    'looping email per enter'
+    for (loopingEmailPerDoc = 0; loopingEmailPerDoc < emailPerDoc.size(); loopingEmailPerDoc++) {
+        'split per '
 
-			'jika must use wa first'
-			if (mustUseWAFirst == '1') {
-				tipeSaldo = 'WhatsApp Message'
+        ' '
+        ArrayList<String> email = (emailPerDoc[loopingEmailPerDoc]).split(';', -1)
 
+        'looping email per '
+
+        ' '
+        for (loopingEmail = 0; loopingEmail < email.size(); loopingEmail++) {
+            'get email from nik'
+            (email[loopingEmail]) = CustomKeywords.'connection.DataVerif.getEmailFromNIK'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
+                    email[loopingEmail]))
+
+            fullNameUser = CustomKeywords.'connection.DataVerif.getFullNameOfUser'(conneSign, email[loopingEmail])
+
+            notifTypeDB = CustomKeywords.'connection.APIFullService.getWASMSFromNotificationType'(conneSign, email[loopingEmail], 
+                'SEND_DOC', GlobalVariable.Tenant)
+
+            if (notifTypeDB == '0') {
+                mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
+
+                'get email service, full name, dan setting must use wa first'
+                emailServiceOnVendor = CustomKeywords.'connection.DataVerif.getEmailServiceAsVendorUser'(conneSign, email[loopingEmail])
+
+                'jika must use wa first'
+                if (mustUseWAFirst == '1') {
+                    tipeSaldo = 'WhatsApp Message'
+
+                    'menggunakan saldo wa'
+                    balmut = (balmut + CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser))
+
+                    'jika balmut tidak terdapat data'
+                    if (balmut.size() == 0) {
+                        'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                            GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 
+                                rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via WhatsApp')
+                    } else {
+                        'get penggunaan saldo'
+                        penggunaanSaldo = (balmut.size() / 10)
+                    }
+                } else {
+                    'jika email servicenya hidup'
+                    if (emailServiceOnVendor == '1') {
+                        useWAMessage = CustomKeywords.'connection.DataVerif.getUseWAMessage'(conneSign, GlobalVariable.Tenant)
+
+                        'jiak use wa meesagenya 1'
+                        if (useWAMessage == '1') {
+                            'penggunaan kepada wa'
+                            tipeSaldo = 'WhatsApp Message'
+
+                            'menggunakan saldo wa'
+                            balmut = (balmut + CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, 
+                                fullNameUser))
+
+                            'jika balmut tidak terdapat transaksi'
+                            if (balmut.size() == 0) {
+                                'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+                                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                                    GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 
+                                        rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via WhatsApp')
+                            } else {
+                                'get penggunaan saldo '
+                                penggunaanSaldo = (balmut.size() / 10)
+                            }
+                        } else if (useWAMessage == '0') {
+                            'jika use wa message 0, maka mengarah ke SMS'
+
+                            'ke sms / wa'
+                            SMSSetting = CustomKeywords.'connection.DataVerif.getSMSSetting'(conneSign, 'Send Document')
+
+                            'jika setting SMS hidup'
+                            if (SMSSetting == '1') {
+                                'ke sms'
+                                tipeSaldo = 'SMS Notif'
+
+                                'get balmut sms'
+                                balmut = (balmut + CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, 
+                                    fullNameUser))
+
+                                'jika balmutnya kosong'
+                                if (balmut.size() == 0) {
+                                    'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+                                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                                        GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 
+                                            rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via SMS')
+                                } else {
+                                    'get penggunaan saldo dari balmut'
+                                    penggunaanSaldo = (balmut.size() / 10)
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+				tipeSaldo = notifTypeDB
+				
 				'menggunakan saldo wa'
-				balmut = balmut + CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser, 1)
+				balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
 
-				'jika balmut tidak terdapat data'
+				'jika balmutnya tidak ada value'
 				if (balmut.size() == 0) {
 					'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
 					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-						GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel(
-								'Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via WhatsApp')
+						GlobalVariable.StatusFailed, (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm,
+							rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via ' + tipeSaldo.replace(' Message', '').replace(' Notif', ''))
 				} else {
-					'get penggunaan saldo'
-					penggunaanSaldo = ((balmut.size() / 10))
-				}
-			} else {
-				'jika email servicenya hidup'
-				if (emailServiceOnVendor == '1') {
-					useWAMessage = CustomKeywords.'connection.DataVerif.getUseWAMessage'(conneSign, GlobalVariable.Tenant)
-
-					'jiak use wa meesagenya 1'
-					if (useWAMessage == '1') {
-						'penggunaan kepada wa'
-						tipeSaldo = 'WhatsApp Message'
-
-						'menggunakan saldo wa'
-						balmut = balmut + CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser, 1)
-
-						'jika balmut tidak terdapat transaksi'
-						if (balmut.size() == 0) {
-							'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-								GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,
-									rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via WhatsApp')
-						} else {
-							'get penggunaan saldo '
-							penggunaanSaldo = ((balmut.size() / 10))
-						}
-					} else if (useWAMessage == '0') {
-						'jika use wa message 0, maka mengarah ke SMS'
-						'ke sms / wa'
-						SMSSetting = CustomKeywords.'connection.DataVerif.getSMSSetting'(conneSign, 'Send Document')
-
-						'jika setting SMS hidup'
-						if (SMSSetting == '1') {
-							'ke sms'
-							tipeSaldo = 'SMS Notif'
-
-							'get balmut sms'
-							balmut = balmut + CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser, 1)
-
-							'jika balmutnya kosong'
-							if (balmut.size() == 0) {
-								'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-								CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-									GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm,
-										rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via SMS')
-							} else {
-								'get penggunaan saldo dari balmut'
-								penggunaanSaldo = ((balmut.size() / 10))
-							}
-						}
-					}
+					'penggunaan saldo didapat dari ikuantitaas query balmut'
+					penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
 				}
 			}
-		}
+        }
+        
+        'jika ada penggunaan saldo'
+        if (penggunaanSaldo > 0) {
+            'looping berdasarkan penggunaan saldo'
+            for (looping = 1; looping <= penggunaanSaldo; looping++) {
+                'jika looping pertama, maka increment menjadi 0, jika sudah kedua, maka increment naik 9'
+                if (looping == 1) {
+                    increment = 0
+                } else {
+                    increment = (increment + 10)
+                }
+                
+                'pemotongan saldo di get dari balmut kuantitas'
+                pemotonganSaldo = (pemotonganSaldo + Integer.parseInt((balmut[(increment + 9)]).replace('-', '')))
 
-		'jika ada penggunaan saldo'
-		if (penggunaanSaldo > 0) {
-			'looping berdasarkan penggunaan saldo'
-		for (looping = 1; looping <= penggunaanSaldo; looping++) {
-			'jika looping pertama, maka increment menjadi 0, jika sudah kedua, maka increment naik 9'
-			if (looping == 1) {
-				increment = 0
-			} else {
-				increment = (increment + 10)
-			}
-			'pemotongan saldo di get dari balmut kuantitas'
-			pemotonganSaldo = (pemotonganSaldo + Integer.parseInt(balmut[(increment + 9)].replace('-', '')))
-			
-			'trx number akan masuk kepada hashmap'
-			GlobalVariable.eSignData['allTrxNo'] = GlobalVariable.eSignData['allTrxNo'] + balmut[increment] + ';'
-			
-			'tipe sign akan masuk kepada hashmap'
-			GlobalVariable.eSignData['allSignType'] = GlobalVariable.eSignData['allSignType'] + balmut[increment + 3].replace('Use ', '') + ';'
-			
-			'email usage akan masuk kepada hashmap'
-			GlobalVariable.eSignData['emailUsageSign'] = GlobalVariable.eSignData['emailUsageSign'] + fullNameUser + ';'
-		}
-		
-		'jika tipe saldo wa, maka akan terpotong saldo wa dari pemotongan saldo, jika sms, maka mengarah ke sms'
-		if (tipeSaldo == 'WhatsApp Message') {
-			GlobalVariable.eSignData['CountVerifikasiWA'] = pemotonganSaldo
-		} else if (tipeSaldo == 'SMS Notif') {
-			GlobalVariable.eSignData['CountVerifikasiSMS'] = pemotonganSaldo
-		}	
-		}
-	}
+                'trx number akan masuk kepada hashmap'
+                (GlobalVariable.eSignData['allTrxNo']) = (((GlobalVariable.eSignData['allTrxNo']) + (balmut[increment])) + 
+                ';')
+
+                'tipe sign akan masuk kepada hashmap'
+                (GlobalVariable.eSignData['allSignType']) = (((GlobalVariable.eSignData['allSignType']) + (balmut[(increment + 
+                3)]).replace('Use ', '')) + ';')
+
+                'email usage akan masuk kepada hashmap'
+                (GlobalVariable.eSignData['emailUsageSign']) = (((GlobalVariable.eSignData['emailUsageSign']) + fullNameUser) + 
+                ';')
+            }
+            
+            'jika tipe saldo wa, maka akan terpotong saldo wa dari pemotongan saldo, jika sms, maka mengarah ke sms'
+            if (tipeSaldo == 'WhatsApp Message') {
+                (GlobalVariable.eSignData['CountVerifikasiWA']) = pemotonganSaldo
+            } else if (tipeSaldo == 'SMS Notif') {
+                (GlobalVariable.eSignData['CountVerifikasiSMS']) = pemotonganSaldo
+            }
+        }
+    }
 }
+

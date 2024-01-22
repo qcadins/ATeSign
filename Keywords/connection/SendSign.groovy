@@ -471,8 +471,9 @@ public class SendSign {
 	@Keyword
 	settingSentOTPbyEmail(Connection conn, String value) {
 		stm = conn.createStatement()
-
-		updateVariable = stm.executeUpdate("UPDATE ms_tenant SET sent_otp_by_email = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
+		if (value != '') {
+			updateVariable = stm.executeUpdate("UPDATE ms_tenant SET sent_otp_by_email = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
+		}
 	}
 
 	@Keyword

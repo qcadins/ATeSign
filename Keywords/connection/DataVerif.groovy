@@ -559,184 +559,184 @@ public class DataVerif {
 
 		if (decisionCode == 'Send Document') {
 			helperQuery = 'SEND_SMS_SENDDOC'
-		} 
-
-		if (decisionCode == 'OTP') {
-			helperQuery = 'SEND_SMS_OTP_USER'
 		}
 
-		resultSet = stm.executeQuery("select gs_value from am_generalsetting left join ms_tenant mst on am_generalsetting.id_ms_tenant = mst.id_ms_tenant where gs_code = '" + helperQuery + "'")
-		metadata = resultSet.metaData
-
-		columnCount = metadata.getColumnCount()
-
-		while (resultSet.next()) {
-			data = resultSet.getObject(1)
-		}
-
-		if (data == null) {
-			data = '0'
-		}
-		data
+	if (decisionCode == 'OTP') {
+		helperQuery = 'SEND_SMS_OTP_USER'
 	}
 
-	@Keyword
-	getFullNameOfUser(Connection conn, String valueUser) {
-		if (valueUser.contains('@')) {
-			helperQuery = 'login_id'
-		} else {
-			helperQuery = 'hashed_phone'
-		}
+	resultSet = stm.executeQuery("select gs_value from am_generalsetting left join ms_tenant mst on am_generalsetting.id_ms_tenant = mst.id_ms_tenant where gs_code = '" + helperQuery + "'")
+	metadata = resultSet.metaData
 
-		stm = conn.createStatement()
+	columnCount = metadata.getColumnCount()
 
-		resultSet = stm.executeQuery("select full_name from am_msuser where " + helperQuery + " = '" + valueUser + "'")
-		metadata = resultSet.metaData
-
-		columnCount = metadata.getColumnCount()
-
-		while (resultSet.next()) {
-			data = resultSet.getObject(1)
-		}
-
-		data
+	while (resultSet.next()) {
+		data = resultSet.getObject(1)
 	}
 
-	@Keyword
-	getTrxSaldoWASMS(Connection conn, String usage, String fullName) {
-		stm = conn.createStatement()
+	if (data == null) {
+		data = '0'
+	}
+	data
+}
 
-		resultSet = stm.executeQuery("SELECT tbm.trx_no, mso.office_name, TO_CHAR(tbm.trx_date, 'YYYY-MM-DD HH24:MI:SS'), 'Use ' || msl.description, amm.full_name, '', '', '', tbm.notes, tbm.qty FROM tr_balance_mutation tbm LEFT JOIN ms_office mso on mso.id_ms_office = tbm.id_ms_office LEFT JOIN ms_lov msl ON tbm.lov_balance_type = msl.id_lov LEFT JOIN am_msuser amm ON tbm.id_ms_user = amm.id_ms_user LEFT JOIN tr_document_d tdd ON tbm.id_document_d = tdd.id_document_d LEFT JOIN tr_document_h tdh ON tbm.id_document_h = tdh.id_document_h WHERE msl.description = '" + usage + "' AND amm.full_name = '" + fullName + "' AND tbm.trx_date BETWEEN current_timestamp - interval '" + GlobalVariable.batasWaktu + " minutes' AND current_timestamp + interval '" + GlobalVariable.batasWaktu + " minutes' ORDER BY tbm.dtm_crt DESC;")
-		metadata = resultSet.metaData
+@Keyword
+getFullNameOfUser(Connection conn, String valueUser) {
+	if (valueUser.contains('@')) {
+		helperQuery = 'login_id'
+	} else {
+		helperQuery = 'hashed_phone'
+	}
 
-		columnCount = metadata.getColumnCount()
+	stm = conn.createStatement()
 
-		while (resultSet.next()) {
-			for (i = 1 ; i <= columnCount ; i++) {
-				data = resultSet.getObject(i)
+	resultSet = stm.executeQuery("select full_name from am_msuser where " + helperQuery + " = '" + valueUser + "'")
+	metadata = resultSet.metaData
+
+	columnCount = metadata.getColumnCount()
+
+	while (resultSet.next()) {
+		data = resultSet.getObject(1)
+	}
+
+	data
+}
+
+@Keyword
+getTrxSaldoWASMS(Connection conn, String usage, String fullName) {
+	stm = conn.createStatement()
+
+	resultSet = stm.executeQuery("SELECT tbm.trx_no, mso.office_name, TO_CHAR(tbm.trx_date, 'YYYY-MM-DD HH24:MI:SS'), 'Use ' || msl.description, amm.full_name, '', '', '', tbm.notes, tbm.qty FROM tr_balance_mutation tbm LEFT JOIN ms_office mso on mso.id_ms_office = tbm.id_ms_office LEFT JOIN ms_lov msl ON tbm.lov_balance_type = msl.id_lov LEFT JOIN am_msuser amm ON tbm.id_ms_user = amm.id_ms_user LEFT JOIN tr_document_d tdd ON tbm.id_document_d = tdd.id_document_d LEFT JOIN tr_document_h tdh ON tbm.id_document_h = tdh.id_document_h WHERE msl.description = '" + usage + "' AND amm.full_name = '" + fullName + "' AND tbm.trx_date BETWEEN current_timestamp - interval '" + GlobalVariable.batasWaktu + " minutes' AND current_timestamp + interval '" + GlobalVariable.batasWaktu + " minutes' ORDER BY tbm.dtm_crt DESC;")
+	metadata = resultSet.metaData
+
+	columnCount = metadata.getColumnCount()
+
+	while (resultSet.next()) {
+		for (i = 1 ; i <= columnCount ; i++) {
+			data = resultSet.getObject(i)
+			listdata.add(data)
+		}
+	}
+	listdata
+}
+
+@Keyword
+getDetailTrx(Connection conn, String trxNo) {
+	stm = conn.createStatement()
+
+	resultSet = stm.executeQuery("SELECT tbm.trx_no, TO_CHAR(tbm.trx_date, 'YYYY-MM-DD HH24:MI:SS'), mso.office_name, 'Use ' || msl.description, amm.full_name, tdh.ref_number, msl1.code, '', tbm.notes, tbm.qty FROM tr_balance_mutation tbm LEFT JOIN ms_office mso on tbm.id_ms_office = mso.id_ms_office LEFT JOIN ms_business_line mbl on tbm.id_ms_business_line = mbl.id_ms_business_line LEFT JOIN ms_lov msl ON tbm.lov_balance_type = msl.id_lov LEFT JOIN am_msuser amm ON tbm.id_ms_user = amm.id_ms_user LEFT JOIN tr_document_d tdd ON tbm.id_document_d = tdd.id_document_d LEFT JOIN tr_document_h tdh ON tbm.id_document_h = tdh.id_document_h  left join am_msuser amm1 on tdh.id_msuser_customer = amm1.id_ms_user left join ms_lov msl1 on tdh.lov_doc_type = msl1.id_lov WHERE tbm.trx_no = '" + trxNo + "' ORDER BY tbm.dtm_crt DESC")
+
+	metadata = resultSet.metaData
+
+	columnCount = metadata.getColumnCount()
+
+	while (resultSet.next()) {
+		for (i = 1 ; i <= columnCount ; i++) {
+			data = resultSet.getObject(i)
+			if (data == null) {
+				listdata.add('')
+			} else {
 				listdata.add(data)
 			}
 		}
-		listdata
 	}
+	listdata
+}
 
-	@Keyword
-	getDetailTrx(Connection conn, String trxNo) {
-		stm = conn.createStatement()
+@Keyword
+getLimitValidationLivenessDaily(Connection conn) {
+	stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT tbm.trx_no, TO_CHAR(tbm.trx_date, 'YYYY-MM-DD HH24:MI:SS'), mso.office_name, 'Use ' || msl.description, amm.full_name, tdh.ref_number, msl1.code, '', tbm.notes, tbm.qty FROM tr_balance_mutation tbm LEFT JOIN ms_office mso on tbm.id_ms_office = mso.id_ms_office LEFT JOIN ms_business_line mbl on tbm.id_ms_business_line = mbl.id_ms_business_line LEFT JOIN ms_lov msl ON tbm.lov_balance_type = msl.id_lov LEFT JOIN am_msuser amm ON tbm.id_ms_user = amm.id_ms_user LEFT JOIN tr_document_d tdd ON tbm.id_document_d = tdd.id_document_d LEFT JOIN tr_document_h tdh ON tbm.id_document_h = tdh.id_document_h  left join am_msuser amm1 on tdh.id_msuser_customer = amm1.id_ms_user left join ms_lov msl1 on tdh.lov_doc_type = msl1.id_lov WHERE tbm.trx_no = '" + trxNo + "' ORDER BY tbm.dtm_crt DESC")
+	resultSet = stm.executeQuery("select gs_value from am_generalsetting WHERE gs_code = 'LIVENESS_FACECOMPARE_VALIDATION_USER_DAILY_LIMIT'")
+	metadata = resultSet.metaData
 
-		metadata = resultSet.metaData
+	columnCount = metadata.getColumnCount()
 
-		columnCount = metadata.getColumnCount()
+	while (resultSet.next()) {
+		data = resultSet.getObject(1)
+	}
+	data
+}
 
-		while (resultSet.next()) {
-			for (i = 1 ; i <= columnCount ; i++) {
-				data = resultSet.getObject(i)
-				if (data == null) {
-					listdata.add('')
-				} else {
-					listdata.add(data)
-				}
+@Keyword
+getCountValidationFaceCompDaily(Connection conn, String email) {
+	stm = conn.createStatement()
+
+	resultSet = stm.executeQuery("SELECT liveness_facecompare_validation_num FROM am_msuser WHERE login_id = '" + email + "'")
+
+	metadata = resultSet.metaData
+
+	columnCount = metadata.getColumnCount()
+
+	while (resultSet.next()) {
+		data = resultSet.getObject(1)
+	}
+	if (data != null) {
+		Integer.parseInt(data)
+	} else {
+		data = 0
+	}
+}
+
+@Keyword
+getOfficeName(Connection conn, String value) {
+	stm = conn.createStatement()
+
+	resultSet = stm.executeQuery("select mso.office_name from ms_office mso left join tr_document_h tdh on tdh.id_ms_office = mso.id_ms_office left join tr_document_d tdd on tdd.id_document_h = tdh.id_document_h where tdd.document_id = '" + value + "' OR tdh.ref_number = '" + value + "'")
+	metadata = resultSet.metaData
+
+	columnCount = metadata.getColumnCount()
+
+	while (resultSet.next()) {
+		data = resultSet.getObject(1)
+	}
+	data
+}
+
+@Keyword
+getBusinessLineOfficeCode(Connection conn, String value, String type) {
+	stm = conn.createStatement()
+
+	resultSet = stm.executeQuery("SELECT qty, tbm.id_ms_business_line, tbm.id_ms_office FROM tr_balance_mutation tbm LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = tbm.id_ms_tenant LEFT JOIN ms_useroftenant mot ON mot.id_ms_tenant = mt.id_ms_tenant LEFT JOIN am_msuser amu ON amu.id_ms_user = mot.id_ms_user LEFT JOIN tr_document_h tdh ON tbm.id_document_h = tdh.id_document_h WHERE ((lov_trx_type = 158 OR lov_trx_type = 42 OR lov_trx_type = 41 OR lov_trx_type = 3 OR lov_trx_type = 44 OR lov_trx_type = 139 OR lov_trx_type = 142 OR lov_trx_type = 133)  AND (login_id = '" + value.toUpperCase() + "' OR tdh.ref_number = '" + value.toUpperCase() + "'))  ORDER BY trx_date DESC LIMIT 1;")
+	metadata = resultSet.metaData
+
+	columnCount = metadata.getColumnCount()
+
+	while (resultSet.next()) {
+		for (i = 1 ; i <= columnCount ; i++) {
+			data = resultSet.getObject(i)
+			if (data == null) {
+				listdata.add('')
+			} else {
+				listdata.add(data)
 			}
 		}
-		listdata
 	}
 
-	@Keyword
-	getLimitValidationLivenessDaily(Connection conn) {
-		stm = conn.createStatement()
-
-		resultSet = stm.executeQuery("select gs_value from am_generalsetting WHERE gs_code = 'LIVENESS_FACECOMPARE_VALIDATION_USER_DAILY_LIMIT'")
-		metadata = resultSet.metaData
-
-		columnCount = metadata.getColumnCount()
-
-		while (resultSet.next()) {
-			data = resultSet.getObject(1)
-		}
-		data
+	if (type.equalsIgnoreCase('Register')) {
+		resultSet = stm.executeQuery("select '-1', id_ms_business_line, id_ms_office from tr_invitation_link til join ms_vendor mv on til.id_ms_vendor = mv.id_ms_vendor where (receiver_detail = '" + value.toUpperCase() + "' or phone = '" + value.toUpperCase() + "') order by id_ms_user desc limit 1")
+	} else if (type.equalsIgnoreCase('Document')) {
+		resultSet = stm.executeQuery("SELECT '-1', COALESCE(tdh.id_ms_business_line, tlink.id_ms_business_line) AS id_ms_business_line, COALESCE(tdh.id_ms_office, tlink.id_ms_office) AS id_ms_office FROM tr_document_d td LEFT JOIN tr_document_h tdh ON td.id_document_h = tdh.id_document_h LEFT JOIN tr_document_d_sign tds ON tds.id_document_d = td.id_document_d LEFT JOIN am_msuser amu ON amu.id_ms_user = tds.id_ms_user LEFT JOIN tr_invitation_link tlink ON tlink.email = '" + value.toUpperCase() + "' WHERE amu.login_id = '" + value.toUpperCase() + "' ORDER BY td.id_document_d DESC LIMIT 1")
+	} else if (type.equalsIgnoreCase('Stamping')) {
+		resultSet = stm.executeQuery("SELECT -td.total_stamping, COALESCE(tdh.id_ms_business_line, tlink.id_ms_business_line) AS id_ms_business_line, COALESCE(tdh.id_ms_office, tlink.id_ms_office) AS id_ms_office FROM tr_document_d td LEFT JOIN tr_document_h tdh ON td.id_document_h = tdh.id_document_h LEFT JOIN tr_document_d_sign tds ON tds.id_document_d = td.id_document_d LEFT JOIN am_msuser amu ON amu.id_ms_user = tds.id_ms_user LEFT JOIN tr_invitation_link tlink ON tlink.email = amu.login_id WHERE amu.login_id = '" + value.toUpperCase() + "' OR tdh.ref_number = '" + value.toUpperCase() + "' ORDER BY td.id_document_d DESC LIMIT 1")
+	} else if (type.equalsIgnoreCase('Signing')) {
+		resultSet = stm.executeQuery("SELECT '-1', COALESCE(tdh.id_ms_business_line, tlink.id_ms_business_line) AS id_ms_business_line, COALESCE(tdh.id_ms_office, tlink.id_ms_office) AS id_ms_office FROM tr_document_d td LEFT JOIN tr_document_h tdh ON td.id_document_h = tdh.id_document_h LEFT JOIN tr_document_d_sign tds ON tds.id_document_d = td.id_document_d LEFT JOIN am_msuser amu ON amu.id_ms_user = tds.id_ms_user LEFT JOIN tr_invitation_link tlink ON tlink.email = amu.login_id WHERE amu.login_id = '" + value.toUpperCase() + "' OR tdh.ref_number = '" + value.toUpperCase() + "' ORDER BY td.id_document_d DESC LIMIT 1")
 	}
 
-	@Keyword
-	getCountValidationFaceCompDaily(Connection conn, String email) {
-		stm = conn.createStatement()
+	metadata = resultSet.metaData
 
-		resultSet = stm.executeQuery("SELECT liveness_facecompare_validation_num FROM am_msuser WHERE login_id = '" + email + "'")
+	columnCount = metadata.getColumnCount()
 
-		metadata = resultSet.metaData
-
-		columnCount = metadata.getColumnCount()
-
-		while (resultSet.next()) {
-			data = resultSet.getObject(1)
-		}
-		if (data != null) {
-			Integer.parseInt(data)
-		} else {
-			data = 0
-		}
-	}
-
-	@Keyword
-	getOfficeName(Connection conn, String value) {
-		stm = conn.createStatement()
-
-		resultSet = stm.executeQuery("select mso.office_name from ms_office mso left join tr_document_h tdh on tdh.id_ms_office = mso.id_ms_office left join tr_document_d tdd on tdd.id_document_h = tdh.id_document_h where tdd.document_id = '" + value + "' OR tdh.ref_number = '" + value + "'")
-		metadata = resultSet.metaData
-
-		columnCount = metadata.getColumnCount()
-
-		while (resultSet.next()) {
-			data = resultSet.getObject(1)
-		}
-		data
-	}
-
-	@Keyword
-	getBusinessLineOfficeCode(Connection conn, String value, String type) {
-		stm = conn.createStatement()
-
-		resultSet = stm.executeQuery("SELECT qty, tbm.id_ms_business_line, tbm.id_ms_office FROM tr_balance_mutation tbm LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = tbm.id_ms_tenant LEFT JOIN ms_useroftenant mot ON mot.id_ms_tenant = mt.id_ms_tenant LEFT JOIN am_msuser amu ON amu.id_ms_user = mot.id_ms_user LEFT JOIN tr_document_h tdh ON tbm.id_document_h = tdh.id_document_h WHERE ((lov_trx_type = 158 OR lov_trx_type = 42 OR lov_trx_type = 41 OR lov_trx_type = 3 OR lov_trx_type = 44 OR lov_trx_type = 139 OR lov_trx_type = 142 OR lov_trx_type = 133)  AND (login_id = '" + value.toUpperCase() + "' OR tdh.ref_number = '" + value.toUpperCase() + "'))  ORDER BY trx_date DESC LIMIT 1;")
-		metadata = resultSet.metaData
-
-		columnCount = metadata.getColumnCount()
-
-		while (resultSet.next()) {
-			for (i = 1 ; i <= columnCount ; i++) {
-				data = resultSet.getObject(i)
-				if (data == null) {
-					listdata.add('')
-				} else {
-					listdata.add(data)
-				}
+	while (resultSet.next()) {
+		for (i = 1 ; i <= columnCount ; i++) {
+			data = resultSet.getObject(i)
+			if (data == null) {
+				listdata.add('')
+			} else {
+				listdata.add(data)
 			}
 		}
-
-		if (type.equalsIgnoreCase('Register')) {
-			resultSet = stm.executeQuery("select '-1', id_ms_business_line, id_ms_office from tr_invitation_link til join ms_vendor mv on til.id_ms_vendor = mv.id_ms_vendor where (receiver_detail = '" + value.toUpperCase() + "' or phone = '" + value.toUpperCase() + "') order by id_ms_user desc limit 1")
-		} else if (type.equalsIgnoreCase('Document')) {
-			resultSet = stm.executeQuery("SELECT '-1', COALESCE(tdh.id_ms_business_line, tlink.id_ms_business_line) AS id_ms_business_line, COALESCE(tdh.id_ms_office, tlink.id_ms_office) AS id_ms_office FROM tr_document_d td LEFT JOIN tr_document_h tdh ON td.id_document_h = tdh.id_document_h LEFT JOIN tr_document_d_sign tds ON tds.id_document_d = td.id_document_d LEFT JOIN am_msuser amu ON amu.id_ms_user = tds.id_ms_user LEFT JOIN tr_invitation_link tlink ON tlink.email = '" + value.toUpperCase() + "' WHERE amu.login_id = '" + value.toUpperCase() + "' ORDER BY td.id_document_d DESC LIMIT 1")
-		} else if (type.equalsIgnoreCase('Stamping')) {
-			resultSet = stm.executeQuery("SELECT -td.total_stamping, COALESCE(tdh.id_ms_business_line, tlink.id_ms_business_line) AS id_ms_business_line, COALESCE(tdh.id_ms_office, tlink.id_ms_office) AS id_ms_office FROM tr_document_d td LEFT JOIN tr_document_h tdh ON td.id_document_h = tdh.id_document_h LEFT JOIN tr_document_d_sign tds ON tds.id_document_d = td.id_document_d LEFT JOIN am_msuser amu ON amu.id_ms_user = tds.id_ms_user LEFT JOIN tr_invitation_link tlink ON tlink.email = amu.login_id WHERE amu.login_id = '" + value.toUpperCase() + "' OR tdh.ref_number = '" + value.toUpperCase() + "' ORDER BY td.id_document_d DESC LIMIT 1")
-		} else if (type.equalsIgnoreCase('Signing')) {
-			resultSet = stm.executeQuery("SELECT '-1', COALESCE(tdh.id_ms_business_line, tlink.id_ms_business_line) AS id_ms_business_line, COALESCE(tdh.id_ms_office, tlink.id_ms_office) AS id_ms_office FROM tr_document_d td LEFT JOIN tr_document_h tdh ON td.id_document_h = tdh.id_document_h LEFT JOIN tr_document_d_sign tds ON tds.id_document_d = td.id_document_d LEFT JOIN am_msuser amu ON amu.id_ms_user = tds.id_ms_user LEFT JOIN tr_invitation_link tlink ON tlink.email = amu.login_id WHERE amu.login_id = '" + value.toUpperCase() + "' OR tdh.ref_number = '" + value.toUpperCase() + "' ORDER BY td.id_document_d DESC LIMIT 1")
-		}
-
-		metadata = resultSet.metaData
-
-		columnCount = metadata.getColumnCount()
-
-		while (resultSet.next()) {
-			for (i = 1 ; i <= columnCount ; i++) {
-				data = resultSet.getObject(i)
-				if (data == null) {
-					listdata.add('')
-				} else {
-					listdata.add(data)
-				}
-			}
-		}
-		listdata
 	}
+	listdata
+}
 }

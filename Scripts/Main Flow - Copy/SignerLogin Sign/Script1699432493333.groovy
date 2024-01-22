@@ -1135,14 +1135,6 @@ def verifOTPMethod(Connection conneSign, String emailSigner, ArrayList listOTP, 
             ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
                 '-', '') + ';') + GlobalVariable.ReasonFailedSaveGagal) + ' dengan alasan tidak muncul page input OTP')
     } else {
-		'setting sent otp by email'
-		if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email')).length() >
-		0) {
-			'update setting sent otp by email'
-			CustomKeywords.'connection.SendSign.settingSentOTPbyEmail'(conneSign, findTestData(excelPathFESignDocument).getValue(
-					GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email')))
-		}
-		
         if (verifOTPMethodDetail(conneSign, emailSigner, listOTP, noTelpSigner, otpAfter, vendor) == false) {
             return false
         }
@@ -1165,10 +1157,6 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
     'check ada value maka Setting OTP Active Duration'
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() > 
     0) {
-        'Setting OTP Active Duration'
-        CustomKeywords.'connection.APIFullService.settingOTPActiveDuration'(conneSign, findTestData(excelPathFESignDocument).getValue(
-                GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')))
-
         delayExpiredOTP = (60 * Integer.parseInt(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
                 rowExcel('Setting OTP Active Duration'))))
     }
