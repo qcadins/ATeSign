@@ -49,4 +49,10 @@ public class UpdateData {
 
 		stm.executeUpdate("UPDATE ms_tenant SET lov_vendor_stamping = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
 	}
+	@Keyword
+	updateExternalActivationVendorUser(Connection conn, int value, String email) {
+		Statement stm = conn.createStatement()
+
+		stm.executeUpdate("UPDATE ms_vendor_registered_user SET is_external_activation = '" + value + "' WHERE signer_registered_email = '" + email + "'")
+	}
 }
