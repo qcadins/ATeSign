@@ -1,7 +1,6 @@
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.testobject.TestObject as TestObject
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
@@ -30,7 +29,8 @@ int firstRun = 0
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathPengaturanDokumen).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
-    } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase(
+    }
+    else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase(
         'Unexecuted')) {
         'get Tenant per case dari excel'
         GlobalVariable.Tenant = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
@@ -51,8 +51,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             WebUI.click(findTestObject('TandaTanganDokumen/btn_PengaturanDokumen'))
 
             'apakah cek paging diperlukan di awal run'
-            if (GlobalVariable.checkPaging.equals('Yes')) {
-                'call function check paging'
+            if (GlobalVariable.checkPaging == 'Yes') {
+               'call function check paging'
                // checkPaging()
 
                 'call function input cancel'
@@ -91,7 +91,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             semicolon, splitIndex)
 
         'Klik tombol pengaturan dokumen'
-        if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('New')) {
+        if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase(
+            'New')) {
             'Klik tombol tambah pengaturan dokumen'
             WebUI.click(findTestObject('TandaTanganDokumen/btn_Add'))
 
@@ -207,7 +208,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     GlobalVariable.FlagFailed = 1
                 }
             }
-        } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('View')) {
+        } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase(
+            'View')) {
             'call function search pengaturan dokumen'
             searchPengaturanDokumen()
 
@@ -247,7 +249,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         1, GlobalVariable.StatusSuccess)
                 }
             }
-        } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('Edit')) {
+        } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase(
+            'Edit')) {
             'call function search pengaturan dokumen'
             searchPengaturanDokumen()
 
@@ -397,7 +400,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     checkPopUpBerhasil(isMandatoryComplete, semicolon)
                 }
             }
-        } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('Setting')) {
+        } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase(
+            'Setting')) {
             'call function search pengaturan dokumen'
             searchPengaturanDokumen()
 
@@ -659,9 +663,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         }
         
         'check if new or edit'
-        if ((findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('New') || findTestData(
-            excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('Edit')) && (GlobalVariable.FlagFailed == 
-        0)) {
+        if ((findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase(
+            'New') || findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase(
+            'Edit')) && (GlobalVariable.FlagFailed == 0)) {
             'call fucntion after edit'
             verifyAfterAddorEdit(TipeTandaTangan)
 
@@ -673,10 +677,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             }
         }
     }
-} //			update ESIGNHUB 3.4.0
-//			roleUI = WebUI.getText(modifyObject).split('\\.\\s', -1)
-//			
-//			index = seqSignRole.indexOf(roleUI[1]) + 1
+}
 
 def checkVerifyEqualorMatch(Boolean isMatch, String reason) {
     if (isMatch == false) {
@@ -782,7 +783,7 @@ def checkPaging() {
         
         'verify paging di page terakhir'
         checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('TandaTanganDokumen/paging_Page'), 'aria-label', 
-                    FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage + additionalRoundUp).toString(), 
+                    FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage + additionalRoundUp), 
                 false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'click min page'
@@ -823,7 +824,7 @@ def searchPengaturanDokumen() {
     WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_cari'))
 }
 
-def verifyAfterAddorEdit(def TipeTTD) {
+def verifyAfterAddorEdit(String tipeTTD) {
     'click menu pengaturan dokumen'
     WebUI.click(findTestObject('TandaTanganDokumen/btn_PengaturanDokumen'))
 
@@ -862,15 +863,15 @@ def verifyAfterAddorEdit(def TipeTTD) {
 
     'verify after add / edit TTD pengaturan dokumen'
     checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/TandaTanganDokumen/label_TTD')), 
-            TipeTTD.count('TTD').toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' TTD pengaturan dokumen')
+            tipeTTD.count('TTD').toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' TTD pengaturan dokumen')
 
     'verify after add / edit Paraf pengaturan dokumen'
     checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/TandaTanganDokumen/label_Paraf')), 
-            TipeTTD.count('Paraf').toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Paraf pengaturan dokumen')
+            tipeTTD.count('Paraf').toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Paraf pengaturan dokumen')
 
     'verify after add / edit Meterai pengaturan dokumen'
     checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/TandaTanganDokumen/label_Meterai')), 
-            TipeTTD.count('Meterai').toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Meterai pengaturan dokumen')
+            tipeTTD.count('Meterai').toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' Meterai pengaturan dokumen')
 
     'verify after add / edit Tipe Pembayaran Dokumen pengaturan dokumen'
     checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/TandaTanganDokumen/label_TipePembayaranTTD')), 
@@ -934,9 +935,9 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     }
 }
 
-def checkDDL(TestObject objectDDL, ArrayList<String> listDB, String reason) {
+def checkDDL(TestObject objectDDL, ArrayList listDB, String reason) {
     'declare array untuk menampung ddl'
-    ArrayList<String> list = []
+    ArrayList list = []
 
     'click untuk memunculkan ddl'
     WebUI.click(objectDDL)
@@ -1012,8 +1013,8 @@ def sortingSequenceSign() {
     if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Sequential Signing')).equalsIgnoreCase(
         'Iya')) {
         'get urutan seq sign dari excel'
-        ArrayList<String> seqSignRole = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel(
-                'Urutan Signing')).split(';', -1)
+        ArrayList seqSignRole = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Urutan Signing')).split(
+            ';', -1)
 
         'count box'
         variable = DriverFactory.webDriver.findElements(By.cssSelector('#cdk-drop-list-0 div'))
@@ -1050,7 +1051,8 @@ def sortingSequenceSign() {
 }
 
 def inputForm(Connection conneSign, int checked) {
-    if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('New')) {
+    if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase(
+        'New')) {
         'Input text documentTemplateCode'
         WebUI.setText(findTestObject('TandaTanganDokumen/input_documentTemplateCode'), findTestData(excelPathPengaturanDokumen).getValue(
                 GlobalVariable.NumofColm, rowExcel('Kode Templat Dokumen')))
@@ -1066,7 +1068,7 @@ def inputForm(Connection conneSign, int checked) {
 
     if ((GlobalVariable.NumofColm == 2) && (checked == 0)) {
         'get data tipe-tipe pembayaran secara asc'
-        ArrayList<String> tipePembayaranDB = CustomKeywords.'connection.PengaturanDokumen.getLovTipePembayaran'(conneSign)
+        ArrayList tipePembayaranDB = CustomKeywords.'connection.PengaturanDokumen.getLovTipePembayaran'(conneSign)
 
         'check ddl tipe pembayaran'
         checkDDL(findTestObject('TandaTanganDokumen/input_tipePembayaran'), tipePembayaranDB, ' pada tipe pembayaran Ttd ')
@@ -1084,7 +1086,7 @@ def inputForm(Connection conneSign, int checked) {
 
     if ((GlobalVariable.NumofColm == 2) && (checked == 0)) {
         'get data tipe-tipe pembayaran secara asc'
-        ArrayList<String> resultVendorDDL = CustomKeywords.'connection.PengaturanDokumen.getDDLVendor'(conneSign)
+        ArrayList resultVendorDDL = CustomKeywords.'connection.PengaturanDokumen.getDDLVendor'(conneSign)
 
         'check ddl psre'
         checkDDL(findTestObject('Object Repository/TandaTanganDokumen/select_Psre'), resultVendorDDL, ' pada DDL Psre ')
@@ -1139,7 +1141,7 @@ def inputSignBox() {
     'Pembuatan variable mengenai jumlah delete, jumlah lock, dan indexlock untuk loop kedepannya'
     RoleTandaTangan = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('RoleTandaTangan')).split(
         semicolon, splitIndex)
-	
+
     TipeTandaTangan = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('TipeTandaTangan')).split(
         semicolon, splitIndex)
 
@@ -1173,8 +1175,9 @@ def inputSignBox() {
     'verify sign box is deleted'
     checkVerifyEqualorMatch(WebUI.verifyElementNotPresent(findTestObject('TandaTanganDokumen/signBox'), GlobalVariable.TimeOut, 
             FailureHandling.CONTINUE_ON_FAILURE), ' pada deletenya sign Box ')
-	
-    if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('RoleTandaTangan')).length() > 0) {
+
+    if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('RoleTandaTangan')).length() > 
+    0) {
         'looping berdasarkan total tanda tangan'
         for (int j = 1; j <= RoleTandaTangan.size(); j++) {
             if ((TipeTandaTangan[(j - 1)]).equalsIgnoreCase('TTD')) {
@@ -1235,6 +1238,6 @@ def inputSignBox() {
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
