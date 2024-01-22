@@ -56,7 +56,6 @@ if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryIn
 
         //'verify invitationby'
         //checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/select_InviteBy')).toUpperCase(), result[arrayindex++].toUpperCase(), false), ' Invitation by tidak sesuai')
-		
         'verify receiver'
         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_Receiver'), 
                     'value', FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), (result[arrayindex++]).toUpperCase(), false, 
@@ -259,35 +258,35 @@ if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryIn
                 'get reason'
                 ReasonFailed = WebUI.getAttribute(findTestObject('RegisterEsign/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 
-                if (!(ReasonFailed.contains('Undangan terkirim ke'))) {
-                    'write to excel status failed dan ReasonFailed'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                        GlobalVariable.StatusFailed, (((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-                            rowExcel('Reason Failed')).replace('-', '') + ';') + '<') + ReasonFailed) + '>')
-
-                    if (invitedBy.equalsIgnoreCase('SMS')) {
-                        'get data saldo'
-                        String result = CustomKeywords.'connection.DataVerif.getSaldo'(conneSign, GlobalVariable.userLogin)
-
-                        'verify saldo'
-                        checkVerifyEqualOrMatch(WebUI.verifyMatch(result, '0', false, FailureHandling.CONTINUE_ON_FAILURE), 
-                            ' Saldo tidak sesuai')
-                    }
-                    
-                    GlobalVariable.FlagFailed = 1
+                if (ReasonFailed.contains('Undangan terkirim ke')) {
+                	'write to excel success'
+                	CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
+                			1, GlobalVariable.StatusSuccess)
+                	
+                	if (invitedBy.equalsIgnoreCase('SMS')) {
+                		'get data saldo'
+                		String result = CustomKeywords.'connection.DataVerif.getSaldo'(conneSign, GlobalVariable.userLogin)
+                				
+                				'verify saldo'
+                				checkVerifyEqualOrMatch(WebUI.verifyMatch(result, '-1', false, FailureHandling.CONTINUE_ON_FAILURE), 
+                						' Saldo tidak sesuai')
+                	}
                 } else {
-                    'write to excel success'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
-                        1, GlobalVariable.StatusSuccess)
+					'write to excel status failed dan ReasonFailed'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+						GlobalVariable.StatusFailed, (((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
+							rowExcel('Reason Failed')).replace('-', '') + ';') + '<') + ReasonFailed) + '>')
 
-                    if (invitedBy.equalsIgnoreCase('SMS')) {
-                        'get data saldo'
-                        String result = CustomKeywords.'connection.DataVerif.getSaldo'(conneSign, GlobalVariable.userLogin)
+					if (invitedBy.equalsIgnoreCase('SMS')) {
+						'get data saldo'
+						String result = CustomKeywords.'connection.DataVerif.getSaldo'(conneSign, GlobalVariable.userLogin)
 
-                        'verify saldo'
-                        checkVerifyEqualOrMatch(WebUI.verifyMatch(result, '-1', false, FailureHandling.CONTINUE_ON_FAILURE), 
-                            ' Saldo tidak sesuai')
-                    }
+						'verify saldo'
+						checkVerifyEqualOrMatch(WebUI.verifyMatch(result, '0', false, FailureHandling.CONTINUE_ON_FAILURE),
+							' Saldo tidak sesuai')
+					}
+					
+					GlobalVariable.FlagFailed = 1
                 }
             }
         } else if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
@@ -317,35 +316,35 @@ if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryIn
                 'get reason'
                 ReasonFailed = WebUI.getAttribute(findTestObject('RegisterEsign/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
 
-                if (!(ReasonFailed.contains('Berhasil'))) {
-                    'write to excel status failed dan ReasonFailed'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                        GlobalVariable.StatusFailed, (((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-                            rowExcel('Reason Failed')).replace('-', '') + ';') + '<') + ReasonFailed) + '>')
+                if (ReasonFailed.contains('Berhasil')) {
+					'write to excel success'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
+						1, GlobalVariable.StatusSuccess)
 
-                    GlobalVariable.FlagFailed = 1
+					if (invitedBy.equalsIgnoreCase('SMS')) {
+						'get data saldo'
+						String result = CustomKeywords.'connection.DataVerif.getSaldo'(conneSign, GlobalVariable.userLogin)
 
-                    if (invitedBy.equalsIgnoreCase('SMS')) {
-                        'get data saldo'
-                        String result = CustomKeywords.'connection.DataVerif.getSaldo'(conneSign, GlobalVariable.userLogin)
-
-                        'verify saldo'
-                        checkVerifyEqualOrMatch(WebUI.verifyMatch(result, '0', false, FailureHandling.CONTINUE_ON_FAILURE), 
-                            ' Saldo tidak sesuai')
-                    }
+						'verify saldo'
+						checkVerifyEqualOrMatch(WebUI.verifyMatch(result, '-1', false, FailureHandling.CONTINUE_ON_FAILURE),
+							' Saldo tidak sesuai')
+					}
                 } else {
-                    'write to excel success'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
-                        1, GlobalVariable.StatusSuccess)
-
-                    if (invitedBy.equalsIgnoreCase('SMS')) {
-                        'get data saldo'
-                        String result = CustomKeywords.'connection.DataVerif.getSaldo'(conneSign, GlobalVariable.userLogin)
-
-                        'verify saldo'
-                        checkVerifyEqualOrMatch(WebUI.verifyMatch(result, '-1', false, FailureHandling.CONTINUE_ON_FAILURE), 
-                            ' Saldo tidak sesuai')
-                    }
+                	'write to excel status failed dan ReasonFailed'
+                	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                			GlobalVariable.StatusFailed, (((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+                					rowExcel('Reason Failed')).replace('-', '') + ';') + '<') + ReasonFailed) + '>')
+                	
+                	GlobalVariable.FlagFailed = 1
+                	
+                	if (invitedBy.equalsIgnoreCase('SMS')) {
+                		'get data saldo'
+                		String result = CustomKeywords.'connection.DataVerif.getSaldo'(conneSign, GlobalVariable.userLogin)
+                				
+        				'verify saldo'
+        				checkVerifyEqualOrMatch(WebUI.verifyMatch(result, '0', false, FailureHandling.CONTINUE_ON_FAILURE), 
+        						' Saldo tidak sesuai')
+                	}
                 }
             }
         } else if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {

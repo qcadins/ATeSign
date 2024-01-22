@@ -1775,7 +1775,7 @@ public class APIFullService {
 		data
 	}
 	@Keyword
-	DownloadReportCountAPIOnly(Connection conn, String tenant) {
+	downloadReportCountAPIOnly(Connection conn, String tenant) {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("SELECT count(*) FROM tr_manual_report mr LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mr.id_ms_tenant WHERE mt.tenant_code = '" + tenant + "'")

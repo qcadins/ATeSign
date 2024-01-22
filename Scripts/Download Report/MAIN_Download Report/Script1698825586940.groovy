@@ -7,7 +7,6 @@ import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.By as By
-import org.openqa.selenium.JavascriptExecutor as JavascriptExecutor
 import org.openqa.selenium.WebDriver as WebDriver
 
 'get data file path'
@@ -19,7 +18,9 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'get colm excel'
 int countColmExcel = findTestData(excelPathDownRep).columnNumbers
 
-int firstRun = 0, totalData
+int firstRun = 0
+
+int totalData
 
 'looping saldo'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
@@ -196,7 +197,7 @@ def checkPaging(int resultTotalData) {
 def zoomSetting(int percentage) {
     BigDecimal percentageZoom = percentage / 100
 
-    WebDriver driver = DriverFactory.webDriver as JavascriptExecutor
+    WebDriver driver = ((DriverFactory.webDriver) as JavascriptExecutor)
 
     'buka tab baru'
     driver.executeScript('window.open();')
@@ -209,7 +210,7 @@ def zoomSetting(int percentage) {
 
     driver.get('chrome://settings/')
 
-	driver.executeScript("chrome.settingsPrivate.setDefaultZoom($percentageZoom);")
+    driver.executeScript("chrome.settingsPrivate.setDefaultZoom($percentageZoom);")
 
     'close tab baru'
     driver.executeScript('window.close();')
@@ -217,7 +218,7 @@ def zoomSetting(int percentage) {
 
 def settingzoom() {
     'ambil index tab yang sedang dibuka di chrome'
-    int currentTab = WebUI.getWindowIndex()
+    int currentTab = WebUI.windowIndex
 
     'setting zoom menuju 70 persen'
     zoomSetting(70)

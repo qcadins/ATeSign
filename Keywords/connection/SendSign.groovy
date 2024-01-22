@@ -140,7 +140,7 @@ public class SendSign {
 	}
 
 	@Keyword
-	getSaldoUsedBasedonPaymentType(Connection conn, String refnumber, String emailSigner){
+	getSaldoUsedBasedonPaymentType(Connection conn, String refnumber, String emailSigner) {
 		String data
 
 		stm = conn.createStatement()
@@ -172,7 +172,7 @@ public class SendSign {
 	}
 
 	@Keyword
-	getDocumentType(Connection conn, String refnumber){
+	getDocumentType(Connection conn, String refnumber) {
 		String data
 
 		stm = conn.createStatement()
@@ -248,7 +248,6 @@ public class SendSign {
 		}
 		listdata
 	}
-
 
 	@Keyword
 	getKotakMasukSendDoc(Connection conn, String refNumber, String emailSigner) {

@@ -1,7 +1,7 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.kms.katalon.core.model.FailureHandling
-import com.kms.katalon.core.testobject.ResponseObject
+import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject as ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import internal.GlobalVariable as GlobalVariable
 
@@ -20,9 +20,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
         'HIT API Login untuk token : andy@ad-ins.com'
-        responLogin = WS.sendRequest(findTestObject('Postman/Login', [
-						('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('username')), 
-						('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('password'))]))
+        responLogin = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                        rowExcel('username')), ('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                        rowExcel('password'))]))
 
         'Jika status HIT API Login 200 OK'
         if (WS.verifyResponseStatusCode(responLogin, 200, FailureHandling.OPTIONAL) == true) {
@@ -37,32 +37,32 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         'HIT API Login untuk token : andy@ad-ins.com'
-        respon = WS.sendRequest(findTestObject('Postman/Get List User Management', [
-						('tenantCode') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('tenantCode')), 
-						('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), 
-						('loginId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('loginId')), 
-						('roleCode') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('roleCode')), 
-						('page') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('page'))]))
+        respon = WS.sendRequest(findTestObject('Postman/Get List User Management', [('tenantCode') : findTestData(excelPath).getValue(
+                        GlobalVariable.NumofColm, rowExcel('tenantCode')), ('callerId') : findTestData(excelPath).getValue(
+                        GlobalVariable.NumofColm, rowExcel('callerId')), ('loginId') : findTestData(excelPath).getValue(
+                        GlobalVariable.NumofColm, rowExcel('loginId')), ('roleCode') : findTestData(excelPath).getValue(
+                        GlobalVariable.NumofColm, rowExcel('roleCode')), ('page') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                        rowExcel('page'))]))
 
         'Jika status HIT API Login 200 OK'
         if (WS.verifyResponseStatusCode(responLogin, 200, FailureHandling.OPTIONAL) == true) {
             'get Status Code'
             statusCode = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
-			'ambil lama waktu yang diperlukan hingga request menerima balikan'
-			elapsedTime = ((respon.elapsedTime / 1000) + ' second')
-	
-			'ambil body dari hasil respons'
-			responseBody = respon.responseBodyContent
-	
-			'panggil keyword untuk proses beautify dari respon json yang didapat'
-			CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
-					excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
-	
-			'write to excel response elapsed time'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') -
-				1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
-			
+            'ambil lama waktu yang diperlukan hingga request menerima balikan'
+            elapsedTime = ((respon.elapsedTime / 1000) + ' second')
+
+            'ambil body dari hasil respons'
+            responseBody = respon.responseBodyContent
+
+            'panggil keyword untuk proses beautify dari respon json yang didapat'
+            CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
+                    excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+
+            'write to excel response elapsed time'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 
+                1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+
             'Jika status codenya 0'
             if (statusCode == 0) {
                 if (GlobalVariable.FlagFailed == 0) {

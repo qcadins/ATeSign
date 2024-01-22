@@ -38,7 +38,7 @@ if (nomorKontrak == '') {
 nomorKontrakPerPilihan = nomorKontrak.split(';', -1)
 
 if (isStamping == 'Yes') {
-    saldoBefore = loginAdminGetSaldo('No', sheet)
+    saldoBefore = loginAdminGetSaldo('No')
 }
 
 'looping untuk membuka dokumen'
@@ -161,6 +161,7 @@ for (int o = 1; o <= 1; o++) {
                             arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[1], emailSigner.size(), FailureHandling.CONTINUE_ON_FAILURE))
                         } else if (i == 8) {
                             'Jika berada di column ke 8'
+
                             'Split teks total Stamping'
                             totalStampingAndTotalMaterai = WebUI.getText(modifyObjectvalues).split('/', -1)
 
@@ -170,7 +171,7 @@ for (int o = 1; o <= 1; o++) {
                                 arrayMatch.add(WebUI.verifyEqual(totalStampingAndTotalMaterai[k], resultStamping[k], FailureHandling.CONTINUE_ON_FAILURE))
                             }
                         } else if (i == 10) {
-							continue
+                            continue
                         } else {
                             'Selain di column 7 dan 8 maka akan diverif dengan db.'
                             arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectvalues), resultQuery[arrayIndex++], 
@@ -247,6 +248,7 @@ for (int o = 1; o <= 1; o++) {
                                 arrayMatch.add(WebUI.verifyEqual(totalStampingAndTotalMaterai[k], resultStamping[k], FailureHandling.CONTINUE_ON_FAILURE))
                             }
                         } else if (i == 10) {
+							continue
                         } else {
                             'Selain di column 7 dan 8 maka akan diverif dengan db.'
                             arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectvalues), resultQuery[arrayIndex++], 
@@ -464,7 +466,7 @@ for (int o = 1; o <= 1; o++) {
                 GlobalVariable.FlagFailed = 1
             }
             
-            saldoAfter = loginAdminGetSaldo('Yes', sheet)
+            saldoAfter = loginAdminGetSaldo('Yes')
 
             'mengambil value db proses meterai'
             int prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, nomorKontrakPerPilihan[y])
@@ -545,7 +547,7 @@ def cancelDoc(Connection conneSign, String nomorKontrakPerPilihan) {
     }
 }
 
-def loginAdminGetSaldo(String start, String sheet) {
+def loginAdminGetSaldo(String start) {
     String totalSaldo
 
     if (start == 'Yes') {

@@ -1,7 +1,8 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import java.sql.Connection as Connection
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.model.FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
@@ -51,17 +52,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         'HIT API check Status Signing'
-        respon = WS.sendRequest(findTestObject('APIFullService/Postman/Check Status Signing', [
-			('callerId') : findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), 
-			('refNumber') : findTestData(excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, rowExcel('refNumber'))]))
-
+        respon = WS.sendRequest(findTestObject('APIFullService/Postman/Check Status Signing', [('callerId') : findTestData(
+                        excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('refNumber') : findTestData(
+                        excelPathAPICheckSigning).getValue(GlobalVariable.NumofColm, rowExcel('refNumber'))]))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
             code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
             'ambil lama waktu yang diperlukan hingga request menerima balikan'
-            elapsedTime = (respon.elapsedTime / 1000) + ' second'
+            elapsedTime = ((respon.elapsedTime / 1000) + ' second')
 
             'ambil body dari hasil respons'
             responseBody = respon.responseBodyContent
@@ -88,12 +88,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 signDate = WS.getElementPropertyValue(respon, 'statusSigning.signer.signDate', FailureHandling.OPTIONAL)
 
-				phoneNo = WS.getElementPropertyValue(respon, 'statusSigning.signer.phoneNo', FailureHandling.OPTIONAL)
-				
-				name = WS.getElementPropertyValue(respon, 'statusSigning.signer.name', FailureHandling.OPTIONAL)
-				
+                phoneNo = WS.getElementPropertyValue(respon, 'statusSigning.signer.phoneNo', FailureHandling.OPTIONAL)
+
+                name = WS.getElementPropertyValue(respon, 'statusSigning.signer.name', FailureHandling.OPTIONAL)
+
                 if (GlobalVariable.checkStoreDB == 'Yes') {
-                    int indexArrayDB = 0, indexColResp = 0, indexRowResp = 0, i = 0
+                    int indexArrayDB = 0
+
+                    int indexColResp = 0
+
+                    int indexRowResp = 0
+
+                    int i = 0
 
                     'get data from db'
                     ArrayList result = CustomKeywords.'connection.APIFullService.getAPICheckSigningStoreDB'(conneSign, findTestData(
@@ -117,13 +123,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                                     'verify email'
                                     arrayMatch.add(WebUI.verifyMatch(((email[indexColResp])[indexRowResp]).toUpperCase(), 
                                             emailDB.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-									if (result[indexArrayDB] == '') {
-										indexArrayDB++
-									} else {
-										'verify signer type'
-                                    	arrayMatch.add(WebUI.verifyMatch(((signerType[indexColResp])[indexRowResp]).toUpperCase(), 
-                                            (result[indexArrayDB++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-									}
+
+                                    if ((result[indexArrayDB]) == '') {
+                                        indexArrayDB++
+                                    } else {
+                                        'verify signer type'
+                                        arrayMatch.add(WebUI.verifyMatch(((signerType[indexColResp])[indexRowResp]).toUpperCase(), 
+                                                (result[indexArrayDB++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+                                    }
+                                    
                                     'verify status signing'
                                     arrayMatch.add(WebUI.verifyMatch(((statusSigning[indexColResp])[indexRowResp]).toUpperCase(), 
                                             (result[indexArrayDB++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -135,17 +143,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                                     } else {
                                         indexArrayDB++
                                     }
-									
-									'verify status signing'
-									arrayMatch.add(WebUI.verifyMatch(((name[indexColResp])[indexRowResp]).toUpperCase(),
-											(result[indexArrayDB++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
                                     
-									if (phoneNo.toString().contains('*')) {
-										arrayMatch.add(true)
-									} else {
-										arrayMatch.add(false)
-									}
-									
+                                    'verify status signing'
+                                    arrayMatch.add(WebUI.verifyMatch(((name[indexColResp])[indexRowResp]).toUpperCase(), 
+                                            (result[indexArrayDB++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                                    if (phoneNo.toString().contains('*')) {
+                                        arrayMatch.add(true)
+                                    } else {
+                                        arrayMatch.add(false)
+                                    }
+                                    
                                     indexRowResp = 0
 
                                     indexColResp = 0
@@ -185,7 +193,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     }
 }
 
-def getErrorMessageAPI(def respon) {
+def getErrorMessageAPI(ResponseObject respon) {
     'mengambil status code berdasarkan response HIT API'
     message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 

@@ -555,16 +555,16 @@ public class DataVerif {
 
 		if (decisionCode == 'Forgot Password') {
 			helperQuery = 'SEND_SMS_FORPASS'
-		} 
-		
+		}
+
 		if (decisionCode == 'Send Document') {
 			helperQuery = 'SEND_SMS_SENDDOC'
 		} 
-		
+
 		if (decisionCode == 'OTP') {
 			helperQuery = 'SEND_SMS_OTP_USER'
 		}
-		
+
 		resultSet = stm.executeQuery("select gs_value from am_generalsetting left join ms_tenant mst on am_generalsetting.id_ms_tenant = mst.id_ms_tenant where gs_code = '" + helperQuery + "'")
 		metadata = resultSet.metaData
 

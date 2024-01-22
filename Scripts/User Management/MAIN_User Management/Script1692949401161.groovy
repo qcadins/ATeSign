@@ -19,9 +19,7 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 'get colm excel'
 int countColmExcel = findTestData(excelPathUserManagement).columnNumbers
 
-int isCheckDDL = 0
-
-int firstRun = 0
+int isCheckDDL = 0, firstRun = 0
 
 'looping User Management'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
@@ -302,44 +300,44 @@ def checkPagingConfirmation(String reason) {
             GlobalVariable.ReasonFailedSaveGagal) + reason)
 
         return true
-    } else {
-        'Jika button lanjut tidak disabled, klik button lanjut'
-        WebUI.click(modifyObjectBtnSave)
+    } 
+	
+    'Jika button lanjut tidak disabled, klik button lanjut'
+    WebUI.click(modifyObjectBtnSave)
 
-        'Jika check error log ada'
-        if (checkErrorLog() == true) {
-            'Klik label judul'
-            WebUI.click(findTestObject('User Management/label_Judul'))
+    'Jika check error log ada'
+    if (checkErrorLog() == true) {
+        'Klik label judul'
+        WebUI.click(findTestObject('User Management/label_Judul'))
 
-            'Klik batal'
-            WebUI.click(findTestObject('User Management/button_Batal'))
+        'Klik batal'
+        WebUI.click(findTestObject('User Management/button_Batal'))
 
-            return true
+        return true
+    }
+    
+    'Jika popup muncul'
+    if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+        'label popup diambil'
+        lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
+
+        'Jika popup bukan success'
+        if (lblpopup.contains('Success')) {
+            'write to excel success'
+            CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'User Management', 
+                0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+
+            'call testcase store db'
+            WebUI.callTestCase(findTestCase('User Management/User Management Store DB'), [:], FailureHandling.CONTINUE_ON_FAILURE)
+        } else {
+            'Tulis di excel sebagai failed dan error.'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('User Management', GlobalVariable.NumofColm, 
+                GlobalVariable.StatusFailed, (((findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 
+                    rowExcel('Reason Failed')).replace('-', '') + ';') + '<') + lblpopup) + '>')
         }
         
-        'Jika popup muncul'
-        if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-            'label popup diambil'
-            lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
-
-            'Jika popup bukan success'
-            if (lblpopup.contains('Success')) {
-				'write to excel success'
-				CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'User Management',
-					0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-
-				'call testcase store db'
-				WebUI.callTestCase(findTestCase('User Management/User Management Store DB'), [:], FailureHandling.CONTINUE_ON_FAILURE)
-            } else {
-				'Tulis di excel sebagai failed dan error.'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'('User Management', GlobalVariable.NumofColm,
-					GlobalVariable.StatusFailed, (((findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm,
-						rowExcel('Reason Failed')).replace('-', '') + ';') + '<') + lblpopup) + '>')
-            }
-            
-            'Klik OK untuk popupnya'
-            WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
-        }
+        'Klik OK untuk popupnya'
+        WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
     }
 }
 
@@ -495,8 +493,7 @@ def checkPaging(Connection conneSign) {
         
         'verify paging di page terakhir'
         checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('User Management/paging_Page'), 'aria-label', 
-                    FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage + additionalRoundUp), 
-                false, FailureHandling.CONTINUE_ON_FAILURE))
+                    FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage + additionalRoundUp), false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'click first page'
         WebUI.click(findTestObject('User Management/button_FirstPage'))

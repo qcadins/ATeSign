@@ -1,7 +1,5 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
-import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
-import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import java.sql.Connection as Connection
@@ -113,7 +111,8 @@ for (int i = 0; i < docid.size(); i++) {
             (emailExcel[r]) = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(idKtpExcel[r])
         }
         
-        ArrayList resultStoreEmailandType = CustomKeywords.'connection.APIFullService.getSendDocForEmailAndSignerType'(conneSign, docid[i], emailExcel[r])
+        ArrayList resultStoreEmailandType = CustomKeywords.'connection.APIFullService.getSendDocForEmailAndSignerType'(conneSign, 
+            docid[i], emailExcel[r])
 
         if (resultStoreEmailandType.size() > 1) {
             'declare arrayindex'
@@ -198,8 +197,8 @@ for (int i = 0; i < docid.size(); i++) {
         'Jika signAction tersebut adalah AT'
         if ((signAction[z]).replace('"', '') == 'at') {
             'Mengambil emailSign dari excel dan displit kembali'
-            emailSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 35).replace('"', '').split(
-                semicolon, splitnum)[z]
+            emailSign = (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 35).replace('"', '').split(
+                semicolon, splitnum)[z])
 
             'Mengambil trxno dari column tersebut'
             trxno = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 6)
@@ -215,7 +214,7 @@ for (int i = 0; i < docid.size(); i++) {
 
             'verify ref no di trx'
             arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 11).replace(
-             '"', ''), resulttrxsigning[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+                        '"', ''), resulttrxsigning[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
             'verify date req di trx'
             arrayMatch.add(WebUI.verifyMatch(currentDate, resulttrxsigning[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -231,9 +230,8 @@ for (int i = 0; i < docid.size(); i++) {
     'jika data db tidak sesuai dengan excel'
     if (arrayMatch.contains(false)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-            GlobalVariable.StatusFailed, (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 2) + semicolon) + 
-            GlobalVariable.ReasonFailedStoredDB)
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 2) + semicolon) + GlobalVariable.ReasonFailedStoredDB)
     }
 }
 
