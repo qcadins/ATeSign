@@ -1,5 +1,4 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
-import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import java.sql.Connection as Connection
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
@@ -122,7 +121,7 @@ if (GlobalVariable.Psre == 'VIDA') {
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
 def verifyStoreDB(ArrayList arrayMatch, ArrayList resultDataDiri) {
@@ -136,17 +135,17 @@ def verifyStoreDB(ArrayList arrayMatch, ArrayList resultDataDiri) {
 
     if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
         'Menu Buat Undangan')) {
-    	'verify tanggal lahir'
-    	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Lahir')).replace(
-    			'"', ''), resultDataDiri[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+        'verify tanggal lahir'
+        arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Lahir')).replace(
+                    '"', ''), resultDataDiri[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
     } else {
-    	'parse Date from MM/dd/yyyy > yyyy-MM-dd'
-    	sDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(resultDataDiri[arrayindex++], 'MM/dd/yyyy', 
-    			'yyyy-MM-dd')
-    			
-    			'verify tanggal lahir'
-    			arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Lahir')).replace(
-    					'"', ''), sDate, false, FailureHandling.CONTINUE_ON_FAILURE))
+        'parse Date from MM/dd/yyyy > yyyy-MM-dd'
+        sDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(resultDataDiri[arrayindex++], 'MM/dd/yyyy', 
+            'yyyy-MM-dd')
+
+        'verify tanggal lahir'
+        arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Lahir')).replace(
+                    '"', ''), sDate, false, FailureHandling.CONTINUE_ON_FAILURE))
     }
     
     'verify jenis kelamin'

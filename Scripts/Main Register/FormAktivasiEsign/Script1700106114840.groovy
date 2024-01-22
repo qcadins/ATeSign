@@ -495,7 +495,7 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
         }
     }
     
-    return inputed
+    inputed
 }
 
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {

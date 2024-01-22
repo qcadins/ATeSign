@@ -36,7 +36,6 @@ public class ForgotPassword {
 
 	@Keyword
 	getResetCodeLimit(Connection conn) {
-
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("SELECT gs_value FROm am_generalsetting WHERE gs_code = 'OTP_RESET_PWD_DAILY'")
@@ -79,9 +78,8 @@ public class ForgotPassword {
 
 		resultSet = stm.executeQuery("SELECT reset_code_request_num FROM am_msuser where " + helperQuery + " = '" +  email  + "'")
 
-		while (resultSet.next()){
-
-			data = resultSet.getObject(1);
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
 		}
 
 		data
@@ -101,9 +99,8 @@ public class ForgotPassword {
 
 		resultSet = stm.executeQuery("SELECT mt.tenant_code FROM am_msuser amu LEFT JOIN ms_useroftenant mot ON mot.id_ms_user = amu.id_ms_user LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mot.id_ms_tenant LEFT JOIN tr_document_h tdh ON tdh.id_ms_tenant = mt.id_ms_tenant WHERE " + helperQuery + " = '" + email + "' ORDER BY id_document_h DESC LIMIT 1")
 
-		while (resultSet.next()){
-
-			data = resultSet.getObject(1);
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
 		}
 
 		data

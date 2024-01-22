@@ -1,9 +1,9 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.model.FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import java.nio.charset.StandardCharsets as StandardCharsets
 import java.sql.Connection as Connection
 import internal.GlobalVariable as GlobalVariable
 
@@ -186,7 +186,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     }
 }
 
-def getAPIErrorMessage(def respon) {
+def getAPIErrorMessage(ResponseObject respon) {
     'jika status codenya bukan 0, yang berarti antara salah verifikasi data dan error'
     messageFailed = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
@@ -208,13 +208,6 @@ def encodeValue(String value, Connection conneSign) {
     String aesKey = CustomKeywords.'connection.APIFullService.getAesKeyEncryptUrl'(conneSign)
 
     'encrypt invitation code'
-    String encryptCode = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(invCode, aesKey)
-
-    try {
-        return URLEncoder.encode(encryptCode, StandardCharsets.UTF_8.toString())
-    }
-    catch (UnsupportedEncodingException ex) {
-        throw new RuntimeException(ex.cause)
-    } 
+    CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(invCode, aesKey)
 }
 

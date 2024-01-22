@@ -160,7 +160,7 @@ public class Saldo {
 	getTenantName(Connection conn) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT tenant_name FROM ms_tenant WHERE tenant_code = '"+ GlobalVariable.Tenant +"'")
+		resultSet = stm.executeQuery("SELECT tenant_name FROM ms_tenant WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
 
 		metadata = resultSet.metaData
 
@@ -246,13 +246,13 @@ public class Saldo {
 		if (docType == 'All' || docType == '') {
 			commandDocType = '--'
 		}
-		
+
 		if (saldoType == 'Stamp Duty' || saldoType == 'Stamp Duty Postpaid') {
 			queryCustName = 'doch.id_msuser_customer'
 		} else {
 			queryCustName = 'tbm.id_ms_user'
 		}
-		
+
 		resultSet = stm.executeQuery("with bdc AS ( SELECT recap_date, recap_total_balance FROM tr_balance_daily_recap bdc WHERE 1 = 1 AND bdc.id_ms_tenant = (SELECT id_ms_tenant FROM ms_tenant WHERE tenant_code = '" + GlobalVariable.Tenant + "') AND bdc.lov_balance_type = (SELECT id_lov FROM ms_lov WHERE description = '" + saldoType + "' AND lov_group = 'BALANCE_TYPE') AND bdc.recap_date <= ( CAST('" + startDate + "' AS DATE) - INTERVAL '1 DAY' ) ORDER BY bdc.recap_date DESC limit 1 ) select * from ( SELECT tbm.trx_no as trxNo, TO_CHAR( tbm.trx_date, 'YYYY-MM-DD HH24:MI:SS' ) as trxDate, COALESCE(CASE WHEN office_name is null THEN '' ELSE office_name END, '') as officename, ml.description, COALESCE( am.full_name, COALESCE(am.full_name, tbm.usr_crt) ) as customerName, COALESCE(CASE WHEN tbm.ref_no is null then '' ELSE tbm.ref_no END, '') as refNo, COALESCE(mlovDocType.code, '') as documentType, COALESCE(case when docd.id_ms_doc_template is null then docd.document_name else dt.doc_template_name end, '') as documentName, COALESCE(tbm.notes, '') as notes, COALESCE(CAST(tbm.qty * -1 AS VARCHAR), '') FROM tr_balance_mutation tbm join bdc ON 1 = 1 JOIN ms_vendor mv ON mv.id_ms_vendor = tbm.id_ms_vendor left join tr_document_d docd ON docd.id_document_d = tbm.id_document_d LEFT JOIN ms_office mo ON mo.id_ms_office = tbm.id_ms_office LEFT JOIN ms_region mr ON mr.id_ms_region = mo.id_ms_region left join ms_doc_template AS dt ON dt.id_doc_template = docd.id_ms_doc_template LEFT JOIN ms_business_line mbl ON mbl.id_ms_business_line = tbm.id_ms_business_line left join tr_document_h doch ON doch.id_document_h = tbm.id_document_h LEFT JOIN am_msuser am ON am.id_ms_user = " + queryCustName + " left join ms_lov AS mlovDocType ON mlovDocType.id_lov = doch.lov_doc_type join ms_lov balancetype ON balancetype.id_lov = tbm.lov_balance_type JOIN ms_lov ml ON tbm.lov_trx_type = ml.id_lov where DATE(tbm.trx_date) > bdc.recap_date AND tbm.id_ms_tenant = (SELECT id_ms_tenant FROM ms_tenant WHERE tenant_code = '" + GlobalVariable.Tenant + "') AND tbm.lov_balance_type = (SELECT id_lov FROM ms_lov WHERE description = '" + saldoType + "' AND lov_group = 'BALANCE_TYPE') and DATE(tbm.trx_date) >= '" + startDate + "' and DATE(tbm.trx_date) <= '" + endDate + "' AND vendor_name = '" + vendor + "'" + '\n' +
 				commandTrxType + " AND ml.description = '" + trxType + "'" + '\n' +
 				commandDocType + " AND mlovDocType.description = '" + docType + "'" + '\n' +

@@ -559,7 +559,11 @@ public class DataVerif {
 
 		if (decisionCode == 'Send Document') {
 			helperQuery = 'SEND_SMS_SENDDOC'
+<<<<<<< HEAD
 		}
+=======
+		} 
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 
 		if (decisionCode == 'OTP') {
 			helperQuery = 'SEND_SMS_OTP_USER'

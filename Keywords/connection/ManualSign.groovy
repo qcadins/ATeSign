@@ -52,7 +52,7 @@ public class ManualSign {
 	}
 
 	@Keyword
-	getVerificationSigner(Connection conn, String value){
+	getVerificationSigner(Connection conn, String value) {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select full_name from am_msuser where login_id = '" + value + "' or hashed_phone = '" + value + "'")
@@ -110,7 +110,7 @@ public class ManualSign {
 	getAPIManualSign(Connection conn, String refNumber) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select msv.vendor_name, tdh.ref_Number, tdd.document_name, TO_CHAR(tdd.request_date, 'yyyy-mm-dd'), mpdt.peruri_doc_id, tdh.automatic_stamping_after_sign, msl.code ,tdd.is_sequence, mso.office_code, msr.region_code, mbl.business_line_code, tdh.total_document, tdh.is_manual_upload from tr_document_h tdh left join tr_document_d tdd on tdd.id_Document_h = tdh.id_document_h left join ms_lov msl on tdd.lov_payment_sign_type = msl.id_lov left join ms_peruri_doc_type mpdt on tdd.id_peruri_doc_type = mpdt.id_peruri_doc_type left join ms_vendor msv on tdd.id_ms_vendor = msv.id_ms_vendor left join ms_office mso on tdh.id_ms_office = mso.id_ms_office left join ms_region msr on mso.id_ms_region = msr.id_ms_region left join ms_business_line mbl on tdh.id_ms_business_line = mbl.id_ms_business_line where tdh.ref_number = '"+refNumber+"'")
+		resultSet = stm.executeQuery("select msv.vendor_name, tdh.ref_Number, tdd.document_name, TO_CHAR(tdd.request_date, 'yyyy-mm-dd'), mpdt.peruri_doc_id, tdh.automatic_stamping_after_sign, msl.code ,tdd.is_sequence, mso.office_code, msr.region_code, mbl.business_line_code, tdh.total_document, tdh.is_manual_upload from tr_document_h tdh left join tr_document_d tdd on tdd.id_Document_h = tdh.id_document_h left join ms_lov msl on tdd.lov_payment_sign_type = msl.id_lov left join ms_peruri_doc_type mpdt on tdd.id_peruri_doc_type = mpdt.id_peruri_doc_type left join ms_vendor msv on tdd.id_ms_vendor = msv.id_ms_vendor left join ms_office mso on tdh.id_ms_office = mso.id_ms_office left join ms_region msr on mso.id_ms_region = msr.id_ms_region left join ms_business_line mbl on tdh.id_ms_business_line = mbl.id_ms_business_line where tdh.ref_number = '" + refNumber + "'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

@@ -159,4 +159,10 @@ public class UpdateData {
 			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET send_otp_by_email = '"+value+"' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '"+GlobalVariable.Tenant+"' AND ml.code = 'OTP_SIGN_EXTERNAL' AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
 		}
 	}
+	@Keyword
+	updateExternalActivationVendorUser(Connection conn, int value, String email) {
+		Statement stm = conn.createStatement()
+
+		stm.executeUpdate("UPDATE ms_vendor_registered_user SET is_external_activation = '" + value + "' WHERE signer_registered_email = '" + email + "'")
+	}
 }

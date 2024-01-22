@@ -1,8 +1,8 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.kms.katalon.core.model.FailureHandling
-import com.kms.katalon.core.testobject.ResponseObject
+import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject as ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
@@ -203,22 +203,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     for (int l = 0; l < pageSigns.size(); l++) {
                         if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('SeqNo')).length() == 
                         0) {
-                        	seqNoBodyAPI.add('')					
-						} else {
-							'split seq number per documentnya'
-							seqNos = (seqNo[i]).split(semicolon, splitnum)
+                            seqNoBodyAPI.add('')
+                        } else {
+                            'split seq number per documentnya'
+                            seqNos = (seqNo[i]).split(semicolon, splitnum)
 
-							'looping mengenai total sequence number'
-							for (int p = 0; p < seqNos.size(); p++) {
-								'jika seq numbernya tidak kosong'
-								if ((seqNos[p]) != '') {
-									'Memasukkan value seqNo dan body API kepada array'
-									seqNoBodyAPI.add(',"seqNo": ' + (seqNos[p]))
-								} else {
-									'Jika seq number kosong ,maka input kosong'
-									seqNoBodyAPI.add('')
-								}
-							}
+                            'looping mengenai total sequence number'
+                            for (int p = 0; p < seqNos.size(); p++) {
+                                'jika seq numbernya tidak kosong'
+                                if ((seqNos[p]) != '') {
+                                    'Memasukkan value seqNo dan body API kepada array'
+                                    seqNoBodyAPI.add(',"seqNo": ' + (seqNos[p]))
+                                } else {
+                                    'Jika seq number kosong ,maka input kosong'
+                                    seqNoBodyAPI.add('')
+                                }
+                            }
                         }
                         
                         'Jika loopingan pertama'
@@ -346,9 +346,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         t])) + ',"tlp": ') + (tlps[t])) + ',"idKtp": ') + (idKtps[t])) + ',"email": ') + (emails[t])) + 
                         bodyAPI) + '},')
                     }
-                } 
-				
-				if (t == (signActions.size() - 1)) {
+                }
+                
+                if (t == (signActions.size() - 1)) {
                     'isi bodyAPI dengan bodyAPI yang atas'
                     bodyAPI = ((((((((((('{"signAction": ' + (signActions[t])) + ',"signerType": ') + (signerTypes[t])) + 
                     ',"tlp": ') + (tlps[t])) + ',"idKtp": ') + (idKtps[t])) + ',"email": ') + (emails[t])) + bodyAPI) + 
@@ -581,10 +581,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             getErrorMessageAPI(respon)
         }
     }
-}
-
-def PDFtoBase64(String fileName) {
-    CustomKeywords.'customizekeyword.ConvertFile.base64File'(fileName)
 }
 
 def getErrorMessageAPI(ResponseObject respon) {

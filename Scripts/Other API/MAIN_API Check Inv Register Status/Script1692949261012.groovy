@@ -23,6 +23,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         break
     } else if (findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase(
         'Unexecuted')) {
+		'setting untuk is-external-activation'
+		if (findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Setting isExternalActivation(VendorUser)')).length() >
+		0) {
+			CustomKeywords.'connection.UpdateData.updateExternalActivationVendorUser'(conneSign,
+				Integer.parseInt(findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Setting isExternalActivation(VendorUser)'))),
+				findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel('Email/PhoneNo')))
+		}
+	
         'get tenant dari excel per case'
         GlobalVariable.Tenant = findTestData(excelPathCheckInvRegisterStatus).getValue(GlobalVariable.NumofColm, rowExcel(
                 'Tenant Login'))

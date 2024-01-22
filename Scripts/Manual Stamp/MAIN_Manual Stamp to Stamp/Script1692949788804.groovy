@@ -843,7 +843,7 @@ def verifySaldoUsed(Connection conneSign) {
     ArrayList inquiryDB = []
 
     'get current date'
-    def currentDate = new Date().format('yyyy-MM-dd')
+    currentDate = new Date().format('yyyy-MM-dd')
 
     documentType = CustomKeywords.'connection.APIFullService.getDocumentType'(conneSign, findTestData(excelPathManualStamptoStamp).getValue(
             GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))

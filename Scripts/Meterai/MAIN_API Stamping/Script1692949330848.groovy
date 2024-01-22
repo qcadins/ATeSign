@@ -232,7 +232,7 @@ def loginAdminGetSaldo(String start) {
     }
     
     'return total saldo awal'
-    return totalSaldo
+    totalSaldo
 }
 
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
