@@ -13,7 +13,8 @@ import java.time.format.DateTimeFormatter
 public class GetSMS {
 
 	String currentDate = new Date().format('yyyy-MM-dd')
-
+	def threadForRecipient, threadLastest
+	
 	@Keyword
 	String getOTP(String nameSMS) {
 		ResponseObject response = WS.sendRequest(findTestObject('Postman/SMS/API Pushbullet', [('function') : 'threads']))
@@ -22,7 +23,7 @@ public class GetSMS {
 			Map jsonResponse = new JsonSlurper().parseText(response.responseBodyContent)
 
 			// Filter threads based on dynamic recipient name
-			def threadForRecipient = jsonResponse.threads.find { thread ->
+			threadForRecipient = jsonResponse.threads.find { thread ->
 				thread.recipients[0]?.name == nameSMS
 			}
 
@@ -35,8 +36,8 @@ public class GetSMS {
 				if (WS.verifyResponseStatusCode(responseDetail, 200)) {
 					Map jsonResponseDetail = new JsonSlurper().parseText(responseDetail.responseBodyContent)
 
-					def threadLastest = jsonResponseDetail.thread[0]
-					
+					threadLastest = jsonResponseDetail.thread[0]
+
 					// Extract the timestamp from the thread
 					String timeStamp = threadLastest.timestamp ?: "No timestamp found for this thread."
 
@@ -49,7 +50,7 @@ public class GetSMS {
 
 					// Format Jakarta date
 					String jakartaDate = jakartaDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-					
+
 					if (currentDate == jakartaDate) {
 						// Extract the body of the latest message in the thread
 						String body = threadLastest.body ?: "No message found for '$nameSMS'."
@@ -62,7 +63,7 @@ public class GetSMS {
 						// Extract the number using regular expression
 						List<String> digits = body.findAll(/\d+/)
 						String otp = digits ? digits.join() : 'No OTP found in the message.'
-						
+
 						otp
 					} else {
 						'Tidak dapat mengambil OTP dikarenakan tidak ada OTP yang masuk via SMS hari ini.'
