@@ -450,6 +450,7 @@ for (int o = 1; o <= 1; o++) {
                                 arrayMatch.add(WebUI.verifyEqual(totalStampingAndTotalMaterai[k], resultStamping[k], FailureHandling.CONTINUE_ON_FAILURE))
                             }
                         } else if (i == 10) {
+							continue
                         } else {
                             'Selain di column 7 dan 8 maka akan diverif dengan db.'
                             arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectvalues), resultQuery[arrayIndex++], 

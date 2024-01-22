@@ -78,9 +78,8 @@ public class ForgotPassword {
 
 		resultSet = stm.executeQuery("SELECT reset_code_request_num FROM am_msuser where " + helperQuery + " = '" +  email  + "'")
 
-		while (resultSet.next()){
-
-			data = resultSet.getObject(1);
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
 		}
 
 		data
