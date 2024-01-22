@@ -10,9 +10,7 @@ import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign Main.xlsx')
 sheet = 'Main'
 
-'get current date'
-Date currentDateTimeStamp = new Date().format('yyyy-MM-dd HH:mm:ss')
-pritnln currentDateTimeStamp
+
 //'connect DB eSign'
 //Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 //
@@ -27,42 +25,11 @@ pritnln currentDateTimeStamp
 //WebUI.Delay(100000000)
 otp = CustomKeywords.'customizekeyword.GetSMS.getOTP'('eSignHub')
 println otp
-if (otp.find(/\d/)) {
-	println 'ada angka'
-	println otp
-} else {
-	println 'tidak ada angka'
-	println otp
-}
 
 otp1 = CustomKeywords.'customizekeyword.GetSMS.getOTP'('PrivyID')
 println otp1
-if (otp1.find(/\d/)) {
-	println 'ada angka'
-	println otp1
-} else {
-	println 'tidak ada angka'
-	println otp1
-}
 otp2 = CustomKeywords.'customizekeyword.GetSMS.getOTP'('DIGISIGN')
 println otp2
-if (otp2.find(/\d/)) {
-	println 'ada angka'
-	println otp2
-} else {
-	println 'tidak ada angka'
-	println otp2
-}
-
-HashMap aa = []
-
-aa['a'] = 'bbb'
-println aa.keySet()[0]
-
-WebUI.delay(5.25)
-sheet = 'Main'
-GlobalVariable.NumofColm = 4
-
 //otp = CustomKeywords.'customizekeyword.GetSMS.getOTP'('eSignHub')
 //println otp
 //if (otp.find(/\d/)) {

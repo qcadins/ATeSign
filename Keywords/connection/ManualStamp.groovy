@@ -135,6 +135,10 @@ public class ManualStamp {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
+		if (data == 'null' || data == null) {
+			data = ''
+		}
+		
 		Integer.parseInt(data)
 	}
 
@@ -156,5 +160,4 @@ public class ManualStamp {
 
 		data
 	}
-	
 }

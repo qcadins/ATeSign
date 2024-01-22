@@ -56,7 +56,7 @@
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>GET</restRequestMethod>
-   <restUrl>https://api.pushbullet.com/v2/permanents/${tokenSourceDevice}_threads</restUrl>
+   <restUrl>https://api.pushbullet.com/v2/permanents/${tokenSourceDevice}_${function}</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>

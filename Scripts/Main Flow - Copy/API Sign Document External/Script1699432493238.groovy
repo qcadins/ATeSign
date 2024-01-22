@@ -57,38 +57,6 @@ if (vendor == 'null') {
 ArrayList tenantVendor = CustomKeywords.'connection.DataVerif.getTenantandVendorCode'(conneSign, GlobalVariable.storeVar.keySet()[
     0])
 
-'setting vendor otp dimatikan/diaktifkan'
-if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting must_user_vendor_otp (Sign External)')).length() > 
-0) {
-    'update setting vendor otp ke table di DB'
-    CustomKeywords.'connection.UpdateData.updateVendorOTP'(conneSign, tenantVendor[1], findTestData(excelPathAPISignDocument).getValue(
-            GlobalVariable.NumofColm, rowExcel('Enable User Vendor OTP? (Sign External)')))
-}
-
-'setting tenant otp dimatikan/diaktifkan'
-if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Enable Need OTP for signing? (Sign External)')).length() > 
-0) {
-    'update setting otp ke table di DB'
-    CustomKeywords.'connection.UpdateData.updateTenantOTPReq'(conneSign, tenantVendor[0], findTestData(excelPathAPISignDocument).getValue(
-            GlobalVariable.NumofColm, rowExcel('Enable Need OTP for signing? (Sign External)')))
-}
-
-'setting tenant password dimatikan/diaktifkan'
-if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Enable Need Password for signing? (Sign External)')).length() > 
-0) {
-    'update setting pass tenant ke table di DB'
-    CustomKeywords.'connection.UpdateData.updateTenantPassReq'(conneSign, tenantVendor[0], findTestData(excelPathAPISignDocument).getValue(
-            GlobalVariable.NumofColm, rowExcel('Enable Need Password for signing? (Sign External)')))
-}
-
-'setting sent otp by email'
-if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Sign External)')).length() > 
-0) {
-    'update setting sent otp by email'
-    CustomKeywords.'connection.SendSign.settingSentOTPbyEmail'(conneSign, findTestData(excelPathAPISignDocument).getValue(
-            GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Sign External)')))
-}
-
 if (vendor.equalsIgnoreCase('Digisign')) {
     signTypeUsed = 'Dokumen'
 } else {
@@ -204,10 +172,6 @@ if (vendor.equalsIgnoreCase('Privy') || vendor.equalsIgnoreCase('Digisign')) {
     'check ada value maka Setting OTP Active Duration'
     if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration (Sign External)')).length() > 
     0) {
-        'Setting OTP Active Duration'
-        CustomKeywords.'connection.APIFullService.settingOTPActiveDuration'(conneSign, findTestData(excelPathAPISignDocument).getValue(
-                GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration (Sign External)')))
-
         delayExpiredOTP = (60 * Integer.parseInt(findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
                 rowExcel('Setting OTP Active Duration'))))
     }

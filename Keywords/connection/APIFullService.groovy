@@ -2226,4 +2226,24 @@ public class APIFullService {
 		}
 		data
 	}
+
+	@Keyword
+	getWASMSFromNotificationType(Connection conn, String userEmail, String code, String tenantCode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT CASE WHEN mntot.must_use_wa_first = '1' THEN 'WhatsApp Message' ELSE CASE WHEN (SELECT msvr.email_service FROM ms_vendor_registered_user msvr LEFT JOIN am_msuser amm ON msvr.id_ms_user = amm.id_ms_user WHERE amm.login_id = '"+userEmail+" OR amm.hashed_phone = '"+userEmail+"' OR amm.hashed_id_phone = '"+userEmail+"'') = '1' THEN 'SMS Notif' ELSE CASE WHEN mntot.use_wa_message = '1' THEN 'WA' ELSE 'SMS Notif' END END END AS result FROM ms_notificationtypeoftenant mntot LEFT JOIN ms_lov msl ON mntot.lov_sending_point = msl.id_lov LEFT JOIN ms_tenant mst ON mntot.id_ms_tenant = mst.id_ms_tenant WHERE msl.code = '"+code+"' and mst.tenant_code = '"+tenantCode+"';")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+
+		if (data == null || data == 'null') {
+			data = 0
+		}
+
+		data
+	}
 }
