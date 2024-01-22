@@ -857,7 +857,7 @@ public class APIFullService {
 	getVendorCodeUsingDocId(Connection conn, String docId) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select case when msv.vendor_code is not null then msv.vendor_code else msv1.vendor_code end from tr_document_d tdd left join ms_doc_template mdt on tdd.id_ms_doc_template = mdt.id_doc_template left join ms_vendor msv on mdt.id_ms_vendor = msv.id_ms_vendor left join ms_vendoroftenant mvot on tdd.id_ms_tenant = mvot.id_ms_tenant left join ms_vendor msv1 on mvot.id_ms_vendor = msv1.id_ms_vendor where tdd.document_id = '" + docId  + "' order by mvot.default_vendor asc limit 1")
+		resultSet = stm.executeQuery("select case when msv.vendor_code is not null then msv.vendor_code else msv1.vendor_code end from tr_document_d tdd left join ms_doc_template mdt on tdd.id_ms_doc_template = mdt.id_doc_template left join ms_vendor msv on mdt.id_ms_vendor = msv.id_ms_vendor left join ms_vendoroftenant mvot on tdd.id_ms_tenant = mvot.id_ms_tenant left join ms_vendor msv1 on mvot.id_ms_vendor = msv1.id_ms_vendor where tdd.document_id = '" + docId + "' order by mvot.default_vendor asc limit 1")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -1073,7 +1073,7 @@ public class APIFullService {
 			//
 			resultSet = stm.executeQuery(" SELECT CASE WHEN mvru.is_active is null then '0' else mvru.is_active END, CASE WHEN request_status = 3 then '1' else '0' END, request_status, notes, is_external FROM tr_job_check_register_status tjc JOIN tr_balance_mutation tbm ON tbm.id_balance_mutation = tjc.id_balance_mutation LEFT JOIN am_msuser amu ON tjc.hashed_id_no = amu.hashed_id_no LEFT JOIN ms_vendor_registered_user mvru ON mvru.id_ms_user = amu.id_ms_user WHERE amu.login_id = '" + value + "'")
 		} else {
-			resultSet = stm.executeQuery("select mvru.is_active, is_registered, '0', '', CASE WHEN is_external_activation is null THEN '0' ELSE is_external_activation END from ms_vendor_registered_user mvru join ms_vendor mv on mvru.id_ms_vendor = mv.id_ms_vendor where signer_registered_email = '" + value + "' or hashed_signer_registered_phone = encode(sha256('" + value + "'), 'hex') and mv.vendor_code = '" + GlobalVariable.Psre  + "'")
+			resultSet = stm.executeQuery("select mvru.is_active, is_registered, '0', '', CASE WHEN is_external_activation is null THEN '0' ELSE is_external_activation END from ms_vendor_registered_user mvru join ms_vendor mv on mvru.id_ms_vendor = mv.id_ms_vendor where signer_registered_email = '" + value + "' or hashed_signer_registered_phone = encode(sha256('" + value + "'), 'hex') and mv.vendor_code = '" + GlobalVariable.Psre + "'")
 		}
 
 		metadata = resultSet.metaData
@@ -1404,7 +1404,7 @@ public class APIFullService {
 
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT CASE WHEN mlo.description = 'Stamp Duty (materai)' THEN 'Stamp Duty' ELSE ml.description END as signer_type, mlo.description, sign_page, jsonb_build_object( 'llx', round((sign_location::jsonb->>'llx')::numeric), 'lly', round((sign_location::jsonb->>'lly')::numeric), 'urx', round((sign_location::jsonb->>'urx')::numeric), 'ury', round((sign_location::jsonb->>'ury')::numeric)) AS digiSignLoc, jsonb_build_object( 'llx', round((sign_location::jsonb->>'llx')::numeric), 'lly', round((sign_location::jsonb->>'lly')::numeric), 'urx', round((sign_location::jsonb->>'urx')::numeric), 'ury', round((sign_location::jsonb->>'ury')::numeric) ) AS tknajasignLoc FROM ms_doc_template_sign_loc mdts JOIN ms_doc_template mdt ON mdt.id_doc_template = mdts.id_doc_template LEFT JOIN ms_lov ml ON mdts.lov_signer_type = ml.id_lov JOIN ms_lov mlo ON mdts.lov_sign_type = mlo.id_lov LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mdt.id_ms_tenant WHERE doc_template_code = '" + doctemplatecode + "' AND tenant_code = '" + tenant + "'" + '\n' +
+		resultSet = stm.executeQuery("SELECT CASE WHEN mlo.description = 'Stamp Duty (materai)' THEN 'Stamp Duty' ELSE ml.description END as signer_type, mlo.description, sign_page, jsonb_build_object( 'llx', round((sign_location::jsonb->>'llx')::numeric), 'lly', round((sign_location::jsonb->>'lly')::numeric), 'urx', round((sign_location::jsonb->>'urx')::numeric), 'ury', round((sign_location::jsonb->>'ury')::numeric)) AS digiSignLoc, jsonb_build_object( 'llx', round((sign_location::jsonb->>'llx')::numeric), 'lly', round((sign_location::jsonb->>'lly')::numeric), 'urx', round((sign_location::jsonb->>'urx')::numeric), 'ury', round((sign_location::jsonb->>'ury')::numeric) ) AS tknajasignLoc FROM ms_doc_template_sign_loc mdts JOIN ms_doc_template mdt ON mdt.id_doc_template = mdts.id_doc_template LEFT JOIN ms_lov ml ON mdts.lov_signer_type = ml.id_lov JOIN ms_lov mlo ON mdts.lov_sign_type = mlo.id_lov LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mdt.id_ms_tenant WHERE doc_template_code = '" + doctemplatecode + "' AND tenant_code = '" + tenant + "'" + '\n' + 
 				commandCode + queryActive + "= '" + signertypeCode + "'")
 
 		metadata = resultSet.metaData
@@ -1433,7 +1433,7 @@ public class APIFullService {
 
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT jsonb_build_object( 'x', round((vida_sign_location::jsonb->>'x')::numeric), 'y', round((vida_sign_location::jsonb->>'y')::numeric), 'h', round((vida_sign_location::jsonb->>'h')::numeric), 'w', round((vida_sign_location::jsonb->>'w')::numeric))::text::jsonb AS vidasignLoc, jsonb_build_object( 'x', round((privy_sign_location::jsonb->>'x')::numeric), 'y', round((privy_sign_location::jsonb->>'y')::numeric), 'h', round((privy_sign_location::jsonb->>'h')::numeric), 'w', round((privy_sign_location::jsonb->>'w')::numeric) )::text::jsonb AS privysignLoc FROM ms_doc_template_sign_loc mdts JOIN ms_doc_template mdt ON mdt.id_doc_template = mdts.id_doc_template LEFT JOIN ms_lov ml ON mdts.lov_signer_type = ml.id_lov LEFT JOIN ms_lov mlo ON mdts.lov_sign_type = mlo.id_lov  LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mdt.id_ms_tenant WHERE doc_template_code = '" + doctemplatecode + "' AND tenant_code = '" + tenant + "'" + '\n' +
+		resultSet = stm.executeQuery("SELECT jsonb_build_object( 'x', round((vida_sign_location::jsonb->>'x')::numeric), 'y', round((vida_sign_location::jsonb->>'y')::numeric), 'h', round((vida_sign_location::jsonb->>'h')::numeric), 'w', round((vida_sign_location::jsonb->>'w')::numeric))::text::jsonb AS vidasignLoc, jsonb_build_object( 'x', round((privy_sign_location::jsonb->>'x')::numeric), 'y', round((privy_sign_location::jsonb->>'y')::numeric), 'h', round((privy_sign_location::jsonb->>'h')::numeric), 'w', round((privy_sign_location::jsonb->>'w')::numeric) )::text::jsonb AS privysignLoc FROM ms_doc_template_sign_loc mdts JOIN ms_doc_template mdt ON mdt.id_doc_template = mdts.id_doc_template LEFT JOIN ms_lov ml ON mdts.lov_signer_type = ml.id_lov LEFT JOIN ms_lov mlo ON mdts.lov_sign_type = mlo.id_lov  LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mdt.id_ms_tenant WHERE doc_template_code = '" + doctemplatecode + "' AND tenant_code = '" + tenant + "'" + '\n' + 
 				commandCode + queryActive + " = '" + signertypeCode + "'")
 
 		metadata = resultSet.metaData
@@ -1462,7 +1462,7 @@ public class APIFullService {
 
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT count(id_ms_doc_template_sign_loc) FROM ms_doc_template_sign_loc mdts JOIN ms_doc_template mdt ON mdt.id_doc_template = mdts.id_doc_template LEFT JOIN ms_lov ml ON mdts.lov_signer_type = ml.id_lov LEFT JOIN ms_lov mlo ON mdts.lov_sign_type = mlo.id_lov LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mdt.id_ms_tenant WHERE doc_template_code = '" + doctemplatecode + "' AND tenant_code = '" + tenant + "'" + '\n' +
+		resultSet = stm.executeQuery("SELECT count(id_ms_doc_template_sign_loc) FROM ms_doc_template_sign_loc mdts JOIN ms_doc_template mdt ON mdt.id_doc_template = mdts.id_doc_template LEFT JOIN ms_lov ml ON mdts.lov_signer_type = ml.id_lov LEFT JOIN ms_lov mlo ON mdts.lov_sign_type = mlo.id_lov LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mdt.id_ms_tenant WHERE doc_template_code = '" + doctemplatecode + "' AND tenant_code = '" + tenant + "'" + '\n' + 
 				commandCode + queryActive + " = '" + signertypeCode + "'")
 
 		metadata = resultSet.metaData
@@ -1606,7 +1606,7 @@ public class APIFullService {
 
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select office_code, office_name from ms_office mo LEFT join ms_tenant mt on mo.id_ms_tenant = mt.id_ms_tenant LEFT JOIN ms_region mr ON mr.id_ms_region = mo.id_ms_region where tenant_code = '" + GlobalVariable.Tenant + "'" + '\n' +
+		resultSet = stm.executeQuery("select office_code, office_name from ms_office mo LEFT join ms_tenant mt on mo.id_ms_tenant = mt.id_ms_tenant LEFT JOIN ms_region mr ON mr.id_ms_region = mo.id_ms_region where tenant_code = '" + GlobalVariable.Tenant + "'" + '\n' + 
 				commandRegion + " AND region_code = '" + region + "'")
 
 		metadata = resultSet.metaData
@@ -1916,12 +1916,12 @@ public class APIFullService {
 		if (deliveryStatus == '') {
 			commandDelivStat = '--'
 		}
-		resultSet = stm.executeQuery("SELECT vendor_name, mdr.report_time, recipient_detail, trx_no, description, delivery_status, CASE WHEN delivery_status = '0' THEN 'Not Started' WHEN delivery_status = '1' THEN 'Waiting' WHEN delivery_status = '2' THEN 'Failed' WHEN delivery_status = '3' THEN 'Delivered' WHEN delivery_status = '4' THEN 'Read' END as delivery_status_information FROM tr_message_delivery_report mdr LEFT JOIN ms_tenant mt ON mdr.id_ms_tenant = mt.id_ms_tenant LEFT JOIN ms_vendor mv ON mv.id_ms_vendor = mdr.id_ms_vendor LEFT JOin ms_lov mlov ON mlov.id_lov = mdr.lov_message_media WHERE tenant_code = '" + tenant + "'" + '\n' +
-				commandRec + " AND(recipient_detail = '" + recipient + "') " + '\n' +
-				commandReport + " AND(mdr.report_time BETWEEN '" + dateStart + " 00:00:00.000' AND '" + dateEnd + " 23:59:59.999') " + '\n' +
-				commandMedia + " AND (mlov.description = '" + messageMedia + "') " + '\n' +
-				commandVendor + " AND (vendor_code = '" + vendor + "') " + '\n' +
-				commandDelivStat + " AND (mdr.delivery_status = '" + deliveryStatus + "') " + '\n' +
+		resultSet = stm.executeQuery("SELECT vendor_name, mdr.report_time, recipient_detail, trx_no, description, delivery_status, CASE WHEN delivery_status = '0' THEN 'Not Started' WHEN delivery_status = '1' THEN 'Waiting' WHEN delivery_status = '2' THEN 'Failed' WHEN delivery_status = '3' THEN 'Delivered' WHEN delivery_status = '4' THEN 'Read' END as delivery_status_information FROM tr_message_delivery_report mdr LEFT JOIN ms_tenant mt ON mdr.id_ms_tenant = mt.id_ms_tenant LEFT JOIN ms_vendor mv ON mv.id_ms_vendor = mdr.id_ms_vendor LEFT JOin ms_lov mlov ON mlov.id_lov = mdr.lov_message_media WHERE tenant_code = '" + tenant + "'" + '\n' + 
+				commandRec + " AND(recipient_detail = '" + recipient + "') " + '\n' + 
+				commandReport + " AND(mdr.report_time BETWEEN '" + dateStart + " 00:00:00.000' AND '" + dateEnd + " 23:59:59.999') " + '\n' + 
+				commandMedia + " AND (mlov.description = '" + messageMedia + "') " + '\n' + 
+				commandVendor + " AND (vendor_code = '" + vendor + "') " + '\n' + 
+				commandDelivStat + " AND (mdr.delivery_status = '" + deliveryStatus + "') " + '\n' + 
 				"ORDER BY report_time DESC ")
 
 		metadata = resultSet.metaData
@@ -1952,9 +1952,9 @@ public class APIFullService {
 
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT count(*) FROM ms_doc_template mdt LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mdt.id_ms_tenant WHERE tenant_code = '" + tenant + "'" + '\n' +
-				commandCode + " and mdt.doc_template_code = '" + docTempCode + "'" + '\n' +
-				commandName + " AND mdt.doc_template_name = '" + docTempName + "'" + '\n' +
+		resultSet = stm.executeQuery("SELECT count(*) FROM ms_doc_template mdt LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mdt.id_ms_tenant WHERE tenant_code = '" + tenant + "'" + '\n' + 
+				commandCode + " and mdt.doc_template_code = '" + docTempCode + "'" + '\n' + 
+				commandName + " AND mdt.doc_template_name = '" + docTempName + "'" + '\n' + 
 				commandisActive + " AND mdt.is_active = '" + isActive + "'")
 
 		metadata = resultSet.metaData
@@ -2017,8 +2017,8 @@ public class APIFullService {
 
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT count(*) from ms_tenant " + '\n' +
-				commandName + " WHERE tenant_name LIKE '" + tenantName + "%'" + '\n' +
+		resultSet = stm.executeQuery("SELECT count(*) from ms_tenant " + '\n' + 
+				commandName + " WHERE tenant_name LIKE '" + tenantName + "%'" + '\n' + 
 				commandisActive + commandWhere + " is_active = '" + isActive + "'")
 
 		metadata = resultSet.metaData
@@ -2055,10 +2055,10 @@ public class APIFullService {
 
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT count(*) FROM ms_vendor mv LEFT JOIN ms_lov mlo ON mlo.id_lov = mv.lov_vendor_type WHERE mlo.code = 'PSRE'" + '\n' +
-				commandName + " AND vendor_name LIKE '%" + vendorName + "%'" + '\n' +
-				commandCode + " AND vendor_code LIKE '%" + vendorCode + "%'" + '\n' +
-				commandisActive + " AND mv.is_active = '" + isActive + "'" + '\n' +
+		resultSet = stm.executeQuery("SELECT count(*) FROM ms_vendor mv LEFT JOIN ms_lov mlo ON mlo.id_lov = mv.lov_vendor_type WHERE mlo.code = 'PSRE'" + '\n' + 
+				commandName + " AND vendor_name LIKE '%" + vendorName + "%'" + '\n' + 
+				commandCode + " AND vendor_code LIKE '%" + vendorCode + "%'" + '\n' + 
+				commandisActive + " AND mv.is_active = '" + isActive + "'" + '\n' + 
 				commandisOperating + " AND mv.is_operating = '" + isOperating + "'")
 
 		metadata = resultSet.metaData

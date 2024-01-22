@@ -108,7 +108,6 @@ public class ForgotPassword {
 
 	@Keyword
 	updateResetRequestNum(Connection conn, String email) {
-
 		stm = conn.createStatement()
 
 		if (email.length() == countLengthforSHA256) {
@@ -122,7 +121,6 @@ public class ForgotPassword {
 
 	@Keyword
 	updateOTPActiveDuration(Connection conn, String tenantcode, int otpduration) {
-
 		stm = conn.createStatement()
 
 		stm.executeUpdate("UPDATE ms_tenant SET otp_active_duration = " + otpduration + " WHERE tenant_code = '" + tenantcode + "';")

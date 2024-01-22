@@ -740,7 +740,7 @@ def checkPaging() {
         
         'verify paging di page terakhir'
         checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DocumentMonitoring/paging_Page'), 'aria-label', 
-                    FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage + additionalRoundUp).toString(), 
+                    FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage + additionalRoundUp), 
                 false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'click first page'

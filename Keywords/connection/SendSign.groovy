@@ -123,7 +123,7 @@ public class SendSign {
 	}
 
 	@Keyword
-	getPaymentType(Connection conn, String refnumber){
+	getPaymentType(Connection conn, String refnumber) {
 		String data
 
 		stm = conn.createStatement()

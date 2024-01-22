@@ -20,7 +20,7 @@ public class PengaturanPSrE {
 	getDataVendor(Connection conn, String vendorCode) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT vendor_code, vendor_name, CASE WHEN mv.is_active = '1' THEN 'Aktif' WHEN mv.is_active = '0' THEN 'Tidak Aktif' END, CASE WHEN mv.is_operating = '1' THEN 'Aktif' WHEN mv.is_operating = '0' THEN 'Tidak Aktif' END, ml.description FROM ms_vendor mv JOIN ms_lov ml ON ml.id_lov = mv.lov_vendor_sign_payment_type WHERE vendor_code = '" +  vendorCode  + "'")
+		resultSet = stm.executeQuery("SELECT vendor_code, vendor_name, CASE WHEN mv.is_active = '1' THEN 'Aktif' WHEN mv.is_active = '0' THEN 'Tidak Aktif' END, CASE WHEN mv.is_operating = '1' THEN 'Aktif' WHEN mv.is_operating = '0' THEN 'Tidak Aktif' END, ml.description FROM ms_vendor mv JOIN ms_lov ml ON ml.id_lov = mv.lov_vendor_sign_payment_type WHERE vendor_code = '" + vendorCode + "'")
 
 		metadata = resultSet.metaData
 
@@ -74,7 +74,7 @@ public class PengaturanPSrE {
 	getPsrePriority(Connection conn) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT VENDOR_NAME FROM ms_vendoroftenant mvt JOIN ms_tenant mt ON mvt.id_ms_tenant = mt.id_ms_tenant JOIN ms_vendor mv ON mvt.id_ms_vendor = mv.id_ms_vendor join ms_lov ml on ml.id_lov = mv.lov_vendor_type WHERE mt.tenant_code = '"+ GlobalVariable.Tenant +"' AND ml.description = 'PSRE' AND default_vendor is not null ORDER BY mvt.default_vendor ASC")
+		resultSet = stm.executeQuery("SELECT VENDOR_NAME FROM ms_vendoroftenant mvt JOIN ms_tenant mt ON mvt.id_ms_tenant = mt.id_ms_tenant JOIN ms_vendor mv ON mvt.id_ms_vendor = mv.id_ms_vendor join ms_lov ml on ml.id_lov = mv.lov_vendor_type WHERE mt.tenant_code = '" + GlobalVariable.Tenant + "' AND ml.description = 'PSRE' AND default_vendor is not null ORDER BY mvt.default_vendor ASC")
 
 		metadata = resultSet.metaData
 
