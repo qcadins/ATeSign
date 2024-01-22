@@ -9,8 +9,10 @@ import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign Main.xlsx')
 sheet = 'Main'
-println(rowExcel('reason Failed'))
-println(rowExcel('Cancel Docs after Stamp?'))
+
+'get current date'
+Date currentDateTimeStamp = new Date().format('yyyy-MM-dd HH:mm:ss')
+pritnln currentDateTimeStamp
 //'connect DB eSign'
 //Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 //
