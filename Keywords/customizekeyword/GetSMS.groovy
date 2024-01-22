@@ -13,14 +13,14 @@ import java.time.format.DateTimeFormatter
 public class GetSMS {
 
 	String currentDate = new Date().format('yyyy-MM-dd')
-	def threadForRecipient, threadLastest
+	Map threadForRecipient, threadLastest, jsonResponse
 	
 	@Keyword
 	String getOTP(String nameSMS) {
 		ResponseObject response = WS.sendRequest(findTestObject('Postman/SMS/API Pushbullet', [('function') : 'threads']))
 
 		if (WS.verifyResponseStatusCode(response, 200)) {
-			Map jsonResponse = new JsonSlurper().parseText(response.responseBodyContent)
+			jsonResponse = new JsonSlurper().parseText(response.responseBodyContent)
 
 			// Filter threads based on dynamic recipient name
 			threadForRecipient = jsonResponse.threads.find { thread ->
