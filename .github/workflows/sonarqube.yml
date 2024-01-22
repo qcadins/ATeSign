@@ -1,33 +1,19 @@
 name: Build
-
 on:
   push:
     branches:
-      - master
+      - master # or the name of your main branch
 
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    permissions: read-all
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-          
-      - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@master
-        # with:
-        #   projectBaseDir: .
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: docker://sonarsource/sonar-scanner-cli:latest
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: http://sonar.ad-ins.com:9000
-          # SONAR_SCANNER_OPTS: -X
-
-      # - name: SonarQube Quality Gate
-      #   uses: sonarsource/sonarqube-quality-gate-action@master
-      #   timeout-minutes: 5
-      #   with:
-      #     scanMetadataReportFile: .scannerwork/report-task.txt
-      #   env:
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      #     # SONAR_SCANNER_OPTS: -X
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
