@@ -2,14 +2,11 @@ import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import java.sql.Connection as Connection
-import java.util.concurrent.ConcurrentHashMap.KeySetView as KeySetView
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
-import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
-import org.openqa.selenium.By as By
-import org.openqa.selenium.Keys as Keys
+import com.kms.katalon.core.testobject.ResponseObject
 
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
@@ -43,9 +40,6 @@ prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, 
     int flagErrorDMS = 0
 
     GlobalVariable.base_url = findTestData('Login/Setting').getValue(7, 2)
-
-    'ambil nama vendor dari DB'
-    String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conneSign, refNumber)
 
     if ((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Option for Stamp Document :')) == 
     'API Stamping External') || (findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('Option for Stamp Document :')) == 
@@ -121,12 +115,12 @@ prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, 
 
                         GlobalVariable.FlagFailed = 1
 
-                        if (!(errorMessageDB.toString().contains('upload DMS'))) {
-                            break
+                        if (errorMessageDB.toString().contains('upload DMS')) {
+							flagErrorDMS = 1
+							
+							continue
                         } else {
-                            flagErrorDMS = 1
-
-                            continue
+							break
                         }
                     } else if (((prosesMaterai == 53) || (prosesMaterai == 63)) || (flagErrorDMS == 1)) {
                         'Jika proses meterai sukses (53), berikan delay 3 sec untuk update di db'
@@ -143,7 +137,7 @@ prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, 
                         arrayMatch.add(WebUI.verifyMatch(totalMateraiAndTotalStamping[0], totalMateraiAndTotalStamping[1], 
                                 false, FailureHandling.CONTINUE_ON_FAILURE))
 
-						GlobalVariable.eSignData.putAt('VerifikasiMeterai', GlobalVariable.eSignData.getAt('VerifikasiMeterai') + Integer.parseInt(totalMateraiAndTotalStamping[0]))
+						GlobalVariable.eSignData['VerifikasiMeterai'] = GlobalVariable.eSignData['VerifikasiMeterai'] + Integer.parseInt(totalMateraiAndTotalStamping[0])
 
 						ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(
 							conneSign, nomorKontrakDocument, 'Stamping')
@@ -279,118 +273,7 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     }
 }
 
-def verifySaldoUsed(Connection conneSign, String sheet, String refNumber, int prosesMaterai) {
-    'deklarasi array inquiryDB'
-    ArrayList inquiryDB = []
-
-    'get current date'
-    def currentDate = new Date().format('yyyy-MM-dd')
-
-    documentType = CustomKeywords.'connection.APIFullService.getDocumentType'(conneSign, refNumber)
-
-    documentName = CustomKeywords.'connection.DataVerif.getDocumentName'(conneSign, refNumber)
-
-    'klik ddl untuk tenant memilih mengenai Vida'
-    WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)
-
-    'input filter dari saldo'
-    WebUI.setText(findTestObject('Saldo/input_tipesaldo'), 'Stamp Duty')
-
-    'enter'
-    WebUI.sendKeys(findTestObject('Saldo/input_tipeSaldo'), Keys.chord(Keys.ARROW_DOWN))
-
-    'enter'
-    WebUI.sendKeys(findTestObject('Saldo/input_tipeSaldo'), Keys.chord(Keys.ENTER))
-
-    'Input tipe transaksi'
-    WebUI.setText(findTestObject('Saldo/input_tipetransaksi'), 'Use Stamp Duty')
-
-    'Input enter'
-    WebUI.sendKeys(findTestObject('Saldo/input_tipetransaksi'), Keys.chord(Keys.ENTER))
-
-    'Input date sekarang'
-    WebUI.setText(findTestObject('Saldo/input_fromdate'), currentDate)
-
-    'Input tipe dokumen'
-    WebUI.setText(findTestObject('Saldo/input_tipedokumen'), documentType)
-
-    'Input enter'
-    WebUI.sendKeys(findTestObject('Saldo/input_tipedokumen'), Keys.chord(Keys.ENTER))
-
-    'Input referal number'
-    WebUI.setText(findTestObject('Saldo/input_refnumber'), refNumber)
-
-    'Input documentTemplateName'
-    WebUI.setText(findTestObject('Saldo/input_namadokumen'), documentName, FailureHandling.CONTINUE_ON_FAILURE)
-
-    'Input date sekarang'
-    WebUI.setText(findTestObject('Saldo/input_todate'), currentDate)
-
-    'Klik cari'
-    WebUI.click(findTestObject('Saldo/btn_cari'))
-
-    'get column di saldo'
-    variableSaldoColumn = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller > datatable-row-wrapper > datatable-body-row datatable-body-cell'))
-
-    'get row di saldo'
-    variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper '))
-
-    if (prosesMaterai == 63) {
-        'ambil inquiry di db'
-        inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldoForMeteraiPrivy'(conneSign, refNumber)
-    } else {
-        'ambil inquiry di db'
-        inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldoForMeterai'(conneSign, refNumber)
-    }
-    
-    index = 0
-
-    for (int p = 1; p <= variableSaldoRow.size(); p++) {
-        'looping mengenai columnnya'
-        for (int u = 1; u <= (variableSaldoColumn.size() / variableSaldoRow.size()); u++) {
-            'modify per row dan column. column menggunakan u dan row menggunakan documenttemplatename'
-            modifyperrowpercolumn = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/lbl_notrxsaldo'), 'xpath', 
-                'equals', ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-                p) + ']/datatable-body-row/div[2]/datatable-body-cell[') + u) + ']/div', true)
-
-            WebUI.scrollToElement(modifyperrowpercolumn, GlobalVariable.TimeOut)
-
-            'Jika u di lokasi qty atau kolom ke 9'
-            if (u == 9) {
-                'Jika yang qtynya 1 dan databasenya juga, berhasil'
-                if ((WebUI.getText(modifyperrowpercolumn) == '1') || ((inquiryDB[index]) == '-1')) {
-                    'Jika bukan untuk 2 kolom itu, maka check ke db'
-                    checkVerifyEqualOrMatch(WebUI.verifyMatch('-' + WebUI.getText(modifyperrowpercolumn), inquiryDB[index], 
-                            false, FailureHandling.CONTINUE_ON_FAILURE), 'pada Kuantitas di Mutasi Saldo dengan nomor kontrak ' + 
-                        refNumber)
-
-                    index++
-                } else {
-                    'Jika bukan -1, atau masih 0. Maka ttdnya dibilang error'
-                    GlobalVariable.FlagFailed = 1
-
-                    'Jika saldonya belum masuk dengan flag, maka signnya gagal.'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                        GlobalVariable.StatusFailed, (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
-                            rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedSignGagal) + ' terlihat pada Kuantitas di Mutasi Saldo dengan nomor kontrak ') + 
-                        refNumber)
-
-                    index++
-                }
-            } else if (u == (variableSaldoColumn.size() / variableSaldoRow.size())) {
-                'Jika di kolom ke 10, atau di FE table saldo'
-            } else {
-                'check table'
-                checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyperrowpercolumn), inquiryDB[index], false, 
-                        FailureHandling.CONTINUE_ON_FAILURE), 'pada Mutasi Saldo dengan nomor Kontrak ' + refNumber)
-
-                index++
-            }
-        }
-    }
-}
-
-def getErrorMessageAPI(def respon) {
+def getErrorMessageAPI(ResponseObject respon) {
     'mengambil status code berdasarkan response HIT API'
     message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 
@@ -403,6 +286,6 @@ def getErrorMessageAPI(def respon) {
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 

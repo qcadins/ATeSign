@@ -23,19 +23,24 @@ GlobalVariable.FlagFailed = 0
 WebUI.click(findTestObject('Meterai/menu_Meterai'))
 
 'get totalMaterai from db'
-ArrayList totalMateraiAndTotalStamping = CustomKeywords.'connection.Meterai.getTotalMateraiAndTotalStamping'(conneSign, noKontrak)
+ArrayList totalMateraiAndTotalStamping = CustomKeywords.'connection.Meterai.getTotalMateraiAndTotalStamping'(conneSign, 
+    noKontrak)
 
 'declare index yang akan digunakan'
-int indexInput = 0, indexValue = 0, indexGetNomorMaterai = 0
+int indexInput = 0
+
+int indexValue = 0
+
+int indexGetNomorMaterai = 0
 
 'looping per total meterai yang telah distamp'
-for (j = 1; j <= (Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ',''))); j++) {
-	'ambil value db untuk mau input apa'
-	ArrayList inputBasedOnAPIStamping = CustomKeywords.'connection.Meterai.getInputMeterai'(conneSign, noKontrak)
+for (j = 1; j <= Integer.parseInt((totalMateraiAndTotalStamping[1]).replace(' ', '')); j++) {
+    'ambil value db untuk mau input apa'
+    ArrayList inputBasedOnAPIStamping = CustomKeywords.'connection.Meterai.getInputMeterai'(conneSign, noKontrak)
 
-	'set text lini bisnis all untuk reset'
-	WebUI.click(findTestObject('Object Repository/Meterai/button_SetUlang'))
-	
+    'set text lini bisnis all untuk reset'
+    WebUI.click(findTestObject('Object Repository/Meterai/button_SetUlang'))
+
     'set text no kontrak'
     WebUI.setText(findTestObject('Meterai/input_NoKontrak'), inputBasedOnAPIStamping[indexInput++])
 
@@ -46,7 +51,7 @@ for (j = 1; j <= (Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ','
     WebUI.sendKeys(findTestObject('Meterai/input_StatusMeterai'), Keys.chord(Keys.ENTER))
 
     'set text lini bisnis'
-    WebUI.setText(findTestObject('Meterai/input_LiniBisnis'),inputBasedOnAPIStamping[indexInput++])
+    WebUI.setText(findTestObject('Meterai/input_LiniBisnis'), inputBasedOnAPIStamping[indexInput++])
 
     'enter untuk set lini bisnis'
     WebUI.sendKeys(findTestObject('Meterai/input_LiniBisnis'), Keys.chord(Keys.ENTER))
@@ -58,7 +63,7 @@ for (j = 1; j <= (Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ','
     WebUI.sendKeys(findTestObject('Meterai/input_Wilayah'), Keys.chord(Keys.ENTER))
 
     'set text tanggal cabang'
-    WebUI.setText(findTestObject('Meterai/input_Cabang'),inputBasedOnAPIStamping[indexInput++])
+    WebUI.setText(findTestObject('Meterai/input_Cabang'), inputBasedOnAPIStamping[indexInput++])
 
     'enter untuk set cabang'
     WebUI.sendKeys(findTestObject('Meterai/input_Cabang'), Keys.chord(Keys.ENTER))
@@ -75,9 +80,9 @@ for (j = 1; j <= (Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ','
     'click button cari'
     WebUI.click(findTestObject('Meterai/button_Cari'))
 
-	'Beri delay 5sec loading Cari'
-	WebUI.delay(5)
-	
+    'Beri delay 5sec loading Cari'
+    WebUI.delay(5)
+
     'get value meterai data dari db'
     result = CustomKeywords.'connection.Meterai.getValueMeterai'(conneSign, noKontrak)
 
@@ -94,15 +99,16 @@ for (j = 1; j <= (Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ','
             false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Pakai')
 
     'verify biaya'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_Biaya')).replace(',', ''), result[indexValue++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Biaya')
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_Biaya')).replace(',', ''), result[
+            indexValue++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Biaya')
 
     'verify cabang'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_Cabang')), result[indexValue++], false, 
-            FailureHandling.CONTINUE_ON_FAILURE), ' Cabang')
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_Cabang')), result[indexValue++], 
+            false, FailureHandling.CONTINUE_ON_FAILURE), ' Cabang')
 
     'verify wilayah'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_Wilayah')), result[indexValue++], false, 
-            FailureHandling.CONTINUE_ON_FAILURE), ' Wilayah')
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_Wilayah')), result[indexValue++], 
+            false, FailureHandling.CONTINUE_ON_FAILURE), ' Wilayah')
 
     'verify lini bisnis'
     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_LiniBisnis')), result[indexValue++], 
@@ -118,54 +124,54 @@ for (j = 1; j <= (Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ','
 
     'get stampduty trx data dari db'
     resultPopup = CustomKeywords.'connection.Meterai.getValueDetailMeterai'(conneSign, result[indexGetNomorMaterai])
-	
-	'index get nomor materai ditingkatkan 8 berdasarkan jumalh kolom value'
-	indexGetNomorMaterai = indexGetNomorMaterai + 8
-	
-	'declare index'
-	index = 0
-	
+
+    'index get nomor materai ditingkatkan 8 berdasarkan jumalh kolom value'
+    indexGetNomorMaterai = (indexGetNomorMaterai + 8)
+
+    'declare index'
+    index = 0
+
     'verify no meterai'
     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_NoTrx')), resultPopup[index++], 
             false, FailureHandling.CONTINUE_ON_FAILURE), ' No Materai')
 
     'verify no kontrak'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_NoKontrak')), resultPopup[index++], 
-            false, FailureHandling.CONTINUE_ON_FAILURE), ' No Kontrak')
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_NoKontrak')), resultPopup[
+            index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' No Kontrak')
 
     'verify nama dok'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_NamaDok')), resultPopup[index++], 
-            false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama Dokumen')
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_NamaDok')), resultPopup[
+            index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama Dokumen')
 
     'verify nama pelanggan'
     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_NamaPelanggan')), resultPopup[
             index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama Pelanggan')
 
     'verify tipe trx'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_TipeTrx')), resultPopup[index++], 
-            false, FailureHandling.CONTINUE_ON_FAILURE), ' Tipe Trx')
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_TipeTrx')), resultPopup[
+            index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Tipe Trx')
 
     'verify tanggal trx'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_TanggalTrx')), resultPopup[index++], 
-            false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Trx')
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_TanggalTrx')), resultPopup[
+            index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Trx')
 
     'click button X'
     WebUI.click(findTestObject('Meterai/button_X'))
 }
 
 if (linkDocumentMonitoring == '') {
-linkDocumentMonitoring = 'Not Used'
+    linkDocumentMonitoring = 'Not Used'
 }
 
 'call testcase verify document monitoring'
-WebUI.callTestCase(findTestCase('Document Monitoring/verifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathMeterai,
-	('sheet') : sheet, ('nomorKontrak') : noKontrak,
-	('linkDocumentMonitoring') : linkDocumentMonitoring, ('CancelDocsStamp') : CancelDocsStamp], FailureHandling.CONTINUE_ON_FAILURE)
+WebUI.callTestCase(findTestCase('Document Monitoring/verifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathMeterai
+        , ('sheet') : sheet, ('nomorKontrak') : noKontrak, ('linkDocumentMonitoring') : linkDocumentMonitoring, ('CancelDocsStamp') : CancelDocsStamp], 
+    FailureHandling.CONTINUE_ON_FAILURE)
 
 if (GlobalVariable.FlagFailed == 0) {
-	'write to excel success'
-	CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet , 0, GlobalVariable.NumofColm -
-		1, GlobalVariable.StatusSuccess)
+    'write to excel success'
+    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
+        1, GlobalVariable.StatusSuccess)
 }
 
 def checkVerifyPaging(Boolean isMatch) {

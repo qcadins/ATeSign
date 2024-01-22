@@ -1,17 +1,10 @@
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
-import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
-import org.openqa.selenium.By as By
 import java.sql.Connection as Connection
-import java.util.concurrent.ConcurrentHashMap.KeySetView as KeySetView
-import com.kms.katalon.core.testobject.TestObject as TestObject
-import com.kms.katalon.core.configuration.RunConfiguration as RunConfiguration
-import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
 
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
@@ -153,9 +146,9 @@ if (WebUI.verifyElementVisible(findTestObject('Signing-DIGISIGN/text_popupGagal'
             WebUI.delay(30)
         }
         
-		WebUI.setText(findTestObject('Signing-DIGISIGN/input_Password'), 'wikyhendra22')
+		//WebUI.setText(findTestObject('Signing-DIGISIGN/input_Password'), 'wikyhendra22')
         'delay 60 detik untuk input otp dari sms dan password'
-       // WebUI.delay(15)
+        WebUI.delay(15)
 
         'jika menyetujui yes'
         if ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Menyetujui(Yes/No)')).split(
@@ -176,10 +169,9 @@ if (WebUI.verifyElementVisible(findTestObject('Signing-DIGISIGN/text_popupGagal'
 
         'jika pop up after proses visible'
         if (WebUI.verifyElementVisible(findTestObject('Signing-DIGISIGN/text_popupAfterProcess'), FailureHandling.OPTIONAL)) {
-           
 			WebUI.click(findTestObject('Signing-DIGISIGN/button_melanjutkan'))
 			
-			GlobalVariable.eSignData.putAt('VerifikasiOTP', GlobalVariable.eSignData.getAt('VerifikasiOTP') + 1)
+			GlobalVariable.eSignData['VerifikasiOTP'] = GlobalVariable.eSignData['VerifikasiOTP'] + 1
 
 			 if (WebUI.verifyElementVisible(findTestObject('Signing-DIGISIGN/text_success'), FailureHandling.OPTIONAL)) {
                 'ambil value success dan failed'
@@ -220,7 +212,7 @@ if (WebUI.verifyElementVisible(findTestObject('Signing-DIGISIGN/text_popupGagal'
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+	CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
 def checkVerifyEqualorMatch(Boolean isMatch, String reason) {
@@ -292,9 +284,10 @@ def masukanStoreDB(Connection conneSign, String emailSigner) {
 }
 
 def checkPopup() {
+	WebUI.delay(0.25)
+	
     'Jika popup muncul'
-    if (WebUI.verifyElementNotPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-    } else {
+    if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
         'label popup diambil'
         lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
 

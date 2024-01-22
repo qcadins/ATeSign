@@ -199,6 +199,10 @@ def getDataExcel(String semicolon, int splitnum, String delimiter, String enter)
     documentFile = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('documentFile')).split(
         enter, splitnum)
 
+	'Inisialisasi qrEnable berdasarkan delimiter ;'
+	qrEnable = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('QR')).replace('Ya','true').replace('Tidak','false').split(
+		semicolon, splitnum)
+	
     'split signer untuk doc1 dan signer untuk doc2'
     signAction = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$signAction')).split(enter, 
         splitnum)
@@ -257,8 +261,12 @@ def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) 
         i])) + '", "documentName": "') + (documentName[i])) + '", "officeCode": "') + (officeCode[i])) + '", "officeName": "') + 
         (officeName[i])) + '", "regionCode": "') + (regionCode[i])) + '", "regionName": "') + (regionName[i])) + '", "businessLineCode": "') + 
         (businessLineCode[i])) + '", "businessLineName": "') + (businessLineName[i])) + '", "isSequence": "') + (isSequence[
-        i])) + '",  "psreCode": "') + (psreCode[i])) + '",')
+        i])) + '",  "psreCode": "') + (psreCode[i])) + '", ')
 
+		if (documentTemplateCode[i] != '') {
+			bodyAPI = bodyAPI + ' "qrEnable" : ' + qrEnable[i] + ', '
+		}
+		
         'Memasukkan bodyAPI ke stringRefno'
         stringRefno = (stringRefno + bodyAPI)
 
@@ -330,10 +338,7 @@ def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) 
 		
 						'looping mengenai total sequence number'
 						for (int p = 0; p < seqNos.size(); p++) {
-							
-							println seqNo
-							println seqNos
-							println seqNos[p]
+
 							'jika seq numbernya tidak kosong'
 							if ((seqNos[p]) != '') {
 								'Memasukkan value seqNo dan body API kepada array'

@@ -8,7 +8,6 @@ import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.By as By
 import org.openqa.selenium.Keys as Keys
-import java.sql.Connection as Connection
 
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
@@ -28,10 +27,10 @@ if (nomorKontrak == '') {
     } else if (isManualSign == 'Yes') {
         'Mengambil documen id dari excel'
         nomorKontrak = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 9)
-		
-		if (nomorKontrak.contains('"')) {
-			nomorKontrak = nomorKontrak.replace('"', '')
-		}
+
+        if (nomorKontrak.contains('"')) {
+            nomorKontrak = nomorKontrak.replace('"', '')
+        }
     }
 }
 
@@ -39,7 +38,7 @@ if (nomorKontrak == '') {
 nomorKontrakPerPilihan = nomorKontrak.split(';', -1)
 
 if (isStamping == 'Yes') {
-    saldoBefore = loginAdminGetSaldo(conneSign, 'No', sheet)
+    saldoBefore = loginAdminGetSaldo('No', sheet)
 }
 
 'looping untuk membuka dokumen'
@@ -50,10 +49,9 @@ for (int o = 1; o <= 1; o++) {
 
         linkDocumentMonitoring = ''
     } else if (linkDocumentMonitoring == '') {
-		'panggil fungsi login'
-		WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet,
-			('Path') : excelPathFESignDocument, ('Email') : 'Email Login', ('Password') : 'Password Login',
-				 ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.CONTINUE_ON_FAILURE)
+        'panggil fungsi login'
+        WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathFESignDocument, ('Email') : 'Email Login'
+                , ('Password') : 'Password Login', ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], FailureHandling.CONTINUE_ON_FAILURE)
 
         'Klik Button menu Document Monitoring'
         WebUI.click(findTestObject('DocumentMonitoring/DocumentMonitoring'))
@@ -99,24 +97,25 @@ for (int o = 1; o <= 1; o++) {
     'Looping per document'
     for (int y = 0; y < nomorKontrakPerPilihan.size(); y++) {
         WebUI.delay(7)
-		
-		'inisialisasi emailSigner menjadi array list'
-		ArrayList emailSigner = []
-		
+
+        'inisialisasi emailSigner menjadi array list'
+        ArrayList emailSigner = []
+
         'Mengambil email berdasarkan documentId'
-        String emailSignerString = CustomKeywords.'connection.DocumentMonitoring.getEmailSigneronRefNumber'(conneSign, nomorKontrakPerPilihan[y], GlobalVariable.Tenant)
-		
-		'jika email signer string tidak null, maka'
-		if (emailSignerString != null) {
-			'split email signer dan dimasukkan kepada ArrayList'
-			emailSigner = emailSignerString.split(';', -1)
-		}
-		
-		'declare arraylist arraymatch'
-		ArrayList arrayMatch = []
-		
-       inputDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, settingHO)
-	   
+        String emailSignerString = CustomKeywords.'connection.DocumentMonitoring.getEmailSigneronRefNumber'(conneSign, nomorKontrakPerPilihan[
+            y], GlobalVariable.Tenant)
+
+        'jika email signer string tidak null, maka'
+        if (emailSignerString != null) {
+            'split email signer dan dimasukkan kepada ArrayList'
+            emailSigner = emailSignerString.split(';', -1)
+        }
+        
+        'declare arraylist arraymatch'
+        ArrayList arrayMatch = []
+
+        inputDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, settingHO)
+
         if (linkDocumentMonitoring == '') {
             modifyObjectvalues = findTestObject('DocumentMonitoring/lbl_Value')
 
@@ -162,7 +161,6 @@ for (int o = 1; o <= 1; o++) {
                             arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[1], emailSigner.size(), FailureHandling.CONTINUE_ON_FAILURE))
                         } else if (i == 8) {
                             'Jika berada di column ke 8'
-
                             'Split teks total Stamping'
                             totalStampingAndTotalMaterai = WebUI.getText(modifyObjectvalues).split('/', -1)
 
@@ -172,6 +170,7 @@ for (int o = 1; o <= 1; o++) {
                                 arrayMatch.add(WebUI.verifyEqual(totalStampingAndTotalMaterai[k], resultStamping[k], FailureHandling.CONTINUE_ON_FAILURE))
                             }
                         } else if (i == 10) {
+							continue
                         } else {
                             'Selain di column 7 dan 8 maka akan diverif dengan db.'
                             arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectvalues), resultQuery[arrayIndex++], 
@@ -275,13 +274,13 @@ for (int o = 1; o <= 1; o++) {
                 GlobalVariable.ReasonFailedStoredDB) + ' pada menu Document Monitoring ')
         }
         
-		if (CancelDocsSend == 'Yes' || CancelDocsSign == 'Yes') {
-			
-			'panggil fungsi cancel docs sesudah send'
-			cancelDoc(conneSign, nomorKontrakPerPilihan[y].toString())
-			break
-		}
-		
+        if ((CancelDocsSend == 'Yes') || (CancelDocsSign == 'Yes')) {
+            'panggil fungsi cancel docs sesudah send'
+            cancelDoc(conneSign, (nomorKontrakPerPilihan[y]).toString())
+
+            break
+        }
+        
         if (isStamping == 'Yes') {
             'click button start stamping'
             WebUI.click(findTestObject('DocumentMonitoring/button_startStamping'))
@@ -385,178 +384,168 @@ for (int o = 1; o <= 1; o++) {
                     }
                 }
             }
+            
+            inputDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, settingHO)
 
-		    inputDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, settingHO)
-			
-			if (CancelDocsStamp == 'Yes') {
-				
-				'panggil fungsi cancel docs sesudah send'
-				cancelDoc(conneSign, nomorKontrakPerPilihan[y].toString())
-				
-				break
-			}
-	
-			modifyObjectvalues = findTestObject('DocumentMonitoring/lbl_Value')
+            if (CancelDocsStamp == 'Yes') {
+                'panggil fungsi cancel docs sesudah send'
+                cancelDoc(conneSign, (nomorKontrakPerPilihan[y]).toString())
 
-			'Mengambil row size dari value'
-			sizeRowofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('#listDokumen > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
+                break
+            }
+            
+            modifyObjectvalues = findTestObject('DocumentMonitoring/lbl_Value')
 
-			'Mengambil column size dari value'
-			sizeColumnofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('#listDokumen > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-body-cell'))
+            'Mengambil row size dari value'
+            sizeRowofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('#listDokumen > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
 
-			'Jika valuenya ada'
-			if (WebUI.verifyElementPresent(modifyObjectvalues, GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
-				'Pembuatan untuk array Index result Query'
-				arrayIndex = 0
+            'Mengambil column size dari value'
+            sizeColumnofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('#listDokumen > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-body-cell'))
 
-				'Mengambil value dari db menngenai data yang perlu diverif'
-				resultQuery = CustomKeywords.'connection.DocumentMonitoring.getDocumentMonitoringBasedOnEmbed'(conneSign,
-					nomorKontrakPerPilihan[y])
+            'Jika valuenya ada'
+            if (WebUI.verifyElementPresent(modifyObjectvalues, GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+                'Pembuatan untuk array Index result Query'
+                arrayIndex = 0
 
-				'Mengambil value dari db mengenai total stamping'
-				resultStamping = CustomKeywords.'connection.DocumentMonitoring.getTotalStampingandTotalMaterai'(conneSign,
-					nomorKontrakPerPilihan[y])
+                'Mengambil value dari db menngenai data yang perlu diverif'
+                resultQuery = CustomKeywords.'connection.DocumentMonitoring.getDocumentMonitoringBasedOnEmbed'(conneSign, 
+                    nomorKontrakPerPilihan[y])
 
-				'Looping berdasarkan row yang ada pada value'
-				for (int j = 1; j <= sizeRowofLabelValue.size(); j++) {
-					'Looping berdasarkan column yang ada pada value tanpa aksi.'
-					for (int i = 1; i <= ((sizeColumnofLabelValue.size() / sizeRowofLabelValue.size()) - 1); i++) {
-						'modify object label Value'
-						modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'),
-							'xpath', 'equals', ((('//*[@id="listDokumen"]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-							j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div', true)
+                'Mengambil value dari db mengenai total stamping'
+                resultStamping = CustomKeywords.'connection.DocumentMonitoring.getTotalStampingandTotalMaterai'(conneSign, 
+                    nomorKontrakPerPilihan[y])
 
-						'Jika berada di column ke 7'
-						if (i == 7) {
-							'Split teks proses TTD'
-							totalSignandtotalSigned = WebUI.getText(modifyObjectvalues).split(' / ', -1)
+                'Looping berdasarkan row yang ada pada value'
+                for (int j = 1; j <= sizeRowofLabelValue.size(); j++) {
+                    'Looping berdasarkan column yang ada pada value tanpa aksi.'
+                    for (int i = 1; i <= ((sizeColumnofLabelValue.size() / sizeRowofLabelValue.size()) - 1); i++) {
+                        'modify object label Value'
+                        modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 
+                            'xpath', 'equals', ((('//*[@id="listDokumen"]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
+                            j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div', true)
 
-							int jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgress'(
-								conneSign, nomorKontrakPerPilihan[y])
+                        'Jika berada di column ke 7'
+                        if (i == 7) {
+                            'Split teks proses TTD'
+                            totalSignandtotalSigned = WebUI.getText(modifyObjectvalues).split(' / ', -1)
 
-							'Verif hasil split, dimana proses awal hingga akhir. Awal dibandingkan dengan jumlahsignertandatangan, sedangkan akhir dibandingkan dengan total signer dari email'
-							arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[0], jumlahSignerTelahTandaTangan, FailureHandling.CONTINUE_ON_FAILURE))
+                            int jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgress'(
+                                conneSign, nomorKontrakPerPilihan[y])
 
-							arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[1], emailSigner.size(), FailureHandling.CONTINUE_ON_FAILURE))
-						} else if (i == 8) {
-							'Jika berada di column ke 8'
+                            'Verif hasil split, dimana proses awal hingga akhir. Awal dibandingkan dengan jumlahsignertandatangan, sedangkan akhir dibandingkan dengan total signer dari email'
+                            arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[0], jumlahSignerTelahTandaTangan, FailureHandling.CONTINUE_ON_FAILURE))
 
-							'Split teks total Stamping'
-							totalStampingAndTotalMaterai = WebUI.getText(modifyObjectvalues).split('/', -1)
+                            arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[1], emailSigner.size(), FailureHandling.CONTINUE_ON_FAILURE))
+                        } else if (i == 8) {
+                            'Jika berada di column ke 8'
 
-							'looping berdasarkan total split dan diverif berdasarkan db.'
-							for (int k = 0; k < totalStampingAndTotalMaterai.size(); k++) {
-								'Verifikasi UI dengan db'
-								arrayMatch.add(WebUI.verifyEqual(totalStampingAndTotalMaterai[k], resultStamping[k], FailureHandling.CONTINUE_ON_FAILURE))
-							}
-						} else if (i == 10) {
-						} else {
-							'Selain di column 7 dan 8 maka akan diverif dengan db.'
-							arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectvalues), resultQuery[arrayIndex++],
-									false, FailureHandling.CONTINUE_ON_FAILURE))
-						}
-					}
-				}
-			} else {
-				'Jika tidak ada, maka datanya tidak ada di UI.'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-					((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') +
-					GlobalVariable.ReasonFailedNoneUI) + ' pada Page Document Monitoring.')
+                            'Split teks total Stamping'
+                            totalStampingAndTotalMaterai = WebUI.getText(modifyObjectvalues).split('/', -1)
 
-				GlobalVariable.FlagFailed = 1
-			}
-			
-            saldoAfter = loginAdminGetSaldo(conneSign, 'Yes', sheet)
-
-			'mengambil value db proses meterai'
-			int prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, nomorKontrakPerPilihan[
-				y])
-
-			'jika proses meterai tidak Failed'
-			if (prosesMaterai != 51) {
-				'jika saldo before sama dengan saldo after'
-				if (saldoBefore == saldoAfter) {
-                'write to excel status failed dan reason'
+                            'looping berdasarkan total split dan diverif berdasarkan db.'
+                            for (int k = 0; k < totalStampingAndTotalMaterai.size(); k++) {
+                                'Verifikasi UI dengan db'
+                                arrayMatch.add(WebUI.verifyEqual(totalStampingAndTotalMaterai[k], resultStamping[k], FailureHandling.CONTINUE_ON_FAILURE))
+                            }
+                        } else if (i == 10) {
+                        } else {
+                            'Selain di column 7 dan 8 maka akan diverif dengan db.'
+                            arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectvalues), resultQuery[arrayIndex++], 
+                                    false, FailureHandling.CONTINUE_ON_FAILURE))
+                        }
+                    }
+                }
+            } else {
+                'Jika tidak ada, maka datanya tidak ada di UI.'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                    ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
-                    ' terhadap total saldo dimana saldo awal dan saldo setelah meterai sama ')
-				} else {
-					verifySaldoUsed(conneSign, sheet)
-				}
-			} else {
-				if (saldoBefore != saldoAfter) {
-                'write to excel status failed dan reason'
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                    ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
-                    ' terhadap total saldo dimana saldo awal dan saldo setelah meterai tidak sama ')
-				}
-			}
+                    ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + 
+                    GlobalVariable.ReasonFailedNoneUI) + ' pada Page Document Monitoring.')
+
+                GlobalVariable.FlagFailed = 1
+            }
+            
+            saldoAfter = loginAdminGetSaldo('Yes', sheet)
+
+            'mengambil value db proses meterai'
+            int prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, nomorKontrakPerPilihan[y])
+
+            'jika proses meterai tidak Failed'
+            if (prosesMaterai != 51) {
+                'jika saldo before sama dengan saldo after'
+                if (saldoBefore == saldoAfter) {
+                    'write to excel status failed dan reason'
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                        GlobalVariable.StatusFailed, ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
+                            2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + ' terhadap total saldo dimana saldo awal dan saldo setelah meterai sama ')
+                } else {
+                    verifySaldoUsed(conneSign, sheet)
+                }
+            } else {
+                if (saldoBefore != saldoAfter) {
+                    'write to excel status failed dan reason'
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                        GlobalVariable.StatusFailed, ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
+                            2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + ' terhadap total saldo dimana saldo awal dan saldo setelah meterai tidak sama ')
+                }
+            }
         }
     }
 }
 
 def cancelDoc(Connection conneSign, String nomorKontrakPerPilihan) {
-	
-	'jika action yang dilakukan sebelumnya adalah view dokumen'
-	if (isStamping == 'Yes') {
-		
-		'set text no kontrak'
-		WebUI.setText(findTestObject('DocumentMonitoring/input_NoKontrak'), nomorKontrakPerPilihan)
-		
-		'click button cari'
-		WebUI.click(findTestObject('DocumentMonitoring/button_Cari'))
-	}
-	
-	'jika status text adalah complete'
-	if (WebUI.getText(findTestObject('DocumentMonitoring/lblTable_status'), FailureHandling.OPTIONAL).equalsIgnoreCase('Complete')) {
-		
-		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-			GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) +
-			';') + 'Cancel Document tidak bisa karena status Complete')
+    'jika action yang dilakukan sebelumnya adalah view dokumen'
+    if (isStamping == 'Yes') {
+        'set text no kontrak'
+        WebUI.setText(findTestObject('DocumentMonitoring/input_NoKontrak'), nomorKontrakPerPilihan)
 
-		GlobalVariable.FlagFailed = 1
-		
-		return
-	}
-	
-	'klik pada tombol cancel doc'
-	WebUI.click(findTestObject('DocumentMonitoring/button_CancelDoc'))
-	
-	'klik pada tombol batalkan'
-	WebUI.click(findTestObject('DocumentMonitoring/button_TidakBatalkan'))
-	
-	'klik pada tombol cancel doc'
-	WebUI.click(findTestObject('DocumentMonitoring/button_CancelDoc'))
-	
-	'klik pada tombol proses'
-	WebUI.click(findTestObject('DocumentMonitoring/button_YaProses'))
-	
-	'ambil message yang muncul pada popup'
-	String popupMsg = WebUI.getText(findTestObject('DocumentMonitoring/PopUpMessage'), FailureHandling.OPTIONAL)
-	
-	'klik pada tombol OK'
-	WebUI.click(findTestObject('DocumentMonitoring/button_OKcancelDoc'))
-	
-	'jika message yang muncul adalah sukses'
-	if (popupMsg.equalsIgnoreCase('Dokumen berhasil dibatalkan')) {
-		
-		'lakukan pengecekan ke DB'
-		checkVerifyEqualorMatch(WebUI.verifyMatch('0', CustomKeywords.'connection.DocumentMonitoring.getCancelDocStatus'(
-			conneSign, nomorKontrakPerPilihan),
-				false, FailureHandling.CONTINUE_ON_FAILURE), 'Pengecekan ke DB Cancel Doc gagal')
-	} else {
-		
-		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-			GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) +
-			';') + '<' + popupMsg + '>')
+        'click button cari'
+        WebUI.click(findTestObject('DocumentMonitoring/button_Cari'))
+    }
+    
+    'jika status text adalah complete'
+    if (WebUI.getText(findTestObject('DocumentMonitoring/lblTable_status'), FailureHandling.OPTIONAL).equalsIgnoreCase('Complete')) {
+        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + ';') + 'Cancel Document tidak bisa karena status Complete')
 
-		GlobalVariable.FlagFailed = 1
-	}
+        GlobalVariable.FlagFailed = 1
+
+        return null
+    }
+    
+    'klik pada tombol cancel doc'
+    WebUI.click(findTestObject('DocumentMonitoring/button_CancelDoc'))
+
+    'klik pada tombol batalkan'
+    WebUI.click(findTestObject('DocumentMonitoring/button_TidakBatalkan'))
+
+    'klik pada tombol cancel doc'
+    WebUI.click(findTestObject('DocumentMonitoring/button_CancelDoc'))
+
+    'klik pada tombol proses'
+    WebUI.click(findTestObject('DocumentMonitoring/button_YaProses'))
+
+    'ambil message yang muncul pada popup'
+    String popupMsg = WebUI.getText(findTestObject('DocumentMonitoring/PopUpMessage'), FailureHandling.OPTIONAL)
+
+    'klik pada tombol OK'
+    WebUI.click(findTestObject('DocumentMonitoring/button_OKcancelDoc'))
+
+    'jika message yang muncul adalah sukses'
+    if (popupMsg.equalsIgnoreCase('Dokumen berhasil dibatalkan')) {
+        'lakukan pengecekan ke DB'
+        checkVerifyEqualorMatch(WebUI.verifyMatch('0', CustomKeywords.'connection.DocumentMonitoring.getCancelDocStatus'(
+                    conneSign, nomorKontrakPerPilihan), false, FailureHandling.CONTINUE_ON_FAILURE), 'Pengecekan ke DB Cancel Doc gagal')
+    } else {
+        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + ';') + '<') + popupMsg) + '>')
+
+        GlobalVariable.FlagFailed = 1
+    }
 }
 
-def loginAdminGetSaldo(Connection conneSign, String start, String sheet) {
+def loginAdminGetSaldo(String start, String sheet) {
     String totalSaldo
 
     if (start == 'Yes') {
@@ -591,200 +580,200 @@ def loginAdminGetSaldo(Connection conneSign, String start, String sheet) {
     }
     
     'return total saldo awal'
-    return totalSaldo
+    totalSaldo
 }
 
-
 def verifySaldoUsed(Connection conneSign, String sheet) {
-	'get current date'
-	def currentDate = new Date().format('yyyy-MM-dd')
+    'get current date'
+    currentDate = new Date().format('yyyy-MM-dd')
 
-	documentType = CustomKeywords.'connection.APIFullService.getDocumentType'(conneSign, findTestData(excelPathStamping).getValue(
-			GlobalVariable.NumofColm, 11).replace('"', ''))
+    documentType = CustomKeywords.'connection.APIFullService.getDocumentType'(conneSign, findTestData(excelPathStamping).getValue(
+            GlobalVariable.NumofColm, 11).replace('"', ''))
 
-	documentName = CustomKeywords.'connection.DataVerif.getDocumentName'(conneSign, findTestData(excelPathStamping).getValue(
-			GlobalVariable.NumofColm, 11).replace('"', ''))
+    documentName = CustomKeywords.'connection.DataVerif.getDocumentName'(conneSign, findTestData(excelPathStamping).getValue(
+            GlobalVariable.NumofColm, 11).replace('"', ''))
 
-	'klik ddl untuk tenant memilih mengenai Vida'
-	WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)
+    'klik ddl untuk tenant memilih mengenai Vida'
+    WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)
 
-	'input filter dari saldo'
-	WebUI.setText(findTestObject('Saldo/input_tipesaldo'), 'Stamp Duty')
+    'input filter dari saldo'
+    WebUI.setText(findTestObject('Saldo/input_tipesaldo'), 'Stamp Duty')
 
-	'enter'
-	WebUI.sendKeys(findTestObject('Saldo/input_tipeSaldo'), Keys.chord(Keys.ARROW_DOWN))
+    'enter'
+    WebUI.sendKeys(findTestObject('Saldo/input_tipeSaldo'), Keys.chord(Keys.ARROW_DOWN))
 
-	'enter'
-	WebUI.sendKeys(findTestObject('Saldo/input_tipeSaldo'), Keys.chord(Keys.ENTER))
+    'enter'
+    WebUI.sendKeys(findTestObject('Saldo/input_tipeSaldo'), Keys.chord(Keys.ENTER))
 
-	'Input tipe transaksi'
-	WebUI.setText(findTestObject('Saldo/input_tipetransaksi'), 'Use Stamp Duty')
+    'Input tipe transaksi'
+    WebUI.setText(findTestObject('Saldo/input_tipetransaksi'), 'Use Stamp Duty')
 
-	'Input enter'
-	WebUI.sendKeys(findTestObject('Saldo/input_tipetransaksi'), Keys.chord(Keys.ENTER))
+    'Input enter'
+    WebUI.sendKeys(findTestObject('Saldo/input_tipetransaksi'), Keys.chord(Keys.ENTER))
 
-	'Input date sekarang'
-	WebUI.setText(findTestObject('Saldo/input_fromdate'), currentDate)
+    'Input date sekarang'
+    WebUI.setText(findTestObject('Saldo/input_fromdate'), currentDate)
 
-	'Input tipe dokumen'
-	WebUI.setText(findTestObject('Saldo/input_tipedokumen'), documentType)
+    'Input tipe dokumen'
+    WebUI.setText(findTestObject('Saldo/input_tipedokumen'), documentType)
 
-	'Input enter'
-	WebUI.sendKeys(findTestObject('Saldo/input_tipedokumen'), Keys.chord(Keys.ENTER))
+    'Input enter'
+    WebUI.sendKeys(findTestObject('Saldo/input_tipedokumen'), Keys.chord(Keys.ENTER))
 
-	'Input referal number'
-	WebUI.setText(findTestObject('Saldo/input_refnumber'), findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm,
-			11).replace('"', ''))
+    'Input referal number'
+    WebUI.setText(findTestObject('Saldo/input_refnumber'), findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 
+            11).replace('"', ''))
 
-	'Input documentTemplateName'
-	WebUI.setText(findTestObject('Saldo/input_namadokumen'), documentName, FailureHandling.CONTINUE_ON_FAILURE)
+    'Input documentTemplateName'
+    WebUI.setText(findTestObject('Saldo/input_namadokumen'), documentName, FailureHandling.CONTINUE_ON_FAILURE)
 
-	'Input date sekarang'
-	WebUI.setText(findTestObject('Saldo/input_todate'), currentDate)
+    'Input date sekarang'
+    WebUI.setText(findTestObject('Saldo/input_todate'), currentDate)
 
-	'Klik cari'
-	WebUI.click(findTestObject('Saldo/btn_cari'))
+    'Klik cari'
+    WebUI.click(findTestObject('Saldo/btn_cari'))
 
-	'get column di saldo'
-	variableSaldoColumn = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller > datatable-row-wrapper > datatable-body-row datatable-body-cell'))
+    'get column di saldo'
+    variableSaldoColumn = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller > datatable-row-wrapper > datatable-body-row datatable-body-cell'))
 
-	'get row di saldo'
-	variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper '))
+    'get row di saldo'
+    variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper '))
 
-	'ambil inquiry di db'
-	ArrayList inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldoForMeterai'(conneSign, findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 11).replace('"', ''))
+    'ambil inquiry di db'
+    ArrayList inquiryDB = CustomKeywords.'connection.APIFullService.gettrxSaldoForMeterai'(conneSign, findTestData(excelPathStamping).getValue(
+            GlobalVariable.NumofColm, 11).replace('"', ''))
 
-	index = 0
+    index = 0
 
-	for (int p = 1; p <= variableSaldoRow.size(); p++) {
-		'looping mengenai columnnya'
-		for (int u = 1; u <= (variableSaldoColumn.size() / variableSaldoRow.size()); u++) {
-			'modify per row dan column. column menggunakan u dan row menggunakan documenttemplatename'
-			modifyperrowpercolumn = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/lbl_notrxsaldo'), 'xpath',
-				'equals', ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
-				p) + ']/datatable-body-row/div[2]/datatable-body-cell[') + u) + ']/div', true)
+    for (int p = 1; p <= variableSaldoRow.size(); p++) {
+        'looping mengenai columnnya'
+        for (int u = 1; u <= (variableSaldoColumn.size() / variableSaldoRow.size()); u++) {
+            'modify per row dan column. column menggunakan u dan row menggunakan documenttemplatename'
+            modifyperrowpercolumn = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/lbl_notrxsaldo'), 'xpath', 
+                'equals', ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
+                p) + ']/datatable-body-row/div[2]/datatable-body-cell[') + u) + ']/div', true)
 
-			'Jika u di lokasi qty atau kolom ke 9'
-			if (u == 9) {
-				'Jika yang qtynya 1 dan databasenya juga, berhasil'
-				if ((WebUI.getText(modifyperrowpercolumn) == '1') || ((inquiryDB[index]) == '-1')) {
-					'Jika bukan untuk 2 kolom itu, maka check ke db'
-					checkVerifyEqualorMatch(WebUI.verifyMatch('-' + WebUI.getText(modifyperrowpercolumn), inquiryDB[index],
-							false, FailureHandling.CONTINUE_ON_FAILURE), 'pada Kuantitas di Mutasi Saldo dengan nomor kontrak ' +
-						findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 11).replace('"', ''))
+            'Jika u di lokasi qty atau kolom ke 9'
+            if (u == 9) {
+                'Jika yang qtynya 1 dan databasenya juga, berhasil'
+                if ((WebUI.getText(modifyperrowpercolumn) == '1') || ((inquiryDB[index]) == '-1')) {
+                    'Jika bukan untuk 2 kolom itu, maka check ke db'
+                    checkVerifyEqualorMatch(WebUI.verifyMatch('-' + WebUI.getText(modifyperrowpercolumn), inquiryDB[index], 
+                            false, FailureHandling.CONTINUE_ON_FAILURE), 'pada Kuantitas di Mutasi Saldo dengan nomor kontrak ' + 
+                        findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 11).replace('"', ''))
 
-					index++
-				} else {
-					'Jika bukan -1, atau masih 0. Maka ttdnya dibilang error'
-					GlobalVariable.FlagFailed = 1
+                    index++
+                } else {
+                    'Jika bukan -1, atau masih 0. Maka ttdnya dibilang error'
+                    GlobalVariable.FlagFailed = 1
 
-					'Jika saldonya belum masuk dengan flag, maka signnya gagal.'
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-						GlobalVariable.StatusFailed, (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
-							2) + ';') + GlobalVariable.ReasonFailedSignGagal) + ' terlihat pada Kuantitas di Mutasi Saldo dengan nomor kontrak ') +
-						findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 11).replace('"', ''))
+                    'Jika saldonya belum masuk dengan flag, maka signnya gagal.'
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                        GlobalVariable.StatusFailed, (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
+                            2) + ';') + GlobalVariable.ReasonFailedSignGagal) + ' terlihat pada Kuantitas di Mutasi Saldo dengan nomor kontrak ') + 
+                        findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 11).replace('"', ''))
 
-					index++
-				}
-			} else if (u == (variableSaldoColumn.size() / variableSaldoRow.size())) {
-				'Jika di kolom ke 10, atau di FE table saldo'
-			} else {
-				'check table'
-				checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(modifyperrowpercolumn), inquiryDB[index], false,
-						FailureHandling.CONTINUE_ON_FAILURE), 'pada Mutasi Saldo dengan nomor Kontrak ' + findTestData(excelPathStamping).getValue(
-						GlobalVariable.NumofColm, 11).replace('"', ''))
+                    index++
+                }
+            } else if (u == (variableSaldoColumn.size() / variableSaldoRow.size())) {
+                'Jika di kolom ke 10, atau di FE table saldo'
+            } else {
+                'check table'
+                checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getText(modifyperrowpercolumn), inquiryDB[index], false, 
+                        FailureHandling.CONTINUE_ON_FAILURE), 'pada Mutasi Saldo dengan nomor Kontrak ' + findTestData(excelPathStamping).getValue(
+                        GlobalVariable.NumofColm, 11).replace('"', ''))
 
-				index++
-			}
-		}
-	}
+                index++
+            }
+        }
+    }
 }
 
 def inputDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan, String linkDocumentMonitoring, String settingHO) {
-	'Pembuatan untuk array Index result Query'
-	arrayIndex = 0
+    'Pembuatan untuk array Index result Query'
+    arrayIndex = 0
 
-	'Mengambil value db untuk input-input monitoring seperti nomor kontrak, cabang, dan wilayah'
-	inputDocumentMonitoring = CustomKeywords.'connection.DocumentMonitoring.getInputDocumentMonitoring'(conneSign, nomorKontrakPerPilihan)
-	
-	println inputDocumentMonitoring
+    'Mengambil value db untuk input-input monitoring seperti nomor kontrak, cabang, dan wilayah'
+    inputDocumentMonitoring = CustomKeywords.'connection.DocumentMonitoring.getInputDocumentMonitoring'(conneSign, nomorKontrakPerPilihan)
 
-	'Set text mengenai teks customer'
-	WebUI.setText(findTestObject('DocumentMonitoring/input_NamaPelanggan'), inputDocumentMonitoring[arrayIndex++], FailureHandling.OPTIONAL)
+    println(inputDocumentMonitoring)
 
-	'Set text mengneai input nomor kontrak'
-	WebUI.setText(findTestObject('DocumentMonitoring/input_NoKontrak'), nomorKontrakPerPilihan)
+    'Set text mengenai teks customer'
+    WebUI.setText(findTestObject('DocumentMonitoring/input_NamaPelanggan'), inputDocumentMonitoring[arrayIndex++], FailureHandling.OPTIONAL)
 
-	'Set text mengenai tanggal permintaan dari'
-	WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalPermintaanDari'), inputDocumentMonitoring[arrayIndex++])
+    'Set text mengneai input nomor kontrak'
+    WebUI.setText(findTestObject('DocumentMonitoring/input_NoKontrak'), nomorKontrakPerPilihan)
 
-	'Set text mengenai tanggal selesai dari'
-	WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalSelesaiDari'), inputDocumentMonitoring[(arrayIndex -
-		1)])
+    'Set text mengenai tanggal permintaan dari'
+    WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalPermintaanDari'), inputDocumentMonitoring[arrayIndex++])
 
-	'Set text tanggal permintaan sampai'
-	WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalPermintaanSampai'), inputDocumentMonitoring[arrayIndex++])
+    'Set text mengenai tanggal selesai dari'
+    WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalSelesaiDari'), inputDocumentMonitoring[(arrayIndex - 1)])
 
-	'Set text tanggal selesai sampai'
-	WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalSelesaiSampai'), inputDocumentMonitoring[(arrayIndex -
-		1)])
+    'Set text tanggal permintaan sampai'
+    WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalPermintaanSampai'), inputDocumentMonitoring[arrayIndex++])
 
-	'Set text mengenai tipe dokumen'
-	WebUI.setText(findTestObject('DocumentMonitoring/input_TipeDok'), inputDocumentMonitoring[arrayIndex++])
+    'Set text tanggal selesai sampai'
+    WebUI.setText(findTestObject('DocumentMonitoring/input_TanggalSelesaiSampai'), inputDocumentMonitoring[(arrayIndex - 
+        1)])
 
-	'Enter'
-	WebUI.sendKeys(findTestObject('DocumentMonitoring/input_TipeDok'), Keys.chord(Keys.ENTER))
+    'Set text mengenai tipe dokumen'
+    WebUI.setText(findTestObject('DocumentMonitoring/input_TipeDok'), inputDocumentMonitoring[arrayIndex++])
 
-	'Set text mengenai status dokumen'
-	WebUI.setText(findTestObject('DocumentMonitoring/input_Status'), inputDocumentMonitoring[arrayIndex++])
+    'Enter'
+    WebUI.sendKeys(findTestObject('DocumentMonitoring/input_TipeDok'), Keys.chord(Keys.ENTER))
 
-	'Enter'
-	WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Status'), Keys.chord(Keys.ENTER))
+    'Set text mengenai status dokumen'
+    WebUI.setText(findTestObject('DocumentMonitoring/input_Status'), inputDocumentMonitoring[arrayIndex++])
 
-	if (linkDocumentMonitoring == '') {
-		'Set text mengenai wilayah'
-		WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndex++], FailureHandling.OPTIONAL)
+    'Enter'
+    WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Status'), Keys.chord(Keys.ENTER))
 
-		'Enter'
-		WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER), FailureHandling.OPTIONAL)
+    if (linkDocumentMonitoring == '') {
+        'Set text mengenai wilayah'
+        WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndex++], FailureHandling.OPTIONAL)
 
-		'Set text mengenai input cabang'
-		WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndex++], FailureHandling.OPTIONAL)
+        'Enter'
+        WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER), FailureHandling.OPTIONAL)
 
-		'Enter'
-		WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER), FailureHandling.OPTIONAL)
-	}
-	
-	if (WebUI.verifyMatch(settingHO.toString(), '1', true, FailureHandling.OPTIONAL) == true) {
-		'Set text mengenai wilayah'
-		WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndex++])
+        'Set text mengenai input cabang'
+        WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndex++], FailureHandling.OPTIONAL)
 
-		'Enter'
-		WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER))
+        'Enter'
+        WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER), FailureHandling.OPTIONAL)
+    }
+    
+    if (WebUI.verifyMatch(settingHO.toString(), '1', true, FailureHandling.OPTIONAL) == true) {
+        'Set text mengenai wilayah'
+        WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndex++])
 
-		'Set text mengenai input cabang'
-		WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndex++])
+        'Enter'
+        WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER))
 
-		'Enter'
-		WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER))
-	}
-	
-	'Klik enter Cari'
-	WebUI.click(findTestObject('DocumentMonitoring/button_Cari'))
+        'Set text mengenai input cabang'
+        WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndex++])
+
+        'Enter'
+        WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER))
+    }
+    
+    'Klik enter Cari'
+    WebUI.click(findTestObject('DocumentMonitoring/button_Cari'))
 }
 
 def checkVerifyEqualorMatch(Boolean isMatch, String reason) {
-	if (isMatch == false) {
-		'Write to excel status failed and ReasonFailedVerifyEqualorMatch'
-		GlobalVariable.FlagFailed = 1
+    if (isMatch == false) {
+        'Write to excel status failed and ReasonFailedVerifyEqualorMatch'
+        GlobalVariable.FlagFailed = 1
 
-		'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-			((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) +
-			reason)
-		
-		return false
-	}
-	
-	return true
+        'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
+            reason)
+
+        return false
+    }
+    
+    true
 }
+

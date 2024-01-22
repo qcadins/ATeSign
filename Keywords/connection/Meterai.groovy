@@ -20,7 +20,7 @@ public class Meterai {
 	getTotalMeterai(Connection conn) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT COUNT(*) FROM tr_stamp_duty tsd JOIN ms_tenant mt ON mt.id_ms_tenant = tsd.id_ms_tenant where tsd.dtm_crt >= date_trunc('month', now()) and tsd.dtm_crt <= now() AND tenant_code = '"+ GlobalVariable.Tenant +"'")
+		resultSet = stm.executeQuery("SELECT COUNT(*) FROM tr_stamp_duty tsd JOIN ms_tenant mt ON mt.id_ms_tenant = tsd.id_ms_tenant where tsd.dtm_crt >= date_trunc('month', now()) and tsd.dtm_crt <= now() AND tenant_code = '" + GlobalVariable.Tenant + "'")
 
 		metadata = resultSet.metaData
 
@@ -179,7 +179,7 @@ public class Meterai {
 	getErrorMessage(Connection conn, String refNumber) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select error_message from tr_document_h_stampduty_error tdhse left join tr_document_h tdh on tdhse.id_document_h = tdh.id_document_h where tdh.ref_number = '"+refNumber+"' order by tdhse.dtm_crt desc limit 1")
+		resultSet = stm.executeQuery("select error_message from tr_document_h_stampduty_error tdhse left join tr_document_h tdh on tdhse.id_document_h = tdh.id_document_h where tdh.ref_number = '" + refNumber + "' order by tdhse.dtm_crt desc limit 1")
 
 		metadata = resultSet.metaData
 
@@ -195,7 +195,7 @@ public class Meterai {
 	getAutomaticStamp(Connection conn, String refNumber) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select automatic_stamping_after_sign from tr_document_h where ref_number = '"+refNumber+"'")
+		resultSet = stm.executeQuery("select automatic_stamping_after_sign from tr_document_h where ref_number = '" + refNumber + "'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -210,7 +210,7 @@ public class Meterai {
 	getInsertStampingPaymentReceipt(Connection conn, String transactionId) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select mst.tenant_code, mdt.doc_template_code, tdh.ref_number, tdd.tenant_transaction_id, tdd.document_name,TO_CHAR(tdd.request_date,'yyyy-mm-dd'), msl_doctype.code, tdd.document_nominal, mpdt.peruri_doc_id, mso.office_code, mso.office_name, msr.region_code, msr.region_name , msl_idtype.code, tdd.id_no, tdd.id_name from tr_balance_mutation tbm left join ms_tenant mst on tbm.id_ms_tenant = mst.id_ms_tenant left join tr_document_h tdh on tbm.id_document_h = tdh.id_document_h left join tr_document_d tdd on tdd.id_document_h = tdh.id_document_h left join ms_doc_template mdt on tdd.id_ms_doc_template = mdt.id_doc_template left join tr_stamp_duty tsd on tbm.id_stamp_duty = tsd.id_stamp_duty left join ms_lov msl_doctype on tdh.lov_doc_type = msl_doctype.id_lov left join ms_peruri_doc_type mpdt on tdd.id_peruri_doc_type = mpdt.id_peruri_doc_type left join ms_office mso on tdh.id_ms_office = mso.id_ms_office left join ms_region msr on mso.id_ms_region = msr.id_ms_region left join ms_lov msl_idtype on tdd.lov_id_type = msl_idtype.id_lov where tdd.tenant_transaction_id = '"+transactionId+"' order by tbm.dtm_crt desc ")
+		resultSet = stm.executeQuery("select mst.tenant_code, mdt.doc_template_code, tdh.ref_number, tdd.tenant_transaction_id, tdd.document_name,TO_CHAR(tdd.request_date,'yyyy-mm-dd'), msl_doctype.code, tdd.document_nominal, mpdt.peruri_doc_id, mso.office_code, mso.office_name, msr.region_code, msr.region_name , msl_idtype.code, tdd.id_no, tdd.id_name from tr_balance_mutation tbm left join ms_tenant mst on tbm.id_ms_tenant = mst.id_ms_tenant left join tr_document_h tdh on tbm.id_document_h = tdh.id_document_h left join tr_document_d tdd on tdd.id_document_h = tdh.id_document_h left join ms_doc_template mdt on tdd.id_ms_doc_template = mdt.id_doc_template left join tr_stamp_duty tsd on tbm.id_stamp_duty = tsd.id_stamp_duty left join ms_lov msl_doctype on tdh.lov_doc_type = msl_doctype.id_lov left join ms_peruri_doc_type mpdt on tdd.id_peruri_doc_type = mpdt.id_peruri_doc_type left join ms_office mso on tdh.id_ms_office = mso.id_ms_office left join ms_region msr on mso.id_ms_region = msr.id_ms_region left join ms_lov msl_idtype on tdd.lov_id_type = msl_idtype.id_lov where tdd.tenant_transaction_id = '" + transactionId + "' order by tbm.dtm_crt desc ")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -228,7 +228,7 @@ public class Meterai {
 	getCountTotalStampDutyOnTemplate(Connection conn, String docTemplateCode) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select COUNT(msl.code) from ms_doc_template_sign_loc mdtsl left join ms_lov msl on mdtsl.lov_sign_type = msl.id_lov left join ms_doc_template mdt on mdtsl.id_doc_template = mdt.id_doc_template WHERE msl.code = 'SDT' AND mdt.doc_template_code = '"+docTemplateCode+"'")
+		resultSet = stm.executeQuery("select COUNT(msl.code) from ms_doc_template_sign_loc mdtsl left join ms_lov msl on mdtsl.lov_sign_type = msl.id_lov left join ms_doc_template mdt on mdtsl.id_doc_template = mdt.id_doc_template WHERE msl.code = 'SDT' AND mdt.doc_template_code = '" + docTemplateCode + "'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

@@ -1,19 +1,8 @@
-import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
-import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
-import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
-import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
-import com.kms.katalon.core.testcase.TestCase as TestCase
-import com.kms.katalon.core.testdata.TestData as TestData
-import com.kms.katalon.core.testng.keyword.TestNGBuiltinKeywords as TestNGKW
-import com.kms.katalon.core.testobject.TestObject as TestObject
-import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
 import org.openqa.selenium.By as By
@@ -24,7 +13,7 @@ import java.sql.Connection as Connection
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'inisialisasi result'
-HashMap<String, String> result = new HashMap<String, String>()
+HashMap result = [:]
 
 'jika vendornya ada teks digi ataupun DIGI'
 if (vendor.toString().contains('digi') || vendor.toString().contains('DIGI')) {
@@ -36,24 +25,30 @@ if (vendor.toString().contains('digi') || vendor.toString().contains('DIGI')) {
 }
 
 'return total saldo awal'
-String totalSaldoOTP, vendorVerifikasi, totalSaldo
+String vendorVerifikasi, totalSaldo
 
 funcLogin()
 
 if (usageSaldo == 'Send') {
 	funcSaldoSend(result)
-} else if (usageSaldo == 'Sign') {
+}
+
+if (usageSaldo == 'Sign') {
 	funcSaldoSign(result)
-} else if (usageSaldo == 'Stamp') {
+}
+
+if (usageSaldo == 'Stamp') {
 	funcSaldoStamp(result)
-} else if (usageSaldo == 'Register') {
+}
+
+if (usageSaldo == 'Register') {
 	funcSaldoRegis(result, countCheckSaldo, conneSign)
 }
 
-return result
+result
 
 def rowExcel(String cellValue) {
-	return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+	CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
 def funcLogin() {
@@ -213,7 +208,7 @@ def funcFindSaldo(HashMap result, String vendorVerifikasi, ArrayList saldoList, 
 				if (forAutosign == true) {
 					result.put(vendor, WebUI.getText(modifyObjecttotalSaldoSign).replace(',', ''))
 				} else {
-					result.put(saldoList[i], WebUI.getText(modifyObjecttotalSaldoSign).replace(',',''))
+					result.put(saldoList[i], WebUI.getText(modifyObjecttotalSaldoSign).replace(',', ''))
 				}
 			}
 		}
@@ -227,19 +222,18 @@ def funcSaldoRegis(HashMap result, int countCheckSaldo, Connection conneSign) {
 	
 	if (!findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
 		'API Register')) {
-	
 		vendorVerifikasi = 'ESIGN/ADINS'
 		
 		'check jika Must use WA message = 1'
 		if ((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')) == '1')) {
 			useSaldo = 'WhatsApp Message'
 			
-			saldoList = [useSaldo,'OTP']
+			saldoList = [useSaldo, 'OTP']
 		} else {
 			'check jika email service on'
 			if (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == '1') {
 				'check jika use WA message = 1'
-				if((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) == '1')) {
+				if ((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) == '1')) {
 					useSaldo = 'WhatsApp Message'
 			
 					saldoList = [useSaldo,'OTP']
@@ -279,7 +273,7 @@ def funcSaldoRegis(HashMap result, int countCheckSaldo, Connection conneSign) {
 	}
 	
 	if (vendor == 'VIDA') {
-		saldoList = ['Verifikasi','PNBP']
+		saldoList = ['Verifikasi', 'PNBP']
 	} else if (vendor == 'PRIVY' || vendor == 'TEKENAJA') {
 		saldoList = ['Verifikasi']
 	}
@@ -376,23 +370,8 @@ def inputFilterSaldo(String tipeSaldo, Connection conneSign) {
 		('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
 		variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[10]/div', true)
 
-	'check if email kosong atau tidak'
-	if (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase('Edit') &&
-		findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Invite By')).equalsIgnoreCase('Email')) {
-		'get email dari row edit'
-		email = findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Email - Edit')).replace('"', '')
-	} else if (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 2 &&
-		!findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase('Edit')) {
-		'get email dari row input'
-		email = findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', '')
-	} else {
-		'get name + email hosting'
-		email = findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"', '') + CustomKeywords.'connection.DataVerif.getEmailHosting'(conneSign)
-	}
-	
 	'get trx dari db'
-	ArrayList<String> result = CustomKeywords.'connection.DataVerif.getSaldoTrx'(conneSign, email, findTestData(excel).getValue(
-			GlobalVariable.NumofColm, rowExcel('No Telepon')).replace('"', ''), 'Use ' + tipeSaldo)
+	ArrayList<String> result = CustomKeywords.'connection.DataVerif.getSaldoTrx'(conneSign, 'Use ' + tipeSaldo)
 
 	arrayIndex = 0
 
@@ -426,7 +405,7 @@ def inputFilterSaldo(String tipeSaldo, Connection conneSign) {
 	checkVerifyEqualOrMatch(WebUI.verifyMatch(Note, result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE),
 		' Notes ' + tipeSaldo)
 
-	if(tipeSaldo == 'SMS' && Note.toLowerCase().contains('error')) {
+	if (tipeSaldo == 'SMS' && Note.toLowerCase().contains('error')) {
 		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
 		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 			((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + '; <') +
