@@ -14,6 +14,8 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'get colm excel'
 int countColmExcel = findTestData(excelPathRegister).columnNumbers
 
+String lov_code = ''
+
 'declare variable array'
 HashMap<String, String> saldoBefore = [:]
 
@@ -47,7 +49,20 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'set tenant kosong'
             GlobalVariable.Tenant = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Wrong tenant Code'))
         }
-        
+		
+		if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')) == 'API Generate Inv Link Normal' ||
+			findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')) == 'API Generate Inv Link External') {
+			'lov_code menjadi GEN_INV'
+			lov_code = 'GEN_INV'
+		} else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')) == 'Menu Buat Undangan') {
+			'lov_code menjadi GEN_INV menu'
+			lov_code = 'GEN_INV_MENU'
+		}
+		
+		'ambil result get inv link'
+		ArrayList resultGetInvLink = CustomKeywords.'connection.APIFullService.getResultNotifTypeGenInvLink'(conneSign,
+			findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')), lov_code)
+		
         'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathRegister, GlobalVariable.NumofColm, rowExcel(
                 'Use Correct base Url'))
@@ -55,9 +70,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'check ada value maka setting email service tenant'
         if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')).length() > 
         0) {
-            'setting email service tenant'
-            CustomKeywords.'connection.APIFullService.settingEmailServiceTenant'(conneSign, findTestData(excelPathRegister).getValue(
-                    GlobalVariable.NumofColm, rowExcel('Setting Email Service')))
+			'setting email service tenant'
+			CustomKeywords.'connection.APIFullService.settingEmailServiceTenant'(conneSign, findTestData(excelPathRegister).getValue(
+					GlobalVariable.NumofColm, rowExcel('Setting Email Service')))
         }
         
         'check ada value maka setting SMS certif notif'
@@ -79,17 +94,31 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'check ada value maka setting must use wa first'
         if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')).length() > 
         0) {
-            'setting must use wa first'
-            CustomKeywords.'connection.APIFullService.settingMustUseWAFirst'(conneSign, findTestData(excelPathRegister).getValue(
+			if (resultGetInvLink.isEmpty()) {
+				'setting must use wa first'
+				CustomKeywords.'connection.APIFullService.settingMustUseWAFirst'(conneSign, findTestData(excelPathRegister).getValue(
                     GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')))
+			}
+			else {
+				'setting must use wa by notiftype tenant'
+				CustomKeywords.'connection.UpdateData.updateMustWALevelNotifGenInvLink'(conneSign, findTestData(excelPathRegister).getValue(
+                    GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')))
+			}
         }
         
         'check ada value maka setting use wa message'
         if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')).length() > 
         0) {
-            'setting use wa message'
-            CustomKeywords.'connection.APIFullService.settingUseWAMessage'(conneSign, findTestData(excelPathRegister).getValue(
+			if (resultGetInvLink.isEmpty()) {
+				'setting use wa message'
+				CustomKeywords.'connection.APIFullService.settingUseWAMessage'(conneSign, findTestData(excelPathRegister).getValue(
                     GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')))
+			}
+			else {
+				'setting must use wa by notiftype tenant'
+				CustomKeywords.'connection.UpdateData.updateUseWAMsgLevelNotifGenInvLink'(conneSign, findTestData(excelPathRegister).getValue(
+					GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')))
+			}
         }
         
         'check if mau menggunakan api_key yang salah atau benar'
@@ -109,7 +138,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             CustomKeywords.'connection.APIFullService.settingSendSMSGenInv'(conneSign, findTestData(excelPathRegister).getValue(
                     GlobalVariable.NumofColm, rowExcel('Setting Send SMS GenInv')))
         }
-        
+		
         if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Run API Only - Gen Link')).equalsIgnoreCase(
             'No')) {
             'get saldo before'
