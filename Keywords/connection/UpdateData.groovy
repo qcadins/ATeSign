@@ -299,7 +299,7 @@ public class UpdateData {
 	}
 
 	@Keyword
-	def rowExcel(String cellValue) {
+	rowExcel(String cellValue) {
 		WriteExcel needto = new WriteExcel()
 		return needto.getExcelRow(GlobalVariable.DataFilePath, sheet, cellValue)
 	}
