@@ -62,7 +62,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'Inisialisasi otp, photo, ipaddress, dan total signed sebelumnya yang dikosongkan'
         String otp, photo, ipaddress
 
-        ArrayList totalSignedBefore = [], totalSignedAfter = [], flaggingOTP = []
+        ArrayList totalSignedBefore = [], totalSignedAfter = []
 
         'Split dokumen id agar mendapat dokumenid 1 per 1 dengan case bulk'
         documentId = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('$documentid')).replace(

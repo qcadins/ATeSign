@@ -171,15 +171,15 @@ public class EditSignerData {
 
 		helperQuery = ''
 		if (tenantCode != '') {
-			resultSet = stm.executeQuery("select count(*) from ms_tenant where tenant_code = '"+tenantCode+"'")
+			resultSet = stm.executeQuery("select count(*) from ms_tenant where tenant_code = '" + tenantCode + "'")
 			metadata = resultSet.metaData
-	
+
 			columnCount = metadata.getColumnCount()
-			
+
 			while (resultSet.next()) {
 				data = resultSet.getObject(1)
 			}
-			
+
 			if (Integer.parseInt(data) > 0) {
 				helperQuery = "and mst.tenant_code = '" + tenantCode + "'"
 			}

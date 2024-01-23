@@ -20,7 +20,7 @@ public class CheckSaveProccess {
 				(new customizekeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
 						1, colm - 1, GlobalVariable.ReasonFailedSystemError)
 			}
-		}else {
+		} else {
 			if (count == 0) {
 				(new customizekeyword.WriteExcel()).writeToExcel(GlobalVariable.DataFilePath, sheetname,
 						0, colm - 1, GlobalVariable.StatusFailed)

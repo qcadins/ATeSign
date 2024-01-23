@@ -71,96 +71,156 @@ public class UpdateData {
 	@Keyword
 	updateMustWALevelNotifSendDocAndManualSign(Connection conn, String value) {
 		Statement stm = conn.createStatement()
+<<<<<<< HEAD
 		if (value != '') {
 			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET must_use_wa_first = '"+value+"' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '"+GlobalVariable.Tenant+"' AND (ml.code = 'SEND_DOC' OR ml.code = 'MANUAL_SIGN_REQ') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+=======
+		if (value != 0) {
+			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET must_use_wa_first = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND (ml.code = 'SEND_DOC' OR ml.code = 'MANUAL_SIGN_REQ') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 		}
 	}
 
 	@Keyword
 	updateUseWAMsgLevelNotifSendDocAndManualSign(Connection conn, String value) {
 		Statement stm = conn.createStatement()
+<<<<<<< HEAD
 		if (value != '') {
 			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET use_wa_message = '"+value+"' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '"+GlobalVariable.Tenant+"' AND (ml.code = 'SEND_DOC' OR ml.code = 'MANUAL_SIGN_REQ') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+=======
+		if (value != 0) {
+			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET use_wa_message = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND (ml.code = 'SEND_DOC' OR ml.code = 'MANUAL_SIGN_REQ') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 		}
 	}
 
 	@Keyword
 	updateOtpByEmailLevelNotifSendDocAndManualSign(Connection conn, String value) {
 		Statement stm = conn.createStatement()
+<<<<<<< HEAD
 		if (value != '') {
 			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET send_otp_by_email = '"+value+"' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '"+GlobalVariable.Tenant+"' AND (ml.code = 'SEND_DOC' OR ml.code = 'MANUAL_SIGN_REQ') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+=======
+		if (value != 0) {
+			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET send_otp_by_email = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND (ml.code = 'SEND_DOC' OR ml.code = 'MANUAL_SIGN_REQ') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 		}
 	}
 
 	@Keyword
 	updateMustWALevelNotifOTPSignNormal(Connection conn, String value) {
 		Statement stm = conn.createStatement()
+<<<<<<< HEAD
 		if (value != '') {
 			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET must_use_wa_first = '"+value+"' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '"+GlobalVariable.Tenant+"' AND ml.code = 'OTP_SIGN_NORMAL' AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+=======
+		if (value != 0) {
+			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET must_use_wa_first = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND ml.code = 'OTP_SIGN_NORMAL' AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 		}
 	}
 
 	@Keyword
 	updateUseWAMsgLevelNotifOTPSignNormal(Connection conn, String value) {
 		Statement stm = conn.createStatement()
+<<<<<<< HEAD
 		if (value != '') {
 			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET use_wa_message = '"+value+"' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '"+GlobalVariable.Tenant+"' AND ml.code = 'OTP_SIGN_NORMAL' AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+=======
+		if (value != 0) {
+			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET use_wa_message = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND ml.code = 'OTP_SIGN_NORMAL' AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 		}
 	}
 
 	@Keyword
 	updateOtpByEmailLevelNotifOTPSignNormal(Connection conn, String value) {
 		Statement stm = conn.createStatement()
+<<<<<<< HEAD
 		if (value != '') {
 			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET send_otp_by_email = '"+value+"' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '"+GlobalVariable.Tenant+"' AND ml.code = 'OTP_SIGN_NORMAL' AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+=======
+		if (value != 0) {
+			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET send_otp_by_email = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND ml.code = 'OTP_SIGN_NORMAL' AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 		}
 	}
 
 	@Keyword
 	updateMustWALevelNotifOTPSignEmbedV2(Connection conn, String value) {
 		Statement stm = conn.createStatement()
+<<<<<<< HEAD
 		if (value != '') {
 			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET must_use_wa_first = '"+value+"' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '"+GlobalVariable.Tenant+"' AND ml.code = 'OTP_SIGN_EMBED_V2' AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+=======
+		if (value != 0) {
+			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET must_use_wa_first = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND ml.code = 'OTP_SIGN_EMBED_V2' AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 		}
 	}
 
 	@Keyword
 	updateUseWAMsgLevelNotifOTPSignEmbedV2(Connection conn, String value) {
 		Statement stm = conn.createStatement()
+<<<<<<< HEAD
 		if (value != '') {
 			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET use_wa_message = '"+value+"' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '"+GlobalVariable.Tenant+"' AND ml.code = 'OTP_SIGN_EMBED_V2' AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+=======
+		if (value != 0) {
+			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET use_wa_message = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND ml.code = 'OTP_SIGN_EMBED_V2' AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 		}
 	}
 
 	@Keyword
 	updateOtpByEmailLevelNotifOTPSignEmbedV2(Connection conn, String value) {
 		Statement stm = conn.createStatement()
+<<<<<<< HEAD
 		if (value != '') {
 			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET send_otp_by_email = '"+value+"' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '"+GlobalVariable.Tenant+"' AND ml.code = 'OTP_SIGN_EMBED_V2' AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+=======
+		if (value != 0) {
+			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET send_otp_by_email = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND ml.code = 'OTP_SIGN_EMBED_V2' AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 		}
 	}
 
 	@Keyword
 	updateMustWALevelNotifOTPSignExternal(Connection conn, String value) {
 		Statement stm = conn.createStatement()
+<<<<<<< HEAD
 		if (value != '') {
 			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET must_use_wa_first = '"+value+"' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '"+GlobalVariable.Tenant+"' AND ml.code = 'OTP_SIGN_EXTERNAL' AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+=======
+		if (value != 0) {
+			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET must_use_wa_first = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND ml.code = 'OTP_SIGN_EXTERNAL' AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 		}
 	}
 
 	@Keyword
 	updateUseWAMsgLevelNotifOTPSignExternal(Connection conn, String value) {
 		Statement stm = conn.createStatement()
+<<<<<<< HEAD
 		if (value != '') {
 			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET use_wa_message = '"+value+"' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '"+GlobalVariable.Tenant+"' AND ml.code = 'OTP_SIGN_EXTERNAL' AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+=======
+		if (value != 0) {
+			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET use_wa_message = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND ml.code = 'OTP_SIGN_EXTERNAL' AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 		}
 	}
 
 	@Keyword
 	updateOtpByEmailLevelNotifOTPSignExternal(Connection conn, String value) {
 		Statement stm = conn.createStatement()
+<<<<<<< HEAD
 		if (value != '') {
 			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET send_otp_by_email = '"+value+"' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '"+GlobalVariable.Tenant+"' AND ml.code = 'OTP_SIGN_EXTERNAL' AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+=======
+		if (value != 0) {
+			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET send_otp_by_email = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND ml.code = 'OTP_SIGN_EXTERNAL' AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 		}
 	}
 
@@ -170,6 +230,7 @@ public class UpdateData {
 
 		stm.executeUpdate("UPDATE ms_vendor_registered_user SET is_external_activation = '" + value + "' WHERE signer_registered_email = '" + email + "'")
 	}
+<<<<<<< HEAD
 
 	@Keyword
 	updateDBLevelTenant(Connection conneSign, String excelPathMain, String sheets) {
@@ -305,5 +366,27 @@ public class UpdateData {
 	}
 	
 	
+=======
+	@Keyword
+	updateMustWALevelNotifGenInvLink(Connection conn, String value) {
+		Statement stm = conn.createStatement()
+		
+		stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET must_use_wa_first = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '"+GlobalVariable.Tenant+"' AND (ml.code = 'GEN_INV' OR ml.code = 'GEN_INV_MENU') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+	}
+
+	@Keyword
+	updateUseWAMsgLevelNotifGenInvLink(Connection conn, String value) {
+		Statement stm = conn.createStatement()
+
+		stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET use_wa_message = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '"+GlobalVariable.Tenant+"' AND (ml.code = 'GEN_INV' OR ml.code = 'GEN_INV_MENU') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+	}
+
+	@Keyword
+	updateOtpByEmailLevelNotifGenInvLink(Connection conn, String value) {
+		Statement stm = conn.createStatement()
+
+		stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET send_otp_by_email = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '"+GlobalVariable.Tenant+"' AND (ml.code = 'GEN_INV' OR ml.code = 'GEN_INV_MENU') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+	}
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 }
 
