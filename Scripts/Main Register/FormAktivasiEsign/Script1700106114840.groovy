@@ -87,17 +87,7 @@ if (GlobalVariable.Psre == 'PRIVY') {
         'call function check mutation trx'
         checkTrxMutation(conneSign)
     }
-} //			'check if must use wa first / use wa message'
-//			if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')).length() > 0 &&
-//				findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')).length() > 0) {
-//			
-//				'delay 30 detik untuk input otp ke excel dari WA'
-//				WebUI.delay(30)
-//					
-//				'get otp yang diinput dari excel'
-//				OTP = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Wrong OTP - Aktivasi'))
-//			}
-else {
+} else {
     'check if email kosong atau tidak'
     if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase(
         'Edit') && (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Invite By')).equalsIgnoreCase(
