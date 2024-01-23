@@ -20,51 +20,51 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 arrayMatch = []
 
 'Mengambil documentid di excel dan displit'
-docid = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 6).split(', ', splitnum)
+docid = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('docid')).split(', ', splitnum)
 
 'split signer untuk doc1 dan signer untuk doc2'
-signAction = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 30).split(enter, splitnum)
+signAction = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$signAction')).split(enter, splitnum)
 
-signerType = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 31).split(enter, splitnum)
+signerType = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$signerType')).split(enter, splitnum)
 
-seqNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 32).split(enter, splitnum)
+seqNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('SeqNo')).split(enter, splitnum)
 
-tlp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 33).split(enter, splitnum)
+tlp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$tlp')).split(enter, splitnum)
 
-idKtp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 34).split(enter, splitnum)
+idKtp = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$idKtp')).split(enter, splitnum)
 
-email = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 35).split(enter, splitnum)
+email = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$email')).split(enter, splitnum)
 
-refNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 11)
+refNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo'))
 
 'looping berdasarkan jumlah dari document id '
 for (int i = 0; i < docid.size(); i++) {
     'Inisialisasi document template code berdasarkan delimiter ;'
-    documentTemplateCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 12).split(semicolon, splitnum)
+    documentTemplateCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$documentTemplateCode')).split(semicolon, splitnum)
 
     'Inisialisasi document template code berdasarkan delimiter ;'
-    documentName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 13).split(semicolon, splitnum)
+    documentName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('documentName')).split(semicolon, splitnum)
 
     'Inisialisasi office Code berdasarkan delimiter ;'
-    officeCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 14).split(semicolon, splitnum)
+    officeCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('officeCode')).split(semicolon, splitnum)
 
     'Inisialisasi office name berdasarkan delimiter ;'
-    officeName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 15).split(semicolon, splitnum)
+    officeName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('officeName')).split(semicolon, splitnum)
 
     'Inisialisasi region code berdasarkan delimiter ;'
-    regionCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 16).split(semicolon, splitnum)
+    regionCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('regionCode')).split(semicolon, splitnum)
 
     'Inisialisasi region name berdasarkan delimiter ;'
-    regionName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 17).split(semicolon, splitnum)
+    regionName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('regionName')).split(semicolon, splitnum)
 
     'Inisialisasi business line code berdasarkan delimiter ;'
-    businessLineCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 18).split(semicolon, splitnum)
+    businessLineCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('businessLineCode')).split(semicolon, splitnum)
 
     'Inisialisasi business line name berdasarkan delimiter ;'
-    businessLineName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 19).split(semicolon, splitnum)
+    businessLineName = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('businessLineName')).split(semicolon, splitnum)
 
     'Inisialisasi is sequence berdasarkan delimiter ;'
-    isSequence = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 20).split(semicolon, splitnum)
+    isSequence = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('isSequence')).split(semicolon, splitnum)
 
     'Inisialisasi psre code berdasarkan delimiter ;'
     psreCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 21).split(semicolon, splitnum)
@@ -235,3 +235,6 @@ for (int i = 0; i < docid.size(); i++) {
     }
 }
 
+def rowExcel(String cellValue) {
+	CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+}

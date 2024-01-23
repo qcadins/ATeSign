@@ -84,6 +84,11 @@ if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
                     'Urutan Signing')).toUpperCase(), getUrutanSigning.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 }
 
+'verify qr sign'
+arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel(
+				'QR Lacak Ttd')).replace('Ya', '1').replace('Tidak', '0'), CustomKeywords.'connection.APIFullService.getUseSignQRFromDocTemplate'(conneSign, findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Kode Templat Dokumen'))), false, FailureHandling.CONTINUE_ON_FAILURE))
+
+
 'jika data db tidak sesuai dengan excel'
 if (arrayMatch.contains(false)) {
     'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'

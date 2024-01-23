@@ -1624,12 +1624,16 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 
     mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
 
+	notifTypeDB = CustomKeywords.'connection.APIFullService.getWASMSFromNotificationTypeOTP'(conneSign, GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[
+		0])], 'OTP_SIGN_NORMAL', GlobalVariable.Tenant)
+
 	if (vendor.equalsIgnoreCase('Privy')) {
 		mustUseWaFirst = '0'
 		
 		emailServiceOnVendor = '0'
 	}
 	
+	if (notifType == '0') {
     if (mustUseWAFirst == '1') {
         tipeSaldo = 'WhatsApp Message'
 
@@ -1706,7 +1710,26 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 					}
 				}
     }
-    
+	} else {
+		if (vendor.equalsIgnoreCase('Privy')) {
+			tipeSaldo = 'OTP'
+		} else {
+			tipeSaldo = notifTypeDB
+		}
+		'menggunakan saldo wa'
+		balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
+
+		'jika balmutnya tidak ada value'
+		if (balmut.size() == 0) {
+			'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+				GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+					rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via ' + tipeSaldo.replace(' Message', '').replace(' Notif', ''))
+		} else {
+			'penggunaan saldo didapat dari ikuantitaas query balmut'
+			penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
+		}
+	}
     int pemotonganSaldo = 0
 
     int increment

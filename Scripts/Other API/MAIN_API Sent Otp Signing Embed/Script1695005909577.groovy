@@ -26,6 +26,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
+		'setting must wa, use wa, dan send otp by email level notification'
+		CustomKeywords.'connection.UpdateData.updateDBOTPNormalLevelNotification'(conneSign, excelPath, sheet)
+
+		'setting must wa, use wa, dan send otp by email level tenant'
+		CustomKeywords.'connection.UpdateData.updateDBLevelTenant'(conneSign, excelPath, sheet)
+		
         'get tenant yang ditesting dari excel per colm'
         GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('tenantCode'))
 

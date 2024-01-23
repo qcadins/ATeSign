@@ -1111,6 +1111,19 @@ def inputForm(Connection conneSign, int checked) {
     'Input enter'
     WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_SequentialSigning'), Keys.chord(Keys.ENTER))
 
+	if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Input Psre')).equalsIgnoreCase('Privy')) {
+		WebUI.click(findTestObject('TandaTanganDokumen/select_QRSign'))
+		
+		WebUI.verifyElementText(findTestObject('TandaTanganDokumen/ddl_QRSign'), 'Ya', FailureHandling.CONTINUE_ON_FAILURE)
+	} else {
+		'Input value QRSign'
+		WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/select_QRSign'), findTestData(excelPathPengaturanDokumen).getValue(
+			GlobalVariable.NumofColm, rowExcel('QR Lacak Ttd')))
+
+		'Input enter'
+		WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_QRSign'), Keys.chord(Keys.ENTER))
+	}
+	
     'click label judul'
     WebUI.click(findTestObject('TandaTanganDokumen/label_Judul'))
 

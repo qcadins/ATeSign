@@ -126,7 +126,8 @@ public class ManualStamp {
 	@Keyword
 	getIdLovVendorStamping(Connection conn, String vendorStamping) {
 		stm = conn.createStatement()
-
+		if (vendorStamping != '') {
+		
 		resultSet = stm.executeQuery("SELECT id_lov FROM ms_lov WHERE code = '" + vendorStamping + "'")
 		metadata = resultSet.metaData
 
@@ -135,11 +136,13 @@ public class ManualStamp {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		if (data == 'null' || data == null) {
-			data = ''
 		}
-		
+		if (data == 'null' || data == null) {
+			data = 0
+		}
+
 		Integer.parseInt(data)
+		
 	}
 
 	@Keyword
