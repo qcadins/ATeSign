@@ -158,10 +158,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'looping berdasarkan jumlah dari signAction di dokumen pertama'
             for (int t = 0; t < signActions.size(); t++) {
                 'Jika semua data mengenai Sign Location seperti page, llx, lly, urx, ury tidak kosong'
-                if (!(((((findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 37).length() == 0) && (findTestData(
-                    excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 38).length() == 0)) && (findTestData(excelPathAPISendDoc).getValue(
-                    GlobalVariable.NumofColm, 39).length() == 0)) && (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 
-                    40).length() == 0)) && (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 41).length() == 
+                if (!(((((findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('page (sign)')).length() == 0) && (findTestData(
+                    excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('llx (sign)')).length() == 0)) && (findTestData(excelPathAPISendDoc).getValue(
+                    GlobalVariable.NumofColm, rowExcel('lly (sign)')).length() == 0)) && (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 
+                    rowExcel('urx (sign)')).length() == 0)) && (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('ury (sign)')).length() == 
                 0))) {
                     'Split mengenai signLocation dimana berdasarkan dokumen'
                     pageSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('page (sign)')).split(
