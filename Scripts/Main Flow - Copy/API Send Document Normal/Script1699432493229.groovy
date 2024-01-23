@@ -462,12 +462,12 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
     for (loopingEmailPerDoc = 0; loopingEmailPerDoc < emailPerDoc.size(); loopingEmailPerDoc++) {
         'split per '
 
-        ' '
+        'email'
         ArrayList<String> email = (emailPerDoc[loopingEmailPerDoc]).split(';', -1)
 
         'looping email per '
 
-        ' '
+        'looping'
         for (loopingEmail = 0; loopingEmail < email.size(); loopingEmail++) {
             'get email from nik'
             (email[loopingEmail]) = CustomKeywords.'connection.DataVerif.getEmailFromNIK'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(

@@ -263,9 +263,7 @@ def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) 
         (businessLineCode[i])) + '", "businessLineName": "') + (businessLineName[i])) + '", "isSequence": "') + (isSequence[
         i])) + '",  "psreCode": "') + (psreCode[i])) + '", ')
 
-        if ((documentTemplateCode[i]) != '') {
-            bodyAPI = (((bodyAPI + ' "qrEnable" : ') + (qrEnable[i])) + ', ')
-        }
+        bodyAPI = (((bodyAPI + ' "qrEnable" : ') + (qrEnable[i])) + ', ')
         
         'Memasukkan bodyAPI ke stringRefno'
         stringRefno = (stringRefno + bodyAPI)

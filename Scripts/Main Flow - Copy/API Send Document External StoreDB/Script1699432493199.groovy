@@ -122,7 +122,7 @@ for (int i = 0; i < docid.size(); i++) {
 		
 		'Maka pengecekan use sign qr yang diinput'
         arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getUseSignQR'(conneSign, docid[i]), 
-                qrEnable[i], false, FailureHandling.CONTINUE_ON_FAILURE))
+                qrEnable[i].replace('false', '0').replace('true', '1'), false, FailureHandling.CONTINUE_ON_FAILURE))
     } else {
 		'Maka pengecekan use sign qr via document template'
 		arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getUseSignQRFromDocTemplate'(conneSign, documentTemplateCode[i]),

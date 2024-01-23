@@ -34,7 +34,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         'inisialisasi variable yang diperlukan dalam proses Main Flow'
         inisializeValue()
 
-		updateDB()
+		CustomKeywords.'connection.UpdateData.updateDBMainFlowBefore'(conneSign, excelPathMain)
 		
 		String officeName = ''
 
@@ -1092,78 +1092,8 @@ def checkVerifyEqualorMatch(Boolean isMatch, String reason) {
     }
 }
 
-def updateDB() {
-	'Setting must wa level notif send doc'
-	CustomKeywords.'connection.UpdateData.updateMustWALevelNotifSendDocAndManualSign'(conneSign, findTestData(excelPathAPISignDocument).getValue(
-			GlobalVariable.NumofColm, rowExcel('Must Wa (Send Document & Manual Sign Request)')))
-	
-	'Setting use wa level notif send doc'
-	CustomKeywords.'connection.UpdateData.updateUseWAMsgLevelNotifSendDocAndManualSign'(conneSign, findTestData(excelPathAPISignDocument).getValue(
-			GlobalVariable.NumofColm, rowExcel('Use WA Message (Send Document & Manual Sign Request)')))
-	
-	'Setting otp by email level notif send doc'
-	CustomKeywords.'connection.UpdateData.updateOtpByEmailLevelNotifSendDocAndManualSign'(conneSign, findTestData(excelPathAPISignDocument).getValue(
-			GlobalVariable.NumofColm, rowExcel('Setting OTP By Email (Send Document & Manual Sign Request)')))
-	
-	'Setting must wa level notif otp signing normal'
-	CustomKeywords.'connection.UpdateData.updateMustWALevelNotifOTPSignNormal'(conneSign, findTestData(excelPathAPISignDocument).getValue(
-			GlobalVariable.NumofColm, rowExcel('Must Wa (OTP Sign Normal Flow)')))
-	
-	'Setting use wa level notif otp signing normal'
-	CustomKeywords.'connection.UpdateData.updateUseWAMsgLevelNotifOTPSignNormal'(conneSign, findTestData(excelPathAPISignDocument).getValue(
-			GlobalVariable.NumofColm, rowExcel('Use WA Message (OTP Sign Normal Flow)')))
-	
-	'Setting otp by email level notif otp signing normal'
-	CustomKeywords.'connection.UpdateData.updateOtpByEmailLevelNotifOTPSignNormal'(conneSign, findTestData(excelPathAPISignDocument).getValue(
-			GlobalVariable.NumofColm, rowExcel('Setting OTP By Email (OTP Sign Normal Flow)')))
-	
-	'Setting must wa level notif otp sign embed v2'
-	CustomKeywords.'connection.UpdateData.updateMustWALevelNotifOTPSignEmbedV2'(conneSign, findTestData(excelPathAPISignDocument).getValue(
-			GlobalVariable.NumofColm, rowExcel('Must Wa (OTP Sign Embed V2 Flow)')))
-	
-	'Setting use wa level notif otp sign embed v2'
-	CustomKeywords.'connection.UpdateData.updateUseWAMsgLevelNotifOTPSignEmbedV2'(conneSign, findTestData(excelPathAPISignDocument).getValue(
-			GlobalVariable.NumofColm, rowExcel('Use WA Message (OTP Sign Embed V2 Flow)')))
-	
-	'Setting otp by email level notif otp sign embed v2'
-	CustomKeywords.'connection.UpdateData.updateOtpByEmailLevelNotifOTPSignEmbedV2'(conneSign, findTestData(excelPathAPISignDocument).getValue(
-			GlobalVariable.NumofColm, rowExcel('Setting OTP By Email (OTP Sign Embed V2 Flow)')))
 
-	'Setting must wa level notif OTP Sign External'
-	CustomKeywords.'connection.UpdateData.updateMustWALevelNotifOTPSignEmbedV2'(conneSign, findTestData(excelPathAPISignDocument).getValue(
-			GlobalVariable.NumofColm, rowExcel('Must Wa (OTP Sign External Flow)')))
-	
-	'Setting use wa level notif OTP Sign External'
-	CustomKeywords.'connection.UpdateData.updateUseWAMsgLevelNotifOTPSignEmbedV2'(conneSign, findTestData(excelPathAPISignDocument).getValue(
-			GlobalVariable.NumofColm, rowExcel('Use WA Message (OTP Sign External Flow)')))
-	
-	'Setting otp by email level notif OTP Sign External'
-	CustomKeywords.'connection.UpdateData.updateOtpByEmailLevelNotifOTPSignEmbedV2'(conneSign, findTestData(excelPathAPISignDocument).getValue(
-			GlobalVariable.NumofColm, rowExcel('Setting OTP By Email (OTP Sign External Flow)')))
-	
-	'setting menggunakan Must WA'
-	CustomKeywords.'connection.APIFullService.settingMustUseWAFirst'(conneSign, findTestData(excelPathMain).getValue(
-			GlobalVariable.NumofColm, rowExcel('Must Wa (Level Tenant)')))
-
-	'setting menggunakan Use Wa Message'
-	CustomKeywords.'connection.APIFullService.settingUseWAMessage'(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm,
-			rowExcel('Use WA Message (Level Tenant)')))
-
-	'update setting sent otp by email'
-	CustomKeywords.'connection.SendSign.settingSentOTPbyEmail'(conneSign, findTestData(excelPathMain).getValue(
-			GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Level Tenant)')))
-
-	'ambil idLov untuk diupdate secara otomatis ke DB'
-	int idLov = CustomKeywords.'connection.ManualStamp.getIdLovVendorStamping'(conneSign, findTestData(excelPathMain).getValue(
-	GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')))
-		
-	'lakukan update vendor stamping yang akan dipakai'
-	CustomKeywords.'connection.UpdateData.updateVendorStamping'(conneSign, idLov)
-
-	'update setting vendor otp ke table di DB'
-	CustomKeywords.'connection.UpdateData.settingLivenessFaceCompare'(conneSign, findTestData(excelPathMain).getValue(
-	GlobalVariable.NumofColm, rowExcel('Setting use_liveness_facecompare_first')))
-	
+def updateDBPasca() {
 	'setting vendor otp dimatikan/diaktifkan'
 	if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting must_user_vendor_otp (Sign External)')).length() >
 	0) {
@@ -1171,16 +1101,4 @@ def updateDB() {
 		CustomKeywords.'connection.UpdateData.updateVendorOTP'(conneSign, tenantVendor[1], findTestData(excelPathAPISignDocument).getValue(
 				GlobalVariable.NumofColm, rowExcel('Setting must_user_vendor_otp (Sign External)')))
 	}
-
-	'update setting otp ke table di DB'
-	CustomKeywords.'connection.UpdateData.updateTenantOTPReq'(conneSign, tenantVendor[0], findTestData(excelPathAPISignDocument).getValue(
-	GlobalVariable.NumofColm, rowExcel('Enable Need OTP for signing?')))
-	
-	'update setting pass tenant ke table di DB'
-	CustomKeywords.'connection.UpdateData.updateTenantPassReq'(conneSign, tenantVendor[0], findTestData(excelPathAPISignDocument).getValue(
-	GlobalVariable.NumofColm, rowExcel('Enable Need Password for signing?')))
-
-	'Setting OTP Active Duration'
-	CustomKeywords.'connection.APIFullService.settingOTPActiveDuration'(conneSign, findTestData(excelPathAPISignDocument).getValue(
-			GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')))
 }

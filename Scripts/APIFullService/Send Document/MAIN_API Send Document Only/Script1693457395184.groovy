@@ -74,6 +74,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         'Inisialisasi is sequence berdasarkan delimiter ;'
         isSequence = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('isSequence')).split(
             semicolon, splitnum)
+		
+		'Inisialisasi QREnable berdasarkan delimiter ;'
+		qrEnable = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('QR')).split(
+			semicolon, splitnum)
 
         'Inisialisasi psre Code berdasarkan delimiter ;'
         psreCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('psreCode')).split(semicolon, 
@@ -140,6 +144,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             (businessLineCode[i])) + ', "businessLineName": ') + (businessLineName[i])) + ', "isSequence": ') + (isSequence[
             i])) + ',  "psreCode": ') + (psreCode[i])) + ',')
 
+			bodyAPI = (((bodyAPI + ' "qrEnable" : ') + (qrEnable[i])) + ', ')
+			
             'Memasukkan bodyAPI ke stringRefno'
             stringRefno = (stringRefno + bodyAPI)
 

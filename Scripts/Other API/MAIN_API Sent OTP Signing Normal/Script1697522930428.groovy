@@ -26,6 +26,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPISentOTPSigning, GlobalVariable.NumofColm, 
             rowExcel('Use Correct base Url'))
 
+		'setting must wa, use wa, dan send otp by email level notification'
+		CustomKeywords.'connection.UpdateData.updateDBOTPNormalLevelNotification'(conneSign, excelPathAPISentOTPSigning, sheet)
+
+		'setting must wa, use wa, dan send otp by email level tenant'
+		CustomKeywords.'connection.UpdateData.updateDBLevelTenant'(conneSign, excelPathAPISentOTPSigning, sheet)
+		
         'check if tidak mau menggunakan tenant code yang benar'
         if (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 
         'No') {
