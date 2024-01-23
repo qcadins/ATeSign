@@ -2263,4 +2263,22 @@ public class APIFullService {
 		}
 		listdata
 	}
+	@Keyword
+	checkNotifTypeExistforTenant(Connection conn, String genInvType) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT description FROM ms_notificationtypeoftenant mntot JOIN ms_lov msl ON mntot.lov_sending_point = msl.id_lov LEFT JOIN ms_tenant mst ON mntot.id_ms_tenant = mst.id_ms_tenant WHERE mst.tenant_code = '" + GlobalVariable.Tenant + "' and msl.code = '" + genInvType + "';")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
 }
