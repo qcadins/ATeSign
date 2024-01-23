@@ -27,5 +27,4 @@ jobs:
         with:
           scanMetadataReportFile: .scannerwork/report-task.txt
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}          
-          SONAR_SCANNER_OPTS: -X
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
