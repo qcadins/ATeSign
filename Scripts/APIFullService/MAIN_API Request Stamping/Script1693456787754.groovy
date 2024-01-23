@@ -1,7 +1,8 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import java.sql.Connection as Connection
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.model.FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
@@ -88,10 +89,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
 
             if (code == 0) {
-                if (GlobalVariable.checkStoreDB == 'Yes') {		
-					'declare arraylist arraymatch'
-					arrayMatch = []
-					
+                if (GlobalVariable.checkStoreDB == 'Yes') {
+                    'declare arraylist arraymatch'
+                    arrayMatch = []
+
                     'get totalMaterai from db'
                     String totalMaterai = CustomKeywords.'connection.APIFullService.getTotalMaterai'(conneSign, findTestData(
                             excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')))
@@ -141,16 +142,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             'verify saldo terpotong'
                             arrayMatch.add(WebUI.verifyMatch(result, '-' + totalMaterai, false, FailureHandling.OPTIONAL))
 
-							ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(
-								conneSign, findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')), 'Stamping')
+                            ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(
+                                conneSign, findTestData(excelPathAPIRequestStamping).getValue(GlobalVariable.NumofColm, 
+                                    rowExcel('refNumber')), 'Stamping')
 
-							'lakukan loop untuk pengecekan data'
-							for (int i = 0; i < (officeRegionBline.size() / 2); i++) {
-								'verify business line dan office code'
-								arrayMatch.add(WebUI.verifyMatch((officeRegionBline[i]).toString(), (officeRegionBline[(i +
-										3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
-							}
-							
+                            'lakukan loop untuk pengecekan data'
+                            for (int i = 0; i < (officeRegionBline.size() / 2); i++) {
+                                'verify business line dan office code'
+                                arrayMatch.add(WebUI.verifyMatch((officeRegionBline[i]).toString(), (officeRegionBline[(i + 
+                                        3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+                            }
+                            
                             'jika data db tidak bertambah'
                             if (arrayMatch.contains(false)) {
                                 'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
@@ -205,7 +207,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     }
 }
 
-def getErrorMsg(def respon) {
+def getErrorMsg(ResponseObject respon) {
     'mengambil status code berdasarkan response HIT API'
     message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 

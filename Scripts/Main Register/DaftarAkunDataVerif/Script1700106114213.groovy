@@ -441,7 +441,7 @@ def getTextorAttribute(TestObject object) {
     try {
         text = WebUI.getAttribute(object, 'value', FailureHandling.OPTIONAL).toUpperCase()
     }
-    catch (Exception e) {
+    catch (IllegalArgumentException e) {
         text(WebUI.getText(object).toUpperCase())
     } 
     

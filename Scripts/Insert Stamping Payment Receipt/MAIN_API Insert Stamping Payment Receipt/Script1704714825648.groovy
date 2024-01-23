@@ -48,7 +48,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'Jika dokumennya menggunakan base64'
         if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 Document')) == 'Yes') {
             'input bodyAPI dengan Base64'
-            bodyAPI = PDFtoBase64(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentFile')))
+            bodyAPI = pdfToBase64(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentFile')))
         } else {
             'input bodyAPI tidak dengan Base64'
             bodyAPI = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentFile'))
@@ -219,7 +219,7 @@ def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
-def PDFtoBase64(String fileName) {
+def pdfToBase64(String fileName) {
     CustomKeywords.'customizekeyword.ConvertFile.base64File'(fileName)
 }
 

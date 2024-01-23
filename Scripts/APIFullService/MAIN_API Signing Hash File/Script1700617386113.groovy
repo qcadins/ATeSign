@@ -1,6 +1,7 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.model.FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import internal.GlobalVariable as GlobalVariable
 import java.sql.Connection as Connection
@@ -61,7 +62,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
         'inisialisasi arrayList'
-        ArrayList documentHash = [], list = [], listDocId = []
+        ArrayList documentHash = []
+
+        ArrayList list = []
+
+        ArrayList listDocId = []
 
         'Mengambil document id dari excel dan displit'
         documentHash = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Document Hash')).split(';', 
@@ -81,30 +86,30 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         String listDoc = listDocId.toString().replace('[', '').replace(']', '')
 
         'HIT API send otp ke email invitasi'
-        respon = WS.sendRequest(findTestObject('APIFullService/Postman/API Signing Hash File', [
-					('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), 
-					('loginId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Email')), 
-					('otp') : otp, ('documentHash') : listDoc, ('psre') : GlobalVariable.Psre]))
+        respon = WS.sendRequest(findTestObject('APIFullService/Postman/API Signing Hash File', [('callerId') : findTestData(
+                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('loginId') : findTestData(
+                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Email')), ('otp') : otp, ('documentHash') : listDoc
+                    , ('psre') : GlobalVariable.Psre]))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
             'get Status Code'
             statusCode = WS.getElementPropertyValue(respon, 'status.code')
 
-			'ambil lama waktu yang diperlukan hingga request menerima balikan'
-			elapsedTime = (respon.elapsedTime / 1000) + ' second'
-	
-			'ambil body dari hasil respons'
-			responseBody = respon.responseBodyContent
-	
-			'panggil keyword untuk proses beautify dari respon json yang didapat'
-			CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
-					excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
-	
-			'write to excel response elapsed time'
-			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') -
-				1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
-			
+            'ambil lama waktu yang diperlukan hingga request menerima balikan'
+            elapsedTime = ((respon.elapsedTime / 1000) + ' second')
+
+            'ambil body dari hasil respons'
+            responseBody = respon.responseBodyContent
+
+            'panggil keyword untuk proses beautify dari respon json yang didapat'
+            CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
+                    excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+
+            'write to excel response elapsed time'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 
+                1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+
             'Jika status codenya 0'
             if (statusCode == 0) {
                 'ambil data sesuai dengan jumlah document hash yang diinput'
@@ -146,7 +151,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
     }
 }
 
-def getErrorMessageAPI(def respon) {
+def getErrorMessageAPI(ResponseObject respon) {
     'mengambil status code berdasarkan response HIT API'
     message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
 

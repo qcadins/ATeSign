@@ -857,7 +857,7 @@ public class APIFullService {
 	getVendorCodeUsingDocId(Connection conn, String docId) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select case when msv.vendor_code is not null then msv.vendor_code else msv1.vendor_code end from tr_document_d tdd left join ms_doc_template mdt on tdd.id_ms_doc_template = mdt.id_doc_template left join ms_vendor msv on mdt.id_ms_vendor = msv.id_ms_vendor left join ms_vendoroftenant mvot on tdd.id_ms_tenant = mvot.id_ms_tenant left join ms_vendor msv1 on mvot.id_ms_vendor = msv1.id_ms_vendor where tdd.document_id = '" + docId  + "' order by mvot.default_vendor asc limit 1")
+		resultSet = stm.executeQuery("select case when msv.vendor_code is not null then msv.vendor_code else msv1.vendor_code end from tr_document_d tdd left join ms_doc_template mdt on tdd.id_ms_doc_template = mdt.id_doc_template left join ms_vendor msv on mdt.id_ms_vendor = msv.id_ms_vendor left join ms_vendoroftenant mvot on tdd.id_ms_tenant = mvot.id_ms_tenant left join ms_vendor msv1 on mvot.id_ms_vendor = msv1.id_ms_vendor where tdd.document_id = '" + docId + "' order by mvot.default_vendor asc limit 1")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -1073,7 +1073,7 @@ public class APIFullService {
 			//
 			resultSet = stm.executeQuery(" SELECT CASE WHEN mvru.is_active is null then '0' else mvru.is_active END, CASE WHEN request_status = 3 then '1' else '0' END, request_status, notes, is_external FROM tr_job_check_register_status tjc JOIN tr_balance_mutation tbm ON tbm.id_balance_mutation = tjc.id_balance_mutation LEFT JOIN am_msuser amu ON tjc.hashed_id_no = amu.hashed_id_no LEFT JOIN ms_vendor_registered_user mvru ON mvru.id_ms_user = amu.id_ms_user WHERE amu.login_id = '" + value + "'")
 		} else {
-			resultSet = stm.executeQuery("select mvru.is_active, is_registered, '0', '', CASE WHEN is_external_activation is null THEN '0' ELSE is_external_activation END from ms_vendor_registered_user mvru join ms_vendor mv on mvru.id_ms_vendor = mv.id_ms_vendor where signer_registered_email = '" + value + "' or hashed_signer_registered_phone = encode(sha256('" + value + "'), 'hex') and mv.vendor_code = '" + GlobalVariable.Psre  + "'")
+			resultSet = stm.executeQuery("select mvru.is_active, is_registered, '0', '', CASE WHEN is_external_activation is null THEN '0' ELSE is_external_activation END from ms_vendor_registered_user mvru join ms_vendor mv on mvru.id_ms_vendor = mv.id_ms_vendor where signer_registered_email = '" + value + "' or hashed_signer_registered_phone = encode(sha256('" + value + "'), 'hex') and mv.vendor_code = '" + GlobalVariable.Psre + "'")
 		}
 
 		metadata = resultSet.metaData
@@ -2232,7 +2232,7 @@ public class APIFullService {
 	getWASMSFromNotificationType(Connection conn, String userEmail, String code, String tenantCode) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT CASE WHEN mntot.must_use_wa_first = '1' THEN 'WhatsApp Message' ELSE CASE WHEN (SELECT msvr.email_service FROM ms_vendor_registered_user msvr LEFT JOIN am_msuser amm ON msvr.id_ms_user = amm.id_ms_user WHERE amm.login_id = '"+userEmail+" OR amm.hashed_phone = '"+userEmail+"' OR amm.hashed_id_phone = '"+userEmail+"'') = '1' THEN 'SMS Notif' ELSE CASE WHEN mntot.use_wa_message = '1' THEN 'WA' ELSE 'SMS Notif' END END END AS result FROM ms_notificationtypeoftenant mntot LEFT JOIN ms_lov msl ON mntot.lov_sending_point = msl.id_lov LEFT JOIN ms_tenant mst ON mntot.id_ms_tenant = mst.id_ms_tenant WHERE msl.code = '"+code+"' and mst.tenant_code = '"+tenantCode+"';")
+		resultSet = stm.executeQuery("SELECT CASE WHEN mntot.must_use_wa_first = '1' THEN 'WhatsApp Message' ELSE CASE WHEN (SELECT msvr.email_service FROM ms_vendor_registered_user msvr LEFT JOIN am_msuser amm ON msvr.id_ms_user = amm.id_ms_user WHERE amm.login_id = '" + userEmail + " OR amm.hashed_phone = '" + userEmail + "' OR amm.hashed_id_phone = '" + userEmail + "'') = '1' THEN 'SMS Notif' ELSE CASE WHEN mntot.use_wa_message = '1' THEN 'WA' ELSE 'SMS Notif' END END END AS result FROM ms_notificationtypeoftenant mntot LEFT JOIN ms_lov msl ON mntot.lov_sending_point = msl.id_lov LEFT JOIN ms_tenant mst ON mntot.id_ms_tenant = mst.id_ms_tenant WHERE msl.code = '" + code + "' and mst.tenant_code = '" + tenantCode + "';")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

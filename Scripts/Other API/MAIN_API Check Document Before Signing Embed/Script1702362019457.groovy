@@ -5,7 +5,6 @@ import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.testobject.ResponseObject as ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import internal.GlobalVariable as GlobalVariable
-import java.nio.charset.StandardCharsets as StandardCharsets
 import java.sql.Connection as Connection
 import java.time.LocalDateTime as LocalDateTime
 import java.time.format.DateTimeFormatter as DateTimeFormatter
@@ -27,14 +26,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         break
     } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
         'inisialisasi arrayList'
-        ArrayList documentId = [], listDocId = []
+        ArrayList documentId = []
+
+        ArrayList listDocId = []
 
         'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
         'get tenant per case dari colm excel'
         GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
-        
+
         'Mengambil document id dari excel dan displit'
         documentId = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Document ID')).split(';', -1)
 
@@ -97,8 +98,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         String listDoc = listDocId.toString().replace('[', '').replace(']', '')
 
         'HIT API'
-        respon = WS.sendRequest(findTestObject('Postman/Check Document Before Signing Embed', [('docId') : 
-                        listDoc, ('msg') : parseCodeOnly(endcodedMsg), ('url') : url]))
+        respon = WS.sendRequest(findTestObject('Postman/Check Document Before Signing Embed', [('docId') : listDoc, ('msg') : parseCodeOnly(
+                        endcodedMsg), ('url') : url]))
 
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
             'get Status Code'

@@ -49,54 +49,51 @@ public class GetEmail {
 
 		Object content = message.content
 
-		// Pastikan content adalah instance dari MimeMultipart
-		if (content instanceof MimeMultipart) {
-			MimeMultipart mimeMultipart = content
+		MimeMultipart mimeMultipart = content
 
-			StringBuilder bodyText = new StringBuilder()
+		StringBuilder bodyText = new StringBuilder()
 
-			String textWithoutHtml
+		String textWithoutHtml
 
-			// Loop melalui semua bagian dalam MimeMultipart
-			for (int i = 0 ; i < mimeMultipart.count ; i++) {
-				BodyPart bodyPart = mimeMultipart.getBodyPart(i)
+		// Loop melalui semua bagian dalam MimeMultipart
+		for (int i = 0 ; i < mimeMultipart.count ; i++) {
+			BodyPart bodyPart = mimeMultipart.getBodyPart(i)
 
-				String contentType = bodyPart.contentType
-				Document doc
+			String contentType = bodyPart.contentType
+			Document doc
 
-				// Hanya ambil bagian teks dari bagian yang berisi teks
-				if (contentType.startsWith('text/plain') || contentType.startsWith('text/html')) {
-					String partText = ((bodyPart.content) as String)
+			// Hanya ambil bagian teks dari bagian yang berisi teks
+			if (contentType.startsWith('text/plain') || contentType.startsWith('text/html')) {
+				String partText = ((bodyPart.content) as String)
 
-					// Gunakan jsoup untuk menghilangkan elemen HTML
-					doc = Jsoup.parse(partText)
+				// Gunakan jsoup untuk menghilangkan elemen HTML
+				doc = Jsoup.parse(partText)
 
-					textWithoutHtml = doc.text()
+				textWithoutHtml = doc.text()
 
-					println(textWithoutHtml)
+				println(textWithoutHtml)
 
-					break
-				} else if (!(contentType.startsWith('text/plain') || contentType.startsWith('text/html'))) {
-					InputStream is = bodyPart.inputStream
-					BufferedReader br = new BufferedReader(new InputStreamReader(is))
-					String line
-					while ((line = br.readLine()) != null) {
-						bodyText.append(line)
-					}
-
-					// Gunakan jsoup untuk menghilangkan elemen HTML
-					doc = Jsoup.parse(bodyText.toString())
-
-					textWithoutHtml = findText(doc.text())
-
-					break
+				break
+			} else if (!(contentType.startsWith('text/plain') || contentType.startsWith('text/html'))) {
+				InputStream is = bodyPart.inputStream
+				BufferedReader br = new BufferedReader(new InputStreamReader(is))
+				String line
+				while ((line = br.readLine()) != null) {
+					bodyText.append(line)
 				}
+
+				// Gunakan jsoup untuk menghilangkan elemen HTML
+				doc = Jsoup.parse(bodyText.toString())
+
+				textWithoutHtml = findText(doc.text())
+
+				break
 			}
-
-			otpCode = findOtpCode(textWithoutHtml.toString())
-
-			println('OTP Code: ' + otpCode)
 		}
+		
+		otpCode = findOtpCode(textWithoutHtml.toString())
+				
+		println('OTP Code: ' + otpCode)
 
 		emailFolder.close(false)
 
