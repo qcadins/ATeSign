@@ -166,26 +166,23 @@ public class UpdateData {
 		stm.executeUpdate("UPDATE ms_vendor_registered_user SET is_external_activation = '" + value + "' WHERE signer_registered_email = '" + email + "'")
 	}
 	@Keyword
-	updateMustWALevelNotifGenInvLink(Connection conn, int value) {
+	updateMustWALevelNotifGenInvLink(Connection conn, String value) {
 		Statement stm = conn.createStatement()
-		if (value != 0) {
-			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET must_use_wa_first = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '"+GlobalVariable.Tenant+"' AND (ml.code = 'GEN_INV' OR ml.code = 'GEN_INV_MENU') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
-		}
+		
+		stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET must_use_wa_first = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '"+GlobalVariable.Tenant+"' AND (ml.code = 'GEN_INV' OR ml.code = 'GEN_INV_MENU') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
 	}
 
 	@Keyword
-	updateUseWAMsgLevelNotifGenInvLink(Connection conn, int value) {
+	updateUseWAMsgLevelNotifGenInvLink(Connection conn, String value) {
 		Statement stm = conn.createStatement()
-		if (value != 0) {
-			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET use_wa_message = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '"+GlobalVariable.Tenant+"' AND (ml.code = 'GEN_INV' OR ml.code = 'GEN_INV_MENU') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
-		}
+
+		stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET use_wa_message = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '"+GlobalVariable.Tenant+"' AND (ml.code = 'GEN_INV' OR ml.code = 'GEN_INV_MENU') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
 	}
 
 	@Keyword
-	updateOtpByEmailLevelNotifGenInvLink(Connection conn, int value) {
+	updateOtpByEmailLevelNotifGenInvLink(Connection conn, String value) {
 		Statement stm = conn.createStatement()
-		if (value != 0) {
-			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET send_otp_by_email = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '"+GlobalVariable.Tenant+"' AND (ml.code = 'GEN_INV' OR ml.code = 'GEN_INV_MENU') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
-		}
+
+		stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET send_otp_by_email = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '"+GlobalVariable.Tenant+"' AND (ml.code = 'GEN_INV' OR ml.code = 'GEN_INV_MENU') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
 	}
 }
