@@ -14,7 +14,7 @@ public class GetSMS {
 
 	String currentDate = new Date().format('yyyy-MM-dd')
 	Map threadForRecipient, threadLastest, jsonResponse
-	
+
 	@Keyword
 	String getOTP(String nameSMS) {
 		ResponseObject response = WS.sendRequest(findTestObject('Postman/SMS/API Pushbullet', [('function') : 'threads']))

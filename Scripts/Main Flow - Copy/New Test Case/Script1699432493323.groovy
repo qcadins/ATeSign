@@ -13,7 +13,6 @@ sheet = 'Main'
 GlobalVariable.NumofColm = 2
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-CustomKeywords.'connection.UpdateData.updateDBMainFlowBefore'(conneSign, 'Main/Main')
 
 //'connect DB eSign'
 //Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
