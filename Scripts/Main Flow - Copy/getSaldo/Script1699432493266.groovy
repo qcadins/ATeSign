@@ -231,7 +231,8 @@ def funcSaldoRegis(HashMap result, int countCheckSaldo, Connection conneSign) {
 			saldoList = [useSaldo, 'OTP']
 		} else {
 			'check jika email service on'
-			if (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == '1') {
+			if (findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == 
+                '1' && findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('$Email')) == '') {
 				'check jika use WA message = 1'
 				if ((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) == '1')) {
 					useSaldo = 'WhatsApp Message'
