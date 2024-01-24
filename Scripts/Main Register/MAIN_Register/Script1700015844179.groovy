@@ -247,8 +247,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             if (GlobalVariable.FlagFailed == 0) {
                 'kurang saldo before dengan proses verifikasi'
                 saldoBefore.put('Verifikasi', (Integer.parseInt(saldoBefore.get('Verifikasi')) - GlobalVariable.VerificationCount).toString())
-
-                if (checkNotifTypeAvailable.isEmpty()) {
+                if (checkNotifTypeAvailable.empty) {
 					if ((GlobalVariable.Psre == 'VIDA') || (GlobalVariable.Psre == 'TKNAJ')) {
 						if (GlobalVariable.Psre == 'VIDA') {
 							'kurang saldo before dengan proses PNBP'
