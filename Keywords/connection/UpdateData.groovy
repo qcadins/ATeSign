@@ -305,24 +305,37 @@ public class UpdateData {
 	}
 
 	@Keyword
-	updateMustWALevelNotifGenInvLink(Connection conn, String value) {
+	updateMustWALevelNotifGenInvLink(Connection conn, String value, String lovType) {
 		Statement stm = conn.createStatement()
 
-		stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET must_use_wa_first = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '"+GlobalVariable.Tenant+"' AND (ml.code = 'GEN_INV' OR ml.code = 'GEN_INV_MENU') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+		stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET must_use_wa_first = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND (ml.code = '" + lovType + "') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
 	}
 
 	@Keyword
-	updateUseWAMsgLevelNotifGenInvLink(Connection conn, String value) {
+	updateUseWAMsgLevelNotifGenInvLink(Connection conn, String value, String lovType) {
 		Statement stm = conn.createStatement()
 
-		stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET use_wa_message = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '"+GlobalVariable.Tenant+"' AND (ml.code = 'GEN_INV' OR ml.code = 'GEN_INV_MENU') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+		stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET use_wa_message = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND (ml.code = '" + lovType + "') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
 	}
 
 	@Keyword
-	updateOtpByEmailLevelNotifGenInvLink(Connection conn, String value) {
+	updateOtpByEmailLevelNotifGenInvLink(Connection conn, String value, String lovType) {
 		Statement stm = conn.createStatement()
 
-		stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET send_otp_by_email = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '"+GlobalVariable.Tenant+"' AND (ml.code = 'GEN_INV' OR ml.code = 'GEN_INV_MENU') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+		stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET send_otp_by_email = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND (ml.code = '" + lovType + "') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+	}
+	
+	@Keyword
+	updateDBNotifTypeMultipointRegist(Connection conneSign, String excelPathMain, String sheets) {
+		sheet = sheets
+		'Setting must wa level notif otp signing normal'
+		updateMustWALevelNotifOTPSignEmbedV2(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must WA Level Notification')))
+
+		'Setting use wa level notif otp signing normal'
+		updateUseWAMsgLevelNotifOTPSignEmbedV2(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message Level Notification')))
+
+		'Setting otp by email level notif otp signing normal'
+		updateOtpByEmailLevelNotifOTPSignEmbedV2(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Send Otp By Email Level Notification')))
 	}
 }
 
