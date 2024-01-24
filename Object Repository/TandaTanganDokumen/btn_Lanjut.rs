@@ -6,22 +6,30 @@
    <elementGuidId>8ea36161-9ade-4c18-b9b1-5f99ab3ef274</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>BASIC</key>
-         <value>//*[@class != 'btn btn-info']</value>
-      </entry>
-      <entry>
          <key>XPATH</key>
          <value>//*[@id=&quot;msxForm&quot;]/div[2]/div/button[2]</value>
       </entry>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;xForm&quot;]/div/div[10]/button[2]</value>
+      </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>not equal</matchCondition>
       <name>class</name>
       <type>Main</type>
       <value>btn btn-info</value>
-      <webElementGuid>e12ac8d6-53a8-4841-9ee6-81a77e606db0</webElementGuid>
+      <webElementGuid>4e935937-e184-44df-99a8-ac99a8889f93</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;xForm&quot;]/div/div[10]/button[2]</value>
+      <webElementGuid>55519716-d259-43b6-a52a-464e47fed53e</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
