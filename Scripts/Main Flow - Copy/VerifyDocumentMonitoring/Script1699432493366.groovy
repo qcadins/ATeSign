@@ -185,7 +185,7 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                 
                 if (((((CancelDocsStamp != 'Yes') || (isStamping != 'Yes')) || (retryStamping != 'Yes')) || (CancelDocsSend != 
                 'Yes')) || (CancelDocsSign != 'Yes')) {
-                    actionDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, settingHO, j)
+                    actionDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, j)
                 }
             }
         } else {
@@ -271,6 +271,7 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                             arrayMatch.add(WebUI.verifyEqual(totalStampingAndTotalMaterai[k], resultStamping[k], FailureHandling.CONTINUE_ON_FAILURE))
                         }
                     } else if (i == 10) {
+						continue
                     } else {
                         'Selain di column 7 dan 8 maka akan diverif dengan db.'
                         arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectvalues), resultQuery[arrayIndex++], false, 
@@ -280,7 +281,7 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                 
                 if (((((CancelDocsStamp != 'Yes') || (isStamping != 'Yes')) || (retryStamping != 'Yes')) || (CancelDocsSend != 
                 'Yes')) || (CancelDocsSign != 'Yes')) {
-                    actionDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, settingHO, j)
+                    actionDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, j)
                 }
             }
         } else {
@@ -724,7 +725,7 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     }
 }
 
-def actionDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan, String linkDocumentMonitoring, String settingHO, int j) {
+def actionDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan, String linkDocumentMonitoring, int j) {
    if (GlobalVariable.RunWithEmbed == 'No') {
    		helperModifyObject = '/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-monitoring-document/'
    } else {

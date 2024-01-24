@@ -533,7 +533,6 @@ for (looping = 0; looping < loopcase; looping++) {
                             GlobalVariable.StatusFailed, (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
                                 rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
                     }
-
                 }
             }
             
@@ -968,11 +967,7 @@ def checkDDLWithGetDDL(TestObject objectDDL, int listDB, String reason, TestObje
 	WebUI.click(objectClick)
 }
 
-
 def checkDDL(TestObject objectDDL, int listDB, String reason) {
-	'declare array untuk menampung ddl'
-	ArrayList list = []
-
 	WebUI.scrollToElement(objectDDL, GlobalVariable.TimeOut)
 	
 	'click untuk memunculkan ddl'

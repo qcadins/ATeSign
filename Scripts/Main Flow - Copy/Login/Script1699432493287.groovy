@@ -167,7 +167,6 @@ def runWithEmbed(String linkUrl) {
     
     'check if ingin menggunakan embed atau tidak'
     if (GlobalVariable.RunWithEmbed == 'Yes') {
-		
 		if (GlobalVariable.RunWith == 'Mobile') {
 			//belum work
 			'ambil koordinat dari settings'
@@ -184,7 +183,6 @@ def runWithEmbed(String linkUrl) {
 			
 			'aktifkan view desktop sites'
 			Mobile.tapAtPosition(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), FailureHandling.OPTIONAL)
-			
 		} else {
 			'navigate url ke daftar akun'
 			WebUI.openBrowser(GlobalVariable.embedUrl)
@@ -208,18 +206,15 @@ def runWithEmbed(String linkUrl) {
 		'Jika error lognya muncul'
 		if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 			'ambil teks errormessage'
-			'ambil teks errormessage'
 			errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
 	
 			'Tulis di excel itu adalah error'
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 				(((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
 					'-', '') + ';') + '<') + errormessage) + '>')
-
 		}
 		
     } else if (GlobalVariable.RunWithEmbed == 'No') {
-		
 		if (GlobalVariable.RunWith == 'Mobile') {
 			//belum work
 			'ambil koordinat dari settings'
@@ -239,15 +234,12 @@ def runWithEmbed(String linkUrl) {
 			
 			'open browser'
 			WebUI.navigateToUrl(linkUrl)
-			
 		} else {
-			
 			'navigate url ke daftar akun'
 			WebUI.openBrowser(linkUrl)
 	
 			'Maximize Windows'
 			WebUI.maximizeWindow()
-			
 		}
     }
 }

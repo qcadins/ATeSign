@@ -24,9 +24,6 @@ if (vendor.toString().contains('digi') || vendor.toString().contains('DIGI')) {
 	vendor = 'TEKENAJA'
 }
 
-'return total saldo awal'
-String totalSaldo
-
 funcLogin()
 
 if (usageSaldo == 'Send') {
@@ -181,7 +178,7 @@ def funcSaldoStamp(HashMap result) {
 	
 	funcFindSaldo(result, vendorVerifikasi, saldoList, forAutosign)
 
-	return result
+	result
 }
 
 def funcFindSaldo(HashMap result, String vendorVerifikasi, ArrayList saldoList, boolean forAutosign) {
@@ -296,7 +293,7 @@ def funcSaldoRegis(HashMap result, int countCheckSaldo, Connection conneSign) {
 		}
 	}
 	
-	return result
+	result
 }
 
 def inputFilterSaldo(String tipeSaldo, Connection conneSign) {
