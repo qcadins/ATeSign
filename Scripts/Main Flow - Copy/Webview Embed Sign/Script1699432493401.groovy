@@ -340,7 +340,6 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 		'Jika error log tidak muncul, Jika verifikasi penanda tangan tidak muncul'
 		if (!(WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_VerifikasiPenandaTangan'), GlobalVariable.TimeOut,
 			FailureHandling.OPTIONAL))) {
-		
 		noTelpSigner = checkBeforeChoosingOTPOrBiometric(GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])], conneSign, vendor)
 
 		'jika metode verifikasi tidak muncul'
@@ -1251,7 +1250,6 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
 					';', -1)[GlobalVariable.indexUsed])
 			}
 			}
-
 		}
 	} else {
 		'OTP yang pertama dimasukkan kedalam 1 var'
