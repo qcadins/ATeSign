@@ -306,7 +306,6 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 		
 		saldoUsed = (saldoUsed + noKontrakPerDoc.size())
     } else {
-		
 		'Looping berdasarkan total document sign'
 		for (c = 0; c < documentTemplateNamePerDoc.size(); c++) {
 			'modify object btn Nama Dokumen '
@@ -346,9 +345,8 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 				((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
 					'-', '') + ';') + GlobalVariable.ReasonFailedSaveGagal) + ' dengan alasan page tidak berpindah di Bulk Sign View.')
-		
 		}
-
+		
 		'Scroll ke btn Proses'
 		WebUI.scrollToElement(findTestObject('KotakMasuk/Sign/btn_Proses'), GlobalVariable.TimeOut)
 
@@ -843,10 +841,10 @@ def checkPopupWarning() {
 		'Klik checkbox ttd untuk semua'
 		WebUI.click(findTestObject('KotakMasuk/Sign/checkbox_ttdsemua'))
 		
-        return true
+        true
     }
     
-    return false
+    false
 }
 
 def checkBulkSigning() {
@@ -1063,9 +1061,6 @@ def signingProcessStoreDB(Connection conneSign, String emailSigner, int jumlahSi
         if (arrayMatch.contains(false)) {
             'mengembalikan false'
             return false
-            
-            'dibreak ke looping code'
-            break
         } else {
             'jika semuanya true'
             'mengembalikan true'
@@ -1418,8 +1413,7 @@ def verifBiomMethod(int isLocalhost, int maxFaceCompDB, int countLivenessFaceCom
             GlobalVariable.FlagFailed = 1
             
 			'dapatkan count untuk limit harian facecompare akun tersebut'
-			countLivenessValidationFaceComp = CustomKeywords.'connection.DataVerif.getCountValidationFaceCompDaily'(conneSign, GlobalVariable.storeVar.getAt(
-					GlobalVariable.storeVar.keySet()[0]))
+			countLivenessValidationFaceComp = CustomKeywords.'connection.DataVerif.getCountValidationFaceCompDaily'(conneSign, GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])])
 			
             'ambil terbaru count dari DB'
             countLivenessFaceComp = CustomKeywords.'connection.DataVerif.getCountFaceCompDaily'(conneSign, emailSigner)

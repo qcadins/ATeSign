@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>btn_Lanjut</name>
+   <name>btn_closeddlOffice</name>
    <tag></tag>
-   <elementGuidId>8ea36161-9ade-4c18-b9b1-5f99ab3ef274</elementGuidId>
+   <elementGuidId>b9a1188a-d7f6-4d8d-80d4-e789d17f2d4e</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>XPATH</key>
-      </entry>
-      <entry>
          <key>BASIC</key>
-         <value>//*[@class != 'btn btn-info']</value>
+         <value>//*[@id=&quot;officeCode&quot;]/div/span[1]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -20,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@id=&quot;xForm&quot;]/div/div[10]/button[2]</value>
-      <webElementGuid>0b9d07ad-c793-40de-8159-c3ba4bdbfad6</webElementGuid>
+      <value>//*[@id=&quot;officeCode&quot;]/div/span[1]</value>
+      <webElementGuid>3982ef94-9302-4ff2-a06a-3ba03f828214</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

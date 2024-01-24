@@ -79,7 +79,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
     String otpAfter
 
     'Inisialisasi variable total document yang akan disign, count untuk resend, dan saldo yang akan digunakan'
-    int totalDocSign = 0, countSaldoSplitLiveFCused = 0
+    int totalDocSign = 0
 
 	'ambil kondisi max liveness harian'
 	int maxFaceCompValidationDB = Integer.parseInt(CustomKeywords.'connection.DataVerif.getLimitValidationLivenessDaily'(conneSign))
@@ -278,7 +278,6 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 		
 		saldoUsed = (saldoUsed + noKontrakPerDoc.size())
     } else {
-		
 		'Looping berdasarkan total document sign'
 		for (c = 0; c < documentTemplateNamePerDoc.size(); c++) {
 			'modify object btn Nama Dokumen '
@@ -655,7 +654,6 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 							}
 							'Jika hasil store dbnya true, maka'
 							break
-
 						}
 					}
 				}
@@ -861,10 +859,9 @@ def checkPopupWarning() {
 
         GlobalVariable.FlagFailed = 1
 
-        return true
+        true
     }
-    
-    return false
+    false
 }
 
 def generateEncryptMessage(Connection conneSign, String documentId, String emailSigner, String tenantCode) {
@@ -980,7 +977,7 @@ def modifyObject(int j) {
         'xpath', 'equals', ('/html/body/app-root/app-content-layout/div/div/div/div[2]/app-dashboard1/div[3]/div/div/div[2]/div/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
         j) + ']/datatable-body-row/div[2]/datatable-body-cell[7]/div/p', true)
 
-    HashMap<String, String> result = new HashMap<String, String>()
+    HashMap<String, String> result = [:]
 
     result.put('modifyObjectTextDocumentTemplateName', modifyObjectTextDocumentTemplateName)
 
@@ -998,7 +995,7 @@ def modifyObject(int j) {
 
     result.put('modifyObjectTextProsesTtd', modifyObjectTextProsesTtd)
 
-    return result
+    result
 }
 
 def checkBulkSigning() {
@@ -1128,17 +1125,9 @@ def signingProcessStoreDB(Connection conneSign, String emailSigner, int jumlahSi
         if (arrayMatch.contains(false)) {
             'mengembalikan false'
             return false
-            
-            'dibreak ke looping code'
-            break
         } else {
-            'jika semuanya true'
-
             'mengembalikan true'
             return true
-            
-            'dibreak ke looping code'
-            break
         }
     }
 }
@@ -1212,8 +1201,8 @@ def verifOTPMethod(Connection conneSign, String emailSigner, ArrayList listOTP, 
 
 def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList listOTP, String noTelpSigner, String otpAfter, String vendor) {
 	countResend = 0
-	
-	GlobalVariable.eSignData.putAt('VerifikasiOTP', 1)
+
+	GlobalVaraible.eSignData['VerifikasiOTP'] = 1
 
 	'check ada value maka Setting OTP Active Duration'
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() > 
@@ -1465,8 +1454,7 @@ def verifBiomMethod(int isLocalhost, int maxFaceCompDB, int countLivenessFaceCom
 			GlobalVariable.FlagFailed = 1
 			
 			'dapatkan count untuk limit harian facecompare akun tersebut'
-			countLivenessValidationFaceComp = CustomKeywords.'connection.DataVerif.getCountValidationFaceCompDaily'(conneSign, GlobalVariable.storeVar.getAt(
-					GlobalVariable.storeVar.keySet()[0]))
+			countLivenessValidationFaceComp = CustomKeywords.'connection.DataVerif.getCountValidationFaceCompDaily'(conneSign, GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])])
 			
 			'ambil terbaru count dari DB'
 			countLivenessFaceComp = CustomKeywords.'connection.DataVerif.getCountFaceCompDaily'(conneSign, emailSigner)

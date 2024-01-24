@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>btn_Lanjut</name>
+   <name>iframe_errorCallbackPage</name>
    <tag></tag>
-   <elementGuidId>8ea36161-9ade-4c18-b9b1-5f99ab3ef274</elementGuidId>
+   <elementGuidId>84a9c441-cc6f-4376-a5b0-7532be1c7265</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>XPATH</key>
-      </entry>
-      <entry>
          <key>BASIC</key>
-         <value>//*[@class != 'btn btn-info']</value>
+         <value>//*[@id = 'sub-frame-error']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -18,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>id</name>
       <type>Main</type>
-      <value>//*[@id=&quot;xForm&quot;]/div/div[10]/button[2]</value>
-      <webElementGuid>0b9d07ad-c793-40de-8159-c3ba4bdbfad6</webElementGuid>
+      <value>sub-frame-error</value>
+      <webElementGuid>de7e558f-1d3c-49e1-aca1-37c65af58b16</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

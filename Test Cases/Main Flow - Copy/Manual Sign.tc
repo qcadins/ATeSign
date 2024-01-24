@@ -17,6 +17,12 @@
       <value></value>
       <variableId>ff3ce37b-84ec-4608-9744-14b4d05ce73d</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>72bba166-6580-4275-911e-dc6e31c2549a</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -30,5 +36,12 @@
       <id>ff3ce37b-84ec-4608-9744-14b4d05ce73d</id>
       <masked>false</masked>
       <name>sheet</name>
+   </variable>
+   <variable>
+      <defaultValue>-1</defaultValue>
+      <description></description>
+      <id>72bba166-6580-4275-911e-dc6e31c2549a</id>
+      <masked>false</masked>
+      <name>splitIndex</name>
    </variable>
 </TestCaseEntity>

@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;officeCode&quot;]/div/div/div[3]/input</value>
+         <value>//*[@id=&quot;officeCode&quot;]/div/div/div[2]/input</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@id=&quot;officeCode&quot;]/div/div/div[3]/input</value>
-      <webElementGuid>8204c8f9-23fd-46ba-a921-3b760047a99b</webElementGuid>
+      <value>//*[@id=&quot;officeCode&quot;]/div/div/div[2]/input</value>
+      <webElementGuid>c8da16e7-92d4-4d53-9136-c756f3469551</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

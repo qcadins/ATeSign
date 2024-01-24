@@ -25,7 +25,7 @@ if (vendor.toString().contains('digi') || vendor.toString().contains('DIGI')) {
 }
 
 'return total saldo awal'
-String vendorVerifikasi, totalSaldo
+String totalSaldo
 
 funcLogin()
 
@@ -110,7 +110,7 @@ def funcSaldoSend(HashMap result) {
 	'get saldo menggunakan func find saldo'
 	funcFindSaldo(result, vendorVerifikasi, saldoList, forAutosign)
 	
-	return result
+	result
 }
 
 def funcSaldoSign(HashMap result) {
@@ -167,7 +167,7 @@ def funcSaldoSign(HashMap result) {
 	'get saldo'
 	funcFindSaldo(result, vendorVerifikasi, saldoList, forAutosign)
 
-	return result
+	result
 }
 
 def funcSaldoStamp(HashMap result) {
@@ -237,7 +237,7 @@ def funcSaldoRegis(HashMap result, int countCheckSaldo, Connection conneSign) {
 				if ((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) == '1')) {
 					useSaldo = 'WhatsApp Message'
 			
-					saldoList = [useSaldo,'OTP']
+					saldoList = [useSaldo, 'OTP']
 				} else {
 					'jika use WA message bukan 1 maka use OTP'
 					useSaldo = 'OTP'

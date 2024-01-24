@@ -123,26 +123,24 @@ public class ManualStamp {
 		}
 		listdata
 	}
+	
 	@Keyword
 	getIdLovVendorStamping(Connection conn, String vendorStamping) {
 		stm = conn.createStatement()
 		if (vendorStamping != '') {
-		
-		resultSet = stm.executeQuery("SELECT id_lov FROM ms_lov WHERE code = '" + vendorStamping + "'")
-		metadata = resultSet.metaData
+			resultSet = stm.executeQuery("SELECT id_lov FROM ms_lov WHERE code = '" + vendorStamping + "'")
+			metadata = resultSet.metaData
 
-		columnCount = metadata.getColumnCount()
+			columnCount = metadata.getColumnCount()
 
-		while (resultSet.next()) {
-			data = resultSet.getObject(1)
-		}
+			while (resultSet.next()) {
+				data = resultSet.getObject(1)
+			}
 		}
 		if (data == 'null' || data == null) {
 			data = 0
 		}
-
 		Integer.parseInt(data)
-		
 	}
 
 	@Keyword
@@ -160,7 +158,6 @@ public class ManualStamp {
 		if (data == null) {
 			data = 'null'
 		}
-
 		data
 	}
 }

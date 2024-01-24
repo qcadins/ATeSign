@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>btn_Lanjut</name>
+   <name>button_ddlOfficeCode</name>
    <tag></tag>
-   <elementGuidId>8ea36161-9ade-4c18-b9b1-5f99ab3ef274</elementGuidId>
+   <elementGuidId>833731a6-76be-4dc0-b45a-98e8b478a98f</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>XPATH</key>
-      </entry>
-      <entry>
          <key>BASIC</key>
-         <value>//*[@class != 'btn btn-info']</value>
+         <value>//*[@id = 'officeCode']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -18,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>id</name>
       <type>Main</type>
-      <value>//*[@id=&quot;xForm&quot;]/div/div[10]/button[2]</value>
-      <webElementGuid>0b9d07ad-c793-40de-8159-c3ba4bdbfad6</webElementGuid>
+      <value>officeCode</value>
+      <webElementGuid>d6546d33-a675-46c5-9528-32080e0767e9</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

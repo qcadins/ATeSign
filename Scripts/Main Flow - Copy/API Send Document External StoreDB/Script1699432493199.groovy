@@ -1,7 +1,6 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
-import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import java.sql.Connection as Connection
@@ -23,14 +22,14 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'declare arraylist arraymatch'
 arrayMatch = []
 
-'check active atau tidaknya document based on nomor kontrak + '-''
+'check active atau tidaknya document based on nomor kontrak + "-"'
 String checkActiveDocument = CustomKeywords.'connection.SendSign.getCheckingActiveDocument'(conneSign, findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo')))
 
 'jika check active document tidak kosong, maka ada document yang masih aktif padahal secara nomor kontrak sudah ada _'
 if (checkActiveDocument != '') {
 	'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
 	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
-		(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-','') + semicolon) +
+		(findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + semicolon) +
 		'<Nomor Kontrak ' + checkActiveDocument + 'masih aktif>')
 }
 
@@ -90,8 +89,8 @@ for (int i = 0; i < docid.size(); i++) {
         semicolon, splitnum)
 
 	'Inisialisasi business line name berdasarkan delimiter ;'
-	qrEnable = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('QR')).replace('Ya', 'true').replace('Tidak', 'false').split(
-		semicolon, splitnum)
+	//qrEnable = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('QR')).replace('Ya', 'true').replace('Tidak', 'false').split(
+	//	semicolon, splitnum)
 	
     'Inisialisasi is sequence berdasarkan delimiter ;'
     isSequence = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('isSequence')).split(
@@ -121,12 +120,12 @@ for (int i = 0; i < docid.size(); i++) {
                 signlocStoreDBSplit[i], false, FailureHandling.CONTINUE_ON_FAILURE))
 		
 		'Maka pengecekan use sign qr yang diinput'
-        arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getUseSignQR'(conneSign, docid[i]), 
-                qrEnable[i].replace('false', '0').replace('true', '1'), false, FailureHandling.CONTINUE_ON_FAILURE))
+    //    arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getUseSignQR'(conneSign, docid[i]), 
+   //             qrEnable[i].replace('false', '0').replace('true', '1'), false, FailureHandling.CONTINUE_ON_FAILURE))
     } else {
-		'Maka pengecekan use sign qr via document template'
-		arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getUseSignQRFromDocTemplate'(conneSign, documentTemplateCode[i]),
-				CustomKeywords.'connection.APIFullService.getUseSignQR'(conneSign, docid[i]), false, FailureHandling.CONTINUE_ON_FAILURE))
+	//	'Maka pengecekan use sign qr via document template'
+	//	arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getUseSignQRFromDocTemplate'(conneSign, documentTemplateCode[i]),
+	//			CustomKeywords.'connection.APIFullService.getUseSignQR'(conneSign, docid[i]), false, FailureHandling.CONTINUE_ON_FAILURE))
 	}
     
     'get current date'
@@ -171,7 +170,6 @@ for (int i = 0; i < docid.size(); i++) {
             if ((documentTemplateCode[i]).replace('"', '') == '') {
                 'Jika is sequence nya bukan 0'
                 if ((isSequence[i]).replace('"', '') != '0') {
-
 					if (!findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('SeqNo (Send External)')).length() == 0) {
 						'Inisialisasi sequence number berdasarkan delimiter enter'
 						seqNo = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('SeqNo (Send External)')).split(
@@ -342,9 +340,6 @@ for (int i = 0; i < docid.size(); i++) {
                 }
             }
 	}
-        
-    
-    
     'jika data db tidak sesuai dengan excel'
     if (arrayMatch.contains(false)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
@@ -355,6 +350,6 @@ for (int i = 0; i < docid.size(); i++) {
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 

@@ -1596,6 +1596,21 @@ public class APIFullService {
 	}
 
 	@Keyword
+	getRegionListCount(Connection conn) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select COUNT(region_code) from ms_region mr join ms_tenant mt on mr.id_ms_tenant = mt.id_ms_tenant where tenant_code = '" + GlobalVariable.Tenant + "'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+
+		Integer.parseInt(data)
+	}
+	@Keyword
 	getOfficeList(Connection conn, String region) {
 		String commandRegion = ''
 
@@ -2002,6 +2017,7 @@ public class APIFullService {
 
 		Integer.parseInt(data)
 	}
+
 	@Keyword
 	listTenantAPIOnly(Connection conn, String tenantName, String isActive) {
 		String commandName = '', commandisActive = '', commandWhere = 'AND'
@@ -2303,5 +2319,21 @@ public class APIFullService {
 			}
 		}
 		listdata
+	}
+
+	@Keyword
+	getOfficeNameBasedOnRegionAndTenant(Connection conn, String tenantCode, String regionName) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select count(mso.office_name) from ms_office mso left join ms_tenant mst on mso.id_ms_tenant = mst.id_ms_tenant left join ms_region msr on mso.id_ms_region = msr.id_ms_region where mst.tenant_code = '"+tenantCode+"' AND msr.region_name = '"+regionName+"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+
+		Integer.parseInt(data)
 	}
 }

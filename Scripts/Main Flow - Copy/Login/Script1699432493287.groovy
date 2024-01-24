@@ -12,14 +12,13 @@ import java.sql.Connection as Connection
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'setting untuk membuat lokasi default folder download'
-HashMap<String, String> chromePrefs = new HashMap<String, String>()
+HashMap<String, String> chromePrefs = [:]
 
 chromePrefs.put('download.default_directory', System.getProperty('user.dir') + '\\Download')
 
 RunConfiguration.setWebDriverPreferencesProperty('prefs', chromePrefs)
 
 if (GlobalVariable.RunWith == 'Mobile') {
-	
 	'ambil koordinat dari settings'
 	ArrayList coordinates = findTestData('Login/Setting').getValue(13, 2).split(',')
 	
@@ -31,7 +30,6 @@ if (GlobalVariable.RunWith == 'Mobile') {
 	
 	'aktifkan view desktop sites'
 	Mobile.tapAtPosition(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), FailureHandling.OPTIONAL)
-	
 } else {
 	'open browser'
 	WebUI.openBrowser(findTestData('Login/Login').getValue(1, 2))
@@ -155,7 +153,7 @@ if (email == '') {
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
 def runWithEmbed(String linkUrl) {
