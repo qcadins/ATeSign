@@ -7,17 +7,25 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@class = 'btn btn-light mr-2 ng-star-inserted']</value>
+         <value>//*[@id=&quot;xForm&quot;]/div/div[10]/button[1]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>class</name>
       <type>Main</type>
       <value>btn btn-light mr-2 ng-star-inserted</value>
-      <webElementGuid>1c8af439-f8b1-4cfb-af14-b93d611a0ec2</webElementGuid>
+      <webElementGuid>06c8a80b-fbe8-48e7-a077-fbd1dc28fd30</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;xForm&quot;]/div/div[10]/button[1]</value>
+      <webElementGuid>f6d60ee6-a45c-48c6-b2e3-c1fda66384de</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

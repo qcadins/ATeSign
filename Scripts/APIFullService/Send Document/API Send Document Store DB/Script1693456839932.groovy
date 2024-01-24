@@ -67,7 +67,7 @@ for (int i = 0; i < docid.size(); i++) {
     isSequence = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('isSequence')).split(semicolon, splitnum)
 
     'Inisialisasi psre code berdasarkan delimiter ;'
-    psreCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 21).split(semicolon, splitnum)
+    psreCode = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('psreCode')).split(semicolon, splitnum)
 
     'Inisialisasi pageSign berdasarkan delimiter enter'
     pageSign = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 37).split(enter, splitnum)
