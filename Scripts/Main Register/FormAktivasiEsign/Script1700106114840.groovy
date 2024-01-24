@@ -215,7 +215,7 @@ if (GlobalVariable.Psre == 'PRIVY') {
             } else {
                 'check jika email service on'
                 if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == 
-                '1' && findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')) == '') {
+                '1') {
                     'check jika use WA message = 1'
                     if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) == 
                     '1') {
