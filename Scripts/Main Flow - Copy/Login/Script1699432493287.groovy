@@ -213,7 +213,6 @@ def runWithEmbed(String linkUrl) {
 				(((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
 					'-', '') + ';') + '<') + errormessage) + '>')
 		}
-		
     } else if (GlobalVariable.RunWithEmbed == 'No') {
 		if (GlobalVariable.RunWith == 'Mobile') {
 			//belum work

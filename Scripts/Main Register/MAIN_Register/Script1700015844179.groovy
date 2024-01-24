@@ -115,7 +115,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'check ada value maka setting use wa message'
         if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')).length() > 
         0) {
-			if (checkNotifTypeAvailable.isEmpty()) {
+			if (checkNotifTypeAvailable.empty) {
 				'setting use wa message'
 				CustomKeywords.'connection.APIFullService.settingUseWAMessage'(conneSign, findTestData(excelPathRegister).getValue(
                     GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')))

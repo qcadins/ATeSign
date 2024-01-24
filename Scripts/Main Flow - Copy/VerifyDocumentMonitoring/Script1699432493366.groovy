@@ -17,8 +17,6 @@ currentDate = new Date().format('yyyy-MM-dd')
 
 ArrayList nomorKontrakPerPilihan = []
 
-String settingHO = ''
-
 'Memilih document monitoring menggunakan apa berdasarkan input. Jika embed, maka setting GV Yes, jika tidak, maka setting No'
 if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Document Monitoring Using ?')) == 'Embed V2') {
 	GlobalVariable.RunWithEmbed = 'Yes'
