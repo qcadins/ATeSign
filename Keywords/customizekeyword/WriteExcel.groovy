@@ -8,7 +8,7 @@ import internal.GlobalVariable
 import org.apache.poi.xssf.usermodel.XSSFCell
 import org.apache.poi.xssf.usermodel.XSSFRow
 
-public class WriteExcel {
+class WriteExcel {
 
 	FileInputStream file
 	XSSFWorkbook workbook

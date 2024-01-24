@@ -200,7 +200,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         }
         
         'jika documentid nya tidak kosong'
-        if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).length() > 0) {
+       if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).length() > 0) { 
             'Jika option for send document yaitu Cancel Only'
             if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
             'Cancel Only') {
@@ -241,9 +241,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             emailSignerPerDoc = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, documentId[
                                 i]).split(';', -1)
 
-                            emailSignerPerDoc.collect { String email ->
-                                    email.trim()
-                                }
+							emailSignerPerDoc*.trim()
 
                             emailSigner.put(documentId[i], emailSignerPerDoc)
                         }
@@ -266,9 +264,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             emailSignerPerDoc = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel(
                                     'email Signer (Sign Only)')).split(';', -1)
 
-                            emailSignerPerDoc.collect { String email ->
-                                    email.trim()
-                                } 
+                            emailSignerPerDoc*.trim()
 
                             emailSigner.put(documentId[i], emailSignerPerDoc)
                         }
@@ -1077,9 +1073,8 @@ def checkingDocAndEmailFromInput(ArrayList<String> documentId, String rowEmail, 
 		signersPerDoc = (signers[loopingDocument]).split(';', -1)
 		
 		'di trim'
-		signersPerDoc = (signers[loopingDocument]).split(';', -1).collect { def signerss ->
-			signerss.trim()
-		}
+		signersPerDoc = (signers[loopingDocument]).split(';', -1)*.trim()
+		
         'masukkan value kepada array list signer input'
         signerInput.put(documentId[loopingDocument], signersPerDoc)
     }

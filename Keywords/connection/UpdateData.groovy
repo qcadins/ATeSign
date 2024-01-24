@@ -10,7 +10,7 @@ import com.kms.katalon.core.annotation.Keyword
 import internal.GlobalVariable
 import customizekeyword.WriteExcel
 
-public class UpdateData {
+class UpdateData {
 
 	String data = '', sheet = 'Main'
 	int columnCount, i

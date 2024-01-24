@@ -6,7 +6,7 @@ import java.sql.Statement
 import java.sql.ResultSet
 import java.sql.ResultSetMetaData
 
-public class ForgotPassword {
+class ForgotPassword {
 
 	String data, helperQuery
 	int columnCount = 0 , i = 0, countLengthforSHA256 = 64

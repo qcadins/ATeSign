@@ -8,7 +8,7 @@ import java.awt.Toolkit
 import java.awt.datatransfer.StringSelection
 import java.awt.event.KeyEvent
 
-public class UploadFile {
+class UploadFile {
 
 	@Keyword
 	uploadFunction(TestObject to, String filePath) {
@@ -27,5 +27,4 @@ public class UploadFile {
 		robot.keyPress(KeyEvent.VK_ENTER)
 		robot.keyRelease(KeyEvent.VK_ENTER)
 	}
-	
 }

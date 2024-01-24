@@ -141,16 +141,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     Map jsonResponseObject = jsonSlurper.parseText(responseBody)
 
                     'ambil seluruh vida sign loc dari response'
-                    ArrayList vidaSignLocation = jsonResponseObject.templateSignLocation.collect { def location ->
-                            location.vidaSignLocation
-                        }.toString().replace('x:', '').replace('y:', '').replace('h:', '').replace('w:', '').replace(' ', 
-                        '').replace('[', '').replace(']', '').split(',', -1)
+					ArrayList vidaSignLocation = (jsonResponseObject.templateSignLocation*.vidaSignLocation)
+					.join(',')
+					.replaceAll('[xyhw\\[\\] ]', '')
+					.split(',')
 
                     'ambil seluruh privy sign loc dari response'
-                    ArrayList privySignLocation = jsonResponseObject.templateSignLocation.collect { def location ->
-                            location.privySignLocation
-                        }.toString().replace('x:', '').replace('y:', '').replace('h:', '').replace('w:', '').replace(' ', 
-                        '').replace('[', '').replace(']', '').split(',', -1)
+					ArrayList privySignLocation = (jsonResponseObject.templateSignLocation*.privySignLocation)
+					.join(',')
+					.replaceAll('[xyhw\\[\\] ]', '')
+					.split(',')
 
                     'gabungkan vida dan privysignloc'
                     vidaSignLocation.addAll(privySignLocation)

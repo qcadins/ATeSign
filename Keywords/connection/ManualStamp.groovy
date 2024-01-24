@@ -6,7 +6,7 @@ import java.sql.ResultSetMetaData
 import java.sql.Statement
 import com.kms.katalon.core.annotation.Keyword
 
-public class ManualStamp {
+class ManualStamp {
 
 	String data
 	int columnCount, i
@@ -123,7 +123,7 @@ public class ManualStamp {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getIdLovVendorStamping(Connection conn, String vendorStamping) {
 		stm = conn.createStatement()

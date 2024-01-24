@@ -7,7 +7,7 @@ import java.sql.Statement
 import com.kms.katalon.core.annotation.Keyword
 import internal.GlobalVariable
 
-public class SendSign {
+class SendSign {
 
 	String data, commandSql
 	int columnCount, i, countLengthforSHA256 = 64, updateVariable
@@ -584,7 +584,7 @@ public class SendSign {
 		if (check.size() == 0) {
 			check
 		} else {
-			check.substring(0, check.length() - 2)
+			check[0..-3]
 		}
 	}
 

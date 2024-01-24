@@ -7,7 +7,7 @@ import java.sql.Statement
 import com.kms.katalon.core.annotation.Keyword
 import internal.GlobalVariable
 
-public class DataVerif {
+class DataVerif {
 
 	String data, helperQuery
 	int columnCount, i, updateVariable

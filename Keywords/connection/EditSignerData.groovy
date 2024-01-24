@@ -6,7 +6,7 @@ import java.sql.ResultSetMetaData
 import java.sql.Statement
 import com.kms.katalon.core.annotation.Keyword
 
-public class EditSignerData {
+class EditSignerData {
 
 	String data, helperQuery
 	int columnCount = 0, i = 0, countLengthforSHA256 = 64

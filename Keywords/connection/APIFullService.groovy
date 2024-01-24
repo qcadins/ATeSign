@@ -8,7 +8,7 @@ import java.sql.Statement
 import com.kms.katalon.core.annotation.Keyword
 import internal.GlobalVariable
 
-public class APIFullService {
+class APIFullService {
 
 	String data, helperQuery
 	int columnCount, i, countLengthforSHA256 = 64, updateVariable
