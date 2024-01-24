@@ -6,7 +6,7 @@ import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
 import internal.GlobalVariable
 
-public class BeautifyJson {
+class BeautifyJson {
 
 	WriteExcel needto = new WriteExcel()
 

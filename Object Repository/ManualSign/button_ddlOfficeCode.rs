@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>input_officeCode</name>
+   <name>button_ddlOfficeCode</name>
    <tag></tag>
-   <elementGuidId>a89ef93f-5b6c-4da9-b3c9-037aaeae1768</elementGuidId>
+   <elementGuidId>833731a6-76be-4dc0-b45a-98e8b478a98f</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;officeCode&quot;]/div/div/div[2]/input</value>
+         <value>//*[@id = 'officeCode']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>id</name>
       <type>Main</type>
-      <value>//*[@id=&quot;officeCode&quot;]/div/div/div[2]/input</value>
-      <webElementGuid>c8da16e7-92d4-4d53-9136-c756f3469551</webElementGuid>
+      <value>officeCode</value>
+      <webElementGuid>d6546d33-a675-46c5-9528-32080e0767e9</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

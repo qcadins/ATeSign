@@ -7,7 +7,7 @@ import java.sql.Statement
 import com.kms.katalon.core.annotation.Keyword
 import internal.GlobalVariable
 
-public class ErrorReport {
+class ErrorReport {
 
 	String data
 	int columnCount, i
@@ -86,24 +86,24 @@ public class ErrorReport {
 		listdata
 	}
 
-//	@Keyword
-//	getErrorHistoryAPI(Connection conn) {
-//		stm = conn.createStatement()
-//
-//		resultSet = stm.executeQuery("select teh.id_error_history, msl.description, teh.ref_number, teh.cust_name, teh.office, teh.region, teh.business_line, teh.error_type, teh.error_date, teh.error_message, msv.vendor_code from tr_error_history teh left join ms_lov msl on teh.lov_modul = msl.id_lov left join ms_vendor msv on teh.id_ms_vendor = msv.id_ms_vendor where teh.error_date >= date_trunc('month', now()) and teh.error_date <= now() LIMIT 10 OFFSET 11")
-//
-//		metadata = resultSet.metaData
-//
-//		columnCount = metadata.getColumnCount()
-//
-//		while (resultSet.next()) {
-//			for (i = 1 ; i <= columnCount ; i++) {
-//				data = resultSet.getObject(i)
-//				listdata.add(data)
-//			}
-//		}
-//		listdata
-//	}
+	//	@Keyword
+	//	getErrorHistoryAPI(Connection conn) {
+	//		stm = conn.createStatement()
+	//
+	//		resultSet = stm.executeQuery("select teh.id_error_history, msl.description, teh.ref_number, teh.cust_name, teh.office, teh.region, teh.business_line, teh.error_type, teh.error_date, teh.error_message, msv.vendor_code from tr_error_history teh left join ms_lov msl on teh.lov_modul = msl.id_lov left join ms_vendor msv on teh.id_ms_vendor = msv.id_ms_vendor where teh.error_date >= date_trunc('month', now()) and teh.error_date <= now() LIMIT 10 OFFSET 11")
+	//
+	//		metadata = resultSet.metaData
+	//
+	//		columnCount = metadata.getColumnCount()
+	//
+	//		while (resultSet.next()) {
+	//			for (i = 1 ; i <= columnCount ; i++) {
+	//				data = resultSet.getObject(i)
+	//				listdata.add(data)
+	//			}
+	//		}
+	//		listdata
+	//	}
 
 	@Keyword
 	getStatusActivationAPI(Connection conn, String email, String idErrorReport) {

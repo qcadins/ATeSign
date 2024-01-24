@@ -6,7 +6,7 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.Base64 as base64
 
-public class ConvertFile {
+class ConvertFile {
 
 	@Keyword
 	base64File(String filename) {

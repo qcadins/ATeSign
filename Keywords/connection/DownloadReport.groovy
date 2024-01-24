@@ -6,7 +6,7 @@ import java.sql.ResultSetMetaData
 import java.sql.Statement
 import com.kms.katalon.core.annotation.Keyword
 
-public class DownloadReport {
+class DownloadReport {
 
 	String data
 	int columnCount
@@ -29,5 +29,4 @@ public class DownloadReport {
 		}
 		Integer.parseInt(data)
 	}
-	
 }

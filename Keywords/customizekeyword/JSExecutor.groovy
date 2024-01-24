@@ -5,7 +5,7 @@ import org.openqa.selenium.WebElement
 import com.kms.katalon.core.annotation.Keyword
 import com.kms.katalon.core.webui.driver.DriverFactory
 
-public class JSExecutor {
+class JSExecutor {
 
 	@Keyword
 	jsExecutionFunction(String jsCode, String xpath, String newJS) {
@@ -19,5 +19,4 @@ public class JSExecutor {
 
 		DriverFactory.webDriver.executeScript(js, element, newLocation)
 	}
-	
 }

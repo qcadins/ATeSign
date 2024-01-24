@@ -12,7 +12,7 @@ import org.jsoup.nodes.Document as Document
 import java.util.regex.Matcher as Matcher
 import java.util.regex.Pattern as Pattern
 
-public class GetEmail {
+class GetEmail {
 
 	@Keyword
 	getEmailContent(String email, String inputPassword, String value) {
@@ -90,9 +90,9 @@ public class GetEmail {
 				break
 			}
 		}
-		
+
 		otpCode = findOtpCode(textWithoutHtml.toString())
-				
+
 		println('OTP Code: ' + otpCode)
 
 		emailFolder.close(false)

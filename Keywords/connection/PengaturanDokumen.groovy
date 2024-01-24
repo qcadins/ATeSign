@@ -7,7 +7,7 @@ import java.sql.Statement
 import com.kms.katalon.core.annotation.Keyword
 import internal.GlobalVariable
 
-public class PengaturanDokumen {
+class PengaturanDokumen {
 
 	String data
 	int columnCount, i

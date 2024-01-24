@@ -4,7 +4,7 @@ import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import java.sql.DriverManager
 import com.kms.katalon.core.annotation.Keyword
 
-public class ConnectDB {
+ class ConnectDB {
 
 	@Keyword
 	connectDBeSign() {
@@ -18,5 +18,4 @@ public class ConnectDB {
 
 		DriverManager.getConnection(url, username, password)
 	}
-	
 }

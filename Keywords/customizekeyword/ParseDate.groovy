@@ -3,7 +3,7 @@ package customizekeyword
 import java.text.SimpleDateFormat
 import com.kms.katalon.core.annotation.Keyword
 
-public class ParseDate {
+class ParseDate {
 
 	@Keyword
 	parseDateFormat(String date, String format1, String format2) {
@@ -25,5 +25,4 @@ public class ParseDate {
 
 		sDate
 	}
-	
 }

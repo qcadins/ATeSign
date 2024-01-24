@@ -6,7 +6,7 @@ import java.sql.ResultSetMetaData
 import java.sql.Statement
 import com.kms.katalon.core.annotation.Keyword
 
-public class PengaturanTenant {
+class PengaturanTenant {
 
 	String data
 	int columnCount, i
@@ -48,5 +48,4 @@ public class PengaturanTenant {
 		}
 		data
 	}
-	
 }

@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
-public class GetSMS {
+class GetSMS {
 
 	String currentDate = new Date().format('yyyy-MM-dd')
 	Map threadForRecipient, threadLastest, jsonResponse

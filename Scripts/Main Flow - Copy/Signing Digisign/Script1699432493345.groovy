@@ -173,7 +173,7 @@ if (WebUI.verifyElementVisible(findTestObject('Signing-DIGISIGN/text_popupGagal'
 			
 			GlobalVariable.eSignData['VerifikasiOTP'] = GlobalVariable.eSignData['VerifikasiOTP'] + 1
 
-			 if (WebUI.verifyElementVisible(findTestObject('Signing-DIGISIGN/text_success'), FailureHandling.OPTIONAL)) {
+			 if (WebUI.verifyElementPresent(findTestObject('Signing-DIGISIGN/iframe_errorCallbackPage'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
                 'ambil value success dan failed'
                 String success = WebUI.getText(findTestObject('Signing-DIGISIGN/text_success'))
 

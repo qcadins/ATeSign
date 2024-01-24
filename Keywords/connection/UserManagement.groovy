@@ -6,8 +6,8 @@ import java.sql.ResultSetMetaData
 import java.sql.Statement
 import com.kms.katalon.core.annotation.Keyword
 
-public class UserManagement {
-	
+class UserManagement {
+
 	String data
 	int columnCount, i
 	Statement stm
@@ -172,5 +172,4 @@ public class UserManagement {
 		}
 		listdata
 	}
-	
 }

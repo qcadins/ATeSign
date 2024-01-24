@@ -6,7 +6,7 @@ import com.kms.katalon.core.testobject.TestObject
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable
 
-public class CheckSaveProccess {
+class CheckSaveProccess {
 
 	@Keyword
 	checkStatus(int count, TestObject object, int colm, String sheetname) {

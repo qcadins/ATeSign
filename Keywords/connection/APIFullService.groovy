@@ -8,7 +8,7 @@ import java.sql.Statement
 import com.kms.katalon.core.annotation.Keyword
 import internal.GlobalVariable
 
-public class APIFullService {
+class APIFullService {
 
 	String data, helperQuery
 	int columnCount, i, countLengthforSHA256 = 64, updateVariable
@@ -1596,6 +1596,21 @@ public class APIFullService {
 	}
 
 	@Keyword
+	getRegionListCount(Connection conn) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select COUNT(region_code) from ms_region mr join ms_tenant mt on mr.id_ms_tenant = mt.id_ms_tenant where tenant_code = '" + GlobalVariable.Tenant + "'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+
+		Integer.parseInt(data)
+	}
+	@Keyword
 	getOfficeList(Connection conn, String region) {
 		String commandRegion = ''
 
@@ -2002,6 +2017,7 @@ public class APIFullService {
 
 		Integer.parseInt(data)
 	}
+
 	@Keyword
 	listTenantAPIOnly(Connection conn, String tenantName, String isActive) {
 		String commandName = '', commandisActive = '', commandWhere = 'AND'
@@ -2232,7 +2248,7 @@ public class APIFullService {
 	getWASMSFromNotificationType(Connection conn, String userEmail, String code, String tenantCode) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT CASE WHEN mntot.must_use_wa_first = '1' THEN 'WhatsApp Message' ELSE CASE WHEN (SELECT msvr.email_service FROM ms_vendor_registered_user msvr LEFT JOIN am_msuser amm ON msvr.id_ms_user = amm.id_ms_user WHERE amm.login_id = '"+userEmail+"' OR amm.hashed_phone = '"+userEmail+"' OR amm.hashed_id_no = '"+userEmail+"') = '1' THEN 'SMS Notif' ELSE CASE WHEN mntot.use_wa_message = '1' THEN 'WhatsApp Message' ELSE 'SMS Notif' END END END AS result FROM ms_notificationtypeoftenant mntot LEFT JOIN ms_lov msl ON mntot.lov_sending_point = msl.id_lov LEFT JOIN ms_tenant mst ON mntot.id_ms_tenant = mst.id_ms_tenant WHERE msl.code = '"+code+"' and mst.tenant_code = '"+tenantCode+"';")
+		resultSet = stm.executeQuery("SELECT CASE WHEN mntot.must_use_wa_first = '1' THEN 'WhatsApp Message' ELSE CASE WHEN (SELECT msvr.email_service FROM ms_vendor_registered_user msvr LEFT JOIN am_msuser amm ON msvr.id_ms_user = amm.id_ms_user WHERE amm.login_id = '" + userEmail + "' OR amm.hashed_phone = '" + userEmail + "' OR amm.hashed_id_no = '" + userEmail + "') = '1' THEN 'SMS Notif' ELSE CASE WHEN mntot.use_wa_message = '1' THEN 'WhatsApp Message' ELSE 'SMS Notif' END END END AS result FROM ms_notificationtypeoftenant mntot LEFT JOIN ms_lov msl ON mntot.lov_sending_point = msl.id_lov LEFT JOIN ms_tenant mst ON mntot.id_ms_tenant = mst.id_ms_tenant WHERE msl.code = '" + code + "' and mst.tenant_code = '" + tenantCode + "';")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -2303,5 +2319,21 @@ public class APIFullService {
 			}
 		}
 		listdata
+	}
+
+	@Keyword
+	getOfficeNameBasedOnRegionAndTenant(Connection conn, String tenantCode, String regionName) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select count(mso.office_name) from ms_office mso left join ms_tenant mst on mso.id_ms_tenant = mst.id_ms_tenant left join ms_region msr on mso.id_ms_region = msr.id_ms_region where mst.tenant_code = '" + tenantCode + "' AND msr.region_name = '" + regionName + "'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+
+		Integer.parseInt(data)
 	}
 }

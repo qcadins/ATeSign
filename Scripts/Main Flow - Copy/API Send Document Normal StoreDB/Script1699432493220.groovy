@@ -148,7 +148,7 @@ for (int i = 0; i < docid.size(); i++) {
 	arrayindex = 0
 
     'verify tenant code'
-    arrayMatch.add(WebUI.verifyMatch(tenantCode.replace('"',''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+    arrayMatch.add(WebUI.verifyMatch(tenantCode.replace('"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
 	'Maka pengecekan use sign qr via document template'
 	arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getUseSignQRFromDocTemplate'(conneSign, documentTemplateCode[i]),
@@ -245,7 +245,6 @@ for (int i = 0; i < docid.size(); i++) {
             for (loopPerSignActionPerSigner = 0; loopPerSignActionPerSigner < signActions.size(); loopPerSignActionPerSigner++) {
         'Jika signAction tersebut adalah AT'
         if ((signActions[loopPerSignActionPerSigner]).replace('"', '') == 'at') {
-			
 			'Mengambil trxno dari column tersebut'
 			trxno = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('trxNo')).split(', ', -1)
 
