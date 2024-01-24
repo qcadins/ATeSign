@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>input_officeCode</name>
+   <name>btn_closeddlOffice</name>
    <tag></tag>
-   <elementGuidId>a89ef93f-5b6c-4da9-b3c9-037aaeae1768</elementGuidId>
+   <elementGuidId>b9a1188a-d7f6-4d8d-80d4-e789d17f2d4e</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;officeCode&quot;]/div/div/div[2]/input</value>
+         <value>//*[@id=&quot;officeCode&quot;]/div/span[1]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -17,7 +17,7 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//*[@id=&quot;officeCode&quot;]/div/div/div[2]/input</value>
-      <webElementGuid>c8da16e7-92d4-4d53-9136-c756f3469551</webElementGuid>
+      <value>//*[@id=&quot;officeCode&quot;]/div/span[1]</value>
+      <webElementGuid>3982ef94-9302-4ff2-a06a-3ba03f828214</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

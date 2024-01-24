@@ -7,9 +7,6 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import java.sql.Connection as Connection
-import org.openqa.selenium.Keys as Keys
-import org.openqa.selenium.By as By
-import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
@@ -632,7 +629,7 @@ def setBodyForStampingLocation(String pageStamp, String llxStamp, String llyStam
         }
     }
     
-    return bodyAPI
+    bodyAPI
 }
 
 def bodyLocationCoordinate(String llxSigns, String llySigns, String urxSigns, String urySigns) {

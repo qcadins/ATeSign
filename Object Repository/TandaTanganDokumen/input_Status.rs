@@ -6,16 +6,17 @@
    <elementGuidId>d6e998d2-17a4-48b3-9f8c-c7eeb7b1a261</elementGuidId>
    <selectorCollection>
       <entry>
+         <key>CSS</key>
+         <value>div.ng-select-container</value>
+      </entry>
+      <entry>
          <key>XPATH</key>
-         <value>//ng-select[@id='isActive']/div</value>
+         <value>//ng-select[@id='isActive']/div&#xd;
+//*[@id=&quot;isActive&quot;]/div/div/div[3]/input</value>
       </entry>
       <entry>
          <key>BASIC</key>
          <value>//*[@id=&quot;isActive&quot;]/div/div/div[3]/input</value>
-      </entry>
-      <entry>
-         <key>CSS</key>
-         <value>div.ng-select-container</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -26,7 +27,7 @@
       <name>tag</name>
       <type>Main</type>
       <value>div</value>
-      <webElementGuid>59b18868-9018-4d48-a1f3-1c4eed51a81b</webElementGuid>
+      <webElementGuid>0f53b4e5-11f7-4f1d-be9c-f488423e6578</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -34,7 +35,7 @@
       <name>class</name>
       <type>Main</type>
       <value>ng-select-container</value>
-      <webElementGuid>fc75debe-6cb6-45e6-93b2-9aabdc608750</webElementGuid>
+      <webElementGuid>37df46a3-316e-44c7-82f6-e620d45f0546</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -42,7 +43,7 @@
       <name>text</name>
       <type>Main</type>
       <value>Pilih status</value>
-      <webElementGuid>3d349233-f089-4571-81c1-b17116bc39ef</webElementGuid>
+      <webElementGuid>65cbf485-bbe7-4d45-9615-c6d78c6d1fb8</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -50,7 +51,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>//*[@id=&quot;isActive&quot;]/div/div/div[3]/input</value>
-      <webElementGuid>4bd57b39-bd6f-4212-b48b-78e80b8bc60d</webElementGuid>
+      <webElementGuid>fd55fe2c-4ebb-4a9c-ba42-a2764b3ad0e3</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -58,7 +59,7 @@
       <name>xpath:idRelative</name>
       <type>Main</type>
       <value>//ng-select[@id='isActive']/div</value>
-      <webElementGuid>2b268377-5d38-4bfb-9283-c81aaa96bf97</webElementGuid>
+      <webElementGuid>65b64d36-73ec-41d6-9e54-48648410678f</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -66,7 +67,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Status'])[1]/following::div[2]</value>
-      <webElementGuid>12af5cfe-5797-4baf-93dc-f0e741c2f2a4</webElementGuid>
+      <webElementGuid>f8096bf1-d71a-4c2c-b9d6-0df4d1262bec</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -74,7 +75,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Nama Templat Dokumen'])[1]/following::div[7]</value>
-      <webElementGuid>6f2f19ae-3605-4233-b3c8-664d30039d01</webElementGuid>
+      <webElementGuid>340bb97a-1a20-486b-bb2d-2db9b558399d</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -82,7 +83,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='All'])[1]/preceding::div[5]</value>
-      <webElementGuid>3010afa2-ac4a-4e9d-9fe9-cdea122a0d7e</webElementGuid>
+      <webElementGuid>5eec837c-9a03-4229-87f1-2d999609756b</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -90,7 +91,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//ng-select/div</value>
-      <webElementGuid>a67364ee-3ca8-4d98-956d-35d9a0b6ced7</webElementGuid>
+      <webElementGuid>2077dc38-82a5-41d1-ad4c-51a925643fbb</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -98,6 +99,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//div[(text() = 'Pilih status' or . = 'Pilih status')]</value>
-      <webElementGuid>4cc54ef3-a164-47f3-9f5c-52018a60d956</webElementGuid>
+      <webElementGuid>10368d3c-3a94-4124-b924-76ecdce95c5b</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

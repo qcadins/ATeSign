@@ -7,9 +7,6 @@ import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.testobject.ResponseObject as ResponseObject
 import internal.GlobalVariable as GlobalVariable
 import java.sql.Connection as Connection
-import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
-import org.openqa.selenium.By as By
-import org.openqa.selenium.Keys as Keys
 
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
@@ -64,10 +61,6 @@ String vendor = CustomKeywords.'connection.DataVerif.getVendorNameForSaldo'(conn
 if (vendor == 'null') {
     vendor = findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Vendor'))
 }
-
-'ambil tenant dan vendor code yang akan digunakan document'
-ArrayList<String> tenantVendor = CustomKeywords.'connection.DataVerif.getTenantandVendorCode'(conneSign, GlobalVariable.storeVar.keySet()[
-    0])
 
 if (vendor.equalsIgnoreCase('Digisign')) {
     signTypeUsed = 'Dokumen'
@@ -864,8 +857,8 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
                         '-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP')
 
                 GlobalVariable.FlagFailed = 1
-
-                GlobalVariable.eSignData.putAt('VerifikasiOTP', GlobalVariable.eSignData.getAt('VerifikasiOTP') - 1)
+				
+				GlobalVariable.eSignData['VerifikasiOTP'] =  GlobalVariable.eSignData['VerifikasiOTP'] - 1
             } else {
                 penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
             }

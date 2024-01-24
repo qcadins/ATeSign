@@ -14,7 +14,7 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'get colm excel'
 int countColmExcel = findTestData(excelPathRegister).columnNumbers
 
-String lov_code = '', emailPhoneNo = ''
+String lovCode = '', emailPhoneNo = ''
 
 'declare variable array'
 HashMap<String, String> saldoBefore = [:]
@@ -59,15 +59,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 		
 		if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')) == 'API Generate Inv Link Normal' ||
 			findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')) == 'API Generate Inv Link External') {
-			'lov_code menjadi GEN_INV'
-			lov_code = 'GEN_INV'
+			'lovCode menjadi GEN_INV'
+			lovCode = 'GEN_INV'
 		} else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')) == 'Menu Buat Undangan') {
-			'lov_code menjadi GEN_INV menu'
-			lov_code = 'GEN_INV_MENU'
+			'lovCode menjadi GEN_INV menu'
+			lovCode = 'GEN_INV_MENU'
 		}
 		
 		'ambil result get inv link'
-		ArrayList checkNotifTypeAvailable = CustomKeywords.'connection.APIFullService.checkNotifTypeExistforTenant'(conneSign, lov_code)
+		ArrayList checkNotifTypeAvailable = CustomKeywords.'connection.APIFullService.checkNotifTypeExistforTenant'(conneSign, lovCode)
 		
         'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathRegister, GlobalVariable.NumofColm, rowExcel(
@@ -100,7 +100,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'check ada value maka setting must use wa first'
         if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')).length() > 
         0) {
-			if (checkNotifTypeAvailable.isEmpty()) {
+			if (checkNotifTypeAvailable.empty) {
 				'setting must use wa first'
 				CustomKeywords.'connection.APIFullService.settingMustUseWAFirst'(conneSign, findTestData(excelPathRegister).getValue(
                     GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')))
@@ -115,7 +115,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'check ada value maka setting use wa message'
         if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')).length() > 
         0) {
-			if (checkNotifTypeAvailable.isEmpty()) {
+			if (checkNotifTypeAvailable.empty) {
 				'setting use wa message'
 				CustomKeywords.'connection.APIFullService.settingUseWAMessage'(conneSign, findTestData(excelPathRegister).getValue(
                     GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')))

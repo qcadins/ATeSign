@@ -12,14 +12,13 @@ import java.sql.Connection as Connection
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'setting untuk membuat lokasi default folder download'
-HashMap<String, String> chromePrefs = new HashMap<String, String>()
+HashMap<String, String> chromePrefs = [:]
 
 chromePrefs.put('download.default_directory', System.getProperty('user.dir') + '\\Download')
 
 RunConfiguration.setWebDriverPreferencesProperty('prefs', chromePrefs)
 
 if (GlobalVariable.RunWith == 'Mobile') {
-	
 	'ambil koordinat dari settings'
 	ArrayList coordinates = findTestData('Login/Setting').getValue(13, 2).split(',')
 	
@@ -31,7 +30,6 @@ if (GlobalVariable.RunWith == 'Mobile') {
 	
 	'aktifkan view desktop sites'
 	Mobile.tapAtPosition(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), FailureHandling.OPTIONAL)
-	
 } else {
 	'open browser'
 	WebUI.openBrowser(findTestData('Login/Login').getValue(1, 2))
@@ -155,7 +153,7 @@ if (email == '') {
 }
 
 def rowExcel(String cellValue) {
-    return CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
 def runWithEmbed(String linkUrl) {
@@ -169,7 +167,6 @@ def runWithEmbed(String linkUrl) {
     
     'check if ingin menggunakan embed atau tidak'
     if (GlobalVariable.RunWithEmbed == 'Yes') {
-		
 		if (GlobalVariable.RunWith == 'Mobile') {
 			//belum work
 			'ambil koordinat dari settings'
@@ -186,7 +183,6 @@ def runWithEmbed(String linkUrl) {
 			
 			'aktifkan view desktop sites'
 			Mobile.tapAtPosition(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]), FailureHandling.OPTIONAL)
-			
 		} else {
 			'navigate url ke daftar akun'
 			WebUI.openBrowser(GlobalVariable.embedUrl)
@@ -210,18 +206,14 @@ def runWithEmbed(String linkUrl) {
 		'Jika error lognya muncul'
 		if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 			'ambil teks errormessage'
-			'ambil teks errormessage'
 			errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
 	
 			'Tulis di excel itu adalah error'
 			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 				(((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
 					'-', '') + ';') + '<') + errormessage) + '>')
-
 		}
-		
     } else if (GlobalVariable.RunWithEmbed == 'No') {
-		
 		if (GlobalVariable.RunWith == 'Mobile') {
 			//belum work
 			'ambil koordinat dari settings'
@@ -241,15 +233,12 @@ def runWithEmbed(String linkUrl) {
 			
 			'open browser'
 			WebUI.navigateToUrl(linkUrl)
-			
 		} else {
-			
 			'navigate url ke daftar akun'
 			WebUI.openBrowser(linkUrl)
 	
 			'Maximize Windows'
 			WebUI.maximizeWindow()
-			
 		}
     }
 }

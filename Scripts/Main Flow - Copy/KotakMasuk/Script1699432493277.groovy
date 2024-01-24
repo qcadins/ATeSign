@@ -286,7 +286,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 
     loopingPerDocument = 0
 
-    for (c = 0; c < resultHashMap.get(GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0])); c++) {
+    for (c = 0; c < resultHashMap.get(GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])]); c++) {
         if ((isViewDocument != 'Yes') || (c == 0)) {
             'get row pada beranda'
             variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-dashboard1 > div:nth-child(3) > div > div > div.card-content > div > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
@@ -312,8 +312,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 
             variable.size() == (variable.size() - c)
 
-            resultHashMap.put(GlobalVariable.storeVar.getAt(GlobalVariable.storeVar.keySet()[0]), resultHashMap.get(GlobalVariable.storeVar.getAt(
-                        GlobalVariable.storeVar.keySet()[0])) - c)
+            resultHashMap.put(GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])], resultHashMap.get(GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])]) - c)
 
             c = 0
         }

@@ -1,7 +1,8 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.model.FailureHandling
+import com.kms.katalon.core.testobject.TestObject
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
@@ -66,7 +67,7 @@ for (looping = 0; looping < loopcase; looping++) {
     'Pengecekan apakah masuk page manual sign'
     if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), GlobalVariable.TimeOut)) {
         'Input form yang ada pada page'
-        inputForm()
+        inputForm(conneSign)
 
         'jika setting menggunakan e-meterai'
         if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Membutuhkan e-Meterai (Send Manual)')) == 
@@ -411,15 +412,22 @@ for (looping = 0; looping < loopcase; looping++) {
             sortingSequenceSign()
 
             checkErrorLog()
-
+			
+			String docId = CustomKeywords.'connection.DataVerif.getDocId'(conneSign, findTestData(excelPathManualSigntoSign).getValue(
+				GlobalVariable.NumofColm, rowExcel('$referenceNo')), GlobalVariable.Tenant)
+			
+			'Write to excel mengenai Document ID'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel(
+					'documentid') - 1, GlobalVariable.NumofColm - 1, docId)
+			
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('PsRE Document') -
+				1, GlobalVariable.NumofColm - 1, findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
+					rowExcel('Vendor')))
+			
             if (GlobalVariable.FlagFailed == 0) {
                 'write to excel success'
                 CustomKeywords.'customizeKeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Status') - 
                     1, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
-
-                CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('PsRE Document') - 
-                    1, GlobalVariable.NumofColm - 1, findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
-                        rowExcel('Vendor')))
 
                 if (GlobalVariable.checkStoreDB == 'Yes') {
                     result = CustomKeywords.'connection.ManualSign.getManualSign'(conneSign, findTestData(excelPathManualSigntoSign).getValue(
@@ -505,11 +513,9 @@ for (looping = 0; looping < loopcase; looping++) {
                     
                     'verify use sign qr'
                     arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
-                                rowExcel('QR')), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
+                                rowExcel('QR')).replace('Ya', '1').replace('Tidak', '0'), result[index++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                    String docId = CustomKeywords.'connection.DataVerif.getDocId'(conneSign, findTestData(excelPathManualSigntoSign).getValue(
-                            GlobalVariable.NumofColm, rowExcel('$referenceNo')), GlobalVariable.Tenant)
-
+					index++
                     if ((GlobalVariable.Psre == 'PRIVY') && tipeTandaTangan.contains('Meterai')) {
                         'pastikan privy sign loc tidak null'
                         arrayMatch.add(WebUI.verifyNotMatch('null', CustomKeywords.'connection.APIFullService.getPrivyStampLocation'(
@@ -527,10 +533,6 @@ for (looping = 0; looping < loopcase; looping++) {
                             GlobalVariable.StatusFailed, (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
                                 rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
                     }
-                    
-                    'Write to excel mengenai Document ID'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel(
-                            'documentid') - 1, GlobalVariable.NumofColm - 1, docId)
                 }
             }
             
@@ -575,7 +577,7 @@ def checkErrorLog() {
     false
 }
 
-def inputForm() {
+def inputForm(Connection conneSign) {
     'Input teks di nama template dokumen'
     WebUI.setText(findTestObject('ManualSign/input_psre'), GlobalVariable.Psre)
 
@@ -617,15 +619,27 @@ def inputForm() {
         WebUI.sendKeys(findTestObject('ManualSign/input_qr'), Keys.chord(Keys.ENTER))
     }
     
+	'get data store db'
+	int result = CustomKeywords.'connection.APIFullService.businessLineAPIOnly'(conneSign, GlobalVariable.Tenant)
+
+	'check ddl busienss line code count'
+	checkDDL(findTestObject('ManualSign/input_businessLineCode'), result, ' pada tipe Business Line ')
+		
     if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('businessLineName')) != '') {
-        'Input pada business line'
+		'Input pada business line'
         WebUI.setText(findTestObject('ManualSign/input_businessLineCode'), findTestData(excelPathManualSigntoSign).getValue(
                 GlobalVariable.NumofColm, rowExcel('businessLineName')))
 
         'Klik enter'
         WebUI.sendKeys(findTestObject('ManualSign/input_businessLineCode'), Keys.chord(Keys.ENTER))
     }
-    
+	
+	'get data store db'
+	result = CustomKeywords.'connection.APIFullService.getRegionListCount'(conneSign)
+
+	'check ddl busienss line code count'
+	checkDDL(findTestObject('ManualSign/input_regionCode'), result, ' pada tipe Region ')
+		
     if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('regionName')) != '') {
         'Input pada region code'
         WebUI.setText(findTestObject('ManualSign/input_regionCode'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
@@ -634,7 +648,13 @@ def inputForm() {
         'Klik enter'
         WebUI.sendKeys(findTestObject('ManualSign/input_regionCode'), Keys.chord(Keys.ENTER))
     }
-    
+	
+	'get data store db'
+	result = CustomKeywords.'connection.APIFullService.getOfficeNameBasedOnRegionAndTenant'(conneSign, GlobalVariable.Tenant, findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('regionName')))
+
+	'check ddl busienss line code count'
+	checkDDLWithGetDDL(findTestObject('ManualSign/button_ddlOfficeCode'), result, ' pada tipe Office ', findTestObject('ManualSign/btn_closeddlOffice'))
+
     if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('officeName')) != '') {
         'Input pada office code'
         WebUI.setText(findTestObject('ManualSign/input_officeCode'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
@@ -752,7 +772,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
     for (loopingEmailPerDoc = 0; loopingEmailPerDoc < emailSigner.split(';', -1).size(); loopingEmailPerDoc++) {
         fullNameUser = CustomKeywords.'connection.DataVerif.getFullNameOfUser'(conneSign, emailSigner[loopingEmailPerDoc])
 
-        notifTypeDB = CustomKeywords.'connection.APIFullService.getWASMSFromNotificationType'(conneSign, email[loopingEmail], 
+        notifTypeDB = CustomKeywords.'connection.APIFullService.getWASMSFromNotificationType'(conneSign, emailSigner[loopingEmailPerDoc], 
             'MANUAL_SIGN_REQ', GlobalVariable.Tenant)
 
         if (notifTypeDB == '0') {
@@ -914,3 +934,55 @@ def funcLogin() {
     }
 }
 
+def checkDDLWithGetDDL(TestObject objectDDL, int listDB, String reason, TestObject objectClick) {
+	'declare array untuk menampung ddl'
+	ArrayList list = []
+
+	WebUI.scrollToElement(objectDDL, GlobalVariable.TimeOut)
+	
+	'click untuk memunculkan ddl'
+	WebUI.click(objectDDL)
+
+	'get id ddl'
+	id = WebUI.getAttribute(findTestObject('TandaTanganDokumen/ddlClass'), 'id', FailureHandling.CONTINUE_ON_FAILURE)
+
+	'get row'
+	variable = DriverFactory.webDriver.findElements(By.cssSelector(('#' + id) + '> div > div:nth-child(2) div'))
+
+	'looping untuk get ddl kedalam array'
+	for (i = 1; i < variable.size(); i++) {
+		'modify object DDL'
+		modifyObjectDDL = WebUI.modifyObjectProperty(findTestObject('TandaTanganDokumen/modifyObject'), 'xpath', 'equals',
+			((('//*[@id=\'' + id) + '-') + i) + '\']', true)
+
+		'add ddl ke array'
+		list.add(WebUI.getText(modifyObjectDDL))
+	}
+
+	'verify jumlah ddl ui = db'
+	checkVerifyEqualOrMatch(WebUI.verifyEqual(list.size(), listDB, FailureHandling.CONTINUE_ON_FAILURE), ' Jumlah ' +
+		reason)
+
+	'Input click untuk tutup ddl'
+	WebUI.click(objectClick)
+}
+
+def checkDDL(TestObject objectDDL, int listDB, String reason) {
+	WebUI.scrollToElement(objectDDL, GlobalVariable.TimeOut)
+	
+	'click untuk memunculkan ddl'
+	WebUI.click(objectDDL)
+
+	'get id ddl'
+	id = WebUI.getAttribute(findTestObject('TandaTanganDokumen/ddlClass'), 'id', FailureHandling.CONTINUE_ON_FAILURE)
+
+	'get row'
+	variable = DriverFactory.webDriver.findElements(By.cssSelector(('#' + id) + '> div > div:nth-child(2) div'))
+
+	'verify jumlah ddl ui = db'
+	checkVerifyEqualOrMatch(WebUI.verifyEqual(variable.size() - 1, listDB, FailureHandling.CONTINUE_ON_FAILURE), ' Jumlah ' +
+		reason)
+
+	'Input enter untuk tutup ddl'
+	WebUI.sendKeys(objectDDL, Keys.chord(Keys.ENTER))
+}

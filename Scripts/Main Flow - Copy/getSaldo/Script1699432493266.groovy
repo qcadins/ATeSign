@@ -24,9 +24,6 @@ if (vendor.toString().contains('digi') || vendor.toString().contains('DIGI')) {
 	vendor = 'TEKENAJA'
 }
 
-'return total saldo awal'
-String vendorVerifikasi, totalSaldo
-
 funcLogin()
 
 if (usageSaldo == 'Send') {
@@ -110,7 +107,7 @@ def funcSaldoSend(HashMap result) {
 	'get saldo menggunakan func find saldo'
 	funcFindSaldo(result, vendorVerifikasi, saldoList, forAutosign)
 	
-	return result
+	result
 }
 
 def funcSaldoSign(HashMap result) {
@@ -167,7 +164,7 @@ def funcSaldoSign(HashMap result) {
 	'get saldo'
 	funcFindSaldo(result, vendorVerifikasi, saldoList, forAutosign)
 
-	return result
+	result
 }
 
 def funcSaldoStamp(HashMap result) {
@@ -181,7 +178,7 @@ def funcSaldoStamp(HashMap result) {
 	
 	funcFindSaldo(result, vendorVerifikasi, saldoList, forAutosign)
 
-	return result
+	result
 }
 
 def funcFindSaldo(HashMap result, String vendorVerifikasi, ArrayList saldoList, boolean forAutosign) {
@@ -237,7 +234,7 @@ def funcSaldoRegis(HashMap result, int countCheckSaldo, Connection conneSign) {
 				if ((findTestData(excel).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) == '1')) {
 					useSaldo = 'WhatsApp Message'
 			
-					saldoList = [useSaldo,'OTP']
+					saldoList = [useSaldo, 'OTP']
 				} else {
 					'jika use WA message bukan 1 maka use OTP'
 					useSaldo = 'OTP'
@@ -296,7 +293,7 @@ def funcSaldoRegis(HashMap result, int countCheckSaldo, Connection conneSign) {
 		}
 	}
 	
-	return result
+	result
 }
 
 def inputFilterSaldo(String tipeSaldo, Connection conneSign) {
