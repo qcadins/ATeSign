@@ -2288,7 +2288,7 @@ public class APIFullService {
 	getResultNotifTypeGenInvLink(Connection conn, String value, String genInvType) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT CASE WHEN mntot.must_use_wa_first = '1' THEN 'WhatsApp Message' ELSE CASE WHEN ( SELECT msvr.email_service FROM ms_vendor_registered_user msvr LEFT JOIN am_msuser amm ON msvr.id_ms_user = amm.id_ms_user WHERE amm.login_id = '" + value + "' OR amm.hashed_phone = encode(sha256('" + value + "'), 'hex') ) = '1' THEN 'SMS' ELSE CASE WHEN mntot.use_wa_message = '1' THEN 'WA' ELSE 'SMS' END END END AS result FROM ms_notificationtypeoftenant mntot JOIN ms_lov msl ON mntot.lov_sending_point = msl.id_lov LEFT JOIN ms_tenant mst ON mntot.id_ms_tenant = mst.id_ms_tenant WHERE mst.tenant_code = '" + GlobalVariable.Tenant + "' and msl.code = '" + genInvType + "';")
+		resultSet = stm.executeQuery("SELECT CASE WHEN mntot.must_use_wa_first = '1' THEN 'WhatsApp Message' ELSE CASE WHEN ( SELECT msvr.email_service FROM ms_vendor_registered_user msvr LEFT JOIN am_msuser amm ON msvr.id_ms_user = amm.id_ms_user WHERE amm.login_id = '" + value + "' OR amm.hashed_phone = encode(sha256('" + value + "'), 'hex') ) = '1' THEN 'SMS' ELSE CASE WHEN mntot.use_wa_message = '1' THEN 'WhatsApp Message' ELSE 'SMS' END END END AS result FROM ms_notificationtypeoftenant mntot JOIN ms_lov msl ON mntot.lov_sending_point = msl.id_lov LEFT JOIN ms_tenant mst ON mntot.id_ms_tenant = mst.id_ms_tenant WHERE mst.tenant_code = '" + GlobalVariable.Tenant + "' and msl.code = '" + genInvType + "';")
 
 		metadata = resultSet.metaData
 
