@@ -22,6 +22,6 @@
       <name>class</name>
       <type>Main</type>
       <value>btn btn-info</value>
-      <webElementGuid>b99ae203-5813-4af5-a9d0-d748c00f734c</webElementGuid>
+      <webElementGuid>e12ac8d6-53a8-4841-9ee6-81a77e606db0</webElementGuid>
    </webElementProperties>
 </WebElementEntity>
