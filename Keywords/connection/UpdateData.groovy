@@ -9,9 +9,6 @@ import com.kms.katalon.core.annotation.Keyword
 
 import internal.GlobalVariable
 import customizekeyword.WriteExcel
-import connection.ManualStamp
-import connection.SendSign
-import connection.APIFullService
 
 public class UpdateData {
 
@@ -306,7 +303,7 @@ public class UpdateData {
 	@Keyword
 	rowExcel(String cellValue) {
 		WriteExcel needto = new WriteExcel()
-		return needto.getExcelRow(GlobalVariable.DataFilePath, sheet, cellValue)
+		needto.getExcelRow(GlobalVariable.DataFilePath, sheet, cellValue)
 	}
 
 	@Keyword

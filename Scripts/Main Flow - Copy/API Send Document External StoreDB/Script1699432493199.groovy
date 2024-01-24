@@ -1,5 +1,4 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
-import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
@@ -89,8 +88,8 @@ for (int i = 0; i < docid.size(); i++) {
         semicolon, splitnum)
 
 	'Inisialisasi business line name berdasarkan delimiter ;'
-	//qrEnable = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('QR')).replace('Ya', 'true').replace('Tidak', 'false').split(
-	//	semicolon, splitnum)
+	qrEnable = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('QR')).replace('Ya', 'true').replace('Tidak', 'false').split(
+		semicolon, splitnum)
 	
     'Inisialisasi is sequence berdasarkan delimiter ;'
     isSequence = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('isSequence')).split(
@@ -120,12 +119,12 @@ for (int i = 0; i < docid.size(); i++) {
                 signlocStoreDBSplit[i], false, FailureHandling.CONTINUE_ON_FAILURE))
 		
 		'Maka pengecekan use sign qr yang diinput'
-    //    arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getUseSignQR'(conneSign, docid[i]), 
-   //             qrEnable[i].replace('false', '0').replace('true', '1'), false, FailureHandling.CONTINUE_ON_FAILURE))
+        arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getUseSignQR'(conneSign, docid[i]), 
+                qrEnable[i].replace('false', '0').replace('true', '1'), false, FailureHandling.CONTINUE_ON_FAILURE))
     } else {
-	//	'Maka pengecekan use sign qr via document template'
-	//	arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getUseSignQRFromDocTemplate'(conneSign, documentTemplateCode[i]),
-	//			CustomKeywords.'connection.APIFullService.getUseSignQR'(conneSign, docid[i]), false, FailureHandling.CONTINUE_ON_FAILURE))
+		'Maka pengecekan use sign qr via document template'
+		arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getUseSignQRFromDocTemplate'(conneSign, documentTemplateCode[i]),
+				CustomKeywords.'connection.APIFullService.getUseSignQR'(conneSign, docid[i]), false, FailureHandling.CONTINUE_ON_FAILURE))
 	}
     
     'get current date'
@@ -285,7 +284,6 @@ for (int i = 0; i < docid.size(); i++) {
             for (loopPerSignActionPerSigner = 0; loopPerSignActionPerSigner < signActions.size(); loopPerSignActionPerSigner++) {
                 'Jika signAction tersebut adalah AT'
                 if ((signActions[loopPerSignActionPerSigner]).replace('"', '') == 'at') {
-
                     'Mengambil trxno dari column tersebut'
                     trxno = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('trxNo')).split(
                         ', ', -1)

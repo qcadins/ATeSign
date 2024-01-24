@@ -10,16 +10,6 @@ import org.openqa.selenium.By as By
 import java.sql.Connection as Connection
 import org.apache.commons.lang3.time.StopWatch as StopWatch
 import org.apache.commons.lang3.time.DurationFormatUtils as DurationFormatUtils
-import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
-import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
-import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
-import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
-import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
-import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
-import com.kms.katalon.core.testcase.TestCase as TestCase
-import com.kms.katalon.core.testdata.TestData as TestData
-import com.kms.katalon.core.testobject.TestObject as TestObject
-import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
 
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
@@ -251,9 +241,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             emailSignerPerDoc = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, documentId[
                                 i]).split(';', -1)
 
-                            emailSignerPerDoc.collect({ String email ->
+                            emailSignerPerDoc.collect{ String email ->
                                     email.trim()
-                                })
+                                }
 
                             emailSigner.put(documentId[i], emailSignerPerDoc)
                         }
@@ -1087,9 +1077,9 @@ def checkingDocAndEmailFromInput(ArrayList<String> documentId, String rowEmail, 
         signersPerDoc = (signers[loopingDocument]).split(';', -1)
 
         'di trim'
-        signersPerDoc = (signers[loopingDocument]).split(';', -1).collect({ 
-                it.trim()
-            })
+        signersPerDoc = (signers[loopingDocument]).split(';', -1).collect{ def signerss ->
+                signerss.trim()
+            }
 
         'masukkan value kepada array list signer input'
         signerInput.put(documentId[loopingDocument], signersPerDoc)
