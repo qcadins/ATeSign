@@ -824,7 +824,7 @@ def searchPengaturanDokumen() {
     WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_cari'))
 }
 
-def verifyAfterAddorEdit(String tipeTTD) {
+def verifyAfterAddorEdit(ArrayList tipeTTD) {
     'click menu pengaturan dokumen'
     WebUI.click(findTestObject('TandaTanganDokumen/btn_PengaturanDokumen'))
 

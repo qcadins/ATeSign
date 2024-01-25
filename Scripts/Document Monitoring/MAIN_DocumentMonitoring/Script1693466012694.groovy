@@ -46,6 +46,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.FlagFailed = 0
         }
         
+		CustomKeywords.'connection.UpdateData.updateDBMainFlowBefore'(conneSign, excelPathDocumentMonitoring)
+		
         'get office code dari db'
         officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, findTestData(excelPathDocumentMonitoring).getValue(
                 GlobalVariable.NumofColm, rowExcel('No Kontrak')))
@@ -780,14 +782,43 @@ def rowExcel(String cellValue) {
 
 def checkBalanceMutation(Connection conneSign, String emailSigner) {
     'cek apakah perlu untuk pengecekan DB'
-    if ((GlobalVariable.checkStoreDB == 'Yes') && !(findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 
-        rowExcel('Run With')).equalsIgnoreCase('Embed V2'))) {
+    if (GlobalVariable.checkStoreDB == 'Yes') {
         emailServiceOnTenant = CustomKeywords.'connection.DataVerif.getEmailService'(conneSign, GlobalVariable.Tenant)
 
         fullNameUser = CustomKeywords.'connection.DataVerif.getFullNameOfUser'(conneSign, emailSigner)
 
+		notifTypeDBResendSignNotifNormal = CustomKeywords.'connection.APIFullService.getWASMSFromNotificationType'(conneSign, emailSigner,
+			'RESEND_SIGN_NOTIF', GlobalVariable.Tenant)
+		
+		notifTypeDBResendSignNotifEmbedV1 = CustomKeywords.'connection.APIFullService.getWASMSFromNotificationType'(conneSign, emailSigner,
+			'RESEND_SIGN_NOTIF_EMBED_V1', GlobalVariable.Tenant)
+		
+		notifTypeDBResendSignNotifEmbedV2 = CustomKeywords.'connection.APIFullService.getWASMSFromNotificationType'(conneSign, emailSigner,
+			'RESEND_SIGN_NOTIF_EMBED_V2', GlobalVariable.Tenant)
+		
         mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
-
+		
+		if (notifTypeDBResendSignNotifNormal == '0') {
+			if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Run With')).equalsIgnoreCase('Normal')) {
+				notifTypeDB = '0'
+			} else {
+				notifTypeDB = notifTypeDBResendSignNotifNormal
+			}
+		} else if (notifTypeDBResendSignNotifEmbedV1 == '0') {
+			if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Run With')).equalsIgnoreCase('Embed V1')) {
+				notifTypeDB = '0'
+			} else {
+				notifTypeDB = notifTypeDBResendSignNotifEmbedV1
+			}
+		} else if (notifTypeDBResendSignNotifEmbedV2 == '0') {
+			if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Run With')).equalsIgnoreCase('Embed V2')) {
+				notifTypeDB = '0'
+			} else {
+				notifTypeDB = notifTypeDBResendSignNotifEmbedV2
+			}
+		}
+		
+		if (notifTypeDB == '0') {
         if (mustUseWAFirst == '1') {
             'menggunakan saldo wa'
             ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message', fullNameUser)
@@ -801,7 +832,7 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
                     ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
             }
             
-            if ((balmut[9]) != -1) {
+            if ((balmut[10]) != -1) {
                 GlobalVariable.FlagFailed = 1
 
                 'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
@@ -827,7 +858,7 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
                                 rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
                     }
                     
-                    if ((balmut[9]) != -1) {
+                    if ((balmut[10]) != -1) {
                         GlobalVariable.FlagFailed = 1
 
                         'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
@@ -848,7 +879,7 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
                                 rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via SMS')
                     }
                     
-                    if ((balmut[9]) != -1) {
+                    if ((balmut[10]) != -1) {
                         GlobalVariable.FlagFailed = 1
 
                         'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
@@ -858,7 +889,30 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
                     }
                 }
             }
-            
+        }
+		} else {
+			'menggunakan saldo wa'
+			ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, notifTypeDB, fullNameUser)
+
+			if (balmut.size() == 0) {
+				GlobalVariable.FlagFailed = 1
+
+				'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+					GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm,
+						rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via SMS')
+			}
+			
+			if ((balmut[10]) != -1) {
+				GlobalVariable.FlagFailed = 1
+
+				'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+					GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm,
+						rowExcel('Reason Failed')) + ';') + 'Saldo SMS tidak terpotong')
+			}
+	
+		}
             'cek apakah perlu untuk pengecekan DB'
             if (GlobalVariable.checkStoreDB == 'Yes') {
                 WebUI.delay(1)
@@ -886,11 +940,10 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
                     'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 
-                            rowExcel('Reason Failed')) + ';') + 'Transaksi OTP tidak masuk balance mutation')
+                            rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch +  'pada pengecekan Office/Region/Bline')
                 }
             }
         }
-    }
 }
 
 def encryptValue(String value, String aesKey) {

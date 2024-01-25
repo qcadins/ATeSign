@@ -5,15 +5,9 @@ import com.kms.katalon.core.testobject.ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
-import java.sql.Connection as Connection
-import java.util.regex.Matcher as Matcher
-import java.util.regex.Pattern as Pattern
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - API Only.xlsx')
-
-'connect dengan db'
-Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get colm excel'
 int countColmExcel = findTestData(excelPath).columnNumbers
@@ -45,12 +39,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         'HIT API Login untuk token : andy@ad-ins.com'
-        respon = WS.sendRequest(findTestObject('Postman/changePassword', [('tenantCode') : findTestData(excelPath).getValue(
-                        GlobalVariable.NumofColm, rowExcel('tenantCode')), ('loginId') : findTestData(excelPath).getValue(
+        respon = WS.sendRequest(findTestObject('Postman/changePassword', [('callerId') : findTestData(excelPath).getValue(
+                        GlobalVariable.NumofColm, rowExcel('callerId')), ('loginId') : findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('loginId')), ('oldPassword') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('oldPassword')), ('newPassword') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-                        rowExcel('newPassword')), ('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-                        rowExcel('callerId'))]))
+                        rowExcel('newPassword')), ('tenantCode') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                        rowExcel('tenantCode'))]))
 
         'ambil lama waktu yang diperlukan hingga request menerima balikan'
         elapsedTime = ((respon.elapsedTime / 1000) + ' second')
@@ -90,7 +84,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 def getErrorMessageAPI(ResponseObject respon) {
     'mengambil status code berdasarkan response HIT API'
     message = WS.getElementPropertyValue(respon, 'status.message', FailureHandling.OPTIONAL)
-
+    
     'Write To Excel GlobalVariable.StatusFailed and errormessage'
     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
         ((findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') + 
@@ -102,34 +96,3 @@ def getErrorMessageAPI(ResponseObject respon) {
 def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
-
-def parseCodeOnly(String url) {
-    'ambil data sesudah "code="'
-    Pattern pattern = Pattern.compile('code=([^&]+)')
-
-    'ambil matcher dengan URL'
-    Matcher matcher = pattern.matcher(url)
-
-    'cek apakah apttern nya sesuai'
-    if (matcher.find()) {
-        'ubah jadi string'
-        String code = matcher.group(1)
-
-        'decode semua ascii pada url'
-        code = URLDecoder.decode(code, 'UTF-8')
-
-        return code
-    }
-
-	''
-}
-
-def decryptLink(Connection conneSign, String invCode) {
-    aesKey = CustomKeywords.'connection.DataVerif.getAESKey'(conneSign)
-
-    'enkripsi msg'
-    encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseDecrypt'(invCode, aesKey)
-
-    encryptMsg
-}
-
