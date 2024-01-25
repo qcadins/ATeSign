@@ -6,12 +6,12 @@
    <elementGuidId>8ea36161-9ade-4c18-b9b1-5f99ab3ef274</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>XPATH</key>
-         <value>//*[@id=&quot;msxForm&quot;]/div[2]/div/button[2]</value>
-      </entry>
-      <entry>
          <key>BASIC</key>
          <value>//*[@id=&quot;xForm&quot;]/div/div[10]/button[2]</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value></value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -22,7 +22,7 @@
       <name>class</name>
       <type>Main</type>
       <value>btn btn-info</value>
-      <webElementGuid>4e935937-e184-44df-99a8-ac99a8889f93</webElementGuid>
+      <webElementGuid>68ae16a8-286d-4074-a919-19a7e48b4192</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -30,6 +30,6 @@
       <name>xpath</name>
       <type>Main</type>
       <value>//*[@id=&quot;xForm&quot;]/div/div[10]/button[2]</value>
-      <webElementGuid>55519716-d259-43b6-a52a-464e47fed53e</webElementGuid>
+      <webElementGuid>9ec72dd7-c899-4dad-b5a4-e7a2f26a7dcf</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

@@ -78,7 +78,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         RoleTandaTangan = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('RoleTandaTangan')).split(
             semicolon, splitIndex)
 
-        TipeTandaTangan = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('TipeTandaTangan')).split(
+        ArrayList<String> TipeTandaTangan = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('TipeTandaTangan')).split(
             semicolon, splitIndex)
 
         SignBoxAction = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Pindahkan SignBox')).split(
@@ -824,7 +824,7 @@ def searchPengaturanDokumen() {
     WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_cari'))
 }
 
-def verifyAfterAddorEdit(ArrayList tipeTTD) {
+def verifyAfterAddorEdit(ArrayList<String> tipeTTD) {
     'click menu pengaturan dokumen'
     WebUI.click(findTestObject('TandaTanganDokumen/btn_PengaturanDokumen'))
 
