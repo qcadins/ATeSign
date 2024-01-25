@@ -140,10 +140,14 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
                 }
                 
                 'check potong saldo sms notif / WA untuk kirim link undangan'
-                checkVerifyEqualOrMatch(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getSaldoTrx'(conneSign, 
-                            findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('callerId')).replace(
-                                '"', ''), usedSaldo), '-1', false, FailureHandling.CONTINUE_ON_FAILURE), (' Saldo ' + usedSaldo) + 
-                    ' tidak terpotong untuk kirim link undangan')
+                if (!WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getSaldoTrx'(conneSign, 
+                		findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('callerId')).replace(
+                				'"', ''), usedSaldo), '-1', false, FailureHandling.CONTINUE_ON_FAILURE)) {
+                	'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+                	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+                			((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) +
+                			' Saldo ' + usedSaldo + ' tidak terpotong untuk kirim link undangan')
+                }
             }
         }
     } else {

@@ -267,9 +267,13 @@ if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryIn
                 		'get data saldo'
                 		String result = CustomKeywords.'connection.DataVerif.getSaldo'(conneSign, GlobalVariable.userLogin)
                 				
-                				'verify saldo'
-                				checkVerifyEqualOrMatch(WebUI.verifyMatch(result, '-1', false, FailureHandling.CONTINUE_ON_FAILURE), 
-                						' Saldo tidak sesuai')
+        				'verify saldo'
+        				if (!WebUI.verifyMatch(result, '-1', false, FailureHandling.CONTINUE_ON_FAILURE)) {
+							'write to excel status failed dan ReasonFailed'
+							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+								GlobalVariable.StatusFailed, (((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
+									rowExcel('Reason Failed')).replace('-', '') + ';') + ' Saldo tidak sesuai')))
+						} 
                 	}
                 } else {
 					'write to excel status failed dan ReasonFailed'

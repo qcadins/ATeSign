@@ -146,7 +146,9 @@ class APIFullService {
 	@Keyword
 	settingEmailServiceTenant(Connection conn, String value) {
 		stm = conn.createStatement()
-		updateVariable = stm.executeUpdate("UPDATE ms_tenant SET email_service = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
+		if (value != '') {
+			updateVariable = stm.executeUpdate("UPDATE ms_tenant SET email_service = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
+		}
 	}
 
 	@Keyword
@@ -1094,8 +1096,9 @@ class APIFullService {
 	@Keyword
 	settingAllowRegenerateLink(Connection conn, String value) {
 		stm = conn.createStatement()
-
-		updateVariable = stm.executeUpdate("WITH rows_to_update AS ( SELECT mvt.id_ms_vendoroftenant FROM ms_vendoroftenant mvt JOIN ms_tenant mt ON mvt.id_ms_tenant = mt.id_ms_tenant JOIN ms_vendor mv ON mv.id_ms_vendor = mvt.id_ms_vendor WHERE mt.tenant_code = '" + GlobalVariable.Tenant + "' AND mv.vendor_code = '" + GlobalVariable.Psre + "' ) UPDATE ms_vendoroftenant mvt SET allow_regenerate_inv_link = " + value + " FROM rows_to_update rtu WHERE mvt.id_ms_vendoroftenant = rtu.id_ms_vendoroftenant")
+		if (value != '') {
+			updateVariable = stm.executeUpdate("WITH rows_to_update AS ( SELECT mvt.id_ms_vendoroftenant FROM ms_vendoroftenant mvt JOIN ms_tenant mt ON mvt.id_ms_tenant = mt.id_ms_tenant JOIN ms_vendor mv ON mv.id_ms_vendor = mvt.id_ms_vendor WHERE mt.tenant_code = '" + GlobalVariable.Tenant + "' AND mv.vendor_code = '" + GlobalVariable.Psre + "' ) UPDATE ms_vendoroftenant mvt SET allow_regenerate_inv_link = " + value + " FROM rows_to_update rtu WHERE mvt.id_ms_vendoroftenant = rtu.id_ms_vendoroftenant")
+		}
 	}
 
 	@Keyword
@@ -1326,7 +1329,6 @@ class APIFullService {
 	@Keyword
 	settingUseWAMessage(Connection conn, String value) {
 		stm = conn.createStatement()
-
 		if (value != '') {
 			updateVariable = stm.executeUpdate("UPDATE ms_tenant SET use_wa_message = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
 		}
@@ -2302,25 +2304,7 @@ class APIFullService {
 		}
 		listdata
 	}
-	@Keyword
-	checkNotifTypeExistforTenant(Connection conn, String genInvType) {
-		stm = conn.createStatement()
-
-		resultSet = stm.executeQuery("SELECT description FROM ms_notificationtypeoftenant mntot JOIN ms_lov msl ON mntot.lov_sending_point = msl.id_lov LEFT JOIN ms_tenant mst ON mntot.id_ms_tenant = mst.id_ms_tenant WHERE mst.tenant_code = '" + GlobalVariable.Tenant + "' and msl.code = '" + genInvType + "';")
-
-		metadata = resultSet.metaData
-
-		columnCount = metadata.getColumnCount()
-
-		while (resultSet.next()) {
-			for (i = 1 ; i <= columnCount ; i++) {
-				data = resultSet.getObject(i)
-				listdata.add(data)
-			}
-		}
-		listdata
-	}
-
+	
 	@Keyword
 	getOfficeNameBasedOnRegionAndTenant(Connection conn, String tenantCode, String regionName) {
 		stm = conn.createStatement()
@@ -2335,5 +2319,13 @@ class APIFullService {
 		}
 
 		Integer.parseInt(data)
+	}
+	
+	@Keyword
+	settingSentOTPByEmail(Connection conn, String value) {
+		stm = conn.createStatement()
+		if (value != '') {
+			updateVariable = stm.executeUpdate("UPDATE ms_tenant SET sent_otp_by_email = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
+		}
 	}
 }
