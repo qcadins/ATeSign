@@ -174,4 +174,19 @@ class PengaturanDokumen {
 		}
 		listdata
 	}
+	
+	@Keyword
+	getExistDocTemplate(Connection conn, String docTemplateCode, String tenantCode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select count(doc_template_code) from ms_doc_template left join ms_tenant mst on ms_doc_template.id_ms_tenant = mst.id_ms_tenant where doc_template_code = '" + docTemplateCode + "' AND mst.tenant_code = '" + tenantCode + "'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
 }

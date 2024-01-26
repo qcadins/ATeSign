@@ -200,7 +200,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         }
         
         'jika documentid nya tidak kosong'
-       if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).length() > 0) { 
+       if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).length() > 0) { 
             'Jika option for send document yaitu Cancel Only'
             if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
             'Cancel Only') {

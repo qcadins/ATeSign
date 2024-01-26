@@ -339,7 +339,6 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                 'Jika aksinya mengenai retry stamping dan retry stamping from upload, klik'
                 WebUI.click(findTestObject('Object Repository/e-Meterai Monitoring/table_Aksi Retry Stamping'))
             }
-            
             'klik yes'
             WebUI.click(findTestObject('Object Repository/DocumentMonitoring/button_yesStartStamping'))
 
@@ -822,6 +821,73 @@ def actionDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan
         }
     }
     
+	if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Need Resend Notification ?')) == 'Yes') {
+            'click button KirimUlangNotifikasi'
+            WebUI.click(findTestObject('DocumentMonitoring/button_KirimUlangNotifikasi'))
+
+            'check if error alert present'
+            if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+                'get reason dari error log'
+                errorLog = WebUI.getAttribute(findTestObject('DocumentMonitoring/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
+
+                'Write To Excel GlobalVariable.StatusFailed and errorLog'
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                    (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
+                    ';') + '<') + errorLog) + '>')
+
+                GlobalVariable.FlagFailed = 1
+            } else if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/button_YaProses'), GlobalVariable.TimeOut, 
+                FailureHandling.OPTIONAL)) {
+                'click button tidak batalkan'
+                WebUI.click(findTestObject('DocumentMonitoring/button_TidakBatalkan'))
+
+                'click button KirimUlangNotifikasi'
+                WebUI.click(findTestObject('DocumentMonitoring/button_KirimUlangNotifikasi'))
+
+                'click button ya proses'
+                WebUI.click(findTestObject('DocumentMonitoring/button_YaProses'))
+
+                'check if pop up success message'
+                if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/button_OK'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+                    'click button OK'
+                    WebUI.click(findTestObject('DocumentMonitoring/button_OK'))
+
+                    'lihat apakah perlu pengecekan ke DB'
+                    if (GlobalVariable.checkStoreDB == 'Yes') {
+                        'cek balance mutation dan juga pemotongan saldo'
+                        checkBalanceMutation(conneSign, emailSHA256)
+                    }
+                } else {
+                    'check if error alert present'
+                    if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/errorLog'), GlobalVariable.TimeOut, 
+                        FailureHandling.OPTIONAL)) {
+                        'get reason dari error log'
+                        errorLog = WebUI.getAttribute(findTestObject('DocumentMonitoring/errorLog'), 'aria-label', FailureHandling.OPTIONAL)
+
+                        'Write To Excel GlobalVariable.StatusFailed and errorLog'
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                            GlobalVariable.StatusFailed, (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
+                                rowExcel('Reason Failed')) + ';') + '<') + errorLog) + '>')
+
+                        GlobalVariable.FlagFailed = 1
+                    }
+                    
+                    if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/PopupMessage'), GlobalVariable.TimeOut, 
+                        FailureHandling.OPTIONAL)) {
+                        'get text dari popup message'
+                        errorLog = WebUI.getText(findTestObject('DocumentMonitoring/PopUpMessage'))
+
+                        'Write To Excel GlobalVariable.StatusFailed and errorLog'
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                            GlobalVariable.StatusFailed, (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
+                                rowExcel('Reason Failed')) + ';') + '<') + errorLog) + '>')
+
+                        GlobalVariable.FlagFailed = 1
+                    }
+                }
+            }
+        }
+	
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Need View Document ?')) == 'Yes') {
         'get row lastest'
         modifyObjectView = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/button_modifyDownload'), 'xpath', 

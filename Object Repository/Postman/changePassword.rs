@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebServiceRequestEntity>
    <description></description>
-   <name>Cancel Digital Sign</name>
+   <name>changePassword</name>
    <tag></tag>
-   <elementGuidId>13616295-e61f-4a40-a56b-a0ec9ae6af4e</elementGuidId>
+   <elementGuidId>77c61e70-af13-4a9f-b9c7-f9091f9201f7</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
-   <autoUpdateContent>true</autoUpdateContent>
+   <autoUpdateContent>false</autoUpdateContent>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
    <httpBodyContent>{
-  &quot;text&quot;: &quot;{\&quot;tenantCode\&quot;:\&quot;${tenantCode}\&quot;,\&quot;refNumber\&quot;:\&quot;${refNumber}\&quot;,\&quot;audit\&quot;:{\&quot;callerId\&quot;:\&quot;${login}\&quot;}}&quot;,
+  &quot;text&quot;: &quot;{\&quot;audit\&quot;:{\&quot;callerId\&quot;:\&quot;${callerId}\&quot;},\&quot;loginId\&quot;:\&quot;${loginId}\&quot;,\&quot;oldPassword\&quot;:\&quot;${oldPassword}\&quot;,\&quot;newPassword\&quot;:\&quot;${newPassword}\&quot;,\&quot;tenantCode\&quot;:\&quot;${tenantCode}\&quot;}&quot;,
   &quot;contentType&quot;: &quot;application/json&quot;,
   &quot;charset&quot;: &quot;UTF-8&quot;
 }</httpBodyContent>
@@ -22,7 +22,7 @@
       <name>Accept</name>
       <type>Main</type>
       <value>application/json, text/plain, */*</value>
-      <webElementGuid>d703d4cc-b68f-4f02-9379-9396c3d4fb2a</webElementGuid>
+      <webElementGuid>4220d1d4-bbbd-4946-8f8f-0098aeb97482</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -30,15 +30,7 @@
       <name>Authorization</name>
       <type>Main</type>
       <value>Bearer ${token}</value>
-      <webElementGuid>aecb53f1-b0da-4f48-a2d2-924967d585fd</webElementGuid>
-   </httpHeaderProperties>
-   <httpHeaderProperties>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>User-Agent</name>
-      <type>Main</type>
-      <value>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36</value>
-      <webElementGuid>0a6ff7fa-004b-4ab7-beee-1c3bd8964b75</webElementGuid>
+      <webElementGuid>6fe74723-50ca-42cc-81a1-26d02bf41316</webElementGuid>
    </httpHeaderProperties>
    <httpHeaderProperties>
       <isSelected>false</isSelected>
@@ -46,13 +38,13 @@
       <name>Content-Type</name>
       <type>Main</type>
       <value>application/json</value>
-      <webElementGuid>01f42b46-bec9-4298-a102-9eb828bb3fbb</webElementGuid>
+      <webElementGuid>8dc8e492-5f2f-4e2c-b2b3-cca8a5f532ed</webElementGuid>
    </httpHeaderProperties>
-   <katalonVersion>8.5.5</katalonVersion>
+   <katalonVersion>9.0.0</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>POST</restRequestMethod>
-   <restUrl>${base_url}/services/document/s/cancelDigitalSign</restUrl>
+   <restUrl>${base_url}/services/user/changePassword</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>
@@ -62,18 +54,18 @@
    <socketTimeout>-1</socketTimeout>
    <useServiceInfoFromWsdl>true</useServiceInfoFromWsdl>
    <variables>
-      <defaultValue>GlobalVariable.token</defaultValue>
-      <description></description>
-      <id>35abacfd-2270-4704-93c7-189e05fbd1c6</id>
-      <masked>false</masked>
-      <name>token</name>
-   </variables>
-   <variables>
       <defaultValue>GlobalVariable.base_url</defaultValue>
       <description></description>
-      <id>6dd4034a-d761-4f85-b456-a82959df0e6a</id>
+      <id>5d26d26d-b4e2-40c7-8dee-4b3b91879394</id>
       <masked>false</masked>
       <name>base_url</name>
+   </variables>
+   <variables>
+      <defaultValue>GlobalVariable.token</defaultValue>
+      <description></description>
+      <id>9b87a3f6-7be4-44dd-87f5-d4d21c432c79</id>
+      <masked>false</masked>
+      <name>token</name>
    </variables>
    <verificationScript>import static org.assertj.core.api.Assertions.*
 

@@ -6,14 +6,12 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import java.sql.Connection as Connection
-import java.util.regex.Matcher as Matcher
-import java.util.regex.Pattern as Pattern
+
+'connect DB eSign'
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - API Only.xlsx')
-
-'connect dengan db'
-Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get colm excel'
 int countColmExcel = findTestData(excelPath).columnNumbers
@@ -45,11 +43,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         'HIT API Login untuk token : andy@ad-ins.com'
-        respon = WS.sendRequest(findTestObject('Postman/changePassword', [('tenantCode') : findTestData(excelPath).getValue(
-                        GlobalVariable.NumofColm, rowExcel('tenantCode')), ('loginId') : findTestData(excelPath).getValue(
-                        GlobalVariable.NumofColm, rowExcel('loginId')), ('oldPassword') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-                        rowExcel('oldPassword')), ('newPassword') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-                        rowExcel('newPassword')), ('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+        respon = WS.sendRequest(findTestObject('Postman/Check Template Document Exist', [('tenantCode') : findTestData(excelPath).getValue(
+                        GlobalVariable.NumofColm, rowExcel('tenantCode')), ('documentTemplateCode') : findTestData(excelPath).getValue(
+                        GlobalVariable.NumofColm, rowExcel('documentTemplateCode')), ('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('callerId'))]))
 
         'ambil lama waktu yang diperlukan hingga request menerima balikan'
@@ -73,6 +69,28 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
             'Jika status codenya 0'
             if (statusCode == 0) {
+					if (GlobalVariable.checkStoreDB == 'Yes') {
+						'get documetntemplateexist dari api'
+						documentTemplateExist = WS.getElementPropertyValue(respon, 'documentTemplateExist', FailureHandling.OPTIONAL)
+						
+						'store db'
+						result = CustomKeywords.'connection.PengaturanDokumen.getExistDocTemplate'(conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentTemplateCode')), 
+							findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('tenantCode')))
+						
+						'inisialisasi arraymatch'
+						arrayMatch = []
+						
+						'verify templateexist dengan db'
+						arrayMatch.add(WebUI.verifyMatch(documentTemplateExist.toString().replace('false','0').replace('true','1'), result, false, FailureHandling.CONTINUE_ON_FAILURE))
+						
+						'jika verify ada yang false'
+						if (arrayMatch.contains(false)) {
+							'Write To Excel GlobalVariable.StatusFailed and errormessage'
+							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+								((findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') +
+								(  GlobalVariable.ReasonFailedStoredDB)) )
+						}
+					}
                 if (GlobalVariable.FlagFailed == 0) {
                     'write to excel success'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
@@ -102,34 +120,3 @@ def getErrorMessageAPI(ResponseObject respon) {
 def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
-
-def parseCodeOnly(String url) {
-    'ambil data sesudah "code="'
-    Pattern pattern = Pattern.compile('code=([^&]+)')
-
-    'ambil matcher dengan URL'
-    Matcher matcher = pattern.matcher(url)
-
-    'cek apakah apttern nya sesuai'
-    if (matcher.find()) {
-        'ubah jadi string'
-        String code = matcher.group(1)
-
-        'decode semua ascii pada url'
-        code = URLDecoder.decode(code, 'UTF-8')
-
-        return code
-    }
-
-	''
-}
-
-def decryptLink(Connection conneSign, String invCode) {
-    aesKey = CustomKeywords.'connection.DataVerif.getAESKey'(conneSign)
-
-    'enkripsi msg'
-    encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseDecrypt'(invCode, aesKey)
-
-    encryptMsg
-}
-
