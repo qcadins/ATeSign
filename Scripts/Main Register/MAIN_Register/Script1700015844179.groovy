@@ -1,9 +1,13 @@
 import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
+import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import java.sql.Connection as Connection
+import org.openqa.selenium.By as By
+import org.openqa.selenium.Keys as Keys
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign Main Register.xlsx')
@@ -175,105 +179,101 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 }
             }
             
-			if (GlobalVariable.FlagFailed == 0) {
-                'kurang saldo before dengan proses verifikasi'
-                saldoBefore.put('Verifikasi', (Integer.parseInt(saldoBefore.get('Verifikasi')) - GlobalVariable.VerificationCount).toString())
-
-                if (GlobalVariable.Psre == 'VIDA') {
-                	'kurang saldo before dengan proses PNBP'
-                	saldoBefore.put('PNBP', (Integer.parseInt(saldoBefore.get('PNBP')) - 1).toString())
-                }
-				
-				'get tenant di table ms notif type of tenant'
-				tenantType = CustomKeywords.'connection.UpdateData.checkNotifTypeExistforTenant'(conneSign)
-				
-				if(tenantType == 0) {
-					if (!(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
-							'API Register'))) {
-						
-						'call function potong saldo WA or OTP untuk transaksi otp'
-						potongSaldoWAorOTP('', saldoBefore)
-						
-						if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS GenInv')) ==
-							'1') {
-							if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() <=
-									2) {
-								'check jika Must use WA message = 1'
-								if ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')) ==
-										'1') || (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) ==
-												'1')) {
-									usedSaldo = 'WhatsApp Message'
-								} else {
-									'jika use WA message bukan 1 maka use SMS Notif'
-									usedSaldo = 'SMS Notif'
-								}
-								
-								if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase('Regenerate invitation link')
-										&& (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
-												'API Generate Inv Link Normal') || findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
-														'Menu Buat Undangan'))) {
-									'kurang saldo before dengan proses send link undangan melalui sms 1x hit api 1x regenrate link'
-									saldoBefore.put(usedSaldo, (Integer.parseInt(saldoBefore.get(usedSaldo)) - 2).toString())
-								} else {
-									'kurang saldo before dengan proses send link undangan melalui sms 1x regenarate link'
-									saldoBefore.put(usedSaldo, (Integer.parseInt(saldoBefore.get(usedSaldo)) - 1).toString())
-								}
-							}
-						}
-						
-						if (((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Certif Notif')) == 
-								'1') && (GlobalVariable.Psre == 'VIDA')) && (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-										rowExcel('$Email')).length() <= 2)) {
-							'kurang saldo before dengan proses send certif melalui sms'
-							saldoBefore.put('SMS Notif', (Integer.parseInt(saldoBefore.get('SMS Notif')) - 1).toString())
-						}
-					}
-				} else {
-					'call function potong saldo WA or OTP untuk transaksi otp'
-					potongSaldoWAorOTP(' - OTP Act', saldoBefore)
-					
-					if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
-							'API Generate Inv Link Normal')) {
-						potongSaldoSendGenInvLink(' - Gen Inv', saldoBefore)
-					}
-					
-					if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
-						'Menu Buat Undangan')) {
-						potongSaldoSendGenInvLink(' - Gen Inv Menu', saldoBefore)
-					}
-					
-					if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase(
-						'Regenerate invitation link')) {
-						potongSaldoSendGenInvLink(' - Regen Link', saldoBefore)
-					}
-					
-					if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase(
-						'Kirim Ulang Undangan')) {
-						potongSaldoSendGenInvLink(' - Resend Inv', saldoBefore)
-					}
-					
-					if(((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Certif Notif')) == 
-								'1') && (GlobalVariable.Psre == 'VIDA')) && (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-										rowExcel('$Email')).length() <= 2)) {
-						potongSaldoSendGenInvLink(' - Cert Notif', saldoBefore)
-					}
-				}
-                
+            if (GlobalVariable.FlagFailed == 0) {
                 'get saldo after'
                 saldoAfter = WebUI.callTestCase(findTestCase('Main Flow - Copy/getSaldo'), [('excel') : excelPathRegister
                         , ('sheet') : sheet, ('vendor') : GlobalVariable.Psre, ('usageSaldo') : 'Register', ('countCheckSaldo') : countCheckSaldo], 
                     FailureHandling.CONTINUE_ON_FAILURE)
 
-                println(saldoAfter)
+                'kurang saldo before dengan proses verifikasi'
+                saldoBefore.put('Verifikasi', (Integer.parseInt(saldoBefore.get('Verifikasi')) - GlobalVariable.VerificationCount).toString())
 
-                WebUI.comment(saldoBefore.toString())
+                'call fucntion input filter saldo'
+                inputFilterSaldo('Verification', conneSign, GlobalVariable.Psre)
 
-                WebUI.comment(saldoAfter.toString())
+                if (GlobalVariable.Psre == 'VIDA') {
+                    'kurang saldo before dengan proses PNBP'
+                    saldoBefore.put('PNBP', (Integer.parseInt(saldoBefore.get('PNBP')) - 1).toString())
 
-                'verify saldo before dan after'
-                checkVerifyEqualOrMatch(WebUI.verifyMatch(saldoBefore.toString(), saldoAfter.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), 
-                    ' Saldo Gagal Potong')
+                    'call fucntion input filter saldo'
+                    inputFilterSaldo('PNBP', conneSign, GlobalVariable.Psre)
+                }
+                
+                if (!(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
+                    'API Register'))) {
+                    'get tenant di table ms notif type of tenant'
+                    tenantType = CustomKeywords.'connection.UpdateData.checkNotifTypeExistforTenant'(conneSign)
 
+                    if (tenantType == 0) {
+                        'call function potong saldo WA or OTP untuk transaksi otp'
+                        potongSaldoWAorOTP('', saldoBefore, conneSign)
+
+                        if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
+                            'API Generate Inv Link Normal')) {
+                            potongSaldoSendGenInvLink('', saldoBefore, conneSign)
+                        }
+                        
+                        if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
+                            'Menu Buat Undangan')) {
+                            potongSaldoSendGenInvLink('', saldoBefore, conneSign)
+                        }
+                        
+                        if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase(
+                            'Regenerate invitation link')) {
+                            potongSaldoSendGenInvLink('', saldoBefore, conneSign)
+                        }
+                        
+                        if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase(
+                            'Kirim Ulang Undangan')) {
+                            potongSaldoSendGenInvLink('', saldoBefore, conneSign)
+                        }
+                    } else {
+                        'call function potong saldo WA or OTP untuk transaksi otp'
+                        potongSaldoWAorOTP(' - OTP Act', saldoBefore, conneSign)
+
+                        if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
+                            'API Generate Inv Link Normal')) {
+                            potongSaldoSendGenInvLink(' - Gen Inv', saldoBefore, conneSign)
+                        }
+                        
+                        if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
+                            'Menu Buat Undangan')) {
+                            potongSaldoSendGenInvLink(' - Gen Inv Menu', saldoBefore, conneSign)
+                        }
+                        
+                        if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase(
+                            'Regenerate invitation link')) {
+                            potongSaldoSendGenInvLink(' - Regen Link', saldoBefore, conneSign)
+                        }
+                        
+                        if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase(
+                            'Kirim Ulang Undangan')) {
+                            potongSaldoSendGenInvLink(' - Resend Inv', saldoBefore, conneSign)
+                        }
+                    }
+                    
+                    if (((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Certif Notif')) == 
+                    '1') && (GlobalVariable.Psre == 'VIDA')) && (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+                        rowExcel('$Email')).length() <= 2)) {
+                        potongSaldoSendCertNotif(saldoBefore, conneSign)
+                    }
+                    
+                    WebUI.comment(saldoBefore.toString())
+
+                    WebUI.comment(saldoAfter.toString())
+
+                    'verify saldo before dan after'
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch(saldoBefore.toString(), saldoAfter.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), 
+                        ' Saldo Gagal Potong')
+
+                    if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Check Pencarian Pengguna')).length() > 
+                    0) {
+                        'call test case pencarian pengguna'
+                        WebUI.callTestCase(findTestCase('Main Register/PencarianPenggunaPelanggan'), [('excelPathRegister') : 'Registrasi/MainRegister'
+                                , ('sheet') : 'Main Register'], FailureHandling.CONTINUE_ON_FAILURE)
+                    }
+                }
+                
                 'check if email kosong atau tidak'
                 if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase(
                     'Edit') && findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Invite By')).equalsIgnoreCase(
@@ -308,13 +308,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         ' email cert tidak terkirim')
                 }
                 
-                if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Check Pencarian Pengguna')).length() > 
-                0) {
-                    'call test case pencarian pengguna'
-                    WebUI.callTestCase(findTestCase('Main Register/PencarianPenggunaPelanggan'), [('excelPathRegister') : 'Registrasi/MainRegister'
-                            , ('sheet') : 'Main Register'], FailureHandling.CONTINUE_ON_FAILURE)
-                }
-                
                 'call test case Store DB'
                 WebUI.callTestCase(findTestCase('Main Register/NewUserStoreDB'), [('excelPathRegister') : 'Registrasi/MainRegister'
                         , ('sheet') : 'Main Register'], FailureHandling.CONTINUE_ON_FAILURE)
@@ -338,56 +331,231 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     }
 }
 
-def potongSaldoWAorOTP(String type, HashMap<String, String> saldoBefore) {
-	if ((GlobalVariable.Psre == 'VIDA') || (GlobalVariable.Psre == 'TKNAJ')) {
-		'check jika Must use WA message = 1'
-		if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First' + type)) ==
-				'1') {
-			usedSaldo = 'WhatsApp Message'
-		} else {
-			'check jika email service on'
-			if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) ==
-					'1') {
-				'check jika use WA message = 1'
-				if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message' + type)) ==
-						'1') {
-					usedSaldo = 'WhatsApp Message'
-				} else {
-					'jika use WA message bukan 1 maka use OTP'
-					usedSaldo = 'OTP'
-				}
-			} else {
-				'jika use WA message bukan 1 maka use OTP'
-				usedSaldo = 'OTP'
-			}
-		}
-		
-		'kurang saldo before dengan jumlah counter send OTP'
-		saldoBefore.put(usedSaldo, (Integer.parseInt(saldoBefore.get(usedSaldo)) - GlobalVariable.Counter).toString())
-	} else {
-		'kurang saldo before dengan jumlah counter send OTP'
-		saldoBefore.put('OTP', (Integer.parseInt(saldoBefore.get('OTP')) - GlobalVariable.Counter).toString())
-	}
+def potongSaldoWAorOTP(String type, HashMap<String, String> saldoBefore, Connection conneSign) {
+    if ((GlobalVariable.Psre == 'VIDA') || (GlobalVariable.Psre == 'TKNAJ')) {
+        'check jika Must use WA message = 1'
+        if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First' + type)) == 
+        '1') {
+            usedSaldo = 'WhatsApp Message'
+        } else {
+            'check jika email service on'
+            if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == 
+            '1') {
+                'check jika use WA message = 1'
+                if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message' + 
+                        type)) == '1') {
+                    usedSaldo = 'WhatsApp Message'
+                } else {
+                    'jika use WA message bukan 1 maka use OTP'
+                    usedSaldo = 'OTP'
+                }
+            } else {
+                'jika use WA message bukan 1 maka use OTP'
+                usedSaldo = 'OTP'
+            }
+        }
+        
+        'kurang saldo before dengan jumlah counter send OTP'
+        saldoBefore.put(usedSaldo, (Integer.parseInt(saldoBefore.get(usedSaldo)) - GlobalVariable.Counter).toString())
+    } else {
+        usedSaldo = 'OTP'
+
+        'kurang saldo before dengan jumlah counter send OTP'
+        saldoBefore.put(usedSaldo, (Integer.parseInt(saldoBefore.get('OTP')) - GlobalVariable.Counter).toString())
+    }
+    
+    'call fucntion input filter saldo'
+    inputFilterSaldo(usedSaldo, conneSign, 'ESIGN/ADINS')
 }
 
-def potongSaldoSendGenInvLink(String type, HashMap<String, String> saldoBefore) {
-	if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS GenInv')) ==
-		'1' || type == ' - Cert Notif') {
-		if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() <=
-				2) {
-			'check jika Must use WA message = 1'
-			if ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First' + type)) ==
-					'1') || (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message' + type)) ==
-							'1')) {
-				usedSaldo = 'WhatsApp Message'
-			} else {
-				'jika use WA message bukan 1 maka use SMS Notif'
-				usedSaldo = 'SMS Notif'
-			}
-			
-			'kurang saldo before dengan proses send link undangan melalui sms / WA'
-			saldoBefore.put(usedSaldo, (Integer.parseInt(saldoBefore.get(usedSaldo)) - 1).toString())
-		}
-	}
+def potongSaldoSendGenInvLink(String type, HashMap<String, String> saldoBefore, Connection conneSign) {
+    if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() <= 2) {
+        'check jika Must use WA message = 1'
+        if ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First' + type)) == 
+        '1') || (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message' + 
+                type)) == '1')) {
+            if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send WA GenInv')) == 
+            '1') {
+                usedSaldo = 'WhatsApp Message'
+            } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send WA GenInv')) == 
+            '0') {
+            }
+        } else {
+            if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS GenInv')) == 
+            '1') {
+                'jika use WA message bukan 1 maka use SMS Notif'
+                usedSaldo = 'SMS Notif'
+            } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS GenInv')) == 
+            '0') {
+            }
+        }
+        
+        'kurang saldo before dengan proses send link undangan melalui sms / WA'
+        saldoBefore.put(usedSaldo, (Integer.parseInt(saldoBefore.get(usedSaldo)) - 1).toString())
+
+        'call fucntion input filter saldo'
+        inputFilterSaldo(usedSaldo.replace(' Notif', ''), conneSign, 'ESIGN/ADINS')
+    }
+}
+
+def potongSaldoSendCertNotif(HashMap<String, String> saldoBefore, Connection conneSign) {
+    'jika use WA message bukan 1 maka use SMS Notif'
+    usedSaldo = 'SMS Notif'
+
+    'kurang saldo before dengan proses send link undangan melalui sms / WA'
+    saldoBefore.put('SMS Notif', (Integer.parseInt(saldoBefore.get(usedSaldo)) - 1).toString())
+
+    'call fucntion input filter saldo'
+    inputFilterSaldo('SMS', conneSign, 'ESIGN/ADINS')
+}
+
+def inputFilterSaldo(String tipeSaldo, Connection conneSign, String vendorVerifikasi) {
+    'get current date'
+    currentDate = new Date().format('yyyy-MM-dd')
+
+    'klik button saldo'
+    WebUI.click(findTestObject('Saldo/menu_Saldo'))
+
+    'klik ddl untuk tenant memilih mengenai Vida'
+    WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), '(?i)' + vendorVerifikasi, true)
+
+    'input tipe saldo'
+    WebUI.setText(findTestObject('RegisterEsign/checkSaldo/input_TipeSaldo'), tipeSaldo)
+
+    'enter untuk input tipe saldo'
+    WebUI.sendKeys(findTestObject('RegisterEsign/checkSaldo/input_TipeSaldo'), Keys.chord(Keys.ENTER))
+
+    'input tanggal Transaksi'
+    WebUI.setText(findTestObject('RegisterEsign/checkSaldo/input_TanggalTransaksi'), currentDate)
+
+    'click button cari'
+    WebUI.click(findTestObject('RegisterEsign/checkSaldo/button_Cari'))
+
+    'get row'
+    variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-footer > div > datatable-pager > ul li'))
+
+    'modify object button last page'
+    modifyObjectButtonLastPage = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 
+        'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-footer/div/datatable-pager/ul/li[' + 
+        variable.size()) + ']', true)
+
+    if (WebUI.getAttribute(modifyObjectButtonLastPage, 'class', FailureHandling.OPTIONAL) != 'disabled') {
+        'click button last page'
+        WebUI.click(findTestObject('RegisterEsign/checkSaldo/button_LastPage'))
+    }
+    
+    'get row'
+    variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
+
+    'modify object no transaksi'
+    modifyObjectNoTransaksi = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 
+        'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
+        variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[1]/div', true)
+
+    'modify object tanggal transaksi'
+    modifyObjectTanggalTransaksi = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 
+        'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
+        variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[2]/div', true)
+
+    'modify object office'
+    modifyObjectOffice = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 'equals', 
+        ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
+        variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[3]/div', true)
+
+    'modify object tipe transaksi'
+    modifyObjectTipeTransaksi = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 
+        'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
+        variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[4]/div', true)
+
+    'modify object user'
+    modifyObjectUser = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 'equals', 
+        ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
+        variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[5]/div', true)
+
+    'modify object no kontrak'
+    modifyObjectNoKontrak = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 
+        'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
+        variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[6]/div', true)
+
+    'modify object Catatan'
+    modifyObjectCatatan = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 'equals', 
+        ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
+        variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[9]/div', true)
+
+    'modify object qty'
+    modifyObjectQty = WebUI.modifyObjectProperty(findTestObject('RegisterEsign/checkSaldo/modifyObject'), 'xpath', 'equals', 
+        ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
+        variable.size()) + ']/datatable-body-row/div[2]/datatable-body-cell[10]/div', true)
+
+    'get trx dari db'
+    ArrayList result = CustomKeywords.'connection.DataVerif.getSaldoTrx'(conneSign, 'Use ' + tipeSaldo)
+
+    arrayIndex = 0
+
+    'verify no trx ui = db'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectNoTransaksi), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), 
+        ' No Trx ' + tipeSaldo)
+
+    'verify tgl trx ui = db'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectTanggalTransaksi), result[arrayIndex++], false, 
+            FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Trx ' + tipeSaldo)
+
+    'verify office ui = db'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectOffice), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), 
+        ' Office ' + tipeSaldo)
+
+    'verify tipe trx ui = db'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectTipeTransaksi), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), 
+        ' Tipe Trx ' + tipeSaldo)
+
+    'verify user trx ui = db'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectUser), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), 
+        ' User ' + tipeSaldo)
+
+    'verify ref no trx ui = db'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectNoKontrak), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), 
+        ' Ref No ' + tipeSaldo)
+
+    Note = WebUI.getText(modifyObjectCatatan)
+
+    'verify note trx ui = db'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(Note, result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Notes ' + 
+        tipeSaldo)
+
+    if ((tipeSaldo == 'SMS') && Note.toLowerCase().contains('error')) {
+        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
+        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+            ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + '; <') + Note) + 
+            '>')
+
+        GlobalVariable.FlagFailed = 1
+    }
+    
+    'verify qty trx ui = db'
+    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObjectQty), (result[arrayIndex++]).toString().replace(
+                '-', ''), false, FailureHandling.CONTINUE_ON_FAILURE), ' Qty Trx ' + tipeSaldo)
+
+    if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
+        'API Generate Inv Link Normal')) {
+        'verify office code trx ui = db'
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
+                        'OfficeCode')), (result[arrayIndex++]).toString().replace('-', ''), false, FailureHandling.CONTINUE_ON_FAILURE), 
+            ' office code Trx ' + tipeSaldo)
+
+        'verify office name trx ui = db'
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
+                        'OfficeName')), (result[arrayIndex++]).toString().replace('-', ''), false, FailureHandling.CONTINUE_ON_FAILURE), 
+            ' office name Trx ' + tipeSaldo)
+
+        'verify business line code trx ui = db'
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
+                        'BusinessLineCode')), (result[arrayIndex++]).toString().replace('-', ''), false, FailureHandling.CONTINUE_ON_FAILURE), 
+            ' business line code Trx ' + tipeSaldo)
+
+        'verify business line name trx ui = db'
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
+                        'BusinessLineName')), (result[arrayIndex++]).toString().replace('-', ''), false, FailureHandling.CONTINUE_ON_FAILURE), 
+            ' business line name Trx ' + tipeSaldo)
+    }
 }
 

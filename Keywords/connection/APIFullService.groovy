@@ -2304,7 +2304,7 @@ class APIFullService {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getOfficeNameBasedOnRegionAndTenant(Connection conn, String tenantCode, String regionName) {
 		stm = conn.createStatement()
@@ -2320,12 +2320,20 @@ class APIFullService {
 
 		Integer.parseInt(data)
 	}
-	
+
 	@Keyword
 	settingSentOTPByEmail(Connection conn, String value) {
 		stm = conn.createStatement()
 		if (value != '') {
 			updateVariable = stm.executeUpdate("UPDATE ms_tenant SET sent_otp_by_email = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
+		}
+	}
+	
+	@Keyword
+	settingSendWAGenInv(Connection conn, String value) {
+		stm = conn.createStatement()
+		if (value != '') {
+			updateVariable = stm.executeUpdate("UPDATE am_generalsetting SET gs_value = " + value + " WHERE gs_code = 'SEND_WA_GENINV'")
 		}
 	}
 }

@@ -208,27 +208,54 @@ if (GlobalVariable.Psre == 'PRIVY') {
         }
         
         if (GlobalVariable.checkStoreDB == 'Yes') {
-            'check jika Must use WA message = 1'
-            if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')) == 
-            '1') {
-                usedSaldo = 'WhatsApp Message'
-            } else {
-                'check jika email service on'
-                if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == 
-                '1') {
-                    'check jika use WA message = 1'
-                    if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) == 
-                    '1') {
-                        usedSaldo = 'WhatsApp Message'
-                    } else {
-                        'jika use WA message bukan 1 maka use OTP'
-                        usedSaldo = 'OTP'
-                    }
-                } else {
-                    'jika use WA message bukan 1 maka use OTP'
-                    usedSaldo = 'OTP'
-                }
-            }
+			'get tenant di table ms notif type of tenant'
+			tenantType = CustomKeywords.'connection.UpdateData.checkNotifTypeExistforTenant'(conneSign)
+			
+			if (tenantType == 0) {
+				'check jika Must use WA message = 1'
+				if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')) == 
+						'1') {
+					usedSaldo = 'WhatsApp Message'
+				} else {
+					'check jika email service on'
+					if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == 
+							'1') {
+						'check jika use WA message = 1'
+						if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) == 
+								'1') {
+							usedSaldo = 'WhatsApp Message'
+						} else {
+							'jika use WA message bukan 1 maka use OTP'
+							usedSaldo = 'OTP'
+						}
+					} else {
+						'jika use WA message bukan 1 maka use OTP'
+						usedSaldo = 'OTP'
+					}
+				}
+			} else {
+				'check jika Must use WA message = 1'
+				if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First - OTP Act')) ==
+						'1') {
+					usedSaldo = 'WhatsApp Message'
+				} else {
+					'check jika email service on'
+					if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) ==
+							'1') {
+						'check jika use WA message = 1'
+						if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message - OTP Act')) ==
+								'1') {
+							usedSaldo = 'WhatsApp Message'
+						} else {
+							'jika use WA message bukan 1 maka use OTP'
+							usedSaldo = 'OTP'
+						}
+					} else {
+						'jika use WA message bukan 1 maka use OTP'
+						usedSaldo = 'OTP'
+					}
+				}
+			}
             
             resultTrx = CustomKeywords.'connection.APIFullService.getAPIGenInvLinkOTPTrx'(conneSign, findTestData(excelPathRegister).getValue(
                     GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"', ''), usedSaldo)
