@@ -121,7 +121,7 @@ class WriteExcel {
 		for (int i = 0; i <= sheet.lastRowNum; i++) {
 			row = sheet.getRow(i)
 			try {
-				if (row != null && row.getCell(0) != null && row.getCell(0).getStringCellValue().equalsIgnoreCase(cellValue)) {
+				if (row != null && row.getCell(0) != null && row.getCell(0).stringCellValue.equalsIgnoreCase(cellValue)) {
 					rowNum = i
 					break
 				}

@@ -18,14 +18,10 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'get colm excel'
 int countColmExcel = findTestData(excelPathRegister).columnNumbers
 
-String lovCode = ''
-
 String emailPhoneNo = ''
 
 'declare variable array'
-HashMap<String, String> saldoBefore = [:]
-
-HashMap<String, String> saldoAfter = [:]
+HashMap<String, String> saldoBefore = [:], saldoAfter = [:]
 
 'looping buat undangan'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
@@ -181,16 +177,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             }
             
             if (GlobalVariable.FlagFailed == 0) {
-				
-				println(GlobalVariable.VerificationCount)
-				println(saldoBefore.get('Verifikasi'))
+                println(GlobalVariable.VerificationCount)
+
+                println(saldoBefore.get('Verifikasi'))
+
                 'get saldo after'
                 saldoAfter = WebUI.callTestCase(findTestCase('Main Flow - Copy/getSaldo'), [('excel') : excelPathRegister
                         , ('sheet') : sheet, ('vendor') : GlobalVariable.Psre, ('usageSaldo') : 'Register', ('countCheckSaldo') : countCheckSaldo], 
                     FailureHandling.CONTINUE_ON_FAILURE)
 
-				println(GlobalVariable.VerificationCount)
-				println(saldoBefore.get('Verifikasi'))
+                println(GlobalVariable.VerificationCount)
+
+                println(saldoBefore.get('Verifikasi'))
+
                 'kurang saldo before dengan proses verifikasi'
                 saldoBefore.put('Verifikasi', (Integer.parseInt(saldoBefore.get('Verifikasi')) - GlobalVariable.VerificationCount).toString())
 
@@ -385,6 +384,7 @@ def potongSaldoSendGenInvLink(String type, HashMap<String, String> saldoBefore, 
                 usedSaldo = 'WhatsApp Message'
             } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send WA GenInv')) == 
             '0') {
+				return
             }
         } else {
             if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS GenInv')) == 
@@ -393,6 +393,7 @@ def potongSaldoSendGenInvLink(String type, HashMap<String, String> saldoBefore, 
                 usedSaldo = 'SMS Notif'
             } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS GenInv')) == 
             '0') {
+				return
             }
         }
         

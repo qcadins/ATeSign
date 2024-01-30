@@ -4,7 +4,6 @@ import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
-import org.openqa.selenium.Keys as Keys
 import org.openqa.selenium.By as By
 import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import java.sql.Connection as Connection
@@ -39,7 +38,7 @@ if (usageSaldo == 'Stamp') {
 }
 
 if (usageSaldo == 'Register') {
-	funcSaldoRegis(result, countCheckSaldo, conneSign)
+	funcSaldoRegis(result, conneSign)
 }
 
 result
@@ -212,7 +211,7 @@ def funcFindSaldo(HashMap result, String vendorVerifikasi, ArrayList saldoList, 
 	}
 }
 
-def funcSaldoRegis(HashMap result, int countCheckSaldo, Connection conneSign) {
+def funcSaldoRegis(HashMap result, Connection conneSign) {
 	String vendorVerifikasi
 	
 	ArrayList saldoList = []

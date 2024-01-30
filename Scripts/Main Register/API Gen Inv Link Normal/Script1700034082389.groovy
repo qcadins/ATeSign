@@ -115,7 +115,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
             }
             
             if ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS GenInv')) ==
-				'1' ||findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send WA GenInv')) == 
+				'1' || findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send WA GenInv')) == 
 				'1') && (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() <= 
 				2)) {
                 'check jika Must use WA message = 1'
