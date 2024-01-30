@@ -18,8 +18,6 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'get colm excel'
 int countColmExcel = findTestData(excelPathRegister).columnNumbers
 
-String emailPhoneNo = ''
-
 'declare variable array'
 HashMap<String, String> saldoBefore = [:], saldoAfter = [:]
 
@@ -50,13 +48,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'No') {
             'set tenant kosong'
             GlobalVariable.Tenant = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Wrong tenant Code'))
-        }
-        
-        'jika email kosng akan ambil phone num, tapi jika terisi akan ambil email'
-        if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() == 0) {
-            emailPhoneNo = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon'))
-        } else {
-            emailPhoneNo = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email'))
         }
         
         'setting menggunakan base url yang benar atau salah'
