@@ -81,7 +81,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Run API Only - Gen Link')).equalsIgnoreCase(
-            'No')) {
+            'No') || findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
+            'Menu Buat Undangan')) {
             'get saldo before'
             saldoBefore = WebUI.callTestCase(findTestCase('Main Flow - Copy/getSaldo'), [('excel') : excelPathRegister, ('sheet') : sheet
                     , ('vendor') : GlobalVariable.Psre, ('usageSaldo') : 'Register', ('countCheckSaldo') : countCheckSaldo], 
@@ -180,11 +181,16 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             }
             
             if (GlobalVariable.FlagFailed == 0) {
+				
+				println(GlobalVariable.VerificationCount)
+				println(saldoBefore.get('Verifikasi'))
                 'get saldo after'
                 saldoAfter = WebUI.callTestCase(findTestCase('Main Flow - Copy/getSaldo'), [('excel') : excelPathRegister
                         , ('sheet') : sheet, ('vendor') : GlobalVariable.Psre, ('usageSaldo') : 'Register', ('countCheckSaldo') : countCheckSaldo], 
                     FailureHandling.CONTINUE_ON_FAILURE)
 
+				println(GlobalVariable.VerificationCount)
+				println(saldoBefore.get('Verifikasi'))
                 'kurang saldo before dengan proses verifikasi'
                 saldoBefore.put('Verifikasi', (Integer.parseInt(saldoBefore.get('Verifikasi')) - GlobalVariable.VerificationCount).toString())
 

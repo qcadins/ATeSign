@@ -1,0 +1,96 @@
+[35m[Appium][39m Welcome to Appium v1.22.3
+[35m[Appium][39m Non-default server args:
+[35m[Appium][39m   port: 61740
+[35m[Appium][39m   loglevel: info
+[35m[Appium][39m   tmpDir: C:\Users\fendy.tio\AppData\Local\Temp\\Katalon\Appium\Temp1706239409990
+[35m[Appium][39m   chromedriverPort: 61741
+[35m[Appium][39m Deprecated server args:
+[35m[Appium][39m   [31m--chromedriver-port[39m => --default-capabilities
+[35m[Appium][39m Default capabilities, which will be added to each request unless overridden by desired capabilities:
+[35m[Appium][39m   chromedriverPort: 61741
+[35m[Appium][39m Appium REST http interface listener started on 0.0.0.0:61740
+[35m[HTTP][39m [37m-->[39m [37mGET[39m [37m/wd/hub/status[39m
+[35m[HTTP][39m [90m{}[39m
+[35m[HTTP][39m [37m<-- GET /wd/hub/status [39m[32m200[39m [90m5 ms - 68[39m
+[35m[HTTP][39m [90m[39m
+[35m[HTTP][39m [37m-->[39m [37mGET[39m [37m/wd/hub/status[39m
+[35m[HTTP][39m [90m{}[39m
+[35m[HTTP][39m [37m<-- GET /wd/hub/status [39m[32m200[39m [90m1 ms - 68[39m
+[35m[HTTP][39m [90m[39m
+[35m[HTTP][39m [37m-->[39m [37mPOST[39m [37m/wd/hub/session[39m
+[35m[HTTP][39m [90m{"desiredCapabilities":{"app":"C:\\Users\\fendy.tio\\Downloads\\google-chrome-120-0-6099-210.apk","noReset":true,"deviceId":"","deviceName":"samsung SM-G965F (Android 10)","fullReset":false,"platform":"ANDROID","newCommandTimeout":1800,"platformVersion":"10","automationName":"uiautomator2","autoGrantPermissions":true,"platformName":"Android","udid":"1ced4c3f34037ece","systemPort":61754},"capabilities":{"firstMatch":[{"appium:app":"C:\\Users\\fendy.tio\\Downloads\\google-chrome-120-0-6099-210.apk","appium:autoGrantPermissions":true,"appium:automationName":"uiautomator2","deviceId":"","appium:deviceName":"samsung SM-G965F (Android 10)","appium:fullReset":false,"appium:newCommandTimeout":1800,"appium:noReset":true,"platform":"ANDROID","platformName":"android","appium:platformVersion":"10","appium:systemPort":61754,"appium:udid":"1ced4c3f34037ece"}]}}[39m
+[35m[BaseDriver][39m The following capabilities are not standard capabilities and should have an extension prefix:
+[35m[BaseDriver][39m   deviceId
+[35m[BaseDriver][39m   platform
+[35m[BaseDriver][39m   chromedriverPort
+[35m[Appium][39m Appium v1.22.3 creating new AndroidUiautomator2Driver (v1.70.1) session
+[35m[BaseDriver][39m The following capabilities were provided, but are not recognized by Appium:
+[35m[BaseDriver][39m   deviceId
+[35m[BaseDriver][39m   platform
+[35m[BaseDriver][39m Session created with session id: 471ade62-ba1c-4bc4-a14c-87251c6f651c
+[35m[BaseDriver][39m Using local app 'C:\Users\fendy.tio\Downloads\google-chrome-120-0-6099-210.apk'
+[35m[ADB][39m Found 1 'build-tools' folders under 'C:\Users\fendy.tio\.katalon\tools\android_sdk' (newest first):
+[35m[ADB][39m     C:/Users/fendy.tio/.katalon/tools/android_sdk/build-tools/29.0.3
+[35m[ADB][39m Using 'adb.exe' from 'C:\Users\fendy.tio\.katalon\tools\android_sdk\platform-tools\adb.exe'
+[35m[AndroidDriver][39m Retrieving device list
+[35m[AndroidDriver][39m Using device: 1ced4c3f34037ece
+[35m[ADB][39m Using 'adb.exe' from 'C:\Users\fendy.tio\.katalon\tools\android_sdk\platform-tools\adb.exe'
+[35m[ADB][39m Getting device platform version
+[35m[UiAutomator2][39m Relaxing hidden api policy
+[35m[ADB][39m Package name: 'com.android.chrome'
+[35m[ADB][39m Main activity name: 'com.google.android.apps.chrome.Main'
+[35m[ADB][39m Using 'apksigner.jar' from 'C:\Users\fendy.tio\.katalon\tools\android_sdk\build-tools\29.0.3\lib\apksigner.jar'
+[35m[ADB][39m 'C:\Users\fendy.tio\AppData\Roaming\npm\node_modules\appium\node_modules\appium-uiautomator2-server\apks\appium-uiautomator2-server-v4.27.0.apk' is signed with the default certificate
+[35m[ADB][39m 'C:\Users\fendy.tio\AppData\Roaming\npm\node_modules\appium\node_modules\appium-uiautomator2-server\apks\appium-uiautomator2-server-debug-androidTest.apk' is signed with the default certificate
+[35m[UiAutomator2][39m Server packages are not going to be (re)installed
+[35m[ADB][39m Adding packages ["io.appium.settings","io.appium.uiautomator2.server","io.appium.uiautomator2.server.test"] to Doze whitelist
+[35m[ADB][39m 'C:\Users\fendy.tio\Downloads\google-chrome-120-0-6099-210.apk' is signed with a non-default certificate
+[35m[ADB][39m The application at 'C:\Users\fendy.tio\Downloads\google-chrome-120-0-6099-210.apk' will not be cached, because the device under test has confirmed the support of streamed installs
+[35m[ADB][39m The installation of 'google-chrome-120-0-6099-210.apk' took 41696ms
+[35m[UiAutomator2][39m Starting UIAutomator2 server 4.27.0
+[35m[UiAutomator2][39m Using UIAutomator2 server from 'C:\Users\fendy.tio\AppData\Roaming\npm\node_modules\appium\node_modules\appium-uiautomator2-server\apks\appium-uiautomator2-server-v4.27.0.apk' and test from 'C:\Users\fendy.tio\AppData\Roaming\npm\node_modules\appium\node_modules\appium-uiautomator2-server\apks\appium-uiautomator2-server-debug-androidTest.apk'
+[35m[UiAutomator2][39m Waiting up to 30000ms for UiAutomator2 to be online...
+[35m[WD Proxy][39m socket hang up
+[35m[WD Proxy][39m socket hang up
+[35m[WD Proxy][39m socket hang up
+[35m[WD Proxy][39m socket hang up
+[35m[WD Proxy][39m Determined the downstream protocol as 'W3C'
+[35m[AndroidDriver][39m Using app unlock, this is going to be deprecated!
+[35m[AndroidDriver][39m Unlocking screen
+[35m[AndroidDriver][39m Launching .Unlock
+[35m[UiAutomator2][39m Starting 'com.android.chrome/com.google.android.apps.chrome.Main and waiting for 'com.android.chrome/com.google.android.apps.chrome.Main'
+[35m[Appium][39m New AndroidUiautomator2Driver session created successfully, session 471ade62-ba1c-4bc4-a14c-87251c6f651c added to master session list
+[35m[HTTP][39m [37m<-- POST /wd/hub/session [39m[32m200[39m [90m62989 ms - 1332[39m
+[35m[HTTP][39m [90m[39m
+[35m[HTTP][39m [37m-->[39m [37mGET[39m [37m/wd/hub/session/471ade62-ba1c-4bc4-a14c-87251c6f651c[39m
+[35m[HTTP][39m [90m{}[39m
+[35m[HTTP][39m [37m<-- GET /wd/hub/session/471ade62-ba1c-4bc4-a14c-87251c6f651c [39m[32m200[39m [90m12 ms - 1286[39m
+[35m[HTTP][39m [90m[39m
+[35m[HTTP][39m [37m-->[39m [37mGET[39m [37m/wd/hub/session/471ade62-ba1c-4bc4-a14c-87251c6f651c[39m
+[35m[HTTP][39m [90m{}[39m
+[35m[HTTP][39m [37m<-- GET /wd/hub/session/471ade62-ba1c-4bc4-a14c-87251c6f651c [39m[32m200[39m [90m18 ms - 1286[39m
+[35m[HTTP][39m [90m[39m
+[35m[HTTP][39m [37m-->[39m [37mGET[39m [37m/wd/hub/status[39m
+[35m[HTTP][39m [90m{}[39m
+[35m[HTTP][39m [37m<-- GET /wd/hub/status [39m[32m200[39m [90m1 ms - 68[39m
+[35m[HTTP][39m [90m[39m
+[35m[HTTP][39m [37m-->[39m [37mPOST[39m [37m/wd/hub/session/471ade62-ba1c-4bc4-a14c-87251c6f651c/timeouts[39m
+[35m[HTTP][39m [90m{"implicit":60000}[39m
+[35m[HTTP][39m [37m<-- POST /wd/hub/session/471ade62-ba1c-4bc4-a14c-87251c6f651c/timeouts [39m[32m200[39m [90m2 ms - 14[39m
+[35m[HTTP][39m [90m[39m
+[35m[HTTP][39m [37m-->[39m [37mGET[39m [37m/wd/hub/session/471ade62-ba1c-4bc4-a14c-87251c6f651c/source[39m
+[35m[HTTP][39m [90m{}[39m
+[35m[W3C (471ade62)][39m Driver proxy active, passing request on via HTTP proxy
+[35m[WD Proxy][39m Replacing sessionId 251f49af-edde-49c8-96c4-10533272c674 with 471ade62-ba1c-4bc4-a14c-87251c6f651c
+[35m[HTTP][39m [37m<-- GET /wd/hub/session/471ade62-ba1c-4bc4-a14c-87251c6f651c/source [39m[32m200[39m [90m1073 ms - 38308[39m
+[35m[HTTP][39m [90m[39m
+[35m[HTTP][39m [37m-->[39m [37mGET[39m [37m/wd/hub/session/471ade62-ba1c-4bc4-a14c-87251c6f651c/screenshot[39m
+[35m[HTTP][39m [90m{}[39m
+[35m[HTTP][39m [37m<-- GET /wd/hub/session/471ade62-ba1c-4bc4-a14c-87251c6f651c/screenshot [39m[32m200[39m [90m1043 ms - 198420[39m
+[35m[HTTP][39m [90m[39m
+[35m[HTTP][39m [37m-->[39m [37mDELETE[39m [37m/wd/hub/session/471ade62-ba1c-4bc4-a14c-87251c6f651c[39m
+[35m[HTTP][39m [90m{}[39m
+[35m[Appium][39m Removing session 471ade62-ba1c-4bc4-a14c-87251c6f651c from our master session list
+[35m[UiAutomator2][39m Restoring hidden api policy to the device default configuration
+[35m[HTTP][39m [37m<-- DELETE /wd/hub/session/471ade62-ba1c-4bc4-a14c-87251c6f651c [39m[32m200[39m [90m493 ms - 14[39m
+[35m[HTTP][39m [90m[39m
