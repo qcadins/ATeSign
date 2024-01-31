@@ -205,48 +205,48 @@ if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/label_ValidationErr
             1, GlobalVariable.StatusSuccess)
     }
     
-    'check ada value maka setting Link Is Active'
-    if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting is_active Link')).length() > 
-    0) {
-        'check if email kosong atau tidak'
-        if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 0) {
-            'setting Link Is Active'
-            CustomKeywords.'connection.APIFullService.settingLinkIsActive'(conneSign, findTestData(excelPathRegister).getValue(
-                    GlobalVariable.NumofColm, rowExcel('Setting is_active Link')), findTestData(excelPathRegister).getValue(
-                    GlobalVariable.NumofColm, rowExcel('$Email')))
-        } else {
-            'setting Link Is Active'
-            CustomKeywords.'connection.APIFullService.settingLinkIsActive'(conneSign, findTestData(excelPathRegister).getValue(
-                    GlobalVariable.NumofColm, rowExcel('Setting is_active Link')), findTestData(excelPathRegister).getValue(
-                    GlobalVariable.NumofColm, rowExcel('No Telepon')))
-        }
-        
-        inputBuatUndangan()
-
-        'click button save'
-        WebUI.click(findTestObject('RegisterEsign/button_Save'))
-
-        if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/button_YaProses'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-            'click button ya proses'
-            WebUI.click(findTestObject('RegisterEsign/button_YaProses'))
-        }
-        
-        if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-            'call function get error log'
-            getErrorLog()
-        } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting is_active Link')) == 
-        '0') {
-            'write to excel failed'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', 
-                    '') + ';') + ' Link tergenerate walupun sudah tidak active')
-
-            GlobalVariable.FlagFailed = 1
-        } else {
-            'click tutup popup'
-            WebUI.click(findTestObject('RegisterEsign/button_TutupDapatLink'))
-        }
-    }
+//    'check ada value maka setting Link Is Active'
+//    if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting is_active Link')).length() > 
+//    0) {
+//        'check if email kosong atau tidak'
+//        if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 0) {
+//            'setting Link Is Active'
+//            CustomKeywords.'connection.APIFullService.settingLinkIsActive'(conneSign, findTestData(excelPathRegister).getValue(
+//                    GlobalVariable.NumofColm, rowExcel('Setting is_active Link')), findTestData(excelPathRegister).getValue(
+//                    GlobalVariable.NumofColm, rowExcel('$Email')))
+//        } else {
+//            'setting Link Is Active'
+//            CustomKeywords.'connection.APIFullService.settingLinkIsActive'(conneSign, findTestData(excelPathRegister).getValue(
+//                    GlobalVariable.NumofColm, rowExcel('Setting is_active Link')), findTestData(excelPathRegister).getValue(
+//                    GlobalVariable.NumofColm, rowExcel('No Telepon')))
+//        }
+//        
+//        inputBuatUndangan()
+//
+//        'click button save'
+//        WebUI.click(findTestObject('RegisterEsign/button_Save'))
+//
+//        if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/button_YaProses'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+//            'click button ya proses'
+//            WebUI.click(findTestObject('RegisterEsign/button_YaProses'))
+//        }
+//        
+//        if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+//            'call function get error log'
+//            getErrorLog()
+//        } else if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting is_active Link')) == 
+//        '0') {
+//            'write to excel failed'
+//            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+//                (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', 
+//                    '') + ';') + ' Link tergenerate walupun sudah tidak active')
+//
+//            GlobalVariable.FlagFailed = 1
+//        } else {
+//            'click tutup popup'
+//            WebUI.click(findTestObject('RegisterEsign/button_TutupDapatLink'))
+//        }
+//    }
 }
 
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {

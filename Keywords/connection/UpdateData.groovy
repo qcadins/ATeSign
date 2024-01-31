@@ -231,6 +231,63 @@ class UpdateData {
 
 	@Keyword
 	updateDBMainFlowBefore(Connection conneSign, String excelPathMain) {
+<<<<<<< HEAD
+=======
+		'Setting must wa level notif send doc'
+		updateMustWALevelNotifSendDocAndManualSign(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Send Document & Manual Sign Request)')))
+
+		'Setting use wa level notif send doc'
+		updateUseWAMsgLevelNotifSendDocAndManualSign(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Send Document & Manual Sign Request)')))
+
+		'Setting otp by email level notif send doc'
+		updateOtpByEmailLevelNotifSendDocAndManualSign(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP By Email (Send Document & Manual Sign Request)')))
+
+		'Setting must wa level notif otp sign embed v2'
+		updateMustWALevelNotifOTPSignEmbedV2(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (OTP Sign Embed V2 Flow)')))
+
+		'Setting use wa level notif otp sign embed v2'
+		updateUseWAMsgLevelNotifOTPSignEmbedV2(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (OTP Sign Embed V2 Flow)')))
+
+		'Setting otp by email level notif otp sign embed v2'
+		updateOtpByEmailLevelNotifOTPSignEmbedV2(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP By Email (OTP Sign Embed V2 Flow)')))
+
+		'Setting must wa level notif OTP Sign External'
+		updateMustWALevelNotifOTPSignExternal(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (OTP Sign External Flow)')))
+
+		'Setting use wa level notif OTP Sign External'
+		updateUseWAMsgLevelNotifOTPSignExternal(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (OTP Sign External Flow)')))
+
+		'Setting otp by email level notif OTP Sign External'
+		updateOtpByEmailLevelNotifOTPSignExternal(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP By Email (OTP Sign External Flow)')))
+
+		'Setting must wa level notif otp signing normal'
+		updateMustWALevelNotifResendSignNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Resend Sign Notification)')))
+
+		'Setting use wa level notif otp signing normal'
+		updateUseWAMsgLevelNotifResendSignNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Resend Sign Notification)')))
+
+		'Setting otp by email level notif otp signing normal'
+		updateOtpByEmailLevelNotifResendSignNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP By Email (Resend Sign Notification)')))
+
+		'Setting must wa level notif otp signing normal'
+		updateMustWALevelNotifResendSignNotifEmbedV1(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Resend Sign Notification Embed V1)')))
+
+		'Setting use wa level notif otp signing normal'
+		updateUseWAMsgLevelNotifResendSignNotifEmbedV1(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Resend Sign Notification Embed V1)')))
+
+		'Setting otp by email level notif otp signing normal'
+		updateOtpByEmailLevelNotifResendSignNotifEmbedV1(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP By Email (Resend Sign Notification Embed V1)')))
+
+		'Setting must wa level notif otp signing normal'
+		updateMustWALevelNotifResendSignNotifEmbedV2(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Resend Sign Notification Embed V2)')))
+
+		'Setting use wa level notif otp signing normal'
+		updateUseWAMsgLevelNotifResendSignNotifEmbedV2(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Resend Sign Notification Embed V2)')))
+
+		'Setting otp by email level notif otp signing normal'
+		updateOtpByEmailLevelNotifResendSignNotifEmbedV2(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP By Email (Resend Sign Notification Embed V2)')))
+
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 		'get connection apifullservice'
 		APIFullService apiFullService = new APIFullService()
 
@@ -563,6 +620,12 @@ class UpdateData {
 		'setting sned sms gen invitation'
 		apiFullService.settingSendSMSGenInv(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS GenInv')))
 
+<<<<<<< HEAD
+=======
+		'setting sned WA gen invitation'
+		apiFullService.settingSendWAGenInv(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send WA GenInv')))
+
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 		if (checkNotifTypeExistforTenant(conneSign) > 0) {
 			'update notif pada table ms_notificationtypeoftenant'
 			updateDBNotifTypeMultiPointOTPAct(conneSign, excelPathMain, sheets)
@@ -653,21 +716,43 @@ class UpdateData {
 	@Keyword
 	updateDBDocumentMonitoring(Connection conneSign, String excelPathMain, String sheets) {
 		sheet = sheets
+<<<<<<< HEAD
 		if (checkNotifTypeExistforTenant(conneSign) > 0) {
 			'Setting must wa level notif otp signing normal'
 			updateMustWALevelNotifResendSignNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Resend Sign Notification)')))
+=======
+
+		'Setting must wa level notif otp signing normal'
+		updateMustWALevelNotifResendSignNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Resend Sign Notification)')))
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 
 			'Setting use wa level notif otp signing normal'
 			updateUseWAMsgLevelNotifResendSignNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Resend Sign Notification)')))
 
+<<<<<<< HEAD
 			'Setting must wa level notif otp signing normal'
 			updateMustWALevelNotifResendSignNotifEmbedV1(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Resend Sign Notification Embed V1)')))
+=======
+		'Setting otp by email level notif otp signing normal'
+		updateOtpByEmailLevelNotifResendSignNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP By Email (Resend Sign Notification)')))
+
+		'Setting must wa level notif otp signing normal'
+		updateMustWALevelNotifResendSignNotifEmbedV1(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Resend Sign Notification Embed V1)')))
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 
 			'Setting use wa level notif otp signing normal'
 			updateUseWAMsgLevelNotifResendSignNotifEmbedV1(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Resend Sign Notification Embed V1)')))
 
+<<<<<<< HEAD
 			'Setting must wa level notif otp signing normal'
 			updateMustWALevelNotifResendSignNotifEmbedV2(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Resend Sign Notification Embed V2)')))
+=======
+		'Setting otp by email level notif otp signing normal'
+		updateOtpByEmailLevelNotifResendSignNotifEmbedV1(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP By Email (Resend Sign Notification Embed V1)')))
+
+		'Setting must wa level notif otp signing normal'
+		updateMustWALevelNotifResendSignNotifEmbedV2(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Resend Sign Notification Embed V2)')))
+>>>>>>> branch 'master' of https://github.com/qcadins/ATeSign
 
 			'Setting use wa level notif otp signing normal'
 			updateUseWAMsgLevelNotifResendSignNotifEmbedV2(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Resend Sign Notification Embed V2)')))
