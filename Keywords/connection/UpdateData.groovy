@@ -231,60 +231,6 @@ class UpdateData {
 
 	@Keyword
 	updateDBMainFlowBefore(Connection conneSign, String excelPathMain) {
-		'Setting must wa level notif send doc'
-		updateMustWALevelNotifSendDocAndManualSign(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Send Document & Manual Sign Request)')))
-
-		'Setting use wa level notif send doc'
-		updateUseWAMsgLevelNotifSendDocAndManualSign(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Send Document & Manual Sign Request)')))
-
-		'Setting otp by email level notif send doc'
-		updateOtpByEmailLevelNotifSendDocAndManualSign(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP By Email (Send Document & Manual Sign Request)')))
-
-		'Setting must wa level notif otp sign embed v2'
-		updateMustWALevelNotifOTPSignEmbedV2(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (OTP Sign Embed V2 Flow)')))
-
-		'Setting use wa level notif otp sign embed v2'
-		updateUseWAMsgLevelNotifOTPSignEmbedV2(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (OTP Sign Embed V2 Flow)')))
-
-		'Setting otp by email level notif otp sign embed v2'
-		updateOtpByEmailLevelNotifOTPSignEmbedV2(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP By Email (OTP Sign Embed V2 Flow)')))
-
-		'Setting must wa level notif OTP Sign External'
-		updateMustWALevelNotifOTPSignExternal(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (OTP Sign External Flow)')))
-
-		'Setting use wa level notif OTP Sign External'
-		updateUseWAMsgLevelNotifOTPSignExternal(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (OTP Sign External Flow)')))
-
-		'Setting otp by email level notif OTP Sign External'
-		updateOtpByEmailLevelNotifOTPSignExternal(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP By Email (OTP Sign External Flow)')))
-
-		'Setting must wa level notif otp signing normal'
-		updateMustWALevelNotifResendSignNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Resend Sign Notification)')))
-
-		'Setting use wa level notif otp signing normal'
-		updateUseWAMsgLevelNotifResendSignNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Resend Sign Notification)')))
-
-		'Setting otp by email level notif otp signing normal'
-		updateOtpByEmailLevelNotifResendSignNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP By Email (Resend Sign Notification)')))
-		
-		'Setting must wa level notif otp signing normal'
-		updateMustWALevelNotifResendSignNotifEmbedV1(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Resend Sign Notification Embed V1)')))
-
-		'Setting use wa level notif otp signing normal'
-		updateUseWAMsgLevelNotifResendSignNotifEmbedV1(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Resend Sign Notification Embed V1)')))
-
-		'Setting otp by email level notif otp signing normal'
-		updateOtpByEmailLevelNotifResendSignNotifEmbedV1(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP By Email (Resend Sign Notification Embed V1)')))
-		
-		'Setting must wa level notif otp signing normal'
-		updateMustWALevelNotifResendSignNotifEmbedV2(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Resend Sign Notification Embed V2)')))
-
-		'Setting use wa level notif otp signing normal'
-		updateUseWAMsgLevelNotifResendSignNotifEmbedV2(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Resend Sign Notification Embed V2)')))
-
-		'Setting otp by email level notif otp signing normal'
-		updateOtpByEmailLevelNotifResendSignNotifEmbedV2(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP By Email (Resend Sign Notification Embed V2)')))
-
 		'get connection apifullservice'
 		APIFullService apiFullService = new APIFullService()
 
@@ -294,15 +240,58 @@ class UpdateData {
 		'get connection ManualStamp'
 		ManualStamp manualStamp = new ManualStamp()
 
-		'setting menggunakan Must WA'
-		apiFullService.settingMustUseWAFirst(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Level Tenant)')))
+		if (checkNotifTypeExistforTenant(conneSign) > 0) {
+			'Setting must wa level notif send doc'
+			updateMustWALevelNotifSendDocAndManualSign(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Send Document & Manual Sign Request)')))
 
-		'setting menggunakan Use Wa Message'
-		apiFullService.settingUseWAMessage(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Level Tenant)')))
+			'Setting use wa level notif send doc'
+			updateUseWAMsgLevelNotifSendDocAndManualSign(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Send Document & Manual Sign Request)')))
 
-		'update setting sent otp by email'
-		sendSign.settingSentOTPbyEmail(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Level Tenant)')))
+			'Setting must wa level notif otp sign embed v2'
+			updateMustWALevelNotifOTPSignEmbedV2(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (OTP Sign Embed V2 Flow)')))
 
+			'Setting use wa level notif otp sign embed v2'
+			updateUseWAMsgLevelNotifOTPSignEmbedV2(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (OTP Sign Embed V2 Flow)')))
+
+			'Setting otp by email level notif otp sign embed v2'
+			updateOtpByEmailLevelNotifOTPSignEmbedV2(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP By Email (OTP Sign Embed V2 Flow)')))
+
+			'Setting must wa level notif OTP Sign External'
+			updateMustWALevelNotifOTPSignExternal(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (OTP Sign External Flow)')))
+
+			'Setting use wa level notif OTP Sign External'
+			updateUseWAMsgLevelNotifOTPSignExternal(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (OTP Sign External Flow)')))
+
+			'Setting otp by email level notif OTP Sign External'
+			updateOtpByEmailLevelNotifOTPSignExternal(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP By Email (OTP Sign External Flow)')))
+
+			'Setting must wa level notif otp signing normal'
+			updateMustWALevelNotifResendSignNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Resend Sign Notification)')))
+
+			'Setting use wa level notif otp signing normal'
+			updateUseWAMsgLevelNotifResendSignNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Resend Sign Notification)')))
+
+			'Setting must wa level notif otp signing normal'
+			updateMustWALevelNotifResendSignNotifEmbedV1(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Resend Sign Notification Embed V1)')))
+
+			'Setting use wa level notif otp signing normal'
+			updateUseWAMsgLevelNotifResendSignNotifEmbedV1(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Resend Sign Notification Embed V1)')))
+
+			'Setting must wa level notif otp signing normal'
+			updateMustWALevelNotifResendSignNotifEmbedV2(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Resend Sign Notification Embed V2)')))
+
+			'Setting use wa level notif otp signing normal'
+			updateUseWAMsgLevelNotifResendSignNotifEmbedV2(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Resend Sign Notification Embed V2)')))
+		} else {
+			'setting menggunakan Must WA'
+			apiFullService.settingMustUseWAFirst(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Level Tenant)')))
+
+			'setting menggunakan Use Wa Message'
+			apiFullService.settingUseWAMessage(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Level Tenant)')))
+
+			'update setting sent otp by email'
+			sendSign.settingSentOTPbyEmail(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Level Tenant)')))
+		}
 		'ambil idLov untuk diupdate secara otomatis ke DB'
 		int idLov = manualStamp.getIdLovVendorStamping(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')))
 
@@ -428,7 +417,7 @@ class UpdateData {
 			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET send_otp_by_email = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND ml.code = 'RESEND_INV' AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
 		}
 	}
-	
+
 	@Keyword
 	updateMustWALevelNotifOTPAct(Connection conn, String value) {
 		Statement stm = conn.createStatement()
@@ -442,7 +431,7 @@ class UpdateData {
 		Statement stm = conn.createStatement()
 		if (value != '') {
 			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET use_wa_message = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND ml.code = 'OTP_ACT' AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
-		}	
+		}
 	}
 
 	@Keyword
@@ -452,7 +441,7 @@ class UpdateData {
 			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET send_otp_by_email = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND ml.code = 'OTP_ACT' AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
 		}
 	}
-	
+
 	@Keyword
 	updateMustWALevelNotifCert(Connection conn, String value) {
 		Statement stm = conn.createStatement()
@@ -480,7 +469,7 @@ class UpdateData {
 	@Keyword
 	updateDBNotifTypeMultiPointOTPAct(Connection conneSign, String excelPathMain, String sheets) {
 		sheet = sheets
-		
+
 		'Setting must wa level notif'
 		updateMustWALevelNotifGenInvLink(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First - Gen Inv')))
 
@@ -489,7 +478,7 @@ class UpdateData {
 
 		'Setting otp by email level'
 		updateOtpByEmailLevelNotifGenInvLink(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email - Gen Inv')))
-		
+
 		'Setting must wa level notif'
 		updateMustWALevelNotifGenInvMenu(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First - Gen Inv Menu')))
 
@@ -498,7 +487,7 @@ class UpdateData {
 
 		'Setting otp by email level'
 		updateOtpByEmailLevelNotifGenInvMenu(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email - Gen Inv Menu')))
-		
+
 		'Setting must wa level notif'
 		updateMustWALevelNotifRegenLink(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First - Regen Link')))
 
@@ -507,7 +496,7 @@ class UpdateData {
 
 		'Setting otp by email level'
 		updateOtpByEmailLevelNotifRegenLink(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email - Regen Link')))
-		
+
 		'Setting must wa level notif'
 		updateMustWALevelNotifResendInv(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First - Resend Inv')))
 
@@ -516,7 +505,7 @@ class UpdateData {
 
 		'Setting otp by email level'
 		updateOtpByEmailLevelNotifResendInv(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email - Resend Inv')))
-		
+
 		'Setting must wa level notif'
 		updateMustWALevelNotifOTPAct(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First - OTP Act')))
 
@@ -525,7 +514,7 @@ class UpdateData {
 
 		'Setting otp by email level'
 		updateOtpByEmailLevelNotifOTPAct(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email - OTP Act')))
-		
+
 		'Setting must wa level notif'
 		updateMustWALevelNotifCert(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First - Cert Notif')))
 
@@ -535,7 +524,7 @@ class UpdateData {
 		'Setting otp by email level'
 		updateOtpByEmailLevelNotifCert(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email - Cert Notif')))
 	}
-	
+
 	@Keyword
 	checkNotifTypeExistforTenant(Connection conn) {
 		stm = conn.createStatement()
@@ -549,19 +538,19 @@ class UpdateData {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		
+
 		Integer.parseInt(data)
 	}
-	
+
 	@Keyword
 	updateDBMainRegister(Connection conneSign, String excelPathMain, String sheets) {
 		sheet = sheets
-		
+
 		println(sheet)
 		'get connection apifullservice'
 		APIFullService apiFullService = new APIFullService()
 		Registrasi registrasi = new Registrasi()
-		
+
 		'setting email services'
 		apiFullService.settingEmailServiceTenant(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')))
 
@@ -573,22 +562,22 @@ class UpdateData {
 
 		'setting sned sms gen invitation'
 		apiFullService.settingSendSMSGenInv(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS GenInv')))
-		
+
 		if (checkNotifTypeExistforTenant(conneSign) > 0) {
 			'update notif pada table ms_notificationtypeoftenant'
-			updateDBNotifTypeMultiPointOTPAct(conneSign, excelPathMain, sheets)			
+			updateDBNotifTypeMultiPointOTPAct(conneSign, excelPathMain, sheets)
 		} else {
 			'setting must use wa first ms_tenant'
 			apiFullService.settingMustUseWAFirst(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')))
-			
+
 			'setting use wa message ms_tenant'
 			apiFullService.settingUseWAMessage(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')))
-			
+
 			'setting sent otp by email ms_tenant'
 			apiFullService.settingSentOTPByEmail(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email')))
 		}
 	}
-	
+
 	@Keyword
 	updateMustWALevelNotifResendSignNotif(Connection conn, String value) {
 		Statement stm = conn.createStatement()
@@ -612,7 +601,7 @@ class UpdateData {
 			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET send_otp_by_email = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND ml.code = 'RESEND_SIGN_NOTIF' AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
 		}
 	}
-	
+
 	@Keyword
 	updateMustWALevelNotifResendSignNotifEmbedV1(Connection conn, String value) {
 		Statement stm = conn.createStatement()
@@ -636,7 +625,7 @@ class UpdateData {
 			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET send_otp_by_email = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND ml.code = 'RESEND_SIGN_NOTIF_EMBED_V1' AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
 		}
 	}
-	
+
 	@Keyword
 	updateMustWALevelNotifResendSignNotifEmbedV2(Connection conn, String value) {
 		Statement stm = conn.createStatement()
@@ -660,36 +649,112 @@ class UpdateData {
 			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET send_otp_by_email = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND ml.code = 'RESEND_SIGN_NOTIF_EMBED_V2' AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
 		}
 	}
-	
+
 	@Keyword
 	updateDBDocumentMonitoring(Connection conneSign, String excelPathMain, String sheets) {
 		sheet = sheets
-		
-		'Setting must wa level notif otp signing normal'
-		updateMustWALevelNotifResendSignNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Resend Sign Notification)')))
+		if (checkNotifTypeExistforTenant(conneSign) > 0) {
+			'Setting must wa level notif otp signing normal'
+			updateMustWALevelNotifResendSignNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Resend Sign Notification)')))
 
-		'Setting use wa level notif otp signing normal'
-		updateUseWAMsgLevelNotifResendSignNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Resend Sign Notification)')))
+			'Setting use wa level notif otp signing normal'
+			updateUseWAMsgLevelNotifResendSignNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Resend Sign Notification)')))
 
-		'Setting otp by email level notif otp signing normal'
-		updateOtpByEmailLevelNotifResendSignNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP By Email (Resend Sign Notification)')))
-		
-		'Setting must wa level notif otp signing normal'
-		updateMustWALevelNotifResendSignNotifEmbedV1(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Resend Sign Notification Embed V1)')))
+			'Setting must wa level notif otp signing normal'
+			updateMustWALevelNotifResendSignNotifEmbedV1(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Resend Sign Notification Embed V1)')))
 
-		'Setting use wa level notif otp signing normal'
-		updateUseWAMsgLevelNotifResendSignNotifEmbedV1(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Resend Sign Notification Embed V1)')))
+			'Setting use wa level notif otp signing normal'
+			updateUseWAMsgLevelNotifResendSignNotifEmbedV1(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Resend Sign Notification Embed V1)')))
 
-		'Setting otp by email level notif otp signing normal'
-		updateOtpByEmailLevelNotifResendSignNotifEmbedV1(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP By Email (Resend Sign Notification Embed V1)')))
-		
-		'Setting must wa level notif otp signing normal'
-		updateMustWALevelNotifResendSignNotifEmbedV2(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Resend Sign Notification Embed V2)')))
+			'Setting must wa level notif otp signing normal'
+			updateMustWALevelNotifResendSignNotifEmbedV2(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Resend Sign Notification Embed V2)')))
 
-		'Setting use wa level notif otp signing normal'
-		updateUseWAMsgLevelNotifResendSignNotifEmbedV2(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Resend Sign Notification Embed V2)')))
+			'Setting use wa level notif otp signing normal'
+			updateUseWAMsgLevelNotifResendSignNotifEmbedV2(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Resend Sign Notification Embed V2)')))
+		} else {
+			'get connection apifullservice'
+			APIFullService apiFullService = new APIFullService()
 
-		'Setting otp by email level notif otp signing normal'
-		updateOtpByEmailLevelNotifResendSignNotifEmbedV2(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP By Email (Resend Sign Notification Embed V2)')))
+			'get connection SendSign'
+			SendSign sendSign = new SendSign()
+
+			'get connection ManualStamp'
+			ManualStamp manualStamp = new ManualStamp()
+
+			'setting menggunakan Must WA'
+			apiFullService.settingMustUseWAFirst(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Level Tenant)')))
+
+			'setting menggunakan Use Wa Message'
+			apiFullService.settingUseWAMessage(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Level Tenant)')))
+		}
+	}
+
+	@Keyword
+	updateMustWALevelNotifSendDoc(Connection conn, String value) {
+		Statement stm = conn.createStatement()
+		if (value != '') {
+			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET must_use_wa_first = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND (ml.code = 'SEND_DOC') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+		}
+	}
+
+	@Keyword
+	updateUseWAMsgLevelNotifSendDoc(Connection conn, String value) {
+		Statement stm = conn.createStatement()
+		if (value != '') {
+			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET use_wa_message = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND (ml.code = 'SEND_DOC') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+		}
+	}
+
+	@Keyword
+	updateOtpByEmailLevelNotifSendDoc(Connection conn, String value) {
+		Statement stm = conn.createStatement()
+		if (value != '') {
+			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET send_otp_by_email = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND (ml.code = 'SEND_DOC') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+		}
+	}
+
+	@Keyword
+	updateMustWALevelNotifManualSign(Connection conn, String value) {
+		Statement stm = conn.createStatement()
+		if (value != '') {
+			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET must_use_wa_first = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND (ml.code = 'MANUAL_SIGN_REQ') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+		}
+	}
+
+	@Keyword
+	updateUseWAMsgLevelNotifManualSign(Connection conn, String value) {
+		Statement stm = conn.createStatement()
+		if (value != '') {
+			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET use_wa_message = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND (ml.code = 'MANUAL_SIGN_REQ') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+		}
+	}
+
+	@Keyword
+	updateOtpByEmailLevelNotifManualSign(Connection conn, String value) {
+		Statement stm = conn.createStatement()
+		if (value != '') {
+			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET send_otp_by_email = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND (ml.code = 'MANUAL_SIGN_REQ') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+		}
+	}
+
+	@Keyword
+	updateDBSendDocLevelNotification(Connection conneSign, String excelPathMain, String sheets) {
+		sheet = sheets
+		if (checkNotifTypeExistforTenant(conneSign) > 0) {
+			'Setting must wa level notif otp signing normal'
+			updateMustWALevelNotifSendDoc(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must WA Level Notification')))
+
+			'Setting use wa level notif otp signing normal'
+			updateUseWAMsgLevelNotifSendDoc(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message Level Notification')))
+		} else {
+			'get connection apifullservice'
+			APIFullService apiFullService = new APIFullService()
+
+			'setting menggunakan Must WA'
+			apiFullService.settingMustUseWAFirst(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Level Tenant)')))
+
+			'setting menggunakan Use Wa Message'
+			apiFullService.settingUseWAMessage(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Level Tenant)')))
+		}
 	}
 }

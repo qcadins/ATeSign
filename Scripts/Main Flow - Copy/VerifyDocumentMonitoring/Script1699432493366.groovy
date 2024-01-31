@@ -852,11 +852,11 @@ def actionDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan
                     'click button OK'
                     WebUI.click(findTestObject('DocumentMonitoring/button_OK'))
 
-                    'lihat apakah perlu pengecekan ke DB'
-                    if (GlobalVariable.checkStoreDB == 'Yes') {
-                        'cek balance mutation dan juga pemotongan saldo'
-                        checkBalanceMutation(conneSign, emailSHA256)
-                    }
+					'Input email signer based on sequentialnya'
+					emailSigner = CustomKeywords.'connection.APIFullService.getEmailBasedOnSequence'(conneSign, nomorKontrakPerPilihan)
+					
+                    'cek balance mutation dan juga pemotongan saldo'
+                    checkSaldoWAOrSMS(conneSign, emailSigner)
                 } else {
                     'check if error alert present'
                     if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/errorLog'), GlobalVariable.TimeOut, 
@@ -1064,4 +1064,191 @@ def encryptLink(Connection conneSign, String documentId, String emailSigner, Str
     encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(msg, aesKey)
 
     encryptMsg
+}
+
+
+def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
+	'inisialisasi arraylist balmut'
+	ArrayList<String> balmut = []
+
+	'inisialisasi penggunaan saldo, pemotongan saldo, dan increment untuk kebutuhan selanjutnya'
+	int penggunaanSaldo = 0
+
+	int pemotonganSaldo = 0
+
+	int increment
+
+	'inisialisasi tipesaldo'
+	String tipeSaldo
+
+	'get email per document menggunakan email signer yang diplit enter'
+	ArrayList<String> emailPerDoc = emailSigner.split('\\n', -1)
+
+	'looping per email per document'
+	for (loopingEmailPerDoc = 0; loopingEmailPerDoc < emailPerDoc.size(); loopingEmailPerDoc++) {
+		'split lagi per ;'
+		ArrayList<String> email = (emailPerDoc[loopingEmailPerDoc]).split(';', -1)
+
+		'looping email per '
+		for (loopingEmail = 0; loopingEmail < email.size(); loopingEmail++) {
+			'get email dari nik/notelp/email tersebut'
+			(email[loopingEmail]) = CustomKeywords.'connection.DataVerif.getEmailFromNIK'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
+					email[loopingEmail]))
+
+        emailServiceOnTenant = CustomKeywords.'connection.DataVerif.getEmailService'(conneSign, GlobalVariable.Tenant)
+
+        fullNameUser = CustomKeywords.'connection.DataVerif.getFullNameOfUser'(conneSign, emailSigner)
+
+        notifTypeDBResendSignNotifNormal = CustomKeywords.'connection.APIFullService.getWASMSFromNotificationType'(conneSign, 
+            emailSigner, 'RESEND_SIGN_NOTIF', GlobalVariable.Tenant)
+
+        notifTypeDBResendSignNotifEmbedV1 = CustomKeywords.'connection.APIFullService.getWASMSFromNotificationType'(conneSign, 
+            emailSigner, 'RESEND_SIGN_NOTIF_EMBED_V1', GlobalVariable.Tenant)
+
+        notifTypeDBResendSignNotifEmbedV2 = CustomKeywords.'connection.APIFullService.getWASMSFromNotificationType'(conneSign, 
+            emailSigner, 'RESEND_SIGN_NOTIF_EMBED_V2', GlobalVariable.Tenant)
+
+        mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
+
+		String runWithType = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Document Monitoring Using ?'));
+		if (runWithType.equals('Login Via Admin Client')) {
+			notifTypeDB = notifTypeDBResendSignNotifNormal
+		} else if (runWithType.equals('Embed V1')) {
+			notifTypeDB = notifTypeDBResendSignNotifEmbedV1
+		} else if (runWithType.equals('Embed V2')) {
+			notifTypeDB = notifTypeDBResendSignNotifEmbedV2
+		}
+
+			if (notifTypeDB == '0' || notifTypeDB == 'Level Tenant') {
+				'get email service dari email tersebut'
+				emailServiceOnVendor = CustomKeywords.'connection.DataVerif.getEmailServiceAsVendorUser'(conneSign, email[
+					loopingEmail])
+
+				'get settinog must use wa first'
+				mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
+
+				'jika must use wa first'
+				if (mustUseWAFirst == '1') {
+					'tipe saldonya menjadi wa'
+					tipeSaldo = 'WhatsApp Message'
+
+					'menggunakan saldo wa'
+					balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
+
+					'jika arraylist tidak ada isinya'
+					if (balmut.size() == 0) {
+						'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+							GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+								rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via WhatsApp')
+					} else {
+						'penggunaan saldo get dari kuantitas per array list balance mutation'
+						penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
+					}
+				} else {
+					'jika email servicenya 1'
+					if (emailServiceOnVendor == '1') {
+						'check use wa message'
+						useWAMessage = CustomKeywords.'connection.DataVerif.getUseWAMessage'(conneSign, GlobalVariable.Tenant)
+
+						'jika menggunakan wa'
+						if (useWAMessage == '1') {
+							tipeSaldo = 'WhatsApp Message'
+
+							'menggunakan saldo wa'
+							balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
+
+							'jika balmutnya tidak ada value'
+							if (balmut.size() == 0) {
+								'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+								CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+									GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+										rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via WhatsApp')
+							} else {
+								'penggunaan saldo didapat dari ikuantitaas query balmut'
+								penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
+							}
+						} else if (useWAMessage == '0') {
+							'jika tidak menggunakan use wa message, maka mengarah ke sms'
+
+							'ke sms / wa'
+							SMSSetting = CustomKeywords.'connection.DataVerif.getSMSSetting'(conneSign, 'Send Document')
+
+							'jika setting sms = 1'
+							if (SMSSetting == '1') {
+								'ke sms'
+								tipeSaldo = 'SMS Notif'
+
+								'get balmut dari sms '
+								balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
+
+								'jika tidak ada balmut'
+								if (balmut.size() == 0) {
+									'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+									CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+										GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+											rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via SMS')
+								} else {
+									'get kuantitas dari balmut'
+									penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
+								}
+							}
+						}
+					}
+				}
+			} else {
+				tipeSaldo = notifTypeDB
+				
+				'menggunakan saldo wa'
+				balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
+
+				'jika balmutnya tidak ada value'
+				if (balmut.size() == 0) {
+					'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+						GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+							rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via ' + tipeSaldo.replace(' Message', '').replace(' Notif', ''))
+				} else {
+					'penggunaan saldo didapat dari ikuantitaas query balmut'
+					penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
+				}
+			}
+		}
+		
+		'jika ada penggunaan saldo'
+		if (penggunaanSaldo > 0) {
+			'looping mengenai penggunaan saldo'
+			for (looping = 0; looping < penggunaanSaldo; looping++) {
+				'jika loopingan pertama, incrementnya 0'
+				if (looping == 0) {
+					increment = 0
+				} else {
+					'increment meningkat 9'
+					increment = (increment + 10)
+				}
+				
+				'pemotongan saldo akan di get berdasarkan kuantitas yang awalnya hanya get dari total 11 row query'
+				pemotonganSaldo = (pemotonganSaldo + Integer.parseInt((balmut[(increment + 9)]).replace('-', '')))
+
+				'input value trx number ke hashmap'
+				(GlobalVariable.eSignData['allTrxNo']) = (((GlobalVariable.eSignData['allTrxNo']) + (balmut[(increment +
+				0)])) + ';')
+
+				'input value sign type ke hashmap'
+				(GlobalVariable.eSignData['allSignType']) = (((GlobalVariable.eSignData['allSignType']) + (balmut[(increment +
+				3)]).replace('Use ', '')) + ';')
+
+				'input email usage sign (nama/email) ke hashmap'
+				(GlobalVariable.eSignData['emailUsageSign']) = (((GlobalVariable.eSignData['emailUsageSign']) + fullNameUser) +
+				';')
+			}
+		}
+		
+		'jika tipenya wa, maka tambah pemotongan saldo ke countverifikasiwa, jika sms, maka ke sms'
+		if (tipeSaldo == 'WhatsApp Message') {
+			(GlobalVariable.eSignData['CountVerifikasiWA']) = pemotonganSaldo
+		} else if (tipeSaldo == 'SMS Notif') {
+			(GlobalVariable.eSignData['CountVerifikasiSMS']) = pemotonganSaldo
+		}
+	}
 }

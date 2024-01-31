@@ -2248,21 +2248,26 @@ class APIFullService {
 
 	@Keyword
 	getWASMSFromNotificationType(Connection conn, String userEmail, String code, String tenantCode) {
-		stm = conn.createStatement()
+		UpdateData update = new UpdateData()
+		if (update.checkNotifTypeExistforTenant(conn) > 0) {
+			stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT CASE WHEN mntot.must_use_wa_first = '1' THEN 'WhatsApp Message' ELSE CASE WHEN (SELECT msvr.email_service FROM ms_vendor_registered_user msvr LEFT JOIN am_msuser amm ON msvr.id_ms_user = amm.id_ms_user WHERE amm.login_id = '" + userEmail + "' OR amm.hashed_phone = '" + userEmail + "' OR amm.hashed_id_no = '" + userEmail + "') = '1' THEN 'SMS Notif' ELSE CASE WHEN mntot.use_wa_message = '1' THEN 'WhatsApp Message' ELSE 'SMS Notif' END END END AS result FROM ms_notificationtypeoftenant mntot LEFT JOIN ms_lov msl ON mntot.lov_sending_point = msl.id_lov LEFT JOIN ms_tenant mst ON mntot.id_ms_tenant = mst.id_ms_tenant WHERE msl.code = '" + code + "' and mst.tenant_code = '" + tenantCode + "';")
-		metadata = resultSet.metaData
+			resultSet = stm.executeQuery("SELECT CASE WHEN mntot.must_use_wa_first = '1' THEN 'WhatsApp Message' ELSE CASE WHEN (SELECT msvr.email_service FROM ms_vendor_registered_user msvr LEFT JOIN am_msuser amm ON msvr.id_ms_user = amm.id_ms_user WHERE amm.login_id = '" + userEmail + "' OR amm.hashed_phone = '" + userEmail + "' OR amm.hashed_id_no = '" + userEmail + "' LIMIT 1) = '1' THEN 'SMS Notif' ELSE CASE WHEN mntot.use_wa_message = '1' THEN 'WhatsApp Message' ELSE 'SMS Notif' END END END AS result FROM ms_notificationtypeoftenant mntot LEFT JOIN ms_lov msl ON mntot.lov_sending_point = msl.id_lov LEFT JOIN ms_tenant mst ON mntot.id_ms_tenant = mst.id_ms_tenant WHERE msl.code = '" + code + "' and mst.tenant_code = '" + tenantCode + "';")
+			metadata = resultSet.metaData
 
-		columnCount = metadata.getColumnCount()
+			columnCount = metadata.getColumnCount()
 
-		while (resultSet.next()) {
-			data = resultSet.getObject(1)
+			while (resultSet.next()) {
+				data = resultSet.getObject(1)
+			}
+
+			if (data == null || data == 'null') {
+				data = 0
+			}
 		}
-
-		if (data == null || data == 'null') {
-			data = 0
+		else {
+			data = 'Level Tenant'
 		}
-
 		data
 	}
 
@@ -2270,7 +2275,7 @@ class APIFullService {
 	getWASMSFromNotificationTypeOTP(Connection conn, String userEmail, String code, String tenantCode) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT CASE WHEN mntot.must_use_wa_first = '1' THEN 'WhatsApp Message' ELSE CASE WHEN (SELECT msvr.email_service FROM ms_vendor_registered_user msvr LEFT JOIN am_msuser amm ON msvr.id_ms_user = amm.id_ms_user WHERE amm.login_id = '" + userEmail + " OR amm.hashed_phone = '" + userEmail + "' OR amm.hashed_id_phone = '" + userEmail + "'') = '1' THEN 'SMS Notif' ELSE CASE WHEN mntot.use_wa_message = '1' THEN 'WA' ELSE 'SMS Notif' END END END AS result FROM ms_notificationtypeoftenant mntot LEFT JOIN ms_lov msl ON mntot.lov_sending_point = msl.id_lov LEFT JOIN ms_tenant mst ON mntot.id_ms_tenant = mst.id_ms_tenant WHERE msl.code = '" + code + "' and mst.tenant_code = '" + tenantCode + "';")
+		resultSet = stm.executeQuery("SELECT CASE WHEN mntot.must_use_wa_first = '1' THEN 'WhatsApp Message' ELSE CASE WHEN (SELECT msvr.email_service FROM ms_vendor_registered_user msvr LEFT JOIN am_msuser amm ON msvr.id_ms_user = amm.id_ms_user WHERE amm.login_id = '" + userEmail + " OR amm.hashed_phone = '" + userEmail + "' OR amm.hashed_id_phone = '" + userEmail + "' LIMIT 1) = '1' THEN 'SMS Notif' ELSE CASE WHEN mntot.use_wa_message = '1' THEN 'WA' ELSE 'Level Tenant' END END END AS result FROM ms_notificationtypeoftenant mntot LEFT JOIN ms_lov msl ON mntot.lov_sending_point = msl.id_lov LEFT JOIN ms_tenant mst ON mntot.id_ms_tenant = mst.id_ms_tenant WHERE msl.code = '" + code + "' and mst.tenant_code = '" + tenantCode + "';")
 
 		metadata = resultSet.metaData
 
@@ -2286,6 +2291,7 @@ class APIFullService {
 
 		data
 	}
+
 	@Keyword
 	getResultNotifTypeGenInvLink(Connection conn, String value, String genInvType) {
 		stm = conn.createStatement()
@@ -2304,7 +2310,7 @@ class APIFullService {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getOfficeNameBasedOnRegionAndTenant(Connection conn, String tenantCode, String regionName) {
 		stm = conn.createStatement()
@@ -2320,12 +2326,28 @@ class APIFullService {
 
 		Integer.parseInt(data)
 	}
-	
+
 	@Keyword
 	settingSentOTPByEmail(Connection conn, String value) {
 		stm = conn.createStatement()
 		if (value != '') {
 			updateVariable = stm.executeUpdate("UPDATE ms_tenant SET sent_otp_by_email = " + value + " WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
 		}
+	}
+
+	@Keyword
+	getPaymentTypeDescription(Connection conn, String code, String vendorCode, String tenantCode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT mlov.description FROM ms_paymentsigntypeoftenant mspot LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mspot.id_ms_tenant LEFT JOIN ms_vendor mv ON mv.id_ms_vendor = mspot.id_ms_vendor LEFT JOIN ms_lov mlov ON mlov.id_lov = mspot.lov_payment_sign_type WHERE mlov.code = '"+code+"' AND mt.tenant_code = '"+tenantCode+"' AND mv.vendor_code = '"+vendorCode+"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+
+		data
 	}
 }

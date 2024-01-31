@@ -56,6 +56,9 @@ businessLineName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofCol
 'Inisialisasi is sequence berdasarkan delimiter ;'
 isSequence = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('isSequence')).split(semicolon, splitnum)
 
+'Inisialisasi qr enable berdasarkan delimiter ;'
+qrEnable = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('QR')).split(semicolon, splitnum)
+
 'Inisialisasi document file berdasarkan delimiter ;'
 documentFile = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('documentFile')).split(enter, splitnum)
 
@@ -230,14 +233,14 @@ for (int o = 0; o < documentFile.size(); o++) {
         (documentTemplateCode[o])) + '", "officeCode": "') + (officeCode[o])) + '", "officeName": "') + (officeName[o])) + 
         '", "regionCode": "') + (regionCode[o])) + '", "regionName": "') + (regionName[o])) + '", "businessLineCode": "') + 
         (businessLineCode[o])) + '", "businessLineName": "') + (businessLineName[o])) + '", "isSequence": "') + (isSequence[
-        o])) + '", "signer":[') + listSigner) + '],') + bodyAPI) + ', "psreCode" : "') + (psreCode[o])) + '", "successURL": "') + 
+        o])) + '", "qrEnable" : ' + qrEnable[o] + ',"signer":[') + listSigner) + '],') + bodyAPI) + ', "psreCode" : "') + (psreCode[o])) + '", "successURL": "') + 
         (successURL[o])) + '", "uploadURL": "') + (uploadURL[o])) + '"}')
     } else {
         stringRefno = (((((((((((((((((((((((((((((stringRefno + '{"referenceNo" : "') + refNo) + '", "documentTemplateCode": "') + 
         (documentTemplateCode[o])) + '", "officeCode": "') + (officeCode[o])) + '", "officeName": "') + (officeName[o])) + 
         '", "regionCode": "') + (regionCode[o])) + '", "regionName": "') + (regionName[o])) + '", "businessLineCode": "') + 
         (businessLineCode[o])) + '", "businessLineName": "') + (businessLineName[o])) + '", "isSequence": "') + (isSequence[
-        o])) + '", "signer":[') + listSigner) + '],') + bodyAPI) + ', "psreCode" : "') + (psreCode[o])) + '", "successURL": "') + 
+        o])) + '", "qrEnable" : ' + qrEnable[o] + ', "signer":[') + listSigner) + '],') + bodyAPI) + ', "psreCode" : "') + (psreCode[o])) + '", "successURL": "') + 
         (successURL[o])) + '", "uploadURL": "') + (uploadURL[o])) + '"},')
     }
 }
@@ -478,7 +481,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
             notifTypeDB = CustomKeywords.'connection.APIFullService.getWASMSFromNotificationType'(conneSign, email[loopingEmail], 
                 'SEND_DOC', GlobalVariable.Tenant)
 
-            if (notifTypeDB == '0') {
+            if (notifTypeDB == '0' || notifTypeDB == 'Level Tenant') {
                 mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
 
                 'get email service, full name, dan setting must use wa first'

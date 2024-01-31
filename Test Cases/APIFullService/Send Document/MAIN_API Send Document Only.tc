@@ -17,6 +17,30 @@
       <value></value>
       <variableId>a7c730c0-9b0e-4476-8c2e-bfcee005640f</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>0d60de3c-8381-49dd-b084-ddce7bdd5e02</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>9daab9e8-cb66-4741-b4d0-1c49943185e7</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>b604a5d8-dc80-4c07-a826-3412f05ab964</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>adea512d-65ae-4399-a87a-cb262dc881f6</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>'APIFullService/API_SendDoc'</defaultValue>
       <description></description>
@@ -30,5 +54,33 @@
       <id>a7c730c0-9b0e-4476-8c2e-bfcee005640f</id>
       <masked>false</masked>
       <name>sheet</name>
+   </variable>
+   <variable>
+      <defaultValue>-1</defaultValue>
+      <description></description>
+      <id>0d60de3c-8381-49dd-b084-ddce7bdd5e02</id>
+      <masked>false</masked>
+      <name>splitnum</name>
+   </variable>
+   <variable>
+      <defaultValue>'\\\\n'</defaultValue>
+      <description></description>
+      <id>9daab9e8-cb66-4741-b4d0-1c49943185e7</id>
+      <masked>false</masked>
+      <name>enter</name>
+   </variable>
+   <variable>
+      <defaultValue>'\\\\|'</defaultValue>
+      <description></description>
+      <id>b604a5d8-dc80-4c07-a826-3412f05ab964</id>
+      <masked>false</masked>
+      <name>delimiter</name>
+   </variable>
+   <variable>
+      <defaultValue>';'</defaultValue>
+      <description></description>
+      <id>adea512d-65ae-4399-a87a-cb262dc881f6</id>
+      <masked>false</masked>
+      <name>semicolon</name>
    </variable>
 </TestCaseEntity>

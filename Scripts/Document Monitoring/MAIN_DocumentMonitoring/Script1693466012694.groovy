@@ -36,9 +36,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         String emailSHA256
 
         if (email.contains('@')) {
-        	emailSHA256 = email
+            emailSHA256 = email
         } else {
-        	emailSHA256 = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(email)
+            emailSHA256 = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(email)
         }
         
         if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase(
@@ -46,13 +46,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.FlagFailed = 0
         }
         
-		CustomKeywords.'connection.UpdateData.updateDBMainFlowBefore'(conneSign, excelPathDocumentMonitoring)
-		
+        GlobalVariable.Tenant = CustomKeywords.'connection.DataVerif.getTenantCode'(conneSign, email)
+
+        CustomKeywords.'connection.UpdateData.updateDBDocumentMonitoring'(conneSign, excelPathDocumentMonitoring, sheet)
+
         'get office code dari db'
         officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, findTestData(excelPathDocumentMonitoring).getValue(
                 GlobalVariable.NumofColm, rowExcel('No Kontrak')))
-
-        GlobalVariable.Tenant = CustomKeywords.'connection.DataVerif.getTenantCode'(conneSign, email)
 
         if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Run With')).equalsIgnoreCase(
             'Normal')) {
@@ -742,8 +742,7 @@ def checkPaging() {
         
         'verify paging di page terakhir'
         checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DocumentMonitoring/paging_Page'), 'aria-label', 
-                    FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage + additionalRoundUp), 
-                false, FailureHandling.CONTINUE_ON_FAILURE))
+                    FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage + additionalRoundUp), false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'click first page'
         WebUI.click(findTestObject('DocumentMonitoring/button_FirstPage'))
@@ -787,41 +786,104 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
 
         fullNameUser = CustomKeywords.'connection.DataVerif.getFullNameOfUser'(conneSign, emailSigner)
 
-		notifTypeDBResendSignNotifNormal = CustomKeywords.'connection.APIFullService.getWASMSFromNotificationType'(conneSign, emailSigner,
-			'RESEND_SIGN_NOTIF', GlobalVariable.Tenant)
-		
-		notifTypeDBResendSignNotifEmbedV1 = CustomKeywords.'connection.APIFullService.getWASMSFromNotificationType'(conneSign, emailSigner,
-			'RESEND_SIGN_NOTIF_EMBED_V1', GlobalVariable.Tenant)
-		
-		notifTypeDBResendSignNotifEmbedV2 = CustomKeywords.'connection.APIFullService.getWASMSFromNotificationType'(conneSign, emailSigner,
-			'RESEND_SIGN_NOTIF_EMBED_V2', GlobalVariable.Tenant)
-		
+        notifTypeDBResendSignNotifNormal = CustomKeywords.'connection.APIFullService.getWASMSFromNotificationType'(conneSign, 
+            emailSigner, 'RESEND_SIGN_NOTIF', GlobalVariable.Tenant)
+
+        notifTypeDBResendSignNotifEmbedV1 = CustomKeywords.'connection.APIFullService.getWASMSFromNotificationType'(conneSign, 
+            emailSigner, 'RESEND_SIGN_NOTIF_EMBED_V1', GlobalVariable.Tenant)
+
+        notifTypeDBResendSignNotifEmbedV2 = CustomKeywords.'connection.APIFullService.getWASMSFromNotificationType'(conneSign, 
+            emailSigner, 'RESEND_SIGN_NOTIF_EMBED_V2', GlobalVariable.Tenant)
+
         mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
+
+		String runWithType = findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Document Monitoring Using ?'));
 		
-		if (notifTypeDBResendSignNotifNormal == '0') {
-			if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Run With')).equalsIgnoreCase('Normal')) {
-				notifTypeDB = '0'
-			} else {
-				notifTypeDB = notifTypeDBResendSignNotifNormal
-			}
-		} else if (notifTypeDBResendSignNotifEmbedV1 == '0') {
-			if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Run With')).equalsIgnoreCase('Embed V1')) {
-				notifTypeDB = '0'
-			} else {
-				notifTypeDB = notifTypeDBResendSignNotifEmbedV1
-			}
-		} else if (notifTypeDBResendSignNotifEmbedV2 == '0') {
-			if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Run With')).equalsIgnoreCase('Embed V2')) {
-				notifTypeDB = '0'
-			} else {
-				notifTypeDB = notifTypeDBResendSignNotifEmbedV2
-			}
+		if (runWithType.equals('Login Via Admin Client')) {
+			notifTypeDB = notifTypeDBResendSignNotifNormal
+		} else if (runWithType.equals('Embed V1')) {
+			notifTypeDB = notifTypeDBResendSignNotifEmbedV1
+		} else if (runWithType.equals('Embed V2')) {
+			notifTypeDB = notifTypeDBResendSignNotifEmbedV2
 		}
-		
-		if (notifTypeDB == '0') {
-        if (mustUseWAFirst == '1') {
+        
+        if (notifTypeDB == '0' || notifTypeDB == 'Level Tenant') {
+            if (mustUseWAFirst == '1') {
+                'menggunakan saldo wa'
+                ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message', 
+                    fullNameUser)
+
+                if (balmut.size() == 0) {
+                    GlobalVariable.FlagFailed = 1
+
+                    'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                        GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 
+                            rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
+                }
+                
+                if ((balmut[10]) != -1) {
+                    GlobalVariable.FlagFailed = 1
+
+                    'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                        GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 
+                            rowExcel('Reason Failed')) + ';') + 'Saldo WA tidak terpotong')
+                }
+            } else {
+                if (emailServiceOnTenant == 1) {
+                    useWAMessage = CustomKeywords.'connection.DataVerif.getUseWAMessage'(conneSign, GlobalVariable.Tenant)
+
+                    if (useWAMessage == '1') {
+                        'menggunakan saldo wa'
+                        ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message', 
+                            fullNameUser)
+
+                        if (balmut.size() == 0) {
+                            GlobalVariable.FlagFailed = 1
+
+                            'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+                            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                                GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 
+                                    rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
+                        }
+                        
+                        if ((balmut[10]) != -1) {
+                            GlobalVariable.FlagFailed = 1
+
+                            'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+                            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                                GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 
+                                    rowExcel('Reason Failed')) + ';') + 'Saldo WA tidak terpotong')
+                        }
+                    } else if (useWAMessage == '0') {
+                        'menggunakan saldo wa'
+                        ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'SMS Notif', 
+                            fullNameUser)
+
+                        if (balmut.size() == 0) {
+                            GlobalVariable.FlagFailed = 1
+
+                            'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+                            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                                GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 
+                                    rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via SMS')
+                        }
+                        
+                        if ((balmut[10]) != -1) {
+                            GlobalVariable.FlagFailed = 1
+
+                            'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+                            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                                GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 
+                                    rowExcel('Reason Failed')) + ';') + 'Saldo SMS tidak terpotong')
+                        }
+                    }
+                }
+            }
+        } else {
             'menggunakan saldo wa'
-            ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message', fullNameUser)
+            ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, notifTypeDB, fullNameUser)
 
             if (balmut.size() == 0) {
                 GlobalVariable.FlagFailed = 1
@@ -829,7 +891,7 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
                 'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                     (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
-                    ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
+                    ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via SMS')
             }
             
             if ((balmut[10]) != -1) {
@@ -838,112 +900,38 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
                 'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                     (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
-                    ';') + 'Saldo WA tidak terpotong')
-            }
-        } else {
-            if (emailServiceOnTenant == 1) {
-                useWAMessage = CustomKeywords.'connection.DataVerif.getUseWAMessage'(conneSign, GlobalVariable.Tenant)
-
-                if (useWAMessage == '1') {
-                    'menggunakan saldo wa'
-                    ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message', 
-                        fullNameUser)
-
-                    if (balmut.size() == 0) {
-                        GlobalVariable.FlagFailed = 1
-
-                        'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                            GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 
-                                rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
-                    }
-                    
-                    if ((balmut[10]) != -1) {
-                        GlobalVariable.FlagFailed = 1
-
-                        'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                            GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 
-                                rowExcel('Reason Failed')) + ';') + 'Saldo WA tidak terpotong')
-                    }
-                } else if (useWAMessage == '0') {
-                    'menggunakan saldo wa'
-                    ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'SMS Notif', fullNameUser)
-
-                    if (balmut.size() == 0) {
-                        GlobalVariable.FlagFailed = 1
-
-                        'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                            GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 
-                                rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via SMS')
-                    }
-                    
-                    if ((balmut[10]) != -1) {
-                        GlobalVariable.FlagFailed = 1
-
-                        'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                            GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 
-                                rowExcel('Reason Failed')) + ';') + 'Saldo SMS tidak terpotong')
-                    }
-                }
+                    ';') + 'Saldo SMS tidak terpotong')
             }
         }
-		} else {
-			'menggunakan saldo wa'
-			ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, notifTypeDB, fullNameUser)
+        
+        WebUI.delay(1)
 
-			if (balmut.size() == 0) {
-				GlobalVariable.FlagFailed = 1
+        'declare arraylist arraymatch'
+        ArrayList arrayMatch = []
 
-				'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-					GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm,
-						rowExcel('Reason Failed')) + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via SMS')
-			}
-			
-			if ((balmut[10]) != -1) {
-				GlobalVariable.FlagFailed = 1
+        'ambil data last transaction dari DB'
+        ArrayList resultDB = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(conneSign, findTestData(excelPathDocumentMonitoring).getValue(
+                GlobalVariable.NumofColm, rowExcel('Email Login')), 'Document')
 
-				'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-					GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm,
-						rowExcel('Reason Failed')) + ';') + 'Saldo SMS tidak terpotong')
-			}
-	
-		}
-            'cek apakah perlu untuk pengecekan DB'
-            if (GlobalVariable.checkStoreDB == 'Yes') {
-                WebUI.delay(1)
+        'declare arrayindex'
+        arrayindex = 0
 
-                'declare arraylist arraymatch'
-                ArrayList arrayMatch = []
-
-                'ambil data last transaction dari DB'
-                ArrayList resultDB = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(conneSign, findTestData(
-                        excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')), 'Document')
-
-                'declare arrayindex'
-                arrayindex = 0
-
-                'lakukan loop untuk pengecekan data'
-                for (int i = 0; i < (resultDB.size() / 2); i++) {
-                    'verify business line dan office code'
-                    arrayMatch.add(WebUI.verifyMatch((resultDB[i]).toString(), (resultDB[(i + 3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
-                }
-                
-                'jika data db tidak sesuai dengan excel'
-                if (arrayMatch.contains(false)) {
-                    GlobalVariable.FlagFailed = 1
-
-                    'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                        GlobalVariable.StatusFailed, (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 
-                            rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch +  'pada pengecekan Office/Region/Bline')
-                }
-            }
+        'lakukan loop untuk pengecekan data'
+        for (int i = 0; i < (resultDB.size() / 2); i++) {
+            'verify business line dan office code'
+            arrayMatch.add(WebUI.verifyMatch((resultDB[i]).toString(), (resultDB[(i + 3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
         }
+        
+        'jika data db tidak sesuai dengan excel'
+        if (arrayMatch.contains(false)) {
+            GlobalVariable.FlagFailed = 1
+
+            'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+                ((findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
+                ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 'pada pengecekan Office/Region/Bline')
+        }
+    }
 }
 
 def encryptValue(String value, String aesKey) {

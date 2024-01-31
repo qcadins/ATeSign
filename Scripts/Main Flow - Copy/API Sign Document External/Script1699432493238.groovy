@@ -786,7 +786,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
         emailServiceOnVendor = '0'
     }
 
-	if (notifTypeDB == '0') {
+	if (notifTypeDB == '0' || notifTypeDB == 'Level Tenant') {
     'jika must use wa'
     if (mustUseWAFirst == '1') {
         tipeSaldo = 'WhatsApp Message'

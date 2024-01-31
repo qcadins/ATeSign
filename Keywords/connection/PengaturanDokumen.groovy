@@ -174,12 +174,27 @@ class PengaturanDokumen {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getExistDocTemplate(Connection conn, String docTemplateCode, String tenantCode) {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select count(doc_template_code) from ms_doc_template left join ms_tenant mst on ms_doc_template.id_ms_tenant = mst.id_ms_tenant where doc_template_code = '" + docTemplateCode + "' AND mst.tenant_code = '" + tenantCode + "'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+	
+	@Keyword
+	getUrutanSigningNoDistinct(Connection conn, String docTempCode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT STRING_AGG(subquery.description, ';' ORDER BY subquery.seq_no) AS concatenated_descriptions FROM (SELECT ml.description, mdtsl.seq_no FROM ms_doc_template mdt JOIN ms_doc_template_sign_loc mdtsl ON mdt.id_doc_template = mdtsl.id_doc_template JOIN ms_lov ml ON ml.id_lov = mdtsl.lov_signer_type WHERE mdt.doc_template_code = '" + docTempCode + "') AS subquery;")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

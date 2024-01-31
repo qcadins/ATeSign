@@ -96,9 +96,9 @@ email = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel
 
 npwp = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('npwp (Send Normal)')).split(enter, splitnum)
 
-idPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('idPhoto (Send Normal)'))
+idPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('idPhoto (Send Normal)')).split(enter, splitnum)
 
-signerSelfPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('signerSelfPhoto (Send Normal)'))
+signerSelfPhoto = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('signerSelfPhoto (Send Normal)')).split(enter, splitnum)
 
 docid = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).replace('[', '').replace(']', '').split(', ', -1)
 

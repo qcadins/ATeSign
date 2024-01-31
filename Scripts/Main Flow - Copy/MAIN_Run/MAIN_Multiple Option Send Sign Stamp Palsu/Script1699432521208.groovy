@@ -158,7 +158,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                 'store all get saldo kepada result saldo before'
                 resultSaldoBefore.putAll(GlobalVariable.saldo)
-            }
+            } else {
+				GlobalVariable.Psre = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Vendor'))
+				
+				'update full to db'
+				CustomKeywords.'connection.UpdateData.updateDBMainFlowBefore'(conneSign, excelPathMain)
+			}
         }
         
         'Pemilihan opsi send document. Jika send document API Send External'

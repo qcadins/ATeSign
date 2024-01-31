@@ -11,11 +11,24 @@
       <value></value>
       <variableId>bd326cf9-84c1-4879-81b4-b62f4c8c4791</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>79137b80-1212-4b95-afeb-24c79a328de0</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
       <id>bd326cf9-84c1-4879-81b4-b62f4c8c4791</id>
       <masked>false</masked>
       <name>signlocStoreDB</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>79137b80-1212-4b95-afeb-24c79a328de0</id>
+      <masked>false</masked>
+      <name>responsePsreCode</name>
    </variable>
 </TestCaseEntity>

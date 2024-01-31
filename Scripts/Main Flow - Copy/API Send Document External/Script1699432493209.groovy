@@ -695,7 +695,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
             notifTypeDB = CustomKeywords.'connection.APIFullService.getWASMSFromNotificationType'(conneSign, email[loopingEmail], 
                 'SEND_DOC', GlobalVariable.Tenant)
 
-            if (notifTypeDB == '0') {
+            if (notifTypeDB == '0' || notifTypeDB == 'Level Tenant') {
                 'get email service dari email tersebut'
                 emailServiceOnVendor = CustomKeywords.'connection.DataVerif.getEmailServiceAsVendorUser'(conneSign, email[
                     loopingEmail])
