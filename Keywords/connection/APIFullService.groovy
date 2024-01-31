@@ -2350,7 +2350,7 @@ class APIFullService {
 
 		data
 	}
-	
+
 	@Keyword
 	settingSendWAGenInv(Connection conn, String value) {
 		stm = conn.createStatement()
@@ -2358,5 +2358,4 @@ class APIFullService {
 			updateVariable = stm.executeUpdate("UPDATE am_generalsetting SET gs_value = " + value + " WHERE gs_code = 'SEND_WA_GENINV'")
 		}
 	}
-
 }
