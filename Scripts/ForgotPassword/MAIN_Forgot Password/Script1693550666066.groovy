@@ -50,6 +50,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
         GlobalVariable.Tenant = tenantcode
 
+		CustomKeywords.'connection.UpdateData.updateDBForgotPasswordLevelNotification'(conneSign, excelPathForgotPass, sheet)
+		
         if (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration (Empty/0/1/>1)')).length() > 
         0) {
             'ubah durasi aktif di DB'
@@ -446,7 +448,9 @@ def openBrowser() {
 }
 
 def checkBalanceMutation(Connection conneSign, String emailSigner) {
-    emailServiceOnVendor = CustomKeywords.'connection.DataVerif.getEmailServiceAsVendorUser'(conneSign, emailSigner)
+    ArrayList balmut = []
+	
+	emailServiceOnVendor = CustomKeywords.'connection.DataVerif.getEmailServiceAsVendorUser'(conneSign, emailSigner)
 
     fullNameUser = CustomKeywords.'connection.DataVerif.getFullNameOfUser'(conneSign, emailSigner)
 
@@ -454,7 +458,7 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
 
     if (mustUseWAFirst == '1') {
         'menggunakan saldo wa'
-        ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message', fullNameUser)
+        balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message', fullNameUser)
 
         if (balmut.size() == 0) {
             'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
@@ -463,7 +467,7 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
                     '-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
         }
         
-        if ((balmut[9]) != -1) {
+        if ((balmut[9]) != '-1') {
             'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                 (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
@@ -475,7 +479,7 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
 
             if (useWAMessage == '1') {
                 'menggunakan saldo wa'
-                ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message', 
+                 balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message', 
                     fullNameUser)
 
                 if (balmut.size() == 0) {
@@ -485,7 +489,7 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
                             rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
                 }
                 
-                if ((balmut[9]) != -1) {
+                if ((balmut[9]) != '-1') {
                     'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                         GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, 
@@ -499,7 +503,7 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
                     'ke sms'
 
                     'menggunakan saldo wa'
-                    ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'SMS Notif', fullNameUser)
+                    balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'SMS Notif', fullNameUser)
 
                     if (balmut.size() == 0) {
                         'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
@@ -508,7 +512,7 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
                                 rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via SMS')
                     }
                     
-                    if ((balmut[9]) != -1) {
+                    if ((balmut[9]) != '-1') {
                         'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                             GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, 
@@ -519,9 +523,9 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
         }
     }
     
+	println balmut
     'cek apakah perlu untuk pengecekan DB'
-    if ((GlobalVariable.checkStoreDB == 'Yes') && (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, 
-        rowExcel('Setting Email Service')) == '1')) {
+    if ((GlobalVariable.checkStoreDB == 'Yes')) {
         WebUI.delay(1)
 
         'declare arraylist arraymatch'

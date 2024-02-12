@@ -123,8 +123,7 @@ if (WebUI.verifyElementVisible(findTestObject('Signing-DIGISIGN/text_popupGagal'
             'click request otp untuk digisign'
             WebUI.click(findTestObject('Signing-DIGISIGN/button_requestOtp'))
         } else {
-            WebUI.setText(findTestObject('Signing-DIGISIGN/input_Otp'), findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
-                    rowExcel('Manual OTP')))
+            WebUI.setText(findTestObject('Signing-DIGISIGN/input_Otp'), GlobalVariable.wrongOtp)
         }
         
         if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Getting OTP Value from SMS Via Pushbullet ?')) == 
@@ -142,8 +141,8 @@ if (WebUI.verifyElementVisible(findTestObject('Signing-DIGISIGN/text_popupGagal'
                         '-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + OTP.toString())
             }
         } else {
-            'delay 60 detik untuk input otp dari sms dan password'
-            WebUI.delay(30)
+            'delay 45 detik untuk input otp dari sms dan password'
+            WebUI.delay(45)
         }
         
 		//WebUI.setText(findTestObject('Signing-DIGISIGN/input_Password'), 'wikyhendra22')

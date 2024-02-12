@@ -10,9 +10,22 @@ import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign Main.xlsx')
 sheet = 'Main'
 'connect DB eSign'
-GlobalVariable.NumofColm = 2
+GlobalVariable.NumofColm = 4
+excelPathFESignDocument = 'Main/Main'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
+if (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Level Tenant)')) ==
+				'1') && (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) ==
+				'1')) || (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Level Tenant)')) ==
+				'1')) {
+			println 'aa'
+} else {
+	println 'bb'
+}
+
+WebUI.delay(1000000)
+String otp = ''
+println otp.length()
 //'connect DB eSign'
 //Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 //

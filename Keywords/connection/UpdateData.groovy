@@ -6,7 +6,6 @@ import java.sql.ResultSet
 import java.sql.ResultSetMetaData
 import java.sql.Statement
 import com.kms.katalon.core.annotation.Keyword
-
 import internal.GlobalVariable
 import customizekeyword.WriteExcel
 
@@ -314,6 +313,15 @@ class UpdateData {
 
 		'Setting OTP Active Duration'
 		apiFullService.settingOTPActiveDuration(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')))
+
+		'setting send wa send doc general setting'
+		apiFullService.settingSendWASendDoc(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send WA SendDoc')))
+
+		'setting send sms send doc general setting'
+		apiFullService.settingSendSMSSendDoc(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS SendDoc')))
+
+		'setting send sms send doc general setting'
+		apiFullService.settingSendSMSOtpUser(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS OTP For User')))
 	}
 
 	@Keyword
@@ -529,8 +537,7 @@ class UpdateData {
 	checkNotifTypeExistforTenant(Connection conn) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select count(*) from ms_notificationtypeoftenant mn join ms_tenant mt on mn.id_ms_tenant = mt.id_ms_tenant where tenant_code = '" + GlobalVariable.Tenant + "'")
-
+		resultSet = stm.executeQuery("select count(*) from ms_notificationtypeoftenant mn join ms_tenant mt on mn.id_ms_tenant = mt.id_ms_tenant where tenant_code = '"+GlobalVariable.Tenant+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -743,6 +750,10 @@ class UpdateData {
 	@Keyword
 	updateDBSendDocLevelNotification(Connection conneSign, String excelPathMain, String sheets) {
 		sheet = sheets
+
+		'get connection apifullservice'
+		APIFullService apiFullService = new APIFullService()
+
 		if (checkNotifTypeExistforTenant(conneSign) > 0) {
 			'Setting must wa level notif otp signing normal'
 			updateMustWALevelNotifSendDoc(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must WA Level Notification')))
@@ -750,14 +761,100 @@ class UpdateData {
 			'Setting use wa level notif otp signing normal'
 			updateUseWAMsgLevelNotifSendDoc(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message Level Notification')))
 		} else {
-			'get connection apifullservice'
-			APIFullService apiFullService = new APIFullService()
-
 			'setting menggunakan Must WA'
 			apiFullService.settingMustUseWAFirst(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Level Tenant)')))
 
 			'setting menggunakan Use Wa Message'
 			apiFullService.settingUseWAMessage(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Level Tenant)')))
 		}
+		'setting send wa send doc general setting'
+		apiFullService.settingSendWASendDoc(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send WA SendDoc')))
+
+		'setting send sms send doc general setting'
+		apiFullService.settingSendSMSSendDoc(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS SendDoc')))
+	}
+
+	@Keyword
+	updateDBManualSignLevelNotification(Connection conneSign, String excelPathMain, String sheets) {
+		sheet = sheets
+
+		'get connection apifullservice'
+		APIFullService apiFullService = new APIFullService()
+
+		if (checkNotifTypeExistforTenant(conneSign) > 0) {
+			'Setting must wa level notif otp signing normal'
+			updateMustWALevelNotifManualSign(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must WA Level Notification')))
+
+			'Setting use wa level notif otp signing normal'
+			updateUseWAMsgLevelNotifManualSign(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message Level Notification')))
+		} else {
+			'setting menggunakan Must WA'
+			apiFullService.settingMustUseWAFirst(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Level Tenant)')))
+
+			'setting menggunakan Use Wa Message'
+			apiFullService.settingUseWAMessage(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Level Tenant)')))
+		}
+		'setting send wa send doc general setting'
+		apiFullService.settingSendWASendDoc(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send WA SendDoc')))
+
+		'setting send sms send doc general setting'
+		apiFullService.settingSendSMSSendDoc(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS SendDoc')))
+	}
+
+	@Keyword
+	updateMustWALevelNotifForgotPassword(Connection conn, String value) {
+		Statement stm = conn.createStatement()
+		if (value != '') {
+			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET must_use_wa_first = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND (ml.code = 'RESET_PASSWORD') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+		}
+	}
+
+	@Keyword
+	updateUseWAMsgLevelNotifForgotPassword(Connection conn, String value) {
+		Statement stm = conn.createStatement()
+		if (value != '') {
+			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET use_wa_message = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND (ml.code = 'RESET_PASSWORD') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+		}
+	}
+
+	@Keyword
+	updateOtpByEmailLevelNotifForgotPassword(Connection conn, String value) {
+		Statement stm = conn.createStatement()
+		if (value != '') {
+			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET send_otp_by_email = '" + value + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND (ml.code = 'RESET_PASSWORD') AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+		}
+	}
+
+	@Keyword
+	updateDBForgotPasswordLevelNotification(Connection conneSign, String excelPathMain, String sheets) {
+		sheet = sheets
+
+		'get connection apifullservice'
+		APIFullService apiFullService = new APIFullService()
+
+		if (checkNotifTypeExistforTenant(conneSign) > 0) {
+			'Setting must wa level notif otp signing normal'
+			updateMustWALevelNotifForgotPassword(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must WA Level Notification')))
+
+			'Setting use wa level notif otp signing normal'
+			updateUseWAMsgLevelNotifForgotPassword(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message Level Notification')))
+
+			'Setting use wa level notif otp signing normal'
+			updateOtpByEmailLevelNotifForgotPassword(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Send Otp By Email Level Notification')))
+		} else {
+			'setting menggunakan Must WA'
+			apiFullService.settingMustUseWAFirst(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Level Tenant)')))
+
+			'setting menggunakan Use Wa Message'
+			apiFullService.settingUseWAMessage(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Level Tenant)')))
+
+			'setting menggunakan Use Wa Message'
+			apiFullService.settingSentOTPByEmail(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Send Otp By Email (Level Tenant)')))
+		}
+		'setting send wa send doc general setting'
+		apiFullService.settingSendWAForgotPassword(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send WA ForgotPassword')))
+
+		'setting send sms send doc general setting'
+		apiFullService.settingSendSMSForgotPassword(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS ForgotPassword')))
 	}
 }

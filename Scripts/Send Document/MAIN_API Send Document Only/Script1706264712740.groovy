@@ -33,12 +33,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
     if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
     } else if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
-        'setting menggunakan base url yang benar atau salah'
+		'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(API_Excel_Path, GlobalVariable.NumofColm, rowExcel('Use Correct base Url'))
+        
+        GlobalVariable.Tenant = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$tenantCode'))
 
         CustomKeywords.'connection.UpdateData.updateDBSendDocLevelNotification'(conneSign, API_Excel_Path, sheet)
-
-        GlobalVariable.Tenant = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$tenantCode'))
 
         'Inisialisasi ref No berdasarkan delimiter ;'
         refNo = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$referenceNo'))
@@ -318,12 +318,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
         } else {
             getErrorMessageAPI(respon)
         }
-    }
-    
-    'jika tidak ada document id'
-    if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).length() > 0) {
-        'get check saldo wa or sms di send document'
-        checkSaldoWAOrSMS(conneSign, findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$idKtp')))
+		'jika tidak ada document id'
+		if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).length() > 0) {
+			'get check saldo wa or sms di send document'
+			checkSaldoWAOrSMS(conneSign, findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$idKtp')))
+		}
     }
 }
 
@@ -388,6 +387,10 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
             notifTypeDB = CustomKeywords.'connection.APIFullService.getWASMSFromNotificationType'(conneSign, email[loopingEmail], 
                 'SEND_DOC', GlobalVariable.Tenant)
 
+			if(notifTypeDB == 'Email') {
+				continue	
+			}
+			
             if ((notifTypeDB == '0') || (notifTypeDB == 'Level Tenant')) {
                 'get email service dari email tersebut'
                 emailServiceOnVendor = CustomKeywords.'connection.DataVerif.getEmailServiceAsVendorUser'(conneSign, email[
@@ -403,21 +406,8 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 
                     'menggunakan saldo wa'
                     balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
-
-                    'jika arraylist tidak ada isinya'
-                    if (balmut.size() == 0) {
-                        'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                            GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 
-                                rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via WhatsApp')
-                    } else if ((balmut[9]) != -1) {
-                        GlobalVariable.FlagFailed = 1
-
-                        'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                            GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 
-                                rowExcel('Reason Failed')) + ';') + 'Saldo WA tidak terpotong')
-                    }
+					
+					checkingSaldo(balmut, tipeSaldo)
                 } else {
                     'jika email servicenya 1'
                     if (emailServiceOnVendor == '1') {
@@ -431,23 +421,9 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
                             'menggunakan saldo wa'
                             balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
 
-                            'jika balmutnya tidak ada value'
-                            if (balmut.size() == 0) {
-                                'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-                                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                                    GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 
-                                        rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via WhatsApp')
-                            } else if ((balmut[9]) != -1) {
-                                GlobalVariable.FlagFailed = 1
-
-                                'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-                                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                                    GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 
-                                        rowExcel('Reason Failed')) + ';') + 'Saldo WA tidak terpotong')
-                            }
+							checkingSaldo(balmut, tipeSaldo)
                         } else if (useWAMessage == '0') {
                             'jika tidak menggunakan use wa message, maka mengarah ke sms'
-
                             'ke sms / wa'
                             SMSSetting = CustomKeywords.'connection.DataVerif.getSMSSetting'(conneSign, 'Send Document')
 
@@ -459,20 +435,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
                                 'get balmut dari sms '
                                 balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
 
-                                'jika tidak ada balmut'
-                                if (balmut.size() == 0) {
-                                    'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-                                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                                        GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 
-                                            rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via SMS')
-                                } else if ((balmut[9]) != -1) {
-                                    GlobalVariable.FlagFailed = 1
-
-                                    'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-                                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                                        GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 
-                                            rowExcel('Reason Failed')) + ';') + 'Saldo SMS tidak terpotong')
-                                }
+								checkingSaldo(balmut, tipeSaldo)
                             }
                         }
                     }
@@ -483,23 +446,26 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
                 'menggunakan saldo wa'
                 balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
 
-                'jika balmutnya tidak ada value'
-                if (balmut.size() == 0) {
-                    'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                        GlobalVariable.StatusFailed, ((findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel(
-                                'Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via ') + 
-                        tipeSaldo.replace(' Message', '').replace(' Notif', ''))
-                } else if ((balmut[9]) != -1) {
-                    GlobalVariable.FlagFailed = 1
-
-                    'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                        GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel(
-                                'Reason Failed')) + ';') + 'Saldo SMS tidak terpotong')
-                }
+				checkingSaldo(balmut, tipeSaldo)
             }
         }
     }
 }
 
+def checkingSaldo(ArrayList balmut, String tipeSaldo) {
+	'jika balmutnya tidak ada value'
+	if (balmut.size() == 0) {
+		'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+			GlobalVariable.StatusFailed, ((findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel(
+					'Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via ') +
+			tipeSaldo)
+	} else if ((balmut[9]) != '-1') {
+		GlobalVariable.FlagFailed = 1
+
+		'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+			GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel(
+					'Reason Failed')) + ';') + 'Saldo ' + tipeSaldo + ' tidak terpotong')
+	}
+}

@@ -299,4 +299,9 @@
       <initValue>1</initValue>
       <name>VerificationCount</name>
    </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>'00000'</initValue>
+      <name>wrongOtp</name>
+   </GlobalVariableEntity>
 </GlobalVariableEntities>

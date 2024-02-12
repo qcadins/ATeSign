@@ -1174,7 +1174,7 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList<Str
     useBiom = 0
 
     if (CustomKeywords.'connection.DataVerif.getEmailServiceFromTenant'(conneSign, findTestData(excelPathFESignDocument).getValue(
-            GlobalVariable.NumofColm, rowExcel('Tenant'))) == '1') {
+            GlobalVariable.NumofColm, rowExcel('Tenant')), GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])]) == '1') {
         noTelpSigner = CustomKeywords.'connection.DataVerif.getEmailFromPhone'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
                 noTelpSigner))
     }
@@ -1188,31 +1188,50 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList<Str
     email = (GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])])
 
     if (vendor.equalsIgnoreCase('Privy')) {
-        if ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email')) == 
-        '1') && email.contains('OUTLOOK.COM')) {
-            'call keyword get otp dari email'
-            OTP = CustomKeywords.'customizekeyword.GetEmail.getEmailContent'(email, findTestData(excelPathFESignDocument).getValue(
-                    GlobalVariable.NumofColm, rowExcel('Password Signer')), 'OTP')
-        } else if ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email')) == 
-        '0') || !(email.contains('OUTLOOK.COM'))) {
-            if (((CustomKeywords.'connection.DataVerif.getEmailServiceFromTenant'(conneSign, findTestData(excelPathFESignDocument).getValue(
-                    GlobalVariable.NumofColm, rowExcel('Tenant'))) == '0') && (CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(
-                conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))) == 
-            '0')) && (CustomKeywords.'connection.DataVerif.getUseWAMessage'(conneSign, findTestData(excelPathFESignDocument).getValue(
-                    GlobalVariable.NumofColm, rowExcel('Tenant'))) == '0')) {
-                if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Getting OTP Value from SMS Via Pushbullet ?')) == 
-                'Yes') {
-                    OTP = CustomKeywords.'customizekeyword.GetSMS.getOTP'('PrivyID')
+		    if (CustomKeywords.'connection.UpdateData.checkNotifTypeExistforTenant'(conneSign) > 0) {
+            if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (OTP Sign Normal Flow)')) == 
+            '1') {
+                OTP = handlingOTP('WhatsApp', email)
+            } else if ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP By Email (OTP Sign Normal Flow)')) == 
+            '1') && (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == 
+            '0')) {
+                if (email.contains('OUTLOOK.COM')) {
+                    OTP = handlingOTP('Email', email)
                 } else {
-                    'Dikasih delay 50 detik dikarenakan loading untuk mendapatkan OTP Privy via SMS.'
-                    WebUI.delay(50)
-
-                    OTP = (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Manual OTP')).split(
-                        ';', -1)[GlobalVariable.indexUsed])
+					WebUI.delay(45)
+					OTP = 'Manual FE'
                 }
+            } else if (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP By Email (OTP Sign Normal Flow)')) == 
+            '1') && (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == 
+            '1')) || (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (OTP Sign Normal Flow)')) == 
+            '1')) {
+                OTP = handlingOTP('WhatsApp', email)
+            } else {
+                OTP = handlingOTP('SMS', email)
             }
-        }
-    } else {
+        } else {
+			if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Level Tenant)')) ==
+				'1') {
+					OTP = handlingOTP('WhatsApp', email)
+				} else if ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Level Tenant)')) ==
+				'1') && (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) ==
+				'0')) {
+					if (email.contains('OUTLOOK.COM')) {
+						OTP = handlingOTP('Email', email)
+					} else {
+						WebUI.delay(45)
+						OTP = 'Manual FE'
+					}
+				} else if (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Level Tenant)')) ==
+				'1') && (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) ==
+				'1')) || (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use WA Message (Level Tenant)')) ==
+				'1')) {
+					OTP = handlingOTP('WhatsApp', email)
+				} else {
+					OTP = handlingOTP('SMS', email)
+				}
+		}
+		} else {
         'OTP yang pertama dimasukkan kedalam 1 var'
         OTP = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, emailSigner)
     }
@@ -1223,61 +1242,24 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList<Str
     'add otp ke list'
     listOTP.add(OTP)
 
+	'check if ingin testing expired otp'
+	if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() >
+	0) {
+		'delay untuk input expired otp'
+		delayExpiredOTP = (delayExpiredOTP + 10)
+
+		WebUI.delay(delayExpiredOTP)
+	}
+	
     if ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Correct OTP (Yes/No)')).split(
         ';', -1)[GlobalVariable.indexUsed]) == 'Yes') {
-        if (OTP == '') {
-            if ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email')) == 
-            '1') && email.contains('OUTLOOK.COM')) {
-                'call keyword get otp dari email'
-                OTP = CustomKeywords.'customizekeyword.GetEmail.getEmailContent'(email, findTestData(excelPathFESignDocument).getValue(
-                        GlobalVariable.NumofColm, rowExcel('Password Signer')), 'OTP')
-            } else if ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email')) == 
-            '0') || !(email.contains('OUTLOOK.COM'))) {
-                if (((CustomKeywords.'connection.DataVerif.getEmailServiceFromTenant'(conneSign, findTestData(excelPathFESignDocument).getValue(
-                        GlobalVariable.NumofColm, rowExcel('Tenant'))) == '0') && (CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(
-                    conneSign, findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))) == 
-                '0')) && (CustomKeywords.'connection.DataVerif.getUseWAMessage'(conneSign, findTestData(excelPathFESignDocument).getValue(
-                        GlobalVariable.NumofColm, rowExcel('Tenant'))) == '0')) {
-                    if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Getting OTP Value from SMS Via Pushbullet ?')) == 
-                    'Yes') {
-                        WebUI.delay(2)
-
-                        OTP = CustomKeywords.'customizekeyword.GetSMS.getOTP'('eSignHub')
-                    }
-                }
-            }
-        }
-        
-        if (OTP.find('\\d')) {
-            'value OTP dari db / email'
-            WebUI.setText(findTestObject('KotakMasuk/Sign/input_OTP'), OTP)
-        } else {
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
-                    '-', '') + ';') + OTP.toString())
-        }
-        
-        'check if ingin testing expired otp'
-        if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() > 
-        0) {
-            'delay untuk input expired otp'
-            delayExpiredOTP = (delayExpiredOTP + 10)
-
-            WebUI.delay(delayExpiredOTP)
-        }
+		if (OTP != 'Manual FE') {
+			'value OTP dari excel'
+			WebUI.setText(findTestObject('KotakMasuk/Sign/input_OTP'), OTP)
+		}
     } else {
-        'check if ingin testing expired otp'
-        if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration')).length() > 
-        0) {
-            'delay untuk input expired otp'
-            delayExpiredOTP = (delayExpiredOTP + 10)
-
-            WebUI.delay(delayExpiredOTP)
-        }
-        
         'value OTP dari excel'
-        WebUI.setText(findTestObject('KotakMasuk/Sign/input_OTP'), findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
-                rowExcel('Manual OTP')).split(';', -1)[GlobalVariable.indexUsed])
+        WebUI.setText(findTestObject('KotakMasuk/Sign/input_OTP'), GlobalVariable.wrongOtp)
     }
     
     'klik verifikasi OTP'
@@ -1783,3 +1765,30 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
     }
 }
 
+def handlingOTP(String typeOfHandling, String email) {
+	if (typeOfHandling == 'WhatsApp') {
+		WebUI.delay(45)
+
+		'Manual FE'
+	} else if (typeOfHandling == 'SMS') {
+		if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Getting OTP Value from SMS Via Pushbullet ?')) == 'Yes') {
+		OTP = CustomKeywords.'customizekeyword.GetSMS.getOTP'('PrivyID')
+		if (OTP.find('\\d')) {
+			OTP
+		} else {
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+				(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+					'-', '') + ';') + OTP.toString())
+			
+			''
+		}
+		} else {
+			WebUI.delay(45)
+			
+			'Manual FE'
+		}
+	} else if (typeOfHandling == 'Email') {
+		CustomKeywords.'customizekeyword.GetEmail.getEmailContent'(email, findTestData(excelPathFESignDocument).getValue(
+				GlobalVariable.NumofColm, rowExcel('Password Signer')), 'OTP')
+	}
+}

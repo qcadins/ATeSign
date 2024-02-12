@@ -21,12 +21,16 @@ delimiter = '\\|'
 enter = '\\n'
 
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_Excel_Path).columnNumbers; (GlobalVariable.NumofColm)++) {
-    if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 1).length() == 0) {
+    if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
-    } else if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, 1).equalsIgnoreCase('Unexecuted')) {
+    } else if (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
 		'setting menggunakan base url yang benar atau salah'
 		CustomKeywords.'connection.APIFullService.settingBaseUrl'(API_Excel_Path, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
+		GlobalVariable.Tenant = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('tenantCode'))
+		
+		CustomKeywords.'connection.UpdateData.updateDBManualSignLevelNotification'(conneSign, API_Excel_Path, sheet)
+		
         'Inisialisasi callerId'
         callerId = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('callerId'))
 
@@ -306,9 +310,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
 							}
 							
 							arrayMatch.add(WebUI.verifyMatch('1', result[11], false, FailureHandling.CONTINUE_ON_FAILURE))
-							
-							arrayMatch.add(WebUI.verifyMatch('1', result[11], false, FailureHandling.CONTINUE_ON_FAILURE))
-							
+
+							'get check saldo wa or sms di send document'
+							checkSaldoWAOrSMS(conneSign, findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('$email')))
+				
 							'jika data db tidak sesuai dengan excel'
 							if (arrayMatch.contains(false)) {
 								GlobalVariable.FlagFailed = 1
@@ -356,3 +361,109 @@ def getErrorMessageAPI(ResponseObject respon) {
     GlobalVariable.FlagFailed = 1
 }
 
+def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
+	'inisialisasi arraylist balmut'
+	ArrayList<String> balmut = []
+
+	'inisialisasi penggunaan saldo, pemotongan saldo, dan increment untuk kebutuhan selanjutnya'
+	int penggunaanSaldo = 0
+
+	int pemotonganSaldo = 0
+
+	int increment
+
+	'inisialisasi tipesaldo'
+	String tipeSaldo
+
+	'get email per document menggunakan email signer yang diplit enter'
+	ArrayList<String> emailPerDoc = emailSigner.split(';', -1)
+
+	'looping per email per document'
+	for (loopingEmailPerDoc = 0; loopingEmailPerDoc < emailPerDoc.size(); loopingEmailPerDoc++) {
+			'get full name user dari email tersebut'
+			fullNameUser = CustomKeywords.'connection.DataVerif.getFullNameOfUser'(conneSign, emailPerDoc[loopingEmailPerDoc])
+
+			notifTypeDB = CustomKeywords.'connection.APIFullService.getWASMSFromNotificationType'(conneSign, emailPerDoc[loopingEmailPerDoc], 
+            'MANUAL_SIGN_REQ', GlobalVariable.Tenant)
+
+			if(notifTypeDB == 'Email') {
+				continue
+			}
+			
+			if ((notifTypeDB == '0') || (notifTypeDB == 'Level Tenant')) {
+				'get email service dari email tersebut'
+				emailServiceOnVendor = CustomKeywords.'connection.DataVerif.getEmailServiceAsVendorUser'(conneSign, emailPerDoc[
+					loopingEmailPerDoc])
+
+				'get settinog must use wa first'
+				mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
+
+				'jika must use wa first'
+				if (mustUseWAFirst == '1') {
+					'tipe saldonya menjadi wa'
+					tipeSaldo = 'WhatsApp Message'
+
+					'menggunakan saldo wa'
+					balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
+					
+					checkingSaldo(balmut, tipeSaldo)
+				} else {
+					'jika email servicenya 1'
+					if (emailServiceOnVendor == '1') {
+						'check use wa message'
+						useWAMessage = CustomKeywords.'connection.DataVerif.getUseWAMessage'(conneSign, GlobalVariable.Tenant)
+
+						'jika menggunakan wa'
+						if (useWAMessage == '1') {
+							tipeSaldo = 'WhatsApp Message'
+
+							'menggunakan saldo wa'
+							balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
+
+							checkingSaldo(balmut, tipeSaldo)
+						} else if (useWAMessage == '0') {
+							'jika tidak menggunakan use wa message, maka mengarah ke sms'
+							'ke sms / wa'
+							SMSSetting = CustomKeywords.'connection.DataVerif.getSMSSetting'(conneSign, 'Send Document')
+
+							'jika setting sms = 1'
+							if (SMSSetting == '1') {
+								'ke sms'
+								tipeSaldo = 'SMS Notif'
+
+								'get balmut dari sms '
+								balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
+
+								checkingSaldo(balmut, tipeSaldo)
+							}
+						}
+					}
+				}
+			} else {
+				tipeSaldo = notifTypeDB
+
+				'menggunakan saldo wa'
+				balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
+
+				checkingSaldo(balmut, tipeSaldo)
+			}
+	}
+}
+
+def checkingSaldo(ArrayList balmut, String tipeSaldo) {
+	'jika balmutnya tidak ada value'
+	if (balmut.size() == 0) {
+		'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+			GlobalVariable.StatusFailed, ((findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel(
+					'Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via ') +
+			tipeSaldo)
+	} else if ((balmut[9]) != '-1') {
+		GlobalVariable.FlagFailed = 1
+
+		'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+			GlobalVariable.StatusFailed, (findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel(
+					'Reason Failed')) + ';') + 'Saldo ' + tipeSaldo + ' tidak terpotong')
+	}
+}

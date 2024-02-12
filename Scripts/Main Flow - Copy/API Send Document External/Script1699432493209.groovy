@@ -260,8 +260,9 @@ def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) 
         (businessLineCode[i])) + '", "businessLineName": "') + (businessLineName[i])) + '", "isSequence": "') + (isSequence[
         i])) + '",  "psreCode": "') + (psreCode[i])) + '", ')
 
-        bodyAPI = (((bodyAPI + ' "qrEnable" : ') + (qrEnable[i])) + ', ')
-        
+		if (qrEnable[i] != '') {
+			bodyAPI = (((bodyAPI + ' "qrEnable" : ') + (qrEnable[i])) + ', ')
+		}
         'Memasukkan bodyAPI ke stringRefno'
         stringRefno = (stringRefno + bodyAPI)
 
@@ -512,8 +513,17 @@ def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) 
         'Mengkosongkan bodyAPI'
         bodyAPI = ''
 
-        bodyAPI = setBodyForStampingLocation(pageStamp[i], llxStamp[i], llyStamp[i], urxStamp[i], uryStamp[i], bodyAPI)
-
+		println pageStamp.size()
+		println i
+		
+		if (i <= pageStamp.size() - 1 && i <= llxStamp.size() - 1 && i <= llyStamp.size() - 1 && i <= urxStamp.size() - 1 && i <= uryStamp.size() - 1) {
+		'Jika informasi di excel mengenai stampLocation seperti page dan koordinat ada, maka'
+		if (pageStamp[i].length() != 0 && llxStamp[i].length() != 0 && llyStamp[i].length() != 0 && urxStamp[i].length() !=
+		0 && uryStamp[i].length() != 0) {
+	WebUI.delay(100000)
+        	bodyAPI = setBodyForStampingLocation(pageStamp[i], llxStamp[i], llyStamp[i], urxStamp[i], uryStamp[i], bodyAPI)
+		}
+		}
         'jika dokumennya di akhir'
         if (i == (documentFile.size() - 1)) {
             'input body API berdasarkan bodyAPI diatasnya'
@@ -537,9 +547,6 @@ def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) 
 }
 
 def setBodyForStampingLocation(String pageStamp, String llxStamp, String llyStamp, String urxStamp, String uryStamp, String bodyAPI) {
-    'Jika informasi di excel mengenai stampLocation seperti page dan koordinat ada, maka'
-    if (!(((((pageStamp.length() == 0) && (llxStamp.length() == 0)) && (llyStamp.length() == 0)) && (urxStamp.length() == 
-    0)) && (uryStamp.length() == 0))) {
         'Splitting dari dokumen pertama per signer mengenai stamping'
         pageStamps = pageStamp.split(semicolon, splitnum)
 
@@ -627,8 +634,6 @@ def setBodyForStampingLocation(String pageStamp, String llxStamp, String llyStam
                 }
             }
         }
-    }
-    
     bodyAPI
 }
 
@@ -695,6 +700,10 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
             notifTypeDB = CustomKeywords.'connection.APIFullService.getWASMSFromNotificationType'(conneSign, email[loopingEmail], 
                 'SEND_DOC', GlobalVariable.Tenant)
 
+			if (notifTypeDB == 'Email') {
+				continue
+			}
+			
             if (notifTypeDB == '0' || notifTypeDB == 'Level Tenant') {
                 'get email service dari email tersebut'
                 emailServiceOnVendor = CustomKeywords.'connection.DataVerif.getEmailServiceAsVendorUser'(conneSign, email[
@@ -711,16 +720,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
                     'menggunakan saldo wa'
                     balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
 
-                    'jika arraylist tidak ada isinya'
-                    if (balmut.size() == 0) {
-                        'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                            GlobalVariable.StatusFailed, (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 
-                                rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via WhatsApp')
-                    } else {
-                        'penggunaan saldo get dari kuantitas per array list balance mutation'
-                        penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
-                    }
+					penggunaanSaldo = checkingSaldo(balmut, tipeSaldo, penggunaanSaldo)
                 } else {
                     'jika email servicenya 1'
                     if (emailServiceOnVendor == '1') {
@@ -734,16 +734,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
                             'menggunakan saldo wa'
                             balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
 
-                            'jika balmutnya tidak ada value'
-                            if (balmut.size() == 0) {
-                                'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-                                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                                    GlobalVariable.StatusFailed, (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 
-                                        rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via WhatsApp')
-                            } else {
-                                'penggunaan saldo didapat dari ikuantitaas query balmut'
-                                penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
-                            }
+							penggunaanSaldo = checkingSaldo(balmut, tipeSaldo, penggunaanSaldo)
                         } else if (useWAMessage == '0') {
                             'jika tidak menggunakan use wa message, maka mengarah ke sms'
 
@@ -758,16 +749,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
                                 'get balmut dari sms '
                                 balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
 
-                                'jika tidak ada balmut'
-                                if (balmut.size() == 0) {
-                                    'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-                                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                                        GlobalVariable.StatusFailed, (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, 
-                                            rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via SMS')
-                                } else {
-                                    'get kuantitas dari balmut'
-                                    penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
-                                }
+								penggunaanSaldo = checkingSaldo(balmut, tipeSaldo, penggunaanSaldo)
                             }
                         }
                     }
@@ -778,16 +760,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 				'menggunakan saldo wa'
 				balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
 
-				'jika balmutnya tidak ada value'
-				if (balmut.size() == 0) {
-					'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-					CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-						GlobalVariable.StatusFailed, (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm,
-							rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via ' + tipeSaldo.replace(' Message', '').replace(' Notif', ''))
-				} else {
-					'penggunaan saldo didapat dari ikuantitaas query balmut'
-					penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
-				}
+				penggunaanSaldo = checkingSaldo(balmut, tipeSaldo, penggunaanSaldo)
 			}
         }
         
@@ -829,3 +802,16 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
     }
 }
 
+def checkingSaldo(ArrayList<String> balmut, String tipeSaldo, int penggunaanSaldo) {
+	'jika balmutnya tidak ada value'
+	if (balmut.size() == 0) {
+		'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+			((findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') +
+			';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via ') + tipeSaldo)
+	} else {
+		'penggunaan saldo didapat dari ikuantitaas query balmut'
+		penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
+	}
+	penggunaanSaldo
+}

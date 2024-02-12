@@ -138,6 +138,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 'usage saldo sign sebagai flag untuk get saldo'
                 usageSaldo = 'Sign'
 
+				'check ada value maka setting email service tenant'
+				if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')).length() >
+				0) {
+					emailPenandaTangan = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('email Signer (Sign Only)')).split(';', -1)
+					for (loopingSigner = 0; loopingSigner < emailPenandaTangan.size(); loopingSigner++) {
+						'setting email service tenant'
+						CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(excelPathMain).getValue(
+								GlobalVariable.NumofColm, rowExcel('Setting Email Service')), emailPenandaTangan[loopingSigner])
+					}
+				}
+				
                 'get saldo before'
                 GlobalVariable.saldo = WebUI.callTestCase(findTestCase('Main Flow - Copy/getSaldo'), [('excel') : excelPathMain
                         , ('sheet') : sheet, ('vendor') : logicVendor, ('usageSaldo') : usageSaldo], FailureHandling.CONTINUE_ON_FAILURE)
@@ -211,7 +222,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'Cancel Only') {
                 'beri flag cancel document Yes'
                 cancelDocsValue = 'Yes'
-            } else {
+            } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Send?')) == 'Yes') {
                 'ambil value cancel doc after send pada inputan'
                 cancelDocsValue = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Send?'))
             }
@@ -286,19 +297,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         }
                         
                         'looping per signer'
-                        for (y = 0; y < emailSigner.get(emailSigner.keySet()[i]).size(); y++) {
-                            'jika cancel doc after sign Yes'
-                            if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Sign?')) == 
-                            'Yes') {
-                                'integrasikan cancel docs jika signer sudah sesuai'
-                                if ((Integer.parseInt(findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel(
-                                            'Cancel Docs after how many Signer?'))) - 1) == y) {
-                                    'ubah value cancel docs menjadi yes'
-                                    cancelDocsValue = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel(
-                                            'Cancel Docs after Sign?'))
-                                }
-                            }
-                            
+                        for (y = 0; y < emailSigner.get(emailSigner.keySet()[i]).size(); y++) {   
                             'checking signer tersebut adalah signer autosign'
                             ifSignerAuto = CustomKeywords.'connection.APIFullService.getIfSignerAutosign'(conneSign, emailSigner.keySet()[
                                 i], emailSigner.get(emailSigner.keySet()[i])[y])
@@ -428,7 +427,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             if (((y + 1) == emailSigner.get(emailSigner.keySet()[i]).size()) && ((i + 1) == emailSigner.keySet().size())) {
                                 (GlobalVariable.eSignData['NoKontrakProcessed']) = (GlobalVariable.eSignData['NoKontrakProcessed']).split(
                                     ';', -1).toUnique()
-
+									
+									if (GlobalVariable.eSignData['CountVerifikasiOTP'] > 0) {
                                 for (loopingNoKontrak = 0; loopingNoKontrak < (GlobalVariable.eSignData['NoKontrakProcessed']).size(); loopingNoKontrak++) {
                                     ArrayList<String> officeRegionBline = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(
                                         conneSign, CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, GlobalVariable.storeVar.keySet()[
@@ -441,14 +441,28 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                                 (i + 3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada pengecekan Office/Region/Bline pada Sent otp Signing')
                                     }
                                 }
-                                
+									}
                                 (GlobalVariable.eSignData['NoKontrakProcessed']) = (GlobalVariable.eSignData['NoKontrakProcessed']).toString().replace(
                                     '[', '').replace(']', '').replace(', ', ';')
                             } else {
                                 (GlobalVariable.eSignData['NoKontrakProcessed']) = ((GlobalVariable.eSignData['NoKontrakProcessed']) + 
                                 ';')
                             }
-                            
+
+							'jika cancel doc after sign Yes'
+							if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Cancel Docs after Sign?')) ==
+							'Yes') {
+								'integrasikan cancel docs jika signer sudah sesuai'
+								if ((Integer.parseInt(findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel(
+											'Cancel Docs after how many Signer?'))) - 1) == y) {
+									'ubah value cancel docs menjadi yes'
+									cancelDocsValue = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel(
+											'Cancel Docs after Sign?'))
+								}
+							} else {
+								cancelDocsValue = ''
+							}
+							
                             'jika cancel doc tidak kosong, maka open document monitoring'
                             if (cancelDocsValue == 'Yes') {
                                 'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
@@ -495,6 +509,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 }
                 
                 if (cancelDocsValue == '') {
+					GlobalVariable.Tenant = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))
+					
+					GlobalVariable.Psre = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Vendor'))
+					
                     'Memanggil DocumentMonitoring untuk dicheck apakah documentnya sudah masuk'
                     WebUI.callTestCase(findTestCase('Main Flow - Copy/VerifyDocumentMonitoring'), [('excelPathFESignDocument') : excelPathMain
                             , ('sheet') : sheet, ('nomorKontrak') : GlobalVariable.eSignData['NoKontrakProcessed'], ('vendor') : vendor], 
@@ -1146,14 +1164,3 @@ def checkVerifyEqualorMatch(Boolean isMatch, String reason) {
             ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + reason)
     }
 }
-
-def updateDBPasca() {
-    'setting vendor otp dimatikan/diaktifkan'
-    if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Setting must_user_vendor_otp (Sign External)')).length() > 
-    0) {
-        'update setting vendor otp ke table di DB'
-        CustomKeywords.'connection.UpdateData.updateVendorOTP'(conneSign, tenantVendor[1], findTestData(excelPathAPISignDocument).getValue(
-                GlobalVariable.NumofColm, rowExcel('Setting must_user_vendor_otp (Sign External)')))
-    }
-}
-

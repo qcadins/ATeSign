@@ -560,7 +560,7 @@ class SendSign {
 		resultSet = stm.executeQuery("SELECT is_active, ref_number FROM tr_document_h WHERE ref_number LIKE '" + refNumber + "${"_"}%' ESCAPE '\$' ORDER BY dtm_crt DESC")
 
 		println "SELECT is_active, ref_number FROM tr_document_h WHERE ref_number LIKE '" + refNumber + "${"_"}%' ESCAPE '\$' ORDER BY dtm_crt DESC"
-		
+
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
