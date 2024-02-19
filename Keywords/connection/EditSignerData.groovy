@@ -20,7 +20,7 @@ class EditSignerData {
 	countEditSignerDataBasedOnEmail(Connection conn, String email, String tenantCode) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select count(amm.login_id) from ms_useroftenant muot join am_msuser amm on muot.id_ms_user = amm.id_ms_user join ms_vendor_registered_user msvr on amm.id_ms_user = msvr.id_ms_user join ms_vendor msv on msvr.id_ms_vendor = msv.id_ms_vendor join ms_tenant mst on muot.id_ms_tenant = mst.id_ms_tenant join am_user_personal_data aupd on amm.id_ms_user = aupd.id_ms_user where amm.login_id = '" + email + "' and msvr.is_active = '1' and msv.is_active = '1' and msv.is_operating = '1' and mst.tenant_code = '" + tenantCode + "'")
+		resultSet = stm.executeQuery("select count(amm.login_id) from ms_useroftenant muot join am_msuser amm on muot.id_ms_user = amm.id_ms_user join ms_vendor_registered_user msvr on amm.id_ms_user = msvr.id_ms_user join ms_vendor msv on msvr.id_ms_vendor = msv.id_ms_vendor join ms_tenant mst on muot.id_ms_tenant = mst.id_ms_tenant join am_user_personal_data aupd on amm.id_ms_user = aupd.id_ms_user where (amm.login_id = '"+email+"' OR msvr.signer_registered_email = '"+email+"') and mst.tenant_code = '"+tenantCode+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

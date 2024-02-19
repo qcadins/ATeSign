@@ -88,7 +88,7 @@ for (int i = 0; i < docid.size(); i++) {
         semicolon, splitnum)
 
 	'Inisialisasi business line name berdasarkan delimiter ;'
-	qrEnable = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('QR')).replace('Ya', 'true').replace('Tidak', 'false').split(
+	useSignQr = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('QR')).replace('Ya', '1').replace('Tidak', '0').split(
 		semicolon, splitnum)
 	
     'Inisialisasi is sequence berdasarkan delimiter ;'
@@ -120,7 +120,7 @@ for (int i = 0; i < docid.size(); i++) {
 		
 		'Maka pengecekan use sign qr yang diinput'
         arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getUseSignQR'(conneSign, docid[i]), 
-                qrEnable[i].replace('false', '0').replace('true', '1'), false, FailureHandling.CONTINUE_ON_FAILURE))
+                useSignQr[i].replace('Tidak', '0').replace('Ya', '1'), false, FailureHandling.CONTINUE_ON_FAILURE))
     } else {
 		'Maka pengecekan use sign qr via document template'
 		arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getUseSignQRFromDocTemplate'(conneSign, documentTemplateCode[i]),

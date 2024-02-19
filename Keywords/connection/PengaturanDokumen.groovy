@@ -189,7 +189,7 @@ class PengaturanDokumen {
 		}
 		data
 	}
-	
+
 	@Keyword
 	getUrutanSigningNoDistinct(Connection conn, String docTempCode) {
 		stm = conn.createStatement()

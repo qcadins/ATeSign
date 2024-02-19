@@ -1,18 +1,19 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.kms.katalon.core.model.FailureHandling
-import com.kms.katalon.core.testobject.ResponseObject
+import com.kms.katalon.core.model.FailureHandling as FailureHandling
+import com.kms.katalon.core.testobject.ResponseObject as ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
-import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
+import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import java.sql.Connection as Connection
-
-Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - API Only.xlsx')
 
 int countColmExcel = findTestData(excelPath).columnNumbers
+
+'connect dengan db'
+Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
@@ -41,80 +42,76 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         'HIT API Login untuk token : andy@ad-ins.com'
-        respon = WS.sendRequest(findTestObject('Postman/Edit Activation Status', [('tenantCode') : findTestData(excelPath).getValue(
+        respon = WS.sendRequest(findTestObject('Postman/View Reset Code', [('tenantCode') : findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('tenantCode')), ('callerId') : findTestData(excelPath).getValue(
-                        GlobalVariable.NumofColm, rowExcel('callerId')), ('loginId') : findTestData(excelPath).getValue(
-                        GlobalVariable.NumofColm, rowExcel('loginId')), ('vendorCode') : findTestData(excelPath).getValue(
-                        GlobalVariable.NumofColm, rowExcel('vendorCode')), ('isActive') : findTestData(excelPath).getValue(
-                        GlobalVariable.NumofColm, rowExcel('isActive'))]))
-
-        'ambil lama waktu yang diperlukan hingga request menerima balikan'
-        elapsedTime = ((respon.elapsedTime / 1000) + ' second')
-
-        'ambil body dari hasil respons'
-        responseBody = respon.responseBodyContent
-
-        'panggil keyword untuk proses beautify dari respon json yang didapat'
-        CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
-                excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
-
-        'write to excel response elapsed time'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 
-            1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+                        GlobalVariable.NumofColm, rowExcel('callerId')), ('email') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                        rowExcel('email')), ('ipAddress') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
+                            'ipAddress'))]))
 
         'Jika status HIT API Login 200 OK'
         if (WS.verifyResponseStatusCode(responLogin, 200, FailureHandling.OPTIONAL) == true) {
             'get Status Code'
             statusCode = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
+            'ambil lama waktu yang diperlukan hingga request menerima balikan'
+            elapsedTime = ((respon.elapsedTime / 1000) + ' second')
+
+            'ambil body dari hasil respons'
+            responseBody = respon.responseBodyContent
+
+            'panggil keyword untuk proses beautify dari respon json yang didapat'
+            CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
+                    excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+
+            'write to excel response elapsed time'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') - 
+                1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
+
             'Jika status codenya 0'
             if (statusCode == 0) {
-                if (GlobalVariable.checkStoreDB == 'Yes') {
-                    String result = CustomKeywords.'connection.EditSignerData.getStatusActivationAPI'(conneSign, findTestData(
-                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('loginId')), findTestData(excelPath).getValue(
-                            GlobalVariable.NumofColm, rowExcel('tenantCode')), findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-                            rowExcel('vendorCode')))
+                if (GlobalVariable.FlagFailed == 0) {
+                    'db hasil pencarian'
+                    String result = CustomKeywords.'connection.ViewUserOTP.getResetCode'(conneSign, findTestData(excelPath).getValue(
+                            GlobalVariable.NumofColm, rowExcel('email')))
+
+                    'get Status Code'
+                    resetCode = WS.getElementPropertyValue(respon, 'resetCode', FailureHandling.OPTIONAL)
 
                     ArrayList arrayMatch = []
 
-                    if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('isActive')).toString() != '') {
-                        'verify signer type'
-                        arrayMatch.add(WebUI.verifyMatch(result, findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-                                    rowExcel('isActive')).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
-                    }
-					'get current date'
-					String currentDate = new Date().format('yyyy-MM-dd')
-					
-					ArrayList resultAccessLog = CustomKeywords.'connection.ViewUserOTP.getAccessLog'(conneSign,
-						'EDIT_ACT_STATUS')
+                    arrayMatch.add(WebUI.verifyMatch(result, resetCode, false, FailureHandling.CONTINUE_ON_FAILURE))
 
-					arrayIndexAccessLog = 0
+                    ArrayList resultAccessLog = CustomKeywords.'connection.ViewUserOTP.getAccessLog'(conneSign, 'VIEW_RESET_CODE')
 
-					arrayMatch.add(WebUI.verifyMatch(resultAccessLog[arrayIndexAccessLog++], currentDate, false,
-							FailureHandling.CONTINUE_ON_FAILURE))
+                    'get current date'
+                    String currentDate = new Date().format('yyyy-MM-dd')
 
-					arrayMatch.add(WebUI.verifyMatch((resultAccessLog[arrayIndexAccessLog++]).toString(),
-							'Edit Activation Status', false, FailureHandling.CONTINUE_ON_FAILURE))
+                    arrayIndexAccessLog = 0
 
-					arrayMatch.add(WebUI.verifyMatch((resultAccessLog[arrayIndexAccessLog++]).toString().toLowerCase(),
-							findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
-									'callerId')).toLowerCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+                    arrayMatch.add(WebUI.verifyMatch(resultAccessLog[arrayIndexAccessLog++], currentDate, false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                    arrayMatch.add(WebUI.verifyMatch((resultAccessLog[arrayIndexAccessLog++]).toString().toUpperCase(), 'VIEW RESET CODE', 
+                            false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                    arrayMatch.add(WebUI.verifyMatch((resultAccessLog[arrayIndexAccessLog++]).toString().toLowerCase(), 
+                            findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')).toLowerCase(), 
+                            false, FailureHandling.CONTINUE_ON_FAILURE))
 
                     'jika data db tidak sesuai dengan excel'
                     if (arrayMatch.contains(false)) {
-                        GlobalVariable.FlagFailed = 1
-
                         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                             GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
-                                    'Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
+                                    'Reason Failed')) + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch)
+
+                        GlobalVariable.FlagFailed = 1
                     }
-                }
-                
-                if (GlobalVariable.FlagFailed == 0) {
-                    'write to excel success'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
-                        1, GlobalVariable.StatusSuccess)
+                    
+                    if (GlobalVariable.FlagFailed == 0) {
+                        'write to excel success'
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, 
+                            GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+                    }
                 }
             } else {
                 getErrorMessageAPI(respon)

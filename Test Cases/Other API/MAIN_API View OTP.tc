@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API View OTP</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>c10ff9dc-6bc9-4eb1-bd56-5ef9d681f0a4</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>8e6192cb-5e0b-4549-b36b-b0029a8d935c</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>52fafc80-6e68-45db-837b-66aef1d082eb</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/View OTP'</defaultValue>
+      <description></description>
+      <id>8e6192cb-5e0b-4549-b36b-b0029a8d935c</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API View OTP'</defaultValue>
+      <description></description>
+      <id>52fafc80-6e68-45db-837b-66aef1d082eb</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>

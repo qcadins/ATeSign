@@ -196,8 +196,8 @@ def getDataExcel(String semicolon, int splitnum, String delimiter, String enter)
     documentFile = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('documentFile')).split(
         enter, splitnum)
 
-    'Inisialisasi qrEnable berdasarkan delimiter ;'
-    qrEnable = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('QR')).replace('Ya', 'true').replace(
+    'Inisialisasi useSignQr berdasarkan delimiter ;'
+    useSignQr = findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('QR')).replace('Ya', 'true').replace(
         'Tidak', 'false').split(semicolon, splitnum)
 
     'split signer untuk doc1 dan signer untuk doc2'
@@ -261,7 +261,7 @@ def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) 
         i])) + '",  "psreCode": "') + (psreCode[i])) + '", ')
 
 		if (qrEnable[i] != '') {
-			bodyAPI = (((bodyAPI + ' "qrEnable" : ') + (qrEnable[i])) + ', ')
+			bodyAPI = (((bodyAPI + ' "useSignQr" : "') + (useSignQr[i])) + '", ')
 		}
         'Memasukkan bodyAPI ke stringRefno'
         stringRefno = (stringRefno + bodyAPI)

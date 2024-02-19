@@ -93,8 +93,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         'Klik tombol pengaturan dokumen'
         if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase(
             'New')) {
-            'Klik tombol tambah pengaturan dokumen'
-            WebUI.click(findTestObject('TandaTanganDokumen/btn_Add'))
+			if (WebUI.verifyElementNotPresent(findTestObject('TandaTanganDokumen/input_documentExample'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+				'click menu pengaturan dokumen'
+				WebUI.click(findTestObject('TandaTanganDokumen/btn_PengaturanDokumen'))
+				
+				'Klik tombol tambah pengaturan dokumen'
+				WebUI.click(findTestObject('TandaTanganDokumen/btn_Add'))
+			}
 
             'Pengecekan apakah masuk page tambah pengaturan dokumen'
             if (WebUI.verifyElementPresent(findTestObject('TandaTanganDokumen/lbl_TambahTemplatDokumen'), GlobalVariable.TimeOut)) {
@@ -289,9 +294,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             checkVerifyPaging(WebUI.verifyMatch(WebUI.getText(findTestObject('TandaTanganDokumen/check_tipePembayaran')), 
                     result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
+			'Input enter'
+			WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
+			
             'call function input form'
             inputForm(conneSign, checked)
-
+			
             'Klik button lanjut'
             WebUI.click(findTestObject('TandaTanganDokumen/btn_Lanjut'))
 

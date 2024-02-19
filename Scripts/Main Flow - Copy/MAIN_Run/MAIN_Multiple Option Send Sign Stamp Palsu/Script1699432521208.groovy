@@ -978,7 +978,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 }
             }
         }
-        
         stopStopWatch(watch)
     }
 }

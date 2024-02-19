@@ -130,6 +130,27 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         }
                     }
                     
+					
+					'get current date'
+					String currentDate = new Date().format('yyyy-MM-dd')
+					
+					ArrayList resultAccessLog = CustomKeywords.'connection.ViewUserOTP.getAccessLog'(conneSign,
+						'EDIT_SIGNER_DATA')
+
+					arrayIndexAccessLog = 0
+
+					arrayMatch.add(WebUI.verifyMatch(resultAccessLog[arrayIndexAccessLog++], currentDate, false,
+							FailureHandling.CONTINUE_ON_FAILURE))
+
+					if (resultAccessLog[arrayIndexAccessLog++].toString().contains('Edit Signer Data')) {
+						arrayMatch.add(true)
+					} else {
+						arrayMatch.add(false)
+					}
+					arrayMatch.add(WebUI.verifyMatch((resultAccessLog[arrayIndexAccessLog++]).toString().toLowerCase(),
+							findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
+									'callerId')).toLowerCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
                     'jika data db tidak sesuai dengan excel'
                     if (arrayMatch.contains(false)) {
                         GlobalVariable.FlagFailed = 1

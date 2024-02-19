@@ -57,7 +57,7 @@ businessLineName = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofCol
 isSequence = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('isSequence')).split(semicolon, splitnum)
 
 'Inisialisasi qr enable berdasarkan delimiter ;'
-qrEnable = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('QR')).split(semicolon, splitnum)
+useSignQr = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('QR')).split(semicolon, splitnum)
 
 'Inisialisasi document file berdasarkan delimiter ;'
 documentFile = findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('documentFile')).split(enter, splitnum)
@@ -229,19 +229,32 @@ for (int o = 0; o < documentFile.size(); o++) {
     }
     
     if (o == (documentFile.size() - 1)) {
-        stringRefno = (((((((((((((((((((((((((((((((stringRefno + '{"referenceNo" : "') + refNo) + '", "documentTemplateCode": "') + 
-        (documentTemplateCode[o])) + '", "officeCode": "') + (officeCode[o])) + '", "officeName": "') + (officeName[o])) + 
-        '", "regionCode": "') + (regionCode[o])) + '", "regionName": "') + (regionName[o])) + '", "businessLineCode": "') + 
-        (businessLineCode[o])) + '", "businessLineName": "') + (businessLineName[o])) + '", "isSequence": "') + (isSequence[
-        o])) + '", "qrEnable" : ') + (qrEnable[o])) + ',"signer":[') + listSigner) + '],') + bodyAPI) + ', "psreCode" : "') + 
-        (psreCode[o])) + '", "successURL": "') + (successURL[o])) + '", "uploadURL": "') + (uploadURL[o])) + '"}')
+        stringRefno = stringRefno + '{"referenceNo" : "' + refNo + '", "documentTemplateCode": "' + 
+        documentTemplateCode[o] + '", "officeCode": "' + officeCode[o] + '", "officeName": "' + officeName[o] + 
+        '", "regionCode": "' + regionCode[o] + '", "regionName": "' + regionName[o] + '", "businessLineCode": "' + 
+        businessLineCode[o] + '", "businessLineName": "' + businessLineName[o] + '", "isSequence": "' + isSequence[
+        o] + '" ,'
+		
+		if (useSignQr[o] != '') {
+			 stringRefno = stringRefno + '"useSignQr" : "' + useSignQr[o] + '" ,'
+		}
+		
+		stringRefno = stringRefno + '"signer":[' + listSigner + '],' + bodyAPI + ', "psreCode" : "' + 
+        psreCode[o] + '", "successURL": "' + successURL[o] + '", "uploadURL": "' + uploadURL[o] + '"}'
+		
     } else {
-        stringRefno = (((((((((((((((((((((((((((((((stringRefno + '{"referenceNo" : "') + refNo) + '", "documentTemplateCode": "') + 
-        (documentTemplateCode[o])) + '", "officeCode": "') + (officeCode[o])) + '", "officeName": "') + (officeName[o])) + 
-        '", "regionCode": "') + (regionCode[o])) + '", "regionName": "') + (regionName[o])) + '", "businessLineCode": "') + 
-        (businessLineCode[o])) + '", "businessLineName": "') + (businessLineName[o])) + '", "isSequence": "') + (isSequence[
-        o])) + '", "qrEnable" : ') + (qrEnable[o])) + ', "signer":[') + listSigner) + '],') + bodyAPI) + ', "psreCode" : "') + 
-        (psreCode[o])) + '", "successURL": "') + (successURL[o])) + '", "uploadURL": "') + (uploadURL[o])) + '"},')
+        stringRefno = stringRefno + '{"referenceNo" : "' + refNo + '", "documentTemplateCode": "' + 
+        documentTemplateCode[o] + '", "officeCode": "' + officeCode[o] + '", "officeName": "' + officeName[o] + 
+        '", "regionCode": "' + regionCode[o] + '", "regionName": "' + regionName[o] + '", "businessLineCode": "' + 
+        businessLineCode[o] + '", "businessLineName": "' + businessLineName[o] + '", "isSequence": "' + isSequence[
+        o] + '" ,'
+		
+		if (useSignQr[o] != '') {
+			 stringRefno = stringRefno + '"useSignQr" : "' + useSignQr[o] + '" ,'
+		}
+		
+		stringRefno = stringRefno + '"signer":[' + listSigner + '],' + bodyAPI + ', "psreCode" : "' + 
+        psreCode[o] + '", "successURL": "' + successURL[o] + '", "uploadURL": "' + uploadURL[o] + '"},'
     }
 }
 

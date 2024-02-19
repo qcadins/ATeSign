@@ -724,7 +724,7 @@ def rowExcel(String cellValue) {
 
 def encryptLink(Connection conneSign, String documentId, String emailSigner, String aesKey) {
     'get current date'
-    String currentDateTimeStamp = new Date().format('yyyy-MM-dd HH:mm:ss')
+    String currentDateTimeStamp = new Date().format('yyyy-MM-dd')
 
     officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, documentId)
 

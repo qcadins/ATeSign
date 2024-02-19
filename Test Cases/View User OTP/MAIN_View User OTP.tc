@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_View User OTP</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>e75fde93-155e-4aab-97d6-8a561b82f7d7</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>155232c3-cf98-4f5a-bafe-1b3935388e7c</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>65c5d4ad-dee1-497e-9dd4-acb47ffa6563</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'View User OTP/View User OTP'</defaultValue>
+      <description></description>
+      <id>155232c3-cf98-4f5a-bafe-1b3935388e7c</id>
+      <masked>false</masked>
+      <name>excelPathViewUserOTP</name>
+   </variable>
+   <variable>
+      <defaultValue>'View User OTP'</defaultValue>
+      <description></description>
+      <id>65c5d4ad-dee1-497e-9dd4-acb47ffa6563</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>
