@@ -19,18 +19,25 @@ int countColmExcel = findTestData(excelPathEditSignerData).columnNumbers
 String currentDate = new Date().format('yyyy-MM-dd')
 
 int firstRun = 0
+
 'looping Edit Signer Data'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
     } else if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase(
         'Unexecuted')) {
+		'inisiasi Flag Failed 0'
         GlobalVariable.FlagFailed = 0
 
-		GlobalVariable.Tenant = findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
-		
+		'setting tenant based on input'
+        GlobalVariable.Tenant = findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
+
         'Declare variable yang dibutuhkan'
-        String emailOrNIKExcel, emailOrNIKHash, getVendor
+        String emailOrNIKExcel
+
+        String emailOrNIKHash
+
+        String getVendor
 
         'check if email login case selanjutnya masih sama dengan sebelumnya'
         if ((findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) != findTestData(
@@ -45,7 +52,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'call function check paging'
                 checkPaging(conneSign)
             }
-            
+            'flag first run = 1'
             firstRun = 1
         }
         
@@ -55,9 +62,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'check if search dengan email/NIK'
         if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Use input ?')).equalsIgnoreCase(
             'Email')) {
+			'ambil via email'
             emailOrNIKExcel = findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('$Email'))
         } else if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Use input ?')).equalsIgnoreCase(
             'NIK')) {
+		'ambil via NIK'
             emailOrNIKExcel = findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('$NIK'))
         }
         
@@ -67,15 +76,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'Jika aksi Edit Data'
         if (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase(
             'Edit Data')) {
+		'delay 2 second'
             WebUI.delay(2)
 
             'click button Edit Data'
             WebUI.click(findTestObject('Object Repository/Edit Signer Data/button_AksiEditData'))
 
-			if (checkErrorLog() == true) {
-				continue
-			}
-			
+			'check error log'
+            if (checkErrorLog() == true) {
+                continue
+            }
+            
             'Klik batal'
             WebUI.click(findTestObject('Object Repository/Edit Signer Data/button_Batal'))
 
@@ -148,36 +159,43 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                         GlobalVariable.FlagFailed = 1
                     }
-					
-					ArrayList resultAccessLog = CustomKeywords.'connection.ViewUserOTP.getAccessLog'(conneSign,
-						'EDIT_SIGNER_DATA')
+                    
+					'get access log pada edit signer data'
+                    ArrayList resultAccessLog = CustomKeywords.'connection.DataVerif.getAccessLog'(conneSign, 'EDIT_SIGNER_DATA')
 
-					ArrayList arrayMatch = []
+					'inisialisasi arraymatch'
+                    ArrayList arrayMatch = []
 
-					arrayIndexAccessLog = 0
+					'inisialisasi array index untuk access log'
+                    arrayIndexAccessLog = 0
 
-					arrayMatch.add(WebUI.verifyMatch(resultAccessLog[arrayIndexAccessLog++], currentDate, false,
-							FailureHandling.CONTINUE_ON_FAILURE))
+					'array match mengenai current date'
+                    arrayMatch.add(WebUI.verifyMatch(resultAccessLog[arrayIndexAccessLog++], currentDate, false, FailureHandling.CONTINUE_ON_FAILURE))
 
-					if (resultAccessLog[arrayIndexAccessLog++].toString().contains('Edit Signer Data')) {
-						arrayMatch.add(true)
-					} else {
-						arrayMatch.add(false)
-					}
+					'array match mengenai edit signer data. Bersifat contains dikarenakan ada tambahan inputan tergantung pada editnya'
+                    if ((resultAccessLog[arrayIndexAccessLog++]).toString().contains('Edit Signer Data')) {
+						'setting array match true'
+                        arrayMatch.add(true)
+                    } else {
+						'setting array match false'
+                        arrayMatch.add(false)
+                    }
+                    
+					'array match mengenai user create'
+                    arrayMatch.add(WebUI.verifyMatch((resultAccessLog[arrayIndexAccessLog++]).toString().toLowerCase(), 
+                            findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')).toLowerCase(), 
+                            false, FailureHandling.CONTINUE_ON_FAILURE))
 
-					arrayMatch.add(WebUI.verifyMatch((resultAccessLog[arrayIndexAccessLog++]).toString().toLowerCase(),
-							findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel(
-									'Email Login')).toLowerCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+                    'jika data db tidak sesuai dengan excel'
+                    if (arrayMatch.contains(false)) {
+                        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                            GlobalVariable.StatusFailed, (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, 
+                                rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
 
-					'jika data db tidak sesuai dengan excel'
-					if (arrayMatch.contains(false)) {
-						'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-							GlobalVariable.StatusFailed, (findTestData(excelPathViewUserOTP).getValue(GlobalVariable.NumofColm,
-								rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
-
-						GlobalVariable.FlagFailed = 1
-					}
+						'setting flag failed 1'
+                        GlobalVariable.FlagFailed = 1
+                    }
                 } else {
                     'Jika tidak sama, maka continue'
                     continue
@@ -249,33 +267,38 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             GlobalVariable.StatusFailed, ((findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, 
                                 rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB) + ' pada Edit Aktivasi')
                     }
-					
-					ArrayList resultAccessLog = CustomKeywords.'connection.ViewUserOTP.getAccessLog'(conneSign,
-						'EDIT_ACT_STATUS')
+                    
+					'get access log untuk edit activation status'
+                    ArrayList resultAccessLog = CustomKeywords.'connection.DataVerif.getAccessLog'(conneSign, 'EDIT_ACT_STATUS')
 
-					ArrayList arrayMatch = []
+					'inisialisasi array match'
+                    ArrayList arrayMatch = []
 
-					arrayIndexAccessLog = 0
+					'inisialisasi array match pada access log'
+                    arrayIndexAccessLog = 0
 
-					arrayMatch.add(WebUI.verifyMatch(resultAccessLog[arrayIndexAccessLog++], currentDate, false,
-							FailureHandling.CONTINUE_ON_FAILURE))
+					'array match kepada current date'
+                    arrayMatch.add(WebUI.verifyMatch(resultAccessLog[arrayIndexAccessLog++], currentDate, false, FailureHandling.CONTINUE_ON_FAILURE))
 
-					arrayMatch.add(WebUI.verifyMatch((resultAccessLog[arrayIndexAccessLog++]).toString(),
-							'Edit Activation Status', false, FailureHandling.CONTINUE_ON_FAILURE))
+					'array match kepada edit activation status'
+                    arrayMatch.add(WebUI.verifyMatch((resultAccessLog[arrayIndexAccessLog++]).toString(), 'Edit Activation Status', 
+                            false, FailureHandling.CONTINUE_ON_FAILURE))
 
-					arrayMatch.add(WebUI.verifyMatch((resultAccessLog[arrayIndexAccessLog++]).toString().toLowerCase(),
-							findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel(
-									'Email Login')).toLowerCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+					'array match kepada user create'
+                    arrayMatch.add(WebUI.verifyMatch((resultAccessLog[arrayIndexAccessLog++]).toString().toLowerCase(), 
+                            findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')).toLowerCase(), 
+                            false, FailureHandling.CONTINUE_ON_FAILURE))
 
-					'jika data db tidak sesuai dengan excel'
-					if (arrayMatch.contains(false)) {
-						'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-							GlobalVariable.StatusFailed, (findTestData(excelPathViewUserOTP).getValue(GlobalVariable.NumofColm,
-								rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
+                    'jika data db tidak sesuai dengan excel'
+                    if (arrayMatch.contains(false)) {
+                        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                            GlobalVariable.StatusFailed, (findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, 
+                                rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
 
-						GlobalVariable.FlagFailed = 1
-					}
+						'flag failed'
+                        GlobalVariable.FlagFailed = 1
+                    }
                 } else {
                     'Jika tidak sama, maka continue'
                     continue
@@ -295,6 +318,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 }
 
 def searchData(String emailOrNIKExcel) {
+	'set text login id pada search data'
     WebUI.setText(findTestObject('Object Repository/Edit Signer Data/input_loginid'), emailOrNIKExcel)
 
     'click button cari'
@@ -366,8 +390,7 @@ def checkPaging(Connection conneSign) {
         
         'verify paging di last page'
         checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('Edit Signer Data/paging_Page'), 'aria-label', 
-                    FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage + additionalRoundUp), 
-                false, FailureHandling.CONTINUE_ON_FAILURE))
+                    FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage + additionalRoundUp), false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'click first page'
         WebUI.click(findTestObject('Edit Signer Data/button_FirstPage'))

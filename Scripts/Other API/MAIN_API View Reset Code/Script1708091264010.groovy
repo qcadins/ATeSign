@@ -77,22 +77,29 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'get Status Code'
                     resetCode = WS.getElementPropertyValue(respon, 'resetCode', FailureHandling.OPTIONAL)
 
+					'inisialisasi array match'
                     ArrayList arrayMatch = []
 
+					'array match kepada reset code'
                     arrayMatch.add(WebUI.verifyMatch(result, resetCode, false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                    ArrayList resultAccessLog = CustomKeywords.'connection.ViewUserOTP.getAccessLog'(conneSign, 'VIEW_RESET_CODE')
+					'access log kepada view reset code'
+                    ArrayList resultAccessLog = CustomKeywords.'connection.DataVerif.getAccessLog'(conneSign, 'VIEW_RESET_CODE')
 
                     'get current date'
                     String currentDate = new Date().format('yyyy-MM-dd')
 
+					'inisialisasi array index pada access log'
                     arrayIndexAccessLog = 0
 
+					'array match kepada current date'
                     arrayMatch.add(WebUI.verifyMatch(resultAccessLog[arrayIndexAccessLog++], currentDate, false, FailureHandling.CONTINUE_ON_FAILURE))
 
+					'array match kepada description'
                     arrayMatch.add(WebUI.verifyMatch((resultAccessLog[arrayIndexAccessLog++]).toString().toUpperCase(), 'VIEW RESET CODE', 
                             false, FailureHandling.CONTINUE_ON_FAILURE))
 
+					'array match kepada user create'
                     arrayMatch.add(WebUI.verifyMatch((resultAccessLog[arrayIndexAccessLog++]).toString().toLowerCase(), 
                             findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')).toLowerCase(), 
                             false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -107,6 +114,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         GlobalVariable.FlagFailed = 1
                     }
                     
+					'Jika flag failed tidak aktif'
                     if (GlobalVariable.FlagFailed == 0) {
                         'write to excel success'
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, 

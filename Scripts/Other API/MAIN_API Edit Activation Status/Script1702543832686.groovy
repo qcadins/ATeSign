@@ -85,17 +85,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					'get current date'
 					String currentDate = new Date().format('yyyy-MM-dd')
 					
-					ArrayList resultAccessLog = CustomKeywords.'connection.ViewUserOTP.getAccessLog'(conneSign,
+					'get access log pada edit activation status'
+					ArrayList resultAccessLog = CustomKeywords.'connection.DataVerif.getAccessLog'(conneSign,
 						'EDIT_ACT_STATUS')
 
+					'inisialisasi array match pada access log'
 					arrayIndexAccessLog = 0
 
+					'array match kepada current date'
 					arrayMatch.add(WebUI.verifyMatch(resultAccessLog[arrayIndexAccessLog++], currentDate, false,
 							FailureHandling.CONTINUE_ON_FAILURE))
 
+					'array match kepada edit activation status'
 					arrayMatch.add(WebUI.verifyMatch((resultAccessLog[arrayIndexAccessLog++]).toString(),
 							'Edit Activation Status', false, FailureHandling.CONTINUE_ON_FAILURE))
 
+					'array match kepada user create'
 					arrayMatch.add(WebUI.verifyMatch((resultAccessLog[arrayIndexAccessLog++]).toString().toLowerCase(),
 							findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
 									'callerId')).toLowerCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -111,6 +116,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     }
                 }
                 
+				'Jika flag failed tidak kena'
                 if (GlobalVariable.FlagFailed == 0) {
                     'write to excel success'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 

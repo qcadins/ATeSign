@@ -756,4 +756,24 @@ class DataVerif {
 		}
 		listdata
 	}
+	
+	@Keyword
+	getAccessLog(Connection conn, String action) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select TO_CHAR(tud.access_date, 'yyyy-MM-DD'), tud.request_details, tud.usr_crt from tr_user_data_access_log tud left join ms_lov msl on tud.lov_action_type = msl.id_lov WHERE msl.code = '"+action+"' order by tud.dtm_crt desc LIMIT 1")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
 }
