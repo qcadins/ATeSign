@@ -6,9 +6,6 @@ import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import java.sql.Connection as Connection
-import org.openqa.selenium.Keys as Keys
-import org.openqa.selenium.By as By
-import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import com.kms.katalon.core.testobject.ResponseObject as ResponseObject
 
 'connect dengan db'
@@ -357,13 +354,6 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
     'inisialisasi arraylist balmut'
     ArrayList<String> balmut = []
 
-    'inisialisasi penggunaan saldo, pemotongan saldo, dan increment untuk kebutuhan selanjutnya'
-    int penggunaanSaldo = 0
-
-    int pemotonganSaldo = 0
-
-    int increment
-
     'inisialisasi tipesaldo'
     String tipeSaldo
 
@@ -387,7 +377,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
             notifTypeDB = CustomKeywords.'connection.APIFullService.getWASMSFromNotificationType'(conneSign, email[loopingEmail], 
                 'SEND_DOC', GlobalVariable.Tenant)
 
-			if(notifTypeDB == 'Email') {
+			if (notifTypeDB == 'Email') {
 				continue	
 			}
 			

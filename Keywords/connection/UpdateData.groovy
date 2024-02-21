@@ -537,7 +537,7 @@ class UpdateData {
 	checkNotifTypeExistforTenant(Connection conn) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select count(*) from ms_notificationtypeoftenant mn join ms_tenant mt on mn.id_ms_tenant = mt.id_ms_tenant where tenant_code = '"+GlobalVariable.Tenant+"'")
+		resultSet = stm.executeQuery("select count(*) from ms_notificationtypeoftenant mn join ms_tenant mt on mn.id_ms_tenant = mt.id_ms_tenant where tenant_code = '" + GlobalVariable.Tenant + "'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -684,12 +684,6 @@ class UpdateData {
 		} else {
 			'get connection apifullservice'
 			APIFullService apiFullService = new APIFullService()
-
-			'get connection SendSign'
-			SendSign sendSign = new SendSign()
-
-			'get connection ManualStamp'
-			ManualStamp manualStamp = new ManualStamp()
 
 			'setting menggunakan Must WA'
 			apiFullService.settingMustUseWAFirst(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (Level Tenant)')))

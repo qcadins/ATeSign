@@ -470,7 +470,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             WebUI.delay(3)
 
                             'Mengambil value total stamping dan total meterai'
-                            ArrayList totalMateraiAndTotalStamping = CustomKeywords.'connection.Meterai.getTotalMateraiAndTotalStamping'(
+                            ArrayList<String> totalMateraiAndTotalStamping = CustomKeywords.'connection.Meterai.getTotalMateraiAndTotalStamping'(
                                 conneSign, findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 
                                     rowExcel('No Kontrak')))
 
@@ -481,7 +481,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             arrayMatch.add(WebUI.verifyMatch(totalMateraiAndTotalStamping[0], totalMateraiAndTotalStamping[
                                     1], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                            ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(
+                            ArrayList<String> officeRegionBline = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(
                                 conneSign, findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, 
                                     rowExcel('No Kontrak')), 'Stamping')
 
@@ -797,20 +797,20 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
 
         mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
 
-		String runWithType = findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Document Monitoring Using ?'));
-		
-		if (runWithType.equals('Login Via Admin Client')) {
-			notifTypeDB = notifTypeDBResendSignNotifNormal
-		} else if (runWithType.equals('Embed V1')) {
-			notifTypeDB = notifTypeDBResendSignNotifEmbedV1
-		} else if (runWithType.equals('Embed V2')) {
-			notifTypeDB = notifTypeDBResendSignNotifEmbedV2
-		}
+        String runWithType = findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Document Monitoring Using ?'))
+
+        if (runWithType == 'Login Via Admin Client') {
+            notifTypeDB = notifTypeDBResendSignNotifNormal
+        } else if (runWithType == 'Embed V1') {
+            notifTypeDB = notifTypeDBResendSignNotifEmbedV1
+        } else if (runWithType == 'Embed V2') {
+            notifTypeDB = notifTypeDBResendSignNotifEmbedV2
+        }
         
-        if (notifTypeDB == '0' || notifTypeDB == 'Level Tenant') {
+        if ((notifTypeDB == '0') || (notifTypeDB == 'Level Tenant')) {
             if (mustUseWAFirst == '1') {
                 'menggunakan saldo wa'
-                ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message', 
+                ArrayList<String> balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message', 
                     fullNameUser)
 
                 if (balmut.size() == 0) {
@@ -836,7 +836,7 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
 
                     if (useWAMessage == '1') {
                         'menggunakan saldo wa'
-                        ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message', 
+                        ArrayList<String> balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message', 
                             fullNameUser)
 
                         if (balmut.size() == 0) {
@@ -858,7 +858,7 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
                         }
                     } else if (useWAMessage == '0') {
                         'menggunakan saldo wa'
-                        ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'SMS Notif', 
+                        ArrayList<String> balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'SMS Notif', 
                             fullNameUser)
 
                         if (balmut.size() == 0) {
@@ -883,7 +883,7 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
             }
         } else {
             'menggunakan saldo wa'
-            ArrayList balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, notifTypeDB, fullNameUser)
+            ArrayList<String> balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, notifTypeDB, fullNameUser)
 
             if (balmut.size() == 0) {
                 GlobalVariable.FlagFailed = 1
@@ -907,11 +907,11 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
         WebUI.delay(1)
 
         'declare arraylist arraymatch'
-        ArrayList arrayMatch = []
+        ArrayList<String> arrayMatch = []
 
         'ambil data last transaction dari DB'
-        ArrayList resultDB = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(conneSign, findTestData(excelPathDocumentMonitoring).getValue(
-                GlobalVariable.NumofColm, rowExcel('Email Login')), 'Document')
+        ArrayList<String> resultDB = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(conneSign, findTestData(
+                excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')), 'Document')
 
         'declare arrayindex'
         arrayindex = 0

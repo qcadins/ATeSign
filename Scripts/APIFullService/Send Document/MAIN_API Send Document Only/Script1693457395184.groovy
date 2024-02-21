@@ -696,13 +696,6 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
     'inisialisasi arraylist balmut'
     ArrayList<String> balmut = []
 
-    'inisialisasi penggunaan saldo, pemotongan saldo, dan increment untuk kebutuhan selanjutnya'
-    int penggunaanSaldo = 0
-
-    int pemotonganSaldo = 0
-
-    int increment
-
     'inisialisasi tipesaldo'
     String tipeSaldo
 
@@ -726,7 +719,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
             notifTypeDB = CustomKeywords.'connection.APIFullService.getWASMSFromNotificationType'(conneSign, email[loopingEmail], 
                 'SEND_DOC', GlobalVariable.Tenant)
 
-			if(notifTypeDB == 'Email') {
+			if (notifTypeDB == 'Email') {
 				continue
 			}
 			

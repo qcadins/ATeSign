@@ -8,10 +8,8 @@ import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
-import org.openqa.selenium.WebDriver as WebDriver
 import org.openqa.selenium.By as By
 import java.time.LocalDate as LocalDate
-import org.openqa.selenium.JavascriptExecutor as JavascriptExecutor
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
@@ -414,7 +412,7 @@ def checkErrorLog() {
                         '-', '') + ';') + '<') + errormessage) + '>')
             }
             
-            return true
+            true
         } else {
             'Tulis di excel itu adalah error'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
@@ -422,7 +420,6 @@ def checkErrorLog() {
                     '-', '') + ';') + 'Error tidak berhasil ditangkap')
         }
     }
-    
     false
 }
 

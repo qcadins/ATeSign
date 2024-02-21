@@ -2275,7 +2275,6 @@ class APIFullService {
 	getWASMSFromNotificationTypeOTP(Connection conn, String userEmail, String code, String tenantCode) {
 		UpdateData update = new UpdateData()
 		if (update.checkNotifTypeExistforTenant(conn) > 0) {
-
 			stm = conn.createStatement()
 
 			resultSet = stm.executeQuery("SELECT CASE WHEN mntot.must_use_wa_first = '1' THEN 'WhatsApp Message' ELSE CASE WHEN (SELECT msvr.email_service FROM ms_vendor_registered_user msvr LEFT JOIN am_msuser amm ON msvr.id_ms_user = amm.id_ms_user WHERE amm.login_id = '" + userEmail + "' OR amm.hashed_phone = '" + userEmail + "' OR amm.hashed_id_no = '" + userEmail + "' LIMIT 1) = '1' THEN 'SMS Notif' ELSE CASE WHEN mntot.use_wa_message = '1' THEN 'WA' ELSE 'Level Tenant' END END END AS result FROM ms_notificationtypeoftenant mntot LEFT JOIN ms_lov msl ON mntot.lov_sending_point = msl.id_lov LEFT JOIN ms_tenant mst ON mntot.id_ms_tenant = mst.id_ms_tenant WHERE msl.code = '" + code + "' and mst.tenant_code = '" + tenantCode + "';")
@@ -2344,7 +2343,7 @@ class APIFullService {
 	getPaymentTypeDescription(Connection conn, String code, String vendorCode, String tenantCode) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT mlov.description FROM ms_paymentsigntypeoftenant mspot LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mspot.id_ms_tenant LEFT JOIN ms_vendor mv ON mv.id_ms_vendor = mspot.id_ms_vendor LEFT JOIN ms_lov mlov ON mlov.id_lov = mspot.lov_payment_sign_type WHERE mlov.code = '"+code+"' AND mt.tenant_code = '"+tenantCode+"' AND mv.vendor_code = '"+vendorCode+"'")
+		resultSet = stm.executeQuery("SELECT mlov.description FROM ms_paymentsigntypeoftenant mspot LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mspot.id_ms_tenant LEFT JOIN ms_vendor mv ON mv.id_ms_vendor = mspot.id_ms_vendor LEFT JOIN ms_lov mlov ON mlov.id_lov = mspot.lov_payment_sign_type WHERE mlov.code = '"+code+"' AND mt.tenant_code = '" + tenantCode + "' AND mv.vendor_code = '" + vendorCode + "'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

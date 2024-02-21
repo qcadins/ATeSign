@@ -81,14 +81,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 						arrayMatch = []
 						
 						'verify templateexist dengan db'
-						arrayMatch.add(WebUI.verifyMatch(documentTemplateExist.toString().replace('false','0').replace('true','1'), result, false, FailureHandling.CONTINUE_ON_FAILURE))
+						arrayMatch.add(WebUI.verifyMatch(documentTemplateExist.toString().replace('false', '0').replace('true', '1'), result, false, FailureHandling.CONTINUE_ON_FAILURE))
 						
 						'jika verify ada yang false'
 						if (arrayMatch.contains(false)) {
 							'Write To Excel GlobalVariable.StatusFailed and errormessage'
 							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 								((findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + ';') +
-								(  GlobalVariable.ReasonFailedStoredDB)) )
+								(GlobalVariable.ReasonFailedStoredDB)))
 						}
 					}
                 if (GlobalVariable.FlagFailed == 0) {

@@ -1103,11 +1103,11 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
 
         String runWithType = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Document Monitoring Using ?'))
 
-        if (runWithType.equals('Login Via Admin Client')) {
+        if (runWithType == 'Login Via Admin Client') {
             notifTypeDB = notifTypeDBResendSignNotifNormal
-        } else if (runWithType.equals('Embed V1')) {
+        } else if (runWithType == 'Embed V1') {
             notifTypeDB = notifTypeDBResendSignNotifEmbedV1
-        } else if (runWithType.equals('Embed V2')) {
+        } else if (runWithType == 'Embed V2') {
             notifTypeDB = notifTypeDBResendSignNotifEmbedV2
         }
         

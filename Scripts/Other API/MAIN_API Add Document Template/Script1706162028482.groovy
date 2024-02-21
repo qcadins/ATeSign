@@ -47,9 +47,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Token')) == 'No') {
             GlobalVariable.token = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Token'))
         }
-        
-        String signer = new String()
-
+		
         signerTypeCode = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('signerTypeCode')).split(semicolon, 
             splitnum)
 
@@ -115,7 +113,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'HIT API Login untuk token : andy@ad-ins.com'
         respon = WS.sendRequest(findTestObject('Postman/Add Document Template', [('callerId') : findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('callerId')), ('documentExample') : CustomKeywords.'customizekeyword.ConvertFile.base64File'(
-                        findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentExample'))),('documentTemplateCode') : findTestData(
+                        findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentExample'))), ('documentTemplateCode') : findTestData(
                         excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentTemplateCode')), ('documentTemplateName') : findTestData(
                         excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentTemplateName')), ('documentTemplateDescription') : findTestData(
                         excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentTemplateDescription')), ('isActive') : findTestData(
