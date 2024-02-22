@@ -1,0 +1,2063 @@
+{
+    "status": {
+        "code": 0
+    },
+    "listDistrict": [
+        {
+            "districtName": "BOJONEGORO",
+            "idMsDistrict": "144"
+        },
+        {
+            "districtName": "KOTA MADIUN",
+            "idMsDistrict": "153"
+        },
+        {
+            "districtName": "KOTA MALANG",
+            "idMsDistrict": "154"
+        },
+        {
+            "districtName": "KOTA MOJOKERTO",
+            "idMsDistrict": "155"
+        },
+        {
+            "districtName": "KOTA PROBOLINGGO",
+            "idMsDistrict": "157"
+        },
+        {
+            "districtName": "KOTA SURABAYA",
+            "idMsDistrict": "158"
+        },
+        {
+            "districtName": "LAMONGAN",
+            "idMsDistrict": "159"
+        },
+        {
+            "districtName": "LUMAJANG",
+            "idMsDistrict": "160"
+        },
+        {
+            "districtName": "MADIUN",
+            "idMsDistrict": "161"
+        },
+        {
+            "districtName": "MAGETAN",
+            "idMsDistrict": "162"
+        },
+        {
+            "districtName": "MALANG",
+            "idMsDistrict": "163"
+        },
+        {
+            "districtName": "MOJOKERTO",
+            "idMsDistrict": "164"
+        },
+        {
+            "districtName": "NGANJUK",
+            "idMsDistrict": "165"
+        },
+        {
+            "districtName": "NGAWI",
+            "idMsDistrict": "166"
+        },
+        {
+            "districtName": "PACITAN",
+            "idMsDistrict": "167"
+        },
+        {
+            "districtName": "PAMEKASAN",
+            "idMsDistrict": "168"
+        },
+        {
+            "districtName": "PASURUAN",
+            "idMsDistrict": "169"
+        },
+        {
+            "districtName": "PONOROGO",
+            "idMsDistrict": "170"
+        },
+        {
+            "districtName": "PROBOLINGGO",
+            "idMsDistrict": "171"
+        },
+        {
+            "districtName": "SAMPANG",
+            "idMsDistrict": "172"
+        },
+        {
+            "districtName": "SIDOARJO",
+            "idMsDistrict": "173"
+        },
+        {
+            "districtName": "SITUBONDO",
+            "idMsDistrict": "174"
+        },
+        {
+            "districtName": "TRENGGALEK",
+            "idMsDistrict": "176"
+        },
+        {
+            "districtName": "TULUNGAGUNG",
+            "idMsDistrict": "178"
+        },
+        {
+            "districtName": "BENGKAYANG",
+            "idMsDistrict": "179"
+        },
+        {
+            "districtName": "KAPUAS HULU",
+            "idMsDistrict": "180"
+        },
+        {
+            "districtName": "KAYONG UTARA",
+            "idMsDistrict": "181"
+        },
+        {
+            "districtName": "KETAPANG",
+            "idMsDistrict": "182"
+        },
+        {
+            "districtName": "KOTA PONTIANAK",
+            "idMsDistrict": "183"
+        },
+        {
+            "districtName": "KOTA SINGKAWANG",
+            "idMsDistrict": "184"
+        },
+        {
+            "districtName": "KUBU RAYA",
+            "idMsDistrict": "185"
+        },
+        {
+            "districtName": "LANDAK",
+            "idMsDistrict": "186"
+        },
+        {
+            "districtName": "KEBUMEN",
+            "idMsDistrict": "117"
+        },
+        {
+            "districtName": "KENDAL",
+            "idMsDistrict": "118"
+        },
+        {
+            "districtName": "KLATEN",
+            "idMsDistrict": "119"
+        },
+        {
+            "districtName": "KOTA MAGELANG",
+            "idMsDistrict": "120"
+        },
+        {
+            "districtName": "KOTA PEKALONGAN",
+            "idMsDistrict": "121"
+        },
+        {
+            "districtName": "KOTA SALATIGA",
+            "idMsDistrict": "122"
+        },
+        {
+            "districtName": "KOTA SEMARANG",
+            "idMsDistrict": "123"
+        },
+        {
+            "districtName": "KOTA SURAKARTA",
+            "idMsDistrict": "124"
+        },
+        {
+            "districtName": "KOTA TEGAL",
+            "idMsDistrict": "125"
+        },
+        {
+            "districtName": "KUDUS",
+            "idMsDistrict": "126"
+        },
+        {
+            "districtName": "MAGELANG",
+            "idMsDistrict": "127"
+        },
+        {
+            "districtName": "PATI",
+            "idMsDistrict": "128"
+        },
+        {
+            "districtName": "PEKALONGAN",
+            "idMsDistrict": "129"
+        },
+        {
+            "districtName": "PEMALANG",
+            "idMsDistrict": "130"
+        },
+        {
+            "districtName": "PURBALINGGA",
+            "idMsDistrict": "131"
+        },
+        {
+            "districtName": "PURWOREJO",
+            "idMsDistrict": "132"
+        },
+        {
+            "districtName": "REMBANG",
+            "idMsDistrict": "133"
+        },
+        {
+            "districtName": "SEMARANG",
+            "idMsDistrict": "134"
+        },
+        {
+            "districtName": "SRAGEN",
+            "idMsDistrict": "135"
+        },
+        {
+            "districtName": "SUKOHARJO",
+            "idMsDistrict": "136"
+        },
+        {
+            "districtName": "TEGAL",
+            "idMsDistrict": "137"
+        },
+        {
+            "districtName": "TEMANGGUNG",
+            "idMsDistrict": "138"
+        },
+        {
+            "districtName": "WONOGIRI",
+            "idMsDistrict": "139"
+        },
+        {
+            "districtName": "WONOSOBO",
+            "idMsDistrict": "140"
+        },
+        {
+            "districtName": "BANGKALAN",
+            "idMsDistrict": "141"
+        },
+        {
+            "districtName": "BANYUWANGI",
+            "idMsDistrict": "142"
+        },
+        {
+            "districtName": "BLITAR",
+            "idMsDistrict": "143"
+        },
+        {
+            "districtName": "BONDOWOSO",
+            "idMsDistrict": "145"
+        },
+        {
+            "districtName": "JEMBER",
+            "idMsDistrict": "147"
+        },
+        {
+            "districtName": "JOMBANG",
+            "idMsDistrict": "148"
+        },
+        {
+            "districtName": "KEDIRI",
+            "idMsDistrict": "149"
+        },
+        {
+            "districtName": "KOTA BATU",
+            "idMsDistrict": "150"
+        },
+        {
+            "districtName": "KOTA BLITAR",
+            "idMsDistrict": "151"
+        },
+        {
+            "districtName": "KOTA KEDIRI",
+            "idMsDistrict": "152"
+        },
+        {
+            "districtName": "TUBAN",
+            "idMsDistrict": "177"
+        },
+        {
+            "districtName": "MELAWI",
+            "idMsDistrict": "187"
+        },
+        {
+            "districtName": "BANTUL",
+            "idMsDistrict": "51"
+        },
+        {
+            "districtName": "GUNUNGKIDUL",
+            "idMsDistrict": "52"
+        },
+        {
+            "districtName": "KOTA YOGYAKARTA",
+            "idMsDistrict": "53"
+        },
+        {
+            "districtName": "KULON PROGO",
+            "idMsDistrict": "54"
+        },
+        {
+            "districtName": "SLEMAN",
+            "idMsDistrict": "55"
+        },
+        {
+            "districtName": "JAKARTA BARAT",
+            "idMsDistrict": "56"
+        },
+        {
+            "districtName": "JAKARTA PUSAT",
+            "idMsDistrict": "57"
+        },
+        {
+            "districtName": "JAKARTA SELATAN",
+            "idMsDistrict": "58"
+        },
+        {
+            "districtName": "JAKARTA TIMUR",
+            "idMsDistrict": "59"
+        },
+        {
+            "districtName": "JAKARTA UTARA",
+            "idMsDistrict": "60"
+        },
+        {
+            "districtName": "KEPULAUAN SERIBU",
+            "idMsDistrict": "61"
+        },
+        {
+            "districtName": "BOALEMO",
+            "idMsDistrict": "62"
+        },
+        {
+            "districtName": "BONE BOLANGO",
+            "idMsDistrict": "63"
+        },
+        {
+            "districtName": "GORONTALO",
+            "idMsDistrict": "64"
+        },
+        {
+            "districtName": "GORONTALO UTARA",
+            "idMsDistrict": "65"
+        },
+        {
+            "districtName": "KOTA GORONTALO",
+            "idMsDistrict": "66"
+        },
+        {
+            "districtName": "PAHUWATO",
+            "idMsDistrict": "67"
+        },
+        {
+            "districtName": "BATANGHARI",
+            "idMsDistrict": "68"
+        },
+        {
+            "districtName": "BUNGO",
+            "idMsDistrict": "69"
+        },
+        {
+            "districtName": "KERINCI",
+            "idMsDistrict": "70"
+        },
+        {
+            "districtName": "KOTA JAMBI",
+            "idMsDistrict": "71"
+        },
+        {
+            "districtName": "KOTA SUNGAI PENUH",
+            "idMsDistrict": "72"
+        },
+        {
+            "districtName": "MERANGIN",
+            "idMsDistrict": "73"
+        },
+        {
+            "districtName": "MUARO JAMBI",
+            "idMsDistrict": "74"
+        },
+        {
+            "districtName": "SAROLANGUN",
+            "idMsDistrict": "75"
+        },
+        {
+            "districtName": "TANJUNG JABUNG BARAT",
+            "idMsDistrict": "76"
+        },
+        {
+            "districtName": "TANJUNG JABUNG TIMUR",
+            "idMsDistrict": "77"
+        },
+        {
+            "districtName": "TEBO",
+            "idMsDistrict": "78"
+        },
+        {
+            "districtName": "BREBES",
+            "idMsDistrict": "111"
+        },
+        {
+            "districtName": "CILACAP",
+            "idMsDistrict": "112"
+        },
+        {
+            "districtName": "DEMAK",
+            "idMsDistrict": "113"
+        },
+        {
+            "districtName": "GROBOGAN",
+            "idMsDistrict": "114"
+        },
+        {
+            "districtName": "JEPARA",
+            "idMsDistrict": "115"
+        },
+        {
+            "districtName": "KARANGANYAR",
+            "idMsDistrict": "116"
+        },
+        {
+            "districtName": "KOTA PASURUAN",
+            "idMsDistrict": "156"
+        },
+        {
+            "districtName": "KLUNGKUNG",
+            "idMsDistrict": "30"
+        },
+        {
+            "districtName": "KOTA DENPASAR",
+            "idMsDistrict": "31"
+        },
+        {
+            "districtName": "TABANAN",
+            "idMsDistrict": "32"
+        },
+        {
+            "districtName": "KOTA CILEGON",
+            "idMsDistrict": "33"
+        },
+        {
+            "districtName": "KOTA SERANG",
+            "idMsDistrict": "34"
+        },
+        {
+            "districtName": "KOTA TANGERANG",
+            "idMsDistrict": "35"
+        },
+        {
+            "districtName": "KOTA TANGERANG SELATAN",
+            "idMsDistrict": "36"
+        },
+        {
+            "districtName": "LEBAK",
+            "idMsDistrict": "37"
+        },
+        {
+            "districtName": "PANDEGLANG",
+            "idMsDistrict": "38"
+        },
+        {
+            "districtName": "SERANG",
+            "idMsDistrict": "39"
+        },
+        {
+            "districtName": "TANGERANG",
+            "idMsDistrict": "40"
+        },
+        {
+            "districtName": "BENGKULU SELATAN",
+            "idMsDistrict": "41"
+        },
+        {
+            "districtName": "BENGKULU TENGAH",
+            "idMsDistrict": "42"
+        },
+        {
+            "districtName": "BENGKULU UTARA",
+            "idMsDistrict": "43"
+        },
+        {
+            "districtName": "KAUR",
+            "idMsDistrict": "44"
+        },
+        {
+            "districtName": "KEPAHIANG",
+            "idMsDistrict": "45"
+        },
+        {
+            "districtName": "KOTA BENGKULU",
+            "idMsDistrict": "46"
+        },
+        {
+            "districtName": "LEBONG",
+            "idMsDistrict": "47"
+        },
+        {
+            "districtName": "MUKOMUKO",
+            "idMsDistrict": "48"
+        },
+        {
+            "districtName": "REJANG LEBONG",
+            "idMsDistrict": "49"
+        },
+        {
+            "districtName": "SELUMA",
+            "idMsDistrict": "50"
+        },
+        {
+            "districtName": "GRESIK",
+            "idMsDistrict": "146"
+        },
+        {
+            "districtName": "MEMPAWAH",
+            "idMsDistrict": "188"
+        },
+        {
+            "districtName": "SAMBAS",
+            "idMsDistrict": "189"
+        },
+        {
+            "districtName": "SANGGAU",
+            "idMsDistrict": "190"
+        },
+        {
+            "districtName": "SEKADAU",
+            "idMsDistrict": "191"
+        },
+        {
+            "districtName": "SINTANG",
+            "idMsDistrict": "192"
+        },
+        {
+            "districtName": "BALANGAN",
+            "idMsDistrict": "193"
+        },
+        {
+            "districtName": "BANJAR",
+            "idMsDistrict": "194"
+        },
+        {
+            "districtName": "BARITO KUALA",
+            "idMsDistrict": "195"
+        },
+        {
+            "districtName": "HULU SUNGAI SELATAN",
+            "idMsDistrict": "196"
+        },
+        {
+            "districtName": "HULU SUNGAI TENGAH",
+            "idMsDistrict": "197"
+        },
+        {
+            "districtName": "HULU SUNGAI UTARA",
+            "idMsDistrict": "198"
+        },
+        {
+            "districtName": "KOTA BANJARBARU",
+            "idMsDistrict": "199"
+        },
+        {
+            "districtName": "KOTA BANJARMASIN",
+            "idMsDistrict": "200"
+        },
+        {
+            "districtName": "KOTABARU",
+            "idMsDistrict": "201"
+        },
+        {
+            "districtName": "TABALONG",
+            "idMsDistrict": "202"
+        },
+        {
+            "districtName": "TANAH BUMBU",
+            "idMsDistrict": "203"
+        },
+        {
+            "districtName": "TANAH LAUT",
+            "idMsDistrict": "204"
+        },
+        {
+            "districtName": "TAPIN",
+            "idMsDistrict": "205"
+        },
+        {
+            "districtName": "BARITO SELATAN",
+            "idMsDistrict": "206"
+        },
+        {
+            "districtName": "BARITO TIMUR",
+            "idMsDistrict": "207"
+        },
+        {
+            "districtName": "BARITO UTARA",
+            "idMsDistrict": "208"
+        },
+        {
+            "districtName": "GUNUNG MAS",
+            "idMsDistrict": "209"
+        },
+        {
+            "districtName": "KAPUAS",
+            "idMsDistrict": "210"
+        },
+        {
+            "districtName": "KATINGAN",
+            "idMsDistrict": "211"
+        },
+        {
+            "districtName": "KOTA PALANGKARAYA",
+            "idMsDistrict": "212"
+        },
+        {
+            "districtName": "KOTAWARINGIN BARAT",
+            "idMsDistrict": "213"
+        },
+        {
+            "districtName": "SUMENEP",
+            "idMsDistrict": "175"
+        },
+        {
+            "districtName": "KOTAWARINGIN TIMUR",
+            "idMsDistrict": "214"
+        },
+        {
+            "districtName": "LAMANDAU",
+            "idMsDistrict": "215"
+        },
+        {
+            "districtName": "MURUNG RAYA",
+            "idMsDistrict": "216"
+        },
+        {
+            "districtName": "PULANG PISAU",
+            "idMsDistrict": "217"
+        },
+        {
+            "districtName": "SERUYAN",
+            "idMsDistrict": "218"
+        },
+        {
+            "districtName": "SUKAMARA",
+            "idMsDistrict": "219"
+        },
+        {
+            "districtName": "BERAU",
+            "idMsDistrict": "220"
+        },
+        {
+            "districtName": "KOTA BALIKPAPAN",
+            "idMsDistrict": "221"
+        },
+        {
+            "districtName": "KOTA BONTANG",
+            "idMsDistrict": "222"
+        },
+        {
+            "districtName": "KOTA SAMARINDA",
+            "idMsDistrict": "223"
+        },
+        {
+            "districtName": "KUTAI BARAT",
+            "idMsDistrict": "224"
+        },
+        {
+            "districtName": "KUTAI KARTANEGARA",
+            "idMsDistrict": "225"
+        },
+        {
+            "districtName": "KUTAI TIMUR",
+            "idMsDistrict": "226"
+        },
+        {
+            "districtName": "MAHAKAM ULU",
+            "idMsDistrict": "227"
+        },
+        {
+            "districtName": "PASER",
+            "idMsDistrict": "228"
+        },
+        {
+            "districtName": "PENAJAM PASER UTARA",
+            "idMsDistrict": "229"
+        },
+        {
+            "districtName": "BULUNGAN",
+            "idMsDistrict": "230"
+        },
+        {
+            "districtName": "KOTA TARAKAN",
+            "idMsDistrict": "231"
+        },
+        {
+            "districtName": "MALINAU",
+            "idMsDistrict": "232"
+        },
+        {
+            "districtName": "NUNUKAN",
+            "idMsDistrict": "233"
+        },
+        {
+            "districtName": "TANA TIDUNG",
+            "idMsDistrict": "234"
+        },
+        {
+            "districtName": "BANGKA",
+            "idMsDistrict": "235"
+        },
+        {
+            "districtName": "BANGKA BARAT",
+            "idMsDistrict": "236"
+        },
+        {
+            "districtName": "BANGKA SELATAN",
+            "idMsDistrict": "237"
+        },
+        {
+            "districtName": "BANGKA TENGAH",
+            "idMsDistrict": "238"
+        },
+        {
+            "districtName": "BELITUNG",
+            "idMsDistrict": "239"
+        },
+        {
+            "districtName": "BELITUNG TIMUR",
+            "idMsDistrict": "240"
+        },
+        {
+            "districtName": "KOTA PANGKALPINANG",
+            "idMsDistrict": "241"
+        },
+        {
+            "districtName": "BINTAN",
+            "idMsDistrict": "242"
+        },
+        {
+            "districtName": "KARIMUN",
+            "idMsDistrict": "243"
+        },
+        {
+            "districtName": "KEPULAUAN ANAMBAS",
+            "idMsDistrict": "244"
+        },
+        {
+            "districtName": "KOTA BATAM",
+            "idMsDistrict": "245"
+        },
+        {
+            "districtName": "KOTA TANJUNGPINANG",
+            "idMsDistrict": "246"
+        },
+        {
+            "districtName": "LINGGA",
+            "idMsDistrict": "247"
+        },
+        {
+            "districtName": "NATUNA",
+            "idMsDistrict": "248"
+        },
+        {
+            "districtName": "KOTA BANDAR LAMPUNG",
+            "idMsDistrict": "249"
+        },
+        {
+            "districtName": "KOTA METRO",
+            "idMsDistrict": "250"
+        },
+        {
+            "districtName": "LAMPUNG BARAT",
+            "idMsDistrict": "251"
+        },
+        {
+            "districtName": "LAMPUNG SELATAN",
+            "idMsDistrict": "252"
+        },
+        {
+            "districtName": "LAMPUNG TENGAH",
+            "idMsDistrict": "253"
+        },
+        {
+            "districtName": "LAMPUNG TIMUR",
+            "idMsDistrict": "254"
+        },
+        {
+            "districtName": "LAMPUNG UTARA",
+            "idMsDistrict": "255"
+        },
+        {
+            "districtName": "MESUJI",
+            "idMsDistrict": "256"
+        },
+        {
+            "districtName": "PESAWARAN",
+            "idMsDistrict": "257"
+        },
+        {
+            "districtName": "PESISIR BARAT",
+            "idMsDistrict": "258"
+        },
+        {
+            "districtName": "PRINGSEWU",
+            "idMsDistrict": "259"
+        },
+        {
+            "districtName": "TANGGAMUS",
+            "idMsDistrict": "260"
+        },
+        {
+            "districtName": "TULANG BAWANG",
+            "idMsDistrict": "261"
+        },
+        {
+            "districtName": "TULANG BAWANG BARAT",
+            "idMsDistrict": "262"
+        },
+        {
+            "districtName": "WAY KANAN",
+            "idMsDistrict": "263"
+        },
+        {
+            "districtName": "BURU",
+            "idMsDistrict": "264"
+        },
+        {
+            "districtName": "BURU SELATAN",
+            "idMsDistrict": "265"
+        },
+        {
+            "districtName": "KEPULAUAN ARU",
+            "idMsDistrict": "266"
+        },
+        {
+            "districtName": "KOTA AMBON",
+            "idMsDistrict": "267"
+        },
+        {
+            "districtName": "KOTA TUAL",
+            "idMsDistrict": "268"
+        },
+        {
+            "districtName": "MALUKU BARAT DAYA",
+            "idMsDistrict": "269"
+        },
+        {
+            "districtName": "MALUKU TENGAH",
+            "idMsDistrict": "270"
+        },
+        {
+            "districtName": "MALUKU TENGGARA",
+            "idMsDistrict": "271"
+        },
+        {
+            "districtName": "MALUKU TENGGARA BARAT",
+            "idMsDistrict": "272"
+        },
+        {
+            "districtName": "SERAM BAGIAN BARAT",
+            "idMsDistrict": "273"
+        },
+        {
+            "districtName": "SERAM BAGIAN TIMUR",
+            "idMsDistrict": "274"
+        },
+        {
+            "districtName": "HALMAHERA BARAT",
+            "idMsDistrict": "275"
+        },
+        {
+            "districtName": "HALMAHERA SELATAN",
+            "idMsDistrict": "276"
+        },
+        {
+            "districtName": "HALMAHERA TENGAH",
+            "idMsDistrict": "277"
+        },
+        {
+            "districtName": "HALMAHERA TIMUR",
+            "idMsDistrict": "278"
+        },
+        {
+            "districtName": "HALMAHERA UTARA",
+            "idMsDistrict": "279"
+        },
+        {
+            "districtName": "KEPULAUAN SULA",
+            "idMsDistrict": "280"
+        },
+        {
+            "districtName": "KOTA TERNATE",
+            "idMsDistrict": "281"
+        },
+        {
+            "districtName": "KOTA TIDORE KEPULAUAN",
+            "idMsDistrict": "282"
+        },
+        {
+            "districtName": "PULAU MOROTAI",
+            "idMsDistrict": "283"
+        },
+        {
+            "districtName": "PULAU TALIABU",
+            "idMsDistrict": "284"
+        },
+        {
+            "districtName": "BIMA",
+            "idMsDistrict": "285"
+        },
+        {
+            "districtName": "KOTA BIMA",
+            "idMsDistrict": "287"
+        },
+        {
+            "districtName": "KOTA MATARAM",
+            "idMsDistrict": "288"
+        },
+        {
+            "districtName": "LOMBOK BARAT",
+            "idMsDistrict": "289"
+        },
+        {
+            "districtName": "LOMBOK TENGAH",
+            "idMsDistrict": "290"
+        },
+        {
+            "districtName": "LOMBOK TIMUR",
+            "idMsDistrict": "291"
+        },
+        {
+            "districtName": "LOMBOK UTARA",
+            "idMsDistrict": "292"
+        },
+        {
+            "districtName": "SUMBAWA",
+            "idMsDistrict": "293"
+        },
+        {
+            "districtName": "SUMBAWA BARAT",
+            "idMsDistrict": "294"
+        },
+        {
+            "districtName": "ALOR",
+            "idMsDistrict": "295"
+        },
+        {
+            "districtName": "BELU",
+            "idMsDistrict": "296"
+        },
+        {
+            "districtName": "ENDE",
+            "idMsDistrict": "297"
+        },
+        {
+            "districtName": "FLORES TIMUR",
+            "idMsDistrict": "298"
+        },
+        {
+            "districtName": "KOTA KUPANG",
+            "idMsDistrict": "299"
+        },
+        {
+            "districtName": "KUPANG",
+            "idMsDistrict": "300"
+        },
+        {
+            "districtName": "LEMBATA",
+            "idMsDistrict": "301"
+        },
+        {
+            "districtName": "MALAKA",
+            "idMsDistrict": "302"
+        },
+        {
+            "districtName": "MANGGARAI",
+            "idMsDistrict": "303"
+        },
+        {
+            "districtName": "MANGGARAI BARAT",
+            "idMsDistrict": "304"
+        },
+        {
+            "districtName": "MANGGARAI TIMUR",
+            "idMsDistrict": "305"
+        },
+        {
+            "districtName": "NAGEKEO",
+            "idMsDistrict": "306"
+        },
+        {
+            "districtName": "NGADA",
+            "idMsDistrict": "307"
+        },
+        {
+            "districtName": "ROTE NDAO",
+            "idMsDistrict": "308"
+        },
+        {
+            "districtName": "SABU RAIJUA",
+            "idMsDistrict": "309"
+        },
+        {
+            "districtName": "SIKKA",
+            "idMsDistrict": "310"
+        },
+        {
+            "districtName": "SUMBA BARAT",
+            "idMsDistrict": "311"
+        },
+        {
+            "districtName": "SUMBA BARAT DAYA",
+            "idMsDistrict": "312"
+        },
+        {
+            "districtName": "SUMBA TENGAH",
+            "idMsDistrict": "313"
+        },
+        {
+            "districtName": "SUMBA TIMUR",
+            "idMsDistrict": "314"
+        },
+        {
+            "districtName": "TIMOR TENGAH SELATAN",
+            "idMsDistrict": "315"
+        },
+        {
+            "districtName": "TIMOR TENGAH UTARA",
+            "idMsDistrict": "316"
+        },
+        {
+            "districtName": "ASMAT",
+            "idMsDistrict": "317"
+        },
+        {
+            "districtName": "BIAK NUMFOR",
+            "idMsDistrict": "318"
+        },
+        {
+            "districtName": "BOVEN DIGOEL",
+            "idMsDistrict": "319"
+        },
+        {
+            "districtName": "DEIYAI",
+            "idMsDistrict": "320"
+        },
+        {
+            "districtName": "DOGIYAI",
+            "idMsDistrict": "321"
+        },
+        {
+            "districtName": "INTAN JAYA",
+            "idMsDistrict": "322"
+        },
+        {
+            "districtName": "JAYAPURA",
+            "idMsDistrict": "323"
+        },
+        {
+            "districtName": "JAYAWIJAYA",
+            "idMsDistrict": "324"
+        },
+        {
+            "districtName": "KEEROM",
+            "idMsDistrict": "325"
+        },
+        {
+            "districtName": "KEPULAUAN YAPEN",
+            "idMsDistrict": "326"
+        },
+        {
+            "districtName": "KOTA JAYAPURA",
+            "idMsDistrict": "327"
+        },
+        {
+            "districtName": "LANNY JAYA",
+            "idMsDistrict": "328"
+        },
+        {
+            "districtName": "MAMBERAMO RAYA",
+            "idMsDistrict": "329"
+        },
+        {
+            "districtName": "MAMBERAMO TENGAH",
+            "idMsDistrict": "330"
+        },
+        {
+            "districtName": "MAPPI",
+            "idMsDistrict": "331"
+        },
+        {
+            "districtName": "MERAUKE",
+            "idMsDistrict": "332"
+        },
+        {
+            "districtName": "MIMIKA",
+            "idMsDistrict": "333"
+        },
+        {
+            "districtName": "NABIRE",
+            "idMsDistrict": "334"
+        },
+        {
+            "districtName": "NDUGA",
+            "idMsDistrict": "335"
+        },
+        {
+            "districtName": "PEGUNUNGAN BINTANG",
+            "idMsDistrict": "337"
+        },
+        {
+            "districtName": "PUNCAK",
+            "idMsDistrict": "338"
+        },
+        {
+            "districtName": "PUNCAK JAYA",
+            "idMsDistrict": "339"
+        },
+        {
+            "districtName": "SARMI",
+            "idMsDistrict": "340"
+        },
+        {
+            "districtName": "SUPIORI",
+            "idMsDistrict": "341"
+        },
+        {
+            "districtName": "TOLIKARA",
+            "idMsDistrict": "342"
+        },
+        {
+            "districtName": "WAROPEN",
+            "idMsDistrict": "343"
+        },
+        {
+            "districtName": "YAHUKIMO",
+            "idMsDistrict": "344"
+        },
+        {
+            "districtName": "YALIMO",
+            "idMsDistrict": "345"
+        },
+        {
+            "districtName": "FAKFAK",
+            "idMsDistrict": "346"
+        },
+        {
+            "districtName": "KAIMANA",
+            "idMsDistrict": "347"
+        },
+        {
+            "districtName": "KOTA SORONG",
+            "idMsDistrict": "348"
+        },
+        {
+            "districtName": "SORONG",
+            "idMsDistrict": "354"
+        },
+        {
+            "districtName": "SORONG SELATAN",
+            "idMsDistrict": "355"
+        },
+        {
+            "districtName": "TAMBRAUW",
+            "idMsDistrict": "356"
+        },
+        {
+            "districtName": "TELUK BINTUNI",
+            "idMsDistrict": "357"
+        },
+        {
+            "districtName": "TELUK WONDAMA",
+            "idMsDistrict": "358"
+        },
+        {
+            "districtName": "BENGKALIS",
+            "idMsDistrict": "359"
+        },
+        {
+            "districtName": "DOMPU",
+            "idMsDistrict": "286"
+        },
+        {
+            "districtName": "PANIAI",
+            "idMsDistrict": "336"
+        },
+        {
+            "districtName": "MANOKWARI",
+            "idMsDistrict": "349"
+        },
+        {
+            "districtName": "MANOKWARI SELATAN",
+            "idMsDistrict": "350"
+        },
+        {
+            "districtName": "MAYBRAT",
+            "idMsDistrict": "351"
+        },
+        {
+            "districtName": "PEGUNUNGAN ARFAK",
+            "idMsDistrict": "352"
+        },
+        {
+            "districtName": "RAJA AMPAT",
+            "idMsDistrict": "353"
+        },
+        {
+            "districtName": "INDRAGIRI HILIR",
+            "idMsDistrict": "360"
+        },
+        {
+            "districtName": "INDRAGIRI HULU",
+            "idMsDistrict": "361"
+        },
+        {
+            "districtName": "KAMPAR",
+            "idMsDistrict": "362"
+        },
+        {
+            "districtName": "KEPULAUAN MERANTI",
+            "idMsDistrict": "363"
+        },
+        {
+            "districtName": "KOTA DUMAI",
+            "idMsDistrict": "364"
+        },
+        {
+            "districtName": "KOTA PEKANBARU",
+            "idMsDistrict": "365"
+        },
+        {
+            "districtName": "KUANTAN SINGINGI",
+            "idMsDistrict": "366"
+        },
+        {
+            "districtName": "PELALAWAN",
+            "idMsDistrict": "367"
+        },
+        {
+            "districtName": "ROKAN HILIR",
+            "idMsDistrict": "368"
+        },
+        {
+            "districtName": "ROKAN HULU",
+            "idMsDistrict": "369"
+        },
+        {
+            "districtName": "SIAK",
+            "idMsDistrict": "370"
+        },
+        {
+            "districtName": "MAJENE",
+            "idMsDistrict": "371"
+        },
+        {
+            "districtName": "MAMASA",
+            "idMsDistrict": "372"
+        },
+        {
+            "districtName": "MAMUJU",
+            "idMsDistrict": "373"
+        },
+        {
+            "districtName": "MAMUJU TENGAH",
+            "idMsDistrict": "374"
+        },
+        {
+            "districtName": "MAMUJU UTARA",
+            "idMsDistrict": "375"
+        },
+        {
+            "districtName": "POLEWALI MANDAR",
+            "idMsDistrict": "376"
+        },
+        {
+            "districtName": "BANTAENG",
+            "idMsDistrict": "377"
+        },
+        {
+            "districtName": "BARRU",
+            "idMsDistrict": "378"
+        },
+        {
+            "districtName": "BONE",
+            "idMsDistrict": "379"
+        },
+        {
+            "districtName": "BULUKUMBA",
+            "idMsDistrict": "380"
+        },
+        {
+            "districtName": "ENREKANG",
+            "idMsDistrict": "381"
+        },
+        {
+            "districtName": "GOWA",
+            "idMsDistrict": "382"
+        },
+        {
+            "districtName": "JENEPONTO",
+            "idMsDistrict": "383"
+        },
+        {
+            "districtName": "KEPULAUAN SELAYAR",
+            "idMsDistrict": "384"
+        },
+        {
+            "districtName": "SINJAI",
+            "idMsDistrict": "395"
+        },
+        {
+            "districtName": "SOPPENG",
+            "idMsDistrict": "396"
+        },
+        {
+            "districtName": "TAKALAR",
+            "idMsDistrict": "397"
+        },
+        {
+            "districtName": "TANA TORAJA",
+            "idMsDistrict": "398"
+        },
+        {
+            "districtName": "TORAJA UTARA",
+            "idMsDistrict": "399"
+        },
+        {
+            "districtName": "WAJO",
+            "idMsDistrict": "400"
+        },
+        {
+            "districtName": "BANGGAI",
+            "idMsDistrict": "401"
+        },
+        {
+            "districtName": "PARIGI MOUTONG",
+            "idMsDistrict": "409"
+        },
+        {
+            "districtName": "POSO",
+            "idMsDistrict": "410"
+        },
+        {
+            "districtName": "SIGI",
+            "idMsDistrict": "411"
+        },
+        {
+            "districtName": "TOJO UNA-UNA",
+            "idMsDistrict": "412"
+        },
+        {
+            "districtName": "TOLITOLI",
+            "idMsDistrict": "413"
+        },
+        {
+            "districtName": "BOMBANA",
+            "idMsDistrict": "414"
+        },
+        {
+            "districtName": "BUTON",
+            "idMsDistrict": "415"
+        },
+        {
+            "districtName": "BUTON SELATAN",
+            "idMsDistrict": "416"
+        },
+        {
+            "districtName": "BUTON TENGAH",
+            "idMsDistrict": "417"
+        },
+        {
+            "districtName": "BUTON UTARA",
+            "idMsDistrict": "418"
+        },
+        {
+            "districtName": "KOLAKA",
+            "idMsDistrict": "419"
+        },
+        {
+            "districtName": "KOLAKA TIMUR",
+            "idMsDistrict": "420"
+        },
+        {
+            "districtName": "KOTA PAGAR ALAM",
+            "idMsDistrict": "468"
+        },
+        {
+            "districtName": "KOTA PALEMBANG",
+            "idMsDistrict": "469"
+        },
+        {
+            "districtName": "KOTA PRABUMULIH",
+            "idMsDistrict": "470"
+        },
+        {
+            "districtName": "LAHAT",
+            "idMsDistrict": "471"
+        },
+        {
+            "districtName": "MUARA ENIM",
+            "idMsDistrict": "472"
+        },
+        {
+            "districtName": "MUSI BANYUASIN",
+            "idMsDistrict": "473"
+        },
+        {
+            "districtName": "MUSI RAWAS",
+            "idMsDistrict": "474"
+        },
+        {
+            "districtName": "MUSI RAWAS UTARA",
+            "idMsDistrict": "475"
+        },
+        {
+            "districtName": "KOTA MAKASSAR",
+            "idMsDistrict": "385"
+        },
+        {
+            "districtName": "KOTA PALOPO",
+            "idMsDistrict": "386"
+        },
+        {
+            "districtName": "KOTA PARE PARE",
+            "idMsDistrict": "387"
+        },
+        {
+            "districtName": "LUWU",
+            "idMsDistrict": "388"
+        },
+        {
+            "districtName": "LUWU TIMUR",
+            "idMsDistrict": "389"
+        },
+        {
+            "districtName": "LUWU UTARA",
+            "idMsDistrict": "390"
+        },
+        {
+            "districtName": "MAROS",
+            "idMsDistrict": "391"
+        },
+        {
+            "districtName": "PANGKAJENE DAN KEPULAUAN",
+            "idMsDistrict": "392"
+        },
+        {
+            "districtName": "PINRANG",
+            "idMsDistrict": "393"
+        },
+        {
+            "districtName": "SIDENRENG RAPPANG",
+            "idMsDistrict": "394"
+        },
+        {
+            "districtName": "BANGGAI KEPULAUAN",
+            "idMsDistrict": "402"
+        },
+        {
+            "districtName": "BANGGAI LAUT",
+            "idMsDistrict": "403"
+        },
+        {
+            "districtName": "BUOL",
+            "idMsDistrict": "404"
+        },
+        {
+            "districtName": "DONGGALA",
+            "idMsDistrict": "405"
+        },
+        {
+            "districtName": "KOTA PALU",
+            "idMsDistrict": "406"
+        },
+        {
+            "districtName": "MOROWALI",
+            "idMsDistrict": "407"
+        },
+        {
+            "districtName": "MOROWALI UTARA",
+            "idMsDistrict": "408"
+        },
+        {
+            "districtName": "KOLAKA UTARA",
+            "idMsDistrict": "421"
+        },
+        {
+            "districtName": "KONAWE",
+            "idMsDistrict": "422"
+        },
+        {
+            "districtName": "KONAWE KEPULAUAN",
+            "idMsDistrict": "423"
+        },
+        {
+            "districtName": "KONAWE SELATAN",
+            "idMsDistrict": "424"
+        },
+        {
+            "districtName": "KONAWE UTARA",
+            "idMsDistrict": "425"
+        },
+        {
+            "districtName": "KOTA BAU BAU",
+            "idMsDistrict": "426"
+        },
+        {
+            "districtName": "KOTA KENDARI",
+            "idMsDistrict": "427"
+        },
+        {
+            "districtName": "MUNA",
+            "idMsDistrict": "428"
+        },
+        {
+            "districtName": "KOTA SOLOK",
+            "idMsDistrict": "455"
+        },
+        {
+            "districtName": "EMPAT LAWANG",
+            "idMsDistrict": "466"
+        },
+        {
+            "districtName": "KOTA LUBUKLINGGAU",
+            "idMsDistrict": "467"
+        },
+        {
+            "districtName": "OGAN ILIR",
+            "idMsDistrict": "476"
+        },
+        {
+            "districtName": "OGAN KOMERING ILIR",
+            "idMsDistrict": "477"
+        },
+        {
+            "districtName": "OGAN KOMERING ULU",
+            "idMsDistrict": "478"
+        },
+        {
+            "districtName": "OGAN KOMERING ULU SELATAN",
+            "idMsDistrict": "479"
+        },
+        {
+            "districtName": "TOBA SAMOSIR",
+            "idMsDistrict": "514"
+        },
+        {
+            "districtName": "MUNA BARAT",
+            "idMsDistrict": "429"
+        },
+        {
+            "districtName": "WAKATOBI",
+            "idMsDistrict": "430"
+        },
+        {
+            "districtName": "BOLAANG MONGONDOW",
+            "idMsDistrict": "431"
+        },
+        {
+            "districtName": "BOLAANG MONGONDOW SELATAN",
+            "idMsDistrict": "432"
+        },
+        {
+            "districtName": "BOLAANG MONGONDOW TIMUR",
+            "idMsDistrict": "433"
+        },
+        {
+            "districtName": "BOLAANG MONGONDOW UTARA",
+            "idMsDistrict": "434"
+        },
+        {
+            "districtName": "KEPULAUAN SANGIHE",
+            "idMsDistrict": "435"
+        },
+        {
+            "districtName": "KEPULAUAN SIAU TAGULANDANG BIARO",
+            "idMsDistrict": "436"
+        },
+        {
+            "districtName": "KEPULAUAN TALAUD",
+            "idMsDistrict": "437"
+        },
+        {
+            "districtName": "KOTA BITUNG",
+            "idMsDistrict": "438"
+        },
+        {
+            "districtName": "KOTA KOTAMOBAGU",
+            "idMsDistrict": "439"
+        },
+        {
+            "districtName": "KOTA MANADO",
+            "idMsDistrict": "440"
+        },
+        {
+            "districtName": "KOTA TOMOHON",
+            "idMsDistrict": "441"
+        },
+        {
+            "districtName": "MINAHASA",
+            "idMsDistrict": "442"
+        },
+        {
+            "districtName": "MINAHASA SELATAN",
+            "idMsDistrict": "443"
+        },
+        {
+            "districtName": "MINAHASA TENGGARA",
+            "idMsDistrict": "444"
+        },
+        {
+            "districtName": "MINAHASA UTARA",
+            "idMsDistrict": "445"
+        },
+        {
+            "districtName": "AGAM",
+            "idMsDistrict": "446"
+        },
+        {
+            "districtName": "DHARMASRAYA",
+            "idMsDistrict": "447"
+        },
+        {
+            "districtName": "KEPULAUAN MENTAWAI",
+            "idMsDistrict": "448"
+        },
+        {
+            "districtName": "KOTA BUKITTINGGI",
+            "idMsDistrict": "449"
+        },
+        {
+            "districtName": "KOTA PADANG",
+            "idMsDistrict": "450"
+        },
+        {
+            "districtName": "KOTA PADANG PANJANG",
+            "idMsDistrict": "451"
+        },
+        {
+            "districtName": "KOTA PARIAMAN",
+            "idMsDistrict": "452"
+        },
+        {
+            "districtName": "KOTA PAYAKUMBUH",
+            "idMsDistrict": "453"
+        },
+        {
+            "districtName": "KOTA SAWAHLUNTO",
+            "idMsDistrict": "454"
+        },
+        {
+            "districtName": "OGAN KOMERING ULU TIMUR",
+            "idMsDistrict": "480"
+        },
+        {
+            "districtName": "PENUKAL ABAB LEMATANG ILIR",
+            "idMsDistrict": "481"
+        },
+        {
+            "districtName": "ASAHAN",
+            "idMsDistrict": "482"
+        },
+        {
+            "districtName": "BATU BARA",
+            "idMsDistrict": "483"
+        },
+        {
+            "districtName": "DAIRI",
+            "idMsDistrict": "484"
+        },
+        {
+            "districtName": "DELI SERDANG",
+            "idMsDistrict": "485"
+        },
+        {
+            "districtName": "HUMBANG HASUNDUTAN",
+            "idMsDistrict": "486"
+        },
+        {
+            "districtName": "KARO",
+            "idMsDistrict": "487"
+        },
+        {
+            "districtName": "KOTA BINJAI",
+            "idMsDistrict": "488"
+        },
+        {
+            "districtName": "KOTA GUNUNGSITOLI",
+            "idMsDistrict": "489"
+        },
+        {
+            "districtName": "KOTA MEDAN",
+            "idMsDistrict": "490"
+        },
+        {
+            "districtName": "KOTA PADANG SIDIMPUAN",
+            "idMsDistrict": "491"
+        },
+        {
+            "districtName": "KOTA PEMATANGSIANTAR",
+            "idMsDistrict": "492"
+        },
+        {
+            "districtName": "KOTA SIBOLGA",
+            "idMsDistrict": "493"
+        },
+        {
+            "districtName": "KOTA TANJUNG BALAI",
+            "idMsDistrict": "494"
+        },
+        {
+            "districtName": "KOTA TEBING TINGGI",
+            "idMsDistrict": "495"
+        },
+        {
+            "districtName": "LABUHANBATU",
+            "idMsDistrict": "496"
+        },
+        {
+            "districtName": "LABUHANBATU SELATAN",
+            "idMsDistrict": "497"
+        },
+        {
+            "districtName": "LABUHANBATU UTARA",
+            "idMsDistrict": "498"
+        },
+        {
+            "districtName": "LANGKAT",
+            "idMsDistrict": "499"
+        },
+        {
+            "districtName": "MANDAILING NATAL",
+            "idMsDistrict": "500"
+        },
+        {
+            "districtName": "NIAS",
+            "idMsDistrict": "501"
+        },
+        {
+            "districtName": "NIAS BARAT",
+            "idMsDistrict": "502"
+        },
+        {
+            "districtName": "NIAS SELATAN",
+            "idMsDistrict": "503"
+        },
+        {
+            "districtName": "NIAS UTARA",
+            "idMsDistrict": "504"
+        },
+        {
+            "districtName": "PADANG LAWAS",
+            "idMsDistrict": "505"
+        },
+        {
+            "districtName": "PADANG LAWAS UTARA",
+            "idMsDistrict": "506"
+        },
+        {
+            "districtName": "PAKPAK BHARAT",
+            "idMsDistrict": "507"
+        },
+        {
+            "districtName": "SAMOSIR",
+            "idMsDistrict": "508"
+        },
+        {
+            "districtName": "SERDANG BEDAGAI",
+            "idMsDistrict": "509"
+        },
+        {
+            "districtName": "SIMALUNGUN",
+            "idMsDistrict": "510"
+        },
+        {
+            "districtName": "TAPANULI SELATAN",
+            "idMsDistrict": "511"
+        },
+        {
+            "districtName": "TAPANULI TENGAH",
+            "idMsDistrict": "512"
+        },
+        {
+            "districtName": "TAPANULI UTARA",
+            "idMsDistrict": "513"
+        },
+        {
+            "districtName": "BANDUNG",
+            "idMsDistrict": "79"
+        },
+        {
+            "districtName": "BANDUNG BARAT",
+            "idMsDistrict": "80"
+        },
+        {
+            "districtName": "BEKASI",
+            "idMsDistrict": "81"
+        },
+        {
+            "districtName": "BOGOR",
+            "idMsDistrict": "82"
+        },
+        {
+            "districtName": "CIAMIS",
+            "idMsDistrict": "83"
+        },
+        {
+            "districtName": "CIANJUR",
+            "idMsDistrict": "84"
+        },
+        {
+            "districtName": "CIREBON",
+            "idMsDistrict": "85"
+        },
+        {
+            "districtName": "GARUT",
+            "idMsDistrict": "86"
+        },
+        {
+            "districtName": "INDRAMAYU",
+            "idMsDistrict": "87"
+        },
+        {
+            "districtName": "KARAWANG",
+            "idMsDistrict": "88"
+        },
+        {
+            "districtName": "KOTA BANDUNG",
+            "idMsDistrict": "89"
+        },
+        {
+            "districtName": "KOTA BANJAR",
+            "idMsDistrict": "90"
+        },
+        {
+            "districtName": "KOTA BEKASI",
+            "idMsDistrict": "91"
+        },
+        {
+            "districtName": "KOTA BOGOR",
+            "idMsDistrict": "92"
+        },
+        {
+            "districtName": "KOTA CIMAHI",
+            "idMsDistrict": "93"
+        },
+        {
+            "districtName": "KOTA CIREBON",
+            "idMsDistrict": "94"
+        },
+        {
+            "districtName": "KOTA DEPOK",
+            "idMsDistrict": "95"
+        },
+        {
+            "districtName": "KOTA SUKABUMI",
+            "idMsDistrict": "96"
+        },
+        {
+            "districtName": "KOTA TASIKMALAYA",
+            "idMsDistrict": "97"
+        },
+        {
+            "districtName": "KUNINGAN",
+            "idMsDistrict": "98"
+        },
+        {
+            "districtName": "MAJALENGKA",
+            "idMsDistrict": "99"
+        },
+        {
+            "districtName": "PANGANDARAN",
+            "idMsDistrict": "100"
+        },
+        {
+            "districtName": "PURWAKARTA",
+            "idMsDistrict": "101"
+        },
+        {
+            "districtName": "SUBANG",
+            "idMsDistrict": "102"
+        },
+        {
+            "districtName": "SUKABUMI",
+            "idMsDistrict": "103"
+        },
+        {
+            "districtName": "SUMEDANG",
+            "idMsDistrict": "104"
+        },
+        {
+            "districtName": "TASIKMALAYA",
+            "idMsDistrict": "105"
+        },
+        {
+            "districtName": "BANJARNEGARA",
+            "idMsDistrict": "106"
+        },
+        {
+            "districtName": "BANYUMAS",
+            "idMsDistrict": "107"
+        },
+        {
+            "districtName": "BATANG",
+            "idMsDistrict": "108"
+        },
+        {
+            "districtName": "BLORA",
+            "idMsDistrict": "109"
+        },
+        {
+            "districtName": "BOYOLALI",
+            "idMsDistrict": "110"
+        },
+        {
+            "districtName": "ACEH BARAT",
+            "idMsDistrict": "1"
+        },
+        {
+            "districtName": "ACEH BARAT DAYA",
+            "idMsDistrict": "2"
+        },
+        {
+            "districtName": "ACEH BESAR",
+            "idMsDistrict": "3"
+        },
+        {
+            "districtName": "ACEH JAYA",
+            "idMsDistrict": "4"
+        },
+        {
+            "districtName": "ACEH SELATAN",
+            "idMsDistrict": "5"
+        },
+        {
+            "districtName": "ACEH SINGKIL",
+            "idMsDistrict": "6"
+        },
+        {
+            "districtName": "ACEH TAMIANG",
+            "idMsDistrict": "7"
+        },
+        {
+            "districtName": "ACEH TENGAH",
+            "idMsDistrict": "8"
+        },
+        {
+            "districtName": "ACEH TENGGARA",
+            "idMsDistrict": "9"
+        },
+        {
+            "districtName": "ACEH TIMUR",
+            "idMsDistrict": "10"
+        },
+        {
+            "districtName": "ACEH UTARA",
+            "idMsDistrict": "11"
+        },
+        {
+            "districtName": "BENER MERIAH",
+            "idMsDistrict": "12"
+        },
+        {
+            "districtName": "BIREUEN",
+            "idMsDistrict": "13"
+        },
+        {
+            "districtName": "GAYO LUES",
+            "idMsDistrict": "14"
+        },
+        {
+            "districtName": "KOTA BANDA ACEH",
+            "idMsDistrict": "15"
+        },
+        {
+            "districtName": "KOTA LANGSA",
+            "idMsDistrict": "16"
+        },
+        {
+            "districtName": "KOTA LHOKSEUMAWE",
+            "idMsDistrict": "17"
+        },
+        {
+            "districtName": "KOTA SABANG",
+            "idMsDistrict": "18"
+        },
+        {
+            "districtName": "KOTA SUBULUSSALAM",
+            "idMsDistrict": "19"
+        },
+        {
+            "districtName": "NAGAN RAYA",
+            "idMsDistrict": "20"
+        },
+        {
+            "districtName": "PIDIE",
+            "idMsDistrict": "21"
+        },
+        {
+            "districtName": "PIDIE JAYA",
+            "idMsDistrict": "22"
+        },
+        {
+            "districtName": "SIMEULUE",
+            "idMsDistrict": "23"
+        },
+        {
+            "districtName": "BADUNG",
+            "idMsDistrict": "24"
+        },
+        {
+            "districtName": "BANGLI",
+            "idMsDistrict": "25"
+        },
+        {
+            "districtName": "BULELENG",
+            "idMsDistrict": "26"
+        },
+        {
+            "districtName": "GIANYAR",
+            "idMsDistrict": "27"
+        },
+        {
+            "districtName": "JEMBRANA",
+            "idMsDistrict": "28"
+        },
+        {
+            "districtName": "KARANGASEM",
+            "idMsDistrict": "29"
+        },
+        {
+            "districtName": "LIMA PULUH KOTA",
+            "idMsDistrict": "456"
+        },
+        {
+            "districtName": "PADANG PARIAMAN",
+            "idMsDistrict": "457"
+        },
+        {
+            "districtName": "PASAMAN",
+            "idMsDistrict": "458"
+        },
+        {
+            "districtName": "PASAMAN BARAT",
+            "idMsDistrict": "459"
+        },
+        {
+            "districtName": "PESISIR SELATAN",
+            "idMsDistrict": "460"
+        },
+        {
+            "districtName": "SIJUNJUNG",
+            "idMsDistrict": "461"
+        },
+        {
+            "districtName": "SOLOK",
+            "idMsDistrict": "462"
+        },
+        {
+            "districtName": "SOLOK SELATAN",
+            "idMsDistrict": "463"
+        },
+        {
+            "districtName": "TANAH DATAR",
+            "idMsDistrict": "464"
+        },
+        {
+            "districtName": "BANYUASIN",
+            "idMsDistrict": "465"
+        }
+    ]
+}

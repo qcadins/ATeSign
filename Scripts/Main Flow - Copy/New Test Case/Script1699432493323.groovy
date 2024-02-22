@@ -5,10 +5,10 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.twilio.Twilio
-import com.twilio.rest.api.v2010.account.Message
-import com.twilio.type.PhoneNumber
-import com.twilio.base.ResourceSet
+//import com.twilio.Twilio
+//import com.twilio.rest.api.v2010.account.Message
+//import com.twilio.type.PhoneNumber
+//import com.twilio.base.ResourceSet
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign Main.xlsx')
@@ -18,27 +18,33 @@ GlobalVariable.NumofColm = 4
 excelPathFESignDocument = 'Main/Main'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-aa = WebUI.getAttribute(findTestObject('View User OTP/text_otp'), 'value')
-println aa
 
-WebUI.delay(19000000)
-@Grab(group='com.twilio.sdk', module='twilio', version='7.55.0')
-
-accountSid = 'AC67480a3610517f15d6f3179268d80111'
-authToken = '1a5e0ca394243f7454befb7fc84e5343'
-
-// Initialize Twilio client
-Twilio.init(accountSid, authToken)
+aa = 'xYItUDPFsvkdZZ57ncOfPg%3D%3D'
+println CustomKeywords.'customizekeyword.ParseText.parseDecrypt'(aa, 'iT0ZQaNFRrF179Ka')
 
 
-// Retrieve messages using Twilio API
-ResourceSet<Message> messages = Message.reader('').limit(20).read()
-
-println messages
-// Print the body of each message
-messages.each { message ->
-    println(message.getBody())
-}
+//
+//aa = WebUI.getAttribute(findTestObject('View User OTP/text_otp'), 'value')
+//println aa
+//
+//WebUI.delay(19000000)
+//@Grab(group='com.twilio.sdk', module='twilio', version='7.55.0')
+//
+//accountSid = 'AC67480a3610517f15d6f3179268d80111'
+//authToken = '1a5e0ca394243f7454befb7fc84e5343'
+//
+//// Initialize Twilio client
+//Twilio.init(accountSid, authToken)
+//
+//
+//// Retrieve messages using Twilio API
+//ResourceSet<Message> messages = Message.reader('').limit(20).read()
+//
+//println messages
+//// Print the body of each message
+//messages.each { message ->
+//    println(message.getBody())
+//}
 
 
 //otp = CustomKeywords.'customizekeyword.GetSMS.getOTP'('eSignHub')
