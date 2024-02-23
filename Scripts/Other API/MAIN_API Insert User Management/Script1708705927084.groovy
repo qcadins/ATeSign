@@ -45,10 +45,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         'HIT API Login untuk token : andy@ad-ins.com'
-        respon = WS.sendRequest(findTestObject('Postman/Add Balance Type', [('callerId') : findTestData(excelPath).getValue(
-                        GlobalVariable.NumofColm, rowExcel('callerId')), ('balanceTypeCode') : findTestData(excelPath).getValue(
-                        GlobalVariable.NumofColm, rowExcel('balanceTypeCode')), ('balanceTypeName') : findTestData(excelPath).getValue(
-                        GlobalVariable.NumofColm, rowExcel('balanceTypeName'))]))
+        respon = WS.sendRequest(findTestObject('Postman/Insert User Management', [('callerId') : findTestData(excelPath).getValue(
+                        GlobalVariable.NumofColm, rowExcel('callerId')), ('fullName') : findTestData(excelPath).getValue(
+                        GlobalVariable.NumofColm, rowExcel('fullName')), ('tenantCode') : findTestData(excelPath).getValue(
+                        GlobalVariable.NumofColm, rowExcel('tenantCode')), ('loginId') : findTestData(excelPath).getValue(
+                        GlobalVariable.NumofColm, rowExcel('loginId')), ('roleCode') : findTestData(excelPath).getValue(
+                        GlobalVariable.NumofColm, rowExcel('roleCode')), ('password') : findTestData(excelPath).getValue(
+                        GlobalVariable.NumofColm, rowExcel('password')), ('officeCode') : findTestData(excelPath).getValue(
+                        GlobalVariable.NumofColm, rowExcel('officeCode'))]))
 
         'ambil lama waktu yang diperlukan hingga request menerima balikan'
         elapsedTime = ((respon.elapsedTime / 1000) + ' second')
@@ -73,9 +77,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             if (statusCode == 0) {
                 if (GlobalVariable.checkStoreDB == 'Yes') {
                     'get data doc template dari DB'
-                    ArrayList<String> result = CustomKeywords.'connection.APIOnly.getAddBalanceType'(conneSign, findTestData(
-                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('balanceTypeCode')))
+                    ArrayList<String> result = CustomKeywords.'connection.UserManagement.getInsertUserManagement'(conneSign,
+						findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('loginId')), findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('tenantCode')))
 
+					println result
+					
                     'declare arraylist arraymatch'
                     ArrayList<String> arrayMatch = []
 
@@ -84,24 +90,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                     'verify add balance type'
                     arrayMatch.add(WebUI.verifyMatch(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
-                                    'callerId')), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-					'verify add balance type'
-					arrayMatch.add(WebUI.verifyMatch('BALANCE_TYPE', result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+                                    'fullName')), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
 					'verify add balance type'
 					arrayMatch.add(WebUI.verifyMatch(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
-									'balanceTypeCode')), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+                                    'loginId')), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
 					'verify add balance type'
 					arrayMatch.add(WebUI.verifyMatch(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
-									'balanceTypeName')), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+									'roleCode')), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
 					'verify add balance type'
 					arrayMatch.add(WebUI.verifyMatch('1', result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
 					'verify add balance type'
-					arrayMatch.add(WebUI.verifyMatch('0', result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+					arrayMatch.add(WebUI.verifyMatch(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
+									'officeCode')), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
                     'jika data db tidak sesuai dengan excel'
                     if (arrayMatch.contains(false)) {

@@ -10,10 +10,10 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'declare arraylist arraymatch'
 ArrayList arrayMatch = []
 
-if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('New')) {	
+if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('New')) {	
     'ambil data role dari db'
     ArrayList<String> resultDB = CustomKeywords.'connection.UserManagement.getUserManagementNewStoreDB'(conneSign, findTestData(
-            excelPathUserManagement).getValue(GlobalVariable.NumofColm, 17).toUpperCase(), GlobalVariable.Tenant)
+            excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).toUpperCase(), GlobalVariable.Tenant)
 
     startTakeExcel = 8
 
@@ -41,10 +41,10 @@ if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6).
 				';') + GlobalVariable.ReasonFailedStoredDB + ' pada data ' + resultExcel[i] + ' dan ' + resultDB[i]))
         }
     }
-} else if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6).equalsIgnoreCase('Setting')) {
+} else if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase('Setting')) {
     'ambil data role dari db'
     ArrayList<String> resultDB = CustomKeywords.'connection.UserManagement.getUserManagementEditStoreDB'(conneSign, findTestData(
-            excelPathUserManagement).getValue(GlobalVariable.NumofColm, 17), GlobalVariable.Tenant)
+            excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('$Email')), GlobalVariable.Tenant)
 
     startTakeExcel = 14
 
@@ -69,3 +69,6 @@ if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, 6).
     }
 }
 
+def rowExcel(String cellValue) {
+	CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+}

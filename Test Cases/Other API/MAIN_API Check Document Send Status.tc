@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API Check Document Send Status</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>4ae7ebd8-5863-4dcc-8bca-c3dd7904bbeb</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>37bf7298-c142-458f-b675-418c655df619</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>eb0d97ee-0c17-4a67-aedb-56039780deac</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'API/Check Document Send Status'</defaultValue>
+      <description></description>
+      <id>37bf7298-c142-458f-b675-418c655df619</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Check Document Send Status'</defaultValue>
+      <description></description>
+      <id>eb0d97ee-0c17-4a67-aedb-56039780deac</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>

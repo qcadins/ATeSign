@@ -104,25 +104,10 @@ class APIOnly {
 	}
 
 	@Keyword
-	getOtpCode(Connection conn, String user) {
+	getCheckDocumentSendStatus(Connection conn, String refNumber) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select amm.otp_code from ms_vendor_registered_user msvr left join am_msuser amm on amm.id_ms_user = msvr.id_ms_user left join ms_vendor msv on msv.id_ms_vendor = msvr.id_ms_vendor where (msvr.signer_registered_email = '" + user + "' OR msvr.hashed_signer_registered_phone = encode(sha256('" + user + "'), 'hex') OR hashed_id_no = encode(sha256('" + user + "'), 'hex'))")
-		metadata = resultSet.metaData
-
-		columnCount = metadata.getColumnCount()
-
-		while (resultSet.next()) {
-			data = resultSet.getObject(1)
-		}
-		data
-	}
-
-	@Keyword
-	getResetCode(Connection conn, String user) {
-		stm = conn.createStatement()
-
-		resultSet = stm.executeQuery("select amm.reset_code from ms_vendor_registered_user msvr left join am_msuser amm on amm.id_ms_user = msvr.id_ms_user left join ms_vendor msv on msv.id_ms_vendor = msvr.id_ms_vendor where (msvr.signer_registered_email = '" + user + "' OR msvr.hashed_signer_registered_phone = encode(sha256('" + user + "'), 'hex') OR hashed_id_no = encode(sha256('" + user + "'), 'hex'))")
+		resultSet = stm.executeQuery("select count(tdd.*) from tr_document_d tdd left join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h where tdh.ref_number = '"+refNumber+"'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

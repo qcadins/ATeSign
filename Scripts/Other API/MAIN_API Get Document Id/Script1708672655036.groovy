@@ -45,7 +45,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
         'HIT API Login untuk token : andy@ad-ins.com'
-        respon = WS.sendRequest(findTestObject('Postman/Add Balance Type', [('callerId') : findTestData(excelPath).getValue(
+        respon = WS.sendRequest(findTestObject('Postman/Get Document Id', [('callerId') : findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('callerId')), ('balanceTypeCode') : findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('balanceTypeCode')), ('balanceTypeName') : findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('balanceTypeName'))]))
@@ -65,53 +65,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
 
         'Jika status HIT API Login 200 OK'
-        if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
+        if (WS.verifyResponseStatusCode(responLogin, 200, FailureHandling.OPTIONAL) == true) {
             'get Status Code'
             statusCode = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
             'Jika status codenya 0'
             if (statusCode == 0) {
                 if (GlobalVariable.checkStoreDB == 'Yes') {
-                    'get data doc template dari DB'
-                    ArrayList<String> result = CustomKeywords.'connection.APIOnly.getAddBalanceType'(conneSign, findTestData(
-                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('balanceTypeCode')))
-
-                    'declare arraylist arraymatch'
-                    ArrayList<String> arrayMatch = []
-
-                    'declare arrayindex'
-                    arrayIndex = 0
-
-                    'verify add balance type'
-                    arrayMatch.add(WebUI.verifyMatch(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
-                                    'callerId')), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-					'verify add balance type'
-					arrayMatch.add(WebUI.verifyMatch('BALANCE_TYPE', result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-					'verify add balance type'
-					arrayMatch.add(WebUI.verifyMatch(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
-									'balanceTypeCode')), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-					'verify add balance type'
-					arrayMatch.add(WebUI.verifyMatch(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
-									'balanceTypeName')), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-					'verify add balance type'
-					arrayMatch.add(WebUI.verifyMatch('1', result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-					'verify add balance type'
-					arrayMatch.add(WebUI.verifyMatch('0', result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-                    'jika data db tidak sesuai dengan excel'
-                    if (arrayMatch.contains(false)) {
-                        GlobalVariable.FlagFailed = 1
-
-                        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                            GlobalVariable.StatusFailed, (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
-                                    'Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
-                    }
                 }
                 
                 if (GlobalVariable.FlagFailed == 0) {
