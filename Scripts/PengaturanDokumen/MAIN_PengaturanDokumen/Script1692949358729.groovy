@@ -1083,11 +1083,8 @@ def inputForm(Connection conneSign, int checked) {
     }
     
     'Input value tipe pembayaran'
-    WebUI.setText(findTestObject('TandaTanganDokumen/input_tipePembayaran'), findTestData(excelPathPengaturanDokumen).getValue(
-            GlobalVariable.NumofColm, rowExcel('$Tipe Pembayaran TTD')))
-
-    'Input enter'
-    WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_tipePembayaran'), Keys.chord(Keys.ENTER))
+	inputDDLExact('Object Repository/TandaTanganDokumen/input_tipePembayaran', findTestData(excelPathPengaturanDokumen).getValue(
+		GlobalVariable.NumofColm, rowExcel('$Tipe Pembayaran TTD')))
 
     'click label judul'
     WebUI.click(findTestObject('TandaTanganDokumen/label_Judul'))
@@ -1103,47 +1100,26 @@ def inputForm(Connection conneSign, int checked) {
     }
     
     'Input value Psre'
-    WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/select_Psre'), findTestData(excelPathPengaturanDokumen).getValue(
-            GlobalVariable.NumofColm, rowExcel('Input Psre')))
-
-    'Input enter'
-    WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_Psre'), Keys.chord(Keys.ENTER))
-
-    'click label judul'
-    WebUI.click(findTestObject('TandaTanganDokumen/label_Judul'))
-
+	inputDDLExact('Object Repository/TandaTanganDokumen/select_Psre', findTestData(excelPathPengaturanDokumen).getValue(
+		GlobalVariable.NumofColm, rowExcel('Input Psre')))
+	
     'Input value sequential sign'
-    WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/select_SequentialSigning'), findTestData(excelPathPengaturanDokumen).getValue(
-            GlobalVariable.NumofColm, rowExcel('Sequential Signing')))
-
-    'Input enter'
-    WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_SequentialSigning'), Keys.chord(Keys.ENTER))
-
+	inputDDLExact('Object Repository/TandaTanganDokumen/select_SequentialSigning', findTestData(excelPathPengaturanDokumen).getValue(
+		GlobalVariable.NumofColm, rowExcel('Sequential Signing')))
+	
 	if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Input Psre')).equalsIgnoreCase('Privy')) {
 		WebUI.click(findTestObject('TandaTanganDokumen/select_QRSign'))
 		
 		WebUI.verifyElementText(findTestObject('TandaTanganDokumen/ddl_QRSign'), 'Ya', FailureHandling.CONTINUE_ON_FAILURE)
 	} else {
 		'Input value QRSign'
-		WebUI.setText(findTestObject('Object Repository/TandaTanganDokumen/select_QRSign'), findTestData(excelPathPengaturanDokumen).getValue(
+		inputDDLExact('Object Repository/TandaTanganDokumen/select_QRSign', findTestData(excelPathPengaturanDokumen).getValue(
 			GlobalVariable.NumofColm, rowExcel('QR Lacak Ttd')))
-
-		'Input enter'
-		WebUI.sendKeys(findTestObject('Object Repository/TandaTanganDokumen/select_QRSign'), Keys.chord(Keys.ENTER))
 	}
 	
-    'click label judul'
-    WebUI.click(findTestObject('TandaTanganDokumen/label_Judul'))
-
-    'Input value status'
-    WebUI.setText(findTestObject('TandaTanganDokumen/input_Status'), findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
+	'input ddl pada status'
+	inputDDLExact('TandaTanganDokumen/input_Status', findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
             rowExcel('Status Active')))
-
-    'Input enter'
-    WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
-
-    'click label judul'
-    WebUI.click(findTestObject('TandaTanganDokumen/label_Judul'))
 
     'Jika panjang dokumen lebih besar dari 0'
     if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('$Dokumen')).length() > 0) {
@@ -1262,3 +1238,28 @@ def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
+def inputDDLExact(String locationObject, String input) {
+	'Input value status'
+	WebUI.setText(findTestObject(locationObject), input)
+
+	WebUI.click(findTestObject(locationObject))
+	
+	'get token unik'
+	tokenUnique = WebUI.getAttribute(findTestObject(locationObject), 'aria-owns')
+	
+	'modify object label Value'
+	modifyObjectGetDDLFromToken = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]', true)
+	
+	DDLFromToken = WebUI.getText(modifyObjectGetDDLFromToken)
+	
+	for (i = 0; i < DDLFromToken.split('\n', -1).size(); i++) {
+		if (DDLFromToken.split('\n', -1)[i].toString().toLowerCase() == input.toString().toLowerCase()) {
+			modifyObjectClicked = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]/div['+ (i + 1) +']', true)
+
+			WebUI.click(modifyObjectClicked)
+			break
+		}
+	}
+}

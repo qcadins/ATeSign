@@ -18,6 +18,14 @@
       <name>xpath</name>
       <type>Main</type>
       <value>//*[@id=&quot;listDokumen&quot;]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper/datatable-body-row/div[2]/datatable-body-cell[1]/div/p</value>
-      <webElementGuid>8c936ff0-a697-49bc-8dfb-1018d8382cc6</webElementGuid>
+      <webElementGuid>4b905a98-90c4-480c-824e-505beb84def9</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>false</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>text</name>
+      <type>Main</type>
+      <value>kkk</value>
+      <webElementGuid>6f7f7616-ed6a-4235-9c59-9e540b584a09</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

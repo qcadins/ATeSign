@@ -35,6 +35,12 @@
       <value></value>
       <variableId>83dffcb1-138a-4f68-8768-31cc4f02b4f3</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>84053c3d-9e01-4b88-abe0-025f54009956</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -69,5 +75,12 @@
       <id>83dffcb1-138a-4f68-8768-31cc4f02b4f3</id>
       <masked>false</masked>
       <name>countCheckSaldo</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>84053c3d-9e01-4b88-abe0-025f54009956</id>
+      <masked>false</masked>
+      <name>variable</name>
    </variable>
 </TestCaseEntity>

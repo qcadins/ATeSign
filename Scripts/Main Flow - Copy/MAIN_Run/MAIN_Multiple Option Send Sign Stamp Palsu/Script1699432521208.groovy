@@ -1,4 +1,4 @@
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
+	import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
@@ -296,8 +296,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             break
                         }
                         
+						int countLooping = emailSigner.get(emailSigner.keySet()[i]).size()
+						
                         'looping per signer'
-                        for (y = 0; y < emailSigner.get(emailSigner.keySet()[i]).size(); y++) {   
+                        for (y = 0; y < countLooping; y++) {   
                             'checking signer tersebut adalah signer autosign'
                             ifSignerAuto = CustomKeywords.'connection.APIFullService.getIfSignerAutosign'(conneSign, emailSigner.keySet()[
                                 i], emailSigner.get(emailSigner.keySet()[i])[y])
@@ -521,11 +523,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 
                 'get result saldo after'
                 resultSaldoAfter = WebUI.callTestCase(findTestCase('Main Flow - Copy/getSaldo'), [('excel') : excelPathMain
-                        , ('sheet') : sheet, ('vendor') : vendor, ('usageSaldo') : usageSaldo], FailureHandling.CONTINUE_ON_FAILURE)
+                        , ('sheet') : sheet, ('vendor') : vendor, ('usageSaldo') : 'Sign'], FailureHandling.CONTINUE_ON_FAILURE)
 
                 WebUI.comment(GlobalVariable.eSignData.toString())
 
-                if ((GlobalVariable.eSignData['allTrxNo']).toString().size() > 0) {
+                if (GlobalVariable.eSignData['allTrxNo'].toString().length() > 0) {
                     'Jika count saldo sign/ttd diatas (after) sama dengan yang dulu/pertama (before) dikurang jumlah dokumen yang ditandatangani'
                     if (checkVerifyEqualorMatch(WebUI.verifyEqual(Integer.parseInt(resultSaldoBefore.get(vendor)) - (GlobalVariable.eSignData[
                             'CountVerifikasiSign']), Integer.parseInt(resultSaldoAfter.get(vendor)), FailureHandling.CONTINUE_ON_FAILURE), 
@@ -829,7 +831,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     }
                     
                     'jika seluruh trx no ada'
-                    if ((GlobalVariable.eSignData['allTrxNo']).toString().length() > 0) {
+                    if (GlobalVariable.eSignData['allTrxNo'].toString().length() > 0) {
                         if ((vendor.equalsIgnoreCase('Privy') || vendor.equalsIgnoreCase('Digisign')) || vendor.equalsIgnoreCase(
                             'tekenaja')) {
                             'klik ddl untuk tenant memilih mengenai Vida'
@@ -850,7 +852,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                     GlobalVariable.NumofColm, rowExcel('documentid')))
 
                             'Input filter di Mutasi Saldo'
-                            inputFilterTrx(conneSign, currentDate, '', signTypes[looping], officeName)
+                            inputFilterTrx(conneSign, currentDate, GlobalVariable.eSignData['NoKontrakProcessed'].split(';', -1)[looping], signTypes[looping], officeName)
 
                             'inquirydb mengenai get detail trx'
                             inquiryDB = CustomKeywords.'connection.DataVerif.getDetailTrx'(conneSign, trxNo[looping])
@@ -1111,27 +1113,16 @@ def inputFilterTrx(Connection conneSign, String currentDate, String noKontrak, S
         documentType = CustomKeywords.'connection.APIFullService.getDocumentType'(conneSign, noKontrak)
     }
     
-    'input filter dari saldo'
-    WebUI.setText(findTestObject('Saldo/input_tipesaldo'), signType)
-
     not_run: WebUI.sendKeys(findTestObject('Saldo/input_tipedokumen'), Keys.chord(Keys.ENTER))
 
     'Input documentTemplateName'
     not_run: WebUI.setText(findTestObject('Saldo/input_namadokumen'), documentTemplateName)
 
-    if (signType == 'Stamp Duty') {
-        'Input down untuk stamp duty'
-        WebUI.sendKeys(findTestObject('Saldo/input_tipesaldo'), Keys.chord(Keys.ARROW_DOWN))
-    }
-    
-    'Input enter'
-    WebUI.sendKeys(findTestObject('Saldo/input_tipesaldo'), Keys.chord(Keys.ENTER))
+	'input filter dari saldo'
+	inputDDLExact('Saldo/input_tipesaldo', signType)
 
     'Input tipe transaksi'
-    WebUI.setText(findTestObject('Saldo/input_tipetransaksi'), 'Use ' + signType)
-
-    'Input enter'
-    WebUI.sendKeys(findTestObject('Saldo/input_tipetransaksi'), Keys.chord(Keys.ENTER))
+	inputDDLExact('Saldo/input_tipetransaksi', 'Use ' + signType)
 
     'Input date sekarang'
     WebUI.setText(findTestObject('Saldo/input_fromdate'), currentDate)
@@ -1143,10 +1134,7 @@ def inputFilterTrx(Connection conneSign, String currentDate, String noKontrak, S
     WebUI.setText(findTestObject('Saldo/input_todate'), currentDate)
 
     'Input office name'
-    WebUI.setText(findTestObject('Saldo/input_officeName'), officeName)
-
-    'Input office name'
-    WebUI.sendKeys(findTestObject('Saldo/input_officeName'), Keys.chord(Keys.ENTER))
+	inputDDLExact('Saldo/input_officeName', officeName)
 
     'Klik cari'
     WebUI.click(findTestObject('Saldo/btn_cari'))
@@ -1162,4 +1150,30 @@ def checkVerifyEqualorMatch(Boolean isMatch, String reason) {
             ((findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') + 
             ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + reason)
     }
+}
+
+def inputDDLExact(String locationObject, String input) {
+	'Input value status'
+	WebUI.setText(findTestObject(locationObject), input)
+
+	WebUI.click(findTestObject(locationObject))
+	
+	'get token unik'
+	tokenUnique = WebUI.getAttribute(findTestObject(locationObject), 'aria-owns')
+	
+	'modify object label Value'
+	modifyObjectGetDDLFromToken = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]', true)
+	
+	DDLFromToken = WebUI.getText(modifyObjectGetDDLFromToken)
+	
+	for (i = 0; i < DDLFromToken.split('\n', -1).size(); i++) {
+		if (DDLFromToken.split('\n', -1)[i].toString().toLowerCase() == input.toString().toLowerCase()) {
+			modifyObjectClicked = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]/div['+ (i + 1) +']', true)
+
+			WebUI.click(modifyObjectClicked)
+			break
+		}
+	}
 }

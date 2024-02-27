@@ -87,7 +87,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'Failed alasan save gagal tidak bisa diklik.'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                     ((findTestData(excelPathViewUserOTP).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
-                        '-', '') + ';') + GlobalVariable.ReasonFailedNoneUI) + ' pada menu Message Delivery Report ')
+                        '-', '') + ';') + GlobalVariable.ReasonFailedNoneUI) + ' pada menu View User OTP ')
 
                 break
             }
@@ -175,8 +175,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                                         GlobalVariable.FlagFailed = 1
                                     }
                                 } else {
-                                    'tidak muncul popup'
-
                                     'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
                                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                                         GlobalVariable.StatusFailed, (findTestData(excelPathViewUserOTP).getValue(GlobalVariable.NumofColm, 
@@ -258,8 +256,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                                         GlobalVariable.FlagFailed = 1
                                     }
                                 } else {
-                                    'tidak muncul popup'
-
                                     'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
                                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                                         GlobalVariable.StatusFailed, (findTestData(excelPathViewUserOTP).getValue(GlobalVariable.NumofColm, 
@@ -300,7 +296,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 WebUI.closeBrowser()
 
 def inputViewUserOTP() {
-    'input vendor'
+    'input email / NIK / no hp'
     WebUI.setText(findTestObject('View User OTP/input_EmailNIKNoHp'), findTestData(excelPathViewUserOTP).getValue(GlobalVariable.NumofColm, 
             rowExcel('Email / NIK / No Hp')))
 
@@ -326,14 +322,14 @@ def checkPaging(Connection conneSign) {
     'klik search'
     WebUI.click(findTestObject('View User OTP/button_Search'))
 
-    'ambil total trx berdasarkan filter yang telah disiapkan pada ui'
+    'ambil total user berdasarkan filter yang telah disiapkan pada ui'
     totalTrxUI = WebUI.getText(findTestObject('View User OTP/label_TotalViewUserOTP')).split(' ', -1)
 
-    'ambil total trx berdasarkan filter yang telah disiapkan pada db'
+    'ambil total user berdasarkan filter yang telah disiapkan pada db'
     totalTrxDB = CustomKeywords.'connection.ViewUserOTP.getTotalViewUserOTP'(conneSign, findTestData(excelPathViewUserOTP).getValue(
             GlobalVariable.NumofColm, rowExcel('Email / NIK / No Hp')))
 
-    'verify total trx pada message delivery report'
+    'verify total trx pada view user otp'
     checkVerifyPaging(WebUI.verifyMatch(totalTrxUI[0], totalTrxDB, false, FailureHandling.CONTINUE_ON_FAILURE), ' total transaksi ui dan db tidak match')
 }
 
@@ -357,40 +353,6 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 
         GlobalVariable.FlagFailed = 1
     }
-}
-
-def checkDDL(TestObject objectDDL, ArrayList listDB, String reason) {
-    'declare array untuk menampung ddl'
-    ArrayList list = []
-
-    'click untuk memunculkan ddl'
-    WebUI.click(objectDDL)
-
-    'get id ddl'
-    id = WebUI.getAttribute(findTestObject('MessageDeliveryReport/ddlClass'), 'id', FailureHandling.CONTINUE_ON_FAILURE)
-
-    'get row'
-    variable = DriverFactory.webDriver.findElements(By.cssSelector(('#' + id) + '> div > div:nth-child(2) div'))
-
-    'looping untuk get ddl kedalam array'
-    for (i = 1; i < variable.size(); i++) {
-        'modify object DDL'
-        modifyObjectDDL = WebUI.modifyObjectProperty(findTestObject('MessageDeliveryReport/modifyObject'), 'xpath', 'equals', 
-            ((('//*[@id=\'' + id) + '-') + i) + '\']', true)
-
-        'add ddl ke array'
-        list.add(WebUI.getText(modifyObjectDDL))
-    }
-    
-    'verify ddl ui = db'
-    checkVerifyEqualOrMatch(listDB.containsAll(list), reason)
-
-    'verify jumlah ddl ui = db'
-    checkVerifyEqualOrMatch(WebUI.verifyEqual(list.size(), listDB.size(), FailureHandling.CONTINUE_ON_FAILURE), ' Jumlah ' + 
-        reason)
-
-    'Input enter untuk tutup ddl'
-    WebUI.sendKeys(objectDDL, Keys.chord(Keys.ENTER))
 }
 
 def rowExcel(String cellValue) {
@@ -422,4 +384,3 @@ def checkErrorLog() {
     }
     false
 }
-

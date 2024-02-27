@@ -260,7 +260,7 @@ def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) 
         (businessLineCode[i])) + '", "businessLineName": "') + (businessLineName[i])) + '", "isSequence": "') + (isSequence[
         i])) + '",  "psreCode": "') + (psreCode[i])) + '", ')
 
-		if (qrEnable[i] != '') {
+		if (useSignQr[i] != '') {
 			bodyAPI = (((bodyAPI + ' "useSignQr" : "') + (useSignQr[i])) + '", ')
 		}
         'Memasukkan bodyAPI ke stringRefno'
@@ -520,7 +520,6 @@ def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) 
 		'Jika informasi di excel mengenai stampLocation seperti page dan koordinat ada, maka'
 		if (pageStamp[i].length() != 0 && llxStamp[i].length() != 0 && llyStamp[i].length() != 0 && urxStamp[i].length() !=
 		0 && uryStamp[i].length() != 0) {
-	WebUI.delay(100000)
         	bodyAPI = setBodyForStampingLocation(pageStamp[i], llxStamp[i], llyStamp[i], urxStamp[i], uryStamp[i], bodyAPI)
 		}
 		}

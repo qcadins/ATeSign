@@ -583,11 +583,8 @@ def checkErrorLog() {
 }
 
 def inputForm(Connection conneSign) {
-    'Input teks di nama template dokumen'
-    WebUI.setText(findTestObject('ManualSign/input_psre'), GlobalVariable.Psre)
-
-    'Klik enter'
-    WebUI.sendKeys(findTestObject('ManualSign/input_psre'), Keys.chord(Keys.ENTER))
+    'Input teks input psre'
+	inputDDLExact('ManualSign/input_psre', GlobalVariable.Psre)
 
     'Input teks kode template dokumen'
     WebUI.setText(findTestObject('ManualSign/input_referenceNo'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
@@ -597,31 +594,22 @@ def inputForm(Connection conneSign) {
     WebUI.setText(findTestObject('ManualSign/input_documentName'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
             rowExcel('documentName')))
 
-    'Input AKtif pada input Status'
+    'Input tanggal document'
     WebUI.setText(findTestObject('ManualSign/input_documentDate'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
             rowExcel('$Tanggal Dokumen (Send Manual)')))
 
-    'Input AKtif pada input Status'
-    WebUI.setText(findTestObject('ManualSign/input_jenisPembayaran'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
+    'Input jenis pembayaran'
+	inputDDLExact('ManualSign/input_jenisPembayaran', findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
             rowExcel('$Jenis Pembayaran (Send Manual)')))
-
-    'Klik enter'
-    WebUI.sendKeys(findTestObject('ManualSign/input_jenisPembayaran'), Keys.chord(Keys.ENTER))
-
+	
     'Input is sequence'
-    WebUI.setText(findTestObject('ManualSign/input_isSequence'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
-            rowExcel('isSequence')))
-
-    'Klik enter'
-    WebUI.sendKeys(findTestObject('ManualSign/input_isSequence'), Keys.chord(Keys.ENTER))
+	inputDDLExact('ManualSign/input_isSequence', findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
+		rowExcel('isSequence')))
 
     if (!(GlobalVariable.Psre.toString().equalsIgnoreCase('Privy'))) {
         'Input qr'
-        WebUI.setText(findTestObject('ManualSign/input_qr'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
-                rowExcel('QR')))
-
-        'Klik enter'
-        WebUI.sendKeys(findTestObject('ManualSign/input_qr'), Keys.chord(Keys.ENTER))
+		inputDDLExact('ManualSign/input_qr', findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
+			rowExcel('QR')))
     }
     
 	'get data store db'
@@ -632,11 +620,8 @@ def inputForm(Connection conneSign) {
 		
     if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('businessLineName')) != '') {
 		'Input pada business line'
-        WebUI.setText(findTestObject('ManualSign/input_businessLineCode'), findTestData(excelPathManualSigntoSign).getValue(
-                GlobalVariable.NumofColm, rowExcel('businessLineName')))
-
-        'Klik enter'
-        WebUI.sendKeys(findTestObject('ManualSign/input_businessLineCode'), Keys.chord(Keys.ENTER))
+		inputDDLExact('ManualSign/input_businessLineCode', findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
+			rowExcel('businessLineName')))
     }
 	
 	'get data store db'
@@ -647,11 +632,8 @@ def inputForm(Connection conneSign) {
 		
     if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('regionName')) != '') {
         'Input pada region code'
-        WebUI.setText(findTestObject('ManualSign/input_regionCode'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
-                rowExcel('regionName')))
-
-        'Klik enter'
-        WebUI.sendKeys(findTestObject('ManualSign/input_regionCode'), Keys.chord(Keys.ENTER))
+		inputDDLExact('ManualSign/input_regionCode', findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
+			rowExcel('regionName')))
     }
 
     if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('officeName')) != '') {
@@ -660,13 +642,10 @@ def inputForm(Connection conneSign) {
 	
 		'check ddl busienss line code count'
 		checkDDLWithGetDDL(findTestObject('ManualSign/button_ddlOfficeCode'), result, ' pada tipe Office ', findTestObject('ManualSign/btn_closeddlOffice'))
-	
+		
 		'Input pada office code'
-        WebUI.setText(findTestObject('ManualSign/input_officeCode'), findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, 
-                rowExcel('officeName')))
-
-        'Klik enter'
-        WebUI.sendKeys(findTestObject('ManualSign/input_officeCode'), Keys.chord(Keys.ENTER))
+		inputDDLExact('ManualSign/input_officeCode', findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
+			rowExcel('officeName')))
     }
     
     'Code untuk mengambil file berdasarkan direktori masing-masing sekaligus ambil value dari excel'
@@ -686,11 +665,8 @@ def inputForm(Connection conneSign) {
         }
         
         'Input Aktif pada input Status'
-        WebUI.setText(findTestObject('ManualSign/input_tipeDokumenPeruri'), findTestData(excelPathManualSigntoSign).getValue(
-                GlobalVariable.NumofColm, rowExcel('Tipe Dokumen Peruri (Send Manual)')))
-
-        'Klik enter'
-        WebUI.sendKeys(findTestObject('ManualSign/input_tipeDokumenPeruri'), Keys.chord(Keys.ENTER))
+		inputDDLExact('ManualSign/input_tipeDokumenPeruri', findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
+			rowExcel('Tipe Dokumen Peruri (Send Manual)')))
 
         if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Tipe Dokumen Peruri (Send Manual)')) == 
         '') {
@@ -699,11 +675,8 @@ def inputForm(Connection conneSign) {
         }
         
         'Input AKtif pada input Status'
-        WebUI.setText(findTestObject('ManualSign/input_isAutomatedStamp'), findTestData(excelPathManualSigntoSign).getValue(
-                GlobalVariable.NumofColm, rowExcel('$Stamp Meterai Otomatis (Send Manual)')))
-
-        'Klik enter'
-        WebUI.sendKeys(findTestObject('ManualSign/input_isAutomatedStamp'), Keys.chord(Keys.ENTER))
+		inputDDLExact('ManualSign/input_isAutomatedStamp', findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm,
+			rowExcel('$Stamp Meterai Otomatis (Send Manual)')))
     } else if (findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('$Membutuhkan e-Meterai (Send Manual)')) == 
     'No') {
         if (WebUI.verifyElementChecked(findTestObject('ManualSign/input_isE-Meterai'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
@@ -973,4 +946,30 @@ def checkDDL(TestObject objectDDL, int listDB, String reason) {
 
 	'Input enter untuk tutup ddl'
 	WebUI.sendKeys(objectDDL, Keys.chord(Keys.ENTER))
+}
+
+def inputDDLExact(String locationObject, String input) {
+	'Input value status'
+	WebUI.setText(findTestObject(locationObject), input)
+
+	WebUI.click(findTestObject(locationObject))
+	
+	'get token unik'
+	tokenUnique = WebUI.getAttribute(findTestObject(locationObject), 'aria-owns')
+	
+	'modify object label Value'
+	modifyObjectGetDDLFromToken = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]', true)
+	
+	DDLFromToken = WebUI.getText(modifyObjectGetDDLFromToken)
+	
+	for (i = 0; i < DDLFromToken.split('\n', -1).size(); i++) {
+		if (DDLFromToken.split('\n', -1)[i].toString().toLowerCase() == input.toString().toLowerCase()) {
+			modifyObjectClicked = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+				'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]/div['+ (i + 1) +']', true)
+
+			WebUI.click(modifyObjectClicked)
+			break
+		}
+	}
 }

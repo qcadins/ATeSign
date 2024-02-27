@@ -86,8 +86,8 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 
     HashMap<String, String> result = [:]
 
-    result = generateEncryptMessage(conneSign, GlobalVariable.storeVar.keySet()[0], GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[
-        0])], tenantCode)
+    result = generateEncryptMessage(conneSign, GlobalVariable.storeVar.keySet()[0], GlobalVariable.storeVar[GlobalVariable.storeVar.keySet()[
+        0]], tenantCode)
 
     'Inisialisasi variable yang dibutuhkan, Mengkosongkan nomor kontrak dan document Template Name'
     String noKontrak = ''
@@ -724,13 +724,12 @@ def rowExcel(String cellValue) {
 
 def encryptLink(Connection conneSign, String documentId, String emailSigner, String aesKey) {
     'get current date'
-    String currentDateTimeStamp = new Date().format('yyyy-MM-dd')
+    String currentDateTimeStamp = new Date().format('yyyy-MM-dd HH:mm:ss')
 
     officeCode = CustomKeywords.'connection.DataVerif.getOfficeCode'(conneSign, documentId)
 
     'pembuatan message yang akan dienkrip'
-    msg = (((((('{"officeCode" : "' + officeCode) + '", "email" : "') + emailSigner) + '","timestamp" : "') + currentDateTimeStamp) + 
-    '"}')
+    msg = ((((('{"officeCode" : "' + officeCode) + '", "email" : "') + emailSigner) + '","timestamp" : "') + currentDateTimeStamp + '"}')
 
     'enkripsi msg'
     encryptMsg = CustomKeywords.'customizekeyword.ParseText.parseEncrypt'(msg, aesKey)
@@ -915,7 +914,7 @@ def generateEncryptMessage(Connection conneSign, String documentId, String email
     }
     
     HashMap<String, String> result = [:]
-
+	
     result.put('encryptDocumentMonitoring', linkDocumentMonitoring)
 
     result.put('encryptKotakMasuk', linkKotakMasuk)

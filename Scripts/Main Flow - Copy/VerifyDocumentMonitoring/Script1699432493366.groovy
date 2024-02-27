@@ -8,6 +8,7 @@ import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.By as By
 import org.openqa.selenium.Keys as Keys
+import com.kms.katalon.core.testobject.TestObject
 
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
@@ -107,7 +108,7 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
         sizeColumnofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('#listDokumen > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller > datatable-row-wrapper:nth-child(1) > datatable-body-row datatable-body-cell'))
 
         'Jika valuenya ada'
-        if (WebUI.verifyElementPresent(modifyObjectvalues, GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+        if (WebUI.verifyElementPresent(modifyObjectvalues, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
             'Pembuatan untuk array Index result Query'
             arrayIndex = 0
 
@@ -205,7 +206,7 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
             true)
 
         'Jika valuenya ada'
-        if (WebUI.verifyElementPresent(modifyObjectvalues, GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+        if (WebUI.verifyElementPresent(modifyObjectvalues, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
             WebUI.delay(2)
 
             'Mengambil row size dari value'
@@ -458,7 +459,7 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
         sizeColumnofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('#listDokumen > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-body-cell'))
 
         'Jika valuenya ada'
-        if (WebUI.verifyElementPresent(modifyObjectvalues, GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+        if (WebUI.verifyElementPresent(modifyObjectvalues, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
             'scroll menuju values element'
             WebUI.scrollToElement(modifyObjectvalues, GlobalVariable.TimeOut)
 
@@ -577,29 +578,17 @@ def inputDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan,
         1)])
 
     'Set text mengenai tipe dokumen'
-    WebUI.setText(findTestObject('DocumentMonitoring/input_TipeDok'), inputDocumentMonitoring[arrayIndexInput++])
-
-    'Enter'
-    WebUI.sendKeys(findTestObject('DocumentMonitoring/input_TipeDok'), Keys.chord(Keys.ENTER))
-
+	inputDDLExact('DocumentMonitoring/input_TipeDok', inputDocumentMonitoring[arrayIndexInput++])
+	
     'Set text mengenai status dokumen'
-    WebUI.setText(findTestObject('DocumentMonitoring/input_Status'), inputDocumentMonitoring[arrayIndexInput++])
-
-    'Enter'
-    WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Status'), Keys.chord(Keys.ENTER))
+	inputDDLExact('DocumentMonitoring/input_Status', inputDocumentMonitoring[arrayIndexInput++])
 
     if (WebUI.verifyElementPresent(findTestObject('DocumentMonitoring/input_Wilayah'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
         'Set text mengenai wilayah'
-        WebUI.setText(findTestObject('DocumentMonitoring/input_Wilayah'), inputDocumentMonitoring[arrayIndexInput++], FailureHandling.OPTIONAL)
-
-        'Enter'
-        WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Wilayah'), Keys.chord(Keys.ENTER))
-
+		inputDDLExact('DocumentMonitoring/input_Wilayah', inputDocumentMonitoring[arrayIndexInput++])
+		
         'Set text mengenai input cabang'
-        WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), inputDocumentMonitoring[arrayIndexInput++], FailureHandling.OPTIONAL)
-
-        'Enter'
-        WebUI.sendKeys(findTestObject('DocumentMonitoring/input_Cabang'), Keys.chord(Keys.ENTER))
+		inputDDLExact('DocumentMonitoring/input_Cabang', inputDocumentMonitoring[arrayIndexInput++])
     }
     
     if (linkDocumentMonitoring == '') {
@@ -611,15 +600,8 @@ def inputDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan,
         modifyObjectProsesMeterai = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/input_prosesMeterai'), 
             'xpath', 'equals', '//*[@id=\'prosesMaterai\']/div/div/div[3]/input', true)
     }
+	inputDDLExactRelativesObject(modifyObjectProsesMeterai, inputDocumentMonitoring[arrayIndexInput++])
     
-    WebUI.focus(modifyObjectProsesMeterai)
-
-    'Set text mengenai input cabang'
-    WebUI.setText(modifyObjectProsesMeterai, inputDocumentMonitoring[arrayIndexInput++])
-
-    'Enter'
-    WebUI.sendKeys(modifyObjectProsesMeterai, Keys.chord(Keys.ENTER))
-
     'Klik enter Cari'
     WebUI.click(findTestObject('DocumentMonitoring/button_Cari'))
 }
@@ -919,7 +901,6 @@ def actionDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan
             FailureHandling.OPTIONAL)) {
             checkVerifyEqualOrMatch(false, ' button view tidak berfungsi')
         }
-        
         inputDocumentMonitoring(conneSign, nomorKontrakPerPilihan, linkDocumentMonitoring)
     }
 }
@@ -1244,3 +1225,54 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
     }
 }
 
+def inputDDLExact(String locationObject, String input) {
+	'Input value status'
+	WebUI.setText(findTestObject(locationObject), input)
+
+	WebUI.click(findTestObject(locationObject))
+	
+	'get token unik'
+	tokenUnique = WebUI.getAttribute(findTestObject(locationObject), 'aria-owns')
+	
+	'modify object label Value'
+	modifyObjectGetDDLFromToken = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]', true)
+	
+	DDLFromToken = WebUI.getText(modifyObjectGetDDLFromToken)
+
+	for (i = 0; i < DDLFromToken.split('\n', -1).size(); i++) {
+		if (DDLFromToken.split('\n', -1)[i].toString().toLowerCase() == input.toString().toLowerCase()) {
+			modifyObjectClicked = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]/div['+ (i + 1) +']', true)
+
+			WebUI.click(modifyObjectClicked)
+			break
+		}
+	}
+}
+
+def inputDDLExactRelativesObject(TestObject locationObject, String input) {
+	'Input value status'
+	WebUI.setText(locationObject, input)
+
+	WebUI.click(locationObject)
+	
+	'get token unik'
+	tokenUnique = WebUI.getAttribute(locationObject, 'aria-owns')
+	
+	'modify object label Value'
+	modifyObjectGetDDLFromToken = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]', true)
+	
+	DDLFromToken = WebUI.getText(modifyObjectGetDDLFromToken)
+	
+	for (i = 0; i < DDLFromToken.split('\n', -1).size(); i++) {
+		if (DDLFromToken.split('\n', -1)[i].toString().toLowerCase() == input.toString().toLowerCase()) {
+			modifyObjectClicked = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]/div['+ (i + 1) +']', true)
+
+			WebUI.click(modifyObjectClicked)
+			break
+		}
+	}
+}

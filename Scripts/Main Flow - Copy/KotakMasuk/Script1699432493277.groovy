@@ -106,21 +106,14 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 
         'input TanggalSelesaiSampai'
         WebUI.setText(findTestObject('PencarianDokumen/input_TanggalSelesaiSampai'), currentDate)
-
-        'input tipeDokumen'
-        WebUI.setText(findTestObject('PencarianDokumen/select_TipeDokumen'), inputPencarianDokumen[arrayIndex++])
-
-        'click enter untuk input select ddl'
-        WebUI.sendKeys(findTestObject('PencarianDokumen/select_TipeDokumen'), Keys.chord(Keys.ENTER))
+		
+		'input tipe dokumen'
+		inputDDLExact('PencarianDokumen/select_TipeDokumen', inputPencarianDokumen[arrayIndex++])
     }
-    
     'input status'
-    WebUI.setText(findTestObject('PencarianDokumen/select_Status'), CustomKeywords.'connection.SendSign.getSignStatus'(conneSign, 
+	inputDDLExact('PencarianDokumen/select_Status', CustomKeywords.'connection.SendSign.getSignStatus'(conneSign, 
             refNumber))
-
-    'click enter untuk input select ddl'
-    WebUI.sendKeys(findTestObject('PencarianDokumen/select_Status'), Keys.chord(Keys.ENTER))
-
+	
     'Klik button cari'
     WebUI.click(findTestObject('Object Repository/PencarianDokumen/button_Cari'))
 
@@ -618,3 +611,29 @@ def loopingMultiDoc(ArrayList docId, Connection conneSign, String refNumber, Lin
     resultHashMap
 }
 
+
+def inputDDLExact(String locationObject, String input) {
+	'Input value status'
+	WebUI.setText(findTestObject(locationObject), input)
+
+	WebUI.click(findTestObject(locationObject))
+	
+	'get token unik'
+	tokenUnique = WebUI.getAttribute(findTestObject(locationObject), 'aria-owns')
+	
+	'modify object label Value'
+	modifyObjectGetDDLFromToken = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]', true)
+	
+	DDLFromToken = WebUI.getText(modifyObjectGetDDLFromToken)
+	
+	for (i = 0; i < DDLFromToken.split('\n', -1).size(); i++) {
+		if (DDLFromToken.split('\n', -1)[i].toString().toLowerCase() == input.toString().toLowerCase()) {
+			modifyObjectClicked = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+				'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]/div['+ (i + 1) +']', true)
+
+			WebUI.click(modifyObjectClicked)
+			break
+		}
+	}
+}
