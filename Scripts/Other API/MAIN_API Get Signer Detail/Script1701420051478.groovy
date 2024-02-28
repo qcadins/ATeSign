@@ -31,7 +31,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
        'get tenant per case dari colm excel'
         GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
         
-        'HIT API Login untuk token : andy@ad-ins.com'
+        'HIT API Login untuk get token'
         responLogin = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('username')), ('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('password'))]))
@@ -41,7 +41,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'Parsing token menjadi GlobalVariable'
             GlobalVariable.token = WS.getElementPropertyValue(responLogin, 'access_token')
 
-            'HIT API resend inv'
+            'HIT API'
             responSignerDetail = WS.sendRequest(findTestObject('Postman/Get Signer Detail', [
 						('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), 
 						('loginId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Email'))]))

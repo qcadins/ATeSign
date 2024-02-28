@@ -23,7 +23,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
-        'HIT API Login untuk token : andy@ad-ins.com'
+        'HIT API Login untuk get token'
         responLogin = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('username')), ('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('password'))]))
@@ -40,7 +40,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.token = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Token'))
         }
         
-        'HIT API Login untuk token : andy@ad-ins.com'
+        'HIT API'
         respon = WS.sendRequest(findTestObject('Postman/Get Document Template', [('tenantCode') : findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('tenantCode')), ('callerId') : findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('callerId')), ('documentTemplateCode') : findTestData(excelPath).getValue(
@@ -73,6 +73,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                     arrayIndex = 0
 
+					'get sign location detail'
                     ArrayList resultSignLocation = WS.getElementPropertyValue(respon, 'signer.signLocation', FailureHandling.OPTIONAL)
 
                     ArrayList resultSignerTypeCode = WS.getElementPropertyValue(respon, 'signer.signerTypeCode', FailureHandling.OPTIONAL)
@@ -120,25 +121,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             arrayIndex++
                         }
                         
-                        'verify signer type'
+                        'verify sign locaiton detail'
                         arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], resultSignTypeCode[index], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                        'verify signer type'
                         arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], resultSignPage[index], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                        'verify signer type'
                         arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], resultTransform[index], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                        'verify signer type'
                         arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], resultPosition[index], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                        'verify signer type'
                         arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], resultPositionVida[index], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                        'verify signer type'
                         arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], resultPositionPrivy[index], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                        'verify signer type'
                         arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toString(), (resultSeqNo[index]).toString(), 
                                 false, FailureHandling.CONTINUE_ON_FAILURE))
                     }
@@ -148,25 +143,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                     arrayIndex = 0
 
-                    'verify signer type'
+                    'verify doc template detail'
                     arrayMatch.add(WebUI.verifyMatch(resultDocumentTemplateCode, result2[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                    'verify signer type'
                     arrayMatch.add(WebUI.verifyMatch(resultDocumentTemplateName, result2[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                    'verify signer type'
                     arrayMatch.add(WebUI.verifyMatch(resultDocumentTemplateDescription, result2[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                    'verify signer type'
                     arrayMatch.add(WebUI.verifyMatch(resultIsActive, result2[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                    'verify signer type'
                     arrayMatch.add(WebUI.verifyMatch(resultPaymentSignTypeCode, result2[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                    'verify signer type'
                     arrayMatch.add(WebUI.verifyMatch(resultIsSequence, result2[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                    'verify signer type'
                     arrayMatch.add(WebUI.verifyMatch(resultVendorCode, result2[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
                     'jika data db tidak sesuai dengan excel'

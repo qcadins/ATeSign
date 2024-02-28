@@ -16,8 +16,6 @@ int countColmExcel = findTestData(excelPath).columnNumbers
 
 semicolon = ';'
 
-int splitnum = -1
-
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
@@ -27,7 +25,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
-        'HIT API Login untuk token : andy@ad-ins.com'
+        'HIT API Login untuk get token'
         responLogin = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('username')), ('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('password'))]))
@@ -44,7 +42,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.token = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Token'))
         }
         
-        'HIT API Login untuk token : andy@ad-ins.com'
+        'HIT API'
         respon = WS.sendRequest(findTestObject('Postman/Get District', [('callerId') : findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('callerId')), ('districtName') : findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('districtName')), ('provinceId') : findTestData(excelPath).getValue(
@@ -78,7 +76,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'Jika status codenya 0'
             if (statusCode == 0) {
                 if (GlobalVariable.checkStoreDB == 'Yes') {
-                    'get data doc template dari DB'
+                    'get data district dari DB'
                     ArrayList<String> result = CustomKeywords.'connection.APIOnly.getSubDistrict'(conneSign, findTestData(
                             excelPath).getValue(GlobalVariable.NumofColm, rowExcel('districtName')), findTestData(excelPath).getValue(
                             GlobalVariable.NumofColm, rowExcel('provinceId')))

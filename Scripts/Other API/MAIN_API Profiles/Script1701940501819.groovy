@@ -25,7 +25,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
-        'HIT API Login untuk ambil bearer token'
+        'HIT API Login untuk get token'
         responLogin = WS.sendRequest(findTestObject('Postman/Login', [
 						('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('username')), 
 						('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('password'))]))
@@ -85,13 +85,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             'verify tenant name'
                             arrayMatch.add(WebUI.verifyMatch(result[arrayindex++], tenantName[index], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                            'verify tenant name'
+                            'verify role code'
                             arrayMatch.add(WebUI.verifyMatch(result[arrayindex++], roleCode[index], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                            'verify tenant name'
+                            'verify role name'
                             arrayMatch.add(WebUI.verifyMatch(result[arrayindex++], roleName[index], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                            'verify tenant name'
+                            'verify tenant code'
                             arrayMatch.add(WebUI.verifyMatch(result[arrayindex++], tenantCode[index], false, FailureHandling.CONTINUE_ON_FAILURE))
                         }
                         

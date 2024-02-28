@@ -51,7 +51,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('Task No'))) + '",') + '"nama": "') + 
         findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, rowExcel('nama'))) + '"}')
 
-        'HIT API Login untuk ambil bearer token'
+        'HIT API Login untuk get token'
         responLogin = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData(excelPathGenerateLink).getValue(
                         GlobalVariable.NumofColm, rowExcel('username')), ('password') : findTestData(excelPathGenerateLink).getValue(
                         GlobalVariable.NumofColm, rowExcel('password'))]))
