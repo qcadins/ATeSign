@@ -43,14 +43,15 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; (Glob
                     excelPath).getValue(GlobalVariable.NumofColm, rowExcel('File Name')))
         }
         
-        'HIT API Login untuk ambil bearer token'
+        'HIT API Login untuk get token'
         reponLogin = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('username')), ('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('password'))]))
 
         if (WS.verifyResponseStatusCode(reponLogin, 200, FailureHandling.OPTIONAL)) {
             GlobalVariable.token = WS.getElementPropertyValue(reponLogin, 'access_token')
-
+			
+			'Hit API'
             respon = WS.sendRequest(findTestObject('Postman/downloadReport', [('callerId') : findTestData(excelPath).getValue(
                             GlobalVariable.NumofColm, rowExcel('username')), ('idManReport') : idManualReport]))
 
