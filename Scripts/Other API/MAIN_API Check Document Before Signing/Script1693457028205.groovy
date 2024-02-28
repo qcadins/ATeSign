@@ -30,7 +30,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'set psre sesuai inputan excel per case'
         GlobalVariable.Psre = findTestData(excelPathCheckDocBeforeSigning).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
 
-        'HIT API'
+        'HIT API untuk get token'
         responLogin = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/Login', [('email') : findTestData(excelPathCheckDocBeforeSigning).getValue(
                         GlobalVariable.NumofColm, rowExcel('email')).replace('"', ''), ('password') : findTestData(excelPathCheckDocBeforeSigning).getValue(
                         GlobalVariable.NumofColm, rowExcel('password'))]))
