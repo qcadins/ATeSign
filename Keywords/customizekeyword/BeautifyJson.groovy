@@ -1,7 +1,5 @@
 package customizekeyword
 
-import com.kms.katalon.core.annotation.Keyword
-
 import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
 import internal.GlobalVariable
@@ -15,11 +13,11 @@ class BeautifyJson {
 			// Parse the original JSON string
 			JsonSlurper slurper = new JsonSlurper()
 			Map json = slurper.parseText(responseBody)
-			
+
 			// Beautify the JSON
 			JsonBuilder builder = new JsonBuilder(json)
 			String beautifiedJson = builder.toPrettyString()
-	
+
 			try {
 				needto.writeToExcel(GlobalVariable.DataFilePath, sheet, rowNo, GlobalVariable.NumofColm - 1, beautifiedJson)
 			} catch (IllegalArgumentException ex) {

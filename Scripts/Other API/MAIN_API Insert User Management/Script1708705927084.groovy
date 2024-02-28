@@ -16,8 +16,6 @@ int countColmExcel = findTestData(excelPath).columnNumbers
 
 semicolon = ';'
 
-int splitnum = -1
-
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
@@ -88,18 +86,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'declare arrayindex'
                     arrayIndex = 0
 
-                    'verify user detail'
+                    'verify user name'
                     arrayMatch.add(WebUI.verifyMatch(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
                                     'fullName')), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
+					
+					'verify login id'
 					arrayMatch.add(WebUI.verifyMatch(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
                                     'loginId')), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
+					'verify role code'
 					arrayMatch.add(WebUI.verifyMatch(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
 									'roleCode')), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
+					'verify user status'
 					arrayMatch.add(WebUI.verifyMatch('1', result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
+					'verify office code'
 					arrayMatch.add(WebUI.verifyMatch(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
 									'officeCode')), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 

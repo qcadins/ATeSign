@@ -129,8 +129,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             arrayIndex++
                         }
                     }
-                    
-					
+                    	
 					'get current date'
 					String currentDate = new Date().format('yyyy-MM-dd')
 					

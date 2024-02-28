@@ -2343,7 +2343,7 @@ class APIFullService {
 	getPaymentTypeDescription(Connection conn, String code, String vendorCode, String tenantCode) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT mlov.description FROM ms_paymentsigntypeoftenant mspot LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mspot.id_ms_tenant LEFT JOIN ms_vendor mv ON mv.id_ms_vendor = mspot.id_ms_vendor LEFT JOIN ms_lov mlov ON mlov.id_lov = mspot.lov_payment_sign_type WHERE mlov.code = '"+code+"' AND mt.tenant_code = '" + tenantCode + "' AND mv.vendor_code = '" + vendorCode + "'")
+		resultSet = stm.executeQuery("SELECT mlov.description FROM ms_paymentsigntypeoftenant mspot LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = mspot.id_ms_tenant LEFT JOIN ms_vendor mv ON mv.id_ms_vendor = mspot.id_ms_vendor LEFT JOIN ms_lov mlov ON mlov.id_lov = mspot.lov_payment_sign_type WHERE mlov.code = '" + code + "' AND mt.tenant_code = '" + tenantCode + "' AND mv.vendor_code = '" + vendorCode + "'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
