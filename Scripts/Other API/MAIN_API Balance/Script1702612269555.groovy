@@ -36,7 +36,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.token = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Token'))
         }
         
-        'HIT API Login untuk token : andy@ad-ins.com'
+        'HIT API'
         respon = WS.sendRequest(findTestObject('Postman/Balance', [
 			('tenantCode') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('tenantCode')), 
 			('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), 

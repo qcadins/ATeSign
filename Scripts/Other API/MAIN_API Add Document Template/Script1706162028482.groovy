@@ -110,7 +110,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             listSigner = (listSigner + (list[i]))
         }
         
-        'HIT API Login untuk token : andy@ad-ins.com'
+        'HIT API'
         respon = WS.sendRequest(findTestObject('Postman/Add Document Template', [('callerId') : findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('callerId')), ('documentExample') : CustomKeywords.'customizekeyword.ConvertFile.base64File'(
                         findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentExample'))), ('documentTemplateCode') : findTestData(
