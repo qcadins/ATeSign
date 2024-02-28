@@ -88,10 +88,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         arrayMatch.add(false)
                     } else {
                         for (i = 0; i < namaProvinsi.size(); i++) {
-                            'verify get sub province'
+                            'verify get sub province name'
                             arrayMatch.add(WebUI.verifyMatch(namaProvinsi[i], result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                            'verify get sub province'
+                            'verify get sub province id'
                             arrayMatch.add(WebUI.verifyMatch(idMsProvinsi[i].toString(), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
                         }
                     }
