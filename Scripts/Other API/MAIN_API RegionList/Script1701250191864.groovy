@@ -28,7 +28,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'get tenant per case dari colm excel'
         GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('tenantCode'))
 
-        'HIT API Login untuk ambil bearer token'
+        'HIT API Login untuk get token'
         responLogin = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('username')), ('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('password'))]))
@@ -78,10 +78,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         arrayindex = 0
 
                         for (index = 0; index < (result.size() / 2); index++) {
-                            'verify vendor code'
+                            'verify region code'
                             arrayMatch.add(WebUI.verifyMatch(result[arrayindex++], resultRegionCode[index], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                            'verify vendor name'
+                            'verify region name'
                             arrayMatch.add(WebUI.verifyMatch(result[arrayindex++], resultRegionName[index], false, FailureHandling.CONTINUE_ON_FAILURE))
                         }
                         

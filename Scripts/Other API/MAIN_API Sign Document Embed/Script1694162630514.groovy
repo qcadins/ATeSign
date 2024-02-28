@@ -86,7 +86,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             endcodedDocumentId = ''
         }
         
-        'HIT API Sign Document'
+        'HIT API Sign Document Embed'
         responsigndocEmbed = WS.sendRequest(findTestObject('Postman/Sign Doc Embed', [('callerId') : findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('callerId')), ('email') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('email')), ('docId') : endcodedDocumentId, ('msg') : endcodedMsg, ('url') : url]))

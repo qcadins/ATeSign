@@ -23,7 +23,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
-        'HIT API Login untuk token : andy@ad-ins.com'
+        'HIT API Login untuk get token'
         responLogin = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('username')), ('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('password'))]))
@@ -40,7 +40,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.token = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Token'))
         }
         
-        'HIT API Login untuk token : andy@ad-ins.com'
+        'HIT API'
         respon = WS.sendRequest(findTestObject('Postman/Update Data Signer', [('tenantCode') : findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('tenantCode')), ('callerId') : findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('callerId')), ('loginId') : findTestData(excelPath).getValue(
@@ -94,17 +94,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         }
                         
                         if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('newEmail')) != '') {
-                            'verify full name'
+                            'verify email'
                             arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                                         rowExcel('newEmail')), false, FailureHandling.CONTINUE_ON_FAILURE))
                         } else {
-                            'verify full name'
+                            'verify login id'
                             arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                                         rowExcel('loginId')), false, FailureHandling.CONTINUE_ON_FAILURE))
                         }
                         
                         if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('noPhone')) != '') {
-                            'verify full name'
+                            'verify phone no'
                             arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
                                         findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('noPhone'))), 
                                     false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -113,7 +113,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         }
                         
                         if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('noKtp')) != '') {
-                            'verify full name'
+                            'verify ktp no'
                             arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
                                         findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('noKtp'))), 
                                     false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -122,7 +122,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         }
                         
                         if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('dateOfBirth')) != '') {
-                            'verify full name'
+                            'verify date of birth'
                             arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                                         rowExcel('dateOfBirth')), false, FailureHandling.CONTINUE_ON_FAILURE))
                         } else {
