@@ -1268,7 +1268,7 @@ def inputDDLExactRelativesObject(String locationObject, String input) {
 	
 	'modify object label Value'
 	modifyObjectGetDDLFromToken = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
-		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]', true)
+		'equals', '//*[@id="' + tokenUnique + '"]/div/div[2]', true)
 	
 	DDLFromToken = WebUI.getText(modifyObjectGetDDLFromToken)
 	
