@@ -68,7 +68,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'get Status Code'
             statusCode = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
 
-            'Jika status codenya 0'
+            'Jika status codenya 0 atau sukses'
             if (statusCode == 0) {
                 if (GlobalVariable.FlagFailed == 0) {
                     'write to excel success'
