@@ -30,7 +30,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'get tenant per case dari colm excel'
         GlobalVariable.Tenant = findTestData(excelPathGetInvData).getValue(GlobalVariable.NumofColm, rowExcel('tenantCode'))
 
-        'HIT API Login untuk ambil bearer token'
+        'HIT API Login untuk get token'
         responLogin = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData(excelPathGetInvData).getValue(
                         GlobalVariable.NumofColm, rowExcel('username')), ('password') : findTestData(excelPathGetInvData).getValue(
                         GlobalVariable.NumofColm, rowExcel('password'))]))

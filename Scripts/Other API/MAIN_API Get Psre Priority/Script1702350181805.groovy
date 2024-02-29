@@ -30,7 +30,7 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; (Glob
 
         GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('tenantCode'))
 
-        'HIT API Login untuk ambil bearer token'
+        'HIT API Login untuk get token'
         respon_login = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('username')), ('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('password'))]))
@@ -38,6 +38,7 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; (Glob
         if (WS.verifyResponseStatusCode(respon_login, 200, FailureHandling.OPTIONAL)) {
             GlobalVariable.token = WS.getElementPropertyValue(respon_login, 'access_token')
 
+			'Hit API'
             respon = WS.sendRequest(findTestObject('Postman/getPsrePriority', [('callerId') : findTestData(excelPath).getValue(
                             GlobalVariable.NumofColm, rowExcel('username'))]))
 
@@ -72,13 +73,11 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; (Glob
 
                         'loop untuk pengecekan hasil dari DB'
                         for (index = 0; index < (result.size() / 3); index++) {
-                            'verify tenant name'
+                            'verify psre tenant detail'
                             arrayMatch.add(WebUI.verifyMatch(result[arrayindex++], vendorCode[index], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                            'verify tenant name'
                             arrayMatch.add(WebUI.verifyMatch(result[arrayindex++], vendorName[index], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                            'verify tenant name'
                             arrayMatch.add(WebUI.verifyMatch(result[arrayindex++], priority[index], false, FailureHandling.CONTINUE_ON_FAILURE))
                         }
                         

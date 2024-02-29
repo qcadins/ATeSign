@@ -16,8 +16,6 @@ int countColmExcel = findTestData(excelPath).columnNumbers
 
 semicolon = ';'
 
-int splitnum = -1
-
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
@@ -44,7 +42,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.token = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Token'))
         }
         
-        'HIT API Login untuk token : andy@ad-ins.com'
+        'HIT API Login untuk get token'
         respon = WS.sendRequest(findTestObject('Postman/Edit Balance Type', [('callerId') : findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('callerId')), ('balanceTypeCode') : findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('balanceTypeCode')), ('balanceTypeName') : findTestData(excelPath).getValue(
@@ -72,7 +70,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'Jika status codenya 0'
             if (statusCode == 0) {
                 if (GlobalVariable.checkStoreDB == 'Yes') {
-                    'get data doc template dari DB'
+                    'get data balance type dari DB'
                     ArrayList<String> result = CustomKeywords.'connection.APIOnly.getAddBalanceType'(conneSign, findTestData(
                             excelPath).getValue(GlobalVariable.NumofColm, rowExcel('balanceTypeCode')))
 

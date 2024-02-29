@@ -20,7 +20,7 @@ class ViewUserOTP {
 	getTotalViewUserOTP(Connection conn, String user) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select count(msvr.id_ms_vendor_registered_user) from ms_vendor_registered_user msvr left join am_msuser amm on amm.id_ms_user = msvr.id_ms_user left join ms_vendor msv on msv.id_ms_vendor = msvr.id_ms_vendor where (msvr.signer_registered_email = '"+user+"' OR hashed_signer_registered_phone = encode(sha256('" + user + "'), 'hex') OR hashed_id_no = encode(sha256('" + user + "'), 'hex'))")
+		resultSet = stm.executeQuery("select count(msvr.id_ms_vendor_registered_user) from ms_vendor_registered_user msvr left join am_msuser amm on amm.id_ms_user = msvr.id_ms_user left join ms_vendor msv on msv.id_ms_vendor = msvr.id_ms_vendor where (msvr.signer_registered_email = '" + user + "' OR hashed_signer_registered_phone = encode(sha256('" + user + "'), 'hex') OR hashed_id_no = encode(sha256('" + user + "'), 'hex'))")
 
 		metadata = resultSet.metaData
 

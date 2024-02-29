@@ -25,7 +25,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
-        'HIT API Login untuk token : andy@ad-ins.com'
+        'HIT API Login get token'
         responLogin = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('username')), ('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('password'))]))
@@ -42,7 +42,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.token = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Token'))
         }
         
-        'HIT API Login untuk token : andy@ad-ins.com'
+        'HIT API'
         respon = WS.sendRequest(findTestObject('Postman/Error History Act Status', [('tenantCode') : findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('tenantCode')), ('idErrorHistory') : findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('idErrorHistory')), ('callerId') : findTestData(excelPath).getValue(

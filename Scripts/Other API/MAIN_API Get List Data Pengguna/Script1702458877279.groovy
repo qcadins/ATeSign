@@ -23,7 +23,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
-        'HIT API Login untuk token : andy@ad-ins.com'
+        'HIT API Login untuk get token'
         responLogin = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('username')), ('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('password'))]))
@@ -40,7 +40,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.token = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Token'))
         }
         
-        'HIT API Login untuk token : andy@ad-ins.com'
+        'HIT API'
         respon = WS.sendRequest(findTestObject('Postman/Get List Data Pengguna', [
 						('tenantCode') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('tenantCode')), 
 						('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), 
@@ -91,26 +91,20 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     ArrayList arrayMatch = []
 
                     for (index = 0; index < (result.size() / 7); index++) {
-                        'verify signer type'
+                        'verify user detail'
                         arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], resultLoginId[index], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                        'verify signer type'
                         arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], resultFullName[index], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                        'verify signer type'
                         arrayMatch.add(WebUI.verifyMatch((result[arrayIndex++]).toString().toLowerCase(), (resultIsActive[
                                 index]).toString().toLowerCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                        'verify signer type'
                         arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], resultVendorCode[index], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                        'verify signer type'
                         arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], resultIsRegistered[index], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                        'verify signer type'
                         arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], resultIsActivated[index], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                        'verify signer type'
                         arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], resultVendorName[index], false, FailureHandling.CONTINUE_ON_FAILURE))
                     }
                     

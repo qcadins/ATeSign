@@ -20,7 +20,7 @@ class APIOnly {
 	getAddBalanceType(Connection conn, String code) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select usr_crt, lov_group, code, description, is_active, is_deleted from ms_lov where code = '"+code+"'")
+		resultSet = stm.executeQuery("select usr_crt, lov_group, code, description, is_active, is_deleted from ms_lov where code = '" + code + "'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -42,7 +42,7 @@ class APIOnly {
 		if (districtId == '') {
 			listdata
 		} else {
-			resultSet = stm.executeQuery("SELECT subdistrict_name AS subDistrictName, CAST(id_mssubdistrict AS VARCHAR) AS idMsSubDistrict FROM am_mssubdistrict WHERE subdistrict_name LIKE '%" + subDistrictName + "%' AND id_msdistrict = '" + districtId + "'");
+			resultSet = stm.executeQuery("SELECT subdistrict_name AS subDistrictName, CAST(id_mssubdistrict AS VARCHAR) AS idMsSubDistrict FROM am_mssubdistrict WHERE subdistrict_name LIKE '%" + subDistrictName + "%' AND id_msdistrict = '" + districtId + "'")
 
 			metadata = resultSet.metaData
 
@@ -66,7 +66,7 @@ class APIOnly {
 		if (provinceId == '') {
 			listdata
 		} else {
-			resultSet = stm.executeQuery("SELECT district_name AS subDistrictName, CAST(id_msdistrict AS VARCHAR) AS idMsSubDistrict FROM am_msdistrict WHERE district_name LIKE '%" + districtName + "%' AND id_msprovince = '" + provinceId + "'");
+			resultSet = stm.executeQuery("SELECT district_name AS subDistrictName, CAST(id_msdistrict AS VARCHAR) AS idMsSubDistrict FROM am_msdistrict WHERE district_name LIKE '%" + districtName + "%' AND id_msprovince = '" + provinceId + "'")
 
 			metadata = resultSet.metaData
 
@@ -87,7 +87,7 @@ class APIOnly {
 	getProvince(Connection conn, String provinceName) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT province_name AS subDistrictName, CAST(id_msprovince AS VARCHAR) AS idMsSubDistrict FROM am_msprovince WHERE province_name LIKE '%" + provinceName + "%'");
+		resultSet = stm.executeQuery("SELECT province_name AS subDistrictName, CAST(id_msprovince AS VARCHAR) AS idMsSubDistrict FROM am_msprovince WHERE province_name LIKE '%" + provinceName + "%'")
 
 		metadata = resultSet.metaData
 
@@ -107,7 +107,7 @@ class APIOnly {
 	getCheckDocumentSendStatus(Connection conn, String refNumber) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select count(tdd.*) from tr_document_d tdd left join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h where tdh.ref_number = '"+refNumber+"'")
+		resultSet = stm.executeQuery("select count(tdd.*) from tr_document_d tdd left join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h where tdh.ref_number = '" + refNumber + "'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

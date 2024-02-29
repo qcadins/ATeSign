@@ -31,7 +31,7 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; (Glob
             GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Tenant Code'))
         }
         
-        'HIT API Login untuk ambil bearer token'
+        'HIT API Login untuk get token'
         responLogin = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('username')), ('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('password'))]))
@@ -39,6 +39,7 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; (Glob
         if (WS.verifyResponseStatusCode(responLogin, 200, FailureHandling.OPTIONAL)) {
             GlobalVariable.token = WS.getElementPropertyValue(responLogin, 'access_token')
 
+			'Hit API'
             respon = WS.sendRequest(findTestObject('Postman/tryCallback', [('callerId') : findTestData(excelPath).getValue(
                             GlobalVariable.NumofColm, rowExcel('username'))]))
 

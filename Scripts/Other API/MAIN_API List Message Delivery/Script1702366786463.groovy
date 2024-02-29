@@ -39,7 +39,7 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; (Glob
         'ambil data date start'
         dateEnd = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Report Date End*'))
 
-        'HIT API Login untuk token'
+        'HIT API Login untuk get token'
         responLogin = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('username')), ('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('password'))]))
@@ -69,7 +69,7 @@ for (GlobalVariable.NumofColm; GlobalVariable.NumofColm <= countColmExcel; (Glob
                 deliveryStatus = '4'
             }
             
-            'HIT API utamanya'
+            'HIT API'
             respon = WS.sendRequest(findTestObject('Postman/listMessageDelivery', [('callerId') : findTestData(excelPath).getValue(
                             GlobalVariable.NumofColm, rowExcel('username')), ('page') : findTestData(excelPath).getValue(
                             GlobalVariable.NumofColm, rowExcel('Page*')), ('messageMedia') : findTestData(excelPath).getValue(

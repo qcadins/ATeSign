@@ -24,9 +24,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathUpdateData, GlobalVariable.NumofColm, rowExcel(
                 'Use Correct Base Url'))
 
-            'get tenant per case dari colm excel'
-            GlobalVariable.Tenant = (('"' + findTestData(excelPathUpdateData).getValue(GlobalVariable.NumofColm, rowExcel(
-                    'tenantCode'))) + '"')
+        'get tenant per case dari colm excel'
+        GlobalVariable.Tenant = (('"' + findTestData(excelPathUpdateData).getValue(GlobalVariable.NumofColm, rowExcel('tenantCode'))) + '"')
 
         'Pembuatan pengisian variable di sendRequest per column berdasarkan data excel.'
         ArrayList listInvitation = []
@@ -51,7 +50,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         findTestData(excelPathUpdateData).getValue(GlobalVariable.NumofColm, rowExcel('kodePos'))) + '",') + '"vendorCode": "') + 
         findTestData(excelPathUpdateData).getValue(GlobalVariable.NumofColm, rowExcel('vendorCode'))) + '",')
 
-        'HIT API Login untuk ambil bearer token'
+        'HIT API Login untuk get token'
         responLogin = WS.sendRequest(findTestObject('Postman/Login', [
 						('username') : findTestData(excelPathUpdateData).getValue(GlobalVariable.NumofColm, rowExcel('username')), 
 						('password') : findTestData(excelPathUpdateData).getValue(GlobalVariable.NumofColm, rowExcel('password'))]))

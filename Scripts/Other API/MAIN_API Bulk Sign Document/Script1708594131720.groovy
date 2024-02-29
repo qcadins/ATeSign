@@ -3,11 +3,7 @@ import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.testobject.ResponseObject as ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
-import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
-import java.sql.Connection as Connection
-
-Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - API Only.xlsx')
@@ -15,8 +11,6 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 int countColmExcel = findTestData(excelPath).columnNumbers
 
 semicolon = ';'
-
-int splitnum = -1
 
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
@@ -27,7 +21,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
-        'HIT API Login untuk token : andy@ad-ins.com'
+        'HIT API Login untuk get token'
         responLogin = WS.sendRequest(findTestObject('Postman/Login', [('username') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('username')), ('password') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('password'))]))
@@ -55,7 +49,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.token = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong Token'))
         }
         
-        'HIT API Login untuk token : andy@ad-ins.com'
+        'HIT API'
         respon = WS.sendRequest(findTestObject('Postman/Bulk Sign Document', [('callerId') : findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('callerId')), ('loginId') : findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('loginId')), ('documentIds') : apiBody]))

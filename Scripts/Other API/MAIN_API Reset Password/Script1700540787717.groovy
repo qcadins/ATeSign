@@ -36,7 +36,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
-        'HIT API send otp ke email invitasi'
+        'HIT API'
         respon = WS.sendRequest(findTestObject('Postman/Reset Password', [('callerId') : ('"' + findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('callerId'))) + '"', ('loginId') : ('"' + findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('Email'))) + '"', ('otp') : ('"' + otp) + '"', ('newPass') : ('"' + 

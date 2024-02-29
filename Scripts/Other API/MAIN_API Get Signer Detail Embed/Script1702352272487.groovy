@@ -77,7 +77,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             endcodedMsg = ''
         }
         
-        'HIT API resend inv'
+        'HIT API'
         responSignerDetail = WS.sendRequest(findTestObject('Postman/Get Signer Detail Embed', [('msg') : endcodedMsg, ('url') : url]))
 
         'Jika status HIT API 200 OK'

@@ -94,7 +94,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         'ubah menjadi string'
         String listDoc = listDocId.toString().replace('[', '').replace(']', '')
 
-        'HIT API Sign Balance availability'
+        'HIT API Sign Balance availability embed'
         responsignBalVal = WS.sendRequest(findTestObject('Postman/Sign Balance Availability Embed', [('callerId') : findTestData(
                         excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('docId') : listDoc, ('msg') : endcodedMsg
                     , ('url') : url]))
