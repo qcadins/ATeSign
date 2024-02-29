@@ -39,10 +39,7 @@ checkVerifyEqualOrMatch(WebUI.verifyMatch((totalData[0]).replace(',', ''), resul
     ' Total Data')
 
 'select modul'
-WebUI.setText(findTestObject('ErrorReport/select_Modul'), 'generate invitation link error history')
-
-'send keys enter'
-WebUI.sendKeys(findTestObject('ErrorReport/select_Modul'), Keys.chord(Keys.ENTER))
+inputDDLExact('ErrorReport/select_Modul', 'generate invitation link error history')
 
 'input nama'
 WebUI.setText(findTestObject('ErrorReport/input_Nama'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
@@ -55,10 +52,7 @@ WebUI.setText(findTestObject('ErrorReport/input_TanggalDari'), currentDate)
 WebUI.setText(findTestObject('ErrorReport/input_TanggalKe'), currentDate)
 
 'input error type'
-WebUI.setText(findTestObject('ErrorReport/select_Tipe'), GlobalVariable.ErrorType)
-
-'enter untuk input tipe error'
-WebUI.sendKeys(findTestObject('ErrorReport/select_Tipe'), Keys.chord(Keys.ENTER))
+inputDDLExact('ErrorReport/select_Tipe', GlobalVariable.ErrorType)
 
 'click button cari'
 WebUI.click(findTestObject('ErrorReport/button_Cari'))
@@ -125,10 +119,7 @@ def checkPaging() {
     String defaultTanggalKe = WebUI.getAttribute(findTestObject('ErrorReport/input_TanggalKe'), 'value')
 
     'select modul'
-    WebUI.setText(findTestObject('ErrorReport/select_Modul'), 'generate invitation link error history')
-
-    'send keys enter'
-    WebUI.sendKeys(findTestObject('ErrorReport/select_Modul'), Keys.chord(Keys.ENTER))
+	inputDDLExact('ErrorReport/select_Modul', 'generate invitation link error history')
 
     'input no kontrak'
     WebUI.setText(findTestObject('ErrorReport/input_NoKontrak'), '0000')
@@ -152,10 +143,7 @@ def checkPaging() {
     WebUI.setText(findTestObject('ErrorReport/input_TanggalKe'), '2023-08-11')
 
     'input Tanggal Ke'
-    WebUI.setText(findTestObject('ErrorReport/select_Tipe'), 'REJECT')
-
-    'send keys enter'
-    WebUI.sendKeys(findTestObject('ErrorReport/select_Tipe'), Keys.chord(Keys.ENTER))
+	inputDDLExact('ErrorReport/select_Tipe', 'REJECT')
 
     'click button set ulang'
     WebUI.click(findTestObject('Object Repository/ErrorReport/button_Reset'))
@@ -262,3 +250,35 @@ def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
+
+def inputDDLExact(String locationObject, String input) {
+	'Input value status'
+	WebUI.setText(findTestObject(locationObject), input)
+
+	if (input != '') {
+		WebUI.click(findTestObject(locationObject))
+	
+	'get token unik'
+	tokenUnique = WebUI.getAttribute(findTestObject(locationObject), 'aria-owns')
+	
+	'modify object label Value'
+	modifyObjectGetDDLFromToken = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]', true)
+	
+	DDLFromToken = WebUI.getText(modifyObjectGetDDLFromToken)
+	
+	for (i = 0; i < DDLFromToken.split('\n', -1).size(); i++) {
+		if (DDLFromToken.split('\n', -1)[i].toString().toLowerCase() == input.toString().toLowerCase()) {
+			modifyObjectClicked = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]/div['+ (i + 1) +']', true)
+
+			WebUI.click(modifyObjectClicked)
+			break
+		}
+	}
+	} else {
+		WebUI.click(findTestObject(locationObject))
+		
+		WebUI.sendKeys(findTestObject(locationObject), Keys.chord(Keys.ENTER))
+	}
+}

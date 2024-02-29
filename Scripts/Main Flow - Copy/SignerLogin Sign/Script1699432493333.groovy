@@ -1287,6 +1287,11 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList<Str
             'Klik resend otp'
             WebUI.click(findTestObject('KotakMasuk/Sign/btn_ResendOTP'))
 
+			'check pop up'
+			if (checkPopup() == true) {
+				return false
+			}
+			
             for (loopingTimer = 1; loopingTimer <= 5; loopingTimer++) {
                 'Memberikan delay 3 karena OTP after terlalu cepat'
                 WebUI.delay(loopingTimer * 2)
@@ -1318,7 +1323,12 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList<Str
             }
         }
     }
-    
+	
+	'check pop up'
+	if (checkPopup() == true) {
+		return false
+	}
+	
     checkSaldoWAOrSMS(conneSign, vendor)
 
     (GlobalVariable.eSignData['VerifikasiOTP']) = ((GlobalVariable.eSignData['VerifikasiOTP']) + countResend)

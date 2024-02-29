@@ -25,7 +25,7 @@ int countColmExcel = findTestData(excelPathemeteraiMonitoring).columnNumbers
 int firstRun = 0
 
 'looping e meterai monitoring'
-for (GlobalVariable.NumofColm = 11; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
+for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
     } else if (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase(
@@ -312,38 +312,23 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Nomor Dokumen'), '20230616133400')
 
     'set text status meterai'
-    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Tipe Dokumen'), 'Dokumen Transaksi/Payment Receipt')
-
-    'enter untuk set status meterai'
-    WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_Tipe Dokumen'), Keys.chord(Keys.ENTER))
-
-    'set text status meterai'
+	inputDDLExact('Object Repository/e-Meterai Monitoring/input_Tipe Dokumen', 'Dokumen Transaksi/Payment Receipt')
+	
+    'set text tanggal document mulai'
     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Tanggal Dokumen Mulai'), firstDateOfMonth.toString())
 
+    'set text hasil stamping'
+	inputDDLExact('Object Repository/e-Meterai Monitoring/input_HasilStamping', 'Success')
+	
+    'set text cabang'
+	inputDDLExact('Object Repository/e-Meterai Monitoring/input_Cabang', 'Daegu')
+	
     'set text status meterai'
-    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_HasilStamping'), 'Success')
-
-    'enter untuk set status meterai'
-    WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_HasilStamping'), Keys.chord(Keys.ENTER))
-
-    'set text status meterai'
-    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Cabang'), 'Daegu')
-
-    'enter untuk set status meterai'
-    WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_Cabang'), Keys.chord(Keys.ENTER))
-
-    'set text status meterai'
-    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_TipeDokumenPeruri'), 'Dokumen penerimaan uang (lebih dari 5 juta)')
-
-    'enter untuk set status meterai'
-    WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_TipeDokumenPeruri'), Keys.chord(Keys.ENTER))
-
-    'set text status meterai'
-    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_PengaturanDokumen'), 'KWITANSI EMETERAI')
-
-    'enter untuk set status meterai'
-    WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_PengaturanDokumen'), Keys.chord(Keys.ENTER))
-
+	inputDDLExact('Object Repository/e-Meterai Monitoring/input_TipeDokumenPeruri', 'Dokumen penerimaan uang (lebih dari 5 juta)')
+   
+	'set text status meterai'
+	inputDDLExact('Object Repository/e-Meterai Monitoring/input_PengaturanDokumen', 'KWITANSI EMETERAI')
+	
     'set text status meterai'
     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_TanggalDokumenSampai'), currentDate.toString())
 
@@ -351,11 +336,8 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Nomor Seri'), '')
 
     'set text status meterai'
-    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_JenisPajak'), 'Pemungut')
-
-    'enter untuk set status meterai'
-    WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_JenisPajak'), Keys.chord(Keys.ENTER))
-
+	inputDDLExact('Object Repository/e-Meterai Monitoring/input_JenisPajak', 'Pemungut')
+	
     'click button set ulang'
     WebUI.click(findTestObject('Object Repository/e-Meterai Monitoring/button_Set Ulang'))
 
@@ -525,59 +507,41 @@ def inputPagingAndVerify(Connection conneSign) {
             GlobalVariable.NumofColm, rowExcel('Nomor Dokumen')))
 
     'set text status meterai'
-    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Tipe Dokumen'), findTestData(excelPathemeteraiMonitoring).getValue(
+	inputDDLExact('Object Repository/e-Meterai Monitoring/input_Tipe Dokumen', findTestData(excelPathemeteraiMonitoring).getValue(
             GlobalVariable.NumofColm, rowExcel('Input Tipe Dokumen')))
-
-    'enter untuk set status meterai'
-    WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_Tipe Dokumen'), Keys.chord(Keys.ENTER))
 
     'set text status meterai'
     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Tanggal Dokumen Mulai'), findTestData(excelPathemeteraiMonitoring).getValue(
             GlobalVariable.NumofColm, rowExcel('Tanggal Dokumen Mulai')))
 
     'set text status meterai'
-    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_HasilStamping'), findTestData(excelPathemeteraiMonitoring).getValue(
-            GlobalVariable.NumofColm, rowExcel('Hasil Stamping')))
-
-    'enter untuk set status meterai'
-    WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_HasilStamping'), Keys.chord(Keys.ENTER))
+	inputDDLExact('Object Repository/e-Meterai Monitoring/input_HasilStamping', findTestData(excelPathemeteraiMonitoring).getValue(
+		GlobalVariable.NumofColm, rowExcel('Hasil Stamping')))
 
     'set text status meterai'
-    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Cabang'), findTestData(excelPathemeteraiMonitoring).getValue(
-            GlobalVariable.NumofColm, rowExcel('Cabang')))
-
-    'enter untuk set status meterai'
-    WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_Cabang'), Keys.chord(Keys.ENTER))
+	inputDDLExact('Object Repository/e-Meterai Monitoring/input_Cabang', findTestData(excelPathemeteraiMonitoring).getValue(
+		GlobalVariable.NumofColm, rowExcel('Cabang')))
 
     'set text status meterai'
-    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_TipeDokumenPeruri'), findTestData(excelPathemeteraiMonitoring).getValue(
-            GlobalVariable.NumofColm, rowExcel('Tipe Dokumen Peruri')))
-
-    'enter untuk set status meterai'
-    WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_TipeDokumenPeruri'), Keys.chord(Keys.ENTER))
-
-    'set text status meterai'
+	inputDDLExact('Object Repository/e-Meterai Monitoring/input_TipeDokumenPeruri', findTestData(excelPathemeteraiMonitoring).getValue(
+		GlobalVariable.NumofColm, rowExcel('Tipe Dokumen Peruri')))
+   
+	'set text status meterai'
     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_TanggalDokumenSampai'), findTestData(excelPathemeteraiMonitoring).getValue(
             GlobalVariable.NumofColm, rowExcel('Tanggal Dokumen Sampai')))
 
     'set text status meterai'
-    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_PengaturanDokumen'), findTestData(excelPathemeteraiMonitoring).getValue(
-            GlobalVariable.NumofColm, rowExcel('Pengaturan Dokumen')))
-
-    'enter untuk set status meterai'
-    WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_PengaturanDokumen'), Keys.chord(Keys.ENTER))
-
-    'set text status meterai'
+	inputDDLExact('Object Repository/e-Meterai Monitoring/input_PengaturanDokumen', findTestData(excelPathemeteraiMonitoring).getValue(
+		GlobalVariable.NumofColm, rowExcel('Pengaturan Dokumen')))
+    
+	'set text status meterai'
     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Nomor Seri'), findTestData(excelPathemeteraiMonitoring).getValue(
             GlobalVariable.NumofColm, rowExcel('Nomor Seri')))
 
     'set text status meterai'
-    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_JenisPajak'), findTestData(excelPathemeteraiMonitoring).getValue(
-            GlobalVariable.NumofColm, rowExcel('Jenis Pajak')))
-
-    'enter untuk set status meterai'
-    WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_JenisPajak'), Keys.chord(Keys.ENTER))
-
+	inputDDLExact('Object Repository/e-Meterai Monitoring/input_JenisPajak', findTestData(excelPathemeteraiMonitoring).getValue(
+		GlobalVariable.NumofColm, rowExcel('Jenis Pajak')))
+   
     'click button cari'
     WebUI.click(findTestObject('e-Meterai Monitoring/button_Cari'))
 
@@ -663,3 +627,34 @@ def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
+def inputDDLExact(String locationObject, String input) {
+	'Input value status'
+	WebUI.setText(findTestObject(locationObject), input)
+
+	if (input != '') {
+		WebUI.click(findTestObject(locationObject))
+	
+	'get token unik'
+	tokenUnique = WebUI.getAttribute(findTestObject(locationObject), 'aria-owns')
+	
+	'modify object label Value'
+	modifyObjectGetDDLFromToken = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]', true)
+	
+	DDLFromToken = WebUI.getText(modifyObjectGetDDLFromToken)
+	
+	for (i = 0; i < DDLFromToken.split('\n', -1).size(); i++) {
+		if (DDLFromToken.split('\n', -1)[i].toString().toLowerCase() == input.toString().toLowerCase()) {
+			modifyObjectClicked = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]/div['+ (i + 1) +']', true)
+
+			WebUI.click(modifyObjectClicked)
+			break
+		}
+	}
+	} else {
+		WebUI.click(findTestObject(locationObject))
+		
+		WebUI.sendKeys(findTestObject(locationObject), Keys.chord(Keys.ENTER))
+	}
+}

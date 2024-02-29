@@ -87,23 +87,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         GlobalVariable.NumofColm, rowExcel('$Email')))
 
                 'Set text peran'
-                WebUI.setText(findTestObject('Object Repository/User Management/input_PeranNew'), findTestData(excelPathUserManagement).getValue(
+				inputDDLExact('Object Repository/User Management/input_PeranNew', findTestData(excelPathUserManagement).getValue(
                         GlobalVariable.NumofColm, rowExcel('$Peran')))
-
-                'Enter peran'
-                WebUI.sendKeys(findTestObject('Object Repository/User Management/input_PeranNew'), Keys.chord(Keys.ENTER))
-
-                'Set text kode akses'
+                
+				'Set text kode akses'
                 WebUI.setText(findTestObject('Object Repository/User Management/input_KodeAksesNew'), findTestData(excelPathUserManagement).getValue(
                         GlobalVariable.NumofColm, rowExcel('$Kode Akses')))
 
                 'Input cabang'
-                WebUI.setText(findTestObject('Object Repository/User Management/input_CabangNew'), findTestData(excelPathUserManagement).getValue(
-                        GlobalVariable.NumofColm, rowExcel('$Cabang')))
-
-                'Enter cabang'
-                WebUI.sendKeys(findTestObject('Object Repository/User Management/input_CabangNew'), Keys.chord(Keys.ENTER))
-
+				inputDDLExact('Object Repository/User Management/input_CabangNew', findTestData(excelPathUserManagement).getValue(
+					GlobalVariable.NumofColm, rowExcel('$Cabang')))
+				
                 if (checkPagingConfirmation(' pada menu New ') == true) {
                     continue
                 }
@@ -221,36 +215,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('$Peran Edit')) == 
                     '') {
                         'set peran yaitu select role'
-                        WebUI.setText(findTestObject('Object Repository/User Management/input_PeranEdit'), 'Select Role')
-
-                        'enter peran'
-                        WebUI.sendKeys(findTestObject('Object Repository/User Management/input_PeranEdit'), Keys.chord(Keys.ENTER))
-                    } else {
+						inputDDLExact('Object Repository/User Management/input_PeranEdit', 'Select Role')
+						} else {
                         'set peran sesuai excel'
-                        WebUI.setText(findTestObject('Object Repository/User Management/input_PeranEdit'), findTestData(
+						inputDDLExact('Object Repository/User Management/input_PeranEdit', findTestData(
                                 excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('$Peran Edit')))
-
-                        'enter peran'
-                        WebUI.sendKeys(findTestObject('Object Repository/User Management/input_PeranEdit'), Keys.chord(Keys.ENTER))
                     }
                     
                     'jika kolom edit kosong'
                     if (findTestData(excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('$Cabang Edit')) == 
                     '') {
                         'set cabang yaitu select office'
-                        WebUI.setText(findTestObject('Object Repository/User Management/input_CabangEdit'), 'Select Office')
-
-                        'enter peran'
-                        WebUI.sendKeys(findTestObject('Object Repository/User Management/input_CabangEdit'), Keys.chord(
-                                Keys.ENTER))
+						inputDDLExact('Object Repository/User Management/input_CabangEdit', 'Select Office')
                     } else {
-                        'set cabang sesuai excel'
-                        WebUI.setText(findTestObject('Object Repository/User Management/input_CabangEdit'), findTestData(
+						'set cabang yaitu select office'
+						inputDDLExact('Object Repository/User Management/input_CabangEdit', findTestData(
                                 excelPathUserManagement).getValue(GlobalVariable.NumofColm, rowExcel('$Cabang Edit')))
-
-                        'enter cabang'
-                        WebUI.sendKeys(findTestObject('Object Repository/User Management/input_CabangEdit'), Keys.chord(
-                                Keys.ENTER))
                     }
                     
                     if (checkPagingConfirmation(' pada menu Edit ') == true) {
@@ -353,10 +333,7 @@ def searchDataAfterAction(Connection conneSign) {
             GlobalVariable.NumofColm, rowExcel('Email Search')))
 
     'set text peran'
-    WebUI.setText(findTestObject('Object Repository/User Management/input_Peran'), peranAfter)
-
-    'enter untuk set status meterai'
-    WebUI.sendKeys(findTestObject('Object Repository/User Management/input_Peran'), Keys.chord(Keys.ENTER))
+	inputDDLExact('Object Repository/User Management/input_Peran', peranAfter)
 
     'click button cari'
     WebUI.click(findTestObject('User Management/button_Cari'))
@@ -391,12 +368,9 @@ def searchData() {
     WebUI.setText(findTestObject('Object Repository/User Management/input_Email'), findTestData(excelPathUserManagement).getValue(
             GlobalVariable.NumofColm, rowExcel('Email Search')))
 
-    WebUI.setText(findTestObject('Object Repository/User Management/input_Peran'), findTestData(excelPathUserManagement).getValue(
+	inputDDLExact('Object Repository/User Management/input_Peran', findTestData(excelPathUserManagement).getValue(
             GlobalVariable.NumofColm, rowExcel('Peran Search')))
-
-    'enter untuk set status meterai'
-    WebUI.sendKeys(findTestObject('Object Repository/User Management/input_Peran'), Keys.chord(Keys.ENTER))
-
+   
     'click button cari'
     WebUI.click(findTestObject('User Management/button_Cari'))
 }
@@ -426,11 +400,8 @@ def checkPaging(Connection conneSign) {
     WebUI.setText(findTestObject('Object Repository/User Management/input_Email'), 'userciie@ad-ins.com')
 
     'set text status meterai'
-    WebUI.setText(findTestObject('Object Repository/User Management/input_Peran'), 'Admin')
-
-    'enter untuk set status meterai'
-    WebUI.sendKeys(findTestObject('Object Repository/User Management/input_Peran'), Keys.chord(Keys.ENTER))
-
+	inputDDLExact('Object Repository/User Management/input_Peran', 'Admin')
+	
     'set text lini bisnis'
     WebUI.click(findTestObject('Object Repository/User Management/button_Set Ulang'))
 
@@ -572,23 +543,17 @@ def inputCancel() {
             GlobalVariable.NumofColm, rowExcel('$Email')))
 
     'Set text peran'
-    WebUI.setText(findTestObject('Object Repository/User Management/input_PeranNew'), findTestData(excelPathUserManagement).getValue(
+	inputDDLExact('Object Repository/User Management/input_PeranNew', findTestData(excelPathUserManagement).getValue(
             GlobalVariable.NumofColm, rowExcel('$Peran')))
-
-    'Enter peran'
-    WebUI.sendKeys(findTestObject('Object Repository/User Management/input_PeranNew'), Keys.chord(Keys.ENTER))
-
+	
     'Set text kode akses'
     WebUI.setText(findTestObject('Object Repository/User Management/input_KodeAksesNew'), findTestData(excelPathUserManagement).getValue(
             GlobalVariable.NumofColm, rowExcel('$Kode Akses')))
 
     'Input cabang'
-    WebUI.setText(findTestObject('Object Repository/User Management/input_CabangNew'), findTestData(excelPathUserManagement).getValue(
-            GlobalVariable.NumofColm, rowExcel('$Cabang')))
-
-    'Enter cabang'
-    WebUI.sendKeys(findTestObject('Object Repository/User Management/input_CabangNew'), Keys.chord(Keys.ENTER))
-
+	inputDDLExact('Object Repository/User Management/input_CabangNew', findTestData(excelPathUserManagement).getValue(
+		GlobalVariable.NumofColm, rowExcel('$Cabang')))
+	
     'Klik label judul'
     WebUI.click(findTestObject('User Management/label_Judul'))
 
@@ -645,4 +610,36 @@ def inputCancel() {
 
 def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+}
+
+def inputDDLExact(String locationObject, String input) {
+	'Input value status'
+	WebUI.setText(findTestObject(locationObject), input)
+
+	if (input != '') {
+		WebUI.click(findTestObject(locationObject))
+	
+	'get token unik'
+	tokenUnique = WebUI.getAttribute(findTestObject(locationObject), 'aria-owns')
+	
+	'modify object label Value'
+	modifyObjectGetDDLFromToken = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]', true)
+	
+	DDLFromToken = WebUI.getText(modifyObjectGetDDLFromToken)
+	
+	for (i = 0; i < DDLFromToken.split('\n', -1).size(); i++) {
+		if (DDLFromToken.split('\n', -1)[i].toString().toLowerCase() == input.toString().toLowerCase()) {
+			modifyObjectClicked = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]/div['+ (i + 1) +']', true)
+
+			WebUI.click(modifyObjectClicked)
+			break
+		}
+	}
+	} else {
+		WebUI.click(findTestObject(locationObject))
+		
+		WebUI.sendKeys(findTestObject(locationObject), Keys.chord(Keys.ENTER))
+	}
 }

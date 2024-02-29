@@ -163,19 +163,13 @@ def verifAfterEdit() {
             rowExcel('$Kode Vendor - Setting')))
 
     'input status'
-    WebUI.setText(findTestObject('PengaturanPSrE/input_Status'), findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+	inputDDLExact('PengaturanPSrE/input_Status', findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
             rowExcel('$Status Active - Setting')))
 
-    'Input enter'
-    WebUI.sendKeys(findTestObject('PengaturanPSrE/input_Status'), Keys.chord(Keys.ENTER))
-
     'input status operational'
-    WebUI.setText(findTestObject('PengaturanPSrE/input_StatusOperational'), findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-            rowExcel('$Status Operating - Setting')))
-
-    'Input enter'
-    WebUI.sendKeys(findTestObject('PengaturanPSrE/input_StatusOperational'), Keys.chord(Keys.ENTER))
-
+	inputDDLExact('PengaturanPSrE/input_StatusOperational', findTestData(excelPath).getValue(GlobalVariable.NumofColm,
+		rowExcel('$Status Operating - Setting')))
+	
     'click button cari'
     WebUI.click(findTestObject('PengaturanPSrE/button_Cari'))
 
@@ -318,30 +312,18 @@ def inputSearchPSrE() {
             rowExcel('Vendor Code')))
 
     'input status all untuk reset'
-    WebUI.setText(findTestObject('PengaturanPSrE/input_Status'), 'All')
-
-    'Input enter'
-    WebUI.sendKeys(findTestObject('PengaturanPSrE/input_Status'), Keys.chord(Keys.ENTER))
-
-    'input status sesuai excel'
-    WebUI.setText(findTestObject('PengaturanPSrE/input_Status'), findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+	inputDDLExact('PengaturanPSrE/input_Status', 'All')
+	
+	'input status'
+	inputDDLExact('PengaturanPSrE/input_Status', findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
             rowExcel('Status Active')))
-
-    'Input enter'
-    WebUI.sendKeys(findTestObject('PengaturanPSrE/input_Status'), Keys.chord(Keys.ENTER))
-
-    'input status operational all untuk reset'
-    WebUI.setText(findTestObject('PengaturanPSrE/input_StatusOperational'), 'All')
-
-    'Input enter'
-    WebUI.sendKeys(findTestObject('PengaturanPSrE/input_StatusOperational'), Keys.chord(Keys.ENTER))
-
+	
+	'input status'
+	inputDDLExact('PengaturanPSrE/input_StatusOperational', 'All')
+	
     'input status operational sesuai excel'
-    WebUI.setText(findTestObject('PengaturanPSrE/input_StatusOperational'), findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+	inputDDLExact('PengaturanPSrE/input_StatusOperational', findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
             rowExcel('Status Operating')))
-
-    'Input enter'
-    WebUI.sendKeys(findTestObject('PengaturanPSrE/input_StatusOperational'), Keys.chord(Keys.ENTER))
 }
 
 def checkVerifyPaging(Boolean isMatch) {
@@ -477,3 +459,35 @@ def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
+
+def inputDDLExact(String locationObject, String input) {
+	'Input value status'
+	WebUI.setText(findTestObject(locationObject), input)
+
+	if (input != '') {
+		WebUI.click(findTestObject(locationObject))
+	
+	'get token unik'
+	tokenUnique = WebUI.getAttribute(findTestObject(locationObject), 'aria-owns')
+	
+	'modify object label Value'
+	modifyObjectGetDDLFromToken = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]', true)
+	
+	DDLFromToken = WebUI.getText(modifyObjectGetDDLFromToken)
+	
+	for (i = 0; i < DDLFromToken.split('\n', -1).size(); i++) {
+		if (DDLFromToken.split('\n', -1)[i].toString().toLowerCase() == input.toString().toLowerCase()) {
+			modifyObjectClicked = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]/div['+ (i + 1) +']', true)
+
+			WebUI.click(modifyObjectClicked)
+			break
+		}
+	}
+	} else {
+		WebUI.click(findTestObject(locationObject))
+		
+		WebUI.sendKeys(findTestObject(locationObject), Keys.chord(Keys.ENTER))
+	}
+}

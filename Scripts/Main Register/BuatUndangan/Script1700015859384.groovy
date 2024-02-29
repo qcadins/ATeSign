@@ -324,30 +324,21 @@ def inputBuatUndangan() {
 
     if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Wilayah')).length() > 0) {
         'input wilayah'
-        WebUI.setText(findTestObject('RegisterEsign/input_Wilayah'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+		inputDDLExact('RegisterEsign/input_Wilayah', findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
                 rowExcel('Wilayah')))
-
-        'enter wilayah'
-        WebUI.sendKeys(findTestObject('RegisterEsign/input_Wilayah'), Keys.chord(Keys.ENTER), FailureHandling.CONTINUE_ON_FAILURE)
     }
     
     if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('OfficeName')).length() > 0) {
         'input office'
-        WebUI.setText(findTestObject('RegisterEsign/input_Office'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-                rowExcel('OfficeName')))
-
-        'enter office'
-        WebUI.sendKeys(findTestObject('RegisterEsign/input_Office'), Keys.chord(Keys.ENTER), FailureHandling.CONTINUE_ON_FAILURE)
+		inputDDLExact('RegisterEsign/input_Office', findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
+			rowExcel('OfficeName')))
     }
     
     if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('BusinessLineName')).length() > 0) {
         'input lini bisnis'
-        WebUI.setText(findTestObject('RegisterEsign/input_LiniBisnis'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-                rowExcel('BusinessLineName')))
-
-        'enter lini bisnis'
-        WebUI.sendKeys(findTestObject('RegisterEsign/input_LiniBisnis'), Keys.chord(Keys.ENTER), FailureHandling.CONTINUE_ON_FAILURE)
-    }
+		inputDDLExact('RegisterEsign/input_LiniBisnis', findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
+			rowExcel('BusinessLineName')))
+     }
     
     'input task no'
     WebUI.setText(findTestObject('RegisterEsign/input_TaskNo'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
@@ -473,3 +464,34 @@ def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
+def inputDDLExact(String locationObject, String input) {
+	'Input value status'
+	WebUI.setText(findTestObject(locationObject), input)
+
+	if (input != '') {
+		WebUI.click(findTestObject(locationObject))
+	
+	'get token unik'
+	tokenUnique = WebUI.getAttribute(findTestObject(locationObject), 'aria-owns')
+	
+	'modify object label Value'
+	modifyObjectGetDDLFromToken = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]', true)
+	
+	DDLFromToken = WebUI.getText(modifyObjectGetDDLFromToken)
+	
+	for (i = 0; i < DDLFromToken.split('\n', -1).size(); i++) {
+		if (DDLFromToken.split('\n', -1)[i].toString().toLowerCase() == input.toString().toLowerCase()) {
+			modifyObjectClicked = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]/div['+ (i + 1) +']', true)
+
+			WebUI.click(modifyObjectClicked)
+			break
+		}
+	}
+	} else {
+		WebUI.click(findTestObject(locationObject))
+		
+		WebUI.sendKeys(findTestObject(locationObject), Keys.chord(Keys.ENTER))
+	}
+}

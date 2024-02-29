@@ -87,19 +87,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     GlobalVariable.NumofColm, rowExcel('Tanggal Selesai Sampai')))
 
             'input tipeDokumen'
-            WebUI.setText(findTestObject('PencarianDokumen/select_TipeDokumen'), findTestData(excelPathPencarianDokumen).getValue(
+			inputDDLExact('PencarianDokumen/select_TipeDokumen', findTestData(excelPathPencarianDokumen).getValue(
                     GlobalVariable.NumofColm, rowExcel('Tipe Dokumen')))
-
-            'click enter untuk input select ddl'
-            WebUI.sendKeys(findTestObject('PencarianDokumen/select_TipeDokumen'), Keys.chord(Keys.ENTER))
         }
         
         'input status'
-        WebUI.setText(findTestObject('PencarianDokumen/select_Status'), findTestData(excelPathPencarianDokumen).getValue(
-                GlobalVariable.NumofColm, rowExcel('StatusDoc')))
-
-        'click enter untuk input select ddl'
-        WebUI.sendKeys(findTestObject('PencarianDokumen/select_Status'), Keys.chord(Keys.ENTER))
+		inputDDLExact('PencarianDokumen/select_Status', findTestData(excelPathPencarianDokumen).getValue(
+			GlobalVariable.NumofColm, rowExcel('StatusDoc')))
 
         'click button cari'
         WebUI.click(findTestObject('PencarianDokumen/button_Cari'))
@@ -268,17 +262,11 @@ def checkPaging(Connection conneSign) {
         WebUI.setText(findTestObject('PencarianDokumen/input_TanggalSelesaiSampai'), '2023-04-10')
 
         'input tipeDokumen'
-        WebUI.setText(findTestObject('PencarianDokumen/select_TipeDokumen'), 'Dokumen Umum')
-
-        'click enter untuk input select ddl'
-        WebUI.sendKeys(findTestObject('PencarianDokumen/select_TipeDokumen'), Keys.chord(Keys.ENTER))
+		inputDDLExact('PencarianDokumen/select_TipeDokumen', 'Dokumen Umum')
     }
     
     'input status'
-    WebUI.setText(findTestObject('PencarianDokumen/select_Status'), 'Need Sign')
-
-    'click enter untuk input select ddl'
-    WebUI.sendKeys(findTestObject('PencarianDokumen/select_Status'), Keys.chord(Keys.ENTER))
+	inputDDLExact('PencarianDokumen/select_Status', 'Need Sign')
 
     'click button set ulang'
     WebUI.click(findTestObject('PencarianDokumen/button_SetUlang'))
@@ -419,3 +407,34 @@ def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
+def inputDDLExact(String locationObject, String input) {
+	'Input value status'
+	WebUI.setText(findTestObject(locationObject), input)
+
+	if (input != '') {
+		WebUI.click(findTestObject(locationObject))
+	
+	'get token unik'
+	tokenUnique = WebUI.getAttribute(findTestObject(locationObject), 'aria-owns')
+	
+	'modify object label Value'
+	modifyObjectGetDDLFromToken = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]', true)
+	
+	DDLFromToken = WebUI.getText(modifyObjectGetDDLFromToken)
+	
+	for (i = 0; i < DDLFromToken.split('\n', -1).size(); i++) {
+		if (DDLFromToken.split('\n', -1)[i].toString().toLowerCase() == input.toString().toLowerCase()) {
+			modifyObjectClicked = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]/div['+ (i + 1) +']', true)
+
+			WebUI.click(modifyObjectClicked)
+			break
+		}
+	}
+	} else {
+		WebUI.click(findTestObject(locationObject))
+		
+		WebUI.sendKeys(findTestObject(locationObject), Keys.chord(Keys.ENTER))
+	}
+}

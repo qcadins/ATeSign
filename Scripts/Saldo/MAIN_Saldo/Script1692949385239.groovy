@@ -207,28 +207,19 @@ def inputSaldo(String startDate, String endDate) {
             rowExcel('Psre Login')), true)
 
     'input filter dari saldo'
-    WebUI.setText(findTestObject('Saldo/input_tipesaldo'), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 
+	inputDDLExact('Saldo/input_tipesaldo', findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 
             rowExcel('$Tipe Saldo')))
 
-    'Input enter'
-    WebUI.sendKeys(findTestObject('Saldo/input_tipesaldo'), Keys.chord(Keys.ENTER))
-
     'Input tipe transaksi'
-    WebUI.setText(findTestObject('Saldo/input_tipetransaksi'), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 
-            rowExcel('Tipe Transaksi')))
-
-    'Input enter'
-    WebUI.sendKeys(findTestObject('Saldo/input_tipetransaksi'), Keys.chord(Keys.ENTER))
-
+	inputDDLExact('Saldo/input_tipetransaksi', findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm,
+		rowExcel('Tipe Transaksi')))
+	
     'Input date sekarang'
     WebUI.setText(findTestObject('Saldo/input_fromdate'), startDate)
 
     'Input tipe dokumen'
-    WebUI.setText(findTestObject('Saldo/input_tipedokumen'), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 
-            rowExcel('Tipe Dokumen')))
-
-    'Input enter'
-    WebUI.sendKeys(findTestObject('Saldo/input_tipedokumen'), Keys.chord(Keys.ENTER))
+	inputDDLExact('Saldo/input_tipedokumen', findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm,
+		rowExcel('Tipe Dokumen')))
 
     'Input referal number'
     WebUI.setText(findTestObject('Saldo/input_refnumber'), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 
@@ -242,11 +233,8 @@ def inputSaldo(String startDate, String endDate) {
     WebUI.setText(findTestObject('Saldo/input_todate'), endDate)
 
     'Input office name'
-    WebUI.setText(findTestObject('Saldo/input_officeName'), findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm, 
-            rowExcel('Office Name')))
-
-    'Input enter'
-    WebUI.sendKeys(findTestObject('Saldo/input_officeName'), Keys.chord(Keys.ENTER))
+	inputDDLExact('Saldo/input_officeName', findTestData(excelPathSaldo).getValue(GlobalVariable.NumofColm,
+		rowExcel('Office Name')))
 }
 
 def checkPaging(Connection conneSign) {
@@ -426,4 +414,36 @@ def checkDDL(TestObject objectDDL, ArrayList listDB, String reason) {
 
 def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+}
+
+def inputDDLExact(String locationObject, String input) {
+	'Input value status'
+	WebUI.setText(findTestObject(locationObject), input)
+
+	if (input != '') {
+		WebUI.click(findTestObject(locationObject))
+	
+	'get token unik'
+	tokenUnique = WebUI.getAttribute(findTestObject(locationObject), 'aria-owns')
+	
+	'modify object label Value'
+	modifyObjectGetDDLFromToken = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]', true)
+	
+	DDLFromToken = WebUI.getText(modifyObjectGetDDLFromToken)
+	
+	for (i = 0; i < DDLFromToken.split('\n', -1).size(); i++) {
+		if (DDLFromToken.split('\n', -1)[i].toString().toLowerCase() == input.toString().toLowerCase()) {
+			modifyObjectClicked = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]/div['+ (i + 1) +']', true)
+
+			WebUI.click(modifyObjectClicked)
+			break
+		}
+	}
+	} else {
+		WebUI.click(findTestObject(locationObject))
+		
+		WebUI.sendKeys(findTestObject(locationObject), Keys.chord(Keys.ENTER))
+	}
 }

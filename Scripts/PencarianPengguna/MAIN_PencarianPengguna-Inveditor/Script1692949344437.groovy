@@ -268,4 +268,3 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
-

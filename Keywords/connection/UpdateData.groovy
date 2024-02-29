@@ -170,6 +170,110 @@ class UpdateData {
 	}
 
 	@Keyword
+	updateLOVSMSGatewayLevelTenant(Connection conn, String smsGateway) {
+		Statement stm = conn.createStatement()
+
+		if (smsGateway != 'Value First' && smsGateway != 'Jatis') {
+			data = '1'
+		} else {
+			resultSet = stm.executeQuery("select id_lov from ms_lov where description = '"+ smsGateway +"'")
+
+			metadata = resultSet.metaData
+
+			columnCount = metadata.getColumnCount()
+
+			while (resultSet.next()) {
+				data = resultSet.getObject(1)
+			}
+		}
+
+		stm.executeUpdate("UPDATE ms_tenant SET lov_sms_gateway = '" + data + "' WHERE tenant_code = '" + GlobalVariable.Tenant + "'")
+	}
+
+	@Keyword
+	updateLOVSMSGatewayLevelNotif(Connection conn, String smsGateway, String sendingPoint) {
+		stm = conn.createStatement()
+
+		if (smsGateway != '') {
+			if (smsGateway != 'Value First' && smsGateway != 'Jatis') {
+				data = '1'
+			} else {
+				resultSet = stm.executeQuery("select id_lov from ms_lov where description = '"+ smsGateway +"'")
+
+				metadata = resultSet.metaData
+
+				columnCount = metadata.getColumnCount()
+
+				while (resultSet.next()) {
+					data = resultSet.getObject(1)
+				}
+			}
+			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET lov_sms_gateway = '" + data + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND ml.description = '"+sendingPoint+"' AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+		}
+	}
+
+	@Keyword
+	updateLOVSendingPointLevelNotif(Connection conn, String value, String sendingPoint) {
+		String hardCode
+
+		switch (sendingPoint) {
+			case 'Send Document':
+				hardCode = '1'
+			case 'Manual Sign Request':
+				hardCode = '2'
+			case 'OTP Sign Normal Flow':
+				hardCode = '3'
+			case 'OTP Sign Embed V2 Flow':
+				hardCode = '4'
+			case 'OTP Sign External Flow':
+				hardCode = '5'
+			case 'Resend Sign Notification':
+				hardCode = '6'
+			case 'Resend Sign Notification Embed V1':
+				hardCode = '7'
+			case 'Resend Sign Notification Embed V2':
+				hardCode = '8'
+		}
+
+		'Nembak Sending Point Send Document. Wrong Sending Point hardcode = 1.'
+		String dataComparison
+
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select id_lov from ms_lov where description = '"+ sendingPoint +"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+
+		resultSet = stm.executeQuery("select mn.lov_sending_point from ms_notificationtypeoftenant mn left join ms_lov msl on msl.id_lov = mn.lov_sending_point where msl.description = '"+ sendingPoint +"'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			dataComparison = resultSet.getObject(1)
+		}
+
+		if (value == 'Yes') {
+			if (data != dataComparison) {
+				println data
+				println dataComparison
+				stm.executeUpdate("UPDATE ms_notificationtypeoftenant set lov_sending_point = '" + data + "' WHERE lov_sending_point = '1'")
+			}
+		} else if (value == 'No') {
+			if (data == dataComparison) {
+				println data
+				println dataComparison
+				stm.executeUpdate("UPDATE ms_notificationtypeoftenant set lov_sending_point = '1' WHERE lov_sending_point = '"+ data +"'")
+			}
+		}
+	}
+
+	@Keyword
 	updateDBLevelTenant(Connection conneSign, String excelPathMain, String sheets) {
 		sheet = sheets
 		'get connection apifullservice'
@@ -298,6 +402,59 @@ class UpdateData {
 			'lakukan update vendor stamping yang akan dipakai'
 			updateVendorStamping(conneSign, idLov)
 		}
+		'LOV Sending Point Send Document'
+		updateLOVSendingPointLevelNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting True LOV Sending Point to Send Document ?')), 'Send Document')
+
+		'LOV Sending Point Manual Sign Request'
+		updateLOVSendingPointLevelNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting True LOV Sending Point to Manual Sign Request ?')), 'Manual Sign Request')
+
+		'LOV Sending Point OTP Sign Normal Flow'
+		updateLOVSendingPointLevelNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting True LOV Sending Point to OTP Sign Normal Flow ?')), 'OTP Sign Normal Flow')
+
+		'LOV Sending Point OTP Sign Embed V2 Flow'
+		updateLOVSendingPointLevelNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting True LOV Sending Point to OTP Sign Embed V2 Flow ?')), 'OTP Sign Embed V2 Flow')
+
+		'LOV Sending Point OTP Sign External Flow'
+		updateLOVSendingPointLevelNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting True LOV Sending Point to OTP Sign External Flow ?')), 'OTP Sign External Flow')
+
+		'LOV Sending Point Resend Sign Notification'
+		updateLOVSendingPointLevelNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting True LOV Sending Point to Resend Sign Notification ?')), 'Resend Sign Notification')
+
+		'LOV Sending Point Resend Sign Notification Embed V1'
+		updateLOVSendingPointLevelNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting True LOV Sending Point to Resend Sign Notification Embed V1 ?')), 'Resend Sign Notification Embed V1')
+
+		'LOV Sending Point Resend Sign Notification Embed V2'
+		updateLOVSendingPointLevelNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting True LOV Sending Point to Resend Sign Notification Embed V2 ?')), 'Resend Sign Notification Embed V2')
+
+		'LOV SMS Gateway Level Notif untuk Send Document'
+		updateLOVSMSGatewayLevelNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Gateway for Send Document ?')), 'Send Document')
+
+		'LOV SMS Gateway Level Notif untuk Manual Sign Request'
+		updateLOVSMSGatewayLevelNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Gateway for Manual Sign Request ?')), 'Manual Sign Request')
+
+		'LOV SMS Gateway Level Notif untuk OTP Sign Normal Flow'
+		updateLOVSMSGatewayLevelNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Gateway for OTP Sign Normal Flow ?')), 'OTP Sign Normal Flow')
+
+		'LOV SMS Gateway Level Notif untuk OTP Sign Embed V2 Flow'
+		updateLOVSMSGatewayLevelNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Gateway for OTP Sign Embed V2 Flow ?')), 'OTP Sign Embed V2 Flow')
+
+		'LOV SMS Gateway Level Notif untuk OTP Sign External Flow'
+		updateLOVSMSGatewayLevelNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Gateway for OTP Sign External Flow ?')), 'OTP Sign External Flow')
+
+		'LOV SMS Gateway Level Notif untuk Resend Sign Notification'
+		updateLOVSMSGatewayLevelNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Gateway for Resend Sign Notification ?')), 'Resend Sign Notification')
+
+		'LOV SMS Gateway Level Notif untuk Resend Sign Notification Embed V1'
+		updateLOVSMSGatewayLevelNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Gateway for Resend Sign Notification Embed V1 ?')), 'Resend Sign Notification Embed V1')
+
+		'LOV SMS Gateway Level Notif untuk Resend Sign Notification Embed V2'
+		updateLOVSMSGatewayLevelNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Gateway for Resend Sign Notification Embed V2 ?')), 'Resend Sign Notification Embed V2')
+
+		'LOV SMS Gateway Level Notif untuk OTP Sign Embed V2 Flow'
+		updateLOVSMSGatewayLevelNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Gateway for OTP Sign Embed V2 Flow ?')), 'OTP Sign Embed V2 Flow')
+
+		'LOV SMS Gateway Level Tenant'
+		updateLOVSMSGatewayLevelTenant(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Gateway for Level Tenant ?')))
 
 		'update setting vendor otp ke table di DB'
 		settingLivenessFaceCompare(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting use_liveness_facecompare_first')))
@@ -553,7 +710,6 @@ class UpdateData {
 	updateDBMainRegister(Connection conneSign, String excelPathMain, String sheets) {
 		sheet = sheets
 
-		println(sheet)
 		'get connection apifullservice'
 		APIFullService apiFullService = new APIFullService()
 		Registrasi registrasi = new Registrasi()

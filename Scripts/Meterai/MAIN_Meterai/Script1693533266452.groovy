@@ -60,33 +60,21 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 rowExcel('No Kontrak')))
 
         'set text status meterai'
-        WebUI.setText(findTestObject('Meterai/input_StatusMeterai'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
+		inputDDLExact('Meterai/input_StatusMeterai', findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
                 rowExcel('Status Meterai')))
-
-        'enter untuk set status meterai'
-        WebUI.sendKeys(findTestObject('Meterai/input_StatusMeterai'), Keys.chord(Keys.ENTER))
-
+      
         'set text lini bisnis'
-        WebUI.setText(findTestObject('Meterai/input_LiniBisnis'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-                rowExcel('Lini Bisnis')))
-
-        'enter untuk set lini bisnis'
-        WebUI.sendKeys(findTestObject('Meterai/input_LiniBisnis'), Keys.chord(Keys.ENTER))
-
+		inputDDLExact('Meterai/input_LiniBisnis', findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm,
+			rowExcel('Lini Bisnis')))
+		
         'set text tanggal wilayah'
-        WebUI.setText(findTestObject('Meterai/input_Wilayah'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-                rowExcel('Wilayah')))
-
-        'enter untuk set wilayah'
-        WebUI.sendKeys(findTestObject('Meterai/input_Wilayah'), Keys.chord(Keys.ENTER))
-
+		inputDDLExact('Meterai/input_Wilayah', findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm,
+			rowExcel('Wilayah')))
+		
         'set text tanggal cabang'
-        WebUI.setText(findTestObject('Meterai/input_Cabang'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
-                rowExcel('Cabang')))
-
-        'enter untuk set cabang'
-        WebUI.sendKeys(findTestObject('Meterai/input_Cabang'), Keys.chord(Keys.ENTER))
-
+		inputDDLExact('Meterai/input_Cabang', findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm,
+			rowExcel('Cabang')))
+		
         'set text tanggal pakai dari'
         WebUI.setText(findTestObject('Meterai/input_TanggalPakaiDari'), findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, 
                 rowExcel('Tanggal Pakai Dari')))
@@ -245,28 +233,16 @@ def checkPaging(LocalDate currentDate, LocalDate firstDateOfMonth, Connection co
     WebUI.setText(findTestObject('Meterai/input_NoKontrak'), '000111')
 
     'set text status meterai'
-    WebUI.setText(findTestObject('Meterai/input_StatusMeterai'), 'stamp duty Used')
-
-    'enter untuk set status meterai'
-    WebUI.sendKeys(findTestObject('Meterai/input_StatusMeterai'), Keys.chord(Keys.ENTER))
-
+	inputDDLExact('Meterai/input_StatusMeterai', 'stamp duty used')
+	
     'set text lini bisnis'
-    WebUI.setText(findTestObject('Meterai/input_LiniBisnis'), 'multiguna')
-
-    'enter untuk set lini bisnis'
-    WebUI.sendKeys(findTestObject('Meterai/input_LiniBisnis'), Keys.chord(Keys.ENTER))
+	inputDDLExact('Meterai/input_LiniBisnis', 'multiguna')
 
     'set text tanggal wilayah'
-    WebUI.setText(findTestObject('Meterai/input_Wilayah'), 'bogor')
-
-    'enter untuk set wilayah'
-    WebUI.sendKeys(findTestObject('Meterai/input_Wilayah'), Keys.chord(Keys.ENTER))
-
+	inputDDLExact('Meterai/input_Wilayah', 'bogor')
+	
     'set text tanggal cabang'
-    WebUI.setText(findTestObject('Meterai/input_Cabang'), 'irwan')
-
-    'enter untuk set cabang'
-    WebUI.sendKeys(findTestObject('Meterai/input_Cabang'), Keys.chord(Keys.ENTER))
+	inputDDLExact('Meterai/input_Cabang', 'irwan')
 
     'set text tanggal pakai dari'
     WebUI.setText(findTestObject('Meterai/input_TanggalPakaiDari'), '2023-01-01')
@@ -403,3 +379,34 @@ def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
+def inputDDLExact(String locationObject, String input) {
+	'Input value status'
+	WebUI.setText(findTestObject(locationObject), input)
+
+	if (input != '') {
+		WebUI.click(findTestObject(locationObject))
+	
+	'get token unik'
+	tokenUnique = WebUI.getAttribute(findTestObject(locationObject), 'aria-owns')
+	
+	'modify object label Value'
+	modifyObjectGetDDLFromToken = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]', true)
+	
+	DDLFromToken = WebUI.getText(modifyObjectGetDDLFromToken)
+	
+	for (i = 0; i < DDLFromToken.split('\n', -1).size(); i++) {
+		if (DDLFromToken.split('\n', -1)[i].toString().toLowerCase() == input.toString().toLowerCase()) {
+			modifyObjectClicked = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]/div['+ (i + 1) +']', true)
+
+			WebUI.click(modifyObjectClicked)
+			break
+		}
+	}
+	} else {
+		WebUI.click(findTestObject(locationObject))
+		
+		WebUI.sendKeys(findTestObject(locationObject), Keys.chord(Keys.ENTER))
+	}
+}

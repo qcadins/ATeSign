@@ -35,6 +35,8 @@ WebUI.setText(findTestObject('Login/input_Email'), findTestData(Path).getValue(G
 'input password'
 WebUI.setText(findTestObject('Login/input_Password'), findTestData(Path).getValue(GlobalVariable.NumofColm, rowExcel(Password)))
 
+WebUI.focus(findTestObject('Login/button_Login'))
+
 'click button login'
 WebUI.click(findTestObject('Login/button_Login'))
 

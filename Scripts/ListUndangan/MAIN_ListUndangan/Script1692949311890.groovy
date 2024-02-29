@@ -75,23 +75,14 @@ def checkPaging() {
     WebUI.setText(findTestObject('ListUndangan/input_TanggalPengirimanKe'), '2023-03-31')
 
     'set text Status Undangan'
-    WebUI.setText(findTestObject('ListUndangan/input_StatusUndangan'), 'AKTIF')
-
-    'enter untuk set status undangan'
-    WebUI.sendKeys(findTestObject('ListUndangan/input_StatusUndangan'), Keys.chord(Keys.ENTER))
-
-    'set text Pengiriman Melalui'
-    WebUI.setText(findTestObject('ListUndangan/input_PengirimanMelalui'), 'SMS')
-
-    'enter untuk set PengirimanMelalui'
-    WebUI.sendKeys(findTestObject('ListUndangan/input_PengirimanMelalui'), Keys.chord(Keys.ENTER))
-
-    'set text status registrasi'
-    WebUI.setText(findTestObject('ListUndangan/input_StatusRegistrasi'), 'DONE')
-
-    'enter untuk set status registrasi'
-    WebUI.sendKeys(findTestObject('ListUndangan/input_StatusRegistrasi'), Keys.chord(Keys.ENTER))
-
+	inputDDLExact('ListUndangan/input_StatusUndangan', 'AKTIF')
+   
+	'set text Pengiriman Melalui'
+	inputDDLExact('ListUndangan/input_PengirimanMelalui', 'SMS')
+    
+	'set text status registrasi'
+	inputDDLExact('ListUndangan/input_StatusRegistrasi', 'DONE')
+  
     'click button set ulang'
     WebUI.click(findTestObject('ListUndangan/button_SetUlang'))
 
@@ -193,3 +184,34 @@ def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
+def inputDDLExact(String locationObject, String input) {
+	'Input value status'
+	WebUI.setText(findTestObject(locationObject), input)
+
+	if (input != '') {
+		WebUI.click(findTestObject(locationObject))
+	
+	'get token unik'
+	tokenUnique = WebUI.getAttribute(findTestObject(locationObject), 'aria-owns')
+	
+	'modify object label Value'
+	modifyObjectGetDDLFromToken = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]', true)
+	
+	DDLFromToken = WebUI.getText(modifyObjectGetDDLFromToken)
+	
+	for (i = 0; i < DDLFromToken.split('\n', -1).size(); i++) {
+		if (DDLFromToken.split('\n', -1)[i].toString().toLowerCase() == input.toString().toLowerCase()) {
+			modifyObjectClicked = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]/div['+ (i + 1) +']', true)
+
+			WebUI.click(modifyObjectClicked)
+			break
+		}
+	}
+	} else {
+		WebUI.click(findTestObject(locationObject))
+		
+		WebUI.sendKeys(findTestObject(locationObject), Keys.chord(Keys.ENTER))
+	}
+}

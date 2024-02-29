@@ -61,18 +61,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 rowExcel('Permintaan Tanggal Berakhir')))
 
         'set text nama job'
-        WebUI.setText(findTestObject('Job Result/input_JobName'), findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 
+		inputDDLExact('Job Result/input_JobName', findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 
                 rowExcel('Nama Job')))
 
-        'enter untuk nama job'
-        WebUI.sendKeys(findTestObject('Job Result/input_JobName'), Keys.chord(Keys.ENTER))
-
         'set text process result'
-        WebUI.setText(findTestObject('Job Result/input_ProcessResult'), findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 
-                rowExcel('Hasil Proses')))
-
-        'enter untuk process result'
-        WebUI.sendKeys(findTestObject('Job Result/input_ProcessResult'), Keys.chord(Keys.ENTER))
+		inputDDLExact('Job Result/input_ProcessResult', findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm,
+			rowExcel('Hasil Proses')))
 
         'set text diminta oleh'
         WebUI.setText(findTestObject('Job Result/input_DimintaOleh'), findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, 
@@ -170,16 +164,10 @@ def checkPaging(Connection conneSign) {
     WebUI.setText(findTestObject('Job Result/input_requestDateEnd'), '2023-04-30')
 
     'set text job name'
-    WebUI.setText(findTestObject('Job Result/input_JobName'), 'Reconsile OTP Digisign')
-
-    'enter untuk job name'
-    WebUI.sendKeys(findTestObject('Job Result/input_JobName'), Keys.chord(Keys.ENTER))
-
+	inputDDLExact('Job Result/input_JobName', 'Reconsile OTP Digisign')
+	
     'set text process result'
-    WebUI.setText(findTestObject('Job Result/input_ProcessResult'), 'Completed')
-
-    'enter untuk process result'
-    WebUI.sendKeys(findTestObject('Job Result/input_ProcessResult'), Keys.chord(Keys.ENTER))
+	inputDDLExact('Job Result/input_ProcessResult', 'Completed')
 
     'set text diminta oleh'
     WebUI.setText(findTestObject('Job Result/input_DimintaOleh'), 'ADMESIGN')
@@ -338,3 +326,34 @@ def checkVerifyPaging(Boolean isMatch) {
     }
 }
 
+def inputDDLExact(String locationObject, String input) {
+	'Input value status'
+	WebUI.setText(findTestObject(locationObject), input)
+
+	if (input != '') {
+		WebUI.click(findTestObject(locationObject))
+	
+	'get token unik'
+	tokenUnique = WebUI.getAttribute(findTestObject(locationObject), 'aria-owns')
+	
+	'modify object label Value'
+	modifyObjectGetDDLFromToken = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]', true)
+	
+	DDLFromToken = WebUI.getText(modifyObjectGetDDLFromToken)
+	
+	for (i = 0; i < DDLFromToken.split('\n', -1).size(); i++) {
+		if (DDLFromToken.split('\n', -1)[i].toString().toLowerCase() == input.toString().toLowerCase()) {
+			modifyObjectClicked = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]/div['+ (i + 1) +']', true)
+
+			WebUI.click(modifyObjectClicked)
+			break
+		}
+	}
+	} else {
+		WebUI.click(findTestObject(locationObject))
+		
+		WebUI.sendKeys(findTestObject(locationObject), Keys.chord(Keys.ENTER))
+	}
+}

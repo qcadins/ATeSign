@@ -150,8 +150,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     ArrayList resultAfter = CustomKeywords.'connection.EditSignerData.getBeforeEditDataEditSignerData'(conneSign, 
                         emailOrNIKHash, GlobalVariable.Tenant, getVendor)
 
+					'get access log pada edit signer data'
+					ArrayList resultAccessLog = CustomKeywords.'connection.DataVerif.getAccessLog'(conneSign, 'EDIT_SIGNER_DATA')
+
                     'jika before sama dengan after'
-                    if (resultBefore == resultAfter) {
+                    if (resultBefore == resultAfter && resultAccessLog.size() == 0) {
                         'Write failed stored db'
                         CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                             GlobalVariable.StatusFailed, ((findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, 
@@ -159,10 +162,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                         GlobalVariable.FlagFailed = 1
                     }
-                    
-					'get access log pada edit signer data'
-                    ArrayList resultAccessLog = CustomKeywords.'connection.DataVerif.getAccessLog'(conneSign, 'EDIT_SIGNER_DATA')
-
+					
 					'inisialisasi arraymatch'
                     ArrayList arrayMatch = []
 
@@ -258,8 +258,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     String isActivateAfter = CustomKeywords.'connection.EditSignerData.getStatusActivationEditSignerData'(
                         conneSign, emailOrNIKHash, GlobalVariable.Tenant, getVendor)
 
+					'get access log untuk edit activation status'
+					ArrayList resultAccessLog = CustomKeywords.'connection.DataVerif.getAccessLog'(conneSign, 'EDIT_ACT_STATUS')
+
                     'Jika before dan after sama'
-                    if (isActivate == isActivateAfter) {
+                    if (isActivate == isActivateAfter && resultAccessLog.size() == 0) {
                         GlobalVariable.FlagFailed = 1
 
                         'Write excel failed store db'
@@ -267,10 +270,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             GlobalVariable.StatusFailed, ((findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, 
                                 rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB) + ' pada Edit Aktivasi')
                     }
-                    
-					'get access log untuk edit activation status'
-                    ArrayList resultAccessLog = CustomKeywords.'connection.DataVerif.getAccessLog'(conneSign, 'EDIT_ACT_STATUS')
-
 					'inisialisasi array match'
                     ArrayList arrayMatch = []
 
@@ -545,4 +544,3 @@ def verifyAfterEdit() {
 def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
-

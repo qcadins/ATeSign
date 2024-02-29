@@ -1190,7 +1190,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String emailSigner) {
         'jika ada penggunaan saldo'
         if (penggunaanSaldo > 0) {
             'looping mengenai penggunaan saldo'
-            for (looping = 0; looping < penggunaanSaldo; looping++) {
+            for (looping = 1; looping <= penggunaanSaldo; looping++) {
                 'jika loopingan pertama, incrementnya 0'
                 if (looping == 0) {
                     increment = 0
@@ -1229,7 +1229,8 @@ def inputDDLExact(String locationObject, String input) {
 	'Input value status'
 	WebUI.setText(findTestObject(locationObject), input)
 
-	WebUI.click(findTestObject(locationObject))
+	if (input != '') {
+		WebUI.click(findTestObject(locationObject))
 	
 	'get token unik'
 	tokenUnique = WebUI.getAttribute(findTestObject(locationObject), 'aria-owns')
@@ -1239,7 +1240,7 @@ def inputDDLExact(String locationObject, String input) {
 		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]', true)
 	
 	DDLFromToken = WebUI.getText(modifyObjectGetDDLFromToken)
-
+	
 	for (i = 0; i < DDLFromToken.split('\n', -1).size(); i++) {
 		if (DDLFromToken.split('\n', -1)[i].toString().toLowerCase() == input.toString().toLowerCase()) {
 			modifyObjectClicked = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
@@ -1249,13 +1250,19 @@ def inputDDLExact(String locationObject, String input) {
 			break
 		}
 	}
+	} else {
+		WebUI.click(findTestObject(locationObject))
+		
+		WebUI.sendKeys(findTestObject(locationObject), Keys.chord(Keys.ENTER))
+	}
 }
 
-def inputDDLExactRelativesObject(TestObject locationObject, String input) {
+def inputDDLExactRelativesObject(String locationObject, String input) {
 	'Input value status'
 	WebUI.setText(locationObject, input)
 
-	WebUI.click(locationObject)
+	if (input != '') {
+		WebUI.click(locationObject)
 	
 	'get token unik'
 	tokenUnique = WebUI.getAttribute(locationObject, 'aria-owns')
@@ -1274,5 +1281,10 @@ def inputDDLExactRelativesObject(TestObject locationObject, String input) {
 			WebUI.click(modifyObjectClicked)
 			break
 		}
+	}
+	} else {
+		WebUI.click(locationObject)
+		
+		WebUI.sendKeys(locationObject, Keys.chord(Keys.ENTER))
 	}
 }

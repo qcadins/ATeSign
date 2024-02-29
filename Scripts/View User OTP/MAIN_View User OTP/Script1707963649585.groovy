@@ -298,9 +298,6 @@ def inputViewUserOTP() {
     'input email / NIK / no hp'
     WebUI.setText(findTestObject('View User OTP/input_EmailNIKNoHp'), findTestData(excelPathViewUserOTP).getValue(GlobalVariable.NumofColm, 
             rowExcel('Email / NIK / No Hp')))
-
-    'Input enter'
-    WebUI.sendKeys(findTestObject('View User OTP/input_EmailNIKNoHp'), Keys.chord(Keys.ENTER))
 }
 
 def checkPaging(Connection conneSign) {
@@ -314,7 +311,7 @@ def checkPaging(Connection conneSign) {
 
     'verify field ke reset'
     checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('View User OTP/input_EmailNIKNoHp'), 'value', 
-                FailureHandling.CONTINUE_ON_FAILURE), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field search form tidak kereset - vendor')
+                FailureHandling.CONTINUE_ON_FAILURE), '', false, FailureHandling.CONTINUE_ON_FAILURE), ' field search form tidak kereset')
 
     inputViewUserOTP()
 

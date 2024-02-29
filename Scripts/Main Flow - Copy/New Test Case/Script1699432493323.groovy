@@ -18,41 +18,11 @@ GlobalVariable.NumofColm = 4
 excelPathFESignDocument = 'Main/Main'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-'input di fe = QE'
-WebUI.setText(findTestObject('DocumentMonitoring/input_Cabang'), 'QE')
+println CustomKeywords.'connection.APIFullService.aaaa'(conneSign)
+println findTestData(excelPathFESignDocument).getValue(2, rowExcel('Status'))
 WebUI.delay(1000000)
-'click biar keluar ddl hasil filter di fe'
-WebUI.click(findTestObject('DocumentMonitoring/input_Cabang'))
 
-'get token unik'
-aa = WebUI.getAttribute(findTestObject('DocumentMonitoring/input_Cabang'), 'aria-owns')
-println aa
 
-'tokennya diambil buat dapet text cabang hasil filter'
-'modify object label Value'
-modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
-	'equals', '//*[@id="'+aa+'"]/div/div[2]', true)
-
-aaa = WebUI.getText(modifyObjectvalues)
-println aaa
-
-println tokenUnique
-println idText
-
-'modify object label Value'
-modifyObjectValuesDDL = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
-	'equals', '//*[@id="'+tokenUnique+'-'+idText+'"]', true)
-
-//	'modify object label Value'
-//	modifyObjectValuesDDL = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
-//		'equals', '//*[@ng-reflect-ng-item-label="'+input+'"]', true)
-
-WebUI.click(modifyObjectValuesDDL)
-'modify object label Value'
-modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
-	'equals', '//*[@ng-reflect-ng-item-label="QE"]', true)
-
-WebUI.click(modifyObjectvalues)
 
 //*[@id="searchForm"]/div[1]/div[10]/app-question/app-select/div/div[2]/ng-dropdown-panel
 

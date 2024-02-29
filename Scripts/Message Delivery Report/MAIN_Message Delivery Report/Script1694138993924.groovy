@@ -158,19 +158,13 @@ WebUI.closeBrowser()
 
 def inputMessageDeliveryReport() {
     'input vendor'
-    WebUI.setText(findTestObject('MessageDeliveryReport/input_vendor'), findTestData(excelPathMessageDeliveryReport).getValue(
+	inputDDLExact('MessageDeliveryReport/input_vendor', findTestData(excelPathMessageDeliveryReport).getValue(
             GlobalVariable.NumofColm, rowExcel('Vendor')))
 
-    'Input enter'
-    WebUI.sendKeys(findTestObject('MessageDeliveryReport/input_vendor'), Keys.chord(Keys.ENTER))
-
     'Input tipe message media'
-    WebUI.setText(findTestObject('MessageDeliveryReport/input_messageMedia'), findTestData(excelPathMessageDeliveryReport).getValue(
-            GlobalVariable.NumofColm, rowExcel('Message Media')))
-
-    'Input enter'
-    WebUI.sendKeys(findTestObject('MessageDeliveryReport/input_messageMedia'), Keys.chord(Keys.ENTER))
-
+	inputDDLExact('MessageDeliveryReport/input_messageMedia', findTestData(excelPathMessageDeliveryReport).getValue(
+		GlobalVariable.NumofColm, rowExcel('Message Media')))
+	
     'Input report time start'
     WebUI.setText(findTestObject('MessageDeliveryReport/input_reportTimeStart'), findTestData(excelPathMessageDeliveryReport).getValue(
             GlobalVariable.NumofColm, rowExcel('Report Time Start')))
@@ -180,12 +174,9 @@ def inputMessageDeliveryReport() {
             GlobalVariable.NumofColm, rowExcel('Report Time End')))
 
     'Input tipe dokumen'
-    WebUI.setText(findTestObject('MessageDeliveryReport/input_deliveryStatus'), findTestData(excelPathMessageDeliveryReport).getValue(
-            GlobalVariable.NumofColm, rowExcel('Status Delivery')))
-
-    'Input enter'
-    WebUI.sendKeys(findTestObject('MessageDeliveryReport/input_deliveryStatus'), Keys.chord(Keys.ENTER))
-
+	inputDDLExact('MessageDeliveryReport/input_deliveryStatus', findTestData(excelPathMessageDeliveryReport).getValue(
+		GlobalVariable.NumofColm, rowExcel('Status Delivery')))
+	
     'Input referal number'
     WebUI.setText(findTestObject('MessageDeliveryReport/input_recipient'), findTestData(excelPathMessageDeliveryReport).getValue(
             GlobalVariable.NumofColm, rowExcel('Recipient')))
@@ -496,3 +487,34 @@ def storeHashMapForVerify() {
 	result
 }
 
+def inputDDLExact(String locationObject, String input) {
+	'Input value status'
+	WebUI.setText(findTestObject(locationObject), input)
+
+	if (input != '') {
+		WebUI.click(findTestObject(locationObject))
+	
+	'get token unik'
+	tokenUnique = WebUI.getAttribute(findTestObject(locationObject), 'aria-owns')
+	
+	'modify object label Value'
+	modifyObjectGetDDLFromToken = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]', true)
+	
+	DDLFromToken = WebUI.getText(modifyObjectGetDDLFromToken)
+	
+	for (i = 0; i < DDLFromToken.split('\n', -1).size(); i++) {
+		if (DDLFromToken.split('\n', -1)[i].toString().toLowerCase() == input.toString().toLowerCase()) {
+			modifyObjectClicked = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]/div['+ (i + 1) +']', true)
+
+			WebUI.click(modifyObjectClicked)
+			break
+		}
+	}
+	} else {
+		WebUI.click(findTestObject(locationObject))
+		
+		WebUI.sendKeys(findTestObject(locationObject), Keys.chord(Keys.ENTER))
+	}
+}

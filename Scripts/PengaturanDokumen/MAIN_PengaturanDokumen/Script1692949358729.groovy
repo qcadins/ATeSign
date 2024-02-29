@@ -61,7 +61,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             
             firstRun = 1
         }
-        
+		'focus pengaturan dokumen'
+		WebUI.focus(findTestObject('TandaTanganDokumen/btn_PengaturanDokumen'))
+		
         'click menu pengaturan dokumen'
         WebUI.click(findTestObject('TandaTanganDokumen/btn_PengaturanDokumen'))
 
@@ -1242,7 +1244,8 @@ def inputDDLExact(String locationObject, String input) {
 	'Input value status'
 	WebUI.setText(findTestObject(locationObject), input)
 
-	WebUI.click(findTestObject(locationObject))
+	if (input != '') {
+		WebUI.click(findTestObject(locationObject))
 	
 	'get token unik'
 	tokenUnique = WebUI.getAttribute(findTestObject(locationObject), 'aria-owns')
@@ -1261,5 +1264,10 @@ def inputDDLExact(String locationObject, String input) {
 			WebUI.click(modifyObjectClicked)
 			break
 		}
+	}
+	} else {
+		WebUI.click(findTestObject(locationObject))
+		
+		WebUI.sendKeys(findTestObject(locationObject), Keys.chord(Keys.ENTER))
 	}
 }

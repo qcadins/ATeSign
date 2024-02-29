@@ -123,11 +123,8 @@ if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryIn
 
         if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Invite By')).length() > 0) {
             'input invited by'
-            WebUI.setText(findTestObject('InquiryInvitation/select_InviteBy'), findTestData(excelPathRegister).getValue(
+			inputDDLExact('InquiryInvitation/select_InviteBy', findTestData(excelPathRegister).getValue(
                     GlobalVariable.NumofColm, rowExcel('Invite By')))
-
-            'send keys enter'
-            WebUI.sendKeys(findTestObject('InquiryInvitation/select_InviteBy'), Keys.chord(Keys.ENTER))
 
             'input receiver detail'
             WebUI.setText(findTestObject('InquiryInvitation/edit_Receiver'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
@@ -496,3 +493,34 @@ def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
+def inputDDLExact(String locationObject, String input) {
+	'Input value status'
+	WebUI.setText(findTestObject(locationObject), input)
+
+	if (input != '') {
+		WebUI.click(findTestObject(locationObject))
+	
+	'get token unik'
+	tokenUnique = WebUI.getAttribute(findTestObject(locationObject), 'aria-owns')
+	
+	'modify object label Value'
+	modifyObjectGetDDLFromToken = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]', true)
+	
+	DDLFromToken = WebUI.getText(modifyObjectGetDDLFromToken)
+	
+	for (i = 0; i < DDLFromToken.split('\n', -1).size(); i++) {
+		if (DDLFromToken.split('\n', -1)[i].toString().toLowerCase() == input.toString().toLowerCase()) {
+			modifyObjectClicked = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]/div['+ (i + 1) +']', true)
+
+			WebUI.click(modifyObjectClicked)
+			break
+		}
+	}
+	} else {
+		WebUI.click(findTestObject(locationObject))
+		
+		WebUI.sendKeys(findTestObject(locationObject), Keys.chord(Keys.ENTER))
+	}
+}

@@ -1,5 +1,6 @@
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
+import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.testobject.TestObject as TestObject
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
@@ -50,10 +51,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         if ((findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm - 1, rowExcel('Email Login')) != 
         findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Email Login'))) || (firstRun == 
         0)) {
-            'call test case login per case'
-            WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathManualStamptoStamp
-                    , ('Email') : 'Email Login', ('Password') : 'Password Login', ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'], 
-                FailureHandling.STOP_ON_FAILURE)
+			'call test case login per case'
+			WebUI.callTestCase(findTestCase('Login/Login_perCase'), [('sheet') : sheet, ('Path') : excelPathManualStamptoStamp
+					, ('Email') : 'Email Login', ('Password') : 'Password Login', ('Perusahaan') : 'Perusahaan Login', ('Peran') : 'Peran Login'],
+				FailureHandling.STOP_ON_FAILURE)
 
             'apakah cek paging diperlukan di awal run'
             if (GlobalVariable.checkPaging == 'Yes') {
@@ -508,18 +509,12 @@ def inputForm() {
             rowExcel('$Tanggal Dokumen')))
 
     'Input AKtif pada input Status'
-    WebUI.setText(findTestObject('ManualStamp/input_docType'), findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
+	inputDDLExact('ManualStamp/input_docType', findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
             rowExcel('$Tipe Dokumen')))
 
-    'Klik enter'
-    WebUI.sendKeys(findTestObject('ManualStamp/input_docType'), Keys.chord(Keys.ENTER))
-
     'Input AKtif pada input Status'
-    WebUI.setText(findTestObject('ManualStamp/input_docTypePeruri'), findTestData(excelPathManualStamptoStamp).getValue(
-            GlobalVariable.NumofColm, rowExcel('$Tipe Dokumen Peruri')))
-
-    'Klik enter'
-    WebUI.sendKeys(findTestObject('ManualStamp/input_docTypePeruri'), Keys.chord(Keys.ENTER))
+	inputDDLExact('ManualStamp/input_docTypePeruri', findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm,
+		rowExcel('$Tipe Dokumen Peruri')))
 
     'Code untuk mengambil file berdasarkan direktori masing-masing sekaligus ambil value dari excel'
     String userDir = System.getProperty('user.dir')
@@ -598,28 +593,16 @@ def inputEMeteraiMonitoring(Connection conneSign) {
                         indexInput++])
 
                     'set text TipeDokumenPeruri'
-                    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_TipeDokumenPeruri'), inputEMeterai[
+					inputDDLExact('Object Repository/e-Meterai Monitoring/input_TipeDokumenPeruri', inputEMeterai[
                         indexInput++])
-
-                    'enter untuk set TipeDokumenPeruri'
-                    WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_TipeDokumenPeruri'), Keys.chord(
-                            Keys.ENTER))
 
                     'set text Tipe Dokumen'
-                    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Tipe Dokumen'), inputEMeterai[
-                        indexInput++])
-
-                    'enter untuk set Tipe Dokumen'
-                    WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_Tipe Dokumen'), Keys.chord(
-                            Keys.ENTER))
+					inputDDLExact('Object Repository/e-Meterai Monitoring/input_Tipe Dokumen', inputEMeterai[
+						indexInput++])
 
                     'set text PengaturanDokumen'
-                    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_PengaturanDokumen'), inputEMeterai[
-                        indexInput++])
-
-                    'enter untuk set PengaturanDokumen'
-                    WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_PengaturanDokumen'), Keys.chord(
-                            Keys.ENTER))
+					inputDDLExact('Object Repository/e-Meterai Monitoring/input_PengaturanDokumen', inputEMeterai[
+						indexInput++])
 
                     'set text Tanggal Dokumen Mulai'
                     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Tanggal Dokumen Mulai'), 
@@ -630,31 +613,21 @@ def inputEMeteraiMonitoring(Connection conneSign) {
                         indexInput++])
 
                     'set text prosesStamping'
-                    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/button_prosesStamping'), inputEMeterai[
-                        indexInput++])
-
-                    'enter untuk set prosesStamping'
-                    WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/button_prosesStamping'), Keys.chord(
-                            Keys.ENTER))
-
+					inputDDLExact('Object Repository/e-Meterai Monitoring/button_prosesStamping', inputEMeterai[
+						indexInput++])
+                   
                     'set text Nomor Seri'
                     WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Nomor Seri'), inputEMeterai[
                         indexInput++])
 
                     'set text Cabang'
-                    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_Cabang'), inputEMeterai[indexInput++])
-
-                    'enter untuk set Cabang'
-                    WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_Cabang'), Keys.chord(Keys.ENTER))
-
+					inputDDLExact('Object Repository/e-Meterai Monitoring/input_Cabang', inputEMeterai[
+						indexInput++])
+					
                     'set text JenisPajak'
-                    WebUI.setText(findTestObject('Object Repository/e-Meterai Monitoring/input_JenisPajak'), inputEMeterai[
-                        indexInput++])
-
-                    'enter untuk set JenisPajak'
-                    WebUI.sendKeys(findTestObject('Object Repository/e-Meterai Monitoring/input_JenisPajak'), Keys.chord(
-                            Keys.ENTER))
-
+					inputDDLExact('Object Repository/e-Meterai Monitoring/input_JenisPajak', inputEMeterai[
+						indexInput++])
+					
                     'click button cari'
                     WebUI.click(findTestObject('e-Meterai Monitoring/button_Cari'))
 
@@ -790,7 +763,109 @@ def inputEMeteraiMonitoring(Connection conneSign) {
                 }
             }
         }
-        
+		if (findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Need Download Document ?')) ==
+			'Yes') {
+            'Klik download file'
+            WebUI.click(findTestObject('e-Meterai Monitoring/btn_DownloadDocument'))
+
+            'looping hingga 20 detik'
+            for (int i = 1; i <= 4; i++) {
+                'pemberian delay download 5 sec'
+                WebUI.delay(5)
+
+                'check isfiled downloaded'
+                if (CustomKeywords.'customizekeyword.Download.isFileDownloaded'(findTestData(excelPathManualStamptoStamp).getValue(
+                        GlobalVariable.NumofColm, rowExcel('Delete Downloaded Document'))) == true) {
+                    'Jika sukses downloadnya lebih dari 10 detik'
+                    if (i > 2) {
+                        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedPerformance'
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                            GlobalVariable.StatusWarning, ((((findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
+                                rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedPerformance) + ' sejumlah ') + 
+                            (i * 5)) + ' detik ')
+
+                        GlobalVariable.FlagFailed = 1
+                    }
+                    
+                    break
+                } else {
+                    'Jika error lognya muncul'
+                    if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+                        'ambil teks errormessage'
+                        errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
+
+                        'Tulis di excel itu adalah error'
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                            GlobalVariable.StatusFailed, (((findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
+                                rowExcel('Reason Failed')).replace('-', '') + ';') + '<') + errormessage) + '>')
+
+                        GlobalVariable.FlagFailed = 1
+
+                        break
+                    }
+                    
+                    'Jika sudah loopingan terakhir'
+                    if (i == 5) {
+                        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedDownload'
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                            GlobalVariable.StatusFailed, (findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
+                                rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedDownload)
+
+                        GlobalVariable.FlagFailed = 1
+                    }
+                }
+            }
+		}
+
+		if (findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Need View Document ?')) == 'Yes') {
+			'check if button view document present'
+			if (WebUI.verifyElementPresent(findTestObject('e-Meterai Monitoring/btn_ViewDocument'), GlobalVariable.TimeOut,
+				FailureHandling.CONTINUE_ON_FAILURE)) {
+				'click button view document'
+				WebUI.click(findTestObject('e-Meterai Monitoring/btn_ViewDocument'))
+			}
+			
+			'Jika error lognya muncul'
+			if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+				'ambil teks errormessage'
+				errormessage = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/errorLog'), 'aria-label', FailureHandling.CONTINUE_ON_FAILURE)
+
+				'Tulis di excel itu adalah error'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+					(((findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 2).replace('-', '') +
+					';') + '<') + errormessage) + '>')
+			}
+			
+			'Pemberian waktu 2 detik karena loading terus menerus'
+			WebUI.delay(2)
+
+			'verifikasi label dokumen'
+			if (WebUI.verifyElementPresent(findTestObject('Object Repository/KotakMasuk/lbl_viewDokumen'), GlobalVariable.TimeOut,
+				FailureHandling.CONTINUE_ON_FAILURE)) {
+				'Mengambil label pada view Dokoumen'
+				labelViewDoc = WebUI.getText(findTestObject('Object Repository/KotakMasuk/lbl_viewDokumen'))
+
+				'Jika pada label terdapat teks No Kontrak'
+				if (labelViewDoc.contains('No Kontrak ')) {
+					'Direplace dengan kosong agar mendapatkan nomor kontrak'
+					labelViewDoc = labelViewDoc.replace('No Kontrak ', '')
+				}
+				
+				'Diverifikasi dengan UI didepan'
+				checkVerifyEqualOrMatch(WebUI.verifyMatch(findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm,
+							rowExcel('$Nomor Dokumen')), labelViewDoc, false, FailureHandling.CONTINUE_ON_FAILURE), ' pada nomor kontrak UI yaitu ' +
+					labelViewDoc)
+
+				'Klik kembali'
+				WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_backViewDokumen'))
+			} else {
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+					((findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) +
+					';') + GlobalVariable.ReasonFailedProcessNotDone) + ' untuk proses View dokumen tanda tangan. ')
+			}
+		
+			}
+
         return inputEMeterai[6]
     }
 }
@@ -858,33 +933,17 @@ def verifySaldoUsed(Connection conneSign) {
     WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)
 
     'input filter dari saldo'
-    WebUI.setText(findTestObject('Saldo/input_tipesaldo'), 'Stamp Duty')
-
-    if (!(WebUI.verifyElementText(findTestObject('ManualStamp/selected_DDL_Saldo'), 'Stamp Duty', FailureHandling.OPTIONAL))) {
-        WebUI.mouseOver(findTestObject('ManualStamp/selected_DDL_Saldo'))
-
-        'Input page down'
-        WebUI.sendKeys(findTestObject('ManualStamp/input_tipeSaldo'), Keys.chord(Keys.ARROW_DOWN))
-    }
-    
-    'enter'
-    WebUI.sendKeys(findTestObject('Saldo/input_tipeSaldo'), Keys.chord(Keys.ENTER))
+	inputDDLExact('Saldo/input_tipesaldo', 'Stamp Duty')
 
     'Input tipe transaksi'
-    WebUI.setText(findTestObject('Saldo/input_tipetransaksi'), 'Use Stamp Duty')
-
-    'Input enter'
-    WebUI.sendKeys(findTestObject('Saldo/input_tipetransaksi'), Keys.chord(Keys.ENTER))
-
+	inputDDLExact('Saldo/input_tipetransaksi', 'Use Stamp Duty')
+	
     'Input date sekarang'
     WebUI.setText(findTestObject('Saldo/input_fromdate'), currentDate)
 
     'Input tipe dokumen'
-    WebUI.setText(findTestObject('Saldo/input_tipedokumen'), documentType)
-
-    'Input enter'
-    WebUI.sendKeys(findTestObject('Saldo/input_tipedokumen'), Keys.chord(Keys.ENTER))
-
+	inputDDLExact('Saldo/input_tipedokumen', documentType)
+    
     'Input referal number'
     WebUI.setText(findTestObject('Saldo/input_refnumber'), findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
             rowExcel('$Nomor Dokumen')))
@@ -896,11 +955,8 @@ def verifySaldoUsed(Connection conneSign) {
     WebUI.setText(findTestObject('Saldo/input_todate'), currentDate)
 
     'Input office name'
-    WebUI.setText(findTestObject('Saldo/input_officeName'), officeName)
-
-    'Input office name'
-    WebUI.sendKeys(findTestObject('Saldo/input_officeName'), Keys.chord(Keys.ENTER))
-
+	inputDDLExact('Saldo/input_officeName', officeName)
+	
     'Klik cari'
     WebUI.click(findTestObject('Saldo/btn_cari'))
 
@@ -984,3 +1040,34 @@ def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
+def inputDDLExact(String locationObject, String input) {
+	'Input value status'
+	WebUI.setText(findTestObject(locationObject), input)
+
+	if (input != '') {
+		WebUI.click(findTestObject(locationObject))
+	
+	'get token unik'
+	tokenUnique = WebUI.getAttribute(findTestObject(locationObject), 'aria-owns')
+	
+	'modify object label Value'
+	modifyObjectGetDDLFromToken = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]', true)
+	
+	DDLFromToken = WebUI.getText(modifyObjectGetDDLFromToken)
+	
+	for (i = 0; i < DDLFromToken.split('\n', -1).size(); i++) {
+		if (DDLFromToken.split('\n', -1)[i].toString().toLowerCase() == input.toString().toLowerCase()) {
+			modifyObjectClicked = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]/div['+ (i + 1) +']', true)
+
+			WebUI.click(modifyObjectClicked)
+			break
+		}
+	}
+	} else {
+		WebUI.click(findTestObject(locationObject))
+		
+		WebUI.sendKeys(findTestObject(locationObject), Keys.chord(Keys.ENTER))
+	}
+}

@@ -253,4 +253,3 @@ def checkVerifyPaging(Boolean isMatch) {
         GlobalVariable.FlagFailed = 1
     }
 }
-

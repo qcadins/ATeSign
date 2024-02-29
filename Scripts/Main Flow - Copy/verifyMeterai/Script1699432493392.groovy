@@ -59,13 +59,9 @@ for (j = 1; j <= Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ', '
 	
     'set text no kontrak'
     WebUI.setText(findTestObject('Meterai/input_NoKontrak'), inputBasedOnAPIStamping[indexInput++])
-
-    'set text status meterai'
-    WebUI.setText(findTestObject('Meterai/input_StatusMeterai'), inputBasedOnAPIStamping[indexInput++])
-
-    'enter untuk set status meterai'
-    WebUI.sendKeys(findTestObject('Meterai/input_StatusMeterai'), Keys.chord(Keys.ENTER))
-
+	
+	'set text status meterai'
+	inputDDLExact('Meterai/input_StatusMeterai', inputBasedOnAPIStamping[indexInput++])
 //    'set text lini bisnis'
 //    WebUI.setText(findTestObject('Meterai/input_LiniBisnis'),inputBasedOnAPIStamping[indexInput++])
 //
@@ -74,19 +70,13 @@ for (j = 1; j <= Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ', '
 
 	indexInput++
 	
-    'set text tanggal wilayah'
-    WebUI.setText(findTestObject('Meterai/input_Wilayah'), inputBasedOnAPIStamping[indexInput++])
-
-    'enter untuk set wilayah'
-    WebUI.sendKeys(findTestObject('Meterai/input_Wilayah'), Keys.chord(Keys.ENTER))
+	'set text tanggal wilayah'
+	inputDDLExact('Meterai/input_Wilayah', inputBasedOnAPIStamping[indexInput++])
 
     'set text tanggal cabang'
-    WebUI.setText(findTestObject('Meterai/input_Cabang'), inputBasedOnAPIStamping[indexInput++])
-
-    'enter untuk set cabang'
-    WebUI.sendKeys(findTestObject('Meterai/input_Cabang'), Keys.chord(Keys.ENTER))
-
-    'set text tanggal pakai dari'
+	inputDDLExact('Meterai/input_Cabang', inputBasedOnAPIStamping[indexInput++])
+  
+	'set text tanggal pakai dari'
     WebUI.setText(findTestObject('Meterai/input_TanggalPakaiDari'), inputBasedOnAPIStamping[indexInput++])
 
     'set text tanggal pakai sampai'
@@ -207,4 +197,36 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 
 def rowExcel(String cellValue) {
 	CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+}
+
+def inputDDLExact(String locationObject, String input) {
+	'Input value status'
+	WebUI.setText(findTestObject(locationObject), input)
+
+	if (input != '') {
+		WebUI.click(findTestObject(locationObject))
+	
+	'get token unik'
+	tokenUnique = WebUI.getAttribute(findTestObject(locationObject), 'aria-owns')
+	
+	'modify object label Value'
+	modifyObjectGetDDLFromToken = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]', true)
+	
+	DDLFromToken = WebUI.getText(modifyObjectGetDDLFromToken)
+	
+	for (i = 0; i < DDLFromToken.split('\n', -1).size(); i++) {
+		if (DDLFromToken.split('\n', -1)[i].toString().toLowerCase() == input.toString().toLowerCase()) {
+			modifyObjectClicked = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]/div['+ (i + 1) +']', true)
+
+			WebUI.click(modifyObjectClicked)
+			break
+		}
+	}
+	} else {
+		WebUI.click(findTestObject(locationObject))
+		
+		WebUI.sendKeys(findTestObject(locationObject), Keys.chord(Keys.ENTER))
+	}
 }

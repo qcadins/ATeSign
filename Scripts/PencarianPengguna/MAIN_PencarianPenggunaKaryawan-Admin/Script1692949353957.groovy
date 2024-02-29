@@ -66,11 +66,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 GlobalVariable.NumofColm, rowExcel('Tanggal Aktivasi Sampai')))
 
         'input status aktivasi'
-        WebUI.setText(findTestObject('PencarianPenggunaAdmin/Karyawan/Select_Status'), findTestData(excelPathPencarianPengguna).getValue(
+		inputDDLExact('PencarianPenggunaAdmin/Karyawan/Select_Status', findTestData(excelPathPencarianPengguna).getValue(
                 GlobalVariable.NumofColm, rowExcel('StatusKaryawan')))
-
-        'send keys enter'
-        WebUI.sendKeys(findTestObject('PencarianPenggunaAdmin/Karyawan/Select_Status'), Keys.chord(Keys.ENTER))
 
         'click button cari'
         WebUI.click(findTestObject('PencarianPenggunaAdmin/Karyawan/button_Cari'))
@@ -178,10 +175,7 @@ def checkPaging() {
     WebUI.setText(findTestObject('PencarianPenggunaAdmin/Karyawan/input_TanggalAktivasiSampai'), '2023-01-01')
 
     'input status aktivasi'
-    WebUI.setText(findTestObject('PencarianPenggunaAdmin/Karyawan/Select_Status'), 'Active')
-
-    'send keys enter'
-    WebUI.sendKeys(findTestObject('PencarianPenggunaAdmin/Karyawan/Select_Status'), Keys.chord(Keys.ENTER))
+	inputDDLExact('PencarianPenggunaAdmin/Karyawan/Select_Status', 'Active')
 
     'click button reset'
     WebUI.click(findTestObject('PencarianPenggunaAdmin/Karyawan/button_Reset'))
@@ -269,3 +263,34 @@ def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
+def inputDDLExact(String locationObject, String input) {
+	'Input value status'
+	WebUI.setText(findTestObject(locationObject), input)
+
+	if (input != '') {
+		WebUI.click(findTestObject(locationObject))
+	
+	'get token unik'
+	tokenUnique = WebUI.getAttribute(findTestObject(locationObject), 'aria-owns')
+	
+	'modify object label Value'
+	modifyObjectGetDDLFromToken = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]', true)
+	
+	DDLFromToken = WebUI.getText(modifyObjectGetDDLFromToken)
+	
+	for (i = 0; i < DDLFromToken.split('\n', -1).size(); i++) {
+		if (DDLFromToken.split('\n', -1)[i].toString().toLowerCase() == input.toString().toLowerCase()) {
+			modifyObjectClicked = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]/div['+ (i + 1) +']', true)
+
+			WebUI.click(modifyObjectClicked)
+			break
+		}
+	}
+	} else {
+		WebUI.click(findTestObject(locationObject))
+		
+		WebUI.sendKeys(findTestObject(locationObject), Keys.chord(Keys.ENTER))
+	}
+}
