@@ -70,9 +70,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
             'Jika status codenya 0'
             if (statusCode == 0) {
-                if (GlobalVariable.checkStoreDB == 'Yes') {
-                }
-                
                 if (GlobalVariable.FlagFailed == 0) {
                     'write to excel success'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 

@@ -8,7 +8,6 @@ import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.By as By
 import org.openqa.selenium.Keys as Keys
-import com.kms.katalon.core.testobject.TestObject
 
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
@@ -1276,7 +1275,7 @@ def inputDDLExactRelativesObject(String locationObject, String input) {
 	for (i = 0; i < DDLFromToken.split('\n', -1).size(); i++) {
 		if (DDLFromToken.split('\n', -1)[i].toString().toLowerCase() == input.toString().toLowerCase()) {
 			modifyObjectClicked = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
-		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]/div['+ (i + 1) +']', true)
+		'equals', '//*[@id="' + tokenUnique + '"]/div/div[2]/div['+ (i + 1) +']', true)
 
 			WebUI.click(modifyObjectClicked)
 			break

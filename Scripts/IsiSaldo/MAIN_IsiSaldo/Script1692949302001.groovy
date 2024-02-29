@@ -261,10 +261,9 @@ def loginAdminGetSaldo(int countCheckSaldo, Connection conneSign) {
 
             break
         }
-    }
+    }	
     
     if (countCheckSaldo == 1) {
-
         'input tipe saldo'
 		inputDDLExact('isiSaldo/SaldoAdmin/input_TipeSaldo', findTestData(excelPathIsiSaldo).getValue(GlobalVariable.NumofColm, 
                 rowExcel('$Tipe Saldo')))

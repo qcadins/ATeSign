@@ -863,7 +863,6 @@ def inputEMeteraiMonitoring(Connection conneSign) {
 					((findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) +
 					';') + GlobalVariable.ReasonFailedProcessNotDone) + ' untuk proses View dokumen tanda tangan. ')
 			}
-		
 			}
 
         return inputEMeterai[6]
@@ -1052,14 +1051,14 @@ def inputDDLExact(String locationObject, String input) {
 	
 	'modify object label Value'
 	modifyObjectGetDDLFromToken = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
-		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]', true)
+		'equals', '//*[@id="' + tokenUnique + '"]/div/div[2]', true)
 	
 	DDLFromToken = WebUI.getText(modifyObjectGetDDLFromToken)
 	
 	for (i = 0; i < DDLFromToken.split('\n', -1).size(); i++) {
 		if (DDLFromToken.split('\n', -1)[i].toString().toLowerCase() == input.toString().toLowerCase()) {
 			modifyObjectClicked = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
-		'equals', '//*[@id="'+tokenUnique+'"]/div/div[2]/div['+ (i + 1) +']', true)
+		'equals', '//*[@id="' + tokenUnique + '"]/div/div[2]/div['+ (i + 1) +']', true)
 
 			WebUI.click(modifyObjectClicked)
 			break

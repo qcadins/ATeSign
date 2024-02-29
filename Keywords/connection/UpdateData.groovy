@@ -208,7 +208,7 @@ class UpdateData {
 					data = resultSet.getObject(1)
 				}
 			}
-			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET lov_sms_gateway = '" + data + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND ml.description = '"+sendingPoint+"' AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
+			stm.executeUpdate("UPDATE ms_notificationtypeoftenant nt0 SET lov_sms_gateway = '" + data + "' FROM ms_notificationtypeoftenant nt JOIN ms_tenant ot on nt.id_ms_tenant = ot.id_ms_tenant JOIN ms_lov ml ON nt.lov_sending_point = ml.id_lov WHERE ot.tenant_code = '" + GlobalVariable.Tenant + "' AND ml.description = '" + sendingPoint + "' AND nt0.id_ms_notificationtypeoftenant = nt.id_ms_notificationtypeoftenant;")
 		}
 	}
 
@@ -240,7 +240,7 @@ class UpdateData {
 
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select id_lov from ms_lov where description = '"+ sendingPoint +"'")
+		resultSet = stm.executeQuery("select id_lov from ms_lov where description = '" + sendingPoint + "'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -249,7 +249,7 @@ class UpdateData {
 			data = resultSet.getObject(1)
 		}
 
-		resultSet = stm.executeQuery("select mn.lov_sending_point from ms_notificationtypeoftenant mn left join ms_lov msl on msl.id_lov = mn.lov_sending_point where msl.description = '"+ sendingPoint +"'")
+		resultSet = stm.executeQuery("select mn.lov_sending_point from ms_notificationtypeoftenant mn left join ms_lov msl on msl.id_lov = mn.lov_sending_point where msl.description = '" + sendingPoint + "'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -262,13 +262,13 @@ class UpdateData {
 			if (data != dataComparison) {
 				println data
 				println dataComparison
-				stm.executeUpdate("UPDATE ms_notificationtypeoftenant set lov_sending_point = '" + data + "' WHERE lov_sending_point = '1'")
+				stm.executeUpdate("UPDATE ms_notificationtypeoftenant set lov_sending_point = '" + data + "' WHERE lov_sending_point = '" + hardCode + "'")
 			}
 		} else if (value == 'No') {
 			if (data == dataComparison) {
 				println data
 				println dataComparison
-				stm.executeUpdate("UPDATE ms_notificationtypeoftenant set lov_sending_point = '1' WHERE lov_sending_point = '"+ data +"'")
+				stm.executeUpdate("UPDATE ms_notificationtypeoftenant set lov_sending_point = '" + hardCode + "' WHERE lov_sending_point = '" + data + "'")
 			}
 		}
 	}
