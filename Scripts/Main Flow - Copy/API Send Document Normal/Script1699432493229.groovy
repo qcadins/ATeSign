@@ -241,7 +241,6 @@ for (int o = 0; o < documentFile.size(); o++) {
 		
 		stringRefno = stringRefno + '"signer":[' + listSigner + '],' + bodyAPI + ', "psreCode" : "' + 
         psreCode[o] + '", "successURL": "' + successURL[o] + '", "uploadURL": "' + uploadURL[o] + '"}'
-		
     } else {
         stringRefno = stringRefno + '{"referenceNo" : "' + refNo + '", "documentTemplateCode": "' + 
         documentTemplateCode[o] + '", "officeCode": "' + officeCode[o] + '", "officeName": "' + officeName[o] + 

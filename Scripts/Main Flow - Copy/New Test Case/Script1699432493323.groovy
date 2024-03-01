@@ -18,8 +18,9 @@ GlobalVariable.NumofColm = 4
 excelPathFESignDocument = 'Main/Main'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-println CustomKeywords.'connection.APIFullService.aaaa'(conneSign)
-println findTestData(excelPathFESignDocument).getValue(2, rowExcel('Status'))
+tokenUnique = 'aa'
+i = 1
+println '//*[@id="' + tokenUnique + '"]/div/div[2]/div[' + (i + 1) + ']'
 WebUI.delay(1000000)
 
 

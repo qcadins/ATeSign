@@ -176,7 +176,7 @@ class UpdateData {
 		if (smsGateway != 'Value First' && smsGateway != 'Jatis') {
 			data = '1'
 		} else {
-			resultSet = stm.executeQuery("select id_lov from ms_lov where description = '"+ smsGateway +"'")
+			resultSet = stm.executeQuery("select id_lov from ms_lov where description = '" + smsGateway + "'")
 
 			metadata = resultSet.metaData
 
