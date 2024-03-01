@@ -29,8 +29,9 @@ int firstRun = 0
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(excelPathPengaturanDokumen).columnNumbers; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
-    }
-    else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase(
+        // checkPaging()
+        //  inputCancel(conneSign, checked)
+    } else if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase(
         'Unexecuted')) {
         'get Tenant per case dari excel'
         GlobalVariable.Tenant = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
@@ -52,18 +53,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
             'apakah cek paging diperlukan di awal run'
             if (GlobalVariable.checkPaging == 'Yes') {
-               'call function check paging'
-               // checkPaging()
+                'call function check paging'
 
                 'call function input cancel'
-              //  inputCancel(conneSign, checked)
             }
             
             firstRun = 1
         }
-		'focus pengaturan dokumen'
-		WebUI.focus(findTestObject('TandaTanganDokumen/btn_PengaturanDokumen'))
-		
+        
+        'focus pengaturan dokumen'
+        WebUI.focus(findTestObject('TandaTanganDokumen/btn_PengaturanDokumen'))
+
         'click menu pengaturan dokumen'
         WebUI.click(findTestObject('TandaTanganDokumen/btn_PengaturanDokumen'))
 
@@ -80,8 +80,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         RoleTandaTangan = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('RoleTandaTangan')).split(
             semicolon, splitIndex)
 
-        ArrayList<String> TipeTandaTangan = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('TipeTandaTangan')).split(
-            semicolon, splitIndex)
+        ArrayList<String> tipeTandaTangan = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
+            rowExcel('TipeTandaTangan')).split(semicolon, splitIndex)
 
         SignBoxAction = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Pindahkan SignBox')).split(
             semicolon, splitIndex)
@@ -95,14 +95,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         'Klik tombol pengaturan dokumen'
         if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase(
             'New')) {
-			if (WebUI.verifyElementNotPresent(findTestObject('TandaTanganDokumen/input_documentExample'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-				'click menu pengaturan dokumen'
-				WebUI.click(findTestObject('TandaTanganDokumen/btn_PengaturanDokumen'))
-				
-				'Klik tombol tambah pengaturan dokumen'
-				WebUI.click(findTestObject('TandaTanganDokumen/btn_Add'))
-			}
+            if (WebUI.verifyElementNotPresent(findTestObject('TandaTanganDokumen/input_documentExample'), GlobalVariable.TimeOut, 
+                FailureHandling.OPTIONAL)) {
+                'click menu pengaturan dokumen'
+                WebUI.click(findTestObject('TandaTanganDokumen/btn_PengaturanDokumen'))
 
+                'Klik tombol tambah pengaturan dokumen'
+                WebUI.click(findTestObject('TandaTanganDokumen/btn_Add'))
+            }
+            
             'Pengecekan apakah masuk page tambah pengaturan dokumen'
             if (WebUI.verifyElementPresent(findTestObject('TandaTanganDokumen/lbl_TambahTemplatDokumen'), GlobalVariable.TimeOut)) {
                 'call function input form'
@@ -296,12 +297,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             checkVerifyPaging(WebUI.verifyMatch(WebUI.getText(findTestObject('TandaTanganDokumen/check_tipePembayaran')), 
                     result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-			'Input enter'
-			WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
-			
+            'Input enter'
+            WebUI.sendKeys(findTestObject('TandaTanganDokumen/input_Status'), Keys.chord(Keys.ENTER))
+
             'call function input form'
             inputForm(conneSign, checked)
-			
+
             'Klik button lanjut'
             WebUI.click(findTestObject('TandaTanganDokumen/btn_Lanjut'))
 
@@ -480,7 +481,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                 'looping signbox inputan excel'
                 for (indexExcel = 0; indexExcel < RoleTandaTangan.size(); indexExcel++) {
-                    if (!(roleTTD.equalsIgnoreCase(RoleTandaTangan[indexExcel]) && tipeTTD.equalsIgnoreCase(TipeTandaTangan[
+                    if (!(roleTTD.equalsIgnoreCase(RoleTandaTangan[indexExcel]) && tipeTTD.equalsIgnoreCase(tipeTandaTangan[
                         indexExcel]))) {
                         if (indexExcel == (RoleTandaTangan.size() - 1)) {
                             'modify object button delete sign box'
@@ -498,7 +499,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                             variable = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-setting-signer > div:nth-child(3) > div > app-document-anotate > section > section.box > div app-bbox'))
                         }
-                    } else if (roleTTD.equalsIgnoreCase(RoleTandaTangan[indexExcel]) && tipeTTD.equalsIgnoreCase(TipeTandaTangan[
+                    } else if (roleTTD.equalsIgnoreCase(RoleTandaTangan[indexExcel]) && tipeTTD.equalsIgnoreCase(tipeTandaTangan[
                         indexExcel])) {
                         if ((SignBoxAction[indexExcel]).equalsIgnoreCase('Yes')) {
                             if (!(locationSignBox.contains(SignBoxLocation[indexExcel]))) {
@@ -566,21 +567,21 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     
                     locationSignBox = WebUI.getAttribute(modifyObjectSignBox, 'style', FailureHandling.CONTINUE_ON_FAILURE)
 
-                    if (!(roleTTD.equalsIgnoreCase(RoleTandaTangan[indexExcel]) && tipeTTD.equalsIgnoreCase(TipeTandaTangan[
+                    if (!(roleTTD.equalsIgnoreCase(RoleTandaTangan[indexExcel]) && tipeTTD.equalsIgnoreCase(tipeTandaTangan[
                         indexExcel]))) {
                         if (index == variable.size()) {
-                            if ((TipeTandaTangan[indexExcel]).equalsIgnoreCase('TTD')) {
+                            if ((tipeTandaTangan[indexExcel]).equalsIgnoreCase('TTD')) {
                                 'Klik button tanda tangan'
                                 WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_ttd'))
-                            } else if ((TipeTandaTangan[indexExcel]).equalsIgnoreCase('Paraf')) {
+                            } else if ((tipeTandaTangan[indexExcel]).equalsIgnoreCase('Paraf')) {
                                 'Klik button tanda tangan'
                                 WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_paraf'))
-                            } else if ((TipeTandaTangan[indexExcel]).equalsIgnoreCase('Meterai')) {
+                            } else if ((tipeTandaTangan[indexExcel]).equalsIgnoreCase('Meterai')) {
                                 'Klik button tanda tangan'
                                 WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_materai'))
                             }
                             
-                            if ((TipeTandaTangan[indexExcel]).equalsIgnoreCase('TTD') || (TipeTandaTangan[indexExcel]).equalsIgnoreCase(
+                            if ((tipeTandaTangan[indexExcel]).equalsIgnoreCase('TTD') || (tipeTandaTangan[indexExcel]).equalsIgnoreCase(
                                 'Paraf')) {
                                 'Verify label tanda tangannya muncul atau tidak'
                                 WebUI.verifyElementPresent(findTestObject('TandaTanganDokumen/lbl_TipeTandaTangan'), GlobalVariable.TimeOut, 
@@ -627,7 +628,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                 }
                             }
                         }
-                    } else if (roleTTD.equalsIgnoreCase(RoleTandaTangan[indexExcel]) && tipeTTD.equalsIgnoreCase(TipeTandaTangan[
+                    } else if (roleTTD.equalsIgnoreCase(RoleTandaTangan[indexExcel]) && tipeTTD.equalsIgnoreCase(tipeTandaTangan[
                         indexExcel])) {
                         if ((SignBoxAction[indexExcel]).equalsIgnoreCase('Yes')) {
                             if (!(locationSignBox.contains(SignBoxLocation[indexExcel]))) {
@@ -677,7 +678,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'New') || findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase(
             'Edit')) && (GlobalVariable.FlagFailed == 0)) {
             'call fucntion after edit'
-            verifyAfterAddorEdit(TipeTandaTangan)
+            verifyAfterAddorEdit(tipeTandaTangan)
 
             'check if storedb = yes dan flagfailed = 0'
             if ((GlobalVariable.checkStoreDB == 'Yes') && (GlobalVariable.FlagFailed == 0)) {
@@ -793,8 +794,7 @@ def checkPaging() {
         
         'verify paging di page terakhir'
         checkVerifyPaging(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('TandaTanganDokumen/paging_Page'), 'aria-label', 
-                    FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage + additionalRoundUp), 
-                false, FailureHandling.CONTINUE_ON_FAILURE))
+                    FailureHandling.CONTINUE_ON_FAILURE), 'page ' + Math.round(lastPage + additionalRoundUp), false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'click min page'
         WebUI.click(findTestObject('TandaTanganDokumen/button_MinPage'))
@@ -945,9 +945,9 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     }
 }
 
-def checkDDL(TestObject objectDDL, ArrayList listDB, String reason) {
+def checkDDL(TestObject objectDDL, ArrayList<String> listDB, String reason) {
     'declare array untuk menampung ddl'
-    ArrayList list = []
+    ArrayList<String> list = []
 
     'click untuk memunculkan ddl'
     WebUI.click(objectDDL)
@@ -1023,8 +1023,8 @@ def sortingSequenceSign() {
     if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Sequential Signing')).equalsIgnoreCase(
         'Iya')) {
         'get urutan seq sign dari excel'
-        ArrayList seqSignRole = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Urutan Signing')).split(
-            ';', -1)
+        ArrayList<String> seqSignRole = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel(
+                'Urutan Signing')).split(';', -1)
 
         'count box'
         variable = DriverFactory.webDriver.findElements(By.cssSelector('#cdk-drop-list-0 div'))
@@ -1078,22 +1078,22 @@ def inputForm(Connection conneSign, int checked) {
 
     if ((GlobalVariable.NumofColm == 2) && (checked == 0)) {
         'get data tipe-tipe pembayaran secara asc'
-        ArrayList tipePembayaranDB = CustomKeywords.'connection.PengaturanDokumen.getLovTipePembayaran'(conneSign)
+        ArrayList<String> tipePembayaranDB = CustomKeywords.'connection.PengaturanDokumen.getLovTipePembayaran'(conneSign)
 
         'check ddl tipe pembayaran'
         checkDDL(findTestObject('TandaTanganDokumen/input_tipePembayaran'), tipePembayaranDB, ' pada tipe pembayaran Ttd ')
     }
     
     'Input value tipe pembayaran'
-	inputDDLExact('Object Repository/TandaTanganDokumen/input_tipePembayaran', findTestData(excelPathPengaturanDokumen).getValue(
-		GlobalVariable.NumofColm, rowExcel('$Tipe Pembayaran TTD')))
+    inputDDLExact('Object Repository/TandaTanganDokumen/input_tipePembayaran', findTestData(excelPathPengaturanDokumen).getValue(
+            GlobalVariable.NumofColm, rowExcel('$Tipe Pembayaran TTD')))
 
     'click label judul'
     WebUI.click(findTestObject('TandaTanganDokumen/label_Judul'))
 
     if ((GlobalVariable.NumofColm == 2) && (checked == 0)) {
         'get data tipe-tipe pembayaran secara asc'
-        ArrayList resultVendorDDL = CustomKeywords.'connection.PengaturanDokumen.getDDLVendor'(conneSign)
+        ArrayList<String> resultVendorDDL = CustomKeywords.'connection.PengaturanDokumen.getDDLVendor'(conneSign)
 
         'check ddl psre'
         checkDDL(findTestObject('Object Repository/TandaTanganDokumen/select_Psre'), resultVendorDDL, ' pada DDL Psre ')
@@ -1102,25 +1102,26 @@ def inputForm(Connection conneSign, int checked) {
     }
     
     'Input value Psre'
-	inputDDLExact('Object Repository/TandaTanganDokumen/select_Psre', findTestData(excelPathPengaturanDokumen).getValue(
-		GlobalVariable.NumofColm, rowExcel('Input Psre')))
-	
+    inputDDLExact('Object Repository/TandaTanganDokumen/select_Psre', findTestData(excelPathPengaturanDokumen).getValue(
+            GlobalVariable.NumofColm, rowExcel('Input Psre')))
+
     'Input value sequential sign'
-	inputDDLExact('Object Repository/TandaTanganDokumen/select_SequentialSigning', findTestData(excelPathPengaturanDokumen).getValue(
-		GlobalVariable.NumofColm, rowExcel('Sequential Signing')))
-	
-	if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Input Psre')).equalsIgnoreCase('Privy')) {
-		WebUI.click(findTestObject('TandaTanganDokumen/select_QRSign'))
-		
-		WebUI.verifyElementText(findTestObject('TandaTanganDokumen/ddl_QRSign'), 'Ya', FailureHandling.CONTINUE_ON_FAILURE)
-	} else {
-		'Input value QRSign'
-		inputDDLExact('Object Repository/TandaTanganDokumen/select_QRSign', findTestData(excelPathPengaturanDokumen).getValue(
-			GlobalVariable.NumofColm, rowExcel('QR Lacak Ttd')))
-	}
-	
-	'input ddl pada status'
-	inputDDLExact('TandaTanganDokumen/input_Status', findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
+    inputDDLExact('Object Repository/TandaTanganDokumen/select_SequentialSigning', findTestData(excelPathPengaturanDokumen).getValue(
+            GlobalVariable.NumofColm, rowExcel('Sequential Signing')))
+
+    if (findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Input Psre')).equalsIgnoreCase(
+        'Privy')) {
+        WebUI.click(findTestObject('TandaTanganDokumen/select_QRSign'))
+
+        WebUI.verifyElementText(findTestObject('TandaTanganDokumen/ddl_QRSign'), 'Ya', FailureHandling.CONTINUE_ON_FAILURE)
+    } else {
+        'Input value QRSign'
+        inputDDLExact('Object Repository/TandaTanganDokumen/select_QRSign', findTestData(excelPathPengaturanDokumen).getValue(
+                GlobalVariable.NumofColm, rowExcel('QR Lacak Ttd')))
+    }
+    
+    'input ddl pada status'
+    inputDDLExact('TandaTanganDokumen/input_Status', findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, 
             rowExcel('Status Active')))
 
     'Jika panjang dokumen lebih besar dari 0'
@@ -1141,7 +1142,7 @@ def inputSignBox() {
     RoleTandaTangan = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('RoleTandaTangan')).split(
         semicolon, splitIndex)
 
-    TipeTandaTangan = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('TipeTandaTangan')).split(
+    tipeTandaTangan = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('TipeTandaTangan')).split(
         semicolon, splitIndex)
 
     SignBoxAction = findTestData(excelPathPengaturanDokumen).getValue(GlobalVariable.NumofColm, rowExcel('Pindahkan SignBox')).split(
@@ -1179,13 +1180,13 @@ def inputSignBox() {
     0) {
         'looping berdasarkan total tanda tangan'
         for (int j = 1; j <= RoleTandaTangan.size(); j++) {
-            if ((TipeTandaTangan[(j - 1)]).equalsIgnoreCase('TTD')) {
+            if ((tipeTandaTangan[(j - 1)]).equalsIgnoreCase('TTD')) {
                 'Klik button tanda tangan'
                 WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_ttd'))
-            } else if ((TipeTandaTangan[(j - 1)]).equalsIgnoreCase('Paraf')) {
+            } else if ((tipeTandaTangan[(j - 1)]).equalsIgnoreCase('Paraf')) {
                 'Klik button tanda tangan'
                 WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_paraf'))
-            } else if ((TipeTandaTangan[(j - 1)]).equalsIgnoreCase('Meterai')) {
+            } else if ((tipeTandaTangan[(j - 1)]).equalsIgnoreCase('Meterai')) {
                 'Klik button tanda tangan'
                 WebUI.click(findTestObject('Object Repository/TandaTanganDokumen/btn_materai'))
             }
@@ -1195,7 +1196,7 @@ def inputSignBox() {
                 'xpath', 'equals', ('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-setting-signer/div[2]/div/app-document-anotate/section/section[2]/div/app-bbox[' + 
                 j) + ']/div/div/small', true)
 
-            if ((TipeTandaTangan[(j - 1)]).equalsIgnoreCase('TTD') || (TipeTandaTangan[(j - 1)]).equalsIgnoreCase('Paraf')) {
+            if ((tipeTandaTangan[(j - 1)]).equalsIgnoreCase('TTD') || (tipeTandaTangan[(j - 1)]).equalsIgnoreCase('Paraf')) {
                 'Verify label tanda tangannya muncul atau tidak'
                 WebUI.verifyElementPresent(findTestObject('TandaTanganDokumen/lbl_TipeTandaTangan'), GlobalVariable.TimeOut, 
                     FailureHandling.CONTINUE_ON_FAILURE)
@@ -1241,33 +1242,35 @@ def rowExcel(String cellValue) {
 }
 
 def inputDDLExact(String locationObject, String input) {
-	'Input value status'
-	WebUI.setText(findTestObject(locationObject), input)
+    'Input value status'
+    WebUI.setText(findTestObject(locationObject), input)
 
-	if (input != '') {
-		WebUI.click(findTestObject(locationObject))
-	
-	'get token unik'
-	tokenUnique = WebUI.getAttribute(findTestObject(locationObject), 'aria-owns')
-	
-	'modify object label Value'
-	modifyObjectGetDDLFromToken = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
-		'equals', '//*[@id="' + tokenUnique + '"]/div/div[2]', true)
-	
-	DDLFromToken = WebUI.getText(modifyObjectGetDDLFromToken)
-	
-	for (i = 0; i < DDLFromToken.split('\n', -1).size(); i++) {
-		if (DDLFromToken.split('\n', -1)[i].toString().toLowerCase() == input.toString().toLowerCase()) {
-			modifyObjectClicked = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
-		'equals', '//*[@id="' + tokenUnique + '"]/div/div[2]/div[' + (i + 1) + ']', true)
+    if (input != '') {
+        WebUI.click(findTestObject(locationObject))
 
-			WebUI.click(modifyObjectClicked)
-			break
-		}
-	}
-	} else {
-		WebUI.click(findTestObject(locationObject))
-		
-		WebUI.sendKeys(findTestObject(locationObject), Keys.chord(Keys.ENTER))
-	}
+        'get token unik'
+        tokenUnique = WebUI.getAttribute(findTestObject(locationObject), 'aria-owns')
+
+        'modify object label Value'
+        modifyObjectGetDDLFromToken = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath', 
+            'equals', ('//*[@id="' + tokenUnique) + '"]/div/div[2]', true)
+
+        DDLFromToken = WebUI.getText(modifyObjectGetDDLFromToken)
+
+        for (i = 0; i < DDLFromToken.split('\n', -1).size(); i++) {
+            if ((DDLFromToken.split('\n', -1)[i]).toString().toLowerCase() == input.toString().toLowerCase()) {
+                modifyObjectClicked = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath', 
+                    'equals', ((('//*[@id="' + tokenUnique) + '"]/div/div[2]/div[') + (i + 1)) + ']', true)
+
+                WebUI.click(modifyObjectClicked)
+
+                break
+            }
+        }
+    } else {
+        WebUI.click(findTestObject(locationObject))
+
+        WebUI.sendKeys(findTestObject(locationObject), Keys.chord(Keys.ENTER))
+    }
 }
+
