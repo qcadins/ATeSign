@@ -12,7 +12,7 @@ import java.sql.Connection as Connection
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'inisialisasi result'
-HashMap result = [:]
+HashMap result = []
 
 'jika vendornya ada teks digi ataupun DIGI'
 if (vendor.toString().contains('digi') || vendor.toString().contains('DIGI')) {
@@ -211,7 +211,7 @@ def funcFindSaldo(HashMap result, String vendorVerifikasi, ArrayList saldoList, 
 	}
 }
 
-def funcSaldoRegis(HashMap result) {
+def funcSaldoRegis(HashMap result, Connection conneSign) {
 	String vendorVerifikasi
 	
 	ArrayList saldoList = []

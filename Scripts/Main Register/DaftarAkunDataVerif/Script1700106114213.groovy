@@ -108,12 +108,31 @@ if (WebUI.verifyElementNotPresent(findTestObject('DaftarAkun/label_SuccessPrivy'
         
         'delay untuk camera on'
         WebUI.delay(5)
-
+		if (GlobalVariable.Psre.toString().equalsIgnoreCase('Privy')) {
+			'swith to iframe privy'
+			WebUI.switchToFrame(findTestObject('DaftarAkun/iFrame_PrivyLiveness'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
+			
+			'click focus button next'
+			WebUI.focus(findTestObject('Object Repository/DaftarAkun/button_NextLivenessPrivy'))
+			
+			'click click button next'
+			WebUI.click(findTestObject('Object Repository/DaftarAkun/button_NextLivenessPrivy'))
+			
+			'click focus button take selfie'
+			WebUI.focus(findTestObject('Object Repository/DaftarAkun/button_TakeSelfieLivenessPrivy'))
+			
+			'click click button take selfie'
+			WebUI.click(findTestObject('Object Repository/DaftarAkun/button_TakeSelfieLivenessPrivy'))
+			
+			'prepare untuk foto'
+			WebUI.delay(30)
+			} else {
         'click ambil foto'
         WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFoto'))
 
         'click ambil apply'
         WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Apply'))
+		}
     }
     
     'check mau foto KTP atau tidak'

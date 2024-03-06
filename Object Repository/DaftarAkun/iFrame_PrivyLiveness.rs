@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>iFrame_PrivyLiveness</name>
+   <tag></tag>
+   <elementGuidId>472af78d-a429-449a-a46d-da55d9df9005</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;privy-liveness-frame&quot;]</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;privy-liveness-frame&quot;]</value>
+      <webElementGuid>af3b5a06-4495-4e1c-83f3-ac7c939e6973</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>

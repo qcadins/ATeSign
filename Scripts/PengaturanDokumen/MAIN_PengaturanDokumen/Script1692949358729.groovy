@@ -1273,4 +1273,3 @@ def inputDDLExact(String locationObject, String input) {
         WebUI.sendKeys(findTestObject(locationObject), Keys.chord(Keys.ENTER))
     }
 }
-
