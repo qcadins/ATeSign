@@ -1,32 +1,50 @@
-import groovy.json.JsonSlurper
-import internal.GlobalVariable
+import groovy.json.JsonSlurper as JsonSlurper
+import internal.GlobalVariable as GlobalVariable
 import java.sql.Connection as Connection
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
+
 //import com.twilio.Twilio
 //import com.twilio.rest.api.v2010.account.Message
 //import com.twilio.type.PhoneNumber
 //import com.twilio.base.ResourceSet
-
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign Main.xlsx')
+
 sheet = 'Main'
+
 'connect DB eSign'
 GlobalVariable.NumofColm = 4
+
 excelPathFESignDocument = 'Main/Main'
+
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-tokenUnique = 'aa'
-i = 1
-println '//*[@id="' + tokenUnique + '"]/div/div[2]/div[' + (i + 1) + ']'
-WebUI.delay(1000000)
+'click ambil foto sendiri'
+WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFotoSendiri'))
 
+'swith to iframe privy'
+WebUI.switchToFrame(findTestObject('DaftarAkun/iFrame_PrivyLiveness'), GlobalVariable.TimeOut)
 
+WebUI.scrollToElement(findTestObject('Object Repository/DaftarAkun/button_NextLivenessPrivy'), GlobalVariable.TimeOut)
 
-//*[@id="searchForm"]/div[1]/div[10]/app-question/app-select/div/div[2]/ng-dropdown-panel
+'click button next'
+WebUI.click(findTestObject('Object Repository/DaftarAkun/button_NextLivenessPrivy'))
 
+WebUI.scrollToElement(findTestObject('Object Repository/DaftarAkun/button_TakeSelfieLivenessPrivy'), GlobalVariable.TimeOut)
+
+'click button take selfie'
+WebUI.click(findTestObject('Object Repository/DaftarAkun/button_TakeSelfieLivenessPrivy'))
+
+'click focus button next'
+WebUI.focus(findTestObject('Object Repository/DaftarAkun/button_NextLivenessPrivy'))
+
+'click click button next'
+WebUI.click(findTestObject('Object Repository/DaftarAkun/button_NextLivenessPrivy'))
+
+WebUI.delay(1000000) //*[@id="searchForm"]/div[1]/div[10]/app-question/app-select/div/div[2]/ng-dropdown-panel
 //
 //aa = WebUI.getAttribute(findTestObject('View User OTP/text_otp'), 'value')
 //println aa
@@ -49,8 +67,6 @@ WebUI.delay(1000000)
 //messages.each { message ->
 //    println(message.getBody())
 //}
-
-
 //otp = CustomKeywords.'customizekeyword.GetSMS.getOTP'('eSignHub')
 //println otp
 //otp1 = CustomKeywords.'customizekeyword.GetSMS.getOTP'('PrivyID')
@@ -59,5 +75,6 @@ WebUI.delay(1000000)
 //println otp2
 
 def rowExcel(String cellValue) {
-	CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
+    CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
+

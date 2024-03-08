@@ -106,33 +106,34 @@ if (WebUI.verifyElementNotPresent(findTestObject('DaftarAkun/label_SuccessPrivy'
             MobileBuiltInKeywords.tapAndHoldAtPosition(550, 1820, 3)
         }
         
-        'delay untuk camera on'
-        WebUI.delay(5)
-		if (GlobalVariable.Psre.toString().equalsIgnoreCase('Privy')) {
-			'swith to iframe privy'
-			WebUI.switchToFrame(findTestObject('DaftarAkun/iFrame_PrivyLiveness'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
+        if (GlobalVariable.Psre.toString().equalsIgnoreCase('Privy')) {
+            'swith to iframe privy'
+            WebUI.switchToFrame(findTestObject('DaftarAkun/iFrame_PrivyLiveness'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
 			
-			'click focus button next'
-			WebUI.focus(findTestObject('Object Repository/DaftarAkun/button_NextLivenessPrivy'))
-			
-			'click click button next'
-			WebUI.click(findTestObject('Object Repository/DaftarAkun/button_NextLivenessPrivy'))
-			
-			'click focus button take selfie'
-			WebUI.focus(findTestObject('Object Repository/DaftarAkun/button_TakeSelfieLivenessPrivy'))
-			
-			'click click button take selfie'
-			WebUI.click(findTestObject('Object Repository/DaftarAkun/button_TakeSelfieLivenessPrivy'))
-			
-			'prepare untuk foto'
-			WebUI.delay(30)
-			} else {
-        'click ambil foto'
-        WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFoto'))
+			'cari element button next liveness'
+			WebUI.scrollToElement(findTestObject('Object Repository/DaftarAkun/button_NextLivenessPrivy'), GlobalVariable.TimeOut)
 
-        'click ambil apply'
-        WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Apply'))
-		}
+            'click button next'
+            WebUI.click(findTestObject('Object Repository/DaftarAkun/button_NextLivenessPrivy'))
+
+			'cari take self photo'
+			WebUI.scrollToElement(findTestObject('Object Repository/DaftarAkun/button_TakeSelfieLivenessPrivy'), GlobalVariable.TimeOut)
+			
+            'click button take selfie'
+            WebUI.click(findTestObject('Object Repository/DaftarAkun/button_TakeSelfieLivenessPrivy'))
+
+            'prepare untuk foto'
+            WebUI.delay(45)
+        } else {
+            'delay 5 detik'
+            WebUI.delay(5)
+
+            'click ambil foto'
+            WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFoto'))
+
+            'click ambil apply'
+            WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Apply'))
+        }
     }
     
     'check mau foto KTP atau tidak'

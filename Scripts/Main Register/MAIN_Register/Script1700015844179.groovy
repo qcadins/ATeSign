@@ -188,11 +188,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 inputFilterSaldo('Verification', conneSign, GlobalVariable.Psre)
 
                 if (GlobalVariable.Psre == 'VIDA') {
-                    'kurang saldo before dengan proses PNBP'
-                    saldoBefore.put('PNBP', (Integer.parseInt(saldoBefore.get('PNBP')) - 1).toString())
-
-                    'call fucntion input filter saldo'
-                    inputFilterSaldo('PNBP', conneSign, GlobalVariable.Psre)
+//                    'kurang saldo before dengan proses PNBP'
+//                    saldoBefore.put('PNBP', (Integer.parseInt(saldoBefore.get('PNBP')) - 1).toString())
+//
+//                    'call fucntion input filter saldo'
+//                    inputFilterSaldo('PNBP', conneSign, GlobalVariable.Psre)
                 }
                 
                 if (!(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(

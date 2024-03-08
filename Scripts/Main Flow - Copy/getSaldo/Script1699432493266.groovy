@@ -236,8 +236,8 @@ def funcSaldoRegis(HashMap result, Connection conneSign) {
 //			}
 //		}
 	}
-	
-	saldoList = ['Verifikasi', 'PNBP']
+	'bisa ditambahkan saldo PNBP disini'
+	saldoList = ['Verifikasi']
 	
 	funcFindSaldo(result, vendor, saldoList, forAutosign)
 
