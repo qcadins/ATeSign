@@ -6,6 +6,10 @@
    <elementGuidId>30c83ddb-e244-4b68-b19f-278e99196417</elementGuidId>
    <selectorCollection>
       <entry>
+         <key>BASIC</key>
+         <value>//*[@id = 'email']</value>
+      </entry>
+      <entry>
          <key>CSS</key>
          <value>#email</value>
       </entry>
@@ -14,7 +18,7 @@
          <value>//input[@id='email']</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>true</useRalativeImagePath>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -22,15 +26,15 @@
       <name>tag</name>
       <type>Main</type>
       <value>input</value>
-      <webElementGuid>3c79fe25-139a-4338-a211-1cf35faa0dec</webElementGuid>
+      <webElementGuid>e920c0d0-13fb-4e4c-af7a-427772fc857b</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>type</name>
       <type>Main</type>
       <value>text</value>
-      <webElementGuid>27fc669b-10b4-4d50-9921-88c7777e582f</webElementGuid>
+      <webElementGuid>b59acc43-4360-4487-bd94-7bba8660375a</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -38,7 +42,7 @@
       <name>class</name>
       <type>Main</type>
       <value>form-control ng-untouched ng-pristine ng-invalid</value>
-      <webElementGuid>3f2b4cf9-90d1-40b8-a9b9-26caab7ef79d</webElementGuid>
+      <webElementGuid>b63d01a9-5c47-4a65-8344-fd8434f635f5</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -46,7 +50,7 @@
       <name>ng-reflect-name</name>
       <type>Main</type>
       <value>email</value>
-      <webElementGuid>739e222f-491e-41c7-a91c-e34d7447840d</webElementGuid>
+      <webElementGuid>89909473-f007-46a3-a33e-31fab4f23b83</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -54,15 +58,15 @@
       <name>id</name>
       <type>Main</type>
       <value>email</value>
-      <webElementGuid>00550320-6779-4ac3-b0b2-078d5ba5c900</webElementGuid>
+      <webElementGuid>a10cd5e1-530f-4060-9533-197ec80ecc6f</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>placeholder</name>
       <type>Main</type>
       <value>Tulis email / nomor handphone Anda</value>
-      <webElementGuid>4a4fae4a-40d8-4265-83ba-f0d66cc1a6ff</webElementGuid>
+      <webElementGuid>46ba66eb-d06f-4046-a139-5b06693b67f9</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -70,7 +74,7 @@
       <name>ng-reflect-required</name>
       <type>Main</type>
       <value>true</value>
-      <webElementGuid>f739ee80-c472-46d3-b9e6-405090cc2aff</webElementGuid>
+      <webElementGuid>a22d49e1-481f-47da-b9cb-5ba5f3c249d4</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -78,7 +82,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>id(&quot;email&quot;)</value>
-      <webElementGuid>43f47f89-c622-4939-801c-2cdcfd8f9bac</webElementGuid>
+      <webElementGuid>0120b8e6-9e84-428a-8ee5-e2d9b1ebe922</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -86,7 +90,7 @@
       <name>xpath:attributes</name>
       <type>Main</type>
       <value>//input[@id='email']</value>
-      <webElementGuid>63b63f22-bb17-4859-86b7-92d4d1ad7357</webElementGuid>
+      <webElementGuid>6fda63b5-3a65-4628-9b3a-9076165c99c9</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -94,7 +98,7 @@
       <name>xpath:idRelative</name>
       <type>Main</type>
       <value>//form[@id='msxForm']/div/div/app-question/app-text/fieldset/div/input</value>
-      <webElementGuid>aacca3fb-d78d-4c3d-9f02-fba2bc5d6ec3</webElementGuid>
+      <webElementGuid>5b7a5827-ecf2-4aab-84fd-4310943e6698</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -102,7 +106,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//input</value>
-      <webElementGuid>0be0499f-ead4-48fe-ba05-76416e3eb9b4</webElementGuid>
+      <webElementGuid>14b764b6-ea47-45f7-b5ce-e3ad32cb1d80</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -110,6 +114,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//input[@type = 'text' and @id = 'email' and @placeholder = 'Tulis email / nomor handphone Anda']</value>
-      <webElementGuid>8a28f09b-6e1f-4ad8-8606-067a4768c043</webElementGuid>
+      <webElementGuid>ad593267-64c4-48c0-9bc5-55a54df01ab0</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

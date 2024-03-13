@@ -22,27 +22,23 @@ excelPathFESignDocument = 'Main/Main'
 
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-'click ambil foto sendiri'
-WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFotoSendiri'))
-
 'swith to iframe privy'
-WebUI.switchToFrame(findTestObject('DaftarAkun/iFrame_PrivyLiveness'), GlobalVariable.TimeOut)
+            WebUI.switchToFrame(findTestObject('DaftarAkun/iFrame_PrivyLiveness'), GlobalVariable.TimeOut)
+			
+			'cari element button next liveness'
+			WebUI.scrollToElement(findTestObject('Object Repository/DaftarAkun/button_NextLivenessPrivy'), GlobalVariable.TimeOut)
 
-WebUI.scrollToElement(findTestObject('Object Repository/DaftarAkun/button_NextLivenessPrivy'), GlobalVariable.TimeOut)
+            'click button next'
+            WebUI.click(findTestObject('Object Repository/DaftarAkun/button_NextLivenessPrivy'))
 
-'click button next'
-WebUI.click(findTestObject('Object Repository/DaftarAkun/button_NextLivenessPrivy'))
+			'cari take self photo'
+			WebUI.scrollToElement(findTestObject('Object Repository/DaftarAkun/button_TakeSelfieLivenessPrivy'), GlobalVariable.TimeOut)
+			
+            'click button take selfie'
+            WebUI.click(findTestObject('Object Repository/DaftarAkun/button_TakeSelfieLivenessPrivy'))
 
-WebUI.scrollToElement(findTestObject('Object Repository/DaftarAkun/button_TakeSelfieLivenessPrivy'), GlobalVariable.TimeOut)
-
-'click button take selfie'
-WebUI.click(findTestObject('Object Repository/DaftarAkun/button_TakeSelfieLivenessPrivy'))
-
-'click focus button next'
-WebUI.focus(findTestObject('Object Repository/DaftarAkun/button_NextLivenessPrivy'))
-
-'click click button next'
-WebUI.click(findTestObject('Object Repository/DaftarAkun/button_NextLivenessPrivy'))
+            'prepare untuk foto'
+            WebUI.delay(45)
 
 WebUI.delay(1000000) //*[@id="searchForm"]/div[1]/div[10]/app-question/app-select/div/div[2]/ng-dropdown-panel
 //

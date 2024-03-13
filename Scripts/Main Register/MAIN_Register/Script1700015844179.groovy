@@ -156,7 +156,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 'looping untuk mengeck apakah case selanjutnya ingin melanjutkan input pada form registrasi'
                 while (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Continue Register & Activation')).equalsIgnoreCase(
-                    'Continue') && (GlobalVariable.FlagFailed > 0)) {
+                    'Continue') && (GlobalVariable.FlagFailed == 0)) {
                     (GlobalVariable.NumofColm)++
 
                     GlobalVariable.FlagFailed = 0
@@ -187,13 +187,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'call fucntion input filter saldo'
                 inputFilterSaldo('Verification', conneSign, GlobalVariable.Psre)
 
-                if (GlobalVariable.Psre == 'VIDA') {
+//                if (GlobalVariable.Psre == 'VIDA') {
 //                    'kurang saldo before dengan proses PNBP'
 //                    saldoBefore.put('PNBP', (Integer.parseInt(saldoBefore.get('PNBP')) - 1).toString())
 //
 //                    'call fucntion input filter saldo'
 //                    inputFilterSaldo('PNBP', conneSign, GlobalVariable.Psre)
-                }
+//                }
                 
                 if (!(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
                     'API Register'))) {

@@ -208,54 +208,54 @@ if (GlobalVariable.Psre == 'PRIVY') {
         }
         
         if (GlobalVariable.checkStoreDB == 'Yes') {
-			'get tenant di table ms notif type of tenant'
-			tenantType = CustomKeywords.'connection.UpdateData.checkNotifTypeExistforTenant'(conneSign)
-			
-			if (tenantType == 0) {
-				'check jika Must use WA message = 1'
-				if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')) == 
-						'1') {
-					usedSaldo = 'WhatsApp Message'
-				} else {
-					'check jika email service on'
-					if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == 
-							'1') {
-						'check jika use WA message = 1'
-						if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) == 
-								'1') {
-							usedSaldo = 'WhatsApp Message'
-						} else {
-							'jika use WA message bukan 1 maka use OTP'
-							usedSaldo = 'OTP'
-						}
-					} else {
-						'jika use WA message bukan 1 maka use OTP'
-						usedSaldo = 'OTP'
-					}
-				}
-			} else {
-				'check jika Must use WA message = 1'
-				if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First - OTP Act')) ==
-						'1') {
-					usedSaldo = 'WhatsApp Message'
-				} else {
-					'check jika email service on'
-					if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) ==
-							'1') {
-						'check jika use WA message = 1'
-						if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message - OTP Act')) ==
-								'1') {
-							usedSaldo = 'WhatsApp Message'
-						} else {
-							'jika use WA message bukan 1 maka use OTP'
-							usedSaldo = 'OTP'
-						}
-					} else {
-						'jika use WA message bukan 1 maka use OTP'
-						usedSaldo = 'OTP'
-					}
-				}
-			}
+            'get tenant di table ms notif type of tenant'
+            tenantType = CustomKeywords.'connection.UpdateData.checkNotifTypeExistforTenant'(conneSign)
+
+            if (tenantType == 0) {
+                'check jika Must use WA message = 1'
+                if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')) == 
+                '1') {
+                    usedSaldo = 'WhatsApp Message'
+                } else {
+                    'check jika email service on'
+                    if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == 
+                    '1') {
+                        'check jika use WA message = 1'
+                        if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) == 
+                        '1') {
+                            usedSaldo = 'WhatsApp Message'
+                        } else {
+                            'jika use WA message bukan 1 maka use OTP'
+                            usedSaldo = 'OTP'
+                        }
+                    } else {
+                        'jika use WA message bukan 1 maka use OTP'
+                        usedSaldo = 'OTP'
+                    }
+                }
+            } else {
+                'check jika Must use WA message = 1'
+                if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First - OTP Act')) == 
+                '1') {
+                    usedSaldo = 'WhatsApp Message'
+                } else {
+                    'check jika email service on'
+                    if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == 
+                    '1') {
+                        'check jika use WA message = 1'
+                        if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message - OTP Act')) == 
+                        '1') {
+                            usedSaldo = 'WhatsApp Message'
+                        } else {
+                            'jika use WA message bukan 1 maka use OTP'
+                            usedSaldo = 'OTP'
+                        }
+                    } else {
+                        'jika use WA message bukan 1 maka use OTP'
+                        usedSaldo = 'OTP'
+                    }
+                }
+            }
             
             resultTrx = CustomKeywords.'connection.APIFullService.getAPIGenInvLinkOTPTrx'(conneSign, findTestData(excelPathRegister).getValue(
                     GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"', ''), usedSaldo)
@@ -288,6 +288,9 @@ if (GlobalVariable.Psre == 'PRIVY') {
 def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
     'declare list otp'
     ArrayList listOTP = []
+
+	'pilih wa dengan beri index 0 (start selalu awal)'
+    pilihWAorSMS(rowExcel('Media Pemilihan OTP - Aktivasi'), 0)
 
     'click button proses'
     WebUI.click(findTestObject('RegisterEsign/FormAktivasiEsign/button_Proses'))
@@ -341,6 +344,8 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
                 for (int i = 0; i < countResend; i++) {
                     'tunggu button resend otp'
                     WebUI.delay(315)
+
+                    pilihWAorSMS(rowExcel('Media Pemilihan Resend OTP - Aktivasi'), i)
 
                     'klik pada button kirim ulang otp'
                     WebUI.click(findTestObject('RegisterEsign/FormAktivasiEsign/kirimKodeLagi'))
@@ -416,6 +421,9 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
                 for (int i = 0; i < countResend; i++) {
                     'tunggu button resend otp'
                     WebUI.delay(315)
+
+                    'pilih mau wa / sms'
+                    pilihWAorSMS(rowExcel('Media Pemilihan Resend OTP - Aktivasi'), i)
 
                     'klik pada button kirim ulang otp'
                     WebUI.click(findTestObject('RegisterEsign/FormAktivasiEsign/kirimKodeLagi'))
@@ -538,5 +546,37 @@ def getOTP(Connection conneSign) {
     otp = CustomKeywords.'connection.DataVerif.getOTPAktivasi'(conneSign, email.toUpperCase())
 
     otp
+}
+
+def pilihWAorSMS(int rowInput, int indexLooping) {
+    mediaPemilihan = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowInput).split(';', -1)
+
+    'apakah ada media otp'
+    if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/text_pemilihanOTP'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+        'pilih mau sms / wa'
+        if ((mediaPemilihan[indexLooping]) == 'SMS') {
+            'jika element pada sms present'
+            if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/button_sms'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+                'click SMS'
+                WebUI.click(findTestObject('RegisterEsign/button_sms'))
+            } else {
+                'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusWarning, 
+                    (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
+                    'button SMS untuk Pemilihan OTP tidak muncul. Pemilihan akan menggunakan default yang sudah terpilih.')
+            }
+        } else if ((mediaPemilihan[indexLooping]) == 'WhatsApp') {
+            'jika element pada wa present'
+            if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/button_wa'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+                'click wa'
+                WebUI.click(findTestObject('RegisterEsign/button_wa'))
+            } else {
+                'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+                CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusWarning, 
+                    (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
+                    'button WA untuk Pemilihan OTP tidak muncul. Pemilihan akan menggunakan default yang sudah terpilih.')
+            }
+        }
+    }
 }
 

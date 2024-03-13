@@ -107,6 +107,9 @@ if (WebUI.verifyElementNotPresent(findTestObject('DaftarAkun/label_SuccessPrivy'
         }
         
         if (GlobalVariable.Psre.toString().equalsIgnoreCase('Privy')) {
+			'delay loading iframe'
+			WebUI.delay(10)
+			
             'swith to iframe privy'
             WebUI.switchToFrame(findTestObject('DaftarAkun/iFrame_PrivyLiveness'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)
 			
@@ -125,15 +128,14 @@ if (WebUI.verifyElementNotPresent(findTestObject('DaftarAkun/label_SuccessPrivy'
             'prepare untuk foto'
             WebUI.delay(45)
         } else {
-            'delay 5 detik'
-            WebUI.delay(5)
+            'delay 7 detik'
+            WebUI.delay(7)
 
             'click ambil foto'
             WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFoto'))
-
-            'click ambil apply'
-            WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Apply'))
         }
+		'click ambil apply'
+		WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Apply'))
     }
     
     'check mau foto KTP atau tidak'
@@ -186,9 +188,8 @@ if (WebUI.verifyElementNotPresent(findTestObject('DaftarAkun/label_SuccessPrivy'
     'click daftar akun'
     WebUI.click(findTestObject('DaftarAkun/button_DaftarAkun'))
 
-    'cek if muncul popup alert'
-    if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-        'get reason'
+	if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/label_ValidationError'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+        'cek if muncul popup alert dan get reason'
         ReasonFailed = WebUI.getText(findTestObject('DaftarAkun/label_ReasonError'))
 
         'write to excel status failed dan reason'
@@ -201,6 +202,17 @@ if (WebUI.verifyElementNotPresent(findTestObject('DaftarAkun/label_SuccessPrivy'
 
         GlobalVariable.FlagFailed = 1
     } else {
+		if (WebUI.verifyElementPresent(findTestObject('DaftarAkun/button_CancelOTP'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+			'click button cancel'
+			WebUI.click(findTestObject('RegisterEsign/button_CancelOTP'))
+			
+			'click daftar akun'
+			WebUI.click(findTestObject('DaftarAkun/button_DaftarAkun'))
+			
+			'click button cancel'
+			WebUI.click(findTestObject('RegisterEsign/button_ProcessOTP'))
+		}
+		
         'check if email kosong atau tidak'
         if ((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).length() > 2) && !(findTestData(
             excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Invite By')).equalsIgnoreCase('SMS'))) {

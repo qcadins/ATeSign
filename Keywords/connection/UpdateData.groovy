@@ -258,13 +258,13 @@ class UpdateData {
 			dataComparison = resultSet.getObject(1)
 		}
 
-		if (value == 'Yes') {
+		if (value == 'Yes' || value == '1') {
 			if (data != dataComparison) {
 				println data
 				println dataComparison
 				stm.executeUpdate("UPDATE ms_notificationtypeoftenant set lov_sending_point = '" + data + "' WHERE lov_sending_point = '" + hardCode + "'")
 			}
-		} else if (value == 'No') {
+		} else if (value == 'No' || value == '0') {
 			if (data == dataComparison) {
 				println data
 				println dataComparison
@@ -742,6 +742,26 @@ class UpdateData {
 			'setting sent otp by email ms_tenant'
 			apiFullService.settingSentOTPByEmail(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email')))
 		}
+		'LOV Sending Point Send Document'
+		updateLOVSendingPointLevelNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting True LOV Sending Point to Generate Invitation ?')), 'Generate Invitation')
+
+		'LOV Sending Point Send Document'
+		updateLOVSendingPointLevelNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting True LOV Sending Point to Generate Invitation Menu ?')), 'Generate Invitation Menu')
+
+		'LOV Sending Point Send Document'
+		updateLOVSendingPointLevelNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting True LOV Sending Point to Regenerate Invitation ?')), 'Regenerate Invitation')
+
+		'LOV Sending Point Send Document'
+		updateLOVSendingPointLevelNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting True LOV Sending Point to Resend Invitation ?')), 'Resend Invitation')
+
+		'LOV Sending Point Send Document'
+		updateLOVSendingPointLevelNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting True LOV Sending Point to Certificate Notification ?')), 'Certificate Notification')
+
+		'LOV Balance Type SMS dan WA'
+		updateLOVBalanceMutationBalanceVendorOfTenant(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting True LOV Balance Type for Tenant and Vendor about SMS ?')), 'SMS Notif', GlobalVariable.Tenant)
+
+		'LOV Balance Type SMS dan WA'
+		updateLOVBalanceMutationBalanceVendorOfTenant(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting True LOV Balance Type for Tenant and Vendor about WhatsApp ?')), 'WhatsApp Message', GlobalVariable.Tenant)
 	}
 
 	@Keyword
@@ -1006,5 +1026,65 @@ class UpdateData {
 
 		'setting send sms send doc general setting'
 		apiFullService.settingSendSMSForgotPassword(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS ForgotPassword')))
+	}
+
+	@Keyword
+	updateLOVBalanceMutationBalanceVendorOfTenant(Connection conn, String value, String balanceType, String tenantCode) {
+		String hardCode
+
+		if (balanceType == 'WhatsApp Message') {
+			hardCode = '9'
+		} else if (balanceType == 'SMS Notif') {
+			hardCode = '10'
+		}
+
+		'Nembak Sending Point Send Document. Wrong Sending Point hardcode = 1.'
+		String dataComparison, dataUpdated
+
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select id_lov from ms_lov where description = '" + balanceType + "'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+
+		resultSet = stm.executeQuery("select mbvot.lov_balance_type, mbvot.id_balancevendoroftenant from ms_balancevendoroftenant mbvot left join ms_tenant mst on mbvot.id_ms_tenant = mst.id_ms_tenant left join ms_lov msl on mbvot.lov_balance_type = msl.id_lov where msl.description = '" + balanceType + "' and mst.tenant_code = '" + tenantCode + "'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			dataComparison = resultSet.getObject(1)
+			dataUpdated = resultSet.getObject(2)
+		}
+
+		if (value == 'Yes' || value == '1') {
+			if (data != dataComparison) {
+				println data
+				println dataComparison
+				stm.executeUpdate("UPDATE ms_balancevendoroftenant set lov_balance_type = '" + data + "' WHERE lov_balance_type = '" + hardCode + "'")
+			}
+		} else if (value == 'No' || value == '0') {
+			if (data == dataComparison) {
+				println data
+				println dataComparison
+				stm.executeUpdate("UPDATE ms_balancevendoroftenant set lov_balance_type = '" + hardCode + "' WHERE id_balancevendoroftenant = '" + dataUpdated + "'")
+			}
+		}
+	}
+	@Keyword
+	updateLOVBalanceMutationBalanceVendorOfTenantPackage(Connection conneSign, String excelPathMain, String sheets) {
+		sheet = sheets
+		
+		'LOV Balance Type SMS dan WA'
+		updateLOVBalanceMutationBalanceVendorOfTenant(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting True LOV Balance Type for Tenant and Vendor about SMS ?')), 'SMS Notif', GlobalVariable.Tenant)
+	
+		'LOV Balance Type SMS dan WA'
+		updateLOVBalanceMutationBalanceVendorOfTenant(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting True LOV Balance Type for Tenant and Vendor about WhatsApp ?')), 'WhatsApp Message', GlobalVariable.Tenant)
+	
 	}
 }

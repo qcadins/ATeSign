@@ -46,11 +46,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(excelPathForgotPass).getValue(
                 GlobalVariable.NumofColm, rowExcel('Setting Email Service')), emailSHA256)
 
+		emailServiceOnVendor = CustomKeywords.'connection.DataVerif.getEmailServiceAsVendorUser'(conneSign, emailSHA256)
+		
         String tenantcode = CustomKeywords.'connection.ForgotPassword.getTenantCode'(conneSign, emailSHA256)
 
         GlobalVariable.Tenant = tenantcode
 
 		CustomKeywords.'connection.UpdateData.updateDBForgotPasswordLevelNotification'(conneSign, excelPathForgotPass, sheet)
+		
+		CustomKeywords.'connection.UpdateData.updateLOVBalanceMutationBalanceVendorOfTenantPackage'(conneSign, excelPathForgotPass, sheet)
 		
         if (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration (Empty/0/1/>1)')).length() > 
         0) {
@@ -88,12 +92,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         WebUI.setText(findTestObject('ForgotPassword/inputEmail_ForgotPage'), findTestData(excelPathForgotPass).getValue(
                 GlobalVariable.NumofColm, rowExcel('$EmailForPassChange')))
 
+		'klik pada tombol lanjut'
+		WebUI.click(findTestObject('ForgotPassword/button_Lanjut_ForgotPage'))
+		
         'cek apakah tombol lanjut tidak di disable'
-        if (WebUI.verifyElementNotHasAttribute(findTestObject('ForgotPassword/button_Lanjut_ForgotPage'), 'disabled', GlobalVariable.TimeOut, 
+        if (WebUI.verifyElementPresent(findTestObject('ForgotPassword/button_Periksa lagi'), GlobalVariable.TimeOut, 
             FailureHandling.OPTIONAL)) {
-            'klik pada tombol lanjut'
-            WebUI.click(findTestObject('ForgotPassword/button_Lanjut_ForgotPage'))
-
             'klik pada tombol periksa lagi'
             WebUI.click(findTestObject('ForgotPassword/button_Periksa lagi'))
 
@@ -104,10 +108,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
             'klik pada tombol lanjut'
             WebUI.click(findTestObject('ForgotPassword/button_Lanjut_ForgotPage'))
-
+			
+			'focus ke click konfirm'
+            WebUI.focus(findTestObject('ForgotPassword/button_YaKonfirm'))
+			
             'klik pada tombol ya'
-            WebUI.click(findTestObject('ForgotPassword/button_YaKonfirm'))
-
+            WebUI.enhancedClick(findTestObject('ForgotPassword/button_YaKonfirm'))
+			
             'check apakah muncul error'
             if (WebUI.verifyElementPresent(findTestObject('ForgotPassword/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
                 'ambil error dan get text dari error tersebut'
@@ -116,7 +123,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     ';') + '<') + WebUI.getText(findTestObject('ForgotPassword/errorLog'))) + '>')
 
                 'klik pada tombol batal'
-                WebUI.click(findTestObject('ForgotPassword/button_Batal'))
+                WebUI.click(findTestObject('ForgotPassword/button_Batal_ForgotPage'))
 
                 continue
             } else if (WebUI.verifyElementPresent(findTestObject('ForgotPassword/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
@@ -128,11 +135,75 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 WebUI.click(findTestObject('ForgotPassword/button_OK'))
 
                 'klik pada tombol batal'
-                WebUI.click(findTestObject('ForgotPassword/button_Batal'))
+                WebUI.click(findTestObject('ForgotPassword/button_Batal_ForgotPage'))
 
                 continue
+            } else if (WebUI.verifyElementPresent(findTestObject('ForgotPassword/label_modal'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+				'jika label modal muncul, maka check apakah email service hidup'
+				if (emailServiceOnVendor == '1') {
+						'jika ingin input media pengiriman SMS'
+						if (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Media Pengiriman OTP')) == 'SMS') {
+							'jika dapat melakukan input pada sms'
+							if (WebUI.verifyElementPresent(findTestObject('ForgotPassword/input_SMS'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+								'input media SMS'
+								WebUI.click(findTestObject('ForgotPassword/input_SMS'))
+								
+								'click button cancel'
+								WebUI.click(findTestObject('ForgotPassword/button_cancelMediaPemilihan'))
+								
+								'klik pada tombol lanjut'
+								WebUI.click(findTestObject('ForgotPassword/button_Lanjut_ForgotPage'))
+			
+								'klik pada tombol ya'
+								WebUI.enhancedClick(findTestObject('ForgotPassword/button_YaKonfirm'))
+								
+								'input media SMS'
+								WebUI.click(findTestObject('ForgotPassword/input_SMS'))
+								
+								'click proses media pemilihan'
+								WebUI.click(findTestObject('ForgotPassword/button_ProsesMediaPemilihan'))
+							} else {
+								'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+								CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusWarning,
+									(findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +
+									'button SMS untuk Pemilihan OTP tidak muncul. Pemilihan akan menggunakan default yang sudah terpilih.')
+							}
+
+						} else if (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Media Pengiriman OTP')) == 'WhatsApp') {
+							'jika dapat melakukan input pada sms'
+							if (WebUI.verifyElementPresent(findTestObject('ForgotPassword/input_WA'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+							'input media WA'
+							WebUI.click(findTestObject('ForgotPassword/input_WA'))
+							
+							'click button cancel'
+							WebUI.click(findTestObject('ForgotPassword/button_cancelMediaPemilihan'))
+							
+							'klik pada tombol lanjut'
+							WebUI.click(findTestObject('ForgotPassword/button_Lanjut_ForgotPage'))
+							
+							'focus ke click konfirm'
+							WebUI.focus(findTestObject('ForgotPassword/button_YaKonfirm'))
+							
+							'input media WA'
+							WebUI.click(findTestObject('ForgotPassword/input_WA'))
+							
+							'click proses media pemilihan'
+							WebUI.click(findTestObject('ForgotPassword/button_ProsesMediaPemilihan'))
+							} else {
+								'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+								CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusWarning,
+									(findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +
+									'button WA untuk Pemilihan OTP tidak muncul. Pemilihan akan menggunakan default yang sudah terpilih.')
+							}
+						}
+					} else {
+						'ambil error dan get text dari error tersebut'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+							(((findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) +
+							';')) + 'Muncul Popup Pilih Media Pengiriman OTP pada saat Email Service tidak aktif.'))
+		
+					}
             }
-            
             'ambil request num'
             int requestNumresetCode = CustomKeywords.'connection.ForgotPassword.getResetNum'(conneSign, emailSHA256)
 
@@ -143,7 +214,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             }
         } else {
             'klik pada tombol batal'
-            WebUI.click(findTestObject('ForgotPassword/button_Batal'))
+            WebUI.click(findTestObject('ForgotPassword/button_Batal_ForgotPage'))
 
             if (isMandatoryComplete != 0) {
                 'tulis adanya error pada sistem web'
@@ -318,28 +389,6 @@ WebUI.closeBrowser()
 
 def verifConfirmation() {
     boolean shouldContinue = false
-
-    'jika perlu tunggu hingga code expired'
-    if (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Setting OTP Active Duration (Empty/0/1/>1)')).length() > 
-    0) {
-        'ambil durasi aktif OTP dari update excel'
-        int otpActiveDuration = Integer.parseInt(findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel(
-                    'Setting OTP Active Duration (Empty/0/1/>1)')))
-
-        'kondisi jika OTP tidak 0 dan null'
-        if ((otpActiveDuration != 0) && (otpActiveDuration != null)) {
-            'hitung durasi aktif otp'
-            int otpDuration = (otpActiveDuration * 60) + 10
-
-            'buat delay hingga melebihi waktu OTP Active Duration'
-            WebUI.delay(otpDuration)
-        } else {
-            'ambil error dan get text dari error tersebut'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
-                'OTP Active Duration belum di set oleh tenant')
-        }
-    }
     
     'klik pada button verifikasi'
     WebUI.click(findTestObject('ForgotPassword/button_Verifikasi'))
@@ -358,7 +407,7 @@ def verifConfirmation() {
         WebUI.click(findTestObject('ForgotPassword/tombolXVerif'))
 
         'klik pada tombol batal'
-        WebUI.click(findTestObject('ForgotPassword/button_Batal'))
+        WebUI.click(findTestObject('ForgotPassword/button_Batal_ForgotPage'))
 
         shouldContinue = true
     }
@@ -372,22 +421,25 @@ def resendFunction(Connection conndev, int countResend, ArrayList resetCodefromD
         'ulangi sesuai flag dari excel'
         for (int i = 1; i <= countResend; i++) {
 			'ambil durasi aktif OTP dari update excel'
-			int otpActiveDuration = Integer.parseInt(findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel(
+			 otpActiveDuration = (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel(
 						'Setting OTP Active Duration (Empty/0/1/>1)')))
 	
 			int otpDuration = 0
 			
 			'kondisi jika OTP tidak 0 dan null'
-			if ((otpActiveDuration != 0) && (otpActiveDuration != null)) {
+			if ((otpActiveDuration != '0') && otpActiveDuration != '') {
 				'hitung durasi aktif otp'
-				otpDuration = (otpActiveDuration * 60) + 10
+				otpDuration = (Integer.parseInt(otpActiveDuration) * 60) + 10
 				
 				'mulai delay dikurangi otp expire duration'
 				WebUI.delay(297 - otpDuration)
 			} else {
-				WebUI.delay(297)
+				WebUI.delay(30)
 			}
-
+			
+            'pilih wa or sms pada resend'
+			pilihWAorSMS(rowExcel('Media Pengiriman OTP Resend'), i - 1)
+			
             'klik pada resend code'
             WebUI.click(findTestObject('ForgotPassword/ResendCode'))
 
@@ -450,10 +502,20 @@ def openBrowser() {
 def checkBalanceMutation(Connection conneSign, String emailSigner) {
     ArrayList balmut = []
 	
+	String tipeSaldo = ''
+	
 	emailServiceOnVendor = CustomKeywords.'connection.DataVerif.getEmailServiceAsVendorUser'(conneSign, emailSigner)
 
     fullNameUser = CustomKeywords.'connection.DataVerif.getFullNameOfUser'(conneSign, emailSigner)
 
+	notifTypeDB = CustomKeywords.'connection.APIFullService.getWASMSFromNotificationType'(conneSign, emailSigner,
+		'RESET_PASSWORD', GlobalVariable.Tenant)
+
+	if (notifTypeDB == 'Email') {
+		true
+	}
+	
+	if (notifTypeDB == '0' || notifTypeDB == 'Level Tenant') {
     mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
 
     if (mustUseWAFirst == '1') {
@@ -522,7 +584,26 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
             }
         }
     }
-    
+	} else {
+			tipeSaldo = notifTypeDB
+			
+			'menggunakan saldo wa'
+			balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
+			
+			if (balmut.size() == 0) {
+				'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+					GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm,
+						rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via ' + tipeSaldo)
+			}
+			
+			if ((balmut[9]) != '-1') {
+				'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+					GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm,
+						rowExcel('Reason Failed')).replace('-', '') + ';') + 'Saldo ' + tipeSaldo + ' tidak terpotong')
+			}
+	}
 	println balmut
     'cek apakah perlu untuk pengecekan DB'
     if ((GlobalVariable.checkStoreDB == 'Yes')) {
@@ -553,3 +634,34 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
     }
 }
 
+def pilihWAorSMS(int rowInput, int indexLooping) {
+	mediaPemilihan = findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowInput).split(';', -1)
+
+	'apakah ada media otp'
+	if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/text_pemilihanOTP'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		'pilih mau sms / wa'
+		if ((mediaPemilihan[indexLooping]) == 'SMS') {
+			'jika element pada sms present'
+			if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/button_sms'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+				'click SMS'
+				WebUI.click(findTestObject('ForgotPassword/input_SMS'))
+			} else {
+				'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusWarning,
+					(findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +
+					'button SMS untuk Pemilihan OTP tidak muncul. Pemilihan akan menggunakan default yang sudah terpilih.')
+			}
+		} else if ((mediaPemilihan[indexLooping]) == 'WhatsApp') {
+			'jika element pada wa present'
+			if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/button_wa'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+				'click wa'
+				WebUI.click(findTestObject('ForgotPassword/input_WA'))
+			} else {
+				'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusWarning,
+					(findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +
+					'button WA untuk Pemilihan OTP tidak muncul. Pemilihan akan menggunakan default yang sudah terpilih.')
+			}
+		}
+	}
+}

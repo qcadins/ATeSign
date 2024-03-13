@@ -54,9 +54,12 @@ if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryIn
         '1 karena invited by belum bisa di get value dari UI'
         arrayindex = 1
 
-        //'verify invitationby'
-        //checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/select_InviteBy')).toUpperCase(), result[arrayindex++].toUpperCase(), false), ' Invitation by tidak sesuai')
-        'verify receiver'
+        'verify invitationby'
+        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/select_InviteBy'),
+			 'value', FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), result[arrayindex++].toUpperCase(), false, 
+		 FailureHandling.CONTINUE_ON_FAILURE), ' Invitation by tidak sesuai')
+        
+		'verify receiver'
         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('InquiryInvitation/edit_Receiver'), 
                     'value', FailureHandling.CONTINUE_ON_FAILURE).toUpperCase(), (result[arrayindex++]).toUpperCase(), false, 
                 FailureHandling.CONTINUE_ON_FAILURE), ' Receiver tidak sesuai')

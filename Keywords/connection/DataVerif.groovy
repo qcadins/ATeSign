@@ -1,5 +1,6 @@
 package connection
 
+import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import java.sql.Connection
 import java.sql.ResultSet
 import java.sql.ResultSetMetaData
@@ -15,6 +16,15 @@ class DataVerif {
 	ResultSetMetaData metadata
 	ResultSet resultSet
 	ArrayList<String> listdata = []
+
+	@Keyword
+	settingBaseUrl(String excelPath, int colm, int row) {
+		if (findTestData(excelPath).getValue(colm, row) == 'No') {
+			GlobalVariable.base_url = findTestData('Login/Setting').getValue(7, 2) + 'BASEURLSALAH'
+		} else {
+			GlobalVariable.base_url = findTestData('Login/Setting').getValue(7, 2)
+		}
+	}
 
 	@Keyword
 	getOTP(Connection conn, String value) {

@@ -6,6 +6,10 @@
    <elementGuidId>803c9bf2-acac-43ed-bfa9-5eabe5e68d36</elementGuidId>
    <selectorCollection>
       <entry>
+         <key>BASIC</key>
+         <value>//*[@href = '/pages/forgotaccesscode']</value>
+      </entry>
+      <entry>
          <key>CSS</key>
          <value>a</value>
       </entry>
@@ -14,7 +18,7 @@
          <value>//section[@id='login']/div/div[2]/div/form/div[3]/a</value>
       </entry>
    </selectorCollection>
-   <selectorMethod>XPATH</selectorMethod>
+   <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>true</useRalativeImagePath>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -22,7 +26,7 @@
       <name>tag</name>
       <type>Main</type>
       <value>a</value>
-      <webElementGuid>0972b8dd-bdf9-4d85-ae88-2a7fdb20a3a0</webElementGuid>
+      <webElementGuid>4d8e520e-7547-4c55-808b-90cdedacd262</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -30,7 +34,7 @@
       <name>ng-reflect-router-link</name>
       <type>Main</type>
       <value>/pages/forgotaccesscode</value>
-      <webElementGuid>b8e933fb-3b3e-4ab6-86a6-d5b3d8aa406c</webElementGuid>
+      <webElementGuid>71c6d054-c629-41e3-92b0-10021fdc7214</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>true</isSelected>
@@ -38,15 +42,15 @@
       <name>href</name>
       <type>Main</type>
       <value>/pages/forgotaccesscode</value>
-      <webElementGuid>0dad5bf1-2e89-46e4-be01-70f30fa6c536</webElementGuid>
+      <webElementGuid>694a1204-a1d9-4bb0-811d-7024d37981a4</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>text</name>
       <type>Main</type>
       <value>Lupa Kode Akses?</value>
-      <webElementGuid>732265b6-f727-4fb2-abfa-3f0ae58f8f6b</webElementGuid>
+      <webElementGuid>e51f3a67-d65b-4a6f-8dbb-ec2eb8799f68</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -54,7 +58,7 @@
       <name>xpath</name>
       <type>Main</type>
       <value>id(&quot;login&quot;)/div[@class=&quot;row vh-100&quot;]/div[@class=&quot;col right-content&quot;]/div[@class=&quot;content-container&quot;]/form[@class=&quot;ng-untouched ng-pristine ng-invalid&quot;]/div[@class=&quot;d-sm-flex justify-content-between input&quot;]/a[1]</value>
-      <webElementGuid>5c8a4c80-0fd7-461e-860c-113cfed81a41</webElementGuid>
+      <webElementGuid>709fc9d9-3c3b-4d44-b897-288067c8d3d3</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -62,7 +66,7 @@
       <name>xpath:idRelative</name>
       <type>Main</type>
       <value>//section[@id='login']/div/div[2]/div/form/div[3]/a</value>
-      <webElementGuid>bbae26bf-ba5d-4c75-8082-7211d75b31d2</webElementGuid>
+      <webElementGuid>494ee386-c3ca-459d-aff5-758a9ce48df3</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -70,7 +74,7 @@
       <name>xpath:link</name>
       <type>Main</type>
       <value>//a[contains(text(),'Lupa Kode Akses?')]</value>
-      <webElementGuid>fa993e81-f9cf-4ca6-b561-08c00ebb5851</webElementGuid>
+      <webElementGuid>6b820319-da2a-4159-a6d2-e3ddd1375fed</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -78,7 +82,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Selamat datang kembali di eSignHub'])[1]/following::a[1]</value>
-      <webElementGuid>31188320-2cb7-45e5-a049-4f5482423732</webElementGuid>
+      <webElementGuid>e687dd94-e021-4537-b382-6576405f8d45</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -86,7 +90,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Masuk'])[1]/preceding::a[1]</value>
-      <webElementGuid>28ec51d7-eaea-47ce-90f3-d736cf05ca78</webElementGuid>
+      <webElementGuid>aa89a501-bc52-4333-b5a7-bbb651624647</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -94,7 +98,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Capture object:'])[1]/preceding::a[1]</value>
-      <webElementGuid>fa33d9d0-f253-4e08-8dd2-4b07b8379b99</webElementGuid>
+      <webElementGuid>cdaff803-af64-43f5-999d-ebd4a95f8a57</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -102,7 +106,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='Lupa Kode Akses?']/parent::*</value>
-      <webElementGuid>6789a9f4-76f1-4cb0-8d55-c26bfa1223eb</webElementGuid>
+      <webElementGuid>207f5f08-c346-41e9-b81d-3fd8c9f88ab3</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -110,7 +114,7 @@
       <name>xpath:href</name>
       <type>Main</type>
       <value>//a[contains(@href, '/pages/forgotaccesscode')]</value>
-      <webElementGuid>e4e6c149-802c-4629-97f0-32336fad3fdb</webElementGuid>
+      <webElementGuid>c0074345-2a35-4b22-959c-1e038199ee85</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -118,7 +122,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//a</value>
-      <webElementGuid>25ae4a02-3f72-4bb9-aaf9-50f18f85adbd</webElementGuid>
+      <webElementGuid>538d3d9a-13c9-4930-b302-78f6359c6f69</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -126,6 +130,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//a[@href = '/pages/forgotaccesscode' and (text() = 'Lupa Kode Akses?' or . = 'Lupa Kode Akses?')]</value>
-      <webElementGuid>bec9492a-c0ae-4623-b09d-1a98b7b6b3b3</webElementGuid>
+      <webElementGuid>30683083-f10e-4603-b1b8-3f6d61a741aa</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

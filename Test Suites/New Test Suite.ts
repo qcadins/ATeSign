@@ -12,41 +12,16 @@
    <rerunImmediately>true</rerunImmediately>
    <testSuiteGuid>07110b73-9ace-4a35-a75b-1764288b21e3</testSuiteGuid>
    <testCaseLink>
-      <guid>d8ac9c6e-a827-41de-947f-03d097863586</guid>
+      <guid>d7c849fe-e2ef-4fe2-a5a0-80c300f0e58c</guid>
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
-      <testCaseId>Test Cases/Other API/MAIN_API Edit Activation Status</testCaseId>
+      <testCaseId>Test Cases/ForgotPassword/MAIN_Forgot Password</testCaseId>
       <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
       <variableLink>
          <testDataLinkId></testDataLinkId>
          <type>DEFAULT</type>
          <value></value>
-         <variableId>658353be-0668-4d5b-9882-f2c795d88fb5</variableId>
-      </variableLink>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>8624efa9-5f96-46a0-9209-1eb6b0f85802</variableId>
-      </variableLink>
-   </testCaseLink>
-   <testCaseLink>
-      <guid>f9f5dbba-1976-433c-88ec-da84990d1060</guid>
-      <isReuseDriver>false</isReuseDriver>
-      <isRun>true</isRun>
-      <testCaseId>Test Cases/Other API/MAIN_API Update Data Signer</testCaseId>
-      <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>5f1b3a2b-fa6c-4df7-8a63-7890f23f5041</variableId>
-      </variableLink>
-      <variableLink>
-         <testDataLinkId></testDataLinkId>
-         <type>DEFAULT</type>
-         <value></value>
-         <variableId>f2511a82-ed4a-4603-997c-6fc8e8cb2270</variableId>
+         <variableId>9143d26e-867f-4d1e-a1d9-39db0b7a6bdd</variableId>
       </variableLink>
    </testCaseLink>
 </TestSuiteEntity>
