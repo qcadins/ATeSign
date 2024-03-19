@@ -6,6 +6,7 @@
    <elementGuidId>6e14aaf7-844d-4ac0-8ecd-b3f8d3c29390</elementGuidId>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
+   <autoUpdateContent>true</autoUpdateContent>
    <connectionTimeout>-1</connectionTimeout>
    <followRedirects>false</followRedirects>
    <httpBody></httpBody>
@@ -31,12 +32,11 @@
 }</httpBodyContent>
    <httpBodyType>x-www-form-urlencoded</httpBodyType>
    <httpHeaderProperties>
-      <isSelected>false</isSelected>
+      <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>Content-Type</name>
       <type>Main</type>
-      <value>application/x-www-form-urlencoded</value>
-      <webElementGuid>6002c927-94aa-4a77-b183-890234e2f504</webElementGuid>
+      <webElementGuid>27dad3fd-46b8-4717-88fb-4eb1e735ece5</webElementGuid>
    </httpHeaderProperties>
    <katalonVersion>8.5.5</katalonVersion>
    <maxResponseSize>-1</maxResponseSize>

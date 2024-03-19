@@ -6,16 +6,16 @@
    <elementGuidId>55bdf755-d718-44de-a639-ad4c707b0f62</elementGuidId>
    <selectorCollection>
       <entry>
-         <key>XPATH</key>
-         <value>(.//*[normalize-space(text()) and normalize-space(.)='Keluar'])[1]/following::span[1]</value>
-      </entry>
-      <entry>
          <key>BASIC</key>
-         <value>//*[(text() = 'Pengaturan Dokumen' or . = 'Pengaturan Dokumen')]</value>
+         <value>//*[@href = '/master/documents']</value>
       </entry>
       <entry>
          <key>CSS</key>
          <value>span.menu-title.ng-tns-c133-1</value>
+      </entry>
+      <entry>
+         <key>XPATH</key>
+         <value>(.//*[normalize-space(text()) and normalize-space(.)='Keluar'])[1]/following::span[1]</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -26,7 +26,7 @@
       <name>tag</name>
       <type>Main</type>
       <value>span</value>
-      <webElementGuid>7742f3cf-5fb3-444b-b0eb-000d16c10a27</webElementGuid>
+      <webElementGuid>a4c610b5-e7a1-4739-a52d-bb63e71a2a37</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -34,15 +34,15 @@
       <name>class</name>
       <type>Main</type>
       <value>menu-title ng-tns-c133-1</value>
-      <webElementGuid>f8885ef7-1e3e-4391-80f0-9f011b7fd2d0</webElementGuid>
+      <webElementGuid>eb5cd407-e741-4e26-80a0-37b5277a35b4</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>text</name>
       <type>Main</type>
       <value>Pengaturan Dokumen</value>
-      <webElementGuid>0df55248-a842-4c34-9fb6-573b9bdb356f</webElementGuid>
+      <webElementGuid>3eda37bd-96e3-49f9-aa8c-e8cdf67304d4</webElementGuid>
    </webElementProperties>
    <webElementProperties>
       <isSelected>false</isSelected>
@@ -50,7 +50,15 @@
       <name>xpath</name>
       <type>Main</type>
       <value>/html[1]/body[@class=&quot;vertical-layout navbar-static pace-done menu-expanded menu-open vertical-menu&quot;]/app-root[1]/app-full-layout[@class=&quot;ng-star-inserted&quot;]/div[@class=&quot;wrapper&quot;]/div[@class=&quot;app-sidebar main-menu menu-fixed menu-native-scroll expanded ng-star-inserted&quot;]/app-sidebar[@class=&quot;ng-tns-c133-1&quot;]/div[@class=&quot;sidebar-content main-menu-content ng-tns-c133-1 ps&quot;]/div[@class=&quot;nav-container ng-tns-c133-1&quot;]/ul[@class=&quot;navigation ng-tns-c133-1&quot;]/li[@class=&quot;ng-tns-c133-1 ng-star-inserted active&quot;]/a[@class=&quot;ng-tns-c133-1 ng-star-inserted&quot;]/span[@class=&quot;menu-title ng-tns-c133-1&quot;]</value>
-      <webElementGuid>917ff95d-9d8e-44eb-9b1d-9c04009ce07d</webElementGuid>
+      <webElementGuid>ad16b821-d1f7-48da-9923-1c7543e3b476</webElementGuid>
+   </webElementProperties>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>href</name>
+      <type>Main</type>
+      <value>/master/documents</value>
+      <webElementGuid>a0ccefa2-adea-444a-a51b-1463d539e801</webElementGuid>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
@@ -58,7 +66,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Keluar'])[1]/following::span[1]</value>
-      <webElementGuid>6d4c0bf8-039a-46db-9b66-050cda38c335</webElementGuid>
+      <webElementGuid>c9b06df9-4b7e-4be0-9dfe-c1229bd494e0</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -66,7 +74,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Ubah Kode Akses'])[1]/following::span[2]</value>
-      <webElementGuid>999ed278-6287-41fd-b628-c5be74e6ec78</webElementGuid>
+      <webElementGuid>e8cf09fa-afeb-4294-a3d1-9d4074309d74</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -74,7 +82,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Pengaturan Dokumen'])[2]/preceding::span[1]</value>
-      <webElementGuid>b8a3a081-a5fe-4798-83c6-30bc9ddb3a37</webElementGuid>
+      <webElementGuid>e33b9d41-0376-4c1d-8f15-1f861f7e544a</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -82,7 +90,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>(.//*[normalize-space(text()) and normalize-space(.)='Baru'])[1]/preceding::span[1]</value>
-      <webElementGuid>ba6f45a8-5c8e-474b-b348-c6ec51c0cac3</webElementGuid>
+      <webElementGuid>dd769e54-b1e7-406b-a72a-4913046c76da</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -90,7 +98,7 @@
       <name>xpath:neighbor</name>
       <type>Main</type>
       <value>//*/text()[normalize-space(.)='Pengaturan Dokumen']/parent::*</value>
-      <webElementGuid>75323346-b066-4a76-b954-11c3510c5d0c</webElementGuid>
+      <webElementGuid>bfddf4a3-a29a-44d7-a4e7-374803272ac9</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -98,7 +106,7 @@
       <name>xpath:position</name>
       <type>Main</type>
       <value>//app-sidebar/div[2]/div/ul/li/a/span</value>
-      <webElementGuid>6fd6e184-8319-4856-a0e6-47826df0649d</webElementGuid>
+      <webElementGuid>b95b0ec9-9ce6-4f1a-965e-91f41d76e44c</webElementGuid>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
@@ -106,6 +114,6 @@
       <name>xpath:customAttributes</name>
       <type>Main</type>
       <value>//span[(text() = 'Pengaturan Dokumen' or . = 'Pengaturan Dokumen')]</value>
-      <webElementGuid>162e8fdb-c557-4440-9c94-69510f74bde2</webElementGuid>
+      <webElementGuid>600efa13-1170-4438-a6ff-17a1e5ce6830</webElementGuid>
    </webElementXpaths>
 </WebElementEntity>

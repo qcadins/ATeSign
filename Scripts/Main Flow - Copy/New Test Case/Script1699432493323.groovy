@@ -22,23 +22,16 @@ excelPathFESignDocument = 'Main/Main'
 
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-'swith to iframe privy'
-            WebUI.switchToFrame(findTestObject('DaftarAkun/iFrame_PrivyLiveness'), GlobalVariable.TimeOut)
-			
-			'cari element button next liveness'
-			WebUI.scrollToElement(findTestObject('Object Repository/DaftarAkun/button_NextLivenessPrivy'), GlobalVariable.TimeOut)
+int aa = 75
 
-            'click button next'
-            WebUI.click(findTestObject('Object Repository/DaftarAkun/button_NextLivenessPrivy'))
+int bb = aa / 60
 
-			'cari take self photo'
-			WebUI.scrollToElement(findTestObject('Object Repository/DaftarAkun/button_TakeSelfieLivenessPrivy'), GlobalVariable.TimeOut)
-			
-            'click button take selfie'
-            WebUI.click(findTestObject('Object Repository/DaftarAkun/button_TakeSelfieLivenessPrivy'))
+println aa / 60
+println bb
 
-            'prepare untuk foto'
-            WebUI.delay(45)
+WebUI.delay(bb - aa)
+println bb.getClass()
+
 
 WebUI.delay(1000000) //*[@id="searchForm"]/div[1]/div[10]/app-question/app-select/div/div[2]/ng-dropdown-panel
 //

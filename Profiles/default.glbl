@@ -304,4 +304,14 @@
       <initValue>'00000'</initValue>
       <name>wrongOtp</name>
    </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description>development 4.3.0</description>
+      <initValue>''</initValue>
+      <name>chooseOTP</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>0</initValue>
+      <name>totalDelayPerSecond</name>
+   </GlobalVariableEntity>
 </GlobalVariableEntities>

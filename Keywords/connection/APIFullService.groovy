@@ -2402,4 +2402,12 @@ class APIFullService {
 			updateVariable = stm.executeUpdate("UPDATE am_generalsetting SET gs_value = " + value + " WHERE gs_code = 'SEND_SMS_OTP_USER'")
 		}
 	}
+	
+	@Keyword
+	settingSendWAOtpUser(Connection conn, String value) {
+		stm = conn.createStatement()
+		if (value != '') {
+			updateVariable = stm.executeUpdate("UPDATE am_generalsetting SET gs_value = " + value + " WHERE gs_code = 'SEND_WA_OTP_USER'")
+		}
+	}
 }

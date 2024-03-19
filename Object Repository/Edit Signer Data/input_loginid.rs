@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@ng-reflect-name = 'loginId']</value>
+         <value>//*[@id = 'loginId']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>ng-reflect-name</name>
+      <name>id</name>
       <type>Main</type>
       <value>loginId</value>
-      <webElementGuid>f24b8ff7-d7d2-4b59-bdf4-804a6ba46e43</webElementGuid>
+      <webElementGuid>1dea9c96-5a24-40d9-a37c-f47ed257d018</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

@@ -987,7 +987,7 @@ def verifySaldoUsed(Connection conneSign) {
                 row) + ']/datatable-body-row/div[2]/datatable-body-cell[') + colm) + ']/div', true)
 
             'Jika u di lokasi qty atau kolom ke 9'
-            if (colm == 9) {
+            if (colm == 10) {
                 'Jika bukan untuk 2 kolom itu, maka check ke db'
                 checkVerifyEqualOrMatch(WebUI.verifyMatch('-' + WebUI.getText(modifyperrowpercolumn), inquiryDB[index], 
                         false, FailureHandling.CONTINUE_ON_FAILURE), 'pada Kuantitas di Mutasi Saldo dengan nomor kontrak ' + 
@@ -995,7 +995,7 @@ def verifySaldoUsed(Connection conneSign) {
                         '"', ''))
 
                 index++
-            } else if (colm == 10) {
+            } else if (colm == 11) {
                 'Jika di kolom ke 10, atau di FE table saldo'
             } else {
                 'check table'

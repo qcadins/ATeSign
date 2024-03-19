@@ -87,7 +87,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         excelPath).getValue(GlobalVariable.NumofColm, rowExcel('tenantCode')), ('phoneNo') : findTestData(
                         excelPath).getValue(GlobalVariable.NumofColm, rowExcel('phoneNo')), ('vendorCode') : findTestData(
                         excelPath).getValue(GlobalVariable.NumofColm, rowExcel('vendorCode')), ('callerId') : findTestData(
-                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('url') : url]))
+                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('url') : url, 
+					('sendingPointOption') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('sendingPointOption'))]))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {

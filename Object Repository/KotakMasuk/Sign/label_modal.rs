@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>input_SearchBox</name>
+   <name>label_modal</name>
    <tag></tag>
-   <elementGuidId>693e7e6b-c1e7-46cc-82d4-15a887145320</elementGuidId>
+   <elementGuidId>efae1c80-1ad6-4b8c-8bbb-1fbbfa677589</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;param&quot;]</value>
+         <value>//*[@class = 'form-group ng-star-inserted']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>class</name>
       <type>Main</type>
-      <value>//*[@id=&quot;param&quot;]</value>
-      <webElementGuid>4c55cacc-5f4d-44d5-9908-01b637eaf6ab</webElementGuid>
+      <value>form-group ng-star-inserted</value>
+      <webElementGuid>36957e06-f8ac-47e3-8e99-4ca71e5cf74f</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

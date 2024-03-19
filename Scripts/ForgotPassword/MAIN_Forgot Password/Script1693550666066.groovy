@@ -147,21 +147,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 							if (WebUI.verifyElementPresent(findTestObject('ForgotPassword/input_SMS'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
 								'input media SMS'
 								WebUI.click(findTestObject('ForgotPassword/input_SMS'))
-								
-								'click button cancel'
-								WebUI.click(findTestObject('ForgotPassword/button_cancelMediaPemilihan'))
-								
-								'klik pada tombol lanjut'
-								WebUI.click(findTestObject('ForgotPassword/button_Lanjut_ForgotPage'))
-			
-								'klik pada tombol ya'
-								WebUI.enhancedClick(findTestObject('ForgotPassword/button_YaKonfirm'))
-								
-								'input media SMS'
-								WebUI.click(findTestObject('ForgotPassword/input_SMS'))
-								
-								'click proses media pemilihan'
-								WebUI.click(findTestObject('ForgotPassword/button_ProsesMediaPemilihan'))
 							} else {
 								'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
 								CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusWarning,
@@ -174,21 +159,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 							if (WebUI.verifyElementPresent(findTestObject('ForgotPassword/input_WA'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
 							'input media WA'
 							WebUI.click(findTestObject('ForgotPassword/input_WA'))
-							
-							'click button cancel'
-							WebUI.click(findTestObject('ForgotPassword/button_cancelMediaPemilihan'))
-							
-							'klik pada tombol lanjut'
-							WebUI.click(findTestObject('ForgotPassword/button_Lanjut_ForgotPage'))
-							
-							'focus ke click konfirm'
-							WebUI.focus(findTestObject('ForgotPassword/button_YaKonfirm'))
-							
-							'input media WA'
-							WebUI.click(findTestObject('ForgotPassword/input_WA'))
-							
-							'click proses media pemilihan'
-							WebUI.click(findTestObject('ForgotPassword/button_ProsesMediaPemilihan'))
 							} else {
 								'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
 								CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusWarning,
@@ -196,6 +166,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 									'button WA untuk Pemilihan OTP tidak muncul. Pemilihan akan menggunakan default yang sudah terpilih.')
 							}
 						}
+						'click proses media pemilihan'
+						WebUI.click(findTestObject('ForgotPassword/button_ProsesMediaPemilihan'))
 					} else {
 						'ambil error dan get text dari error tersebut'
 						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
@@ -230,7 +202,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         ArrayList resetCodefromDB = []
 
         'hitung jumlah resend yang diperlukan'
-        countResend = Integer.parseInt(findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Count Resend')))
+        countResend = findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Count Resend')).toInteger()
 
         'tambahkan reset code dari DB'
         resetCodefromDB.add(CustomKeywords.'connection.ForgotPassword.getResetCode'(conneSign, emailSHA256))
@@ -434,6 +406,8 @@ def resendFunction(Connection conndev, int countResend, ArrayList resetCodefromD
 				'mulai delay dikurangi otp expire duration'
 				WebUI.delay(297 - otpDuration)
 			} else {
+				WebUI.comment(countResend.toString())
+				
 				WebUI.delay(30)
 			}
 			
@@ -462,13 +436,8 @@ def resendFunction(Connection conndev, int countResend, ArrayList resetCodefromD
             
             'input reset code dari DB'
             WebUI.setText(findTestObject('ForgotPassword/input_resetCode'), resetCodefromDB[i])
-
-            countResend++
         }
-    } else {
-        countResend++
     }
-    
     countResend
 }
 
@@ -510,101 +479,141 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
 
 	notifTypeDB = CustomKeywords.'connection.APIFullService.getWASMSFromNotificationType'(conneSign, emailSigner,
 		'RESET_PASSWORD', GlobalVariable.Tenant)
+//
+//	if (notifTypeDB == 'Email') {
+//		true
+//	}
+//	
+//	if (notifTypeDB == '0' || notifTypeDB == 'Level Tenant') {
+//    mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
+//
+//    if (mustUseWAFirst == '1') {
+//        'menggunakan saldo wa'
+//        balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message', fullNameUser)
+//
+//        if (balmut.size() == 0) {
+//            'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+//            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+//                (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+//                    '-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
+//        }
+//        
+//        if ((balmut[9]) != '-1') {
+//            'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+//            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+//                (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+//                    '-', '') + ';') + 'Saldo WA tidak terpotong')
+//        }
+//    } else {
+//        if (emailServiceOnVendor == '1') {
+//            useWAMessage = CustomKeywords.'connection.DataVerif.getUseWAMessage'(conneSign, GlobalVariable.Tenant)
+//
+//            if (useWAMessage == '1') {
+//                'menggunakan saldo wa'
+//                 balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message', 
+//                    fullNameUser)
+//
+//                if (balmut.size() == 0) {
+//                    'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+//                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+//                        GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, 
+//                            rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
+//                }
+//                
+//                if ((balmut[9]) != '-1') {
+//                    'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+//                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+//                        GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, 
+//                            rowExcel('Reason Failed')).replace('-', '') + ';') + 'Saldo WA tidak terpotong')
+//                }
+//            } else if (useWAMessage == '0') {
+//                'ke sms / wa'
+//                SMSSetting = CustomKeywords.'connection.DataVerif.getSMSSetting'(conneSign, 'Forgot Password')
+//
+//                if (SMSSetting == '1') {
+//                    'ke sms'
+//
+//                    'menggunakan saldo wa'
+//                    balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'SMS Notif', fullNameUser)
+//
+//                    if (balmut.size() == 0) {
+//                        'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+//                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+//                            GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, 
+//                                rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via SMS')
+//                    }
+//                    
+//                    if ((balmut[9]) != '-1') {
+//                        'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+//                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+//                            GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, 
+//                                rowExcel('Reason Failed')).replace('-', '') + ';') + 'Saldo SMS tidak terpotong')
+//                    }
+//                }
+//            }
+//        }
+//    }
+//	} else {
+//			tipeSaldo = notifTypeDB
+//			
+//			'menggunakan saldo wa'
+//			balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
+//			
+//			if (balmut.size() == 0) {
+//				'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+//				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+//					GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm,
+//						rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via ' + tipeSaldo)
+//			}
+//			
+//			if ((balmut[9]) != '-1') {
+//				'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+//				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+//					GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm,
+//						rowExcel('Reason Failed')).replace('-', '') + ';') + 'Saldo ' + tipeSaldo + ' tidak terpotong')
+//			}
+//	}
+	
+	
+	GlobalVariable.chooseOTP = findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Media Pengiriman OTP'))
+	
+	if (GlobalVariable.chooseOTP.toString().contains('WA')) {
+		'menggunakan saldo wa'
+		balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message', fullNameUser)
 
-	if (notifTypeDB == 'Email') {
-		true
+		if (balmut.size() == 0) {
+	'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+	GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, 
+	rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WA')
+	}
+                    
+	if ((balmut[9]) != '-1') {
+	'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+	GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, 
+	rowExcel('Reason Failed')).replace('-', '') + ';') + 'Saldo WA tidak terpotong')
+    }
 	}
 	
-	if (notifTypeDB == '0' || notifTypeDB == 'Level Tenant') {
-    mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
+	if (GlobalVariable.chooseOTP.toString().contains('SMS')) {
+		'menggunakan saldo wa'
+		balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'OTP', fullNameUser)
 
-    if (mustUseWAFirst == '1') {
-        'menggunakan saldo wa'
-        balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message', fullNameUser)
-
-        if (balmut.size() == 0) {
-            'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
-                    '-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
-        }
-        
-        if ((balmut[9]) != '-1') {
-            'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
-                    '-', '') + ';') + 'Saldo WA tidak terpotong')
-        }
-    } else {
-        if (emailServiceOnVendor == '1') {
-            useWAMessage = CustomKeywords.'connection.DataVerif.getUseWAMessage'(conneSign, GlobalVariable.Tenant)
-
-            if (useWAMessage == '1') {
-                'menggunakan saldo wa'
-                 balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'WhatsApp Message', 
-                    fullNameUser)
-
-                if (balmut.size() == 0) {
-                    'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                        GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, 
-                            rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
-                }
-                
-                if ((balmut[9]) != '-1') {
-                    'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                        GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, 
-                            rowExcel('Reason Failed')).replace('-', '') + ';') + 'Saldo WA tidak terpotong')
-                }
-            } else if (useWAMessage == '0') {
-                'ke sms / wa'
-                SMSSetting = CustomKeywords.'connection.DataVerif.getSMSSetting'(conneSign, 'Forgot Password')
-
-                if (SMSSetting == '1') {
-                    'ke sms'
-
-                    'menggunakan saldo wa'
-                    balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, 'SMS Notif', fullNameUser)
-
-                    if (balmut.size() == 0) {
-                        'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                            GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, 
-                                rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via SMS')
-                    }
-                    
-                    if ((balmut[9]) != '-1') {
-                        'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                            GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, 
-                                rowExcel('Reason Failed')).replace('-', '') + ';') + 'Saldo SMS tidak terpotong')
-                    }
-                }
-            }
-        }
-    }
-	} else {
-			tipeSaldo = notifTypeDB
-			
-			'menggunakan saldo wa'
-			balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
-			
-			if (balmut.size() == 0) {
-				'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-					GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm,
-						rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via ' + tipeSaldo)
-			}
-			
-			if ((balmut[9]) != '-1') {
-				'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
-					GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm,
-						rowExcel('Reason Failed')).replace('-', '') + ';') + 'Saldo ' + tipeSaldo + ' tidak terpotong')
-			}
+		if (balmut.size() == 0) {
+	'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+	GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, 
+	rowExcel('Reason Failed')).replace('-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via SMS')
 	}
-	println balmut
+                    
+	if ((balmut[9]) != '-1') {
+	'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+	CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+	GlobalVariable.StatusFailed, (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, 
+	rowExcel('Reason Failed')).replace('-', '') + ';') + 'Saldo SMS tidak terpotong')
+    }	}
+	
     'cek apakah perlu untuk pengecekan DB'
     if ((GlobalVariable.checkStoreDB == 'Yes')) {
         WebUI.delay(1)

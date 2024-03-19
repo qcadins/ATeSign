@@ -35,6 +35,12 @@
       <value></value>
       <variableId>cc451805-473f-4171-8c50-da5ec5be853f</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>4630e7f5-d20c-4987-8eb7-20c562363986</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -69,5 +75,12 @@
       <id>cc451805-473f-4171-8c50-da5ec5be853f</id>
       <masked>false</masked>
       <name>useBiom</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>4630e7f5-d20c-4987-8eb7-20c562363986</id>
+      <masked>false</masked>
+      <name>splitIndex</name>
    </variable>
 </TestCaseEntity>

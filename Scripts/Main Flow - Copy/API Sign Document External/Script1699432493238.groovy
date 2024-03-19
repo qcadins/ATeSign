@@ -24,6 +24,10 @@ int countBiometric = 0
 
 GlobalVariable.FlagFailed = 0
 
+GlobalVariable.totalDelayPerSecond = 0
+
+GlobalVariable.batasWaktu = 0
+
 'Inisialisasi otp, photo, ipaddress, dan total signed sebelumnya yang dikosongkan'
 String otp = ''
 
@@ -95,6 +99,14 @@ if ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, r
 flaggingOTP = CustomKeywords.'connection.DataVerif.getParameterFlagPassOTP'(conneSign, (GlobalVariable.storeVar.keySet()[
     [0]]).toString())
 
+String sendingPoint = ''
+
+if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('sendingPointOption (Sent Otp)')).split(
+    ';', -1)[GlobalVariable.indexUsed].length() == 0) {
+	sendingPoint = ''
+} else {
+sendingPoint = ', "sendingPointOption" : "' + findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('sendingPointOption (Sent Otp)')).split(';', -1)[GlobalVariable.indexUsed] + '"' 
+}
 if ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use correct OTP From Database (Sign External)')).split(
     ';', -1)[GlobalVariable.indexUsed]) == 'Yes') {
     if (vendor.equalsIgnoreCase('Privy') || vendor.equalsIgnoreCase('Digisign')) {
@@ -107,7 +119,8 @@ if ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, r
                         ';', -1)[GlobalVariable.indexUsed], ('email') : findTestData(excelPathAPISignDocument).getValue(
                         GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(';', -1)[GlobalVariable.indexUsed]
                     , ('refnumber') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('refNumber (Sent Otp)')).split(
-                        ';', -1)[GlobalVariable.indexUsed], ('listDocumentId') : documentIdInput.replace('[', '').replace(']', ''), ('vendor') : vendor]))
+                        ';', -1)[GlobalVariable.indexUsed], ('listDocumentId') : documentIdInput.replace('[', '').replace(']', ''), ('vendor') : vendor,
+					 ('sendingPointOption') : sendingPoint]))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(responOTP, 200, FailureHandling.OPTIONAL) == true) {
@@ -136,7 +149,7 @@ if ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, r
                 
                 email = (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(
                     ';', -1)[GlobalVariable.indexUsed])
-
+/*
                 if (CustomKeywords.'connection.UpdateData.checkNotifTypeExistforTenant'(conneSign) > 0) {
                     if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Must Wa (OTP Sign External Flow)')) == 
                     '1') {
@@ -184,7 +197,8 @@ if ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, r
                         otp = handlingOTP('SMS', email, psreCode)
                     }
                 }
-                
+                */
+				otp = handlingOTP('SMS', email, psreCode)
                 println(otp)
             } else {
                 getErrorMessageAPI(responOTP)
@@ -213,7 +227,8 @@ if ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, r
                         ';', -1)[GlobalVariable.indexUsed], ('email') : findTestData(excelPathAPISignDocument).getValue(
                         GlobalVariable.NumofColm, rowExcel('email (Sign External)')).split(';', -1)[GlobalVariable.indexUsed]
                     , ('refnumber') : CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, GlobalVariable.storeVar.keySet()[
-                        [0]]), ('listDocumentId') : documentIdInput.replace('[', '').replace(']', ''), ('vendor') : vendor]))
+                        [0]]), ('listDocumentId') : documentIdInput.replace('[', '').replace(']', ''), ('vendor') : vendor,
+					('sendingPointOption') : sendingPoint]))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(responOTP, 200, FailureHandling.OPTIONAL) == true) {
@@ -309,7 +324,9 @@ if (otp != null) {
             (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
                 '-', '') + ';') + otp.toString())
     }
-    
+
+	GlobalVariable.batasWaktu = (delayExpiredOTP / 60) + 2
+	
     'Memasukkan input dari total signed'
     (totalSignedBefore[0]) = CustomKeywords.'connection.APIFullService.getTotalSigned'(conneSign, (GlobalVariable.storeVar.keySet()[
         [0]]).toString())
@@ -798,7 +815,44 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 
         emailServiceOnVendor = '0'
     }
-    
+	
+	if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('sendingPointOption (Sent Otp)')).split(';', -1)[GlobalVariable.indexUsed] == 'WA') {
+		tipeSaldo = 'WhatsApp Message'
+		
+		'menggunakan saldo wa'
+		balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
+		
+		if (balmut.size() == 0) {
+			'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+			(findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+			'-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
+		
+			GlobalVariable.FlagFailed = 1
+		} else {
+			penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
+		}
+	}
+	
+	if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('sendingPointOption (Sent Otp)')).split(';', -1)[GlobalVariable.indexUsed] == 'SMS') {
+		tipeSaldo = 'OTP'
+		
+		'menggunakan saldo wa'
+		balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
+		
+		if (balmut.size() == 0) {
+			'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+			(findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+			'-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via SMS')
+		
+			GlobalVariable.FlagFailed = 1
+		} else {
+			penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
+		}
+	}
+	
+    /*
     if ((notifTypeDB == '0') || (notifTypeDB == 'Level Tenant')) {
         'jika must use wa'
         if (mustUseWAFirst == '1') {
@@ -899,7 +953,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
             penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
         }
     }
-    
+    */
     int pemotonganSaldo = 0
 
     int increment

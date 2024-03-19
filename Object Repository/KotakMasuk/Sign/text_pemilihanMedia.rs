@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>input_SearchBox</name>
+   <name>text_pemilihanMedia</name>
    <tag></tag>
-   <elementGuidId>693e7e6b-c1e7-46cc-82d4-15a887145320</elementGuidId>
+   <elementGuidId>dbc0aa13-064a-4b6f-920c-f90cd0d6fc46</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;param&quot;]</value>
+         <value>//*[@for = 'gender']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>for</name>
       <type>Main</type>
-      <value>//*[@id=&quot;param&quot;]</value>
-      <webElementGuid>4c55cacc-5f4d-44d5-9908-01b637eaf6ab</webElementGuid>
+      <value>gender</value>
+      <webElementGuid>3aec490e-abc5-4eb6-b54d-fc67372d5761</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

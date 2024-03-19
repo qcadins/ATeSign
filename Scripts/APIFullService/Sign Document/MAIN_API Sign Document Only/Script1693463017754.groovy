@@ -114,7 +114,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('phoneNo')), ('email') : findTestData(
                             excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('email')), ('refnumber') : refNumber
                         , ('listDocumentId') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
-                            rowExcel('$documentid')).replace('[', '').replace(']', ''), ('vendor') : vendor]))
+                            rowExcel('$documentid')).replace('[', '').replace(']', ''), ('vendor') : vendor, 
+						('sendingPointOption') : findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('sendingPointOption'))]))
 
             'Jika status HIT API 200 OK'
             if (WS.verifyResponseStatusCode(responOTP, 200, FailureHandling.OPTIONAL) == true) {

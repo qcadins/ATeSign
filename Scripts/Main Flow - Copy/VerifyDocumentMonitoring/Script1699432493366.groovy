@@ -8,6 +8,7 @@ import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.By as By
 import org.openqa.selenium.Keys as Keys
+import com.kms.katalon.core.testobject.TestObject as TestObject
 
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
@@ -1256,7 +1257,7 @@ def inputDDLExact(String locationObject, String input) {
 	}
 }
 
-def inputDDLExactRelativesObject(String locationObject, String input) {
+def inputDDLExactRelativesObject(TestObject locationObject, String input) {
 	'Input value status'
 	WebUI.setText(locationObject, input)
 

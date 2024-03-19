@@ -489,7 +489,7 @@ class SendSign {
 			data = resultSet.getObject(1)
 		}
 
-		if (data == null || data == 'null') {
+		if (data == null || data.toString() == 'null') {
 			resultSet = stm.executeQuery("select msv.vendor_name from ms_vendoroftenant mvot left join ms_tenant mst on mvot.id_ms_tenant = mst.id_ms_tenant join ms_vendor msv on mvot.id_ms_vendor = msv.id_ms_vendor WHERE mst.tenant_code = '" + tenantCode + "' ORDER BY mvot.default_vendor limit 1")
 			metadata = resultSet.metaData
 

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>input_SearchBox</name>
+   <name>button_sms</name>
    <tag></tag>
-   <elementGuidId>693e7e6b-c1e7-46cc-82d4-15a887145320</elementGuidId>
+   <elementGuidId>904e5895-14dc-4bc3-ab32-4f8e4b298656</elementGuidId>
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;param&quot;]</value>
+         <value>//*[@for = 'sms']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>for</name>
       <type>Main</type>
-      <value>//*[@id=&quot;param&quot;]</value>
-      <webElementGuid>4c55cacc-5f4d-44d5-9908-01b637eaf6ab</webElementGuid>
+      <value>sms</value>
+      <webElementGuid>01ebad1c-1d9c-4143-88d7-2b15de58c9b1</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

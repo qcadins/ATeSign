@@ -149,6 +149,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'vendorName', FailureHandling.OPTIONAL), 
                             result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
+					if (WS.getElementPropertyValue(respon, 'vendorName', FailureHandling.OPTIONAL) == 'Privy') {
+						'verify livenessurl'
+						arrayMatch.add(WebUI.verifyNotMatch(WS.getElementPropertyValue(respon, 'livenessUrl', FailureHandling.OPTIONAL),
+								'null', FailureHandling.CONTINUE_ON_FAILURE))
+						
+						'tulis di excel hasil link yang bisa digunakan untuk sign'
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Liveness Url Link') -
+							1, GlobalVariable.NumofColm - 1, WS.getElementPropertyValue(respon, 'livenessUrl', FailureHandling.OPTIONAL))
+					}
                     'verify verifPhone'
                     arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'verifPhone', FailureHandling.OPTIONAL), 
                             result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))

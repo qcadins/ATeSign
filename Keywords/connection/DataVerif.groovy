@@ -445,18 +445,19 @@ class DataVerif {
 	getEmailServiceFromTenant(Connection conn, String tenantCode, String emailSigner) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select sent_otp_by_email from ms_tenant where tenant_code = '" + tenantCode + "'")
-		metadata = resultSet.metaData
-
-		columnCount = metadata.getColumnCount()
-
-		while (resultSet.next()) {
-			data = resultSet.getObject(1)
-		}
-
-		if (data == null) {
-			data = '0'
-		}
+		//		resultSet = stm.executeQuery("select sent_otp_by_email from ms_tenant where tenant_code = '" + tenantCode + "'")
+		//		metadata = resultSet.metaData
+		//
+		//		columnCount = metadata.getColumnCount()
+		//
+		//		while (resultSet.next()) {
+		//			data = resultSet.getObject(1)
+		//		}
+		//
+		//		if (data == null) {
+		//			data = '0'
+		//		}
+		data = 0
 
 		if (data == '1') {
 			resultSet = stm.executeQuery("select email_service from ms_vendor_registered_user where signer_registered_email = '" + emailSigner + "'")

@@ -96,7 +96,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     'usage saldo sign sebagai flag untuk get saldo'
                     usageSaldo = 'Sign'
 
-                    'get saldo before'
+					WebUI.comment(GlobalVariable.Psre)
+					'get saldo before'
                     GlobalVariable.saldo = WebUI.callTestCase(findTestCase('Main Flow - Copy/getSaldo'), [('excel') : excelPathMain
                             , ('sheet') : sheet, ('vendor') : logicVendor, ('usageSaldo') : usageSaldo], FailureHandling.CONTINUE_ON_FAILURE)
 
@@ -377,7 +378,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                 'call test case webview embed sign'
                                 WebUI.callTestCase(findTestCase('Main Flow - Copy/Webview Embed Sign'), [('excelPathFESignDocument') : excelPathMain
                                         , ('sheet') : sheet, ('indexUsed') : indexReadDataExcelWebview, ('opsiSigning') : opsiSigning[
-                                        i], ('CancelDocsSign') : cancelDocsValue], FailureHandling.CONTINUE_ON_FAILURE)
+                                        i], ('CancelDocsSign') : cancelDocsValue, ('splitIndex') : y], FailureHandling.CONTINUE_ON_FAILURE)
 
                                 'set boolean true'
                                 isUsedUI = true
@@ -391,7 +392,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                 'call test case webview embed sign'
                                 WebUI.callTestCase(findTestCase('Main Flow - Copy/Webview Embed Sign'), [('excelPathFESignDocument') : excelPathMain
                                         , ('sheet') : sheet, ('indexUsed') : indexReadDataExcelEmbed, ('opsiSigning') : opsiSigning[
-                                        i], ('CancelDocsSign') : cancelDocsValue], FailureHandling.CONTINUE_ON_FAILURE)
+                                        i], ('CancelDocsSign') : cancelDocsValue, ('splitIndex') : y], FailureHandling.CONTINUE_ON_FAILURE)
 
                                 'set boolean true'
                                 isUsedUI = true
@@ -404,7 +405,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                                 'call test case signer login sign'
                                 WebUI.callTestCase(findTestCase('Main Flow - Copy/SignerLogin Sign'), [('excelPathFESignDocument') : excelPathMain
-                                        , ('sheet') : sheet, ('opsiSigning') : opsiSigning[i], ('CancelDocsSign') : cancelDocsValue], 
+                                        , ('sheet') : sheet, ('opsiSigning') : opsiSigning[i], ('CancelDocsSign') : cancelDocsValue, ('splitIndex') : y], 
                                     FailureHandling.CONTINUE_ON_FAILURE)
 
                                 'set boolean true'

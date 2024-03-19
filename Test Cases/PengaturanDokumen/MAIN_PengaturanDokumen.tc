@@ -17,6 +17,12 @@
       <value></value>
       <variableId>73c7a81e-6b94-430e-b74a-dbdc0afcaab6</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>67e2a92d-9ebf-4d29-82c8-9b0fc5af43c1</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>'PengaturanDokumen/PengaturanDokumen'</defaultValue>
       <description></description>
@@ -30,5 +36,12 @@
       <id>73c7a81e-6b94-430e-b74a-dbdc0afcaab6</id>
       <masked>false</masked>
       <name>sheet</name>
+   </variable>
+   <variable>
+      <defaultValue>0</defaultValue>
+      <description></description>
+      <id>67e2a92d-9ebf-4d29-82c8-9b0fc5af43c1</id>
+      <masked>false</masked>
+      <name>countBreak</name>
    </variable>
 </TestCaseEntity>

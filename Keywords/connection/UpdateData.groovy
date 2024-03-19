@@ -402,6 +402,7 @@ class UpdateData {
 			'lakukan update vendor stamping yang akan dipakai'
 			updateVendorStamping(conneSign, idLov)
 		}
+
 		'LOV Sending Point Send Document'
 		updateLOVSendingPointLevelNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting True LOV Sending Point to Send Document ?')), 'Send Document')
 
@@ -450,9 +451,6 @@ class UpdateData {
 		'LOV SMS Gateway Level Notif untuk Resend Sign Notification Embed V2'
 		updateLOVSMSGatewayLevelNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Gateway for Resend Sign Notification Embed V2 ?')), 'Resend Sign Notification Embed V2')
 
-		'LOV SMS Gateway Level Notif untuk OTP Sign Embed V2 Flow'
-		updateLOVSMSGatewayLevelNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Gateway for OTP Sign Embed V2 Flow ?')), 'OTP Sign Embed V2 Flow')
-
 		'LOV SMS Gateway Level Tenant'
 		updateLOVSMSGatewayLevelTenant(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Gateway for Level Tenant ?')))
 
@@ -479,6 +477,12 @@ class UpdateData {
 
 		'setting send sms send doc general setting'
 		apiFullService.settingSendSMSOtpUser(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS OTP For User')))
+
+		'setting send wa send doc general setting'
+		apiFullService.settingSendWAOtpUser(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send WA OTP For User')))
+
+		'lov balance mutation change'
+		updateLOVBalanceMutationBalanceVendorOfTenantPackage(conneSign, excelPathMain, sheet)
 	}
 
 	@Keyword
@@ -1026,6 +1030,9 @@ class UpdateData {
 
 		'setting send sms send doc general setting'
 		apiFullService.settingSendSMSForgotPassword(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS ForgotPassword')))
+		
+		'update lov balance mutation pada balancevendoroftenant'
+		updateLOVBalanceMutationBalanceVendorOfTenantPackage(conneSign, excelPathMain, sheets)
 	}
 
 	@Keyword
@@ -1079,12 +1086,11 @@ class UpdateData {
 	@Keyword
 	updateLOVBalanceMutationBalanceVendorOfTenantPackage(Connection conneSign, String excelPathMain, String sheets) {
 		sheet = sheets
-		
+
 		'LOV Balance Type SMS dan WA'
 		updateLOVBalanceMutationBalanceVendorOfTenant(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting True LOV Balance Type for Tenant and Vendor about SMS ?')), 'SMS Notif', GlobalVariable.Tenant)
-	
+
 		'LOV Balance Type SMS dan WA'
 		updateLOVBalanceMutationBalanceVendorOfTenant(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting True LOV Balance Type for Tenant and Vendor about WhatsApp ?')), 'WhatsApp Message', GlobalVariable.Tenant)
-	
 	}
 }
