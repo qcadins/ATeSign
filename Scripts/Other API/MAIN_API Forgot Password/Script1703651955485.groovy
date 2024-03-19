@@ -51,8 +51,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         respon = WS.sendRequest(findTestObject('Postman/forgotPassword', [('callerId') : email, ('loginId') : email, ('sendingPointOption') : findTestData(
                         excelPath).getValue(GlobalVariable.NumofColm, rowExcel('sendingPointOption'))]))
 
-        checkBalanceMutation(conneSign, emailSHA256)
-
         'ambil lama waktu yang diperlukan hingga request menerima balikan'
         elapsedTime = ((respon.elapsedTime / 1000) + ' second')
 
@@ -90,8 +88,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         ArrayList arrayMatch = []
 
                         'ambil data last transaction dari DB'
-                        ArrayList resultDB = CustomKeywords.'connection.ForgotPassword.getBusinessLineOfficeCode'(conneSign, 
-                            email)
+                        ArrayList resultDB = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(conneSign, 
+                            emailSHA256, 'Document')
 
                         'declare arrayindex'
                         arrayindex = 0
@@ -227,7 +225,7 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
     'Code#1'
 
     'mengambil value dari sendingpoint option'
-    GlobalVariable.chooseOTP = findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('sendingPointOption'))
+    GlobalVariable.chooseOTP = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('sendingPointOption'))
 
     'jika chooseotpnya adalah wa'
     if (GlobalVariable.chooseOTP.toString().contains('WA')) {
@@ -237,14 +235,14 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
         if (balmut.size() == 0) {
             'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+                (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
                     '-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WA')
         }
         
         if ((balmut[9]) != '-1') {
             'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+                (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
                     '-', '') + ';') + 'Saldo WA tidak terpotong')
         }
     }
