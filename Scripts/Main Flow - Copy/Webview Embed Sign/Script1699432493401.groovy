@@ -33,6 +33,8 @@ useBiom = 0
 GlobalVariable.totalDelayPerSecond = 0
 
 GlobalVariable.batasWaktu = 0
+
+GlobalVariable.chooseOTP = ''
 'Inisialisasi array untuk Listotp, arraylist arraymatch'
 ArrayList<String> listOTP = []
 

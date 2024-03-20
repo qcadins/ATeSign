@@ -33,7 +33,9 @@ useBiom = 0
 
 GlobalVariable.totalDelayPerSecond = 0
 
-GlobalVariable.batasWaktu = 0
+GlobalVariable.batasWaktu = 3
+
+GlobalVariable.chooseOTP = ''
 
 'Inisialisasi array untuk Listotp, arraylist arraymatch'
 ArrayList<String> listOTP = []
@@ -1348,14 +1350,16 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList<Str
                 listOTP.add(otpAfter)
 
                 'dicheck OTP pertama dan kedua dan seterusnya'
-                if (WebUI.verifyMatch(listOTP[(w - 1)], listOTP[w], false, FailureHandling.OPTIONAL)) {
-                    if (loopingTimer == 5) {
-                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                            GlobalVariable.StatusFailed, (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 
-                                rowExcel('Reason Failed')).replace('-', '') + ';') + 'OTP Before dan After sama setelah ') + 
-                            (loopingTimer * 2)) + ' detik')
-                    }
-                }
+                if (WebUI.verifyNotMatch(listOTP[(w - 1)], listOTP[w], false, FailureHandling.OPTIONAL)) {
+					break
+                } else {
+					if (loopingTimer == 5) {
+						CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm,
+							GlobalVariable.StatusFailed, (((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm,
+								rowExcel('Reason Failed')).replace('-', '') + ';') + 'OTP Before dan After sama setelah ') +
+							(loopingTimer * 2)) + ' detik')
+					}
+				}
             }
             
             'Jika looping telah diterakhir, baru set text'
@@ -1722,6 +1726,9 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 			penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
 		}
 	}
+	
+	WebUI.comment(balmut.toString())
+	
 	/*
     if (notifTypeDB == '0' || notifTypeDB == 'Level Tenant') {
         if (mustUseWAFirst == '1') {

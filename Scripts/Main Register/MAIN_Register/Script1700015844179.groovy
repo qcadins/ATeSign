@@ -32,8 +32,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         
         GlobalVariable.VerificationCount = 1
 
+		'dianggap counter untuk sms, perubahan 4.3.0'
         GlobalVariable.Counter = 0
+		
+		GlobalVariable.CounterWA = 0
 
+		GlobalVariable.chooseOTP  = ''
+		
         int countCheckSaldo = 0
 
         'get psre per case'
@@ -154,17 +159,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 WebUI.callTestCase(findTestCase('Main Register/DaftarAkunDataVerif'), [('excelPathRegister') : excelPathRegister
                         , ('otpBefore') : saldoBefore.get('OTP')], FailureHandling.CONTINUE_ON_FAILURE)
 
-                'looping untuk mengeck apakah case selanjutnya ingin melanjutkan input pada form registrasi'
-                while (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Continue Register & Activation')).equalsIgnoreCase(
-                    'Continue') && (GlobalVariable.FlagFailed == 0)) {
-                    (GlobalVariable.NumofColm)++
-
-                    GlobalVariable.FlagFailed = 0
-
-                    'call test case daftar akun verif'
-                    WebUI.callTestCase(findTestCase('Main Register/DaftarAkunDataVerif'), [('excelPathRegister') : excelPathRegister
-                            , ('otpBefore') : saldoBefore.get('OTP')], FailureHandling.CONTINUE_ON_FAILURE)
-                }
             }
             
             if (GlobalVariable.FlagFailed == 0) {
@@ -197,6 +191,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 
                 if (!(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
                     'API Register'))) {
+					'#Code1'
+					/*
                     'get tenant di table ms notif type of tenant'
                     tenantType = CustomKeywords.'connection.UpdateData.checkNotifTypeExistforTenant'(conneSign)
 
@@ -229,6 +225,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                         if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
                             'API Generate Inv Link Normal')) {
+                            potongSaldoWAorOTP(' - OTP Act', saldoBefore, conneSign)
                             potongSaldoSendGenInvLink(' - Gen Inv', saldoBefore, conneSign)
                         }
                         
@@ -247,7 +244,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             potongSaldoSendGenInvLink(' - Resend Inv', saldoBefore, conneSign)
                         }
                     }
-                    
+                    */
+					
+					potongSaldoWAorOTP(' - OTP Act', saldoBefore, conneSign)
+					
+					potongSaldoSendGenInvLink(' - Gen Inv', saldoBefore, conneSign)
+					
                     if (((findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting SMS Certif Notif')) == 
                     '1') && (GlobalVariable.Psre == 'VIDA')) && (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
                         rowExcel('$Email')).length() <= 2)) {
@@ -259,7 +261,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     WebUI.comment(saldoAfter.toString())
 
                     'verify saldo before dan after'
-                    checkVerifyEqualOrMatch(WebUI.verifyMatch(saldoBefore.toString(), saldoAfter.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), 
+                    checkVerifyEqualOrMatch(WebUI.verifyNotMatch(saldoBefore.toString(), saldoAfter.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), 
                         ' Saldo Gagal Potong')
 
                     if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Check Pencarian Pengguna')).length() > 
@@ -328,7 +330,9 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 }
 
 def potongSaldoWAorOTP(String type, HashMap<String, String> saldoBefore, Connection conneSign) {
-    if ((GlobalVariable.Psre == 'VIDA') || (GlobalVariable.Psre == 'TKNAJ')) {
+    '#Code2'
+	/*
+	if ((GlobalVariable.Psre == 'VIDA') || (GlobalVariable.Psre == 'TKNAJ')) {
         'check jika Must use WA message = 1'
         if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First' + type)) == 
         '1') {
@@ -359,9 +363,22 @@ def potongSaldoWAorOTP(String type, HashMap<String, String> saldoBefore, Connect
         'kurang saldo before dengan jumlah counter send OTP'
         saldoBefore.put(usedSaldo, (Integer.parseInt(saldoBefore.get('OTP')) - GlobalVariable.Counter).toString())
     }
-    
-    'call fucntion input filter saldo'
-    inputFilterSaldo(usedSaldo, conneSign, 'ESIGN/ADINS')
+	*/
+	if (GlobalVariable.chooseOTP.toString().contains('WA')) {
+		'kurang saldo before dengan jumlah counter send WA'
+		saldoBefore.put('WhatsApp Message', (Integer.parseInt(saldoBefore.get('WhatsApp Message')) - GlobalVariable.CounterWA).toString())
+		
+		'call fucntion input filter saldo'
+		inputFilterSaldo('WhatsApp Message', conneSign, 'ESIGN/ADINS')
+	}
+
+	if (GlobalVariable.chooseOTP.toString().contains('SMS')) {
+		'kurang saldo before dengan jumlah counter send OTP'
+		saldoBefore.put('OTP', (Integer.parseInt(saldoBefore.get('OTP')) - GlobalVariable.Counter).toString())
+		
+		'call fucntion input filter saldo'
+		inputFilterSaldo('OTP', conneSign, 'ESIGN/ADINS')
+	}
 }
 
 def potongSaldoSendGenInvLink(String type, HashMap<String, String> saldoBefore, Connection conneSign) {

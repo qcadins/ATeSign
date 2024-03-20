@@ -20,6 +20,11 @@ GlobalVariable.NumofColm = 4
 
 excelPathFESignDocument = 'Main/Main'
 
+if (excelPathFESignDocument.contains('MAIN')) {
+	println 'bb'
+} else {
+	println 'aa'
+}
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 int aa = 75

@@ -17,6 +17,7 @@ int countColmExcel = findTestData(excelPathForgotPass).columnNumbers
 
 sheet = 'Forgot Password'
 
+flagRun = 0
 'looping saldo'
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
@@ -26,10 +27,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         if (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
             GlobalVariable.FlagFailed = 0
         }
-        
-        'call function open browser'
-        openBrowser()
-
+		
+		if (flagRun == 0) {
+			'call function open browser'
+			openBrowser()
+			
+			flagRun = 1
+		}
+		
         String email = findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('$EmailForPassChange'))
 
         String emailSHA256
@@ -113,7 +118,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             WebUI.focus(findTestObject('ForgotPassword/button_YaKonfirm'))
 
             'klik pada tombol ya'
-            WebUI.enhancedClick(findTestObject('ForgotPassword/button_YaKonfirm'))
+            WebUI.click(findTestObject('ForgotPassword/button_YaKonfirm'))
 
             'check apakah muncul error'
             if (WebUI.verifyElementPresent(findTestObject('ForgotPassword/errorLog'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
@@ -146,6 +151,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     
                     'click proses media pemilihan'
                     WebUI.click(findTestObject('ForgotPassword/button_ProsesMediaPemilihan'))
+					
+					checkPopup()
                 } else {
                     'ambil error dan get text dari error tersebut'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
@@ -212,7 +219,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         if (verifConfirmation() == true) {
             continue
         }
-        
+
         'input password baru'
         WebUI.setText(findTestObject('ForgotPassword/input_newPass'), findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, 
                 rowExcel('$Password Baru')))
@@ -614,9 +621,14 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
                 GlobalVariable.NumofColm, rowExcel('$EmailForPassChange')), 'Document')
 
         'lakukan loop untuk pengecekan data'
-        for (int i = 0; i < (resultDB.size() / 2); i++) {
-            'verify business line dan office code'
-            arrayMatch.add(WebUI.verifyMatch((resultDB[i]).toString(), (resultDB[(i + 3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+        for (int i = 0; i < (resultDB.size() / 2); i++) {			
+			if (i == 2) {
+				'verify business line dan office code'
+				arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.ForgotPassword.getOfficeNameLastDocumentOnUser'(conneSign, emailSigner).toString(), (resultDB[(i + 3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+			} else if (i == 0) {
+				'verify business line dan office code'
+				arrayMatch.add(WebUI.verifyMatch((resultDB[i]).toString(), (resultDB[(i + 3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+			}
         }
         
         'jika data db tidak sesuai dengan excel'
@@ -634,12 +646,17 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
 def pilihWAorSMS(int rowInput, int indexLooping) {
     mediaPemilihan = findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowInput).split(';', -1)
 
+	if (rowExcel('Media Pengiriman OTP') == rowInput) {
+		object = 'ForgotPassword/label_ForgotPassword'
+	} else {
+		object = 'ForgotPassword/label_ForgotPasswordResend'
+	}
     'apakah ada media otp'
-    if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/text_pemilihanOTP'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+    if (WebUI.verifyElementPresent(findTestObject(object), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
         'pilih mau sms / wa'
         if ((mediaPemilihan[indexLooping]) == 'SMS') {
             'jika element pada sms present'
-            if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/button_sms'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+            if (WebUI.verifyElementPresent(findTestObject('ForgotPassword/input_SMS'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
                 'click SMS'
                 WebUI.click(findTestObject('ForgotPassword/input_SMS'))
             } else {
@@ -650,7 +667,7 @@ def pilihWAorSMS(int rowInput, int indexLooping) {
             }
         } else if ((mediaPemilihan[indexLooping]) == 'WhatsApp') {
             'jika element pada wa present'
-            if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/button_wa'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+            if (WebUI.verifyElementPresent(findTestObject('ForgotPassword/input_WA'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
                 'click wa'
                 WebUI.click(findTestObject('ForgotPassword/input_WA'))
             } else {
@@ -663,3 +680,20 @@ def pilihWAorSMS(int rowInput, int indexLooping) {
     }
 }
 
+def checkPopup() {
+	WebUI.delay(0.25)
+
+	'Jika popup muncul'
+	if (WebUI.verifyElementPresent(findTestObject('KotakMasuk/Sign/lbl_popup'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		'label popup diambil'
+		lblpopup = WebUI.getText(findTestObject('KotakMasuk/Sign/lbl_popup'), FailureHandling.CONTINUE_ON_FAILURE)
+
+			'Tulis di excel sebagai failed dan error.'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+				(((findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+					'-', '') + ';') + '<') + lblpopup) + '>')
+		
+		'Klik OK untuk popupnya'
+		WebUI.click(findTestObject('KotakMasuk/Sign/errorLog_OK'))
+	}
+}

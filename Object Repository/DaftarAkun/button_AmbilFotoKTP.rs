@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[16]/div[3]/button</value>
+         <value>//*[@src = '../../../../assets/img/photos/photo-area.png']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>src</name>
       <type>Main</type>
-      <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[16]/div[3]/button</value>
-      <webElementGuid>369949e5-1d3b-451b-a443-b4f50ea83aca</webElementGuid>
+      <value>../../../../assets/img/photos/photo-area.png</value>
+      <webElementGuid>8348b6db-7e18-4e89-b2de-5ea67a982727</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

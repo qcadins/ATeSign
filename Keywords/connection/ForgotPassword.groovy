@@ -144,4 +144,24 @@ class ForgotPassword {
 		}
 		listdata
 	}
+
+	@Keyword
+	getOfficeNameLastDocumentOnUser(Connection conn, String email) {
+		if (email.length() == countLengthforSHA256) {
+			helperQuery = 'amm.hashed_phone'
+		} else {
+			helperQuery = 'amm.login_id'
+		}
+
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select mso.id_ms_office from tr_Document_d_sign tdds left join tr_Document_d tdd on tdds.id_Document_d = tdd.id_document_D left join tr_Document_h tdh on tdh.id_Document_h = tdd.id_Document_h left join am_msuser amm on tdds.id_ms_user = amm.id_ms_user left join ms_office mso on tdh.id_ms_office = mso.id_ms_office WHERE " + helperQuery + " = '" + email + "' order by tdh.id_document_h desc limit 1")
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		if (data.toString() == 'null') {
+			data = ''
+		}
+		data
+	}
 }

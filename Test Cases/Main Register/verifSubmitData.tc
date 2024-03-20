@@ -18,14 +18,14 @@
       <variableId>675dc2ab-4b86-4d48-8039-f01a6d398688</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'Registrasi/BuatUndangan'</defaultValue>
+      <defaultValue>'Registrasi/MainRegister'</defaultValue>
       <description></description>
       <id>c3358f48-ce20-4cb3-8567-deee6b82ef8d</id>
       <masked>false</masked>
       <name>excelPathBuatUndangan</name>
    </variable>
    <variable>
-      <defaultValue>'BuatUndangan'</defaultValue>
+      <defaultValue>'Main Register'</defaultValue>
       <description></description>
       <id>675dc2ab-4b86-4d48-8039-f01a6d398688</id>
       <masked>false</masked>

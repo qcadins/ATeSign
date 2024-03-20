@@ -130,10 +130,14 @@ if (WebUI.verifyElementNotPresent(findTestObject('DaftarAkun/label_SuccessPrivy'
         } else {
             'delay 7 detik'
             WebUI.delay(7)
-
+			
+			'focus ambil foto'
+			WebUI.scrollToElement(findTestObject('Object Repository/DaftarAkun/button_AmbilFoto'), GlobalVariable.TimeOut)
+			
             'click ambil foto'
             WebUI.click(findTestObject('Object Repository/DaftarAkun/button_AmbilFoto'))
         }
+
 		'click ambil apply'
 		WebUI.click(findTestObject('Object Repository/DaftarAkun/button_Apply'))
     }
@@ -173,8 +177,8 @@ if (WebUI.verifyElementNotPresent(findTestObject('DaftarAkun/label_SuccessPrivy'
         'Yes')) {
         'click checkbox'
         WebUI.click(findTestObject('DaftarAkun/checkbox_SyaratdanKetentuan'))
-
-        if ((GlobalVariable.Psre == 'VIDA') || (GlobalVariable.Psre == 'TKNAJ')) {
+		
+        if ((GlobalVariable.Psre == 'VIDA') || (GlobalVariable.Psre == 'TKNAJ') || GlobalVariable.Psre == 'PRIVY') {
             'click checkbox setuju'
             WebUI.click(findTestObject('DaftarAkun/checkbox_Setuju'))
 
@@ -208,9 +212,6 @@ if (WebUI.verifyElementNotPresent(findTestObject('DaftarAkun/label_SuccessPrivy'
 			
 			'click daftar akun'
 			WebUI.click(findTestObject('DaftarAkun/button_DaftarAkun'))
-			
-			'click button cancel'
-			WebUI.click(findTestObject('RegisterEsign/button_ProcessOTP'))
 		}
 		
         'check if email kosong atau tidak'
@@ -303,6 +304,8 @@ if (WebUI.verifyElementNotPresent(findTestObject('DaftarAkun/label_SuccessPrivy'
         }
         
         if ((GlobalVariable.Psre == 'VIDA') || (GlobalVariable.Psre == 'TKNAJ')) {
+			if (CustomKeywords.'connection.InquiryInvitation.getReceiverDetail'(conneSign, findTestData(excelPathRegister).getValue(
+        GlobalVariable.NumofColm, rowExcel('$NIK')).replace('"', '')).toString().contains('@')) {
             'get reason error log'
             reason = WebUI.getAttribute(findTestObject('DaftarAkun/errorLog'), 'aria-label', FailureHandling.OPTIONAL).toString().toLowerCase()
 
@@ -320,9 +323,8 @@ if (WebUI.verifyElementNotPresent(findTestObject('DaftarAkun/label_SuccessPrivy'
                 if (reason.contains('gagal')) {
                     'call function checkTrxMutation'
                     checkTrxMutation(conneSign)
-
-                    (GlobalVariable.VerificationCount)++
                 }
+            }
             } else if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/FormAktivasiEsign/input_KataSandi'), GlobalVariable.TimeOut, 
                 FailureHandling.OPTIONAL)) {
                 checkTrxMutation(conneSign)
@@ -492,8 +494,8 @@ def getOTP(Connection conneSign) {
 }
 
 def verifyDataDaftarAkun() {
-    'verify Email sesuai inputan'
-    checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Email'), 'value').toUpperCase(), 
+		'verify Email sesuai inputan'
+		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Email'), 'value').toUpperCase(), 
             findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', '').toUpperCase(), 
             false, FailureHandling.CONTINUE_ON_FAILURE), ' Email')
 

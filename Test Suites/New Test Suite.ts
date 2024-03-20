@@ -12,16 +12,22 @@
    <rerunImmediately>true</rerunImmediately>
    <testSuiteGuid>07110b73-9ace-4a35-a75b-1764288b21e3</testSuiteGuid>
    <testCaseLink>
-      <guid>d7c849fe-e2ef-4fe2-a5a0-80c300f0e58c</guid>
+      <guid>906268d6-618b-4baf-8535-1d4c4363bb78</guid>
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
-      <testCaseId>Test Cases/ForgotPassword/MAIN_Forgot Password</testCaseId>
+      <testCaseId>Test Cases/Other API/MAIN_API Forgot Password</testCaseId>
       <usingDataBindingAtTestSuiteLevel>true</usingDataBindingAtTestSuiteLevel>
       <variableLink>
          <testDataLinkId></testDataLinkId>
          <type>DEFAULT</type>
          <value></value>
-         <variableId>9143d26e-867f-4d1e-a1d9-39db0b7a6bdd</variableId>
+         <variableId>4354ff66-a1f8-4d93-9a1e-7c68e005ffd7</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId></testDataLinkId>
+         <type>DEFAULT</type>
+         <value></value>
+         <variableId>076a0cbf-5032-408f-b14c-d1877054cea7</variableId>
       </variableLink>
    </testCaseLink>
 </TestSuiteEntity>

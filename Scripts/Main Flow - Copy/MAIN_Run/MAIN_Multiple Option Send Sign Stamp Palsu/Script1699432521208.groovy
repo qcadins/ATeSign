@@ -96,7 +96,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                     'usage saldo sign sebagai flag untuk get saldo'
                     usageSaldo = 'Sign'
 
-					WebUI.comment(GlobalVariable.Psre)
 					'get saldo before'
                     GlobalVariable.saldo = WebUI.callTestCase(findTestCase('Main Flow - Copy/getSaldo'), [('excel') : excelPathMain
                             , ('sheet') : sheet, ('vendor') : logicVendor, ('usageSaldo') : usageSaldo], FailureHandling.CONTINUE_ON_FAILURE)
@@ -325,7 +324,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             (GlobalVariable.eSignData['VerifikasiBiometric']) = 0
 
                             (GlobalVariable.eSignData['VerifikasiSign']) = 0
-
+							
                             'jika opsi tanda tangannya bukan sign only dan stamp only'
                             if ((findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 
                             'Sign Only') && (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 
@@ -436,9 +435,18 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                     ArrayList<String> officeRegionBline = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(
                                         conneSign, CustomKeywords.'connection.APIFullService.getRefNumber'(conneSign, GlobalVariable.storeVar.keySet()[
                                             0]), 'Signing')
-
+									
                                     'lakukan loop untuk pengecekan data'
                                     for (i = 0; i < (officeRegionBline.size() / 2); i++) {
+										if (i == 0) {
+											if (GlobalVariable.ErrorType.size() == 0) {
+												'verify business line dan office code'
+												checkVerifyEqualorMatch(WebUI.verifyMatch((officeRegionBline[i]).toString(), (officeRegionBline[
+														(i + 3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada pengecekan Office/Region/Bline pada Sent otp Signing')
+											} else {
+												continue
+											}
+										}
                                         'verify business line dan office code'
                                         checkVerifyEqualorMatch(WebUI.verifyMatch((officeRegionBline[i]).toString(), (officeRegionBline[
                                                 (i + 3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE), ' pada pengecekan Office/Region/Bline pada Sent otp Signing')

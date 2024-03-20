@@ -11,9 +11,15 @@ currentDate = new Date().format('dd-MMM-yyyy')
 'click menu Inquiry Invitation'
 WebUI.click(findTestObject('InquiryInvitation/menu_InquiryInvitation'))
 
-'input email'
-WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
+if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == '1') {
+	'input nomor telp'
+	WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm,
+			rowExcel('No Telepon')))
+} else {
+	'input email'
+	WebUI.setText(findTestObject('InquiryInvitation/input_SearchBox'), findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, 
         rowExcel('$Email')))
+}
 
 'Looping delay untuk handling search data selama +- 2 menit'
 for (int i = 1; i <= 8; i++) {
@@ -34,11 +40,17 @@ checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('InquiryI
             excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), 
     ' Nama')
 
-'verify email'
-checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('InquiryInvitation/tr_Receiver')).toUpperCase(), 
+if (findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == '1') {
+	'verify nomor telepon'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('InquiryInvitation/tr_Receiver')).toUpperCase(),
+		findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon')).toUpperCase(), false,
+		FailureHandling.CONTINUE_ON_FAILURE), ' Receiver')
+} else {
+	'verify email'
+	checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('InquiryInvitation/tr_Receiver')).toUpperCase(), 
         findTestData(excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).toUpperCase(), false, 
-        FailureHandling.CONTINUE_ON_FAILURE), ' Email')
-
+        FailureHandling.CONTINUE_ON_FAILURE), ' Receiver')
+}
 'verify phone'
 checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('InquiryInvitation/tr_Phone')).toUpperCase(), findTestData(
             excelPathBuatUndangan).getValue(GlobalVariable.NumofColm, rowExcel('No Telepon')).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE), 

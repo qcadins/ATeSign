@@ -7,25 +7,25 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;msxForm&quot;]/div[11]/div/div/label</value>
+         <value>//*[@for = 'isMeterei']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
    <useRalativeImagePath>false</useRalativeImagePath>
    <webElementProperties>
-      <isSelected>true</isSelected>
+      <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
       <value>//*[@id=&quot;msxForm&quot;]/div[11]/div/div/label</value>
-      <webElementGuid>bca9e4a9-2d43-4c41-8667-481b802a64bd</webElementGuid>
+      <webElementGuid>51617053-01cb-433a-9c02-60869b10ea67</webElementGuid>
    </webElementProperties>
    <webElementProperties>
-      <isSelected>false</isSelected>
+      <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
       <name>for</name>
       <type>Main</type>
       <value>isMeterei</value>
-      <webElementGuid>0a13f148-2e29-445a-8312-bb152fb4c3be</webElementGuid>
+      <webElementGuid>7d402d52-b0f6-4a5e-ab95-6268673dc121</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

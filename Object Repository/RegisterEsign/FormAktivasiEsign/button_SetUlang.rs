@@ -7,7 +7,7 @@
    <selectorCollection>
       <entry>
          <key>BASIC</key>
-         <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[5]/div/button[1]</value>
+         <value>//*[@class = 'btn btn-light']</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -15,9 +15,9 @@
    <webElementProperties>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath</name>
+      <name>class</name>
       <type>Main</type>
-      <value>//*[@id=&quot;regestration&quot;]/div/div/div/div/div/div/div/form/div[5]/div/button[1]</value>
-      <webElementGuid>5fcf9984-ee22-4495-a134-cdea202b2471</webElementGuid>
+      <value>btn btn-light</value>
+      <webElementGuid>d9c99eb4-386d-4acd-8e1f-a4a76710387e</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

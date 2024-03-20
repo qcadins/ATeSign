@@ -18,6 +18,6 @@
       <name>for</name>
       <type>Main</type>
       <value>sms</value>
-      <webElementGuid>532f92a8-0e7a-40d1-a418-894487995931</webElementGuid>
+      <webElementGuid>8536804a-cdfc-4caa-87a4-e9821148f5ff</webElementGuid>
    </webElementProperties>
 </WebElementEntity>

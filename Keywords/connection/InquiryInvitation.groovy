@@ -5,6 +5,7 @@ import java.sql.ResultSet
 import java.sql.ResultSetMetaData
 import java.sql.Statement
 import com.kms.katalon.core.annotation.Keyword
+import internal.GlobalVariable
 
 class InquiryInvitation {
 
@@ -19,7 +20,7 @@ class InquiryInvitation {
 	getSetEditAfterRegister(Connection conn) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select edit_after_register from ms_vendor Where vendor_code = 'VIDA'")
+		resultSet = stm.executeQuery("select edit_after_register from ms_vendor Where vendor_code = '" + GlobalVariable.Psre + "'")
 
 		metadata = resultSet.metaData
 
@@ -36,7 +37,7 @@ class InquiryInvitation {
 	getSetResendLink(Connection conn) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select resend_activation_link from ms_vendor Where vendor_code = 'VIDA'")
+		resultSet = stm.executeQuery("select resend_activation_link from ms_vendor Where vendor_code = '" + GlobalVariable.Psre + "'")
 
 		metadata = resultSet.metaData
 
@@ -100,5 +101,22 @@ class InquiryInvitation {
 			}
 		}
 		listdata
+	}
+	
+	@Keyword
+	getReceiverDetail(Connection conn, String idno) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT receiver_detail FROM tr_invitation_link WHERE id_no = '" +  idno  + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		
+		data
 	}
 }

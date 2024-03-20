@@ -314,4 +314,9 @@
       <initValue>0</initValue>
       <name>totalDelayPerSecond</name>
    </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description></description>
+      <initValue>0</initValue>
+      <name>CounterWA</name>
+   </GlobalVariableEntity>
 </GlobalVariableEntities>

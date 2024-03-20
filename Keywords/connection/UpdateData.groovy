@@ -1030,7 +1030,7 @@ class UpdateData {
 
 		'setting send sms send doc general setting'
 		apiFullService.settingSendSMSForgotPassword(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Send SMS ForgotPassword')))
-		
+
 		'update lov balance mutation pada balancevendoroftenant'
 		updateLOVBalanceMutationBalanceVendorOfTenantPackage(conneSign, excelPathMain, sheets)
 	}

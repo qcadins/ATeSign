@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>FormAktivasiEsign</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>e649e280-6004-4cbd-875f-d96c0940e721</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>7811866d-4742-42e8-9e04-1c12fdd3d132</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>e01fbba2-4ce3-4ffa-9931-df4ae2016baa</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>69749863-8c0e-47ba-aaee-50287921a4a8</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Registrasi/MainRegister'</defaultValue>
+      <description></description>
+      <id>7811866d-4742-42e8-9e04-1c12fdd3d132</id>
+      <masked>false</masked>
+      <name>excelPathRegister</name>
+   </variable>
+   <variable>
+      <defaultValue>'Main Register'</defaultValue>
+      <description></description>
+      <id>e01fbba2-4ce3-4ffa-9931-df4ae2016baa</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>69749863-8c0e-47ba-aaee-50287921a4a8</id>
+      <masked>false</masked>
+      <name>usedSaldo</name>
+   </variable>
+</TestCaseEntity>
