@@ -6,7 +6,6 @@ import com.kms.katalon.core.testobject.ResponseObject as ResponseObject
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import internal.GlobalVariable as GlobalVariable
 import java.sql.Connection as Connection
-import java.util.Collections as Collections
 
 'get data file path'
 GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2.1 Esign - API Only.xlsx')
@@ -242,9 +241,8 @@ def getErrorMessageAPI(ResponseObject respon) {
 
 def checkSaldoWAOrSMS(Connection conneSign) {
 	String vendor = findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('$vendorCode'))
+	
 	ArrayList<String> balmut = []
-
-	int penggunaanSaldo = 0
 
 	String tipeSaldo
 
