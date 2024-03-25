@@ -5,6 +5,17 @@ import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import org.openqa.selenium.Keys as Keys
+import com.kms.katalon.core.mobile.keyword.MobileBuiltInKeywords as Mobile
+import com.kms.katalon.core.cucumber.keyword.CucumberBuiltinKeywords as CucumberKW
+import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
+import com.kms.katalon.core.windows.keyword.WindowsBuiltinKeywords as Windows
+import static com.kms.katalon.core.testobject.ObjectRepository.findWindowsObject
+import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
+import static com.kms.katalon.core.checkpoint.CheckpointFactory.findCheckpoint
+import com.kms.katalon.core.testcase.TestCase as TestCase
+import com.kms.katalon.core.testdata.TestData as TestData
+import com.kms.katalon.core.testobject.TestObject as TestObject
+import com.kms.katalon.core.checkpoint.Checkpoint as Checkpoint
 
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
@@ -87,6 +98,53 @@ if (GlobalVariable.Psre == 'PRIVY') {
         'call function check mutation trx'
         checkTrxMutation(conneSign)
     }
+    /*#Code1
+            if (tenantType == 0) {
+                'check jika Must use WA message = 1'
+                if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')) == 
+                '1') {
+                    usedSaldo = 'WhatsApp Message'
+                } else {
+                    'check jika email service on'
+                    if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == 
+                    '1') {
+                        'check jika use WA message = 1'
+                        if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) == 
+                        '1') {
+                            usedSaldo = 'WhatsApp Message'
+                        } else {
+                            'jika use WA message bukan 1 maka use OTP'
+                            usedSaldo = 'OTP'
+                        }
+                    } else {
+                        'jika use WA message bukan 1 maka use OTP'
+                        usedSaldo = 'OTP'
+                    }
+                }
+            } else {
+                'check jika Must use WA message = 1'
+                if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First - OTP Act')) == 
+                '1') {
+                    usedSaldo = 'WhatsApp Message'
+                } else {
+                    'check jika email service on'
+                    if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == 
+                    '1') {
+                        'check jika use WA message = 1'
+                        if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message - OTP Act')) == 
+                        '1') {
+                            usedSaldo = 'WhatsApp Message'
+                        } else {
+                            'jika use WA message bukan 1 maka use OTP'
+                            usedSaldo = 'OTP'
+                        }
+                    } else {
+                        'jika use WA message bukan 1 maka use OTP'
+                        usedSaldo = 'OTP'
+                    }
+                }
+            }
+            */
 } else {
     'check if email kosong atau tidak'
     if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')).equalsIgnoreCase(
@@ -210,90 +268,44 @@ if (GlobalVariable.Psre == 'PRIVY') {
         if (GlobalVariable.checkStoreDB == 'Yes') {
             'get tenant di table ms notif type of tenant'
             tenantType = CustomKeywords.'connection.UpdateData.checkNotifTypeExistforTenant'(conneSign)
-			'#Code1'
-			/*#Code1
-            if (tenantType == 0) {
-                'check jika Must use WA message = 1'
-                if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First')) == 
-                '1') {
-                    usedSaldo = 'WhatsApp Message'
-                } else {
-                    'check jika email service on'
-                    if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == 
-                    '1') {
-                        'check jika use WA message = 1'
-                        if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message')) == 
-                        '1') {
-                            usedSaldo = 'WhatsApp Message'
-                        } else {
-                            'jika use WA message bukan 1 maka use OTP'
-                            usedSaldo = 'OTP'
-                        }
-                    } else {
-                        'jika use WA message bukan 1 maka use OTP'
-                        usedSaldo = 'OTP'
-                    }
+
+            '#Code1'
+
+            'declare arraylist arraymatch'
+            ArrayList arrayMatch = []
+
+            if (GlobalVariable.chooseOTP.toString().contains('WA')) {
+                resultTrx = CustomKeywords.'connection.APIFullService.getAPIGenInvLinkOTPTrx'(conneSign, findTestData(excelPathRegister).getValue(
+                        GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"', ''), 'WhatsApp Message')
+
+                int sum = 0
+
+                for (String value : resultTrx) {
+                    int intValue = Integer.parseInt(value)
+
+                    sum += intValue
                 }
-            } else {
-                'check jika Must use WA message = 1'
-                if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Must Use WA First - OTP Act')) == 
-                '1') {
-                    usedSaldo = 'WhatsApp Message'
-                } else {
-                    'check jika email service on'
-                    if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')) == 
-                    '1') {
-                        'check jika use WA message = 1'
-                        if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting Use WA Message - OTP Act')) == 
-                        '1') {
-                            usedSaldo = 'WhatsApp Message'
-                        } else {
-                            'jika use WA message bukan 1 maka use OTP'
-                            usedSaldo = 'OTP'
-                        }
-                    } else {
-                        'jika use WA message bukan 1 maka use OTP'
-                        usedSaldo = 'OTP'
-                    }
-                }
+                
+                'verify trx qty = -1'
+                arrayMatch.add(WebUI.verifyEqual(sum, -(GlobalVariable.CounterWA), FailureHandling.CONTINUE_ON_FAILURE))
             }
-            */
-			'declare arraylist arraymatch'
-			ArrayList arrayMatch = []
-			if (GlobalVariable.chooseOTP.toString().contains('WA')) {
-				resultTrx = CustomKeywords.'connection.APIFullService.getAPIGenInvLinkOTPTrx'(conneSign, findTestData(excelPathRegister).getValue(
-					GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"', ''), 'WhatsApp Message')
+            
+            if (GlobalVariable.chooseOTP.toString().contains('SMS')) {
+                resultTrx = CustomKeywords.'connection.APIFullService.getAPIGenInvLinkOTPTrx'(conneSign, findTestData(excelPathRegister).getValue(
+                        GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"', ''), 'OTP')
 
-			int sum = 0
+                int sum = 0
 
-			for (String value : resultTrx) {
-				int intValue = Integer.parseInt(value)
+                for (String value : resultTrx) {
+                    int intValue = Integer.parseInt(value)
 
-				sum += intValue
-			}
-			
-			'verify trx qty = -1'
-			arrayMatch.add(WebUI.verifyEqual(sum, -(GlobalVariable.CounterWA), FailureHandling.CONTINUE_ON_FAILURE))
-
-			}
-		
-			if (GlobalVariable.chooseOTP.toString().contains('SMS')) {
-				resultTrx = CustomKeywords.'connection.APIFullService.getAPIGenInvLinkOTPTrx'(conneSign, findTestData(excelPathRegister).getValue(
-					GlobalVariable.NumofColm, rowExcel('$Nama')).replace('"', ''), 'OTP')
-
-			int sum = 0
-
-			for (String value : resultTrx) {
-				int intValue = Integer.parseInt(value)
-
-				sum += intValue
-			}
-			
-			'verify trx qty = -1'
-			arrayMatch.add(WebUI.verifyEqual(sum, -(GlobalVariable.CounterWA), FailureHandling.CONTINUE_ON_FAILURE))
-
-			}
-			
+                    sum += intValue
+                }
+                
+                'verify trx qty = -1'
+                arrayMatch.add(WebUI.verifyEqual(sum, -(GlobalVariable.CounterWA), FailureHandling.CONTINUE_ON_FAILURE))
+            }
+            
             'jika data db tidak sesuai dengan excel'
             if (arrayMatch.contains(false)) {
                 'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
@@ -309,7 +321,7 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
     'declare list otp'
     ArrayList listOTP = []
 
-	'pilih wa dengan beri index 0 (start selalu awal). return wa / sms'
+    'pilih wa dengan beri index 0 (start selalu awal). return wa / sms'
     getWaSMS = pilihWAorSMS(rowExcel('Media Pemilihan OTP - Aktivasi'), 0)
 
     'click button proses'
@@ -335,15 +347,15 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
 
         'call function get otp'
         OTP = getOTP(conneSign)
-		
-		if (getWaSMS == 'WA') {
-			'+1 karena request otp'
-			(GlobalVariable.CounterWA)++
-		} else {
-			'+1 karena request otp'
-			(GlobalVariable.Counter)++
-		}
-		
+
+        if (getWaSMS == 'WA') {
+            '+1 karena request otp'
+            (GlobalVariable.CounterWA)++
+        } else {
+            '+1 karena request otp'
+            (GlobalVariable.Counter)++
+        }
+        
         'clear arraylist sebelumnya'
         listOTP.clear()
 
@@ -406,14 +418,14 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
                     'call function get otp'
                     OTP = getOTP(conneSign)
 
-					if (getWaSMS == 'WA') {
-						'+1 karena request otp'
-						(GlobalVariable.CounterWA)++
-					} else {
-						'+1 karena request otp'
-						(GlobalVariable.Counter)++
-					}
-
+                    if (getWaSMS == 'WA') {
+                        '+1 karena request otp'
+                        (GlobalVariable.CounterWA)++
+                    } else {
+                        '+1 karena request otp'
+                        (GlobalVariable.Counter)++
+                    }
+                    
                     'add OTP ke list'
                     listOTP.add(OTP)
 
@@ -489,14 +501,14 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
                     'call function get otp'
                     OTP = getOTP(conneSign)
 
-					if (getWaSMS == 'WA') {
-						'+1 karena request otp'
-						(GlobalVariable.CounterWA)++
-					} else {
-						'+1 karena request otp'
-						(GlobalVariable.Counter)++
-					}
-
+                    if (getWaSMS == 'WA') {
+                        '+1 karena request otp'
+                        (GlobalVariable.CounterWA)++
+                    } else {
+                        '+1 karena request otp'
+                        (GlobalVariable.Counter)++
+                    }
+                    
                     'add OTP ke list'
                     listOTP.add(OTP)
 
@@ -584,8 +596,9 @@ def getOTP(Connection conneSign) {
 
 def pilihWAorSMS(int rowInput, int indexLooping) {
     mediaPemilihan = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowInput).split(';', -1)
-	
-	varChecking = ''
+
+    varChecking = ''
+
     'apakah ada media otp'
     if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/text_pemilihanOTP'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
         'pilih mau sms / wa'
@@ -594,41 +607,45 @@ def pilihWAorSMS(int rowInput, int indexLooping) {
             if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/button_sms'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
                 'click SMS'
                 WebUI.click(findTestObject('RegisterEsign/button_sms'))
-				
-				GlobalVariable.chooseOTP  = GlobalVariable.chooseOTP + 'SMS'
-				varChecking = 'SMS'
-			} else {
+
+                GlobalVariable.chooseOTP = (GlobalVariable.chooseOTP + 'SMS')
+
+                varChecking = 'SMS'
+            } else {
                 'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusWarning, 
                     (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
                     'button SMS untuk Pemilihan OTP tidak muncul. Pemilihan akan menggunakan default yang sudah terpilih.')
-				
-				if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/button_wa'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
-					GlobalVariable.chooseOTP = GlobalVariable.chooseOTP + 'WA'
-					varChecking = 'WA'
-			}
+
+                if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/button_wa'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+                    GlobalVariable.chooseOTP = (GlobalVariable.chooseOTP + 'WA')
+
+                    varChecking = 'WA'
+                }
             }
         } else if ((mediaPemilihan[indexLooping]) == 'WhatsApp') {
             'jika element pada wa present'
             if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/button_wa'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
                 'click wa'
                 WebUI.click(findTestObject('RegisterEsign/button_wa'))
-				
-				GlobalVariable.chooseOTP  = GlobalVariable.chooseOTP + 'WA'
-				varChecking = 'WA'
+
+                GlobalVariable.chooseOTP = (GlobalVariable.chooseOTP + 'WA')
+
+                varChecking = 'WA'
             } else {
                 'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusWarning, 
                     (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') + 
                     'button WA untuk Pemilihan OTP tidak muncul. Pemilihan akan menggunakan default yang sudah terpilih.')
-				
-				if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/button_sms'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
-					GlobalVariable.chooseOTP = GlobalVariable.chooseOTP + 'SMS'
-					varChecking = 'SMS'
-			}
+
+                if (WebUI.verifyElementPresent(findTestObject('RegisterEsign/button_sms'), GlobalVariable.TimeOut, FailureHandling.CONTINUE_ON_FAILURE)) {
+                    GlobalVariable.chooseOTP = (GlobalVariable.chooseOTP + 'SMS')
+
+                    varChecking = 'SMS'
+                }
             }
         }
-		varChecking
+        varChecking
     }
 }
 

@@ -328,7 +328,7 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     }
 }
 
-def potongSaldoWAorOTP(String type, HashMap<String, String> saldoBefore, Connection conneSign) {
+def potongSaldoWAorOTP(HashMap<String, String> saldoBefore, Connection conneSign) {
     '#Code2'
 	/*
 	if ((GlobalVariable.Psre == 'VIDA') || (GlobalVariable.Psre == 'TKNAJ')) {

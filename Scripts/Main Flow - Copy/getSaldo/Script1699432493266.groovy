@@ -211,7 +211,7 @@ def funcFindSaldo(HashMap result, String vendorVerifikasi, ArrayList saldoList, 
 	}
 }
 
-def funcSaldoRegis(HashMap result, Connection conneSign) {
+def funcSaldoRegis(HashMap result) {
 	String vendorVerifikasi
 	
 	ArrayList saldoList = []
@@ -255,7 +255,6 @@ def funcSaldoRegis(HashMap result, Connection conneSign) {
 //			inputFilterSaldo('Text Verification', conneSign)
 //		}
 //	}
-	
 	result
 }
 

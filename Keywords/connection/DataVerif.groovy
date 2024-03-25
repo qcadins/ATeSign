@@ -442,7 +442,7 @@ class DataVerif {
 	}
 
 	@Keyword
-	getEmailServiceFromTenant(Connection conn, String tenantCode, String emailSigner) {
+	getEmailServiceFromTenant(Connection conn, String emailSigner) {
 		stm = conn.createStatement()
 		/*
 		 resultSet = stm.executeQuery("select sent_otp_by_email from ms_tenant where tenant_code = '" + tenantCode + "'")
@@ -739,8 +739,6 @@ class DataVerif {
 			}
 		}
 
-		println ("SELECT qty, tbm.id_ms_business_line, tbm.id_ms_office FROM tr_balance_mutation tbm LEFT JOIN ms_tenant mt ON mt.id_ms_tenant = tbm.id_ms_tenant LEFT JOIN ms_useroftenant mot ON mot.id_ms_tenant = mt.id_ms_tenant LEFT JOIN am_msuser amu ON amu.id_ms_user = mot.id_ms_user LEFT JOIN tr_document_h tdh ON tbm.id_document_h = tdh.id_document_h WHERE ((lov_trx_type = 158 OR lov_trx_type = 42 OR lov_trx_type = 41 OR lov_trx_type = 3 OR lov_trx_type = 44 OR lov_trx_type = 139 OR lov_trx_type = 142 OR lov_trx_type = 133)  AND (login_id = '" + value.toUpperCase() + "' OR tdh.ref_number = '" + value.toUpperCase() + "' OR amu.hashed_phone = encode(sha256('" + value.toUpperCase() + "'), 'hex')))  ORDER BY trx_date DESC LIMIT 1;")
-		
 		if (type.equalsIgnoreCase('Register')) {
 			resultSet = stm.executeQuery("select '-1', id_ms_business_line, id_ms_office from tr_invitation_link til join ms_vendor mv on til.id_ms_vendor = mv.id_ms_vendor where (receiver_detail = '" + value.toUpperCase() + "' or phone = '" + value.toUpperCase() + "') order by id_ms_user desc limit 1")
 		} else if (type.equalsIgnoreCase('Document')) {
@@ -751,8 +749,6 @@ class DataVerif {
 			resultSet = stm.executeQuery("SELECT '-1', COALESCE(tdh.id_ms_business_line, tlink.id_ms_business_line) AS id_ms_business_line, COALESCE(tdh.id_ms_office, tlink.id_ms_office) AS id_ms_office FROM tr_document_d td LEFT JOIN tr_document_h tdh ON td.id_document_h = tdh.id_document_h LEFT JOIN tr_document_d_sign tds ON tds.id_document_d = td.id_document_d LEFT JOIN am_msuser amu ON amu.id_ms_user = tds.id_ms_user LEFT JOIN tr_invitation_link tlink ON tlink.email = amu.login_id WHERE amu.login_id = '" + value.toUpperCase() + "' OR tdh.ref_number = '" + value.toUpperCase() + "' ORDER BY td.id_document_d DESC LIMIT 1")
 		}
 
-		println ("SELECT '-1', COALESCE(tdh.id_ms_business_line, tlink.id_ms_business_line) AS id_ms_business_line, COALESCE(tdh.id_ms_office, tlink.id_ms_office) AS id_ms_office FROM tr_document_d td LEFT JOIN tr_document_h tdh ON td.id_document_h = tdh.id_document_h LEFT JOIN tr_document_d_sign tds ON tds.id_document_d = td.id_document_d LEFT JOIN am_msuser amu ON amu.id_ms_user = tds.id_ms_user LEFT JOIN tr_invitation_link tlink ON tlink.email = amu.login_id WHERE amu.login_id = '" + value.toUpperCase() + "' OR amu.hashed_phone = encode(sha256('" + value.toUpperCase() + "'), 'hex') ORDER BY td.id_document_d DESC LIMIT 1")
-		
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
