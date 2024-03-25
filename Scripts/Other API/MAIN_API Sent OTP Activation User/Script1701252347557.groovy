@@ -56,7 +56,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         respon = WS.sendRequest(findTestObject('Postman/Sent OTP Activation User', [
 					('callerId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), 
 					('code') : code, 
-					('phoneNo') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('phoneNumber'))]))
+					('phoneNo') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('phoneNumber')),
+					('sendingPointOption') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('sendingPointOption'))]))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {

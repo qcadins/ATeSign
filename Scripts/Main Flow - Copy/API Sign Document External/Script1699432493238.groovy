@@ -107,6 +107,7 @@ if (findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, ro
 } else {
 sendingPoint = ', "sendingPointOption" : "' + findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('sendingPointOption (Sent Otp)')).split(';', -1)[GlobalVariable.indexUsed] + '"' 
 }
+
 if ((findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Use correct OTP From Database (Sign External)')).split(
     ';', -1)[GlobalVariable.indexUsed]) == 'Yes') {
     if (vendor.equalsIgnoreCase('Privy') || vendor.equalsIgnoreCase('Digisign')) {
@@ -415,7 +416,7 @@ if (otp != null) {
                         responseAPIStoreDB(conneSign, ipaddress, GlobalVariable.storeVar.keySet()[0], trxNo.toString())
                     }
                     
-                    if (trxNo != 'null') {
+                    if (trxNo.toString().replace('[', '').replace(']', '') != 'null') {
                         'ambil trx no untuk displit'
                         trxNo = trxNo.replace('[', '').replace(']', '').split(', ', -1)
 
@@ -544,14 +545,17 @@ def responseAPIStoreDB(Connection conneSign, String ipaddress, String documentId
     'verify tenant'
     arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], GlobalVariable.Tenant, false, FailureHandling.CONTINUE_ON_FAILURE))
 
+	trxNo = trxNo.replace('[', '').replace(']', '')
+	
     'Jika trxNonya tidak kosong'
-    if (trxNo != '') {
+    if (trxNo != 'null' && trxNo != '') {
         trxNo = trxNo.split(', ', -1)
 
         'Array result. Value dari db'
         trxList = CustomKeywords.'connection.APIFullService.getTrxNoAPISign'(conneSign, documentId)
 
         for (loopingTrxNo = 0; loopingTrxNo < trxNo.size(); loopingTrxNo++) {
+
             if (trxList.contains(trxNo[loopingTrxNo])) {
                 continue
             }
