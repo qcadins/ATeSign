@@ -31,7 +31,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         GlobalVariable.Psre = findTestData(excelPathCheckDocBeforeSigning).getValue(GlobalVariable.NumofColm, rowExcel('Psre Login'))
 
         'HIT API untuk get token'
-        responLogin = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/Login', [('email') : findTestData(excelPathCheckDocBeforeSigning).getValue(
+        responLogin = WS.sendRequest(findTestObject('Postman/Login', [('email') : findTestData(excelPathCheckDocBeforeSigning).getValue(
                         GlobalVariable.NumofColm, rowExcel('email')).replace('"', ''), ('password') : findTestData(excelPathCheckDocBeforeSigning).getValue(
                         GlobalVariable.NumofColm, rowExcel('password'))]))
 

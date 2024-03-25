@@ -24,7 +24,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
         'HIT API'
-        responLogin = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/Login', [('email') : findTestData(excelPath).getValue(
+        responLogin = WS.sendRequest(findTestObject('Postman/Login', [('email') : findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('email')).replace('"', ''), ('password') : findTestData(excelPath).getValue(
                         GlobalVariable.NumofColm, rowExcel('password'))]))
 

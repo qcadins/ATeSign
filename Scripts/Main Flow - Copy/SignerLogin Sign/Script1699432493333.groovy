@@ -1712,7 +1712,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 	if (GlobalVariable.chooseOTP.toString().contains('SMS')) {
 		tipeSaldo = 'OTP'
 		
-		'menggunakan saldo wa'
+		'menggunakan saldo sms'
 		balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
 		
 		if (balmut.size() == 0) {

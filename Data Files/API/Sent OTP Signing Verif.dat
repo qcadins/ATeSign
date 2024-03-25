@@ -3,12 +3,19 @@
    <description></description>
    <name>Sent OTP Signing Verif</name>
    <tag></tag>
+   <connectionProperties/>
    <containsHeaders>false</containsHeaders>
    <csvSeperator></csvSeperator>
    <dataFileGUID>cfd24597-50b0-4885-a2ea-4c94b41989c0</dataFileGUID>
    <dataSourceUrl>Excel/2.1 Esign - API Only.xlsx</dataSourceUrl>
    <driver>ExcelFile</driver>
    <isInternalPath>true</isInternalPath>
+   <properties>
+      <entry>
+         <key>readAsString</key>
+         <value>true</value>
+      </entry>
+   </properties>
    <query></query>
    <secureUserAccount>false</secureUserAccount>
    <sheetName>API Sent OTP Signing Verif</sheetName>

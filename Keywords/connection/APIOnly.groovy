@@ -117,4 +117,24 @@ class APIOnly {
 		}
 		data
 	}
+	
+	@Keyword
+	getRefNumberAndSortDescending(Connection conn, String documentId) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select tdh.ref_number, tdd.request_date from tr_document_h tdh join tr_document_d tdd on tdh.id_document_h = tdd.id_document_h where tdd.document_id = '" + documentId + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
 }

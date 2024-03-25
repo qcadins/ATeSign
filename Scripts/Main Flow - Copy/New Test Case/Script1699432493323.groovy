@@ -5,6 +5,7 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.webservice.keyword.WSBuiltInKeywords as WS
 import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
 import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
+import java.util.Collections
 
 //import com.twilio.Twilio
 //import com.twilio.rest.api.v2010.account.Message
@@ -26,19 +27,13 @@ if (excelPathFESignDocument.contains('MAIN')) {
 	println 'aa'
 }
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
+aa = ['2024-03-19 14:59:30.834', '2024-03-19 14:43:02.9', '2022-08-20 00:00:00']
 
-int aa = 75
+Collections.sort(aa, Collections.reverseOrder())
 
-int bb = aa / 60
-
-println aa / 60
-println bb
-
-WebUI.delay(bb - aa)
-println bb.getClass()
-
-
-WebUI.delay(1000000) //*[@id="searchForm"]/div[1]/div[10]/app-question/app-select/div/div[2]/ng-dropdown-panel
+println aa
+WebUI.delay(1000000)
+ //*[@id="searchForm"]/div[1]/div[10]/app-question/app-select/div/div[2]/ng-dropdown-panel
 //
 //aa = WebUI.getAttribute(findTestObject('View User OTP/text_otp'), 'value')
 //println aa

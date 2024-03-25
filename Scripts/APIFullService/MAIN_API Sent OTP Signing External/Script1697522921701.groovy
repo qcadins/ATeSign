@@ -96,6 +96,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         }
         
 		String sendingPoint = ''
+		
 		if (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('sendingPointOption')).length() == 0) {
 			sendingPoint = ''
 		} else {

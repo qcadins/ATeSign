@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>MAIN_API Sent OTP Signing Normal</name>
+   <name>MAIN_API Sent Otp Signing Verification</name>
    <tag></tag>
    <comment></comment>
    <testCaseGuid>d8fa34c4-05d2-4729-834a-6e3cdac92c25</testCaseGuid>
@@ -18,14 +18,14 @@
       <variableId>f0ab38f2-d3a4-4def-9a67-ba02e4e5b94b</variableId>
    </variableLinks>
    <variable>
-      <defaultValue>'API/Sent OTP Signing Normal'</defaultValue>
+      <defaultValue>'API/Sent OTP Signing Verif'</defaultValue>
       <description></description>
       <id>b98e3682-39a3-4885-a120-1ed2e2248547</id>
       <masked>false</masked>
       <name>excelPathAPISentOTPSigning</name>
    </variable>
    <variable>
-      <defaultValue>'API Sent OTP Signing Normal'</defaultValue>
+      <defaultValue>'API Sent OTP Signing Verif'</defaultValue>
       <description></description>
       <id>f0ab38f2-d3a4-4def-9a67-ba02e4e5b94b</id>
       <masked>false</masked>

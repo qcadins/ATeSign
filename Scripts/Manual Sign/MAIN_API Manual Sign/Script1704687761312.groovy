@@ -230,7 +230,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(API_
         bodyAPIFinal = ((bodyAPIFinal + bodyAPI) + '}')
 
         'HIT API'
-        responLogin = WS.sendRequest(findTestObject('APIFullService - Privy/Postman/Login', [('email') : findTestData(API_Excel_Path).getValue(
+        responLogin = WS.sendRequest(findTestObject('Postman/Login', [('email') : findTestData(API_Excel_Path).getValue(
                         GlobalVariable.NumofColm, rowExcel('Email Login')), ('password') : findTestData(API_Excel_Path).getValue(
                         GlobalVariable.NumofColm, rowExcel('Password Login'))]))
 
