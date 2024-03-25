@@ -429,7 +429,11 @@ if (WebUI.verifyElementPresent(findTestObject('InquiryInvitation/Table_InquiryIn
                                     ' FE Inquiry Inv View Link dan API Get Inv Link')
 
                                 GlobalVariable.FlagFailed = 1
-                            }
+                            } else {
+								'write to excel generated link'
+								CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Link Invitation') -
+									1, GlobalVariable.NumofColm - 1, GlobalVariable.Link)
+							}
                         } else {
                             messageFailed = WS.getElementPropertyValue(responGetInvLink, 'status.message', FailureHandling.OPTIONAL).toString()
 

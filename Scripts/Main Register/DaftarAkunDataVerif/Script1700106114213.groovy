@@ -241,7 +241,7 @@ if (WebUI.verifyElementNotPresent(findTestObject('DaftarAkun/label_SuccessPrivy'
                 if (countResend > 0) {
                     for (int i = 0; i < countResend; i++) {
                         'tunggu button resend otp'
-                        WebUI.delay(315)
+                        WebUI.delay(30)
 
                         'klik pada button kirim ulang otp'
                         WebUI.click(findTestObject('DaftarAkun/button_KirimKodeLagi'))
@@ -274,7 +274,7 @@ if (WebUI.verifyElementNotPresent(findTestObject('DaftarAkun/label_SuccessPrivy'
                 if (countResend > 0) {
                     for (int i = 0; i < countResend; i++) {
                         'tunggu button resend otp'
-                        WebUI.delay(315)
+                        WebUI.delay(30)
 
                         'klik pada button kirim ulang otp'
                         WebUI.click(findTestObject('DaftarAkun/button_KirimKodeLagi'))
@@ -293,8 +293,7 @@ if (WebUI.verifyElementNotPresent(findTestObject('DaftarAkun/label_SuccessPrivy'
                             ' OTP')
 
                         'input OTP'
-                        WebUI.setText(findTestObject('DaftarAkun/input_OTP'), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-                                rowExcel('Wrong OTP')))
+                        WebUI.setText(findTestObject('DaftarAkun/input_OTP'), OTP)
                     }
                 }
             }

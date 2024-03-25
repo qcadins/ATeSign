@@ -600,6 +600,19 @@ def inputDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan,
         modifyObjectProsesMeterai = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/input_prosesMeterai'), 
             'xpath', 'equals', '//*[@id=\'prosesMaterai\']/div/div/div[3]/input', true)
     }
+	
+	if (WebUI.verifyElementNotPresent(modifyObjectProsesMeterai, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		if (linkDocumentMonitoring == '') {
+			'modify object test status tanda tangan di beranda'
+			modifyObjectProsesMeterai = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/input_prosesMeterai'),
+				'xpath', 'equals', '//*[@id="stampingStatus"]/div/div/div[2]/input', true)
+		} else if (linkDocumentMonitoring.contains('embed')) {
+			'modify object test status tanda tangan di beranda'
+			modifyObjectProsesMeterai = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/input_prosesMeterai'),
+				'xpath', 'equals', '//*[@id=\'prosesMaterai\']/div/div/div[2]/input', true)
+		}
+	}
+	
 	inputDDLExactRelativesObject(modifyObjectProsesMeterai, inputDocumentMonitoring[arrayIndexInput++])
     
     'Klik enter Cari'

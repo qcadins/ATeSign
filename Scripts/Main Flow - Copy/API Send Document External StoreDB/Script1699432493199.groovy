@@ -118,9 +118,15 @@ for (int i = 0; i < docid.size(); i++) {
         arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getSignLocation'(conneSign, docid[i]), 
                 signlocStoreDBSplit[i], false, FailureHandling.CONTINUE_ON_FAILURE))
 		
+		'jika qrnya kosong'
+		if (useSignQr[i] == '') {
+			'otomatis 0'
+			useSignQr[i] = '0'
+		}
+		
 		'Maka pengecekan use sign qr yang diinput'
         arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getUseSignQR'(conneSign, docid[i]), 
-                useSignQr[i].replace('Tidak', '0').replace('Ya', '1').replace('', '0'), false, FailureHandling.CONTINUE_ON_FAILURE))
+                useSignQr[i], false, FailureHandling.CONTINUE_ON_FAILURE))
     } else {
 		'Maka pengecekan use sign qr via document template'
 		arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.APIFullService.getUseSignQRFromDocTemplate'(conneSign, documentTemplateCode[i]),

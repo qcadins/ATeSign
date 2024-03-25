@@ -1356,7 +1356,7 @@ class APIFullService {
 	getInvRegisterData(Connection conn, String email) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select tril.provinsi, tril.kota, tril.kecamatan, tril.email, tril.kelurahan, tril.zip_code, tril.full_name, tril.address, tril.gender, tril.phone, tril.place_of_birth, tril.date_of_birth, tril.id_no, mst.tenant_code, mv.vendor_code, mv.vendor_name, mv.verif_phone from tr_invitation_link as tril join ms_tenant as mst on tril.id_ms_tenant = mst.id_ms_tenant left join ms_vendor mv ON mv.id_ms_vendor = tril.id_ms_vendor where tril.is_active = '1' and tril.email = '" + email + "'")
+		resultSet = stm.executeQuery("select tril.provinsi, tril.kota, tril.kecamatan, tril.email, tril.kelurahan, tril.zip_code, tril.full_name, tril.address, tril.gender, tril.phone, tril.place_of_birth, tril.date_of_birth, tril.id_no, mst.tenant_code, mv.vendor_code, mv.vendor_name, mv.verif_phone from tr_invitation_link as tril join ms_tenant as mst on tril.id_ms_tenant = mst.id_ms_tenant left join ms_vendor mv ON mv.id_ms_vendor = tril.id_ms_vendor where tril.is_active = '1' and tril.phone = '" + email + "'")
 
 		metadata = resultSet.metaData
 

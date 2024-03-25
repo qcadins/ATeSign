@@ -158,7 +158,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'call test case daftar akun verif'
                 WebUI.callTestCase(findTestCase('Main Register/DaftarAkunDataVerif'), [('excelPathRegister') : excelPathRegister
                         , ('otpBefore') : saldoBefore.get('OTP')], FailureHandling.CONTINUE_ON_FAILURE)
-
             }
             
             if (GlobalVariable.FlagFailed == 0) {
@@ -175,7 +174,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                 println(saldoBefore.get('Verifikasi'))
 
-                'kurang saldo before dengan proses verifikasi'
+                'kurang saldo before dengan proses verifikasi. Saldo before akan menjadi saldo before yang diexpect sama dengan after.'
                 saldoBefore.put('Verifikasi', (Integer.parseInt(saldoBefore.get('Verifikasi')) - GlobalVariable.VerificationCount).toString())
 
                 'call fucntion input filter saldo'
@@ -261,7 +260,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     WebUI.comment(saldoAfter.toString())
 
                     'verify saldo before dan after'
-                    checkVerifyEqualOrMatch(WebUI.verifyNotMatch(saldoBefore.toString(), saldoAfter.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), 
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch(saldoBefore.toString(), saldoAfter.toString(), false, FailureHandling.CONTINUE_ON_FAILURE), 
                         ' Saldo Gagal Potong')
 
                     if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Check Pencarian Pengguna')).length() > 

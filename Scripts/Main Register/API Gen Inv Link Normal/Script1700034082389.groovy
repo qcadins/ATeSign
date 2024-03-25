@@ -70,9 +70,10 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
             1, GlobalVariable.NumofColm - 1, GlobalVariable.Link)
 
         if (GlobalVariable.Link == '') {
-            'Write To Excel GlobalVariable.StatusFailed and errormessage'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                'Generate Link Null / Kosong')
+			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+				(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +
+				'Generate Link Null / Kosong')
 
             GlobalVariable.FlagFailed = 1
         }
@@ -150,7 +151,11 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
                 			' Saldo ' + usedSaldo + ' tidak terpotong untuk kirim link undangan')
                 }
             }
-        }
+        } else {
+			'write to excel gagal'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
+				1, GlobalVariable.StatusFailed)
+		}
     } else {
         'call function get API error message'
         getAPIErrorMessage(respon)

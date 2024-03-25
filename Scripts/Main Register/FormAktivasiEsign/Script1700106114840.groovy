@@ -505,8 +505,7 @@ def inputOTP(int inputed, int delayExpiredOTP, Connection conneSign) {
                         ' OTP')
 
                     'input OTP'
-                    WebUI.setText(findTestObject('RegisterEsign/FormAktivasiEsign/input_OTP'), findTestData(excelPathRegister).getValue(
-                            GlobalVariable.NumofColm, rowExcel('Wrong OTP - Aktivasi')))
+                    WebUI.setText(findTestObject('RegisterEsign/FormAktivasiEsign/input_OTP'), OTP)
                 }
             }
         }

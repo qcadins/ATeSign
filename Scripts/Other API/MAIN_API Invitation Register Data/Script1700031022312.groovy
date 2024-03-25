@@ -80,7 +80,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                     'get data store db'
                     ArrayList result = CustomKeywords.'connection.APIFullService.getInvRegisterData'(conneSign, WS.getElementPropertyValue(
-                            respon, 'userData.email').toString())
+                            respon, 'userData.tlp').toString())
 
                     'declare arrayindex'
                     arrayindex = 0
@@ -97,10 +97,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'userData.kecamatan', FailureHandling.OPTIONAL), 
                             result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-                    'verify email'
-                    arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'userData.email', FailureHandling.OPTIONAL), 
+					if (WS.getElementPropertyValue(respon, 'userData.email', FailureHandling.OPTIONAL).toString() != 'null') {
+						'verify email'
+						arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'userData.email', FailureHandling.OPTIONAL), 
                             result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
+					} else {
+						arrayindex++
+					}
                     'verify kelurahan'
                     arrayMatch.add(WebUI.verifyMatch(WS.getElementPropertyValue(respon, 'userData.kelurahan', FailureHandling.OPTIONAL), 
                             result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -152,7 +155,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					if (WS.getElementPropertyValue(respon, 'vendorName', FailureHandling.OPTIONAL) == 'Privy') {
 						'verify livenessurl'
 						arrayMatch.add(WebUI.verifyNotMatch(WS.getElementPropertyValue(respon, 'livenessUrl', FailureHandling.OPTIONAL),
-								'null', FailureHandling.CONTINUE_ON_FAILURE))
+								'null', false, FailureHandling.CONTINUE_ON_FAILURE))
 						
 						'tulis di excel hasil link yang bisa digunakan untuk sign'
 						CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Liveness Url Link') -
