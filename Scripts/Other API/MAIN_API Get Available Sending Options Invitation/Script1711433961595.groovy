@@ -59,13 +59,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					listAvailableOptionSendingPoint = WS.getElementPropertyValue(respon, 'listAvailableOptionSendingPoint',
 						FailureHandling.OPTIONAL)
 					
+					'get aes key dari general setting'
 					String getAesKey = CustomKeywords.'connection.APIFullService.getAesKeyEncryptUrl'(conneSign)
 					
+					'get parse decrypt dari inputan'
 					String parseDecryptMsg = CustomKeywords.'customizekeyword.ParseText.parseDecrypt'(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('msg')), getAesKey)
 					
+					'get tenant code dari invitation link'
 					String tenantCode = CustomKeywords.'connection.DataVerif.getTenantCodeBasedOnInvitationLink'(conneSign, parseDecryptMsg)
-					
-					println tenantCode
 					
 					'get result list available by db'
 					ArrayList resultListAvailable = CustomKeywords.'connection.APIOnly.listAvailableOptionSendingPointGetAvailSendingPointInv'(conneSign, tenantCode)
@@ -83,11 +84,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					'verify list available option sending point'
 					arrayMatch.add(WebUI.verifyMatch(resultListAvailable.toString(), listAvailableOptionSendingPoint.toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
+					'jika resultnya bukan SMS dan WA, akan otomatis ke SMS'
 					if (result[0] != 'SMS' && result[0] != 'WA') {
 						result[0] = 'SMS'
 					}
 					
-                    'verify add balance type'
+                    'verify default otp'
                     arrayMatch.add(WebUI.verifyMatch(result[0], defaultAvailableOptionSendingPoint, false, FailureHandling.CONTINUE_ON_FAILURE))
 
                     'jika data db tidak sesuai dengan excel'
