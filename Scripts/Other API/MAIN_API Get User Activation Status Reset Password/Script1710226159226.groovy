@@ -14,8 +14,6 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 
 int countColmExcel = findTestData(excelPath).columnNumbers
 
-semicolon = ';'
-
 for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
     if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
         break
@@ -154,9 +152,6 @@ def rowExcel(String cellValue) {
 }
 
 def getNotifType(Connection conneSign, String emailSigner) {
-    ArrayList balmut = []
-
-    String tipeSaldo = ''
 
     emailServiceOnVendor = CustomKeywords.'connection.DataVerif.getEmailServiceAsVendorUser'(conneSign, emailSigner)
 
