@@ -160,10 +160,6 @@ def rowExcel(String cellValue) {
 }
 
 def getNotifType(Connection conneSign, String emailSigner) {
-   // ArrayList balmut = []
-
-    //String tipeSaldo = ''
-
     emailServiceOnVendor = CustomKeywords.'connection.DataVerif.getEmailServiceAsVendorUser'(conneSign, emailSigner)
 
     fullNameUser = CustomKeywords.'connection.DataVerif.getFullNameOfUser'(conneSign, emailSigner)
