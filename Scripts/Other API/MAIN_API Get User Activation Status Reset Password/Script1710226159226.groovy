@@ -55,8 +55,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'get tenant Code'
                     tenantCode = WS.getElementPropertyValue(respon, 'tenantCode', FailureHandling.OPTIONAL)
 
+					'penggunaan di function'
+					GlobalVariable.Tenant = tenantCode
+					
 					'get latest recipient'
 					latestRecipient = WS.getElementPropertyValue(respon, 'latestRecipient', FailureHandling.OPTIONAL)
+
+					'get notif Type'
+					notifType = WS.getElementPropertyValue(respon, 'notifType', FailureHandling.OPTIONAL)
 
                     'get defaultAvailableOptionSendingPoint'
                     defaultAvailableOptionSendingPoint = WS.getElementPropertyValue(respon, 'defaultAvailableOptionSendingPoint', 
@@ -66,21 +72,24 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 					listAvailableOptionSendingPoint = WS.getElementPropertyValue(respon, 'listAvailableOptionSendingPoint',
 						FailureHandling.OPTIONAL)
 
+					'get email'
                     emailSHA256 = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('loginId'))
 
+					'jika itu adalah nomor hp'
                     if (!(emailSHA256.contains('@'))) {
+						'get no hp hashed'
                         emailSHA256 = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(emailSHA256)
                     }
-                    
-                    String tenantCodeQuery = CustomKeywords.'connection.ForgotPassword.getTenantCode'(conneSign, emailSHA256)
 
                     'get data balance type dari DB'
                     ArrayList result = CustomKeywords.'connection.GetUserActivationStatusResetPassword.getGetUserActivationStatusResetPasswordStoreDB'(
                         conneSign, tenantCode)
 					
+					'get result list available by db'
 					ArrayList resultListAvailable = CustomKeywords.'connection.GetUserActivationStatusResetPassword.getListAvailableOptionSendingPoint'(conneSign, tenantCode)
 
-                    String notifType = getNotifType(conneSign, emailSHA256)
+					'get notif type'
+                    String notifTypeQuery = getNotifType(conneSign, emailSHA256)
 
                     'declare arraylist arraymatch'
                     ArrayList arrayMatch = []
@@ -88,6 +97,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'declare arrayindex'
                     arrayIndex = 0
 					
+					'verify notif type'
+					arrayMatch.add(WebUI.verifyMatch(notifType.toString(), notifTypeQuery.toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+
 					'verify list available option sending point'
 					arrayMatch.add(WebUI.verifyMatch(resultListAvailable.toString(), listAvailableOptionSendingPoint.toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
@@ -152,14 +164,13 @@ def getNotifType(Connection conneSign, String emailSigner) {
 
     mustUseWAFirst = CustomKeywords.'connection.DataVerif.getMustUseWAFirst'(conneSign, GlobalVariable.Tenant)
 
-    notifTypeDB = CustomKeywords.'connection.APIFullService.getWASMSFromNotificationType'(conneSign, emailSigner, 'RESET_PASSWORD', 
+    String notifTypeDB = CustomKeywords.'connection.APIFullService.getWASMSFromNotificationType'(conneSign, emailSigner, 'RESET_PASSWORD', 
         GlobalVariable.Tenant)
-
+	
     if (notifTypeDB == 'Email') {
         'EMAIL'
-    }
-    
-    if ((notifTypeDB == '0') || (notifTypeDB == 'Level Tenant')) {
+    } 
+    else if ((notifTypeDB == '0') || (notifTypeDB == 'Level Tenant')) {
         if (mustUseWAFirst == '1') {
             'SMS'
         } else {
