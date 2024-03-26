@@ -25,6 +25,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.DataVerif.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
+		'check ada value maka setting email service tenant'
+		if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')).length() >
+		0) {
+			'setting email service tenant'
+			CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(excelPath).getValue(
+				GlobalVariable.NumofColm, rowExcel('Setting Email Service')), findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('loginId')))
+		}
+		
         'HIT API'
         respon = WS.sendRequest(findTestObject('Postman/getUserActivationStatusResetPassword', [('callerId') : findTestData(
                         excelPath).getValue(GlobalVariable.NumofColm, rowExcel('loginId')), ('loginId') : findTestData(excelPath).getValue(
@@ -154,9 +162,9 @@ def rowExcel(String cellValue) {
 }
 
 def getNotifType(Connection conneSign, String emailSigner) {
-    ArrayList balmut = []
+   // ArrayList balmut = []
 
-    String tipeSaldo = ''
+    //String tipeSaldo = ''
 
     emailServiceOnVendor = CustomKeywords.'connection.DataVerif.getEmailServiceAsVendorUser'(conneSign, emailSigner)
 
