@@ -79,4 +79,24 @@ class GetUserActivationStatusResetPassword {
 		}
 		listdata
 	}
+	
+	@Keyword
+	getListAvailableOptionSendingPoint(Connection conn, String tenantCode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT mv.code FROM ms_balancevendoroftenant bvt JOIN ms_lov mv ON mv.id_lov = bvt.lov_balance_type left join ms_tenant mst on bvt.id_ms_tenant = mst.id_ms_tenant WHERE mst.tenant_code = '" + tenantCode + "'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				if (data == 'SMS' || data == 'WA') {
+					listdata.add(data)
+				}
+			}
+		}
+		listdata
+	}
 }

@@ -22,6 +22,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         break
     } else if (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase(
         'Unexecuted')) {
+		GlobalVariable.FlagFailed = 0
+	
         'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPathAPISentOTPSigning, GlobalVariable.NumofColm, 
             rowExcel('Use Correct base Url'))
@@ -188,6 +190,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                                         3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
                             }
                             
+							checkSaldoWAOrSMS(conneSign)
+							
                             'verify otp code tidak sama'
                             arrayMatch.add(WebUI.verifyEqual(newResetNum, resetOTPRequestNum + 1, FailureHandling.CONTINUE_ON_FAILURE))
 
@@ -197,9 +201,11 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                                     GlobalVariable.StatusFailed, (findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, 
                                         rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedStoredDB)
                             } else {
+								if (GlobalVariable.FlagFailed == 0) {
                                 'write to excel success'
                                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 
                                     0, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+								}
                             }
                         }
                     }
@@ -279,6 +285,8 @@ def checkSaldoWAOrSMS(Connection conneSign) {
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 				(findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
 				'-', '') + ';') + 'Tidak terjadi transaksi.')
+				
+				GlobalVariable.FlagFailed = 1
 			}
 		}
 	}
@@ -302,6 +310,8 @@ def checkSaldoWAOrSMS(Connection conneSign) {
 				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 				(findTestData(excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
 				'-', '') + ';') + 'Tidak terjadi transaksi.')
+				
+				GlobalVariable.FlagFailed = 1
 			}
 		}
 	}

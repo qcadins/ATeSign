@@ -61,6 +61,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'get defaultAvailableOptionSendingPoint'
                     defaultAvailableOptionSendingPoint = WS.getElementPropertyValue(respon, 'defaultAvailableOptionSendingPoint', 
                         FailureHandling.OPTIONAL)
+					
+					'get defaultAvailableOptionSendingPoint'
+					listAvailableOptionSendingPoint = WS.getElementPropertyValue(respon, 'listAvailableOptionSendingPoint',
+						FailureHandling.OPTIONAL)
 
                     emailSHA256 = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('loginId'))
 
@@ -73,6 +77,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'get data balance type dari DB'
                     ArrayList result = CustomKeywords.'connection.GetUserActivationStatusResetPassword.getGetUserActivationStatusResetPasswordStoreDB'(
                         conneSign, tenantCode)
+					
+					ArrayList resultListAvailable = CustomKeywords.'connection.GetUserActivationStatusResetPassword.getListAvailableOptionSendingPoint'(conneSign, tenantCode)
 
                     String notifType = getNotifType(conneSign, emailSHA256)
 
@@ -81,6 +87,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                     'declare arrayindex'
                     arrayIndex = 0
+					
+					'verify list available option sending point'
+					arrayMatch.add(WebUI.verifyMatch(resultListAvailable.toString(), listAvailableOptionSendingPoint.toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
                     'verify add balance type'
                     arrayMatch.add(WebUI.verifyMatch(defaultAvailableOptionSendingPoint, result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
