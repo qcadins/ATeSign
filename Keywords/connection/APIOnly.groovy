@@ -117,7 +117,7 @@ class APIOnly {
 		}
 		data
 	}
-	
+
 	@Keyword
 	getRefNumberAndSortDescending(Connection conn, String documentId) {
 		stm = conn.createStatement()
@@ -133,6 +133,27 @@ class APIOnly {
 				data = resultSet.getObject(i)
 
 				listdata.add(data)
+			}
+		}
+		listdata
+	}
+
+	@Keyword
+	listAvailableOptionSendingPointGetAvailSendingPointInv(Connection conn, String tenantCode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("SELECT distinct balType.code as balanceTypeCode FROM ms_balancevendoroftenant bvot JOIN ms_vendor mv ON bvot.id_ms_vendor = mv.id_ms_vendor JOIN ms_tenant mt ON bvot.id_Ms_tenant = mt.id_Ms_tenant JOIN ms_lov balType ON bvot.lov_balance_type = balType.id_lov WHERE mt.tenant_code = '" + tenantCode + "' AND mv.vendor_Code = 'ESG' AND balType.is_Active = '1' AND mv.is_Active = '1' AND mt.is_Active = '1' AND (bvot.is_Hidden IS NULL OR bvot.is_Hidden = '0')")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+					
+				if (data == 'SMS' || data == 'WA') {
+					listdata.add(data)
+				}
 			}
 		}
 		listdata

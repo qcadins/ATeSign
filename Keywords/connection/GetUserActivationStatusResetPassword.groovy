@@ -79,7 +79,7 @@ class GetUserActivationStatusResetPassword {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getListAvailableOptionSendingPoint(Connection conn, String tenantCode) {
 		stm = conn.createStatement()

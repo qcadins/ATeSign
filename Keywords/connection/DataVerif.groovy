@@ -785,4 +785,19 @@ class DataVerif {
 		}
 		listdata
 	}
+
+	@Keyword
+	getTenantCodeBasedOnInvitationLink(Connection conn, String invitationCode) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select mst.tenant_code from tr_invitation_link til left join ms_tenant mst on til.id_ms_tenant = mst.id_ms_tenant where til.invitation_code = '" + invitationCode + "'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
 }
