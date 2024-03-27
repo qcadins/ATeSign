@@ -442,7 +442,7 @@ class DataVerif {
 	}
 
 	@Keyword
-	getEmailServiceFromTenant(Connection conn, String emailSigner) {
+	getEmailServiceFromTenant(Connection conn, String tenantCode, String emailSigner) {
 		stm = conn.createStatement()
 		/*
 		 resultSet = stm.executeQuery("select sent_otp_by_email from ms_tenant where tenant_code = '" + tenantCode + "'")
@@ -791,6 +791,21 @@ class DataVerif {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select mst.tenant_code from tr_invitation_link til left join ms_tenant mst on til.id_ms_tenant = mst.id_ms_tenant where til.invitation_code = '" + invitationCode + "'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		data
+	}
+	
+	@Keyword
+	getSettingCallback(Connection conn, String tenantCode, String callBack) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select mts.setting_value from ms_tenant_settings mts left join ms_tenant mst on mts.id_ms_tenant = mst.id_ms_tenant left join ms_lov msl on mts.lov_setting_type = msl.id_lov where mst.tenant_code = '" + tenantCode + "' AND msl.code = 'SIGNER_COMPLETE_CALLBACK'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

@@ -110,11 +110,25 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                             excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('$tenantCode')), ('listDocumentId') : listDoc
                         , ('sendingPointOption') : sendingPoint]))
 
+			
             'Jika status HIT API 200 OK'
             if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
                 'get status code'
                 code = WS.getElementPropertyValue(respon, 'status.code', FailureHandling.OPTIONAL)
-
+				
+				'ambil lama waktu yang diperlukan hingga request menerima balikan'
+				elapsedTime = ((respon.elapsedTime / 1000) + ' second')
+	
+				'ambil body dari hasil respons'
+				responseBody = respon.responseBodyContent
+	
+				'panggil keyword untuk proses beautify dari respon json yang didapat'
+				CustomKeywords.'customizekeyword.BeautifyJson.process'(responseBody, sheet, rowExcel('Respons') - 1, findTestData(
+						excelPathAPISentOTPSigning).getValue(GlobalVariable.NumofColm, rowExcel('Scenario')))
+	
+				'write to excel response elapsed time'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Process Time') -
+					1, GlobalVariable.NumofColm - 1, elapsedTime.toString())
                 'declare arraylist arraymatch'
                 ArrayList arrayMatch = []
 

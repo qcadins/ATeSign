@@ -687,7 +687,10 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
                                 checkVerifyEqualorMatch(WebUI.verifyMatch((officeRegionBline[a]).toString(), (officeRegionBline[
                                         (a + 3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE), 'Pada Pengecekan Office dan Business Line')
                             }
-                            
+							
+							'callback dicheck'
+							callbackStoreDB(conneSign, refNumber)
+							
                             'Jika hasil store dbnya true, maka'
                             break
                         }
@@ -1972,6 +1975,66 @@ def pilihWAorSMS(int rowInput, int indexLooping, int splitIndex) {
 					(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +
 					'button WA untuk Pemilihan OTP tidak muncul. Pemilihan akan menggunakan default yang sudah terpilih.')
 			}
+		}
+	}
+}
+
+def callbackStoreDB(Connection conneSign, String refNumber) {
+	'logic dia signing complete, document complete, atau all document sign complete'
+	String code = ''
+
+	ArrayList arrayMatch = []
+
+	increment = 0
+
+	if (CustomKeywords.'connection.DataVerif.getSettingCallback'(conneSign, GlobalVariable.Tenant, 'SIGNER_COMPLETE_CALLBACK') ==
+	'1') {
+		code = 'SIGNING_COMPLETE'
+
+		ArrayList resultStoreDB = CustomKeywords.'connection.SendSign.signCallBack'(conneSign, GlobalVariable.Tenant, GlobalVariable.storeVar.keySet()[
+			0], GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])], code)
+
+		'verify code'
+		arrayMatch.add(WebUI.verifyMatch(resultStoreDB[increment++], code, false, FailureHandling.OPTIONAL))
+
+		'verify code'
+		arrayMatch.add(WebUI.verifyMatch(resultStoreDB[increment++], 'Success', false, FailureHandling.OPTIONAL))
+	}
+	
+	if (CustomKeywords.'connection.DataVerif.getSettingCallback'(conneSign, GlobalVariable.Tenant, 'DOCUMENT_COMPLETE_CALLBACK') ==
+	'1') {
+		if (CustomKeywords.'connection.SendSign.checkDocumentIsSigned'(conneSign, GlobalVariable.storeVar.keySet()[0]) ==
+		'0') {
+			code = 'DOCUMENT_SIGN_COMPLETE'
+
+			resultStoreDB = CustomKeywords.'connection.SendSign.signCallBack'(conneSign, GlobalVariable.Tenant, GlobalVariable.storeVar.keySet()[
+				0], GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])], code)
+
+			increment = 0
+
+			'verify code'
+			arrayMatch.add(WebUI.verifyMatch(resultStoreDB[increment++], code, false, FailureHandling.OPTIONAL))
+
+			'verify code'
+			arrayMatch.add(WebUI.verifyMatch(resultStoreDB[increment++], 'Success', false, FailureHandling.OPTIONAL))
+		}
+	}
+	
+	if (CustomKeywords.'connection.DataVerif.getSettingCallback'(conneSign, GlobalVariable.Tenant, 'ALL_DOCUMENT_COMPLETE_CALLBACK') ==
+	'1') {
+		if (CustomKeywords.'connection.SendSign.checkAllDocumentIsSigned'(conneSign, refNumber) == '0') {
+			code = 'ALL_DOCUMENT_SIGN_COMPLETE'
+
+			resultStoreDB = CustomKeywords.'connection.SendSign.signCallBack'(conneSign, GlobalVariable.Tenant, GlobalVariable.storeVar.keySet()[
+				0], GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])], code)
+
+			increment = 0
+
+			'verify code'
+			arrayMatch.add(WebUI.verifyMatch(resultStoreDB[increment++], code, false, FailureHandling.OPTIONAL))
+
+			'verify code'
+			arrayMatch.add(WebUI.verifyMatch(resultStoreDB[increment++], 'Success', false, FailureHandling.OPTIONAL))
 		}
 	}
 }

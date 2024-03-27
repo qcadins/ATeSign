@@ -175,7 +175,7 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                             arrayMatch.add(WebUI.verifyEqual(totalStampingAndTotalMaterai[k], resultStamping[arrayIndexStamping++], 
                                     FailureHandling.CONTINUE_ON_FAILURE))
                         }
-                    } else if (i == 10) {
+                    } else if (i == 10 || i == 11) {
                         continue
                     } else {
                         'Selain di column 7 dan 8 maka akan diverif dengan db.'
@@ -271,7 +271,7 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                             'Verifikasi UI dengan db'
                             arrayMatch.add(WebUI.verifyEqual(totalStampingAndTotalMaterai[k], resultStamping[k], FailureHandling.CONTINUE_ON_FAILURE))
                         }
-                    } else if (i == 10) {
+                    } else if (i == 10 || i == 11) {
                         continue
                     } else {
                         'Selain di column 7 dan 8 maka akan diverif dengan db.'
@@ -731,7 +731,7 @@ def actionDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan
     'get row lastest'
     modifyObjectSigner = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/button_modifyDownload'), 'xpath', 
         'equals', ((helperModifyObject + 'app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[') + 
-        j) + ']/datatable-body-row/div[2]/datatable-body-cell[10]/div/a[3]/em', true)
+        j) + ']/datatable-body-row/div[2]/datatable-body-cell[' + columnAction + ']/div/a[3]/em', true)
 
     'click button view signer'
     WebUI.click(modifyObjectSigner)
@@ -790,7 +790,7 @@ def actionDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan
         'get row lastest'
         modifyObjectDownload = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/button_modifyDownload'), 'xpath', 
             'equals', ((helperModifyObject + 'app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[') + 
-            j) + ']/datatable-body-row/div[2]/datatable-body-cell[10]/div/a[2]/em', true)
+            j) + ']/datatable-body-row/div[2]/datatable-body-cell[' + columnAction + ']/div/a[2]/em', true)
 
         'click button download'
         WebUI.click(modifyObjectDownload)
@@ -886,7 +886,7 @@ def actionDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan
         'get row lastest'
         modifyObjectView = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/button_modifyDownload'), 'xpath', 
             'equals', ((helperModifyObject + 'app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[') + 
-            j) + ']/datatable-body-row/div[2]/datatable-body-cell[10]/div/a[1]/em', true)
+            j) + ']/datatable-body-row/div[2]/datatable-body-cell[' + columnAction + ']/div/a[1]/em', true)
 
         'click button view dokumen'
         WebUI.click(modifyObjectView)
