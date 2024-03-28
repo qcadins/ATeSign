@@ -199,7 +199,7 @@ prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, 
                         'Call verify meterai'
                         WebUI.callTestCase(findTestCase('Main Flow - Copy/verifyMeterai'), [('excelPathMeterai') : excelPathStamping
                          , ('sheet') : sheet, ('noKontrak') : nomorKontrakDocument.replace('"', ''), ('linkDocumentMonitoring') : linkDocumentMonitoring
-                        , ('CancelDocsStamp') : CancelDocsStamp], FailureHandling.CONTINUE_ON_FAILURE)
+                        , ('CancelDocsStamp') : CancelDocsStamp], FailureHandling.OPTIONAL)
                     }
                 }
             } else {

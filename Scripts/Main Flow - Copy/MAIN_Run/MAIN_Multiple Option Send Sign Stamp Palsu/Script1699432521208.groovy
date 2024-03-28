@@ -261,8 +261,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             emailSignerPerDoc = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, documentId[
                                 i]).split(';', -1)
 
-                            emailSignerPerDoc.trim()
-
                             emailSigner.put(documentId[i], emailSignerPerDoc)
                         }
                         
@@ -283,8 +281,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             'get email signer based on inputan sign only, setelah itu di trim dan dimasukkan kedalam array list'
                             emailSignerPerDoc = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel(
                                     'email Signer (Sign Only)')).split(';', -1)
-
-                            emailSignerPerDoc.trim()
 
                             emailSigner.put(documentId[i], emailSignerPerDoc)
                         }

@@ -661,9 +661,12 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
                             0]) == false) {
                             if (GlobalVariable.ErrorType.size() > 0) {
                                 saldoForCheckingDB = (saldoForCheckingDB - jumlahSignerTandaTangan)
-
+								
+								WebUI.comment(saldoForCheckingDB.toString())
                                 saldoUsed = (saldoUsed - saldoForCheckingDB)
-
+								
+								WebUI.comment(saldoUsed.toString())
+								WebUI.comment(GlobalVariable.eSignData.toString())
                                 break
                             }
                             
@@ -1283,7 +1286,8 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList<Str
     useBiom = 0
 
     if (CustomKeywords.'connection.DataVerif.getEmailServiceFromTenant'(conneSign, findTestData(excelPathFESignDocument).getValue(
-            GlobalVariable.NumofColm, rowExcel('Tenant')), GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])]) == '1') {
+            GlobalVariable.NumofColm, rowExcel('Tenant')), GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])]) == 
+		'1') {
         noTelpSigner = CustomKeywords.'connection.DataVerif.getEmailFromPhone'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
                 noTelpSigner))
     }

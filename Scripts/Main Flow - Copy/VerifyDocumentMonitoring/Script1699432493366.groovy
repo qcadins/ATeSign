@@ -271,7 +271,7 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                             'Verifikasi UI dengan db'
                             arrayMatch.add(WebUI.verifyEqual(totalStampingAndTotalMaterai[k], resultStamping[k], FailureHandling.CONTINUE_ON_FAILURE))
                         }
-                    } else if (i == 10 || i == 11) {
+                    } else if (i == 10) {
                         continue
                     } else {
                         'Selain di column 7 dan 8 maka akan diverif dengan db.'
@@ -514,7 +514,7 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
                             'Verifikasi UI dengan db'
                             arrayMatch.add(WebUI.verifyEqual(totalStampingAndTotalMaterai[k], resultStamping[k], FailureHandling.CONTINUE_ON_FAILURE))
                         }
-                    } else if (i == 10) {
+                    } else if (i == 10 || i == 11) {
                         continue
                     } else {
                         'Selain di column 7 dan 8 maka akan diverif dengan db.'
@@ -727,7 +727,7 @@ def actionDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan
     } else {
         helperModifyObject = '/html/body/app-root/app-content-layout/div/div/div/div[2]/app-inquiry/'
     }
-    
+    /*
     'get row lastest'
     modifyObjectSigner = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/button_modifyDownload'), 'xpath', 
         'equals', ((helperModifyObject + 'app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[') + 
@@ -784,7 +784,7 @@ def actionDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan
 
     'Klik x terlebih dahulu pada popup'
     WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_X'))
-
+*/
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Need Download Document ?')) == 
     'Yes') {
         'get row lastest'

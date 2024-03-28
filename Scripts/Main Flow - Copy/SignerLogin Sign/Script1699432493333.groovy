@@ -920,8 +920,10 @@ def checkPopup() {
 }
 
 def checkKonfirmasiTTD() {
+	WebUI.delay(1.25)
+	
     'Klik tanda tangan'
-    WebUI.click(findTestObject('KotakMasuk/Sign/btn_TTDSemua'))
+    WebUI.enhancedClick(findTestObject('KotakMasuk/Sign/btn_TTDSemua'))
 
     'Klik tidak untuk konfirmasi ttd'
     WebUI.click(findTestObject('KotakMasuk/Sign/btn_TidakKonfirmasiTTD'))
@@ -1369,12 +1371,12 @@ def verifOTPMethodDetail(Connection conneSign, String emailSigner, ArrayList lis
     'ubah pemakaian biom menjadi false'
     useBiom = 0
 
-    if (CustomKeywords.'connection.DataVerif.getEmailServiceFromTenant'(conneSign, findTestData(excelPathFESignDocument).getValue(
-            GlobalVariable.NumofColm, rowExcel('Tenant')), GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])]) == 
-    '1') {
-        noTelpSigner = CustomKeywords.'connection.DataVerif.getEmailFromPhone'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
-                noTelpSigner))
-    }
+//    if (CustomKeywords.'connection.DataVerif.getEmailServiceFromTenant'(conneSign, findTestData(excelPathFESignDocument).getValue(
+//            GlobalVariable.NumofColm, rowExcel('Tenant')), GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])]) == 
+//    '1') {
+//        noTelpSigner = CustomKeywords.'connection.DataVerif.getEmailFromPhone'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
+//                noTelpSigner))
+//    }
     
     'Verifikasi antara no telp yang dinput dengan yang sebelumnya'
     checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('KotakMasuk/Sign/lbl_phoneNo'), 'value'), 
