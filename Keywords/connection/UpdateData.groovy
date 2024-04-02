@@ -483,12 +483,12 @@ class UpdateData {
 
 		'lov balance mutation change'
 		updateLOVBalanceMutationBalanceVendorOfTenantPackage(conneSign, excelPathMain, sheet)
-		
+
 		'update ms tenant settings mengenai signer complete, document complete, all document complete'
 		UpdateTenantSettingsSignerCompleteCallback(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Signer Complete Callback On Tenant Login Admin Setting')))
-		
+
 		UpdateTenantSettingsDocumentCompleteCallback(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Document Complete Callback On Tenant Login Admin Setting')))
-		
+
 		UpdateTenantSettingsAllDocumentCompleteCallback(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting All Document Complete Callback On Tenant Login Admin Setting')))
 	}
 
@@ -1100,7 +1100,7 @@ class UpdateData {
 		'LOV Balance Type SMS dan WA'
 		updateLOVBalanceMutationBalanceVendorOfTenant(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting True LOV Balance Type for Tenant and Vendor about WhatsApp ?')), 'WhatsApp Message', GlobalVariable.Tenant)
 	}
-	
+
 	@Keyword
 	UpdateTenantSettingsSignerCompleteCallback(Connection conn, String value) {
 		Statement stm = conn.createStatement()
@@ -1108,7 +1108,7 @@ class UpdateData {
 			stm.executeUpdate("UPDATE ms_tenant_settings mts0 SET setting_value = '" + value + "' FROM ms_tenant_settings mts JOIN ms_tenant mst ON mts.id_ms_tenant = mst.id_ms_tenant LEFT JOIN ms_lov msl ON mts.lov_setting_type = msl.id_lov WHERE msl.code = 'SIGNER_COMPLETE_CALLBACK' AND mst.tenant_code = '" + GlobalVariable.Tenant + "' AND mts0.id_ms_tenant_setting = mts.id_ms_tenant_setting")
 		}
 	}
-	
+
 	@Keyword
 	UpdateTenantSettingsDocumentCompleteCallback(Connection conn, String value) {
 		Statement stm = conn.createStatement()
@@ -1116,7 +1116,7 @@ class UpdateData {
 			stm.executeUpdate("UPDATE ms_tenant_settings mts0 SET setting_value = '" + value + "' FROM ms_tenant_settings mts JOIN ms_tenant mst ON mts.id_ms_tenant = mst.id_ms_tenant LEFT JOIN ms_lov msl ON mts.lov_setting_type = msl.id_lov WHERE msl.code = 'DOCUMENT_COMPLETE_CALLBACK' AND mst.tenant_code = '" + GlobalVariable.Tenant + "' AND mts0.id_ms_tenant_setting = mts.id_ms_tenant_setting")
 		}
 	}
-	
+
 	@Keyword
 	UpdateTenantSettingsAllDocumentCompleteCallback(Connection conn, String value) {
 		Statement stm = conn.createStatement()

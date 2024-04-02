@@ -16,7 +16,7 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 'get current date'
 currentDate = new Date().format('yyyy-MM-dd')
 
-ArrayList<String> nomorKontrakPerPilihan = []
+ArrayList nomorKontrakPerPilihan = []
 
 'Memilih document monitoring menggunakan apa berdasarkan input. Jika embed, maka setting GV Yes, jika tidak, maka setting No'
 if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Document Monitoring Using ?')) == 
@@ -58,7 +58,7 @@ if (vendor.toString() == 'null') {
             GlobalVariable.NumofColm, rowExcel('documentid')))
 }
 
-documentId = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ', 
+ArrayList documentId = findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(', ', 
     -1)
 
 'Looping per document'
@@ -81,7 +81,7 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
     }
     
     'inisialisasi emailSigner menjadi array list'
-    ArrayList<String> emailSigner = []
+    ArrayList emailSigner = []
 
     'Mengambil email berdasarkan documentId'
     String emailSignerString = CustomKeywords.'connection.DocumentMonitoring.getEmailSigneronRefNumber'(conneSign, nomorKontrakPerPilihan[
@@ -99,200 +99,9 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
     inputDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring)
 
     if (linkDocumentMonitoring == '') {
-        modifyObjectvalues = findTestObject('DocumentMonitoring/lbl_Value')
-
-        'Mengambil row size dari value'
-        sizeRowofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('#listDokumen > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
-
-        'Mengambil column size dari value'
-        sizeColumnofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('#listDokumen > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller > datatable-row-wrapper:nth-child(1) > datatable-body-row datatable-body-cell'))
-
-        'Jika valuenya ada'
-        if (WebUI.verifyElementPresent(modifyObjectvalues, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-            'Pembuatan untuk array Index result Query'
-            arrayIndex = 0
-
-            'Mengambil value dari db menngenai data yang perlu diverif'
-            resultQuery = CustomKeywords.'connection.DocumentMonitoring.getDocumentMonitoringBasedOnEmbed'(conneSign, nomorKontrakPerPilihan[
-                y])
-
-            'Mengambil value dari db mengenai total stamping'
-            resultStamping = CustomKeywords.'connection.DocumentMonitoring.getTotalStampingandTotalMaterai'(conneSign, nomorKontrakPerPilihan[
-                y])
-
-            'array index untuk stamping'
-            arrayIndexStamping = 0
-
-            arrayIndexJumlahHarusTandaTangan = 0
-
-            'Looping berdasarkan row yang ada pada value'
-            for (j = 1; j <= sizeRowofLabelValue.size(); j++) {
-                'Looping berdasarkan column yang ada pada value tanpa aksi.'
-                for (i = 1; i <= sizeColumnofLabelValue.size(); i++) {
-                    'modify object label Value'
-                    modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath', 
-                        'equals', ((('//*[@id="listDokumen"]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-                        j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div', true)
-
-                    WebUI.scrollToElement(modifyObjectvalues, GlobalVariable.TimeOut)
-
-                    'Jika berada di column ke 7'
-                    if (i == 7) {
-                        'Split teks proses TTD'
-                        totalSignandtotalSigned = WebUI.getText(modifyObjectvalues).split(' / ', -1)
-
-                        if (vendor.equalsIgnoreCase('Digisign')) {
-                            jumlahSignerTelahTandaTangan = CustomKeywords.'connection.APIFullService.getUserAlreadySigned'(
-                                conneSign, nomorKontrakPerPilihan[y])
-                        } else if (vendor.equalsIgnoreCase('Privy')) {
-                            jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgressPrivy'(
-                                conneSign, documentId[(j - 1)])
-                        } else {
-                            jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgress'(conneSign, 
-                                documentId[(j - 1)])
-                        }
-                        
-                        'Verif hasil split, dimana proses awal hingga akhir. Awal dibandingkan dengan jumlahsignertandatangan, sedangkan akhir dibandingkan dengan total signer dari email'
-                        arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[0], jumlahSignerTelahTandaTangan, FailureHandling.CONTINUE_ON_FAILURE))
-
-                        if ((sizeRowofLabelValue.size() > 1) && (nomorKontrakPerPilihan.size() == 1)) {
-                            jumlahSignerHarusTandaTangan = CustomKeywords.'connection.SendSign.getTotalSignerTtd'(conneSign, 
-                                documentId[(j - 1)])
-
-                            arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[1], jumlahSignerHarusTandaTangan, FailureHandling.CONTINUE_ON_FAILURE))
-                        } else {
-                            arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[1], emailSigner.size(), FailureHandling.CONTINUE_ON_FAILURE))
-                        }
-                    } else if (i == 8) {
-                        'Jika berada di column ke 8'
-
-                        'Split teks total Stamping'
-                        totalStampingAndTotalMaterai = WebUI.getText(modifyObjectvalues).split('/', -1)
-
-                        'looping berdasarkan total split dan diverif berdasarkan db.'
-                        for (k = 0; k < totalStampingAndTotalMaterai.size(); k++) {
-                            'Verifikasi UI dengan db'
-                            arrayMatch.add(WebUI.verifyEqual(totalStampingAndTotalMaterai[k], resultStamping[arrayIndexStamping++], 
-                                    FailureHandling.CONTINUE_ON_FAILURE))
-                        }
-                    } else if (i == 10 || i == 11) {
-                        continue
-                    } else {
-                        'Selain di column 7 dan 8 maka akan diverif dengan db.'
-                        arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectvalues), resultQuery[arrayIndex++], false, 
-                                FailureHandling.CONTINUE_ON_FAILURE))
-                    }
-                }
-                
-                if (((((CancelDocsStamp != 'Yes') && (isStamping != 'Yes')) && (retryStamping != 'Yes')) && (CancelDocsSend != 
-                'Yes')) && (CancelDocsSign != 'Yes')) {
-                    actionDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, j)
-                }
-            }
-        } else {
-            'Jika tidak ada, maka datanya tidak ada di UI.'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
-                    '-', '') + ';') + GlobalVariable.ReasonFailedNoneUI) + ' pada Page Document Monitoring.')
-
-            GlobalVariable.FlagFailed = 1
-        }
-    } else {
-        WebUI.delay(2)
-
-        'modify object label Value'
-        modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath', 'equals', 
-            '/html/body/app-root/app-content-layout/div/div/div/div[2]/app-inquiry/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper/datatable-body-row/div[2]/datatable-body-cell[1]/div/p', 
-            true)
-
-        'Jika valuenya ada'
-        if (WebUI.verifyElementPresent(modifyObjectvalues, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-            WebUI.delay(2)
-
-            'Mengambil row size dari value'
-            sizeRowofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-content-layout > div > div > div > div.content-wrapper.p-0 > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
-
-            'Mengambil column size dari value'
-            sizeColumnofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-content-layout > div > div > div > div.content-wrapper.p-0 > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller >  datatable-row-wrapper > datatable-body-row datatable-body-cell'))
-
-            'Pembuatan untuk array Index result Query'
-            arrayIndex = 0
-
-            'Mengambil value dari db menngenai data yang perlu diverif'
-            resultQuery = CustomKeywords.'connection.DocumentMonitoring.getDocumentMonitoringBasedOnEmbed'(conneSign, nomorKontrakPerPilihan[
-                y])
-
-            'Mengambil value dari db mengenai total stamping'
-            resultStamping = CustomKeywords.'connection.DocumentMonitoring.getTotalStampingandTotalMaterai'(conneSign, nomorKontrakPerPilihan[
-                y])
-
-            'Looping berdasarkan row yang ada pada value'
-            for (j = 1; j <= sizeRowofLabelValue.size(); j++) {
-                'Looping berdasarkan column yang ada pada value tanpa aksi.'
-                for (i = 1; i <= (sizeColumnofLabelValue.size() / sizeRowofLabelValue.size()); i++) {
-                    modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath', 
-                        'equals', ((('/html/body/app-root/app-content-layout/div/div/div/div[2]/app-inquiry/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-                        j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div', true)
-
-                    WebUI.scrollToElement(modifyObjectvalues, GlobalVariable.TimeOut)
-
-                    'Jika berada di column ke 7'
-                    if (i == 7) {
-                        'Split teks proses TTD'
-                        totalSignandtotalSigned = WebUI.getText(modifyObjectvalues).split(' / ', -1)
-
-                        if (vendor.equalsIgnoreCase('Digisign')) {
-                            jumlahSignerTelahTandaTangan = CustomKeywords.'connection.APIFullService.getUserAlreadySigned'(
-                                conneSign, nomorKontrakPerPilihan[y])
-                        } else if (vendor.equalsIgnoreCase('Privy')) {
-                            jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgressPrivy'(
-                                conneSign, documentId[(j - 1)])
-                        } else {
-                            jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgress'(conneSign, 
-                                documentId[(j - 1)])
-                        }
-                        
-                        if ((sizeRowofLabelValue.size() > 1) && (nomorKontrakPerPilihan.size() == 1)) {
-                            jumlahSignerHarusTandaTangan = CustomKeywords.'connection.SendSign.getTotalSignerTtd'(conneSign, 
-                                documentId[(j - 1)])
-
-                            arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[1], jumlahSignerHarusTandaTangan, FailureHandling.CONTINUE_ON_FAILURE))
-                        } else {
-                            arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[1], emailSigner.size(), FailureHandling.CONTINUE_ON_FAILURE))
-                        }
-                    } else if (i == 8) {
-                        'Jika berada di column ke 8'
-
-                        'Split teks total Stamping'
-                        totalStampingAndTotalMaterai = WebUI.getText(modifyObjectvalues).split('/', -1)
-
-                        'looping berdasarkan total split dan diverif berdasarkan db.'
-                        for (int k = 0; k < totalStampingAndTotalMaterai.size(); k++) {
-                            'Verifikasi UI dengan db'
-                            arrayMatch.add(WebUI.verifyEqual(totalStampingAndTotalMaterai[k], resultStamping[k], FailureHandling.CONTINUE_ON_FAILURE))
-                        }
-                    } else if (i == 10) {
-                        continue
-                    } else {
-                        'Selain di column 7 dan 8 maka akan diverif dengan db.'
-                        arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectvalues), resultQuery[arrayIndex++], false, 
-                                FailureHandling.CONTINUE_ON_FAILURE))
-                    }
-                }
-                
-                if (((((CancelDocsStamp != 'Yes') && (isStamping != 'Yes')) && (retryStamping != 'Yes')) && (CancelDocsSend != 
-                'Yes')) && (CancelDocsSign != 'Yes')) {
-                    actionDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, j)
-                }
-            }
-        } else {
-            'Jika tidak ada, maka datanya tidak ada di UI.'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
-                    '-', '') + ';') + GlobalVariable.ReasonFailedNoneUI) + ' pada Page Document Monitoring.')
-
-            GlobalVariable.FlagFailed = 1
-        }
+		arrayMatch = verifyListAdminClient(conneSign, nomorKontrakPerPilihan, documentId, y, emailSigner)
+		} else {
+		arrayMatch = verifyListEmbed(conneSign, nomorKontrakPerPilihan, documentId, y, emailSigner)
     }
     
     'penggunaan checking print false'
@@ -449,88 +258,25 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
         }
         
         inputDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring)
-
-        modifyObjectvalues = findTestObject('DocumentMonitoring/lbl_Value')
-
-        'Mengambil row size dari value'
-        sizeRowofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('#listDokumen > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
-
-        'Mengambil column size dari value'
-        sizeColumnofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('#listDokumen > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-body-cell'))
-
-        'Jika valuenya ada'
-        if (WebUI.verifyElementPresent(modifyObjectvalues, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-            'scroll menuju values element'
-            WebUI.scrollToElement(modifyObjectvalues, GlobalVariable.TimeOut)
-
-            'Pembuatan untuk array Index result Query'
-            arrayIndex = 0
-
-            'Mengambil value dari db menngenai data yang perlu diverif'
-            resultQuery = CustomKeywords.'connection.DocumentMonitoring.getDocumentMonitoringBasedOnEmbed'(conneSign, nomorKontrakPerPilihan[
-                y])
-
-            'Mengambil value dari db mengenai total stamping'
-            resultStamping = CustomKeywords.'connection.DocumentMonitoring.getTotalStampingandTotalMaterai'(conneSign, nomorKontrakPerPilihan[
-                y])
-
-            'Looping berdasarkan row yang ada pada value'
-            for (j = 1; j <= sizeRowofLabelValue.size(); j++) {
-                'Looping berdasarkan column yang ada pada value tanpa aksi.'
-                for (i = 1; i <= ((sizeColumnofLabelValue.size() / sizeRowofLabelValue.size()) - 1); i++) {
-                    'modify object label Value'
-                    modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath', 
-                        'equals', ((('//*[@id="listDokumen"]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
-                        j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div', true)
-
-                    'Jika berada di column ke 7'
-                    if (i == 7) {
-                        'Split teks proses TTD'
-                        totalSignandtotalSigned = WebUI.getText(modifyObjectvalues).split(' / ', -1)
-
-                        if (vendor.equalsIgnoreCase('Digisign')) {
-                            jumlahSignerTelahTandaTangan = CustomKeywords.'connection.APIFullService.getUserAlreadySigned'(
-                                conneSign, nomorKontrakPerPilihan[y])
-                        } else if (vendor.equalsIgnoreCase('Privy')) {
-                            jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgressPrivy'(
-                                conneSign, documentId[(j - 1)])
-                        } else {
-                            jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgress'(conneSign, 
-                                documentId[(j - 1)])
-                        }
-                        
-                        'Verif hasil split, dimana proses awal hingga akhir. Awal dibandingkan dengan jumlahsignertandatangan, sedangkan akhir dibandingkan dengan total signer dari email'
-                        arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[0], jumlahSignerTelahTandaTangan, FailureHandling.CONTINUE_ON_FAILURE))
-
-                        arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[1], emailSigner.size(), FailureHandling.CONTINUE_ON_FAILURE))
-                    } else if (i == 8) {
-                        'Jika berada di column ke 8'
-
-                        'Split teks total Stamping'
-                        totalStampingAndTotalMaterai = WebUI.getText(modifyObjectvalues).split('/', -1)
-
-                        'looping berdasarkan total split dan diverif berdasarkan db.'
-                        for (k = 0; k < totalStampingAndTotalMaterai.size(); k++) {
-                            'Verifikasi UI dengan db'
-                            arrayMatch.add(WebUI.verifyEqual(totalStampingAndTotalMaterai[k], resultStamping[k], FailureHandling.CONTINUE_ON_FAILURE))
-                        }
-                    } else if (i == 10 || i == 11) {
-                        continue
-                    } else {
-                        'Selain di column 7 dan 8 maka akan diverif dengan db.'
-                        arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectvalues), resultQuery[arrayIndex++], false, 
-                                FailureHandling.CONTINUE_ON_FAILURE))
-                    }
-                }
-            }
-        } else {
-            'Jika tidak ada, maka datanya tidak ada di UI.'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-                ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
-                    '-', '') + ';') + GlobalVariable.ReasonFailedNoneUI) + ' pada Page Document Monitoring.')
-
-            GlobalVariable.FlagFailed = 1
-        }
+		
+		'declare arraylist arraymatch'
+		arrayMatch = []
+		
+		if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Document Monitoring Using ?')) == 'Login Via Admin Client') {
+			arrayMatch = verifyListAdminClient(conneSign, nomorKontrakPerPilihan, documentId, y, emailSigner)
+		} else {
+			arrayMatch = verifyListEmbed(conneSign, nomorKontrakPerPilihan, documentId, y, emailSigner)
+		}
+		
+		'penggunaan checking print false'
+		if (arrayMatch.contains(false)) {
+			GlobalVariable.FlagFailed = 1
+	
+			'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+				((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+					'-', '') + ';') + GlobalVariable.ReasonFailedStoredDB) + ' pada menu Document Monitoring ')
+		}
     }
     
     if (CancelDocsStamp == 'Yes') {
@@ -615,6 +361,11 @@ def inputDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan,
 	
 	inputDDLExactRelativesObject(modifyObjectProsesMeterai, inputDocumentMonitoring[arrayIndexInput++])
     
+	if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Document Monitoring Using ?')).contains('Admin Client')) {
+		'Set text mengenai input status document'
+		inputDDLExact('DocumentMonitoring/input_StatusDocument', inputDocumentMonitoring[arrayIndexInput++])
+	}
+	
     'Klik enter Cari'
     WebUI.click(findTestObject('DocumentMonitoring/button_Cari'))
 }
@@ -647,17 +398,6 @@ def cancelDoc(Connection conneSign, String nomorKontrakPerPilihan) {
 
         'click button cari'
         WebUI.click(findTestObject('DocumentMonitoring/button_Cari'))
-    }
-    
-    'jika status text adalah complete'
-    if (WebUI.getText(findTestObject('DocumentMonitoring/lblTable_status'), FailureHandling.OPTIONAL).equalsIgnoreCase('Complete')) {
-        'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2) + ';') + 'Cancel Document tidak bisa dilakukan karena status Complete')
-
-        GlobalVariable.FlagFailed = 1
-
-        false
     }
     
     'klik pada tombol cancel doc'
@@ -724,10 +464,14 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 def actionDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan, String linkDocumentMonitoring, int j) {
     if (GlobalVariable.RunWithEmbed == 'No') {
         helperModifyObject = '/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-monitoring-document/'
+		
+		columnAction = 11
     } else {
         helperModifyObject = '/html/body/app-root/app-content-layout/div/div/div/div[2]/app-inquiry/'
+		
+		columnAction = 10
     }
-    /*
+    
     'get row lastest'
     modifyObjectSigner = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/button_modifyDownload'), 'xpath', 
         'equals', ((helperModifyObject + 'app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[') + 
@@ -744,7 +488,7 @@ def actionDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan
     'get column popup'
     variableColPopup = DriverFactory.webDriver.findElements(By.cssSelector('body > ngb-modal-window > div > div > app-signer > div.modal-body > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller > datatable-row-wrapper:nth-child(1) > datatable-body-row datatable-body-cell'))
 
-    ArrayList<String> arrayMatch = []
+    arrayMatch = []
 
     'loop untuk row popup'
     for (int i = 1; i <= variableRowPopup.size(); i++) {
@@ -784,7 +528,7 @@ def actionDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan
 
     'Klik x terlebih dahulu pada popup'
     WebUI.click(findTestObject('Object Repository/KotakMasuk/btn_X'))
-*/
+
     if (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Need Download Document ?')) == 
     'Yes') {
         'get row lastest'
@@ -1300,4 +1044,243 @@ def inputDDLExactRelativesObject(TestObject locationObject, String input) {
 		
 		WebUI.sendKeys(locationObject, Keys.chord(Keys.ENTER))
 	}
+}
+
+def verifyListAdminClient(Connection conneSign, ArrayList nomorKontrakPerPilihan, ArrayList documentId, int y, ArrayList emailSigner) {
+	'declare arraylist arraymatch'
+	arrayMatch = []
+
+	modifyObjectvalues = findTestObject('DocumentMonitoring/lbl_Value')
+
+	'Mengambil row size dari value'
+	sizeRowofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('#listDokumen > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
+
+	'Mengambil column size dari value'
+	sizeColumnofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('#listDokumen > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller > datatable-row-wrapper:nth-child(1) > datatable-body-row datatable-body-cell'))
+
+	'Jika valuenya ada'
+	if (WebUI.verifyElementPresent(modifyObjectvalues, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		'Pembuatan untuk array Index result Query'
+		arrayIndex = 0
+
+		'Mengambil value dari db menngenai data yang perlu diverif'
+		resultQuery = CustomKeywords.'connection.DocumentMonitoring.getDocumentMonitoringBasedOnEmbed'(conneSign, nomorKontrakPerPilihan[
+			y])
+
+		'Mengambil value dari db mengenai total stamping'
+		resultStamping = CustomKeywords.'connection.DocumentMonitoring.getTotalStampingandTotalMaterai'(conneSign, nomorKontrakPerPilihan[
+			y])
+
+		'array index untuk stamping'
+		arrayIndexStamping = 0
+
+		arrayIndexJumlahHarusTandaTangan = 0
+
+		'Looping berdasarkan row yang ada pada value'
+		for (j = 1; j <= sizeRowofLabelValue.size(); j++) {
+			'Looping berdasarkan column yang ada pada value tanpa aksi.'
+			for (i = 1; i <= sizeColumnofLabelValue.size(); i++) {
+				'modify object label Value'
+				modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+					'equals', ((('//*[@id="listDokumen"]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+					j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div', true)
+
+				WebUI.scrollToElement(modifyObjectvalues, GlobalVariable.TimeOut)
+
+				'Jika berada di column ke 7'
+				if (i == 7) {
+					'Split teks proses TTD'
+					totalSignandtotalSigned = WebUI.getText(modifyObjectvalues).split(' / ', -1)
+
+					if (vendor.equalsIgnoreCase('Digisign')) {
+						jumlahSignerTelahTandaTangan = CustomKeywords.'connection.APIFullService.getUserAlreadySigned'(
+							conneSign, nomorKontrakPerPilihan[y])
+					} else if (vendor.equalsIgnoreCase('Privy')) {
+						jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgressPrivy'(
+							conneSign, documentId[(j - 1)])
+					} else {
+						jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgress'(conneSign,
+							documentId[(j - 1)])
+					}
+					
+					'Verif hasil split, dimana proses awal hingga akhir. Awal dibandingkan dengan jumlahsignertandatangan, sedangkan akhir dibandingkan dengan total signer dari email'
+					arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[0], jumlahSignerTelahTandaTangan, FailureHandling.CONTINUE_ON_FAILURE))
+
+					if ((sizeRowofLabelValue.size() > 1) && (nomorKontrakPerPilihan.size() == 1)) {
+						jumlahSignerHarusTandaTangan = CustomKeywords.'connection.SendSign.getTotalSignerTtd'(conneSign,
+							documentId[(j - 1)])
+
+						arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[1], jumlahSignerHarusTandaTangan, FailureHandling.CONTINUE_ON_FAILURE))
+					} else {
+						arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[1], emailSigner.size(), FailureHandling.CONTINUE_ON_FAILURE))
+					}
+				} else if (i == 8) {
+					'Jika berada di column ke 8. Split teks total Stamping'
+					totalStampingAndTotalMaterai = WebUI.getText(modifyObjectvalues).split('/', -1)
+
+					'looping berdasarkan total split dan diverif berdasarkan db.'
+					for (k = 0; k < totalStampingAndTotalMaterai.size(); k++) {
+						'Verifikasi UI dengan db'
+						arrayMatch.add(WebUI.verifyEqual(totalStampingAndTotalMaterai[k], resultStamping[arrayIndexStamping++],
+								FailureHandling.CONTINUE_ON_FAILURE))
+					}
+				} else if (i == 11) {
+					continue
+				} else if (i == 10) {
+					modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+						'equals', ((('//*[@id="listDokumen"]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+						j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div/em', true)
+					
+					statusDocument = WebUI.getAttribute(modifyObjectvalues, 'class')
+					
+					if (resultQuery[arrayIndex++] == '1') {
+						if (statusDocument.toString().contains('danger')) {
+							arrayMatch.add(false)
+						}
+					} else if (resultQuery[arrayIndex++] == '0') {
+						if (statusDocument.toString().contains('success')) {
+							arrayMatch.add(false)
+						}
+					}
+				} else {
+					'Selain di column 7 dan 8 maka akan diverif dengan db.'
+					arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectvalues), resultQuery[arrayIndex++], false,
+							FailureHandling.CONTINUE_ON_FAILURE))
+				}
+			}
+			
+			if (((((CancelDocsStamp != 'Yes') && (isStamping != 'Yes')) && (retryStamping != 'Yes')) && (CancelDocsSend !=
+			'Yes')) && (CancelDocsSign != 'Yes')) {
+				actionDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, j)
+			}
+		}
+	} else {
+		'Jika tidak ada, maka datanya tidak ada di UI.'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+			((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+				'-', '') + ';') + GlobalVariable.ReasonFailedNoneUI) + ' pada Page Document Monitoring.')
+
+		GlobalVariable.FlagFailed = 1
+	}
+	arrayMatch
+}
+
+def verifyListEmbed(Connection conneSign, ArrayList nomorKontrakPerPilihan, ArrayList documentId, int y, ArrayList emailSigner) {
+	'declare arraylist arraymatch'
+	arrayMatch = []
+
+   WebUI.delay(2)
+
+   'modify object label Value'
+   modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath', 'equals',
+	   '/html/body/app-root/app-content-layout/div/div/div/div[2]/app-inquiry/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper/datatable-body-row/div[2]/datatable-body-cell[1]/div/p',
+	   true)
+
+   'Jika valuenya ada'
+   if (WebUI.verifyElementPresent(modifyObjectvalues, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+	   WebUI.delay(2)
+
+	   'Mengambil row size dari value'
+	   sizeRowofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-content-layout > div > div > div > div.content-wrapper.p-0 > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
+
+	   'Mengambil column size dari value'
+	   sizeColumnofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-content-layout > div > div > div > div.content-wrapper.p-0 > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller >  datatable-row-wrapper > datatable-body-row datatable-body-cell'))
+
+	   'Pembuatan untuk array Index result Query'
+	   arrayIndex = 0
+
+	   'Mengambil value dari db menngenai data yang perlu diverif'
+	   resultQuery = CustomKeywords.'connection.DocumentMonitoring.getDocumentMonitoringBasedOnEmbed'(conneSign, nomorKontrakPerPilihan[
+		   y])
+
+	   'Mengambil value dari db mengenai total stamping'
+	   resultStamping = CustomKeywords.'connection.DocumentMonitoring.getTotalStampingandTotalMaterai'(conneSign, nomorKontrakPerPilihan[
+		   y])
+
+	   'Looping berdasarkan row yang ada pada value'
+	   for (j = 1; j <= sizeRowofLabelValue.size(); j++) {
+		   'Looping berdasarkan column yang ada pada value tanpa aksi.'
+		   for (i = 1; i <= (sizeColumnofLabelValue.size() / sizeRowofLabelValue.size()); i++) {
+			   modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+				   'equals', ((('/html/body/app-root/app-content-layout/div/div/div/div[2]/app-inquiry/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+				   j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div', true)
+
+			   WebUI.scrollToElement(modifyObjectvalues, GlobalVariable.TimeOut)
+
+			   'Jika berada di column ke 7'
+			   if (i == 7) {
+				   'Split teks proses TTD'
+				   totalSignandtotalSigned = WebUI.getText(modifyObjectvalues).split(' / ', -1)
+
+				   if (vendor.equalsIgnoreCase('Digisign')) {
+					   jumlahSignerTelahTandaTangan = CustomKeywords.'connection.APIFullService.getUserAlreadySigned'(
+						   conneSign, nomorKontrakPerPilihan[y])
+				   } else if (vendor.equalsIgnoreCase('Privy')) {
+					   jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgressPrivy'(
+						   conneSign, documentId[(j - 1)])
+				   } else {
+					   jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgress'(conneSign,
+						   documentId[(j - 1)])
+				   }
+				   
+				   if ((sizeRowofLabelValue.size() > 1) && (nomorKontrakPerPilihan.size() == 1)) {
+					   jumlahSignerHarusTandaTangan = CustomKeywords.'connection.SendSign.getTotalSignerTtd'(conneSign,
+						   documentId[(j - 1)])
+
+					   arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[1], jumlahSignerHarusTandaTangan, FailureHandling.CONTINUE_ON_FAILURE))
+				   } else {
+					   arrayMatch.add(WebUI.verifyEqual(totalSignandtotalSigned[1], emailSigner.size(), FailureHandling.CONTINUE_ON_FAILURE))
+				   }
+			   } else if (i == 8) {
+				   'Jika berada di column ke 8'
+
+				   'Split teks total Stamping'
+				   totalStampingAndTotalMaterai = WebUI.getText(modifyObjectvalues).split('/', -1)
+
+				   'looping berdasarkan total split dan diverif berdasarkan db.'
+				   for (int k = 0; k < totalStampingAndTotalMaterai.size(); k++) {
+					   'Verifikasi UI dengan db'
+					   arrayMatch.add(WebUI.verifyEqual(totalStampingAndTotalMaterai[k], resultStamping[k], FailureHandling.CONTINUE_ON_FAILURE))
+				   }
+			   } else if (i == 10) {
+				   /*modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+				   'equals', ((('/html/body/app-root/app-content-layout/div/div/div/div[2]/app-inquiry/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+				   j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div/em', true)
+
+				   statusDocument = WebUI.getAttribute(modifyObjectvalues, 'class')
+				   
+				   if (resultQuery[arrayIndex++] == '1') {
+					   if (statusDocument.toString().contains('danger')) {
+						   arrayMatch.add(false)
+					   }
+				   } else if (resultQuery[arrayIndex++] == '0') {
+					   if (statusDocument.toString().contains('success')) {
+						   arrayMatch.add(false)
+					   }
+				   }
+				   */
+				   arrayIndex++
+				   
+				   continue
+			   } else {
+				   'Selain di column 7 dan 8 maka akan diverif dengan db.'
+				   arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectvalues), resultQuery[arrayIndex++], false,
+						   FailureHandling.CONTINUE_ON_FAILURE))
+			   }
+		   }
+		   
+		   if (((((CancelDocsStamp != 'Yes') && (isStamping != 'Yes')) && (retryStamping != 'Yes')) && (CancelDocsSend !=
+		   'Yes')) && (CancelDocsSign != 'Yes')) {
+			   actionDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, j)
+		   }
+	   }
+   } else {
+	   'Jika tidak ada, maka datanya tidak ada di UI.'
+	   CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+		   ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+			   '-', '') + ';') + GlobalVariable.ReasonFailedNoneUI) + ' pada Page Document Monitoring.')
+
+	   GlobalVariable.FlagFailed = 1
+   }
+	arrayMatch
 }

@@ -27,12 +27,19 @@ if (excelPathFESignDocument.contains('MAIN')) {
 	println 'aa'
 }
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
-aa = ['2024-03-19 14:59:30.834', '2024-03-19 14:43:02.9', '2022-08-20 00:00:00']
 
-Collections.sort(aa, Collections.reverseOrder())
 
-println aa
-WebUI.delay(1000000)
+def aaa() {
+	aa = 'Failed'
+	return aa
+	}
+	
+a = 1
+
+if (a == 1) {
+	println GlobalVariable.Flag + aaa()
+}
+
  //*[@id="searchForm"]/div[1]/div[10]/app-question/app-select/div/div[2]/ng-dropdown-panel
 //
 //aa = WebUI.getAttribute(findTestObject('View User OTP/text_otp'), 'value')

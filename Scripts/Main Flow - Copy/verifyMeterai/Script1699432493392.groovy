@@ -17,7 +17,10 @@ firstDateOfMonth = currentDate.withDayOfMonth(1)
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 'looping DocumentMonitoring'
-GlobalVariable.FlagFailed = 0
+if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, rowExcel('Status')).toLowerCase() != 'warning' && 
+	GlobalVariable.FlagFailed == 0) {
+	GlobalVariable.FlagFailed = 0
+}
 
 if (!(WebUI.verifyElementPresent(findTestObject('Meterai/menu_Meterai'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL))) {
 	if (WebUI.verifyElementPresent(findTestObject('Meterai/menu_Meterai'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
@@ -168,9 +171,10 @@ for (j = 1; j <= Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ', '
     WebUI.click(findTestObject('Meterai/button_X'))
 }
 
-if (GlobalVariable.FlagFailed == 0 && Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ', '')) > 0) {
+if (GlobalVariable.FlagFailed == 0 && Integer.parseInt(totalMateraiAndTotalStamping[1].replace(' ', '')) > 0
+	&& findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, rowExcel('Status')).toLowerCase() != 'warning') {
 	'write to excel success'
-	CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet , rowExcel('Status') - 1, GlobalVariable.NumofColm -
+	CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Status') - 1, GlobalVariable.NumofColm -
 		1, GlobalVariable.StatusSuccess)
 }
 

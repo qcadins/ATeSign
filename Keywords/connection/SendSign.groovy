@@ -607,19 +607,19 @@ class SendSign {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	signCallBack(Connection conn, String tenantCode, String documentId, String loginId, String code) {
 		stm = conn.createStatement()
 
 		String helperQuery = ''
-		
+
 		if (code == 'SIGNING_COMPLETE') {
 			helperQuery = "mst.tenant_code = '" + tenantCode + "' AND tdd.document_id = '" + documentId + "' AND amm.login_id = '" + loginId + "' AND msl.code = '" + code + "'"
 		} else if (code == 'DOCUMENT_SIGN_COMPLETE' || code == 'ALL_DOCUMENT_SIGN_COMPLETE') {
 			helperQuery = "mst.tenant_code = '" + tenantCode + "' AND tdd.document_id = '" + documentId + "' AND msl.code = '" + code + "'"
 		}
-		
+
 		resultSet = stm.executeQuery("""select substring(callback_request, '"callbackType":"([^"]+)"') AS callbackType, substring(callback_request, '"message":"([^"]+)"') AS message from tr_client_callback_request tccr left join tr_document_d tdd on tccr.id_document_d = tdd.id_document_d left join am_msuser amm on amm.id_ms_user = tccr.id_ms_user left join ms_tenant mst on tccr.id_ms_tenant = mst.id_ms_tenant left join ms_lov msl on msl.id_lov = tccr.lov_callback_type where """ + helperQuery)
 		metadata = resultSet.metaData
 
@@ -633,41 +633,12 @@ class SendSign {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	checkDocumentIsSigned(Connection conn, String documentId) {
 		stm = conn.createStatement()
 
 		resultSet = stm.executeQuery("select count(tdds.id_ms_user) from tr_document_d_sign tdds left join tr_document_d tdd on tdds.id_document_d = tdd.id_document_d where tdd.document_id = '" + documentId + "'")
-			metadata = resultSet.metaData
-
-		columnCount = metadata.getColumnCount()
-
-		while (resultSet.next()) {
-			data = resultSet.getObject(1)
-		}
-		
-		if (data == '1') {
-			data
-		} else {
-			resultSet = stm.executeQuery("select count(tdds.id_ms_user) from tr_document_d_sign tdds left join tr_document_d tdd on tdds.id_document_d = tdd.id_document_d where tdd.document_id = '" + documentId + "' AND tdds.sign_date IS NULL")
-			metadata = resultSet.metaData
-
-			columnCount = metadata.getColumnCount()
-			
-			while (resultSet.next()) {
-				data = resultSet.getObject(1)
-		}
-		data
-		}
-	}
-	
-	@Keyword
-	checkAllDocumentIsSigned(Connection conn, String refNumber) {
-		stm = conn.createStatement()
-
-		resultSet = stm.executeQuery("select count(tdd.document_id) from tr_document_d tdd left join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h where tdh.ref_number = '" + refNumber + "'")
-		
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -675,7 +646,36 @@ class SendSign {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		
+
+		if (data == '1') {
+			data
+		} else {
+			resultSet = stm.executeQuery("select count(tdds.id_ms_user) from tr_document_d_sign tdds left join tr_document_d tdd on tdds.id_document_d = tdd.id_document_d where tdd.document_id = '" + documentId + "' AND tdds.sign_date IS NULL")
+			metadata = resultSet.metaData
+
+			columnCount = metadata.getColumnCount()
+
+			while (resultSet.next()) {
+				data = resultSet.getObject(1)
+			}
+			data
+		}
+	}
+
+	@Keyword
+	checkAllDocumentIsSigned(Connection conn, String refNumber) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select count(tdd.document_id) from tr_document_d tdd left join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h where tdh.ref_number = '" + refNumber + "'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+
 		if (data == '1') {
 			data
 		} else {
@@ -683,11 +683,11 @@ class SendSign {
 			metadata = resultSet.metaData
 
 			columnCount = metadata.getColumnCount()
-			
+
 			while (resultSet.next()) {
 				data = resultSet.getObject(1)
-		}
-		data
+			}
+			data
 		}
 	}
 }

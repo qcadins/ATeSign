@@ -1107,8 +1107,6 @@ def checkingDocAndEmailFromInput(ArrayList documentId, String rowEmail, LinkedHa
     for (loopingDocument = (documentId.size() - 1); loopingDocument >= 0; loopingDocument--) {
         'get signers dan displit per enter'
         signers = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel(rowEmail)).split(enter, -1)
-
-		println signers
 		
         'di trim'
         signersPerDoc = (signers[loopingDocument]).split(';', -1)

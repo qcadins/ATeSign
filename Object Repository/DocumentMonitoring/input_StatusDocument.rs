@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebElementEntity>
+   <description></description>
+   <name>input_StatusDocument</name>
+   <tag></tag>
+   <elementGuidId>0d0580d9-9273-4004-a4a0-609d529ee8cf</elementGuidId>
+   <selectorCollection>
+      <entry>
+         <key>BASIC</key>
+         <value>//*[@id=&quot;isActive&quot;]/div/div/div[3]/input</value>
+      </entry>
+   </selectorCollection>
+   <selectorMethod>BASIC</selectorMethod>
+   <useRalativeImagePath>false</useRalativeImagePath>
+   <webElementProperties>
+      <isSelected>true</isSelected>
+      <matchCondition>equals</matchCondition>
+      <name>xpath</name>
+      <type>Main</type>
+      <value>//*[@id=&quot;isActive&quot;]/div/div/div[3]/input</value>
+      <webElementGuid>de12d345-cfe1-4c53-a827-386e53991a74</webElementGuid>
+   </webElementProperties>
+</WebElementEntity>
