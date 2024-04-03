@@ -334,6 +334,7 @@ class UpdateData {
 
 	@Keyword
 	updateDBMainFlowBefore(Connection conneSign, String excelPathMain) {
+		if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Skip update DB First ?')) == 'No') {
 		'get connection apifullservice'
 		APIFullService apiFullService = new APIFullService()
 
@@ -490,6 +491,7 @@ class UpdateData {
 		UpdateTenantSettingsDocumentCompleteCallback(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Document Complete Callback On Tenant Login Admin Setting')))
 
 		UpdateTenantSettingsAllDocumentCompleteCallback(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting All Document Complete Callback On Tenant Login Admin Setting')))
+		}
 	}
 
 	@Keyword

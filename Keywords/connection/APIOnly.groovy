@@ -150,7 +150,7 @@ class APIOnly {
 		while (resultSet.next()) {
 			for (i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
-					
+
 				if (data == 'SMS' || data == 'WA') {
 					listdata.add(data)
 				}

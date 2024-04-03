@@ -29,16 +29,11 @@ if (excelPathFESignDocument.contains('MAIN')) {
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 
-def aaa() {
-	aa = 'Failed'
-	return aa
-	}
-	
-a = 1
+aa = 'admin@adins.co.id'.toUpperCase()
 
-if (a == 1) {
-	println GlobalVariable.Flag + aaa()
-}
+println aa
+println CustomKeywords.'connection.Test.maskData'(aa)
+
 
  //*[@id="searchForm"]/div[1]/div[10]/app-question/app-select/div/div[2]/ng-dropdown-panel
 //
