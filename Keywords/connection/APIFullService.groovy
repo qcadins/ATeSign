@@ -938,7 +938,7 @@ class APIFullService {
 	}
 
 	@Keyword
-	getEmailBasedOnSequence(Connection conn, String value) {
+	getEmailBasedOnSequence(Connection conn, String value, String documentName) {
 		stm = conn.createStatement()
 		helperResult = stm.executeQuery("select tdd.is_sequence from tr_Document_d tdd left join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h WHERE tdd.document_id = '" + value + "' OR tdh.ref_number = '" + value + "'")
 		metadata = helperResult.metaData
@@ -974,7 +974,7 @@ class APIFullService {
 			}
 		}
 
-		resultSet = stm.executeQuery("SELECT STRING_AGG(login_id, ';' ORDER BY seq_no) AS aa FROM (SELECT DISTINCT tdds.id_ms_user,au.login_id, FIRST_VALUE(" + helperQuery + ") OVER (PARTITION BY tdds.id_ms_user ORDER BY tdds.seq_no) AS seq_no FROM tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user WHERE tdd.document_id = '" + value + "' OR tdh.ref_number = '" + value + "') AS alls;")
+		resultSet = stm.executeQuery("SELECT STRING_AGG(login_id, ';' ORDER BY seq_no) AS aa FROM (SELECT DISTINCT tdds.id_ms_user,au.login_id, FIRST_VALUE(" + helperQuery + ") OVER (PARTITION BY tdds.id_ms_user ORDER BY tdds.seq_no) AS seq_no FROM tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user WHERE tdd.document_id = '" + value + "' OR tdh.ref_number = '" + value + "' AND tdd.document_name = '" + documentName + "') AS alls;")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

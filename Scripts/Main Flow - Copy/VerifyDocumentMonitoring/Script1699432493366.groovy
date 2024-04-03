@@ -121,7 +121,7 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
             inputDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring)
 
             'lakukan pengecekan ke di UI untuk memastikan cancel berhasil'
-            checkVerifyEqualorMatch(WebUI.verifyMatch('Tidak ada data untuk diperlihatkan', WebUI.getText(findTestObject(
+            checkVerifyEqualOrMatch(WebUI.verifyMatch('Tidak ada data untuk diperlihatkan', WebUI.getText(findTestObject(
                             'DocumentMonitoring/SearchResult'), FailureHandling.OPTIONAL), false, FailureHandling.CONTINUE_ON_FAILURE), 
                 'Data gagal terhapus di FE')
         }
@@ -286,7 +286,7 @@ for (y = 0; y < nomorKontrakPerPilihan.size(); y++) {
             inputDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring)
 
             'lakukan pengecekan ke di UI untuk memastikan cancel berhasil'
-            checkVerifyEqualorMatch(WebUI.verifyMatch('Tidak ada data untuk diperlihatkan', WebUI.getText(findTestObject(
+            checkVerifyEqualOrMatch(WebUI.verifyMatch('Tidak ada data untuk diperlihatkan', WebUI.getText(findTestObject(
                             'DocumentMonitoring/SearchResult'), FailureHandling.OPTIONAL), false, FailureHandling.CONTINUE_ON_FAILURE), 
                 'Data gagal terhapus di FE')
         }
@@ -421,7 +421,7 @@ def cancelDoc(Connection conneSign, String nomorKontrakPerPilihan) {
     'jika message yang muncul adalah sukses'
     if (popupMsg.equalsIgnoreCase('Dokumen berhasil dibatalkan')) {
         'lakukan pengecekan ke DB'
-        checkVerifyEqualorMatch(WebUI.verifyMatch('0', CustomKeywords.'connection.DocumentMonitoring.getCancelDocStatus'(
+        checkVerifyEqualOrMatch(WebUI.verifyMatch('0', CustomKeywords.'connection.DocumentMonitoring.getCancelDocStatus'(
                     conneSign, nomorKontrakPerPilihan), false, FailureHandling.CONTINUE_ON_FAILURE), 'Pengecekan ke DB Cancel Doc gagal')
 
         true
@@ -432,22 +432,6 @@ def cancelDoc(Connection conneSign, String nomorKontrakPerPilihan) {
 
         GlobalVariable.FlagFailed = 1
     }
-}
-
-def checkVerifyEqualorMatch(Boolean isMatch, String reason) {
-    if (isMatch == false) {
-        'Write to excel status failed and ReasonFailedVerifyEqualorMatch'
-        GlobalVariable.FlagFailed = 1
-
-        'Jika equalnya salah maka langsung berikan reason bahwa reasonnya failed'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
-            ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 2).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
-            reason)
-
-        false
-    }
-    
-    true
 }
 
 def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
@@ -461,7 +445,7 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
     }
 }
 
-def actionDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan, String linkDocumentMonitoring, int j) {
+def actionDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan, String linkDocumentMonitoring, int j, String documentName) {
     if (GlobalVariable.RunWithEmbed == 'No') {
         helperModifyObject = '/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-monitoring-document/'
 		
@@ -489,16 +473,16 @@ def actionDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan
     variableColPopup = DriverFactory.webDriver.findElements(By.cssSelector('body > ngb-modal-window > div > div > app-signer > div.modal-body > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller > datatable-row-wrapper:nth-child(1) > datatable-body-row datatable-body-cell'))
 
     arrayMatch = []
-
+	
     'loop untuk row popup'
     for (int i = 1; i <= variableRowPopup.size(); i++) {
         'Input email signer based on sequentialnya'
-        emailSignerBasedOnSequence = CustomKeywords.'connection.APIFullService.getEmailBasedOnSequence'(conneSign, nomorKontrakPerPilihan).split(
+        emailSignerBasedOnSequence = CustomKeywords.'connection.APIFullService.getEmailBasedOnSequence'(conneSign, nomorKontrakPerPilihan, documentName).split(
             ';', -1)
-
+	
         'get data kotak masuk send document secara asc, dimana customer no 1'
         ArrayList<String> resultSigner = CustomKeywords.'connection.SendSign.getSignerKotakMasukSendDoc'(conneSign, nomorKontrakPerPilihan, 
-            emailSignerBasedOnSequence[(i - 1)])
+            emailSignerBasedOnSequence[(i - 1)], documentName)
 
         'declare array index menjadi 0 per result'
         arrayIndexSigner = 0
@@ -1127,21 +1111,34 @@ def verifyListAdminClient(Connection conneSign, ArrayList nomorKontrakPerPilihan
 				} else if (i == 11) {
 					continue
 				} else if (i == 10) {
+					'get xpath status'
 					modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
 						'equals', ((('//*[@id="listDokumen"]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
 						j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div/em', true)
 					
+					'get classnya'
 					statusDocument = WebUI.getAttribute(modifyObjectvalues, 'class')
 					
+					'jika dbnya 1'
 					if (resultQuery[arrayIndex++] == '1') {
+						'jika statusnya X'
 						if (statusDocument.toString().contains('danger')) {
+							'input array false'
 							arrayMatch.add(false)
 						}
 					} else if (resultQuery[arrayIndex++] == '0') {
+						'jika dbnya 0, namun statusnya success'
 						if (statusDocument.toString().contains('success')) {
+							'input array false'
 							arrayMatch.add(false)
 						}
 					}
+				} else if (i == 3) {
+					'Selain di column 7 dan 8 maka akan diverif dengan db.'
+					arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectvalues), resultQuery[arrayIndex++], false,
+							FailureHandling.CONTINUE_ON_FAILURE))
+					
+					documentName = WebUI.getText(modifyObjectvalues)
 				} else {
 					'Selain di column 7 dan 8 maka akan diverif dengan db.'
 					arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectvalues), resultQuery[arrayIndex++], false,
@@ -1151,7 +1148,7 @@ def verifyListAdminClient(Connection conneSign, ArrayList nomorKontrakPerPilihan
 			
 			if (((((CancelDocsStamp != 'Yes') && (isStamping != 'Yes')) && (retryStamping != 'Yes')) && (CancelDocsSend !=
 			'Yes')) && (CancelDocsSign != 'Yes')) {
-				actionDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, j)
+				actionDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, j, documentName)
 			}
 		}
 	} else {
@@ -1262,6 +1259,11 @@ def verifyListEmbed(Connection conneSign, ArrayList nomorKontrakPerPilihan, Arra
 				   arrayIndex++
 				   
 				   continue
+			   } else if (i == 3) {
+				   'Selain di column 7 dan 8 maka akan diverif dengan db.'
+				   arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectvalues), resultQuery[arrayIndex++], false,
+						   FailureHandling.CONTINUE_ON_FAILURE))
+				   documentName = WebUI.getText(modifyObjectvalues)
 			   } else {
 				   'Selain di column 7 dan 8 maka akan diverif dengan db.'
 				   arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectvalues), resultQuery[arrayIndex++], false,
@@ -1271,7 +1273,7 @@ def verifyListEmbed(Connection conneSign, ArrayList nomorKontrakPerPilihan, Arra
 		   
 		   if (((((CancelDocsStamp != 'Yes') && (isStamping != 'Yes')) && (retryStamping != 'Yes')) && (CancelDocsSend !=
 		   'Yes')) && (CancelDocsSign != 'Yes')) {
-			   actionDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, j)
+			   actionDocumentMonitoring(conneSign, nomorKontrakPerPilihan[y], linkDocumentMonitoring, j, documentName)
 		   }
 	   }
    } else {

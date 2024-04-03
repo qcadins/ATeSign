@@ -182,6 +182,24 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'click button cari'
         WebUI.click(findTestObject('DocumentMonitoring/button_Cari'))
 
+		ArrayList arrayMatch = []
+		
+		if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Run With')).toLowerCase().contains('embed')) {
+			arrayMatch = verifyListEmbed(conneSign)
+		} else {
+			arrayMatch = verifyListAdminClient(conneSign)
+		}
+		
+		    'penggunaan checking print false'
+			if (arrayMatch.contains(false)) {
+				GlobalVariable.FlagFailed = 1
+
+				'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
+         	  ((findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+                '-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + ' pada menu Document Monitoring ')
+			}
+	
         'check if action yang dilakukan sesuai excel'
         if (findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Action')).equalsIgnoreCase(
             'View Dokumen')) {
@@ -945,4 +963,190 @@ def inputDDLExact(String locationObject, String input) {
 		
 		WebUI.sendKeys(findTestObject(locationObject), Keys.chord(Keys.ENTER))
 	}
+}
+
+def verifyListAdminClient(Connection conneSign) {
+	'declare arraylist arraymatch'
+	arrayMatch = []
+
+	modifyObjectvalues = findTestObject('DocumentMonitoring/lbl_Value')
+
+	'Mengambil row size dari value'
+	sizeRowofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('#listDokumen > app-msx-datatable > section > ngx-datatable > div > datatable-body datatable-row-wrapper'))
+
+	'Mengambil column size dari value'
+	sizeColumnofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('#listDokumen > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller > datatable-row-wrapper:nth-child(1) > datatable-body-row datatable-body-cell'))
+
+	'Jika valuenya ada'
+	if (WebUI.verifyElementPresent(modifyObjectvalues, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+		'Pembuatan untuk array Index result Query'
+		arrayIndex = 0
+
+		'Mengambil value dari db menngenai data yang perlu diverif'
+		resultQuery = CustomKeywords.'connection.DocumentMonitoring.getDocumentMonitoringBasedOnEmbed'(conneSign, findTestData(excelPathDocumentMonitoring).getValue(
+                GlobalVariable.NumofColm, rowExcel('No Kontrak')))
+
+		'Mengambil value dari db mengenai total stamping'
+		resultStamping = CustomKeywords.'connection.DocumentMonitoring.getTotalStampingandTotalMaterai'(conneSign, findTestData(excelPathDocumentMonitoring).getValue(
+                GlobalVariable.NumofColm, rowExcel('No Kontrak')))
+
+		'array index untuk stamping'
+		arrayIndexStamping = 0
+
+		arrayIndexJumlahHarusTandaTangan = 0
+
+		'Looping berdasarkan row yang ada pada value'
+		for (j = 1; j <= sizeRowofLabelValue.size(); j++) {
+			'Looping berdasarkan column yang ada pada value tanpa aksi.'
+			for (i = 1; i <= sizeColumnofLabelValue.size(); i++) {
+				'modify object label Value'
+				modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+					'equals', ((('//*[@id="listDokumen"]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+					j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div', true)
+
+				WebUI.scrollToElement(modifyObjectvalues, GlobalVariable.TimeOut)
+
+				'Jika berada di column ke 7'
+				if (i == 7) {
+					} else if (i == 8) {
+					'Jika berada di column ke 8. Split teks total Stamping'
+					totalStampingAndTotalMaterai = WebUI.getText(modifyObjectvalues).split('/', -1)
+
+					'looping berdasarkan total split dan diverif berdasarkan db.'
+					for (k = 0; k < totalStampingAndTotalMaterai.size(); k++) {
+						'Verifikasi UI dengan db'
+						arrayMatch.add(WebUI.verifyEqual(totalStampingAndTotalMaterai[k], resultStamping[arrayIndexStamping++],
+								FailureHandling.CONTINUE_ON_FAILURE))
+					}
+				} else if (i == 11) {
+					continue
+				} else if (i == 10) {
+					'get xpath untuk status'
+					modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+						'equals', ((('//*[@id="listDokumen"]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+						j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div/em', true)
+					
+					'get class untuk status'
+					statusDocument = WebUI.getAttribute(modifyObjectvalues, 'class')
+					
+					'jika querynya 1'
+					if (resultQuery[arrayIndex++] == '1') {
+						'jika class pada status danger'
+						if (statusDocument.toString().contains('danger')) {
+							'input arraymatch false'
+							arrayMatch.add(false)
+						}
+					} else if (resultQuery[arrayIndex++] == '0') {
+						'jika class pada status success'
+						if (statusDocument.toString().contains('success')) {
+							'input arraymatch false'
+							arrayMatch.add(false)
+						}
+					}
+				} else {
+					'Selain di column 7 dan 8 maka akan diverif dengan db.'
+					arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectvalues), resultQuery[arrayIndex++], false,
+							FailureHandling.CONTINUE_ON_FAILURE))
+				}
+			}
+		}
+	} else {
+		'Jika tidak ada, maka datanya tidak ada di UI.'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+			((findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+				'-', '') + ';') + GlobalVariable.ReasonFailedNoneUI) + ' pada Page Document Monitoring.')
+
+		GlobalVariable.FlagFailed = 1
+	}
+	arrayMatch
+}
+
+def verifyListEmbed(Connection conneSign) {
+	'declare arraylist arraymatch'
+	arrayMatch = []
+
+   WebUI.delay(2)
+
+   'modify object label Value'
+   modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath', 'equals',
+	   '/html/body/app-root/app-content-layout/div/div/div/div[2]/app-inquiry/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper/datatable-body-row/div[2]/datatable-body-cell[1]/div/p',
+	   true)
+
+   'Jika valuenya ada'
+   if (WebUI.verifyElementPresent(modifyObjectvalues, GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+	   WebUI.delay(2)
+
+	   'Mengambil row size dari value'
+	   sizeRowofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-content-layout > div > div > div > div.content-wrapper.p-0 > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper'))
+
+	   'Mengambil column size dari value'
+	   sizeColumnofLabelValue = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-content-layout > div > div > div > div.content-wrapper.p-0 > app-inquiry > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller >  datatable-row-wrapper > datatable-body-row datatable-body-cell'))
+
+	   'Pembuatan untuk array Index result Query'
+	   arrayIndex = 0
+
+	   'Mengambil value dari db menngenai data yang perlu diverif'
+	   resultQuery = CustomKeywords.'connection.DocumentMonitoring.getDocumentMonitoringBasedOnEmbed'(conneSign, findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('No Kontrak')))
+
+	   'Mengambil value dari db mengenai total stamping'
+	   resultStamping = CustomKeywords.'connection.DocumentMonitoring.getTotalStampingandTotalMaterai'(conneSign, findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('No Kontrak')))
+
+	   'Looping berdasarkan row yang ada pada value'
+	   for (j = 1; j <= sizeRowofLabelValue.size(); j++) {
+		   'Looping berdasarkan column yang ada pada value tanpa aksi.'
+		   for (i = 1; i <= (sizeColumnofLabelValue.size() / sizeRowofLabelValue.size()); i++) {
+			   modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+				   'equals', ((('/html/body/app-root/app-content-layout/div/div/div/div[2]/app-inquiry/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+				   j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div', true)
+
+			   WebUI.scrollToElement(modifyObjectvalues, GlobalVariable.TimeOut)
+
+			   'Jika berada di column ke 7'
+			   if (i == 7) {
+			   } else if (i == 8) {
+				   'Jika berada di column ke 8'
+				   'Split teks total Stamping'
+				   totalStampingAndTotalMaterai = WebUI.getText(modifyObjectvalues).split('/', -1)
+
+				   'looping berdasarkan total split dan diverif berdasarkan db.'
+				   for (int k = 0; k < totalStampingAndTotalMaterai.size(); k++) {
+					   'Verifikasi UI dengan db'
+					   arrayMatch.add(WebUI.verifyEqual(totalStampingAndTotalMaterai[k], resultStamping[k], FailureHandling.CONTINUE_ON_FAILURE))
+				   }
+			   } else if (i == 10) {
+				   /*modifyObjectvalues = WebUI.modifyObjectProperty(findTestObject('DocumentMonitoring/lbl_Value'), 'xpath',
+				   'equals', ((('/html/body/app-root/app-content-layout/div/div/div/div[2]/app-inquiry/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' +
+				   j) + ']/datatable-body-row/div[2]/datatable-body-cell[') + i) + ']/div/em', true)
+
+				   statusDocument = WebUI.getAttribute(modifyObjectvalues, 'class')
+				   
+				   if (resultQuery[arrayIndex++] == '1') {
+					   if (statusDocument.toString().contains('danger')) {
+						   arrayMatch.add(false)
+					   }
+				   } else if (resultQuery[arrayIndex++] == '0') {
+					   if (statusDocument.toString().contains('success')) {
+						   arrayMatch.add(false)
+					   }
+				   }
+				   */
+				   arrayIndex++
+				   
+				   continue
+			   } else {
+				   'Selain di column 7 dan 8 maka akan diverif dengan db.'
+				   arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectvalues), resultQuery[arrayIndex++], false,
+						   FailureHandling.CONTINUE_ON_FAILURE))
+			   }
+		   }
+	   }
+   } else {
+	   'Jika tidak ada, maka datanya tidak ada di UI.'
+	   CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+		   ((findTestData(excelPathDocumentMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
+			   '-', '') + ';') + GlobalVariable.ReasonFailedNoneUI) + ' pada Page Document Monitoring.')
+
+	   GlobalVariable.FlagFailed = 1
+   }
+	arrayMatch
 }

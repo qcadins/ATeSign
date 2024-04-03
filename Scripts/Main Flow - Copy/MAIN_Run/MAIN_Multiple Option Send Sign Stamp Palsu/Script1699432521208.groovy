@@ -312,7 +312,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             'reset globalvariable store var setiap signing'
                             GlobalVariable.storeVar = [:]
 
-                            'input documetn id dan email'
+                            'input document id dan email'
                             (GlobalVariable.storeVar[(emailSigner.keySet()[i])]) = (emailSigner.get(emailSigner.keySet()[
                                 i])[y])
 

@@ -53,6 +53,12 @@
       <value></value>
       <variableId>2cbc0533-3235-4f0c-8f38-1242d176169c</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>3fa950ba-7c45-4e6d-bbce-5a7022735d3c</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -108,5 +114,12 @@
       <id>2cbc0533-3235-4f0c-8f38-1242d176169c</id>
       <masked>false</masked>
       <name>isViewDocument</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>3fa950ba-7c45-4e6d-bbce-5a7022735d3c</id>
+      <masked>false</masked>
+      <name>documentName</name>
    </variable>
 </TestCaseEntity>

@@ -65,6 +65,12 @@
       <value></value>
       <variableId>522b5e9b-1040-4160-af3e-a7188ff3384c</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>40cca671-1d4e-4a04-a141-33bd164aa07f</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -134,5 +140,12 @@
       <id>522b5e9b-1040-4160-af3e-a7188ff3384c</id>
       <masked>true</masked>
       <name>columnAction</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>40cca671-1d4e-4a04-a141-33bd164aa07f</id>
+      <masked>false</masked>
+      <name>documentName</name>
    </variable>
 </TestCaseEntity>

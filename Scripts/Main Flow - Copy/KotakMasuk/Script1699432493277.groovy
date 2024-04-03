@@ -62,8 +62,10 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
     WebUI.callTestCase(findTestCase('Main Flow - Copy/Login'), [('email') : GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])], ('excel') : excelPathFESignDocument
             , ('checkBeforeSigning') : checkBeforeSigning, ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
 
+	WebUI.comment(GlobalVariable.storeVar.toString())
+		
     'get data kotak masuk send document secara asc, dimana customer no 1'
-    ArrayList result = CustomKeywords.'connection.SendSign.getKotakMasukSendDoc'(conneSign, refNumber, GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])])
+    ArrayList result = CustomKeywords.'connection.SendSign.getKotakMasukSendDoc'(conneSign, GlobalVariable.storeVar.keySet()[0], GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])])
 
     ArrayList documentIdBasedOnLogin = CustomKeywords.'connection.DataVerif.getDocIdBasedOnLoginSigner'(conneSign, refNumber, GlobalVariable.Tenant, GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])])
 
@@ -195,7 +197,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
                 prosesTtdPencarianDokumen.add(WebUI.getText(modifyObjectPencarianDokumen).split('/', -1))
 
                 jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgress'(conneSign, result[
-                    0])
+                    0], documentName)
 
                 jumlahSignerHarusTandaTangan = CustomKeywords.'connection.SendSign.getTotalSignerTtd'(conneSign, documentIdBasedOnLogin[
                     c])
@@ -235,7 +237,13 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
                     arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectPencarianDokumen), result[arrayIndex++], 
                             false, FailureHandling.CONTINUE_ON_FAILURE))
                 }
-            } else {
+            } else if (i == 3) {
+				'Diverifikasi dengan UI didepan'
+				arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectPencarianDokumen), result[arrayIndex++], false,
+						FailureHandling.CONTINUE_ON_FAILURE))
+				
+				docunentName = WebUI.getText(modifyObjectPencarianDokumen)
+				} else {
                 'Diverifikasi dengan UI didepan'
                 arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectPencarianDokumen), result[arrayIndex++], false, 
                         FailureHandling.CONTINUE_ON_FAILURE))
@@ -389,7 +397,9 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
         'verifikasi document template name dengan database'
         arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectTextDocumentTemplateName), result[arrayIndex++], false, 
                 FailureHandling.CONTINUE_ON_FAILURE))
-
+		
+		documentName = WebUI.getText(modifyObjectTextDocumentTemplateName)
+		
         if (GlobalVariable.roleLogin != 'Customer') {
             'verifikasi nama customer'
             arrayMatch.add(WebUI.verifyMatch(WebUI.getText(modifyObjectTextNamaCustomer), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -439,11 +449,11 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
         for (int i = 1; i <= variableRowPopup.size(); i++) {
             'Input email signer based on sequentialnya'
             emailSignerBasedOnSequence = CustomKeywords.'connection.APIFullService.getEmailBasedOnSequence'(conneSign, documentIdBasedOnLogin[
-                c]).split(';', -1)
+                c], documentName).split(';', -1)
 
             'get data kotak masuk send document secara asc, dimana customer no 1'
             ArrayList resultSigner = CustomKeywords.'connection.SendSign.getSignerKotakMasukSendDoc'(conneSign, documentIdBasedOnLogin[
-                c], emailSignerBasedOnSequence[(i - 1)])
+                c], emailSignerBasedOnSequence[(i - 1)], documentName)
 
             'declare array index menjadi 0 per result'
             arrayIndexSigner = 0
@@ -586,8 +596,7 @@ def loopingMultiDoc(ArrayList docId, Connection conneSign, String refNumber, Lin
             }
             
             'get total document based on signer'
-            count = CustomKeywords.'connection.SendSign.getTotalDocumentBasedOnSigner'(conneSign, refNumber, emailSigner[
-                loopingEmailSigner])
+            count = CustomKeywords.'connection.SendSign.getTotalDocumentBasedOnSigner'(conneSign, refNumber, emailSigner[loopingEmailSigner])
 
             'jika countnya lebih dari 0'
             if (count > 0) {
@@ -607,7 +616,6 @@ def loopingMultiDoc(ArrayList docId, Connection conneSign, String refNumber, Lin
             }
         }
     }
-    
     resultHashMap
 }
 
