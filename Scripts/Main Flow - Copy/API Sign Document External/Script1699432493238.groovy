@@ -1039,7 +1039,6 @@ def handlingOTP(String typeOfHandling, String email, String vendor) {
     }
 }
 
-
 def callbackStoreDB(Connection conneSign, String refNumber) {
 	'logic dia signing complete, document complete, atau all document sign complete'
 	String code = ''

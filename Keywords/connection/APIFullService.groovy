@@ -952,7 +952,7 @@ class APIFullService {
 		if (data == '1') {
 			helperQuery = 'tdds.seq_no'
 		} else if (data == '0') {
-			helperQuery = 'tdds.id_document_d_sign'
+			helperQuery = 'au.login_id'
 		}
 
 		helperResult = stm.executeQuery("select id_ms_doc_template from tr_Document_d tdd left join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h WHERE tdd.document_id = '" + value + "' OR tdh.ref_number = '" + value + "'")
@@ -965,12 +965,12 @@ class APIFullService {
 		}
 
 		if (data != 'null') {
-			if (helperQuery != 'tdds.id_document_d_sign') {
+			if (helperQuery != 'au.login_id') {
 				helperQuery = 'tdds.seq_no'
 			}
 		} else if (data == 'null') {
 			if (helperQuery != 'tdds.seq_no') {
-				helperQuery = 'tdds.id_document_d_sign'
+				helperQuery = 'au.login_id'
 			}
 		}
 

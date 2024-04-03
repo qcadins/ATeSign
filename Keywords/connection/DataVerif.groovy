@@ -798,7 +798,7 @@ class DataVerif {
 	getSettingCallback(Connection conn, String tenantCode, String callBack) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select mts.setting_value from ms_tenant_settings mts left join ms_tenant mst on mts.id_ms_tenant = mst.id_ms_tenant left join ms_lov msl on mts.lov_setting_type = msl.id_lov where mst.tenant_code = '" + tenantCode + "' AND msl.code = 'SIGNER_COMPLETE_CALLBACK'")
+		resultSet = stm.executeQuery("select mts.setting_value from ms_tenant_settings mts left join ms_tenant mst on mts.id_ms_tenant = mst.id_ms_tenant left join ms_lov msl on mts.lov_setting_type = msl.id_lov where mst.tenant_code = '" + tenantCode + "' AND msl.code = '" + callBack + "'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
