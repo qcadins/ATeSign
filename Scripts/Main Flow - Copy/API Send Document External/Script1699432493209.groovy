@@ -349,19 +349,21 @@ def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) 
                     if (l == 0) {
                         'Jika dari loopingan pertama, pageSignnya hanya ada 1 dan yang terakhir'
                         if (l == (pageSigns.size() - 1)) {
-                            if (((pageSigns[l]) != '') || ((llxSigns[l]) != '""')) {
+                            if (((pageSigns[l]) != '') || ((llxSigns[l]) != '')) {
                                 'Isi bodyAPI'
                                 bodyAPI = ((bodyAPI + (seqNoBodyAPI[t])) + ',"signLocations": [')
 
+								println pageSigns[l]
+								println llxSigns[l]
                                 'Jika pageSign untuk yang pertama di signer pertama kosong'
                                 if ((pageSigns[l]) == '') {
                                     'Input body mengenai llx dan lly'
                                     bodyAPI = ((bodyAPI + bodyLocationCoordinate(llxSigns[l], llySigns[l], urxSigns[l], 
                                         urySigns[l])) + ']')
-                                } else if ((llxSigns[l]) == '""') {
+                                } else if ((llxSigns[l]) == '') {
                                     'Input body mengenai page'
                                     bodyAPI = ((bodyAPI + bodyLocationPage(pageSigns[l])) + ']')
-                                } else if (((pageSigns[l]) != '') && ((llxSigns[l]) != '""')) {
+                                } else if (((pageSigns[l]) != '') && ((llxSigns[l]) != '')) {
                                     'Input body mengenai page dan llx,lly,urx, dan ury'
                                     bodyAPI = ((bodyAPI + bodyLocationCoordinatePage(llxSigns[l], llySigns[l], urxSigns[
                                         l], urySigns[l], pageSigns[l])) + ']')
@@ -379,7 +381,7 @@ def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) 
                                 }
                             }
                         } else {
-                            if (((pageSigns[l]) != '') || ((llxSigns[l]) != '""')) {
+                            if (((pageSigns[l]) != '') || ((llxSigns[l]) != '')) {
                                 'Isi bodyAPI'
                                 bodyAPI = ((bodyAPI + (seqNoBodyAPI[t])) + ',"signLocations": [')
 
@@ -388,10 +390,10 @@ def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) 
                                     'Input body mengenai x dan y'
                                     bodyAPI = ((bodyAPI + bodyLocationCoordinate(llxSigns[l], llySigns[l], urxSigns[l], 
                                         urySigns[l])) + ',')
-                                } else if ((llxSigns[l]) == '""') {
+                                } else if ((llxSigns[l]) == '') {
                                     'Input body mengenai page'
                                     bodyAPI = ((bodyAPI + bodyLocationPage(pageSigns[l])) + ',')
-                                } else if (((pageSigns[l]) != '') && ((llxSigns[l]) != '""')) {
+                                } else if (((pageSigns[l]) != '') && ((llxSigns[l]) != '')) {
                                     'Input body mengenai page dan koordinat'
                                     bodyAPI = ((bodyAPI + bodyLocationCoordinatePage(llxSigns[l], llySigns[l], urxSigns[
                                         l], urySigns[l], pageSigns[l])) + ',')
@@ -403,16 +405,16 @@ def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) 
                             }
                         }
                     } else if (l == (pageSigns.size() - 1)) {
-                        if (((pageSigns[l]) != '') || ((llxSigns[l]) != '""')) {
+                        if (((pageSigns[l]) != '') || ((llxSigns[l]) != '')) {
                             'Jika pageSign yang pertama di signer pertama kosong'
                             if ((pageSigns[l]) == '') {
                                 'Input body mengenai koordinat'
                                 bodyAPI = ((bodyAPI + bodyLocationCoordinate(llxSigns[l], llySigns[l], urxSigns[l], urySigns[
                                     l])) + ']')
-                            } else if ((llxSigns[l]) == '""') {
+                            } else if ((llxSigns[l]) == '') {
                                 'Input body mengenai page'
                                 bodyAPI = ((bodyAPI + bodyLocationPage(pageSigns[l])) + ']')
-                            } else if (((pageSigns[l]) != '') && ((llxSigns[l]) != '""')) {
+                            } else if (((pageSigns[l]) != '') && ((llxSigns[l]) != '')) {
                                 'Input body mengenai page dan koordinat'
                                 bodyAPI = ((bodyAPI + bodyLocationCoordinatePage(llxSigns[l], llySigns[l], urxSigns[l], 
                                     urySigns[l], pageSigns[l])) + ']')
@@ -430,16 +432,16 @@ def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) 
                                 l], urySigns[l])) + ';')
                         }
                     } else {
-                        if (((pageSigns[l]) != '') || ((llxSigns[l]) != '""')) {
+                        if (((pageSigns[l]) != '') || ((llxSigns[l]) != '')) {
                             'Jika pageSign yang pertama di signer pertama kosong'
                             if ((pageSigns[l]) == '') {
                                 'Input body mengenai koordinat'
                                 bodyAPI = ((bodyAPI + bodyLocationCoordinate(llxSigns[l], llySigns[l], urxSigns[l], urySigns[
                                     l])) + ',')
-                            } else if ((llxSigns[l]) == '""') {
+                            } else if ((llxSigns[l]) == '') {
                                 'Input body mengenai page'
                                 bodyAPI = ((bodyAPI + bodyLocationPage(pageSigns[l])) + ',')
-                            } else if (((pageSigns[l]) != '') && ((llxSigns[l]) != '""')) {
+                            } else if (((pageSigns[l]) != '') && ((llxSigns[l]) != '')) {
                                 'Input body mengenai page dan koordinat'
                                 bodyAPI = ((bodyAPI + bodyLocationCoordinatePage(llxSigns[l], llySigns[l], urxSigns[l], 
                                     urySigns[l], pageSigns[l])) + ',')
@@ -513,9 +515,6 @@ def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) 
         'Mengkosongkan bodyAPI'
         bodyAPI = ''
 
-		println pageStamp.size()
-		println i
-		
 		if (i <= pageStamp.size() - 1 && i <= llxStamp.size() - 1 && i <= llyStamp.size() - 1 && i <= urxStamp.size() - 1 && i <= uryStamp.size() - 1) {
 		'Jika informasi di excel mengenai stampLocation seperti page dan koordinat ada, maka'
 		if (pageStamp[i].length() != 0 && llxStamp[i].length() != 0 && llyStamp[i].length() != 0 && urxStamp[i].length() !=
@@ -545,95 +544,95 @@ def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) 
     returning
 }
 
-def setBodyForStampingLocation(String pageStamp, String llxStamp, String llyStamp, String urxStamp, String uryStamp, String bodyAPI) {
-        'Splitting dari dokumen pertama per signer mengenai stamping'
-        pageStamps = pageStamp.split(semicolon, splitnum)
-
-        llxStamps = llxStamp.split(semicolon, splitnum)
-
-        llyStamps = llyStamp.split(semicolon, splitnum)
-
-        urxStamps = urxStamp.split(semicolon, splitnum)
-
-        uryStamps = uryStamp.split(semicolon, splitnum)
-
-        'looping berdasarkan pagestamp per dokumen'
-        for (int b = 0; b < pageStamps.size(); b++) {
-            'Jika dia loopingan yang pertama'
-            if (b == 0) {
-                if (b == (pageStamps.size() - 1)) {
-                    if (((pageStamps[b]) != '') || ((llxStamps[b]) != '""')) {
-                        'Isi bodyAPI'
-                        bodyAPI = (bodyAPI + ',"stampLocations": [')
-
-                        if ((pageStamps[b]) == '') {
-                            'Input body mengenai koordinat'
-                            bodyAPI = ((bodyAPI + bodyLocationCoordinate(llxStamps[b], llyStamps[b], urxStamps[b], uryStamps[
-                                b])) + ']')
-                        } else if ((llxStamps[b]) == '""') {
-                            'Input body mengenai page'
-                            bodyAPI = ((bodyAPI + bodyLocationPage(pageStamps[b])) + ']')
-                        } else if (((pageStamps[b]) != '') && ((llxStamps[b]) != '""')) {
-                            'Input body mengenai page dan koordinat'
-                            bodyAPI = ((bodyAPI + bodyLocationCoordinatePage(llxStamps[b], llyStamps[b], urxStamps[b], uryStamps[
-                                b], pageStamps[b])) + ']')
-                        }
-                    }
-                } else {
-                    if (((pageStamps[b]) != '') || ((llxStamps[b]) != '""')) {
-                        'Isi bodyAPI'
-                        bodyAPI = (bodyAPI + ',"stampLocations": [')
-
-                        'Jika pageStampnya kosong'
-                        if ((pageStamps[b]) == '') {
-                            'Input body mengenai koordinat'
-                            bodyAPI = ((bodyAPI + bodyLocationCoordinate(llxStamps[b], llyStamps[b], urxStamps[b], uryStamps[
-                                b])) + ',')
-                        } else if ((llxStamps[b]) == '""') {
-                            'Input body mengenai page'
-                            bodyAPI = ((bodyAPI + bodyLocationPage(pageStamps[b])) + ',')
-                        } else if (((pageStamps[b]) != '') && ((llxStamps[b]) != '""')) {
-                            'Input body mengenai page dan koordinat'
-                            bodyAPI = ((bodyAPI + bodyLocationCoordinatePage(llxStamps[b], llyStamps[b], urxStamps[b], uryStamps[
-                                b], pageStamps[b])) + ',')
-                        }
-                    }
-                }
-            } else if (b == (pageStamps.size() - 1)) {
-                if (((pageStamps[b]) != '') || ((llxStamps[b]) != '""')) {
-                    'Jika pageStampnya kosong'
-                    if ((pageStamps[b]) == '') {
-                        'Input body mengenai koordinat'
-                        bodyAPI = ((bodyAPI + bodyLocationCoordinate(llxStamps[b], llyStamps[b], urxStamps[b], uryStamps[
-                            b])) + ']')
-                    } else if ((llxStamps[b]) == '""') {
-                        'Input body mengenai page'
-                        bodyAPI = ((bodyAPI + bodyLocationPage(pageStamps[b])) + ']')
-                    } else if (((pageStamps[b]) != '') && ((llxStamps[b]) != '""')) {
-                        'Input body mengenai page dan koordinat'
-                        bodyAPI = ((bodyAPI + bodyLocationCoordinatePage(llxStamps[b], llyStamps[b], urxStamps[b], uryStamps[
-                            b], pageStamps[b])) + ']')
-                    }
-                }
-            } else {
-                if (((pageStamps[b]) != '') || ((llxStamps[b]) != '""')) {
-                    'Jika pageStampnya kosong'
-                    if ((pageStamps[b]) == '') {
-                        'Input body mengenai koordinat'
-                        bodyAPI = ((bodyAPI + bodyLocationCoordinate(llxStamps[b], llyStamps[b], urxStamps[b], uryStamps[
-                            b])) + ',')
-                    } else if ((llxStamps[b]) == '""') {
-                        'Input body mengenai page'
-                        bodyAPI = ((bodyAPI + bodyLocationPage(pageStamps[b])) + ',')
-                    } else if (((pageStamps[b]) != '') && ((llxStamps[b]) != '""')) {
-                        'Input body mengenai page dan koordinat'
-                        bodyAPI = ((bodyAPI + bodyLocationCoordinatePage(llxStamps[b], llyStamps[b], urxStamps[b], uryStamps[
-                            b], pageStamps[b])) + ',')
-                    }
-                }
-            }
-        }
-    bodyAPI
+	def setBodyForStampingLocation(String pageStamp, String llxStamp, String llyStamp, String urxStamp, String uryStamp, String bodyAPI) {
+	        'Splitting dari dokumen pertama per signer mengenai stamping'
+	        pageStamps = pageStamp.split(semicolon, splitnum)
+	
+	        llxStamps = llxStamp.split(semicolon, splitnum)
+	
+	        llyStamps = llyStamp.split(semicolon, splitnum)
+	
+	        urxStamps = urxStamp.split(semicolon, splitnum)
+	
+	        uryStamps = uryStamp.split(semicolon, splitnum)
+	
+	        'looping berdasarkan pagestamp per dokumen'
+	        for (int b = 0; b < pageStamps.size(); b++) {
+	            'Jika dia loopingan yang pertama'
+	            if (b == 0) {
+	                if (b == (pageStamps.size() - 1)) {
+	                    if (((pageStamps[b]) != '') || ((llxStamps[b]) != '""')) {
+	                        'Isi bodyAPI'
+	                        bodyAPI = (bodyAPI + ',"stampLocations": [')
+	
+	                        if ((pageStamps[b]) == '') {
+	                            'Input body mengenai koordinat'
+	                            bodyAPI = ((bodyAPI + bodyLocationCoordinate(llxStamps[b], llyStamps[b], urxStamps[b], uryStamps[
+	                                b])) + ']')
+	                        } else if ((llxStamps[b]) == '""') {
+	                            'Input body mengenai page'
+	                            bodyAPI = ((bodyAPI + bodyLocationPage(pageStamps[b])) + ']')
+	                        } else if (((pageStamps[b]) != '') && ((llxStamps[b]) != '""')) {
+	                            'Input body mengenai page dan koordinat'
+	                            bodyAPI = ((bodyAPI + bodyLocationCoordinatePage(llxStamps[b], llyStamps[b], urxStamps[b], uryStamps[
+	                                b], pageStamps[b])) + ']')
+	                        }
+	                    }
+	                } else {
+	                    if (((pageStamps[b]) != '') || ((llxStamps[b]) != '""')) {
+	                        'Isi bodyAPI'
+	                        bodyAPI = (bodyAPI + ',"stampLocations": [')
+	
+	                        'Jika pageStampnya kosong'
+	                        if ((pageStamps[b]) == '') {
+	                            'Input body mengenai koordinat'
+	                            bodyAPI = ((bodyAPI + bodyLocationCoordinate(llxStamps[b], llyStamps[b], urxStamps[b], uryStamps[
+	                                b])) + ',')
+	                        } else if ((llxStamps[b]) == '""') {
+	                            'Input body mengenai page'
+	                            bodyAPI = ((bodyAPI + bodyLocationPage(pageStamps[b])) + ',')
+	                        } else if (((pageStamps[b]) != '') && ((llxStamps[b]) != '""')) {
+	                            'Input body mengenai page dan koordinat'
+	                            bodyAPI = ((bodyAPI + bodyLocationCoordinatePage(llxStamps[b], llyStamps[b], urxStamps[b], uryStamps[
+	                                b], pageStamps[b])) + ',')
+	                        }
+	                    }
+	                }
+	            } else if (b == (pageStamps.size() - 1)) {
+	                if (((pageStamps[b]) != '') || ((llxStamps[b]) != '""')) {
+	                    'Jika pageStampnya kosong'
+	                    if ((pageStamps[b]) == '') {
+	                        'Input body mengenai koordinat'
+	                        bodyAPI = ((bodyAPI + bodyLocationCoordinate(llxStamps[b], llyStamps[b], urxStamps[b], uryStamps[
+	                            b])) + ']')
+	                    } else if ((llxStamps[b]) == '""') {
+	                        'Input body mengenai page'
+	                        bodyAPI = ((bodyAPI + bodyLocationPage(pageStamps[b])) + ']')
+	                    } else if (((pageStamps[b]) != '') && ((llxStamps[b]) != '""')) {
+	                        'Input body mengenai page dan koordinat'
+	                        bodyAPI = ((bodyAPI + bodyLocationCoordinatePage(llxStamps[b], llyStamps[b], urxStamps[b], uryStamps[
+	                            b], pageStamps[b])) + ']')
+	                    }
+	                }
+	            } else {
+	                if (((pageStamps[b]) != '') || ((llxStamps[b]) != '""')) {
+	                    'Jika pageStampnya kosong'
+	                    if ((pageStamps[b]) == '') {
+	                        'Input body mengenai koordinat'
+	                        bodyAPI = ((bodyAPI + bodyLocationCoordinate(llxStamps[b], llyStamps[b], urxStamps[b], uryStamps[
+	                            b])) + ',')
+	                    } else if ((llxStamps[b]) == '""') {
+	                        'Input body mengenai page'
+	                        bodyAPI = ((bodyAPI + bodyLocationPage(pageStamps[b])) + ',')
+	                    } else if (((pageStamps[b]) != '') && ((llxStamps[b]) != '""')) {
+	                        'Input body mengenai page dan koordinat'
+	                        bodyAPI = ((bodyAPI + bodyLocationCoordinatePage(llxStamps[b], llyStamps[b], urxStamps[b], uryStamps[
+	                            b], pageStamps[b])) + ',')
+	                    }
+	                }
+	            }
+	        }
+	    bodyAPI
 }
 
 def bodyLocationCoordinate(String llxSigns, String llySigns, String urxSigns, String urySigns) {

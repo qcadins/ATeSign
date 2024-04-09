@@ -18,6 +18,8 @@ class APIFullService {
 	ArrayList<String> listdata = []
 	String emailWhere, selectData
 
+	MaskingEsign maskingEsign = new MaskingEsign()
+
 	@Keyword
 	getGenInvLink(Connection conn, String tenant, String phone, String idno) {
 		stm = conn.createStatement()
@@ -57,7 +59,7 @@ class APIFullService {
 	getAPIGenInvLinkVerifTrx(Connection conn, String name, String phone) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select qty from tr_balance_mutation tbm left join am_msuser am on am.id_ms_user = tbm.id_ms_user join ms_lov ml on ml.id_lov = tbm.lov_trx_type where ml.description = 'Use Verification' AND (am.full_name = '" + name + "' OR tbm.usr_crt = '" + phone + "')  order by trx_date desc")
+		resultSet = stm.executeQuery("select qty from tr_balance_mutation tbm left join am_msuser am on am.id_ms_user = tbm.id_ms_user join ms_lov ml on ml.id_lov = tbm.lov_trx_type where ml.description = 'Use Verification' AND (am.full_name = '" + name + "' OR tbm.usr_crt = '" + maskingEsign.maskData(phone) + "')  order by trx_date desc")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -1531,7 +1533,7 @@ class APIFullService {
 	getSaldoTrx(Connection conn, String value, String desc) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT qty FROM tr_balance_mutation tbm JOIN ms_lov ml ON ml.id_lov = tbm.lov_trx_type LEFT JOIN am_msuser amu ON amu.id_ms_user = tbm.id_ms_user WHERE description = 'Use " + desc + "' AND tbm.usr_crt = '" + value.toUpperCase() + "' ORDER BY id_balance_mutation DESC LIMIT 1")
+		resultSet = stm.executeQuery("SELECT qty FROM tr_balance_mutation tbm JOIN ms_lov ml ON ml.id_lov = tbm.lov_trx_type LEFT JOIN am_msuser amu ON amu.id_ms_user = tbm.id_ms_user WHERE description = 'Use " + desc + "' AND tbm.usr_crt = '" + maskingEsign.maskData(value.toUpperCase()) + "' ORDER BY id_balance_mutation DESC LIMIT 1")
 
 		metadata = resultSet.metaData
 

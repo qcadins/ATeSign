@@ -159,8 +159,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
 									'array match kepada user create'
                                     arrayMatch.add(WebUI.verifyMatch((resultAccessLog[arrayIndexAccessLog++]).toString().toLowerCase(), 
-                                            findTestData(excelPathViewUserOTP).getValue(GlobalVariable.NumofColm, rowExcel(
-                                                    'Email Login')).toLowerCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+                                    CustomKeywords.'connection.MaskingEsign.maskData'(findTestData(excelPathViewUserOTP).getValue(GlobalVariable.NumofColm, rowExcel(
+                                                    'Email Login')).toLowerCase()), false, FailureHandling.CONTINUE_ON_FAILURE))
 
                                     'jika data db tidak sesuai dengan excel'
                                     if (arrayMatch.contains(false)) {
@@ -241,8 +241,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
 									'array match kepada user create'
                                     arrayMatch.add(WebUI.verifyMatch((resultAccessLog[arrayIndexAccessLog++]).toString().toLowerCase(), 
-                                            findTestData(excelPathViewUserOTP).getValue(GlobalVariable.NumofColm, rowExcel(
-                                                    'Email Login')).toLowerCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+                                    CustomKeywords.'connection.MaskingEsign.maskData'(findTestData(excelPathViewUserOTP).getValue(GlobalVariable.NumofColm, rowExcel(
+                                                    'Email Login')).toLowerCase()), false, FailureHandling.CONTINUE_ON_FAILURE))
 
                                     'jika data db tidak sesuai dengan excel'
                                     if (arrayMatch.contains(false)) {

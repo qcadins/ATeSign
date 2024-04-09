@@ -267,7 +267,7 @@ def verifySaldoUsed(Connection conneSign) {
     WebUI.click(findTestObject('Saldo/btn_cari'))
 
     'get column di saldo'
-    variableSaldoColumn = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller > datatable-row-wrapper > datatable-body-row datatable-body-cell'))
+    variableSaldoColumn = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-header > div > div.datatable-row-center.ng-star-inserted datatable-header-cell'))
 
     'get row di saldo'
     variableSaldoRow = DriverFactory.webDriver.findElements(By.cssSelector('body > app-root > app-full-layout > div > div.main-panel > div > div.content-wrapper > app-balance > app-msx-paging > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller datatable-row-wrapper '))
@@ -278,25 +278,24 @@ def verifySaldoUsed(Connection conneSign) {
 
     index = 0
 
+	'looping mengenai rownnya'
     for (int p = 1; p <= variableSaldoRow.size(); p++) {
         'looping mengenai columnnya'
-        for (int u = 1; u <= (variableSaldoColumn.size() / variableSaldoRow.size()); u++) {
+        for (int u = 1; u <= (variableSaldoColumn.size()); u++) {
             'modify per row dan column. column menggunakan u dan row menggunakan documenttemplatename'
             modifyperrowpercolumn = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/lbl_notrxsaldo'), 'xpath', 
                 'equals', ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
                 p) + ']/datatable-body-row/div[2]/datatable-body-cell[') + u) + ']/div', true)
 
             'Jika u di lokasi qty atau kolom ke 9'
-            if (u == 9) {
+            if (u == 10) {
                 'Jika yang qtynya 1 dan databasenya juga, berhasil'
                 if ((WebUI.getText(modifyperrowpercolumn) == '1') || ((inquiryDB[index]) == '-1')) {
                     'Jika bukan untuk 2 kolom itu, maka check ke db'
-                    checkVerifyEqualOrMatch(WebUI.verifyMatch('-' + WebUI.getText(modifyperrowpercolumn), inquiryDB[index], 
+                    checkVerifyEqualOrMatch(WebUI.verifyMatch('-' + WebUI.getText(modifyperrowpercolumn), inquiryDB[index++], 
                             false, FailureHandling.CONTINUE_ON_FAILURE), 'pada Kuantitas di Mutasi Saldo dengan nomor kontrak ' + 
                         findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, rowExcel('refNumber')).replace(
                             '"', ''))
-
-                    index++
                 } else {
                     'Jika bukan -1, atau masih 0. Maka ttdnya dibilang error'
                     GlobalVariable.FlagFailed = 1

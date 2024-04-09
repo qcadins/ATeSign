@@ -54,7 +54,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 			('endDate') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('$End Date')),
 			('offCode') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Office Code')),
 			('businessLine') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Business Line Code')),
-			('regionCode') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Region Code')),]))
+			('regionCode') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Region Code'))]))
 
         'ambil lama waktu yang diperlukan hingga request menerima balikan'
         elapsedTime = ((respon.elapsedTime / 1000) + ' second')

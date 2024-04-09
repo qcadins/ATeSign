@@ -21,7 +21,7 @@ resultDbNew = CustomKeywords.'connection.PengaturanTenant.getPengaturanTenant'(c
 arrayIndex = 0
 
 'verify login'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')).toUpperCase(), 
+arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.MaskingEsign.maskData'(findTestData(excelPathFEPengaturanTenant).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')).toUpperCase()), 
         resultDbNew[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'verify waktu edit'

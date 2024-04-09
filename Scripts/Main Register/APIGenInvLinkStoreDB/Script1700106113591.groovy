@@ -18,10 +18,9 @@ ArrayList result = CustomKeywords.'connection.APIFullService.getGenInvLink'(conn
 'declare arrayindex'
 arrayindex = 0
 
-//arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('callerId')).replace('"', '').toUpperCase(), 
-//        result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 'verify user crt / callerId'
-arrayindex++
+arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.MaskingEsign.maskData'(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('callerId')).replace('"', '').toUpperCase()), 
+        result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
 'verify gender'
 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Jenis Kelamin')).replace(

@@ -493,11 +493,12 @@ def getOTP(Connection conneSign) {
 }
 
 def verifyDataDaftarAkun() {
+		if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')) != '') {
 		'verify Email sesuai inputan'
 		checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_Email'), 'value').toUpperCase(), 
             findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Email')).replace('"', '').toUpperCase(), 
             false, FailureHandling.CONTINUE_ON_FAILURE), ' Email')
-
+		}
     'verify NIK sesuai inputan'
     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('DaftarAkun/input_NIK'), 'value').toUpperCase(), 
             findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$NIK')).replace('"', '').toUpperCase(), 

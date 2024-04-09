@@ -14,6 +14,7 @@ GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExc
 'connect dengan db'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
+FailureHandling.
 'mengambil AES Key untuk encrypt'
 String aesKey = CustomKeywords.'connection.DataVerif.getAESKey'(conneSign)
 

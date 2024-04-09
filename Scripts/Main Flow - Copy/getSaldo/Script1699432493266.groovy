@@ -38,7 +38,7 @@ if (usageSaldo == 'Stamp') {
 }
 
 if (usageSaldo == 'Register') {
-	funcSaldoRegis(result, conneSign)
+	funcSaldoRegis(result)
 }
 
 result

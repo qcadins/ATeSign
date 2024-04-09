@@ -101,7 +101,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
 					'array match kepada user create'
                     arrayMatch.add(WebUI.verifyMatch((resultAccessLog[arrayIndexAccessLog++]).toString().toLowerCase(), 
-                            findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')).toLowerCase(), 
+                       CustomKeywords.'connection.MaskingEsign.maskData'(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')).toLowerCase()), 
                             false, FailureHandling.CONTINUE_ON_FAILURE))
 
                     'jika data db tidak sesuai dengan excel'

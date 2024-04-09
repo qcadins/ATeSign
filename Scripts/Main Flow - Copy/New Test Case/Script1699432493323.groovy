@@ -29,10 +29,12 @@ if (excelPathFESignDocument.contains('MAIN')) {
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 
-aa = 'admin@adins.co.id'.toUpperCase()
+aa = 'QE'
 
 println aa
-println CustomKeywords.'connection.Test.maskData'(aa)
+println CustomKeywords.'connection.MaskingEsign.maskData'(aa)
+println CustomKeywords.'connection.MaskingEsign.maskData'('082186200807')
+println CustomKeywords.'connection.MaskingEsign.maskData'(findTestData(excelPathFESignDocument).getValue(2, rowExcel('Username')))
 
 
  //*[@id="searchForm"]/div[1]/div[10]/app-question/app-select/div/div[2]/ng-dropdown-panel

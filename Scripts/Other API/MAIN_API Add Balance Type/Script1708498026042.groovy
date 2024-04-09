@@ -81,8 +81,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     arrayIndex = 0
 
                     'verify add balance type'
-                    arrayMatch.add(WebUI.verifyMatch(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
-                                    'callerId')), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+                    arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.MaskingEsign.maskData'(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
+                                    'callerId'))), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
 					'verify add balance type'
 					arrayMatch.add(WebUI.verifyMatch('BALANCE_TYPE', result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))

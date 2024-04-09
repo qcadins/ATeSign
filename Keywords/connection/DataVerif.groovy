@@ -16,6 +16,7 @@ class DataVerif {
 	ResultSetMetaData metadata
 	ResultSet resultSet
 	ArrayList<String> listdata = []
+	MaskingEsign maskingEsign = new MaskingEsign()
 
 	@Keyword
 	settingBaseUrl(String excelPath, int colm, int row) {
@@ -46,7 +47,7 @@ class DataVerif {
 	getSaldo(Connection conn, String user) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT qty FROM tr_balance_mutation where usr_crt = '" + user + "' ORDER BY trx_date DESC LIMIT 1")
+		resultSet = stm.executeQuery("SELECT qty FROM tr_balance_mutation where usr_crt = '" + maskingEsign.maskData(user) + "' ORDER BY trx_date DESC LIMIT 1")
 
 		metadata = resultSet.metaData
 
@@ -137,7 +138,7 @@ class DataVerif {
 	getCountTrx(Connection conn, String email, String notelp, String desc) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("SELECT COUNT(*) FROM tr_balance_mutation tbm JOIN ms_lov ml ON ml.id_lov = tbm.lov_trx_type JOIN am_msuser amu ON amu.id_ms_user = tbm.id_ms_user WHERE description = '" + desc + "' AND (tbm.usr_crt = '" + email + "' OR tbm.usr_crt = '" + notelp + "')")
+		resultSet = stm.executeQuery("SELECT COUNT(*) FROM tr_balance_mutation tbm JOIN ms_lov ml ON ml.id_lov = tbm.lov_trx_type JOIN am_msuser amu ON amu.id_ms_user = tbm.id_ms_user WHERE description = '" + desc + "' AND (tbm.usr_crt = '" + maskingEsign.maskData(email) + "' OR tbm. = '" + maskingEsign.maskData(notelp) + "')")
 
 		metadata = resultSet.metaData
 
@@ -147,24 +148,6 @@ class DataVerif {
 			data = resultSet.getObject(1)
 		}
 		data
-	}
-
-	@Keyword
-	gettrxSaldo(Connection conn, String refnumber, String limit) {
-		stm = conn.createStatement()
-
-		resultSet = stm.executeQuery("select tbm.trx_no, TO_CHAR(tbm.dtm_crt,'YYYY-MM-DD HH24:MI:SS'), ml.description ,amm.full_name, case when amm_two.full_name != null or amm_two.full_name != '' then tdh.ref_number||'('||amm_two.full_name||')' else tdh.ref_number end ,ml_doc_h.code,case when mdt.doc_template_name != null then mdt.doc_template_name else tdd.document_name end, tbm.notes, tbm.qty from tr_balance_mutation as tbm join ms_lov as ml on tbm.lov_trx_type = ml.id_lov join am_msuser as amm on tbm.id_ms_user = amm.id_ms_user join tr_document_h as tdh on tbm.id_document_h = tdh.id_document_h join ms_lov as ml_doc_h on tdh.lov_doc_type = ml_doc_h.id_lov join tr_document_d as tdd on tbm.id_document_d = tdd.id_document_d left join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template  left join am_msuser as amm_two on tdh.id_msuser_customer = amm_two.id_ms_user where tdh.ref_number = '" + refnumber + "' order by tbm.dtm_crt asc limit " + limit + " ")
-		metadata = resultSet.metaData
-
-		columnCount = metadata.getColumnCount()
-
-		while (resultSet.next()) {
-			for (i = 1 ; i <= columnCount ; i++) {
-				data = resultSet.getObject(i)
-				listdata.add(data)
-			}
-		}
-		listdata
 	}
 
 	@Keyword

@@ -79,8 +79,28 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             break
         }
         
+		
         'Jika value muncul'
         if (WebUI.verifyElementPresent(findTestObject('Job Result/lbl_value'), GlobalVariable.TimeOut)) {
+			'get column popup'
+			variableColPopup = DriverFactory.webDriver.findElements(By.cssSelector('#listJobResult > app-msx-datatable > section > ngx-datatable > div > datatable-body > datatable-selection > datatable-scroller > datatable-row-wrapper > datatable-body-row datatable-body-cell'))
+			
+			ArrayList storeDB = CustomKeywords.'connection.JobResult.jobResultDB'(conneSign, findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, rowExcel('Permintaan Tanggal Mulai')), findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, rowExcel('Permintaan Tanggal Berakhir')))
+			
+			arrayIndex = 0
+			for (loopingColumn = 1; loopingColumn <= variableColPopup.size(); loopingColumn++) {
+				'modify object text nama, email, signer Type, sudah aktivasi Untuk yang terakhir belum bisa, dikarenakan masih gak ada data (-) Dikarenakan modifynya bukan p di lastnya, melainkan span'
+				modifyObject = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/text_tipepopup'), 'xpath', 'equals',
+					'//*[@id="listJobResult"]/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper/datatable-body-row/div[2]/datatable-body-cell[' + loopingColumn + ']/div', true)
+				
+				if (loopingColumn == variableColPopup.size()) {
+					continue
+				}
+				
+				'check value modal ke db'
+				checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyObject), storeDB[arrayIndex++],
+						false, FailureHandling.CONTINUE_ON_FAILURE), 'Seaching Page kolom ke-' + loopingColumn)
+			}
             'Jika aksi yang dipilih adalah View Request Param'
             if (findTestData(excelPathJobResult).getValue(GlobalVariable.NumofColm, rowExcel('Action')) == 'View Request Param') {
                 'get row'

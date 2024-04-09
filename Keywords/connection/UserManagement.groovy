@@ -83,7 +83,7 @@ class UserManagement {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getInsertUserManagement(Connection conn, String email, String tenantCode) {
 		stm = conn.createStatement()

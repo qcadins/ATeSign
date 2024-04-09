@@ -183,7 +183,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     
 					'array match mengenai user create'
                     arrayMatch.add(WebUI.verifyMatch((resultAccessLog[arrayIndexAccessLog++]).toString().toLowerCase(), 
-                            findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')).toLowerCase(), 
+                        CustomKeywords.'connection.MaskingEsign.maskData'(findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')).toLowerCase()), 
                             false, FailureHandling.CONTINUE_ON_FAILURE))
 
                     'jika data db tidak sesuai dengan excel'
@@ -285,7 +285,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
 					'array match kepada user create'
                     arrayMatch.add(WebUI.verifyMatch((resultAccessLog[arrayIndexAccessLog++]).toString().toLowerCase(), 
-                            findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')).toLowerCase(), 
+                            CustomKeywords.'connection.MaskingEsign.maskData'(findTestData(excelPathEditSignerData).getValue(GlobalVariable.NumofColm, rowExcel('Email Login')).toLowerCase()), 
                             false, FailureHandling.CONTINUE_ON_FAILURE))
 
                     'jika data db tidak sesuai dengan excel'

@@ -102,7 +102,7 @@ class InquiryInvitation {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getReceiverDetail(Connection conn, String idno) {
 		stm = conn.createStatement()
@@ -116,7 +116,7 @@ class InquiryInvitation {
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
 		}
-		
+
 		data
 	}
 }

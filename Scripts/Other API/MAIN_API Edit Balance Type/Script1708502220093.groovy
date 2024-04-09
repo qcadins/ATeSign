@@ -71,35 +71,35 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             if (statusCode == 0) {
                 if (GlobalVariable.checkStoreDB == 'Yes') {
                     'get data balance type dari DB'
-                    ArrayList<String> result = CustomKeywords.'connection.APIOnly.getAddBalanceType'(conneSign, findTestData(
-                            excelPath).getValue(GlobalVariable.NumofColm, rowExcel('balanceTypeCode')))
+                    ArrayList result = CustomKeywords.'connection.APIOnly.getAddBalanceType'(conneSign, findTestData(excelPath).getValue(
+                            GlobalVariable.NumofColm, rowExcel('balanceTypeCode')))
 
                     'declare arraylist arraymatch'
-                    ArrayList<String> arrayMatch = []
+                    ArrayList arrayMatch = []
 
                     'declare arrayindex'
                     arrayIndex = 0
 
                     'verify edit balance type'
+                    arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'connection.MaskingEsign.maskData'(findTestData(excelPath).getValue(
+                                    GlobalVariable.NumofColm, rowExcel('callerId'))), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                    'verify edit balance type'
+                    arrayMatch.add(WebUI.verifyMatch('BALANCE_TYPE', result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                    'verify edit balance type'
                     arrayMatch.add(WebUI.verifyMatch(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
-                                    'callerId')), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+                                    'balanceTypeCode')), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-					'verify edit balance type'
-					arrayMatch.add(WebUI.verifyMatch('BALANCE_TYPE', result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+                    'verify edit balance type'
+                    arrayMatch.add(WebUI.verifyMatch(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
+                                    'balanceTypeName')), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-					'verify edit balance type'
-					arrayMatch.add(WebUI.verifyMatch(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
-									'balanceTypeCode')), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+                    'verify edit balance type'
+                    arrayMatch.add(WebUI.verifyMatch('1', result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-					'verify edit balance type'
-					arrayMatch.add(WebUI.verifyMatch(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
-									'balanceTypeName')), result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-					'verify edit balance type'
-					arrayMatch.add(WebUI.verifyMatch('1', result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
-					'verify edit balance type'
-					arrayMatch.add(WebUI.verifyMatch('0', result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+                    'verify edit balance type'
+                    arrayMatch.add(WebUI.verifyMatch('0', result[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
                     'jika data db tidak sesuai dengan excel'
                     if (arrayMatch.contains(false)) {

@@ -359,8 +359,8 @@ def responseAPIStoreDB(Connection conneSign, String ipaddress, String[] document
                     rowExcel('browserInfo')).replace('"', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'verify callerId'
-        arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
-                    rowExcel('callerId')).replace('"', ''), false, FailureHandling.CONTINUE_ON_FAILURE))
+        arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], CustomKeywords.'connection.MaskingEsign.maskData'(findTestData(excelPathAPISignDocument).getValue(GlobalVariable.NumofColm, 
+                    rowExcel('callerId')).replace('"', '')), false, FailureHandling.CONTINUE_ON_FAILURE))
 
         'verify signing proces. 0 berarti tidak ada proses tanda tangan lagi.'
         arrayMatch.add(WebUI.verifyEqual(result[arrayIndex++], 0, FailureHandling.CONTINUE_ON_FAILURE))

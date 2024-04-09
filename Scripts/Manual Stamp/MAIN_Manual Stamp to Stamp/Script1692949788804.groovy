@@ -995,15 +995,13 @@ def verifySaldoUsed(Connection conneSign) {
                         '"', ''))
 
                 index++
-            } else if (colm == 11) {
+            } else if (colm == variableSaldoColumn.size()) {
                 'Jika di kolom ke 10, atau di FE table saldo'
             } else {
                 'check table'
-                checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyperrowpercolumn), inquiryDB[index], false, 
+                checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(modifyperrowpercolumn), inquiryDB[index++], false, 
                         FailureHandling.CONTINUE_ON_FAILURE), 'pada Mutasi Saldo dengan nomor Kontrak ' + findTestData(excelPathManualStamptoStamp).getValue(
                         GlobalVariable.NumofColm, rowExcel('$Tipe Dokumen')).replace('"', ''))
-
-                index++
             }
         }
     }
