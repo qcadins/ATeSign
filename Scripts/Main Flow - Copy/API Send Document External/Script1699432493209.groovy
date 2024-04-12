@@ -807,6 +807,8 @@ def checkingSaldo(ArrayList<String> balmut, String tipeSaldo, int penggunaanSald
 		CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
 			((findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', '') +
 			';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via ') + tipeSaldo)
+		
+		GlobalVariable.FlagFailed = 1
 	} else {
 		'penggunaan saldo didapat dari ikuantitaas query balmut'
 		penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))

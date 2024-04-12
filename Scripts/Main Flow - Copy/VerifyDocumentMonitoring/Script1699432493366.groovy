@@ -476,9 +476,10 @@ def actionDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan
 	
     'loop untuk row popup'
     for (int i = 1; i <= variableRowPopup.size(); i++) {
+		println nomorKontrakPerPilihan
+		println documentName
         'Input email signer based on sequentialnya'
-        emailSignerBasedOnSequence = CustomKeywords.'connection.APIFullService.getEmailBasedOnSequence'(conneSign, nomorKontrakPerPilihan, documentName).split(
-            ';', -1)
+        emailSignerBasedOnSequence = CustomKeywords.'connection.APIFullService.getEmailBasedOnSequence'(conneSign, nomorKontrakPerPilihan, documentName).split(';', -1)
 	
         'get data kotak masuk send document secara asc, dimana customer no 1'
         ArrayList<String> resultSigner = CustomKeywords.'connection.SendSign.getSignerKotakMasukSendDoc'(conneSign, nomorKontrakPerPilihan, 

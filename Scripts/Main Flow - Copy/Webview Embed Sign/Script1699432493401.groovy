@@ -1798,7 +1798,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 			penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
 		}
 	}
-    /*
+    
     if ((notifTypeDB == '0') || (notifTypeDB == 'Level Tenant')) {
         if (mustUseWAFirst == '1') {
             tipeSaldo = 'WhatsApp Message'
@@ -1892,16 +1892,20 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
                 ((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
                     '-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman Informasi Signing Via ') + 
                 tipeSaldo.replace(' Message', '').replace(' Notif', ''))
+			
+			GlobalVariable.FlagFailed = 1
         } else {
             'penggunaan saldo didapat dari ikuantitaas query balmut'
             penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
         }
     }
-    */
+    
     int pemotonganSaldo = 0
 
     int increment
 
+	WebUI.comment(balmut.toString())
+	
     if (penggunaanSaldo > 0) {
         for (looping = 0; looping < penggunaanSaldo; looping++) {
             if (looping == 0) {

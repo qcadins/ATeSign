@@ -1842,7 +1842,7 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
         tipeSaldo = 'WhatsApp Message'
 
         'menggunakan saldo wa'
-        balmut = CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
+        balmut = balmut + CustomKeywords.'connection.DataVerif.getTrxSaldoWASMS'(conneSign, tipeSaldo, fullNameUser)
 
         if (balmut.size() == 0) {
 			if (GlobalVariable.Psre.toString().equalsIgnoreCase('Privy')) {
@@ -1858,8 +1858,6 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
 				(findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
 				'-', '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via WhatsApp')
 			}
-        } else {
-            penggunaanSaldo = (penggunaanSaldo + (balmut.size() / 10))
         }
     }
     
@@ -1893,6 +1891,8 @@ def checkSaldoWAOrSMS(Connection conneSign, String vendor) {
     int pemotonganSaldo = 0
 
     int increment
+	
+	penggunaanSaldo = balmut.size() / 10
 
     if (penggunaanSaldo > 0) {
         for (looping = 0; looping < penggunaanSaldo; looping++) {

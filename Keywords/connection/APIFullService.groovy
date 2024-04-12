@@ -7,6 +7,7 @@ import java.sql.ResultSetMetaData
 import java.sql.Statement
 import com.kms.katalon.core.annotation.Keyword
 import internal.GlobalVariable
+import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
 class APIFullService {
 
@@ -976,10 +977,12 @@ class APIFullService {
 			}
 		}
 
-		resultSet = stm.executeQuery("SELECT STRING_AGG(login_id, ';' ORDER BY seq_no) AS aa FROM (SELECT DISTINCT tdds.id_ms_user,au.login_id, FIRST_VALUE(" + helperQuery + ") OVER (PARTITION BY tdds.id_ms_user ORDER BY tdds.seq_no) AS seq_no FROM tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user WHERE tdd.document_id = '" + value + "' OR tdh.ref_number = '" + value + "' AND tdd.document_name = '" + documentName + "') AS alls;")
+		resultSet = stm.executeQuery("SELECT STRING_AGG(login_id, ';' ORDER BY seq_no) AS aa FROM (SELECT DISTINCT tdds.id_ms_user,au.login_id, FIRST_VALUE(" + helperQuery + ") OVER (PARTITION BY tdds.id_ms_user ORDER BY tdds.seq_no) AS seq_no FROM tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user LEFT JOIN ms_doc_template mdt on tdd.id_ms_doc_template = mdt.id_doc_template WHERE (tdd.document_id = '" + value + "' OR tdh.ref_number = '" + value + "') AND (tdd.document_name = '" + documentName + "' OR mdt.doc_template_name = '" + documentName + "')) AS alls;")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
+
+		WebUI.comment(("SELECT STRING_AGG(login_id, ';' ORDER BY seq_no) AS aa FROM (SELECT DISTINCT tdds.id_ms_user,au.login_id, FIRST_VALUE(" + helperQuery + ") OVER (PARTITION BY tdds.id_ms_user ORDER BY tdds.seq_no) AS seq_no FROM tr_document_h AS tdh JOIN tr_document_d AS tdd ON tdh.id_document_h = tdd.id_document_h JOIN tr_document_d_sign AS tdds ON tdd.id_document_d = tdds.id_document_d JOIN am_msuser AS au ON au.id_ms_user = tdds.id_ms_user LEFT JOIN ms_doc_template mdt on tdd.id_ms_doc_template = mdt.id_doc_template WHERE (tdd.document_id = '" + value + "' OR tdh.ref_number = '" + value + "') AND (tdd.document_name = '" + documentName + "' OR mdt.doc_template_name = '" + documentName + "')) AS alls;"))
 
 		while (resultSet.next()) {
 			data = resultSet.getObject(1)
@@ -2279,7 +2282,7 @@ class APIFullService {
 		if (update.checkNotifTypeExistforTenant(conn) > 0) {
 			stm = conn.createStatement()
 
-			resultSet = stm.executeQuery("SELECT CASE WHEN mntot.must_use_wa_first = '1' THEN 'WhatsApp Message' ELSE CASE WHEN (SELECT msvr.email_service FROM ms_vendor_registered_user msvr LEFT JOIN am_msuser amm ON msvr.id_ms_user = amm.id_ms_user WHERE amm.login_id = '" + userEmail + "' OR amm.hashed_phone = '" + userEmail + "' OR amm.hashed_id_no = '" + userEmail + "' LIMIT 1) = '1' THEN 'SMS Notif' ELSE CASE WHEN mntot.use_wa_message = '1' THEN 'WA' ELSE 'Level Tenant' END END END AS result FROM ms_notificationtypeoftenant mntot LEFT JOIN ms_lov msl ON mntot.lov_sending_point = msl.id_lov LEFT JOIN ms_tenant mst ON mntot.id_ms_tenant = mst.id_ms_tenant WHERE msl.code = '" + code + "' and mst.tenant_code = '" + tenantCode + "';")
+			resultSet = stm.executeQuery("SELECT CASE WHEN mntot.must_use_wa_first = '1' THEN 'WhatsApp Message' ELSE CASE WHEN (SELECT msvr.email_service FROM ms_vendor_registered_user msvr LEFT JOIN am_msuser amm ON msvr.id_ms_user = amm.id_ms_user WHERE amm.login_id = '" + userEmail + "' OR amm.hashed_phone = '" + userEmail + "' OR amm.hashed_id_no = '" + userEmail + "' LIMIT 1) = '1' THEN 'SMS Notif' ELSE CASE WHEN mntot.use_wa_message = '1' THEN 'WhatsApp Message' ELSE 'Level Tenant' END END END AS result FROM ms_notificationtypeoftenant mntot LEFT JOIN ms_lov msl ON mntot.lov_sending_point = msl.id_lov LEFT JOIN ms_tenant mst ON mntot.id_ms_tenant = mst.id_ms_tenant WHERE msl.code = '" + code + "' and mst.tenant_code = '" + tenantCode + "';")
 
 			metadata = resultSet.metaData
 
