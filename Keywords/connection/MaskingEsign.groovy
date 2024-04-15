@@ -104,7 +104,7 @@ class MaskingEsign {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	verifyUserCrtUserDpd(Connection conn, String tableName) {
 		stm = conn.createStatement()
@@ -113,7 +113,7 @@ class MaskingEsign {
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
-		
+
 		while (resultSet.next()) {
 			for (i = 1 ; i <= columnCount ; i++) {
 				data = resultSet.getObject(i)
@@ -122,7 +122,7 @@ class MaskingEsign {
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	getLastDataTable(Connection conn, String tableName) {
 		stm = conn.createStatement()

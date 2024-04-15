@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>MAIN_API Insert Stamping Materai</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>d3c661a4-c579-4360-b831-31fa8fa25a01</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>5e3035bf-b389-4035-9edb-c38bb7aa1c2b</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>936bbabf-1713-4a99-ae9d-aa760af32a6d</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>'Insert Stamping Materai/Insert Stamping Materai'</defaultValue>
+      <description></description>
+      <id>5e3035bf-b389-4035-9edb-c38bb7aa1c2b</id>
+      <masked>false</masked>
+      <name>excelPath</name>
+   </variable>
+   <variable>
+      <defaultValue>'API Insert Stamping Materai'</defaultValue>
+      <description></description>
+      <id>936bbabf-1713-4a99-ae9d-aa760af32a6d</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+</TestCaseEntity>
