@@ -8,9 +8,6 @@ import org.openqa.selenium.By as By
 import com.kms.katalon.core.webui.driver.DriverFactory as DriverFactory
 import java.sql.Connection as Connection
 
-'connect DB eSign'
-Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
-
 'inisialisasi result'
 HashMap result = []
 

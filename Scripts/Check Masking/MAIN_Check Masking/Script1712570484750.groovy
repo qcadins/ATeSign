@@ -1,8 +1,3 @@
-import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
-import static com.kms.katalon.core.testdata.TestDataFactory.findTestData
-import static com.kms.katalon.core.testobject.ObjectRepository.findTestObject
-import com.kms.katalon.core.model.FailureHandling as FailureHandling
-import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import internal.GlobalVariable as GlobalVariable
 import java.sql.Connection as Connection
 
@@ -38,8 +33,6 @@ for (loopingTable = 0; loopingTable < tableName.size(); loopingTable++) {
 
     'declare arraylist arraymatch'
     ArrayList arrayMatch = []
-
-    arrayIndex = 0
 
     for (i = 0; i < check.size(); i++) {
         if ((check[i]).toString().length() > 2) {

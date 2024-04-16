@@ -24,12 +24,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
         String bodyAPI = ''
 		
-		'setting menggunakan base url yang benar atau salah. Atur setting dari excel sendiri'
-		GlobalVariable.base_url = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Setting on :'))
-		
-		if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Use Correct base Url')) == 'No') {
-			GlobalVariable.base_url = GlobalVariable.base_url + '/esign/'
-		}
+        'setting menggunakan base url yang benar atau salah'
+        CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
         'Jika flag tenant no'
         if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'No') {
@@ -57,26 +53,55 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             'input bodyAPI tidak dengan Base64'
             bodyAPI = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentFile'))
         }
-        
+		
+		bodyStampingLocations = '{'
+		
+		for (loopingStampPage = 0; 
+			loopingStampPage < findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('stampPage')).toString().split(';', -1).size();
+			 loopingStampPage++) {
+			 
+				 bodyStampingLocations = bodyStampingLocations + '"stampPage" :' +
+				 findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('stampPage'))
+				 .toString().split(';', -1)[loopingStampPage] + ', "notes" :"' +
+				 findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('notes'))
+				 .toString().split(';', -1)[loopingStampPage] + '"' + ', "stampLocation" : { "llx" :' +
+				 findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('llx'))
+				 .toString().split(';', -1)[loopingStampPage] + ',"lly" : ' + 
+				 findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('lly'))
+				 .toString().split(';', -1)[loopingStampPage] + ',"urx" : ' + 
+				 findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('urx'))
+				 .toString().split(';', -1)[loopingStampPage] + ',"ury" : ' + 
+				 findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('ury'))
+				 .toString().split(';', -1)[loopingStampPage] + '}'
+
+			 if (loopingStampPage == (findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+				 rowExcel('stampPage')).toString().split(';', -1).size() - 1)) {
+			 bodyStampingLocations = bodyStampingLocations + '}'
+			 } else {
+				 bodyStampingLocations = bodyStampingLocations + ','
+			 }
+		}
+
         'HIT API'
-        respon = WS.sendRequest(findTestObject('Postman/Insert Stamping Payment Receipt', [('documentTemplateCode') : findTestData(
+        respon = WS.sendRequest(findTestObject('Postman/insertStampingMaterai', [('documentTemplateCode') : findTestData(
                         excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentTemplateCode')), ('callerId') : findTestData(
                         excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('documentNumber') : findTestData(
-                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentNumber')), ('documentTransactionId') : findTestData(
-                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentTransactionId')), ('docName') : findTestData(
+                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentNumber')), ('docName') : findTestData(
                         excelPath).getValue(GlobalVariable.NumofColm, rowExcel('docName')), ('docDate') : findTestData(excelPath).getValue(
-                        GlobalVariable.NumofColm, rowExcel('docDate')), ('docType') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-                        rowExcel('docType')), ('docNominal') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                        GlobalVariable.NumofColm, rowExcel('docDate')), ('docTypeCode') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                        rowExcel('docTypeCode')), ('docNominal') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('docNominal')), ('peruriDocTypeId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('peruriDocTypeId')), ('officeCode') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('officeCode')), ('officeName') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('officeName')), ('regionCode') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('regionCode')), ('regionName') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-                        rowExcel('regionName')), ('idType') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                        rowExcel('regionName')), ('businessLineCode') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                        rowExcel('businessLineCode')), ('businessLineName') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                        rowExcel('businessLineName')),('taxType') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                        rowExcel('taxType')), ('idType') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('idType')), ('idNo') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
                             'idNo')), ('taxOwedsName') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
-                            'taxOwedsName')), ('returnStampResult') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-                        rowExcel('returnStampResult')), ('documentFile') : bodyAPI]))
+                            'taxOwedsName')), ('documentFile') : bodyAPI, ('stampingLocations') : bodyStampingLocations]))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {

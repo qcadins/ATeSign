@@ -78,7 +78,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         if (checkErrorLog() == true) {
             break
         }
-        
 		
         'Jika value muncul'
         if (WebUI.verifyElementPresent(findTestObject('Job Result/lbl_value'), GlobalVariable.TimeOut)) {
