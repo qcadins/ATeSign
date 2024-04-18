@@ -93,7 +93,7 @@ prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, 
             'jika code 0'
             if (code == 0) {
                 'looping dari 1 hingga 12'
-                for (i = 1; i <= 12; i++) {
+                for (i = 1; i <= GlobalVariable.LoopingPeriodStamping; i++) {
                     'mengambil value db proses ttd'
                     prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, nomorKontrakDocument.replace(
                             '"', ''))
@@ -164,15 +164,15 @@ prosesMaterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, 
                         break
                     } else {
                         'Jika bukan 51/61 dan 53/63, maka diberikan delay 20 detik'
-                        WebUI.delay(10)
+                        WebUI.delay(GlobalVariable.TimeLoop)
 
                         'Jika looping berada di akhir, tulis error failed proses stamping'
-                        if (i == 12) {
+                        if (i == GlobalVariable.LoopingPeriodStamping) {
                             'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
                             CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                                 GlobalVariable.StatusFailed, ((((findTestData(excelPathStamping).getValue(GlobalVariable.NumofColm, 
                                     rowExcel('Reason Failed')) + ';') + GlobalVariable.ReasonFailedProsesStamping) + ' dengan jeda waktu ') + 
-                                (i * 12)) + ' detik ')
+                                (i * GlobalVariable.TimeLoop)) + ' detik ')
 
                             GlobalVariable.FlagFailed = 1
                         }

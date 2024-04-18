@@ -447,13 +447,9 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 
         'loop untuk row popup'
         for (int i = 1; i <= variableRowPopup.size(); i++) {
-            'Input email signer based on sequentialnya'
-            emailSignerBasedOnSequence = CustomKeywords.'connection.APIFullService.getEmailBasedOnSequence'(conneSign, documentIdBasedOnLogin[
-                c], documentName).split(';', -1)
-
             'get data kotak masuk send document secara asc, dimana customer no 1'
             ArrayList resultSigner = CustomKeywords.'connection.SendSign.getSignerKotakMasukSendDoc'(conneSign, documentIdBasedOnLogin[
-                c], emailSignerBasedOnSequence[(i - 1)], documentName)
+                c], documentName)
 
             'declare array index menjadi 0 per result'
             arrayIndexSigner = 0

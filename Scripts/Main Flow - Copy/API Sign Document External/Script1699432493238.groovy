@@ -377,7 +377,7 @@ if (otp != null) {
                     ';', -1)[GlobalVariable.indexUsed])
 
             'Loop untuk check db update sign. Maksimal 200 detik.'
-            for (int v = 1; v <= 20; v++) {
+            for (int v = 1; v <= GlobalVariable.LoopingPeriodSigning; v++) {
                 'Mengambil total Signed setelah sign'
                 (totalSignedAfter[0]) = CustomKeywords.'connection.APIFullService.getTotalSigned'(conneSign, GlobalVariable.storeVar.keySet()[
                     [0]])
@@ -465,7 +465,7 @@ if (otp != null) {
                     GlobalVariable.FlagFailed = 1
                 } else {
                     'Delay 10 detik.'
-                    WebUI.delay(10)
+                    WebUI.delay(GlobalVariable.TimeLoop)
 
                     'SigningDB mengambil value dari hasil query'
                     signingDB = CustomKeywords.'connection.SendSign.getSigningStatusProcess'(conneSign, documentIdInput.replace(

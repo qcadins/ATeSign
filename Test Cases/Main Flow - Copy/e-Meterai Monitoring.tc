@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>e-Meterai Monitoring</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>1b9ce624-b4d2-42e3-9546-dac4001234a9</testCaseGuid>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>6132881f-cc71-4a49-9a01-c14d07f34edf</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>f0fdc1b7-9aff-4532-b81b-668232ef43fe</variableId>
+   </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>52d9ccfd-f9f9-4d17-bc1f-37ce11d5cc95</variableId>
+   </variableLinks>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>6132881f-cc71-4a49-9a01-c14d07f34edf</id>
+      <masked>false</masked>
+      <name>excelPathemeteraiMonitoring</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>f0fdc1b7-9aff-4532-b81b-668232ef43fe</id>
+      <masked>false</masked>
+      <name>sheet</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>52d9ccfd-f9f9-4d17-bc1f-37ce11d5cc95</id>
+      <masked>false</masked>
+      <name>noKontrak</name>
+   </variable>
+</TestCaseEntity>

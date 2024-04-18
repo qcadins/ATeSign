@@ -303,10 +303,11 @@ class SendSign {
 	}
 
 	@Keyword
-	getSignerKotakMasukSendDoc(Connection conn, String value, String emailSigner, String documentName) {
+	getSignerKotakMasukSendDoc(Connection conn, String value, String documentName) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select case when ms.description != '' or ms.description != null then ms.description else 'Signer' end as signertype, amm.full_name as name, amm.login_id as email,CASE WHEN amm.is_active = '1' THEN 'Sudah Aktivasi' END as aktivasi, CASE WHEN tdds.sign_date is not null THEN 'Signed' ELSE msl.description END as status, CASE WHEN tdds.sign_date IS null THEN '-' else to_char(tdds.sign_date, 'DD-Mon-YYYY HH24:MI') END sign_date from tr_document_d tdd join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join ms_lov msl on tdd.lov_sign_status = msl.id_lov  left join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d left join ms_lov ms on tdds.lov_signer_type = ms.id_lov join am_msuser amm on tdds.id_ms_user = amm.id_ms_user where (document_id = '" + value + "' OR tdh.ref_number = '" + value + "') and amm.login_id = '" + emailSigner + "' and (tdd.document_name = '" + documentName + "' OR mdt.doc_template_name = '" + documentName + "') ORDER BY tdd.id_document_d asc")
+		resultSet = stm.executeQuery("SELECT description, full_name, signer_registered_email, is_active, sign_status, sign_date FROM (select distinct on (vuser.signer_registered_email) signer_registered_email, case when mu.is_active = '1' THEN 'Sudah Aktivasi' end as is_active, COALESCE(lovds.description, 'Signer') AS description, mu.full_name, case when sign_date is null then (select lov.description from ms_lov lov where lov.lov_group = 'LOV_SIGN_STATUS' and lov.code = 'NS') else 'Signed' end as sign_status, to_char(dds.sign_date, 'YYYY-MM-DD HH24:MI:SS') as sign_date , dds.seq_no, vuser.email_service from tr_document_d dd join tr_document_d_sign dds on dd.id_document_d = dds.id_document_d join tr_document_h dh on dh.id_document_h = dd.id_document_h left join lateral (select lovds.description from ms_lov lovds where dds.lov_signer_type = lovds.id_lov) lovds ON TRUE join am_msuser mu on dds.id_ms_user = mu.id_ms_user join ms_vendor_registered_user vuser on vuser.id_ms_user = mu.id_ms_user and vuser.id_ms_vendor = dd.id_ms_vendor join am_user_personal_data upd on mu.id_ms_user = upd.id_ms_user where dd.document_name = '" + documentName + "' AND dh.ref_number = ' " + value + " ') sub order by description ASC, full_name ASC, signer_registered_email ASC, seq_no ASC;")
+		
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -317,24 +318,7 @@ class SendSign {
 				listdata.add(data)
 			}
 		}
-		if (listdata.size() > 6) {
-			listdata = []
-
-			resultSet = stm.executeQuery("select case when ms.description != '' or ms.description != null then ms.description else 'Signer' end as signertype,amm.full_name as name, amm.login_id as email,CASE WHEN amm.is_active = '1' THEN 'Sudah Aktivasi' END as aktivasi, CASE WHEN tdds.sign_date is not null THEN 'Signed' ELSE msl.description END as status, CASE WHEN tdds.sign_date IS null THEN '-' else to_char(tdds.sign_date, 'DD-Mon-YYYY HH24:MI') END sign_date from tr_document_d tdd join tr_document_h tdh on tdd.id_document_h = tdh.id_document_h join ms_lov msl on tdd.lov_sign_status = msl.id_lov left join ms_doc_template as mdt on tdd.id_ms_doc_template = mdt.id_doc_template join tr_document_d_sign as tdds on tdd.id_document_d = tdds.id_document_d left join ms_lov ms on tdds.lov_signer_type = ms.id_lov join am_msuser amm on tdds.id_ms_user = amm.id_ms_user where (document_id = '" + value + "' OR tdh.ref_number = '" + value + "') and amm.login_id = '" + emailSigner + "' and (tdd.document_name = '" + documentName + "' OR mdt.doc_template_name = '" + documentName + "') ORDER BY tdd.id_document_d asc limit 1")
-			metadata = resultSet.metaData
-
-			columnCount = metadata.getColumnCount()
-
-			while (resultSet.next()) {
-				for (i = 1 ; i <= columnCount ; i++) {
-					data = resultSet.getObject(i)
-					listdata.add(data)
-				}
-			}
 			listdata
-		} else {
-			listdata
-		}
 	}
 
 	@Keyword

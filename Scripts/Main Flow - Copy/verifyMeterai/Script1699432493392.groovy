@@ -22,6 +22,13 @@ if (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, rowExcel('
 	GlobalVariable.FlagFailed = 0
 }
 
+eMeterai = CustomKeywords.'connection.Meterai.getDecisionEMeteraiOrMeteraiMenu'(conneSign, noKontrak)
+
+if (eMeterai == '1') {
+	WebUI.callTestCase(findTestCase('Main Flow - Copy/e-Meterai Monitoring'), [('excelPathemeteraiMonitoring') : excelPathMeterai
+     , ('sheet') : sheet, ('noKontrak') : noKontrak], FailureHandling.CONTINUE_ON_FAILURE)	
+}
+/*
 if (!(WebUI.verifyElementPresent(findTestObject('Meterai/menu_Meterai'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL))) {
 	if (WebUI.verifyElementPresent(findTestObject('Meterai/menu_Meterai'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
 		'cek apakah elemen menu ditutup'
@@ -178,6 +185,7 @@ if (GlobalVariable.FlagFailed == 0 && Integer.parseInt(totalMateraiAndTotalStamp
 		1, GlobalVariable.StatusSuccess)
 }
 
+*/
 def checkVerifyPaging(Boolean isMatch) {
     if (isMatch == false) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedVerifyEqualOrMatch'

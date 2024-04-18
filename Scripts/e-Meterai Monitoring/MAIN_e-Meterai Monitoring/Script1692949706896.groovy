@@ -63,7 +63,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.FlagFailed = 0
         }
         
-        inputPagingAndVerify(conneSign)
+        result = inputPagingAndVerify(conneSign)
 
         'ambil value db mengenai progress stamping'
         progressStamping = CustomKeywords.'connection.EMeteraiMonitoring.getProseseMeteraiMonitoring'(conneSign, findTestData(
@@ -187,7 +187,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             }
         }
         
-        inputPagingAndVerify(conneSign)
+        result = inputPagingAndVerify(conneSign)
 
         'check if mau download data meterai'
         if (findTestData(excelPathemeteraiMonitoring).getValue(GlobalVariable.NumofColm, rowExcel('Need Download Document ?')).equalsIgnoreCase(
@@ -611,6 +611,7 @@ def inputPagingAndVerify(Connection conneSign) {
     'verify lini bisnis'
     checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Object Repository/e-Meterai Monitoring/table_JenisPajak')), 
             result[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Jenis Pajak ')
+	result
 }
 
 def clickRetryAction() {

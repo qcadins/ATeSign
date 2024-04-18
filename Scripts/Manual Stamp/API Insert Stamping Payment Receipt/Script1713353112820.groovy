@@ -10,20 +10,10 @@ import internal.GlobalVariable as GlobalVariable
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-'get data file path'
-GlobalVariable.DataFilePath = CustomKeywords.'customizekeyword.WriteExcel.getExcelPath'('\\Excel\\2. Esign.xlsx')
-
-'get colm excel'
-int countColmExcel = findTestData(excelPath).columnNumbers
-
-for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (GlobalVariable.NumofColm)++) {
-    if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).length() == 0) {
-        break
-    } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Status')).equalsIgnoreCase('Unexecuted')) {
         GlobalVariable.FlagFailed = 0
 
         String bodyAPI = ''
-		
+
         'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
@@ -33,7 +23,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
             GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Wrong tenant Code'))
         } else if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'Yes') {
             'Input tenant'
-            GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant'))
+            GlobalVariable.Tenant = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Tenant Login'))
         }
         
         'check if mau menggunakan api_key yang salah atau benar'
@@ -48,60 +38,31 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'Jika dokumennya menggunakan base64'
         if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 Document')) == 'Yes') {
             'input bodyAPI dengan Base64'
-            bodyAPI = pdfToBase64(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentFile')))
+            bodyAPI = pdfToBase64(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('$Dokumen')))
         } else {
             'input bodyAPI tidak dengan Base64'
-            bodyAPI = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentFile'))
+            bodyAPI = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('$Dokumen'))
         }
-		
-		bodyStampingLocations = '{'
-		
-		for (loopingStampPage = 0; 
-			loopingStampPage < findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('stampPage')).toString().split(';', -1).size();
-			 loopingStampPage++) {
-			 
-				 bodyStampingLocations = bodyStampingLocations + '"stampPage" :' +
-				 findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('stampPage'))
-				 .toString().split(';', -1)[loopingStampPage] + ', "notes" :"' +
-				 findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('notes'))
-				 .toString().split(';', -1)[loopingStampPage] + '"' + ', "stampLocation" : { "llx" :' +
-				 findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('llx'))
-				 .toString().split(';', -1)[loopingStampPage] + ',"lly" : ' + 
-				 findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('lly'))
-				 .toString().split(';', -1)[loopingStampPage] + ',"urx" : ' + 
-				 findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('urx'))
-				 .toString().split(';', -1)[loopingStampPage] + ',"ury" : ' + 
-				 findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('ury'))
-				 .toString().split(';', -1)[loopingStampPage] + '}'
-
-			 if (loopingStampPage == (findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-				 rowExcel('stampPage')).toString().split(';', -1).size() - 1)) {
-			 bodyStampingLocations = bodyStampingLocations + '}'
-			 } else {
-				 bodyStampingLocations = bodyStampingLocations + ','
-			 }
-		}
-
+        
         'HIT API'
-        respon = WS.sendRequest(findTestObject('Postman/insertStampingMaterai', [('documentTemplateCode') : findTestData(
+        respon = WS.sendRequest(findTestObject('Postman/Insert Stamping Payment Receipt', [('documentTemplateCode') : findTestData(
                         excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentTemplateCode')), ('callerId') : findTestData(
                         excelPath).getValue(GlobalVariable.NumofColm, rowExcel('callerId')), ('documentNumber') : findTestData(
-                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentNumber')), ('docName') : findTestData(
-                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('docName')), ('docDate') : findTestData(excelPath).getValue(
-                        GlobalVariable.NumofColm, rowExcel('docDate')), ('docTypeCode') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')), ('documentTransactionId') : findTestData(
+                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentTransactionId')), ('docName') : findTestData(
+                        excelPath).getValue(GlobalVariable.NumofColm, rowExcel('$Nama Dokumen')), ('docDate') : findTestData(excelPath).getValue(
+                        GlobalVariable.NumofColm, rowExcel('$Tanggal Dokumen')), ('docType') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('docTypeCode')), ('docNominal') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('docNominal')), ('peruriDocTypeId') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('peruriDocTypeId')), ('officeCode') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('officeCode')), ('officeName') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('officeName')), ('regionCode') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('regionCode')), ('regionName') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-                        rowExcel('regionName')), ('businessLineCode') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-                        rowExcel('businessLineCode')), ('businessLineName') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-                        rowExcel('businessLineName')),('taxType') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
-                        rowExcel('taxType')), ('idType') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                        rowExcel('regionName')), ('idType') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
                         rowExcel('idType')), ('idNo') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
                             'idNo')), ('taxOwedsName') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel(
-                            'taxOwedsName')), ('documentFile') : bodyAPI, ('stampingLocations') : bodyStampingLocations]))
+                            'taxOwedsName')), ('returnStampResult') : findTestData(excelPath).getValue(GlobalVariable.NumofColm, 
+                        rowExcel('returnStampResult')), ('documentFile') : bodyAPI]))
 
         'Jika status HIT API 200 OK'
         if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) {
@@ -150,7 +111,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                             'check store db dari input'
                             arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++], findTestData(excelPath).getValue(
-                                        GlobalVariable.NumofColm, rowExcel('documentNumber')), false, FailureHandling.CONTINUE_ON_FAILURE))
+                                        GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')), false, FailureHandling.CONTINUE_ON_FAILURE))
 
                             'check store db dari input'
                             arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++], findTestData(excelPath).getValue(
@@ -158,15 +119,15 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
                             'check store db dari input'
                             arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++], findTestData(excelPath).getValue(
-                                        GlobalVariable.NumofColm, rowExcel('docName')), false, FailureHandling.CONTINUE_ON_FAILURE))
+                                        GlobalVariable.NumofColm, rowExcel('$Nama Dokumen')), false, FailureHandling.CONTINUE_ON_FAILURE))
 
                             'check store db dari input'
                             arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++], findTestData(excelPath).getValue(
-                                        GlobalVariable.NumofColm, rowExcel('docDate')), false, FailureHandling.CONTINUE_ON_FAILURE))
+                                        GlobalVariable.NumofColm, rowExcel('$Tanggal Dokumen')), false, FailureHandling.CONTINUE_ON_FAILURE))
 
                             'check store db dari input'
                             arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++], findTestData(excelPath).getValue(
-                                        GlobalVariable.NumofColm, rowExcel('docType')), false, FailureHandling.CONTINUE_ON_FAILURE))
+                                        GlobalVariable.NumofColm, rowExcel('docTypeCode')), false, FailureHandling.CONTINUE_ON_FAILURE))
 
                             'check store db dari input'
                             arrayMatch.add(WebUI.verifyMatch(resultStoreDB[arrayIndex++], findTestData(excelPath).getValue(
@@ -206,9 +167,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                         }
                         
                         'dibandingkan total meterai dan total stamp'
-                        arrayMatch.add(WebUI.verifyEqual(resultStoreDB.size() / 16, Integer.parseInt(CustomKeywords.'connection.Meterai.getCountTotalStampDutyOnTemplate'(
-                                        conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('documentTemplateCode')))) + 
-                                1, FailureHandling.CONTINUE_ON_FAILURE))
+                        arrayMatch.add(WebUI.verifyEqual(resultStoreDB.size() / 16, Integer.parseInt(CustomKeywords.'connection.DocumentMonitoring.getTotalStampingandTotalMaterai'(conneSign,
+					findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))[1]), FailureHandling.CONTINUE_ON_FAILURE))
 
                         'jika data db tidak bertambah'
                         if (arrayMatch.contains(false)) {
@@ -229,8 +189,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
           'call function get API error message'
            getErrorMessageAPI(respon)
         }
-    }
-}
 
 def getErrorMessageAPI(ResponseObject respon) {
     'mengambil status code berdasarkan response HIT API'

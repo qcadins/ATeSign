@@ -15,21 +15,33 @@ rowChecking = 1
 
 'looping of every tables name'
 for (loopingTable = 0; loopingTable < tableName.size(); loopingTable++) {
-	'get usr_crt and usr_upd on verify based on tableName'
+    'get usr_crt and usr_upd on verify based on tableName'
     ArrayList verify = CustomKeywords.'connection.MaskingEsign.verifyUserCrtUserDpd'(conneSign, tableName[loopingTable])
-	
-	'if the verify is exists with size is 2'
+
+    'if the verify is exists with size is 2'
     if (verify.size() < 2) {
-		'continue loop'
+        'continue loop'
         continue
-    } else {
+    }
+    
+    'get last data on the table'
+    ArrayList check = CustomKeywords.'connection.MaskingEsign.getLastDataTable'(conneSign, tableName[loopingTable])
+
+    if (check.size() == 0) {
 		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
 		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Mask Checking', rowChecking,
 			0, tableName[loopingTable])
-	}
-
-	'get last data on the table'
-    ArrayList check = CustomKeywords.'connection.MaskingEsign.getLastDataTable'(conneSign, tableName[loopingTable])
+		
+		'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+		CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Mask Checking', rowChecking++,
+			1, GlobalVariable.StatusFailed)
+		
+        continue
+    }
+    
+    'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+    CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Mask Checking', rowChecking, 
+        0, tableName[loopingTable])
 
     'declare arraylist arraymatch'
     ArrayList arrayMatch = []
@@ -47,7 +59,7 @@ for (loopingTable = 0; loopingTable < tableName.size(); loopingTable++) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Mask Checking', rowChecking++, 
             1, GlobalVariable.StatusFailed)
-    } else {
+    } else if (arrayMatch.contains(true)) {
         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, 'Mask Checking', rowChecking++, 
             1, GlobalVariable.StatusSuccess)

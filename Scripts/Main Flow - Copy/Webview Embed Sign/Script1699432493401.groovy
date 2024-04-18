@@ -613,7 +613,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
 
                 for (looping = 0; looping < loopingEmailSigner.size(); looping++) {
                     'Looping maksimal 100 detik untuk signing proses. Perlu lama dikarenakan walaupun requestnya done(3), tapi dari VIDAnya tidak secepat itu.'
-                    for (y = 1; y <= 10; y++) {
+                    for (y = 1; y <= GlobalVariable.LoopingPeriodSigning; y++) {
                         'jumlah signer yang telah tanda tangan masuk dalam variable dibawah'
                         jumlahSignerTandaTangan = CustomKeywords.'connection.APIFullService.getTotalSigned'(conneSign, GlobalVariable.storeVar.keySet()[
                             0])
@@ -655,24 +655,21 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
                         jumlahSignerTandaTangan = (jumlahSignerTandaTangan + saldoUsed)
 
                         'Kita berikan delay per 20 detik karena proses signingnya masih dalam status In Progress (1), dan ketika selesai, status tanda tangan akan kembali menjadi 0'
-                        WebUI.delay(20)
+                        WebUI.delay(GlobalVariable.TimeLoop)
 
                         'Jika signing process db untuk signing false, maka'
                         if (signingProcessStoreDB(conneSign, loopingEmailSigner[looping], saldoForCheckingDB, GlobalVariable.storeVar.keySet()[
                             0]) == false) {
                             if (GlobalVariable.ErrorType.size() > 0) {
                                 saldoForCheckingDB = (saldoForCheckingDB - jumlahSignerTandaTangan)
-								
-								WebUI.comment(saldoForCheckingDB.toString())
+
                                 saldoUsed = (saldoUsed - saldoForCheckingDB)
 								
-								WebUI.comment(saldoUsed.toString())
-								WebUI.comment(GlobalVariable.eSignData.toString())
                                 break
                             }
                             
                             'Jika looping waktu delaynya yang terakhir, maka'
-                            if (y == 10) {
+                            if (y == GlobalVariable.LoopingPeriodSigning) {
                                 'Failed dengan alasan prosesnya belum selesai'
                                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
                                     GlobalVariable.StatusFailed, (findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, 

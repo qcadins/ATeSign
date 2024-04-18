@@ -56,23 +56,37 @@ class MaskingEsign {
 	@Keyword
 	getLastDataTable(Connection conn, String tableName) {
 		stm = conn.createStatement()
-
-		resultSet = stm.executeQuery("SELECT usr_crt, usr_upd FROM " + tableName + " order by dtm_crt desc limit 1")
+		
+		resultSet = stm.executeQuery("SELECT count(dtm_crt) FROM " + tableName + " group by dtm_crt order by dtm_crt desc limit 1")
 		metadata = resultSet.metaData
 		columnCount = metadata.getColumnCount()
-
+		
 		while (resultSet.next()) {
-			for (i = 1 ; i <= columnCount ; i++) {
-				data = resultSet.getObject(i)
-				if (data == null) {
-					data = 'null'
+			data = resultSet.getObject(1)
+		}
+		
+		if (data == '0') {
+			listdata = []
+		} else {
+			stm = conn.createStatement()
+			
+			resultSet = stm.executeQuery("SELECT usr_crt, usr_upd FROM " + tableName + " order by dtm_crt desc limit 1")
+			metadata = resultSet.metaData
+			columnCount = metadata.getColumnCount()
+
+			while (resultSet.next()) {
+				for (i = 1 ; i <= columnCount; i++) {
+					data = resultSet.getObject(i)
+					if (data == null) {
+						data = 'null'
+					}
+					listdata.add(data)
 				}
-				listdata.add(data)
 			}
 		}
 		listdata
 	}
-	
+
 	@Keyword
 	protected static String maskData(String data) {
 		Character asterisk = '*'
@@ -93,7 +107,7 @@ class MaskingEsign {
 		}
 
 		// Else, mask name
-		 maskName(data)
+		maskName(data)
 	}
 
 	private static String maskString(String input, int unmaskedPrefix, int unmaskedSuffix, char maskChar) {

@@ -319,4 +319,19 @@
       <initValue>0</initValue>
       <name>CounterWA</name>
    </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description>total looping waiting time</description>
+      <initValue>10</initValue>
+      <name>LoopingPeriodSigning</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description>total looping waiting time</description>
+      <initValue>10</initValue>
+      <name>LoopingPeriodStamping</name>
+   </GlobalVariableEntity>
+   <GlobalVariableEntity>
+      <description>looping setiap total looping waiting time</description>
+      <initValue>20</initValue>
+      <name>TimeLoop</name>
+   </GlobalVariableEntity>
 </GlobalVariableEntities>

@@ -61,7 +61,7 @@
    <maxResponseSize>-1</maxResponseSize>
    <migratedVersion>5.4.1</migratedVersion>
    <restRequestMethod>POST</restRequestMethod>
-   <restUrl>${base_url}/services/data/s/getListPeruriDocumentType</restUrl>
+   <restUrl>${base_url}/services/external/data/getListPeruriDocumentType</restUrl>
    <serviceType>RESTful</serviceType>
    <soapBody></soapBody>
    <soapHeader></soapHeader>

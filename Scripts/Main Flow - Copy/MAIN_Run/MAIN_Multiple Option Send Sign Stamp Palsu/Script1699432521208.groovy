@@ -354,19 +354,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
 
                                 'set boolean is used api external menjadi true'
                                 isUsedAPIExternal = true
-                            } else if ((opsiSigning[GlobalVariable.opsiSigning]) == 'API Sign Document Normal') {
-                                'jika opsi signing untuk signer adalah api sign document normal setting index untuk penggunaan data. Cara bacanya adalah apakah opsi tersebut telah digunakan. Jika sudah digunakan, maka + 1, jika tidak, maka 0.'
-                                indexReadDataExcelAPINormal = inisializeArray(isUsedAPINormal, indexReadDataExcelAPINormal)
-
-                                'diberikan kepada gv indexused'
-                                GlobalVariable.indexUsed = indexReadDataExcelAPINormal
-
-                                'call test case api sign document normal'
-                                WebUI.callTestCase(findTestCase('Main Flow - Copy/API Sign Document Normal'), [('API_Excel_Path') : excelPathMain
-                                        , ('sheet') : sheet, ('CancelDocsSign') : cancelDocsValue], FailureHandling.CONTINUE_ON_FAILURE)
-
-                                'set boolean menjadi true'
-                                isUsedAPINormal = true
                             } else if ((opsiSigning[GlobalVariable.opsiSigning]) == 'Webview Sign') {
                                 'jika opsi signing untuk signer adalah webview sign setting index untuk penggunaan data. Cara bacanya adalah apakah opsi tersebut telah digunakan. Jika sudah digunakan, maka + 1, jika tidak, maka 0.'
                                 indexReadDataExcelWebview = inisializeArray(isUsedUI, indexReadDataExcelUI)

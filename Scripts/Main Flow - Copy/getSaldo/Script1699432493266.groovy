@@ -170,7 +170,7 @@ def funcSaldoStamp(HashMap result) {
 	ArrayList saldoList = []
 	vendorVerifikasi = 'ESIGN/ADINS'
 	
-	saldoList = ['Meterai']
+	saldoList = ['Meterai', 'Stamp Duty Postpaid']
 	
 	funcFindSaldo(result, vendorVerifikasi, saldoList, forAutosign)
 
