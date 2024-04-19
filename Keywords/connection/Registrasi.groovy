@@ -110,4 +110,50 @@ class Registrasi {
 		}
 		Integer.parseInt(data)
 	}
+	
+	@Keyword
+	checkPSREMandatoryRegisParam(Connection conn) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select mts.setting_value from ms_tenant_settings mts left join ms_lov msl on mts.lov_setting_type = msl.id_lov where msl.code = 'PSRE_MANDATORY_REGIS_PARAM_FLAG'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		Integer.parseInt(data)
+	}
+	
+	@Keyword
+	checkCriticalUserDataOnlyParam(Connection conn) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select mts.setting_value from ms_tenant_settings mts left join ms_lov msl on mts.lov_setting_type = msl.id_lov where msl.code = 'KEEP_CRITICAL_USER_DATA_ONLY'")
+
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		Integer.parseInt(data)
+	}
+	
+	@Keyword
+	checkCriticalUserDataWithSelfieParam(Connection conn) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select mts.setting_value from ms_tenant_settings mts left join ms_lov msl on mts.lov_setting_type = msl.id_lov where msl.code = 'KEEP_SELFIE_PHOTO'")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			data = resultSet.getObject(1)
+		}
+		Integer.parseInt(data)
+	}
 }
