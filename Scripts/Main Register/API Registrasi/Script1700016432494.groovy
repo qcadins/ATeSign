@@ -161,8 +161,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
                 sDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(resultDataUser[arrayIndex++], 'MM/dd/yyyy', 
                     'yyyy-MM-dd')
 
-				if (CustomKeywords.'connection.Registrasi.checkCriticalUserDataOnlyParam'(conneSign) == '0' ||
-					CustomKeywords.'connection.Registrasi.checkCriticalUserDataWithSelfieParam'(conneSign) == '0' ) {
+				if (CustomKeywords.'connection.Registrasi.checkCriticalUserDataOnlyParam'(conneSign) == '0') {
 					'verify tanggal lahir'
 					arrayMatch.add(WebUI.verifyMatch(sDate.toUpperCase(), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
 							rowExcel('Tanggal Lahir')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))

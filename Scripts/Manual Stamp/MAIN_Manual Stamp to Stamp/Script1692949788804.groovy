@@ -294,18 +294,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                                     index = 0
 
                                     arrayMatch = []
-
-                                    ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(
-                                        conneSign, findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
-                                            rowExcel('$Nomor Dokumen')), 'Stamping')
-
-                                    'lakukan loop untuk pengecekan data'
-                                    for (int i = 0; i < (officeRegionBline.size() / 2); i++) {
-                                        'verify business line dan office code'
-                                        arrayMatch.add(WebUI.verifyMatch((officeRegionBline[i]).toString(), (officeRegionBline[
-                                                (i + 3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
-                                    }
-                                    
+ 
                                     'verify ref number'
                                     arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathManualStamptoStamp).getValue(
                                                 GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')), result[index++], 
@@ -415,27 +404,34 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                 tipeSaldo = 'Meterai'
             }
             
-            if (tipeSaldo == 'Meterai') {
-                prosesMeterai = inputEMeteraiMonitoring(conneSign)
-            } else {
-                prosesMeterai = inputMeterai(conneSign)
-            }
+            prosesMeterai = inputEMeteraiMonitoring(conneSign)
         }
         
-        totalMeterai = Integer.parseInt(CustomKeywords.'connection.DocumentMonitoring.getTotalStampingandTotalMaterai'(conneSign, 
-                findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))[
-            1])
+        if (GlobalVariable.FlagFailed == 0) {
+            if ((CustomKeywords.'connection.DocumentMonitoring.getTotalStampingandTotalMaterai'(conneSign, findTestData(
+                    excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))[0]) == 
+            (CustomKeywords.'connection.DocumentMonitoring.getTotalStampingandTotalMaterai'(conneSign, findTestData(excelPathManualStamptoStamp).getValue(
+                    GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))[1])) {
+                if ((resultSaldoBefore[tipeSaldo]) == (resultSaldoAfter[tipeSaldo])) {
+                    'write to excel status failed dan reason'
+                    CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                        GlobalVariable.StatusFailed, (((findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, 
+                            rowExcel('Reason Failed')).replace('-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + 
+                        ' terhadap saldo') + tipeSaldo)
 
-        if (prosesMeterai == 'Success') {
-            if ((resultSaldoBefore[tipeSaldo]) == (resultSaldoAfter[tipeSaldo])) {
+                    GlobalVariable.FlagFailed = 1
+                } else {
+                    verifySaldoUsed(conneSign, tipeSaldo)
+                }
+            }
+        } else {
+            if ((resultSaldoBefore[tipeSaldo]) != (resultSaldoAfter[tipeSaldo])) {
                 'write to excel status failed dan reason'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                     (((findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace(
                         '-', '') + ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + ' terhadap saldo') + tipeSaldo)
 
                 GlobalVariable.FlagFailed = 1
-            } else {
-                verifySaldoUsed(conneSign, tipeSaldo)
             }
         }
     }
@@ -632,9 +628,6 @@ def inputEMeteraiMonitoring(Connection conneSign) {
                 break
             }
             
-            inputEMeterai = CustomKeywords.'connection.ManualStamp.getInputeMeteraiMonitoring'(conneSign, findTestData(excelPathManualStamptoStamp).getValue(
-                    GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')), GlobalVariable.Tenant)
-
             indexInput = 0
 
             index = 0
@@ -920,7 +913,7 @@ def inputEMeteraiMonitoring(Connection conneSign) {
             } else {
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                     ((findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + 
-                    ';') + GlobalVariable.ReasonFailedProcessNotDone) + ' untuk proses View dokumen tanda tangan. ')
+                    ';') + GlobalVariable.ReasonFailedVerifyEqualOrMatch) + ' untuk proses View dokumen tanda tangan. ')
             }
         }
         
@@ -928,7 +921,46 @@ def inputEMeteraiMonitoring(Connection conneSign) {
     }
 }
 
+def funcLogin() {
+	if (!(WebUI.verifyElementPresent(findTestObject('Saldo/ddl_Vendor'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL))) {
+		if (WebUI.verifyElementPresent(findTestObject('Saldo/menu_Saldo'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+			'cek apakah elemen menu ditutup'
+			if (WebUI.verifyElementVisible(findTestObject('button_HamburberSideMenu'), FailureHandling.OPTIONAL)) {
+				'klik pada button hamburber'
+				WebUI.click(findTestObject('button_HamburberSideMenu'))
+			}
+			
+			'klik button saldo'
+			WebUI.click(findTestObject('Saldo/menu_Saldo'))
+	
+			'cek apakah tombol x terlihat'
+			if (WebUI.verifyElementVisible(findTestObject('buttonX_sideMenu'), FailureHandling.OPTIONAL)) {
+				'klik pada button X'
+				WebUI.click(findTestObject('buttonX_sideMenu'))
+			}
+		} else {
+			'Call test Case untuk login sebagai admin wom admin client'
+			WebUI.callTestCase(findTestCase('Main Flow - Copy/Login'), [('excel') : excel, ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
+		}
+	} else {
+		WebUI.refresh()
+	}
+}
+
 def verifySaldoUsed(Connection conneSign, String tipeSaldo) {
+	arrayMatch = []
+	
+	ArrayList officeRegionBline = CustomKeywords.'connection.DataVerif.getBusinessLineOfficeCode'(
+		conneSign, findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm,
+			rowExcel('$Nomor Dokumen')), 'Stamping')
+
+	'lakukan loop untuk pengecekan data'
+	for (int i = 0; i < (officeRegionBline.size() / 2); i++) {
+		'verify business line dan office code'
+		arrayMatch.add(WebUI.verifyMatch((officeRegionBline[i]).toString(), (officeRegionBline[
+				(i + 3)]).toString(), false, FailureHandling.CONTINUE_ON_FAILURE))
+	}
+	
     'deklarasi array inquiryDB'
     ArrayList inquiryDB = []
 
@@ -948,6 +980,8 @@ def verifySaldoUsed(Connection conneSign, String tipeSaldo) {
     officeName = CustomKeywords.'connection.DataVerif.getOfficeName'(conneSign, findTestData(excelPathManualStamptoStamp).getValue(
             GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))
 
+	funcLogin()
+	
     'klik ddl untuk tenant memilih mengenai Vida'
     WebUI.selectOptionByLabel(findTestObject('Saldo/ddl_Vendor'), 'ESIGN/ADINS', false)
 
@@ -1173,8 +1207,8 @@ def inputMeterai(Connection conneSign) {
         WebUI.delay(2)
 
         'get value meterai data dari db'
-        result = CustomKeywords.'connection.Meterai.getValueMeterai'(conneSign, findTestData(
-                excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))
+        result = CustomKeywords.'connection.Meterai.getValueMeterai'(conneSign, findTestData(excelPathManualStamptoStamp).getValue(
+                GlobalVariable.NumofColm, rowExcel('$Nomor Dokumen')))
 
         'verify no meterai'
         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_NomorMeterai')), result[indexValue++], 

@@ -121,11 +121,14 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     'parse Date from MM/dd/yyyy > yyyy-MM-dd'
                     sDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(resultDataDiri[arrayindex++], 'MM/dd/yyyy', 
                         'yyyy-MM-dd')
-
-                    'verify tanggal lahir'
-                    arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 
+					
+					if (CustomKeywords.'connection.Registrasi.checkCriticalUserDataOnlyParam'(conneSign) == '0' ||
+						CustomKeywords.'connection.Registrasi.checkCriticalUserDataWithSelfieParam'(conneSign) == '0' ) {
+						'verify tanggal lahir'
+						arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 
                                 rowExcel('tglLahir')).replace('"', ''), sDate, false, FailureHandling.CONTINUE_ON_FAILURE))
-
+					}
+					
                     'verify jenis kelamin'
                     arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 
                                 rowExcel('jenisKelamin')).replace('"', '').toUpperCase(), (resultDataDiri[arrayindex++]).toUpperCase(), 
