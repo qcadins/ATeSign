@@ -775,14 +775,13 @@ class UpdateData {
 
 		'LOV Balance Type SMS dan WA'
 		updateLOVBalanceMutationBalanceVendorOfTenant(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting True LOV Balance Type for Tenant and Vendor about WhatsApp ?')), 'WhatsApp Message', GlobalVariable.Tenant)
-		
+
 		'update ms tenant settings mengenai psre mandatory regis param, keep critical user data only, keep selfie photo'
 		updateTenantSettingsPSREMandatoryRegisParam(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting PSRE Mandatory Regis Param On Tenant Login Admin Setting')))
 
 		updateTenantSettingsKeepCriticalUserDataOnly(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Keep Critical User Data Only On Tenant Login Admin Setting')))
 
 		updateTenantSettingsKeepSelfiePhoto(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Keep Selfie Photo On Tenant Login Admin Setting')))
-
 	}
 
 	@Keyword
@@ -1134,7 +1133,7 @@ class UpdateData {
 			stm.executeUpdate("UPDATE ms_tenant_settings mts0 SET setting_value = '" + value + "' FROM ms_tenant_settings mts JOIN ms_tenant mst ON mts.id_ms_tenant = mst.id_ms_tenant LEFT JOIN ms_lov msl ON mts.lov_setting_type = msl.id_lov WHERE msl.code = 'ALL_DOCUMENT_COMPLETE_CALLBACK' AND mst.tenant_code = '" + GlobalVariable.Tenant + "' AND mts0.id_ms_tenant_setting = mts.id_ms_tenant_setting")
 		}
 	}
-	
+
 	@Keyword
 	updateTenantSettingsPSREMandatoryRegisParam(Connection conn, String value) {
 		Statement stm = conn.createStatement()
@@ -1142,7 +1141,7 @@ class UpdateData {
 			stm.executeUpdate("UPDATE ms_tenant_settings mts0 SET setting_value = '" + value + "' FROM ms_tenant_settings mts JOIN ms_tenant mst ON mts.id_ms_tenant = mst.id_ms_tenant LEFT JOIN ms_lov msl ON mts.lov_setting_type = msl.id_lov WHERE msl.code = 'PSRE_MANDATORY_REGIS_PARAM_FLAG' AND mst.tenant_code = '" + GlobalVariable.Tenant + "' AND mts0.id_ms_tenant_setting = mts.id_ms_tenant_setting")
 		}
 	}
-	
+
 	@Keyword
 	updateTenantSettingsKeepCriticalUserDataOnly(Connection conn, String value) {
 		Statement stm = conn.createStatement()
@@ -1150,7 +1149,7 @@ class UpdateData {
 			stm.executeUpdate("UPDATE ms_tenant_settings mts0 SET setting_value = '" + value + "' FROM ms_tenant_settings mts JOIN ms_tenant mst ON mts.id_ms_tenant = mst.id_ms_tenant LEFT JOIN ms_lov msl ON mts.lov_setting_type = msl.id_lov WHERE msl.code = 'KEEP_CRITICAL_USER_DATA_ONLY' AND mst.tenant_code = '" + GlobalVariable.Tenant + "' AND mts0.id_ms_tenant_setting = mts.id_ms_tenant_setting")
 		}
 	}
-	
+
 	@Keyword
 	updateTenantSettingsKeepSelfiePhoto(Connection conn, String value) {
 		Statement stm = conn.createStatement()

@@ -165,7 +165,6 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 					'verify tanggal lahir'
 					arrayMatch.add(WebUI.verifyMatch(sDate.toUpperCase(), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
 							rowExcel('Tanggal Lahir')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-
 				}
                 'verify jenis kelamin'
                 arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathRegister).getValue(

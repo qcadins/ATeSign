@@ -122,8 +122,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                     sDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(resultDataDiri[arrayindex++], 'MM/dd/yyyy', 
                         'yyyy-MM-dd')
 					
-					if (CustomKeywords.'connection.Registrasi.checkCriticalUserDataOnlyParam'(conneSign) == '0' ||
-						CustomKeywords.'connection.Registrasi.checkCriticalUserDataWithSelfieParam'(conneSign) == '0' ) {
+					if (CustomKeywords.'connection.Registrasi.checkCriticalUserDataOnlyParam'(conneSign) == '0') {
 						'verify tanggal lahir'
 						arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathGenerateLink).getValue(GlobalVariable.NumofColm, 
                                 rowExcel('tglLahir')).replace('"', ''), sDate, false, FailureHandling.CONTINUE_ON_FAILURE))
