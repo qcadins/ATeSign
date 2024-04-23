@@ -110,7 +110,7 @@ class Registrasi {
 		}
 		Integer.parseInt(data)
 	}
-	
+
 	@Keyword
 	checkPSREMandatoryRegisParam(Connection conn) {
 		stm = conn.createStatement()
@@ -125,7 +125,7 @@ class Registrasi {
 		}
 		Integer.parseInt(data)
 	}
-	
+
 	@Keyword
 	checkCriticalUserDataOnlyParam(Connection conn) {
 		stm = conn.createStatement()
@@ -141,7 +141,7 @@ class Registrasi {
 		}
 		Integer.parseInt(data)
 	}
-	
+
 	@Keyword
 	checkCriticalUserDataWithSelfieParam(Connection conn) {
 		stm = conn.createStatement()

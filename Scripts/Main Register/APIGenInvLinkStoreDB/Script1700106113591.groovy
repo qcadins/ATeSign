@@ -42,9 +42,14 @@ arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(Global
 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Kode Pos')).replace(
             '"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
-'verify tgl Lahir'
-arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Lahir')).replace(
+'check jika mandatory psre atau criticalnya mati'
+if (CustomKeywords.'connection.Registrasi.checkPSREMandatoryRegisParam'(conneSign) == '1' || CustomKeywords.'connection.Registrasi.checkCriticalUserDataOnlyParam'(conneSign) == '0') {
+	'verify tgl Lahir'
+	arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Lahir')).replace(
             '"', ''), result[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+} else {
+	arrayindex++
+}
 
 'verify tmp Lahir'
 arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Tempat Lahir')).replace(

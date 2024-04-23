@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DataFileEntity>
    <description></description>
-   <name>Insert Stamping Materai</name>
+   <name>Get Liveness Url</name>
    <tag></tag>
    <connectionProperties/>
    <containsHeaders>false</containsHeaders>
    <csvSeperator></csvSeperator>
-   <dataFileGUID>b701b15d-47b9-4683-9e19-53e158d10fd9</dataFileGUID>
+   <dataFileGUID>3b294e41-7f05-4412-9f61-2bdb14040340</dataFileGUID>
    <dataSourceUrl>Excel/2.1 Esign - Full API Services.xlsx</dataSourceUrl>
    <driver>ExcelFile</driver>
    <isInternalPath>true</isInternalPath>
    <query></query>
    <secureUserAccount>false</secureUserAccount>
-   <sheetName>API Insert Stamping Materai</sheetName>
+   <sheetName>API Get Liveness Url</sheetName>
    <usingGlobalDBSetting>false</usingGlobalDBSetting>
 </DataFileEntity>

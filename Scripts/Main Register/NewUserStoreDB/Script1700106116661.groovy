@@ -72,10 +72,10 @@ if (GlobalVariable.Psre == 'VIDA') {
     
     if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')) == 'Edit') {
         'call function verify store db after edit'
-        verifyStoreDBAfterEdit(arrayMatch, resultDataDiri)
+        verifyStoreDBAfterEdit(arrayMatch, resultDataDiri, conneSign)
     } else {
         'call function verify store db'
-        verifyStoreDB(arrayMatch, resultDataDiri)
+        verifyStoreDB(arrayMatch, resultDataDiri, conneSign)
     }
     
     'call function verify store db data perusahaan'
@@ -124,15 +124,20 @@ def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
 
-def verifyStoreDB(ArrayList arrayMatch, ArrayList resultDataDiri) {
+def verifyStoreDB(ArrayList arrayMatch, ArrayList resultDataDiri, Connection conneSign) {
     'verify nama'
     arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$Nama')).replace(
                 '"', '').toUpperCase(), (resultDataDiri[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 
-    'verify tempat lahir'
-    arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Tempat Lahir')).replace(
+	'check jika mandatory psre atau criticalnya mati'
+	if (CustomKeywords.'connection.Registrasi.checkPSREMandatoryRegisParam'(conneSign) == '1' || CustomKeywords.'connection.Registrasi.checkCriticalUserDataOnlyParam'(conneSign) == '0') {
+			'verify tempat lahir'
+			arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Tempat Lahir')).replace(
                 '"', '').toUpperCase(), (resultDataDiri[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-
+	} else {
+		arrayindex++
+	}
+	
     if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Generate Link With')).equalsIgnoreCase(
         'Menu Buat Undangan')) {
         'verify tanggal lahir'
@@ -176,7 +181,7 @@ def verifyStoreDB(ArrayList arrayMatch, ArrayList resultDataDiri) {
                 '"', '').toUpperCase(), (resultDataDiri[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
 }
 
-def verifyStoreDBAfterEdit(ArrayList arrayMatch, ArrayList resultDataDiri) {
+def verifyStoreDBAfterEdit(ArrayList arrayMatch, ArrayList resultDataDiri, Connection conneSign) {
     'verify nama'
     arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Nama - Edit')).replace(
                 '"', '').toUpperCase(), (resultDataDiri[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
@@ -184,11 +189,16 @@ def verifyStoreDBAfterEdit(ArrayList arrayMatch, ArrayList resultDataDiri) {
     'verify tempat lahir'
     arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Tempat Lahir - Edit')).replace(
                 '"', '').toUpperCase(), (resultDataDiri[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-
-    'verify tanggal lahir'
-    arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Lahir - Edit')).replace(
+	
+	'check jika mandatory psre atau criticalnya mati'
+	if (CustomKeywords.'connection.Registrasi.checkPSREMandatoryRegisParam'(conneSign) == '1' || CustomKeywords.'connection.Registrasi.checkCriticalUserDataOnlyParam'(conneSign) == '0') {
+		'verify tanggal lahir'
+		arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Tanggal Lahir - Edit')).replace(
                 '"', ''), resultDataDiri[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
-
+	} else {
+		arrayindex++
+	}
+	
     'verify jenis kelamin'
     arrayMatch.add(WebUI.verifyMatch(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Jenis Kelamin - Edit')).replace(
                 '"', '').toUpperCase(), (resultDataDiri[arrayindex++]).toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))

@@ -88,10 +88,13 @@ if (WebUI.verifyElementPresent(findTestObject('PencarianDokumen/noDataWarning'),
         'parse Date from yyyy-MM-dd > dd-MMM-yyyy'
         sDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(resultData[index++], 'yyyy-MM-dd', 'dd-MMM-yyyy')
 
-        'verify tanggal lahir'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianPenggunaAdmin/View/input_TanggalLahir'), 
+		'check jika mandatory psre atau criticalnya mati'
+		if (CustomKeywords.'connection.Registrasi.checkPSREMandatoryRegisParam'(conneSign) == '1' || CustomKeywords.'connection.Registrasi.checkCriticalUserDataOnlyParam'(conneSign) == '0') {
+			'verify tanggal lahir'
+			checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianPenggunaAdmin/View/input_TanggalLahir'), 
                     'value', FailureHandling.OPTIONAL), sDate, false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Lahir')
-
+		}
+		
         'verify Status AutoSign'
         checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('PencarianPenggunaAdmin/View/input_StatusAutoSign'), 
                     'value', FailureHandling.OPTIONAL), resultData[index++], false, FailureHandling.CONTINUE_ON_FAILURE), 
