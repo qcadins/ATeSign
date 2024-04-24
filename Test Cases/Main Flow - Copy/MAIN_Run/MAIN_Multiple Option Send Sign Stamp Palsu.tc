@@ -171,7 +171,7 @@
       <defaultValue>'\\n'</defaultValue>
       <description></description>
       <id>0faa41ce-9f33-4efd-ab5a-4c60a026e49d</id>
-      <masked>true</masked>
+      <masked>false</masked>
       <name>enter</name>
    </variable>
 </TestCaseEntity>

@@ -43,6 +43,10 @@ if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
     idPhoto = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('idPhoto'))
 }
 
+'check dormant before'
+isDormantBefore = CustomKeywords.'connection.DataVerif.getDormantUser'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
+                    '$Email')), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+                rowExcel('No Telepon')))
 'HIT API'
 respon = WS.sendRequest(findTestObject('APIFullService/Postman/Register', [('callerId') : findTestData(excelPathRegister).getValue(
                 GlobalVariable.NumofColm, rowExcel('callerId')), ('psreCode') : findTestData(excelPathRegister).getValue(
@@ -252,6 +256,20 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
                                 'PsreInput')).replace('"', '').toUpperCase(), psreCode.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
             }
             
+			'check dormant after'
+			isDormant = CustomKeywords.'connection.DataVerif.getDormantUser'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
+								'$Email')), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
+							rowExcel('No Telepon')))
+			
+			'jika dormant after bukan 0'
+			if (isDormant != '0') {
+				'jika dormant before hidup'
+				if (isDormantBefore == '1') {
+					'false store db'
+					arrayMatch.add(false)
+				}
+			}
+			
             'jika data db tidak sesuai dengan excel'
             if (arrayMatch.contains(false)) {
                 'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'

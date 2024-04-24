@@ -37,6 +37,11 @@ if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
     idPhoto = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('idPhoto'))
 }
 
+'check user dormant'
+isDormantBefore = CustomKeywords.'connection.DataVerif.getDormantUser'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+                rowExcel('$Email')), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+                rowExcel('No Telepon')))
+
 'HIT API'
 respon = WS.sendRequest(findTestObject('APIFullService/Postman/Generate Invitation Link', [('nama') : findTestData(excelPathRegister).getValue(
                 GlobalVariable.NumofColm, rowExcel('$Nama')), ('email') : findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
@@ -121,10 +126,10 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         }
         
         if ((GlobalVariable.checkStoreDB == 'Yes') && (GlobalVariable.FlagFailed == 0)) {
-            'write to excel success'
-            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm - 
-                1, GlobalVariable.StatusSuccess)
-
+			'write to excel success'
+			CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, 0, GlobalVariable.NumofColm -
+				1, GlobalVariable.StatusSuccess)
+			
             'call test case ResponseAPIStoreDB'
             WebUI.callTestCase(findTestCase('Main Register/APIGenInvLinkStoreDB'), [('excelPathRegister') : excelPathRegister], 
                 FailureHandling.CONTINUE_ON_FAILURE)

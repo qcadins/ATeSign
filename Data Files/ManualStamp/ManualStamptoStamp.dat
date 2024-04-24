@@ -3,6 +3,7 @@
    <description></description>
    <name>ManualStamptoStamp</name>
    <tag></tag>
+   <connectionProperties/>
    <containsHeaders>false</containsHeaders>
    <csvSeperator></csvSeperator>
    <dataFileGUID>ebddf4dc-0bfa-4024-834e-3d1b01c22ec0</dataFileGUID>
@@ -11,6 +12,6 @@
    <isInternalPath>true</isInternalPath>
    <query></query>
    <secureUserAccount>false</secureUserAccount>
-   <sheetName>Manual Stamp to Stamp</sheetName>
+   <sheetName>Main Flow Stamping</sheetName>
    <usingGlobalDBSetting>false</usingGlobalDBSetting>
 </DataFileEntity>

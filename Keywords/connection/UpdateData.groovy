@@ -1157,4 +1157,12 @@ class UpdateData {
 			stm.executeUpdate("UPDATE ms_tenant_settings mts0 SET setting_value = '" + value + "' FROM ms_tenant_settings mts JOIN ms_tenant mst ON mts.id_ms_tenant = mst.id_ms_tenant LEFT JOIN ms_lov msl ON mts.lov_setting_type = msl.id_lov WHERE msl.code = 'KEEP_SELFIE_PHOTO' AND mst.tenant_code = '" + GlobalVariable.Tenant + "' AND mts0.id_ms_tenant_setting = mts.id_ms_tenant_setting")
 		}
 	}
+
+	@Keyword
+	updateDormantUser(Connection conn, String loginId, String valueDormant) {
+		Statement stm = conn.createStatement()
+		if (valueDormant != '') {
+			stm.executeUpdate("UPDATE am_msuser SET is_dormant = '" + valueDormant + "' WHERE login_id = '" + loginId + "' or hashed_phone = '" + loginId + "'")
+		}
+	}
 }

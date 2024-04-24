@@ -25,7 +25,7 @@
       <name>excelPathManualStamptoStamp</name>
    </variable>
    <variable>
-      <defaultValue>'Manual Stamp to Stamp'</defaultValue>
+      <defaultValue>'Main Flow Stamping'</defaultValue>
       <description></description>
       <id>3eb80b35-564e-4c4e-8b03-12309ca63fef</id>
       <masked>false</masked>

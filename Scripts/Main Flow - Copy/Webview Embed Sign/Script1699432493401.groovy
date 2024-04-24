@@ -915,12 +915,6 @@ def generateEncryptMessage(Connection conneSign, String documentId, String email
     'membuat link kotak masuk'
     linkKotakMasuk = ((((findTestData(excelPathFESignDocument).getValue(GlobalVariable.NumofColm, rowExcel('Base Link KotakMasuk')) + 
     '?msg=') + encryptMsg) + '&tenantCode=') + tenantCode)
-
-    if (opsiSigning == 'Embed Sign') {
-        GlobalVariable.RunWithEmbed = 'Yes'
-    } else {
-        GlobalVariable.RunWithEmbed = 'No'
-    }
     
     HashMap<String, String> result = [:]
 	

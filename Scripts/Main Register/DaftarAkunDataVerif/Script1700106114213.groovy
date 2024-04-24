@@ -83,6 +83,11 @@ WebUI.delay(3)
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
+'check dormant after'
+isDormantBefore = CustomKeywords.'connection.DataVerif.getDormantUser'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
+			'$Email')), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
+			rowExcel('No Telepon')))
+
 if (WebUI.verifyElementNotPresent(findTestObject('DaftarAkun/label_SuccessPrivy'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
     if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')) == 'Edit') {
         'call function verify daftar akun after edit'
@@ -343,6 +348,33 @@ if (WebUI.verifyElementNotPresent(findTestObject('DaftarAkun/label_SuccessPrivy'
                         WebUI.callTestCase(findTestCase('null'), [('excelPathRegister') : excelPathRegister], FailureHandling.CONTINUE_ON_FAILURE)
                     }
                 } else {
+					'inisialisasi arraymatch'
+					arrayMatch = []
+					
+					'check dormant after'
+					isDormant = CustomKeywords.'connection.DataVerif.getDormantUser'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
+								'$Email')), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
+								rowExcel('No Telepon')))
+					
+						'jika dormant after bukan 0'
+						if (isDormant != '0') {
+							'jika dormant before hidup'
+							if (isDormantBefore == '1') {
+								'false store db'
+								arrayMatch.add(false)
+							}
+						}
+						
+						'jika data db tidak sesuai dengan excel'
+						if (arrayMatch.contains(false)) {
+							'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+							CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+								(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +
+								GlobalVariable.ReasonFailedStoredDB)
+			
+							GlobalVariable.FlagFailed = 1
+						}
+						
                     'call testcase form aktivasi vida'
                     WebUI.callTestCase(findTestCase('Main Register/FormAktivasiEsign'), [('excelPathRegister') : excelPathRegister], 
                         FailureHandling.CONTINUE_ON_FAILURE)

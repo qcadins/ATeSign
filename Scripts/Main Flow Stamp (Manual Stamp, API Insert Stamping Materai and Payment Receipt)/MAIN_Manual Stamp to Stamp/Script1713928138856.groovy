@@ -373,12 +373,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
         } else if (findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Doing it with ?')) == 
         'API Insert Stamping Materai') {
             'call test case insert stamping materai'
-            WebUI.callTestCase(findTestCase('Manual Stamp/API Insert Stamping Materai'), [('excelPath') : excelPathManualStamptoStamp
+            WebUI.callTestCase(findTestCase('Main Flow Stamp (Manual Stamp, API Insert Stamping Materai and Payment Receipt)/API Insert Stamping Materai'), [('excelPath') : excelPathManualStamptoStamp
                     , ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
         } else if (findTestData(excelPathManualStamptoStamp).getValue(GlobalVariable.NumofColm, rowExcel('Doing it with ?')) == 
         'API Insert Stamping Payment Receipt') {
             'call test case insert stamping materai'
-            WebUI.callTestCase(findTestCase('Manual Stamp/API Insert Stamping Payment Receipt'), [('excelPath') : excelPathManualStamptoStamp
+            WebUI.callTestCase(findTestCase('Main Flow Stamp (Manual Stamp, API Insert Stamping Materai and Payment Receipt)/API Insert Stamping Payment Receipt'), [('excelPath') : excelPathManualStamptoStamp
                     , ('sheet') : sheet], FailureHandling.CONTINUE_ON_FAILURE)
         }
         
@@ -1039,7 +1039,10 @@ def verifySaldoUsed(Connection conneSign, String tipeSaldo) {
             modifyperrowpercolumn = WebUI.modifyObjectProperty(findTestObject('KotakMasuk/Sign/lbl_notrxsaldo'), 'xpath', 
                 'equals', ((('/html/body/app-root/app-full-layout/div/div[2]/div/div[2]/app-balance/app-msx-paging/app-msx-datatable/section/ngx-datatable/div/datatable-body/datatable-selection/datatable-scroller/datatable-row-wrapper[' + 
                 row) + ']/datatable-body-row/div[2]/datatable-body-cell[') + colm) + ']/div', true)
-
+			
+			'scroll ke balance mutation'
+			WebUI.scrollToElement(modifyperrowpercolumn, GlobalVariable.TimeOut)
+			
             'Jika u di lokasi qty atau kolom ke 9'
             if (colm == 10) {
                 'Jika bukan untuk 2 kolom itu, maka check ke db'

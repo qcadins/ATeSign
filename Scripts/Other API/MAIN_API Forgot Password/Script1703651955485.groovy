@@ -107,13 +107,17 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(excelPath).getValue(
                 GlobalVariable.NumofColm, rowExcel('Setting Email Service')), emailSHA256)
 
+		'setting dormant user'
+		CustomKeywords.'connection.UpdateData.updateDormantUser'(conneSign, emailSHA256, findTestData(excelPath).getValue(
+                GlobalVariable.NumofColm, rowExcel('Dormant User')))
+		
         GlobalVariable.Tenant = CustomKeywords.'connection.ForgotPassword.getTenantCode'(conneSign, emailSHA256)
 
         CustomKeywords.'connection.UpdateData.updateDBForgotPasswordLevelNotification'(conneSign, excelPath, sheet)
 
         'write to excel otp before'
         CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('OTP before') - 
-            1, GlobalVariable.NumofColm - 1, CustomKeywords.'connection.ForgotPassword.getResetCode'(conneSign, email))
+            1, GlobalVariable.NumofColm - 1, CustomKeywords.'connection.ForgotPassword.getResetCode'(conneSign, emailSHA256))
 
         'HIT API send otp ke email invitasi'
         respon = WS.sendRequest(findTestObject('Postman/forgotPassword', [('callerId') : email, ('loginId') : email, ('sendingPointOption') : findTestData(
@@ -143,12 +147,12 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 'write to excel otp latest'
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('OTP latest') - 
                     1, GlobalVariable.NumofColm - 1, CustomKeywords.'connection.ForgotPassword.getResetCode'(conneSign, 
-                        email))
+                        emailSHA256))
 
                 'cek apakah send ulang OTP berhasil'
                 if (WebUI.verifyNotMatch(findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('OTP before')), 
                     findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('OTP latest')), false, FailureHandling.OPTIONAL)) {
-                    checkBalanceMutation(conneSign, email)
+                    checkBalanceMutation(conneSign, emailSHA256)
                 } else {
                     'Write To Excel GlobalVariable.StatusFailed and errormessage'
                     CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
@@ -226,6 +230,8 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                     (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', 
                         '') + ';') + 'Tidak ada transaksi yang terbentuk ketika melakukan pengiriman OTP Via SMS')
+				
+				GlobalVariable.FlagFailed = 1
             }
             
             if ((balmut[9]) != '-1') {
@@ -233,6 +239,8 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
                 CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed, 
                     (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')).replace('-', 
                         '') + ';') + 'Saldo SMS tidak terpotong')
+				
+				GlobalVariable.FlagFailed = 1
             }
         }
     }
@@ -246,4 +254,3 @@ def checkBalanceMutation(Connection conneSign, String emailSigner) {
 		}
 	}
 }
-

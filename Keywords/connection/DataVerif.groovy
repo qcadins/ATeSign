@@ -791,4 +791,22 @@ class DataVerif {
 		}
 		data
 	}
+
+	@Keyword
+	getDormantUser(Connection conn, String loginId, String phone) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select is_dormant from am_msuser where login_id = '" + loginId + "' or hashed_phone = encode(sha256('" + phone + "'), 'hex')")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			if (data.toString() == 'null') {
+				data = '2'
+			}
+			data = resultSet.getObject(1)
+		}
+		data
+	}
 }

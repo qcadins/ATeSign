@@ -13,6 +13,11 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 String selfPhoto, idPhoto
 
+'check dormant after'
+isDormantBefore = CustomKeywords.'connection.DataVerif.getDormantUser'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
+					'$Email')), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
+				rowExcel('No Telepon')))
+
 if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 SelfPhoto')) == 'Yes') {
     selfPhoto = CustomKeywords.'customizekeyword.ConvertFile.base64File'(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
             rowExcel('selfPhoto')))
@@ -84,6 +89,33 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 
     'jika status codenya 0'
     if (status_Code == 0) {
+		'inisialisasi arraymatch'
+		arrayMatch = []
+		
+		'check dormant after'
+		isDormant = CustomKeywords.'connection.DataVerif.getDormantUser'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
+					'$Email')), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
+					rowExcel('No Telepon')))
+		
+			'jika dormant after bukan 0'
+			if (isDormant != '0') {
+				'jika dormant before hidup'
+				if (isDormantBefore == '1') {
+					'false store db'
+					arrayMatch.add(false)
+				}
+			}
+			
+			'jika data db tidak sesuai dengan excel'
+			if (arrayMatch.contains(false)) {
+				'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
+				CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, GlobalVariable.StatusFailed,
+					(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Reason Failed')) + ';') +
+					GlobalVariable.ReasonFailedStoredDB)
+
+				GlobalVariable.FlagFailed = 1
+			}
+			
         'call testcase form aktivasi vida'
         WebUI.callTestCase(findTestCase('Main Register/FormAktivasiEsign'), [('excelPathRegister') : excelPathRegister], 
             FailureHandling.CONTINUE_ON_FAILURE)

@@ -479,9 +479,6 @@ def actionDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan
         'get data kotak masuk send document secara asc, dimana customer no 1'
         ArrayList<String> resultSigner = CustomKeywords.'connection.SendSign.getSignerKotakMasukSendDoc'(conneSign, nomorKontrakPerPilihan, documentName)
 
-        'declare array index menjadi 0 per result'
-        arrayIndexSigner = 0
-
         'loop untuk column popup'
         for (int m = 1; m <= variableColPopup.size(); m++) {
             'modify object text nama, email, signer Type, sudah aktivasi Untuk yang terakhir belum bisa, dikarenakan masih gak ada data (-) Dikarenakan modifynya bukan p di lastnya, melainkan span'

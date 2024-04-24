@@ -39,17 +39,19 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
 
         String emailSHA256
 
-        int countResend
-
-        if (!(email.contains('@'))) {
-            emailSHA256 = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(email)
-        } else {
+        if (email.contains('@')) {
             emailSHA256 = email
+        } else {
+            emailSHA256 = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(email)
         }
         
         'setting email service tenant'
         CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(excelPathForgotPass).getValue(
                 GlobalVariable.NumofColm, rowExcel('Setting Email Service')), emailSHA256)
+
+		'setting dormant user'
+		CustomKeywords.'connection.UpdateData.updateDormantUser'(conneSign, emailSHA256, findTestData(excelPathForgotPass).getValue(
+                GlobalVariable.NumofColm, rowExcel('Dormant User')))
 
         emailServiceOnVendor = CustomKeywords.'connection.DataVerif.getEmailServiceAsVendorUser'(conneSign, emailSHA256)
 
@@ -186,9 +188,6 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'ambil reset code dari DB untuk email yang dituju'
         ArrayList resetCodefromDB = []
 
-        'hitung jumlah resend yang diperlukan'
-        countResend = findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Count Resend')).toInteger()
-
         'tambahkan reset code dari DB'
         resetCodefromDB.add(CustomKeywords.'connection.ForgotPassword.getResetCode'(conneSign, emailSHA256))
 
@@ -210,7 +209,8 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
                 WebUI.click(findTestObject('ForgotPassword/button_OK'))
             }
         }
-        
+        int countResend
+		
         countResend = resendFunction(conneSign, countResend, resetCodefromDB)
 
         checkBalanceMutation(conneSign, emailSHA256)
@@ -469,6 +469,9 @@ def verifConfirmation() {
 def resendFunction(Connection conndev, int countResend, ArrayList resetCodefromDB) {
     'cek apakah perlu resend reset code'
     if (findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Resend Reset Code?')) == 'Yes') {
+		'hitung jumlah resend yang diperlukan'
+		countResend = findTestData(excelPathForgotPass).getValue(GlobalVariable.NumofColm, rowExcel('Count Resend')).toInteger()
+	
         'ulangi sesuai flag dari excel'
         for (int i = 1; i <= countResend; i++) {
             'ambil durasi aktif OTP dari update excel'
@@ -483,10 +486,6 @@ def resendFunction(Connection conndev, int countResend, ArrayList resetCodefromD
 
                 'mulai delay dikurangi otp expire duration'
                 WebUI.delay(297 - otpDuration)
-            } else {
-                WebUI.comment(countResend.toString())
-
-                WebUI.delay(30)
             }
             
             'pilih wa or sms pada resend'
