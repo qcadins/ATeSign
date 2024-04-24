@@ -23,13 +23,22 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         'setting menggunakan base url yang benar atau salah'
         CustomKeywords.'connection.DataVerif.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
-		'check ada value maka setting email service tenant'
-		if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')).length() >
-		0) {
-			'setting email service tenant'
-			CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(excelPath).getValue(
-				GlobalVariable.NumofColm, rowExcel('Setting Email Service')), findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('loginId')))
-		}
+        String email = findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('loginId'))
+
+        String emailSHA256
+
+        if (email.contains('@')) {
+            emailSHA256 = email
+        } else {
+            emailSHA256 = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(email)
+        }
+		'setting dormant user'
+		CustomKeywords.'connection.UpdateData.updateDormantUser'(conneSign, emailSHA256, findTestData(excelPath).getValue(
+				GlobalVariable.NumofColm, rowExcel('Dormant User')))
+		
+        'setting email service tenant'
+        CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(excelPath).getValue(
+                GlobalVariable.NumofColm, rowExcel('Setting Email Service')), emailSHA256)
 		
         'HIT API'
         respon = WS.sendRequest(findTestObject('Postman/getUserActivationStatusResetPassword', [('callerId') : findTestData(

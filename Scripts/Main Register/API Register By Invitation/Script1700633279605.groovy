@@ -13,11 +13,6 @@ Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 String selfPhoto, idPhoto
 
-'check dormant before'
-isDormantBefore = CustomKeywords.'connection.DataVerif.getDormantUser'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-					'$Email')), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
-				rowExcel('No Telepon')))
-
 if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('enter Correct base64 SelfPhoto')) == 'Yes') {
     selfPhoto = CustomKeywords.'customizekeyword.ConvertFile.base64File'(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
             rowExcel('selfPhoto')))
@@ -93,12 +88,11 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 		arrayMatch = []
 		
 		'check dormant after'
-		isDormant = CustomKeywords.'connection.DataVerif.getDormantUser'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-					'$Email')), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
-					rowExcel('No Telepon')))
+		isDormant = CustomKeywords.'connection.DataVerif.getDormantUser'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
+					'$NIK'))))
 		
 			'jika dormant before dan after tidak terjadi perubahan ketika account dormant'
-			if (isDormant == '1' && isDormantBefore == '1') {
+			if (isDormant != '0') {
 				'false store db'
 				arrayMatch.add(false)
 			}

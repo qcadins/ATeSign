@@ -102,14 +102,13 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         } else {
             emailSHA256 = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(email)
         }
-        
+		'setting dormant user'
+		CustomKeywords.'connection.UpdateData.updateDormantUser'(conneSign, emailSHA256, findTestData(excelPath).getValue(
+				GlobalVariable.NumofColm, rowExcel('Dormant User')))
+		
         'setting email service tenant'
         CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(excelPath).getValue(
                 GlobalVariable.NumofColm, rowExcel('Setting Email Service')), emailSHA256)
-
-		'setting dormant user'
-		CustomKeywords.'connection.UpdateData.updateDormantUser'(conneSign, emailSHA256, findTestData(excelPath).getValue(
-                GlobalVariable.NumofColm, rowExcel('Dormant User')))
 		
         GlobalVariable.Tenant = CustomKeywords.'connection.ForgotPassword.getTenantCode'(conneSign, emailSHA256)
 

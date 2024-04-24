@@ -171,6 +171,9 @@ for (int i = 0; i < docid.size(); i++) {
             'verify signerType'
             arrayMatch.add(WebUI.verifyMatch(signerTypeExcel[r], resultStoreEmailandType[arrayindex++], false, FailureHandling.CONTINUE_ON_FAILURE))
 
+			'verify dormant'
+			arrayMatch.add(WebUI.verifyMatch('0', CustomKeywords.'connection.DataVerif.getDormantUser'(conneSign, emailExcel[r]), false, FailureHandling.CONTINUE_ON_FAILURE))
+
             'Jika documentTemplateCode di dokumen pertama adalah kosong'
             if ((documentTemplateCode[i]).replace('"', '') == '') {
                 'Jika is sequence nya bukan 0'

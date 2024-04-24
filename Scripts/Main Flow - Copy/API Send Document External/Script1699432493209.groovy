@@ -50,9 +50,6 @@ stringRefno = (split[0])
 'body untuk sign location store db'
 signlocStoreDB = (split[1])
 
-'is dormant before all signer'
-isDormantBefore = (split[2])
-
 'Jika flag tenant no'
 if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'No') {
     'set tenant kosong'
@@ -119,7 +116,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         if (GlobalVariable.checkStoreDB == 'Yes') {
             'call test case storedb'
             WebUI.callTestCase(findTestCase('Main Flow - Copy/API Send Document External StoreDB'), [('excelPathAPISendDoc') : excelPathAPISendDoc
-                    , ('sheet') : sheet, ('signlocStoreDB') : signlocStoreDB, ('responsePsreCode') : responsePsreCode, ('isDormantBefore') : isDormantBefore], 
+                    , ('sheet') : sheet, ('signlocStoreDB') : signlocStoreDB, ('responsePsreCode') : responsePsreCode], 
                 FailureHandling.CONTINUE_ON_FAILURE)
         }
     } else {
@@ -233,9 +230,6 @@ def getDataExcel(String semicolon, int splitnum, String delimiter, String enter)
 }
 
 def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) {
-	'inisiasi is dormant before'
-	isDormantBefore = ''
-	
     'Looping berdasarkan total dari dokumen file ukuran'
     for (int i = 0; i < documentFile.size(); i++) {
         'signloc store db harus dikosongkan untuk loop dokumen selanjutnya.'
@@ -488,9 +482,10 @@ def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) 
                 CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(
                             excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')), 
                         SHA256IdNo)
-				} else {
-					isDormantBefore = isDormantBefore + CustomKeywords.'connection.DataVerif.getDormantUser'(conneSign, emails[loopingSignerEmailActive], SHA256IdNo).toString()
-                }
+				
+				'setting dormant user'
+				CustomKeywords.'connection.UpdateData.updateDormantUser'(conneSign, SHA256IdNo, findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Dormant User')))
+				}
             }
             
             'Memasukkan bodyAPI ke stringRefno'
@@ -545,8 +540,6 @@ def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) 
     returning.add(stringRefno)
 
     returning.add(signlocStoreDB)
-	
-	returning.add(isDormantBefore)
 
     returning
 }

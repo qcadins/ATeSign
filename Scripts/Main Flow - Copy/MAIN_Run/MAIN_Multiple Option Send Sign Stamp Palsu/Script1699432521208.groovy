@@ -149,6 +149,9 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(
                                 excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')), emailPenandaTangan[
                             loopingSigner])
+						
+						'setting dormant user'
+						CustomKeywords.'connection.UpdateData.updateDormantUser'(conneSign, emailPenandaTangan[loopingSigner], findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Dormant User')))
                     }
                 }
                 

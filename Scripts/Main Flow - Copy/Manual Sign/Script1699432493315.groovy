@@ -63,6 +63,7 @@ funcLogin()
 
 loopcase = 1
 
+ArrayList checkUserAndDormantStoreDB = []
 for (looping = 0; looping < loopcase; looping++) {
     'Pengecekan apakah masuk page manual sign'
     if (WebUI.verifyElementPresent(findTestObject('ManualSign/lbl_ManualSign'), GlobalVariable.TimeOut)) {
@@ -94,6 +95,10 @@ for (looping = 0; looping < loopcase; looping++) {
                 'setting email service tenant'
                 CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(excelPathManualSigntoSign).getValue(
                         GlobalVariable.NumofColm, rowExcel('Setting Email Service')), emailPenandaTangan[loopingSigner])
+				
+				'setting dormant user'
+				CustomKeywords.'connection.UpdateData.updateDormantUser'(conneSign, emailPenandaTangan[loopingSigner], findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Dormant User')))
+
             }
         }
         
@@ -227,7 +232,7 @@ for (looping = 0; looping < loopcase; looping++) {
                 'query check informasi dari user tersebut'
                 queryCheckInformationUser = CustomKeywords.'connection.ManualSign.getInformationUser'(conneSign, emailPenandaTangan[
                     indexEmail++], GlobalVariable.Psre)
-
+				
                 if ((valueInformasi[2]) == (emailPenandaTangan[(indexEmail - 1)])) {
                     'check ui dan query mengenai nama signer'
                     checkVerifyEqualOrMatch(WebUI.verifyMatch(valueInformasi[arrayIndexValue++], queryCheckInformationUser[
@@ -246,7 +251,10 @@ for (looping = 0; looping < loopcase; looping++) {
                     namaTandaTangan.add(valueInformasi[0])
 
                     notelpTandaTangan.add(valueInformasi[1])
-
+					
+					checkUserAndDormantStoreDB.add(valueInformasi[0])
+					
+					checkUserAndDormantStoreDB.add(valueInformasi[1])
                     break
                 } else {
                     indexEmail--
@@ -530,7 +538,26 @@ for (looping = 0; looping < loopcase; looping++) {
                         arrayMatch.add(WebUI.verifyNotMatch('', CustomKeywords.'connection.APIFullService.getPrivyStampLocation'(
                                     conneSign, docId), false, FailureHandling.CONTINUE_ON_FAILURE))
                     }
-                    
+
+					for (loopingUser = 0; loopingUser < checkUserAndDormantStoreDB.size(); loopingUser++) {
+						arrayIndex = 0
+						
+						loopingPhone = loopingUser + 1
+						
+						checkUserAndDormant = CustomKeywords.'connection.ManualSign.getUserAndDormantAfterSend'(conneSign,
+							 checkUserAndDormantStoreDB[loopingUser], checkUserAndDormantStoreDB[loopingPhone], docId)
+						
+						'pastikan nama sesuai after send'
+						arrayMatch.add(WebUI.verifyMatch(checkUserAndDormantStoreDB[loopingUser], checkUserAndDormant[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+						
+						'pastikan no hp sesuai after send'
+						arrayMatch.add(WebUI.verifyMatch(CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(checkUserAndDormantStoreDB[loopingPhone]), checkUserAndDormant[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+						
+						'pastikan nama sesuai after send'
+						arrayMatch.add(WebUI.verifyMatch('0', checkUserAndDormant[arrayIndex++], false, FailureHandling.CONTINUE_ON_FAILURE))
+						
+						loopingUser = loopingPhone
+					}
                     'jika data db tidak sesuai dengan excel'
                     if (arrayMatch.contains(false)) {
                         'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'

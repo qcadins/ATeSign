@@ -83,11 +83,6 @@ WebUI.delay(3)
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-'check dormant after'
-isDormantBefore = CustomKeywords.'connection.DataVerif.getDormantUser'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-			'$Email')), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
-			rowExcel('No Telepon')))
-
 if (WebUI.verifyElementNotPresent(findTestObject('DaftarAkun/label_SuccessPrivy'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
     if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Inquiry Invitation Action')) == 'Edit') {
         'call function verify daftar akun after edit'
@@ -352,12 +347,11 @@ if (WebUI.verifyElementNotPresent(findTestObject('DaftarAkun/label_SuccessPrivy'
 					arrayMatch = []
 					
 					'check dormant after'
-					isDormant = CustomKeywords.'connection.DataVerif.getDormantUser'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-								'$Email')), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
-								rowExcel('No Telepon')))
+					isDormant = CustomKeywords.'connection.DataVerif.getDormantUser'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
+								'$NIK'))))
 					
 					'jika dormant before dan after tidak terjadi perubahan ketika account dormant'
-					if (isDormant == '1' && isDormantBefore == '1') {
+					if (isDormant != '0') {
 						'false store db'
 						arrayMatch.add(false)
 					}

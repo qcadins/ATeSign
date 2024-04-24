@@ -1162,7 +1162,7 @@ class UpdateData {
 	updateDormantUser(Connection conn, String loginId, String valueDormant) {
 		Statement stm = conn.createStatement()
 		if (valueDormant != '') {
-			stm.executeUpdate("UPDATE am_msuser SET is_dormant = '" + valueDormant + "' WHERE login_id = '" + loginId + "' or hashed_phone = '" + loginId + "'")
+			stm.executeUpdate("UPDATE am_msuser amm SET is_dormant = '" + valueDormant + "' FROM ms_vendor_registered_user msvr WHERE amm.id_ms_user = msvr.id_ms_user AND (msvr.signer_registered_email = '" + loginId + "' OR msvr.hashed_signer_registered_phone = '" + loginId + "' OR amm.hashed_id_no = '" + loginId + "')")
 		}
 	}
 }

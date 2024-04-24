@@ -218,6 +218,9 @@ for (int o = 0; o < documentFile.size(); o++) {
                 'setting email service tenant'
                 CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(API_Excel_Path).getValue(
                         GlobalVariable.NumofColm, rowExcel('Setting Email Service')), SHA256IdNo)
+				
+				'setting dormant user'
+				CustomKeywords.'connection.UpdateData.updateDormantUser'(conneSign, SHA256IdNo, findTestData(API_Excel_Path).getValue(GlobalVariable.NumofColm, rowExcel('Dormant User')))
             }
         }
     }

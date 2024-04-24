@@ -803,10 +803,10 @@ class DataVerif {
 	}
 
 	@Keyword
-	getDormantUser(Connection conn, String loginId, String phoneOrNik) {
+	getDormantUser(Connection conn, String loginId) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select is_dormant from am_msuser where login_id = '" + loginId + "' or hashed_phone = encode(sha256('" + phoneOrNik + "'), 'hex') or hashed_id_no = encode(sha256('" + phoneOrNik + "'), 'hex')")
+		resultSet = stm.executeQuery("select amm.is_dormant from ms_vendor_registered_user msvr join am_msuser amm on msvr.id_ms_user = amm.id_ms_user where (msvr.signer_registered_email = '" + loginId + "' OR msvr.hashed_signer_registered_phone = '" + loginId + "' OR amm.hashed_id_no = '" + loginId + "')")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

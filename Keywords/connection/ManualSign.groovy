@@ -126,4 +126,22 @@ class ManualSign {
 		}
 		listdata
 	}
+
+	@Keyword
+	getUserAndDormantAfterSend(Connection conn, String fullName, String phone, String documentId) {
+		stm = conn.createStatement()
+
+		resultSet = stm.executeQuery("select amm.full_name, msvr.hashed_signer_registered_email, amm.is_dormant from tr_document_h tdh left join tr_document_d tdd on tdh.id_document_h = tdd.id_document_h left join tr_document_d_sign tdds on tdds.id_document_d = tdd.id_document_d left join am_msuser amm on tdds.id_ms_user = amm.id_ms_user left join ms_vendor_registered_user msvr on amm.id_ms_user = msvr.id_ms_user where tdd.document_id = '" + documentId + "' and amm.full_name = '" + fullName + "' and (msvr.hashed_signer_registered_phone = encode(sha256('" + phone + "'), 'hex') OR msvr.signer_registered_email = '" + phone + "' OR msvr.hashed_signer_registered_phone = encode(sha256('" + phone + "'), 'hex') OR amm.hashed_id_no = encode(sha256('" + phone + "'), 'hex'))")
+		metadata = resultSet.metaData
+
+		columnCount = metadata.getColumnCount()
+
+		while (resultSet.next()) {
+			for (i = 1 ; i <= columnCount ; i++) {
+				data = resultSet.getObject(i)
+				listdata.add(data)
+			}
+		}
+		listdata
+	}
 }

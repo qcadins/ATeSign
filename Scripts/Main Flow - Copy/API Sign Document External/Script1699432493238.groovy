@@ -651,6 +651,9 @@ def responseAPIStoreDB(Connection conneSign, String ipaddress, String documentId
     'verify tenant'
     arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], GlobalVariable.Tenant, false, FailureHandling.CONTINUE_ON_FAILURE))
 
+	'verify dormant'
+	arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], '0', false, FailureHandling.CONTINUE_ON_FAILURE))
+
     trxNo = trxNo.replace('[', '').replace(']', '')
 
     'Jika trxNonya tidak kosong'

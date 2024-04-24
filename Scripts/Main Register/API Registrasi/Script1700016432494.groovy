@@ -43,10 +43,6 @@ if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
     idPhoto = findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('idPhoto'))
 }
 
-'check dormant before'
-isDormantBefore = CustomKeywords.'connection.DataVerif.getDormantUser'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-                    '$Email')), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
-                rowExcel('No Telepon')))
 'HIT API'
 respon = WS.sendRequest(findTestObject('APIFullService/Postman/Register', [('callerId') : findTestData(excelPathRegister).getValue(
                 GlobalVariable.NumofColm, rowExcel('callerId')), ('psreCode') : findTestData(excelPathRegister).getValue(
@@ -257,12 +253,11 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
             }
             
 			'check dormant after'
-			isDormant = CustomKeywords.'connection.DataVerif.getDormantUser'(conneSign, findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-								'$Email')), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
-							rowExcel('No Telepon')))
+			isDormant = CustomKeywords.'connection.DataVerif.getDormantUser'(conneSign,CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
+								'$NIK'))))
 			
 			'jika dormant before dan after tidak terjadi perubahan ketika account dormant'
-			if (isDormant == '1' && isDormantBefore == '1') {
+			if (isDormant != '0') {
 				'false store db'
 				arrayMatch.add(false)
 			}
