@@ -474,6 +474,7 @@ def actionDocumentMonitoring(Connection conneSign, String nomorKontrakPerPilihan
 
     arrayMatch = []
 	
+	arrayIndexSigner = 0
     'loop untuk row popup'
     for (int i = 1; i <= variableRowPopup.size(); i++) {
         'get data kotak masuk send document secara asc, dimana customer no 1'

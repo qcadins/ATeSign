@@ -50,6 +50,9 @@ stringRefno = (split[0])
 'body untuk sign location store db'
 signlocStoreDB = (split[1])
 
+'is dormant before all signer'
+isDormantBefore = (split[2])
+
 'Jika flag tenant no'
 if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'No') {
     'set tenant kosong'
@@ -116,7 +119,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
         if (GlobalVariable.checkStoreDB == 'Yes') {
             'call test case storedb'
             WebUI.callTestCase(findTestCase('Main Flow - Copy/API Send Document External StoreDB'), [('excelPathAPISendDoc') : excelPathAPISendDoc
-                    , ('sheet') : sheet, ('signlocStoreDB') : signlocStoreDB, ('responsePsreCode') : responsePsreCode], 
+                    , ('sheet') : sheet, ('signlocStoreDB') : signlocStoreDB, ('responsePsreCode') : responsePsreCode, ('isDormantBefore') : isDormantBefore], 
                 FailureHandling.CONTINUE_ON_FAILURE)
         }
     } else {
@@ -230,6 +233,9 @@ def getDataExcel(String semicolon, int splitnum, String delimiter, String enter)
 }
 
 def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) {
+	'inisiasi is dormant before'
+	isDormantBefore = ''
+	
     'Looping berdasarkan total dari dokumen file ukuran'
     for (int i = 0; i < documentFile.size(); i++) {
         'signloc store db harus dikosongkan untuk loop dokumen selanjutnya.'
@@ -353,8 +359,6 @@ def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) 
                                 'Isi bodyAPI'
                                 bodyAPI = ((bodyAPI + (seqNoBodyAPI[t])) + ',"signLocations": [')
 
-								println pageSigns[l]
-								println llxSigns[l]
                                 'Jika pageSign untuk yang pertama di signer pertama kosong'
                                 if ((pageSigns[l]) == '') {
                                     'Input body mengenai llx dan lly'
@@ -473,18 +477,19 @@ def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) 
                 'isi bodyAPI dengan bodyAPI yang atas'
                 bodyAPI = (bodySigner(signActions[t], signerTypes[t], tlps[t], idKtps[t], emails[t], bodyAPI) + ',')
             }
-            
-            'check ada value maka setting email service tenant'
-            if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')).length() > 
-            0) {
-                for (loopingSignerEmailActive = 0; loopingSignerEmailActive < idKtps.size(); loopingSignerEmailActive++) {
-                    SHA256IdNo = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'((idKtps[loopingSignerEmailActive]).replace(
-                            '"', ''))
 
-                    'setting email service tenant'
-                    CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(
+            for (loopingSignerEmailActive = 0; loopingSignerEmailActive < idKtps.size(); loopingSignerEmailActive++) {
+                SHA256IdNo = CustomKeywords.'customizekeyword.ParseText.convertToSHA256'((idKtps[loopingSignerEmailActive]))
+				
+				'check ada value maka setting email service tenant'
+				if (findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')).length() >
+				0) {
+                'setting email service tenant'
+                CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(
                             excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')), 
                         SHA256IdNo)
+				} else {
+					isDormantBefore = isDormantBefore + CustomKeywords.'connection.DataVerif.getDormantUser'(conneSign, emails[loopingSignerEmailActive], SHA256IdNo).toString()
                 }
             }
             
@@ -540,11 +545,13 @@ def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) 
     returning.add(stringRefno)
 
     returning.add(signlocStoreDB)
+	
+	returning.add(isDormantBefore)
 
     returning
 }
 
-	def setBodyForStampingLocation(String pageStamp, String llxStamp, String llyStamp, String urxStamp, String uryStamp, String bodyAPI) {
+def setBodyForStampingLocation(String pageStamp, String llxStamp, String llyStamp, String urxStamp, String uryStamp, String bodyAPI) {
 	        'Splitting dari dokumen pertama per signer mengenai stamping'
 	        pageStamps = pageStamp.split(semicolon, splitnum)
 	

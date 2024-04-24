@@ -23,6 +23,12 @@
       <value></value>
       <variableId>b1f97b98-8f54-4aaa-a185-fcfbb893a323</variableId>
    </variableLinks>
+   <variableLinks>
+      <testDataLinkId></testDataLinkId>
+      <type>DEFAULT</type>
+      <value></value>
+      <variableId>029b55ed-1c73-439f-8f25-c412f0af8228</variableId>
+   </variableLinks>
    <variable>
       <defaultValue>''</defaultValue>
       <description></description>
@@ -43,5 +49,12 @@
       <id>b1f97b98-8f54-4aaa-a185-fcfbb893a323</id>
       <masked>false</masked>
       <name>signlocStoreDBSplit</name>
+   </variable>
+   <variable>
+      <defaultValue>''</defaultValue>
+      <description></description>
+      <id>029b55ed-1c73-439f-8f25-c412f0af8228</id>
+      <masked>false</masked>
+      <name>isDormantBefore</name>
    </variable>
 </TestCaseEntity>

@@ -929,10 +929,15 @@ def checkBeforeChoosingOTPOrBiometric(String emailSigner, Connection conneSign, 
     'Jika verifikasi penanda tangan muncul, Verifikasi antara email yang ada di UI dengan db'
     checkVerifyEqualorMatch(WebUI.verifyMatch(WebUI.getAttribute(findTestObject('KotakMasuk/Sign/input_EmailAfterKonfirmasi'), 
                 'value'), emailSigner, false, FailureHandling.CONTINUE_ON_FAILURE), ' pada email Signer')
-
-    'Get text nomor telepon'
-    noTelpSigner = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/input_phoneNoAfterKonfirmasi'), 'value')
-
+	
+	if (CustomKeywords.'connection.DataVerif.getSentOtpByEmail'(conneSign, GlobalVariable.Tenant) == '1') {
+		'Get text nomor telepon'
+		noTelpSigner = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/input_EmailAfterKonfirmasi'), 'value')
+	} else {
+		'Get text nomor telepon'
+		noTelpSigner = WebUI.getAttribute(findTestObject('KotakMasuk/Sign/input_phoneNoAfterKonfirmasi'), 'value')
+	}
+	
     'input text password'
     WebUI.setText(findTestObject('KotakMasuk/Sign/input_KataSandiAfterKonfirmasi'), findTestData(excelPathFESignDocument).getValue(
             GlobalVariable.NumofColm, rowExcel('Password Signer')))

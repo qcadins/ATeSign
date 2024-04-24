@@ -29,10 +29,9 @@ if (excelPathFESignDocument.contains('MAIN')) {
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
 
-totalMeterai = Integer.parseInt(CustomKeywords.'connection.DocumentMonitoring.getTotalStampingandTotalMaterai'(conneSign,
-			'TEST-STARTSTAMPING-04')[1])
-
+totalMeterai = CustomKeywords.'connection.DataVerif.getSentOtpByEmail'(conneSign, 'WOMF')
 println (totalMeterai)
+
  //*[@id="searchForm"]/div[1]/div[10]/app-question/app-select/div/div[2]/ng-dropdown-panel
 //
 //aa = WebUI.getAttribute(findTestObject('View User OTP/text_otp'), 'value')

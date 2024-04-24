@@ -472,7 +472,7 @@ class DataVerif {
 	getSentOtpByEmail(Connection conn, String tenantCode) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select sent_otp_by_email from ms_tenant where tenant_code = '" + tenantCode + "'")
+		resultSet = stm.executeQuery("select must_use_wa_first from ms_tenant where tenant_code = '" + tenantCode + "'")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
@@ -482,10 +482,20 @@ class DataVerif {
 		}
 
 		if (data != null) {
-			Integer.parseInt(data)
-		} else {
-			data = 0
+			if (data == '0') {
+				resultSet = stm.executeQuery("select sent_otp_by_email from ms_tenant where tenant_code = '" + tenantCode + "'")
+				metadata = resultSet.metaData
+
+				columnCount = metadata.getColumnCount()
+
+				while (resultSet.next()) {
+					data = resultSet.getObject(1)
+				}
+			} else {
+				data = 0
+			}
 		}
+		data
 	}
 
 	@Keyword
@@ -793,17 +803,17 @@ class DataVerif {
 	}
 
 	@Keyword
-	getDormantUser(Connection conn, String loginId, String phone) {
+	getDormantUser(Connection conn, String loginId, String phoneOrNik) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select is_dormant from am_msuser where login_id = '" + loginId + "' or hashed_phone = encode(sha256('" + phone + "'), 'hex')")
+		resultSet = stm.executeQuery("select is_dormant from am_msuser where login_id = '" + loginId + "' or hashed_phone = encode(sha256('" + phoneOrNik + "'), 'hex') or hashed_id_no = encode(sha256('" + phoneOrNik + "'), 'hex')")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()
 
 		while (resultSet.next()) {
 			if (data.toString() == 'null') {
-				data = '2'
+				data = '0'
 			}
 			data = resultSet.getObject(1)
 		}

@@ -261,13 +261,10 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
 								'$Email')), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
 							rowExcel('No Telepon')))
 			
-			'jika dormant after bukan 0'
-			if (isDormant != '0') {
-				'jika dormant before hidup'
-				if (isDormantBefore == '1') {
-					'false store db'
-					arrayMatch.add(false)
-				}
+			'jika dormant before dan after tidak terjadi perubahan ketika account dormant'
+			if (isDormant == '1' && isDormantBefore == '1') {
+				'false store db'
+				arrayMatch.add(false)
 			}
 			
             'jika data db tidak sesuai dengan excel'
