@@ -63,7 +63,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= countColmExcel; (
         CustomKeywords.'connection.UpdateData.updateDBMainRegister'(conneSign, excelPathRegister, sheet)
 		
 		'setting dormant user'
-		CustomKeywords.'connection.UpdateData.updateDormantUser'(conneSign, findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('$NIK')), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Dormant User')))
+		CustomKeywords.'connection.UpdateData.updateDormantUser'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$NIK'))), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Dormant User')))
 
         'check if mau menggunakan api_key yang salah atau benar'
         if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('use Correct API Key')) == 'Yes') {

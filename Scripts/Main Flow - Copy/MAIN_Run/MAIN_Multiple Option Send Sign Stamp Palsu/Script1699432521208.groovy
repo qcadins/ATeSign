@@ -149,9 +149,10 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                         CustomKeywords.'connection.SendSign.settingEmailServiceVendorRegisteredUser'(conneSign, findTestData(
                                 excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Email Service')), emailPenandaTangan[
                             loopingSigner])
-						
-						'setting dormant user'
-						CustomKeywords.'connection.UpdateData.updateDormantUser'(conneSign, emailPenandaTangan[loopingSigner], findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Dormant User')))
+
+                        'setting dormant user'
+                        CustomKeywords.'connection.UpdateData.updateDormantUser'(conneSign, emailPenandaTangan[loopingSigner], 
+                            findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Dormant User')))
                     }
                 }
                 
@@ -249,100 +250,100 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
             'jika opsi tanda tangannya bukan stamp only'
             if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 
             'Stamp Only') {
-                'jika memerlukan tanda tangan pada dokumen ini'
-                if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Need Sign for this document?')) == 
-                'Yes') {
-                    'ambil opsi signing'
-                    ArrayList opsiSigning = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Sign Document per Signer')).split(
-                        ';', -1)
+                'ambil opsi signing'
+                ArrayList opsiSigning = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Sign Document per Signer')).split(
+                    ';', -1)
 
-                    'jika opsi tanda tangannya bukan sign only'
-                    if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 
-                    'Sign Only') {
-                        'get email login berdasarkan document tersebut, setelah itu di trim dan dimasukkan kepada arraylist'
-                        for (i = (documentId.size() - 1); i >= 0; i--) {
-                            emailSignerPerDoc = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, documentId[
-                                i]).split(';', -1)
+                'jika opsi tanda tangannya bukan sign only'
+                if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 
+                'Sign Only') {
+                    'get email login berdasarkan document tersebut, setelah itu di trim dan dimasukkan kepada arraylist'
+                    for (i = (documentId.size() - 1); i >= 0; i--) {
+                        emailSignerPerDoc = CustomKeywords.'connection.SendSign.getEmailLogin'(conneSign, documentId[i]).split(
+                            ';', -1)
 
-                            emailSigner.put(documentId[i], emailSignerPerDoc)
-                        }
-                        
-                        'pengecekan jika total signer dari inputan dan dari db tidak sama'
-                        if (WebUI.verifyNotEqual(signerInput.size(), emailSigner.size(), FailureHandling.OPTIONAL)) {
-                            'Write To Excel GlobalVariable.StatusFailed and total signernya tidak sesuai'
-                            CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
-                                GlobalVariable.StatusFailed, (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, 
-                                    rowExcel('Reason Failed')) + ';') + ' total signer pada Send Document dengan signer yang terdaftar tidak sesuai ')
-                        }
-                    } else {
-                        'mengambil document id'
-                        documentId = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(
-                            ', ', -1)
-
-                        'looping per document id'
-                        for (i = (documentId.size() - 1); i >= 0; i--) {
-                            'get email signer based on inputan sign only, setelah itu di trim dan dimasukkan kedalam array list'
-                            emailSignerPerDoc = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel(
-                                    'email Signer (Sign Only)')).split(';', -1)
-
-                            emailSigner.put(documentId[i], emailSignerPerDoc)
-                        }
+                        emailSigner.put(documentId[i], emailSignerPerDoc)
                     }
                     
-                    'reset value cancel docs'
-                    cancelDocsValue = ''
+                    'pengecekan jika total signer dari inputan dan dari db tidak sama'
+                    if (WebUI.verifyNotEqual(signerInput.size(), emailSigner.size(), FailureHandling.OPTIONAL)) {
+                        'Write To Excel GlobalVariable.StatusFailed and total signernya tidak sesuai'
+                        CustomKeywords.'customizekeyword.WriteExcel.writeToExcelStatusReason'(sheet, GlobalVariable.NumofColm, 
+                            GlobalVariable.StatusFailed, (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, 
+                                rowExcel('Reason Failed')) + ';') + ' total signer pada Send Document dengan signer yang terdaftar tidak sesuai ')
+                    }
+                } else {
+                    'mengambil document id'
+                    documentId = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('documentid')).split(
+                        ', ', -1)
 
-                    'looping berdasarkan email yang akan menandatangani'
-                    for (int i = 0; i < emailSigner.keySet().size(); i++) {
-                        'jika flagbreaknya menyala, maka akan break'
-                        if (flagBreak == 1) {
-                            break
+                    'looping per document id'
+                    for (i = (documentId.size() - 1); i >= 0; i--) {
+                        'get email signer based on inputan sign only, setelah itu di trim dan dimasukkan kedalam array list'
+                        emailSignerPerDoc = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('email Signer (Sign Only)')).split(
+                            ';', -1)
+
+                        emailSigner.put(documentId[i], emailSignerPerDoc)
+                    }
+                }
+                
+                'reset value cancel docs'
+                cancelDocsValue = ''
+
+                'looping berdasarkan email yang akan menandatangani'
+                for (int i = 0; i < emailSigner.keySet().size(); i++) {
+                    'jika flagbreaknya menyala, maka akan break'
+                    if (flagBreak == 1) {
+                        break
+                    }
+                    
+                    int countLooping = emailSigner.get(emailSigner.keySet()[i]).size()
+
+                    'looping per signer'
+                    for (y = 0; y < countLooping; y++) {
+                        'checking signer tersebut adalah signer autosign'
+                        ifSignerAuto = CustomKeywords.'connection.APIFullService.getIfSignerAutosign'(conneSign, emailSigner.keySet()[
+                            i], emailSigner.get(emailSigner.keySet()[i])[y])
+
+                        'jika ada, maka continue'
+                        if (ifSignerAuto == 'Autosign') {
+                            continue
                         }
                         
-                        int countLooping = emailSigner.get(emailSigner.keySet()[i]).size()
+                        'reset globalvariable store var setiap signing'
+                        GlobalVariable.storeVar = [:]
 
-                        'looping per signer'
-                        for (y = 0; y < countLooping; y++) {
-                            'checking signer tersebut adalah signer autosign'
-                            ifSignerAuto = CustomKeywords.'connection.APIFullService.getIfSignerAutosign'(conneSign, emailSigner.keySet()[
-                                i], emailSigner.get(emailSigner.keySet()[i])[y])
+                        'input document id dan email'
+                        (GlobalVariable.storeVar[(emailSigner.keySet()[i])]) = (emailSigner.get(emailSigner.keySet()[i])[
+                        y])
 
-                            'jika ada, maka continue'
-                            if (ifSignerAuto == 'Autosign') {
-                                continue
-                            }
-                            
-                            'reset globalvariable store var setiap signing'
-                            GlobalVariable.storeVar = [:]
+                        'reset global variable verifikasi otp, biometric, dan sign'
 
-                            'input document id dan email'
-                            (GlobalVariable.storeVar[(emailSigner.keySet()[i])]) = (emailSigner.get(emailSigner.keySet()[
-                                i])[y])
+                        'reset value GV'
+                        (GlobalVariable.eSignData['VerifikasiOTP']) = 0
 
-                            'reset global variable verifikasi otp, biometric, dan sign'
+                        (GlobalVariable.eSignData['VerifikasiBiometric']) = 0
 
-                            'reset value GV'
-                            (GlobalVariable.eSignData['VerifikasiOTP']) = 0
+                        (GlobalVariable.eSignData['VerifikasiSign']) = 0
 
-                            (GlobalVariable.eSignData['VerifikasiBiometric']) = 0
-
-                            (GlobalVariable.eSignData['VerifikasiSign']) = 0
-
-                            'jika opsi tanda tangannya bukan sign only dan stamp only'
-                            if ((findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 
-                            'Sign Only') && (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 
-                            'Stamp Only')) {
-                                'call test case kotak masuk'
-                                WebUI.callTestCase(findTestCase('Main Flow - Copy/KotakMasuk'), [('excelPathFESignDocument') : excelPathMain
-                                        , ('sheet') : sheet, ('checkBeforeSigning') : 'Yes'], FailureHandling.CONTINUE_ON_FAILURE)
-                            } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
-                            'Sign Only') {
-                                'call Test Case untuk login sebagai user berdasarkan doc id'
-                                WebUI.callTestCase(findTestCase('Main Flow - Copy/Login'), [('email') : GlobalVariable.storeVar[
-                                        (GlobalVariable.storeVar.keySet()[0])], ('excel') : excelPathMain, ('checkBeforeSigning') : 'Yes'
-                                        , ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
-                            }
-                            
+                        'jika opsi tanda tangannya bukan sign only dan stamp only'
+                        if ((findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 
+                        'Sign Only') && (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) != 
+                        'Stamp Only')) {
+                            'call test case kotak masuk'
+                            WebUI.callTestCase(findTestCase('Main Flow - Copy/KotakMasuk'), [('excelPathFESignDocument') : excelPathMain
+                                    , ('sheet') : sheet, ('checkBeforeSigning') : 'Yes'], FailureHandling.CONTINUE_ON_FAILURE)
+                        } else if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Option for Send Document :')) == 
+                        'Sign Only') {
+                            'call Test Case untuk login sebagai user berdasarkan doc id'
+                            WebUI.callTestCase(findTestCase('Main Flow - Copy/Login'), [('email') : GlobalVariable.storeVar[
+                                    (GlobalVariable.storeVar.keySet()[0])], ('excel') : excelPathMain, ('checkBeforeSigning') : 'Yes'
+                                    , ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
+                        }
+                        
+                        'jika memerlukan tanda tangan pada dokumen ini'
+                        if (findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Need Sign for this document?')) == 
+                        'Yes') {
                             'jika opsi signing untuk signer adalah api sign document external'
                             if ((opsiSigning[GlobalVariable.opsiSigning]) == 'API Sign Document External') {
                                 'setting index untuk penggunaan data. Cara bacanya adalah apakah opsi tersebut telah digunakan. Jika sudah digunakan, maka + 1, jika tidak, maka 0.'
@@ -403,7 +404,7 @@ for (GlobalVariable.NumofColm = 2; GlobalVariable.NumofColm <= findTestData(exce
                             
                             'setelah seluruh opti signing telah dilakukan ,maka opsi signing akan naik 1'
                             (GlobalVariable.opsiSigning)++
-							
+
                             'total saldo otp'
                             (GlobalVariable.eSignData['CountVerifikasiOTP']) = ((GlobalVariable.eSignData['CountVerifikasiOTP']) + 
                             (GlobalVariable.eSignData['VerifikasiOTP']))
@@ -1097,7 +1098,7 @@ def checkingDocAndEmailFromInput(ArrayList documentId, String rowEmail, LinkedHa
     for (loopingDocument = (documentId.size() - 1); loopingDocument >= 0; loopingDocument--) {
         'get signers dan displit per enter'
         signers = findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel(rowEmail)).split(enter, -1)
-		
+
         'di trim'
         signersPerDoc = (signers[loopingDocument]).split(';', -1)
 

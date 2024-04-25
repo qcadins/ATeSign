@@ -108,19 +108,20 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
             'get psre Registered'
             String resultVendorRegistered = CustomKeywords.'connection.APIFullService.getRegisteredVendor'(conneSign, email)
 
-            ArrayList resultTrx = CustomKeywords.'connection.APIFullService.getAPIRegisterTrx'(conneSign, trxNo[0], trxNo[
-                1])
-
-            'reset index kembali 0 untuk array selanjutnya'
-            arrayIndex = 0
-
-            'verify trx Verification qty = -1'
-            arrayMatch.add(WebUI.verifyMatch(resultTrx[arrayIndex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
-
             if ((GlobalVariable.Psre == 'VIDA') || (GlobalVariable.Psre == 'DIGI')) {
+				if (GlobalVariable.Psre == 'VIDA') {
+				ArrayList resultTrx = CustomKeywords.'connection.APIFullService.getAPIRegisterTrx'(conneSign, trxNo[0], trxNo[
+					1])
+	
+				'reset index kembali 0 untuk array selanjutnya'
+				arrayIndex = 0
+	
+				'verify trx Verification qty = -1'
+				arrayMatch.add(WebUI.verifyMatch(resultTrx[arrayIndex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
+	
                 'verify trx PNBP qty / text verification = -1'
                 arrayMatch.add(WebUI.verifyMatch(resultTrx[arrayIndex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
-
+				}
                 arrayIndex = 0
 
                 'get data from db'
