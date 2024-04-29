@@ -98,7 +98,6 @@ for (looping = 0; looping < loopcase; looping++) {
 				
 				'setting dormant user'
 				CustomKeywords.'connection.UpdateData.updateDormantUser'(conneSign, emailPenandaTangan[loopingSigner], findTestData(excelPathManualSigntoSign).getValue(GlobalVariable.NumofColm, rowExcel('Dormant User')))
-
             }
         }
         

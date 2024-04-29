@@ -9,7 +9,9 @@ import internal.GlobalVariable as GlobalVariable
 'connect DB eSign'
 Connection conneSign = CustomKeywords.'connection.ConnectDB.connectDBeSign'()
 
-String selfPhoto, idPhoto
+String selfPhoto
+
+String idPhoto
 
 'check ada value maka setting register as dukcapil check'
 if (findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('Setting as Dukcapil Check')).length() > 
@@ -71,7 +73,7 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
     arrayMatch = []
 
     'ambil lama waktu yang diperlukan hingga request menerima balikan'
-    elapsedTime = (respon.elapsedTime / 1000) + ' second'
+    elapsedTime = ((respon.elapsedTime / 1000) + ' second')
 
     'ambil body dari hasil respons'
     responseBody = respon.responseBodyContent
@@ -109,19 +111,20 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
             String resultVendorRegistered = CustomKeywords.'connection.APIFullService.getRegisteredVendor'(conneSign, email)
 
             if ((GlobalVariable.Psre == 'VIDA') || (GlobalVariable.Psre == 'DIGI')) {
-				if (GlobalVariable.Psre == 'VIDA') {
-				ArrayList resultTrx = CustomKeywords.'connection.APIFullService.getAPIRegisterTrx'(conneSign, trxNo[0], trxNo[
-					1])
-	
-				'reset index kembali 0 untuk array selanjutnya'
-				arrayIndex = 0
-	
-				'verify trx Verification qty = -1'
-				arrayMatch.add(WebUI.verifyMatch(resultTrx[arrayIndex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
-	
-                'verify trx PNBP qty / text verification = -1'
-                arrayMatch.add(WebUI.verifyMatch(resultTrx[arrayIndex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
-				}
+                if (GlobalVariable.Psre == 'VIDA') {
+                    ArrayList resultTrx = CustomKeywords.'connection.APIFullService.getAPIRegisterTrx'(conneSign, trxNo[
+                        0], trxNo[1])
+
+                    'reset index kembali 0 untuk array selanjutnya'
+                    arrayIndex = 0
+
+                    'verify trx Verification qty = -1'
+                    arrayMatch.add(WebUI.verifyMatch(resultTrx[arrayIndex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
+
+                    'verify trx PNBP qty / text verification = -1'
+                    arrayMatch.add(WebUI.verifyMatch(resultTrx[arrayIndex++], '-1', false, FailureHandling.CONTINUE_ON_FAILURE))
+                }
+                
                 arrayIndex = 0
 
                 'get data from db'
@@ -137,9 +140,9 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
                 if (GlobalVariable.Psre == 'VIDA') {
                     'verify is_active'
                     arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], '1', false, FailureHandling.CONTINUE_ON_FAILURE))
-                } 
-
-				if (GlobalVariable.Psre == 'DIGI') {
+                }
+                
+                if (GlobalVariable.Psre == 'DIGI') {
                     'verify is_active'
                     arrayMatch.add(WebUI.verifyMatch(result[arrayIndex++], '0', false, FailureHandling.CONTINUE_ON_FAILURE))
                 }
@@ -162,13 +165,14 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
                 sDate = CustomKeywords.'customizekeyword.ParseDate.parseDateFormat'(resultDataUser[arrayIndex++], 'MM/dd/yyyy', 
                     'yyyy-MM-dd')
 
-				'check jika mandatory psre atau criticalnya mati'
-				if (CustomKeywords.'connection.Registrasi.checkPSREMandatoryRegisParam'(conneSign) == '1' || CustomKeywords.'connection.Registrasi.checkCriticalUserDataOnlyParam'(conneSign) == '0') {
-					'verify tanggal lahir'
-					arrayMatch.add(WebUI.verifyMatch(sDate.toUpperCase(), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm,
-							rowExcel('Tanggal Lahir')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
-				}
-				
+                'check jika mandatory psre atau criticalnya mati'
+                if ((CustomKeywords.'connection.Registrasi.checkPSREMandatoryRegisParam'(conneSign) == '1') || (CustomKeywords.'connection.Registrasi.checkCriticalUserDataOnlyParam'(
+                    conneSign) == '0')) {
+                    'verify tanggal lahir'
+                    arrayMatch.add(WebUI.verifyMatch(sDate.toUpperCase(), findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, 
+                                rowExcel('Tanggal Lahir')).replace('"', '').toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
+                }
+                
                 'verify jenis kelamin'
                 arrayMatch.add(WebUI.verifyMatch((resultDataUser[arrayIndex++]).toUpperCase(), findTestData(excelPathRegister).getValue(
                             GlobalVariable.NumofColm, rowExcel('Jenis Kelamin')).replace('"', '').toUpperCase(), false, 
@@ -253,16 +257,16 @@ if (WS.verifyResponseStatusCode(respon, 200, FailureHandling.OPTIONAL) == true) 
                                 'PsreInput')).replace('"', '').toUpperCase(), psreCode.toUpperCase(), false, FailureHandling.CONTINUE_ON_FAILURE))
             }
             
-			'check dormant after'
-			isDormant = CustomKeywords.'connection.DataVerif.getDormantUser'(conneSign,CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel(
-								'$NIK'))))
-			
-			'jika dormant before dan after tidak terjadi perubahan ketika account dormant'
-			if (isDormant != '0') {
-				'false store db'
-				arrayMatch.add(false)
-			}
-			
+            'check dormant after'
+            isDormant = CustomKeywords.'connection.DataVerif.getDormantUser'(conneSign, CustomKeywords.'customizekeyword.ParseText.convertToSHA256'(
+                    findTestData(excelPathRegister).getValue(GlobalVariable.NumofColm, rowExcel('$NIK'))))
+
+            'jika dormant before dan after tidak terjadi perubahan ketika account dormant'
+            if (isDormant != '0') {
+                'false store db'
+                arrayMatch.add(false)
+            }
+            
             'jika data db tidak sesuai dengan excel'
             if (arrayMatch.contains(false)) {
                 'Write To Excel GlobalVariable.StatusFailed and GlobalVariable.ReasonFailedStoredDB'
@@ -368,4 +372,3 @@ def checkVerifyEqualOrMatch(Boolean isMatch, String reason) {
 def rowExcel(String cellValue) {
     CustomKeywords.'customizekeyword.WriteExcel.getExcelRow'(GlobalVariable.DataFilePath, sheet, cellValue)
 }
-
