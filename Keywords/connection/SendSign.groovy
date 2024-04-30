@@ -440,7 +440,7 @@ class SendSign {
 	getTotalDocumentBasedOnSigner(Connection conn, String refNumber, String emailSigner) {
 		stm = conn.createStatement()
 
-		resultSet = stm.executeQuery("select count(distinct(tdd.id_document_d)) from tr_document_d tdd left join tr_document_h tdh on tdd.id_Document_h = tdh.id_document_h left join tr_document_d_sign tdds on tdd.id_document_d = tdds.id_document_d left join am_msuser amm on amm.id_ms_user = tdds.id_ms_user where tdh.ref_number = '" + refNumber + "' AND amm.login_id = '" + emailSigner + "' AND tdd.document_name = '' AND tdds.sign_date IS NULL")
+		resultSet = stm.executeQuery("select count(distinct(tdd.id_document_d)) from tr_document_d tdd left join tr_document_h tdh on tdd.id_Document_h = tdh.id_document_h left join tr_document_d_sign tdds on tdd.id_document_d = tdds.id_document_d left join am_msuser amm on amm.id_ms_user = tdds.id_ms_user where tdh.ref_number = '" + refNumber + "' AND amm.login_id = '" + emailSigner + "' AND tdds.sign_date IS NULL")
 		metadata = resultSet.metaData
 
 		columnCount = metadata.getColumnCount()

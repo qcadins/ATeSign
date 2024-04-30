@@ -17,16 +17,6 @@ String bodyAPI = ''
 'setting menggunakan base url yang benar atau salah'
 CustomKeywords.'connection.APIFullService.settingBaseUrl'(excelPath, GlobalVariable.NumofColm, rowExcel('Use Correct Base Url'))
 
-'ubah vendor stamping jika diperlukan'
-if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')).length() > 0) {
-    'ambil idLov untuk diupdate secara otomatis ke DB'
-    int idLov = CustomKeywords.'connection.ManualStamp.getIdLovVendorStamping'(conneSign, findTestData(excelPath).getValue(
-            GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')))
-
-    'lakukan update vendor stamping yang akan dipakai'
-    CustomKeywords.'connection.UpdateData.updateVendorStamping'(conneSign, idLov)
-}
-
 'Jika flag tenant no'
 if (findTestData(excelPath).getValue(GlobalVariable.NumofColm, rowExcel('use Correct Tenant Code')) == 'No') {
     'set tenant kosong'

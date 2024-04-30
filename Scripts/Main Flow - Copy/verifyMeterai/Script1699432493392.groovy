@@ -28,169 +28,174 @@ eMeterai = CustomKeywords.'connection.Meterai.getProsesMaterai'(conneSign, noKon
 'jika proses meterai menggunakan vendor pajakku dan success, maka ke menu meterai, jika sebaliknya maka e-meterai monitoring'
 if (eMeterai != 53) {
     WebUI.callTestCase(findTestCase('Main Flow - Copy/e-Meterai Monitoring'), [('excelPathemeteraiMonitoring') : excelPathMeterai
-            , ('sheet') : sheet, ('noKontrak') : noKontrak], FailureHandling.CONTINUE_ON_FAILURE) //    'set text lini bisnis'
-    //    WebUI.setText(findTestObject('Meterai/input_LiniBisnis'),inputBasedOnAPIStamping[indexInput++])
+            , ('sheet') : sheet, ('noKontrak') : noKontrak], FailureHandling.CONTINUE_ON_FAILURE //    'set text lini bisnis'
+        ) //    WebUI.setText(findTestObject('Meterai/input_LiniBisnis'),inputBasedOnAPIStamping[indexInput++])
     //
     //    'enter untuk set lini bisnis'
     //    WebUI.sendKeys(findTestObject('Meterai/input_LiniBisnis'), Keys.chord(Keys.ENTER))
 } else {
-    if (!(WebUI.verifyElementPresent(findTestObject('Meterai/menu_Meterai'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL))) {
-        if (WebUI.verifyElementPresent(findTestObject('Meterai/menu_Meterai'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
-            'cek apakah elemen menu ditutup'
-            if (WebUI.verifyElementVisible(findTestObject('button_HamburberSideMenu'), FailureHandling.OPTIONAL)) {
-                'klik pada button hamburber'
-                WebUI.click(findTestObject('button_HamburberSideMenu'))
-            }
-            
-            'click menu meterai'
-            WebUI.click(findTestObject('Meterai/menu_Meterai'))
+    if (CustomKeywords.'connection.DocumentMonitoring.getManualUpload'(conneSign, noKontrak) == 'Yes') {
+        WebUI.callTestCase(findTestCase('Main Flow - Copy/e-Meterai Monitoring'), [('excelPathemeteraiMonitoring') : excelPathMeterai
+                , ('sheet') : sheet, ('noKontrak') : noKontrak], FailureHandling.CONTINUE_ON_FAILURE)
+    } else {
+        if (!(WebUI.verifyElementPresent(findTestObject('Meterai/menu_Meterai'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL))) {
+            if (WebUI.verifyElementPresent(findTestObject('Meterai/menu_Meterai'), GlobalVariable.TimeOut, FailureHandling.OPTIONAL)) {
+                'cek apakah elemen menu ditutup'
+                if (WebUI.verifyElementVisible(findTestObject('button_HamburberSideMenu'), FailureHandling.OPTIONAL)) {
+                    'klik pada button hamburber'
+                    WebUI.click(findTestObject('button_HamburberSideMenu'))
+                }
+                
+                'click menu meterai'
+                WebUI.click(findTestObject('Meterai/menu_Meterai'))
 
-            'cek apakah tombol x terlihat'
-            if (WebUI.verifyElementVisible(findTestObject('buttonX_sideMenu'), FailureHandling.OPTIONAL)) {
-                'klik pada button X'
-                WebUI.click(findTestObject('buttonX_sideMenu'))
+                'cek apakah tombol x terlihat'
+                if (WebUI.verifyElementVisible(findTestObject('buttonX_sideMenu'), FailureHandling.OPTIONAL)) {
+                    'klik pada button X'
+                    WebUI.click(findTestObject('buttonX_sideMenu'))
+                }
+            } else {
+                'Call test Case untuk login sebagai admin wom admin client'
+                WebUI.callTestCase(findTestCase('Main Flow - Copy/Login'), [('excel') : excelPathMeterai, ('sheet') : sheet], 
+                    FailureHandling.CONTINUE_ON_FAILURE)
             }
-        } else {
-            'Call test Case untuk login sebagai admin wom admin client'
-            WebUI.callTestCase(findTestCase('Main Flow - Copy/Login'), [('excel') : excelPathMeterai, ('sheet') : sheet], 
-                FailureHandling.CONTINUE_ON_FAILURE)
         }
-    }
-    
-    'click menu meterai'
-    WebUI.click(findTestObject('Meterai/menu_Meterai'))
+        
+        'click menu meterai'
+        WebUI.click(findTestObject('Meterai/menu_Meterai'))
 
-    'get totalMaterai from db'
-    ArrayList totalMateraiAndTotalStamping = CustomKeywords.'connection.Meterai.getTotalMateraiAndTotalStamping'(conneSign, 
-        noKontrak)
+        'get totalMaterai from db'
+        ArrayList totalMateraiAndTotalStamping = CustomKeywords.'connection.Meterai.getTotalMateraiAndTotalStamping'(conneSign, 
+            noKontrak)
 
-    'declare index yang akan digunakan'
-    int indexInput = 0
+        'declare index yang akan digunakan'
+        int indexInput = 0
 
-    int indexValue = 0
+        int indexValue = 0
 
-    int indexGetNomorMaterai = 0
+        int indexGetNomorMaterai = 0
 
-    'looping per total meterai yang telah distamp'
-    for (j = 1; j <= Integer.parseInt((totalMateraiAndTotalStamping[1]).replace(' ', '')); j++) {
-        'ambil value db untuk mau input apa'
-        ArrayList inputBasedOnAPIStamping = CustomKeywords.'connection.Meterai.getInputMeterai'(conneSign, noKontrak)
+        'looping per total meterai yang telah distamp'
+        for (j = 1; j <= Integer.parseInt((totalMateraiAndTotalStamping[1]).replace(' ', '')); j++) {
+            'ambil value db untuk mau input apa'
+            ArrayList inputBasedOnAPIStamping = CustomKeywords.'connection.Meterai.getInputMeterai'(conneSign, noKontrak)
 
-        'set text lini bisnis all untuk reset'
-        WebUI.click(findTestObject('Object Repository/Meterai/button_SetUlang'))
+            'set text lini bisnis all untuk reset'
+            WebUI.click(findTestObject('Object Repository/Meterai/button_SetUlang'))
 
-        'set text no kontrak'
-        WebUI.setText(findTestObject('Meterai/input_NoKontrak'), inputBasedOnAPIStamping[indexInput++])
+            'set text no kontrak'
+            WebUI.setText(findTestObject('Meterai/input_NoKontrak'), inputBasedOnAPIStamping[indexInput++])
 
-        'set text status meterai'
-        inputDDLExact('Meterai/input_StatusMeterai', inputBasedOnAPIStamping[indexInput++])
+            'set text status meterai'
+            inputDDLExact('Meterai/input_StatusMeterai', inputBasedOnAPIStamping[indexInput++])
 
-        indexInput++
+            indexInput++
 
-        'set text tanggal wilayah'
-        inputDDLExact('Meterai/input_Wilayah', inputBasedOnAPIStamping[indexInput++])
+            'set text tanggal wilayah'
+            inputDDLExact('Meterai/input_Wilayah', inputBasedOnAPIStamping[indexInput++])
 
-        'set text tanggal cabang'
-        inputDDLExact('Meterai/input_Cabang', inputBasedOnAPIStamping[indexInput++])
+            'set text tanggal cabang'
+            inputDDLExact('Meterai/input_Cabang', inputBasedOnAPIStamping[indexInput++])
 
-        'set text tanggal pakai dari'
-        WebUI.setText(findTestObject('Meterai/input_TanggalPakaiDari'), inputBasedOnAPIStamping[indexInput++])
+            'set text tanggal pakai dari'
+            WebUI.setText(findTestObject('Meterai/input_TanggalPakaiDari'), inputBasedOnAPIStamping[indexInput++])
 
-        'set text tanggal pakai sampai'
-        WebUI.setText(findTestObject('Meterai/input_TanggalPakaiSampai'), inputBasedOnAPIStamping[indexInput++])
+            'set text tanggal pakai sampai'
+            WebUI.setText(findTestObject('Meterai/input_TanggalPakaiSampai'), inputBasedOnAPIStamping[indexInput++])
 
-        'set text no meterai'
-        WebUI.setText(findTestObject('Meterai/input_NoMeterai'), inputBasedOnAPIStamping[indexInput++])
+            'set text no meterai'
+            WebUI.setText(findTestObject('Meterai/input_NoMeterai'), inputBasedOnAPIStamping[indexInput++])
 
-        WebUI.focus(findTestObject('Meterai/button_Cari'))
+            WebUI.focus(findTestObject('Meterai/button_Cari'))
 
-        'click button cari'
-        WebUI.click(findTestObject('Meterai/button_Cari'))
+            'click button cari'
+            WebUI.click(findTestObject('Meterai/button_Cari'))
 
-        'Beri delay 2sec loading Cari'
-        WebUI.delay(2)
+            'Beri delay 2sec loading Cari'
+            WebUI.delay(2)
 
-        'get value meterai data dari db'
-        result = CustomKeywords.'connection.Meterai.getValueMeterai'(conneSign, noKontrak)
+            'get value meterai data dari db'
+            result = CustomKeywords.'connection.Meterai.getValueMeterai'(conneSign, noKontrak)
 
-        'verify no meterai'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_NomorMeterai')), result[indexValue++], 
-                false, FailureHandling.CONTINUE_ON_FAILURE), ' No Materai')
+            'verify no meterai'
+            checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_NomorMeterai')), result[
+                    indexValue++], false, FailureHandling.CONTINUE_ON_FAILURE), ' No Materai')
 
-        'verify no kontrak'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_NoKontrak')), result[indexValue++], 
-                false, FailureHandling.CONTINUE_ON_FAILURE), ' No Kontrak')
+            'verify no kontrak'
+            checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_NoKontrak')), result[indexValue++], 
+                    false, FailureHandling.CONTINUE_ON_FAILURE), ' No Kontrak')
 
-        'verify tanggal pakai'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_TanggalPakai')), result[indexValue++], 
-                false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Pakai')
+            'verify tanggal pakai'
+            checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_TanggalPakai')), result[
+                    indexValue++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Pakai')
 
-        'verify biaya'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_Biaya')).replace(',', ''), 
-                result[indexValue++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Biaya')
+            'verify biaya'
+            checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_Biaya')).replace(',', 
+                        ''), result[indexValue++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Biaya')
 
-        'verify cabang'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_Cabang')), result[indexValue++], 
-                false, FailureHandling.CONTINUE_ON_FAILURE), ' Cabang')
+            'verify cabang'
+            checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_Cabang')), result[indexValue++], 
+                    false, FailureHandling.CONTINUE_ON_FAILURE), ' Cabang')
 
-        'verify wilayah'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_Wilayah')), result[indexValue++], 
-                false, FailureHandling.CONTINUE_ON_FAILURE), ' Wilayah')
+            'verify wilayah'
+            checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_Wilayah')), result[indexValue++], 
+                    false, FailureHandling.CONTINUE_ON_FAILURE), ' Wilayah')
 
-        'verify lini bisnis'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_LiniBisnis')), result[indexValue++], 
-                false, FailureHandling.CONTINUE_ON_FAILURE), ' Lini bisnis')
+            'verify lini bisnis'
+            checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/table_LiniBisnis')), result[
+                    indexValue++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Lini bisnis')
 
-        status = (result[indexValue++]).toUpperCase()
+            status = (result[indexValue++]).toUpperCase()
 
-        'verify status'
-        checkVerifyEqualOrMatch(status.contains(WebUI.getText(findTestObject('Meterai/table_Status'))), ' Status')
+            'verify status'
+            checkVerifyEqualOrMatch(status.contains(WebUI.getText(findTestObject('Meterai/table_Status'))), ' Status')
 
-        'click nomor meterai untuk membuka hyperlink'
-        WebUI.click(findTestObject('Meterai/table_NomorMeterai'))
+            'click nomor meterai untuk membuka hyperlink'
+            WebUI.click(findTestObject('Meterai/table_NomorMeterai'))
 
-        'get stampduty trx data dari db'
-        resultPopup = CustomKeywords.'connection.Meterai.getValueDetailMeterai'(conneSign, result[indexGetNomorMaterai])
+            'get stampduty trx data dari db'
+            resultPopup = CustomKeywords.'connection.Meterai.getValueDetailMeterai'(conneSign, result[indexGetNomorMaterai])
 
-        'index get nomor materai ditingkatkan 8 berdasarkan jumalh kolom value'
-        indexGetNomorMaterai = (indexGetNomorMaterai + 8)
+            'index get nomor materai ditingkatkan 8 berdasarkan jumalh kolom value'
+            indexGetNomorMaterai = (indexGetNomorMaterai + 8)
 
-        'declare index'
-        index = 0
+            'declare index'
+            index = 0
 
-        'verify no meterai'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_NoTrx')), resultPopup[
-                index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' No Materai')
+            'verify no meterai'
+            checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_NoTrx')), resultPopup[
+                    index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' No Materai')
 
-        'verify no kontrak'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_NoKontrak')), resultPopup[
-                index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' No Kontrak')
+            'verify no kontrak'
+            checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_NoKontrak')), resultPopup[
+                    index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' No Kontrak')
 
-        'verify nama dok'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_NamaDok')), resultPopup[
-                index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama Dokumen')
+            'verify nama dok'
+            checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_NamaDok')), resultPopup[
+                    index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama Dokumen')
 
-        'verify nama pelanggan'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_NamaPelanggan')), resultPopup[
-                index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama Pelanggan')
+            'verify nama pelanggan'
+            checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_NamaPelanggan')), 
+                    resultPopup[index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Nama Pelanggan')
 
-        'verify tipe trx'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_TipeTrx')), resultPopup[
-                index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Tipe Trx')
+            'verify tipe trx'
+            checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_TipeTrx')), resultPopup[
+                    index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Tipe Trx')
 
-        'verify tanggal trx'
-        checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_TanggalTrx')), resultPopup[
-                index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Trx')
+            'verify tanggal trx'
+            checkVerifyEqualOrMatch(WebUI.verifyMatch(WebUI.getText(findTestObject('Meterai/tableDetail_TanggalTrx')), resultPopup[
+                    index++], false, FailureHandling.CONTINUE_ON_FAILURE), ' Tanggal Trx')
 
-        'click button X'
-        WebUI.click(findTestObject('Meterai/button_X'))
-    }
-    
-    if (((GlobalVariable.FlagFailed == 0) && (Integer.parseInt((totalMateraiAndTotalStamping[1]).replace(' ', '')) > 0)) && 
-    (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, rowExcel('Status')).toLowerCase() != 'warning')) {
-        'write to excel success'
-        CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Status') - 
-            1, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+            'click button X'
+            WebUI.click(findTestObject('Meterai/button_X'))
+        }
+        
+        if (((GlobalVariable.FlagFailed == 0) && (Integer.parseInt((totalMateraiAndTotalStamping[1]).replace(' ', '')) > 
+        0)) && (findTestData(excelPathMeterai).getValue(GlobalVariable.NumofColm, rowExcel('Status')).toLowerCase() != 'warning')) {
+            'write to excel success'
+            CustomKeywords.'customizekeyword.WriteExcel.writeToExcel'(GlobalVariable.DataFilePath, sheet, rowExcel('Status') - 
+                1, GlobalVariable.NumofColm - 1, GlobalVariable.StatusSuccess)
+        }
     }
 }
 

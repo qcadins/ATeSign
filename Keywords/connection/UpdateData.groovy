@@ -396,14 +396,15 @@ class UpdateData {
 				'update setting sent otp by email'
 				sendSign.settingSentOTPbyEmail(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Sent OTP by Email (Level Tenant)')))
 			}
-			'ambil idLov untuk diupdate secara otomatis ke DB'
-			int idLov = manualStamp.getIdLovVendorStamping(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')))
+			
+				'ambil idLov untuk diupdate secara otomatis ke DB'
+				int idLov = manualStamp.getIdLovVendorStamping(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting Vendor for Stamping')))
 
-			if (idLov != 0) {
-				'lakukan update vendor stamping yang akan dipakai'
-				updateVendorStamping(conneSign, idLov)
-			}
-
+				if (idLov != 0) {
+					'lakukan update vendor stamping yang akan dipakai'
+					updateVendorStamping(conneSign, idLov)
+				}
+			
 			'LOV Sending Point Send Document'
 			updateLOVSendingPointLevelNotif(conneSign, findTestData(excelPathMain).getValue(GlobalVariable.NumofColm, rowExcel('Setting True LOV Sending Point to Send Document ?')), 'Send Document')
 

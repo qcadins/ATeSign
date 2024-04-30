@@ -484,7 +484,7 @@ def setBodyAPI(String stringRefno, String signlocStoreDB, Connection conneSign) 
                         SHA256IdNo)
 				
 				'setting dormant user'
-				CustomKeywords.'connection.UpdateData.updateDormantUser'(conneSign, SHA256IdNo, findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Dormant User')))
+				//CustomKeywords.'connection.UpdateData.updateDormantUser'(conneSign, SHA256IdNo, findTestData(excelPathAPISendDoc).getValue(GlobalVariable.NumofColm, rowExcel('Dormant User')))
 				}
             }
             

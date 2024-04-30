@@ -58,6 +58,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
         GlobalVariable.storeVar[0] = resultHashMap.keySet()[o]
     }
     
+	WebUI.comment(resultHashMap.toString())
     'call Test Case untuk login sebagai user berdasarkan doc id'
     WebUI.callTestCase(findTestCase('Main Flow - Copy/Login'), [('email') : GlobalVariable.storeVar[(GlobalVariable.storeVar.keySet()[0])], ('excel') : excelPathFESignDocument
             , ('checkBeforeSigning') : checkBeforeSigning, ('sheet') : sheet], FailureHandling.STOP_ON_FAILURE)
