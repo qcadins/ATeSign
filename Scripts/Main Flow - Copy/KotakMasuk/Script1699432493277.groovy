@@ -198,7 +198,7 @@ for (o = 0; o < forLoopingWithBreakAndContinue; o++) {
                 prosesTtdPencarianDokumen.add(WebUI.getText(modifyObjectPencarianDokumen).split('/', -1))
 
                 jumlahSignerTelahTandaTangan = CustomKeywords.'connection.SendSign.getProsesTtdProgress'(conneSign, result[
-                    0], documentName)
+                    0])
 
                 jumlahSignerHarusTandaTangan = CustomKeywords.'connection.SendSign.getTotalSignerTtd'(conneSign, documentIdBasedOnLogin[
                     c])
